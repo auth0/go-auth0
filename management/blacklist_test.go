@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"gopkg.in/auth0.v5"
+	"github.com/auth0/go-auth0"
 )
 
 func TestBlacklist(t *testing.T) {

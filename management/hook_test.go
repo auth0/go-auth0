@@ -3,9 +3,9 @@ package management
 import (
 	"testing"
 
-	"gopkg.in/auth0.v5/internal/testing/expect"
+	"github.com/auth0/go-auth0/internal/testing/expect"
 
-	"gopkg.in/auth0.v5"
+	"github.com/auth0/go-auth0"
 )
 
 func TestHook(t *testing.T) {
