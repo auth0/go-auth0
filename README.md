@@ -1,19 +1,49 @@
 # Auth0 Go SDK
 
-[![Go Reference](https://pkg.go.dev/badge/gopkg.in/auth0.v5.svg)](https://pkg.go.dev/gopkg.in/auth0.v5)
-[![Build](https://github.com/go-auth0/auth0/workflows/Build/badge.svg)](https://github.com/go-auth0/auth0/actions?query=branch%3Amaster)
-[![Maintainability](https://api.codeclimate.com/v1/badges/bf038abb77ffb7c94cde/maintainability)](https://codeclimate.com/github/go-auth0/auth0/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/bf038abb77ffb7c94cde/test_coverage)](https://codeclimate.com/github/go-auth0/auth0/test_coverage)
+[![GoDoc](https://pkg.go.dev/badge/github.com/auth0/go-auth0.svg)](https://pkg.go.dev/github.com/auth0/go-auth0)
+[![License](https://img.shields.io/github/license/auth0/go-auth.svg?style=flat-square)](https://github.com/auth0/go-auth0/blob/main/LICENSE)
+[![Tests](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fauth0%2Fgo-auth0%2Fbadge%3Fref%3Dmain&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Amain)
+[![Release](https://img.shields.io/github/v/release/auth0/go-auth0?include_prereleases&style=flat-square)](https://github.com/auth0/go-auth0/releases)
+
+---
+
+Go client library for the [Auth0](https://auth0.com/) platform.
+
+_Note: This SDK was previously maintained under [go-auth0/auth0](https://github.com/go-auth0/auth0)._
+
+-------------------------------------
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Documentation](#documentation)
+- [Usage](#usage)
+- [Testing](#testing)
+- [What is Auth0?](#what-is-auth0)
+- [Create a free Auth0 Account](#create-a-free-auth0-account)
+- [Issue Reporting](#issue-reporting)
+- [Author](#author)
+- [License](#license)
+
+-------------------------------------
+
+## Installation
+
+```shell
+go get github.com/auth0/go-auth0
+```
+
+[[table of contents]](#table-of-contents)
 
 ## Documentation
 
-Reference documentation can be found at [pkg.go.dev](https://pkg.go.dev/gopkg.in/auth0.v5). For more information about [Auth0](http://auth0.com/) please visit the [Auth0 Docs](http://docs.auth0.com/) page.
+Reference documentation can be found at [pkg.go.dev](https://pkg.go.dev/gopkg.in/auth0.v5).
+For more information about [Auth0](http://auth0.com/) please visit the [Auth0 Docs](http://docs.auth0.com/) page and the
+[Auth0 Management API Docs](https://auth0.com/docs/api/management/v2).
 
-## Management API
+[[table of contents]](#table-of-contents)
 
-The Auth0 Management API is meant to be used by back-end servers or trusted parties performing administrative tasks. Generally speaking, anything that can be done through the Auth0 dashboard (and more) can also be done through this API.
-
-### Usage
+## Usage
 
 ```go
 import (
@@ -81,9 +111,15 @@ The following Auth0 resources are supported:
 - [x] [Tickets](https://auth0.com/docs/api/management/v2#!/Tickets/post_email_verification)
 - [x] [Signing Keys](https://auth0.com/docs/api/management/v2#!/Keys/get_signing_keys)
 
-### Tests
+[[table of contents]](#table-of-contents)
 
-The tests must run against an Auth0 tenant. They also need an [M2M app](https://auth0.com/docs/applications/set-up-an-application/register-machine-to-machine-applications) in that tenant that has been authorized to call the Management API. You can easily set one of these up by creating an [API Explorer Application](https://auth0.com/docs/tokens/management-api-access-tokens/create-and-authorize-a-machine-to-machine-application) in your tenant.
+## Testing
+
+The tests must run against an Auth0 tenant. They also need an
+[M2M app](https://auth0.com/docs/applications/set-up-an-application/register-machine-to-machine-applications) in that
+tenant that has been authorized to call the Management API. You can easily set one of these up by creating an
+[API Explorer Application](https://auth0.com/docs/tokens/management-api-access-tokens/create-and-authorize-a-machine-to-machine-application)
+in your tenant.
 
 Then simply create a local `.env` file with the following settings:
 
@@ -92,30 +128,44 @@ Then simply create a local `.env` file with the following settings:
 * `AUTH0_CLIENT_SECRET`: The **Client Secret** of the M2M app
 * `AUTH0_DEBUG`: Set to `true` to call the Management API in debug mode, which dumps the HTTP requests and responses to the output
 
+[[table of contents]](#table-of-contents)
+
 ## What is Auth0?
 
 Auth0 helps you to:
 
-* Add authentication with [multiple authentication sources](https://docs.auth0.com/identityproviders), either social like **Google, Facebook, Microsoft Account, LinkedIn, GitHub, Twitter, Box, Salesforce, amont others**, or enterprise identity systems like **Windows Azure AD, Google Apps, Active Directory, ADFS or any SAML Identity Provider**.
-* Add authentication through more traditional **[username/password databases](https://docs.auth0.com/mysql-connection-tutorial)**.
-* Add support for **[linking different user accounts](https://docs.auth0.com/link-accounts)** with the same user.
-* Support for generating signed [Json Web Tokens](https://docs.auth0.com/jwt) to call your APIs and **flow the user identity** securely.
-* Analytics of how, when and where users are logging in.
-* Pull data from other sources and add it to the user profile, through [JavaScript rules](https://docs.auth0.com/rules).
+- Add authentication with [multiple authentication sources](https://docs.auth0.com/identityproviders), either social like **Google, Facebook, Microsoft Account, LinkedIn, GitHub, Twitter, Box, Salesforce, amont others**, or enterprise identity systems like **Windows Azure AD, Google Apps, Active Directory, ADFS or any SAML Identity Provider**.
+- Add authentication through more traditional **[username/password databases](https://docs.auth0.com/mysql-connection-tutorial)**.
+- Add support for **[linking different user accounts](https://docs.auth0.com/link-accounts)** with the same user.
+- Support for generating signed [Json Web Tokens](https://docs.auth0.com/jwt) to call your APIs and **flow the user identity** securely.
+- Analytics of how, when and where users are logging in.
+- Pull data from other sources and add it to the user profile, through [JavaScript rules](https://docs.auth0.com/rules).
+
+[[table of contents]](#table-of-contents)
 
 ## Create a free Auth0 Account
 
 1.  Go to [Auth0](https://auth0.com) and click "Try Auth0 for Free".
 2.  Use Google, GitHub or Microsoft Account to login.
 
+[[table of contents]](#table-of-contents)
+
 ## Issue Reporting
 
-If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+If you have found a bug or if you have a feature request, please report them at this repository issues section.
+Please do not report security vulnerabilities on the public GitHub issue tracker.
+The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+
+[[table of contents]](#table-of-contents)
 
 ## Author
 
-[Alex Kalyvitis](https://github.com/alexkappa)
+[Auth0](https://auth0.com/)
+
+[[table of contents]](#table-of-contents)
 
 ## License
 
 This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more info.
+
+[[table of contents]](#table-of-contents)
