@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/auth0/go-auth0/internal/testing/expect"
-
 	_ "github.com/joho/godotenv/autoload"
+
+	"github.com/auth0/go-auth0/internal/testing/expect"
 )
 
 var m *Management
