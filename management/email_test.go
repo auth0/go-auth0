@@ -3,8 +3,8 @@ package management
 import (
 	"testing"
 
-	"gopkg.in/auth0.v5"
-	"gopkg.in/auth0.v5/internal/testing/expect"
+	"github.com/auth0/go-auth0"
+	"github.com/auth0/go-auth0/internal/testing/expect"
 )
 
 func TestEmail(t *testing.T) {

@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"gopkg.in/auth0.v5/internal/testing/expect"
+	"github.com/auth0/go-auth0/internal/testing/expect"
 
 	_ "github.com/joho/godotenv/autoload"
 )
