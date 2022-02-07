@@ -15,6 +15,7 @@ import (
 	"strings"
 
 	"golang.org/x/oauth2"
+
 	"github.com/auth0/go-auth0/internal/client"
 )
 

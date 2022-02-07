@@ -13,6 +13,7 @@ import (
 	"github.com/PuerkitoBio/rehttp"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
+
 	"github.com/auth0/go-auth0"
 )
 
