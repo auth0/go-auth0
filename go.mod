@@ -1,6 +1,6 @@
 module github.com/auth0/go-auth0
 
-go 1.12
+go 1.16
 
 require (
 	github.com/PuerkitoBio/rehttp v1.0.0
@@ -12,5 +12,4 @@ require (
 require (
 	github.com/aybabtme/iocontrol v0.0.0-20150809002002-ad15bcfc95a0 // indirect
 	github.com/benbjohnson/clock v1.0.3 // indirect
-	github.com/dustin/go-humanize v1.0.0 // indirect
 )
