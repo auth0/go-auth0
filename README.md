@@ -9,6 +9,7 @@
 
 Go client library for the [Auth0](https://auth0.com/) platform.
 
+
 _Note: This SDK was previously maintained under [go-auth0/auth0](https://github.com/go-auth0/auth0)._
 
 -------------------------------------
