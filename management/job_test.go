@@ -7,7 +7,6 @@ import (
 )
 
 func TestJob(t *testing.T) {
-
 	var err error
 
 	c, err := m.Connection.ReadByName("Username-Password-Authentication")
@@ -90,5 +89,4 @@ func TestJob(t *testing.T) {
 		}
 		t.Log(job)
 	})
-
 }

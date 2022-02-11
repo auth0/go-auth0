@@ -8,7 +8,6 @@ import (
 )
 
 func TestEmailTemplate(t *testing.T) {
-
 	e := &Email{
 		Name:               auth0.String("smtp"),
 		Enabled:            auth0.Bool(true),
@@ -66,7 +65,6 @@ func TestEmailTemplate(t *testing.T) {
 	})
 
 	t.Run("Replace", func(t *testing.T) {
-
 		et.Subject = auth0.String("Let's get you verified!")
 		et.Body = auth0.String("<html><body><h1>Let's get you verified!</h1></body></html>")
 		et.From = auth0.String("someone@example.com")

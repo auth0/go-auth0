@@ -8,7 +8,6 @@ import (
 )
 
 func TestRole(t *testing.T) {
-
 	var err error
 
 	r := &Role{

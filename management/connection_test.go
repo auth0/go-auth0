@@ -12,7 +12,6 @@ import (
 )
 
 func TestConnection(t *testing.T) {
-
 	c := &Connection{
 		Name:     auth0.Stringf("Test-Connection-%d", time.Now().Unix()),
 		Strategy: auth0.String("auth0"),
@@ -93,7 +92,6 @@ func TestConnection(t *testing.T) {
 	})
 
 	t.Run("Update", func(t *testing.T) {
-
 		id := c.GetID()
 
 		c.ID = nil       // read-only
@@ -155,7 +153,6 @@ func TestConnection(t *testing.T) {
 }
 
 func TestConnectionOptions(t *testing.T) {
-
 	t.Run("GoogleOAuth2", func(t *testing.T) {
 		g := &Connection{
 			Name:     auth0.Stringf("Test-Connection-%d", time.Now().Unix()),
@@ -174,7 +171,6 @@ func TestConnectionOptions(t *testing.T) {
 		defer func() {
 			m.Connection.Delete(g.GetID())
 			assertDeleted(t, g)
-
 		}()
 
 		err := m.Connection.Create(g)
@@ -240,7 +236,6 @@ func TestConnectionOptions(t *testing.T) {
 		defer func() {
 			m.Connection.Delete(g.GetID())
 			assertDeleted(t, g)
-
 		}()
 
 		err := m.Connection.Create(g)
@@ -304,7 +299,6 @@ func TestConnectionOptions(t *testing.T) {
 
 		o.NonPersistentAttrs = &[]string{"gender", "ethnicity", "favorite_color"}
 		expect.Expect(t, o.GetNonPersistentAttrs(), []string{"gender", "ethnicity", "favorite_color"})
-
 	})
 
 	t.Run("OAuth2", func(t *testing.T) {
@@ -332,7 +326,6 @@ func TestConnectionOptions(t *testing.T) {
 	})
 
 	t.Run("Email", func(t *testing.T) {
-
 		e := &Connection{
 			Name:     auth0.Stringf("Test-Connection-Email-%d", time.Now().Unix()),
 			Strategy: auth0.String("email"),
@@ -396,7 +389,6 @@ func TestConnectionOptions(t *testing.T) {
 	})
 
 	t.Run("SMS", func(t *testing.T) {
-
 		s := &Connection{
 			Name:     auth0.Stringf("Test-Connection-SMS-%d", time.Now().Unix()),
 			Strategy: auth0.String("sms"),
@@ -452,7 +444,6 @@ func TestConnectionOptions(t *testing.T) {
 	})
 
 	t.Run("CustomSMS", func(t *testing.T) {
-
 		s := &Connection{
 			Name:     auth0.Stringf("Test-Connection-Custom-SMS-%d", time.Now().Unix()),
 			Strategy: auth0.String("sms"),
@@ -516,7 +507,6 @@ func TestConnectionOptions(t *testing.T) {
 	})
 
 	t.Run("SAML", func(t *testing.T) {
-
 		g := &Connection{
 			Name:     auth0.Stringf("Test-SAML-Connection-%d", time.Now().Unix()),
 			Strategy: auth0.String("samlp"),

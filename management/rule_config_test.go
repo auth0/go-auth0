@@ -7,7 +7,6 @@ import (
 )
 
 func TestRuleConfig(t *testing.T) {
-
 	key := "foo"
 	r := &RuleConfig{Value: auth0.String("bar")}
 

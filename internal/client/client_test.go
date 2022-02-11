@@ -9,7 +9,6 @@ import (
 )
 
 func TestWrapRateLimit(t *testing.T) {
-
 	start := time.Now()
 	first := true
 
@@ -46,7 +45,6 @@ func TestWrapRateLimit(t *testing.T) {
 }
 
 func TestWrapUserAgent(t *testing.T) {
-
 	h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ua := r.Header.Get("User-Agent")
 		if ua != UserAgent {

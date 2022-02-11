@@ -7,7 +7,6 @@ import (
 )
 
 func TestRule(t *testing.T) {
-
 	r := &Rule{
 		Name:    auth0.String("test-rule"),
 		Script:  auth0.String("function (user, context, callback) { callback(null, user, context); }"),

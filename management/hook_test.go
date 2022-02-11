@@ -8,7 +8,6 @@ import (
 )
 
 func TestHook(t *testing.T) {
-
 	r := &Hook{
 		Name:      auth0.String("test-hook"),
 		Script:    auth0.String("function (user, context, callback) { callback(null, { user }); }"),
@@ -104,7 +103,6 @@ func TestHookSecretsIntersection(t *testing.T) {
 }
 
 func TestHookSecrets(t *testing.T) {
-
 	r := HookSecrets{
 		"SECRET1": "value1",
 		"SECRET2": "value2",

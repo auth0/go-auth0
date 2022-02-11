@@ -3,7 +3,6 @@ package management
 import "testing"
 
 func TestGrant(t *testing.T) {
-
 	var err error
 
 	t.Run("List", func(t *testing.T) {
