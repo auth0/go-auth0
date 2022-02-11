@@ -1,9 +1,10 @@
 # Auth0 Go SDK
 
 [![GoDoc](https://pkg.go.dev/badge/github.com/auth0/go-auth0.svg)](https://pkg.go.dev/github.com/auth0/go-auth0)
-[![License](https://img.shields.io/github/license/auth0/go-auth.svg?style=flat-square)](https://github.com/auth0/go-auth0/blob/main/LICENSE)
-[![Tests](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fauth0%2Fgo-auth0%2Fbadge%3Fref%3Dmain&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Amain)
+[![License](https://img.shields.io/github/license/auth0/go-auth0.svg?style=flat-square)](https://github.com/auth0/go-auth0/blob/main/LICENSE)
 [![Release](https://img.shields.io/github/v/release/auth0/go-auth0?include_prereleases&style=flat-square)](https://github.com/auth0/go-auth0/releases)
+[![Tests](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fauth0%2Fgo-auth0%2Fbadge%3Fref%3Dmain&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Amain)
+[![Codecov](https://img.shields.io/codecov/c/github/auth0/go-auth0?style=flat-square)](https://codecov.io/gh/auth0/go-auth0)
 
 ---
 
