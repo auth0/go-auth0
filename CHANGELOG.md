@@ -13,15 +13,12 @@ To view previous release notes please check [CHANGELOG.md](https://github.com/go
 - Renamed `ActionBindingReferenceById` to `ActionBindingReferenceByID`
 - Renamed `ConnectionOptionsSMS.GatewayUrl` to `ConnectionOptionsSMS.GatewayURL`
 - Renamed `Connection.ProvisioningTicketUrl` to `Connection.ProvisioningTicketURL`
-
-**Deprecations**
-
-- Deprecated `ActionManager.ListTriggers()`
-- Deprecated `ActionManager.ReadVersion()`
-- Deprecated `ActionManager.ListVersions()`
-- Deprecated `ActionManager.ListBindings()`
-- Deprecated `ActionManager.ReadExecution()`
-- Deprecated `ClientRefreshToken.Type`
-- Deprecated `WithFields()`
-- Deprecated `WithoutFields()`
-- Deprecated `TenantFlags.ChangePasswordFlowV1`
+- Removed deprecated `ActionManager.ListTriggers()`
+- Removed deprecated `ActionManager.ReadVersion()`
+- Removed deprecated `ActionManager.ListVersions()`
+- Removed deprecated `ActionManager.ListBindings()`
+- Removed deprecated `ActionManager.ReadExecution()`
+- Removed deprecated `ClientRefreshToken.Type`
+- Removed deprecated `WithFields()`
+- Removed deprecated `WithoutFields()`
+- Removed deprecated `TenantFlags.ChangePasswordFlowV1`

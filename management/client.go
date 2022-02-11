@@ -124,11 +124,6 @@ type ClientNativeSocialLogin struct {
 
 // ClientRefreshToken is used to configure the Refresh Token settings for our Client.
 type ClientRefreshToken struct {
-	// Refresh token types, one of: reusable, rotating.
-	//
-	// Deprecated: use RotationType and ExpirationType instead
-	Type *string `json:"type,omitempty"`
-
 	// Refresh token rotation type. Can be "rotating" or "non-rotating".
 	RotationType *string `json:"rotation_type,omitempty"`
 

@@ -54,7 +54,7 @@ func TestNew(t *testing.T) {
 
 func TestOptionFields(t *testing.T) {
 	r, _ := http.NewRequest("GET", "/", nil)
-	WithFields("foo", "bar").apply(r)
+	IncludeFields("foo", "bar").apply(r)
 
 	v := r.URL.Query()
 
@@ -68,7 +68,7 @@ func TestOptionFields(t *testing.T) {
 		t.Errorf("Expected %q, but got %q", includeFields, "true")
 	}
 
-	WithoutFields("foo", "bar").apply(r)
+	ExcludeFields("foo", "bar").apply(r)
 
 	includeFields = v.Get("include_fields")
 	if includeFields != "true" {

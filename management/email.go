@@ -85,8 +85,7 @@ func (m *EmailManager) Create(e *Email, opts ...RequestOption) error {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/get_provider
 func (m *EmailManager) Read(opts ...RequestOption) (e *Email, err error) {
-	opts = append(opts,
-		WithFields("name", "enabled", "default_from_address", "credentials", "settings"))
+	opts = append(opts, IncludeFields("name", "enabled", "default_from_address", "credentials", "settings"))
 	err = m.Request("GET", m.URI("emails", "provider"), &e, opts...)
 	return
 }
