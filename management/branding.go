@@ -6,8 +6,12 @@ import (
 	"net/http"
 )
 
+// Branding is used to customize the look and feel of Auth0 to align
+// with an organization's brand requirements and user expectations.
+//
+// See: https://auth0.com/docs/customize
 type Branding struct {
-	// Change password page settings
+	// Change login page colors.
 	Colors *BrandingColors `json:"colors,omitempty"`
 
 	// URL for the favicon. Must use HTTPS.
@@ -19,8 +23,9 @@ type Branding struct {
 	Font *BrandingFont `json:"font,omitempty"`
 }
 
+// BrandingColors are used to customize the Universal Login Page.
 type BrandingColors struct {
-	// Accent color
+	// Accent color.
 	Primary *string `json:"primary,omitempty"`
 
 	// Page background color.
@@ -36,6 +41,8 @@ type BrandingColors struct {
 	PageBackgroundGradient *BrandingPageBackgroundGradient `json:"-"`
 }
 
+// BrandingPageBackgroundGradient is used to customize
+// the background color of the Universal Login Page.
 type BrandingPageBackgroundGradient struct {
 	Type        *string `json:"type,omitempty"`
 	Start       *string `json:"start,omitempty"`
@@ -72,7 +79,6 @@ func (bc *BrandingColors) MarshalJSON() ([]byte, error) {
 // It is required to handle the json field page_background, which can either
 // be a hex color string, or an object describing a gradient.
 func (bc *BrandingColors) UnmarshalJSON(data []byte) error {
-
 	type brandingColors BrandingColors
 	type brandingColorsWrapper struct {
 		*brandingColors
@@ -87,7 +93,6 @@ func (bc *BrandingColors) UnmarshalJSON(data []byte) error {
 	}
 
 	if alias.RawPageBackground != nil {
-
 		var v interface{}
 		err = json.Unmarshal(alias.RawPageBackground, &v)
 		if err != nil {
@@ -114,15 +119,20 @@ func (bc *BrandingColors) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// BrandingFont is used to customize the
+// font on the Universal Login Page.
 type BrandingFont struct {
 	// URL for the custom font. Must use HTTPS.
 	URL *string `json:"url,omitempty"`
 }
 
+// BrandingUniversalLogin is used to customize
+// the body of the Universal Login Page.
 type BrandingUniversalLogin struct {
 	Body *string `json:"body,omitempty"`
 }
 
+// BrandingManager manages Auth0 Branding resources.
 type BrandingManager struct {
 	*Management
 }
@@ -131,7 +141,7 @@ func newBrandingManager(m *Management) *BrandingManager {
 	return &BrandingManager{m}
 }
 
-// Retrieve various settings related to branding.
+// Read retrieves various settings related to branding.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/get_branding
 func (m *BrandingManager) Read(opts ...RequestOption) (b *Branding, err error) {
@@ -146,7 +156,7 @@ func (m *BrandingManager) Update(t *Branding, opts ...RequestOption) (err error)
 	return m.Request("PATCH", m.URI("branding"), t, opts...)
 }
 
-// Retrieve template for New Universal Login Experience.
+// UniversalLogin retrieves the template for the New Universal Login Experience.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/get_universal_login
 func (m *BrandingManager) UniversalLogin(opts ...RequestOption) (ul *BrandingUniversalLogin, err error) {
@@ -154,11 +164,10 @@ func (m *BrandingManager) UniversalLogin(opts ...RequestOption) (ul *BrandingUni
 	return
 }
 
-// Set template for the New Universal Login Experience.
+// SetUniversalLogin sets the template for the New Universal Login Experience.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/put_universal_login
 func (m *BrandingManager) SetUniversalLogin(ul *BrandingUniversalLogin, opts ...RequestOption) (err error) {
-
 	req, err := m.NewRequest("PUT", m.URI("branding", "templates", "universal-login"), ul.Body, opts...)
 	if err != nil {
 		return err
@@ -176,7 +185,7 @@ func (m *BrandingManager) SetUniversalLogin(ul *BrandingUniversalLogin, opts ...
 	return nil
 }
 
-// Delete template for New Universal Login Experience.
+// DeleteUniversalLogin deletes the template for the New Universal Login Experience.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/delete_universal_login
 func (m *BrandingManager) DeleteUniversalLogin(opts ...RequestOption) (err error) {

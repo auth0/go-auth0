@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// Enrollment is used for MultiFactor Authentication.
 type Enrollment struct {
 	// ID for this enrollment
 	ID *string `json:"id,omitempty"`
@@ -23,6 +24,7 @@ type Enrollment struct {
 	LastAuth *time.Time `json:"last_auth,omitempty"`
 }
 
+// MultiFactor Authentication method.
 type MultiFactor struct {
 	// States if this factor is enabled
 	Enabled *bool `json:"enabled,omitempty"`
@@ -34,16 +36,21 @@ type MultiFactor struct {
 	TrialExpired *bool `json:"trial_expired,omitempty"`
 }
 
+// MultiFactorPolicies policies for MultiFactor authentication.
 type MultiFactorPolicies []string
 
+// MultiFactorProvider holds provider type for MultiFactor Authentication.
 type MultiFactorProvider struct {
 	// One of auth0|twilio|phone-message-hook
 	Provider *string `json:"provider,omitempty"`
 }
 
+// PhoneMessageTypes holds message types for phone MultiFactor Authentication.
 type PhoneMessageTypes struct {
 	MessageTypes *[]string `json:"message_types,omitempty"`
 }
+
+// MultiFactorSMSTemplate holds the sms template for MultiFactor Authentication.
 type MultiFactorSMSTemplate struct {
 	// Message sent to the user when they are invited to enroll with a phone number
 	EnrollmentMessage *string `json:"enrollment_message,omitempty"`
@@ -52,6 +59,8 @@ type MultiFactorSMSTemplate struct {
 	VerificationMessage *string `json:"verification_message,omitempty"`
 }
 
+// MultiFactorProviderAmazonSNS is used for
+// AmazonSNS MultiFactor Authentication.
 type MultiFactorProviderAmazonSNS struct {
 	// AWS Access Key ID
 	AccessKeyID *string `json:"aws_access_key_id,omitempty"`
@@ -69,6 +78,7 @@ type MultiFactorProviderAmazonSNS struct {
 	GCMPlatformApplicationARN *string `json:"sns_gcm_platform_application_arn,omitempty"`
 }
 
+// MultiFactorProviderTwilio is used for Twilio MultiFactor Authentication.
 type MultiFactorProviderTwilio struct {
 	// From number
 	From *string `json:"from,omitempty"`
@@ -83,6 +93,7 @@ type MultiFactorProviderTwilio struct {
 	SID *string `json:"sid,omitempty"`
 }
 
+// GuardianManager manages Auth0 Guardian resources.
 type GuardianManager struct {
 	Enrollment  *EnrollmentManager
 	MultiFactor *MultiFactorManager
@@ -104,10 +115,12 @@ func newGuardianManager(m *Management) *GuardianManager {
 	}
 }
 
+// EnrollmentManager manages Auth0 MultiFactor enrollment resources.
 type EnrollmentManager struct {
 	*Management
 }
 
+// CreateEnrollmentTicket used to create an enrollment ticket.
 type CreateEnrollmentTicket struct {
 	// UserID is the user_id for the enrollment ticket.
 	UserID string `json:"user_id,omitempty"`
@@ -120,6 +133,7 @@ type CreateEnrollmentTicket struct {
 	SendMail bool `json:"send_mail,omitempty"`
 }
 
+// EnrollmentTicket holds information on the ticket ID and URL.
 type EnrollmentTicket struct {
 	TicketID  string `json:"ticket_id"`
 	TicketURL string `json:"ticket_url"`
@@ -166,6 +180,7 @@ func (m *EnrollmentManager) Delete(id string, opts ...RequestOption) (err error)
 	return
 }
 
+// MultiFactorManager manages MultiFactor Authentication options.
 type MultiFactorManager struct {
 	*Management
 	Phone            *MultiFactorPhone
@@ -178,7 +193,7 @@ type MultiFactorManager struct {
 	WebAuthnPlatform *MultiFactorWebAuthnPlatform
 }
 
-// Retrieves all factors.
+// List retrieves all factors.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/get_factors
 func (m *MultiFactorManager) List(opts ...RequestOption) (mf []*MultiFactor, err error) {
@@ -186,7 +201,7 @@ func (m *MultiFactorManager) List(opts ...RequestOption) (mf []*MultiFactor, err
 	return
 }
 
-// Get MFA policies
+// Policy retrieves MFA policies.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/get_policies
 func (m *MultiFactorManager) Policy(opts ...RequestOption) (p *MultiFactorPolicies, err error) {
@@ -194,17 +209,18 @@ func (m *MultiFactorManager) Policy(opts ...RequestOption) (p *MultiFactorPolici
 	return
 }
 
-// Update MFA policies
+// UpdatePolicy updates MFA policies.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/put_policies
-//Expects an array of either ["all-applications"] or ["confidence-score"]
+// Expects an array of either ["all-applications"] or ["confidence-score"].
 func (m *MultiFactorManager) UpdatePolicy(p *MultiFactorPolicies, opts ...RequestOption) error {
 	return m.Request("PUT", m.URI("guardian", "policies"), p, opts...)
 }
 
+// MultiFactorPhone is used to manage Phone MFA.
 type MultiFactorPhone struct{ *Management }
 
-// Update MFA Phone to be enabled.
+// Enable Phone MFA.
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/put_factors_by_name
 func (m *MultiFactorPhone) Enable(enabled bool, opts ...RequestOption) error {
 	// An endpoint for enabling Phone doesn't exist yet so we go towards
@@ -214,32 +230,33 @@ func (m *MultiFactorPhone) Enable(enabled bool, opts ...RequestOption) error {
 	}, opts...)
 }
 
-// Retrieves the MFA Phone provider, one of ["auth0" or "twilio" or "phone-message-hook"]
+// Provider retrieves the MFA Phone provider, one of ["auth0" or "twilio" or "phone-message-hook"]
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/get_selected_provider
 func (m *MultiFactorPhone) Provider(opts ...RequestOption) (p *MultiFactorProvider, err error) {
 	err = m.Request("GET", m.URI("guardian", "factors", "phone", "selected-provider"), &p, opts...)
 	return
 }
 
-// Update MFA Phone provider, one of ["auth0" or "twilio" or "phone-message-hook"]
+// UpdateProvider updates MFA Phone provider, one of ["auth0" or "twilio" or "phone-message-hook"]
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/put_selected_provider
 func (m *MultiFactorPhone) UpdateProvider(p *MultiFactorProvider, opts ...RequestOption) error {
 	return m.Request("PUT", m.URI("guardian", "factors", "phone", "selected-provider"), &p, opts...)
 }
 
-// Retrieves the MFA Phone Message Type
+// MessageTypes retrieves the MFA Phone Message Type.
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/get_message_types
 func (m *MultiFactorPhone) MessageTypes(opts ...RequestOption) (mt *PhoneMessageTypes, err error) {
 	err = m.Request("GET", m.URI("guardian", "factors", "phone", "message-types"), &mt, opts...)
 	return
 }
 
-// Update MFA Phone Message Type
+// UpdateMessageTypes updates MFA Phone Message Type.
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/put_message_types
 func (m *MultiFactorPhone) UpdateMessageTypes(mt *PhoneMessageTypes, opts ...RequestOption) error {
 	return m.Request("PUT", m.URI("guardian", "factors", "phone", "message-types"), &mt, opts...)
 }
 
+// MultiFactorSMS is used for SMS MFA.
 type MultiFactorSMS struct{ *Management }
 
 // Enable enables or disables the SMS Multi-factor Authentication.
@@ -283,6 +300,7 @@ func (m *MultiFactorSMS) UpdateTwilio(t *MultiFactorProviderTwilio, opts ...Requ
 	return m.Request("PUT", m.URI("guardian", "factors", "sms", "providers", "twilio"), t, opts...)
 }
 
+// MultiFactorPush is used for Push MFA.
 type MultiFactorPush struct{ *Management }
 
 // Enable enables or disables the Push Notification (via Auth0 Guardian)
@@ -312,6 +330,7 @@ func (m *MultiFactorPush) UpdateAmazonSNS(sc *MultiFactorProviderAmazonSNS, opts
 	return m.Request("PUT", m.URI("guardian", "factors", "push-notification", "providers", "sns"), sc, opts...)
 }
 
+// MultiFactorEmail is used for Email MFA.
 type MultiFactorEmail struct{ *Management }
 
 // Enable enables or disables the Email Multi-factor Authentication.
@@ -323,6 +342,7 @@ func (m *MultiFactorEmail) Enable(enabled bool, opts ...RequestOption) error {
 	}, opts...)
 }
 
+// MultiFactorDUO is used for Duo MFA.
 type MultiFactorDUO struct{ *Management }
 
 // Enable enables or disables DUO Security Multi-factor Authentication.
@@ -334,6 +354,7 @@ func (m *MultiFactorDUO) Enable(enabled bool, opts ...RequestOption) error {
 	}, opts...)
 }
 
+// MultiFactorWebAuthnRoaming is used for WebAuthnRoaming MFA.
 type MultiFactorWebAuthnRoaming struct{ *Management }
 
 // Enable enables or disables WebAuthn Roaming Multi-factor Authentication.
@@ -345,6 +366,7 @@ func (m *MultiFactorWebAuthnRoaming) Enable(enabled bool, opts ...RequestOption)
 	}, opts...)
 }
 
+// MultiFactorWebAuthnPlatform is used for WebAuthnPlatform MFA.
 type MultiFactorWebAuthnPlatform struct{ *Management }
 
 // Enable enables or disables WebAuthn Platform Multi-factor Authentication.
@@ -356,6 +378,7 @@ func (m *MultiFactorWebAuthnPlatform) Enable(enabled bool, opts ...RequestOption
 	}, opts...)
 }
 
+// MultiFactorOTP is used for OTP MFA.
 type MultiFactorOTP struct{ *Management }
 
 // Enable enables or disables One-time Password Multi-factor Authentication.

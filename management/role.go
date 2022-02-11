@@ -1,5 +1,6 @@
 package management
 
+// Role is used to assign roles to a User.
 type Role struct {
 	// A unique ID for the role.
 	ID *string `json:"id,omitempty"`
@@ -11,11 +12,13 @@ type Role struct {
 	Description *string `json:"description,omitempty"`
 }
 
+// RoleList holds a list of Roles.
 type RoleList struct {
 	List
 	Roles []*Role `json:"roles"`
 }
 
+// Permission is granted to a Role.
 type Permission struct {
 	// The resource server that the permission is attached to.
 	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty"`
@@ -30,11 +33,13 @@ type Permission struct {
 	Description *string `json:"description,omitempty"`
 }
 
+// PermissionList holds a list of Permissions.
 type PermissionList struct {
 	List
 	Permissions []*Permission `json:"permissions"`
 }
 
+// RoleManager manages Auth0 Role resources.
 type RoleManager struct {
 	*Management
 }

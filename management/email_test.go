@@ -8,7 +8,6 @@ import (
 )
 
 func TestEmail(t *testing.T) {
-
 	e := &Email{
 		Name:               auth0.String("smtp"),
 		Enabled:            auth0.Bool(true),
@@ -45,7 +44,6 @@ func TestEmail(t *testing.T) {
 	})
 
 	t.Run("Update", func(t *testing.T) {
-
 		e.Enabled = auth0.Bool(false)
 		e.DefaultFromAddress = auth0.String("info@example.com")
 

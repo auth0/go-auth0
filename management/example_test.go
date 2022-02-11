@@ -136,7 +136,6 @@ func ExampleConnectionManager_List() {
 		// handle err
 	}
 	for _, c := range l.Connections {
-
 		fmt.Println(c.GetName())
 
 		if o, ok := c.Options.(*management.ConnectionOptions); ok {

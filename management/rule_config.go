@@ -1,7 +1,7 @@
 package management
 
+// RuleConfig are key value pairs used to configure Rules.
 type RuleConfig struct {
-
 	// The key for a RuleConfigs config
 	Key *string `json:"key,omitempty"`
 
@@ -9,6 +9,7 @@ type RuleConfig struct {
 	Value *string `json:"value,omitempty"`
 }
 
+// RuleConfigManager manages Auth0 RuleConfig resources.
 type RuleConfigManager struct {
 	*Management
 }

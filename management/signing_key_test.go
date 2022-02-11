@@ -5,7 +5,6 @@ import (
 )
 
 func TestSigningKey(t *testing.T) {
-
 	var kid string
 
 	// Our last test revokes the key used to sign the token we're currently

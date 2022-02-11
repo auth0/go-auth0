@@ -418,12 +418,12 @@ func (a *ActionVersionError) GetMessage() string {
 	return *a.Message
 }
 
-// GetUrl returns the Url field if it's non-nil, zero value otherwise.
-func (a *ActionVersionError) GetUrl() string {
-	if a == nil || a.Url == nil {
+// GetURL returns the URL field if it's non-nil, zero value otherwise.
+func (a *ActionVersionError) GetURL() string {
+	if a == nil || a.URL == nil {
 		return ""
 	}
-	return *a.Url
+	return *a.URL
 }
 
 // String returns a string representation of ActionVersionError.
@@ -941,12 +941,12 @@ func (c *Connection) GetName() string {
 	return *c.Name
 }
 
-// GetProvisioningTicketUrl returns the ProvisioningTicketUrl field if it's non-nil, zero value otherwise.
-func (c *Connection) GetProvisioningTicketUrl() string {
-	if c == nil || c.ProvisioningTicketUrl == nil {
+// GetProvisioningTicketURL returns the ProvisioningTicketURL field if it's non-nil, zero value otherwise.
+func (c *Connection) GetProvisioningTicketURL() string {
+	if c == nil || c.ProvisioningTicketURL == nil {
 		return ""
 	}
-	return *c.ProvisioningTicketUrl
+	return *c.ProvisioningTicketURL
 }
 
 // GetStrategy returns the Strategy field if it's non-nil, zero value otherwise.
@@ -3155,12 +3155,12 @@ func (c *ConnectionOptionsSMS) GetGatewayAuthentication() *ConnectionGatewayAuth
 	return c.GatewayAuthentication
 }
 
-// GetGatewayUrl returns the GatewayUrl field if it's non-nil, zero value otherwise.
-func (c *ConnectionOptionsSMS) GetGatewayUrl() string {
-	if c == nil || c.GatewayUrl == nil {
+// GetGatewayURL returns the GatewayURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSMS) GetGatewayURL() string {
+	if c == nil || c.GatewayURL == nil {
 		return ""
 	}
-	return *c.GatewayUrl
+	return *c.GatewayURL
 }
 
 // GetMessagingServiceSID returns the MessagingServiceSID field if it's non-nil, zero value otherwise.

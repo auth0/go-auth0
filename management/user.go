@@ -8,62 +8,61 @@ import (
 	"time"
 )
 
-// User represents an Auth0 user resource
+// User represents an Auth0 user resource.
 //
 // See: https://auth0.com/docs/users
 type User struct {
-
-	// The users identifier.
+	// The users' identifier.
 	ID *string `json:"user_id,omitempty"`
 
 	// The connection the user belongs to.
 	Connection *string `json:"connection,omitempty"`
 
-	// The user's email
+	// The users' email.
 	Email *string `json:"email,omitempty"`
 
-	// The users name
+	// The users' name.
 	Name *string `json:"name,omitempty"`
 
-	// The users given name
+	// The users' given name.
 	GivenName *string `json:"given_name,omitempty"`
 
-	// The users family name
+	// The users' family name.
 	FamilyName *string `json:"family_name,omitempty"`
 
-	// The user's username. Only valid if the connection requires a username
+	// The users' username. Only valid if the connection requires a username.
 	Username *string `json:"username,omitempty"`
 
-	// The user's nickname
+	// The users' nickname.
 	Nickname *string `json:"nickname,omitempty"`
 
-	// The screen name, handle, or alias that this user identifies themselves with
+	// The screen name, handle, or alias that this user identifies themselves with.
 	ScreenName *string `json:"screen_name,omitempty"`
 
-	// The user-defined UTF-8 string describing their account
+	// The user-defined UTF-8 string describing their account.
 	Description *string `json:"description,omitempty"`
 
-	// The user-defined location for this account’s profile
+	// The user-defined location for this account’s profile.
 	Location *string `json:"location,omitempty"`
 
-	// The user's password (mandatory for non SMS connections)
+	// The users' password (mandatory for non SMS connections)
 	Password *string `json:"password,omitempty"`
 
-	// The user's phone number (following the E.164 recommendation), only valid
-	// for users to be added to SMS connections.
+	// The users' phone number (following the E.164 recommendation).
+	// Only valid for users to be added to SMS connections.
 	PhoneNumber *string `json:"phone_number,omitempty"`
 
-	// The time the user is created.
+	// The time the user was created.
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 
-	// The last time the user is updated.
+	// The last time the user was updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 
 	// The last time the user has logged in.
 	LastLogin *time.Time `json:"last_login,omitempty"`
 
-	// UserMetadata holds data that the user has read/write access to (e.g.
-	// color_preference, blog_url, etc).
+	// UserMetadata holds data that the user has read/write access to.
+	// For example color_preference, blog_url, etc.
 	UserMetadata map[string]interface{} `json:"user_metadata,omitempty"`
 
 	// Identities is a list of user identities for when accounts are linked.
@@ -82,21 +81,21 @@ type User struct {
 	VerifyEmail *bool `json:"verify_email,omitempty"`
 
 	// True if the user's phone number is verified, false otherwise. When the
-	// user is added to a SMS connection, they will not receive an verification
+	// user is added to an SMS connection, they will not receive a verification
 	// SMS if this is true.
 	PhoneVerified *bool `json:"phone_verified,omitempty"`
 
-	// AppMetadata holds data that the user has read-only access to (e.g. roles,
-	// permissions, vip, etc).
+	// AppMetadata holds data that the user has read-only access to.
+	// For example roles, permissions, vip, etc.
 	AppMetadata map[string]interface{} `json:"app_metadata,omitempty"`
 
-	// The user's picture url
+	// The user's picture url.
 	Picture *string `json:"picture,omitempty"`
 
-	// A URL provided by the user in association with their profile
+	// A URL provided by the user in association with their profile.
 	URL *string `json:"url,omitempty"`
 
-	// True if the user is blocked from the application, false if the user is enabled
+	// True if the user is blocked from the application, false if the user is enabled.
 	Blocked *bool `json:"blocked,omitempty"`
 
 	// Last IP address from which this user logged in. Read only, cannot be modified.
@@ -142,6 +141,7 @@ func (u *User) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// MarshalJSON is a custom serializer for the User type.
 func (u *User) MarshalJSON() ([]byte, error) {
 	type user User
 	type userAlias struct {
@@ -161,16 +161,20 @@ func (u *User) MarshalJSON() ([]byte, error) {
 type UserIdentityLink struct {
 	// Connection id of the secondary user account being linked when more than one auth0 database provider exists.
 	ConnectionID *string `json:"connection_id,omitempty"`
+
 	// Secondary account user id.
 	UserID *string `json:"user_id,omitempty"`
+
 	// Identity provider of the secondary user account being linked.
 	Provider *string `json:"provider,omitempty"`
+
 	// LinkWith requires the authenticated primary account's JWT in the Authorization header.
 	// Must be a JWT for the secondary account being linked. If sending this parameter,
 	// provider, user_id, and connection_id must not be sent.
 	LinkWith *string `json:"link_with,omitempty"`
 }
 
+// UserIdentity holds values that validate a User's identity.
 type UserIdentity struct {
 	Connection        *string `json:"connection,omitempty"`
 	UserID            *string `json:"-"`
@@ -217,6 +221,7 @@ func (i *UserIdentity) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// MarshalJSON is a custom serializer for the UserIdentity type.
 func (i *UserIdentity) MarshalJSON() ([]byte, error) {
 	type userIdentity UserIdentity
 	type userIdentityAlias struct {
@@ -236,39 +241,48 @@ type userBlock struct {
 	BlockedFor []*UserBlock `json:"blocked_for,omitempty"`
 }
 
+// UserBlock keeps track of a blocked IP for the login identifier associated with a User.
 type UserBlock struct {
 	Identifier *string `json:"identifier,omitempty"`
 	IP         *string `json:"ip,omitempty"`
 }
 
+// UserRecoveryCode represents a User's multi-factor authentication recovery code.
 type UserRecoveryCode struct {
 	RecoveryCode *string `json:"recovery_code,omitempty"`
 }
 
-// UserEnrollment contains information about the Guardian enrollments for the user
+// UserEnrollment contains information about the Guardian enrollments for the user.
 type UserEnrollment struct {
 	// Authentication method for this enrollment. Can be `authentication`, `guardian`, or `sms`.
 	AuthMethod *string `json:"auth_method,omitempty"`
+
 	// Start date and time of this enrollment.
 	EnrolledAt *time.Time `json:"enrolled_at,omitempty"`
+
 	// ID of this enrollment.
 	ID *string `json:"id,omitempty"`
+
 	// Device identifier (usually phone identifier) of this enrollment.
 	Identifier *string `json:"identifier,omitempty"`
+
 	// Last authentication date and time of this enrollment.
 	LastAuth *time.Time `json:"last_auth,omitempty"`
+
 	// Name of enrollment (usually phone number).
 	Name *string `json:"name,omitempty"`
+
 	// Phone number for this enrollment.
 	PhoneNumber *string `json:"phone_number,omitempty"`
+
 	// Status of this enrollment. Can be `pending` or `confirmed`.
 	Status *string `json:"status,omitempty"`
+
 	// Type of enrollment.
 	Type *string `json:"type,omitempty"`
 }
 
-// UserList is an envelope struct which is used when calling List() or Search()
-// methods.
+// UserList is an envelope struct which is used when calling List() or Search() methods.
 //
 // It holds metadata such as the total result count, starting offset and limit.
 type UserList struct {
@@ -439,8 +453,8 @@ func (m *UserManager) Blocks(id string, opts ...RequestOption) ([]*UserBlock, er
 	return b.BlockedFor, err
 }
 
-// Blocks retrieves a list of blocked IP addresses of a particular user using
-// any of the user identifiers: username, phone number or email.
+// BlocksByIdentifier retrieves a list of blocked IP addresses of a particular
+// user using any of the user identifiers: username, phone number or email.
 //
 // See: https://auth0.com/docs/api/management/v2#!/User_Blocks/get_user_blocks
 func (m *UserManager) BlocksByIdentifier(identifier string, opts ...RequestOption) ([]*UserBlock, error) {
@@ -460,7 +474,7 @@ func (m *UserManager) Unblock(id string, opts ...RequestOption) error {
 	return m.Request("DELETE", m.URI("user-blocks", id), nil, opts...)
 }
 
-// Unblock a user that was blocked due to an excessive amount of incorrectly
+// UnblockByIdentifier a user that was blocked due to an excessive amount of incorrectly
 // provided credentials using any of the user identifiers: username, phone number or email.
 //
 // Note: This endpoint does not unblock users that were blocked by admins.
@@ -532,7 +546,7 @@ func (m *UserManager) Link(id string, il *UserIdentityLink, opts ...RequestOptio
 	return uIDs, nil
 }
 
-// List user's organizations
+// Organizations lists user's organizations.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_organizations
 func (m *UserManager) Organizations(id string, opts ...RequestOption) (p *OrganizationList, err error) {

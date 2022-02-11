@@ -29,7 +29,6 @@ func ensureActionBuilt(a *Action) (err error) {
 }
 
 func TestActions(t *testing.T) {
-
 	r := &Action{
 		Name: auth0.String("test-action"),
 		Code: auth0.String("exports.onExecutePostLogin = async (event, api) =\u003e {}"),

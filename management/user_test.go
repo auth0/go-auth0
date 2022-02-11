@@ -10,7 +10,6 @@ import (
 )
 
 func TestUser(t *testing.T) {
-
 	u := &User{
 		Connection: auth0.String("Username-Password-Authentication"),
 		Email:      auth0.String("chuck@chucknorris.com"),
@@ -174,7 +173,6 @@ func TestUser(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-
 	})
 
 	t.Run("RemoveRoles", func(t *testing.T) {
@@ -374,7 +372,6 @@ func TestUser(t *testing.T) {
 }
 
 func TestUserIdentity(t *testing.T) {
-
 	t.Run("MarshalJSON", func(t *testing.T) {
 		for u, expected := range map[*UserIdentity]string{
 			{}:                            `{}`,

@@ -8,7 +8,6 @@ import (
 )
 
 func TestClientGrant(t *testing.T) {
-
 	var err error
 
 	// We need a client and resource server to connect using a client grant. So

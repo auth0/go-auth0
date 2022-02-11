@@ -9,7 +9,6 @@ import (
 )
 
 func TestCustomDomain(t *testing.T) {
-
 	c := &CustomDomain{
 		Domain:               auth0.Stringf("%d.auth.uat.alexkappa.com", time.Now().UTC().Unix()),
 		Type:                 auth0.String("auth0_managed_certs"),

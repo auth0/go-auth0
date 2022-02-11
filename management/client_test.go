@@ -11,7 +11,6 @@ import (
 )
 
 func TestClient(t *testing.T) {
-
 	c := &Client{
 		Name: auth0.Stringf("Test Client (%s)",
 			time.Now().Format(time.StampMilli)),
@@ -82,7 +81,6 @@ func TestClient(t *testing.T) {
 }
 
 func TestJWTConfiguration(t *testing.T) {
-
 	t.Run("MarshalJSON", func(t *testing.T) {
 		for u, expected := range map[*ClientJWTConfiguration]string{
 			{}:                                   `{}`,
@@ -110,5 +108,4 @@ func TestJWTConfiguration(t *testing.T) {
 			expect.Expect(t, jc.GetLifetimeInSeconds(), expected.GetLifetimeInSeconds())
 		}
 	})
-
 }

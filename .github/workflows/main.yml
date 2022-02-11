@@ -37,6 +37,9 @@ jobs:
       - name: Check that the packages can be built
         run: go build ./...
 
+      - name: Check for linting errors
+        run: make lint
+
       - name: Run tests
         run: make tests
         env:

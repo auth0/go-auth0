@@ -9,7 +9,6 @@ import (
 )
 
 func TestTenant(t *testing.T) {
-
 	var tn *Tenant
 	var err error
 

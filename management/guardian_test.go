@@ -7,9 +7,7 @@ import (
 )
 
 func TestGuardian(t *testing.T) {
-
 	t.Run("MultiFactor", func(t *testing.T) {
-
 		t.Run("List", func(t *testing.T) {
 			mfa, err := m.Guardian.MultiFactor.List()
 			if err != nil {
@@ -17,6 +15,7 @@ func TestGuardian(t *testing.T) {
 			}
 			t.Logf("%v\n", mfa)
 		})
+
 		t.Run("Policy", func(t *testing.T) {
 			// Has to be one of "all-applications" or "confidence-score", but not both.
 			// If omitted, it removes all policies.
@@ -32,7 +31,6 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("Phone", func(t *testing.T) {
-
 			t.Run("Provider", func(t *testing.T) {
 				err := m.Guardian.MultiFactor.Phone.UpdateProvider(&MultiFactorProvider{Provider: auth0.String("phone-message-hook")})
 				if err != nil {
@@ -41,12 +39,14 @@ func TestGuardian(t *testing.T) {
 				p, _ := m.Guardian.MultiFactor.Phone.Provider()
 				t.Logf("%v\n", p)
 			})
+
 			t.Run("Enable", func(t *testing.T) {
 				err := m.Guardian.MultiFactor.Phone.Enable(false)
 				if err != nil {
 					t.Error(err)
 				}
 			})
+
 			t.Run("Message-types", func(t *testing.T) {
 				messageTypes := []string{"voice"}
 				err := m.Guardian.MultiFactor.Phone.UpdateMessageTypes(&PhoneMessageTypes{
@@ -57,11 +57,10 @@ func TestGuardian(t *testing.T) {
 				}
 				mt, _ := m.Guardian.MultiFactor.Phone.MessageTypes()
 				t.Logf("%v\n", mt)
-
 			})
 		})
-		t.Run("SMS", func(t *testing.T) {
 
+		t.Run("SMS", func(t *testing.T) {
 			t.Run("Enable", func(t *testing.T) {
 				defer m.Guardian.MultiFactor.SMS.Enable(false)
 
@@ -120,7 +119,6 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("Push", func(t *testing.T) {
-
 			t.Run("Enable", func(t *testing.T) {
 				defer m.Guardian.MultiFactor.Push.Enable(false)
 
@@ -162,7 +160,6 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("Email", func(t *testing.T) {
-
 			t.Run("Enable", func(t *testing.T) {
 				defer m.Guardian.MultiFactor.Email.Enable(false)
 
@@ -177,7 +174,6 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("DUO", func(t *testing.T) {
-
 			t.Run("Enable", func(t *testing.T) {
 				defer m.Guardian.MultiFactor.DUO.Enable(false)
 
@@ -192,7 +188,6 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("OTP", func(t *testing.T) {
-
 			t.Run("Enable", func(t *testing.T) {
 				defer m.Guardian.MultiFactor.OTP.Enable(false)
 
@@ -207,7 +202,6 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("WebAuthn Roaming", func(t *testing.T) {
-
 			t.Run("Enable", func(t *testing.T) {
 				defer m.Guardian.MultiFactor.WebAuthnRoaming.Enable(false)
 
@@ -222,7 +216,6 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("WebAuthn Platform", func(t *testing.T) {
-
 			t.Run("Enable", func(t *testing.T) {
 				defer m.Guardian.MultiFactor.WebAuthnPlatform.Enable(false)
 

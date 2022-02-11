@@ -1,0 +1,21 @@
+linters-settings:
+  gofmt:
+    simplify: true
+  staticcheck:
+    go: "1.16"
+    checks: [ "all" ]
+  godot:
+    scope: declarations
+    capital: true
+
+linters:
+  disable-all: true
+  enable:
+    - gofmt
+    - staticcheck
+    - revive
+    - godot
+    - whitespace
+
+issues:
+  exclude-use-default: false

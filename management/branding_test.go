@@ -10,7 +10,6 @@ import (
 )
 
 func TestBranding(t *testing.T) {
-
 	var branding *Branding
 	var err error
 
@@ -23,7 +22,6 @@ func TestBranding(t *testing.T) {
 	})
 
 	t.Run("Update", func(t *testing.T) {
-
 		err = m.Branding.Update(&Branding{
 			Colors: &BrandingColors{
 				Primary:        auth0.String("#ea5323"),
@@ -43,7 +41,6 @@ func TestBranding(t *testing.T) {
 		t.Logf("%v\n", branding)
 
 		t.Run("BrandingColors", func(t *testing.T) {
-
 			err = m.Branding.Update(&Branding{
 				Colors: &BrandingColors{
 					Primary: auth0.String("#ea5323"),
@@ -85,7 +82,6 @@ func TestBranding(t *testing.T) {
 	})
 
 	t.Run("SetUniversalLogin", func(t *testing.T) {
-
 		body := `<!DOCTYPE html><html><head>{%- auth0:head -%}</head><body>{%- auth0:widget -%}</body></html>`
 
 		ul := &BrandingUniversalLogin{
@@ -103,7 +99,6 @@ func TestBranding(t *testing.T) {
 	})
 
 	t.Run("ReadUniversalLogin", func(t *testing.T) {
-
 		ul, err := m.Branding.UniversalLogin()
 		if err != nil {
 			t.Fatal(err)
@@ -113,7 +108,6 @@ func TestBranding(t *testing.T) {
 	})
 
 	t.Run("DeleteUniversalLogin", func(t *testing.T) {
-
 		err = m.Branding.DeleteUniversalLogin()
 		if err != nil {
 			t.Fatal(err)
@@ -158,9 +152,7 @@ func TestBrandingColors(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-
 		t.Run(tt.name, func(t *testing.T) {
-
 			b, err := json.Marshal(tt.colors)
 			if err != nil {
 				t.Error(err)

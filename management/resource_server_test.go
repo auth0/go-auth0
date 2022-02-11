@@ -8,7 +8,6 @@ import (
 )
 
 func TestResourceServer(t *testing.T) {
-
 	s := &ResourceServer{
 		Name:             auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
 		Identifier:       auth0.String("https://api.example.com/"),
@@ -44,7 +43,6 @@ func TestResourceServer(t *testing.T) {
 	})
 
 	t.Run("Update", func(t *testing.T) {
-
 		id := auth0.StringValue(s.ID)
 
 		s.ID = nil         // read-only

@@ -1,14 +1,15 @@
 package management
 
+// Ticket is used for a users' email verification or password change.
 type Ticket struct {
-	// The user will be redirected to this endpoint once the ticket is used
+	// The user will be redirected to this endpoint once the ticket is used.
 	ResultURL *string `json:"result_url,omitempty"`
 
-	// The UserID for which the ticket is to be created
+	// The UserID for which the ticket is to be created.
 	UserID *string `json:"user_id,omitempty"`
 
 	// The ticket's lifetime in seconds starting from the moment of creation.
-	// After expiration the ticket can not be used to verify the users's email.
+	// After expiration the ticket can not be used to verify the users' email.
 	// If not specified or if you send 0 the Auth0 default lifetime will be
 	// applied.
 	TTLSec *int `json:"ttl_sec,omitempty"`
@@ -21,23 +22,25 @@ type Ticket struct {
 	// Conflicts with: UserID
 	ConnectionID *string `json:"connection_id,omitempty"`
 
-	// The user's email
+	// The user's email.
 	//
 	// Requires: ConnectionID
 	// Conflicts with: UserID
 	Email *string `json:"email,omitempty"`
 
-	// The URL that represents the ticket
+	// The URL that represents the ticket.
 	Ticket *string `json:"ticket,omitempty"`
 
 	// Whether to set the email_verified attribute to true (true) or whether it
-	// should not be updated
+	// should not be updated.
 	MarkEmailAsVerified *bool `json:"mark_email_as_verified,omitempty"`
 
-	// Whether to include the email address as part of the returnUrl in the reset_email (true), or not (false - default).
+	// Whether to include the email address as part of the returnUrl in
+	// the reset_email (true), or not (false - default).
 	IncludeEmailInRedirect *bool `json:"includeEmailInRedirect,omitempty"`
 }
 
+// TicketManager manages Auth0 Ticket resources.
 type TicketManager struct {
 	*Management
 }

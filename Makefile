@@ -12,7 +12,7 @@ deps: ## Downloads dependencies
 .PHONY: lint
 lint: ## Runs linting on the go files. Requires docker to be installed
 	@echo "Running linting on the library..."
-	@docker run --rm -v $(CURDIR):/go-auth0 -w /go-auth0 golangci/golangci-lint:v1.41.1 golangci-lint run ./...
+	@docker run --rm -v $(CURDIR):/go-auth0 -w /go-auth0 golangci/golangci-lint:v1.44.0 golangci-lint -c .golangci.yaml run ./...
 
 .PHONY: tests
 tests: ## Runs tests

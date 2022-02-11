@@ -1,7 +1,7 @@
 package management
 
+// Rule is used as part of the authentication pipeline.
 type Rule struct {
-
 	// The rule's identifier.
 	ID *string `json:"id,omitempty"`
 
@@ -21,11 +21,13 @@ type Rule struct {
 	Enabled *bool `json:"enabled,omitempty"`
 }
 
+// RuleList holds a list of Rules.
 type RuleList struct {
 	List
 	Rules []*Rule `json:"rules"`
 }
 
+// RuleManager manages Auth0 Rule resources.
 type RuleManager struct {
 	*Management
 }

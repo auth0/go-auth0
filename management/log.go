@@ -59,6 +59,9 @@ var logTypeName = map[string]string{
 	"scoa":      "Success Cross Origin Authentication",
 }
 
+// Log for analyzing business needs.
+//
+// See: https://auth0.com/docs/deploy-monitor/logs
 type Log struct {
 	ID    *string `json:"_id"`
 	LogID *string `json:"log_id"`
@@ -88,6 +91,7 @@ type Log struct {
 	UserID *string `json:"user_id"`
 }
 
+// TypeName returns the type name of an Event Log.
 func (l *Log) TypeName() string {
 	if l.Type == nil {
 		return ""
@@ -98,6 +102,7 @@ func (l *Log) TypeName() string {
 	return ""
 }
 
+// LogManager manages Auth0 Log resources.
 type LogManager struct {
 	*Management
 }
@@ -106,7 +111,7 @@ func newLogManager(m *Management) *LogManager {
 	return &LogManager{m}
 }
 
-// Retrieves the data related to the log entry identified by id. This returns a
+// Read the data related to the log entry identified by id. This returns a
 // single log entry representation as specified in the schema.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Logs/get_logs_by_id
@@ -128,7 +133,7 @@ func (m *LogManager) List(opts ...RequestOption) (l []*Log, err error) {
 	return
 }
 
-// Search is an alias for List
+// Search is an alias for List.
 func (m *LogManager) Search(opts ...RequestOption) ([]*Log, error) {
 	return m.List(opts...)
 }

@@ -19,19 +19,20 @@ import (
 	"github.com/auth0/go-auth0/internal/client"
 )
 
-type ManagementOption func(*Management)
+// Option is used for passing options to the Management client.
+type Option func(*Management)
 
 // WithDebug configures the management client to dump http requests and
 // responses to stdout.
-func WithDebug(d bool) ManagementOption {
+func WithDebug(d bool) Option {
 	return func(m *Management) {
 		m.debug = d
 	}
 }
 
-// WitContext configures the management client to use the provided context
+// WithContext configures the management client to use the provided context
 // instead of the provided one.
-func WithContext(ctx context.Context) ManagementOption {
+func WithContext(ctx context.Context) Option {
 	return func(m *Management) {
 		m.ctx = ctx
 	}
@@ -39,7 +40,7 @@ func WithContext(ctx context.Context) ManagementOption {
 
 // WithUserAgent configures the management client to use the provided user agent
 // string instead of the default one.
-func WithUserAgent(userAgent string) ManagementOption {
+func WithUserAgent(userAgent string) Option {
 	return func(m *Management) {
 		m.userAgent = userAgent
 	}
@@ -47,15 +48,15 @@ func WithUserAgent(userAgent string) ManagementOption {
 
 // WithClientCredentials configures management to authenticate using the client
 // credentials authentication flow.
-func WithClientCredentials(clientID, clientSecret string) ManagementOption {
+func WithClientCredentials(clientID, clientSecret string) Option {
 	return func(m *Management) {
-		m.tokenSource = client.ClientCredentials(m.ctx, m.url.String(), clientID, clientSecret)
+		m.tokenSource = client.OAuth2ClientCredentials(m.ctx, m.url.String(), clientID, clientSecret)
 	}
 }
 
 // WithStaticToken configures management to authenticate using a static
 // authentication token.
-func WithStaticToken(token string) ManagementOption {
+func WithStaticToken(token string) Option {
 	return func(m *Management) {
 		m.tokenSource = client.StaticToken(token)
 	}
@@ -66,7 +67,7 @@ func WithStaticToken(token string) ManagementOption {
 //
 // This options is available for testing purposes and should not be used in
 // production.
-func WithInsecure() ManagementOption {
+func WithInsecure() Option {
 	return func(m *Management) {
 		m.tokenSource = client.StaticToken("insecure")
 		m.url.Scheme = "http"
@@ -74,7 +75,7 @@ func WithInsecure() ManagementOption {
 }
 
 // WithClient configures management to use the provided client.
-func WithClient(client *http.Client) ManagementOption {
+func WithClient(client *http.Client) Option {
 	return func(m *Management) {
 		m.http = client
 	}
@@ -82,7 +83,6 @@ func WithClient(client *http.Client) ManagementOption {
 
 // Management is an Auth0 management client used to interact with the Auth0
 // Management API v2.
-//
 type Management struct {
 	// Client manages Auth0 Client (also known as Application) resources.
 	Client *ClientManager
@@ -177,8 +177,7 @@ type Management struct {
 
 // New creates a new Auth0 Management client by authenticating using the
 // supplied client id and secret.
-func New(domain string, options ...ManagementOption) (*Management, error) {
-
+func New(domain string, options ...Option) (*Management, error) {
 	// Ignore the scheme if it was defined in the domain variable. Then prefix
 	// with https as its the only scheme supported by the Auth0 API.
 	if i := strings.Index(domain, "//"); i != -1 {
@@ -253,7 +252,6 @@ func (m *Management) URI(path ...string) string {
 // NewRequest returns a new HTTP request. If the payload is not nil it will be
 // encoded as JSON.
 func (m *Management) NewRequest(method, uri string, payload interface{}, options ...RequestOption) (r *http.Request, err error) {
-
 	var buf bytes.Buffer
 	if payload != nil {
 		err := json.NewEncoder(&buf).Encode(payload)
@@ -278,7 +276,6 @@ func (m *Management) NewRequest(method, uri string, payload interface{}, options
 // Do sends an HTTP request and returns an HTTP response, handling any context
 // cancellations or timeouts.
 func (m *Management) Do(req *http.Request) (*http.Response, error) {
-
 	ctx := req.Context()
 
 	res, err := m.http.Do(req)
@@ -294,10 +291,8 @@ func (m *Management) Do(req *http.Request) (*http.Response, error) {
 	return res, nil
 }
 
-// Request combines NewRequest and Do, while also handling decoding of response
-// payload.
+// Request combines NewRequest and Do, while also handling decoding of response payload.
 func (m *Management) Request(method, uri string, v interface{}, options ...RequestOption) error {
-
 	req, err := m.NewRequest(method, uri, v, options...)
 	if err != nil {
 		return err
@@ -347,10 +342,12 @@ func newError(r io.Reader) error {
 	return m
 }
 
+// Error formats the error into a string representation.
 func (m *managementError) Error() string {
 	return fmt.Sprintf("%d %s: %s", m.StatusCode, m.Err, m.Message)
 }
 
+// Status returns the status code of the error.
 func (m *managementError) Status() int {
 	return m.StatusCode
 }
@@ -369,6 +366,7 @@ type List struct {
 	Total  int `json:"total"`
 }
 
+// HasNext returns true if the list has more results.
 func (l List) HasNext() bool {
 	return l.Total > l.Start+l.Limit
 }

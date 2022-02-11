@@ -7,7 +7,6 @@ import (
 )
 
 func TestTicket(t *testing.T) {
-
 	var err error
 
 	u := &User{
@@ -25,7 +24,6 @@ func TestTicket(t *testing.T) {
 	t.Cleanup(func() { m.User.Delete(userID) })
 
 	t.Run("VerifyEmail", func(t *testing.T) {
-
 		v := &Ticket{
 			ResultURL: auth0.String("https://example.com/verify-email"),
 			UserID:    auth0.String(userID),
@@ -41,7 +39,6 @@ func TestTicket(t *testing.T) {
 	})
 
 	t.Run("ChangePassword", func(t *testing.T) {
-
 		v := &Ticket{
 			ResultURL:              auth0.String("https://example.com/change-password"),
 			UserID:                 auth0.String(userID),

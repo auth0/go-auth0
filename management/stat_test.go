@@ -3,7 +3,6 @@ package management
 import "testing"
 
 func TestStat(t *testing.T) {
-
 	t.Run("ActiveUsers", func(t *testing.T) {
 		i, err := m.Stat.ActiveUsers()
 		if err != nil {
