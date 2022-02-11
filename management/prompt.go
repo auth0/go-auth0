@@ -1,5 +1,8 @@
 package management
 
+// Prompt is used within the Login Page.
+//
+// See: https://auth0.com/docs/customize/universal-login-pages/customize-login-text-prompts
 type Prompt struct {
 	// Which login experience to use. Can be `new` or `classic`.
 	UniversalLoginExperience string `json:"universal_login_experience,omitempty"`
@@ -8,6 +11,7 @@ type Prompt struct {
 	IdentifierFirst *bool `json:"identifier_first,omitempty"`
 }
 
+// PromptManager is used for managing a Prompt.
 type PromptManager struct {
 	*Management
 }

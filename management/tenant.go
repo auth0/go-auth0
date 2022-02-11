@@ -8,6 +8,7 @@ import (
 	"github.com/auth0/go-auth0"
 )
 
+// Tenant represents an Auth0 Tenant.
 type Tenant struct {
 	// Change password page settings
 	ChangePassword *TenantChangePassword `json:"change_password,omitempty"`
@@ -76,8 +77,8 @@ type Tenant struct {
 	EnabledLocales []interface{} `json:"enabled_locales,omitempty"`
 }
 
+// MarshalJSON is a custom serializer for the Tenant type.
 func (t *Tenant) MarshalJSON() ([]byte, error) {
-
 	type tenant Tenant
 	type tenantWrapper struct {
 		*tenant
@@ -88,7 +89,6 @@ func (t *Tenant) MarshalJSON() ([]byte, error) {
 	w := &tenantWrapper{(*tenant)(t), nil, nil}
 
 	if t.SessionLifetime != nil {
-
 		sessionLifetime := t.GetSessionLifetime()
 
 		if sessionLifetime < 1 {
@@ -101,7 +101,6 @@ func (t *Tenant) MarshalJSON() ([]byte, error) {
 	}
 
 	if t.IdleSessionLifetime != nil {
-
 		idleSessionLifetime := t.GetIdleSessionLifetime()
 
 		if idleSessionLifetime < 1 {
@@ -111,20 +110,22 @@ func (t *Tenant) MarshalJSON() ([]byte, error) {
 		} else {
 			w.IdleSessionLifetime = auth0.Float64(math.Round(idleSessionLifetime))
 		}
-
 	}
 
 	return json.Marshal(w)
 }
 
+// TenantChangePassword holds settings for the change password page.
 type TenantChangePassword struct {
 	// True to use the custom change password html, false otherwise.
 	Enabled *bool `json:"enabled,omitempty"`
+
 	// Replace default change password page with a custom HTML (Liquid syntax is
 	// supported).
 	HTML *string `json:"html,omitempty"`
 }
 
+// TenantGuardianMFAPage holds settings for guardian mfa page.
 type TenantGuardianMFAPage struct {
 	// True to use the custom html for Guardian page, false otherwise.
 	Enabled *bool `json:"enabled,omitempty"`
@@ -133,6 +134,7 @@ type TenantGuardianMFAPage struct {
 	HTML *string `json:"html,omitempty"`
 }
 
+// TenantErrorPage holds settings for the error page.
 type TenantErrorPage struct {
 	// Replace default error page with a custom HTML (Liquid syntax is
 	// supported).
@@ -144,6 +146,7 @@ type TenantErrorPage struct {
 	URL *string `json:"url,omitempty"`
 }
 
+// TenantFlags holds information on flag toggles.
 type TenantFlags struct {
 	// Enables the first version of the Change Password flow. We've deprecated
 	// this option and recommending a safer flow. This flag is only for
@@ -198,14 +201,16 @@ type TenantFlags struct {
 	EnablePublicSignupUserExistsError *bool `json:"enable_public_signup_user_exists_error,omitempty"`
 
 	// If enabled, this will use the scope description when generating a consent
-	// prompt. Otherwise the scope name is used.
+	// prompt. Otherwise, the scope name is used.
 	UseScopeDescriptionsForConsent *bool `json:"use_scope_descriptions_for_consent,omitempty"`
 }
 
+// TenantUniversalLogin holds universal login settings.
 type TenantUniversalLogin struct {
 	Colors *TenantUniversalLoginColors `json:"colors,omitempty"`
 }
 
+// TenantUniversalLoginColors holds universal login color settings.
 type TenantUniversalLoginColors struct {
 	// Primary button background color
 	Primary *string `json:"primary,omitempty"`
@@ -223,6 +228,7 @@ type TenantUniversalLoginColors struct {
 	PageBackgroundGradient *BrandingPageBackgroundGradient `json:"-"`
 }
 
+// MarshalJSON is a custom serializer for the TenantUniversalLoginColors type.
 func (c *TenantUniversalLoginColors) MarshalJSON() ([]byte, error) {
 	type colors TenantUniversalLoginColors
 	type colorsWrapper struct {
@@ -248,7 +254,6 @@ func (c *TenantUniversalLoginColors) MarshalJSON() ([]byte, error) {
 // It is required to handle the json field page_background, which can either
 // be a hex color string, or an object describing a gradient.
 func (c *TenantUniversalLoginColors) UnmarshalJSON(data []byte) error {
-
 	type colors BrandingColors
 	type colorsWrapper struct {
 		*colors
@@ -263,7 +268,6 @@ func (c *TenantUniversalLoginColors) UnmarshalJSON(data []byte) error {
 	}
 
 	if alias.RawPageBackground != nil {
-
 		var v interface{}
 		err = json.Unmarshal(alias.RawPageBackground, &v)
 		if err != nil {
@@ -290,6 +294,7 @@ func (c *TenantUniversalLoginColors) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// TenantDeviceFlow holds settings for the device flow.
 type TenantDeviceFlow struct {
 	// The character set for generating a User Code ['base20' or 'digits']
 	Charset *string `json:"charset,omitempty"`
@@ -299,6 +304,7 @@ type TenantDeviceFlow struct {
 	Mask *string `json:"mask,omitempty"`
 }
 
+// TenantManager manages Auth0 Tenant resources.
 type TenantManager struct {
 	*Management
 }
@@ -307,8 +313,8 @@ func newTenantManager(m *Management) *TenantManager {
 	return &TenantManager{m}
 }
 
-// Retrieve tenant settings. A list of fields to include or exclude may also be
-// specified.
+// Read tenant settings.
+// A list of fields to include or exclude may also be specified.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Tenants/get_settings
 func (m *TenantManager) Read(opts ...RequestOption) (t *Tenant, err error) {

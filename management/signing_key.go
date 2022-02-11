@@ -2,8 +2,8 @@ package management
 
 import "time"
 
+// SigningKey is used for signing tokens.
 type SigningKey struct {
-
 	// The key id of the signing key.
 	KID *string `json:"kid,omitempty"`
 
@@ -41,6 +41,7 @@ type SigningKey struct {
 	RevokedAt *time.Time `json:"revoked_at,omitempty"`
 }
 
+// SigningKeyManager manages Auth0 SigningKey resources.
 type SigningKeyManager struct {
 	*Management
 }

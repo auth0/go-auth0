@@ -1,5 +1,10 @@
 package management
 
+// Organization is used to allow B2B customers to better manage
+// their partners and customers, and to customize the ways that
+// end-users access their applications.
+//
+// See: https://auth0.com/docs/manage-users/organizations
 type Organization struct {
 	// Organization identifier
 	ID *string `json:"id,omitempty"`
@@ -18,6 +23,7 @@ type Organization struct {
 	Metadata map[string]interface{} `json:"metadata,omitempty"`
 }
 
+// OrganizationBranding holds branding information for an Organization.
 type OrganizationBranding struct {
 	// URL of logo to display on login page
 	LogoURL *string `json:"logo_url,omitempty"`
@@ -26,6 +32,7 @@ type OrganizationBranding struct {
 	Colors map[string]interface{} `json:"colors,omitempty"`
 }
 
+// OrganizationMember holds member information for an Organization.
 type OrganizationMember struct {
 	UserID  *string `json:"user_id,omitempty"`
 	Picture *string `json:"picture,omitempty"`
@@ -33,6 +40,7 @@ type OrganizationMember struct {
 	Email   *string `json:"email,omitempty"`
 }
 
+// OrganizationConnection holds connection information for an Organization.
 type OrganizationConnection struct {
 	// ID of the connection.
 	ConnectionID *string `json:"connection_id,omitempty"`
@@ -47,6 +55,7 @@ type OrganizationConnection struct {
 	Connection *OrganizationConnectionDetails `json:"connection,omitempty"`
 }
 
+// OrganizationConnectionDetails holds connection details for an Organization.
 type OrganizationConnectionDetails struct {
 	// The name of the enabled connection.
 	Name *string `json:"name,omitempty"`
@@ -55,16 +64,19 @@ type OrganizationConnectionDetails struct {
 	Strategy *string `json:"strategy,omitempty"`
 }
 
+// OrganizationInvitationInviter holds the name of the inviter.
 type OrganizationInvitationInviter struct {
-	// The inviter's name.
+	// The inviters' name.
 	Name *string `json:"name,omitempty"`
 }
 
+// OrganizationInvitationInvitee holds the name of the invitee.
 type OrganizationInvitationInvitee struct {
 	// The invitee's email.
 	Email *string `json:"email,omitempty"`
 }
 
+// OrganizationInvitation holds information on the invitation to an Organization.
 type OrganizationInvitation struct {
 	// The id of the user invitation.
 	ID *string `json:"id,omitempty"`
@@ -118,6 +130,7 @@ type OrganizationInvitation struct {
 	SendInvitationEmail *bool `json:"send_invitation_email,omitempty"`
 }
 
+// OrganizationMemberRole holds member role information.
 type OrganizationMemberRole struct {
 	// ID for this role.
 	ID *string `json:"id,omitempty"`
@@ -129,31 +142,37 @@ type OrganizationMemberRole struct {
 	Description *string `json:"description,omitempty"`
 }
 
+// OrganizationMemberRoleList is a list of OrganizationMemberRoles.
 type OrganizationMemberRoleList struct {
 	List
 	Roles []OrganizationMemberRole `json:"roles"`
 }
 
+// OrganizationInvitationList is a list of OrganizationInvitations.
 type OrganizationInvitationList struct {
 	List
 	OrganizationInvitations []*OrganizationInvitation `json:"invitations"`
 }
 
+// OrganizationConnectionList is a list of OrganizationConnection.
 type OrganizationConnectionList struct {
 	List
 	OrganizationConnections []*OrganizationConnection `json:"enabled_connections"`
 }
 
+// OrganizationMemberList is a list of OrganizationMembers.
 type OrganizationMemberList struct {
 	List
 	Members []OrganizationMember `json:"members"`
 }
 
+// OrganizationList is a list of Organizations.
 type OrganizationList struct {
 	List
 	Organizations []*Organization `json:"organizations"`
 }
 
+// OrganizationManager is used for managing an Organization.
 type OrganizationManager struct {
 	*Management
 }
@@ -162,7 +181,7 @@ func newOrganizationManager(m *Management) *OrganizationManager {
 	return &OrganizationManager{m}
 }
 
-// List available organizations
+// List available organizations.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_organizations
 func (m *OrganizationManager) List(opts ...RequestOption) (o *OrganizationList, err error) {
@@ -170,7 +189,7 @@ func (m *OrganizationManager) List(opts ...RequestOption) (o *OrganizationList, 
 	return
 }
 
-// Create an Organization
+// Create an Organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_organizations
 func (m *OrganizationManager) Create(o *Organization, opts ...RequestOption) (err error) {
@@ -178,7 +197,7 @@ func (m *OrganizationManager) Create(o *Organization, opts ...RequestOption) (er
 	return
 }
 
-// Get a specific organization
+// Get a specific organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_organizations_by_id
 func (m *OrganizationManager) Read(id string, opts ...RequestOption) (o *Organization, err error) {
@@ -186,7 +205,7 @@ func (m *OrganizationManager) Read(id string, opts ...RequestOption) (o *Organiz
 	return
 }
 
-// Delete a specific organization
+// Delete a specific organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_organizations_by_id
 func (m *OrganizationManager) Delete(id string, opts ...RequestOption) (err error) {
@@ -194,7 +213,7 @@ func (m *OrganizationManager) Delete(id string, opts ...RequestOption) (err erro
 	return
 }
 
-// Modify an organization
+// Update an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/patch_organizations_by_id
 func (m *OrganizationManager) Update(id string, o *Organization, opts ...RequestOption) (err error) {
@@ -202,7 +221,7 @@ func (m *OrganizationManager) Update(id string, o *Organization, opts ...Request
 	return
 }
 
-// Get a specific organization by name
+// ReadByName retrieves a specific organization by name.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_name_by_name
 func (m *OrganizationManager) ReadByName(name string, opts ...RequestOption) (o *Organization, err error) {
@@ -210,7 +229,7 @@ func (m *OrganizationManager) ReadByName(name string, opts ...RequestOption) (o 
 	return
 }
 
-// Get connections enabled for an organization
+// Connections retrieves connections enabled for an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_enabled_connections
 func (m *OrganizationManager) Connections(id string, opts ...RequestOption) (c *OrganizationConnectionList, err error) {
@@ -218,7 +237,7 @@ func (m *OrganizationManager) Connections(id string, opts ...RequestOption) (c *
 	return
 }
 
-// Add connections to an organization
+// AddConnection adds connections to an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_enabled_connections
 func (m *OrganizationManager) AddConnection(id string, c *OrganizationConnection, opts ...RequestOption) (err error) {
@@ -226,7 +245,7 @@ func (m *OrganizationManager) AddConnection(id string, c *OrganizationConnection
 	return
 }
 
-// Get an enabled connection for an organization
+// Connection retrieves an enabled connection for an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_enabled_connections_by_connectionId
 func (m *OrganizationManager) Connection(id string, connectionID string, opts ...RequestOption) (c *OrganizationConnection, err error) {
@@ -234,7 +253,7 @@ func (m *OrganizationManager) Connection(id string, connectionID string, opts ..
 	return
 }
 
-// Delete connections from an organization
+// DeleteConnection deletes connections from an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_enabled_connections_by_connectionId
 func (m *OrganizationManager) DeleteConnection(id string, connectionID string, opts ...RequestOption) (err error) {
@@ -242,7 +261,7 @@ func (m *OrganizationManager) DeleteConnection(id string, connectionID string, o
 	return
 }
 
-// Modify an enabled_connection belonging to an Organization
+// UpdateConnection updates an enabled_connection belonging to an Organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/patch_enabled_connections_by_connectionId
 func (m *OrganizationManager) UpdateConnection(id string, connectionID string, c *OrganizationConnection, opts ...RequestOption) (err error) {
@@ -250,7 +269,7 @@ func (m *OrganizationManager) UpdateConnection(id string, connectionID string, c
 	return
 }
 
-// Get invitations to organization
+// Invitations retrieves invitations to organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_invitations
 func (m *OrganizationManager) Invitations(id string, opts ...RequestOption) (i *OrganizationInvitationList, err error) {
@@ -258,7 +277,7 @@ func (m *OrganizationManager) Invitations(id string, opts ...RequestOption) (i *
 	return
 }
 
-// Create invitations to organization
+// CreateInvitation creates invitations to an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_invitations
 func (m *OrganizationManager) CreateInvitation(id string, i *OrganizationInvitation, opts ...RequestOption) (err error) {
@@ -266,7 +285,7 @@ func (m *OrganizationManager) CreateInvitation(id string, i *OrganizationInvitat
 	return
 }
 
-// Get an invitation to organization
+// Invitation retrieves an invitation to an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_invitations_by_invitation_id
 func (m *OrganizationManager) Invitation(id string, invitationID string, opts ...RequestOption) (i *OrganizationInvitation, err error) {
@@ -274,7 +293,7 @@ func (m *OrganizationManager) Invitation(id string, invitationID string, opts ..
 	return
 }
 
-// Delete an invitation to organization
+// DeleteInvitation deletes an invitation to an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_invitations_by_invitation_id
 func (m *OrganizationManager) DeleteInvitation(id string, invitationID string, opts ...RequestOption) (err error) {
@@ -282,7 +301,7 @@ func (m *OrganizationManager) DeleteInvitation(id string, invitationID string, o
 	return
 }
 
-// List organization members
+// Members lists organization members.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_members
 func (m *OrganizationManager) Members(id string, opts ...RequestOption) (o *OrganizationMemberList, err error) {
@@ -290,7 +309,7 @@ func (m *OrganizationManager) Members(id string, opts ...RequestOption) (o *Orga
 	return
 }
 
-// Add members to an organization
+// AddMembers adds members to an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_members
 func (m *OrganizationManager) AddMembers(id string, memberIDs []string, opts ...RequestOption) (err error) {
@@ -303,7 +322,7 @@ func (m *OrganizationManager) AddMembers(id string, memberIDs []string, opts ...
 	return
 }
 
-// Delete members from an organization
+// DeleteMember deletes members from an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_members
 func (m *OrganizationManager) DeleteMember(id string, memberIDs []string, opts ...RequestOption) (err error) {
@@ -316,7 +335,7 @@ func (m *OrganizationManager) DeleteMember(id string, memberIDs []string, opts .
 	return
 }
 
-// Get the roles assigned to an organization member
+// MemberRoles retrieves the roles assigned to an organization member.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_organization_member_roles
 func (m *OrganizationManager) MemberRoles(id string, memberID string, opts ...RequestOption) (r *OrganizationMemberRoleList, err error) {
@@ -324,7 +343,7 @@ func (m *OrganizationManager) MemberRoles(id string, memberID string, opts ...Re
 	return
 }
 
-// Assign one or more roles to a given user that will be applied in the context of the provided organization
+// AssignMemberRoles assigns one or more roles to a given user that will be applied in the context of the provided organization
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_organization_member_roles
 func (m *OrganizationManager) AssignMemberRoles(id string, memberID string, roles []string, opts ...RequestOption) (err error) {
@@ -337,7 +356,7 @@ func (m *OrganizationManager) AssignMemberRoles(id string, memberID string, role
 	return
 }
 
-// Remove one or more roles from a given user in the context of the provided organization
+// DeleteMemberRoles removes one or more roles from a given user in the context of the provided organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_organization_member_roles
 func (m *OrganizationManager) DeleteMemberRoles(id string, memberID string, roles []string, opts ...RequestOption) (err error) {

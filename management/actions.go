@@ -6,32 +6,46 @@ import (
 )
 
 const (
-	ActionTriggerPostLogin         string = "post-login"
+	// ActionTriggerPostLogin constant.
+	ActionTriggerPostLogin string = "post-login"
+	// ActionTriggerClientCredentials constant.
 	ActionTriggerClientCredentials string = "client-credentials"
 )
 
+// ActionTrigger is part of a Flow.
+//
+// See: https://auth0.com/docs/customize/actions/flows-and-triggers
 type ActionTrigger struct {
 	ID      *string `json:"id"`
 	Version *string `json:"version"`
 	Status  *string `json:"status,omitempty"`
 }
 
+// ActionTriggerList is a list of ActionTriggers.
 type ActionTriggerList struct {
 	Triggers []*ActionTrigger `json:"triggers"`
 }
 
+// ActionDependency is used to allow the use of packages from the npm registry.
+//
+// See: https://auth0.com/docs/customize/actions/flows-and-triggers
 type ActionDependency struct {
 	Name        *string `json:"name"`
 	Version     *string `json:"version,omitempty"`
 	RegistryURL *string `json:"registry_url,omitempty"`
 }
 
+// ActionSecret is used to hold Secret values within an Action.
+//
+// See: https://auth0.com/docs/customize/actions/write-your-first-action#add-a-secret
 type ActionSecret struct {
 	Name      *string    `json:"name"`
 	Value     *string    `json:"value,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
+// ActionVersionError is used to keep track of
+// the errors of a specific ActionVersion.
 type ActionVersionError struct {
 	ID      *string `json:"id"`
 	Message *string `json:"msg"`
@@ -39,14 +53,23 @@ type ActionVersionError struct {
 }
 
 const (
-	ActionStatusPending  string = "pending"
+	// ActionStatusPending constant.
+	ActionStatusPending string = "pending"
+	// ActionStatusBuilding constant.
 	ActionStatusBuilding string = "building"
+	// ActionStatusPackaged constant.
 	ActionStatusPackaged string = "packaged"
-	ActionStatusBuilt    string = "built"
+	// ActionStatusBuilt constant.
+	ActionStatusBuilt string = "built"
+	// ActionStatusRetrying constant.
 	ActionStatusRetrying string = "retrying"
-	ActionStatusFailed   string = "failed"
+	// ActionStatusFailed constant.
+	ActionStatusFailed string = "failed"
 )
 
+// Action represents an Auth0 Action.
+//
+// See: https://auth0.com/docs/customize/actions/actions-overview
 type Action struct {
 	// ID of the action
 	ID *string `json:"id,omitempty"`
@@ -78,11 +101,15 @@ type Action struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
+// ActionList is a list of Actions.
 type ActionList struct {
 	List
 	Actions []*Action `json:"actions"`
 }
 
+// ActionVersion is used to manage Actions version history.
+//
+// See: https://auth0.com/docs/customize/actions/manage-versions
 type ActionVersion struct {
 	ID           *string             `json:"id,omitempty"`
 	Code         *string             `json:"code"`
@@ -99,21 +126,27 @@ type ActionVersion struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
+// ActionVersionList is a list of ActionVersions.
 type ActionVersionList struct {
 	List
 	Versions []*ActionVersion `json:"versions"`
 }
 
 const (
+	// ActionBindingReferenceByName constant.
 	ActionBindingReferenceByName string = "action_name"
-	ActionBindingReferenceById   string = "action_id"
+	// ActionBindingReferenceById constant.
+	ActionBindingReferenceById string = "action_id"
 )
 
+// ActionBindingReference holds the reference
+// of an Action attached to an ActionTrigger.
 type ActionBindingReference struct {
 	Type  *string `json:"type"`
 	Value *string `json:"value"`
 }
 
+// ActionBinding is used to attach an Action to an ActionTrigger.
 type ActionBinding struct {
 	ID          *string `json:"id,omitempty"`
 	TriggerID   *string `json:"trigger_id,omitempty"`
@@ -127,6 +160,7 @@ type ActionBinding struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
+// ActionBindingList is a list of ActionBindings.
 type ActionBindingList struct {
 	List
 	Bindings []*ActionBinding `json:"bindings"`
@@ -136,12 +170,16 @@ type actionBindingsPerTrigger struct {
 	Bindings []*ActionBinding `json:"bindings"`
 }
 
+// ActionTestPayload is used for testing Actions prior to being deployed.
+//
+// See: https://auth0.com/docs/customize/actions/test-actions
 type ActionTestPayload map[string]interface{}
 
 type actionTestRequest struct {
 	Payload *ActionTestPayload `json:"payload"`
 }
 
+// ActionExecutionResult holds the results of an ActionExecution.
 type ActionExecutionResult struct {
 	ActionName *string                `json:"action_name,omitempty"`
 	Error      map[string]interface{} `json:"error,omitempty"`
@@ -150,6 +188,8 @@ type ActionExecutionResult struct {
 	EndedAt   *time.Time `json:"ended_at,omitempty"`
 }
 
+// ActionExecution is used to retrieve information
+// about a specific execution of an ActionTrigger.
 type ActionExecution struct {
 	ID        *string                  `json:"id"`
 	TriggerID *string                  `json:"trigger_id"`
@@ -160,6 +200,7 @@ type ActionExecution struct {
 	UpdatedAt *time.Time `json:"updated_at"`
 }
 
+// ActionManager manages Auth0 Action resources.
 type ActionManager struct {
 	*Management
 }
@@ -187,7 +228,7 @@ func (m *ActionManager) Triggers(opts ...RequestOption) (l *ActionTriggerList, e
 
 // ListTriggers lists the available triggers.
 //
-// Deprecated: use Triggers() instead
+// Deprecated: use Triggers() instead.
 func (m *ActionManager) ListTriggers(opts ...RequestOption) (l *ActionTriggerList, err error) {
 	return m.Triggers(opts...)
 }
@@ -300,7 +341,7 @@ func (m *ActionManager) DeployVersion(id string, versionId string, opts ...Reque
 	return
 }
 
-// Test an action
+// Test an action.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/post_test_action
 func (m *ActionManager) Test(id string, payload *ActionTestPayload, opts ...RequestOption) (err error) {
@@ -311,7 +352,7 @@ func (m *ActionManager) Test(id string, payload *ActionTestPayload, opts ...Requ
 	return
 }
 
-// Execution retrieves the details of an action execution
+// Execution retrieves the details of an action execution.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_execution
 func (m *ActionManager) Execution(executionId string, opts ...RequestOption) (v *ActionExecution, err error) {
@@ -319,9 +360,9 @@ func (m *ActionManager) Execution(executionId string, opts ...RequestOption) (v 
 	return
 }
 
-// ReadExecution retrieves the details of an action execution
+// ReadExecution retrieves the details of an action execution.
 //
-// Deprecated: use Execution() instead
+// Deprecated: use Execution() instead.
 func (m *ActionManager) ReadExecution(executionId string, opts ...RequestOption) (v *ActionExecution, err error) {
 	return m.Execution(executionId, opts...)
 }

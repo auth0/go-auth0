@@ -1,7 +1,9 @@
 package management
 
+// ClientGrant is a method through which applications can gain Access Tokens.
+//
+// See: https://auth0.com/docs/get-started/applications/application-grant-types
 type ClientGrant struct {
-
 	// A generated string identifying the client grant.
 	ID *string `json:"id,omitempty"`
 
@@ -14,11 +16,13 @@ type ClientGrant struct {
 	Scope []interface{} `json:"scope"`
 }
 
+// ClientGrantList is a list of ClientGrants.
 type ClientGrantList struct {
 	List
 	ClientGrants []*ClientGrant `json:"client_grants"`
 }
 
+// ClientGrantManager manages Auth0 ClientGrant resources.
 type ClientGrantManager struct {
 	*Management
 }
@@ -34,7 +38,7 @@ func (m *ClientGrantManager) Create(g *ClientGrant, opts ...RequestOption) (err 
 	return m.Request("POST", m.URI("client-grants"), g, opts...)
 }
 
-// Retrieves a client grant by its id.
+// Read a client grant by its ID.
 //
 // The Auth0 Management API does not offer a method to retrieve a client grant
 // by id, we fake this by listing all client grants and matching by id on the

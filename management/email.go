@@ -1,7 +1,9 @@
 package management
 
+// Email is used to configure Email Providers.
+//
+// See: https://auth0.com/docs/customize/email
 type Email struct {
-
 	// The name of the email provider. Can be one of "mandrill", "sendgrid",
 	// "sparkpost", "ses" or "smtp".
 	Name *string `json:"name,omitempty"`
@@ -9,13 +11,14 @@ type Email struct {
 	// True if the email provider is enabled, false otherwise (defaults to true)
 	Enabled *bool `json:"enabled,omitempty"`
 
-	// The default FROM address
+	// The default FROM address.
 	DefaultFromAddress *string `json:"default_from_address,omitempty"`
 
 	Credentials *EmailCredentials      `json:"credentials,omitempty"`
 	Settings    map[string]interface{} `json:"settings,omitempty"`
 }
 
+// EmailCredentials are used for authenticating Email Providers.
 type EmailCredentials struct {
 	// API User
 	APIUser *string `json:"api_user,omitempty"`
@@ -39,6 +42,7 @@ type EmailCredentials struct {
 	Domain *string `json:"domain,omitempty"`
 }
 
+// EmailManager manages Auth0 Email resources.
 type EmailManager struct {
 	*Management
 }
@@ -61,7 +65,7 @@ func newEmailManager(m *Management) *EmailManager {
 // - ses requires accessKeyId, secretAccessKey, and region
 // - smtp requires smtp_host, smtp_port, smtp_user, and smtp_pass
 // - `mailgun` requires `api_key` and `domain`. Optionally, set region to eu to
-// use the Mailgun service hosted in Europe; set to null otherwise. eu or null
+// use the Mailgun service hosted in Europe; set to null otherwise. "eu" or null
 // are the only valid values for region.
 //
 // Depending on the type of provider it is possible to specify settings object
@@ -77,7 +81,7 @@ func (m *EmailManager) Create(e *Email, opts ...RequestOption) error {
 	return m.Request("POST", m.URI("emails", "provider"), e, opts...)
 }
 
-// Retrieve email provider details.
+// Read email provider details.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/get_provider
 func (m *EmailManager) Read(opts ...RequestOption) (e *Email, err error) {

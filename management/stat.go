@@ -2,6 +2,7 @@ package management
 
 import "time"
 
+// StatManager manages Auth0 DailyStat resources.
 type StatManager struct {
 	*Management
 }
@@ -19,6 +20,7 @@ func (m *StatManager) ActiveUsers(opts ...RequestOption) (i int, err error) {
 	return
 }
 
+// DailyStat for an Auth0 Tenant.
 type DailyStat struct {
 	Date            *time.Time `json:"date"`
 	Logins          *int       `json:"logins"`

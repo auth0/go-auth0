@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+// Job is used for importing/exporting users or for
+// sending email address verification emails.
+//
+// See: https://auth0.com/docs/manage-users/user-migration/bulk-user-imports
 type Job struct {
 	// The job's identifier. Useful to retrieve its status
 	ID *string `json:"id,omitempty"`
@@ -57,6 +61,7 @@ type Job struct {
 	SendCompletionEmail *bool `json:"send_completion_email,omitempty"`
 }
 
+// JobManager manages Auth0 Job resources.
 type JobManager struct {
 	*Management
 }
@@ -65,11 +70,13 @@ func newJobManager(m *Management) *JobManager {
 	return &JobManager{m}
 }
 
+// VerifyEmail sends an email to the specified user that asks them to
+// click a link to verify their email address.
 func (m *JobManager) VerifyEmail(j *Job, opts ...RequestOption) error {
 	return m.Request("POST", m.URI("jobs", "verification-email"), j, opts...)
 }
 
-// Retrieves a job. Useful to check its status.
+// Read retrieves a job. Useful to check its status.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Jobs/get_jobs_by_id
 func (m *JobManager) Read(id string, opts ...RequestOption) (j *Job, err error) {
@@ -77,18 +84,17 @@ func (m *JobManager) Read(id string, opts ...RequestOption) (j *Job, err error) 
 	return
 }
 
-// Export all users to a file via a long-running job.
+// ExportUsers exports all users to a file via a long-running job.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Jobs/post_users_exports
 func (m *JobManager) ExportUsers(j *Job, opts ...RequestOption) error {
 	return m.Request("POST", m.URI("jobs", "users-exports"), j, opts...)
 }
 
-// Import users from a formatted file into a connection via a long-running job.
+// ImportUsers imports users from a formatted file into a connection via a long-running job.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Jobs/post_users_imports
 func (m *JobManager) ImportUsers(j *Job, opts ...RequestOption) error {
-
 	var payload bytes.Buffer
 	mp := multipart.NewWriter(&payload)
 

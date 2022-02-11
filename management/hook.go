@@ -1,7 +1,10 @@
 package management
 
+// Hook is a secure, self-contained function that
+// allows the behavior of Auth0 to be customized.
+//
+// See: https://auth0.com/docs/customize/hooks
 type Hook struct {
-
 	// The hook's identifier.
 	ID *string `json:"id,omitempty"`
 
@@ -25,15 +28,16 @@ type Hook struct {
 	Enabled *bool `json:"enabled,omitempty"`
 }
 
+// HookList is a list of Hooks.
 type HookList struct {
 	List
 	Hooks []*Hook `json:"hooks"`
 }
 
-// HookSecrets are the secret keys and values associated with a hook
+// HookSecrets are the secret keys and values associated with a Hook.
 type HookSecrets map[string]string
 
-// Keys gets the configured hook secret keys
+// Keys gets the configured hook secret keys.
 func (s HookSecrets) Keys() []string {
 	keys := make([]string, len(s))
 	i := 0
@@ -44,8 +48,8 @@ func (s HookSecrets) Keys() []string {
 	return keys
 }
 
-// Difference returns a new map containing only keys which are present in s that
-// are missing from other.
+// Difference returns a new map containing only keys which
+// are present in s that are missing from other.
 func (s HookSecrets) difference(other HookSecrets) HookSecrets {
 	d := make(HookSecrets)
 	for k, v := range s {
@@ -56,8 +60,8 @@ func (s HookSecrets) difference(other HookSecrets) HookSecrets {
 	return d
 }
 
-// Intersection returns a new map containing only keys which are present in both
-// s and other.
+// Intersection returns a new map containing only
+// keys which are present in both s and other.
 func (s HookSecrets) intersection(other HookSecrets) HookSecrets {
 	i := make(HookSecrets)
 	for k, v := range s {
@@ -68,6 +72,7 @@ func (s HookSecrets) intersection(other HookSecrets) HookSecrets {
 	return i
 }
 
+// HookManager manages Auth0 Hook resources.
 type HookManager struct {
 	*Management
 }
@@ -85,7 +90,7 @@ func (m *HookManager) Create(h *Hook, opts ...RequestOption) error {
 	return m.Request("POST", m.URI("hooks"), h, opts...)
 }
 
-// Retrieve hook details. Accepts a list of fields to include or exclude in the result.
+// Read hook details. Accepts a list of fields to include or exclude in the result.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Hooks/get_hooks_by_id
 func (m *HookManager) Read(id string, opts ...RequestOption) (h *Hook, err error) {

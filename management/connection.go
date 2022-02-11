@@ -9,27 +9,49 @@ import (
 )
 
 const (
-	ConnectionStrategyAuth0               = "auth0"
-	ConnectionStrategyGoogleOAuth2        = "google-oauth2"
-	ConnectionStrategyFacebook            = "facebook"
-	ConnectionStrategyApple               = "apple"
-	ConnectionStrategyLinkedin            = "linkedin"
-	ConnectionStrategyGitHub              = "github"
-	ConnectionStrategyWindowsLive         = "windowslive"
-	ConnectionStrategySalesforce          = "salesforce"
+	// ConnectionStrategyAuth0 constant.
+	ConnectionStrategyAuth0 = "auth0"
+	// ConnectionStrategyGoogleOAuth2 constant.
+	ConnectionStrategyGoogleOAuth2 = "google-oauth2"
+	// ConnectionStrategyFacebook constant.
+	ConnectionStrategyFacebook = "facebook"
+	// ConnectionStrategyApple constant.
+	ConnectionStrategyApple = "apple"
+	// ConnectionStrategyLinkedin constant.
+	ConnectionStrategyLinkedin = "linkedin"
+	// ConnectionStrategyGitHub constant.
+	ConnectionStrategyGitHub = "github"
+	// ConnectionStrategyWindowsLive constant.
+	ConnectionStrategyWindowsLive = "windowslive"
+	// ConnectionStrategySalesforce constant.
+	ConnectionStrategySalesforce = "salesforce"
+	// ConnectionStrategySalesforceCommunity constant.
 	ConnectionStrategySalesforceCommunity = "salesforce-community"
-	ConnectionStrategySalesforceSandbox   = "salesforce-sandbox"
-	ConnectionStrategyEmail               = "email"
-	ConnectionStrategySMS                 = "sms"
-	ConnectionStrategyOIDC                = "oidc"
-	ConnectionStrategyOAuth2              = "oauth2"
-	ConnectionStrategyAD                  = "ad"
-	ConnectionStrategyADFS                = "adfs"
-	ConnectionStrategyAzureAD             = "waad"
-	ConnectionStrategySAML                = "samlp"
-	ConnectionStrategyGoogleApps          = "google-apps"
+	// ConnectionStrategySalesforceSandbox constant.
+	ConnectionStrategySalesforceSandbox = "salesforce-sandbox"
+	// ConnectionStrategyEmail constant.
+	ConnectionStrategyEmail = "email"
+	// ConnectionStrategySMS constant.
+	ConnectionStrategySMS = "sms"
+	// ConnectionStrategyOIDC constant.
+	ConnectionStrategyOIDC = "oidc"
+	// ConnectionStrategyOAuth2 constant.
+	ConnectionStrategyOAuth2 = "oauth2"
+	// ConnectionStrategyAD constant.
+	ConnectionStrategyAD = "ad"
+	// ConnectionStrategyADFS constant.
+	ConnectionStrategyADFS = "adfs"
+	// ConnectionStrategyAzureAD constant.
+	ConnectionStrategyAzureAD = "waad"
+	// ConnectionStrategySAML constant.
+	ConnectionStrategySAML = "samlp"
+	// ConnectionStrategyGoogleApps constant.
+	ConnectionStrategyGoogleApps = "google-apps"
 )
 
+// Connection is the relationship between Auth0 and a source of users.
+//
+// See: https://auth0.com/docs/authenticate/identity-providers
 type Connection struct {
 	// A generated string identifying the connection.
 	ID *string `json:"id,omitempty"`
@@ -78,8 +100,8 @@ type Connection struct {
 	ProvisioningTicketUrl *string `json:"provisioning_ticket_url,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaler interface.
 func (c *Connection) MarshalJSON() ([]byte, error) {
-
 	type connection Connection
 	type connectionWrapper struct {
 		*connection
@@ -99,8 +121,8 @@ func (c *Connection) MarshalJSON() ([]byte, error) {
 	return json.Marshal(w)
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface.
 func (c *Connection) UnmarshalJSON(b []byte) error {
-
 	type connection Connection
 	type connectionWrapper struct {
 		*connection
@@ -115,7 +137,6 @@ func (c *Connection) UnmarshalJSON(b []byte) error {
 	}
 
 	if c.Strategy != nil {
-
 		var v interface{}
 
 		switch *c.Strategy {
@@ -170,8 +191,8 @@ func (c *Connection) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// ConnectionOptions is used to configure Connections.
 type ConnectionOptions struct {
-
 	// Options for multifactor authentication. Can be used to set active and
 	// return_enroll_settings.
 	MFA map[string]interface{} `json:"mfa,omitempty"`
@@ -217,6 +238,7 @@ type ConnectionOptions struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// ConnectionOptionsGoogleOAuth2 is used to configure a GoogleOAuth2 Connection.
 type ConnectionOptionsGoogleOAuth2 struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
@@ -258,14 +280,17 @@ type ConnectionOptionsGoogleOAuth2 struct {
 	Scope                  []interface{} `json:"scope,omitempty"`
 }
 
+// Scopes returns the scopes for ConnectionOptionsGoogleOAuth2.
 func (c *ConnectionOptionsGoogleOAuth2) Scopes() []string {
 	return tag.Scopes(c)
 }
 
+// SetScopes sets the scopes for ConnectionOptionsGoogleOAuth2.
 func (c *ConnectionOptionsGoogleOAuth2) SetScopes(enable bool, scopes ...string) {
 	tag.SetScopes(c, enable, scopes...)
 }
 
+// ConnectionOptionsFacebook is used to configure a Facebook Connection.
 type ConnectionOptionsFacebook struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
@@ -318,14 +343,17 @@ type ConnectionOptionsFacebook struct {
 	Scope *string `json:"scope,omitempty"`
 }
 
+// Scopes returns the scopes for ConnectionOptionsFacebook.
 func (c *ConnectionOptionsFacebook) Scopes() []string {
 	return tag.Scopes(c)
 }
 
+// SetScopes sets the scopes for ConnectionOptionsFacebook.
 func (c *ConnectionOptionsFacebook) SetScopes(enable bool, scopes ...string) {
 	tag.SetScopes(c, enable, scopes...)
 }
 
+// ConnectionOptionsApple is used to configure an Apple Connection.
 type ConnectionOptionsApple struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"app_secret,omitempty"`
@@ -341,14 +369,17 @@ type ConnectionOptionsApple struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// Scopes returns the scopes for ConnectionOptionsApple.
 func (c *ConnectionOptionsApple) Scopes() []string {
 	return tag.Scopes(c)
 }
 
+// SetScopes sets the scopes for ConnectionOptionsApple.
 func (c *ConnectionOptionsApple) SetScopes(enable bool, scopes ...string) {
 	tag.SetScopes(c, enable, scopes...)
 }
 
+// ConnectionOptionsLinkedin is used to configure a Linkedin Connection.
 type ConnectionOptionsLinkedin struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
@@ -365,14 +396,17 @@ type ConnectionOptionsLinkedin struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// Scopes returns the scopes for ConnectionOptionsLinkedin.
 func (c *ConnectionOptionsLinkedin) Scopes() []string {
 	return tag.Scopes(c)
 }
 
+// SetScopes sets the scopes for ConnectionOptionsLinkedin.
 func (c *ConnectionOptionsLinkedin) SetScopes(enable bool, scopes ...string) {
 	tag.SetScopes(c, enable, scopes...)
 }
 
+// ConnectionOptionsGitHub is used to configure a GitHub Connection.
 type ConnectionOptionsGitHub struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
@@ -404,14 +438,17 @@ type ConnectionOptionsGitHub struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// Scopes returns the scopes for ConnectionOptionsGitHub.
 func (c *ConnectionOptionsGitHub) Scopes() []string {
 	return tag.Scopes(c)
 }
 
+// SetScopes sets the scopes for ConnectionOptionsGitHub.
 func (c *ConnectionOptionsGitHub) SetScopes(enable bool, scopes ...string) {
 	tag.SetScopes(c, enable, scopes...)
 }
 
+// ConnectionOptionsEmail is used to configure an Email Connection.
 type ConnectionOptionsEmail struct {
 	Name  *string                         `json:"name,omitempty"`
 	Email *ConnectionOptionsEmailSettings `json:"email,omitempty"`
@@ -426,6 +463,8 @@ type ConnectionOptionsEmail struct {
 	NonPersistentAttrs   *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// ConnectionOptionsEmailSettings is used to configure
+// the email settings on a ConnectionOptionsEmail.
 type ConnectionOptionsEmailSettings struct {
 	Syntax  *string `json:"syntax,omitempty"`
 	From    *string `json:"from,omitempty"`
@@ -433,11 +472,15 @@ type ConnectionOptionsEmailSettings struct {
 	Body    *string `json:"body,omitempty"`
 }
 
+// ConnectionOptionsOTP is used to configure the
+// OTP settings on a ConnectionOptionsEmail.
 type ConnectionOptionsOTP struct {
 	TimeStep *int `json:"time_step,omitempty"`
 	Length   *int `json:"length,omitempty"`
 }
 
+// ConnectionGatewayAuthentication is used to configure the
+// GatewayAuthentication settings on a ConnectionOptionsSMS.
 type ConnectionGatewayAuthentication struct {
 	Method              *string `json:"method,omitempty"`
 	Subject             *string `json:"subject,omitempty"`
@@ -446,6 +489,7 @@ type ConnectionGatewayAuthentication struct {
 	SecretBase64Encoded *bool   `json:"secret_base64_encoded,omitempty"`
 }
 
+// ConnectionOptionsSMS is used to configure an SMS Connection.
 type ConnectionOptionsSMS struct {
 	Name     *string `json:"name,omitempty"`
 	From     *string `json:"from,omitempty"`
@@ -469,6 +513,7 @@ type ConnectionOptionsSMS struct {
 	BruteForceProtection *bool `json:"brute_force_protection,omitempty"`
 }
 
+// ConnectionOptionsWindowsLive is used to configure a WindowsLive Connection.
 type ConnectionOptionsWindowsLive struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
@@ -504,14 +549,17 @@ type ConnectionOptionsWindowsLive struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// Scopes returns the scopes for ConnectionOptionsWindowsLive.
 func (c *ConnectionOptionsWindowsLive) Scopes() []string {
 	return tag.Scopes(c)
 }
 
+// SetScopes sets the scopes for ConnectionOptionsWindowsLive.
 func (c *ConnectionOptionsWindowsLive) SetScopes(enable bool, scopes ...string) {
 	tag.SetScopes(c, enable, scopes...)
 }
 
+// ConnectionOptionsSalesforce is used to configure a SalesForce Connection.
 type ConnectionOptionsSalesforce struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
@@ -525,14 +573,17 @@ type ConnectionOptionsSalesforce struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// Scopes returns the scopes for ConnectionOptionsSalesforce.
 func (c *ConnectionOptionsSalesforce) Scopes() []string {
 	return tag.Scopes(c)
 }
 
+// SetScopes sets the scopes for ConnectionOptionsSalesforce.
 func (c *ConnectionOptionsSalesforce) SetScopes(enable bool, scopes ...string) {
 	tag.SetScopes(c, enable, scopes...)
 }
 
+// ConnectionOptionsOIDC is used to configure an OIDC Connection.
 type ConnectionOptionsOIDC struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
@@ -554,10 +605,12 @@ type ConnectionOptionsOIDC struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// Scopes returns the scopes for ConnectionOptionsOIDC.
 func (c *ConnectionOptionsOIDC) Scopes() []string {
 	return strings.Fields(c.GetScope())
 }
 
+// SetScopes sets the scopes for ConnectionOptionsOIDC.
 func (c *ConnectionOptionsOIDC) SetScopes(enable bool, scopes ...string) {
 	scopeMap := make(map[string]bool)
 	for _, scope := range c.Scopes() {
@@ -577,6 +630,7 @@ func (c *ConnectionOptionsOIDC) SetScopes(enable bool, scopes ...string) {
 	c.Scope = &scope
 }
 
+// ConnectionOptionsOAuth2 is used to configure an OAuth2 Connection.
 type ConnectionOptionsOAuth2 struct {
 	ClientID           *string   `json:"client_id,omitempty"`
 	ClientSecret       *string   `json:"client_secret,omitempty"`
@@ -590,10 +644,12 @@ type ConnectionOptionsOAuth2 struct {
 	Scripts map[string]interface{} `json:"scripts,omitempty"`
 }
 
+// Scopes returns the scopes for ConnectionOptionsOAuth2.
 func (c *ConnectionOptionsOAuth2) Scopes() []string {
 	return strings.Fields(c.GetScope())
 }
 
+// SetScopes sets the scopes for ConnectionOptionsOAuth2.
 func (c *ConnectionOptionsOAuth2) SetScopes(enable bool, scopes ...string) {
 	scopeMap := make(map[string]bool)
 	for _, scope := range c.Scopes() {
@@ -613,6 +669,7 @@ func (c *ConnectionOptionsOAuth2) SetScopes(enable bool, scopes ...string) {
 	c.Scope = &scope
 }
 
+// ConnectionOptionsAD is used to configure an AD Connection.
 type ConnectionOptionsAD struct {
 	TenantDomain  *string       `json:"tenant_domain,omitempty"`
 	DomainAliases []interface{} `json:"domain_aliases,omitempty"`
@@ -628,6 +685,7 @@ type ConnectionOptionsAD struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// ConnectionOptionsAzureAD is used to configure an AzureAD Connection.
 type ConnectionOptionsAzureAD struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
@@ -662,14 +720,17 @@ type ConnectionOptionsAzureAD struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// Scopes returns the scopes for ConnectionOptionsAzureAD.
 func (c *ConnectionOptionsAzureAD) Scopes() []string {
 	return tag.Scopes(c)
 }
 
+// SetScopes sets the scopes for ConnectionOptionsAzureAD.
 func (c *ConnectionOptionsAzureAD) SetScopes(enable bool, scopes ...string) {
 	tag.SetScopes(c, enable, scopes...)
 }
 
+// ConnectionOptionsADFS is used to configure an ADFS Connection.
 type ConnectionOptionsADFS struct {
 	TenantDomain  *string       `json:"tenant_domain,omitempty"`
 	DomainAliases []interface{} `json:"domain_aliases,omitempty"`
@@ -683,6 +744,7 @@ type ConnectionOptionsADFS struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// ConnectionOptionsSAML is used to configure a SAML Connection.
 type ConnectionOptionsSAML struct {
 	Cert               *string                            `json:"cert,omitempty"`
 	Debug              *bool                              `json:"debug,omitempty"`
@@ -712,6 +774,8 @@ type ConnectionOptionsSAML struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// ConnectionOptionsSAMLIdpInitiated is used to configure the
+// IdpInitiated settings on a ConnectionOptionsSAML.
 type ConnectionOptionsSAMLIdpInitiated struct {
 	Enabled              *bool   `json:"enabled,omitempty"`
 	ClientID             *string `json:"client_id,omitempty"`
@@ -722,11 +786,14 @@ type ConnectionOptionsSAMLIdpInitiated struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 }
 
+// ConnectionOptionsSAMLSigningKey is used to configure the
+// SigningKey settings on a ConnectionOptionsSAML.
 type ConnectionOptionsSAMLSigningKey struct {
 	Key  *string `json:"key,omitempty"`
 	Cert *string `json:"cert,omitempty"`
 }
 
+// ConnectionOptionsGoogleApps is used to configure a GoogleApps Connection.
 type ConnectionOptionsGoogleApps struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
@@ -748,18 +815,22 @@ type ConnectionOptionsGoogleApps struct {
 	LogoURL       *string       `json:"icon_url,omitempty"`
 }
 
+// Scopes returns the scopes for ConnectionOptionsGoogleApps.
 func (c *ConnectionOptionsGoogleApps) Scopes() []string {
 	return tag.Scopes(c)
 }
 
+// SetScopes sets the scopes for ConnectionOptionsGoogleApps.
 func (c *ConnectionOptionsGoogleApps) SetScopes(enable bool, scopes ...string) {
 	tag.SetScopes(c, enable, scopes...)
 }
 
+// ConnectionManager manages Auth0 Connection resources.
 type ConnectionManager struct {
 	*Management
 }
 
+// ConnectionList is a list of Connections.
 type ConnectionList struct {
 	List
 	Connections []*Connection `json:"connections"`
@@ -794,7 +865,7 @@ func (m *ConnectionManager) List(opts ...RequestOption) (c *ConnectionList, err 
 
 // Update a connection.
 //
-// Note: if you use the options parameter, the whole options object will be
+// Note: if you use the options' parameter, the whole options object will be
 // overridden, so ensure that all parameters are present.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/patch_connections_by_id

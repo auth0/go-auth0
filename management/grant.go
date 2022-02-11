@@ -1,7 +1,9 @@
 package management
 
+// Grant is a way of retrieving an Access Token.
+//
+// See: https://auth0.com/docs/get-started/authentication-and-authorization-flow/which-oauth-2-0-flow-should-i-use
 type Grant struct {
-
 	// The id of the grant.
 	ID *string `json:"id,omitempty"`
 
@@ -17,11 +19,13 @@ type Grant struct {
 	Scope []interface{} `json:"scope,omitempty"`
 }
 
+// GrantList is a list of Grants.
 type GrantList struct {
 	List
 	Grants []*Grant `json:"grants"`
 }
 
+// GrantManager manages Auth0 Grant resources.
 type GrantManager struct {
 	*Management
 }
@@ -38,7 +42,8 @@ func (m *GrantManager) List(opts ...RequestOption) (g *GrantList, err error) {
 	return
 }
 
-// Delete revokes a grant associated with a user-id
+// Delete revokes a grant associated with a user-id.
+//
 // https://auth0.com/docs/api/management/v2#!/Grants/delete_grants_by_id
 func (m *GrantManager) Delete(id string, opts ...RequestOption) error {
 	return m.Request("DELETE", m.URI("grants", id), nil, opts...)

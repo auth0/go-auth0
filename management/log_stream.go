@@ -3,14 +3,24 @@ package management
 import "encoding/json"
 
 const (
+	// LogStreamTypeAmazonEventBridge constant.
 	LogStreamTypeAmazonEventBridge = "eventbridge"
-	LogStreamTypeAzureEventGrid    = "eventgrid"
-	LogStreamTypeHTTP              = "http"
-	LogStreamTypeDatadog           = "datadog"
-	LogStreamTypeSplunk            = "splunk"
-	LogStreamTypeSumo              = "sumo"
+	// LogStreamTypeAzureEventGrid constant.
+	LogStreamTypeAzureEventGrid = "eventgrid"
+	// LogStreamTypeHTTP constant.
+	LogStreamTypeHTTP = "http"
+	// LogStreamTypeDatadog constant.
+	LogStreamTypeDatadog = "datadog"
+	// LogStreamTypeSplunk constant.
+	LogStreamTypeSplunk = "splunk"
+	// LogStreamTypeSumo constant.
+	LogStreamTypeSumo = "sumo"
 )
 
+// LogStream is used to export tenant log
+// events to a log event analysis service.
+//
+// See: https://auth0.com/docs/customize/log-streams
 type LogStream struct {
 	// The hook's identifier.
 	ID *string `json:"id,omitempty"`
@@ -30,8 +40,8 @@ type LogStream struct {
 	Sink interface{} `json:"-"`
 }
 
+// MarshalJSON is a custom serializer for the LogStream type.
 func (ls *LogStream) MarshalJSON() ([]byte, error) {
-
 	type logStream LogStream
 	type logStreamWrapper struct {
 		*logStream
@@ -51,8 +61,8 @@ func (ls *LogStream) MarshalJSON() ([]byte, error) {
 	return json.Marshal(w)
 }
 
+// UnmarshalJSON is a custom deserializer for the LogStream type.
 func (ls *LogStream) UnmarshalJSON(b []byte) error {
-
 	type logStream LogStream
 	type logStreamWrapper struct {
 		*logStream
@@ -67,7 +77,6 @@ func (ls *LogStream) UnmarshalJSON(b []byte) error {
 	}
 
 	if ls.Type != nil {
-
 		var v interface{}
 
 		switch *ls.Type {
@@ -98,6 +107,7 @@ func (ls *LogStream) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// LogStreamSinkAmazonEventBridge is used to export logs to Amazon EventBridge.
 type LogStreamSinkAmazonEventBridge struct {
 	// AWS Account Id
 	AccountID *string `json:"awsAccountId,omitempty"`
@@ -107,6 +117,7 @@ type LogStreamSinkAmazonEventBridge struct {
 	PartnerEventSource *string `json:"awsPartnerEventSource,omitempty"`
 }
 
+// LogStreamSinkAzureEventGrid is used to export logs to Azure Event Grid.
 type LogStreamSinkAzureEventGrid struct {
 	// Azure Subscription Id
 	SubscriptionID *string `json:"azureSubscriptionId,omitempty"`
@@ -118,6 +129,7 @@ type LogStreamSinkAzureEventGrid struct {
 	PartnerTopic *string `json:"azurePartnerTopic,omitempty"`
 }
 
+// LogStreamSinkHTTP is used to export logs to Custom Webhooks.
 type LogStreamSinkHTTP struct {
 	// HTTP ContentFormat
 	ContentFormat *string `json:"httpContentFormat,omitempty"`
@@ -131,6 +143,7 @@ type LogStreamSinkHTTP struct {
 	CustomHeaders []interface{} `json:"httpCustomHeaders,omitempty"`
 }
 
+// LogStreamSinkDatadog is used to export logs to Datadog.
 type LogStreamSinkDatadog struct {
 	// Datadog Region
 	Region *string `json:"datadogRegion,omitempty"`
@@ -138,6 +151,7 @@ type LogStreamSinkDatadog struct {
 	APIKey *string `json:"datadogApiKey,omitempty"`
 }
 
+// LogStreamSinkSplunk is used to export logs to Splunk.
 type LogStreamSinkSplunk struct {
 	// Splunk Domain
 	Domain *string `json:"splunkDomain,omitempty"`
@@ -149,11 +163,13 @@ type LogStreamSinkSplunk struct {
 	Secure *bool `json:"splunkSecure,omitempty"`
 }
 
+// LogStreamSinkSumo is used to export logs to Sumo Logic.
 type LogStreamSinkSumo struct {
 	// Sumo Source Address
 	SourceAddress *string `json:"sumoSourceAddress,omitempty"`
 }
 
+// LogStreamManager manages Auth0 LogStream resources.
 type LogStreamManager struct {
 	*Management
 }

@@ -1,15 +1,17 @@
 package management
 
+// CustomDomain to be used on authentication pages.
+//
+// See: https://auth0.com/docs/customize/custom-domains
 type CustomDomain struct {
-
-	// The id of the custom domain
+	// The id of the custom domain.
 	ID *string `json:"custom_domain_id,omitempty"`
 
 	// The custom domain.
 	Domain *string `json:"domain,omitempty"`
 
-	// The custom domain provisioning type. Can be either "auth0_managed_certs"
-	// or "self_managed_certs"
+	// The custom domain provisioning type.
+	// Can be either "auth0_managed_certs" or "self_managed_certs".
 	Type *string `json:"type,omitempty"`
 
 	// Primary is true if the domain was marked as "primary", false otherwise.
@@ -28,16 +30,17 @@ type CustomDomain struct {
 	// The TLS version policy. Can be either "compatible" or "recommended".
 	TLSPolicy *string `json:"tls_policy,omitempty"`
 
-	// The HTTP header to fetch the client's IP address
+	// The HTTP header to fetch the client's IP address.
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty"`
 }
 
+// CustomDomainVerification is used to verify a CustomDomain.
 type CustomDomainVerification struct {
-
 	// The custom domain verification methods.
 	Methods []map[string]interface{} `json:"methods,omitempty"`
 }
 
+// CustomDomainManager manages Auth0 CustomDomain resources.
 type CustomDomainManager struct {
 	*Management
 }
@@ -63,7 +66,7 @@ func (m *CustomDomainManager) Update(id string, c *CustomDomain, opts ...Request
 	return m.Request("PATCH", m.URI("custom-domains", id), c, opts...)
 }
 
-// Retrieve a custom domain configuration and status.
+// Read a custom domain configuration and status.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Custom_Domains/get_custom_domains_by_id
 func (m *CustomDomainManager) Read(id string, opts ...RequestOption) (c *CustomDomain, err error) {
@@ -71,7 +74,7 @@ func (m *CustomDomainManager) Read(id string, opts ...RequestOption) (c *CustomD
 	return
 }
 
-// Run the verification process on a custom domain.
+// Verify a custom domain.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Custom_Domains/post_verify
 func (m *CustomDomainManager) Verify(id string, opts ...RequestOption) (c *CustomDomain, err error) {

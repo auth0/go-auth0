@@ -1,7 +1,9 @@
 package management
 
+// EmailTemplate is used to customize emails.
+//
+// See https://auth0.com/docs/customize/email/email-templates
 type EmailTemplate struct {
-
 	// The template name. Can be one of "verify_email", "reset_email",
 	// "welcome_email", "blocked_account", "stolen_credentials",
 	// "enrollment_email", "change_password", "password_reset" or
@@ -30,6 +32,7 @@ type EmailTemplate struct {
 	Enabled *bool `json:"enabled,omitempty"`
 }
 
+// EmailTemplateManager manages Auth0 EmailTemplate resources.
 type EmailTemplateManager struct {
 	*Management
 }
@@ -45,7 +48,7 @@ func (m *EmailTemplateManager) Create(e *EmailTemplate, opts ...RequestOption) e
 	return m.Request("POST", m.URI("email-templates"), e, opts...)
 }
 
-// Retrieve an email template by pre-defined name.
+// Read an email template by pre-defined name.
 //
 // These names are `verify_email`, `reset_email`, `welcome_email`,
 // `blocked_account`, `stolen_credentials`, `enrollment_email`, and
@@ -60,7 +63,7 @@ func (m *EmailTemplateManager) Read(template string, opts ...RequestOption) (e *
 	return
 }
 
-// Modify an email template.
+// Update an email template.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Email_Templates/patch_email_templates_by_templateName
 func (m *EmailTemplateManager) Update(template string, e *EmailTemplate, opts ...RequestOption) (err error) {

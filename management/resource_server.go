@@ -1,7 +1,8 @@
 package management
 
+// ResourceServer is an entity that represents an external resource, capable of
+// accepting and responding to protected resource requests made by applications.
 type ResourceServer struct {
-
 	// A generated string identifying the resource server.
 	ID *string `json:"id,omitempty"`
 
@@ -49,20 +50,23 @@ type ResourceServer struct {
 	TokenDialect *string `json:"token_dialect,omitempty"`
 }
 
+// ResourceServerScope defines the specific actions, resource servers can be allowed to do.
 type ResourceServerScope struct {
-	// The scope name. Use the format <action>:<resource> for example
-	// 'delete:client_grants'.
+	// The scope name. Use the format <action>:<resource>.
+	// For example 'delete:client_grants'.
 	Value *string `json:"value,omitempty"`
 
-	// Description of the scope
+	// Description of the scope.
 	Description *string `json:"description,omitempty"`
 }
 
+// ResourceServerList is a list of ResourceServers.
 type ResourceServerList struct {
 	List
 	ResourceServers []*ResourceServer `json:"resource_servers"`
 }
 
+// ResourceServerManager is used for managing a ResourceServer.
 type ResourceServerManager struct {
 	*Management
 }
@@ -108,7 +112,7 @@ func (m *ResourceServerManager) List(opts ...RequestOption) (rl *ResourceServerL
 	return
 }
 
-// Stream is a helper method which handles pagination
+// Stream is a helper method which handles pagination.
 func (m *ResourceServerManager) Stream(fn func(s *ResourceServer), opts ...RequestOption) error {
 	var page int
 	for {
