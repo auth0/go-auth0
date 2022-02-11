@@ -97,7 +97,7 @@ type Connection struct {
 	Metadata map[string]string `json:"metadata,omitempty"`
 
 	// Provisioning Ticket URL is Ticket URL for Active Directory/LDAP, etc.
-	ProvisioningTicketUrl *string `json:"provisioning_ticket_url,omitempty"`
+	ProvisioningTicketURL *string `json:"provisioning_ticket_url,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaler interface.
@@ -505,7 +505,7 @@ type ConnectionOptionsSMS struct {
 	MessagingServiceSID *string `json:"messaging_service_sid,omitempty"`
 
 	Provider              *string                          `json:"provider,omitempty"`
-	GatewayUrl            *string                          `json:"gateway_url,omitempty"`
+	GatewayURL            *string                          `json:"gateway_url,omitempty"`
 	GatewayAuthentication *ConnectionGatewayAuthentication `json:"gateway_authentication,omitempty"`
 	ForwardRequestInfo    *bool                            `json:"forward_request_info,omitempty"`
 

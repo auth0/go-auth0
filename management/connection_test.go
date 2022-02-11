@@ -199,6 +199,9 @@ func TestConnectionOptions(t *testing.T) {
 		}
 		c, _ = m.Connection.Read(g.GetID())
 		o, ok = c.Options.(*ConnectionOptionsGoogleOAuth2)
+		if !ok {
+			t.Fatalf("unexpected type %T", o)
+		}
 		expect.Expect(t, o.GetNonPersistentAttrs(), []string{"gender", "ethnicity", "favorite_color"})
 
 		o.NonPersistentAttrs = &[]string{""}
@@ -214,6 +217,9 @@ func TestConnectionOptions(t *testing.T) {
 			log.Fatal(err)
 		}
 		o, ok = c.Options.(*ConnectionOptionsGoogleOAuth2)
+		if !ok {
+			t.Fatalf("unexpected type %T", o)
+		}
 		expect.Expect(t, o.GetNonPersistentAttrs(), []string{""})
 
 		t.Logf("%s\n", g)
@@ -265,6 +271,9 @@ func TestConnectionOptions(t *testing.T) {
 		}
 		c, _ = m.Connection.Read(g.GetID())
 		o, ok = c.Options.(*ConnectionOptionsGoogleApps)
+		if !ok {
+			t.Fatalf("unexpected type %T", o)
+		}
 		expect.Expect(t, o.GetNonPersistentAttrs(), []string{"gender", "ethnicity", "favorite_color"})
 
 		o.NonPersistentAttrs = &[]string{""}
@@ -280,6 +289,9 @@ func TestConnectionOptions(t *testing.T) {
 			log.Fatal(err)
 		}
 		o, ok = c.Options.(*ConnectionOptionsGoogleApps)
+		if !ok {
+			t.Fatalf("unexpected type %T", o)
+		}
 		expect.Expect(t, o.GetNonPersistentAttrs(), []string{""})
 
 		t.Logf("%s\n", g)
@@ -383,6 +395,9 @@ func TestConnectionOptions(t *testing.T) {
 		}
 		e, _ = m.Connection.Read(e.GetID())
 		o, ok = e.Options.(*ConnectionOptionsEmail)
+		if !ok {
+			t.Fatalf("unexpected type %T", o)
+		}
 
 		expect.Expect(t, o.GetNonPersistentAttrs(), []string{"gender", "ethnicity", "favorite_color"})
 		t.Logf("%s\n", e)
@@ -459,7 +474,7 @@ func TestConnectionOptions(t *testing.T) {
 				DisableSignup:        auth0.Bool(true),
 				Name:                 auth0.String("Test-Connection-Custom-SMS"),
 				Provider:             auth0.String("sms_gateway"),
-				GatewayUrl:           auth0.String("https://test.com/sms-gateway"),
+				GatewayURL:           auth0.String("https://test.com/sms-gateway"),
 				GatewayAuthentication: &ConnectionGatewayAuthentication{
 					Method:              auth0.String("bearer"),
 					Subject:             auth0.String("test.us.auth0.com:sms"),
@@ -495,7 +510,7 @@ func TestConnectionOptions(t *testing.T) {
 		expect.Expect(t, o.GetDisableSignup(), true)
 		expect.Expect(t, o.GetName(), "Test-Connection-Custom-SMS")
 		expect.Expect(t, o.GetProvider(), "sms_gateway")
-		expect.Expect(t, o.GetGatewayUrl(), "https://test.com/sms-gateway")
+		expect.Expect(t, o.GetGatewayURL(), "https://test.com/sms-gateway")
 		expect.Expect(t, o.GetGatewayAuthentication().GetMethod(), "bearer")
 		expect.Expect(t, o.GetGatewayAuthentication().GetSubject(), "test.us.auth0.com:sms")
 		expect.Expect(t, o.GetGatewayAuthentication().GetAudience(), "test.com/sms-gateway")
@@ -577,7 +592,7 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			t.Fatal(err)
 		}
 
-		if a.ProvisioningTicketUrl == nil {
+		if a.ProvisioningTicketURL == nil {
 			t.Fatal("provisioning_ticket_url should be returned")
 		}
 
@@ -607,7 +622,7 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 		err := m.Connection.Update(
 			a.GetID(),
 			&Connection{
-				ProvisioningTicketUrl: auth0.String("https://invalid-domain.com"),
+				ProvisioningTicketURL: auth0.String("https://invalid-domain.com"),
 				Options:               o,
 			},
 		)

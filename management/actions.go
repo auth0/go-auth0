@@ -49,7 +49,7 @@ type ActionSecret struct {
 type ActionVersionError struct {
 	ID      *string `json:"id"`
 	Message *string `json:"msg"`
-	Url     *string `json:"url"`
+	URL     *string `json:"url"`
 }
 
 const (
@@ -135,8 +135,8 @@ type ActionVersionList struct {
 const (
 	// ActionBindingReferenceByName constant.
 	ActionBindingReferenceByName string = "action_name"
-	// ActionBindingReferenceById constant.
-	ActionBindingReferenceById string = "action_id"
+	// ActionBindingReferenceByID constant.
+	ActionBindingReferenceByID string = "action_id"
 )
 
 // ActionBindingReference holds the reference
@@ -273,16 +273,16 @@ func (m *ActionManager) List(opts ...RequestOption) (l *ActionList, err error) {
 // Version retrieves the version of an action.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_action_version
-func (m *ActionManager) Version(id string, versionId string, opts ...RequestOption) (v *ActionVersion, err error) {
-	err = m.Request("GET", m.URI("actions", "actions", id, "versions", versionId), &v, opts...)
+func (m *ActionManager) Version(id string, versionID string, opts ...RequestOption) (v *ActionVersion, err error) {
+	err = m.Request("GET", m.URI("actions", "actions", id, "versions", versionID), &v, opts...)
 	return
 }
 
 // ReadVersion retrieves the version of an action.
 //
 // Deprecated: use Version() instead.
-func (m *ActionManager) ReadVersion(id string, versionId string, opts ...RequestOption) (v *ActionVersion, err error) {
-	return m.Version(id, versionId, opts...)
+func (m *ActionManager) ReadVersion(id string, versionID string, opts ...RequestOption) (v *ActionVersion, err error) {
+	return m.Version(id, versionID, opts...)
 }
 
 // Versions lists all versions of an action.
@@ -336,8 +336,8 @@ func (m *ActionManager) Deploy(id string, opts ...RequestOption) (v *ActionVersi
 // DeployVersion of an action
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/post_deploy_draft_version
-func (m *ActionManager) DeployVersion(id string, versionId string, opts ...RequestOption) (v *ActionVersion, err error) {
-	err = m.Request("POST", m.URI("actions", "actions", id, "versions", versionId, "deploy"), &v, opts...)
+func (m *ActionManager) DeployVersion(id string, versionID string, opts ...RequestOption) (v *ActionVersion, err error) {
+	err = m.Request("POST", m.URI("actions", "actions", id, "versions", versionID, "deploy"), &v, opts...)
 	return
 }
 
@@ -355,14 +355,14 @@ func (m *ActionManager) Test(id string, payload *ActionTestPayload, opts ...Requ
 // Execution retrieves the details of an action execution.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_execution
-func (m *ActionManager) Execution(executionId string, opts ...RequestOption) (v *ActionExecution, err error) {
-	err = m.Request("GET", m.URI("actions", "executions", executionId), &v, opts...)
+func (m *ActionManager) Execution(executionID string, opts ...RequestOption) (v *ActionExecution, err error) {
+	err = m.Request("GET", m.URI("actions", "executions", executionID), &v, opts...)
 	return
 }
 
 // ReadExecution retrieves the details of an action execution.
 //
 // Deprecated: use Execution() instead.
-func (m *ActionManager) ReadExecution(executionId string, opts ...RequestOption) (v *ActionExecution, err error) {
-	return m.Execution(executionId, opts...)
+func (m *ActionManager) ReadExecution(executionID string, opts ...RequestOption) (v *ActionExecution, err error) {
+	return m.Execution(executionID, opts...)
 }

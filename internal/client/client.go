@@ -141,8 +141,8 @@ func Wrap(base *http.Client, tokenSource oauth2.TokenSource, options ...Option) 
 	return client
 }
 
-// ClientCredentials sets the oauth2 client credentials.
-func ClientCredentials(ctx context.Context, uri, clientID, clientSecret string) oauth2.TokenSource {
+// OAuth2ClientCredentials sets the oauth2 client credentials.
+func OAuth2ClientCredentials(ctx context.Context, uri, clientID, clientSecret string) oauth2.TokenSource {
 	return (&clientcredentials.Config{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,

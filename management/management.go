@@ -19,12 +19,12 @@ import (
 	"github.com/auth0/go-auth0/internal/client"
 )
 
-// ManagementOption is used for passing options to the Management client.
-type ManagementOption func(*Management)
+// Option is used for passing options to the Management client.
+type Option func(*Management)
 
 // WithDebug configures the management client to dump http requests and
 // responses to stdout.
-func WithDebug(d bool) ManagementOption {
+func WithDebug(d bool) Option {
 	return func(m *Management) {
 		m.debug = d
 	}
@@ -32,7 +32,7 @@ func WithDebug(d bool) ManagementOption {
 
 // WithContext configures the management client to use the provided context
 // instead of the provided one.
-func WithContext(ctx context.Context) ManagementOption {
+func WithContext(ctx context.Context) Option {
 	return func(m *Management) {
 		m.ctx = ctx
 	}
@@ -40,7 +40,7 @@ func WithContext(ctx context.Context) ManagementOption {
 
 // WithUserAgent configures the management client to use the provided user agent
 // string instead of the default one.
-func WithUserAgent(userAgent string) ManagementOption {
+func WithUserAgent(userAgent string) Option {
 	return func(m *Management) {
 		m.userAgent = userAgent
 	}
@@ -48,15 +48,15 @@ func WithUserAgent(userAgent string) ManagementOption {
 
 // WithClientCredentials configures management to authenticate using the client
 // credentials authentication flow.
-func WithClientCredentials(clientID, clientSecret string) ManagementOption {
+func WithClientCredentials(clientID, clientSecret string) Option {
 	return func(m *Management) {
-		m.tokenSource = client.ClientCredentials(m.ctx, m.url.String(), clientID, clientSecret)
+		m.tokenSource = client.OAuth2ClientCredentials(m.ctx, m.url.String(), clientID, clientSecret)
 	}
 }
 
 // WithStaticToken configures management to authenticate using a static
 // authentication token.
-func WithStaticToken(token string) ManagementOption {
+func WithStaticToken(token string) Option {
 	return func(m *Management) {
 		m.tokenSource = client.StaticToken(token)
 	}
@@ -67,7 +67,7 @@ func WithStaticToken(token string) ManagementOption {
 //
 // This options is available for testing purposes and should not be used in
 // production.
-func WithInsecure() ManagementOption {
+func WithInsecure() Option {
 	return func(m *Management) {
 		m.tokenSource = client.StaticToken("insecure")
 		m.url.Scheme = "http"
@@ -75,7 +75,7 @@ func WithInsecure() ManagementOption {
 }
 
 // WithClient configures management to use the provided client.
-func WithClient(client *http.Client) ManagementOption {
+func WithClient(client *http.Client) Option {
 	return func(m *Management) {
 		m.http = client
 	}
@@ -177,7 +177,7 @@ type Management struct {
 
 // New creates a new Auth0 Management client by authenticating using the
 // supplied client id and secret.
-func New(domain string, options ...ManagementOption) (*Management, error) {
+func New(domain string, options ...Option) (*Management, error) {
 	// Ignore the scheme if it was defined in the domain variable. Then prefix
 	// with https as its the only scheme supported by the Auth0 API.
 	if i := strings.Index(domain, "//"); i != -1 {
