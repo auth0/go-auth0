@@ -226,13 +226,6 @@ func (m *ActionManager) Triggers(opts ...RequestOption) (l *ActionTriggerList, e
 	return
 }
 
-// ListTriggers lists the available triggers.
-//
-// Deprecated: use Triggers() instead.
-func (m *ActionManager) ListTriggers(opts ...RequestOption) (l *ActionTriggerList, err error) {
-	return m.Triggers(opts...)
-}
-
 // Create a new action.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/post_action
@@ -278,26 +271,12 @@ func (m *ActionManager) Version(id string, versionID string, opts ...RequestOpti
 	return
 }
 
-// ReadVersion retrieves the version of an action.
-//
-// Deprecated: use Version() instead.
-func (m *ActionManager) ReadVersion(id string, versionID string, opts ...RequestOption) (v *ActionVersion, err error) {
-	return m.Version(id, versionID, opts...)
-}
-
 // Versions lists all versions of an action.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_action_versions
 func (m *ActionManager) Versions(id string, opts ...RequestOption) (c *ActionVersionList, err error) {
 	err = m.Request("GET", m.URI("actions", "actions", id, "versions"), &c, applyActionsListDefaults(opts))
 	return
-}
-
-// ListVersions of an action.
-//
-// Deprecated: use Versions() instead.
-func (m *ActionManager) ListVersions(id string, opts ...RequestOption) (c *ActionVersionList, err error) {
-	return m.Versions(id, opts...)
 }
 
 // UpdateBindings of a trigger.
@@ -316,13 +295,6 @@ func (m *ActionManager) UpdateBindings(triggerID string, b []*ActionBinding, opt
 func (m *ActionManager) Bindings(triggerID string, opts ...RequestOption) (bl *ActionBindingList, err error) {
 	err = m.Request("GET", m.URI("actions", "triggers", triggerID, "bindings"), &bl, applyActionsListDefaults(opts))
 	return
-}
-
-// ListBindings lists the bindings of a trigger.
-//
-// Deprecated: use Bindings() instead.
-func (m *ActionManager) ListBindings(triggerID string, opts ...RequestOption) (bl *ActionBindingList, err error) {
-	return m.Bindings(triggerID, opts...)
 }
 
 // Deploy an action
@@ -358,11 +330,4 @@ func (m *ActionManager) Test(id string, payload *ActionTestPayload, opts ...Requ
 func (m *ActionManager) Execution(executionID string, opts ...RequestOption) (v *ActionExecution, err error) {
 	err = m.Request("GET", m.URI("actions", "executions", executionID), &v, opts...)
 	return
-}
-
-// ReadExecution retrieves the details of an action execution.
-//
-// Deprecated: use Execution() instead.
-func (m *ActionManager) ReadExecution(executionID string, opts ...RequestOption) (v *ActionExecution, err error) {
-	return m.Execution(executionID, opts...)
 }

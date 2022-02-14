@@ -37,7 +37,7 @@ func TestClient(t *testing.T) {
 
 	t.Run("List", func(t *testing.T) {
 		var cl *ClientList
-		cl, err = m.Client.List(WithFields("client_id"))
+		cl, err = m.Client.List(IncludeFields("client_id"))
 		if err != nil {
 			t.Error(err)
 		}

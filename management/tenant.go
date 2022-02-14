@@ -148,11 +148,6 @@ type TenantErrorPage struct {
 
 // TenantFlags holds information on flag toggles.
 type TenantFlags struct {
-	// Enables the first version of the Change Password flow. We've deprecated
-	// this option and recommending a safer flow. This flag is only for
-	// backwards compatibility.
-	ChangePasswordFlowV1 *bool `json:"change_pwd_flow_v1,omitempty"`
-
 	// This flag determines whether all current connections shall be enabled
 	// when a new client is created. Default value is true.
 	EnableClientConnections *bool `json:"enable_client_connections,omitempty"`

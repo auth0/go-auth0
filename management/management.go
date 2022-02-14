@@ -406,20 +406,6 @@ func Context(ctx context.Context) RequestOption {
 	})
 }
 
-// WithFields configures a request to include the desired fields.
-//
-// Deprecated: use IncludeFields instead.
-func WithFields(fields ...string) RequestOption {
-	return IncludeFields(fields...)
-}
-
-// WithoutFields configures a request to exclude the desired fields.
-//
-// Deprecated: use ExcludeFields instead.
-func WithoutFields(fields ...string) RequestOption {
-	return ExcludeFields(fields...)
-}
-
 // IncludeFields configures a request to include the desired fields.
 func IncludeFields(fields ...string) RequestOption {
 	return newRequestOption(func(r *http.Request) {

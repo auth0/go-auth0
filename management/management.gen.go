@@ -896,14 +896,6 @@ func (c *ClientRefreshToken) GetTokenLifetime() int {
 	return *c.TokenLifetime
 }
 
-// GetType returns the Type field if it's non-nil, zero value otherwise.
-func (c *ClientRefreshToken) GetType() string {
-	if c == nil || c.Type == nil {
-		return ""
-	}
-	return *c.Type
-}
-
 // String returns a string representation of ClientRefreshToken.
 func (c *ClientRefreshToken) String() string {
 	return Stringify(c)
@@ -5474,14 +5466,6 @@ func (t *TenantFlags) GetAllowChangingEnableSSO() bool {
 		return false
 	}
 	return *t.AllowChangingEnableSSO
-}
-
-// GetChangePasswordFlowV1 returns the ChangePasswordFlowV1 field if it's non-nil, zero value otherwise.
-func (t *TenantFlags) GetChangePasswordFlowV1() bool {
-	if t == nil || t.ChangePasswordFlowV1 == nil {
-		return false
-	}
-	return *t.ChangePasswordFlowV1
 }
 
 // GetDisableClickjackProtectionHeaders returns the DisableClickjackProtectionHeaders field if it's non-nil, zero value otherwise.
