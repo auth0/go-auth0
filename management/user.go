@@ -87,6 +87,8 @@ type User struct {
 
 	// AppMetadata holds data that the user has read-only access to.
 	// For example roles, permissions, vip, etc.
+	// NOTE: Roles added to AppMetadata are not integrated with Auth0 Role-Based Access Control (RBAC).
+	// For RBAC, see the functions User.Roles, User.AssignRoles, and User.RemoveRoles.
 	AppMetadata map[string]interface{} `json:"app_metadata,omitempty"`
 
 	// The user's picture url.
