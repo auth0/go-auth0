@@ -122,7 +122,7 @@ tenant that has been authorized to call the Management API. You can easily set o
 [API Explorer Application](https://auth0.com/docs/tokens/management-api-access-tokens/create-and-authorize-a-machine-to-machine-application)
 in your tenant.
 
-Then simply create a local `.env` file with the following settings:
+Then simply create a local `.env` file in the `management` folder with the following settings:
 
 * `AUTH0_DOMAIN`: The **Domain** of the M2M app
 * `AUTH0_CLIENT_ID`: The **Client ID** of the M2M app

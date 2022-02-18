@@ -5632,6 +5632,14 @@ func (t *TenantUniversalLoginColors) String() string {
 	return Stringify(t)
 }
 
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (t *Ticket) GetClientID() string {
+	if t == nil || t.ClientID == nil {
+		return ""
+	}
+	return *t.ClientID
+}
+
 // GetConnectionID returns the ConnectionID field if it's non-nil, zero value otherwise.
 func (t *Ticket) GetConnectionID() string {
 	if t == nil || t.ConnectionID == nil {
