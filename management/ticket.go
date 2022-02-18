@@ -14,6 +14,13 @@ type Ticket struct {
 	// applied.
 	TTLSec *int `json:"ttl_sec,omitempty"`
 
+	// ID of the client. If provided for tenants using New Universal Login experience,
+	// the user will be prompted to redirect to the default login route of the
+	// corresponding application once the ticket is used.
+	//
+	// Conflicts with: ResultURL
+	ClientID *string `json:"client_id,omitempty"`
+
 	// The connection that provides the identity for which the password is to be
 	// changed. If sending this parameter, the email is also required and the
 	// UserID is invalid.
