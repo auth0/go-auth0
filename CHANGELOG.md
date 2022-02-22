@@ -1,5 +1,16 @@
 # Change Log
 
+<a name="v0.6.0"></a>
+## [v0.6.0](https://github.com/auth0/go-auth0/tree/v0.6.0) (2022-02-22)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.5.0...v0.6.0)
+
+### Added 
+
+- [DXCDT-44] Add attack protection endpoints ([#27](https://github.com/auth0/go-auth0/pull/27))
+- Added missing field `ClientID` to `Ticket` ([#25](https://github.com/auth0/go-auth0/pull/25/))
+- Clarify intended usage of roles in app metadata vs RBAC ([#24](https://github.com/auth0/go-auth0/pull/24))
+
 <a name="v0.5.0"></a>
 ## [v0.5.0](https://github.com/auth0/go-auth0/tree/v0.5.0) (2022-02-14)
 
