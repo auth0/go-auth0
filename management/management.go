@@ -166,6 +166,9 @@ type Management struct {
 	// Organization manages Auth0 Organizations.
 	Organization *OrganizationManager
 
+	// AttackProtection manages Auth0 Attack Protection.
+	AttackProtection *AttackProtectionManager
+
 	url         *url.URL
 	basePath    string
 	userAgent   string
@@ -235,6 +238,7 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.Anomaly = newAnomalyManager(m)
 	m.Action = newActionManager(m)
 	m.Organization = newOrganizationManager(m)
+	m.AttackProtection = newAttackProtectionManager(m)
 
 	return m, nil
 }
