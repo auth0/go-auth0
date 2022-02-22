@@ -570,6 +570,88 @@ func (b *BrandingUniversalLogin) String() string {
 	return Stringify(b)
 }
 
+// GetAdminNotificationFrequency returns the AdminNotificationFrequency field if it's non-nil, zero value otherwise.
+func (b *BreachedPasswordDetection) GetAdminNotificationFrequency() []string {
+	if b == nil || b.AdminNotificationFrequency == nil {
+		return nil
+	}
+	return *b.AdminNotificationFrequency
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (b *BreachedPasswordDetection) GetEnabled() bool {
+	if b == nil || b.Enabled == nil {
+		return false
+	}
+	return *b.Enabled
+}
+
+// GetMethod returns the Method field if it's non-nil, zero value otherwise.
+func (b *BreachedPasswordDetection) GetMethod() string {
+	if b == nil || b.Method == nil {
+		return ""
+	}
+	return *b.Method
+}
+
+// GetShields returns the Shields field if it's non-nil, zero value otherwise.
+func (b *BreachedPasswordDetection) GetShields() []string {
+	if b == nil || b.Shields == nil {
+		return nil
+	}
+	return *b.Shields
+}
+
+// String returns a string representation of BreachedPasswordDetection.
+func (b *BreachedPasswordDetection) String() string {
+	return Stringify(b)
+}
+
+// GetAllowList returns the AllowList field if it's non-nil, zero value otherwise.
+func (b *BruteForceProtection) GetAllowList() []string {
+	if b == nil || b.AllowList == nil {
+		return nil
+	}
+	return *b.AllowList
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (b *BruteForceProtection) GetEnabled() bool {
+	if b == nil || b.Enabled == nil {
+		return false
+	}
+	return *b.Enabled
+}
+
+// GetMaxAttempts returns the MaxAttempts field if it's non-nil, zero value otherwise.
+func (b *BruteForceProtection) GetMaxAttempts() int {
+	if b == nil || b.MaxAttempts == nil {
+		return 0
+	}
+	return *b.MaxAttempts
+}
+
+// GetMode returns the Mode field if it's non-nil, zero value otherwise.
+func (b *BruteForceProtection) GetMode() string {
+	if b == nil || b.Mode == nil {
+		return ""
+	}
+	return *b.Mode
+}
+
+// GetShields returns the Shields field if it's non-nil, zero value otherwise.
+func (b *BruteForceProtection) GetShields() []string {
+	if b == nil || b.Shields == nil {
+		return nil
+	}
+	return *b.Shields
+}
+
+// String returns a string representation of BruteForceProtection.
+func (b *BruteForceProtection) String() string {
+	return Stringify(b)
+}
+
 // GetAppType returns the AppType field if it's non-nil, zero value otherwise.
 func (c *Client) GetAppType() string {
 	if c == nil || c.AppType == nil {
@@ -4910,6 +4992,48 @@ func (p *PhoneMessageTypes) String() string {
 	return Stringify(p)
 }
 
+// GetMaxAttempts returns the MaxAttempts field if it's non-nil, zero value otherwise.
+func (p *PreLogin) GetMaxAttempts() int {
+	if p == nil || p.MaxAttempts == nil {
+		return 0
+	}
+	return *p.MaxAttempts
+}
+
+// GetRate returns the Rate field if it's non-nil, zero value otherwise.
+func (p *PreLogin) GetRate() int {
+	if p == nil || p.Rate == nil {
+		return 0
+	}
+	return *p.Rate
+}
+
+// String returns a string representation of PreLogin.
+func (p *PreLogin) String() string {
+	return Stringify(p)
+}
+
+// GetMaxAttempts returns the MaxAttempts field if it's non-nil, zero value otherwise.
+func (p *PreUserRegistration) GetMaxAttempts() int {
+	if p == nil || p.MaxAttempts == nil {
+		return 0
+	}
+	return *p.MaxAttempts
+}
+
+// GetRate returns the Rate field if it's non-nil, zero value otherwise.
+func (p *PreUserRegistration) GetRate() int {
+	if p == nil || p.Rate == nil {
+		return 0
+	}
+	return *p.Rate
+}
+
+// String returns a string representation of PreUserRegistration.
+func (p *PreUserRegistration) String() string {
+	return Stringify(p)
+}
+
 // GetIdentifierFirst returns the IdentifierFirst field if it's non-nil, zero value otherwise.
 func (p *Prompt) GetIdentifierFirst() bool {
 	if p == nil || p.IdentifierFirst == nil {
@@ -5253,6 +5377,64 @@ func (s *SigningKey) GetThumbprint() string {
 
 // String returns a string representation of SigningKey.
 func (s *SigningKey) String() string {
+	return Stringify(s)
+}
+
+// GetPreLogin returns the PreLogin field.
+func (s *Stage) GetPreLogin() *PreLogin {
+	if s == nil {
+		return nil
+	}
+	return s.PreLogin
+}
+
+// GetPreUserRegistration returns the PreUserRegistration field.
+func (s *Stage) GetPreUserRegistration() *PreUserRegistration {
+	if s == nil {
+		return nil
+	}
+	return s.PreUserRegistration
+}
+
+// String returns a string representation of Stage.
+func (s *Stage) String() string {
+	return Stringify(s)
+}
+
+// GetAllowList returns the AllowList field if it's non-nil, zero value otherwise.
+func (s *SuspiciousIPThrottling) GetAllowList() []string {
+	if s == nil || s.AllowList == nil {
+		return nil
+	}
+	return *s.AllowList
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (s *SuspiciousIPThrottling) GetEnabled() bool {
+	if s == nil || s.Enabled == nil {
+		return false
+	}
+	return *s.Enabled
+}
+
+// GetShields returns the Shields field if it's non-nil, zero value otherwise.
+func (s *SuspiciousIPThrottling) GetShields() []string {
+	if s == nil || s.Shields == nil {
+		return nil
+	}
+	return *s.Shields
+}
+
+// GetStage returns the Stage field.
+func (s *SuspiciousIPThrottling) GetStage() *Stage {
+	if s == nil {
+		return nil
+	}
+	return s.Stage
+}
+
+// String returns a string representation of SuspiciousIPThrottling.
+func (s *SuspiciousIPThrottling) String() string {
 	return Stringify(s)
 }
 
