@@ -98,6 +98,9 @@ type Connection struct {
 
 	// Provisioning Ticket URL is Ticket URL for Active Directory/LDAP, etc.
 	ProvisioningTicketURL *string `json:"provisioning_ticket_url,omitempty"`
+
+	// Display connection as a button.
+	ShowAsButton *bool `json:"show_as_button,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaler interface.
