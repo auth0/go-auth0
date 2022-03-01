@@ -69,7 +69,7 @@ func (m *AttackProtectionManager) UpdateBreachedPasswordDetection(
 type BruteForceProtection struct {
 	Enabled     *bool     `json:"enabled,omitempty"`
 	Shields     *[]string `json:"shields,omitempty"`
-	AllowList   *[]string `json:"allow_list,omitempty"`
+	AllowList   *[]string `json:"allowlist,omitempty"`
 	Mode        *string   `json:"mode,omitempty"`
 	MaxAttempts *int      `json:"max_attempts,omitempty"`
 }
@@ -117,7 +117,7 @@ func (m *AttackProtectionManager) UpdateBruteForceProtection(
 type SuspiciousIPThrottling struct {
 	Enabled   *bool     `json:"enabled,omitempty"`
 	Shields   *[]string `json:"shields,omitempty"`
-	AllowList *[]string `json:"allow_list,omitempty"`
+	AllowList *[]string `json:"allowlist,omitempty"`
 	Stage     *Stage    `json:"stage,omitempty"`
 }
 
