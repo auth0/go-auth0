@@ -1,5 +1,18 @@
 # Change Log
 
+<a name="v0.6.1"></a>
+## [v0.6.1](https://github.com/auth0/go-auth0/tree/v0.6.1) (2022-03-03)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.0...v0.6.1)
+
+### Added
+
+- Added `ShowAsButton` option on `Connection` ([#29](https://github.com/auth0/go-auth0/pull/29))
+
+### Fixed
+
+- Fixed json tags on AllowList for Attack Protection structs ([#30](https://github.com/auth0/go-auth0/pull/30))
+
 <a name="v0.6.0"></a>
 ## [v0.6.0](https://github.com/auth0/go-auth0/tree/v0.6.0) (2022-02-22)
 
