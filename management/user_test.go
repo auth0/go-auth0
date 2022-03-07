@@ -400,5 +400,15 @@ func TestUserIdentity(t *testing.T) {
 			}
 			expect.Expect(t, u.GetUserID(), expected.GetUserID())
 		}
+
+		profileData := map[string]interface{}{"picture": "some-picture.jpeg"}
+		b := `{"profileData": {"picture": "some-picture.jpeg"}}`
+		expected := &UserIdentity{ProfileData: &profileData}
+		var u UserIdentity
+		err := json.Unmarshal([]byte(b), &u)
+		if err != nil {
+			t.Error(err)
+		}
+		expect.Expect(t, u.ProfileData, expected.ProfileData)
 	})
 }
