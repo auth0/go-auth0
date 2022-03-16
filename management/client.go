@@ -73,20 +73,20 @@ type Client struct {
 	CrossOriginLocation *string `json:"cross_origin_loc,omitempty"`
 
 	// True if the custom login page is to be used, false otherwise. Defaults to true.
-	CustomLoginPageOn      *bool                  `json:"custom_login_page_on,omitempty"`
-	CustomLoginPage        *string                `json:"custom_login_page,omitempty"`
-	CustomLoginPagePreview *string                `json:"custom_login_page_preview,omitempty"`
-	FormTemplate           *string                `json:"form_template,omitempty"`
-	Addons                 map[string]interface{} `json:"addons,omitempty"`
+	CustomLoginPageOn      *bool         `json:"custom_login_page_on,omitempty"`
+	CustomLoginPage        *string       `json:"custom_login_page,omitempty"`
+	CustomLoginPagePreview *string       `json:"custom_login_page_preview,omitempty"`
+	FormTemplate           *string       `json:"form_template,omitempty"`
+	Addons                 *ClientAddons `json:"addons,omitempty"`
 
 	// Defines the requested authentication method for the token endpoint.
 	// Possible values are:
 	// 	'none' (public client without a client secret),
 	// 	'client_secret_post' (client uses HTTP POST parameters) or
 	// 	'client_secret_basic' (client uses HTTP Basic)
-	TokenEndpointAuthMethod *string                `json:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          map[string]string      `json:"client_metadata,omitempty"`
-	Mobile                  map[string]interface{} `json:"mobile,omitempty"`
+	TokenEndpointAuthMethod *string           `json:"token_endpoint_auth_method,omitempty"`
+	ClientMetadata          map[string]string `json:"client_metadata,omitempty"`
+	Mobile                  *ClientMobile     `json:"mobile,omitempty"`
 
 	// Initiate login uri, must be https and cannot contain a fragment.
 	InitiateLoginURI *string `json:"initiate_login_uri,omitempty"`
@@ -96,6 +96,59 @@ type Client struct {
 
 	OrganizationUsage           *string `json:"organization_usage,omitempty"`
 	OrganizationRequireBehavior *string `json:"organization_require_behavior,omitempty"`
+}
+
+// ClientMobile native mobile app configuration.
+type ClientMobile struct {
+	Android *ClientMobileAndroid `json:"android,omitempty"`
+	IOS     *ClientMobileIOS     `json:"ios,omitempty"`
+}
+
+// ClientMobileAndroid native android app configuration.
+type ClientMobileAndroid struct {
+	AppPackageName         *string   `json:"app_package_name,omitempty"`
+	SHA256CertFingerprints *[]string `json:"sha256_cert_fingerprints,omitempty"`
+}
+
+// ClientMobileIOS native iOS app configuration.
+type ClientMobileIOS struct {
+	TeamID              *string `json:"team_id,omitempty"`
+	AppBundleIdentifier *string `json:"app_bundle_identifier,omitempty"`
+}
+
+// ClientAddons is used to configure Addon settings for our Client.
+type ClientAddons struct {
+	SAML *ClientAddonSAML `json:"samlp,omitempty"`
+}
+
+// ClientAddonSAML is a SAML2 Addon indicator.
+type ClientAddonSAML struct {
+	Audience                       *string                `json:"audience,omitempty"`
+	Recipient                      *string                `json:"recipient,omitempty"`
+	Mappings                       map[string]interface{} `json:"mappings,omitempty"`
+	CreateUpnClaim                 *bool                  `json:"createUpnClaim,omitempty"`
+	PassThroughClaimsWithNoMapping *bool                  `json:"passthroughClaimsWithNoMapping,omitempty"`
+	MapUnknownClaimsAsIs           *bool                  `json:"mapUnknownClaimsAsIs,omitempty"`
+	MapIdentities                  *bool                  `json:"mapIdentities,omitempty"`
+	SignatureAlgorithm             *string                `json:"signatureAlgorithm,omitempty"`
+	DigestAlgorithm                *string                `json:"digestAlgorithm,omitempty"`
+	Destination                    *string                `json:"destination,omitempty"`
+	LifetimeInSeconds              *int                   `json:"lifetimeInSeconds,omitempty"`
+	SignResponse                   *bool                  `json:"signResponse,omitempty"`
+	NameIdentifierFormat           *string                `json:"nameIdentifierFormat,omitempty"`
+	NameIdentifierProbes           *[]string              `json:"nameIdentifierProbes,omitempty"`
+	AuthnContextClassRef           *string                `json:"authnContextClassRef,omitempty"`
+	TypedAttributes                *bool                  `json:"typedAttribute,omitempty"`
+	IncludeAttributeNameFormat     *bool                  `json:"includeAttributeNameFormat,omitempty"`
+	Logout                         *ClientAddonSAMLLogout `json:"logout,omitempty"`
+	Binding                        *string                `json:"binding,omitempty"`
+	SigningCert                    *string                `json:"signingCert,omitempty"`
+}
+
+// ClientAddonSAMLLogout controls SAML2 Logout.
+type ClientAddonSAMLLogout struct {
+	Callback   *string `json:"callback,omitempty"`
+	SLOEnabled *bool   `json:"slo_enabled,omitempty"`
 }
 
 // ClientJWTConfiguration is used to configure JWT settings for our Client.

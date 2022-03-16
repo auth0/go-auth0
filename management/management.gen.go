@@ -652,6 +652,14 @@ func (b *BruteForceProtection) String() string {
 	return Stringify(b)
 }
 
+// GetAddons returns the Addons field.
+func (c *Client) GetAddons() *ClientAddons {
+	if c == nil {
+		return nil
+	}
+	return c.Addons
+}
+
 // GetAppType returns the AppType field if it's non-nil, zero value otherwise.
 func (c *Client) GetAppType() string {
 	if c == nil || c.AppType == nil {
@@ -772,6 +780,14 @@ func (c *Client) GetLogoURI() string {
 	return *c.LogoURI
 }
 
+// GetMobile returns the Mobile field.
+func (c *Client) GetMobile() *ClientMobile {
+	if c == nil {
+		return nil
+	}
+	return c.Mobile
+}
+
 // GetName returns the Name field if it's non-nil, zero value otherwise.
 func (c *Client) GetName() string {
 	if c == nil || c.Name == nil {
@@ -849,6 +865,197 @@ func (c *Client) String() string {
 	return Stringify(c)
 }
 
+// GetSAML returns the SAML field.
+func (c *ClientAddons) GetSAML() *ClientAddonSAML {
+	if c == nil {
+		return nil
+	}
+	return c.SAML
+}
+
+// String returns a string representation of ClientAddons.
+func (c *ClientAddons) String() string {
+	return Stringify(c)
+}
+
+// GetAudience returns the Audience field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetAudience() string {
+	if c == nil || c.Audience == nil {
+		return ""
+	}
+	return *c.Audience
+}
+
+// GetAuthnContextClassRef returns the AuthnContextClassRef field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetAuthnContextClassRef() string {
+	if c == nil || c.AuthnContextClassRef == nil {
+		return ""
+	}
+	return *c.AuthnContextClassRef
+}
+
+// GetBinding returns the Binding field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetBinding() string {
+	if c == nil || c.Binding == nil {
+		return ""
+	}
+	return *c.Binding
+}
+
+// GetCreateUpnClaim returns the CreateUpnClaim field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetCreateUpnClaim() bool {
+	if c == nil || c.CreateUpnClaim == nil {
+		return false
+	}
+	return *c.CreateUpnClaim
+}
+
+// GetDestination returns the Destination field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetDestination() string {
+	if c == nil || c.Destination == nil {
+		return ""
+	}
+	return *c.Destination
+}
+
+// GetDigestAlgorithm returns the DigestAlgorithm field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetDigestAlgorithm() string {
+	if c == nil || c.DigestAlgorithm == nil {
+		return ""
+	}
+	return *c.DigestAlgorithm
+}
+
+// GetIncludeAttributeNameFormat returns the IncludeAttributeNameFormat field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetIncludeAttributeNameFormat() bool {
+	if c == nil || c.IncludeAttributeNameFormat == nil {
+		return false
+	}
+	return *c.IncludeAttributeNameFormat
+}
+
+// GetLifetimeInSeconds returns the LifetimeInSeconds field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetLifetimeInSeconds() int {
+	if c == nil || c.LifetimeInSeconds == nil {
+		return 0
+	}
+	return *c.LifetimeInSeconds
+}
+
+// GetLogout returns the Logout field.
+func (c *ClientAddonSAML) GetLogout() *ClientAddonSAMLLogout {
+	if c == nil {
+		return nil
+	}
+	return c.Logout
+}
+
+// GetMapIdentities returns the MapIdentities field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetMapIdentities() bool {
+	if c == nil || c.MapIdentities == nil {
+		return false
+	}
+	return *c.MapIdentities
+}
+
+// GetMapUnknownClaimsAsIs returns the MapUnknownClaimsAsIs field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetMapUnknownClaimsAsIs() bool {
+	if c == nil || c.MapUnknownClaimsAsIs == nil {
+		return false
+	}
+	return *c.MapUnknownClaimsAsIs
+}
+
+// GetNameIdentifierFormat returns the NameIdentifierFormat field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetNameIdentifierFormat() string {
+	if c == nil || c.NameIdentifierFormat == nil {
+		return ""
+	}
+	return *c.NameIdentifierFormat
+}
+
+// GetNameIdentifierProbes returns the NameIdentifierProbes field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetNameIdentifierProbes() []string {
+	if c == nil || c.NameIdentifierProbes == nil {
+		return nil
+	}
+	return *c.NameIdentifierProbes
+}
+
+// GetPassThroughClaimsWithNoMapping returns the PassThroughClaimsWithNoMapping field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetPassThroughClaimsWithNoMapping() bool {
+	if c == nil || c.PassThroughClaimsWithNoMapping == nil {
+		return false
+	}
+	return *c.PassThroughClaimsWithNoMapping
+}
+
+// GetRecipient returns the Recipient field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetRecipient() string {
+	if c == nil || c.Recipient == nil {
+		return ""
+	}
+	return *c.Recipient
+}
+
+// GetSignatureAlgorithm returns the SignatureAlgorithm field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetSignatureAlgorithm() string {
+	if c == nil || c.SignatureAlgorithm == nil {
+		return ""
+	}
+	return *c.SignatureAlgorithm
+}
+
+// GetSigningCert returns the SigningCert field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetSigningCert() string {
+	if c == nil || c.SigningCert == nil {
+		return ""
+	}
+	return *c.SigningCert
+}
+
+// GetSignResponse returns the SignResponse field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetSignResponse() bool {
+	if c == nil || c.SignResponse == nil {
+		return false
+	}
+	return *c.SignResponse
+}
+
+// GetTypedAttributes returns the TypedAttributes field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAML) GetTypedAttributes() bool {
+	if c == nil || c.TypedAttributes == nil {
+		return false
+	}
+	return *c.TypedAttributes
+}
+
+// String returns a string representation of ClientAddonSAML.
+func (c *ClientAddonSAML) String() string {
+	return Stringify(c)
+}
+
+// GetCallback returns the Callback field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAMLLogout) GetCallback() string {
+	if c == nil || c.Callback == nil {
+		return ""
+	}
+	return *c.Callback
+}
+
+// GetSLOEnabled returns the SLOEnabled field if it's non-nil, zero value otherwise.
+func (c *ClientAddonSAMLLogout) GetSLOEnabled() bool {
+	if c == nil || c.SLOEnabled == nil {
+		return false
+	}
+	return *c.SLOEnabled
+}
+
+// String returns a string representation of ClientAddonSAMLLogout.
+func (c *ClientAddonSAMLLogout) String() string {
+	return Stringify(c)
+}
+
 // GetAudience returns the Audience field if it's non-nil, zero value otherwise.
 func (c *ClientGrant) GetAudience() string {
 	if c == nil || c.Audience == nil {
@@ -914,6 +1121,69 @@ func (c *ClientJWTConfiguration) String() string {
 
 // String returns a string representation of ClientList.
 func (c *ClientList) String() string {
+	return Stringify(c)
+}
+
+// GetAndroid returns the Android field.
+func (c *ClientMobile) GetAndroid() *ClientMobileAndroid {
+	if c == nil {
+		return nil
+	}
+	return c.Android
+}
+
+// GetIOS returns the IOS field.
+func (c *ClientMobile) GetIOS() *ClientMobileIOS {
+	if c == nil {
+		return nil
+	}
+	return c.IOS
+}
+
+// String returns a string representation of ClientMobile.
+func (c *ClientMobile) String() string {
+	return Stringify(c)
+}
+
+// GetAppPackageName returns the AppPackageName field if it's non-nil, zero value otherwise.
+func (c *ClientMobileAndroid) GetAppPackageName() string {
+	if c == nil || c.AppPackageName == nil {
+		return ""
+	}
+	return *c.AppPackageName
+}
+
+// GetSHA256CertFingerprints returns the SHA256CertFingerprints field if it's non-nil, zero value otherwise.
+func (c *ClientMobileAndroid) GetSHA256CertFingerprints() []string {
+	if c == nil || c.SHA256CertFingerprints == nil {
+		return nil
+	}
+	return *c.SHA256CertFingerprints
+}
+
+// String returns a string representation of ClientMobileAndroid.
+func (c *ClientMobileAndroid) String() string {
+	return Stringify(c)
+}
+
+// GetAppBundleIdentifier returns the AppBundleIdentifier field if it's non-nil, zero value otherwise.
+func (c *ClientMobileIOS) GetAppBundleIdentifier() string {
+	if c == nil || c.AppBundleIdentifier == nil {
+		return ""
+	}
+	return *c.AppBundleIdentifier
+}
+
+// GetTeamID returns the TeamID field if it's non-nil, zero value otherwise.
+func (c *ClientMobileIOS) GetTeamID() string {
+	if c == nil || c.TeamID == nil {
+		return ""
+	}
+	return *c.TeamID
+}
+
+// String returns a string representation of ClientMobileIOS.
+func (c *ClientMobileIOS) String() string {
 	return Stringify(c)
 }
 
