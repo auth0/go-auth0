@@ -2,6 +2,7 @@ package management
 
 import (
 	"encoding/json"
+	"strings"
 	"testing"
 	"time"
 
@@ -367,6 +368,57 @@ func TestUser(t *testing.T) {
 		t.Cleanup(func() {
 			m.User.Delete(bruceWayne.GetID())
 			m.User.Delete(batman.GetID())
+		})
+	})
+
+	t.Run("Unlink", func(t *testing.T) {
+
+		cs, err := m.Connection.ReadByName("Username-Password-Authentication")
+		if err != nil {
+			t.Error(err)
+		}
+
+		mainUser := &User{
+			Email:      auth0.String("main@user.example"),
+			Username:   auth0.String("main_user"),
+			Password:   auth0.String("NF2QZxci3Z5NikLRoHcAu3H5"),
+			Connection: cs.Name,
+		}
+		if err := m.User.Create(mainUser); err != nil {
+			t.Error(err)
+		}
+
+		secondaryUser := &User{
+			Email:      auth0.String("secondary@user.example"),
+			Username:   auth0.String("secondary_user"),
+			Password:   auth0.String("Ta9Y95PNbiCummJ3zpzCtEYy"),
+			Connection: cs.Name,
+		}
+		if err := m.User.Create(secondaryUser); err != nil {
+			t.Error(err)
+		}
+
+		linkedIdentities, err := m.User.Link(mainUser.GetID(), &UserIdentityLink{
+			Provider:     auth0.String("auth0"),
+			UserID:       secondaryUser.ID,
+			ConnectionID: cs.ID,
+		})
+		if err != nil {
+			t.Error(err)
+		}
+		jsonLinkedIdentities, _ := json.Marshal(linkedIdentities)
+		t.Logf("%v\n", string(jsonLinkedIdentities))
+
+		unlinkedIdentities, err := m.User.Unlink(mainUser.GetID(), "auth0", strings.TrimPrefix(secondaryUser.GetID(), "auth0|"))
+		if err != nil {
+			t.Error(err)
+		}
+		jsonUnlinkedIdentities, _ := json.Marshal(unlinkedIdentities)
+		t.Logf("%v\n", string(jsonUnlinkedIdentities))
+
+		t.Cleanup(func() {
+			m.User.Delete(mainUser.GetID())
+			m.User.Delete(secondaryUser.GetID())
 		})
 	})
 }
