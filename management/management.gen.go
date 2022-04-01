@@ -3540,6 +3540,14 @@ func (c *CreateEnrollmentTicket) String() string {
 	return Stringify(c)
 }
 
+// GetCNAMEAPIKey returns the CNAMEAPIKey field if it's non-nil, zero value otherwise.
+func (c *CustomDomain) GetCNAMEAPIKey() string {
+	if c == nil || c.CNAMEAPIKey == nil {
+		return ""
+	}
+	return *c.CNAMEAPIKey
+}
+
 // GetCustomClientIPHeader returns the CustomClientIPHeader field if it's non-nil, zero value otherwise.
 func (c *CustomDomain) GetCustomClientIPHeader() string {
 	if c == nil || c.CustomClientIPHeader == nil {
@@ -3562,6 +3570,14 @@ func (c *CustomDomain) GetID() string {
 		return ""
 	}
 	return *c.ID
+}
+
+// GetOriginDomainName returns the OriginDomainName field if it's non-nil, zero value otherwise.
+func (c *CustomDomain) GetOriginDomainName() string {
+	if c == nil || c.OriginDomainName == nil {
+		return ""
+	}
+	return *c.OriginDomainName
 }
 
 // GetPrimary returns the Primary field if it's non-nil, zero value otherwise.

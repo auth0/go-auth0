@@ -22,6 +22,15 @@ type CustomDomain struct {
 	// "disabled", "pending", "pending_verification" or "ready"
 	Status *string `json:"status,omitempty"`
 
+	// The origin domain name that the CNAME or reverse proxy should be pointed
+	// to.
+	OriginDomainName *string `json:"origin_domain_name,omitempty"`
+
+	// For self-managed certificates, when the verification completes for the
+	// first time, this field will be set to the value the reverse proxy should
+	// send in the cname-api-key header field.
+	CNAMEAPIKey *string `json:"cname_api_key,omitempty"`
+
 	// The custom domain verification method. The only allowed value is "txt".
 	VerificationMethod *string `json:"verification_method,omitempty"`
 
