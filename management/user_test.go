@@ -5,6 +5,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/auth0/go-auth0"
 	"github.com/auth0/go-auth0/internal/testing/expect"
 )
@@ -387,28 +389,22 @@ func TestUserIdentity(t *testing.T) {
 	})
 
 	t.Run("UnmarshalJSON", func(t *testing.T) {
-		for b, expected := range map[string]*UserIdentity{
+		for expectedAsString, expected := range map[string]*UserIdentity{
 			`{}`:                {UserID: nil},
 			`{"user_id":1}`:     {UserID: auth0.String("1")},
 			`{"user_id":"1"}`:   {UserID: auth0.String("1")},
 			`{"user_id":"foo"}`: {UserID: auth0.String("foo")},
+			`{"profileData": {"picture": "some-picture.jpeg"}}`: {
+				ProfileData: &map[string]interface{}{
+					"picture": "some-picture.jpeg",
+				},
+			},
 		} {
-			var u UserIdentity
-			err := json.Unmarshal([]byte(b), &u)
-			if err != nil {
+			var actual *UserIdentity
+			if err := json.Unmarshal([]byte(expectedAsString), &actual); err != nil {
 				t.Error(err)
 			}
-			expect.Expect(t, u.GetUserID(), expected.GetUserID())
+			assert.Equal(t, expected, actual)
 		}
-
-		profileData := map[string]interface{}{"picture": "some-picture.jpeg"}
-		b := `{"profileData": {"picture": "some-picture.jpeg"}}`
-		expected := &UserIdentity{ProfileData: &profileData}
-		var u UserIdentity
-		err := json.Unmarshal([]byte(b), &u)
-		if err != nil {
-			t.Error(err)
-		}
-		expect.Expect(t, u.ProfileData, expected.ProfileData)
 	})
 }
