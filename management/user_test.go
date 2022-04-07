@@ -372,7 +372,6 @@ func TestUser(t *testing.T) {
 	})
 
 	t.Run("Unlink", func(t *testing.T) {
-
 		cs, err := m.Connection.ReadByName("Username-Password-Authentication")
 		if err != nil {
 			t.Error(err)
@@ -406,14 +405,20 @@ func TestUser(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		jsonLinkedIdentities, _ := json.Marshal(linkedIdentities)
+		jsonLinkedIdentities, err := json.Marshal(linkedIdentities)
+		if err != nil {
+			t.Error(err)
+		}
 		t.Logf("%v\n", string(jsonLinkedIdentities))
 
 		unlinkedIdentities, err := m.User.Unlink(mainUser.GetID(), "auth0", strings.TrimPrefix(secondaryUser.GetID(), "auth0|"))
 		if err != nil {
 			t.Error(err)
 		}
-		jsonUnlinkedIdentities, _ := json.Marshal(unlinkedIdentities)
+		jsonUnlinkedIdentities, err := json.Marshal(unlinkedIdentities)
+		if err != nil {
+			t.Error(err)
+		}
 		t.Logf("%v\n", string(jsonUnlinkedIdentities))
 
 		t.Cleanup(func() {

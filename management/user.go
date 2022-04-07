@@ -551,8 +551,8 @@ func (m *UserManager) Link(id string, il *UserIdentityLink, opts ...RequestOptio
 // Unlink unlinks an identity from a user making it a separate account again.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/delete_user_identity_by_user_id
-func (m *UserManager) Unlink(id, provider, userId string, opts ...RequestOption) (uIDs []UserIdentity, err error) {
-	err = m.Request("DELETE", m.URI("users", id, "identities", provider, userId), &uIDs, opts...)
+func (m *UserManager) Unlink(id, provider, userID string, opts ...RequestOption) (uIDs []UserIdentity, err error) {
+	err = m.Request("DELETE", m.URI("users", id, "identities", provider, userID), &uIDs, opts...)
 	return
 }
 
