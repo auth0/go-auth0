@@ -1,5 +1,18 @@
 # Change Log
 
+<a name="v0.6.2"></a>
+## [v0.6.2](https://github.com/auth0/go-auth0/tree/v0.6.2) (2022-04-07)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.1...v0.6.2)
+
+### Added
+
+- Added a method to `Unlink` a `User`'s identity ([#35](https://github.com/auth0/go-auth0/pull/35))
+- Added fields required to support self-managed certificates ([#37](https://github.com/auth0/go-auth0/pull/37))
+- Added `profileData` key to `UserIdentity` ([#33](https://github.com/auth0/go-auth0/pull/33))
+- [DXCDT-104] Added `Filters` to `LogStream` ([#38](https://github.com/auth0/go-auth0/pull/38))
+
+
 <a name="v0.6.1"></a>
 ## [v0.6.1](https://github.com/auth0/go-auth0/tree/v0.6.1) (2022-03-03)
 

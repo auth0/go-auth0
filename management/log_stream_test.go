@@ -9,9 +9,15 @@ import (
 )
 
 func TestLogStream(t *testing.T) {
-	l := &LogStream{
+	logStream := &LogStream{
 		Name: auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
 		Type: auth0.String(LogStreamTypeDatadog),
+		Filters: []interface{}{
+			map[string]string{
+				"type": "category",
+				"name": "auth.login.fail",
+			},
+		},
 		Sink: &LogStreamSinkDatadog{
 			APIKey: auth0.String("12334567876543"),
 			Region: auth0.String("eu"),
@@ -21,25 +27,25 @@ func TestLogStream(t *testing.T) {
 	var err error
 
 	t.Run("Create", func(t *testing.T) {
-		err = m.LogStream.Create(l)
+		err = m.LogStream.Create(logStream)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if _, ok := l.Sink.(*LogStreamSinkDatadog); !ok {
-			t.Errorf("unexpected options type %T", l.Sink)
+		if _, ok := logStream.Sink.(*LogStreamSinkDatadog); !ok {
+			t.Errorf("unexpected options type %T", logStream.Sink)
 		}
-		t.Logf("%v\n", l)
+		t.Logf("%v\n", logStream)
 	})
 
 	t.Run("Read", func(t *testing.T) {
-		l, err = m.LogStream.Read(l.GetID())
+		logStream, err = m.LogStream.Read(logStream.GetID())
 		if err != nil {
 			t.Error(err)
 		}
-		if _, ok := l.Sink.(*LogStreamSinkDatadog); !ok {
-			t.Errorf("unexpected options type %T", l.Sink)
+		if _, ok := logStream.Sink.(*LogStreamSinkDatadog); !ok {
+			t.Errorf("unexpected options type %T", logStream.Sink)
 		}
-		t.Logf("%v\n", l)
+		t.Logf("%v\n", logStream)
 	})
 
 	t.Run("List", func(t *testing.T) {
@@ -76,27 +82,27 @@ func TestLogStream(t *testing.T) {
 	})
 
 	t.Run("Update", func(t *testing.T) {
-		id := l.GetID()
+		id := logStream.GetID()
 
-		l.ID = nil   // read-only
-		l.Name = nil // read-only
-		l.Type = nil // read-only
+		logStream.ID = nil   // read-only
+		logStream.Name = nil // read-only
+		logStream.Type = nil // read-only
 
-		l.Sink = &LogStreamSinkDatadog{
+		logStream.Sink = &LogStreamSinkDatadog{
 			APIKey: auth0.String("12334567876543"),
 			Region: auth0.String("us"),
 		}
 
-		err = m.LogStream.Update(id, l)
+		err = m.LogStream.Update(id, logStream)
 		if err != nil {
 			t.Error(err)
 		}
 
-		t.Logf("%v\n", l)
+		t.Logf("%v\n", logStream)
 	})
 
 	t.Run("Delete", func(t *testing.T) {
-		err = m.LogStream.Delete(l.GetID())
+		err = m.LogStream.Delete(logStream.GetID())
 		if err != nil {
 			t.Error(err)
 		}
