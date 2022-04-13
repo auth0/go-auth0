@@ -3,6 +3,7 @@ package management
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -10,6 +11,7 @@ import (
 	"time"
 
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/stretchr/testify/assert"
 
 	"github.com/auth0/go-auth0/internal/testing/expect"
 )
@@ -210,4 +212,35 @@ func TestNew_WithInsecure(t *testing.T) {
 	}
 
 	expect.Expect(t, u.GetID(), "123")
+}
+
+func TestManagement_URI(t *testing.T) {
+	var testCases = []struct {
+		given    []string
+		expected string
+	}{
+		{
+			given:    []string{"users", "1234"},
+			expected: "https://" + domain + "/api/v2/users/1234",
+		},
+		{
+			given:    []string{"users", "123 4"},
+			expected: "https://" + domain + "/api/v2/users/123%25204",
+		},
+		{
+			given:    []string{"users", "auth0|1234/5678"},
+			expected: "https://" + domain + "/api/v2/users/auth0%257C1234%252F5678",
+		},
+		{
+			given:    []string{"users", "anotherUserId/secret"},
+			expected: "https://" + domain + "/api/v2/users/anotherUserId%252Fsecret",
+		},
+	}
+
+	for index, testCase := range testCases {
+		t.Run(fmt.Sprintf("#%d", index), func(t *testing.T) {
+			actual := m.URI(testCase.given...)
+			assert.Equal(t, testCase.expected, actual)
+		})
+	}
 }

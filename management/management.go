@@ -246,11 +246,18 @@ func New(domain string, options ...Option) (*Management, error) {
 // URI returns the absolute URL of the Management API with any path segments
 // appended to the end.
 func (m *Management) URI(path ...string) string {
-	return (&url.URL{
+	var escapedPath []string
+	for _, unescapedPath := range path {
+		escapedPath = append(escapedPath, url.PathEscape(unescapedPath))
+	}
+
+	absoluteURL := &url.URL{
 		Scheme: m.url.Scheme,
 		Host:   m.url.Host,
-		Path:   m.basePath + "/" + strings.Join(path, "/"),
-	}).String()
+		Path:   m.basePath + "/" + strings.Join(escapedPath, "/"),
+	}
+
+	return absoluteURL.String()
 }
 
 // NewRequest returns a new HTTP request. If the payload is not nil it will be
