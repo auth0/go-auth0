@@ -10,6 +10,7 @@ import (
 	"time"
 
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/stretchr/testify/assert"
 
 	"github.com/auth0/go-auth0/internal/testing/expect"
 )
@@ -210,4 +211,50 @@ func TestNew_WithInsecure(t *testing.T) {
 	}
 
 	expect.Expect(t, u.GetID(), "123")
+}
+
+func TestManagement_URI(t *testing.T) {
+	var testCases = []struct {
+		name     string
+		given    []string
+		expected string
+	}{
+		{
+			name:     "encodes regular user_id",
+			given:    []string{"users", "1234"},
+			expected: "https://" + domain + "/api/v2/users/1234",
+		},
+		{
+			name:     "encodes a user_id with a space",
+			given:    []string{"users", "123 4"},
+			expected: "https://" + domain + "/api/v2/users/123%204",
+		},
+		{
+			name:     "encodes a user_id with a |",
+			given:    []string{"users", "auth0|12345678"},
+			expected: "https://" + domain + "/api/v2/users/auth0%7C12345678",
+		},
+		{
+			name:     "encodes a user_id with a | and /",
+			given:    []string{"users", "auth0|1234/5678"},
+			expected: "https://" + domain + "/api/v2/users/auth0%7C1234%2F5678",
+		},
+		{
+			name:     "encodes a user_id with a /",
+			given:    []string{"users", "anotherUserId/secret"},
+			expected: "https://" + domain + "/api/v2/users/anotherUserId%2Fsecret",
+		},
+		{
+			name:     "encodes a user_id with a percentage",
+			given:    []string{"users", "anotherUserId/secret%23"},
+			expected: "https://" + domain + "/api/v2/users/anotherUserId%2Fsecret%2523",
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			actual := m.URI(testCase.given...)
+			assert.Equal(t, testCase.expected, actual)
+		})
+	}
 }
