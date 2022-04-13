@@ -1,5 +1,15 @@
 # Change Log
 
+<a name="v0.6.3"></a>
+## [v0.6.3](https://github.com/auth0/go-auth0/tree/v0.6.3) (2022-04-13)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.2...v0.6.3)
+
+### Fixed
+
+- Fixed uri path escaping for param IDs that have a forward slash in them ([#40](https://github.com/auth0/go-auth0/pull/40))
+
+
 <a name="v0.6.2"></a>
 ## [v0.6.2](https://github.com/auth0/go-auth0/tree/v0.6.2) (2022-04-07)
 
