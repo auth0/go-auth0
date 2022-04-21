@@ -4,18 +4,19 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
 	"github.com/auth0/go-auth0"
 )
 
-func TestResourceServer(t *testing.T) {
-	s := &ResourceServer{
-		Name:             auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
-		Identifier:       auth0.String("https://api.example.com/"),
-		SigningAlgorithm: auth0.String("HS256"),
-
+func TestResourceServer_Create(t *testing.T) {
+	expectedResourceServer := &ResourceServer{
+		Name:                auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
+		Identifier:          auth0.String("https://api.example.com/"),
+		SigningAlgorithm:    auth0.String("HS256"),
 		TokenLifetime:       auth0.Int(7200),
 		TokenLifetimeForWeb: auth0.Int(3600),
-
 		Scopes: []*ResourceServerScope{
 			{
 				Value:       auth0.String("create:resource"),
@@ -24,53 +25,94 @@ func TestResourceServer(t *testing.T) {
 		},
 	}
 
-	var err error
+	err := m.ResourceServer.Create(expectedResourceServer)
 
-	t.Run("Create", func(t *testing.T) {
-		err = m.ResourceServer.Create(s)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", s)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedResourceServer.GetID())
+
+	defer cleanupResourceServer(t, expectedResourceServer.GetID())
+}
+
+func TestResourceServer_Read(t *testing.T) {
+	expectedResourceServer := givenAResourceServer(t)
+	defer cleanupResourceServer(t, expectedResourceServer.GetID())
+
+	actualResourceServer, err := m.ResourceServer.Read(expectedResourceServer.GetID())
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedResourceServer.GetName(), actualResourceServer.GetName())
+}
+
+func TestResourceServer_Update(t *testing.T) {
+	expectedResourceServer := givenAResourceServer(t)
+	defer cleanupResourceServer(t, expectedResourceServer.GetID())
+
+	resourceServerID := expectedResourceServer.GetID()
+
+	expectedResourceServer.ID = nil         // Read-Only: Additional properties not allowed.
+	expectedResourceServer.Identifier = nil // Read-Only: Additional properties not allowed.
+
+	expectedResourceServer.AllowOfflineAccess = auth0.Bool(true)
+	expectedResourceServer.SigningAlgorithm = auth0.String("RS256")
+	expectedResourceServer.SkipConsentForVerifiableFirstPartyClients = auth0.Bool(true)
+	expectedResourceServer.TokenLifetime = auth0.Int(7200)
+	expectedResourceServer.TokenLifetimeForWeb = auth0.Int(5400)
+	expectedResourceServer.Scopes = append(expectedResourceServer.Scopes, &ResourceServerScope{
+		Value:       auth0.String("update:resource"),
+		Description: auth0.String("Update Resource"),
 	})
 
-	t.Run("Read", func(t *testing.T) {
-		s, err = m.ResourceServer.Read(auth0.StringValue(s.ID))
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", s)
-	})
+	err := m.ResourceServer.Update(resourceServerID, expectedResourceServer)
 
-	t.Run("Update", func(t *testing.T) {
-		id := auth0.StringValue(s.ID)
+	assert.NoError(t, err)
+	assert.Equal(t, expectedResourceServer.GetAllowOfflineAccess(), true)
+	assert.Equal(t, expectedResourceServer.GetSigningAlgorithm(), "RS256")
+	assert.Equal(t, expectedResourceServer.GetSkipConsentForVerifiableFirstPartyClients(), true)
+	assert.Equal(t, expectedResourceServer.GetTokenLifetime(), 7200)
+	assert.Equal(t, expectedResourceServer.GetTokenLifetimeForWeb(), 5400)
+	assert.Equal(t, len(expectedResourceServer.Scopes), 2)
+}
 
-		s.ID = nil         // read-only
-		s.Identifier = nil // read-only
+func TestResourceServer_Delete(t *testing.T) {
+	expectedResourceServer := givenAResourceServer(t)
 
-		s.AllowOfflineAccess = auth0.Bool(true)
-		s.SigningAlgorithm = auth0.String("RS256")
-		s.SkipConsentForVerifiableFirstPartyClients = auth0.Bool(true)
+	err := m.ResourceServer.Delete(expectedResourceServer.GetID())
 
-		s.TokenLifetime = auth0.Int(7200)
-		s.TokenLifetimeForWeb = auth0.Int(5400)
+	assert.NoError(t, err)
+}
 
-		s.Scopes = append(s.Scopes, &ResourceServerScope{
-			Value:       auth0.String("update:resource"),
-			Description: auth0.String("Update Resource"),
-		})
+func TestResourceServer_List(t *testing.T) {
+	expectedResourceServer := givenAResourceServer(t)
+	defer cleanupResourceServer(t, expectedResourceServer.GetID())
 
-		err = m.ResourceServer.Update(id, s)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", s)
-	})
+	resourceServerList, err := m.ResourceServer.List(IncludeFields("id"))
 
-	t.Run("Delete", func(t *testing.T) {
-		err = m.ResourceServer.Delete(auth0.StringValue(s.ID))
-		if err != nil {
-			t.Error(err)
-		}
-	})
+	assert.NoError(t, err)
+	assert.Contains(t, resourceServerList.ResourceServers, &ResourceServer{ID: expectedResourceServer.ID})
+}
+
+func givenAResourceServer(t *testing.T) *ResourceServer {
+	resourceServer := &ResourceServer{
+		Name:                auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
+		Identifier:          auth0.String("https://api.example.com/"),
+		SigningAlgorithm:    auth0.String("HS256"),
+		TokenLifetime:       auth0.Int(7200),
+		TokenLifetimeForWeb: auth0.Int(3600),
+		Scopes: []*ResourceServerScope{
+			{
+				Value:       auth0.String("create:resource"),
+				Description: auth0.String("Create Resource"),
+			},
+		},
+	}
+
+	err := m.ResourceServer.Create(resourceServer)
+	require.NoError(t, err)
+
+	return resourceServer
+}
+
+func cleanupResourceServer(t *testing.T, resourceServerID string) {
+	err := m.ResourceServer.Delete(resourceServerID)
+	require.NoError(t, err)
 }
