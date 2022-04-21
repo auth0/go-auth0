@@ -2,99 +2,105 @@ package management
 
 import (
 	"testing"
-	"time"
 
-	"github.com/auth0/go-auth0"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
-func TestClientGrant(t *testing.T) {
-	var err error
-
-	// We need a client and resource server to connect using a client grant. So
-	// first we must create them.
-
-	c := &Client{
-		Name: auth0.Stringf("Test Client - Client Grant (%s)",
-			time.Now().Format(time.StampMilli)),
-	}
-	err = m.Client.Create(c)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer m.Client.Delete(auth0.StringValue(c.ClientID))
-
-	s := &ResourceServer{
-		Name: auth0.Stringf("Test Client Grant (%s)",
-			time.Now().Format(time.StampMilli)),
-		Identifier: auth0.String("https://api.example.com/client-grant"),
-		Scopes: []*ResourceServerScope{
-			{
-				Value:       auth0.String("create:resource"),
-				Description: auth0.String("Create Resource"),
-			},
-			{
-				Value:       auth0.String("update:resource"),
-				Description: auth0.String("Update Resource"),
-			},
-		},
-	}
-	err = m.ResourceServer.Create(s)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer m.ResourceServer.Delete(auth0.StringValue(s.ID))
-
-	g := &ClientGrant{
-		ClientID: c.ClientID,
-		Audience: s.Identifier,
+func TestClientGrantManager_Create(t *testing.T) {
+	client := givenAClient(t)
+	resourceServer := givenAResourceServer(t)
+	expectedClientGrant := &ClientGrant{
+		ClientID: client.ClientID,
+		Audience: resourceServer.Identifier,
 		Scope:    []interface{}{"create:resource"},
 	}
 
-	t.Run("Create", func(t *testing.T) {
-		err = m.ClientGrant.Create(g)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", g)
-	})
+	err := m.ClientGrant.Create(expectedClientGrant)
 
-	t.Run("Read", func(t *testing.T) {
-		g, err = m.ClientGrant.Read(auth0.StringValue(g.ID))
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", g)
-	})
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedClientGrant.GetID())
 
-	t.Run("Update", func(t *testing.T) {
-		id := auth0.StringValue(g.ID)
-		g.ID = nil
-		g.Audience = nil // read-only
-		g.ClientID = nil // read-only
-		g.Scope = append(g.Scope, "update:resource")
+	defer cleanupClientGrant(
+		t,
+		expectedClientGrant.GetID(),
+		client.GetClientID(),
+		resourceServer.GetID(),
+	)
+}
 
-		err = m.ClientGrant.Update(id, g)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", g)
-	})
+func TestClientGrantManager_Read(t *testing.T) {
+	expectedClientGrant, clientID, resourceServerID := givenAClientGrant(t)
+	defer cleanupClientGrant(t, expectedClientGrant.GetID(), clientID, resourceServerID)
 
-	t.Run("Delete", func(t *testing.T) {
-		err = m.ClientGrant.Delete(auth0.StringValue(g.ID))
-		if err != nil {
-			t.Fatal(err)
-		}
-	})
+	actualClientGrant, err := m.ClientGrant.Read(expectedClientGrant.GetID())
 
-	t.Run("List", func(t *testing.T) {
-		gs, err := m.ClientGrant.List(
-			PerPage(10),          // overwrites the default 50
-			IncludeTotals(false), // has no effect as it is enforced internally
-		)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", gs)
-	})
+	assert.NoError(t, err)
+	assert.Equal(t, expectedClientGrant.GetID(), actualClientGrant.GetID())
+	assert.Equal(t, expectedClientGrant.GetClientID(), actualClientGrant.GetClientID())
+	assert.Equal(t, expectedClientGrant.GetAudience(), actualClientGrant.GetAudience())
+}
+
+func TestClientGrantManager_Update(t *testing.T) {
+	expectedClientGrant, clientID, resourceServerID := givenAClientGrant(t)
+	defer cleanupClientGrant(t, expectedClientGrant.GetID(), clientID, resourceServerID)
+
+	clientGrantID := expectedClientGrant.GetID()
+
+	expectedClientGrant.ID = nil       // Read-Only: Additional properties not allowed.
+	expectedClientGrant.Audience = nil // Read-Only: Additional properties not allowed.
+	expectedClientGrant.ClientID = nil // Read-Only: Additional properties not allowed.
+
+	expectedClientGrant.Scope = append(expectedClientGrant.Scope, "update:resource")
+
+	err := m.ClientGrant.Update(clientGrantID, expectedClientGrant)
+
+	assert.NoError(t, err)
+	assert.Equal(t, len(expectedClientGrant.Scope), 2)
+}
+
+func TestClientGrantManager_Delete(t *testing.T) {
+	expectedClientGrant, clientID, resourceServerID := givenAClientGrant(t)
+	defer cleanupClient(t, clientID)
+	defer cleanupResourceServer(t, resourceServerID)
+
+	err := m.ClientGrant.Delete(expectedClientGrant.GetID())
+
+	assert.NoError(t, err)
+}
+
+func TestClientGrantManager_List(t *testing.T) {
+	expectedClientGrant, clientID, resourceServerID := givenAClientGrant(t)
+	defer cleanupClientGrant(t, expectedClientGrant.GetID(), clientID, resourceServerID)
+
+	clientGrantList, err := m.ClientGrant.List(
+		Parameter("client_id", expectedClientGrant.GetClientID()),
+	)
+
+	assert.NoError(t, err)
+	assert.Equal(t, len(clientGrantList.ClientGrants), 1)
+}
+
+func givenAClientGrant(t *testing.T) (clientGrant *ClientGrant, clientID string, resourceServerID string) {
+	client := givenAClient(t)
+	resourceServer := givenAResourceServer(t)
+
+	clientGrant = &ClientGrant{
+		ClientID: client.ClientID,
+		Audience: resourceServer.Identifier,
+		Scope:    []interface{}{"create:resource"},
+	}
+
+	err := m.ClientGrant.Create(clientGrant)
+	require.NoError(t, err)
+
+	return clientGrant, client.GetClientID(), resourceServer.GetID()
+}
+
+func cleanupClientGrant(t *testing.T, clientGrantID, clientID, resourceServerID string) {
+	err := m.ClientGrant.Delete(clientGrantID)
+	require.NoError(t, err)
+
+	cleanupClient(t, clientID)
+	cleanupResourceServer(t, resourceServerID)
 }
