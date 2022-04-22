@@ -79,6 +79,11 @@ func TestResourceServer_Delete(t *testing.T) {
 	err := m.ResourceServer.Delete(expectedResourceServer.GetID())
 
 	assert.NoError(t, err)
+
+	actualResourceServer, err := m.ResourceServer.Read(expectedResourceServer.GetID())
+
+	assert.Empty(t, actualResourceServer)
+	assert.EqualError(t, err, "404 Not Found: The resource server does not exist")
 }
 
 func TestResourceServer_List(t *testing.T) {

@@ -59,6 +59,11 @@ func TestClient_Delete(t *testing.T) {
 	err := m.Client.Delete(expectedClient.GetClientID())
 
 	assert.NoError(t, err)
+
+	actualClient, err := m.Client.Read(expectedClient.GetClientID())
+
+	assert.Empty(t, actualClient)
+	assert.EqualError(t, err, "404 Not Found: The client does not exist")
 }
 
 func TestClient_List(t *testing.T) {

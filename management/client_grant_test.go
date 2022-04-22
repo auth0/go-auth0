@@ -67,6 +67,11 @@ func TestClientGrantManager_Delete(t *testing.T) {
 	err := m.ClientGrant.Delete(expectedClientGrant.GetID())
 
 	assert.NoError(t, err)
+
+	actualClientGrant, err := m.ClientGrant.Read(expectedClientGrant.GetID())
+
+	assert.Empty(t, actualClientGrant)
+	assert.EqualError(t, err, "404 Not Found: Client grant not found")
 }
 
 func TestClientGrantManager_List(t *testing.T) {
