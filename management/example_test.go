@@ -129,18 +129,18 @@ func ExampleUserManager_List_pagination() {
 }
 
 func ExampleConnectionManager_List() {
-	l, err := api.Connection.List(
+	connectionList, err := api.Connection.List(
 		management.Parameter("strategy", "auth0"),
 	)
 	if err != nil {
 		// handle err
 	}
-	for _, c := range l.Connections {
-		fmt.Println(c.GetName())
+	for _, connection := range connectionList.Connections {
+		fmt.Println(connection.GetName())
 
-		if o, ok := c.Options.(*management.ConnectionOptions); ok {
-			fmt.Printf("\tPassword Policy: %s\n", o.GetPasswordPolicy())
-			fmt.Printf("\tMulti-Factor Auth Enabled: %t\n", o.MFA["active"])
+		if options, ok := connection.Options.(*management.ConnectionOptions); ok {
+			fmt.Printf("\tPassword Policy: %s\n", options.GetPasswordPolicy())
+			fmt.Printf("\tMulti-Factor Auth Enabled: %t\n", options.MFA["active"])
 		}
 	}
 	// Output: Username-Password-Authentication
@@ -149,7 +149,7 @@ func ExampleConnectionManager_List() {
 }
 
 func ExampleConnectionManager_Create() {
-	c := &management.Connection{
+	connection := &management.Connection{
 		Name:     auth0.Stringf("Test-Google-OAuth2-%d", time.Now().Unix()),
 		Strategy: auth0.String("google-oauth2"),
 		Options: &management.ConnectionOptionsGoogleOAuth2{
@@ -165,9 +165,9 @@ func ExampleConnectionManager_Create() {
 		},
 	}
 
-	defer api.Connection.Delete(c.GetID())
+	defer api.Connection.Delete(connection.GetID())
 
-	err := api.Connection.Create(c)
+	err := api.Connection.Create(connection)
 	if err != nil {
 		// handle err
 	}
