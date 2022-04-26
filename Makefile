@@ -18,3 +18,8 @@ lint: ## Runs linting on the go files. Requires docker to be installed
 test: ## Runs tests
 	@echo "Running tests..."
 	@go test -cover -covermode=atomic -coverprofile=coverage.out ./...
+
+.PHONY: generate
+generate: ## Generate management accessor methods
+	@echo "Generating management accessor methods..."
+	@go generate ./...
