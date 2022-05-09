@@ -3,6 +3,9 @@ package management
 import (
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
 	"github.com/auth0/go-auth0"
 )
 
@@ -201,32 +204,50 @@ func TestGuardian(t *testing.T) {
 			})
 		})
 
-		t.Run("WebAuthn Roaming", func(t *testing.T) {
-			t.Run("Enable", func(t *testing.T) {
-				defer m.Guardian.MultiFactor.WebAuthnRoaming.Enable(false)
-
-				err := m.Guardian.MultiFactor.WebAuthnRoaming.Enable(true)
-				if err != nil {
-					t.Error(err)
-				}
-
-				mfa, _ := m.Guardian.MultiFactor.List()
-				t.Logf("%v\n", mfa)
+		t.Run("WebAuthn Roaming Toggle", func(t *testing.T) {
+			t.Cleanup(func() {
+				err := m.Guardian.MultiFactor.WebAuthnRoaming.Enable(false)
+				require.NoError(t, err)
 			})
+
+			err := m.Guardian.MultiFactor.WebAuthnRoaming.Enable(true)
+			assert.NoError(t, err)
+
+			mfaList, err := m.Guardian.MultiFactor.List()
+			require.NoError(t, err)
+
+			t.Logf("%v\n", mfaList)
+
+			enabled := false
+			for _, mfa := range mfaList {
+				if mfa.GetName() == "webauthn-roaming" {
+					enabled = mfa.GetEnabled()
+				}
+			}
+			assert.True(t, enabled)
 		})
 
-		t.Run("WebAuthn Platform", func(t *testing.T) {
-			t.Run("Enable", func(t *testing.T) {
-				defer m.Guardian.MultiFactor.WebAuthnPlatform.Enable(false)
-
-				err := m.Guardian.MultiFactor.WebAuthnPlatform.Enable(true)
-				if err != nil {
-					t.Error(err)
-				}
-
-				mfa, _ := m.Guardian.MultiFactor.List()
-				t.Logf("%v\n", mfa)
+		t.Run("WebAuthn Platform Toggle", func(t *testing.T) {
+			t.Cleanup(func() {
+				err := m.Guardian.MultiFactor.WebAuthnPlatform.Enable(false)
+				require.NoError(t, err)
 			})
+
+			err := m.Guardian.MultiFactor.WebAuthnPlatform.Enable(true)
+			assert.NoError(t, err)
+
+			mfaList, err := m.Guardian.MultiFactor.List()
+			require.NoError(t, err)
+
+			t.Logf("%v\n", mfaList)
+
+			enabled := false
+			for _, mfa := range mfaList {
+				if mfa.GetName() == "webauthn-platform" {
+					enabled = mfa.GetEnabled()
+				}
+			}
+			assert.True(t, enabled)
 		})
 	})
 
