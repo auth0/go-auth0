@@ -1,6 +1,7 @@
 package management
 
 import (
+	"net/http"
 	"testing"
 	"time"
 
@@ -83,7 +84,9 @@ func TestActionManager_Delete(t *testing.T) {
 	actualAction, err := m.Action.Read(expectedAction.GetID())
 
 	assert.Empty(t, actualAction)
-	assert.EqualError(t, err, "404 Not Found: That action does not exist.")
+	assert.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
 
 func TestActionManager_List(t *testing.T) {
@@ -213,7 +216,9 @@ func TestActionManager_Test(t *testing.T) {
 func TestActionManager_Execution(t *testing.T) {
 	_, err := m.Action.Execution("M9IqRp9wQLaYNrSwz6YPTTIwMjEwNDA0")
 	// Expect a 404 as we can't get execution ID via API
-	assert.EqualError(t, err, "404 Not Found: That execution does not exist.")
+	assert.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
 
 func cleanupAction(t *testing.T, actionID string) {
