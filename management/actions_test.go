@@ -1,36 +1,18 @@
 package management
 
 import (
-	"errors"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0"
 )
 
-func ensureActionBuilt(a *Action) (err error) {
-	i := 1
-	var r *Action
-	for i < 20 {
-		r, err = m.Action.Read(a.GetID())
-		if err != nil {
-			return
-		}
-		if r.GetStatus() == ActionStatusBuilt {
-			break
-		}
-		time.Sleep(1 * time.Second)
-		i++
-	}
-	if r.GetStatus() != ActionStatusBuilt {
-		err = errors.New("action failed to build")
-	}
-	return
-}
-
-func TestActions(t *testing.T) {
-	r := &Action{
-		Name: auth0.String("test-action"),
+func TestActionManager_Create(t *testing.T) {
+	expectedAction := &Action{
+		Name: auth0.Stringf("Test Action (%s)", time.Now().Format(time.StampMilli)),
 		Code: auth0.String("exports.onExecutePostLogin = async (event, api) =\u003e {}"),
 		SupportedTriggers: []*ActionTrigger{
 			{
@@ -53,175 +35,241 @@ func TestActions(t *testing.T) {
 		},
 	}
 
-	var err error
-	var v *ActionVersion
-	var vl *ActionVersionList
+	err := m.Action.Create(expectedAction)
 
-	t.Run("Triggers", func(t *testing.T) {
-		l, err := m.Action.Triggers()
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", l)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedAction.GetID())
+
+	defer cleanupAction(t, expectedAction.GetID())
+}
+
+func TestActionManager_Read(t *testing.T) {
+	expectedAction := givenAnAction(t)
+	defer cleanupAction(t, expectedAction.GetID())
+
+	actualAction, err := m.Action.Read(expectedAction.GetID())
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedAction.GetID(), actualAction.GetID())
+}
+
+func TestActionManager_Update(t *testing.T) {
+	expectedAction := givenAnAction(t)
+	defer cleanupAction(t, expectedAction.GetID())
+
+	actionID := expectedAction.GetID()
+
+	expectedAction.ID = nil        // Read-Only: Additional properties not allowed.
+	expectedAction.UpdatedAt = nil // Read-Only: Additional properties not allowed.
+	expectedAction.CreatedAt = nil // Read-Only: Additional properties not allowed.
+	expectedAction.Status = nil    // Read-Only: Additional properties not allowed.
+
+	expectedCode := "exports.onExecutePostLogin = async (event, api) => { api.user.setUserMetadata('myParam', 'foo'); };"
+	expectedAction.Code = &expectedCode
+
+	err := m.Action.Update(actionID, expectedAction)
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedCode, *expectedAction.Code)
+}
+
+func TestActionManager_Delete(t *testing.T) {
+	expectedAction := givenAnAction(t)
+
+	err := m.Action.Delete(expectedAction.GetID())
+
+	assert.NoError(t, err)
+
+	actualAction, err := m.Action.Read(expectedAction.GetID())
+
+	assert.Empty(t, actualAction)
+	assert.EqualError(t, err, "404 Not Found: That action does not exist.")
+}
+
+func TestActionManager_List(t *testing.T) {
+	expectedAction := givenAnAction(t)
+	defer cleanupAction(t, expectedAction.GetID())
+
+	actionList, err := m.Action.List(Parameter("actionName", expectedAction.GetName()))
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedAction.GetID(), actionList.Actions[0].GetID())
+}
+
+func TestActionManager_Triggers(t *testing.T) {
+	actionTriggerList, err := m.Action.Triggers()
+
+	assert.NoError(t, err)
+	assert.NotEmpty(t, actionTriggerList)
+}
+
+func TestActionManager_Deploy(t *testing.T) {
+	expectedAction := givenAnAction(t)
+	defer cleanupAction(t, expectedAction.GetID())
+
+	ensureActionBuilt(t, expectedAction.GetID())
+
+	actualActionVersion, err := m.Action.Deploy(expectedAction.GetID())
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedAction.GetID(), actualActionVersion.Action.GetID())
+}
+
+func TestActionManager_DeployVersion(t *testing.T) {
+	action := givenAnAction(t)
+	defer cleanupAction(t, action.GetID())
+	ensureActionBuilt(t, action.GetID())
+
+	version, err := m.Action.Deploy(action.GetID())
+	require.NoError(t, err)
+
+	_, err = m.Action.DeployVersion(action.GetID(), version.GetID())
+
+	assert.NoError(t, err)
+}
+
+func TestActionManager_Version(t *testing.T) {
+	action := givenAnAction(t)
+	defer cleanupAction(t, action.GetID())
+	ensureActionBuilt(t, action.GetID())
+
+	deployedVersion, err := m.Action.Deploy(action.GetID())
+	require.NoError(t, err)
+
+	actualVersion, err := m.Action.Version(action.GetID(), deployedVersion.GetID())
+
+	assert.NoError(t, err)
+	assert.Equal(t, deployedVersion.GetID(), actualVersion.GetID())
+}
+
+func TestActionManager_Versions(t *testing.T) {
+	action := givenAnAction(t)
+	defer cleanupAction(t, action.GetID())
+	ensureActionBuilt(t, action.GetID())
+
+	deployedVersion, err := m.Action.Deploy(action.GetID())
+	require.NoError(t, err)
+
+	actualVersions, err := m.Action.Versions(action.GetID())
+
+	assert.NoError(t, err)
+	assert.Equal(t, deployedVersion.GetID(), actualVersions.Versions[0].GetID())
+}
+
+func TestActionManager_Bindings(t *testing.T) {
+	action := givenAnAction(t)
+	ensureActionBuilt(t, action.GetID())
+
+	_, err := m.Action.Deploy(action.GetID())
+	require.NoError(t, err)
+
+	emptyBinding := make([]*ActionBinding, 0)
+	err = m.Action.UpdateBindings(ActionTriggerPostLogin, emptyBinding)
+	assert.NoError(t, err)
+
+	binding := []*ActionBinding{
+		{
+			Ref: &ActionBindingReference{
+				Type:  auth0.String(ActionBindingReferenceByName),
+				Value: action.Name,
+			},
+			DisplayName: auth0.String("My test action Binding"),
+		},
+	}
+
+	err = m.Action.UpdateBindings(ActionTriggerPostLogin, binding)
+	assert.NoError(t, err)
+
+	bindingList, err := m.Action.Bindings(ActionTriggerPostLogin)
+
+	assert.NoError(t, err)
+	assert.Len(t, bindingList.Bindings, 1)
+
+	t.Cleanup(func() {
+		err = m.Action.UpdateBindings(ActionTriggerPostLogin, emptyBinding)
+		assert.NoError(t, err)
+		cleanupAction(t, action.GetID())
 	})
+}
 
-	t.Run("Create", func(t *testing.T) {
-		err = m.Action.Create(r)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", r)
-	})
+func TestActionManager_Test(t *testing.T) {
+	action := givenAnAction(t)
+	defer cleanupAction(t, action.GetID())
+	ensureActionBuilt(t, action.GetID())
 
-	t.Run("Read", func(t *testing.T) {
-		r, err = m.Action.Read(r.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", r)
-	})
+	test := &ActionTestPayload{
+		"event": ActionTestPayload{
+			"user": ActionTestPayload{
+				"email":         "j+smith@example.com",
+				"emailVerified": true,
+				"id":            "auth0|5f7c8ec7c33c6c004bbafe82",
+			},
+		},
+	}
+	err := m.Action.Test(action.GetID(), test)
+	assert.NoError(t, err)
+}
 
-	t.Run("List", func(t *testing.T) {
-		r, err := m.Action.List()
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", r)
-	})
+func TestActionManager_Execution(t *testing.T) {
+	_, err := m.Action.Execution("M9IqRp9wQLaYNrSwz6YPTTIwMjEwNDA0")
+	// Expect a 404 as we can't get execution ID via API
+	assert.EqualError(t, err, "404 Not Found: That execution does not exist.")
+}
 
-	t.Run("Deploy", func(t *testing.T) {
-		err = ensureActionBuilt(r)
-		if err != nil {
-			t.Fatal(err)
-		}
-		v, err = m.Action.Deploy(r.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", v)
-	})
+func cleanupAction(t *testing.T, actionID string) {
+	err := m.Action.Delete(actionID)
+	require.NoError(t, err)
+}
 
-	t.Run("Update", func(t *testing.T) {
-		id := r.GetID()
-
-		r.ID = nil        // read-only
-		r.UpdatedAt = nil // read-only
-		r.CreatedAt = nil // read-only
-		r.Status = nil    // read-only
-		r.Code = auth0.String("exports.onExecutePostLogin = async (event, api) => { api.user.setUserMetadata('myParam', 'foo'); };")
-
-		err = m.Action.Update(id, r)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", r)
-	})
-
-	t.Run("DeployAgain", func(t *testing.T) {
-		err = ensureActionBuilt(r)
-		if err != nil {
-			t.Fatal(err)
-		}
-		v, err = m.Action.Deploy(r.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", v)
-	})
-
-	t.Run("Version", func(t *testing.T) {
-		v, err := m.Action.Version(r.GetID(), v.GetID())
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", v)
-	})
-
-	t.Run("Versions", func(t *testing.T) {
-		vl, err = m.Action.Versions(r.GetID())
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", vl)
-	})
-
-	t.Run("DeployVersion", func(t *testing.T) {
-		v, err = m.Action.DeployVersion(r.GetID(), vl.Versions[0].GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", v)
-	})
-
-	t.Run("UpdateBindings", func(t *testing.T) {
-		b := []*ActionBinding{
+func givenAnAction(t *testing.T) *Action {
+	action := &Action{
+		Name: auth0.Stringf("Test Action (%s)", time.Now().Format(time.StampMilli)),
+		Code: auth0.String("exports.onExecutePostLogin = async (event, api) =\u003e {}"),
+		SupportedTriggers: []*ActionTrigger{
 			{
-				Ref: &ActionBindingReference{
-					Type:  auth0.String(ActionBindingReferenceByName),
-					Value: r.Name,
-				},
-				DisplayName: auth0.String("My test action Binding"),
+				ID:      auth0.String(ActionTriggerPostLogin),
+				Version: auth0.String("v2"),
 			},
-		}
-		err = m.Action.UpdateBindings(ActionTriggerPostLogin, b)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", b)
-	})
-
-	t.Run("Bindings", func(t *testing.T) {
-		bl, err := m.Action.Bindings(ActionTriggerPostLogin)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", bl)
-	})
-
-	t.Run("Test", func(t *testing.T) {
-		p := &ActionTestPayload{
-			"event": ActionTestPayload{
-				"user": ActionTestPayload{
-					"email":         "j+smith@example.com",
-					"emailVerified": true,
-					"id":            "auth0|5f7c8ec7c33c6c004bbafe82",
-				},
+		},
+		Dependencies: []*ActionDependency{
+			{
+				Name:        auth0.String("lodash"),
+				Version:     auth0.String("4.0.0"),
+				RegistryURL: auth0.String("https://www.npmjs.com/package/lodash"),
 			},
-		}
-		err = m.Action.Test(r.GetID(), p)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", p)
-	})
+		},
+		Secrets: []*ActionSecret{
+			{
+				Name:  auth0.String("mySecretName"),
+				Value: auth0.String("mySecretValue"),
+			},
+		},
+	}
 
-	t.Run("Execution", func(t *testing.T) {
-		_, err := m.Action.Execution("M9IqRp9wQLaYNrSwz6YPTTIwMjEwNDA0")
-		if err != nil {
-			mgmtError, _ := err.(*managementError)
-			if mgmtError.StatusCode != 404 {
-				t.Fatal(err)
-			}
-			// Expect a 404 as we can't get execution ID via API
-			t.Log(err)
-			return
-		}
-		t.Fatal(errors.New("read execution unexpectedly succeeded"))
-	})
+	err := m.Action.Create(action)
+	require.NoError(t, err)
 
-	t.Run("ClearBindings", func(t *testing.T) {
-		b := make([]*ActionBinding, 0)
-		err = m.Action.UpdateBindings(ActionTriggerPostLogin, b)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", b)
-	})
+	return action
+}
 
-	t.Run("Delete", func(t *testing.T) {
-		err = m.Action.Delete(r.GetID())
-		if err != nil {
-			t.Fatal(err)
+func ensureActionBuilt(t *testing.T, actionID string) {
+	var actionBuilt bool
+
+	for i := 0; i < 20; i++ {
+		action, err := m.Action.Read(actionID)
+		assert.NoError(t, err)
+
+		if action.GetStatus() == ActionStatusBuilt {
+			actionBuilt = true
+			break
 		}
-	})
+
+		time.Sleep(time.Second)
+	}
+
+	if actionBuilt {
+		return
+	}
+
+	t.Fatalf("action with ID: %s, failed to build", actionID)
 }
