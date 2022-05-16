@@ -3,74 +3,62 @@ package management
 import (
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/auth0/go-auth0"
 )
 
 func TestAttackProtection(t *testing.T) {
 	t.Run("Get breached password detection settings", func(t *testing.T) {
 		breachedPasswordDetection, err := m.AttackProtection.GetBreachedPasswordDetection()
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", breachedPasswordDetection)
+		assert.NoError(t, err)
+		assert.IsType(t, &BreachedPasswordDetection{}, breachedPasswordDetection)
 	})
 
 	t.Run("Update breached password detection settings", func(t *testing.T) {
-		breachedPasswordDetection := &BreachedPasswordDetection{
+		expected := &BreachedPasswordDetection{
 			Enabled: auth0.Bool(true),
 			Method:  auth0.String("standard"),
 		}
 
-		err := m.AttackProtection.UpdateBreachedPasswordDetection(breachedPasswordDetection)
-		if err != nil {
-			t.Error(err)
-		}
+		err := m.AttackProtection.UpdateBreachedPasswordDetection(expected)
+		assert.NoError(t, err)
 
-		breachedPasswordDetection, err = m.AttackProtection.GetBreachedPasswordDetection()
-		if err != nil {
-			t.Error(err)
-		}
-
-		t.Logf("%+v\n", breachedPasswordDetection)
+		actual, err := m.AttackProtection.GetBreachedPasswordDetection()
+		assert.NoError(t, err)
+		assert.Equal(t, expected.GetEnabled(), actual.GetEnabled())
+		assert.Equal(t, expected.GetMethod(), actual.GetMethod())
 	})
 
 	t.Run("Get the brute force configuration", func(t *testing.T) {
 		bruteForceProtection, err := m.AttackProtection.GetBruteForceProtection()
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", bruteForceProtection)
+		assert.NoError(t, err)
+		assert.IsType(t, &BruteForceProtection{}, bruteForceProtection)
 	})
 
 	t.Run("Update the brute force configuration", func(t *testing.T) {
-		bruteForceProtection := &BruteForceProtection{
+		expected := &BruteForceProtection{
 			Enabled:     auth0.Bool(true),
 			MaxAttempts: auth0.Int(10),
 		}
 
-		err := m.AttackProtection.UpdateBruteForceProtection(bruteForceProtection)
-		if err != nil {
-			t.Error(err)
-		}
+		err := m.AttackProtection.UpdateBruteForceProtection(expected)
+		assert.NoError(t, err)
 
-		bruteForceProtection, err = m.AttackProtection.GetBruteForceProtection()
-		if err != nil {
-			t.Error(err)
-		}
-
-		t.Logf("%+v\n", bruteForceProtection)
+		actual, err := m.AttackProtection.GetBruteForceProtection()
+		assert.NoError(t, err)
+		assert.Equal(t, expected.GetEnabled(), actual.GetEnabled())
+		assert.Equal(t, expected.GetMaxAttempts(), actual.GetMaxAttempts())
 	})
 
 	t.Run("Get the suspicious IP throttling configuration", func(t *testing.T) {
 		suspiciousIPThrottling, err := m.AttackProtection.GetSuspiciousIPThrottling()
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", suspiciousIPThrottling)
+		assert.NoError(t, err)
+		assert.IsType(t, &SuspiciousIPThrottling{}, suspiciousIPThrottling)
 	})
 
 	t.Run("Update the suspicious IP throttling configuration", func(t *testing.T) {
-		suspiciousIPThrottling := &SuspiciousIPThrottling{
+		expected := &SuspiciousIPThrottling{
 			Enabled: auth0.Bool(true),
 			Stage: &Stage{
 				PreLogin: &PreLogin{
@@ -84,16 +72,15 @@ func TestAttackProtection(t *testing.T) {
 			},
 		}
 
-		err := m.AttackProtection.UpdateSuspiciousIPThrottling(suspiciousIPThrottling)
-		if err != nil {
-			t.Error(err)
-		}
+		err := m.AttackProtection.UpdateSuspiciousIPThrottling(expected)
+		assert.NoError(t, err)
 
-		suspiciousIPThrottling, err = m.AttackProtection.GetSuspiciousIPThrottling()
-		if err != nil {
-			t.Error(err)
-		}
-
-		t.Logf("%+v\n", suspiciousIPThrottling)
+		actual, err := m.AttackProtection.GetSuspiciousIPThrottling()
+		assert.NoError(t, err)
+		assert.Equal(t, expected.GetEnabled(), actual.GetEnabled())
+		assert.Equal(t, expected.GetStage().GetPreLogin().GetRate(), actual.GetStage().GetPreLogin().GetRate())
+		assert.Equal(t, expected.GetStage().GetPreLogin().GetMaxAttempts(), actual.GetStage().GetPreLogin().GetMaxAttempts())
+		assert.Equal(t, expected.GetStage().GetPreUserRegistration().GetRate(), actual.GetStage().GetPreUserRegistration().GetRate())
+		assert.Equal(t, expected.GetStage().GetPreUserRegistration().GetMaxAttempts(), actual.GetStage().GetPreUserRegistration().GetMaxAttempts())
 	})
 }
