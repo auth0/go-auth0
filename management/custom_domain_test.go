@@ -99,7 +99,7 @@ func givenACustomDomain(t *testing.T) *CustomDomain {
 
 func cleanupCustomDomain(t *testing.T, customDomainID string) {
 	t.Helper()
-	
+
 	err := m.CustomDomain.Delete(customDomainID)
 	assertNoCustomDomainErr(t, err)
 }
