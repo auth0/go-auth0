@@ -2,44 +2,24 @@ package management
 
 import (
 	"testing"
-	"time"
 
-	"github.com/auth0/go-auth0"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBlacklist(t *testing.T) {
-	c := &Client{
-		Name: auth0.Stringf("Test Client - Blacklist (%s)", time.Now().Format(time.StampMilli)),
-	}
-	err := m.Client.Create(c)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer m.Client.Delete(auth0.StringValue(c.ClientID))
+	client := givenAClient(t)
+	defer cleanupClient(t, client.GetClientID())
 
-	t.Run("Create", func(t *testing.T) {
-		err := m.Blacklist.Create(&BlacklistToken{
-			Audience: auth0.StringValue(c.ClientID),
-			JTI:      "test",
-		})
-		if err != nil {
-			t.Error(err)
-		}
-		bl, err := m.Blacklist.List()
-		if err != nil {
-			t.Error(err)
-		}
-		if len(bl) == 0 {
-			t.Error("unexpected output; blacklist should not be empty")
-		}
-		t.Logf("%v\n", bl)
-	})
+	blackListToken := &BlacklistToken{
+		Audience: client.GetClientID(),
+		JTI:      "test",
+	}
 
-	t.Run("List", func(t *testing.T) {
-		bl, err := m.Blacklist.List(Parameter("aud", auth0.StringValue(c.ClientID)))
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", bl)
-	})
+	err := m.Blacklist.Create(blackListToken)
+	assert.NoError(t, err)
+
+	blackList, err := m.Blacklist.List(Parameter("aud", client.GetClientID()))
+	assert.NoError(t, err)
+	assert.Len(t, blackList, 1)
+	assert.Equal(t, client.GetClientID(), blackList[0].Audience)
 }
