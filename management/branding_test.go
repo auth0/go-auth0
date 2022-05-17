@@ -16,6 +16,10 @@ func TestBrandingManager_Read(t *testing.T) {
 }
 
 func TestBrandingManager_Update(t *testing.T) {
+	// Save initial branding settings.
+	preTestBrandingSettings, err := m.Branding.Read()
+	assert.NoError(t, err)
+
 	expected := &Branding{
 		Colors: &BrandingColors{
 			Primary: auth0.String("#ea5323"),
@@ -33,7 +37,7 @@ func TestBrandingManager_Update(t *testing.T) {
 		},
 	}
 
-	err := m.Branding.Update(expected)
+	err = m.Branding.Update(expected)
 	assert.NoError(t, err)
 
 	actual, err := m.Branding.Read()
@@ -41,6 +45,10 @@ func TestBrandingManager_Update(t *testing.T) {
 	assert.Equal(t, expected.GetColors().GetPrimary(), actual.GetColors().GetPrimary())
 	assert.Equal(t, expected.GetFont().GetURL(), actual.GetFont().GetURL())
 	assert.Equal(t, expected.GetFaviconURL(), actual.GetFaviconURL())
+
+	// Restore initial branding settings.
+	err = m.Branding.Update(preTestBrandingSettings)
+	assert.NoError(t, err)
 }
 
 func TestBrandingManager_UniversalLogin(t *testing.T) {
