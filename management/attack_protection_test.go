@@ -16,18 +16,26 @@ func TestAttackProtection(t *testing.T) {
 	})
 
 	t.Run("Update breached password detection settings", func(t *testing.T) {
+		// Save initial settings.
+		preTestBPDSettings, err := m.AttackProtection.GetBreachedPasswordDetection()
+		assert.NoError(t, err)
+
 		expected := &BreachedPasswordDetection{
 			Enabled: auth0.Bool(true),
 			Method:  auth0.String("standard"),
 		}
 
-		err := m.AttackProtection.UpdateBreachedPasswordDetection(expected)
+		err = m.AttackProtection.UpdateBreachedPasswordDetection(expected)
 		assert.NoError(t, err)
 
 		actual, err := m.AttackProtection.GetBreachedPasswordDetection()
 		assert.NoError(t, err)
 		assert.Equal(t, expected.GetEnabled(), actual.GetEnabled())
 		assert.Equal(t, expected.GetMethod(), actual.GetMethod())
+
+		// Restore initial settings.
+		err = m.AttackProtection.UpdateBreachedPasswordDetection(preTestBPDSettings)
+		assert.NoError(t, err)
 	})
 
 	t.Run("Get the brute force configuration", func(t *testing.T) {
@@ -37,18 +45,26 @@ func TestAttackProtection(t *testing.T) {
 	})
 
 	t.Run("Update the brute force configuration", func(t *testing.T) {
+		// Save initial settings.
+		preTestBFPSettings, err := m.AttackProtection.GetBruteForceProtection()
+		assert.NoError(t, err)
+
 		expected := &BruteForceProtection{
 			Enabled:     auth0.Bool(true),
 			MaxAttempts: auth0.Int(10),
 		}
 
-		err := m.AttackProtection.UpdateBruteForceProtection(expected)
+		err = m.AttackProtection.UpdateBruteForceProtection(expected)
 		assert.NoError(t, err)
 
 		actual, err := m.AttackProtection.GetBruteForceProtection()
 		assert.NoError(t, err)
 		assert.Equal(t, expected.GetEnabled(), actual.GetEnabled())
 		assert.Equal(t, expected.GetMaxAttempts(), actual.GetMaxAttempts())
+
+		// Restore initial settings.
+		err = m.AttackProtection.UpdateBruteForceProtection(preTestBFPSettings)
+		assert.NoError(t, err)
 	})
 
 	t.Run("Get the suspicious IP throttling configuration", func(t *testing.T) {
@@ -58,6 +74,10 @@ func TestAttackProtection(t *testing.T) {
 	})
 
 	t.Run("Update the suspicious IP throttling configuration", func(t *testing.T) {
+		// Save initial settings.
+		preTestSIPSettings, err := m.AttackProtection.GetSuspiciousIPThrottling()
+		assert.NoError(t, err)
+
 		expected := &SuspiciousIPThrottling{
 			Enabled: auth0.Bool(true),
 			Stage: &Stage{
@@ -72,7 +92,7 @@ func TestAttackProtection(t *testing.T) {
 			},
 		}
 
-		err := m.AttackProtection.UpdateSuspiciousIPThrottling(expected)
+		err = m.AttackProtection.UpdateSuspiciousIPThrottling(expected)
 		assert.NoError(t, err)
 
 		actual, err := m.AttackProtection.GetSuspiciousIPThrottling()
@@ -82,5 +102,9 @@ func TestAttackProtection(t *testing.T) {
 		assert.Equal(t, expected.GetStage().GetPreLogin().GetMaxAttempts(), actual.GetStage().GetPreLogin().GetMaxAttempts())
 		assert.Equal(t, expected.GetStage().GetPreUserRegistration().GetRate(), actual.GetStage().GetPreUserRegistration().GetRate())
 		assert.Equal(t, expected.GetStage().GetPreUserRegistration().GetMaxAttempts(), actual.GetStage().GetPreUserRegistration().GetMaxAttempts())
+
+		// Restore initial settings.
+		err = m.AttackProtection.UpdateSuspiciousIPThrottling(preTestSIPSettings)
+		assert.NoError(t, err)
 	})
 }
