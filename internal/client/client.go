@@ -153,6 +153,18 @@ func OAuth2ClientCredentials(ctx context.Context, uri, clientID, clientSecret st
 	}).TokenSource(ctx)
 }
 
+// OAuth2ClientCredentialsAndAudience sets the oauth2 client credentials.
+func OAuth2ClientCredentialsAndAudience(ctx context.Context, uri, clientID, clientSecret, audience string) oauth2.TokenSource {
+	return (&clientcredentials.Config{
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
+		TokenURL:     uri + "/oauth/token",
+		EndpointParams: url.Values{
+			"audience": {audience},
+		},
+	}).TokenSource(ctx)
+}
+
 // StaticToken sets a static token to be used for oauth2.
 func StaticToken(token string) oauth2.TokenSource {
 	return oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})

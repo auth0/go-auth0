@@ -12,6 +12,7 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/auth0/go-auth0/internal/client"
 	"github.com/auth0/go-auth0/internal/testing/expect"
 )
 
@@ -205,6 +206,31 @@ func TestNew_WithInsecure(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	u, err := m.User.Read("123")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	expect.Expect(t, u.GetID(), "123")
+}
+
+func TestNew_WithTokenSource(t *testing.T) {
+	h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/api/v2/users/123":
+			w.Write([]byte(`{"user_id":"123"}`))
+		default:
+			http.NotFound(w, r)
+		}
+	})
+	s := httptest.NewServer(h)
+
+	m, err := New(s.URL, WithTokenSource(client.StaticToken("a static token")))
+	if err != nil {
+		t.Fatal(err)
+	}
+	m.url.Scheme = "http"
+	
 	u, err := m.User.Read("123")
 	if err != nil {
 		t.Fatal(err)
