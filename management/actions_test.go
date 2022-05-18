@@ -260,7 +260,7 @@ func givenAnAction(t *testing.T) *Action {
 func ensureActionBuilt(t *testing.T, actionID string) {
 	var actionBuilt bool
 
-	for i := 0; i < 20; i++ {
+	for i := 0; i < 60; i++ {
 		action, err := m.Action.Read(actionID)
 		assert.NoError(t, err)
 
