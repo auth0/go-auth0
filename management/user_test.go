@@ -470,7 +470,7 @@ func TestUserIdentity(t *testing.T) {
 func givenAUser(t *testing.T) *User {
 	user := &User{
 		Connection: auth0.String("Username-Password-Authentication"),
-		Email:      auth0.String("chuck@chucknorris.com"),
+		Email:      auth0.String("chuck@example.com"),
 		Username:   auth0.String("chuck"),
 		Password:   auth0.String("I have a password and its a secret"),
 	}
