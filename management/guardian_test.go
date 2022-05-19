@@ -13,10 +13,9 @@ import (
 func TestGuardian(t *testing.T) {
 	t.Run("MultiFactor", func(t *testing.T) {
 		t.Run("List", func(t *testing.T) {
-			const expectedGuardianFactors = 8
 			mfa, err := m.Guardian.MultiFactor.List()
 			assert.NoError(t, err)
-			assert.Len(t, mfa, expectedGuardianFactors)
+			assert.Greater(t, len(mfa), 1)
 		})
 
 		t.Run("Policy", func(t *testing.T) {
