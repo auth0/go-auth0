@@ -22,6 +22,11 @@ func TestGuardian(t *testing.T) {
 			initialPolicy, err := m.Guardian.MultiFactor.Policy()
 			assert.NoError(t, err)
 
+			t.Cleanup(func() {
+				err = m.Guardian.MultiFactor.UpdatePolicy(initialPolicy)
+				assert.NoError(t, err)
+			})
+
 			// Has to be one of "all-applications" or "confidence-score",
 			// but not both. If omitted, it removes all policies.
 			expectedPolicy := &MultiFactorPolicies{"all-applications"}
@@ -31,15 +36,17 @@ func TestGuardian(t *testing.T) {
 			actualPolicy, err := m.Guardian.MultiFactor.Policy()
 			assert.NoError(t, err)
 			assert.Equal(t, expectedPolicy, actualPolicy)
-
-			err = m.Guardian.MultiFactor.UpdatePolicy(initialPolicy)
-			assert.NoError(t, err)
 		})
 
 		t.Run("Phone", func(t *testing.T) {
 			t.Run("Provider", func(t *testing.T) {
 				initialProvider, err := m.Guardian.MultiFactor.Phone.Provider()
 				assert.NoError(t, err)
+
+				t.Cleanup(func() {
+					err = m.Guardian.MultiFactor.Phone.UpdateProvider(initialProvider)
+					assert.NoError(t, err)
+				})
 
 				expectedProvider := &MultiFactorProvider{Provider: auth0.String("phone-message-hook")}
 
@@ -49,9 +56,6 @@ func TestGuardian(t *testing.T) {
 				actualProvider, err := m.Guardian.MultiFactor.Phone.Provider()
 				assert.NoError(t, err)
 				assert.Equal(t, expectedProvider, actualProvider)
-
-				err = m.Guardian.MultiFactor.Phone.UpdateProvider(initialProvider)
-				assert.NoError(t, err)
 			})
 
 			t.Run("Enable", func(t *testing.T) {
@@ -72,6 +76,11 @@ func TestGuardian(t *testing.T) {
 				initialMessageTypes, err := m.Guardian.MultiFactor.Phone.MessageTypes()
 				assert.NoError(t, err)
 
+				t.Cleanup(func() {
+					err = m.Guardian.MultiFactor.Phone.UpdateMessageTypes(initialMessageTypes)
+					assert.NoError(t, err)
+				})
+
 				messageTypes := []string{"voice"}
 				expectedPhoneMessageTypes := &PhoneMessageTypes{
 					MessageTypes: &messageTypes,
@@ -83,9 +92,6 @@ func TestGuardian(t *testing.T) {
 				actualMessageTypes, err := m.Guardian.MultiFactor.Phone.MessageTypes()
 				assert.NoError(t, err)
 				assert.Equal(t, expectedPhoneMessageTypes, actualMessageTypes)
-
-				err = m.Guardian.MultiFactor.Phone.UpdateMessageTypes(initialMessageTypes)
-				assert.NoError(t, err)
 			})
 		})
 
@@ -265,7 +271,6 @@ func TestGuardian(t *testing.T) {
 	t.Run("Enrollment", func(t *testing.T) {
 		t.Run("CreateTicket", func(t *testing.T) {
 			user := givenAUser(t)
-			defer cleanupUser(t, user.GetID())
 
 			ticket := &CreateEnrollmentTicket{
 				UserID:   user.GetID(),

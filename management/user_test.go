@@ -478,6 +478,10 @@ func givenAUser(t *testing.T) *User {
 	err := m.User.Create(user)
 	require.NoError(t, err)
 
+	t.Cleanup(func() {
+		cleanupUser(t, user.GetID())
+	})
+
 	return user
 }
 
