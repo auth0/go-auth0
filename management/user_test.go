@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0"
 	"github.com/auth0/go-auth0/internal/testing/expect"
@@ -464,4 +465,27 @@ func TestUserIdentity(t *testing.T) {
 			assert.Equal(t, expected, actual)
 		}
 	})
+}
+
+func givenAUser(t *testing.T) *User {
+	user := &User{
+		Connection: auth0.String("Username-Password-Authentication"),
+		Email:      auth0.String("chuck@example.com"),
+		Username:   auth0.String("chuck"),
+		Password:   auth0.String("I have a password and its a secret"),
+	}
+
+	err := m.User.Create(user)
+	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupUser(t, user.GetID())
+	})
+
+	return user
+}
+
+func cleanupUser(t *testing.T, userID string) {
+	err := m.User.Delete(userID)
+	require.NoError(t, err)
 }
