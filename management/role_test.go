@@ -1,140 +1,137 @@
 package management
 
 import (
+	"fmt"
+	"math/rand"
+	"net/http"
 	"testing"
-	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0"
 )
 
-func TestRole(t *testing.T) {
-	var err error
-
-	r := &Role{
-		Name:        auth0.String("admin"),
-		Description: auth0.String("Administrator"),
+func TestRoleManager_Create(t *testing.T) {
+	role := &Role{
+		Name:        auth0.String("test-role"),
+		Description: auth0.String("Test Role"),
 	}
 
-	u := &User{
-		Connection: auth0.String("Username-Password-Authentication"),
-		Email:      auth0.String("chuck@chucknorris.com"),
-		Username:   auth0.String("chuck"),
-		Password:   auth0.String("Passwords hide their Chuck"),
-	}
-	err = m.User.Create(u)
-	if err != nil {
-		t.Error(err)
-	}
-	defer m.User.Delete(auth0.StringValue(u.ID))
+	err := m.Role.Create(role)
 
-	s := &ResourceServer{
-		Name: auth0.Stringf("Test Role (%s)",
-			time.Now().Format(time.StampMilli)),
-		Identifier: auth0.String("https://api.example.com/role"),
-		Scopes: []*ResourceServerScope{
-			{
-				Value:       auth0.String("read:resource"),
-				Description: auth0.String("Read Resource"),
-			},
-			{
-				Value:       auth0.String("update:resource"),
-				Description: auth0.String("Update Resource"),
-			},
+	assert.NoError(t, err)
+	assert.NotEmpty(t, role.GetID())
+
+	defer cleanupRole(t, role.GetID())
+}
+
+func TestRoleManager_Read(t *testing.T) {
+	expectedRole := givenARole(t)
+
+	actualRole, err := m.Role.Read(expectedRole.GetID())
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedRole, actualRole)
+}
+
+func TestRoleManager_Update(t *testing.T) {
+	expectedRole := givenARole(t)
+
+	updatedRole := &Role{
+		Description: auth0.String("The Administrator"),
+	}
+	err := m.Role.Update(expectedRole.GetID(), updatedRole)
+
+	assert.NoError(t, err)
+	assert.Equal(t, "The Administrator", updatedRole.GetDescription())
+	assert.Equal(t, expectedRole.GetName(), updatedRole.GetName())
+}
+
+func TestRoleManager_Delete(t *testing.T) {
+	expectedRole := givenARole(t)
+
+	err := m.Role.Delete(expectedRole.GetID())
+	assert.NoError(t, err)
+
+	actualRole, err := m.Role.Read(expectedRole.GetID())
+	assert.Empty(t, actualRole)
+	assert.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
+}
+
+func TestRoleManager_List(t *testing.T) {
+	role := givenARole(t)
+
+	roleList, err := m.Role.List(Parameter("name_filter", role.GetName()))
+
+	assert.NoError(t, err)
+	assert.Len(t, roleList.Roles, 1)
+	assert.Equal(t, role.GetID(), roleList.Roles[0].GetID())
+}
+
+func TestRoleManager_Users(t *testing.T) {
+	user := givenAUser(t)
+	role := givenARole(t)
+
+	err := m.Role.AssignUsers(role.GetID(), []*User{user})
+	assert.NoError(t, err)
+
+	roleUsers, err := m.Role.Users(role.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, roleUsers.Users, 1)
+	assert.Equal(t, user.GetID(), roleUsers.Users[0].GetID())
+}
+
+func TestRoleManager_Permissions(t *testing.T) {
+	role := givenARole(t)
+	resourceServer := givenAResourceServer(t)
+	permissions := []*Permission{
+		{
+			Name:                     resourceServer.Scopes[0].Value,
+			ResourceServerIdentifier: resourceServer.Identifier,
 		},
 	}
-	err = m.ResourceServer.Create(s)
-	if err != nil {
-		t.Fatal(err)
+
+	err := m.Role.AssociatePermissions(role.GetID(), permissions)
+	assert.NoError(t, err)
+
+	permissionList, err := m.Role.Permissions(role.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, permissionList.Permissions, 1)
+	assert.Equal(t, permissions[0].GetName(), permissionList.Permissions[0].GetName())
+	assert.Equal(t, permissions[0].GetResourceServerIdentifier(), permissionList.Permissions[0].GetResourceServerIdentifier())
+
+	err = m.Role.RemovePermissions(role.GetID(), permissions)
+	assert.NoError(t, err)
+
+	permissionList, err = m.Role.Permissions(role.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, permissionList.Permissions, 0)
+}
+
+func givenARole(t *testing.T) *Role {
+	role := &Role{
+		Name:        auth0.String(fmt.Sprintf("test-role%d", rand.Intn(999))),
+		Description: auth0.String("Test Role"),
 	}
-	defer m.ResourceServer.Delete(auth0.StringValue(s.ID))
 
-	t.Run("Create", func(t *testing.T) {
-		err = m.Role.Create(r)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", r)
+	err := m.Role.Create(role)
+	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupRole(t, role.GetID())
 	})
 
-	t.Run("Read", func(t *testing.T) {
-		r, err = m.Role.Read(auth0.StringValue(r.ID))
-		if err != nil {
+	return role
+}
+
+func cleanupRole(t *testing.T, roleID string) {
+	err := m.Role.Delete(roleID)
+	if err != nil {
+		if err.(Error).Status() != http.StatusNotFound {
 			t.Error(err)
 		}
-		t.Logf("%v\n", r)
-	})
-
-	t.Run("Update", func(t *testing.T) {
-		id := auth0.StringValue(r.ID)
-
-		r.ID = nil // read-only
-		r.Description = auth0.String("The Administrator")
-
-		err = m.Role.Update(id, r)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", r)
-	})
-
-	t.Run("List", func(t *testing.T) {
-		var rs *RoleList
-		rs, err = m.Role.List()
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", rs)
-	})
-
-	t.Run("AssignUsers", func(t *testing.T) {
-		err = m.Role.AssignUsers(auth0.StringValue(r.ID), []*User{u})
-		if err != nil {
-			t.Fatal(err)
-		}
-	})
-
-	t.Run("Users", func(t *testing.T) {
-		l, err := m.Role.Users(auth0.StringValue(r.ID))
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", l.Users)
-	})
-
-	t.Run("AssociatePermissions", func(t *testing.T) {
-		ps := []*Permission{
-			{Name: auth0.String("read:resource"), ResourceServerIdentifier: auth0.String("https://api.example.com/role")},
-			{Name: auth0.String("update:resource"), ResourceServerIdentifier: auth0.String("https://api.example.com/role")},
-		}
-		err = m.Role.AssociatePermissions(auth0.StringValue(r.ID), ps)
-		if err != nil {
-			t.Fatal(err)
-		}
-	})
-
-	t.Run("Permissions", func(t *testing.T) {
-		l, err := m.Role.Permissions(auth0.StringValue(r.ID))
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", l.Permissions)
-	})
-
-	t.Run("RemovePermissions", func(t *testing.T) {
-		ps := []*Permission{
-			{Name: auth0.String("read:resource"), ResourceServerIdentifier: auth0.String("https://api.example.com/role")},
-			{Name: auth0.String("update:resource"), ResourceServerIdentifier: auth0.String("https://api.example.com/role")},
-		}
-		err = m.Role.RemovePermissions(auth0.StringValue(r.ID), ps)
-		if err != nil {
-			t.Fatal(err)
-		}
-	})
-
-	t.Run("Delete", func(t *testing.T) {
-		err = m.Role.Delete(auth0.StringValue(r.ID))
-		if err != nil {
-			t.Error(err)
-		}
-	})
+	}
 }
