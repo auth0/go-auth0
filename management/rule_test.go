@@ -68,7 +68,7 @@ func TestRuleManager_List(t *testing.T) {
 	rule := givenARule(t)
 
 	ruleList, err := m.Rule.List(IncludeFields("id"))
-	
+
 	assert.NoError(t, err)
 	assert.Contains(t, ruleList.Rules, &Rule{ID: rule.ID})
 }
