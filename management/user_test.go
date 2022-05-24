@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -78,7 +79,12 @@ func TestUserManager_Delete(t *testing.T) {
 func TestUserManager_List(t *testing.T) {
 	expectedUser := givenAUser(t)
 
-	userList, err := m.User.List(Query(fmt.Sprintf("email:%q", expectedUser.GetEmail())))
+	// The List() endpoint is slow to pick up the newly created user,
+	// so we wait a second before executing the request.
+	time.Sleep(time.Second)
+
+	userQuery := fmt.Sprintf("username:%q", expectedUser.GetUsername())
+	userList, err := m.User.List(Query(userQuery))
 
 	assert.NoError(t, err)
 	assert.Len(t, userList.Users, 1)
