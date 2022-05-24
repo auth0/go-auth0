@@ -5107,6 +5107,14 @@ func (p *Prompt) GetIdentifierFirst() bool {
 	return *p.IdentifierFirst
 }
 
+// GetWebAuthnPlatformFirstFactor returns the WebAuthnPlatformFirstFactor field if it's non-nil, zero value otherwise.
+func (p *Prompt) GetWebAuthnPlatformFirstFactor() bool {
+	if p == nil || p.WebAuthnPlatformFirstFactor == nil {
+		return false
+	}
+	return *p.WebAuthnPlatformFirstFactor
+}
+
 // String returns a string representation of Prompt.
 func (p *Prompt) String() string {
 	return Stringify(p)
