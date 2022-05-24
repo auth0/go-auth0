@@ -114,6 +114,10 @@ func givenAResourceServer(t *testing.T) *ResourceServer {
 	err := m.ResourceServer.Create(resourceServer)
 	require.NoError(t, err)
 
+	t.Cleanup(func() {
+		cleanupResourceServer(t, resourceServer.GetID())
+	})
+
 	return resourceServer
 }
 
