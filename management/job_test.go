@@ -3,90 +3,63 @@ package management
 import (
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/auth0/go-auth0"
 )
 
-func TestJob(t *testing.T) {
-	var err error
+func TestJobManager_VerifyEmail(t *testing.T) {
+	user := givenAUser(t)
+	job := &Job{UserID: user.ID}
 
-	c, err := m.Connection.ReadByName("Username-Password-Authentication")
-	if err != nil {
-		t.Error(err)
+	err := m.Job.VerifyEmail(job)
+	assert.NoError(t, err)
+
+	actualJob, err := m.Job.Read(job.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, job.GetID(), actualJob.GetID())
+}
+
+func TestJobManager_ExportUsers(t *testing.T) {
+	givenAUser(t)
+	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
+	assert.NoError(t, err)
+
+	job := &Job{
+		ConnectionID: conn.ID,
+		Format:       auth0.String("json"),
+		Limit:        auth0.Int(5),
+		Fields: []map[string]interface{}{
+			{"name": "name"},
+			{"name": "email"},
+			{"name": "identities[0].connection"},
+		},
 	}
-	connectionID := auth0.StringValue(c.ID)
 
-	u := &User{
-		Connection: auth0.String("Username-Password-Authentication"),
-		Email:      auth0.String("example@example.com"),
-		Username:   auth0.String("example"),
-		Password:   auth0.String("I have a password and its a secret"),
+	err = m.Job.ExportUsers(job)
+	assert.NoError(t, err)
+}
+
+func TestJobManager_ImportUsers(t *testing.T) {
+	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
+	assert.NoError(t, err)
+
+	job := &Job{
+		ConnectionID:        conn.ID,
+		Upsert:              auth0.Bool(true),
+		SendCompletionEmail: auth0.Bool(false),
+		Users: []map[string]interface{}{
+			{"email": "auzironian@example.com", "email_verified": true},
+		},
 	}
-	err = m.User.Create(u)
-	if err != nil {
-		t.Error(err)
-	}
-	userID := auth0.StringValue(u.ID)
+	err = m.Job.ImportUsers(job)
+	assert.NoError(t, err)
 
-	defer m.User.Delete(userID)
+	t.Cleanup(func() {
+		users, err := m.User.ListByEmail("auzironian@example.com")
+		assert.NoError(t, err)
+		assert.Len(t, users, 1)
 
-	var jobID string
-
-	t.Run("VerifyEmail", func(t *testing.T) {
-		job := &Job{
-			UserID: auth0.String(userID),
-		}
-
-		err = m.Job.VerifyEmail(job)
-		if err != nil {
-			t.Error(err)
-		}
-
-		jobID = auth0.StringValue(job.ID) // save for use in subsequent tests
-
-		if auth0.StringValue(job.Type) != "verification_email" {
-			t.Errorf("expected job type to be verification_email, got %s", auth0.StringValue(job.Type))
-		}
-	})
-
-	t.Run("Read", func(t *testing.T) {
-		job, err := m.Job.Read(jobID)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Log(job)
-	})
-
-	t.Run("ExportUsers", func(t *testing.T) {
-		job := &Job{
-			ConnectionID: auth0.String(connectionID),
-			Format:       auth0.String("json"),
-			Limit:        auth0.Int(5),
-			Fields: []map[string]interface{}{
-				{"name": "name"},
-				{"name": "email"},
-				{"name": "identities[0].connection"},
-			},
-		}
-		err := m.Job.ExportUsers(job)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Log(job)
-	})
-
-	t.Run("ImportUsers", func(t *testing.T) {
-		job := &Job{
-			ConnectionID:        auth0.String(connectionID),
-			Upsert:              auth0.Bool(true),
-			SendCompletionEmail: auth0.Bool(false),
-			Users: []map[string]interface{}{
-				{"email": "alex@example.com", "email_verified": true},
-			},
-		}
-		err = m.Job.ImportUsers(job)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Log(job)
+		cleanupUser(t, users[0].GetID())
 	})
 }
