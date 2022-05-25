@@ -1,11 +1,12 @@
 package management
 
 import (
-	"encoding/json"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
 	"github.com/auth0/go-auth0"
-	"github.com/auth0/go-auth0/internal/testing/expect"
 )
 
 func TestPrompt(t *testing.T) {
@@ -14,9 +15,7 @@ func TestPrompt(t *testing.T) {
 			UniversalLoginExperience: "classic",
 			IdentifierFirst:          auth0.Bool(false),
 		})
-		if err != nil {
-			t.Fatal(err)
-		}
+		require.NoError(t, err)
 	})
 
 	t.Run("Update to the new identifier first experience", func(t *testing.T) {
@@ -24,16 +23,12 @@ func TestPrompt(t *testing.T) {
 			UniversalLoginExperience: "new",
 			IdentifierFirst:          auth0.Bool(true),
 		})
-		if err != nil {
-			t.Error(err)
-		}
+		assert.NoError(t, err)
 
 		ps, err := m.Prompt.Read()
-		if err != nil {
-			t.Error(err)
-		}
-		expect.Expect(t, ps.UniversalLoginExperience, "new")
-		expect.Expect(t, ps.IdentifierFirst, auth0.Bool(true))
+		assert.NoError(t, err)
+		assert.Equal(t, "new", ps.UniversalLoginExperience)
+		assert.Equal(t, true, ps.GetIdentifierFirst())
 	})
 
 	t.Run("Update to the classic non identifier first experience", func(t *testing.T) {
@@ -41,55 +36,35 @@ func TestPrompt(t *testing.T) {
 			UniversalLoginExperience: "classic",
 			IdentifierFirst:          auth0.Bool(false),
 		})
-		if err != nil {
-			t.Error(err)
-		}
+		assert.NoError(t, err)
 
 		ps, err := m.Prompt.Read()
-		if err != nil {
-			t.Error(err)
-		}
-		expect.Expect(t, ps.UniversalLoginExperience, "classic")
-		expect.Expect(t, ps.IdentifierFirst, auth0.Bool(false))
+		assert.NoError(t, err)
+		assert.Equal(t, "classic", ps.UniversalLoginExperience)
+		assert.Equal(t, false, ps.GetIdentifierFirst())
 	})
 }
 
 func TestPromptCustomText(t *testing.T) {
+	const prompt = "login"
+	const lang = "en"
+
 	t.Cleanup(func() {
-		prompt := "login"
-		lang := "en"
 		body := make(map[string]interface{})
 		err := m.Prompt.SetCustomText(prompt, lang, body)
-		if err != nil {
-			t.Error(err)
-		}
+		require.NoError(t, err)
 	})
 
-	t.Run("Retrieve custom text", func(t *testing.T) {
-		prompt := "login"
-		lang := "en"
+	body := map[string]interface{}{
+		"login": map[string]interface{}{
+			"title": "Welcome",
+		},
+	}
 
-		texts, err := m.Prompt.CustomText(prompt, lang)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", texts)
-	})
+	err := m.Prompt.SetCustomText(prompt, lang, body)
+	assert.NoError(t, err)
 
-	t.Run("Set custom text", func(t *testing.T) {
-		prompt := "login"
-		lang := "en"
-
-		var body map[string]interface{}
-		err := json.Unmarshal([]byte(`{ "login": { "title": "Welcome" } }`), &body)
-		if err != nil {
-			t.Error(err)
-		}
-
-		err = m.Prompt.SetCustomText(prompt, lang, body)
-		if err != nil {
-			t.Error(err)
-		}
-		expect.Expect(t, body["login"].(map[string]interface{})["title"], "Welcome")
-	})
+	texts, err := m.Prompt.CustomText(prompt, lang)
+	assert.NoError(t, err)
+	assert.Equal(t, "Welcome", texts["login"].(map[string]interface{})["title"])
 }
