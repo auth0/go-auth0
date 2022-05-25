@@ -116,12 +116,17 @@ func TestJWTConfiguration(t *testing.T) {
 
 func givenAClient(t *testing.T) *Client {
 	client := &Client{
-		Name:        auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
-		Description: auth0.String("This is just a test client."),
+		Name:              auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
+		Description:       auth0.String("This is just a test client."),
+		OrganizationUsage: auth0.String("allow"),
 	}
 
 	err := m.Client.Create(client)
 	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupClient(t, client.GetClientID())
+	})
 
 	return client
 }

@@ -415,5 +415,9 @@ func givenAConnection(t *testing.T, testCase connectionTestCase) *Connection {
 	err := m.Connection.Create(&connection)
 	require.NoError(t, err)
 
+	t.Cleanup(func() {
+		cleanupConnection(t, connection.GetID())
+	})
+
 	return &connection
 }

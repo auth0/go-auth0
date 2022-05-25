@@ -2,89 +2,160 @@ package management
 
 import (
 	"fmt"
+	"math/rand"
+	"net/http"
 	"os"
 	"testing"
-	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0"
 )
 
-func TestOrganization(t *testing.T) {
-	var err error
-
-	ts := time.Now().Format("20060102150405")
-
-	client := &Client{
-		Name:              auth0.Stringf("testclient%v", ts),
-		AppType:           auth0.String("regular_web"),
-		GrantTypes:        []interface{}{"client_credentials"},
-		OrganizationUsage: auth0.String("allow"),
-	}
-	err = m.Client.Create(client)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	t.Cleanup(func() {
-		m.Client.Delete(auth0.StringValue(client.ClientID))
-	})
-
-	connection := &Connection{
-		Name:        auth0.String(fmt.Sprintf("testconn%v", ts)),
-		DisplayName: auth0.String(fmt.Sprintf("Test Connection %v", ts)),
-		Strategy:    auth0.String(ConnectionStrategyAuth0),
-		EnabledClients: []interface{}{
-			os.Getenv("AUTH0_CLIENT_ID"),
-			client.ClientID,
-		},
-	}
-	err = m.Connection.Create(connection)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	t.Cleanup(func() {
-		m.Connection.Delete(connection.GetID())
-	})
-
-	user := &User{
-		Connection: connection.Name,
-		Email:      auth0.String("chuck@chucknorris.com"),
-		Password:   auth0.String("Passwords hide their Chuck"),
-		GivenName:  auth0.String("Chuck"),
-		FamilyName: auth0.String("Norris"),
-	}
-	err = m.User.Create(user)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	t.Cleanup(func() {
-		m.User.Delete(user.GetID())
-	})
-
-	role := &Role{
-		Name:        auth0.String("admin"),
-		Description: auth0.String("Administrator"),
-	}
-	err = m.Role.Create(role)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	t.Cleanup(func() {
-		m.Role.Delete(role.GetID())
-	})
-
-	o := &Organization{
-		Name:        auth0.String(fmt.Sprintf("testorganization%v", ts)),
+func TestOrganizationManager_Create(t *testing.T) {
+	org := &Organization{
+		Name:        auth0.String(fmt.Sprintf("test-organization%v", rand.Intn(999))),
 		DisplayName: auth0.String("Test Organization"),
 		Branding: &OrganizationBranding{
 			LogoURL: auth0.String("https://example.com/logo.gif"),
 		},
 	}
 
-	oi := &OrganizationInvitation{
+	err := m.Organization.Create(org)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, org.GetID())
+
+	defer cleanupOrganization(t, org.GetID())
+}
+
+func TestOrganizationManager_Read(t *testing.T) {
+	org := givenAnOrganization(t)
+
+	actualOrg, err := m.Organization.Read(org.GetID())
+
+	assert.NoError(t, err)
+	assert.Equal(t, org, actualOrg)
+}
+
+func TestOrganizationManager_ReadByName(t *testing.T) {
+	org := givenAnOrganization(t)
+
+	actualOrg, err := m.Organization.ReadByName(org.GetName())
+
+	assert.NoError(t, err)
+	assert.Equal(t, org, actualOrg)
+}
+
+func TestOrganizationManager_Update(t *testing.T) {
+	org := givenAnOrganization(t)
+
+	err := m.Organization.Update(org.GetID(), &Organization{Name: auth0.String("new-org-name")})
+	assert.NoError(t, err)
+
+	actualOrg, err := m.Organization.Read(org.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, "new-org-name", actualOrg.GetName())
+}
+
+func TestOrganizationManager_Delete(t *testing.T) {
+	org := givenAnOrganization(t)
+
+	err := m.Organization.Delete(org.GetID())
+	assert.NoError(t, err)
+
+	actualOrg, err := m.Organization.Read(org.GetID())
+	assert.Empty(t, actualOrg)
+	assert.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
+}
+
+func TestOrganizationManager_List(t *testing.T) {
+	givenAnOrganization(t)
+
+	orgList, err := m.Organization.List()
+	assert.NoError(t, err)
+	assert.GreaterOrEqual(t, len(orgList.Organizations), 1)
+}
+
+func TestOrganizationManager_AddConnection(t *testing.T) {
+	org := givenAnOrganization(t)
+	client := givenAClient(t)
+	conn := givenAConnection(t, connectionTestCase{connection: Connection{
+		Name:        auth0.String(fmt.Sprintf("test-conn%v", rand.Intn(999))),
+		DisplayName: auth0.String(fmt.Sprintf("Test Connection %v", rand.Intn(999))),
+		Strategy:    auth0.String(ConnectionStrategyAuth0),
+		EnabledClients: []interface{}{
+			os.Getenv("AUTH0_CLIENT_ID"),
+			client.ClientID,
+		},
+	}})
+	orgConn := &OrganizationConnection{
+		ConnectionID:            conn.ID,
+		AssignMembershipOnLogin: auth0.Bool(true),
+	}
+
+	err := m.Organization.AddConnection(org.GetID(), orgConn)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, orgConn.GetConnection())
+}
+
+func TestOrganizationManager_Connection(t *testing.T) {
+	org := givenAnOrganization(t)
+	orgConn := givenAnOrganizationConnection(t, org.GetID())
+
+	actualOrgConn, err := m.Organization.Connection(org.GetID(), orgConn.GetConnectionID())
+	assert.NoError(t, err)
+	assert.Equal(t, orgConn, actualOrgConn)
+}
+
+func TestOrganizationManager_UpdateConnection(t *testing.T) {
+	org := givenAnOrganization(t)
+	orgConn := givenAnOrganizationConnection(t, org.GetID())
+
+	err := m.Organization.UpdateConnection(
+		org.GetID(),
+		orgConn.GetConnectionID(),
+		&OrganizationConnection{
+			AssignMembershipOnLogin: auth0.Bool(false),
+		},
+	)
+	assert.NoError(t, err)
+
+	actualOrgConn, err := m.Organization.Connection(org.GetID(), orgConn.GetConnectionID())
+	assert.NoError(t, err)
+	assert.Equal(t, false, actualOrgConn.GetAssignMembershipOnLogin())
+}
+
+func TestOrganizationManager_DeleteConnection(t *testing.T) {
+	org := givenAnOrganization(t)
+	orgConn := givenAnOrganizationConnection(t, org.GetID())
+
+	err := m.Organization.DeleteConnection(org.GetID(), orgConn.GetConnectionID())
+	assert.NoError(t, err)
+
+	actualOrgConn, err := m.Organization.Connection(org.GetID(), orgConn.GetConnectionID())
+	assert.Error(t, err)
+	assert.Empty(t, actualOrgConn)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
+}
+
+func TestOrganizationManager_Connections(t *testing.T) {
+	org := givenAnOrganization(t)
+	orgConn := givenAnOrganizationConnection(t, org.GetID())
+
+	orgConnList, err := m.Organization.Connections(org.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, orgConnList.OrganizationConnections, 1)
+	assert.Equal(t, orgConn.GetConnectionID(), orgConnList.OrganizationConnections[0].GetConnectionID())
+}
+
+func TestOrganizationManager_CreateInvitation(t *testing.T) {
+	org := givenAnOrganization(t)
+	client := givenAClient(t)
+	orgInvite := &OrganizationInvitation{
 		Inviter: &OrganizationInvitationInviter{
 			Name: auth0.String("Test Inviter"),
 		},
@@ -94,179 +165,170 @@ func TestOrganization(t *testing.T) {
 		ClientID: client.ClientID,
 	}
 
-	oc := &OrganizationConnection{
-		ConnectionID:            connection.ID,
+	err := m.Organization.CreateInvitation(org.GetID(), orgInvite)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, orgInvite.GetID())
+}
+
+func TestOrganizationManager_Invitation(t *testing.T) {
+	org := givenAnOrganization(t)
+	orgInvite := givenAnOrganizationInvitation(t, org.GetID())
+
+	actualOrgInvite, err := m.Organization.Invitation(org.GetID(), orgInvite.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, orgInvite, actualOrgInvite)
+}
+
+func TestOrganizationManager_DeleteInvitation(t *testing.T) {
+	org := givenAnOrganization(t)
+	orgInvite := givenAnOrganizationInvitation(t, org.GetID())
+
+	err := m.Organization.DeleteInvitation(org.GetID(), orgInvite.GetID())
+	assert.NoError(t, err)
+
+	actualOrgInvite, err := m.Organization.Invitation(org.GetID(), orgInvite.GetID())
+	assert.Error(t, err)
+	assert.Empty(t, actualOrgInvite)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
+}
+
+func TestOrganizationManager_Invitations(t *testing.T) {
+	org := givenAnOrganization(t)
+	orgInvite := givenAnOrganizationInvitation(t, org.GetID())
+
+	invitations, err := m.Organization.Invitations(org.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, invitations.OrganizationInvitations, 1)
+	assert.Equal(t, orgInvite.GetID(), invitations.OrganizationInvitations[0].GetID())
+}
+
+func TestOrganizationManager_AddMembers(t *testing.T) {
+	org := givenAnOrganization(t)
+	user := givenAUser(t)
+
+	err := m.Organization.AddMembers(org.GetID(), []string{user.GetID()})
+	assert.NoError(t, err)
+}
+
+func TestOrganizationManager_DeleteMembers(t *testing.T) {
+	org := givenAnOrganization(t)
+	user := givenAUser(t)
+
+	err := m.Organization.AddMembers(org.GetID(), []string{user.GetID()})
+	assert.NoError(t, err)
+
+	err = m.Organization.DeleteMember(org.GetID(), []string{user.GetID()})
+	assert.NoError(t, err)
+
+	members, err := m.Organization.Members(org.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, members.Members, 0)
+}
+
+func TestOrganizationManager_Members(t *testing.T) {
+	org := givenAnOrganization(t)
+	user := givenAUser(t)
+
+	err := m.Organization.AddMembers(org.GetID(), []string{user.GetID()})
+	assert.NoError(t, err)
+
+	members, err := m.Organization.Members(org.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, members.Members, 1)
+	assert.Equal(t, user.GetID(), members.Members[0].GetUserID())
+}
+
+func TestOrganizationManager_MemberRoles(t *testing.T) {
+	org := givenAnOrganization(t)
+	user := givenAUser(t)
+	role := givenARole(t)
+
+	err := m.Organization.AddMembers(org.GetID(), []string{user.GetID()})
+	assert.NoError(t, err)
+
+	err = m.Organization.AssignMemberRoles(org.GetID(), user.GetID(), []string{role.GetID()})
+	assert.NoError(t, err)
+
+	roles, err := m.Organization.MemberRoles(org.GetID(), user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, roles.Roles, 1)
+	assert.Equal(t, role.GetID(), roles.Roles[0].GetID())
+
+	err = m.Organization.DeleteMemberRoles(org.GetID(), user.GetID(), []string{role.GetID()})
+	assert.NoError(t, err)
+
+	roles, err = m.Organization.MemberRoles(org.GetID(), user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, roles.Roles, 0)
+}
+
+func givenAnOrganization(t *testing.T) *Organization {
+	org := &Organization{
+		Name:        auth0.String(fmt.Sprintf("test-organization%v", rand.Intn(999))),
+		DisplayName: auth0.String("Test Organization"),
+		Branding: &OrganizationBranding{
+			LogoURL: auth0.String("https://example.com/logo.gif"),
+		},
+	}
+
+	err := m.Organization.Create(org)
+	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupOrganization(t, org.GetID())
+	})
+
+	return org
+}
+
+func givenAnOrganizationConnection(t *testing.T, orgID string) *OrganizationConnection {
+	client := givenAClient(t)
+	conn := givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:        auth0.String(fmt.Sprintf("test-conn%v", rand.Intn(999))),
+			DisplayName: auth0.String(fmt.Sprintf("Test Connection %v", rand.Intn(999))),
+			Strategy:    auth0.String(ConnectionStrategyAuth0),
+			EnabledClients: []interface{}{
+				os.Getenv("AUTH0_CLIENT_ID"),
+				client.ClientID,
+			},
+		},
+	})
+	orgConn := &OrganizationConnection{
+		ConnectionID:            conn.ID,
 		AssignMembershipOnLogin: auth0.Bool(true),
 	}
 
-	t.Run("Create", func(t *testing.T) {
-		err = m.Organization.Create(o)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", o)
-	})
+	err := m.Organization.AddConnection(orgID, orgConn)
+	require.NoError(t, err)
 
-	t.Run("List", func(t *testing.T) {
-		var ol *OrganizationList
-		ol, err = m.Organization.List()
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", ol)
-	})
+	return orgConn
+}
 
-	t.Run("Read", func(t *testing.T) {
-		o, err = m.Organization.Read(o.GetID())
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", o)
-	})
+func givenAnOrganizationInvitation(t *testing.T, orgID string) *OrganizationInvitation {
+	client := givenAClient(t)
+	orgInvite := &OrganizationInvitation{
+		Inviter: &OrganizationInvitationInviter{
+			Name: auth0.String("Test Inviter"),
+		},
+		Invitee: &OrganizationInvitationInvitee{
+			Email: auth0.String("test@example.com"),
+		},
+		ClientID: client.ClientID,
+	}
 
-	t.Run("Update", func(t *testing.T) {
-		id := o.GetID()
-		o.ID = nil
-		o.Name = auth0.Stringf("testorg%v", ts)
-		err = m.Organization.Update(id, o)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", o)
-	})
+	err := m.Organization.CreateInvitation(orgID, orgInvite)
+	require.NoError(t, err)
 
-	t.Run("ReadByName", func(t *testing.T) {
-		o, err = m.Organization.ReadByName(o.GetName())
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", o)
-	})
+	return orgInvite
+}
 
-	t.Run("AddConnection", func(t *testing.T) {
-		err = m.Organization.AddConnection(o.GetID(), oc)
-		if err != nil {
+func cleanupOrganization(t *testing.T, orgID string) {
+	err := m.Organization.Delete(orgID)
+	if err != nil {
+		if err.(Error).Status() != http.StatusNotFound {
 			t.Error(err)
 		}
-		t.Logf("%v\n", oc)
-	})
-
-	t.Run("Connections", func(t *testing.T) {
-		l, err := m.Organization.Connections(o.GetID())
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", l)
-	})
-
-	t.Run("Connection", func(t *testing.T) {
-		oc, err = m.Organization.Connection(o.GetID(), oc.GetConnectionID())
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", oc)
-	})
-
-	t.Run("UpdateConnection", func(t *testing.T) {
-		connectionID := oc.GetConnectionID()
-		err = m.Organization.UpdateConnection(o.GetID(), connectionID, &OrganizationConnection{
-			AssignMembershipOnLogin: auth0.Bool(false),
-		})
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", oc)
-	})
-
-	t.Run("CreateInvitation", func(t *testing.T) {
-		err = m.Organization.CreateInvitation(o.GetID(), oi)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", oi)
-	})
-
-	t.Run("Invitations", func(t *testing.T) {
-		l, err := m.Organization.Invitations(o.GetID())
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", l)
-	})
-
-	t.Run("Invitation", func(t *testing.T) {
-		var i *OrganizationInvitation
-		i, err = m.Organization.Invitation(o.GetID(), oi.GetID())
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", i)
-	})
-
-	t.Run("AddMembers", func(t *testing.T) {
-		err = m.Organization.AddMembers(o.GetID(), []string{user.GetID()})
-		if err != nil {
-			t.Error(err)
-		}
-	})
-
-	t.Run("Members", func(t *testing.T) {
-		l, err := m.Organization.Members(o.GetID())
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", l)
-	})
-
-	t.Run("MemberRoles", func(t *testing.T) {
-		l, err := m.Organization.MemberRoles(o.GetID(), user.GetID())
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", l)
-	})
-
-	t.Run("AssignMemberRoles", func(t *testing.T) {
-		err = m.Organization.AssignMemberRoles(o.GetID(), user.GetID(), []string{role.GetID()})
-		if err != nil {
-			t.Error(err)
-		}
-	})
-
-	t.Run("DeleteMemberRoles", func(t *testing.T) {
-		err = m.Organization.DeleteMemberRoles(o.GetID(), user.GetID(), []string{role.GetID()})
-		if err != nil {
-			t.Error(err)
-		}
-	})
-
-	t.Run("DeleteMember", func(t *testing.T) {
-		err = m.Organization.DeleteMember(o.GetID(), []string{user.GetID()})
-		if err != nil {
-			t.Error(err)
-		}
-	})
-
-	t.Run("DeleteConnection", func(t *testing.T) {
-		err = m.Organization.DeleteConnection(o.GetID(), oc.GetConnectionID())
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", oc)
-	})
-
-	t.Run("DeleteInvitation", func(t *testing.T) {
-		err = m.Organization.DeleteInvitation(o.GetID(), oi.GetID())
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", oi)
-	})
-
-	t.Run("Delete", func(t *testing.T) {
-		err = m.Organization.Delete(o.GetID())
-		if err != nil {
-			t.Error(err)
-		}
-	})
+	}
 }
