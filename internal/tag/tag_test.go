@@ -19,7 +19,7 @@ func TestScopes(t *testing.T) {
 		Bar: func(b bool) *bool { return &b }(true),
 		Baz: func(b bool) *bool { return &b }(false),
 	}
-	
+
 	assert.Equal(t, []string{"foo", "bar"}, Scopes(testCase))
 }
 

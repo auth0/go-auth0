@@ -8,7 +8,6 @@ import (
 
 func TestBlacklist(t *testing.T) {
 	client := givenAClient(t)
-	defer cleanupClient(t, client.GetClientID())
 
 	blackListToken := &BlacklistToken{
 		Audience: client.GetClientID(),

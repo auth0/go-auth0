@@ -1,6 +1,7 @@
 package management
 
 import (
+	"net/http"
 	"testing"
 	"time"
 
@@ -253,13 +254,14 @@ func TestConnectionManager_Create(t *testing.T) {
 			expectedConnection.Options = testCase.options
 
 			err := m.Connection.Create(&expectedConnection)
-			// We clean up before we check the error as we can't use defer inside a loop.
-			// This is to ensure that if an assertion fails we don't stop cleaning.
-			cleanupConnection(t, expectedConnection.GetID())
 
 			assert.NoError(t, err)
 			assert.NotEmpty(t, expectedConnection.GetID())
 			assert.IsType(t, testCase.options, expectedConnection.Options)
+
+			t.Cleanup(func() {
+				cleanupConnection(t, expectedConnection.GetID())
+			})
 		})
 	}
 }
@@ -270,15 +272,16 @@ func TestConnectionManager_Read(t *testing.T) {
 			expectedConnection := givenAConnection(t, testCase)
 
 			actualConnection, err := m.Connection.Read(expectedConnection.GetID())
-			// We clean up before we check the error as we can't use defer inside a loop.
-			// This is to ensure that if an assertion fails we don't stop cleaning.
-			cleanupConnection(t, expectedConnection.GetID())
 
 			assert.NoError(t, err)
 			assert.Equal(t, expectedConnection.GetID(), actualConnection.GetID())
 			assert.Equal(t, expectedConnection.GetName(), actualConnection.GetName())
 			assert.Equal(t, expectedConnection.GetStrategy(), actualConnection.GetStrategy())
 			assert.IsType(t, testCase.options, actualConnection.Options)
+
+			t.Cleanup(func() {
+				cleanupConnection(t, expectedConnection.GetID())
+			})
 		})
 	}
 }
@@ -289,15 +292,16 @@ func TestConnectionManager_ReadByName(t *testing.T) {
 			expectedConnection := givenAConnection(t, testCase)
 
 			actualConnection, err := m.Connection.ReadByName(expectedConnection.GetName())
-			// We clean up before we check the error as we can't use defer inside a loop.
-			// This is to ensure that if an assertion fails we don't stop cleaning.
-			cleanupConnection(t, expectedConnection.GetID())
 
 			assert.NoError(t, err)
 			assert.Equal(t, expectedConnection.GetID(), actualConnection.GetID())
 			assert.Equal(t, expectedConnection.GetName(), actualConnection.GetName())
 			assert.Equal(t, expectedConnection.GetStrategy(), actualConnection.GetStrategy())
 			assert.IsType(t, testCase.options, actualConnection.Options)
+
+			t.Cleanup(func() {
+				cleanupConnection(t, expectedConnection.GetID())
+			})
 		})
 	}
 
@@ -323,19 +327,9 @@ func TestConnectionManager_Update(t *testing.T) {
 			}
 
 			err := m.Connection.Update(connection.GetID(), connectionWithUpdatedOptions)
-			if err != nil {
-				// We don't want to clean up yet as we're
-				// going to read again the connection.
-				cleanupConnection(t, connection.GetID())
-			}
-
 			assert.NoError(t, err)
 
 			actualConnection, err := m.Connection.Read(connection.GetID())
-			// We clean up before we check the error as we can't use defer inside a loop.
-			// This is to ensure that if an assertion fails we don't stop cleaning.
-			cleanupConnection(t, connection.GetID())
-
 			assert.NoError(t, err)
 			assert.ObjectsAreEqualValues(testCase.options, actualConnection.Options)
 		})
@@ -351,13 +345,13 @@ func TestConnectionManager_Delete(t *testing.T) {
 	})
 
 	err := m.Connection.Delete(expectedConnection.GetID())
-
 	assert.NoError(t, err)
 
 	actualConnection, err := m.Connection.Read(expectedConnection.GetID())
-
 	assert.Nil(t, actualConnection)
-	assert.EqualError(t, err, "404 Not Found: The connection does not exist")
+	assert.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
 
 func TestConnectionManager_List(t *testing.T) {
@@ -367,19 +361,14 @@ func TestConnectionManager_List(t *testing.T) {
 			Strategy: auth0.String("auth0"),
 		},
 	})
-	defer cleanupConnection(t, expectedConnection.GetID())
 
+	needle := &Connection{
+		ID:                 expectedConnection.ID,
+		IsDomainConnection: auth0.Bool(false),
+	}
 	connectionList, err := m.Connection.List(IncludeFields("id"))
-
 	assert.NoError(t, err)
-	assert.Contains(
-		t,
-		connectionList.Connections,
-		&Connection{
-			ID:                 expectedConnection.ID,
-			IsDomainConnection: auth0.Bool(false),
-		},
-	)
+	assert.Contains(t, connectionList.Connections, needle)
 }
 
 func TestConnectionOptionsScopes(t *testing.T) {
@@ -392,6 +381,7 @@ func TestConnectionOptionsScopes(t *testing.T) {
 		options.SetScopes(false, "foo", "baz")
 		assert.Equal(t, []string{"bar"}, options.Scopes())
 	})
+
 	t.Run("It can successfully set the scopes on the options of a OAuth2 connection", func(t *testing.T) {
 		options := &ConnectionOptionsOAuth2{}
 
@@ -404,11 +394,15 @@ func TestConnectionOptionsScopes(t *testing.T) {
 }
 
 func cleanupConnection(t *testing.T, connectionID string) {
+	t.Helper()
+
 	err := m.Connection.Delete(connectionID)
 	require.NoError(t, err)
 }
 
 func givenAConnection(t *testing.T, testCase connectionTestCase) *Connection {
+	t.Helper()
+
 	connection := testCase.connection
 	connection.Options = testCase.options
 

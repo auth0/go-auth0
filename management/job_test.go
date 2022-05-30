@@ -2,6 +2,7 @@ package management
 
 import (
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 
@@ -56,6 +57,10 @@ func TestJobManager_ImportUsers(t *testing.T) {
 	assert.NoError(t, err)
 
 	t.Cleanup(func() {
+		// The ListByEmail() endpoint is slow to pick up the newly created user,
+		// so we wait a second before executing the request.
+		time.Sleep(time.Second)
+
 		users, err := m.User.ListByEmail("auzironian@example.com")
 		assert.NoError(t, err)
 		assert.Len(t, users, 1)

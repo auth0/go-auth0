@@ -28,12 +28,13 @@ func TestEmailTemplateManager_Create(t *testing.T) {
 		}
 	}
 
-	defer cleanupEmailTemplate(t, template.GetTemplate())
+	t.Cleanup(func() {
+		cleanupEmailTemplate(t, template.GetTemplate())
+	})
 }
 
 func TestEmailTemplateManager_Read(t *testing.T) {
 	expectedTemplate := givenAnEmailTemplate(t)
-	defer cleanupEmailTemplate(t, expectedTemplate.GetTemplate())
 
 	actualTemplate, err := m.EmailTemplate.Read(expectedTemplate.GetTemplate())
 
@@ -43,7 +44,6 @@ func TestEmailTemplateManager_Read(t *testing.T) {
 
 func TestEmailTemplateManager_Update(t *testing.T) {
 	template := givenAnEmailTemplate(t)
-	defer cleanupEmailTemplate(t, template.GetTemplate())
 
 	expectedBody := "<html><body><h1>Let's get you verified!</h1></body></html>"
 	err := m.EmailTemplate.Update(
@@ -61,10 +61,7 @@ func TestEmailTemplateManager_Update(t *testing.T) {
 
 func TestEmailTemplateManager_Replace(t *testing.T) {
 	givenAnEmailProvider(t)
-	defer cleanupEmailProvider(t)
-
 	template := givenAnEmailTemplate(t)
-	defer cleanupEmailTemplate(t, template.GetTemplate())
 
 	template.Subject = auth0.String("Let's get you verified!")
 	template.Body = auth0.String("<html><body><h1>Let's get you verified!</h1></body></html>")
@@ -93,6 +90,10 @@ func givenAnEmailTemplate(t *testing.T) *EmailTemplate {
 			t.Error(err)
 		}
 	}
+
+	t.Cleanup(func() {
+		cleanupEmailTemplate(t, template.GetTemplate())
+	})
 
 	return template
 }

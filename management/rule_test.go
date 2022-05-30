@@ -23,7 +23,9 @@ func TestRuleManager_Create(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotEmpty(t, rule.GetID())
 
-	defer cleanupRule(t, rule.GetID())
+	t.Cleanup(func() {
+		cleanupRule(t, rule.GetID())
+	})
 }
 
 func TestRuleManager_Read(t *testing.T) {
@@ -74,6 +76,8 @@ func TestRuleManager_List(t *testing.T) {
 }
 
 func givenARule(t *testing.T) *Rule {
+	t.Helper()
+
 	rule := &Rule{
 		Name:    auth0.String(fmt.Sprintf("test-rule%d", rand.Intn(999))),
 		Script:  auth0.String("function (user, context, callback) { callback(null, user, context); }"),
@@ -91,6 +95,8 @@ func givenARule(t *testing.T) *Rule {
 }
 
 func cleanupRule(t *testing.T, ruleID string) {
+	t.Helper()
+
 	err := m.Rule.Delete(ruleID)
 	require.NoError(t, err)
 }

@@ -307,6 +307,8 @@ func TestUserIdentity_UnmarshalJSON(t *testing.T) {
 }
 
 func givenAUser(t *testing.T) *User {
+	t.Helper()
+
 	user := &User{
 		Connection: auth0.String("Username-Password-Authentication"),
 		Email:      auth0.String(fmt.Sprintf("chuck%d@example.com", rand.Intn(999))),
@@ -342,6 +344,8 @@ func givenAUser(t *testing.T) *User {
 }
 
 func cleanupUser(t *testing.T, userID string) {
+	t.Helper()
+
 	err := m.User.Delete(userID)
 	require.NoError(t, err)
 }

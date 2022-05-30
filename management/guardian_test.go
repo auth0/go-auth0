@@ -317,6 +317,8 @@ func getInitialMFAStatus(mfaName string) (bool, error) {
 }
 
 func assertMFAIsEnabled(t *testing.T, mfaName string) {
+	t.Helper()
+
 	mfaList, err := m.Guardian.MultiFactor.List()
 	assert.NoError(t, err)
 

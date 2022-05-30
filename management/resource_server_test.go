@@ -1,6 +1,7 @@
 package management
 
 import (
+	"net/http"
 	"testing"
 	"time"
 
@@ -26,16 +27,16 @@ func TestResourceServer_Create(t *testing.T) {
 	}
 
 	err := m.ResourceServer.Create(expectedResourceServer)
-
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedResourceServer.GetID())
 
-	defer cleanupResourceServer(t, expectedResourceServer.GetID())
+	t.Cleanup(func() {
+		cleanupResourceServer(t, expectedResourceServer.GetID())
+	})
 }
 
 func TestResourceServer_Read(t *testing.T) {
 	expectedResourceServer := givenAResourceServer(t)
-	defer cleanupResourceServer(t, expectedResourceServer.GetID())
 
 	actualResourceServer, err := m.ResourceServer.Read(expectedResourceServer.GetID())
 
@@ -45,7 +46,6 @@ func TestResourceServer_Read(t *testing.T) {
 
 func TestResourceServer_Update(t *testing.T) {
 	expectedResourceServer := givenAResourceServer(t)
-	defer cleanupResourceServer(t, expectedResourceServer.GetID())
 
 	resourceServerID := expectedResourceServer.GetID()
 
@@ -77,18 +77,17 @@ func TestResourceServer_Delete(t *testing.T) {
 	expectedResourceServer := givenAResourceServer(t)
 
 	err := m.ResourceServer.Delete(expectedResourceServer.GetID())
-
 	assert.NoError(t, err)
 
 	actualResourceServer, err := m.ResourceServer.Read(expectedResourceServer.GetID())
-
 	assert.Empty(t, actualResourceServer)
-	assert.EqualError(t, err, "404 Not Found: The resource server does not exist")
+	assert.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
 
 func TestResourceServer_List(t *testing.T) {
 	expectedResourceServer := givenAResourceServer(t)
-	defer cleanupResourceServer(t, expectedResourceServer.GetID())
 
 	resourceServerList, err := m.ResourceServer.List(IncludeFields("id"))
 
@@ -97,6 +96,8 @@ func TestResourceServer_List(t *testing.T) {
 }
 
 func givenAResourceServer(t *testing.T) *ResourceServer {
+	t.Helper()
+
 	resourceServer := &ResourceServer{
 		Name:                auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
 		Identifier:          auth0.String("https://api.example.com/"),
@@ -122,6 +123,8 @@ func givenAResourceServer(t *testing.T) *ResourceServer {
 }
 
 func cleanupResourceServer(t *testing.T, resourceServerID string) {
+	t.Helper()
+
 	err := m.ResourceServer.Delete(resourceServerID)
 	require.NoError(t, err)
 }

@@ -18,26 +18,25 @@ func TestCustomDomainManager_Create(t *testing.T) {
 	}
 
 	err := m.CustomDomain.Create(expected)
-
 	assertNoCustomDomainErr(t, err)
 	assert.NotEmpty(t, expected.GetID())
 
-	defer cleanupCustomDomain(t, expected.GetID())
+	t.Cleanup(func() {
+		cleanupCustomDomain(t, expected.GetID())
+	})
 }
 
 func TestCustomDomainManager_Read(t *testing.T) {
 	expected := givenACustomDomain(t)
-	defer cleanupCustomDomain(t, expected.GetID())
 
 	actual, err := m.CustomDomain.Read(expected.GetID())
-	assertNoCustomDomainErr(t, err)
 
+	assertNoCustomDomainErr(t, err)
 	assert.Equal(t, expected.GetDomain(), actual.GetDomain())
 }
 
 func TestCustomDomainManager_Update(t *testing.T) {
 	customDomain := givenACustomDomain(t)
-	defer cleanupCustomDomain(t, customDomain.GetID())
 
 	err := m.CustomDomain.Update(customDomain.GetID(), &CustomDomain{TLSPolicy: auth0.String("recommended")})
 	assertNoCustomDomainErr(t, err)
@@ -63,7 +62,6 @@ func TestCustomDomainManager_Delete(t *testing.T) {
 
 func TestCustomDomainManager_List(t *testing.T) {
 	customDomain := givenACustomDomain(t)
-	defer cleanupCustomDomain(t, customDomain.GetID())
 
 	customDomainList, err := m.CustomDomain.List()
 
@@ -74,7 +72,6 @@ func TestCustomDomainManager_List(t *testing.T) {
 
 func TestCustomDomainManager_Verify(t *testing.T) {
 	customDomain := givenACustomDomain(t)
-	defer cleanupCustomDomain(t, customDomain.GetID())
 
 	actualDomain, err := m.CustomDomain.Verify(customDomain.GetID())
 
@@ -93,6 +90,10 @@ func givenACustomDomain(t *testing.T) *CustomDomain {
 
 	err := m.CustomDomain.Create(customDomain)
 	assertNoCustomDomainErr(t, err)
+
+	t.Cleanup(func() {
+		cleanupCustomDomain(t, customDomain.GetID())
+	})
 
 	return customDomain
 }

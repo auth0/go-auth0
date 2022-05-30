@@ -17,21 +17,16 @@ func TestClientGrantManager_Create(t *testing.T) {
 	}
 
 	err := m.ClientGrant.Create(expectedClientGrant)
-
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedClientGrant.GetID())
 
-	defer cleanupClientGrant(
-		t,
-		expectedClientGrant.GetID(),
-		client.GetClientID(),
-		resourceServer.GetID(),
-	)
+	t.Cleanup(func() {
+		cleanupClientGrant(t, expectedClientGrant.GetID())
+	})
 }
 
 func TestClientGrantManager_Read(t *testing.T) {
-	expectedClientGrant, clientID, resourceServerID := givenAClientGrant(t)
-	defer cleanupClientGrant(t, expectedClientGrant.GetID(), clientID, resourceServerID)
+	expectedClientGrant := givenAClientGrant(t)
 
 	actualClientGrant, err := m.ClientGrant.Read(expectedClientGrant.GetID())
 
@@ -42,8 +37,7 @@ func TestClientGrantManager_Read(t *testing.T) {
 }
 
 func TestClientGrantManager_Update(t *testing.T) {
-	expectedClientGrant, clientID, resourceServerID := givenAClientGrant(t)
-	defer cleanupClientGrant(t, expectedClientGrant.GetID(), clientID, resourceServerID)
+	expectedClientGrant := givenAClientGrant(t)
 
 	clientGrantID := expectedClientGrant.GetID()
 
@@ -54,29 +48,23 @@ func TestClientGrantManager_Update(t *testing.T) {
 	expectedClientGrant.Scope = append(expectedClientGrant.Scope, "update:resource")
 
 	err := m.ClientGrant.Update(clientGrantID, expectedClientGrant)
-
 	assert.NoError(t, err)
 	assert.Equal(t, len(expectedClientGrant.Scope), 2)
 }
 
 func TestClientGrantManager_Delete(t *testing.T) {
-	expectedClientGrant, clientID, resourceServerID := givenAClientGrant(t)
-	defer cleanupClient(t, clientID)
-	defer cleanupResourceServer(t, resourceServerID)
+	expectedClientGrant := givenAClientGrant(t)
 
 	err := m.ClientGrant.Delete(expectedClientGrant.GetID())
-
 	assert.NoError(t, err)
 
 	actualClientGrant, err := m.ClientGrant.Read(expectedClientGrant.GetID())
-
 	assert.Empty(t, actualClientGrant)
 	assert.EqualError(t, err, "404 Not Found: Client grant not found")
 }
 
 func TestClientGrantManager_List(t *testing.T) {
-	expectedClientGrant, clientID, resourceServerID := givenAClientGrant(t)
-	defer cleanupClientGrant(t, expectedClientGrant.GetID(), clientID, resourceServerID)
+	expectedClientGrant := givenAClientGrant(t)
 
 	clientGrantList, err := m.ClientGrant.List(
 		Parameter("client_id", expectedClientGrant.GetClientID()),
@@ -86,7 +74,9 @@ func TestClientGrantManager_List(t *testing.T) {
 	assert.Equal(t, len(clientGrantList.ClientGrants), 1)
 }
 
-func givenAClientGrant(t *testing.T) (clientGrant *ClientGrant, clientID string, resourceServerID string) {
+func givenAClientGrant(t *testing.T) (clientGrant *ClientGrant) {
+	t.Helper()
+
 	client := givenAClient(t)
 	resourceServer := givenAResourceServer(t)
 
@@ -99,13 +89,16 @@ func givenAClientGrant(t *testing.T) (clientGrant *ClientGrant, clientID string,
 	err := m.ClientGrant.Create(clientGrant)
 	require.NoError(t, err)
 
-	return clientGrant, client.GetClientID(), resourceServer.GetID()
+	t.Cleanup(func() {
+		cleanupClientGrant(t, clientGrant.GetID())
+	})
+
+	return clientGrant
 }
 
-func cleanupClientGrant(t *testing.T, clientGrantID, clientID, resourceServerID string) {
+func cleanupClientGrant(t *testing.T, clientGrantID string) {
+	t.Helper()
+
 	err := m.ClientGrant.Delete(clientGrantID)
 	require.NoError(t, err)
-
-	cleanupClient(t, clientID)
-	cleanupResourceServer(t, resourceServerID)
 }

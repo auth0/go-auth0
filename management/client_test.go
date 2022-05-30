@@ -2,6 +2,7 @@ package management
 
 import (
 	"encoding/json"
+	"net/http"
 	"testing"
 	"time"
 
@@ -18,16 +19,16 @@ func TestClient_Create(t *testing.T) {
 	}
 
 	err := m.Client.Create(expectedClient)
-
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedClient.GetClientID())
 
-	defer cleanupClient(t, expectedClient.GetClientID())
+	t.Cleanup(func() {
+		cleanupClient(t, expectedClient.GetClientID())
+	})
 }
 
 func TestClient_Read(t *testing.T) {
 	expectedClient := givenAClient(t)
-	defer cleanupClient(t, expectedClient.GetClientID())
 
 	actualClient, err := m.Client.Read(expectedClient.GetClientID())
 
@@ -37,7 +38,6 @@ func TestClient_Read(t *testing.T) {
 
 func TestClient_Update(t *testing.T) {
 	expectedClient := givenAClient(t)
-	defer cleanupClient(t, expectedClient.GetClientID())
 
 	expectedDescription := "This is more than just a test client."
 	expectedClient.Description = &expectedDescription
@@ -57,18 +57,18 @@ func TestClient_Delete(t *testing.T) {
 	expectedClient := givenAClient(t)
 
 	err := m.Client.Delete(expectedClient.GetClientID())
-
 	assert.NoError(t, err)
 
 	actualClient, err := m.Client.Read(expectedClient.GetClientID())
 
 	assert.Empty(t, actualClient)
-	assert.EqualError(t, err, "404 Not Found: The client does not exist")
+	assert.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
 
 func TestClient_List(t *testing.T) {
 	expectedClient := givenAClient(t)
-	defer cleanupClient(t, expectedClient.GetClientID())
 
 	clientList, err := m.Client.List(IncludeFields("client_id"))
 
@@ -78,7 +78,6 @@ func TestClient_List(t *testing.T) {
 
 func TestClient_RotateSecret(t *testing.T) {
 	expectedClient := givenAClient(t)
-	defer cleanupClient(t, expectedClient.GetClientID())
 
 	oldSecret := expectedClient.GetClientSecret()
 	actualClient, err := m.Client.RotateSecret(expectedClient.GetClientID())
@@ -115,6 +114,8 @@ func TestJWTConfiguration(t *testing.T) {
 }
 
 func givenAClient(t *testing.T) *Client {
+	t.Helper()
+
 	client := &Client{
 		Name:              auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
 		Description:       auth0.String("This is just a test client."),
@@ -132,6 +133,8 @@ func givenAClient(t *testing.T) *Client {
 }
 
 func cleanupClient(t *testing.T, clientID string) {
+	t.Helper()
+
 	err := m.Client.Delete(clientID)
 	require.NoError(t, err)
 }
