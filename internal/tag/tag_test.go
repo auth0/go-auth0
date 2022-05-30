@@ -3,10 +3,10 @@ package tag
 import (
 	"testing"
 
-	"github.com/auth0/go-auth0/internal/testing/expect"
+	"github.com/stretchr/testify/assert"
 )
 
-type test struct {
+type testCaseTag struct {
 	Foo bool  `scope:"foo"`
 	Bar *bool `scope:"bar"`
 	Baz *bool `scope:"baz"`
@@ -14,17 +14,19 @@ type test struct {
 }
 
 func TestScopes(t *testing.T) {
-	c := &test{
+	testCase := &testCaseTag{
 		Foo: true,
 		Bar: func(b bool) *bool { return &b }(true),
 		Baz: func(b bool) *bool { return &b }(false),
 	}
-	expect.Expect(t, Scopes(c), []string{"foo", "bar"})
+	
+	assert.Equal(t, []string{"foo", "bar"}, Scopes(testCase))
 }
 
 func TestSetScopes(t *testing.T) {
-	c := &test{}
-	SetScopes(c, true, "foo", "bar")
-	expect.Expect(t, c.Foo, true)
-	expect.Expect(t, c.Bar, func(b bool) *bool { return &b }(true))
+	testCase := &testCaseTag{}
+	SetScopes(testCase, true, "foo", "bar")
+
+	assert.True(t, testCase.Foo)
+	assert.Equal(t, func(b bool) *bool { return &b }(true), testCase.Bar)
 }
