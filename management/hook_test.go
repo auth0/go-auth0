@@ -1,215 +1,240 @@
 package management
 
 import (
+	"fmt"
+	"math/rand"
+	"net/http"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
 	"github.com/auth0/go-auth0"
-	"github.com/auth0/go-auth0/internal/testing/expect"
 )
 
-func TestHook(t *testing.T) {
-	r := &Hook{
-		Name:      auth0.String("test-hook"),
-		Script:    auth0.String("function (user, context, callback) { callback(null, { user }); }"),
-		TriggerID: auth0.String("pre-user-registration"),
-		Enabled:   auth0.Bool(false),
-	}
-
-	var err error
-
-	t.Run("Create", func(t *testing.T) {
-		err = m.Hook.Create(r)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", r)
-	})
-
-	t.Run("Read", func(t *testing.T) {
-		r, err = m.Hook.Read(r.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", r)
-	})
-
-	t.Run("Update", func(t *testing.T) {
-		id := r.GetID()
-
-		r.ID = nil        // read-only
-		r.TriggerID = nil // read-only
-		r.Script = auth0.String("function (user, context, callback) { console.log('hooked!'); callback(null, { user }); }")
-		r.Enabled = auth0.Bool(true)
-
-		err = m.Hook.Update(id, r)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", r)
-	})
-
-	t.Run("List", func(t *testing.T) {
-		r, err := m.Hook.List()
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", r)
-	})
-
-	t.Run("Delete", func(t *testing.T) {
-		err = m.Hook.Delete(auth0.StringValue(r.ID))
-		if err != nil {
-			t.Error(err)
-		}
-	})
-}
-
-func TestHookSecretsDifference(t *testing.T) {
-	for _, tc := range []struct {
-		s, other, difference HookSecrets
-	}{
-		{
-			s:          HookSecrets{"foo": "", "bar": ""},
-			other:      HookSecrets{"bar": ""},
-			difference: HookSecrets{"foo": ""},
-		},
-		{
-			s:          HookSecrets{"foo": "", "bar": "", "baz": ""},
-			other:      HookSecrets{"bar": ""},
-			difference: HookSecrets{"foo": "", "baz": ""},
-		},
-	} {
-		expect.Expect(t, tc.difference, tc.s.difference(tc.other))
-	}
-}
-
-func TestHookSecretsIntersection(t *testing.T) {
-	for _, tc := range []struct {
-		s, other, intersection HookSecrets
-	}{
-		{
-			s:            HookSecrets{"foo": "", "bar": ""},
-			other:        HookSecrets{"bar": ""},
-			intersection: HookSecrets{"bar": ""},
-		},
-		{
-			s:            HookSecrets{"foo": "", "bar": "", "baz": ""},
-			other:        HookSecrets{"bar": ""},
-			intersection: HookSecrets{"bar": ""},
-		},
-	} {
-		expect.Expect(t, tc.intersection, tc.s.intersection(tc.other))
-	}
-}
-
-func TestHookSecrets(t *testing.T) {
-	r := HookSecrets{
-		"SECRET1": "value1",
-		"SECRET2": "value2",
-	}
-
+func TestHookManager_Create(t *testing.T) {
 	hook := &Hook{
-		Name:      auth0.String("test-hook-secrets"),
+		Name:      auth0.String("testing-hook-creation"),
 		Script:    auth0.String("function (user, context, callback) { callback(null, { user }); }"),
 		TriggerID: auth0.String("pre-user-registration"),
 		Enabled:   auth0.Bool(false),
 	}
 
 	err := m.Hook.Create(hook)
-	if err != nil {
-		t.Fatal(err)
+
+	assert.NoError(t, err)
+	assert.NotEmpty(t, hook.GetID())
+
+	defer cleanupHook(t, hook.GetID())
+}
+
+func TestHookManager_Read(t *testing.T) {
+	expectedHook := givenAHook(t, nil)
+
+	actualHook, err := m.Hook.Read(expectedHook.GetID())
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedHook, actualHook)
+}
+
+func TestHookManager_Update(t *testing.T) {
+	hook := givenAHook(t, nil)
+	updatedHook := &Hook{
+		Script:  auth0.String("function (user, context, callback) { console.log('hooked!'); callback(null, { user }); }"),
+		Enabled: auth0.Bool(true),
+	}
+
+	err := m.Hook.Update(hook.GetID(), updatedHook)
+	assert.NoError(t, err)
+
+	actualHook, err := m.Hook.Read(hook.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, updatedHook.GetScript(), actualHook.GetScript())
+	assert.Equal(t, updatedHook.GetEnabled(), actualHook.GetEnabled())
+}
+
+func TestHookManager_Delete(t *testing.T) {
+	hook := givenAHook(t, nil)
+
+	err := m.Hook.Delete(hook.GetID())
+	assert.NoError(t, err)
+
+	actualHook, err := m.Hook.Read(hook.GetID())
+	assert.Empty(t, actualHook)
+	assert.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
+}
+
+func TestHookManager_List(t *testing.T) {
+	expectedHook := givenAHook(t, nil)
+
+	hookList, err := m.Hook.List(IncludeFields("id"))
+
+	assert.NoError(t, err)
+	assert.Len(t, hookList.Hooks, 1)
+	assert.Equal(t, expectedHook.GetID(), hookList.Hooks[0].GetID())
+}
+
+func TestHookManager_CreateSecrets(t *testing.T) {
+	hook := givenAHook(t, nil)
+	secrets := HookSecrets{
+		"SECRET1": "value1",
+		"SECRET2": "value2",
+	}
+
+	err := m.Hook.CreateSecrets(hook.GetID(), secrets)
+	assert.NoError(t, err)
+}
+
+func TestHookManager_UpdateSecrets(t *testing.T) {
+	secrets := HookSecrets{
+		"SECRET1": "value1",
+		"SECRET2": "value2",
+	}
+	hook := givenAHook(t, secrets)
+
+	err := m.Hook.UpdateSecrets(hook.GetID(), HookSecrets{"SECRET1": "something else"})
+	assert.NoError(t, err)
+
+	actualSecrets, err := m.Hook.Secrets(hook.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, actualSecrets["SECRET1"], "_VALUE_NOT_SHOWN_")
+	assert.Equal(t, actualSecrets["SECRET2"], "_VALUE_NOT_SHOWN_")
+}
+
+func TestHookManager_ReplaceSecrets(t *testing.T) {
+	secrets := HookSecrets{
+		"SECRET1": "value1",
+		"SECRET2": "value2",
+	}
+	hook := givenAHook(t, secrets)
+
+	newSecrets := HookSecrets{
+		"SECRET1": "something else",
+		"SECRET3": "other value",
+	}
+	err := m.Hook.ReplaceSecrets(hook.GetID(), newSecrets)
+	assert.NoError(t, err)
+
+	actualSecrets, err := m.Hook.Secrets(hook.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, actualSecrets["SECRET1"], "_VALUE_NOT_SHOWN_")
+	assert.Empty(t, actualSecrets["SECRET2"])
+	assert.Equal(t, actualSecrets["SECRET3"], "_VALUE_NOT_SHOWN_")
+}
+
+func TestHookManager_Secrets(t *testing.T) {
+	secrets := HookSecrets{
+		"SECRET1": "value1",
+		"SECRET2": "value2",
+	}
+	hook := givenAHook(t, secrets)
+
+	actualSecrets, err := m.Hook.Secrets(hook.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, actualSecrets["SECRET1"], "_VALUE_NOT_SHOWN_")
+	assert.Equal(t, actualSecrets["SECRET2"], "_VALUE_NOT_SHOWN_")
+}
+
+func TestHookManager_RemoveSecrets(t *testing.T) {
+	secrets := HookSecrets{
+		"SECRET1": "value1",
+		"SECRET2": "value2",
+	}
+	hook := givenAHook(t, secrets)
+
+	err := m.Hook.RemoveSecrets(hook.GetID(), []string{"SECRET1"})
+	assert.NoError(t, err)
+
+	actualSecrets, err := m.Hook.Secrets(hook.GetID())
+	assert.NoError(t, err)
+	assert.Empty(t, actualSecrets["SECRET1"])
+	assert.Equal(t, actualSecrets["SECRET2"], "_VALUE_NOT_SHOWN_")
+}
+
+func TestHookManager_RemoveAllSecrets(t *testing.T) {
+	secrets := HookSecrets{
+		"SECRET1": "value1",
+		"SECRET2": "value2",
+	}
+	hook := givenAHook(t, secrets)
+
+	err := m.Hook.RemoveAllSecrets(hook.GetID())
+	assert.NoError(t, err)
+
+	actualSecrets, err := m.Hook.Secrets(hook.GetID())
+	assert.NoError(t, err)
+	assert.Empty(t, actualSecrets["SECRET1"])
+	assert.Empty(t, actualSecrets["SECRET2"])
+}
+
+func TestHookSecretsDifference(t *testing.T) {
+	for _, testCase := range []struct {
+		secrets, other, difference HookSecrets
+	}{
+		{
+			secrets:    HookSecrets{"foo": "", "bar": ""},
+			other:      HookSecrets{"bar": ""},
+			difference: HookSecrets{"foo": ""},
+		},
+		{
+			secrets:    HookSecrets{"foo": "", "bar": "", "baz": ""},
+			other:      HookSecrets{"bar": ""},
+			difference: HookSecrets{"foo": "", "baz": ""},
+		},
+	} {
+		assert.Equal(t, testCase.difference, testCase.secrets.difference(testCase.other))
+	}
+}
+
+func TestHookSecretsIntersection(t *testing.T) {
+	for _, testCase := range []struct {
+		secrets, other, intersection HookSecrets
+	}{
+		{
+			secrets:      HookSecrets{"foo": "", "bar": ""},
+			other:        HookSecrets{"bar": ""},
+			intersection: HookSecrets{"bar": ""},
+		},
+		{
+			secrets:      HookSecrets{"foo": "", "bar": "", "baz": ""},
+			other:        HookSecrets{"bar": ""},
+			intersection: HookSecrets{"bar": ""},
+		},
+	} {
+		assert.Equal(t, testCase.intersection, testCase.secrets.intersection(testCase.other))
+	}
+}
+
+func givenAHook(t *testing.T, secrets HookSecrets) *Hook {
+	hook := &Hook{
+		Name:      auth0.String(fmt.Sprintf("test-hook%d", rand.Intn(999))),
+		Script:    auth0.String("function (user, context, callback) { callback(null, { user }); }"),
+		TriggerID: auth0.String("pre-user-registration"),
+		Enabled:   auth0.Bool(false),
+	}
+
+	err := m.Hook.Create(hook)
+	require.NoError(t, err)
+
+	if secrets != nil {
+		err := m.Hook.CreateSecrets(hook.GetID(), secrets)
+		require.NoError(t, err)
 	}
 
 	t.Cleanup(func() {
-		if err = m.Hook.Delete(hook.GetID()); err != nil {
-			t.Fatal(err)
-		}
+		cleanupHook(t, hook.GetID())
 	})
 
-	t.Run("Create", func(t *testing.T) {
-		err = m.Hook.CreateSecrets(hook.GetID(), r)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", r)
-	})
+	return hook
+}
 
-	t.Run("Update", func(t *testing.T) {
-		r["SECRET1"] = "othervalue"
-		delete(r, "SECRET2") // patch allows only specifying one property
-		err = m.Hook.UpdateSecrets(hook.GetID(), r)
-		if err != nil {
-			t.Fatal(err)
-		}
-		r, err := m.Hook.Secrets(hook.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		expect.Expect(t, r["SECRET1"], "_VALUE_NOT_SHOWN_")
-		expect.Expect(t, r["SECRET2"], "_VALUE_NOT_SHOWN_")
-		t.Logf("%v\n", r)
-	})
-
-	t.Run("Replace", func(t *testing.T) {
-		r["SECRET1"] = "othervalue1"
-		r["SECRET3"] = "othervalue3"
-		err = m.Hook.ReplaceSecrets(hook.GetID(), r)
-		if err != nil {
-			t.Fatal(err)
-		}
-		r, err := m.Hook.Secrets(hook.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		expect.Expect(t, r["SECRET1"], "_VALUE_NOT_SHOWN_")
-		expect.Expect(t, r["SECRET2"], "")
-		expect.Expect(t, r["SECRET3"], "_VALUE_NOT_SHOWN_")
-		t.Logf("%v\n", r)
-	})
-
-	t.Run("Read", func(t *testing.T) {
-		result, err := m.Hook.Secrets(hook.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		expect.Expect(t, result["SECRET1"], "_VALUE_NOT_SHOWN_")
-		expect.Expect(t, result["SECRET3"], "_VALUE_NOT_SHOWN_")
-		t.Logf("%v\n", r)
-	})
-
-	t.Run("Delete", func(t *testing.T) {
-		err = m.Hook.RemoveSecrets(hook.GetID(), []string{"SECRET1"})
-		if err != nil {
+func cleanupHook(t *testing.T, hookID string) {
+	err := m.Hook.Delete(hookID)
+	if err != nil {
+		if err.(Error).Status() != http.StatusNotFound {
 			t.Error(err)
 		}
-		result, err := m.Hook.Secrets(hook.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		expect.Expect(t, result["SECRET1"], "")
-		expect.Expect(t, result["SECRET3"], "_VALUE_NOT_SHOWN_")
-		t.Logf("%v\n", r)
-	})
-
-	t.Run("RemoveAllSecrets", func(t *testing.T) {
-		err = m.Hook.RemoveAllSecrets(hook.GetID())
-		if err != nil {
-			t.Error(err)
-		}
-		r = HookSecrets{
-			"SECRET3": "secret3",
-		}
-		err = m.Hook.CreateSecrets(hook.GetID(), r)
-		if err != nil {
-			t.Fatal(err)
-		}
-		result, err := m.Hook.Secrets(hook.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		expect.Expect(t, result["SECRET1"], "")
-		expect.Expect(t, result["SECRET2"], "")
-		expect.Expect(t, result["SECRET3"], "_VALUE_NOT_SHOWN_")
-		t.Logf("%v\n", r)
-	})
+	}
 }
