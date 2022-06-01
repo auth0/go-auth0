@@ -10,7 +10,6 @@ type testCaseTag struct {
 	Foo bool  `scope:"foo"`
 	Bar *bool `scope:"bar"`
 	Baz *bool `scope:"baz"`
-	Bam *bool `scope:"bam"`
 }
 
 func TestScopes(t *testing.T) {
