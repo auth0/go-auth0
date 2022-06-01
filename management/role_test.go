@@ -23,7 +23,9 @@ func TestRoleManager_Create(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotEmpty(t, role.GetID())
 
-	defer cleanupRole(t, role.GetID())
+	t.Cleanup(func() {
+		cleanupRole(t, role.GetID())
+	})
 }
 
 func TestRoleManager_Read(t *testing.T) {
@@ -112,6 +114,8 @@ func TestRoleManager_Permissions(t *testing.T) {
 }
 
 func givenARole(t *testing.T) *Role {
+	t.Helper()
+
 	role := &Role{
 		Name:        auth0.String(fmt.Sprintf("test-role%d", rand.Intn(999))),
 		Description: auth0.String("Test Role"),
@@ -128,6 +132,8 @@ func givenARole(t *testing.T) *Role {
 }
 
 func cleanupRole(t *testing.T, roleID string) {
+	t.Helper()
+
 	err := m.Role.Delete(roleID)
 	if err != nil {
 		if err.(Error).Status() != http.StatusNotFound {

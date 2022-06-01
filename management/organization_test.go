@@ -26,7 +26,9 @@ func TestOrganizationManager_Create(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotEmpty(t, org.GetID())
 
-	defer cleanupOrganization(t, org.GetID())
+	t.Cleanup(func() {
+		cleanupOrganization(t, org.GetID())
+	})
 }
 
 func TestOrganizationManager_Read(t *testing.T) {
@@ -307,6 +309,8 @@ func givenAnOrganizationConnection(t *testing.T, orgID string) *OrganizationConn
 }
 
 func givenAnOrganizationInvitation(t *testing.T, orgID string) *OrganizationInvitation {
+	t.Helper()
+
 	client := givenAClient(t)
 	orgInvite := &OrganizationInvitation{
 		Inviter: &OrganizationInvitationInviter{
@@ -325,6 +329,8 @@ func givenAnOrganizationInvitation(t *testing.T, orgID string) *OrganizationInvi
 }
 
 func cleanupOrganization(t *testing.T, orgID string) {
+	t.Helper()
+
 	err := m.Organization.Delete(orgID)
 	if err != nil {
 		if err.(Error).Status() != http.StatusNotFound {

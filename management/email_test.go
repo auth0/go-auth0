@@ -26,12 +26,13 @@ func TestEmailManager_Create(t *testing.T) {
 	err := m.Email.Create(emailProvider)
 	assert.NoError(t, err)
 
-	defer cleanupEmailProvider(t)
+	t.Cleanup(func() {
+		cleanupEmailProvider(t)
+	})
 }
 
 func TestEmailManager_Read(t *testing.T) {
 	expectedEmailProvider := givenAnEmailProvider(t)
-	defer cleanupEmailProvider(t)
 
 	actualEmailProvider, err := m.Email.Read()
 
@@ -53,7 +54,6 @@ func TestEmailManager_Read(t *testing.T) {
 
 func TestEmailManager_Update(t *testing.T) {
 	emailProvider := givenAnEmailProvider(t)
-	defer cleanupEmailProvider(t)
 
 	emailProvider.Enabled = auth0.Bool(false)
 	emailProvider.DefaultFromAddress = auth0.String("info@example.com")
@@ -81,6 +81,8 @@ func TestEmailManager_Delete(t *testing.T) {
 }
 
 func givenAnEmailProvider(t *testing.T) *Email {
+	t.Helper()
+
 	emailProvider := &Email{
 		Name:               auth0.String("smtp"),
 		Enabled:            auth0.Bool(true),
@@ -96,10 +98,16 @@ func givenAnEmailProvider(t *testing.T) *Email {
 	err := m.Email.Create(emailProvider)
 	require.NoError(t, err)
 
+	t.Cleanup(func() {
+		cleanupEmailProvider(t)
+	})
+
 	return emailProvider
 }
 
 func cleanupEmailProvider(t *testing.T) {
+	t.Helper()
+
 	err := m.Email.Delete()
 	require.NoError(t, err)
 }

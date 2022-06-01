@@ -52,7 +52,7 @@ func TestBrandingManager_Update(t *testing.T) {
 }
 
 func TestBrandingManager_UniversalLogin(t *testing.T) {
-	customDomain := givenACustomDomain(t)
+	givenACustomDomain(t)
 
 	body := `<!DOCTYPE html><html><head>{%- auth0:head -%}</head><body>{%- auth0:widget -%}</body></html>`
 	expectedUL := &BrandingUniversalLogin{
@@ -69,7 +69,6 @@ func TestBrandingManager_UniversalLogin(t *testing.T) {
 	t.Cleanup(func() {
 		err = m.Branding.DeleteUniversalLogin()
 		assert.NoError(t, err)
-		cleanupCustomDomain(t, customDomain.GetID())
 	})
 }
 

@@ -166,6 +166,8 @@ func TestLogStreamManager_List(t *testing.T) {
 }
 
 func givenALogStream(t *testing.T, testCase logStreamTestCase) *LogStream {
+	t.Helper()
+
 	logStream := testCase.logStream
 
 	err := m.LogStream.Create(&logStream)
@@ -179,6 +181,8 @@ func givenALogStream(t *testing.T, testCase logStreamTestCase) *LogStream {
 }
 
 func cleanupLogStream(t *testing.T, logStreamID string) {
+	t.Helper()
+
 	err := m.LogStream.Delete(logStreamID)
 	require.NoError(t, err)
 }

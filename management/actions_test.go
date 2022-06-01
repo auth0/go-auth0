@@ -41,13 +41,13 @@ func TestActionManager_Create(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedAction.GetID())
 
-	defer cleanupAction(t, expectedAction.GetID())
+	t.Cleanup(func() {
+		cleanupAction(t, expectedAction.GetID())
+	})
 }
 
 func TestActionManager_Read(t *testing.T) {
 	expectedAction := givenAnAction(t)
-	defer cleanupAction(t, expectedAction.GetID())
-
 	actualAction, err := m.Action.Read(expectedAction.GetID())
 
 	assert.NoError(t, err)
@@ -56,7 +56,6 @@ func TestActionManager_Read(t *testing.T) {
 
 func TestActionManager_Update(t *testing.T) {
 	expectedAction := givenAnAction(t)
-	defer cleanupAction(t, expectedAction.GetID())
 
 	actionID := expectedAction.GetID()
 
@@ -78,7 +77,6 @@ func TestActionManager_Delete(t *testing.T) {
 	expectedAction := givenAnAction(t)
 
 	err := m.Action.Delete(expectedAction.GetID())
-
 	assert.NoError(t, err)
 
 	actualAction, err := m.Action.Read(expectedAction.GetID())
@@ -91,7 +89,6 @@ func TestActionManager_Delete(t *testing.T) {
 
 func TestActionManager_List(t *testing.T) {
 	expectedAction := givenAnAction(t)
-	defer cleanupAction(t, expectedAction.GetID())
 
 	actionList, err := m.Action.List(Parameter("actionName", expectedAction.GetName()))
 
@@ -108,7 +105,6 @@ func TestActionManager_Triggers(t *testing.T) {
 
 func TestActionManager_Deploy(t *testing.T) {
 	expectedAction := givenAnAction(t)
-	defer cleanupAction(t, expectedAction.GetID())
 
 	ensureActionBuilt(t, expectedAction.GetID())
 
@@ -120,7 +116,6 @@ func TestActionManager_Deploy(t *testing.T) {
 
 func TestActionManager_DeployVersion(t *testing.T) {
 	action := givenAnAction(t)
-	defer cleanupAction(t, action.GetID())
 	ensureActionBuilt(t, action.GetID())
 
 	version, err := m.Action.Deploy(action.GetID())
@@ -133,7 +128,6 @@ func TestActionManager_DeployVersion(t *testing.T) {
 
 func TestActionManager_Version(t *testing.T) {
 	action := givenAnAction(t)
-	defer cleanupAction(t, action.GetID())
 	ensureActionBuilt(t, action.GetID())
 
 	deployedVersion, err := m.Action.Deploy(action.GetID())
@@ -147,7 +141,6 @@ func TestActionManager_Version(t *testing.T) {
 
 func TestActionManager_Versions(t *testing.T) {
 	action := givenAnAction(t)
-	defer cleanupAction(t, action.GetID())
 	ensureActionBuilt(t, action.GetID())
 
 	deployedVersion, err := m.Action.Deploy(action.GetID())
@@ -191,13 +184,11 @@ func TestActionManager_Bindings(t *testing.T) {
 	t.Cleanup(func() {
 		err = m.Action.UpdateBindings(ActionTriggerPostLogin, emptyBinding)
 		assert.NoError(t, err)
-		cleanupAction(t, action.GetID())
 	})
 }
 
 func TestActionManager_Test(t *testing.T) {
 	action := givenAnAction(t)
-	defer cleanupAction(t, action.GetID())
 	ensureActionBuilt(t, action.GetID())
 
 	test := &ActionTestPayload{
@@ -222,11 +213,19 @@ func TestActionManager_Execution(t *testing.T) {
 }
 
 func cleanupAction(t *testing.T, actionID string) {
+	t.Helper()
+
 	err := m.Action.Delete(actionID)
-	require.NoError(t, err)
+	if err != nil {
+		if err.(Error).Status() != http.StatusNotFound {
+			t.Error(err)
+		}
+	}
 }
 
 func givenAnAction(t *testing.T) *Action {
+	t.Helper()
+
 	action := &Action{
 		Name: auth0.Stringf("Test Action (%s)", time.Now().Format(time.StampMilli)),
 		Code: auth0.String("exports.onExecutePostLogin = async (event, api) =\u003e {}"),
@@ -254,10 +253,16 @@ func givenAnAction(t *testing.T) *Action {
 	err := m.Action.Create(action)
 	require.NoError(t, err)
 
+	t.Cleanup(func() {
+		cleanupAction(t, action.GetID())
+	})
+
 	return action
 }
 
 func ensureActionBuilt(t *testing.T, actionID string) {
+	t.Helper()
+
 	var actionBuilt bool
 
 	for i := 0; i < 60; i++ {

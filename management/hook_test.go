@@ -21,11 +21,12 @@ func TestHookManager_Create(t *testing.T) {
 	}
 
 	err := m.Hook.Create(hook)
-
 	assert.NoError(t, err)
 	assert.NotEmpty(t, hook.GetID())
 
-	defer cleanupHook(t, hook.GetID())
+	t.Cleanup(func() {
+		cleanupHook(t, hook.GetID())
+	})
 }
 
 func TestHookManager_Read(t *testing.T) {
@@ -208,6 +209,8 @@ func TestHookSecretsIntersection(t *testing.T) {
 }
 
 func givenAHook(t *testing.T, secrets HookSecrets) *Hook {
+	t.Helper()
+
 	hook := &Hook{
 		Name:      auth0.String(fmt.Sprintf("test-hook%d", rand.Intn(999))),
 		Script:    auth0.String("function (user, context, callback) { callback(null, { user }); }"),
@@ -231,6 +234,8 @@ func givenAHook(t *testing.T, secrets HookSecrets) *Hook {
 }
 
 func cleanupHook(t *testing.T, hookID string) {
+	t.Helper()
+
 	err := m.Hook.Delete(hookID)
 	if err != nil {
 		if err.(Error).Status() != http.StatusNotFound {
