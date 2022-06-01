@@ -1,51 +1,79 @@
 package management
 
 import (
+	"net/http"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0"
 )
 
-func TestRuleConfig(t *testing.T) {
+func TestRuleConfigManager_Upsert(t *testing.T) {
 	key := "foo"
-	r := &RuleConfig{Value: auth0.String("bar")}
+	ruleConfig := &RuleConfig{Value: auth0.String("bar")}
 
-	var err error
+	err := m.RuleConfig.Upsert(key, ruleConfig)
+	assert.NoError(t, err)
+	assert.Equal(t, key, ruleConfig.GetKey())
 
-	t.Run("Upsert", func(t *testing.T) {
-		err = m.RuleConfig.Upsert(key, r)
-		if err != nil {
-			t.Error(err)
-		}
-		rkey := auth0.StringValue(r.Key)
-		if rkey != key {
-			t.Errorf("key mismatch %q != %q", rkey, key)
-		}
-		t.Logf("%v\n", r)
+	t.Cleanup(func() {
+		cleanupRuleConfig(t, ruleConfig.GetKey())
+	})
+}
+
+func TestRuleConfigManager_Read(t *testing.T) {
+	expected := givenARuleConfig(t)
+
+	actual, err := m.RuleConfig.Read(expected.GetKey())
+
+	assert.NoError(t, err)
+	assert.Equal(t, expected.GetKey(), actual.GetKey())
+}
+
+func TestRuleConfigManager_Delete(t *testing.T) {
+	ruleConfig := givenARuleConfig(t)
+
+	err := m.RuleConfig.Delete(ruleConfig.GetKey())
+	assert.NoError(t, err)
+
+	actualRuleConfig, err := m.RuleConfig.Read(ruleConfig.GetKey())
+	assert.Empty(t, actualRuleConfig)
+	assert.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
+}
+
+func TestRuleConfigManager_List(t *testing.T) {
+	ruleConfig := givenARuleConfig(t)
+
+	ruleConfigs, err := m.RuleConfig.List()
+
+	assert.NoError(t, err)
+	assert.Len(t, ruleConfigs, 1)
+	assert.Equal(t, ruleConfig.GetKey(), ruleConfigs[0].GetKey())
+}
+
+func givenARuleConfig(t *testing.T) *RuleConfig {
+	t.Helper()
+
+	key := "foo"
+	ruleConfig := &RuleConfig{Value: auth0.String("bar")}
+
+	err := m.RuleConfig.Upsert(key, ruleConfig)
+	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupRuleConfig(t, ruleConfig.GetKey())
 	})
 
-	t.Run("Read", func(t *testing.T) {
-		r, err = m.RuleConfig.Read(key)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", r)
-	})
+	return ruleConfig
+}
 
-	t.Run("Upsert", func(t *testing.T) {
-		r.Key = nil // read-only
-		r.Value = auth0.String("baz")
-		err = m.RuleConfig.Upsert(key, r)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", r)
-	})
+func cleanupRuleConfig(t *testing.T, key string) {
+	t.Helper()
 
-	t.Run("Delete", func(t *testing.T) {
-		err = m.RuleConfig.Delete(key)
-		if err != nil {
-			t.Error(err)
-		}
-	})
+	err := m.RuleConfig.Delete(key)
+	require.NoError(t, err)
 }
