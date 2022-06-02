@@ -1,5 +1,7 @@
 package management
 
+import "net/http"
+
 // Organization is used to allow B2B customers to better manage
 // their partners and customers, and to customize the ways that
 // end-users access their applications.
@@ -280,9 +282,9 @@ func (m *OrganizationManager) Invitations(id string, opts ...RequestOption) (i *
 // CreateInvitation creates invitations to an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_invitations
-func (m *OrganizationManager) CreateInvitation(id string, i *OrganizationInvitation, opts ...RequestOption) (err error) {
-	err = m.Request("POST", m.URI("organizations", id, "invitations"), &i, opts...)
-	return
+func (m *OrganizationManager) CreateInvitation(id string, i *OrganizationInvitation, opts ...RequestOption) (res *http.Response, err error) {
+	res, err = m.Invite_Request("POST", m.URI("organizations", id, "invitations"), &i, opts...)
+	return res, nil
 }
 
 // Invitation retrieves an invitation to an organization.

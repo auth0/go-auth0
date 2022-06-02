@@ -167,7 +167,8 @@ func TestOrganizationManager_CreateInvitation(t *testing.T) {
 		ClientID: client.ClientID,
 	}
 
-	err := m.Organization.CreateInvitation(org.GetID(), orgInvite)
+	res, err := m.Organization.CreateInvitation(org.GetID(), orgInvite)
+	assert.NotEmpty(t, res)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, orgInvite.GetID())
 }
@@ -322,9 +323,9 @@ func givenAnOrganizationInvitation(t *testing.T, orgID string) *OrganizationInvi
 		ClientID: client.ClientID,
 	}
 
-	err := m.Organization.CreateInvitation(orgID, orgInvite)
+	res, err := m.Organization.CreateInvitation(orgID, orgInvite)
 	require.NoError(t, err)
-
+	assert.NotEmpty(t, res)
 	return orgInvite
 }
 

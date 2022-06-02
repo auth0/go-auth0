@@ -10,6 +10,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 	"strconv"
 	"strings"
@@ -334,6 +335,34 @@ func (m *Management) Request(method, uri string, v interface{}, options ...Reque
 	}
 
 	return nil
+}
+func (m *Management) Invite_Request(method, uri string, v interface{}, options ...RequestOption) (*http.Response, error) {
+	req, err := m.NewRequest(method, uri, v, options...)
+	if err != nil {
+		return nil, err
+	}
+	res, err := m.Do(req)
+
+	respDump, err := httputil.DumpResponse(res, true)
+
+	fmt.Printf("RESPONSE:\n%s", string(respDump))
+
+	if err != nil {
+		return nil, fmt.Errorf("request failed: %w", err)
+	}
+
+	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
+		return res, newError(res.Body)
+	}
+
+	if res.StatusCode != http.StatusNoContent && res.StatusCode != http.StatusAccepted {
+		err := json.NewDecoder(res.Body).Decode(v)
+		if err != nil {
+			return res, fmt.Errorf("decoding response payload failed: %w", err)
+		}
+		return res, res.Body.Close()
+	}
+	return res, nil
 }
 
 // Error is an interface describing any error which could be returned by the
