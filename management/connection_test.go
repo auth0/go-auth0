@@ -250,6 +250,8 @@ type connectionTestCase struct {
 func TestConnectionManager_Create(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully create a "+testCase.name, func(t *testing.T) {
+			setupVCR(t)
+
 			expectedConnection := testCase.connection
 			expectedConnection.Options = testCase.options
 
@@ -269,6 +271,8 @@ func TestConnectionManager_Create(t *testing.T) {
 func TestConnectionManager_Read(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully read a "+testCase.name, func(t *testing.T) {
+			setupVCR(t)
+
 			expectedConnection := givenAConnection(t, testCase)
 
 			actualConnection, err := m.Connection.Read(expectedConnection.GetID())
@@ -289,6 +293,8 @@ func TestConnectionManager_Read(t *testing.T) {
 func TestConnectionManager_ReadByName(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully find a "+testCase.name+" by its name", func(t *testing.T) {
+			setupVCR(t)
+
 			expectedConnection := givenAConnection(t, testCase)
 
 			actualConnection, err := m.Connection.ReadByName(expectedConnection.GetName())
@@ -306,6 +312,8 @@ func TestConnectionManager_ReadByName(t *testing.T) {
 	}
 
 	t.Run("throw an error when connection name is empty", func(t *testing.T) {
+		setupVCR(t)
+
 		actualConnection, err := m.Connection.ReadByName("")
 
 		assert.EqualError(t, err, "400 Bad Request: Name cannot be empty")
@@ -319,6 +327,8 @@ func TestConnectionManager_Update(t *testing.T) {
 			if testCase.connection.GetStrategy() == "oidc" || testCase.connection.GetStrategy() == "samlp" {
 				t.Skip("Skipping because we can't create an oidc or samlp connection with no options")
 			}
+
+			setupVCR(t)
 
 			connection := givenAConnection(t, connectionTestCase{connection: testCase.connection})
 
@@ -337,6 +347,8 @@ func TestConnectionManager_Update(t *testing.T) {
 }
 
 func TestConnectionManager_Delete(t *testing.T) {
+	setupVCR(t)
+
 	expectedConnection := givenAConnection(t, connectionTestCase{
 		connection: Connection{
 			Name:     auth0.Stringf("Test-Auth0-Connection-%d", time.Now().Unix()),
@@ -355,6 +367,8 @@ func TestConnectionManager_Delete(t *testing.T) {
 }
 
 func TestConnectionManager_List(t *testing.T) {
+	setupVCR(t)
+
 	expectedConnection := givenAConnection(t, connectionTestCase{
 		connection: Connection{
 			Name:     auth0.Stringf("Test-Auth0-Connection-List-%d", time.Now().Unix()),

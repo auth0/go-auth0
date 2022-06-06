@@ -11,6 +11,8 @@ import (
 )
 
 func TestRuleConfigManager_Upsert(t *testing.T) {
+	setupVCR(t)
+
 	key := "foo"
 	ruleConfig := &RuleConfig{Value: auth0.String("bar")}
 
@@ -24,6 +26,8 @@ func TestRuleConfigManager_Upsert(t *testing.T) {
 }
 
 func TestRuleConfigManager_Read(t *testing.T) {
+	setupVCR(t)
+
 	expected := givenARuleConfig(t)
 
 	actual, err := m.RuleConfig.Read(expected.GetKey())
@@ -33,6 +37,8 @@ func TestRuleConfigManager_Read(t *testing.T) {
 }
 
 func TestRuleConfigManager_Delete(t *testing.T) {
+	setupVCR(t)
+
 	ruleConfig := givenARuleConfig(t)
 
 	err := m.RuleConfig.Delete(ruleConfig.GetKey())
@@ -46,6 +52,8 @@ func TestRuleConfigManager_Delete(t *testing.T) {
 }
 
 func TestRuleConfigManager_List(t *testing.T) {
+	setupVCR(t)
+
 	ruleConfig := givenARuleConfig(t)
 
 	ruleConfigs, err := m.RuleConfig.List()

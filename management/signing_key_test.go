@@ -8,12 +8,16 @@ import (
 
 func TestSigningKey(t *testing.T) {
 	t.Run("List", func(t *testing.T) {
+		setupVCR(t)
+		
 		signingKeys, err := m.SigningKey.List()
 		assert.NoError(t, err)
 		assert.NotEmpty(t, signingKeys, "expected at least one key to be returned")
 	})
 
 	t.Run("Read", func(t *testing.T) {
+		setupVCR(t)
+
 		signingKeys, err := m.SigningKey.List()
 		assert.NoError(t, err)
 
@@ -23,12 +27,16 @@ func TestSigningKey(t *testing.T) {
 	})
 
 	t.Run("Rotate", func(t *testing.T) {
+		setupVCR(t)
+
 		signingKey, err := m.SigningKey.Rotate()
 		assert.NoError(t, err)
 		assert.NotEmpty(t, signingKey)
 	})
 
 	t.Run("Revoke", func(t *testing.T) {
+		setupVCR(t)
+
 		// Our last test revokes the key used to sign the token we're currently
 		// using, so we need to re-authenticate so that subsequent tests still work.
 		t.Cleanup(func() {

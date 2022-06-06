@@ -10,12 +10,16 @@ import (
 )
 
 func TestBrandingManager_Read(t *testing.T) {
+	setupVCR(t)
+
 	branding, err := m.Branding.Read()
 	assert.NoError(t, err)
 	assert.IsType(t, &Branding{}, branding)
 }
 
 func TestBrandingManager_Update(t *testing.T) {
+	setupVCR(t)
+
 	// Save initial branding settings.
 	preTestBrandingSettings, err := m.Branding.Read()
 	assert.NoError(t, err)
@@ -52,6 +56,8 @@ func TestBrandingManager_Update(t *testing.T) {
 }
 
 func TestBrandingManager_UniversalLogin(t *testing.T) {
+	setupVCR(t)
+
 	givenACustomDomain(t)
 
 	body := `<!DOCTYPE html><html><head>{%- auth0:head -%}</head><body>{%- auth0:widget -%}</body></html>`

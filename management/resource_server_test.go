@@ -12,6 +12,8 @@ import (
 )
 
 func TestResourceServer_Create(t *testing.T) {
+	setupVCR(t)
+
 	expectedResourceServer := &ResourceServer{
 		Name:                auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
 		Identifier:          auth0.String("https://api.example.com/"),
@@ -36,6 +38,8 @@ func TestResourceServer_Create(t *testing.T) {
 }
 
 func TestResourceServer_Read(t *testing.T) {
+	setupVCR(t)
+
 	expectedResourceServer := givenAResourceServer(t)
 
 	actualResourceServer, err := m.ResourceServer.Read(expectedResourceServer.GetID())
@@ -45,12 +49,15 @@ func TestResourceServer_Read(t *testing.T) {
 }
 
 func TestResourceServer_Update(t *testing.T) {
+	setupVCR(t)
+
 	expectedResourceServer := givenAResourceServer(t)
 
 	resourceServerID := expectedResourceServer.GetID()
 
 	expectedResourceServer.ID = nil         // Read-Only: Additional properties not allowed.
 	expectedResourceServer.Identifier = nil // Read-Only: Additional properties not allowed.
+	expectedResourceServer.SigningSecret = nil
 
 	expectedResourceServer.AllowOfflineAccess = auth0.Bool(true)
 	expectedResourceServer.SigningAlgorithm = auth0.String("RS256")
@@ -74,6 +81,8 @@ func TestResourceServer_Update(t *testing.T) {
 }
 
 func TestResourceServer_Delete(t *testing.T) {
+	setupVCR(t)
+
 	expectedResourceServer := givenAResourceServer(t)
 
 	err := m.ResourceServer.Delete(expectedResourceServer.GetID())
@@ -87,6 +96,8 @@ func TestResourceServer_Delete(t *testing.T) {
 }
 
 func TestResourceServer_List(t *testing.T) {
+	setupVCR(t)
+
 	expectedResourceServer := givenAResourceServer(t)
 
 	resourceServerList, err := m.ResourceServer.List(IncludeFields("id"))

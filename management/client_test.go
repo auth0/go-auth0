@@ -13,6 +13,8 @@ import (
 )
 
 func TestClient_Create(t *testing.T) {
+	setupVCR(t)
+
 	expectedClient := &Client{
 		Name:        auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
 		Description: auth0.String("This is just a test client."),
@@ -28,6 +30,8 @@ func TestClient_Create(t *testing.T) {
 }
 
 func TestClient_Read(t *testing.T) {
+	setupVCR(t)
+
 	expectedClient := givenAClient(t)
 
 	actualClient, err := m.Client.Read(expectedClient.GetClientID())
@@ -37,6 +41,8 @@ func TestClient_Read(t *testing.T) {
 }
 
 func TestClient_Update(t *testing.T) {
+	setupVCR(t)
+
 	expectedClient := givenAClient(t)
 
 	expectedDescription := "This is more than just a test client."
@@ -46,6 +52,7 @@ func TestClient_Update(t *testing.T) {
 	expectedClient.ClientID = nil                       // Read-Only: Additional properties not allowed.
 	expectedClient.SigningKeys = nil                    // Read-Only: Additional properties not allowed.
 	expectedClient.JWTConfiguration.SecretEncoded = nil // Read-Only: Additional properties not allowed.
+	expectedClient.ClientSecret = nil
 
 	err := m.Client.Update(clientID, expectedClient)
 
@@ -54,6 +61,8 @@ func TestClient_Update(t *testing.T) {
 }
 
 func TestClient_Delete(t *testing.T) {
+	setupVCR(t)
+
 	expectedClient := givenAClient(t)
 
 	err := m.Client.Delete(expectedClient.GetClientID())
@@ -68,6 +77,8 @@ func TestClient_Delete(t *testing.T) {
 }
 
 func TestClient_List(t *testing.T) {
+	setupVCR(t)
+
 	expectedClient := givenAClient(t)
 
 	clientList, err := m.Client.List(IncludeFields("client_id"))
@@ -77,6 +88,8 @@ func TestClient_List(t *testing.T) {
 }
 
 func TestClient_RotateSecret(t *testing.T) {
+	setupVCR(t)
+
 	expectedClient := givenAClient(t)
 
 	oldSecret := expectedClient.GetClientSecret()

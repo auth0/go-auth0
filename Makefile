@@ -15,9 +15,14 @@ lint: ## Runs linting on the go files. Requires docker to be installed
 	@docker run --rm -v $(CURDIR):/go-auth0 -w /go-auth0 golangci/golangci-lint:v1.44.0 golangci-lint -c .golangci.yaml run ./...
 
 .PHONY: test
-test: ## Runs tests
+test: ## Runs tests without vcr recordings
 	@echo "Running tests..."
 	@go test -cover -covermode=atomic -coverprofile=coverage.out ./...
+
+.PHONY: test-vcr
+test-vcr: ## Runs tests with vcr recordings
+	@echo "Running tests with vcr recordings..."
+	@AUTH0_VCR=on AUTH0_DOMAIN=go-auth0-dev.eu.auth0.com go test -cover -covermode=atomic -coverprofile=coverage.out ./...
 
 .PHONY: generate
 generate: ## Generate management accessor methods

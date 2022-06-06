@@ -13,6 +13,8 @@ import (
 )
 
 func TestRoleManager_Create(t *testing.T) {
+	setupVCR(t)
+
 	role := &Role{
 		Name:        auth0.String("test-role"),
 		Description: auth0.String("Test Role"),
@@ -29,6 +31,8 @@ func TestRoleManager_Create(t *testing.T) {
 }
 
 func TestRoleManager_Read(t *testing.T) {
+	setupVCR(t)
+
 	expectedRole := givenARole(t)
 
 	actualRole, err := m.Role.Read(expectedRole.GetID())
@@ -38,6 +42,8 @@ func TestRoleManager_Read(t *testing.T) {
 }
 
 func TestRoleManager_Update(t *testing.T) {
+	setupVCR(t)
+
 	expectedRole := givenARole(t)
 
 	updatedRole := &Role{
@@ -51,6 +57,8 @@ func TestRoleManager_Update(t *testing.T) {
 }
 
 func TestRoleManager_Delete(t *testing.T) {
+	setupVCR(t)
+
 	expectedRole := givenARole(t)
 
 	err := m.Role.Delete(expectedRole.GetID())
@@ -64,6 +72,8 @@ func TestRoleManager_Delete(t *testing.T) {
 }
 
 func TestRoleManager_List(t *testing.T) {
+	setupVCR(t)
+
 	role := givenARole(t)
 
 	roleList, err := m.Role.List(Parameter("name_filter", role.GetName()))
@@ -74,6 +84,8 @@ func TestRoleManager_List(t *testing.T) {
 }
 
 func TestRoleManager_Users(t *testing.T) {
+	setupVCR(t)
+
 	user := givenAUser(t)
 	role := givenARole(t)
 
@@ -87,6 +99,8 @@ func TestRoleManager_Users(t *testing.T) {
 }
 
 func TestRoleManager_Permissions(t *testing.T) {
+	setupVCR(t)
+
 	role := givenARole(t)
 	resourceServer := givenAResourceServer(t)
 	permissions := []*Permission{

@@ -10,6 +10,8 @@ import (
 )
 
 func TestPrompt(t *testing.T) {
+	setupVCR(t)
+
 	t.Cleanup(func() {
 		err := m.Prompt.Update(&Prompt{
 			UniversalLoginExperience: "classic",
@@ -46,6 +48,8 @@ func TestPrompt(t *testing.T) {
 }
 
 func TestPromptCustomText(t *testing.T) {
+	setupVCR(t)
+
 	const prompt = "login"
 	const lang = "en"
 

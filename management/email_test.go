@@ -11,6 +11,8 @@ import (
 )
 
 func TestEmailManager_Create(t *testing.T) {
+	setupVCR(t)
+
 	emailProvider := &Email{
 		Name:               auth0.String("smtp"),
 		Enabled:            auth0.Bool(true),
@@ -32,6 +34,8 @@ func TestEmailManager_Create(t *testing.T) {
 }
 
 func TestEmailManager_Read(t *testing.T) {
+	setupVCR(t)
+
 	expectedEmailProvider := givenAnEmailProvider(t)
 
 	actualEmailProvider, err := m.Email.Read()
@@ -53,6 +57,8 @@ func TestEmailManager_Read(t *testing.T) {
 }
 
 func TestEmailManager_Update(t *testing.T) {
+	setupVCR(t)
+
 	emailProvider := givenAnEmailProvider(t)
 
 	emailProvider.Enabled = auth0.Bool(false)
@@ -69,6 +75,8 @@ func TestEmailManager_Update(t *testing.T) {
 }
 
 func TestEmailManager_Delete(t *testing.T) {
+	setupVCR(t)
+
 	givenAnEmailProvider(t)
 
 	err := m.Email.Delete()

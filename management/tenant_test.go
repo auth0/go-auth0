@@ -11,6 +11,8 @@ import (
 )
 
 func TestTenantManager(t *testing.T) {
+	setupVCR(t)
+
 	initialSettings, err := m.Tenant.Read()
 	assert.NoError(t, err)
 
