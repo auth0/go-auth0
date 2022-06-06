@@ -17,7 +17,7 @@ func TestAnomaly(t *testing.T) {
 
 	t.Run("UnblockIP", func(t *testing.T) {
 		setupVCR(t)
-		
+
 		err := m.Anomaly.UnblockIP("1.1.1.1")
 		assert.NoError(t, err)
 	})
