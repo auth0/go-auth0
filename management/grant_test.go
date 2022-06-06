@@ -7,7 +7,7 @@ import (
 )
 
 func TestGrantManager_List(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	grantList, err := m.Grant.List()
 	assert.NoError(t, err)

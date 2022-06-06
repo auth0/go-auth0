@@ -11,7 +11,7 @@ import (
 )
 
 func TestEmailManager_Create(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	emailProvider := &Email{
 		Name:               auth0.String("smtp"),
@@ -34,7 +34,7 @@ func TestEmailManager_Create(t *testing.T) {
 }
 
 func TestEmailManager_Read(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedEmailProvider := givenAnEmailProvider(t)
 
@@ -57,7 +57,7 @@ func TestEmailManager_Read(t *testing.T) {
 }
 
 func TestEmailManager_Update(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	emailProvider := givenAnEmailProvider(t)
 
@@ -75,7 +75,7 @@ func TestEmailManager_Update(t *testing.T) {
 }
 
 func TestEmailManager_Delete(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	givenAnEmailProvider(t)
 

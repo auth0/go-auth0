@@ -7,7 +7,7 @@ import (
 )
 
 func TestBlacklist(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	client := givenAClient(t)
 

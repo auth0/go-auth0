@@ -250,7 +250,7 @@ type connectionTestCase struct {
 func TestConnectionManager_Create(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully create a "+testCase.name, func(t *testing.T) {
-			setupVCR(t)
+			setupHTTPRecordings(t)
 
 			expectedConnection := testCase.connection
 			expectedConnection.Options = testCase.options
@@ -271,7 +271,7 @@ func TestConnectionManager_Create(t *testing.T) {
 func TestConnectionManager_Read(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully read a "+testCase.name, func(t *testing.T) {
-			setupVCR(t)
+			setupHTTPRecordings(t)
 
 			expectedConnection := givenAConnection(t, testCase)
 
@@ -293,7 +293,7 @@ func TestConnectionManager_Read(t *testing.T) {
 func TestConnectionManager_ReadByName(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully find a "+testCase.name+" by its name", func(t *testing.T) {
-			setupVCR(t)
+			setupHTTPRecordings(t)
 
 			expectedConnection := givenAConnection(t, testCase)
 
@@ -312,7 +312,7 @@ func TestConnectionManager_ReadByName(t *testing.T) {
 	}
 
 	t.Run("throw an error when connection name is empty", func(t *testing.T) {
-		setupVCR(t)
+		setupHTTPRecordings(t)
 
 		actualConnection, err := m.Connection.ReadByName("")
 
@@ -328,7 +328,7 @@ func TestConnectionManager_Update(t *testing.T) {
 				t.Skip("Skipping because we can't create an oidc or samlp connection with no options")
 			}
 
-			setupVCR(t)
+			setupHTTPRecordings(t)
 
 			connection := givenAConnection(t, connectionTestCase{connection: testCase.connection})
 
@@ -347,7 +347,7 @@ func TestConnectionManager_Update(t *testing.T) {
 }
 
 func TestConnectionManager_Delete(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedConnection := givenAConnection(t, connectionTestCase{
 		connection: Connection{
@@ -367,7 +367,7 @@ func TestConnectionManager_Delete(t *testing.T) {
 }
 
 func TestConnectionManager_List(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedConnection := givenAConnection(t, connectionTestCase{
 		connection: Connection{

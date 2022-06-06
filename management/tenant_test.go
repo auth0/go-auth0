@@ -11,7 +11,7 @@ import (
 )
 
 func TestTenantManager(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	initialSettings, err := m.Tenant.Read()
 	assert.NoError(t, err)

@@ -10,7 +10,7 @@ import (
 )
 
 func TestBrandingManager_Read(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	branding, err := m.Branding.Read()
 	assert.NoError(t, err)
@@ -18,7 +18,7 @@ func TestBrandingManager_Read(t *testing.T) {
 }
 
 func TestBrandingManager_Update(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	// Save initial branding settings.
 	preTestBrandingSettings, err := m.Branding.Read()
@@ -56,7 +56,7 @@ func TestBrandingManager_Update(t *testing.T) {
 }
 
 func TestBrandingManager_UniversalLogin(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	givenACustomDomain(t)
 

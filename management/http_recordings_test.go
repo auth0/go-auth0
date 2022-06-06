@@ -15,7 +15,7 @@ import (
 	"github.com/auth0/go-auth0"
 )
 
-func setupVCR(t *testing.T) {
+func setupHTTPRecordings(t *testing.T) {
 	t.Helper()
 
 	if !vcrTestsEnabled {
@@ -82,9 +82,9 @@ func removeSensitiveDataFromRecordings(t *testing.T, vcr *recorder.Recorder) {
 		return nil
 	})
 	vcr.AddSaveFilter(func(i *cassette.Interaction) error {
-		redactSigningKey(t, i)
-		redactClient(t, i)
-		redactResourceServer(t, i)
+		redactSensitiveDataInSigningKey(t, i)
+		redactSensitiveDataInClient(t, i)
+		redactSensitiveDataInResourceServer(t, i)
 
 		i.URL = strings.Replace(i.URL, domain, "go-auth0-dev.eu.auth0.com", -1)
 		i.Duration = time.Millisecond
@@ -93,7 +93,7 @@ func removeSensitiveDataFromRecordings(t *testing.T, vcr *recorder.Recorder) {
 	})
 }
 
-func redactSigningKey(t *testing.T, i *cassette.Interaction) {
+func redactSensitiveDataInSigningKey(t *testing.T, i *cassette.Interaction) {
 	signingKey := &SigningKey{
 		KID:         auth0.String("111111111111111111111"),
 		Cert:        auth0.String("-----BEGIN CERTIFICATE-----\\r\\n[REDACTED]\\r\\n-----END CERTIFICATE-----"),
@@ -153,7 +153,7 @@ func redactSigningKey(t *testing.T, i *cassette.Interaction) {
 	}
 }
 
-func redactClient(t *testing.T, i *cassette.Interaction) {
+func redactSensitiveDataInClient(t *testing.T, i *cassette.Interaction) {
 	create := i.URL == "https://"+domain+"/api/v2/clients" && i.Method == http.MethodPost
 	read := strings.Contains(i.URL, "https://"+domain+"/api/v2/clients/") && i.Method == http.MethodGet
 	update := strings.Contains(i.URL, "https://"+domain+"/api/v2/clients/") && i.Method == http.MethodPatch
@@ -174,7 +174,7 @@ func redactClient(t *testing.T, i *cassette.Interaction) {
 	}
 }
 
-func redactResourceServer(t *testing.T, i *cassette.Interaction) {
+func redactSensitiveDataInResourceServer(t *testing.T, i *cassette.Interaction) {
 	create := i.URL == "https://"+domain+"/api/v2/resource-servers" && i.Method == http.MethodPost
 	read := strings.Contains(i.URL, "https://"+domain+"/api/v2/resource-servers/") && i.Method == http.MethodGet
 	update := strings.Contains(i.URL, "https://"+domain+"/api/v2/resource-servers/") && i.Method == http.MethodPatch

@@ -7,7 +7,7 @@ import (
 )
 
 func TestStatManager_ActiveUsers(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	activeUsers, err := m.Stat.ActiveUsers()
 	assert.NoError(t, err)
@@ -15,7 +15,7 @@ func TestStatManager_ActiveUsers(t *testing.T) {
 }
 
 func TestStatManager_Daily(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	daily, err := m.Stat.Daily()
 	assert.NoError(t, err)

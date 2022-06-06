@@ -13,7 +13,7 @@ import (
 )
 
 func TestRoleManager_Create(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	role := &Role{
 		Name:        auth0.String("test-role"),
@@ -31,7 +31,7 @@ func TestRoleManager_Create(t *testing.T) {
 }
 
 func TestRoleManager_Read(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedRole := givenARole(t)
 
@@ -42,7 +42,7 @@ func TestRoleManager_Read(t *testing.T) {
 }
 
 func TestRoleManager_Update(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedRole := givenARole(t)
 
@@ -57,7 +57,7 @@ func TestRoleManager_Update(t *testing.T) {
 }
 
 func TestRoleManager_Delete(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedRole := givenARole(t)
 
@@ -72,7 +72,7 @@ func TestRoleManager_Delete(t *testing.T) {
 }
 
 func TestRoleManager_List(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	role := givenARole(t)
 
@@ -84,7 +84,7 @@ func TestRoleManager_List(t *testing.T) {
 }
 
 func TestRoleManager_Users(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	user := givenAUser(t)
 	role := givenARole(t)
@@ -99,7 +99,7 @@ func TestRoleManager_Users(t *testing.T) {
 }
 
 func TestRoleManager_Permissions(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	role := givenARole(t)
 	resourceServer := givenAResourceServer(t)

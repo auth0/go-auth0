@@ -16,7 +16,7 @@ import (
 )
 
 func TestUserManager_Create(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	user := &User{
 		Connection: auth0.String("Username-Password-Authentication"),
@@ -34,7 +34,7 @@ func TestUserManager_Create(t *testing.T) {
 }
 
 func TestUserManager_Read(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -46,7 +46,7 @@ func TestUserManager_Read(t *testing.T) {
 }
 
 func TestUserManager_Update(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -68,7 +68,7 @@ func TestUserManager_Update(t *testing.T) {
 }
 
 func TestUserManager_Delete(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -85,7 +85,7 @@ func TestUserManager_Delete(t *testing.T) {
 }
 
 func TestUserManager_List(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -101,7 +101,7 @@ func TestUserManager_List(t *testing.T) {
 }
 
 func TestUserManager_Search(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -112,7 +112,7 @@ func TestUserManager_Search(t *testing.T) {
 }
 
 func TestUserManager_ListByEmail(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -123,7 +123,7 @@ func TestUserManager_ListByEmail(t *testing.T) {
 }
 
 func TestUserManager_Roles(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	user := givenAUser(t)
 	role := givenARole(t)
@@ -145,7 +145,7 @@ func TestUserManager_Roles(t *testing.T) {
 }
 
 func TestUserManager_Permissions(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	user := givenAUser(t)
 	resourceServer := givenAResourceServer(t)
@@ -174,7 +174,7 @@ func TestUserManager_Permissions(t *testing.T) {
 }
 
 func TestUserManager_Blocks(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	user := givenAUser(t)
 	blockedIPs, err := m.User.Blocks(user.GetID())
@@ -183,7 +183,7 @@ func TestUserManager_Blocks(t *testing.T) {
 }
 
 func TestUserManager_BlocksByIdentifier(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	user := givenAUser(t)
 	blockedIPs, err := m.User.BlocksByIdentifier(user.GetUsername())
@@ -192,7 +192,7 @@ func TestUserManager_BlocksByIdentifier(t *testing.T) {
 }
 
 func TestUserManager_Unblock(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	user := givenAUser(t)
 	err := m.User.Unblock(user.GetID())
@@ -200,7 +200,7 @@ func TestUserManager_Unblock(t *testing.T) {
 }
 
 func TestUserManager_UnblockByIdentifier(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	user := givenAUser(t)
 	err := m.User.UnblockByIdentifier(user.GetUsername())
@@ -208,7 +208,7 @@ func TestUserManager_UnblockByIdentifier(t *testing.T) {
 }
 
 func TestUserManager_Enrollments(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	user := givenAUser(t)
 	userEnrollments, err := m.User.Enrollments(user.GetID())
@@ -217,7 +217,7 @@ func TestUserManager_Enrollments(t *testing.T) {
 }
 
 func TestUserManager_RegenerateRecoveryCode(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	user := givenAUser(t)
 	recoveryCode, err := m.User.RegenerateRecoveryCode(user.GetID())
@@ -226,7 +226,7 @@ func TestUserManager_RegenerateRecoveryCode(t *testing.T) {
 }
 
 func TestUserManager_InvalidateRememberBrowser(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	user := givenAUser(t)
 	err := m.User.InvalidateRememberBrowser(user.GetID())
@@ -234,7 +234,7 @@ func TestUserManager_InvalidateRememberBrowser(t *testing.T) {
 }
 
 func TestUserManager_Link(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	mainUser := givenAUser(t)
 	secondaryUser := givenAUser(t)
@@ -256,7 +256,7 @@ func TestUserManager_Link(t *testing.T) {
 }
 
 func TestUserManager_Unlink(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	provider := "auth0"
 	mainUser := givenAUser(t)

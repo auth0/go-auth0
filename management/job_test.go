@@ -10,7 +10,7 @@ import (
 )
 
 func TestJobManager_VerifyEmail(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	user := givenAUser(t)
 	job := &Job{UserID: user.ID}
@@ -24,7 +24,7 @@ func TestJobManager_VerifyEmail(t *testing.T) {
 }
 
 func TestJobManager_ExportUsers(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	givenAUser(t)
 	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
@@ -46,7 +46,7 @@ func TestJobManager_ExportUsers(t *testing.T) {
 }
 
 func TestJobManager_ImportUsers(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
 	assert.NoError(t, err)

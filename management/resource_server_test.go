@@ -12,7 +12,7 @@ import (
 )
 
 func TestResourceServer_Create(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedResourceServer := &ResourceServer{
 		Name:                auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
@@ -38,7 +38,7 @@ func TestResourceServer_Create(t *testing.T) {
 }
 
 func TestResourceServer_Read(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedResourceServer := givenAResourceServer(t)
 
@@ -49,7 +49,7 @@ func TestResourceServer_Read(t *testing.T) {
 }
 
 func TestResourceServer_Update(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedResourceServer := givenAResourceServer(t)
 
@@ -81,7 +81,7 @@ func TestResourceServer_Update(t *testing.T) {
 }
 
 func TestResourceServer_Delete(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedResourceServer := givenAResourceServer(t)
 
@@ -96,7 +96,7 @@ func TestResourceServer_Delete(t *testing.T) {
 }
 
 func TestResourceServer_List(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedResourceServer := givenAResourceServer(t)
 

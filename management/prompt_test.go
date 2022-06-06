@@ -10,7 +10,7 @@ import (
 )
 
 func TestPrompt(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	t.Cleanup(func() {
 		err := m.Prompt.Update(&Prompt{
@@ -48,7 +48,7 @@ func TestPrompt(t *testing.T) {
 }
 
 func TestPromptCustomText(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	const prompt = "login"
 	const lang = "en"

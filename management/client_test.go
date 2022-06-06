@@ -13,7 +13,7 @@ import (
 )
 
 func TestClient_Create(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedClient := &Client{
 		Name:        auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
@@ -30,7 +30,7 @@ func TestClient_Create(t *testing.T) {
 }
 
 func TestClient_Read(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedClient := givenAClient(t)
 
@@ -41,7 +41,7 @@ func TestClient_Read(t *testing.T) {
 }
 
 func TestClient_Update(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedClient := givenAClient(t)
 
@@ -61,7 +61,7 @@ func TestClient_Update(t *testing.T) {
 }
 
 func TestClient_Delete(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedClient := givenAClient(t)
 
@@ -77,7 +77,7 @@ func TestClient_Delete(t *testing.T) {
 }
 
 func TestClient_List(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedClient := givenAClient(t)
 
@@ -88,7 +88,7 @@ func TestClient_List(t *testing.T) {
 }
 
 func TestClient_RotateSecret(t *testing.T) {
-	setupVCR(t)
+	setupHTTPRecordings(t)
 
 	expectedClient := givenAClient(t)
 
