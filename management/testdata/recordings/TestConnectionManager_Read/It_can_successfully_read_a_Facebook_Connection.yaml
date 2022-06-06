@@ -1,0 +1,77 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test-Facebook-Connection-1654521050","strategy":"facebook","options":{}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+    method: POST
+  response:
+    body: '{"id":"con_bPEJGPMP1CwxPDgh","options":{"scope":""},"strategy":"facebook","name":"Test-Facebook-Connection-1654521050","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Facebook-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_bPEJGPMP1CwxPDgh
+    method: GET
+  response:
+    body: '{"id":"con_bPEJGPMP1CwxPDgh","options":{"scope":""},"strategy":"facebook","name":"Test-Facebook-Connection-1654521050","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Facebook-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_bPEJGPMP1CwxPDgh
+    method: DELETE
+  response:
+    body: '{"deleted_at":"2022-06-06T13:12:54.877Z"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 202 Accepted
+    code: 202
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_bPEJGPMP1CwxPDgh
+    method: DELETE
+  response:
+    body: '{"deleted_at":"2022-06-06T13:12:54.877Z"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 202 Accepted
+    code: 202
+    duration: 1ms

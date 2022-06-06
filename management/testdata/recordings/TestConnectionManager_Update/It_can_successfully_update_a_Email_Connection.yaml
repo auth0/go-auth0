@@ -1,0 +1,82 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test-Email-Connection-1654521050","strategy":"email"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+    method: POST
+  response:
+    body: '{"id":"con_xyySexYqSdIxY2vW","options":{"brute_force_protection":true},"strategy":"email","name":"Test-Email-Connection-1654521050","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Email-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      {"options":{"name":"Test-Connection-Email","email":{"syntax":"liquid","from":"{{application.name}} \u003ctest@example.com\u003e","subject":"Email Login - {{application.name}}","body":"\u003chtml\u003e\u003cbody\u003eemail contents\u003c/body\u003e\u003c/html\u003e"},"totp":{"time_step":100,"length":4},"authParams":{"scope":"openid profile"},"disable_signup":true,"brute_force_protection":true}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_xyySexYqSdIxY2vW
+    method: PATCH
+  response:
+    body: '{"id":"con_xyySexYqSdIxY2vW","options":{"name":"Test-Connection-Email","totp":{"length":4,"time_step":100},"email":{"body":"<html><body>email
+      contents</body></html>","from":"{{application.name}} <test@example.com>","syntax":"liquid","subject":"Email
+      Login - {{application.name}}"},"authParams":{"scope":"openid profile"},"disable_signup":true,"brute_force_protection":true},"strategy":"email","name":"Test-Email-Connection-1654521050","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Email-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_xyySexYqSdIxY2vW
+    method: GET
+  response:
+    body: '{"id":"con_xyySexYqSdIxY2vW","options":{"name":"Test-Connection-Email","totp":{"length":4,"time_step":100},"email":{"body":"<html><body>email
+      contents</body></html>","from":"{{application.name}} <test@example.com>","syntax":"liquid","subject":"Email
+      Login - {{application.name}}"},"authParams":{"scope":"openid profile"},"disable_signup":true,"brute_force_protection":true},"strategy":"email","name":"Test-Email-Connection-1654521050","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Email-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_xyySexYqSdIxY2vW
+    method: DELETE
+  response:
+    body: '{"deleted_at":"2022-06-06T13:13:55.787Z"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 202 Accepted
+    code: 202
+    duration: 1ms

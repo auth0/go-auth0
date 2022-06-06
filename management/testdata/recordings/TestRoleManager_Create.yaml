@@ -1,0 +1,41 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"test-role","description":"Test Role"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/roles
+    method: POST
+  response:
+    body: '{"id":"rol_qBR30eGS8BnE0AgU","name":"test-role","description":"Test Role"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      {}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/roles/rol_qBR30eGS8BnE0AgU
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms

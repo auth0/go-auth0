@@ -1,0 +1,61 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"test-organization735","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations
+    method: POST
+  response:
+    body: '{"name":"test-organization735","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"},"id":"org_i4LxUzvb6wrgh5BE"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations?include_totals=true&per_page=50
+    method: GET
+  response:
+    body: '{"organizations":[{"id":"org_4EyJgziBlsRgGXKh","name":"test-organization256","display_name":"Test
+      Organization","branding":{"logo_url":"https://example.com/logo.gif"}},{"id":"org_i4LxUzvb6wrgh5BE","name":"test-organization735","display_name":"Test
+      Organization","branding":{"logo_url":"https://example.com/logo.gif"}}],"start":0,"limit":50,"total":2}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_i4LxUzvb6wrgh5BE
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

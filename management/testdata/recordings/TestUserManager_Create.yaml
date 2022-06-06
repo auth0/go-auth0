@@ -1,0 +1,40 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"connection":"Username-Password-Authentication","email":"chuck@example.com","username":"chuck","password":"I have a password and its a secret"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/users
+    method: POST
+  response:
+    body: '{"created_at":"2022-06-06T13:25:43.086Z","email":"chuck@example.com","email_verified":false,"identities":[{"connection":"Username-Password-Authentication","user_id":"629e005766c65100687af1b9","provider":"auth0","isSocial":false}],"name":"chuck@example.com","nickname":"chuck","picture":"https://s.gravatar.com/avatar/0b79e7da7bc7877560620cf8f2cc93ae?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fch.png","updated_at":"2022-06-06T13:25:43.086Z","user_id":"auth0|629e005766c65100687af1b9","username":"chuck"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/users/auth0%7C629e005766c65100687af1b9
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

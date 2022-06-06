@@ -1,0 +1,77 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test-GoogleApps-Connection-1654521050","strategy":"google-apps","options":{"domain":"example.com","tenant_domain":"example.com","basic_profile":true,"ext_profile":true,"ext_groups":true,"ext_is_admin":true}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+    method: POST
+  response:
+    body: '{"id":"con_17uc4c3viDZzquWu","options":{"domain":"example.com","tenant_domain":"example.com","basic_profile":true,"ext_profile":true,"ext_groups":true,"ext_is_admin":true,"email":true,"profile":true,"scope":["email","profile"],"handle_login_from_social":true},"strategy":"google-apps","name":"Test-GoogleApps-Connection-1654521050","provisioning_ticket_url":"https://login.eu.auth0.com/go-auth0-dev/p/google-apps/V5rM7BpU","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-GoogleApps-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_17uc4c3viDZzquWu
+    method: GET
+  response:
+    body: '{"id":"con_17uc4c3viDZzquWu","options":{"email":true,"scope":["email","profile"],"domain":"example.com","profile":true,"ext_groups":true,"ext_profile":true,"ext_is_admin":true,"basic_profile":true,"tenant_domain":"example.com","handle_login_from_social":true},"strategy":"google-apps","name":"Test-GoogleApps-Connection-1654521050","provisioning_ticket_url":"https://login.eu.auth0.com/go-auth0-dev/p/google-apps/V5rM7BpU","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-GoogleApps-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_17uc4c3viDZzquWu
+    method: DELETE
+  response:
+    body: '{"deleted_at":"2022-06-06T13:12:44.185Z"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 202 Accepted
+    code: 202
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_17uc4c3viDZzquWu
+    method: DELETE
+  response:
+    body: '{"deleted_at":"2022-06-06T13:12:44.185Z"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 202 Accepted
+    code: 202
+    duration: 1ms

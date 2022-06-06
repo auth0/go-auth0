@@ -1,0 +1,77 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test-GoogleOAuth2-Connection-1654521050","strategy":"google-oauth2","options":{"allowed_audiences":["example.com","api.example.com"],"profile":true,"calendar":true,"youtube":false}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+    method: POST
+  response:
+    body: '{"id":"con_XJxqGPUpcMDbX0r6","options":{"allowed_audiences":["example.com","api.example.com"],"profile":true,"calendar":true,"youtube":false,"email":true,"scope":["profile","https://www.googleapis.com/auth/calendar","email"]},"strategy":"google-oauth2","name":"Test-GoogleOAuth2-Connection-1654521050","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GoogleOAuth2-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_XJxqGPUpcMDbX0r6
+    method: GET
+  response:
+    body: '{"id":"con_XJxqGPUpcMDbX0r6","options":{"email":true,"scope":["profile","https://www.googleapis.com/auth/calendar","email"],"profile":true,"youtube":false,"calendar":true,"allowed_audiences":["example.com","api.example.com"]},"strategy":"google-oauth2","name":"Test-GoogleOAuth2-Connection-1654521050","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GoogleOAuth2-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_XJxqGPUpcMDbX0r6
+    method: DELETE
+  response:
+    body: '{"deleted_at":"2022-06-06T13:12:42.550Z"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 202 Accepted
+    code: 202
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_XJxqGPUpcMDbX0r6
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

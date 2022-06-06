@@ -1,0 +1,83 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"test-hook983","script":"function (user, context, callback) { callback(null, { user }); }","triggerId":"pre-user-registration","enabled":false}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/hooks
+    method: POST
+  response:
+    body: '{"id":"01G4WJJQS97G9WY1MKB2FTZETW","name":"test-hook-983","script":"function
+      (user, context, callback) { callback(null, { user }); }","dependencies":{},"triggerId":"pre-user-registration","enabled":false}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      {"script":"function (user, context, callback) { console.log('hooked!'); callback(null, { user }); }","enabled":true}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/hooks/01G4WJJQS97G9WY1MKB2FTZETW
+    method: PATCH
+  response:
+    body: '{"id":"01G4WJJQS97G9WY1MKB2FTZETW","name":"test-hook-983","script":"function
+      (user, context, callback) { console.log(''hooked!''); callback(null, { user
+      }); }","dependencies":{},"triggerId":"pre-user-registration","enabled":true}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/hooks/01G4WJJQS97G9WY1MKB2FTZETW
+    method: GET
+  response:
+    body: '{"id":"01G4WJJQS97G9WY1MKB2FTZETW","name":"test-hook-983","script":"function
+      (user, context, callback) { console.log(''hooked!''); callback(null, { user
+      }); }","dependencies":{},"enabled":true,"triggerId":"pre-user-registration"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/hooks/01G4WJJQS97G9WY1MKB2FTZETW
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

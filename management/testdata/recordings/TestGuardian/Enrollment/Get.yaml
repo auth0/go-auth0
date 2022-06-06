@@ -1,0 +1,22 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/enrollments/dev_0000000000000001
+    method: GET
+  response:
+    body: '{"statusCode":404,"error":"Not Found","message":"Enrollment not found","errorCode":"enrollment_not_found"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 404 Not Found
+    code: 404
+    duration: 1ms

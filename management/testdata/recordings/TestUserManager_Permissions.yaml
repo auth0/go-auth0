@@ -1,0 +1,155 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"connection":"Username-Password-Authentication","email":"chuck215@example.com","given_name":"Chuck","family_name":"Sanchez","username":"test-user630","nickname":"Chucky","password":"Passwords hide their chuck","user_metadata":{"favourite_attack":"roundhouse_kick"},"verify_email":false,"app_metadata":{"facts":["count_to_infinity_twice","kill_two_stones_with_one_bird","can_hear_sign_language"]},"picture":"https://example-picture-url.jpg","blocked":false,"email_verified":true}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/users
+    method: POST
+  response:
+    body: '{"blocked":false,"created_at":"2022-06-06T13:26:01.765Z","email":"chuck215@example.com","email_verified":true,"family_name":"Sanchez","given_name":"Chuck","identities":[{"connection":"Username-Password-Authentication","user_id":"629e006939daeb006997ed47","provider":"auth0","isSocial":false}],"name":"chuck215@example.com","nickname":"Chucky","picture":"https://example-picture-url.jpg","updated_at":"2022-06-06T13:26:01.765Z","user_id":"auth0|629e006939daeb006997ed47","user_metadata":{"favourite_attack":"roundhouse_kick"},"username":"test-user630","app_metadata":{"facts":["count_to_infinity_twice","kill_two_stones_with_one_bird","can_hear_sign_language"]}}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      {"name":"Test Resource Server (Jun  6 15:26:02.379)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create Resource"}],"signing_alg":"HS256","token_lifetime":7200,"token_lifetime_for_web":3600}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers
+    method: POST
+  response:
+    body: '{"id":"629e006a91f2e600407a7172","name":"Test Resource Server (Jun  6 15:26:02.379)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create
+      Resource"}],"signing_alg":"HS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      {"permissions":[{"resource_server_identifier":"https://api.example.com/","permission_name":"create:resource"}]}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/users/auth0%7C629e006939daeb006997ed47/permissions
+    method: POST
+  response:
+    body: '{}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/users/auth0%7C629e006939daeb006997ed47/permissions?include_totals=true&per_page=50
+    method: GET
+  response:
+    body: '{"permissions":[{"permission_name":"create:resource","description":"Create
+      Resource","resource_server_name":"Test Resource Server (Jun  6 15:26:02.379)","resource_server_identifier":"https://api.example.com/","sources":[{"source_id":"","source_name":"","source_type":"DIRECT"}]}],"start":0,"limit":50,"total":1}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      {"permissions":[{"resource_server_identifier":"https://api.example.com/","permission_name":"create:resource"}]}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/users/auth0%7C629e006939daeb006997ed47/permissions
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/users/auth0%7C629e006939daeb006997ed47/permissions?include_totals=true&per_page=50
+    method: GET
+  response:
+    body: '{"permissions":[],"start":0,"limit":50,"total":0}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/629e006a91f2e600407a7172
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/users/auth0%7C629e006939daeb006997ed47
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

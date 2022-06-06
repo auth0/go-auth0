@@ -1,0 +1,78 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test-LinkedIn-Connection-1654521050","strategy":"linkedin"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+    method: POST
+  response:
+    body: '{"id":"con_5bvmnmA7J1mUgsrb","options":{"profile":true,"scope":["r_basicprofile"]},"strategy":"linkedin","name":"Test-LinkedIn-Connection-1654521050","is_domain_connection":false,"enabled_clients":[],"realms":["Test-LinkedIn-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      {"options":{}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_5bvmnmA7J1mUgsrb
+    method: PATCH
+  response:
+    body: '{"id":"con_5bvmnmA7J1mUgsrb","options":{"scope":["r_basicprofile"],"profile":true},"strategy":"linkedin","name":"Test-LinkedIn-Connection-1654521050","is_domain_connection":false,"enabled_clients":[],"realms":["Test-LinkedIn-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_5bvmnmA7J1mUgsrb
+    method: GET
+  response:
+    body: '{"id":"con_5bvmnmA7J1mUgsrb","options":{"scope":["r_basicprofile"],"profile":true},"strategy":"linkedin","name":"Test-LinkedIn-Connection-1654521050","is_domain_connection":false,"enabled_clients":[],"realms":["Test-LinkedIn-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_5bvmnmA7J1mUgsrb
+    method: DELETE
+  response:
+    body: '{"deleted_at":"2022-06-06T13:14:07.672Z"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 202 Accepted
+    code: 202
+    duration: 1ms

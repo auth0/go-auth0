@@ -1,0 +1,104 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test Action (Jun  6 15:11:00.060)","supported_triggers":[{"id":"post-login","version":"v2"}],"code":"exports.onExecutePostLogin = async (event, api) =\u003e {}","dependencies":[{"name":"lodash","version":"4.0.0","registry_url":"https://www.npmjs.com/package/lodash"}],"secrets":[{"name":"mySecretName","value":"mySecretValue"}]}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/actions/actions
+    method: POST
+  response:
+    body: '{"id":"0b8d3232-c79c-48ac-b4f2-8de99d78a6d6","name":"Test Action (Jun  6
+      15:11:00.060)","supported_triggers":[{"id":"post-login","version":"v2"}],"created_at":"2022-06-06T13:11:00.383962626Z","updated_at":"2022-06-06T13:11:00.396518579Z","code":"exports.onExecutePostLogin
+      = async (event, api) => {}","dependencies":[{"name":"lodash","version":"4.0.0","registry_url":"https://www.npmjs.com/package/lodash"}],"runtime":"node16","status":"pending","secrets":[{"name":"mySecretName","updated_at":"2022-06-06T13:11:00.396518579Z"}],"all_changes_deployed":false}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/actions/actions/0b8d3232-c79c-48ac-b4f2-8de99d78a6d6
+    method: GET
+  response:
+    body: '{"id":"0b8d3232-c79c-48ac-b4f2-8de99d78a6d6","name":"Test Action (Jun  6
+      15:11:00.060)","supported_triggers":[{"id":"post-login","version":"v2"}],"created_at":"2022-06-06T13:11:00.383962626Z","updated_at":"2022-06-06T13:11:00.396518579Z","code":"exports.onExecutePostLogin
+      = async (event, api) => {}","dependencies":[{"name":"lodash","version":"4.0.0","registry_url":"https://www.npmjs.com/package/lodash"}],"runtime":"node16","status":"building","secrets":[{"name":"mySecretName","updated_at":"2022-06-06T13:11:00.396518579Z"}],"all_changes_deployed":false}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/actions/actions/0b8d3232-c79c-48ac-b4f2-8de99d78a6d6
+    method: GET
+  response:
+    body: '{"id":"0b8d3232-c79c-48ac-b4f2-8de99d78a6d6","name":"Test Action (Jun  6
+      15:11:00.060)","supported_triggers":[{"id":"post-login","version":"v2"}],"created_at":"2022-06-06T13:11:00.383962626Z","updated_at":"2022-06-06T13:11:00.396518579Z","code":"exports.onExecutePostLogin
+      = async (event, api) => {}","dependencies":[{"name":"lodash","version":"4.0.0"}],"runtime":"node16","status":"built","secrets":[{"name":"mySecretName","updated_at":"2022-06-06T13:11:00.396518579Z"}],"all_changes_deployed":false}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/actions/actions/0b8d3232-c79c-48ac-b4f2-8de99d78a6d6/deploy
+    method: POST
+  response:
+    body: '{"code":"exports.onExecutePostLogin = async (event, api) => {}","dependencies":[{"name":"lodash","version":"4.0.0"}],"id":"ed43a66d-932c-4968-990f-7fa5860a53bf","deployed":false,"number":1,"secrets":[{"name":"mySecretName","updated_at":"2022-06-06T13:11:00.396518579Z"}],"status":"built","created_at":"2022-06-06T13:11:03.041666168Z","updated_at":"2022-06-06T13:11:03.041666168Z","runtime":"node16","supported_triggers":[{"id":"post-login","version":"v2"}],"action":{"id":"0b8d3232-c79c-48ac-b4f2-8de99d78a6d6","name":"Test
+      Action (Jun  6 15:11:00.060)","supported_triggers":[{"id":"post-login","version":"v2"}],"created_at":"2022-06-06T13:11:00.383962626Z","updated_at":"2022-06-06T13:11:00.383962626Z","all_changes_deployed":false}}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/actions/actions/0b8d3232-c79c-48ac-b4f2-8de99d78a6d6
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

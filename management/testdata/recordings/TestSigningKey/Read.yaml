@@ -1,0 +1,47 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/keys/signing
+    method: GET
+  response:
+    body: '[{"kid":"111111111111111111111","cert":"-----BEGIN CERTIFICATE-----\\r\\n[REDACTED]\\r\\n-----END
+      CERTIFICATE-----","pkcs7":"-----BEGIN PKCS7-----\\r\\n[REDACTED]\\r\\n-----END
+      PKCS7-----","current":true,"next":false,"previous":true,"fingerprint":"[REDACTED]","thumbprint":"[REDACTED]","revoked":false},{"kid":"222222222222222222222","cert":"-----BEGIN
+      CERTIFICATE-----\\r\\n[REDACTED]\\r\\n-----END CERTIFICATE-----","pkcs7":"-----BEGIN
+      PKCS7-----\\r\\n[REDACTED]\\r\\n-----END PKCS7-----","current":false,"next":true,"previous":true,"fingerprint":"[REDACTED]","thumbprint":"[REDACTED]","revoked":false}]'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/keys/signing/111111111111111111111
+    method: GET
+  response:
+    body: '{"kid":"111111111111111111111","cert":"-----BEGIN CERTIFICATE-----\\r\\n[REDACTED]\\r\\n-----END
+      CERTIFICATE-----","pkcs7":"-----BEGIN PKCS7-----\\r\\n[REDACTED]\\r\\n-----END
+      PKCS7-----","current":true,"next":false,"previous":true,"fingerprint":"[REDACTED]","thumbprint":"[REDACTED]","revoked":false}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms

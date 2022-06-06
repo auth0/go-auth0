@@ -1,0 +1,60 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"test-organization636","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations
+    method: POST
+  response:
+    body: '{"name":"test-organization636","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"},"id":"org_cROqgEg13ZZf5yZ7"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_cROqgEg13ZZf5yZ7
+    method: GET
+  response:
+    body: '{"id":"org_cROqgEg13ZZf5yZ7","name":"test-organization636","display_name":"Test
+      Organization","branding":{"logo_url":"https://example.com/logo.gif"}}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_cROqgEg13ZZf5yZ7
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms
