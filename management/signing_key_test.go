@@ -9,7 +9,7 @@ import (
 func TestSigningKey(t *testing.T) {
 	t.Run("List", func(t *testing.T) {
 		setupVCR(t)
-		
+
 		signingKeys, err := m.SigningKey.List()
 		assert.NoError(t, err)
 		assert.NotEmpty(t, signingKeys, "expected at least one key to be returned")
