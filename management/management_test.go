@@ -15,17 +15,17 @@ import (
 )
 
 var (
-	domain          = os.Getenv("AUTH0_DOMAIN")
-	clientID        = os.Getenv("AUTH0_CLIENT_ID")
-	clientSecret    = os.Getenv("AUTH0_CLIENT_SECRET")
-	debug           = os.Getenv("AUTH0_DEBUG")
-	vcr             = os.Getenv("AUTH0_VCR")
-	vcrTestsEnabled = false
-	m               = &Management{}
+	domain                = os.Getenv("AUTH0_DOMAIN")
+	clientID              = os.Getenv("AUTH0_CLIENT_ID")
+	clientSecret          = os.Getenv("AUTH0_CLIENT_SECRET")
+	debug                 = os.Getenv("AUTH0_DEBUG")
+	httpRecordings        = os.Getenv("AUTH0_HTTP_RECORDINGS")
+	httpRecordingsEnabled = false
+	m                     = &Management{}
 )
 
 func init() {
-	vcrTestsEnabled = vcr == "true" || vcr == "1" || vcr == "on"
+	httpRecordingsEnabled = httpRecordings == "true" || httpRecordings == "1" || httpRecordings == "on"
 	initTestManagement()
 }
 

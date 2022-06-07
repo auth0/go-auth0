@@ -119,7 +119,7 @@ The following Auth0 resources are supported:
 
 To run the tests use the `make test` command. This will make use of pre-recorded http interactions found in the
 [recordings](./management/testdata/recordings) folder. To add new recordings run the tests against an Auth0 tenant
-individually using the following env var `AUTH0_VCR=on`.
+individually using the following env var `AUTH0_HTTP_RECORDINGS=on`.
 
 To run the tests against an Auth0 tenant, use the `make test-e2e` command. Start by creating an
 [M2M app](https://auth0.com/docs/applications/set-up-an-application/register-machine-to-machine-applications) in the

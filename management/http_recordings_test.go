@@ -18,7 +18,7 @@ import (
 func setupHTTPRecordings(t *testing.T) {
 	t.Helper()
 
-	if !vcrTestsEnabled {
+	if !httpRecordingsEnabled {
 		return
 	}
 
