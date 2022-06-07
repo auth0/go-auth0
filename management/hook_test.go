@@ -13,6 +13,8 @@ import (
 )
 
 func TestHookManager_Create(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	hook := &Hook{
 		Name:      auth0.String("testing-hook-creation"),
 		Script:    auth0.String("function (user, context, callback) { callback(null, { user }); }"),
@@ -30,6 +32,8 @@ func TestHookManager_Create(t *testing.T) {
 }
 
 func TestHookManager_Read(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedHook := givenAHook(t, nil)
 
 	actualHook, err := m.Hook.Read(expectedHook.GetID())
@@ -39,6 +43,8 @@ func TestHookManager_Read(t *testing.T) {
 }
 
 func TestHookManager_Update(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	hook := givenAHook(t, nil)
 	updatedHook := &Hook{
 		Script:  auth0.String("function (user, context, callback) { console.log('hooked!'); callback(null, { user }); }"),
@@ -55,6 +61,8 @@ func TestHookManager_Update(t *testing.T) {
 }
 
 func TestHookManager_Delete(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	hook := givenAHook(t, nil)
 
 	err := m.Hook.Delete(hook.GetID())
@@ -68,6 +76,8 @@ func TestHookManager_Delete(t *testing.T) {
 }
 
 func TestHookManager_List(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedHook := givenAHook(t, nil)
 
 	hookList, err := m.Hook.List(IncludeFields("id"))
@@ -78,6 +88,8 @@ func TestHookManager_List(t *testing.T) {
 }
 
 func TestHookManager_CreateSecrets(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	hook := givenAHook(t, nil)
 	secrets := HookSecrets{
 		"SECRET1": "value1",
@@ -89,6 +101,8 @@ func TestHookManager_CreateSecrets(t *testing.T) {
 }
 
 func TestHookManager_UpdateSecrets(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	secrets := HookSecrets{
 		"SECRET1": "value1",
 		"SECRET2": "value2",
@@ -105,6 +119,8 @@ func TestHookManager_UpdateSecrets(t *testing.T) {
 }
 
 func TestHookManager_ReplaceSecrets(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	secrets := HookSecrets{
 		"SECRET1": "value1",
 		"SECRET2": "value2",
@@ -126,6 +142,8 @@ func TestHookManager_ReplaceSecrets(t *testing.T) {
 }
 
 func TestHookManager_Secrets(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	secrets := HookSecrets{
 		"SECRET1": "value1",
 		"SECRET2": "value2",
@@ -139,6 +157,8 @@ func TestHookManager_Secrets(t *testing.T) {
 }
 
 func TestHookManager_RemoveSecrets(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	secrets := HookSecrets{
 		"SECRET1": "value1",
 		"SECRET2": "value2",
@@ -155,6 +175,8 @@ func TestHookManager_RemoveSecrets(t *testing.T) {
 }
 
 func TestHookManager_RemoveAllSecrets(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	secrets := HookSecrets{
 		"SECRET1": "value1",
 		"SECRET2": "value2",

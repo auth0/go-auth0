@@ -16,6 +16,8 @@ import (
 )
 
 func TestUserManager_Create(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	user := &User{
 		Connection: auth0.String("Username-Password-Authentication"),
 		Email:      auth0.String("chuck@example.com"),
@@ -32,6 +34,8 @@ func TestUserManager_Create(t *testing.T) {
 }
 
 func TestUserManager_Read(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedUser := givenAUser(t)
 
 	actualUser, err := m.User.Read(expectedUser.GetID())
@@ -42,6 +46,8 @@ func TestUserManager_Read(t *testing.T) {
 }
 
 func TestUserManager_Update(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedUser := givenAUser(t)
 
 	actualUser := &User{
@@ -62,6 +68,8 @@ func TestUserManager_Update(t *testing.T) {
 }
 
 func TestUserManager_Delete(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedUser := givenAUser(t)
 
 	err := m.User.Delete(expectedUser.GetID())
@@ -77,6 +85,8 @@ func TestUserManager_Delete(t *testing.T) {
 }
 
 func TestUserManager_List(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedUser := givenAUser(t)
 
 	// The List() endpoint is slow to pick up the newly created user,
@@ -91,6 +101,8 @@ func TestUserManager_List(t *testing.T) {
 }
 
 func TestUserManager_Search(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedUser := givenAUser(t)
 
 	userList, err := m.User.Search(Query(fmt.Sprintf("email:%q", expectedUser.GetEmail())))
@@ -100,6 +112,8 @@ func TestUserManager_Search(t *testing.T) {
 }
 
 func TestUserManager_ListByEmail(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedUser := givenAUser(t)
 
 	users, err := m.User.ListByEmail(expectedUser.GetEmail())
@@ -109,6 +123,8 @@ func TestUserManager_ListByEmail(t *testing.T) {
 }
 
 func TestUserManager_Roles(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	user := givenAUser(t)
 	role := givenARole(t)
 
@@ -129,6 +145,8 @@ func TestUserManager_Roles(t *testing.T) {
 }
 
 func TestUserManager_Permissions(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	user := givenAUser(t)
 	resourceServer := givenAResourceServer(t)
 	permissions := []*Permission{
@@ -156,6 +174,8 @@ func TestUserManager_Permissions(t *testing.T) {
 }
 
 func TestUserManager_Blocks(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	user := givenAUser(t)
 	blockedIPs, err := m.User.Blocks(user.GetID())
 	assert.NoError(t, err)
@@ -163,6 +183,8 @@ func TestUserManager_Blocks(t *testing.T) {
 }
 
 func TestUserManager_BlocksByIdentifier(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	user := givenAUser(t)
 	blockedIPs, err := m.User.BlocksByIdentifier(user.GetUsername())
 	assert.NoError(t, err)
@@ -170,18 +192,24 @@ func TestUserManager_BlocksByIdentifier(t *testing.T) {
 }
 
 func TestUserManager_Unblock(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	user := givenAUser(t)
 	err := m.User.Unblock(user.GetID())
 	assert.NoError(t, err)
 }
 
 func TestUserManager_UnblockByIdentifier(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	user := givenAUser(t)
 	err := m.User.UnblockByIdentifier(user.GetUsername())
 	assert.NoError(t, err)
 }
 
 func TestUserManager_Enrollments(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	user := givenAUser(t)
 	userEnrollments, err := m.User.Enrollments(user.GetID())
 	assert.NoError(t, err)
@@ -189,6 +217,8 @@ func TestUserManager_Enrollments(t *testing.T) {
 }
 
 func TestUserManager_RegenerateRecoveryCode(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	user := givenAUser(t)
 	recoveryCode, err := m.User.RegenerateRecoveryCode(user.GetID())
 	assert.NoError(t, err)
@@ -196,12 +226,16 @@ func TestUserManager_RegenerateRecoveryCode(t *testing.T) {
 }
 
 func TestUserManager_InvalidateRememberBrowser(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	user := givenAUser(t)
 	err := m.User.InvalidateRememberBrowser(user.GetID())
 	assert.NoError(t, err)
 }
 
 func TestUserManager_Link(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	mainUser := givenAUser(t)
 	secondaryUser := givenAUser(t)
 	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
@@ -222,6 +256,8 @@ func TestUserManager_Link(t *testing.T) {
 }
 
 func TestUserManager_Unlink(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	provider := "auth0"
 	mainUser := givenAUser(t)
 	secondaryUser := givenAUser(t)

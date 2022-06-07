@@ -9,6 +9,8 @@ import (
 )
 
 func TestTicketManager_VerifyEmail(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	user := givenAUser(t)
 	ticket := &Ticket{
 		ResultURL: auth0.String("https://example.com/verify-email"),
@@ -21,6 +23,8 @@ func TestTicketManager_VerifyEmail(t *testing.T) {
 }
 
 func TestTicketManager_ChangePassword(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	user := givenAUser(t)
 	ticket := &Ticket{
 		ResultURL:              auth0.String("https://example.com/change-password"),

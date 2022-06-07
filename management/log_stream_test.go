@@ -92,6 +92,8 @@ type logStreamTestCase struct {
 func TestLogStreamManager_Create(t *testing.T) {
 	for _, testCase := range logStreamTestCases {
 		t.Run("It can successfully create a "+testCase.name, func(t *testing.T) {
+			setupHTTPRecordings(t)
+
 			expectedLogStream := testCase.logStream
 
 			err := m.LogStream.Create(&expectedLogStream)
@@ -108,6 +110,8 @@ func TestLogStreamManager_Create(t *testing.T) {
 func TestLogStreamManager_Read(t *testing.T) {
 	for _, testCase := range logStreamTestCases {
 		t.Run("It can successfully read a "+testCase.name, func(t *testing.T) {
+			setupHTTPRecordings(t)
+
 			expectedLogStream := givenALogStream(t, testCase)
 
 			actualLogStream, err := m.LogStream.Read(expectedLogStream.GetID())
@@ -121,6 +125,8 @@ func TestLogStreamManager_Read(t *testing.T) {
 func TestLogStreamManager_Update(t *testing.T) {
 	for _, testCase := range logStreamTestCases {
 		t.Run("It can successfully update a "+testCase.name, func(t *testing.T) {
+			setupHTTPRecordings(t)
+
 			logStream := givenALogStream(t, testCase)
 			updatedLogStream := &LogStream{
 				Filters: []interface{}{
@@ -144,6 +150,8 @@ func TestLogStreamManager_Update(t *testing.T) {
 func TestLogStreamManager_Delete(t *testing.T) {
 	for _, testCase := range logStreamTestCases {
 		t.Run("It can successfully delete a "+testCase.name, func(t *testing.T) {
+			setupHTTPRecordings(t)
+
 			logStream := givenALogStream(t, testCase)
 
 			err := m.LogStream.Delete(logStream.GetID())
@@ -159,6 +167,8 @@ func TestLogStreamManager_Delete(t *testing.T) {
 }
 
 func TestLogStreamManager_List(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	// There are no params we can add here, unfortunately.
 	logStreamList, err := m.LogStream.List()
 	assert.NoError(t, err)

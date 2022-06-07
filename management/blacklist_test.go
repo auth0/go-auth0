@@ -7,6 +7,8 @@ import (
 )
 
 func TestBlacklist(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	client := givenAClient(t)
 
 	blackListToken := &BlacklistToken{

@@ -13,6 +13,8 @@ import (
 )
 
 func TestRuleManager_Create(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	rule := &Rule{
 		Name:    auth0.String("test-rule"),
 		Script:  auth0.String("function (user, context, callback) { callback(null, user, context); }"),
@@ -29,6 +31,8 @@ func TestRuleManager_Create(t *testing.T) {
 }
 
 func TestRuleManager_Read(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedRule := givenARule(t)
 
 	actualRule, err := m.Rule.Read(expectedRule.GetID())
@@ -38,6 +42,8 @@ func TestRuleManager_Read(t *testing.T) {
 }
 
 func TestRuleManager_Update(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	rule := givenARule(t)
 	updatedRule := &Rule{
 		Order:   auth0.Int(5),
@@ -54,6 +60,8 @@ func TestRuleManager_Update(t *testing.T) {
 }
 
 func TestRuleManager_Delete(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	rule := givenARule(t)
 
 	err := m.Rule.Delete(rule.GetID())
@@ -67,6 +75,8 @@ func TestRuleManager_Delete(t *testing.T) {
 }
 
 func TestRuleManager_List(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	rule := givenARule(t)
 
 	ruleList, err := m.Rule.List(IncludeFields("id"))

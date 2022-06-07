@@ -3,6 +3,7 @@ package management
 import (
 	"context"
 	"errors"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -13,26 +14,31 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var m *Management
-
 var (
-	domain       = os.Getenv("AUTH0_DOMAIN")
-	clientID     = os.Getenv("AUTH0_CLIENT_ID")
-	clientSecret = os.Getenv("AUTH0_CLIENT_SECRET")
-	debug        = os.Getenv("AUTH0_DEBUG")
+	domain                = os.Getenv("AUTH0_DOMAIN")
+	clientID              = os.Getenv("AUTH0_CLIENT_ID")
+	clientSecret          = os.Getenv("AUTH0_CLIENT_SECRET")
+	debug                 = os.Getenv("AUTH0_DEBUG")
+	httpRecordings        = os.Getenv("AUTH0_HTTP_RECORDINGS")
+	httpRecordingsEnabled = false
+	m                     = &Management{}
 )
 
 func init() {
+	httpRecordingsEnabled = httpRecordings == "true" || httpRecordings == "1" || httpRecordings == "on"
 	initTestManagement()
 }
 
 func initTestManagement() {
 	var err error
-	m, err = New(domain,
+
+	m, err = New(
+		domain,
 		WithClientCredentials(clientID, clientSecret),
-		WithDebug(debug == "true" || debug == "1" || debug == "on"))
+		WithDebug(debug == "true" || debug == "1" || debug == "on"),
+	)
 	if err != nil {
-		panic(err)
+		log.Fatal("failed to initialize the api client")
 	}
 }
 

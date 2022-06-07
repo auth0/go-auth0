@@ -10,6 +10,8 @@ import (
 )
 
 func TestPrompt(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	t.Cleanup(func() {
 		err := m.Prompt.Update(&Prompt{
 			UniversalLoginExperience: "classic",
@@ -46,6 +48,8 @@ func TestPrompt(t *testing.T) {
 }
 
 func TestPromptCustomText(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	const prompt = "login"
 	const lang = "en"
 

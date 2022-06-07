@@ -8,6 +8,8 @@ import (
 )
 
 func TestClientGrantManager_Create(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	client := givenAClient(t)
 	resourceServer := givenAResourceServer(t)
 	expectedClientGrant := &ClientGrant{
@@ -26,6 +28,8 @@ func TestClientGrantManager_Create(t *testing.T) {
 }
 
 func TestClientGrantManager_Read(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedClientGrant := givenAClientGrant(t)
 
 	actualClientGrant, err := m.ClientGrant.Read(expectedClientGrant.GetID())
@@ -37,6 +41,8 @@ func TestClientGrantManager_Read(t *testing.T) {
 }
 
 func TestClientGrantManager_Update(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedClientGrant := givenAClientGrant(t)
 
 	clientGrantID := expectedClientGrant.GetID()
@@ -53,6 +59,8 @@ func TestClientGrantManager_Update(t *testing.T) {
 }
 
 func TestClientGrantManager_Delete(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedClientGrant := givenAClientGrant(t)
 
 	err := m.ClientGrant.Delete(expectedClientGrant.GetID())
@@ -64,6 +72,8 @@ func TestClientGrantManager_Delete(t *testing.T) {
 }
 
 func TestClientGrantManager_List(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expectedClientGrant := givenAClientGrant(t)
 
 	clientGrantList, err := m.ClientGrant.List(

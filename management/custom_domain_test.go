@@ -11,6 +11,8 @@ import (
 )
 
 func TestCustomDomainManager_Create(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expected := &CustomDomain{
 		Domain:    auth0.Stringf("%d.auth.uat.auth0.com", time.Now().UTC().Unix()),
 		Type:      auth0.String("auth0_managed_certs"),
@@ -27,6 +29,8 @@ func TestCustomDomainManager_Create(t *testing.T) {
 }
 
 func TestCustomDomainManager_Read(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	expected := givenACustomDomain(t)
 
 	actual, err := m.CustomDomain.Read(expected.GetID())
@@ -36,6 +40,8 @@ func TestCustomDomainManager_Read(t *testing.T) {
 }
 
 func TestCustomDomainManager_Update(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	customDomain := givenACustomDomain(t)
 
 	err := m.CustomDomain.Update(customDomain.GetID(), &CustomDomain{TLSPolicy: auth0.String("recommended")})
@@ -48,6 +54,8 @@ func TestCustomDomainManager_Update(t *testing.T) {
 }
 
 func TestCustomDomainManager_Delete(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	customDomain := givenACustomDomain(t)
 
 	err := m.CustomDomain.Delete(customDomain.GetID())
@@ -61,6 +69,8 @@ func TestCustomDomainManager_Delete(t *testing.T) {
 }
 
 func TestCustomDomainManager_List(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	customDomain := givenACustomDomain(t)
 
 	customDomainList, err := m.CustomDomain.List()
@@ -71,6 +81,8 @@ func TestCustomDomainManager_List(t *testing.T) {
 }
 
 func TestCustomDomainManager_Verify(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	customDomain := givenACustomDomain(t)
 
 	actualDomain, err := m.CustomDomain.Verify(customDomain.GetID())

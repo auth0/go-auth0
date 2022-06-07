@@ -29,6 +29,7 @@ func ExampleNew() {
 	api, err := management.New(domain, management.WithClientCredentials(id, secret))
 	if err != nil {
 		// handle err
+		return
 	}
 	_, _ = api.Stat.ActiveUsers()
 }
@@ -42,6 +43,7 @@ func ExampleClientManager_Create() {
 	err := api.Client.Create(c)
 	if err != nil {
 		// handle err
+		return
 	}
 	defer api.Client.Delete(c.GetClientID())
 
@@ -53,6 +55,7 @@ func ExampleResourceServerManager_List() {
 	l, err := api.ResourceServer.List()
 	if err != nil {
 		// handle err
+		return
 	}
 	_ = l.ResourceServers
 }
@@ -68,6 +71,7 @@ func ExampleUserManager_Create() {
 	err := api.User.Create(u)
 	if err != nil {
 		// handle err
+		return
 	}
 	defer api.User.Delete(u.GetID())
 
@@ -83,6 +87,7 @@ func ExampleRoleManager_Create() {
 	err := api.Role.Create(r)
 	if err != nil {
 		// handle err
+		return
 	}
 	defer api.Role.Delete(r.GetID())
 }
@@ -96,6 +101,7 @@ func ExampleUserManager_AssignRoles() {
 	err := api.User.AssignRoles(user.GetID(), []*management.Role{admin})
 	if err != nil {
 		// handle err
+		return
 	}
 	defer api.User.RemoveRoles(user.GetID(), []*management.Role{admin})
 }
@@ -105,6 +111,7 @@ func ExampleUserManager_List() {
 	l, err := api.User.List(q)
 	if err != nil {
 		// handle err
+		return
 	}
 	_ = l.Users // users matching name "jane smith"
 }
@@ -117,6 +124,7 @@ func ExampleUserManager_List_pagination() {
 			management.Page(page))
 		if err != nil {
 			// handle err
+			return
 		}
 		for _, u := range l.Users {
 			u.GetID() // do something with each user
@@ -134,6 +142,7 @@ func ExampleConnectionManager_List() {
 	)
 	if err != nil {
 		// handle err
+		return
 	}
 	for _, connection := range connectionList.Connections {
 		fmt.Println(connection.GetName())
@@ -143,9 +152,6 @@ func ExampleConnectionManager_List() {
 			fmt.Printf("\tMulti-Factor Auth Enabled: %t\n", options.MFA["active"])
 		}
 	}
-	// Output: Username-Password-Authentication
-	// 	Password Policy: good
-	// 	Multi-Factor Auth Enabled: true
 }
 
 func ExampleConnectionManager_Create() {
@@ -170,5 +176,6 @@ func ExampleConnectionManager_Create() {
 	err := api.Connection.Create(connection)
 	if err != nil {
 		// handle err
+		return
 	}
 }

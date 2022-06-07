@@ -14,6 +14,8 @@ import (
 )
 
 func TestOrganizationManager_Create(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := &Organization{
 		Name:        auth0.String(fmt.Sprintf("test-organization%v", rand.Intn(999))),
 		DisplayName: auth0.String("Test Organization"),
@@ -32,6 +34,8 @@ func TestOrganizationManager_Create(t *testing.T) {
 }
 
 func TestOrganizationManager_Read(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 
 	actualOrg, err := m.Organization.Read(org.GetID())
@@ -41,6 +45,8 @@ func TestOrganizationManager_Read(t *testing.T) {
 }
 
 func TestOrganizationManager_ReadByName(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 
 	actualOrg, err := m.Organization.ReadByName(org.GetName())
@@ -50,6 +56,8 @@ func TestOrganizationManager_ReadByName(t *testing.T) {
 }
 
 func TestOrganizationManager_Update(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 
 	err := m.Organization.Update(org.GetID(), &Organization{Name: auth0.String("new-org-name")})
@@ -61,6 +69,8 @@ func TestOrganizationManager_Update(t *testing.T) {
 }
 
 func TestOrganizationManager_Delete(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 
 	err := m.Organization.Delete(org.GetID())
@@ -74,6 +84,8 @@ func TestOrganizationManager_Delete(t *testing.T) {
 }
 
 func TestOrganizationManager_List(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	givenAnOrganization(t)
 
 	orgList, err := m.Organization.List()
@@ -82,6 +94,8 @@ func TestOrganizationManager_List(t *testing.T) {
 }
 
 func TestOrganizationManager_AddConnection(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	client := givenAClient(t)
 	conn := givenAConnection(t, connectionTestCase{connection: Connection{
@@ -104,6 +118,8 @@ func TestOrganizationManager_AddConnection(t *testing.T) {
 }
 
 func TestOrganizationManager_Connection(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	orgConn := givenAnOrganizationConnection(t, org.GetID())
 
@@ -113,6 +129,8 @@ func TestOrganizationManager_Connection(t *testing.T) {
 }
 
 func TestOrganizationManager_UpdateConnection(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	orgConn := givenAnOrganizationConnection(t, org.GetID())
 
@@ -131,6 +149,8 @@ func TestOrganizationManager_UpdateConnection(t *testing.T) {
 }
 
 func TestOrganizationManager_DeleteConnection(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	orgConn := givenAnOrganizationConnection(t, org.GetID())
 
@@ -145,6 +165,8 @@ func TestOrganizationManager_DeleteConnection(t *testing.T) {
 }
 
 func TestOrganizationManager_Connections(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	orgConn := givenAnOrganizationConnection(t, org.GetID())
 
@@ -155,6 +177,8 @@ func TestOrganizationManager_Connections(t *testing.T) {
 }
 
 func TestOrganizationManager_CreateInvitation(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	client := givenAClient(t)
 	orgInvite := &OrganizationInvitation{
@@ -173,6 +197,8 @@ func TestOrganizationManager_CreateInvitation(t *testing.T) {
 }
 
 func TestOrganizationManager_Invitation(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	orgInvite := givenAnOrganizationInvitation(t, org.GetID())
 
@@ -182,6 +208,8 @@ func TestOrganizationManager_Invitation(t *testing.T) {
 }
 
 func TestOrganizationManager_DeleteInvitation(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	orgInvite := givenAnOrganizationInvitation(t, org.GetID())
 
@@ -196,6 +224,8 @@ func TestOrganizationManager_DeleteInvitation(t *testing.T) {
 }
 
 func TestOrganizationManager_Invitations(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	orgInvite := givenAnOrganizationInvitation(t, org.GetID())
 
@@ -206,6 +236,8 @@ func TestOrganizationManager_Invitations(t *testing.T) {
 }
 
 func TestOrganizationManager_AddMembers(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	user := givenAUser(t)
 
@@ -214,6 +246,8 @@ func TestOrganizationManager_AddMembers(t *testing.T) {
 }
 
 func TestOrganizationManager_DeleteMembers(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	user := givenAUser(t)
 
@@ -229,6 +263,8 @@ func TestOrganizationManager_DeleteMembers(t *testing.T) {
 }
 
 func TestOrganizationManager_Members(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	user := givenAUser(t)
 
@@ -242,6 +278,8 @@ func TestOrganizationManager_Members(t *testing.T) {
 }
 
 func TestOrganizationManager_MemberRoles(t *testing.T) {
+	setupHTTPRecordings(t)
+
 	org := givenAnOrganization(t)
 	user := givenAUser(t)
 	role := givenARole(t)

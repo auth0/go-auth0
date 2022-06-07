@@ -10,12 +10,16 @@ import (
 
 func TestAttackProtection(t *testing.T) {
 	t.Run("Get breached password detection settings", func(t *testing.T) {
+		setupHTTPRecordings(t)
+
 		breachedPasswordDetection, err := m.AttackProtection.GetBreachedPasswordDetection()
 		assert.NoError(t, err)
 		assert.IsType(t, &BreachedPasswordDetection{}, breachedPasswordDetection)
 	})
 
 	t.Run("Update breached password detection settings", func(t *testing.T) {
+		setupHTTPRecordings(t)
+
 		// Save initial settings.
 		preTestBPDSettings, err := m.AttackProtection.GetBreachedPasswordDetection()
 		assert.NoError(t, err)
@@ -39,12 +43,16 @@ func TestAttackProtection(t *testing.T) {
 	})
 
 	t.Run("Get the brute force configuration", func(t *testing.T) {
+		setupHTTPRecordings(t)
+
 		bruteForceProtection, err := m.AttackProtection.GetBruteForceProtection()
 		assert.NoError(t, err)
 		assert.IsType(t, &BruteForceProtection{}, bruteForceProtection)
 	})
 
 	t.Run("Update the brute force configuration", func(t *testing.T) {
+		setupHTTPRecordings(t)
+
 		// Save initial settings.
 		preTestBFPSettings, err := m.AttackProtection.GetBruteForceProtection()
 		assert.NoError(t, err)
@@ -68,12 +76,16 @@ func TestAttackProtection(t *testing.T) {
 	})
 
 	t.Run("Get the suspicious IP throttling configuration", func(t *testing.T) {
+		setupHTTPRecordings(t)
+
 		suspiciousIPThrottling, err := m.AttackProtection.GetSuspiciousIPThrottling()
 		assert.NoError(t, err)
 		assert.IsType(t, &SuspiciousIPThrottling{}, suspiciousIPThrottling)
 	})
 
 	t.Run("Update the suspicious IP throttling configuration", func(t *testing.T) {
+		setupHTTPRecordings(t)
+
 		// Save initial settings.
 		preTestSIPSettings, err := m.AttackProtection.GetSuspiciousIPThrottling()
 		assert.NoError(t, err)
