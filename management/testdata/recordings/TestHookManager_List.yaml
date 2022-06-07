@@ -1,0 +1,64 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"test-hook735","script":"function (user, context, callback) { callback(null, { user }); }","triggerId":"pre-user-registration","enabled":false}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/hooks
+    method: POST
+  response:
+    body: '{"id":"01G4WJJWDFH9D51DYXCT60RN77","name":"test-hook-735","script":"function
+      (user, context, callback) { callback(null, { user }); }","dependencies":{},"triggerId":"pre-user-registration","enabled":false}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/hooks?fields=id&include_fields=true&include_totals=true&per_page=50
+    method: GET
+  response:
+    body: '{"total":1,"start":0,"limit":50,"hooks":[{"id":"01G4WJJWDFH9D51DYXCT60RN77"}]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Link:
+      - <http://go-auth0-dev.eu.auth0.com/api/v2/hooks?fields=id&include_fields=true&include_totals=true&per_page=50&page=0>;
+        rel="first", <http://go-auth0-dev.eu.auth0.com/api/v2/hooks?fields=id&include_fields=true&include_totals=true&per_page=50&page=0>;
+        rel="last"
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/hooks/01G4WJJWDFH9D51DYXCT60RN77
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

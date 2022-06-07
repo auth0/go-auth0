@@ -1,0 +1,41 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"testing-hook-creation","script":"function (user, context, callback) { callback(null, { user }); }","triggerId":"pre-user-registration","enabled":false}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/hooks
+    method: POST
+  response:
+    body: '{"id":"01G4WJJMS13WB9E7T7TW35ZJDN","name":"testing-hook-creation","script":"function
+      (user, context, callback) { callback(null, { user }); }","dependencies":{},"triggerId":"pre-user-registration","enabled":false}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/hooks/01G4WJJMS13WB9E7T7TW35ZJDN
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

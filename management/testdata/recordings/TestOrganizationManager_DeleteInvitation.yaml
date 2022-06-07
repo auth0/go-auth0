@@ -1,0 +1,136 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"test-organization298","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations
+    method: POST
+  response:
+    body: '{"name":"test-organization298","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"},"id":"org_IeBSsMmDZhJGN4Rw"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      {"name":"Test Client (Jun  6 15:22:54.702)","description":"This is just a test client.","organization_usage":"allow"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/clients
+    method: POST
+  response:
+    body: '{"name":"Test Client (Jun  6 15:22:54.702)","description":"This is just
+      a test client.","client_id":"10BQj4JIuDSjdwyHIbHJyj0kAjmLyxOj","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"sso_disabled":false,"cross_origin_auth":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"organization_usage":"allow"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      {"inviter":{"name":"Test Inviter"},"invitee":{"email":"test@example.com"},"client_id":"10BQj4JIuDSjdwyHIbHJyj0kAjmLyxOj"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_IeBSsMmDZhJGN4Rw/invitations
+    method: POST
+  response:
+    body: '{"id":"uinv_MHItFQggxgzV1yCY","client_id":"10BQj4JIuDSjdwyHIbHJyj0kAjmLyxOj","inviter":{"name":"Test
+      Inviter"},"invitee":{"email":"test@example.com"},"invitation_url":"https://example.com/login?invitation=J2dsUugMoUMveoSd0cUVZhdTby4CaWv5&organization=org_IeBSsMmDZhJGN4Rw&organization_name=test-organization298","ticket_id":"J2dsUugMoUMveoSd0cUVZhdTby4CaWv5","created_at":"2022-06-06T13:22:55.965Z","expires_at":"2022-06-13T13:22:55.965Z","organization_id":"org_IeBSsMmDZhJGN4Rw"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_IeBSsMmDZhJGN4Rw/invitations/uinv_MHItFQggxgzV1yCY
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_IeBSsMmDZhJGN4Rw/invitations/uinv_MHItFQggxgzV1yCY
+    method: GET
+  response:
+    body: '{"statusCode":404,"error":"Not Found","message":"The invitation does not
+      exist.","errorCode":"inexistent_invitation"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 404 Not Found
+    code: 404
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/10BQj4JIuDSjdwyHIbHJyj0kAjmLyxOj
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_IeBSsMmDZhJGN4Rw
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

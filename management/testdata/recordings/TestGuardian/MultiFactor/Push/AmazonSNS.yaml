@@ -1,0 +1,79 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/factors/push-notification/providers/sns
+    method: GET
+  response:
+    body: '{"aws_access_key_id":"test","aws_region":"us-west-1","sns_apns_platform_application_arn":"test_arn","sns_gcm_platform_application_arn":"test_arn"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      {"aws_access_key_id":"test","aws_secret_access_key":"test_secret","aws_region":"us-west-1","sns_apns_platform_application_arn":"test_arn","sns_gcm_platform_application_arn":"test_arn"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/factors/push-notification/providers/sns
+    method: PUT
+  response:
+    body: '{"aws_access_key_id":"test","aws_secret_access_key":"test_secret","aws_region":"us-west-1","sns_apns_platform_application_arn":"test_arn","sns_gcm_platform_application_arn":"test_arn"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/factors/push-notification/providers/sns
+    method: GET
+  response:
+    body: '{"aws_access_key_id":"test","aws_region":"us-west-1","sns_apns_platform_application_arn":"test_arn","sns_gcm_platform_application_arn":"test_arn"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      {"aws_access_key_id":"test","aws_region":"us-west-1","sns_apns_platform_application_arn":"test_arn","sns_gcm_platform_application_arn":"test_arn"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/factors/push-notification/providers/sns
+    method: PUT
+  response:
+    body: '{"aws_access_key_id":"test","aws_region":"us-west-1","sns_apns_platform_application_arn":"test_arn","sns_gcm_platform_application_arn":"test_arn"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms

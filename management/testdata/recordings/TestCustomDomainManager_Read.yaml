@@ -1,0 +1,59 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"domain":"1654521274.auth.uat.auth0.com","type":"auth0_managed_certs","tls_policy":"recommended"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains
+    method: POST
+  response:
+    body: '{"custom_domain_id":"cd_juL5iX0RcHvIQ4rJ","domain":"1654521274.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"cname","record":"go-auth0-dev-cd-jul5ix0rchviq4rj.edge.tenants.eu.auth0.com"}]},"tls_policy":"recommended"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_juL5iX0RcHvIQ4rJ
+    method: GET
+  response:
+    body: '{"custom_domain_id":"cd_juL5iX0RcHvIQ4rJ","domain":"1654521274.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"cname","record":"go-auth0-dev-cd-jul5ix0rchviq4rj.edge.tenants.eu.auth0.com"}]},"tls_policy":"recommended"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_juL5iX0RcHvIQ4rJ
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

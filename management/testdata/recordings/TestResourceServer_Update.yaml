@@ -1,0 +1,61 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test Resource Server (Jun  6 15:23:45.452)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create Resource"}],"signing_alg":"HS256","token_lifetime":7200,"token_lifetime_for_web":3600}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers
+    method: POST
+  response:
+    body: '{"id":"629dffe140e70e004513f4a0","name":"Test Resource Server (Jun  6 15:23:45.452)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create
+      Resource"}],"signing_alg":"HS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      {"name":"Test Resource Server (Jun  6 15:23:45.452)","scopes":[{"value":"create:resource","description":"Create Resource"},{"value":"update:resource","description":"Update Resource"}],"signing_alg":"RS256","allow_offline_access":true,"token_lifetime":7200,"token_lifetime_for_web":5400,"skip_consent_for_verifiable_first_party_clients":true}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/629dffe140e70e004513f4a0
+    method: PATCH
+  response:
+    body: '{"id":"629dffe140e70e004513f4a0","name":"Test Resource Server (Jun  6 15:23:45.452)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create
+      Resource"},{"value":"update:resource","description":"Update Resource"}],"signing_alg":"RS256","allow_offline_access":true,"token_lifetime":7200,"token_lifetime_for_web":5400,"skip_consent_for_verifiable_first_party_clients":true}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/629dffe140e70e004513f4a0
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

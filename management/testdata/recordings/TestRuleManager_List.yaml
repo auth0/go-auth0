@@ -1,0 +1,64 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"test-rule983","script":"function (user, context, callback) { callback(null, user, context); }","enabled":false}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/rules
+    method: POST
+  response:
+    body: '{"id":"rul_muJSs6CvX1f8ThGY","enabled":false,"script":"function (user,
+      context, callback) { callback(null, user, context); }","name":"test-rule983","order":1,"stage":"login_success"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/rules?fields=id&include_fields=true&include_totals=true&per_page=50
+    method: GET
+  response:
+    body: '{"total":1,"start":0,"limit":50,"rules":[{"id":"rul_muJSs6CvX1f8ThGY"}]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Link:
+      - <http://go-auth0-dev.eu.auth0.com/api/v2/rules?fields=id&include_fields=true&include_totals=true&per_page=50&page=0>;
+        rel="first", <http://go-auth0-dev.eu.auth0.com/api/v2/rules?fields=id&include_fields=true&include_totals=true&per_page=50&page=0>;
+        rel="last"
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/rules/rul_muJSs6CvX1f8ThGY
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

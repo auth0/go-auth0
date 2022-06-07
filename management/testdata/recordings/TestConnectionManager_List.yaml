@@ -1,0 +1,63 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test-Auth0-Connection-List-1654521255","strategy":"auth0"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+    method: POST
+  response:
+    body: '{"id":"con_tDxKdn9xeb6wxXz4","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","strategy_version":2,"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-List-1654521255","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-List-1654521255"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?fields=id&include_fields=true&include_totals=true&per_page=50
+    method: GET
+  response:
+    body: '{"total":12,"start":0,"limit":50,"connections":[{"id":"con_47S3hqmuxbaOvPiB","is_domain_connection":false},{"id":"con_OX3PbtQiHlGEFyjC","is_domain_connection":false},{"id":"con_AyuS1yvUEQjoFaoX","is_domain_connection":false},{"id":"con_dCiFKDYobv6oVGQF","is_domain_connection":false},{"id":"con_hBXmNx0r8mk0c0Og","is_domain_connection":false},{"id":"con_tyabcVDxPE9A9WdV","is_domain_connection":false},{"id":"con_FbvcVxG10N710jM9","is_domain_connection":false},{"id":"con_tDxKdn9xeb6wxXz4","is_domain_connection":false},{"id":"con_9FaBMQVJU3c8aQ8n","is_domain_connection":false},{"id":"con_AzIgXHjM0nhnYDzB","is_domain_connection":false},{"id":"con_HUU5VfCoOxJC6Jek","is_domain_connection":false},{"id":"con_ftSSLHb0O7rcUGmF","is_domain_connection":false}]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Link:
+      - <http://go-auth0-dev.eu.auth0.com/api/v2/connections?fields=id&include_fields=true&include_totals=true&per_page=50&page=0>;
+        rel="first", <http://go-auth0-dev.eu.auth0.com/api/v2/connections?fields=id&include_fields=true&include_totals=true&per_page=50&page=0>;
+        rel="last"
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_tDxKdn9xeb6wxXz4
+    method: DELETE
+  response:
+    body: '{"deleted_at":"2022-06-06T13:14:16.801Z"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 202 Accepted
+    code: 202
+    duration: 1ms

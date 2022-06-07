@@ -1,0 +1,59 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"connection":"Username-Password-Authentication","email":"chuck878@example.com","given_name":"Chuck","family_name":"Sanchez","username":"test-user636","nickname":"Chucky","password":"Passwords hide their chuck","user_metadata":{"favourite_attack":"roundhouse_kick"},"verify_email":false,"app_metadata":{"facts":["count_to_infinity_twice","kill_two_stones_with_one_bird","can_hear_sign_language"]},"picture":"https://example-picture-url.jpg","blocked":false,"email_verified":true}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/users
+    method: POST
+  response:
+    body: '{"blocked":false,"created_at":"2022-06-06T13:16:56.001Z","email":"chuck878@example.com","email_verified":true,"family_name":"Sanchez","given_name":"Chuck","identities":[{"connection":"Username-Password-Authentication","user_id":"629dfe470b9b190069207694","provider":"auth0","isSocial":false}],"name":"chuck878@example.com","nickname":"Chucky","picture":"https://example-picture-url.jpg","updated_at":"2022-06-06T13:16:56.001Z","user_id":"auth0|629dfe470b9b190069207694","user_metadata":{"favourite_attack":"roundhouse_kick"},"username":"test-user636","app_metadata":{"facts":["count_to_infinity_twice","kill_two_stones_with_one_bird","can_hear_sign_language"]}}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      {"user_id":"auth0|629dfe470b9b190069207694"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/enrollments/ticket
+    method: POST
+  response:
+    body: '{"ticket_id":"ngnQ9cme6tuqHWMv058Bnn1ui3AEvqfK","ticket_url":"https://go-auth0-dev.guardian.eu.auth0.com/enrollment?ticket_id=ngnQ9cme6tuqHWMv058Bnn1ui3AEvqfK"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/users/auth0%7C629dfe470b9b190069207694
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

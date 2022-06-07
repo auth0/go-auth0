@@ -1,0 +1,40 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test-OIDC-Connection-1654521050","strategy":"oidc","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":null,"authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","type":null,"userinfo_endpoint":null,"token_endpoint":null,"scope":"openid"}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+    method: POST
+  response:
+    body: '{"id":"con_Zow9C9rJ9ym9T3y7","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":null,"authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","type":"front_channel","userinfo_endpoint":null,"token_endpoint":null,"scope":"openid"},"strategy":"oidc","name":"Test-OIDC-Connection-1654521050","is_domain_connection":false,"show_as_button":false,"display_name":"Test-OIDC-Connection-1654521050","enabled_clients":[],"realms":["Test-OIDC-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Zow9C9rJ9ym9T3y7
+    method: DELETE
+  response:
+    body: '{"deleted_at":"2022-06-06T13:12:39.345Z"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 202 Accepted
+    code: 202
+    duration: 1ms

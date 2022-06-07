@@ -1,0 +1,81 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/factors/sms/templates
+    method: GET
+  response:
+    body: '{"enrollment_message":"","verification_message":""}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      {"enrollment_message":"Test {{code}} for {{tenant.friendly_name}}","verification_message":"Test {{code}} for {{tenant.friendly_name}}"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/factors/sms/templates
+    method: PUT
+  response:
+    body: '{"enrollment_message":"Test {{code}} for {{tenant.friendly_name}}","verification_message":"Test
+      {{code}} for {{tenant.friendly_name}}"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/factors/sms/templates
+    method: GET
+  response:
+    body: '{"enrollment_message":"Test {{code}} for {{tenant.friendly_name}}","verification_message":"Test
+      {{code}} for {{tenant.friendly_name}}"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      {"enrollment_message":"","verification_message":""}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/factors/sms/templates
+    method: PUT
+  response:
+    body: '{"enrollment_message":"","verification_message":""}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
