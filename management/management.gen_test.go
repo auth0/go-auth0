@@ -6507,6 +6507,16 @@ func TestPrompt_GetIdentifierFirst(tt *testing.T) {
 	p.GetIdentifierFirst()
 }
 
+func TestPrompt_GetWebAuthnPlatformFirstFactor(tt *testing.T) {
+	var zeroValue bool
+	p := &Prompt{WebAuthnPlatformFirstFactor: &zeroValue}
+	p.GetWebAuthnPlatformFirstFactor()
+	p = &Prompt{}
+	p.GetWebAuthnPlatformFirstFactor()
+	p = nil
+	p.GetWebAuthnPlatformFirstFactor()
+}
+
 func TestPrompt_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &Prompt{}

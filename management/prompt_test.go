@@ -14,36 +14,41 @@ func TestPrompt(t *testing.T) {
 
 	t.Cleanup(func() {
 		err := m.Prompt.Update(&Prompt{
-			UniversalLoginExperience: "classic",
-			IdentifierFirst:          auth0.Bool(false),
+			UniversalLoginExperience:    "classic",
+			IdentifierFirst:             auth0.Bool(false),
+			WebAuthnPlatformFirstFactor: auth0.Bool(false),
 		})
 		require.NoError(t, err)
 	})
 
-	t.Run("Update to the new identifier first experience", func(t *testing.T) {
+	t.Run("Update to the new identifier first experience with biometrics", func(t *testing.T) {
 		err := m.Prompt.Update(&Prompt{
-			UniversalLoginExperience: "new",
-			IdentifierFirst:          auth0.Bool(true),
+			UniversalLoginExperience:    "new",
+			IdentifierFirst:             auth0.Bool(true),
+			WebAuthnPlatformFirstFactor: auth0.Bool(true),
 		})
 		assert.NoError(t, err)
 
 		ps, err := m.Prompt.Read()
 		assert.NoError(t, err)
 		assert.Equal(t, "new", ps.UniversalLoginExperience)
-		assert.Equal(t, true, ps.GetIdentifierFirst())
+		assert.True(t, ps.GetIdentifierFirst())
+		assert.True(t, ps.GetWebAuthnPlatformFirstFactor())
 	})
 
-	t.Run("Update to the classic non identifier first experience", func(t *testing.T) {
+	t.Run("Update to the classic non identifier first experience without biometrics", func(t *testing.T) {
 		err := m.Prompt.Update(&Prompt{
-			UniversalLoginExperience: "classic",
-			IdentifierFirst:          auth0.Bool(false),
+			UniversalLoginExperience:    "classic",
+			IdentifierFirst:             auth0.Bool(false),
+			WebAuthnPlatformFirstFactor: auth0.Bool(false),
 		})
 		assert.NoError(t, err)
 
 		ps, err := m.Prompt.Read()
 		assert.NoError(t, err)
 		assert.Equal(t, "classic", ps.UniversalLoginExperience)
-		assert.Equal(t, false, ps.GetIdentifierFirst())
+		assert.False(t, ps.GetIdentifierFirst())
+		assert.False(t, ps.GetWebAuthnPlatformFirstFactor())
 	})
 }
 
