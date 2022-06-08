@@ -1,5 +1,22 @@
 # Change Log
 
+<a name="v0.6.4"></a>
+## [v0.6.4](https://github.com/auth0/go-auth0/tree/v0.6.4) (2022-06-08)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.3...v0.6.4)
+
+### Added
+
+- Added support for webauthn_platform_first_factor_prompt flag in the prompt ([#59](https://github.com/auth0/go-auth0/pull/59))
+
+### Changed
+
+- Bumped Go version to 1.18 ([#71](https://github.com/auth0/go-auth0/pull/71))
+- Ensured that all the tests can be run in any order 
+- Ensured that all the tests clean up the test tenant afterwards of any created resources
+- Enabled http recordings with go-vcr to be used within tests for more reliable testing
+
+
 <a name="v0.6.3"></a>
 ## [v0.6.3](https://github.com/auth0/go-auth0/tree/v0.6.3) (2022-04-13)
 
