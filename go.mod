@@ -6,7 +6,7 @@ require (
 	github.com/PuerkitoBio/rehttp v1.1.0
 	github.com/dnaeon/go-vcr/v2 v2.0.1
 	github.com/joho/godotenv v1.4.0
-	github.com/stretchr/testify v1.7.2
+	github.com/stretchr/testify v1.7.4
 	golang.org/x/oauth2 v0.0.0-20220411215720-9780585627b5
 )
 
