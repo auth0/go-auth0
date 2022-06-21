@@ -3485,6 +3485,16 @@ func TestConnectionOptionsOAuth2_GetClientSecret(tt *testing.T) {
 	c.GetClientSecret()
 }
 
+func TestConnectionOptionsOAuth2_GetLogoURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth2{LogoURL: &zeroValue}
+	c.GetLogoURL()
+	c = &ConnectionOptionsOAuth2{}
+	c.GetLogoURL()
+	c = nil
+	c.GetLogoURL()
+}
+
 func TestConnectionOptionsOAuth2_GetNonPersistentAttrs(tt *testing.T) {
 	var zeroValue []string
 	c := &ConnectionOptionsOAuth2{NonPersistentAttrs: &zeroValue}

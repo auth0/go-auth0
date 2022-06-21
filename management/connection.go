@@ -642,6 +642,7 @@ type ConnectionOptionsOAuth2 struct {
 	Scope              *string   `json:"scope,omitempty"`
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
+	LogoURL            *string   `json:"icon_url,omitempty"`
 	// Scripts for the connection
 	// Allowed keys are: "fetchUserProfile"
 	Scripts map[string]interface{} `json:"scripts,omitempty"`

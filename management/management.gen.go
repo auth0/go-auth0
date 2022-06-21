@@ -2755,6 +2755,14 @@ func (c *ConnectionOptionsOAuth2) GetClientSecret() string {
 	return *c.ClientSecret
 }
 
+// GetLogoURL returns the LogoURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth2) GetLogoURL() string {
+	if c == nil || c.LogoURL == nil {
+		return ""
+	}
+	return *c.LogoURL
+}
+
 // GetNonPersistentAttrs returns the NonPersistentAttrs field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOAuth2) GetNonPersistentAttrs() []string {
 	if c == nil || c.NonPersistentAttrs == nil {
