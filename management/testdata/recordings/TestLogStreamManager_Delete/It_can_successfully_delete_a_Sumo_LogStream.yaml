@@ -1,0 +1,78 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test-LogStream-1654521050","type":"sumo","sink":{"sumoSourceAddress":"https://example.com"}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
+    method: POST
+  response:
+    body: '{"id":"lst_0000000000009099","name":"Test-LogStream-1654521050","type":"sumo","status":"active","sink":{"sumoSourceAddress":"https://example.com"}}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000009099
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000009099
+    method: GET
+  response:
+    body: '{"statusCode":404,"error":"Not Found","message":"The log stream does not
+      exist."}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 404 Not Found
+    code: 404
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000009099
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

@@ -373,7 +373,7 @@ type MultiFactorWebAuthnPlatform struct{ *Management }
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_factors_by_name
 func (m *MultiFactorWebAuthnPlatform) Enable(enabled bool, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "webauthn-roaming"), &MultiFactor{
+	return m.Request("PUT", m.URI("guardian", "factors", "webauthn-platform"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
 }

@@ -1,0 +1,82 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/logs?page=1&per_page=5
+    method: GET
+  response:
+    body: '[{"date":"2022-06-06T13:20:01.819Z","type":"sapi","description":"Create
+      a log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"181.214.173.154","user_agent":"Other
+      0.0.0 / Other 0.0.0","details":{"request":{"method":"post","path":"/api/v2/log-streams","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{"name":"Test-LogStream-1654521050","type":"datadog"},"channel":"api","ip":"181.214.173.154","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":200,"body":{"id":"lst_0000000000009097","name":"Test-LogStream-1654521050","type":"datadog"}}},"log_id":"90020220606132002994615742735386525187832188966962987090","_id":"90020220606132002994615742735386525187832188966962987090","isMobile":false},{"date":"2022-06-06T13:19:59.609Z","type":"sapi","description":"Delete
+      log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"181.214.173.154","user_agent":"Other
+      0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000009095","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"181.214.173.154","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020220606132002441455825195866523187759153376613367906","_id":"90020220606132002441455825195866523187759153376613367906","isMobile":false},{"date":"2022-06-06T13:20:00.030Z","type":"sapi","description":"Create
+      a log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"181.214.173.154","user_agent":"Other
+      0.0.0 / Other 0.0.0","details":{"request":{"method":"post","path":"/api/v2/log-streams","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{"name":"Test-LogStream-1654521050","type":"http","sink":{"httpContentFormat":"JSONLINES","httpContentType":"application/json"}},"channel":"api","ip":"181.214.173.154","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":200,"body":{"id":"lst_0000000000009096","name":"Test-LogStream-1654521050","type":"http","sink":{"httpContentFormat":"JSONLINES","httpContentType":"application/json"}}}},"log_id":"90020220606132000429455825192373936494892489553448271970","_id":"90020220606132000429455825192373936494892489553448271970","isMobile":false},{"date":"2022-06-06T13:19:55.299Z","type":"sapi","description":"Delete
+      log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"181.214.173.154","user_agent":"Other
+      0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000009094","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"181.214.173.154","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020220606132000367385951019982668844886544990074830898","_id":"90020220606132000367385951019982668844886544990074830898","isMobile":false},{"date":"2022-06-06T13:19:58.181Z","type":"sapi","description":"Delete
+      log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"181.214.173.154","user_agent":"Other
+      0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000009095","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"181.214.173.154","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020220606132000367385951019860567337105467443429507122","_id":"90020220606132000367385951019860567337105467443429507122","isMobile":false}]'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/logs/90020220606132002994615742735386525187832188966962987090
+    method: GET
+  response:
+    body: '{"date":"2022-06-06T13:20:01.819Z","type":"sapi","description":"Create
+      a log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"181.214.173.154","user_agent":"Other
+      0.0.0 / Other 0.0.0","details":{"request":{"method":"post","path":"/api/v2/log-streams","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{"name":"Test-LogStream-1654521050","type":"datadog"},"channel":"api","ip":"181.214.173.154","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":200,"body":{"id":"lst_0000000000009097","name":"Test-LogStream-1654521050","type":"datadog"}}},"log_id":"90020220606132002994615742735386525187832188966962987090","_id":"90020220606132002994615742735386525187832188966962987090","isMobile":false}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/logs?per_page=5&q=type%3A%22sapi%22
+    method: GET
+  response:
+    body: '[{"date":"2022-06-06T13:20:03.028Z","type":"sapi","description":"Delete
+      log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"181.214.173.154","user_agent":"Other
+      0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000009097","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"181.214.173.154","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020220606132008235615742741060014059283643958736978002","_id":"90020220606132008235615742741060014059283643958736978002","isMobile":false},{"date":"2022-06-06T13:20:02.297Z","type":"sapi","description":"Delete
+      log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"181.214.173.154","user_agent":"Other
+      0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000009097","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"181.214.173.154","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020220606132007558470024734870013472574151995779186754","_id":"90020220606132007558470024734870013472574151995779186754","isMobile":false},{"date":"2022-06-06T13:20:01.368Z","type":"sapi","description":"Delete
+      log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"181.214.173.154","user_agent":"Other
+      0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000009096","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"181.214.173.154","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020220606132006478615742739323996582317036395139432530","_id":"90020220606132006478615742739323996582317036395139432530","isMobile":false},{"date":"2022-06-06T13:20:00.498Z","type":"sapi","description":"Delete
+      log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"181.214.173.154","user_agent":"Other
+      0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000009096","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"181.214.173.154","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020220606132005673455825203797076564431120968844312674","_id":"90020220606132005673455825203797076564431120968844312674","isMobile":false},{"date":"2022-06-06T13:20:04.630Z","type":"sapi","description":"Delete
+      log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"181.214.173.154","user_agent":"Other
+      0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000009098","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"181.214.173.154","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020220606132005186455825201955882541158040735766806626","_id":"90020220606132005186455825201955882541158040735766806626","isMobile":false}]'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms

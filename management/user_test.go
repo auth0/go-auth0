@@ -2,21 +2,356 @@ package management
 
 import (
 	"encoding/json"
+	"fmt"
+	"math/rand"
+	"net/http"
+	"strings"
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
 	"github.com/auth0/go-auth0"
-	"github.com/auth0/go-auth0/internal/testing/expect"
 )
 
-func TestUser(t *testing.T) {
-	u := &User{
+func TestUserManager_Create(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	user := &User{
 		Connection: auth0.String("Username-Password-Authentication"),
-		Email:      auth0.String("chuck@chucknorris.com"),
-		Password:   auth0.String("Passwords hide their Chuck"),
-		Username:   auth0.String("chucknorris"),
+		Email:      auth0.String("chuck@example.com"),
+		Username:   auth0.String("chuck"),
+		Password:   auth0.String("I have a password and its a secret"),
+	}
+
+	err := m.User.Create(user)
+
+	assert.NoError(t, err)
+	assert.NotEmpty(t, user.GetID())
+
+	defer cleanupUser(t, user.GetID())
+}
+
+func TestUserManager_Read(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	expectedUser := givenAUser(t)
+
+	actualUser, err := m.User.Read(expectedUser.GetID())
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedUser.GetID(), actualUser.GetID())
+	assert.Equal(t, expectedUser.GetName(), actualUser.GetName())
+}
+
+func TestUserManager_Update(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	expectedUser := givenAUser(t)
+
+	actualUser := &User{
+		Connection: auth0.String("Username-Password-Authentication"),
+		Password:   auth0.String("I don't need one"),
+		AppMetadata: map[string]interface{}{
+			"foo": "bar",
+		},
+	}
+	err := m.User.Update(expectedUser.GetID(), actualUser)
+
+	assert.NoError(t, err)
+	expectedAppMetadata := expectedUser.AppMetadata
+	expectedAppMetadata["foo"] = "bar"
+	assert.Equal(t, expectedAppMetadata, actualUser.AppMetadata)
+	assert.Equal(t, expectedAppMetadata, actualUser.AppMetadata)
+	assert.Equal(t, "Username-Password-Authentication", actualUser.GetConnection())
+}
+
+func TestUserManager_Delete(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	expectedUser := givenAUser(t)
+
+	err := m.User.Delete(expectedUser.GetID())
+
+	assert.NoError(t, err)
+
+	actualUser, err := m.User.Read(expectedUser.GetID())
+
+	assert.Empty(t, actualUser)
+	assert.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
+}
+
+func TestUserManager_List(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	expectedUser := givenAUser(t)
+
+	// The List() endpoint is slow to pick up the newly created user,
+	// so we wait a second before executing the request.
+	time.Sleep(time.Second)
+
+	userQuery := fmt.Sprintf("username:%q", expectedUser.GetUsername())
+	userList, err := m.User.List(Query(userQuery))
+
+	assert.NoError(t, err)
+	assert.Len(t, userList.Users, 1)
+}
+
+func TestUserManager_Search(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	expectedUser := givenAUser(t)
+
+	userList, err := m.User.Search(Query(fmt.Sprintf("email:%q", expectedUser.GetEmail())))
+
+	assert.NoError(t, err)
+	assert.Len(t, userList.Users, 1)
+}
+
+func TestUserManager_ListByEmail(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	expectedUser := givenAUser(t)
+
+	users, err := m.User.ListByEmail(expectedUser.GetEmail())
+
+	assert.NoError(t, err)
+	assert.Len(t, users, 1)
+}
+
+func TestUserManager_Roles(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	user := givenAUser(t)
+	role := givenARole(t)
+
+	err := m.User.AssignRoles(user.GetID(), []*Role{role})
+	assert.NoError(t, err)
+
+	roles, err := m.User.Roles(user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, roles.Roles, 1)
+	assert.Equal(t, role.GetName(), roles.Roles[0].GetName())
+
+	err = m.User.RemoveRoles(user.GetID(), []*Role{role})
+	assert.NoError(t, err)
+
+	roles, err = m.User.Roles(user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, roles.Roles, 0)
+}
+
+func TestUserManager_Permissions(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	user := givenAUser(t)
+	resourceServer := givenAResourceServer(t)
+	permissions := []*Permission{
+		{
+			Name:                     resourceServer.Scopes[0].Value,
+			ResourceServerIdentifier: resourceServer.Identifier,
+		},
+	}
+
+	err := m.User.AssignPermissions(user.GetID(), permissions)
+	assert.NoError(t, err)
+
+	permissionList, err := m.User.Permissions(user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, permissionList.Permissions, 1)
+	assert.Equal(t, permissions[0].GetName(), permissionList.Permissions[0].GetName())
+	assert.Equal(t, permissions[0].GetResourceServerIdentifier(), permissionList.Permissions[0].GetResourceServerIdentifier())
+
+	err = m.User.RemovePermissions(user.GetID(), permissions)
+	assert.NoError(t, err)
+
+	permissionList, err = m.User.Permissions(user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, permissionList.Permissions, 0)
+}
+
+func TestUserManager_Blocks(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	user := givenAUser(t)
+	blockedIPs, err := m.User.Blocks(user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, blockedIPs, 0)
+}
+
+func TestUserManager_BlocksByIdentifier(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	user := givenAUser(t)
+	blockedIPs, err := m.User.BlocksByIdentifier(user.GetUsername())
+	assert.NoError(t, err)
+	assert.Len(t, blockedIPs, 0)
+}
+
+func TestUserManager_Unblock(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	user := givenAUser(t)
+	err := m.User.Unblock(user.GetID())
+	assert.NoError(t, err)
+}
+
+func TestUserManager_UnblockByIdentifier(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	user := givenAUser(t)
+	err := m.User.UnblockByIdentifier(user.GetUsername())
+	assert.NoError(t, err)
+}
+
+func TestUserManager_Enrollments(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	user := givenAUser(t)
+	userEnrollments, err := m.User.Enrollments(user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, userEnrollments, 0)
+}
+
+func TestUserManager_RegenerateRecoveryCode(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	user := givenAUser(t)
+	recoveryCode, err := m.User.RegenerateRecoveryCode(user.GetID())
+	assert.NoError(t, err)
+	assert.NotEmpty(t, recoveryCode)
+}
+
+func TestUserManager_InvalidateRememberBrowser(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	user := givenAUser(t)
+	err := m.User.InvalidateRememberBrowser(user.GetID())
+	assert.NoError(t, err)
+}
+
+func TestUserManager_Link(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	mainUser := givenAUser(t)
+	secondaryUser := givenAUser(t)
+	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
+	assert.NoError(t, err)
+
+	mainUserIdentities, err := m.User.Link(
+		mainUser.GetID(),
+		&UserIdentityLink{
+			Provider:     auth0.String("auth0"),
+			UserID:       secondaryUser.ID,
+			ConnectionID: conn.ID,
+		},
+	)
+	assert.NoError(t, err)
+	assert.Len(t, mainUserIdentities, 2)
+	assert.Equal(t, mainUser.GetID(), "auth0|"+mainUserIdentities[0].GetUserID())
+	assert.Equal(t, secondaryUser.GetID(), "auth0|"+mainUserIdentities[1].GetUserID())
+}
+
+func TestUserManager_Unlink(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	provider := "auth0"
+	mainUser := givenAUser(t)
+	secondaryUser := givenAUser(t)
+	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
+	assert.NoError(t, err)
+
+	_, err = m.User.Link(
+		mainUser.GetID(),
+		&UserIdentityLink{
+			Provider:     &provider,
+			UserID:       secondaryUser.ID,
+			ConnectionID: conn.ID,
+		},
+	)
+	assert.NoError(t, err)
+
+	unlinkedIdentities, err := m.User.Unlink(
+		mainUser.GetID(),
+		provider,
+		strings.TrimPrefix(secondaryUser.GetID(), "auth0|"),
+	)
+	assert.NoError(t, err)
+	assert.Len(t, unlinkedIdentities, 1)
+	assert.Equal(t, mainUser.GetID(), "auth0|"+unlinkedIdentities[0].GetUserID())
+}
+
+func TestUser_MarshalJSON(t *testing.T) {
+	for user, expected := range map[*User]string{
+		{}:                                 `{}`,
+		{EmailVerified: auth0.Bool(true)}:  `{"email_verified":true}`,
+		{EmailVerified: auth0.Bool(false)}: `{"email_verified":false}`,
+	} {
+		payload, err := json.Marshal(user)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, string(payload))
+	}
+}
+
+func TestUser_UnmarshalJSON(t *testing.T) {
+	for payload, expected := range map[string]*User{
+		`{}`:                         {EmailVerified: nil},
+		`{"email_verified":true}`:    {EmailVerified: auth0.Bool(true)},
+		`{"email_verified":false}`:   {EmailVerified: auth0.Bool(false)},
+		`{"email_verified":"true"}`:  {EmailVerified: auth0.Bool(true)},
+		`{"email_verified":"false"}`: {EmailVerified: auth0.Bool(false)},
+	} {
+		var actual User
+		err := json.Unmarshal([]byte(payload), &actual)
+		assert.NoError(t, err)
+		assert.Equal(t, expected.GetEmailVerified(), actual.GetEmailVerified())
+	}
+}
+
+func TestUserIdentity_MarshalJSON(t *testing.T) {
+	for userIdentity, expected := range map[*UserIdentity]string{
+		{}:                            `{}`,
+		{UserID: auth0.String("1")}:   `{"user_id":"1"}`,
+		{UserID: auth0.String("foo")}: `{"user_id":"foo"}`,
+	} {
+		payload, err := json.Marshal(userIdentity)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, string(payload))
+	}
+}
+
+func TestUserIdentity_UnmarshalJSON(t *testing.T) {
+	for expectedAsString, expected := range map[string]*UserIdentity{
+		`{}`:                {UserID: nil},
+		`{"user_id":1}`:     {UserID: auth0.String("1")},
+		`{"user_id":"1"}`:   {UserID: auth0.String("1")},
+		`{"user_id":"foo"}`: {UserID: auth0.String("foo")},
+		`{"profileData": {"picture": "some-picture.jpeg"}}`: {
+			ProfileData: &map[string]interface{}{
+				"picture": "some-picture.jpeg",
+			},
+		},
+	} {
+		var actual *UserIdentity
+		err := json.Unmarshal([]byte(expectedAsString), &actual)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, actual)
+	}
+}
+
+func givenAUser(t *testing.T) *User {
+	t.Helper()
+
+	user := &User{
+		Connection: auth0.String("Username-Password-Authentication"),
+		Email:      auth0.String(fmt.Sprintf("chuck%d@example.com", rand.Intn(999))),
+		Password:   auth0.String("Passwords hide their chuck"),
+		Username:   auth0.String(fmt.Sprintf("test-user%d", rand.Intn(999))),
 		GivenName:  auth0.String("Chuck"),
-		FamilyName: auth0.String("Norris"),
+		FamilyName: auth0.String("Sanchez"),
 		Nickname:   auth0.String("Chucky"),
 		UserMetadata: map[string]interface{}{
 			"favourite_attack": "roundhouse_kick",
@@ -28,377 +363,25 @@ func TestUser(t *testing.T) {
 				"count_to_infinity_twice",
 				"kill_two_stones_with_one_bird",
 				"can_hear_sign_language",
-				"knows_victorias_secret",
 			},
 		},
 		Picture: auth0.String("https://example-picture-url.jpg"),
 		Blocked: auth0.Bool(false),
 	}
 
-	var err error
+	err := m.User.Create(user)
+	require.NoError(t, err)
 
-	r1 := &Role{
-		Name:        auth0.String("admin"),
-		Description: auth0.String("Administrator"),
-	}
-	err = m.Role.Create(r1)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	r2 := &Role{
-		Name:        auth0.String("user"),
-		Description: auth0.String("User"),
-	}
-	err = m.Role.Create(r2)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	defer m.Role.Delete(auth0.StringValue(r1.ID))
-	defer m.Role.Delete(auth0.StringValue(r2.ID))
-
-	s := &ResourceServer{
-		Name: auth0.Stringf("Test Role (%s)",
-			time.Now().Format(time.StampMilli)),
-		Identifier: auth0.String("https://api.example.com/role"),
-		Scopes: []*ResourceServerScope{
-			{
-				Value:       auth0.String("read:resource"),
-				Description: auth0.String("Read Resource"),
-			},
-			{
-				Value:       auth0.String("update:resource"),
-				Description: auth0.String("Update Resource"),
-			},
-		},
-	}
-	err = m.ResourceServer.Create(s)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer m.ResourceServer.Delete(auth0.StringValue(s.ID))
-
-	t.Run("MarshalJSON", func(t *testing.T) {
-		for u, expected := range map[*User]string{
-			{}:                                 `{}`,
-			{EmailVerified: auth0.Bool(true)}:  `{"email_verified":true}`,
-			{EmailVerified: auth0.Bool(false)}: `{"email_verified":false}`,
-		} {
-			b, err := json.Marshal(u)
-			if err != nil {
-				t.Error(err)
-			}
-			expect.Expect(t, string(b), expected)
-		}
+	t.Cleanup(func() {
+		cleanupUser(t, user.GetID())
 	})
 
-	t.Run("UnmarshalJSON", func(t *testing.T) {
-		for b, expected := range map[string]*User{
-			`{}`:                         {EmailVerified: nil},
-			`{"email_verified":true}`:    {EmailVerified: auth0.Bool(true)},
-			`{"email_verified":false}`:   {EmailVerified: auth0.Bool(false)},
-			`{"email_verified":"true"}`:  {EmailVerified: auth0.Bool(true)},
-			`{"email_verified":"false"}`: {EmailVerified: auth0.Bool(false)},
-		} {
-			var u User
-			err := json.Unmarshal([]byte(b), &u)
-			if err != nil {
-				t.Error(err)
-			}
-			expect.Expect(t, u.GetEmailVerified(), expected.GetEmailVerified())
-		}
-	})
-
-	t.Run("Create", func(t *testing.T) {
-		err = m.User.Create(u)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", u)
-	})
-
-	t.Run("Read", func(t *testing.T) {
-		u, err = m.User.Read(auth0.StringValue(u.ID))
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", u)
-	})
-
-	t.Run("List", func(t *testing.T) {
-		ul, err := m.User.List()
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", ul)
-	})
-
-	t.Run("Update", func(t *testing.T) {
-		uu := &User{
-			Connection: auth0.String("Username-Password-Authentication"),
-			Password:   auth0.String("I don't need one"),
-		}
-		err = m.User.Update(auth0.StringValue(u.ID), uu)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", uu)
-
-		t.Run("AppMetadata", func(t *testing.T) {
-			uu := &User{
-				Connection: auth0.String("Username-Password-Authentication"),
-				AppMetadata: map[string]interface{}{
-					"foo": "bar",
-				},
-			}
-			err = m.User.Update(auth0.StringValue(u.ID), uu)
-			if err != nil {
-				t.Error(err)
-			}
-			t.Logf("%v\n", uu)
-		})
-	})
-
-	t.Run("Roles", func(t *testing.T) {
-		l, err := m.User.Roles(auth0.StringValue(u.ID))
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", l.Roles)
-	})
-
-	t.Run("AssignRoles", func(t *testing.T) {
-		err = m.User.AssignRoles(auth0.StringValue(u.ID), []*Role{r1, r2})
-		if err != nil {
-			t.Error(err)
-		}
-	})
-
-	t.Run("RemoveRoles", func(t *testing.T) {
-		roles := []*Role{r1, r2}
-		err = m.User.RemoveRoles(auth0.StringValue(u.ID), roles)
-		if err != nil {
-			t.Error(err)
-		}
-	})
-
-	t.Run("Permissions", func(t *testing.T) {
-		l, err := m.User.Permissions(auth0.StringValue(u.ID))
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", l.Permissions)
-	})
-
-	t.Run("AssignPermissions", func(t *testing.T) {
-		permissions := []*Permission{
-			{Name: auth0.String("read:resource"), ResourceServerIdentifier: auth0.String("https://api.example.com/role")},
-			{Name: auth0.String("update:resource"), ResourceServerIdentifier: auth0.String("https://api.example.com/role")},
-		}
-		err = m.User.AssignPermissions(auth0.StringValue(u.ID), permissions)
-		if err != nil {
-			t.Fatal(err)
-		}
-	})
-
-	t.Run("RemovePermissions", func(t *testing.T) {
-		permissions := []*Permission{
-			{Name: auth0.String("read:resource"), ResourceServerIdentifier: auth0.String("https://api.example.com/role")},
-			{Name: auth0.String("update:resource"), ResourceServerIdentifier: auth0.String("https://api.example.com/role")},
-		}
-		err = m.User.RemovePermissions(auth0.StringValue(u.ID), permissions)
-		if err != nil {
-			t.Fatal(err)
-		}
-	})
-
-	t.Run("Blocks", func(t *testing.T) {
-		b, err := m.User.Blocks(u.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", b)
-	})
-
-	t.Run("BlocksByIdentifier", func(t *testing.T) {
-		b, err := m.User.BlocksByIdentifier(u.GetUsername())
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", b)
-	})
-
-	t.Run("Unblock", func(t *testing.T) {
-		err := m.User.Unblock(u.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-	})
-
-	t.Run("UnblockByIdentifier", func(t *testing.T) {
-		err := m.User.UnblockByIdentifier(u.GetUsername())
-		if err != nil {
-			t.Fatal(err)
-		}
-	})
-
-	t.Run("Enrollments", func(t *testing.T) {
-		es, err := m.User.Enrollments(u.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", es)
-	})
-
-	t.Run("RegenerateRecoveryCode", func(t *testing.T) {
-		r, err := m.User.RegenerateRecoveryCode(u.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", r)
-	})
-
-	t.Run("InvalidateRememberBrowser", func(t *testing.T) {
-		err := m.User.InvalidateRememberBrowser(u.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-	})
-
-	t.Run("Delete", func(t *testing.T) {
-		err = m.User.Delete(u.GetID())
-		if err != nil {
-			t.Fatal(err)
-		}
-	})
-
-	// Create some users we can search for
-	allUsers := []*User{
-		{
-			Email:      auth0.String("alice@example.com"),
-			Username:   auth0.String("alice"),
-			Password:   auth0.String("72aae3e7-1b9b-4ff4-8806-c4b0ce0ca424"),
-			Connection: auth0.String("Username-Password-Authentication"),
-		},
-		{
-			Email:      auth0.String("bob@example.com"),
-			Username:   auth0.String("bob"),
-			Password:   auth0.String("bcfc3bca-8cd3-4b74-a474-402420f34f85"),
-			Connection: auth0.String("Username-Password-Authentication"),
-		},
-		{
-			Email:      auth0.String("charlie@example.com"),
-			Username:   auth0.String("charlie"),
-			Password:   auth0.String("80140c2a-b5c1-490c-a4bf-b0623114d5fd"),
-			Connection: auth0.String("Username-Password-Authentication"),
-		},
-	}
-	for _, user := range allUsers {
-		err = m.User.Create(user)
-		if err != nil {
-			t.Error(err)
-		}
-	}
-	defer func() {
-		for _, user := range allUsers {
-			m.User.Delete(user.GetID())
-		}
-	}()
-
-	t.Run("Search", func(t *testing.T) {
-		ul, err := m.User.Search(Query(`email:"alice@example.com"`))
-		if err != nil {
-			t.Error(err)
-		}
-		if len(ul.Users) != 1 {
-			t.Error("unexpected number of users found")
-		}
-		t.Logf("%v\n", ul)
-	})
-
-	t.Run("ListByEmail", func(t *testing.T) {
-		us, err := m.User.ListByEmail("alice@example.com")
-		if err != nil {
-			t.Error(err)
-		}
-		if len(us) != 1 {
-			t.Error("unexpected number of users found")
-		}
-		t.Logf("%v\n", us)
-	})
-
-	t.Run("Link", func(t *testing.T) {
-		cs, err := m.Connection.ReadByName("Username-Password-Authentication")
-		if err != nil {
-			t.Error(err)
-		}
-
-		bruceWayne := &User{
-			Email:      auth0.String("bruce@wayne.com"),
-			Username:   auth0.String("rich_boy"),
-			Password:   auth0.String("72aae3e7-1b9b-4ff4-8806-c4b0ce0ca424"),
-			Connection: cs.Name,
-		}
-		if err := m.User.Create(bruceWayne); err != nil {
-			t.Error(err)
-		}
-
-		batman := &User{
-			Email:      auth0.String("batman@example.com"),
-			Username:   auth0.String("dark_boy"),
-			Password:   auth0.String("3665df77-7ebe-4448-84cb-cd7238f680e9"),
-			Connection: cs.Name,
-		}
-		if err := m.User.Create(batman); err != nil {
-			t.Error(err)
-		}
-
-		bruceIdentities, err := m.User.Link(bruceWayne.GetID(), &UserIdentityLink{
-			Provider:     auth0.String("auth0"),
-			UserID:       batman.ID,
-			ConnectionID: cs.ID,
-		})
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", bruceIdentities)
-
-		t.Cleanup(func() {
-			m.User.Delete(bruceWayne.GetID())
-			m.User.Delete(batman.GetID())
-		})
-	})
+	return user
 }
 
-func TestUserIdentity(t *testing.T) {
-	t.Run("MarshalJSON", func(t *testing.T) {
-		for u, expected := range map[*UserIdentity]string{
-			{}:                            `{}`,
-			{UserID: auth0.String("1")}:   `{"user_id":"1"}`,
-			{UserID: auth0.String("foo")}: `{"user_id":"foo"}`,
-		} {
-			b, err := json.Marshal(u)
-			if err != nil {
-				t.Error(err)
-			}
-			expect.Expect(t, string(b), expected)
-		}
-	})
+func cleanupUser(t *testing.T, userID string) {
+	t.Helper()
 
-	t.Run("UnmarshalJSON", func(t *testing.T) {
-		for b, expected := range map[string]*UserIdentity{
-			`{}`:                {UserID: nil},
-			`{"user_id":1}`:     {UserID: auth0.String("1")},
-			`{"user_id":"1"}`:   {UserID: auth0.String("1")},
-			`{"user_id":"foo"}`: {UserID: auth0.String("foo")},
-		} {
-			var u UserIdentity
-			err := json.Unmarshal([]byte(b), &u)
-			if err != nil {
-				t.Error(err)
-			}
-			expect.Expect(t, u.GetUserID(), expected.GetUserID())
-		}
-	})
+	err := m.User.Delete(userID)
+	require.NoError(t, err)
 }

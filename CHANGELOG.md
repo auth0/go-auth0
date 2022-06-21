@@ -1,5 +1,58 @@
 # Change Log
 
+<a name="v0.6.4"></a>
+## [v0.6.4](https://github.com/auth0/go-auth0/tree/v0.6.4) (2022-06-08)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.3...v0.6.4)
+
+### Added
+
+- Added support for webauthn_platform_first_factor_prompt flag in the prompt ([#59](https://github.com/auth0/go-auth0/pull/59))
+
+### Changed
+
+- Bumped Go version to 1.18 ([#71](https://github.com/auth0/go-auth0/pull/71))
+- Ensured that all the tests can be run in any order 
+- Ensured that all the tests clean up the test tenant afterwards of any created resources
+- Enabled http recordings with go-vcr to be used within tests for more reliable testing
+
+
+<a name="v0.6.3"></a>
+## [v0.6.3](https://github.com/auth0/go-auth0/tree/v0.6.3) (2022-04-13)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.2...v0.6.3)
+
+### Fixed
+
+- Fixed uri path escaping for param IDs that have a forward slash in them ([#40](https://github.com/auth0/go-auth0/pull/40))
+
+
+<a name="v0.6.2"></a>
+## [v0.6.2](https://github.com/auth0/go-auth0/tree/v0.6.2) (2022-04-07)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.1...v0.6.2)
+
+### Added
+
+- Added a method to `Unlink` a `User`'s identity ([#35](https://github.com/auth0/go-auth0/pull/35))
+- Added fields required to support self-managed certificates ([#37](https://github.com/auth0/go-auth0/pull/37))
+- Added `profileData` key to `UserIdentity` ([#33](https://github.com/auth0/go-auth0/pull/33))
+- [DXCDT-104] Added `Filters` to `LogStream` ([#38](https://github.com/auth0/go-auth0/pull/38))
+
+
+<a name="v0.6.1"></a>
+## [v0.6.1](https://github.com/auth0/go-auth0/tree/v0.6.1) (2022-03-03)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.0...v0.6.1)
+
+### Added
+
+- Added `ShowAsButton` option on `Connection` ([#29](https://github.com/auth0/go-auth0/pull/29))
+
+### Fixed
+
+- Fixed json tags on AllowList for Attack Protection structs ([#30](https://github.com/auth0/go-auth0/pull/30))
+
 <a name="v0.6.0"></a>
 ## [v0.6.0](https://github.com/auth0/go-auth0/tree/v0.6.0) (2022-02-22)
 

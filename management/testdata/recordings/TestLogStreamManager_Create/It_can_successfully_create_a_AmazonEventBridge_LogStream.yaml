@@ -1,0 +1,40 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test-LogStream-1654521050","type":"eventbridge","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2"}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
+    method: POST
+  response:
+    body: '{"id":"lst_0000000000009080","name":"Test-LogStream-1654521050","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev-30fa44f9-6fe7-4ea2-9e5e-089825b5afaa/auth0.logs"}}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000009080
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

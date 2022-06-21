@@ -81,6 +81,7 @@ fmt.Printf("Created client %s\n", c.ClientID)
 The following Auth0 resources are supported:
 
 - [x] [Actions](https://auth0.com/docs/api/management/v2/#!/Actions/get_actions)
+- [x] [Attack Protection](https://auth0.com/docs/api/management/v2#!/Attack_Protection/get_breached_password_detection)
 - [x] [Branding](https://auth0.com/docs/api/management/v2/#!/Branding/get_branding)
 - [x] [Clients (Applications)](https://auth0.com/docs/api/management/v2#!/Clients/get_clients)
 - [x] [Client Grants](https://auth0.com/docs/api/management/v2#!/Client_Grants/get_client_grants)
@@ -116,13 +117,15 @@ The following Auth0 resources are supported:
 
 ## Testing
 
-The tests must run against an Auth0 tenant. They also need an
-[M2M app](https://auth0.com/docs/applications/set-up-an-application/register-machine-to-machine-applications) in that
-tenant that has been authorized to call the Management API. You can easily set one of these up by creating an
-[API Explorer Application](https://auth0.com/docs/tokens/management-api-access-tokens/create-and-authorize-a-machine-to-machine-application)
-in your tenant.
+To run the tests use the `make test` command. This will make use of pre-recorded http interactions found in the
+[recordings](./management/testdata/recordings) folder. To add new recordings run the tests against an Auth0 tenant
+individually using the following env var `AUTH0_HTTP_RECORDINGS=on`.
 
-Then simply create a local `.env` file in the `management` folder with the following settings:
+To run the tests against an Auth0 tenant, use the `make test-e2e` command. Start by creating an
+[M2M app](https://auth0.com/docs/applications/set-up-an-application/register-machine-to-machine-applications) in the
+tenant, that has been authorized to call the Management API and has all the required permissions.
+
+Then create a local `.env` file in the `management` folder with the following settings:
 
 * `AUTH0_DOMAIN`: The **Domain** of the M2M app
 * `AUTH0_CLIENT_ID`: The **Client ID** of the M2M app

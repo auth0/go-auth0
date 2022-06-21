@@ -2,70 +2,62 @@ package management
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestSigningKey(t *testing.T) {
-	var kid string
-
-	// Our last test revokes the key used to sign the token we're currently
-	// using, so we need to re-authenticate so that subsequent tests still work.
-	t.Cleanup(func() {
-		initTestManagement()
-	})
-
 	t.Run("List", func(t *testing.T) {
-		ks, err := m.SigningKey.List()
-		if err != nil {
-			t.Fatal(err)
-		}
-		if len(ks) == 0 {
-			t.Error("expected at least one key to be returned")
-		}
+		setupHTTPRecordings(t)
 
-		// save kid for later use
-		kid = ks[0].GetKID()
-
-		t.Logf("%v\n", ks)
+		signingKeys, err := m.SigningKey.List()
+		assert.NoError(t, err)
+		assert.NotEmpty(t, signingKeys, "expected at least one key to be returned")
 	})
 
 	t.Run("Read", func(t *testing.T) {
-		k, err := m.SigningKey.Read(kid)
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", k)
+		setupHTTPRecordings(t)
+
+		signingKeys, err := m.SigningKey.List()
+		assert.NoError(t, err)
+
+		signingKey, err := m.SigningKey.Read(signingKeys[0].GetKID())
+		assert.NoError(t, err)
+		assert.NotEmpty(t, signingKey)
 	})
 
 	t.Run("Rotate", func(t *testing.T) {
-		k, err := m.SigningKey.Rotate()
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", k)
+		setupHTTPRecordings(t)
+
+		signingKey, err := m.SigningKey.Rotate()
+		assert.NoError(t, err)
+		assert.NotEmpty(t, signingKey)
 	})
 
 	t.Run("Revoke", func(t *testing.T) {
-		ks, err := m.SigningKey.List()
-		if err != nil {
-			t.Fatal(err)
-		}
+		setupHTTPRecordings(t)
 
-		var pk *SigningKey
-		for _, k := range ks {
-			if k.GetPrevious() {
-				pk = k
+		// Our last test revokes the key used to sign the token we're currently
+		// using, so we need to re-authenticate so that subsequent tests still work.
+		t.Cleanup(func() {
+			initTestManagement()
+		})
+
+		signingKeys, err := m.SigningKey.List()
+		assert.NoError(t, err)
+
+		var signingKey *SigningKey
+		for _, key := range signingKeys {
+			if key.GetPrevious() {
+				signingKey = key
 				break
 			}
 		}
 
-		if pk == nil {
-			t.Fatal("previous key not found, nothing to revoke")
-		}
+		assert.NotNil(t, signingKey, "previous key not found, nothing to revoke")
 
-		r, err := m.SigningKey.Revoke(pk.GetKID())
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", r)
+		revokedKey, err := m.SigningKey.Revoke(signingKey.GetKID())
+		assert.NoError(t, err)
+		assert.NotEmpty(t, revokedKey)
 	})
 }

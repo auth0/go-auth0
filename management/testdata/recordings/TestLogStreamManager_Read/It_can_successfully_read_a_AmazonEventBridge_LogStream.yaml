@@ -1,0 +1,59 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test-LogStream-1654521050","type":"eventbridge","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2"}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
+    method: POST
+  response:
+    body: '{"id":"lst_0000000000009085","name":"Test-LogStream-1654521050","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev-e4766769-0e98-4a9a-803c-d4c3ac88ab82/auth0.logs"}}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000009085
+    method: GET
+  response:
+    body: '{"id":"lst_0000000000009085","name":"Test-LogStream-1654521050","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev-e4766769-0e98-4a9a-803c-d4c3ac88ab82/auth0.logs"}}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000009085
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

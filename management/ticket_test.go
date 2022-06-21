@@ -3,55 +3,37 @@ package management
 import (
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/auth0/go-auth0"
 )
 
-func TestTicket(t *testing.T) {
-	var err error
+func TestTicketManager_VerifyEmail(t *testing.T) {
+	setupHTTPRecordings(t)
 
-	u := &User{
-		Connection: auth0.String("Username-Password-Authentication"),
-		Email:      auth0.String("chuck@chucknorris.com"),
-		Username:   auth0.String("chuck"),
-		Password:   auth0.String("I have a password and its a secret"),
-	}
-	if err = m.User.Create(u); err != nil {
-		t.Fatal(err)
+	user := givenAUser(t)
+	ticket := &Ticket{
+		ResultURL: auth0.String("https://example.com/verify-email"),
+		UserID:    user.ID,
+		TTLSec:    auth0.Int(3600),
 	}
 
-	userID := u.GetID()
+	err := m.Ticket.VerifyEmail(ticket)
+	assert.NoError(t, err)
+}
 
-	t.Cleanup(func() { m.User.Delete(userID) })
+func TestTicketManager_ChangePassword(t *testing.T) {
+	setupHTTPRecordings(t)
 
-	t.Run("VerifyEmail", func(t *testing.T) {
-		v := &Ticket{
-			ResultURL: auth0.String("https://example.com/verify-email"),
-			UserID:    auth0.String(userID),
-			TTLSec:    auth0.Int(3600),
-		}
+	user := givenAUser(t)
+	ticket := &Ticket{
+		ResultURL:              auth0.String("https://example.com/change-password"),
+		UserID:                 user.ID,
+		TTLSec:                 auth0.Int(3600),
+		MarkEmailAsVerified:    auth0.Bool(true),
+		IncludeEmailInRedirect: auth0.Bool(true),
+	}
 
-		err = m.Ticket.VerifyEmail(v)
-		if err != nil {
-			t.Error(err)
-		}
-
-		t.Logf("%v\n", v)
-	})
-
-	t.Run("ChangePassword", func(t *testing.T) {
-		v := &Ticket{
-			ResultURL:              auth0.String("https://example.com/change-password"),
-			UserID:                 auth0.String(userID),
-			TTLSec:                 auth0.Int(3600),
-			MarkEmailAsVerified:    auth0.Bool(true),
-			IncludeEmailInRedirect: auth0.Bool(true),
-		}
-
-		err = m.Ticket.ChangePassword(v)
-		if err != nil {
-			t.Error(err)
-		}
-
-		t.Logf("%v\n", v)
-	})
+	err := m.Ticket.ChangePassword(ticket)
+	assert.NoError(t, err)
 }

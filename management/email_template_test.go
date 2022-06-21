@@ -4,29 +4,16 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
 	"github.com/auth0/go-auth0"
 )
 
-func TestEmailTemplate(t *testing.T) {
-	e := &Email{
-		Name:               auth0.String("smtp"),
-		Enabled:            auth0.Bool(true),
-		DefaultFromAddress: auth0.String("no-reply@example.com"),
-		Credentials: &EmailCredentials{
-			SMTPHost: auth0.String("smtp.example.com"),
-			SMTPPort: auth0.Int(587),
-			SMTPUser: auth0.String("user"),
-			SMTPPass: auth0.String("pass"),
-		},
-	}
+func TestEmailTemplateManager_Create(t *testing.T) {
+	setupHTTPRecordings(t)
 
-	err := m.Email.Create(e)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer m.Email.Delete()
-
-	et := &EmailTemplate{
+	template := &EmailTemplate{
 		Template:  auth0.String("verify_email"),
 		Body:      auth0.String("<html><body><h1>Verify your email</h1></body></html>"),
 		From:      auth0.String("me@example.com"),
@@ -36,51 +23,92 @@ func TestEmailTemplate(t *testing.T) {
 		Enabled:   auth0.Bool(true),
 	}
 
-	t.Run("Create", func(t *testing.T) {
-		err = m.EmailTemplate.Create(et)
-		if err != nil {
-			if err, ok := err.(Error); ok && err.Status() != http.StatusConflict {
-				t.Fatal(err)
-			}
-		}
-		t.Logf("%v\n", et)
-	})
-
-	t.Run("Read", func(t *testing.T) {
-		et, err = m.EmailTemplate.Read(auth0.StringValue(et.Template))
-		if err != nil {
+	err := m.EmailTemplate.Create(template)
+	if err != nil {
+		if err, ok := err.(Error); ok && err.Status() != http.StatusConflict {
 			t.Error(err)
 		}
-		t.Logf("%v\n", et)
-	})
+	}
 
-	t.Run("Update", func(t *testing.T) {
-		err = m.EmailTemplate.Update(auth0.StringValue(et.Template), &EmailTemplate{
-			Body: auth0.String("<html><body><h1>Let's get you verified!</h1></body></html>"),
-		})
-		if err != nil {
+	t.Cleanup(func() {
+		cleanupEmailTemplate(t, template.GetTemplate())
+	})
+}
+
+func TestEmailTemplateManager_Read(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	expectedTemplate := givenAnEmailTemplate(t)
+
+	actualTemplate, err := m.EmailTemplate.Read(expectedTemplate.GetTemplate())
+
+	assert.NoError(t, err)
+	assert.ObjectsAreEqual(expectedTemplate, actualTemplate)
+}
+
+func TestEmailTemplateManager_Update(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	template := givenAnEmailTemplate(t)
+
+	expectedBody := "<html><body><h1>Let's get you verified!</h1></body></html>"
+	err := m.EmailTemplate.Update(
+		template.GetTemplate(),
+		&EmailTemplate{
+			Body: &expectedBody,
+		},
+	)
+	assert.NoError(t, err)
+
+	actualTemplate, err := m.EmailTemplate.Read(template.GetTemplate())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedBody, actualTemplate.GetBody())
+}
+
+func TestEmailTemplateManager_Replace(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	givenAnEmailProvider(t)
+	template := givenAnEmailTemplate(t)
+
+	template.Subject = auth0.String("Let's get you verified!")
+	template.Body = auth0.String("<html><body><h1>Let's get you verified!</h1></body></html>")
+	template.From = auth0.String("someone@example.com")
+
+	err := m.EmailTemplate.Replace(template.GetTemplate(), template)
+	assert.NoError(t, err)
+}
+
+func givenAnEmailTemplate(t *testing.T) *EmailTemplate {
+	t.Helper()
+
+	template := &EmailTemplate{
+		Template:  auth0.String("verify_email"),
+		Body:      auth0.String("<html><body><h1>Verify your email</h1></body></html>"),
+		From:      auth0.String("me@example.com"),
+		ResultURL: auth0.String("https://www.example.com/verify-email"),
+		Subject:   auth0.String("Verify your email"),
+		Syntax:    auth0.String("liquid"),
+		Enabled:   auth0.Bool(true),
+	}
+
+	err := m.EmailTemplate.Create(template)
+	if err != nil {
+		if err, ok := err.(Error); ok && err.Status() != http.StatusConflict {
 			t.Error(err)
 		}
-		t.Logf("%v\n", et)
+	}
+
+	t.Cleanup(func() {
+		cleanupEmailTemplate(t, template.GetTemplate())
 	})
 
-	t.Run("Replace", func(t *testing.T) {
-		et.Subject = auth0.String("Let's get you verified!")
-		et.Body = auth0.String("<html><body><h1>Let's get you verified!</h1></body></html>")
-		et.From = auth0.String("someone@example.com")
+	return template
+}
 
-		err = m.EmailTemplate.Replace(auth0.StringValue(et.Template), et)
-		if err != nil {
-			t.Error(err)
-		}
-		t.Logf("%v\n", et)
-	})
+func cleanupEmailTemplate(t *testing.T, templateName string) {
+	t.Helper()
 
-	t.Run("Delete", func(t *testing.T) {
-		et.Enabled = auth0.Bool(false)
-		err = m.EmailTemplate.Update(auth0.StringValue(et.Template), et)
-		if err != nil {
-			t.Error(err)
-		}
-	})
+	err := m.EmailTemplate.Update(templateName, &EmailTemplate{Enabled: auth0.Bool(false)})
+	require.NoError(t, err)
 }

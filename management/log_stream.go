@@ -1,6 +1,8 @@
 package management
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 const (
 	// LogStreamTypeAmazonEventBridge constant.
@@ -35,6 +37,10 @@ type LogStream struct {
 
 	// The status of the log-stream. Can be one of "active", "paused", or "suspended".
 	Status *string `json:"status,omitempty"`
+
+	// Only logs events matching these filters will be delivered by the stream.
+	// If omitted or empty, all events will be delivered.
+	Filters []interface{} `json:"filters,omitempty"`
 
 	// Sink for validation.
 	Sink interface{} `json:"-"`

@@ -246,11 +246,25 @@ func New(domain string, options ...Option) (*Management, error) {
 // URI returns the absolute URL of the Management API with any path segments
 // appended to the end.
 func (m *Management) URI(path ...string) string {
-	return (&url.URL{
+	baseURL := &url.URL{
 		Scheme: m.url.Scheme,
 		Host:   m.url.Host,
-		Path:   m.basePath + "/" + strings.Join(path, "/"),
-	}).String()
+		Path:   m.basePath + "/",
+	}
+
+	const escapedForwardSlash = "%2F"
+	var escapedPath []string
+	for _, unescapedPath := range path {
+		// Go's url.PathEscape will not escape "/", but some user IDs do have a valid "/" in them.
+		// See https://github.com/golang/go/blob/b55a2fb3b0d67b346bac871737b862f16e5a6447/src/net/url/url.go#L141.
+		defaultPathEscaped := url.PathEscape(unescapedPath)
+		escapedPath = append(
+			escapedPath,
+			strings.Replace(defaultPathEscaped, "/", escapedForwardSlash, -1),
+		)
+	}
+
+	return baseURL.String() + strings.Join(escapedPath, "/")
 }
 
 // NewRequest returns a new HTTP request. If the payload is not nil it will be

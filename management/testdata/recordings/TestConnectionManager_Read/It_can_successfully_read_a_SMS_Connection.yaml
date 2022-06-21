@@ -1,0 +1,80 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test-SMS-Connection-1654521050","strategy":"sms","options":{"name":"Test-Connection-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"authParams":{"scope":"openid profile"},"twilio_sid":"abc132asdfasdf56","twilio_token":"234127asdfsada23","messaging_service_sid":"273248090982390423","disable_signup":true,"brute_force_protection":true}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+    method: POST
+  response:
+    body: '{"id":"con_m1U5fBQz8Sizj1Fp","options":{"name":"Test-Connection-SMS","from":"+17777777777","syntax":"liquid","template":"Your
+      verification code is { code }}","totp":{"time_step":110,"length":5},"authParams":{"scope":"openid
+      profile"},"twilio_sid":"abc132asdfasdf56","twilio_token":"234127asdfsada23","messaging_service_sid":"273248090982390423","disable_signup":true,"brute_force_protection":true},"strategy":"sms","name":"Test-SMS-Connection-1654521050","is_domain_connection":false,"enabled_clients":[],"realms":["Test-SMS-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_m1U5fBQz8Sizj1Fp
+    method: GET
+  response:
+    body: '{"id":"con_m1U5fBQz8Sizj1Fp","options":{"from":"+17777777777","name":"Test-Connection-SMS","totp":{"length":5,"time_step":110},"syntax":"liquid","template":"Your
+      verification code is { code }}","authParams":{"scope":"openid profile"},"twilio_sid":"abc132asdfasdf56","twilio_token":"234127asdfsada23","disable_signup":true,"messaging_service_sid":"273248090982390423","brute_force_protection":true},"strategy":"sms","name":"Test-SMS-Connection-1654521050","is_domain_connection":false,"enabled_clients":[],"realms":["Test-SMS-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_m1U5fBQz8Sizj1Fp
+    method: DELETE
+  response:
+    body: '{"deleted_at":"2022-06-06T13:12:47.577Z"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 202 Accepted
+    code: 202
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_m1U5fBQz8Sizj1Fp
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

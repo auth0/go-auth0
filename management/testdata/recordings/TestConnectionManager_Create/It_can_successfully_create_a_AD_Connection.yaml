@@ -1,0 +1,40 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"Test-AD-Connection-1654521050","strategy":"ad","options":{"ips":null}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+    method: POST
+  response:
+    body: '{"id":"con_ZXGseBHzsbJyIF6P","options":{"ips":null,"brute_force_protection":true},"strategy":"ad","name":"Test-AD-Connection-1654521050","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com/p/ad/LLuRXCW5FKVJ8s56xHbCsU1KjW6ERFbG","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-AD-Connection-1654521050"]}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_ZXGseBHzsbJyIF6P
+    method: DELETE
+  response:
+    body: '{"deleted_at":"2022-06-06T13:12:32.611Z"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 202 Accepted
+    code: 202
+    duration: 1ms

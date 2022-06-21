@@ -9,6 +9,9 @@ type Prompt struct {
 
 	// IdentifierFirst determines if the login screen prompts for just the identifier, identifier and password first.
 	IdentifierFirst *bool `json:"identifier_first,omitempty"`
+
+	// WebAuthnPlatformFirstFactor determines if the login screen uses identifier and biometrics first.
+	WebAuthnPlatformFirstFactor *bool `json:"webauthn_platform_first_factor,omitempty"`
 }
 
 // PromptManager is used for managing a Prompt.

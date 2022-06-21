@@ -1,0 +1,212 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"name":"test-organization840","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"}}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations
+    method: POST
+  response:
+    body: '{"name":"test-organization840","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"},"id":"org_ue6OqRyu5NxWzWSZ"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      {"connection":"Username-Password-Authentication","email":"chuck152@example.com","given_name":"Chuck","family_name":"Sanchez","username":"test-user357","nickname":"Chucky","password":"Passwords hide their chuck","user_metadata":{"favourite_attack":"roundhouse_kick"},"verify_email":false,"app_metadata":{"facts":["count_to_infinity_twice","kill_two_stones_with_one_bird","can_hear_sign_language"]},"picture":"https://example-picture-url.jpg","blocked":false,"email_verified":true}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/users
+    method: POST
+  response:
+    body: '{"blocked":false,"created_at":"2022-06-06T13:23:11.788Z","email":"chuck152@example.com","email_verified":true,"family_name":"Sanchez","given_name":"Chuck","identities":[{"connection":"Username-Password-Authentication","user_id":"629dffbfa7255f006792a8e1","provider":"auth0","isSocial":false}],"name":"chuck152@example.com","nickname":"Chucky","picture":"https://example-picture-url.jpg","updated_at":"2022-06-06T13:23:11.788Z","user_id":"auth0|629dffbfa7255f006792a8e1","user_metadata":{"favourite_attack":"roundhouse_kick"},"username":"test-user357","app_metadata":{"facts":["count_to_infinity_twice","kill_two_stones_with_one_bird","can_hear_sign_language"]}}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
+- request:
+    body: |
+      {"name":"test-role718","description":"Test Role"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/roles
+    method: POST
+  response:
+    body: '{"id":"rol_aa3Ou2hg2CjH7KW8","name":"test-role718","description":"Test
+      Role"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      {"members":["auth0|629dffbfa7255f006792a8e1"]}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ue6OqRyu5NxWzWSZ/members
+    method: POST
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms
+- request:
+    body: |
+      {"roles":["rol_aa3Ou2hg2CjH7KW8"]}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ue6OqRyu5NxWzWSZ/members/auth0%7C629dffbfa7255f006792a8e1/roles
+    method: POST
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ue6OqRyu5NxWzWSZ/members/auth0%7C629dffbfa7255f006792a8e1/roles?include_totals=true&per_page=50
+    method: GET
+  response:
+    body: '{"roles":[{"id":"rol_aa3Ou2hg2CjH7KW8","name":"test-role718","description":"Test
+      Role"}],"start":0,"limit":50,"total":1}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      {"roles":["rol_aa3Ou2hg2CjH7KW8"]}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ue6OqRyu5NxWzWSZ/members/auth0%7C629dffbfa7255f006792a8e1/roles
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ue6OqRyu5NxWzWSZ/members/auth0%7C629dffbfa7255f006792a8e1/roles?include_totals=true&per_page=50
+    method: GET
+  response:
+    body: '{"roles":[],"start":0,"limit":50,"total":0}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      {}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/roles/rol_aa3Ou2hg2CjH7KW8
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/users/auth0%7C629dffbfa7255f006792a8e1
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms
+- request:
+    body: ""
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ue6OqRyu5NxWzWSZ
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 204 No Content
+    code: 204
+    duration: 1ms

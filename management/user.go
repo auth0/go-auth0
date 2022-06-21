@@ -178,13 +178,14 @@ type UserIdentityLink struct {
 
 // UserIdentity holds values that validate a User's identity.
 type UserIdentity struct {
-	Connection        *string `json:"connection,omitempty"`
-	UserID            *string `json:"-"`
-	Provider          *string `json:"provider,omitempty"`
-	IsSocial          *bool   `json:"isSocial,omitempty"`
-	AccessToken       *string `json:"access_token,omitempty"`
-	AccessTokenSecret *string `json:"access_token_secret,omitempty"`
-	RefreshToken      *string `json:"refresh_token,omitempty"`
+	Connection        *string                 `json:"connection,omitempty"`
+	UserID            *string                 `json:"-"`
+	Provider          *string                 `json:"provider,omitempty"`
+	IsSocial          *bool                   `json:"isSocial,omitempty"`
+	AccessToken       *string                 `json:"access_token,omitempty"`
+	AccessTokenSecret *string                 `json:"access_token_secret,omitempty"`
+	RefreshToken      *string                 `json:"refresh_token,omitempty"`
+	ProfileData       *map[string]interface{} `json:"profileData,omitempty"`
 }
 
 // UnmarshalJSON is a custom deserializer for the UserIdentity type.
@@ -546,6 +547,14 @@ func (m *UserManager) Link(id string, il *UserIdentityLink, opts ...RequestOptio
 	}
 
 	return uIDs, nil
+}
+
+// Unlink unlinks an identity from a user making it a separate account again.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Users/delete_user_identity_by_user_id
+func (m *UserManager) Unlink(id, provider, userID string, opts ...RequestOption) (uIDs []UserIdentity, err error) {
+	err = m.Request("DELETE", m.URI("users", id, "identities", provider, userID), &uIDs, opts...)
+	return
 }
 
 // Organizations lists user's organizations.

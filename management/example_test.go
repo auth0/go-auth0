@@ -29,6 +29,7 @@ func ExampleNew() {
 	api, err := management.New(domain, management.WithClientCredentials(id, secret))
 	if err != nil {
 		// handle err
+		return
 	}
 	_, _ = api.Stat.ActiveUsers()
 }
@@ -42,6 +43,7 @@ func ExampleClientManager_Create() {
 	err := api.Client.Create(c)
 	if err != nil {
 		// handle err
+		return
 	}
 	defer api.Client.Delete(c.GetClientID())
 
@@ -53,6 +55,7 @@ func ExampleResourceServerManager_List() {
 	l, err := api.ResourceServer.List()
 	if err != nil {
 		// handle err
+		return
 	}
 	_ = l.ResourceServers
 }
@@ -68,6 +71,7 @@ func ExampleUserManager_Create() {
 	err := api.User.Create(u)
 	if err != nil {
 		// handle err
+		return
 	}
 	defer api.User.Delete(u.GetID())
 
@@ -83,6 +87,7 @@ func ExampleRoleManager_Create() {
 	err := api.Role.Create(r)
 	if err != nil {
 		// handle err
+		return
 	}
 	defer api.Role.Delete(r.GetID())
 }
@@ -96,6 +101,7 @@ func ExampleUserManager_AssignRoles() {
 	err := api.User.AssignRoles(user.GetID(), []*management.Role{admin})
 	if err != nil {
 		// handle err
+		return
 	}
 	defer api.User.RemoveRoles(user.GetID(), []*management.Role{admin})
 }
@@ -105,6 +111,7 @@ func ExampleUserManager_List() {
 	l, err := api.User.List(q)
 	if err != nil {
 		// handle err
+		return
 	}
 	_ = l.Users // users matching name "jane smith"
 }
@@ -117,6 +124,7 @@ func ExampleUserManager_List_pagination() {
 			management.Page(page))
 		if err != nil {
 			// handle err
+			return
 		}
 		for _, u := range l.Users {
 			u.GetID() // do something with each user
@@ -129,27 +137,25 @@ func ExampleUserManager_List_pagination() {
 }
 
 func ExampleConnectionManager_List() {
-	l, err := api.Connection.List(
+	connectionList, err := api.Connection.List(
 		management.Parameter("strategy", "auth0"),
 	)
 	if err != nil {
 		// handle err
+		return
 	}
-	for _, c := range l.Connections {
-		fmt.Println(c.GetName())
+	for _, connection := range connectionList.Connections {
+		fmt.Println(connection.GetName())
 
-		if o, ok := c.Options.(*management.ConnectionOptions); ok {
-			fmt.Printf("\tPassword Policy: %s\n", o.GetPasswordPolicy())
-			fmt.Printf("\tMulti-Factor Auth Enabled: %t\n", o.MFA["active"])
+		if options, ok := connection.Options.(*management.ConnectionOptions); ok {
+			fmt.Printf("\tPassword Policy: %s\n", options.GetPasswordPolicy())
+			fmt.Printf("\tMulti-Factor Auth Enabled: %t\n", options.MFA["active"])
 		}
 	}
-	// Output: Username-Password-Authentication
-	// 	Password Policy: good
-	// 	Multi-Factor Auth Enabled: true
 }
 
 func ExampleConnectionManager_Create() {
-	c := &management.Connection{
+	connection := &management.Connection{
 		Name:     auth0.Stringf("Test-Google-OAuth2-%d", time.Now().Unix()),
 		Strategy: auth0.String("google-oauth2"),
 		Options: &management.ConnectionOptionsGoogleOAuth2{
@@ -165,10 +171,11 @@ func ExampleConnectionManager_Create() {
 		},
 	}
 
-	defer api.Connection.Delete(c.GetID())
+	defer api.Connection.Delete(connection.GetID())
 
-	err := api.Connection.Create(c)
+	err := api.Connection.Create(connection)
 	if err != nil {
 		// handle err
+		return
 	}
 }

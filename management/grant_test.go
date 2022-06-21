@@ -1,16 +1,16 @@
 package management
 
-import "testing"
+import (
+	"testing"
 
-func TestGrant(t *testing.T) {
-	var err error
+	"github.com/stretchr/testify/assert"
+)
 
-	t.Run("List", func(t *testing.T) {
-		var gs *GrantList
-		gs, err = m.Grant.List()
-		if err != nil {
-			t.Fatal(err)
-		}
-		t.Logf("%v\n", gs)
-	})
+func TestGrantManager_List(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	grantList, err := m.Grant.List()
+	assert.NoError(t, err)
+	assert.IsType(t, &GrantList{}, grantList)
+	assert.Len(t, grantList.Grants, 0)
 }
