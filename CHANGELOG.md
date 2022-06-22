@@ -1,5 +1,19 @@
 # Change Log
 
+<a name="v0.7.0"></a>
+## [v0.7.0](https://github.com/auth0/go-auth0/tree/v0.7.0) (2022-06-22)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.4...v0.7.0)
+
+### Added
+
+- Added `icon_url` to OAuth2 connection options ([#74](https://github.com/auth0/go-auth0/pull/74))
+
+### Changed
+
+- **[Breaking]** Changed `AuthParams` to an `interface{}` in Email and SMS connection options ([#75](https://github.com/auth0/go-auth0/pull/75))
+
+
 <a name="v0.6.4"></a>
 ## [v0.6.4](https://github.com/auth0/go-auth0/tree/v0.6.4) (2022-06-08)
 

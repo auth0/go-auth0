@@ -458,7 +458,7 @@ type ConnectionOptionsEmail struct {
 
 	OTP *ConnectionOptionsOTP `json:"totp,omitempty"`
 
-	AuthParams map[string]string `json:"authParams,omitempty"`
+	AuthParams interface{} `json:"authParams,omitempty"`
 
 	DisableSignup        *bool     `json:"disable_signup,omitempty"`
 	BruteForceProtection *bool     `json:"brute_force_protection,omitempty"`
@@ -501,7 +501,7 @@ type ConnectionOptionsSMS struct {
 
 	OTP *ConnectionOptionsOTP `json:"totp,omitempty"`
 
-	AuthParams map[string]string `json:"authParams,omitempty"`
+	AuthParams interface{} `json:"authParams,omitempty"`
 
 	TwilioSID           *string `json:"twilio_sid,omitempty"`
 	TwilioToken         *string `json:"twilio_token,omitempty"`

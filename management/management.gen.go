@@ -1592,14 +1592,6 @@ func (c *ConnectionOptionsAzureAD) String() string {
 	return Stringify(c)
 }
 
-// GetAuthParams returns the AuthParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsEmail) GetAuthParams() map[string]string {
-	if c == nil || c.AuthParams == nil {
-		return map[string]string{}
-	}
-	return c.AuthParams
-}
-
 // GetBruteForceProtection returns the BruteForceProtection field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsEmail) GetBruteForceProtection() bool {
 	if c == nil || c.BruteForceProtection == nil {
@@ -3236,14 +3228,6 @@ func (c *ConnectionOptionsSAMLSigningKey) GetKey() string {
 // String returns a string representation of ConnectionOptionsSAMLSigningKey.
 func (c *ConnectionOptionsSAMLSigningKey) String() string {
 	return Stringify(c)
-}
-
-// GetAuthParams returns the AuthParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsSMS) GetAuthParams() map[string]string {
-	if c == nil || c.AuthParams == nil {
-		return map[string]string{}
-	}
-	return c.AuthParams
 }
 
 // GetBruteForceProtection returns the BruteForceProtection field if it's non-nil, zero value otherwise.
