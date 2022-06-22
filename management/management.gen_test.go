@@ -2025,16 +2025,6 @@ func TestConnectionOptionsAzureAD_String(t *testing.T) {
 	}
 }
 
-func TestConnectionOptionsEmail_GetAuthParams(tt *testing.T) {
-	zeroValue := map[string]string{}
-	c := &ConnectionOptionsEmail{AuthParams: zeroValue}
-	c.GetAuthParams()
-	c = &ConnectionOptionsEmail{}
-	c.GetAuthParams()
-	c = nil
-	c.GetAuthParams()
-}
-
 func TestConnectionOptionsEmail_GetBruteForceProtection(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsEmail{BruteForceProtection: &zeroValue}
@@ -4093,16 +4083,6 @@ func TestConnectionOptionsSAMLSigningKey_String(t *testing.T) {
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
-}
-
-func TestConnectionOptionsSMS_GetAuthParams(tt *testing.T) {
-	zeroValue := map[string]string{}
-	c := &ConnectionOptionsSMS{AuthParams: zeroValue}
-	c.GetAuthParams()
-	c = &ConnectionOptionsSMS{}
-	c.GetAuthParams()
-	c = nil
-	c.GetAuthParams()
 }
 
 func TestConnectionOptionsSMS_GetBruteForceProtection(tt *testing.T) {
