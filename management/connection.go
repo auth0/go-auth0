@@ -762,6 +762,7 @@ type ConnectionOptionsSAML struct {
 	DomainAliases      []interface{}                      `json:"domain_aliases,omitempty"`
 	SignInEndpoint     *string                            `json:"signInEndpoint,omitempty"`
 	SignOutEndpoint    *string                            `json:"signOutEndpoint,omitempty"`
+	DisableSignOut     *bool                              `json:"disableSignout,omitempty"`
 	SignatureAlgorithm *string                            `json:"signatureAlgorithm,omitempty"`
 	DigestAglorithm    *string                            `json:"digestAlgorithm,omitempty"`
 	MetadataXML        *string                            `json:"metadataXml,omitempty"`
