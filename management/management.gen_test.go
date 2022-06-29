@@ -3807,6 +3807,16 @@ func TestConnectionOptionsSAML_GetDigestAglorithm(tt *testing.T) {
 	c.GetDigestAglorithm()
 }
 
+func TestConnectionOptionsSAML_GetDisableSignOut(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsSAML{DisableSignOut: &zeroValue}
+	c.GetDisableSignOut()
+	c = &ConnectionOptionsSAML{}
+	c.GetDisableSignOut()
+	c = nil
+	c.GetDisableSignOut()
+}
+
 func TestConnectionOptionsSAML_GetEntityID(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsSAML{EntityID: &zeroValue}

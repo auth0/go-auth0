@@ -3007,6 +3007,14 @@ func (c *ConnectionOptionsSAML) GetDigestAglorithm() string {
 	return *c.DigestAglorithm
 }
 
+// GetDisableSignOut returns the DisableSignOut field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetDisableSignOut() bool {
+	if c == nil || c.DisableSignOut == nil {
+		return false
+	}
+	return *c.DisableSignOut
+}
+
 // GetEntityID returns the EntityID field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsSAML) GetEntityID() string {
 	if c == nil || c.EntityID == nil {
