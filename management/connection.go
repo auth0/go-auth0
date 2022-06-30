@@ -645,7 +645,8 @@ type ConnectionOptionsOAuth2 struct {
 	LogoURL            *string   `json:"icon_url,omitempty"`
 	// Scripts for the connection
 	// Allowed keys are: "fetchUserProfile"
-	Scripts map[string]interface{} `json:"scripts,omitempty"`
+	Scripts     map[string]interface{} `json:"scripts,omitempty"`
+	PKCEEnabled *bool                  `json:"pkce_enabled,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsOAuth2.
