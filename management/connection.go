@@ -643,10 +643,10 @@ type ConnectionOptionsOAuth2 struct {
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 	LogoURL            *string   `json:"icon_url,omitempty"`
+	PKCEEnabled        *bool     `json:"pkce_enabled,omitempty"`
 	// Scripts for the connection
 	// Allowed keys are: "fetchUserProfile"
-	Scripts     map[string]interface{} `json:"scripts,omitempty"`
-	PKCEEnabled *bool                  `json:"pkce_enabled,omitempty"`
+	Scripts map[string]interface{} `json:"scripts,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsOAuth2.
