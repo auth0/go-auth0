@@ -303,20 +303,42 @@ func TestGuardian(t *testing.T) {
 			})
 		})
 
-		t.Run("WebAuthn Platform Enable", func(t *testing.T) {
-			setupHTTPRecordings(t)
+		t.Run("WebAuthn Platform", func(t *testing.T) {
+			t.Run("Enable", func(t *testing.T) {
+				setupHTTPRecordings(t)
 
-			initialStatus, err := getInitialMFAStatus("webauthn-platform")
-			assert.NoError(t, err)
+				initialStatus, err := getInitialMFAStatus("webauthn-platform")
+				assert.NoError(t, err)
 
-			t.Cleanup(func() {
-				err := m.Guardian.MultiFactor.WebAuthnPlatform.Enable(initialStatus)
-				require.NoError(t, err)
+				t.Cleanup(func() {
+					err := m.Guardian.MultiFactor.WebAuthnPlatform.Enable(initialStatus)
+					require.NoError(t, err)
+				})
+
+				err = m.Guardian.MultiFactor.WebAuthnPlatform.Enable(true)
+				assert.NoError(t, err)
+				assertMFAIsEnabled(t, "webauthn-platform")
 			})
+			t.Run("Settings", func(t *testing.T) {
+				setupHTTPRecordings(t)
 
-			err = m.Guardian.MultiFactor.WebAuthnPlatform.Enable(true)
-			assert.NoError(t, err)
-			assertMFAIsEnabled(t, "webauthn-platform")
+				initialSettings, err := m.Guardian.MultiFactor.WebAuthnPlatform.Read()
+				assert.NoError(t, err)
+				t.Cleanup(func() {
+					err := m.Guardian.MultiFactor.WebAuthnPlatform.Update(initialSettings)
+					require.NoError(t, err)
+				})
+
+				updatedSettings := &MultiFactorWebAuthnSettings{
+					OverrideRelyingParty: auth0.Bool(false),
+				}
+				err = m.Guardian.MultiFactor.WebAuthnPlatform.Update(updatedSettings)
+				assert.NoError(t, err)
+
+				actualSettings, err := m.Guardian.MultiFactor.WebAuthnPlatform.Read()
+				assert.NoError(t, err)
+				assert.Equal(t, false, actualSettings.GetOverrideRelyingParty())
+			})
 		})
 	})
 
