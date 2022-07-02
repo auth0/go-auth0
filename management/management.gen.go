@@ -4684,6 +4684,35 @@ func (m *MultiFactorWebAuthnRoaming) String() string {
 	return Stringify(m)
 }
 
+// GetOverrideRelyingParty returns the OverrideRelyingParty field if it's non-nil, zero value otherwise.
+func (m *MultiFactorWebAuthnSettings) GetOverrideRelyingParty() bool {
+	if m == nil || m.OverrideRelyingParty == nil {
+		return false
+	}
+	return *m.OverrideRelyingParty
+}
+
+// GetRelyingPartyIdentifier returns the RelyingPartyIdentifier field if it's non-nil, zero value otherwise.
+func (m *MultiFactorWebAuthnSettings) GetRelyingPartyIdentifier() string {
+	if m == nil || m.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *m.RelyingPartyIdentifier
+}
+
+// GetUserVerification returns the UserVerification field if it's non-nil, zero value otherwise.
+func (m *MultiFactorWebAuthnSettings) GetUserVerification() string {
+	if m == nil || m.UserVerification == nil {
+		return ""
+	}
+	return *m.UserVerification
+}
+
+// String returns a string representation of MultiFactorWebAuthnSettings.
+func (m *MultiFactorWebAuthnSettings) String() string {
+	return Stringify(m)
+}
+
 // GetBranding returns the Branding field.
 func (o *Organization) GetBranding() *OrganizationBranding {
 	if o == nil {

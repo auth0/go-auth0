@@ -5957,6 +5957,44 @@ func TestMultiFactorWebAuthnRoaming_String(t *testing.T) {
 	}
 }
 
+func TestMultiFactorWebAuthnSettings_GetOverrideRelyingParty(tt *testing.T) {
+	var zeroValue bool
+	m := &MultiFactorWebAuthnSettings{OverrideRelyingParty: &zeroValue}
+	m.GetOverrideRelyingParty()
+	m = &MultiFactorWebAuthnSettings{}
+	m.GetOverrideRelyingParty()
+	m = nil
+	m.GetOverrideRelyingParty()
+}
+
+func TestMultiFactorWebAuthnSettings_GetRelyingPartyIdentifier(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorWebAuthnSettings{RelyingPartyIdentifier: &zeroValue}
+	m.GetRelyingPartyIdentifier()
+	m = &MultiFactorWebAuthnSettings{}
+	m.GetRelyingPartyIdentifier()
+	m = nil
+	m.GetRelyingPartyIdentifier()
+}
+
+func TestMultiFactorWebAuthnSettings_GetUserVerification(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorWebAuthnSettings{UserVerification: &zeroValue}
+	m.GetUserVerification()
+	m = &MultiFactorWebAuthnSettings{}
+	m.GetUserVerification()
+	m = nil
+	m.GetUserVerification()
+}
+
+func TestMultiFactorWebAuthnSettings_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorWebAuthnSettings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestOrganization_GetBranding(tt *testing.T) {
 	o := &Organization{}
 	o.GetBranding()

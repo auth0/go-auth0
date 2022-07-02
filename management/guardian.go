@@ -354,6 +354,14 @@ func (m *MultiFactorDUO) Enable(enabled bool, opts ...RequestOption) error {
 	}, opts...)
 }
 
+// MultiFactorWebAuthnSettings holds settings for
+// configuring WebAuthn Roaming or Platform.
+type MultiFactorWebAuthnSettings struct {
+	OverrideRelyingParty   *bool   `json:"overrideRelyingParty,omitempty"`
+	RelyingPartyIdentifier *string `json:"relyingPartyIdentifier,omitempty"`
+	UserVerification       *string `json:"userVerification,omitempty"`
+}
+
 // MultiFactorWebAuthnRoaming is used for WebAuthnRoaming MFA.
 type MultiFactorWebAuthnRoaming struct{ *Management }
 
@@ -364,6 +372,21 @@ func (m *MultiFactorWebAuthnRoaming) Enable(enabled bool, opts ...RequestOption)
 	return m.Request("PUT", m.URI("guardian", "factors", "webauthn-roaming"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
+}
+
+// Read WebAuthn Roaming Multi-factor Authentication Settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-security-keys-for-mfa
+func (m *MultiFactorWebAuthnRoaming) Read(opts ...RequestOption) (s *MultiFactorWebAuthnSettings, err error) {
+	err = m.Request("GET", m.URI("guardian", "factors", "webauthn-roaming", "settings"), &s, opts...)
+	return
+}
+
+// Update WebAuthn Roaming Multi-factor Authentication Settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-security-keys-for-mfa
+func (m *MultiFactorWebAuthnRoaming) Update(s *MultiFactorWebAuthnSettings, opts ...RequestOption) error {
+	return m.Request("PUT", m.URI("guardian", "factors", "webauthn-roaming", "settings"), &s, opts...)
 }
 
 // MultiFactorWebAuthnPlatform is used for WebAuthnPlatform MFA.

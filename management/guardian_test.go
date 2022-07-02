@@ -265,20 +265,42 @@ func TestGuardian(t *testing.T) {
 			assertMFAIsEnabled(t, "otp")
 		})
 
-		t.Run("WebAuthn Roaming Enable", func(t *testing.T) {
-			setupHTTPRecordings(t)
+		t.Run("WebAuthn Roaming", func(t *testing.T) {
+			t.Run("Enable", func(t *testing.T) {
+				setupHTTPRecordings(t)
 
-			initialStatus, err := getInitialMFAStatus("webauthn-roaming")
-			assert.NoError(t, err)
+				initialStatus, err := getInitialMFAStatus("webauthn-roaming")
+				assert.NoError(t, err)
 
-			t.Cleanup(func() {
-				err := m.Guardian.MultiFactor.WebAuthnRoaming.Enable(initialStatus)
-				require.NoError(t, err)
+				t.Cleanup(func() {
+					err := m.Guardian.MultiFactor.WebAuthnRoaming.Enable(initialStatus)
+					require.NoError(t, err)
+				})
+
+				err = m.Guardian.MultiFactor.WebAuthnRoaming.Enable(true)
+				assert.NoError(t, err)
+				assertMFAIsEnabled(t, "webauthn-roaming")
 			})
+			t.Run("Settings", func(t *testing.T) {
+				setupHTTPRecordings(t)
 
-			err = m.Guardian.MultiFactor.WebAuthnRoaming.Enable(true)
-			assert.NoError(t, err)
-			assertMFAIsEnabled(t, "webauthn-roaming")
+				initialSettings, err := m.Guardian.MultiFactor.WebAuthnRoaming.Read()
+				assert.NoError(t, err)
+				t.Cleanup(func() {
+					err := m.Guardian.MultiFactor.WebAuthnRoaming.Update(initialSettings)
+					require.NoError(t, err)
+				})
+
+				updatedSettings := &MultiFactorWebAuthnSettings{
+					UserVerification: auth0.String("preferred"),
+				}
+				err = m.Guardian.MultiFactor.WebAuthnRoaming.Update(updatedSettings)
+				assert.NoError(t, err)
+
+				actualSettings, err := m.Guardian.MultiFactor.WebAuthnRoaming.Read()
+				assert.NoError(t, err)
+				assert.Equal(t, "preferred", actualSettings.GetUserVerification())
+			})
 		})
 
 		t.Run("WebAuthn Platform Enable", func(t *testing.T) {
