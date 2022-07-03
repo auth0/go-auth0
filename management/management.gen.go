@@ -4533,6 +4533,35 @@ func (m *MultiFactorDUO) String() string {
 	return Stringify(m)
 }
 
+// GetHostname returns the Hostname field if it's non-nil, zero value otherwise.
+func (m *MultiFactorDUOSettings) GetHostname() string {
+	if m == nil || m.Hostname == nil {
+		return ""
+	}
+	return *m.Hostname
+}
+
+// GetIntegrationKey returns the IntegrationKey field if it's non-nil, zero value otherwise.
+func (m *MultiFactorDUOSettings) GetIntegrationKey() string {
+	if m == nil || m.IntegrationKey == nil {
+		return ""
+	}
+	return *m.IntegrationKey
+}
+
+// GetSecretKey returns the SecretKey field if it's non-nil, zero value otherwise.
+func (m *MultiFactorDUOSettings) GetSecretKey() string {
+	if m == nil || m.SecretKey == nil {
+		return ""
+	}
+	return *m.SecretKey
+}
+
+// String returns a string representation of MultiFactorDUOSettings.
+func (m *MultiFactorDUOSettings) String() string {
+	return Stringify(m)
+}
+
 // String returns a string representation of MultiFactorEmail.
 func (m *MultiFactorEmail) String() string {
 	return Stringify(m)

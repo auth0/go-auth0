@@ -233,20 +233,46 @@ func TestGuardian(t *testing.T) {
 			assertMFAIsEnabled(t, "email")
 		})
 
-		t.Run("DUO Enable", func(t *testing.T) {
-			setupHTTPRecordings(t)
+		t.Run("DUO", func(t *testing.T) {
+			t.Run("Enable", func(t *testing.T) {
+				setupHTTPRecordings(t)
 
-			initialStatus, err := getInitialMFAStatus("duo")
-			assert.NoError(t, err)
+				initialStatus, err := getInitialMFAStatus("duo")
+				assert.NoError(t, err)
 
-			t.Cleanup(func() {
-				err := m.Guardian.MultiFactor.DUO.Enable(initialStatus)
-				require.NoError(t, err)
+				t.Cleanup(func() {
+					err := m.Guardian.MultiFactor.DUO.Enable(initialStatus)
+					require.NoError(t, err)
+				})
+
+				err = m.Guardian.MultiFactor.DUO.Enable(true)
+				assert.NoError(t, err)
+				assertMFAIsEnabled(t, "duo")
 			})
+			t.Run("Settings", func(t *testing.T) {
+				setupHTTPRecordings(t)
 
-			err = m.Guardian.MultiFactor.DUO.Enable(true)
-			assert.NoError(t, err)
-			assertMFAIsEnabled(t, "duo")
+				initialSettings, err := m.Guardian.MultiFactor.DUO.Read()
+				assert.NoError(t, err)
+				t.Cleanup(func() {
+					err := m.Guardian.MultiFactor.DUO.Update(initialSettings)
+					require.NoError(t, err)
+				})
+
+				updatedSettings := &MultiFactorDUOSettings{
+					Hostname:       auth0.String("api-hostname"),
+					IntegrationKey: auth0.String("someKey"),
+					SecretKey:      auth0.String("someSecret"),
+				}
+				err = m.Guardian.MultiFactor.DUO.Update(updatedSettings)
+				assert.NoError(t, err)
+
+				actualSettings, err := m.Guardian.MultiFactor.DUO.Read()
+				assert.NoError(t, err)
+				assert.Equal(t, "api-hostname", actualSettings.GetHostname())
+				assert.Equal(t, "someKey", actualSettings.GetIntegrationKey())
+				assert.Equal(t, "someSecret", actualSettings.GetSecretKey())
+			})
 		})
 
 		t.Run("OTP Enable", func(t *testing.T) {
