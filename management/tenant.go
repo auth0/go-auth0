@@ -198,6 +198,42 @@ type TenantFlags struct {
 	// If enabled, this will use the scope description when generating a consent
 	// prompt. Otherwise, the scope name is used.
 	UseScopeDescriptionsForConsent *bool `json:"use_scope_descriptions_for_consent,omitempty"`
+
+	// Whether the legacy delegation endpoint will be enabled for your account (true) or not available (false).
+	AllowLegacyDelegationGrantTypes *bool `json:"allow_legacy_delegation_grant_types,omitempty"`
+
+	// Whether the legacy `auth/ro` endpoint (used with resource owner password and passwordless features) will be enabled for your account (true) or not available (false).
+	AllowLegacyROGrantTypes *bool `json:"allow_legacy_ro_grant_types,omitempty"`
+
+	// If enabled, customers can use Tokeninfo Endpoint, otherwise they can not use it.
+	AllowLegacyTokenInfoEndpoint *bool `json:"allow_legacy_tokeninfo_endpoint,omitempty"`
+
+	// Whether ID tokens and the userinfo endpoint includes a complete user profile (true) or only OpenID Connect claims (false).
+	EnableLegacyProfile *bool `json:"enable_legacy_profile,omitempty"`
+
+	// Whether ID tokens can be used to authorize some types of requests to API v2 (true) not not (false).
+	EnableIDTokenAPI2 *bool `json:"enable_idtoken_api2,omitempty"`
+
+	// Do not Publish Enterprise Connections Information with IdP domains on the lock configuration file.
+	NoDisclosureEnterpriseConnections *bool `json:"no_disclose_enterprise_connections,omitempty"`
+
+	// If true, SMS phone numbers will not be obfuscated in Management API GET calls.
+	DisableManagementAPISMSObfuscation *bool `json:"disable_management_api_sms_obfuscation,omitempty"`
+
+	// If enabled, users will be presented with an email verification prompt during their first login when using Azure AD or ADFS connections
+	EnableADFSWAADEmailVerification *bool `json:"enable_adfs_waad_email_verification,omitempty"`
+
+	// Delete underlying grant when a Refresh Token is revoked via the Authentication API.
+	RevokeRefreshTokenGrant *bool `json:"revoke_refresh_token_grant,omitempty"`
+
+	// Enables beta access to log streaming changes
+	DashboardLogStreams *bool `json:"dashboard_log_streams_next,omitempty"`
+
+	// Enables new insights activity page view
+	DashboardInsightsView *bool `json:"dashboard_insights_view,omitempty"`
+
+	// Disables SAML fields map fix for bad mappings with repeated attributes
+	DisableFieldsMapFix *bool `json:"disable_fields_map_fix,omitempty"`
 }
 
 // TenantUniversalLogin holds universal login settings.

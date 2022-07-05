@@ -7402,6 +7402,56 @@ func TestTenantFlags_GetAllowChangingEnableSSO(tt *testing.T) {
 	t.GetAllowChangingEnableSSO()
 }
 
+func TestTenantFlags_GetAllowLegacyDelegationGrantTypes(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{AllowLegacyDelegationGrantTypes: &zeroValue}
+	t.GetAllowLegacyDelegationGrantTypes()
+	t = &TenantFlags{}
+	t.GetAllowLegacyDelegationGrantTypes()
+	t = nil
+	t.GetAllowLegacyDelegationGrantTypes()
+}
+
+func TestTenantFlags_GetAllowLegacyROGrantTypes(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{AllowLegacyROGrantTypes: &zeroValue}
+	t.GetAllowLegacyROGrantTypes()
+	t = &TenantFlags{}
+	t.GetAllowLegacyROGrantTypes()
+	t = nil
+	t.GetAllowLegacyROGrantTypes()
+}
+
+func TestTenantFlags_GetAllowLegacyTokenInfoEndpoint(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{AllowLegacyTokenInfoEndpoint: &zeroValue}
+	t.GetAllowLegacyTokenInfoEndpoint()
+	t = &TenantFlags{}
+	t.GetAllowLegacyTokenInfoEndpoint()
+	t = nil
+	t.GetAllowLegacyTokenInfoEndpoint()
+}
+
+func TestTenantFlags_GetDashboardInsightsView(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{DashboardInsightsView: &zeroValue}
+	t.GetDashboardInsightsView()
+	t = &TenantFlags{}
+	t.GetDashboardInsightsView()
+	t = nil
+	t.GetDashboardInsightsView()
+}
+
+func TestTenantFlags_GetDashboardLogStreams(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{DashboardLogStreams: &zeroValue}
+	t.GetDashboardLogStreams()
+	t = &TenantFlags{}
+	t.GetDashboardLogStreams()
+	t = nil
+	t.GetDashboardLogStreams()
+}
+
 func TestTenantFlags_GetDisableClickjackProtectionHeaders(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{DisableClickjackProtectionHeaders: &zeroValue}
@@ -7412,6 +7462,16 @@ func TestTenantFlags_GetDisableClickjackProtectionHeaders(tt *testing.T) {
 	t.GetDisableClickjackProtectionHeaders()
 }
 
+func TestTenantFlags_GetDisableFieldsMapFix(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{DisableFieldsMapFix: &zeroValue}
+	t.GetDisableFieldsMapFix()
+	t = &TenantFlags{}
+	t.GetDisableFieldsMapFix()
+	t = nil
+	t.GetDisableFieldsMapFix()
+}
+
 func TestTenantFlags_GetDisableImpersonation(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{DisableImpersonation: &zeroValue}
@@ -7420,6 +7480,26 @@ func TestTenantFlags_GetDisableImpersonation(tt *testing.T) {
 	t.GetDisableImpersonation()
 	t = nil
 	t.GetDisableImpersonation()
+}
+
+func TestTenantFlags_GetDisableManagementAPISMSObfuscation(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{DisableManagementAPISMSObfuscation: &zeroValue}
+	t.GetDisableManagementAPISMSObfuscation()
+	t = &TenantFlags{}
+	t.GetDisableManagementAPISMSObfuscation()
+	t = nil
+	t.GetDisableManagementAPISMSObfuscation()
+}
+
+func TestTenantFlags_GetEnableADFSWAADEmailVerification(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{EnableADFSWAADEmailVerification: &zeroValue}
+	t.GetEnableADFSWAADEmailVerification()
+	t = &TenantFlags{}
+	t.GetEnableADFSWAADEmailVerification()
+	t = nil
+	t.GetEnableADFSWAADEmailVerification()
 }
 
 func TestTenantFlags_GetEnableAPIsSection(tt *testing.T) {
@@ -7462,6 +7542,16 @@ func TestTenantFlags_GetEnableDynamicClientRegistration(tt *testing.T) {
 	t.GetEnableDynamicClientRegistration()
 }
 
+func TestTenantFlags_GetEnableIDTokenAPI2(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{EnableIDTokenAPI2: &zeroValue}
+	t.GetEnableIDTokenAPI2()
+	t = &TenantFlags{}
+	t.GetEnableIDTokenAPI2()
+	t = nil
+	t.GetEnableIDTokenAPI2()
+}
+
 func TestTenantFlags_GetEnableLegacyLogsSearchV2(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{EnableLegacyLogsSearchV2: &zeroValue}
@@ -7470,6 +7560,16 @@ func TestTenantFlags_GetEnableLegacyLogsSearchV2(tt *testing.T) {
 	t.GetEnableLegacyLogsSearchV2()
 	t = nil
 	t.GetEnableLegacyLogsSearchV2()
+}
+
+func TestTenantFlags_GetEnableLegacyProfile(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{EnableLegacyProfile: &zeroValue}
+	t.GetEnableLegacyProfile()
+	t = &TenantFlags{}
+	t.GetEnableLegacyProfile()
+	t = nil
+	t.GetEnableLegacyProfile()
 }
 
 func TestTenantFlags_GetEnablePipeline2(tt *testing.T) {
@@ -7500,6 +7600,26 @@ func TestTenantFlags_GetEnableSSO(tt *testing.T) {
 	t.GetEnableSSO()
 	t = nil
 	t.GetEnableSSO()
+}
+
+func TestTenantFlags_GetNoDisclosureEnterpriseConnections(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{NoDisclosureEnterpriseConnections: &zeroValue}
+	t.GetNoDisclosureEnterpriseConnections()
+	t = &TenantFlags{}
+	t.GetNoDisclosureEnterpriseConnections()
+	t = nil
+	t.GetNoDisclosureEnterpriseConnections()
+}
+
+func TestTenantFlags_GetRevokeRefreshTokenGrant(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{RevokeRefreshTokenGrant: &zeroValue}
+	t.GetRevokeRefreshTokenGrant()
+	t = &TenantFlags{}
+	t.GetRevokeRefreshTokenGrant()
+	t = nil
+	t.GetRevokeRefreshTokenGrant()
 }
 
 func TestTenantFlags_GetUniversalLogin(tt *testing.T) {
