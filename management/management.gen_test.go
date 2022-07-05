@@ -3495,6 +3495,16 @@ func TestConnectionOptionsOAuth2_GetNonPersistentAttrs(tt *testing.T) {
 	c.GetNonPersistentAttrs()
 }
 
+func TestConnectionOptionsOAuth2_GetPKCEEnabled(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsOAuth2{PKCEEnabled: &zeroValue}
+	c.GetPKCEEnabled()
+	c = &ConnectionOptionsOAuth2{}
+	c.GetPKCEEnabled()
+	c = nil
+	c.GetPKCEEnabled()
+}
+
 func TestConnectionOptionsOAuth2_GetScope(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOAuth2{Scope: &zeroValue}

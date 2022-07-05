@@ -2763,6 +2763,14 @@ func (c *ConnectionOptionsOAuth2) GetNonPersistentAttrs() []string {
 	return *c.NonPersistentAttrs
 }
 
+// GetPKCEEnabled returns the PKCEEnabled field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth2) GetPKCEEnabled() bool {
+	if c == nil || c.PKCEEnabled == nil {
+		return false
+	}
+	return *c.PKCEEnabled
+}
+
 // GetScope returns the Scope field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOAuth2) GetScope() string {
 	if c == nil || c.Scope == nil {
