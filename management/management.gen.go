@@ -4677,6 +4677,35 @@ func (m *MultiFactorPush) String() string {
 	return Stringify(m)
 }
 
+// GetAppleAppLink returns the AppleAppLink field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushCustomApp) GetAppleAppLink() string {
+	if m == nil || m.AppleAppLink == nil {
+		return ""
+	}
+	return *m.AppleAppLink
+}
+
+// GetAppName returns the AppName field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushCustomApp) GetAppName() string {
+	if m == nil || m.AppName == nil {
+		return ""
+	}
+	return *m.AppName
+}
+
+// GetGoogleAppLink returns the GoogleAppLink field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushCustomApp) GetGoogleAppLink() string {
+	if m == nil || m.GoogleAppLink == nil {
+		return ""
+	}
+	return *m.GoogleAppLink
+}
+
+// String returns a string representation of MultiFactorPushCustomApp.
+func (m *MultiFactorPushCustomApp) String() string {
+	return Stringify(m)
+}
+
 // String returns a string representation of MultiFactorSMS.
 func (m *MultiFactorSMS) String() string {
 	return Stringify(m)
