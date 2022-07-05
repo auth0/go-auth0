@@ -392,6 +392,22 @@ func TestGuardian(t *testing.T) {
 				assert.Equal(t, false, actualSettings.GetOverrideRelyingParty())
 			})
 		})
+
+		t.Run("Recovery Code Enable", func(t *testing.T) {
+			setupHTTPRecordings(t)
+
+			initialStatus, err := getInitialMFAStatus("recovery-code")
+			assert.NoError(t, err)
+
+			t.Cleanup(func() {
+				err := m.Guardian.MultiFactor.RecoveryCode.Enable(initialStatus)
+				require.NoError(t, err)
+			})
+
+			err = m.Guardian.MultiFactor.RecoveryCode.Enable(true)
+			assert.NoError(t, err)
+			assertMFAIsEnabled(t, "recovery-code")
+		})
 	})
 
 	t.Run("Enrollment", func(t *testing.T) {

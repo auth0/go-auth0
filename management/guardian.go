@@ -102,13 +102,15 @@ type GuardianManager struct {
 func newGuardianManager(m *Management) *GuardianManager {
 	return &GuardianManager{
 		&EnrollmentManager{m},
-		&MultiFactorManager{m,
+		&MultiFactorManager{
+			m,
 			&MultiFactorPhone{m},
 			&MultiFactorSMS{m},
 			&MultiFactorPush{m},
 			&MultiFactorEmail{m},
 			&MultiFactorDUO{m},
 			&MultiFactorOTP{m},
+			&MultiFactorRecoveryCode{m},
 			&MultiFactorWebAuthnRoaming{m},
 			&MultiFactorWebAuthnPlatform{m},
 		},
@@ -189,6 +191,7 @@ type MultiFactorManager struct {
 	Email            *MultiFactorEmail
 	DUO              *MultiFactorDUO
 	OTP              *MultiFactorOTP
+	RecoveryCode     *MultiFactorRecoveryCode
 	WebAuthnRoaming  *MultiFactorWebAuthnRoaming
 	WebAuthnPlatform *MultiFactorWebAuthnPlatform
 }
@@ -468,6 +471,20 @@ type MultiFactorOTP struct{ *Management }
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_factors_by_name
 func (m *MultiFactorOTP) Enable(enabled bool, opts ...RequestOption) error {
 	return m.Request("PUT", m.URI("guardian", "factors", "otp"), &MultiFactor{
+		Enabled: &enabled,
+	}, opts...)
+}
+
+// MultiFactorRecoveryCode is used for RecoveryCode MFA.
+type MultiFactorRecoveryCode struct {
+	*Management
+}
+
+// Enable enables or disables Recovery Code Multi-factor Authentication.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/configure-recovery-codes-for-mfa
+func (m *MultiFactorRecoveryCode) Enable(enabled bool, opts ...RequestOption) error {
+	return m.Request("PUT", m.URI("guardian", "factors", "recovery-code"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
 }
