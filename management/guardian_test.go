@@ -215,6 +215,32 @@ func TestGuardian(t *testing.T) {
 				assert.Equal(t, expectedSNS.GetAPNSPlatformApplicationARN(), actualSNS.GetAPNSPlatformApplicationARN())
 				assert.Equal(t, expectedSNS.GetGCMPlatformApplicationARN(), actualSNS.GetGCMPlatformApplicationARN())
 			})
+
+			t.Run("CustomApp", func(t *testing.T) {
+				setupHTTPRecordings(t)
+
+				initialCustomApp, err := m.Guardian.MultiFactor.Push.CustomApp()
+				assert.NoError(t, err)
+
+				t.Cleanup(func() {
+					err := m.Guardian.MultiFactor.Push.UpdateCustomApp(initialCustomApp)
+					assert.NoError(t, err)
+				})
+
+				expectedCustomApp := &MultiFactorPushCustomApp{
+					AppName:       auth0.String("bestApp"),
+					AppleAppLink:  auth0.String("https://itunes.apple.com/us/app/my-app/id123121"),
+					GoogleAppLink: auth0.String("https://play.google.com/store/apps/details?id=com.my.app"),
+				}
+				err = m.Guardian.MultiFactor.Push.UpdateCustomApp(expectedCustomApp)
+				assert.NoError(t, err)
+
+				actualCustomApp, err := m.Guardian.MultiFactor.Push.CustomApp()
+				assert.NoError(t, err)
+				assert.Equal(t, expectedCustomApp.GetAppName(), actualCustomApp.GetAppName())
+				assert.Equal(t, expectedCustomApp.GetAppleAppLink(), actualCustomApp.GetAppleAppLink())
+				assert.Equal(t, expectedCustomApp.GetGoogleAppLink(), actualCustomApp.GetGoogleAppLink())
+			})
 		})
 
 		t.Run("Email Enable", func(t *testing.T) {

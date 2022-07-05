@@ -5943,6 +5943,44 @@ func TestMultiFactorPush_String(t *testing.T) {
 	}
 }
 
+func TestMultiFactorPushCustomApp_GetAppleAppLink(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorPushCustomApp{AppleAppLink: &zeroValue}
+	m.GetAppleAppLink()
+	m = &MultiFactorPushCustomApp{}
+	m.GetAppleAppLink()
+	m = nil
+	m.GetAppleAppLink()
+}
+
+func TestMultiFactorPushCustomApp_GetAppName(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorPushCustomApp{AppName: &zeroValue}
+	m.GetAppName()
+	m = &MultiFactorPushCustomApp{}
+	m.GetAppName()
+	m = nil
+	m.GetAppName()
+}
+
+func TestMultiFactorPushCustomApp_GetGoogleAppLink(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorPushCustomApp{GoogleAppLink: &zeroValue}
+	m.GetGoogleAppLink()
+	m = &MultiFactorPushCustomApp{}
+	m.GetGoogleAppLink()
+	m = nil
+	m.GetGoogleAppLink()
+}
+
+func TestMultiFactorPushCustomApp_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorPushCustomApp{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestMultiFactorSMS_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorSMS{}

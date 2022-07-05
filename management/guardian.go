@@ -59,8 +59,8 @@ type MultiFactorSMSTemplate struct {
 	VerificationMessage *string `json:"verification_message,omitempty"`
 }
 
-// MultiFactorProviderAmazonSNS is used for
-// AmazonSNS MultiFactor Authentication.
+// MultiFactorProviderAmazonSNS is an AmazonSNS provider
+// used for MultiFactorPush Authentication.
 type MultiFactorProviderAmazonSNS struct {
 	// AWS Access Key ID
 	AccessKeyID *string `json:"aws_access_key_id,omitempty"`
@@ -300,6 +300,13 @@ func (m *MultiFactorSMS) UpdateTwilio(t *MultiFactorProviderTwilio, opts ...Requ
 	return m.Request("PUT", m.URI("guardian", "factors", "sms", "providers", "twilio"), t, opts...)
 }
 
+// MultiFactorPushCustomApp holds custom multi-factor authentication app settings.
+type MultiFactorPushCustomApp struct {
+	AppName       *string `json:"app_name,omitempty"`
+	AppleAppLink  *string `json:"apple_app_link,omitempty"`
+	GoogleAppLink *string `json:"google_app_link,omitempty"`
+}
+
 // MultiFactorPush is used for Push MFA.
 type MultiFactorPush struct{ *Management }
 
@@ -311,6 +318,21 @@ func (m *MultiFactorPush) Enable(enabled bool, opts ...RequestOption) error {
 	return m.Request("PUT", m.URI("guardian", "factors", "push-notification"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
+}
+
+// CustomApp retrieves the custom multi-factor authentication app's settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa
+func (m *MultiFactorPush) CustomApp(opts ...RequestOption) (a *MultiFactorPushCustomApp, err error) {
+	err = m.Request("GET", m.URI("prompts", "mfa-push"), &a, opts...)
+	return
+}
+
+// UpdateCustomApp updates the custom multi-factor authentication app's settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa
+func (m *MultiFactorPush) UpdateCustomApp(a *MultiFactorPushCustomApp, opts ...RequestOption) error {
+	return m.Request("PATCH", m.URI("prompts", "mfa-push"), a, opts...)
 }
 
 // AmazonSNS returns the Amazon Web Services (AWS) Simple Notification Service
