@@ -5749,6 +5749,44 @@ func TestMultiFactorDUO_String(t *testing.T) {
 	}
 }
 
+func TestMultiFactorDUOSettings_GetHostname(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorDUOSettings{Hostname: &zeroValue}
+	m.GetHostname()
+	m = &MultiFactorDUOSettings{}
+	m.GetHostname()
+	m = nil
+	m.GetHostname()
+}
+
+func TestMultiFactorDUOSettings_GetIntegrationKey(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorDUOSettings{IntegrationKey: &zeroValue}
+	m.GetIntegrationKey()
+	m = &MultiFactorDUOSettings{}
+	m.GetIntegrationKey()
+	m = nil
+	m.GetIntegrationKey()
+}
+
+func TestMultiFactorDUOSettings_GetSecretKey(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorDUOSettings{SecretKey: &zeroValue}
+	m.GetSecretKey()
+	m = &MultiFactorDUOSettings{}
+	m.GetSecretKey()
+	m = nil
+	m.GetSecretKey()
+}
+
+func TestMultiFactorDUOSettings_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorDUOSettings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestMultiFactorEmail_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorEmail{}

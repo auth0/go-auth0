@@ -342,6 +342,13 @@ func (m *MultiFactorEmail) Enable(enabled bool, opts ...RequestOption) error {
 	}, opts...)
 }
 
+// MultiFactorDUOSettings holds settings for configuring DUO.
+type MultiFactorDUOSettings struct {
+	Hostname       *string `json:"host,omitempty"`
+	IntegrationKey *string `json:"ikey,omitempty"`
+	SecretKey      *string `json:"skey,omitempty"`
+}
+
 // MultiFactorDUO is used for Duo MFA.
 type MultiFactorDUO struct{ *Management }
 
@@ -352,6 +359,21 @@ func (m *MultiFactorDUO) Enable(enabled bool, opts ...RequestOption) error {
 	return m.Request("PUT", m.URI("guardian", "factors", "duo"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
+}
+
+// Read WebAuthn Roaming Multi-factor Authentication Settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/configure-cisco-duo-for-mfa
+func (m *MultiFactorDUO) Read(opts ...RequestOption) (s *MultiFactorDUOSettings, err error) {
+	err = m.Request("GET", m.URI("guardian", "factors", "duo", "settings"), &s, opts...)
+	return
+}
+
+// Update WebAuthn Roaming Multi-factor Authentication Settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/configure-cisco-duo-for-mfa
+func (m *MultiFactorDUO) Update(s *MultiFactorDUOSettings, opts ...RequestOption) error {
+	return m.Request("PUT", m.URI("guardian", "factors", "duo", "settings"), &s, opts...)
 }
 
 // MultiFactorWebAuthnSettings holds settings for
