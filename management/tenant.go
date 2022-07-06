@@ -75,6 +75,8 @@ type Tenant struct {
 
 	// Supported locales for the UI
 	EnabledLocales []interface{} `json:"enabled_locales,omitempty"`
+
+	SessionCookie *TenantSessionCookie `json:"session_cookie,omitempty"`
 }
 
 // MarshalJSON is a custom serializer for the Tenant type.
@@ -297,6 +299,10 @@ type TenantDeviceFlow struct {
 	// The mask used to format the generated User Code to a friendly, readable
 	// format with possible spaces or hyphens
 	Mask *string `json:"mask,omitempty"`
+}
+
+type TenantSessionCookie struct {
+	Mode *string `json:"mode,omitempty"`
 }
 
 // TenantManager manages Auth0 Tenant resources.

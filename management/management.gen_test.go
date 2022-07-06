@@ -7129,6 +7129,13 @@ func TestTenant_GetSandboxVersion(tt *testing.T) {
 	t.GetSandboxVersion()
 }
 
+func TestTenant_GetSessionCookie(tt *testing.T) {
+	t := &Tenant{}
+	t.GetSessionCookie()
+	t = nil
+	t.GetSessionCookie()
+}
+
 func TestTenant_GetSessionLifetime(tt *testing.T) {
 	var zeroValue float64
 	t := &Tenant{SessionLifetime: &zeroValue}
@@ -7429,6 +7436,24 @@ func TestTenantGuardianMFAPage_GetHTML(tt *testing.T) {
 func TestTenantGuardianMFAPage_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TenantGuardianMFAPage{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTenantSessionCookie_GetMode(tt *testing.T) {
+	var zeroValue string
+	t := &TenantSessionCookie{Mode: &zeroValue}
+	t.GetMode()
+	t = &TenantSessionCookie{}
+	t.GetMode()
+	t = nil
+	t.GetMode()
+}
+
+func TestTenantSessionCookie_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TenantSessionCookie{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
