@@ -2763,6 +2763,14 @@ func (c *ConnectionOptionsOAuth2) GetNonPersistentAttrs() []string {
 	return *c.NonPersistentAttrs
 }
 
+// GetPKCEEnabled returns the PKCEEnabled field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth2) GetPKCEEnabled() bool {
+	if c == nil || c.PKCEEnabled == nil {
+		return false
+	}
+	return *c.PKCEEnabled
+}
+
 // GetScope returns the Scope field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOAuth2) GetScope() string {
 	if c == nil || c.Scope == nil {
@@ -4533,6 +4541,35 @@ func (m *MultiFactorDUO) String() string {
 	return Stringify(m)
 }
 
+// GetHostname returns the Hostname field if it's non-nil, zero value otherwise.
+func (m *MultiFactorDUOSettings) GetHostname() string {
+	if m == nil || m.Hostname == nil {
+		return ""
+	}
+	return *m.Hostname
+}
+
+// GetIntegrationKey returns the IntegrationKey field if it's non-nil, zero value otherwise.
+func (m *MultiFactorDUOSettings) GetIntegrationKey() string {
+	if m == nil || m.IntegrationKey == nil {
+		return ""
+	}
+	return *m.IntegrationKey
+}
+
+// GetSecretKey returns the SecretKey field if it's non-nil, zero value otherwise.
+func (m *MultiFactorDUOSettings) GetSecretKey() string {
+	if m == nil || m.SecretKey == nil {
+		return ""
+	}
+	return *m.SecretKey
+}
+
+// String returns a string representation of MultiFactorDUOSettings.
+func (m *MultiFactorDUOSettings) String() string {
+	return Stringify(m)
+}
+
 // String returns a string representation of MultiFactorEmail.
 func (m *MultiFactorEmail) String() string {
 	return Stringify(m)
@@ -4648,6 +4685,40 @@ func (m *MultiFactorPush) String() string {
 	return Stringify(m)
 }
 
+// GetAppleAppLink returns the AppleAppLink field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushCustomApp) GetAppleAppLink() string {
+	if m == nil || m.AppleAppLink == nil {
+		return ""
+	}
+	return *m.AppleAppLink
+}
+
+// GetAppName returns the AppName field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushCustomApp) GetAppName() string {
+	if m == nil || m.AppName == nil {
+		return ""
+	}
+	return *m.AppName
+}
+
+// GetGoogleAppLink returns the GoogleAppLink field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushCustomApp) GetGoogleAppLink() string {
+	if m == nil || m.GoogleAppLink == nil {
+		return ""
+	}
+	return *m.GoogleAppLink
+}
+
+// String returns a string representation of MultiFactorPushCustomApp.
+func (m *MultiFactorPushCustomApp) String() string {
+	return Stringify(m)
+}
+
+// String returns a string representation of MultiFactorRecoveryCode.
+func (m *MultiFactorRecoveryCode) String() string {
+	return Stringify(m)
+}
+
 // String returns a string representation of MultiFactorSMS.
 func (m *MultiFactorSMS) String() string {
 	return Stringify(m)
@@ -4681,6 +4752,35 @@ func (m *MultiFactorWebAuthnPlatform) String() string {
 
 // String returns a string representation of MultiFactorWebAuthnRoaming.
 func (m *MultiFactorWebAuthnRoaming) String() string {
+	return Stringify(m)
+}
+
+// GetOverrideRelyingParty returns the OverrideRelyingParty field if it's non-nil, zero value otherwise.
+func (m *MultiFactorWebAuthnSettings) GetOverrideRelyingParty() bool {
+	if m == nil || m.OverrideRelyingParty == nil {
+		return false
+	}
+	return *m.OverrideRelyingParty
+}
+
+// GetRelyingPartyIdentifier returns the RelyingPartyIdentifier field if it's non-nil, zero value otherwise.
+func (m *MultiFactorWebAuthnSettings) GetRelyingPartyIdentifier() string {
+	if m == nil || m.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *m.RelyingPartyIdentifier
+}
+
+// GetUserVerification returns the UserVerification field if it's non-nil, zero value otherwise.
+func (m *MultiFactorWebAuthnSettings) GetUserVerification() string {
+	if m == nil || m.UserVerification == nil {
+		return ""
+	}
+	return *m.UserVerification
+}
+
+// String returns a string representation of MultiFactorWebAuthnSettings.
+func (m *MultiFactorWebAuthnSettings) String() string {
 	return Stringify(m)
 }
 
@@ -5731,6 +5831,46 @@ func (t *TenantFlags) GetAllowChangingEnableSSO() bool {
 	return *t.AllowChangingEnableSSO
 }
 
+// GetAllowLegacyDelegationGrantTypes returns the AllowLegacyDelegationGrantTypes field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetAllowLegacyDelegationGrantTypes() bool {
+	if t == nil || t.AllowLegacyDelegationGrantTypes == nil {
+		return false
+	}
+	return *t.AllowLegacyDelegationGrantTypes
+}
+
+// GetAllowLegacyROGrantTypes returns the AllowLegacyROGrantTypes field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetAllowLegacyROGrantTypes() bool {
+	if t == nil || t.AllowLegacyROGrantTypes == nil {
+		return false
+	}
+	return *t.AllowLegacyROGrantTypes
+}
+
+// GetAllowLegacyTokenInfoEndpoint returns the AllowLegacyTokenInfoEndpoint field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetAllowLegacyTokenInfoEndpoint() bool {
+	if t == nil || t.AllowLegacyTokenInfoEndpoint == nil {
+		return false
+	}
+	return *t.AllowLegacyTokenInfoEndpoint
+}
+
+// GetDashboardInsightsView returns the DashboardInsightsView field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetDashboardInsightsView() bool {
+	if t == nil || t.DashboardInsightsView == nil {
+		return false
+	}
+	return *t.DashboardInsightsView
+}
+
+// GetDashboardLogStreams returns the DashboardLogStreams field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetDashboardLogStreams() bool {
+	if t == nil || t.DashboardLogStreams == nil {
+		return false
+	}
+	return *t.DashboardLogStreams
+}
+
 // GetDisableClickjackProtectionHeaders returns the DisableClickjackProtectionHeaders field if it's non-nil, zero value otherwise.
 func (t *TenantFlags) GetDisableClickjackProtectionHeaders() bool {
 	if t == nil || t.DisableClickjackProtectionHeaders == nil {
@@ -5739,12 +5879,36 @@ func (t *TenantFlags) GetDisableClickjackProtectionHeaders() bool {
 	return *t.DisableClickjackProtectionHeaders
 }
 
+// GetDisableFieldsMapFix returns the DisableFieldsMapFix field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetDisableFieldsMapFix() bool {
+	if t == nil || t.DisableFieldsMapFix == nil {
+		return false
+	}
+	return *t.DisableFieldsMapFix
+}
+
 // GetDisableImpersonation returns the DisableImpersonation field if it's non-nil, zero value otherwise.
 func (t *TenantFlags) GetDisableImpersonation() bool {
 	if t == nil || t.DisableImpersonation == nil {
 		return false
 	}
 	return *t.DisableImpersonation
+}
+
+// GetDisableManagementAPISMSObfuscation returns the DisableManagementAPISMSObfuscation field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetDisableManagementAPISMSObfuscation() bool {
+	if t == nil || t.DisableManagementAPISMSObfuscation == nil {
+		return false
+	}
+	return *t.DisableManagementAPISMSObfuscation
+}
+
+// GetEnableADFSWAADEmailVerification returns the EnableADFSWAADEmailVerification field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetEnableADFSWAADEmailVerification() bool {
+	if t == nil || t.EnableADFSWAADEmailVerification == nil {
+		return false
+	}
+	return *t.EnableADFSWAADEmailVerification
 }
 
 // GetEnableAPIsSection returns the EnableAPIsSection field if it's non-nil, zero value otherwise.
@@ -5779,12 +5943,28 @@ func (t *TenantFlags) GetEnableDynamicClientRegistration() bool {
 	return *t.EnableDynamicClientRegistration
 }
 
+// GetEnableIDTokenAPI2 returns the EnableIDTokenAPI2 field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetEnableIDTokenAPI2() bool {
+	if t == nil || t.EnableIDTokenAPI2 == nil {
+		return false
+	}
+	return *t.EnableIDTokenAPI2
+}
+
 // GetEnableLegacyLogsSearchV2 returns the EnableLegacyLogsSearchV2 field if it's non-nil, zero value otherwise.
 func (t *TenantFlags) GetEnableLegacyLogsSearchV2() bool {
 	if t == nil || t.EnableLegacyLogsSearchV2 == nil {
 		return false
 	}
 	return *t.EnableLegacyLogsSearchV2
+}
+
+// GetEnableLegacyProfile returns the EnableLegacyProfile field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetEnableLegacyProfile() bool {
+	if t == nil || t.EnableLegacyProfile == nil {
+		return false
+	}
+	return *t.EnableLegacyProfile
 }
 
 // GetEnablePipeline2 returns the EnablePipeline2 field if it's non-nil, zero value otherwise.
@@ -5809,6 +5989,22 @@ func (t *TenantFlags) GetEnableSSO() bool {
 		return false
 	}
 	return *t.EnableSSO
+}
+
+// GetNoDisclosureEnterpriseConnections returns the NoDisclosureEnterpriseConnections field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetNoDisclosureEnterpriseConnections() bool {
+	if t == nil || t.NoDisclosureEnterpriseConnections == nil {
+		return false
+	}
+	return *t.NoDisclosureEnterpriseConnections
+}
+
+// GetRevokeRefreshTokenGrant returns the RevokeRefreshTokenGrant field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetRevokeRefreshTokenGrant() bool {
+	if t == nil || t.RevokeRefreshTokenGrant == nil {
+		return false
+	}
+	return *t.RevokeRefreshTokenGrant
 }
 
 // GetUniversalLogin returns the UniversalLogin field if it's non-nil, zero value otherwise.

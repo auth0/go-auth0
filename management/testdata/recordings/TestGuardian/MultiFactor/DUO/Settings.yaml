@@ -1,0 +1,79 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/factors/duo/settings
+    method: GET
+  response:
+    body: '{"ikey":"asdasdasd","skey":"asdascxzcasd","host":"asdasdaasdas"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      {"host":"api-hostname","ikey":"someKey","skey":"someSecret"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/factors/duo/settings
+    method: PUT
+  response:
+    body: '{"host":"api-hostname","ikey":"someKey","skey":"someSecret"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/factors/duo/settings
+    method: GET
+  response:
+    body: '{"ikey":"someKey","skey":"someSecret","host":"api-hostname"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms
+- request:
+    body: |
+      {"host":"asdasdaasdas","ikey":"asdasdasd","skey":"asdascxzcasd"}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/guardian/factors/duo/settings
+    method: PUT
+  response:
+    body: '{"host":"asdasdaasdas","ikey":"asdasdasd","skey":"asdascxzcasd"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms

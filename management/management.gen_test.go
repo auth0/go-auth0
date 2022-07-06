@@ -3495,6 +3495,16 @@ func TestConnectionOptionsOAuth2_GetNonPersistentAttrs(tt *testing.T) {
 	c.GetNonPersistentAttrs()
 }
 
+func TestConnectionOptionsOAuth2_GetPKCEEnabled(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsOAuth2{PKCEEnabled: &zeroValue}
+	c.GetPKCEEnabled()
+	c = &ConnectionOptionsOAuth2{}
+	c.GetPKCEEnabled()
+	c = nil
+	c.GetPKCEEnabled()
+}
+
 func TestConnectionOptionsOAuth2_GetScope(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOAuth2{Scope: &zeroValue}
@@ -5749,6 +5759,44 @@ func TestMultiFactorDUO_String(t *testing.T) {
 	}
 }
 
+func TestMultiFactorDUOSettings_GetHostname(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorDUOSettings{Hostname: &zeroValue}
+	m.GetHostname()
+	m = &MultiFactorDUOSettings{}
+	m.GetHostname()
+	m = nil
+	m.GetHostname()
+}
+
+func TestMultiFactorDUOSettings_GetIntegrationKey(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorDUOSettings{IntegrationKey: &zeroValue}
+	m.GetIntegrationKey()
+	m = &MultiFactorDUOSettings{}
+	m.GetIntegrationKey()
+	m = nil
+	m.GetIntegrationKey()
+}
+
+func TestMultiFactorDUOSettings_GetSecretKey(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorDUOSettings{SecretKey: &zeroValue}
+	m.GetSecretKey()
+	m = &MultiFactorDUOSettings{}
+	m.GetSecretKey()
+	m = nil
+	m.GetSecretKey()
+}
+
+func TestMultiFactorDUOSettings_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorDUOSettings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestMultiFactorEmail_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorEmail{}
@@ -5905,6 +5953,52 @@ func TestMultiFactorPush_String(t *testing.T) {
 	}
 }
 
+func TestMultiFactorPushCustomApp_GetAppleAppLink(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorPushCustomApp{AppleAppLink: &zeroValue}
+	m.GetAppleAppLink()
+	m = &MultiFactorPushCustomApp{}
+	m.GetAppleAppLink()
+	m = nil
+	m.GetAppleAppLink()
+}
+
+func TestMultiFactorPushCustomApp_GetAppName(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorPushCustomApp{AppName: &zeroValue}
+	m.GetAppName()
+	m = &MultiFactorPushCustomApp{}
+	m.GetAppName()
+	m = nil
+	m.GetAppName()
+}
+
+func TestMultiFactorPushCustomApp_GetGoogleAppLink(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorPushCustomApp{GoogleAppLink: &zeroValue}
+	m.GetGoogleAppLink()
+	m = &MultiFactorPushCustomApp{}
+	m.GetGoogleAppLink()
+	m = nil
+	m.GetGoogleAppLink()
+}
+
+func TestMultiFactorPushCustomApp_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorPushCustomApp{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestMultiFactorRecoveryCode_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorRecoveryCode{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestMultiFactorSMS_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorSMS{}
@@ -5952,6 +6046,44 @@ func TestMultiFactorWebAuthnPlatform_String(t *testing.T) {
 func TestMultiFactorWebAuthnRoaming_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorWebAuthnRoaming{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestMultiFactorWebAuthnSettings_GetOverrideRelyingParty(tt *testing.T) {
+	var zeroValue bool
+	m := &MultiFactorWebAuthnSettings{OverrideRelyingParty: &zeroValue}
+	m.GetOverrideRelyingParty()
+	m = &MultiFactorWebAuthnSettings{}
+	m.GetOverrideRelyingParty()
+	m = nil
+	m.GetOverrideRelyingParty()
+}
+
+func TestMultiFactorWebAuthnSettings_GetRelyingPartyIdentifier(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorWebAuthnSettings{RelyingPartyIdentifier: &zeroValue}
+	m.GetRelyingPartyIdentifier()
+	m = &MultiFactorWebAuthnSettings{}
+	m.GetRelyingPartyIdentifier()
+	m = nil
+	m.GetRelyingPartyIdentifier()
+}
+
+func TestMultiFactorWebAuthnSettings_GetUserVerification(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorWebAuthnSettings{UserVerification: &zeroValue}
+	m.GetUserVerification()
+	m = &MultiFactorWebAuthnSettings{}
+	m.GetUserVerification()
+	m = nil
+	m.GetUserVerification()
+}
+
+func TestMultiFactorWebAuthnSettings_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorWebAuthnSettings{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -7285,6 +7417,56 @@ func TestTenantFlags_GetAllowChangingEnableSSO(tt *testing.T) {
 	t.GetAllowChangingEnableSSO()
 }
 
+func TestTenantFlags_GetAllowLegacyDelegationGrantTypes(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{AllowLegacyDelegationGrantTypes: &zeroValue}
+	t.GetAllowLegacyDelegationGrantTypes()
+	t = &TenantFlags{}
+	t.GetAllowLegacyDelegationGrantTypes()
+	t = nil
+	t.GetAllowLegacyDelegationGrantTypes()
+}
+
+func TestTenantFlags_GetAllowLegacyROGrantTypes(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{AllowLegacyROGrantTypes: &zeroValue}
+	t.GetAllowLegacyROGrantTypes()
+	t = &TenantFlags{}
+	t.GetAllowLegacyROGrantTypes()
+	t = nil
+	t.GetAllowLegacyROGrantTypes()
+}
+
+func TestTenantFlags_GetAllowLegacyTokenInfoEndpoint(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{AllowLegacyTokenInfoEndpoint: &zeroValue}
+	t.GetAllowLegacyTokenInfoEndpoint()
+	t = &TenantFlags{}
+	t.GetAllowLegacyTokenInfoEndpoint()
+	t = nil
+	t.GetAllowLegacyTokenInfoEndpoint()
+}
+
+func TestTenantFlags_GetDashboardInsightsView(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{DashboardInsightsView: &zeroValue}
+	t.GetDashboardInsightsView()
+	t = &TenantFlags{}
+	t.GetDashboardInsightsView()
+	t = nil
+	t.GetDashboardInsightsView()
+}
+
+func TestTenantFlags_GetDashboardLogStreams(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{DashboardLogStreams: &zeroValue}
+	t.GetDashboardLogStreams()
+	t = &TenantFlags{}
+	t.GetDashboardLogStreams()
+	t = nil
+	t.GetDashboardLogStreams()
+}
+
 func TestTenantFlags_GetDisableClickjackProtectionHeaders(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{DisableClickjackProtectionHeaders: &zeroValue}
@@ -7295,6 +7477,16 @@ func TestTenantFlags_GetDisableClickjackProtectionHeaders(tt *testing.T) {
 	t.GetDisableClickjackProtectionHeaders()
 }
 
+func TestTenantFlags_GetDisableFieldsMapFix(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{DisableFieldsMapFix: &zeroValue}
+	t.GetDisableFieldsMapFix()
+	t = &TenantFlags{}
+	t.GetDisableFieldsMapFix()
+	t = nil
+	t.GetDisableFieldsMapFix()
+}
+
 func TestTenantFlags_GetDisableImpersonation(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{DisableImpersonation: &zeroValue}
@@ -7303,6 +7495,26 @@ func TestTenantFlags_GetDisableImpersonation(tt *testing.T) {
 	t.GetDisableImpersonation()
 	t = nil
 	t.GetDisableImpersonation()
+}
+
+func TestTenantFlags_GetDisableManagementAPISMSObfuscation(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{DisableManagementAPISMSObfuscation: &zeroValue}
+	t.GetDisableManagementAPISMSObfuscation()
+	t = &TenantFlags{}
+	t.GetDisableManagementAPISMSObfuscation()
+	t = nil
+	t.GetDisableManagementAPISMSObfuscation()
+}
+
+func TestTenantFlags_GetEnableADFSWAADEmailVerification(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{EnableADFSWAADEmailVerification: &zeroValue}
+	t.GetEnableADFSWAADEmailVerification()
+	t = &TenantFlags{}
+	t.GetEnableADFSWAADEmailVerification()
+	t = nil
+	t.GetEnableADFSWAADEmailVerification()
 }
 
 func TestTenantFlags_GetEnableAPIsSection(tt *testing.T) {
@@ -7345,6 +7557,16 @@ func TestTenantFlags_GetEnableDynamicClientRegistration(tt *testing.T) {
 	t.GetEnableDynamicClientRegistration()
 }
 
+func TestTenantFlags_GetEnableIDTokenAPI2(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{EnableIDTokenAPI2: &zeroValue}
+	t.GetEnableIDTokenAPI2()
+	t = &TenantFlags{}
+	t.GetEnableIDTokenAPI2()
+	t = nil
+	t.GetEnableIDTokenAPI2()
+}
+
 func TestTenantFlags_GetEnableLegacyLogsSearchV2(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{EnableLegacyLogsSearchV2: &zeroValue}
@@ -7353,6 +7575,16 @@ func TestTenantFlags_GetEnableLegacyLogsSearchV2(tt *testing.T) {
 	t.GetEnableLegacyLogsSearchV2()
 	t = nil
 	t.GetEnableLegacyLogsSearchV2()
+}
+
+func TestTenantFlags_GetEnableLegacyProfile(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{EnableLegacyProfile: &zeroValue}
+	t.GetEnableLegacyProfile()
+	t = &TenantFlags{}
+	t.GetEnableLegacyProfile()
+	t = nil
+	t.GetEnableLegacyProfile()
 }
 
 func TestTenantFlags_GetEnablePipeline2(tt *testing.T) {
@@ -7383,6 +7615,26 @@ func TestTenantFlags_GetEnableSSO(tt *testing.T) {
 	t.GetEnableSSO()
 	t = nil
 	t.GetEnableSSO()
+}
+
+func TestTenantFlags_GetNoDisclosureEnterpriseConnections(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{NoDisclosureEnterpriseConnections: &zeroValue}
+	t.GetNoDisclosureEnterpriseConnections()
+	t = &TenantFlags{}
+	t.GetNoDisclosureEnterpriseConnections()
+	t = nil
+	t.GetNoDisclosureEnterpriseConnections()
+}
+
+func TestTenantFlags_GetRevokeRefreshTokenGrant(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{RevokeRefreshTokenGrant: &zeroValue}
+	t.GetRevokeRefreshTokenGrant()
+	t = &TenantFlags{}
+	t.GetRevokeRefreshTokenGrant()
+	t = nil
+	t.GetRevokeRefreshTokenGrant()
 }
 
 func TestTenantFlags_GetUniversalLogin(tt *testing.T) {

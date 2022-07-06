@@ -59,8 +59,8 @@ type MultiFactorSMSTemplate struct {
 	VerificationMessage *string `json:"verification_message,omitempty"`
 }
 
-// MultiFactorProviderAmazonSNS is used for
-// AmazonSNS MultiFactor Authentication.
+// MultiFactorProviderAmazonSNS is an AmazonSNS provider
+// used for MultiFactorPush Authentication.
 type MultiFactorProviderAmazonSNS struct {
 	// AWS Access Key ID
 	AccessKeyID *string `json:"aws_access_key_id,omitempty"`
@@ -102,13 +102,15 @@ type GuardianManager struct {
 func newGuardianManager(m *Management) *GuardianManager {
 	return &GuardianManager{
 		&EnrollmentManager{m},
-		&MultiFactorManager{m,
+		&MultiFactorManager{
+			m,
 			&MultiFactorPhone{m},
 			&MultiFactorSMS{m},
 			&MultiFactorPush{m},
 			&MultiFactorEmail{m},
 			&MultiFactorDUO{m},
 			&MultiFactorOTP{m},
+			&MultiFactorRecoveryCode{m},
 			&MultiFactorWebAuthnRoaming{m},
 			&MultiFactorWebAuthnPlatform{m},
 		},
@@ -189,6 +191,7 @@ type MultiFactorManager struct {
 	Email            *MultiFactorEmail
 	DUO              *MultiFactorDUO
 	OTP              *MultiFactorOTP
+	RecoveryCode     *MultiFactorRecoveryCode
 	WebAuthnRoaming  *MultiFactorWebAuthnRoaming
 	WebAuthnPlatform *MultiFactorWebAuthnPlatform
 }
@@ -300,6 +303,13 @@ func (m *MultiFactorSMS) UpdateTwilio(t *MultiFactorProviderTwilio, opts ...Requ
 	return m.Request("PUT", m.URI("guardian", "factors", "sms", "providers", "twilio"), t, opts...)
 }
 
+// MultiFactorPushCustomApp holds custom multi-factor authentication app settings.
+type MultiFactorPushCustomApp struct {
+	AppName       *string `json:"app_name,omitempty"`
+	AppleAppLink  *string `json:"apple_app_link,omitempty"`
+	GoogleAppLink *string `json:"google_app_link,omitempty"`
+}
+
 // MultiFactorPush is used for Push MFA.
 type MultiFactorPush struct{ *Management }
 
@@ -311,6 +321,21 @@ func (m *MultiFactorPush) Enable(enabled bool, opts ...RequestOption) error {
 	return m.Request("PUT", m.URI("guardian", "factors", "push-notification"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
+}
+
+// CustomApp retrieves the custom multi-factor authentication app's settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa
+func (m *MultiFactorPush) CustomApp(opts ...RequestOption) (a *MultiFactorPushCustomApp, err error) {
+	err = m.Request("GET", m.URI("prompts", "mfa-push"), &a, opts...)
+	return
+}
+
+// UpdateCustomApp updates the custom multi-factor authentication app's settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa
+func (m *MultiFactorPush) UpdateCustomApp(a *MultiFactorPushCustomApp, opts ...RequestOption) error {
+	return m.Request("PATCH", m.URI("prompts", "mfa-push"), a, opts...)
 }
 
 // AmazonSNS returns the Amazon Web Services (AWS) Simple Notification Service
@@ -342,6 +367,13 @@ func (m *MultiFactorEmail) Enable(enabled bool, opts ...RequestOption) error {
 	}, opts...)
 }
 
+// MultiFactorDUOSettings holds settings for configuring DUO.
+type MultiFactorDUOSettings struct {
+	Hostname       *string `json:"host,omitempty"`
+	IntegrationKey *string `json:"ikey,omitempty"`
+	SecretKey      *string `json:"skey,omitempty"`
+}
+
 // MultiFactorDUO is used for Duo MFA.
 type MultiFactorDUO struct{ *Management }
 
@@ -352,6 +384,29 @@ func (m *MultiFactorDUO) Enable(enabled bool, opts ...RequestOption) error {
 	return m.Request("PUT", m.URI("guardian", "factors", "duo"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
+}
+
+// Read WebAuthn Roaming Multi-factor Authentication Settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/configure-cisco-duo-for-mfa
+func (m *MultiFactorDUO) Read(opts ...RequestOption) (s *MultiFactorDUOSettings, err error) {
+	err = m.Request("GET", m.URI("guardian", "factors", "duo", "settings"), &s, opts...)
+	return
+}
+
+// Update WebAuthn Roaming Multi-factor Authentication Settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/configure-cisco-duo-for-mfa
+func (m *MultiFactorDUO) Update(s *MultiFactorDUOSettings, opts ...RequestOption) error {
+	return m.Request("PUT", m.URI("guardian", "factors", "duo", "settings"), &s, opts...)
+}
+
+// MultiFactorWebAuthnSettings holds settings for
+// configuring WebAuthn Roaming or Platform.
+type MultiFactorWebAuthnSettings struct {
+	OverrideRelyingParty   *bool   `json:"overrideRelyingParty,omitempty"`
+	RelyingPartyIdentifier *string `json:"relyingPartyIdentifier,omitempty"`
+	UserVerification       *string `json:"userVerification,omitempty"`
 }
 
 // MultiFactorWebAuthnRoaming is used for WebAuthnRoaming MFA.
@@ -366,6 +421,21 @@ func (m *MultiFactorWebAuthnRoaming) Enable(enabled bool, opts ...RequestOption)
 	}, opts...)
 }
 
+// Read WebAuthn Roaming Multi-factor Authentication Settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-security-keys-for-mfa
+func (m *MultiFactorWebAuthnRoaming) Read(opts ...RequestOption) (s *MultiFactorWebAuthnSettings, err error) {
+	err = m.Request("GET", m.URI("guardian", "factors", "webauthn-roaming", "settings"), &s, opts...)
+	return
+}
+
+// Update WebAuthn Roaming Multi-factor Authentication Settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-security-keys-for-mfa
+func (m *MultiFactorWebAuthnRoaming) Update(s *MultiFactorWebAuthnSettings, opts ...RequestOption) error {
+	return m.Request("PUT", m.URI("guardian", "factors", "webauthn-roaming", "settings"), &s, opts...)
+}
+
 // MultiFactorWebAuthnPlatform is used for WebAuthnPlatform MFA.
 type MultiFactorWebAuthnPlatform struct{ *Management }
 
@@ -378,6 +448,21 @@ func (m *MultiFactorWebAuthnPlatform) Enable(enabled bool, opts ...RequestOption
 	}, opts...)
 }
 
+// Read WebAuthn Platform Multi-factor Authentication Settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-device-biometrics-for-mfa
+func (m *MultiFactorWebAuthnPlatform) Read(opts ...RequestOption) (s *MultiFactorWebAuthnSettings, err error) {
+	err = m.Request("GET", m.URI("guardian", "factors", "webauthn-platform", "settings"), &s, opts...)
+	return
+}
+
+// Update WebAuthn Platform Multi-factor Authentication Settings.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-device-biometrics-for-mfa
+func (m *MultiFactorWebAuthnPlatform) Update(s *MultiFactorWebAuthnSettings, opts ...RequestOption) error {
+	return m.Request("PUT", m.URI("guardian", "factors", "webauthn-platform", "settings"), &s, opts...)
+}
+
 // MultiFactorOTP is used for OTP MFA.
 type MultiFactorOTP struct{ *Management }
 
@@ -386,6 +471,20 @@ type MultiFactorOTP struct{ *Management }
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_factors_by_name
 func (m *MultiFactorOTP) Enable(enabled bool, opts ...RequestOption) error {
 	return m.Request("PUT", m.URI("guardian", "factors", "otp"), &MultiFactor{
+		Enabled: &enabled,
+	}, opts...)
+}
+
+// MultiFactorRecoveryCode is used for RecoveryCode MFA.
+type MultiFactorRecoveryCode struct {
+	*Management
+}
+
+// Enable enables or disables Recovery Code Multi-factor Authentication.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/configure-recovery-codes-for-mfa
+func (m *MultiFactorRecoveryCode) Enable(enabled bool, opts ...RequestOption) error {
+	return m.Request("PUT", m.URI("guardian", "factors", "recovery-code"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
 }
