@@ -4714,6 +4714,11 @@ func (m *MultiFactorPushCustomApp) String() string {
 	return Stringify(m)
 }
 
+// String returns a string representation of MultiFactorRecoveryCode.
+func (m *MultiFactorRecoveryCode) String() string {
+	return Stringify(m)
+}
+
 // String returns a string representation of MultiFactorSMS.
 func (m *MultiFactorSMS) String() string {
 	return Stringify(m)

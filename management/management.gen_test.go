@@ -5991,6 +5991,14 @@ func TestMultiFactorPushCustomApp_String(t *testing.T) {
 	}
 }
 
+func TestMultiFactorRecoveryCode_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorRecoveryCode{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestMultiFactorSMS_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorSMS{}
