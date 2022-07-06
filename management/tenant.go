@@ -301,7 +301,7 @@ type TenantDeviceFlow struct {
 	Mask *string `json:"mask,omitempty"`
 }
 
-// TenantSessionCookie manages behavior of the tenant's session cookie, accepts either 'persistent' or 'non-persistent'
+// TenantSessionCookie manages behavior of the tenant's session cookie, accepts either 'persistent' or 'non-persistent'.
 type TenantSessionCookie struct {
 	Mode *string `json:"mode,omitempty"`
 }
