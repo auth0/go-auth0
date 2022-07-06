@@ -1,5 +1,22 @@
 # Change Log
 
+<a name="v0.8.0"></a>
+## [v0.8.0](https://github.com/auth0/go-auth0/tree/v0.8.0) (2022-07-06)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.7.0...v0.8.0)
+
+### Added
+
+- Added `DisableSignOut` field to SAMLP connection options ([#78](https://github.com/auth0/go-auth0/pull/78))
+- Added several missing tenant flags ([#80](https://github.com/auth0/go-auth0/pull/80))
+- Added `PKCEEnabled` field to Oauth2 connection options ([#82](https://github.com/auth0/go-auth0/pull/82))
+- Added `Read()` and `Update()` to WebAuthn Roaming Settings ([#83](https://github.com/auth0/go-auth0/pull/83))
+- Added `Read()` and `Update()` to WebAuthn Platform Settings ([#83](https://github.com/auth0/go-auth0/pull/83))
+- Added `Read()` and `Update()` to Duo Settings ([#84](https://github.com/auth0/go-auth0/pull/84))
+- Added `Read()` and `Update()` to Push CustomApp Settings ([#85](https://github.com/auth0/go-auth0/pull/85))
+- Added `Enable()` Recovery Code MFA ([#86](https://github.com/auth0/go-auth0/pull/86))
+
+
 <a name="v0.7.0"></a>
 ## [v0.7.0](https://github.com/auth0/go-auth0/tree/v0.7.0) (2022-06-22)
 
