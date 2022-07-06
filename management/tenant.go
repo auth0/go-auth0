@@ -302,6 +302,7 @@ type TenantDeviceFlow struct {
 }
 
 type TenantSessionCookie struct {
+	// Behavior of the tenant's session cookie, accepts either 'persistent' or 'non-persistent'
 	Mode *string `json:"mode,omitempty"`
 }
 
