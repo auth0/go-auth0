@@ -18,7 +18,13 @@ var connectionTestCases = []connectionTestCase{
 			Name:     auth0.Stringf("Test-Auth0-Connection-%d", time.Now().Unix()),
 			Strategy: auth0.String("auth0"),
 		},
-		options: &ConnectionOptions{},
+		options: &ConnectionOptions{
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
 	},
 	{
 		name: "GoogleOAuth2 Connection",
@@ -34,6 +40,11 @@ var connectionTestCases = []connectionTestCase{
 			Profile:  auth0.Bool(true),
 			Calendar: auth0.Bool(true),
 			Youtube:  auth0.Bool(false),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
 		},
 	},
 	{
@@ -49,6 +60,11 @@ var connectionTestCases = []connectionTestCase{
 			ExtendedProfile: auth0.Bool(true),
 			Groups:          auth0.Bool(true),
 			Admin:           auth0.Bool(true),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
 		},
 	},
 	{
@@ -74,6 +90,11 @@ var connectionTestCases = []connectionTestCase{
 			BruteForceProtection: auth0.Bool(true),
 			DisableSignup:        auth0.Bool(true),
 			Name:                 auth0.String("Test-Connection-Email"),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
 		},
 	},
 	{
@@ -99,6 +120,11 @@ var connectionTestCases = []connectionTestCase{
 			TwilioSID:            auth0.String("abc132asdfasdf56"),
 			TwilioToken:          auth0.String("234127asdfsada23"),
 			MessagingServiceSID:  auth0.String("273248090982390423"),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
 		},
 	},
 	{
@@ -128,6 +154,11 @@ var connectionTestCases = []connectionTestCase{
 				SecretBase64Encoded: auth0.Bool(false),
 			},
 			ForwardRequestInfo: auth0.Bool(true),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
 		},
 	},
 	{
@@ -167,6 +198,11 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 				"given_name":  "FirstName",
 				"family_name": "LastName",
 			},
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
 		},
 	},
 	{
@@ -175,7 +211,13 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			Name:     auth0.Stringf("Test-AD-Connection-%d", time.Now().Unix()),
 			Strategy: auth0.String("ad"),
 		},
-		options: &ConnectionOptionsAD{},
+		options: &ConnectionOptionsAD{
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
 	},
 	{
 		name: "Facebook Connection",
@@ -183,7 +225,13 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			Name:     auth0.Stringf("Test-Facebook-Connection-%d", time.Now().Unix()),
 			Strategy: auth0.String("facebook"),
 		},
-		options: &ConnectionOptionsFacebook{},
+		options: &ConnectionOptionsFacebook{
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
 	},
 	{
 		name: "Apple Connection",
@@ -191,7 +239,13 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			Name:     auth0.Stringf("Test-Apple-Connection-%d", time.Now().Unix()),
 			Strategy: auth0.String("apple"),
 		},
-		options: &ConnectionOptionsApple{},
+		options: &ConnectionOptionsApple{
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
 	},
 	{
 		name: "LinkedIn Connection",
@@ -199,7 +253,13 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			Name:     auth0.Stringf("Test-LinkedIn-Connection-%d", time.Now().Unix()),
 			Strategy: auth0.String("linkedin"),
 		},
-		options: &ConnectionOptionsLinkedin{},
+		options: &ConnectionOptionsLinkedin{
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
 	},
 	{
 		name: "GitHub Connection",
@@ -207,7 +267,13 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			Name:     auth0.Stringf("Test-GitHub-Connection-%d", time.Now().Unix()),
 			Strategy: auth0.String("github"),
 		},
-		options: &ConnectionOptionsGitHub{},
+		options: &ConnectionOptionsGitHub{
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
 	},
 	{
 		name: "WindowsLive Connection",
@@ -215,7 +281,13 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			Name:     auth0.Stringf("Test-WindowsLive-Connection-%d", time.Now().Unix()),
 			Strategy: auth0.String("windowslive"),
 		},
-		options: &ConnectionOptionsWindowsLive{},
+		options: &ConnectionOptionsWindowsLive{
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
 	},
 	{
 		name: "SalesForce Connection",
@@ -223,7 +295,13 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			Name:     auth0.Stringf("Test-SalesForce-Connection-%d", time.Now().Unix()),
 			Strategy: auth0.String("salesforce"),
 		},
-		options: &ConnectionOptionsSalesforce{},
+		options: &ConnectionOptionsSalesforce{
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
 	},
 	{
 		name: "OIDC Connection",
@@ -237,6 +315,11 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			Issuer:                auth0.String("https://example.com"),
 			AuthorizationEndpoint: auth0.String("https://example.com"),
 			JWKSURI:               auth0.String("https://example.com/jwks"),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
 		},
 	},
 }

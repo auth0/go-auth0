@@ -239,6 +239,8 @@ type ConnectionOptions struct {
 
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // ConnectionOptionsGoogleOAuth2 is used to configure a GoogleOAuth2 Connection.
@@ -281,6 +283,8 @@ type ConnectionOptionsGoogleOAuth2 struct {
 	SetUserAttributes      *string       `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs     *[]string     `json:"non_persistent_attrs,omitempty"`
 	Scope                  []interface{} `json:"scope,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsGoogleOAuth2.
@@ -344,6 +348,8 @@ type ConnectionOptionsFacebook struct {
 
 	// Scope is a comma separated list of scopes.
 	Scope *string `json:"scope,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsFacebook.
@@ -370,6 +376,8 @@ type ConnectionOptionsApple struct {
 	Scope              *string   `json:"scope,omitempty"`
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsApple.
@@ -397,6 +405,8 @@ type ConnectionOptionsLinkedin struct {
 
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsLinkedin.
@@ -439,6 +449,8 @@ type ConnectionOptionsGitHub struct {
 
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsGitHub.
@@ -464,6 +476,8 @@ type ConnectionOptionsEmail struct {
 	BruteForceProtection *bool     `json:"brute_force_protection,omitempty"`
 	SetUserAttributes    *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs   *[]string `json:"non_persistent_attrs,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // ConnectionOptionsEmailSettings is used to configure
@@ -514,6 +528,8 @@ type ConnectionOptionsSMS struct {
 
 	DisableSignup        *bool `json:"disable_signup,omitempty"`
 	BruteForceProtection *bool `json:"brute_force_protection,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // ConnectionOptionsWindowsLive is used to configure a WindowsLive Connection.
@@ -550,6 +566,8 @@ type ConnectionOptionsWindowsLive struct {
 
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsWindowsLive.
@@ -574,6 +592,8 @@ type ConnectionOptionsSalesforce struct {
 	CommunityBaseURL   *string   `json:"community_base_url,omitempty"`
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsSalesforce.
@@ -606,6 +626,8 @@ type ConnectionOptionsOIDC struct {
 
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsOIDC.
@@ -647,6 +669,8 @@ type ConnectionOptionsOAuth2 struct {
 	// Scripts for the connection
 	// Allowed keys are: "fetchUserProfile"
 	Scripts map[string]interface{} `json:"scripts,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsOAuth2.
@@ -688,6 +712,8 @@ type ConnectionOptionsAD struct {
 
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // ConnectionOptionsAzureAD is used to configure an AzureAD Connection.
@@ -723,6 +749,8 @@ type ConnectionOptionsAzureAD struct {
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	TrustEmailVerified *string   `json:"should_trust_email_verified_connection,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsAzureAD.
@@ -747,6 +775,8 @@ type ConnectionOptionsADFS struct {
 	// Set to on_first_login to avoid setting user attributes at each login.
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // ConnectionOptionsSAML is used to configure a SAML Connection.
@@ -778,6 +808,8 @@ type ConnectionOptionsSAML struct {
 
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // ConnectionOptionsSAMLIdpInitiated is used to configure the
@@ -819,6 +851,8 @@ type ConnectionOptionsGoogleApps struct {
 
 	DomainAliases []interface{} `json:"domain_aliases,omitempty"`
 	LogoURL       *string       `json:"icon_url,omitempty"`
+
+	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsGoogleApps.
