@@ -72,6 +72,9 @@ func TestEmailTemplateManager_Update(t *testing.T) {
 func TestEmailTemplateManager_Replace(t *testing.T) {
 	setupHTTPRecordings(t)
 
+	err := m.Email.Delete()
+	assert.NoError(t, err)
+
 	givenAnEmailProvider(t)
 	template := givenAnEmailTemplate(t)
 
@@ -81,7 +84,7 @@ func TestEmailTemplateManager_Replace(t *testing.T) {
 	template.From = auth0.String("someone@example.com")
 	template.IncludeEmailInRedirect = auth0.Bool(true)
 
-	err := m.EmailTemplate.Replace(template.GetTemplate(), template)
+	err = m.EmailTemplate.Replace(template.GetTemplate(), template)
 	assert.NoError(t, err)
 
 	actualTemplate, err := m.EmailTemplate.Read(template.GetTemplate())
