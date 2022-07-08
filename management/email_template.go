@@ -30,6 +30,11 @@ type EmailTemplate struct {
 
 	// Whether or not the template is enabled.
 	Enabled *bool `json:"enabled,omitempty"`
+
+	// Whether the `reset_email` and `verify_email` templates should include the user's
+	// email address as the email parameter in the returnUrl (true) or whether no email
+	// address should be included in the redirect (false). Defaults to true.
+	IncludeEmailInRedirect *bool `json:"includeEmailInRedirect,omitempty"`
 }
 
 // EmailTemplateManager manages Auth0 EmailTemplate resources.
