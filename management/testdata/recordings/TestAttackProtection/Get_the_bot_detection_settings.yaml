@@ -1,0 +1,22 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      null
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/anomaly/captchas
+    method: GET
+  response:
+    body: '{"selected":"recaptcha_v2","policy":"high_risk","providers":{"auth0":{},"recaptcha_v2":{"siteKey":"someSiteKey","secret":"someSecret"},"recaptcha_enterprise":{"siteKey":"someSiteKey","apiKey":"someApiKey","projectId":"someID"}}}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 200 OK
+    code: 200
+    duration: 1ms

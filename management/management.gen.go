@@ -442,6 +442,48 @@ func (b *BlacklistToken) String() string {
 	return Stringify(b)
 }
 
+// GetResponse returns the Response field.
+func (b *BotDetection) GetResponse() *BotDetectionResponse {
+	if b == nil {
+		return nil
+	}
+	return b.Response
+}
+
+// String returns a string representation of BotDetection.
+func (b *BotDetection) String() string {
+	return Stringify(b)
+}
+
+// GetPolicy returns the Policy field if it's non-nil, zero value otherwise.
+func (b *BotDetectionResponse) GetPolicy() string {
+	if b == nil || b.Policy == nil {
+		return ""
+	}
+	return *b.Policy
+}
+
+// GetProviders returns the Providers field.
+func (b *BotDetectionResponse) GetProviders() *CaptchaProviders {
+	if b == nil {
+		return nil
+	}
+	return b.Providers
+}
+
+// GetSelected returns the Selected field if it's non-nil, zero value otherwise.
+func (b *BotDetectionResponse) GetSelected() string {
+	if b == nil || b.Selected == nil {
+		return ""
+	}
+	return *b.Selected
+}
+
+// String returns a string representation of BotDetectionResponse.
+func (b *BotDetectionResponse) String() string {
+	return Stringify(b)
+}
+
 // GetColors returns the Colors field.
 func (b *Branding) GetColors() *BrandingColors {
 	if b == nil {
@@ -651,6 +693,90 @@ func (b *BruteForceProtection) GetShields() []string {
 // String returns a string representation of BruteForceProtection.
 func (b *BruteForceProtection) String() string {
 	return Stringify(b)
+}
+
+// String returns a string representation of CaptchaProviderAuth0.
+func (c *CaptchaProviderAuth0) String() string {
+	return Stringify(c)
+}
+
+// GetAPIKey returns the APIKey field if it's non-nil, zero value otherwise.
+func (c *CaptchaProviderRecaptchaEnterprise) GetAPIKey() string {
+	if c == nil || c.APIKey == nil {
+		return ""
+	}
+	return *c.APIKey
+}
+
+// GetProjectID returns the ProjectID field if it's non-nil, zero value otherwise.
+func (c *CaptchaProviderRecaptchaEnterprise) GetProjectID() string {
+	if c == nil || c.ProjectID == nil {
+		return ""
+	}
+	return *c.ProjectID
+}
+
+// GetSiteKey returns the SiteKey field if it's non-nil, zero value otherwise.
+func (c *CaptchaProviderRecaptchaEnterprise) GetSiteKey() string {
+	if c == nil || c.SiteKey == nil {
+		return ""
+	}
+	return *c.SiteKey
+}
+
+// String returns a string representation of CaptchaProviderRecaptchaEnterprise.
+func (c *CaptchaProviderRecaptchaEnterprise) String() string {
+	return Stringify(c)
+}
+
+// GetSecret returns the Secret field if it's non-nil, zero value otherwise.
+func (c *CaptchaProviderRecaptchaV2) GetSecret() string {
+	if c == nil || c.Secret == nil {
+		return ""
+	}
+	return *c.Secret
+}
+
+// GetSiteKey returns the SiteKey field if it's non-nil, zero value otherwise.
+func (c *CaptchaProviderRecaptchaV2) GetSiteKey() string {
+	if c == nil || c.SiteKey == nil {
+		return ""
+	}
+	return *c.SiteKey
+}
+
+// String returns a string representation of CaptchaProviderRecaptchaV2.
+func (c *CaptchaProviderRecaptchaV2) String() string {
+	return Stringify(c)
+}
+
+// GetAuth0 returns the Auth0 field.
+func (c *CaptchaProviders) GetAuth0() *CaptchaProviderAuth0 {
+	if c == nil {
+		return nil
+	}
+	return c.Auth0
+}
+
+// GetRecaptchaEnterprise returns the RecaptchaEnterprise field.
+func (c *CaptchaProviders) GetRecaptchaEnterprise() *CaptchaProviderRecaptchaEnterprise {
+	if c == nil {
+		return nil
+	}
+	return c.RecaptchaEnterprise
+}
+
+// GetRecaptchaV2 returns the RecaptchaV2 field.
+func (c *CaptchaProviders) GetRecaptchaV2() *CaptchaProviderRecaptchaV2 {
+	if c == nil {
+		return nil
+	}
+	return c.RecaptchaV2
+}
+
+// String returns a string representation of CaptchaProviders.
+func (c *CaptchaProviders) String() string {
+	return Stringify(c)
 }
 
 // GetAppType returns the AppType field if it's non-nil, zero value otherwise.

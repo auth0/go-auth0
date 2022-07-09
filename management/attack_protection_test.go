@@ -119,4 +119,64 @@ func TestAttackProtection(t *testing.T) {
 		err = m.AttackProtection.UpdateSuspiciousIPThrottling(preTestSIPSettings)
 		assert.NoError(t, err)
 	})
+
+	t.Run("Get the bot detection settings", func(t *testing.T) {
+		setupHTTPRecordings(t)
+
+		botDetection, err := m.AttackProtection.GetBotDetection()
+		assert.NoError(t, err)
+		assert.IsType(t, &BotDetection{}, botDetection)
+		assert.NotNil(t, botDetection.Response)
+		assert.NotEmpty(t, botDetection.Response.Policy)
+	})
+
+	t.Run("Update the bot detection settings", func(t *testing.T) {
+		setupHTTPRecordings(t)
+
+		// Save initial settings.
+		initialBotDetection, err := m.AttackProtection.GetBotDetection()
+		assert.NoError(t, err)
+		t.Cleanup(func() {
+			// Restore initial settings.
+			err = m.AttackProtection.UpdateBotDetection(initialBotDetection)
+			assert.NoError(t, err)
+		})
+
+		expected := &BotDetection{
+			Response: &BotDetectionResponse{
+				Policy:   auth0.String("high_risk"),
+				Selected: auth0.String("recaptcha_enterprise"),
+				Providers: &CaptchaProviders{
+					RecaptchaEnterprise: &CaptchaProviderRecaptchaEnterprise{
+						APIKey:    auth0.String("someApiKey"),
+						ProjectID: auth0.String("someID"),
+						SiteKey:   auth0.String("someSiteKey"),
+					},
+				},
+			},
+		}
+
+		err = m.AttackProtection.UpdateBotDetection(expected)
+		assert.NoError(t, err)
+
+		actual, err := m.AttackProtection.GetBotDetection()
+		assert.NoError(t, err)
+		assert.Equal(t, expected.Response.GetPolicy(), actual.Response.GetPolicy())
+		assert.Equal(t, expected.Response.GetSelected(), actual.Response.GetSelected())
+		assert.Equal(
+			t,
+			expected.Response.GetProviders().GetRecaptchaEnterprise().GetProjectID(),
+			actual.Response.GetProviders().GetRecaptchaEnterprise().GetProjectID(),
+		)
+		assert.Equal(
+			t,
+			expected.Response.GetProviders().GetRecaptchaEnterprise().GetAPIKey(),
+			actual.Response.GetProviders().GetRecaptchaEnterprise().GetAPIKey(),
+		)
+		assert.Equal(
+			t,
+			expected.Response.GetProviders().GetRecaptchaEnterprise().GetSiteKey(),
+			actual.Response.GetProviders().GetRecaptchaEnterprise().GetSiteKey(),
+		)
+	})
 }

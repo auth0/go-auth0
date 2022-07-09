@@ -567,6 +567,56 @@ func TestBlacklistToken_String(t *testing.T) {
 	}
 }
 
+func TestBotDetection_GetResponse(tt *testing.T) {
+	b := &BotDetection{}
+	b.GetResponse()
+	b = nil
+	b.GetResponse()
+}
+
+func TestBotDetection_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BotDetection{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBotDetectionResponse_GetPolicy(tt *testing.T) {
+	var zeroValue string
+	b := &BotDetectionResponse{Policy: &zeroValue}
+	b.GetPolicy()
+	b = &BotDetectionResponse{}
+	b.GetPolicy()
+	b = nil
+	b.GetPolicy()
+}
+
+func TestBotDetectionResponse_GetProviders(tt *testing.T) {
+	b := &BotDetectionResponse{}
+	b.GetProviders()
+	b = nil
+	b.GetProviders()
+}
+
+func TestBotDetectionResponse_GetSelected(tt *testing.T) {
+	var zeroValue string
+	b := &BotDetectionResponse{Selected: &zeroValue}
+	b.GetSelected()
+	b = &BotDetectionResponse{}
+	b.GetSelected()
+	b = nil
+	b.GetSelected()
+}
+
+func TestBotDetectionResponse_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BotDetectionResponse{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBranding_GetColors(tt *testing.T) {
 	b := &Branding{}
 	b.GetColors()
@@ -829,6 +879,109 @@ func TestBruteForceProtection_GetShields(tt *testing.T) {
 func TestBruteForceProtection_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &BruteForceProtection{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestCaptchaProviderAuth0_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CaptchaProviderAuth0{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestCaptchaProviderRecaptchaEnterprise_GetAPIKey(tt *testing.T) {
+	var zeroValue string
+	c := &CaptchaProviderRecaptchaEnterprise{APIKey: &zeroValue}
+	c.GetAPIKey()
+	c = &CaptchaProviderRecaptchaEnterprise{}
+	c.GetAPIKey()
+	c = nil
+	c.GetAPIKey()
+}
+
+func TestCaptchaProviderRecaptchaEnterprise_GetProjectID(tt *testing.T) {
+	var zeroValue string
+	c := &CaptchaProviderRecaptchaEnterprise{ProjectID: &zeroValue}
+	c.GetProjectID()
+	c = &CaptchaProviderRecaptchaEnterprise{}
+	c.GetProjectID()
+	c = nil
+	c.GetProjectID()
+}
+
+func TestCaptchaProviderRecaptchaEnterprise_GetSiteKey(tt *testing.T) {
+	var zeroValue string
+	c := &CaptchaProviderRecaptchaEnterprise{SiteKey: &zeroValue}
+	c.GetSiteKey()
+	c = &CaptchaProviderRecaptchaEnterprise{}
+	c.GetSiteKey()
+	c = nil
+	c.GetSiteKey()
+}
+
+func TestCaptchaProviderRecaptchaEnterprise_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CaptchaProviderRecaptchaEnterprise{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestCaptchaProviderRecaptchaV2_GetSecret(tt *testing.T) {
+	var zeroValue string
+	c := &CaptchaProviderRecaptchaV2{Secret: &zeroValue}
+	c.GetSecret()
+	c = &CaptchaProviderRecaptchaV2{}
+	c.GetSecret()
+	c = nil
+	c.GetSecret()
+}
+
+func TestCaptchaProviderRecaptchaV2_GetSiteKey(tt *testing.T) {
+	var zeroValue string
+	c := &CaptchaProviderRecaptchaV2{SiteKey: &zeroValue}
+	c.GetSiteKey()
+	c = &CaptchaProviderRecaptchaV2{}
+	c.GetSiteKey()
+	c = nil
+	c.GetSiteKey()
+}
+
+func TestCaptchaProviderRecaptchaV2_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CaptchaProviderRecaptchaV2{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestCaptchaProviders_GetAuth0(tt *testing.T) {
+	c := &CaptchaProviders{}
+	c.GetAuth0()
+	c = nil
+	c.GetAuth0()
+}
+
+func TestCaptchaProviders_GetRecaptchaEnterprise(tt *testing.T) {
+	c := &CaptchaProviders{}
+	c.GetRecaptchaEnterprise()
+	c = nil
+	c.GetRecaptchaEnterprise()
+}
+
+func TestCaptchaProviders_GetRecaptchaV2(tt *testing.T) {
+	c := &CaptchaProviders{}
+	c.GetRecaptchaV2()
+	c = nil
+	c.GetRecaptchaV2()
+}
+
+func TestCaptchaProviders_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CaptchaProviders{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

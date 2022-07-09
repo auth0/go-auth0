@@ -175,3 +175,67 @@ func (m *AttackProtectionManager) UpdateSuspiciousIPThrottling(
 		opts...,
 	)
 }
+
+// BotDetection mitigates scripted attacks by detecting
+// when a request is likely to be coming from a bot.
+//
+// See: https://auth0.com/docs/secure/attack-protection/bot-detection
+type BotDetection struct {
+	Response *BotDetectionResponse
+}
+
+// BotDetectionResponse used to block suspected bot traffic by
+// requiring a CAPTCHA during the login process.
+type BotDetectionResponse struct {
+	Policy    *string           `json:"policy,omitempty"`
+	Selected  *string           `json:"selected,omitempty"`
+	Providers *CaptchaProviders `json:"providers,omitempty"`
+}
+
+// CaptchaProviders holds all the available captcha providers.
+type CaptchaProviders struct {
+	Auth0               *CaptchaProviderAuth0               `json:"auth0,omitempty"`
+	RecaptchaV2         *CaptchaProviderRecaptchaV2         `json:"recaptcha_v2,omitempty"`
+	RecaptchaEnterprise *CaptchaProviderRecaptchaEnterprise `json:"recaptcha_enterprise,omitempty"`
+}
+
+// CaptchaProviderAuth0 currently has no settings.
+type CaptchaProviderAuth0 struct{}
+
+// CaptchaProviderRecaptchaV2 holds settings for RecaptchaV2.
+type CaptchaProviderRecaptchaV2 struct {
+	Secret  *string `json:"secret,omitempty"`
+	SiteKey *string `json:"siteKey,omitempty"`
+}
+
+// CaptchaProviderRecaptchaEnterprise holds settings for RecaptchaEnterprise.
+type CaptchaProviderRecaptchaEnterprise struct {
+	APIKey    *string `json:"apiKey,omitempty"`
+	ProjectID *string `json:"projectId,omitempty"`
+	SiteKey   *string `json:"siteKey,omitempty"`
+}
+
+// GetBotDetection retrieves the bot detection settings.
+//
+// Required scope: `read:attack_protection`
+//
+// See: https://auth0.com/docs/secure/attack-protection/bot-detection#configure-bot-detection
+func (m *AttackProtectionManager) GetBotDetection(
+	opts ...RequestOption,
+) (*BotDetection, error) {
+	var botDetection BotDetection
+	err := m.Request(http.MethodGet, m.URI("anomaly", "captchas"), &botDetection.Response, opts...)
+	return &botDetection, err
+}
+
+// UpdateBotDetection updates the bot detection settings.
+//
+// Required scope: `read:attack_protection`
+//
+// https://auth0.com/docs/secure/attack-protection/bot-detection#configure-bot-detection
+func (m *AttackProtectionManager) UpdateBotDetection(
+	botDetection *BotDetection,
+	opts ...RequestOption,
+) error {
+	return m.Request(http.MethodPost, m.URI("anomaly", "captchas"), &botDetection.Response, opts...)
+}
