@@ -5707,6 +5707,14 @@ func (t *Tenant) GetSandboxVersion() string {
 	return *t.SandboxVersion
 }
 
+// GetSessionCookie returns the SessionCookie field.
+func (t *Tenant) GetSessionCookie() *TenantSessionCookie {
+	if t == nil {
+		return nil
+	}
+	return t.SessionCookie
+}
+
 // GetSessionLifetime returns the SessionLifetime field if it's non-nil, zero value otherwise.
 func (t *Tenant) GetSessionLifetime() float64 {
 	if t == nil || t.SessionLifetime == nil {
@@ -6038,6 +6046,19 @@ func (t *TenantGuardianMFAPage) GetHTML() string {
 
 // String returns a string representation of TenantGuardianMFAPage.
 func (t *TenantGuardianMFAPage) String() string {
+	return Stringify(t)
+}
+
+// GetMode returns the Mode field if it's non-nil, zero value otherwise.
+func (t *TenantSessionCookie) GetMode() string {
+	if t == nil || t.Mode == nil {
+		return ""
+	}
+	return *t.Mode
+}
+
+// String returns a string representation of TenantSessionCookie.
+func (t *TenantSessionCookie) String() string {
 	return Stringify(t)
 }
 
