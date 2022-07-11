@@ -184,7 +184,7 @@ type BotDetection struct {
 	Response *BotDetectionResponse
 }
 
-// BotDetectionResponse used to block suspected bot traffic by
+// BotDetectionResponse is used to block suspected bot traffic by
 // requiring a CAPTCHA during the login process.
 type BotDetectionResponse struct {
 	Policy    *string           `json:"policy,omitempty"`
