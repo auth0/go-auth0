@@ -91,6 +91,9 @@ func TestEmailManager_Delete(t *testing.T) {
 func givenAnEmailProvider(t *testing.T) *Email {
 	t.Helper()
 
+	err := m.Email.Delete() // Delete any existing email providers, otherwise most subsequent operations will fail
+	require.NoError(t, err)
+
 	emailProvider := &Email{
 		Name:               auth0.String("smtp"),
 		Enabled:            auth0.Bool(true),
@@ -103,7 +106,7 @@ func givenAnEmailProvider(t *testing.T) *Email {
 		},
 	}
 
-	err := m.Email.Create(emailProvider)
+	err = m.Email.Create(emailProvider)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
