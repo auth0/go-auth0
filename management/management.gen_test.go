@@ -4907,6 +4907,16 @@ func TestEmailTemplate_GetFrom(tt *testing.T) {
 	e.GetFrom()
 }
 
+func TestEmailTemplate_GetIncludeEmailInRedirect(tt *testing.T) {
+	var zeroValue bool
+	e := &EmailTemplate{IncludeEmailInRedirect: &zeroValue}
+	e.GetIncludeEmailInRedirect()
+	e = &EmailTemplate{}
+	e.GetIncludeEmailInRedirect()
+	e = nil
+	e.GetIncludeEmailInRedirect()
+}
+
 func TestEmailTemplate_GetResultURL(tt *testing.T) {
 	var zeroValue string
 	e := &EmailTemplate{ResultURL: &zeroValue}

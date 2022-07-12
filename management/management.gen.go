@@ -3886,6 +3886,14 @@ func (e *EmailTemplate) GetFrom() string {
 	return *e.From
 }
 
+// GetIncludeEmailInRedirect returns the IncludeEmailInRedirect field if it's non-nil, zero value otherwise.
+func (e *EmailTemplate) GetIncludeEmailInRedirect() bool {
+	if e == nil || e.IncludeEmailInRedirect == nil {
+		return false
+	}
+	return *e.IncludeEmailInRedirect
+}
+
 // GetResultURL returns the ResultURL field if it's non-nil, zero value otherwise.
 func (e *EmailTemplate) GetResultURL() string {
 	if e == nil || e.ResultURL == nil {

@@ -104,7 +104,11 @@ func givenAnEmailProvider(t *testing.T) *Email {
 	}
 
 	err := m.Email.Create(emailProvider)
-	require.NoError(t, err)
+	if err != nil {
+		if err.(Error).Status() != http.StatusConflict {
+			t.Error(err)
+		}
+	}
 
 	t.Cleanup(func() {
 		cleanupEmailProvider(t)
