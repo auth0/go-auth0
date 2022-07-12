@@ -34,7 +34,7 @@ interactions:
     method: GET
   response:
     body: '{"syntax":"liquid","body":"<html><body><h1>Let''s get you verified!</h1></body></html>","from":"someone@example.com","subject":"Let''s
-      get you verified!","urlLifetimeInSeconds":432000,"template":"verify_email","includeEmailInRedirect":false,"resultUrl":"https://www.example.com/verify-email","enabled":false}'
+      get you verified!","urlLifetimeInSeconds":432000,"template":"verify_email","includeEmailInRedirect":true,"resultUrl":"https://www.example.com/verify-email","enabled":false}'
     headers:
       Content-Type:
       - application/json; charset=utf-8
@@ -54,7 +54,7 @@ interactions:
     method: PATCH
   response:
     body: '{"syntax":"liquid","body":"<html><body><h1>Let''s get you verified!</h1></body></html>","from":"someone@example.com","subject":"Let''s
-      get you verified!","urlLifetimeInSeconds":432000,"template":"verify_email","includeEmailInRedirect":false,"resultUrl":"https://www.example.com/verify-email","enabled":false}'
+      get you verified!","urlLifetimeInSeconds":432000,"template":"verify_email","includeEmailInRedirect":true,"resultUrl":"https://www.example.com/verify-email","enabled":false}'
     headers:
       Content-Type:
       - application/json; charset=utf-8

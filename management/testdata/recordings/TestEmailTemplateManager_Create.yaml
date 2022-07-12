@@ -3,7 +3,7 @@ version: 1
 interactions:
 - request:
     body: |
-      {"template":"verify_email","body":"\u003chtml\u003e\u003cbody\u003e\u003ch1\u003eVerify your email\u003c/h1\u003e\u003c/body\u003e\u003c/html\u003e","from":"me@example.com","resultUrl":"https://www.example.com/verify-email","subject":"Verify your email","syntax":"liquid","enabled":true}
+      {"template":"verify_email","body":"\u003chtml\u003e\u003cbody\u003e\u003ch1\u003eVerify your email\u003c/h1\u003e\u003c/body\u003e\u003c/html\u003e","from":"me@example.com","resultUrl":"https://www.example.com/verify-email","subject":"Verify your email","syntax":"liquid","enabled":true,"includeEmailInRedirect":true}
     form: {}
     headers:
       Content-Type:
@@ -33,8 +33,8 @@ interactions:
     url: https://go-auth0-dev.eu.auth0.com/api/v2/email-templates/verify_email
     method: PATCH
   response:
-    body: '{"template":"verify_email","body":"<html><body><h1>Let''s get you verified!</h1></body></html>","from":"someone@example.com","resultUrl":"https://www.example.com/verify-email","subject":"Let''s
-      get you verified!","syntax":"liquid","enabled":false}'
+    body: '{"syntax":"liquid","body":"<html><body><h1>Let''s get you verified!</h1></body></html>","from":"someone@example.com","subject":"Let''s
+      get you verified!","urlLifetimeInSeconds":432000,"template":"verify_email","includeEmailInRedirect":true,"resultUrl":"https://www.example.com/verify-email","enabled":false}'
     headers:
       Content-Type:
       - application/json; charset=utf-8
