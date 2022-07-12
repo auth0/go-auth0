@@ -1,5 +1,16 @@
 # Change Log
 
+<a name="v0.9.0"></a>
+## [v0.9.0](https://github.com/auth0/go-auth0/tree/v0.9.0) (2022-07-12)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.8.0...v0.9.0)
+
+### Added
+
+- Added `session_cookie` tenant property ([#88](https://github.com/auth0/go-auth0/pull/88))
+- Added `upstream_params` connection property ([#89](https://github.com/auth0/go-auth0/pull/89))
+- Added `include_email_in_redirect` email template property ([#90](https://github.com/auth0/go-auth0/pull/90))
+
 <a name="v0.8.0"></a>
 ## [v0.8.0](https://github.com/auth0/go-auth0/tree/v0.8.0) (2022-07-06)
 
