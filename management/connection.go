@@ -47,6 +47,42 @@ const (
 	ConnectionStrategySAML = "samlp"
 	// ConnectionStrategyGoogleApps constant.
 	ConnectionStrategyGoogleApps = "google-apps"
+	// ConnectionStrategyDropbox constant.
+	ConnectionStrategyDropbox = "dropbox"
+	// ConnectionStrategyBitBucket constant.
+	ConnectionStrategyBitBucket = "bitbucket"
+	// ConnectionStrategyPaypal constant.
+	ConnectionStrategyPaypal = "paypal"
+	// ConnectionStrategyTwitter constant.
+	ConnectionStrategyTwitter = "twitter"
+	// ConnectionStrategyAmazon constant.
+	ConnectionStrategyAmazon = "amazon"
+	// ConnectionStrategyYahoo constant.
+	ConnectionStrategyYahoo = "yahoo"
+	// ConnectionStrategyBox constant.
+	ConnectionStrategyBox = "box"
+	// ConnectionStrategyWordpress constant.
+	ConnectionStrategyWordpress = "wordpress"
+	// ConnectionStrategyDiscord constant.
+	ConnectionStrategyDiscord = "discord"
+	// ConnectionStrategyImgur constant.
+	ConnectionStrategyImgur = "imgur"
+	// ConnectionStrategySpotify constant.
+	ConnectionStrategySpotify = "spotify"
+	// ConnectionStrategyShopify constant.
+	ConnectionStrategyShopify = "shopify"
+	// ConnectionStrategyFigma constant.
+	ConnectionStrategyFigma = "figma"
+	// ConnectionStrategySlack constant.
+	ConnectionStrategySlack = "slack-oauth-2"
+	// ConnectionStrategyDigitalOcean constant.
+	ConnectionStrategyDigitalOcean = "digitalocean"
+	// ConnectionStrategyTwitch constant.
+	ConnectionStrategyTwitch = "twitch"
+	// ConnectionStrategyVimeo constant.
+	ConnectionStrategyVimeo = "vimeo"
+	// ConnectionStrategyCustom constant.
+	ConnectionStrategyCustom = "custom"
 )
 
 // Connection is the relationship between Auth0 and a source of users.
@@ -167,7 +203,25 @@ func (c *Connection) UnmarshalJSON(b []byte) error {
 			v = &ConnectionOptionsSMS{}
 		case ConnectionStrategyOIDC:
 			v = &ConnectionOptionsOIDC{}
-		case ConnectionStrategyOAuth2:
+		case ConnectionStrategyOAuth2,
+			ConnectionStrategyDropbox,
+			ConnectionStrategyBitBucket,
+			ConnectionStrategyPaypal,
+			ConnectionStrategyTwitter,
+			ConnectionStrategyAmazon,
+			ConnectionStrategyYahoo,
+			ConnectionStrategyBox,
+			ConnectionStrategyWordpress,
+			ConnectionStrategyDiscord,
+			ConnectionStrategyImgur,
+			ConnectionStrategySpotify,
+			ConnectionStrategyShopify,
+			ConnectionStrategyFigma,
+			ConnectionStrategySlack,
+			ConnectionStrategyDigitalOcean,
+			ConnectionStrategyTwitch,
+			ConnectionStrategyVimeo,
+			ConnectionStrategyCustom:
 			v = &ConnectionOptionsOAuth2{}
 		case ConnectionStrategyAD:
 			v = &ConnectionOptionsAD{}
