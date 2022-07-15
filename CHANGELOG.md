@@ -1,5 +1,15 @@
 # Change Log
 
+<a name="v0.9.1"></a>
+## [v0.9.1](https://github.com/auth0/go-auth0/tree/v0.9.1) (2022-07-15)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.9.0...v0.9.1)
+
+### Added
+
+- Added more connection strategies that default to OAuth2 ([#93](https://github.com/auth0/go-auth0/pull/93))
+
+
 <a name="v0.9.0"></a>
 ## [v0.9.0](https://github.com/auth0/go-auth0/tree/v0.9.0) (2022-07-12)
 
