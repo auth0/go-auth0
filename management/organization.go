@@ -20,7 +20,7 @@ type Organization struct {
 
 	// Metadata associated with the organization, in the form of an object with
 	// string values (max 255 chars). Maximum of 10 metadata properties allowed.
-	Metadata map[string]interface{} `json:"metadata,omitempty"`
+	Metadata *map[string]interface{} `json:"metadata,omitempty"`
 }
 
 // OrganizationBranding holds branding information for an Organization.
