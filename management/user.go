@@ -63,7 +63,7 @@ type User struct {
 
 	// UserMetadata holds data that the user has read/write access to.
 	// For example color_preference, blog_url, etc.
-	UserMetadata map[string]interface{} `json:"user_metadata,omitempty"`
+	UserMetadata *map[string]interface{} `json:"user_metadata,omitempty"`
 
 	// Identities is a list of user identities for when accounts are linked.
 	Identities []*UserIdentity `json:"identities,omitempty"`
@@ -89,7 +89,7 @@ type User struct {
 	// For example roles, permissions, vip, etc.
 	// NOTE: Roles added to AppMetadata are not integrated with Auth0 Role-Based Access Control (RBAC).
 	// For RBAC, see the functions User.Roles, User.AssignRoles, and User.RemoveRoles.
-	AppMetadata map[string]interface{} `json:"app_metadata,omitempty"`
+	AppMetadata *map[string]interface{} `json:"app_metadata,omitempty"`
 
 	// The user's picture url.
 	Picture *string `json:"picture,omitempty"`
