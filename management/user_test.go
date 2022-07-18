@@ -50,20 +50,23 @@ func TestUserManager_Update(t *testing.T) {
 
 	expectedUser := givenAUser(t)
 
+	appMetadata := map[string]interface{}{"foo": "bar"}
 	actualUser := &User{
-		Connection: auth0.String("Username-Password-Authentication"),
-		Password:   auth0.String("I don't need one"),
-		AppMetadata: map[string]interface{}{
-			"foo": "bar",
-		},
+		Connection:  auth0.String("Username-Password-Authentication"),
+		Password:    auth0.String("I don't need one"),
+		AppMetadata: &appMetadata,
 	}
 	err := m.User.Update(expectedUser.GetID(), actualUser)
 
 	assert.NoError(t, err)
-	expectedAppMetadata := expectedUser.AppMetadata
-	expectedAppMetadata["foo"] = "bar"
-	assert.Equal(t, expectedAppMetadata, actualUser.AppMetadata)
-	assert.Equal(t, expectedAppMetadata, actualUser.AppMetadata)
+	assert.Equal(t, map[string]interface{}{
+		"foo": "bar",
+		"facts": []interface{}{
+			"count_to_infinity_twice",
+			"kill_two_stones_with_one_bird",
+			"can_hear_sign_language",
+		},
+	}, *actualUser.AppMetadata)
 	assert.Equal(t, "Username-Password-Authentication", actualUser.GetConnection())
 }
 
@@ -345,28 +348,30 @@ func TestUserIdentity_UnmarshalJSON(t *testing.T) {
 func givenAUser(t *testing.T) *User {
 	t.Helper()
 
-	user := &User{
-		Connection: auth0.String("Username-Password-Authentication"),
-		Email:      auth0.String(fmt.Sprintf("chuck%d@example.com", rand.Intn(999))),
-		Password:   auth0.String("Passwords hide their chuck"),
-		Username:   auth0.String(fmt.Sprintf("test-user%d", rand.Intn(999))),
-		GivenName:  auth0.String("Chuck"),
-		FamilyName: auth0.String("Sanchez"),
-		Nickname:   auth0.String("Chucky"),
-		UserMetadata: map[string]interface{}{
-			"favourite_attack": "roundhouse_kick",
+	userMetadata := map[string]interface{}{
+		"favourite_attack": "roundhouse_kick",
+	}
+	appMetadata := map[string]interface{}{
+		"facts": []string{
+			"count_to_infinity_twice",
+			"kill_two_stones_with_one_bird",
+			"can_hear_sign_language",
 		},
+	}
+	user := &User{
+		Connection:    auth0.String("Username-Password-Authentication"),
+		Email:         auth0.String(fmt.Sprintf("chuck%d@example.com", rand.Intn(999))),
+		Password:      auth0.String("Passwords hide their chuck"),
+		Username:      auth0.String(fmt.Sprintf("test-user%d", rand.Intn(999))),
+		GivenName:     auth0.String("Chuck"),
+		FamilyName:    auth0.String("Sanchez"),
+		Nickname:      auth0.String("Chucky"),
+		UserMetadata:  &userMetadata,
 		EmailVerified: auth0.Bool(true),
 		VerifyEmail:   auth0.Bool(false),
-		AppMetadata: map[string]interface{}{
-			"facts": []string{
-				"count_to_infinity_twice",
-				"kill_two_stones_with_one_bird",
-				"can_hear_sign_language",
-			},
-		},
-		Picture: auth0.String("https://example-picture-url.jpg"),
-		Blocked: auth0.Bool(false),
+		AppMetadata:   &appMetadata,
+		Picture:       auth0.String("https://example-picture-url.jpg"),
+		Blocked:       auth0.Bool(false),
 	}
 
 	err := m.User.Create(user)
