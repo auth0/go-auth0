@@ -1,5 +1,16 @@
 # Change Log
 
+<a name="v0.9.2"></a>
+## [v0.9.2](https://github.com/auth0/go-auth0/tree/v0.9.2) (2022-07-18)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.9.1...v0.9.2)
+
+### Changed
+
+- **[Breaking]** Change Metadata to `*map[string]interface{}` in Organization ([#95](https://github.com/auth0/go-auth0/pull/95))
+- **[Breaking]** Change Metadata fields to `*map[string]interface{}` in User ([#96s](https://github.com/auth0/go-auth0/pull/95))
+
+
 <a name="v0.9.1"></a>
 ## [v0.9.1](https://github.com/auth0/go-auth0/tree/v0.9.1) (2022-07-15)
 
