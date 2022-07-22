@@ -99,6 +99,21 @@ func TestOptionTotals(t *testing.T) {
 	assert.Equal(t, "true", includeTotals)
 }
 
+func TestOptionFrom(t *testing.T) {
+	r, _ := http.NewRequest("GET", "/", nil)
+
+	From("abc").apply(r)
+	Take(10).apply(r)
+
+	v := r.URL.Query()
+
+	from := v.Get("from")
+	assert.Equal(t, "abc", from)
+
+	take := v.Get("take")
+	assert.Equal(t, "10", take)
+}
+
 func TestOptionParameter(t *testing.T) {
 	r, _ := http.NewRequest("GET", "/", nil)
 
