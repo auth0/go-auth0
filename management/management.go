@@ -378,10 +378,11 @@ func (m *managementError) Status() int {
 // Specific implementations embed this struct, therefore its direct use is not
 // useful. Rather it has been made public in order to aid documentation.
 type List struct {
-	Start  int `json:"start"`
-	Limit  int `json:"limit"`
-	Length int `json:"length"`
-	Total  int `json:"total"`
+	Start  int    `json:"start"`
+	Limit  int    `json:"limit"`
+	Length int    `json:"length"`
+	Total  int    `json:"total"`
+	Next   string `json:"next"`
 }
 
 // HasNext returns true if the list has more results.
@@ -468,6 +469,24 @@ func IncludeTotals(include bool) RequestOption {
 	return newRequestOption(func(r *http.Request) {
 		q := r.URL.Query()
 		q.Set("include_totals", strconv.FormatBool(include))
+		r.URL.RawQuery = q.Encode()
+	})
+}
+
+// From configures a request to start from the specified checkpoint.
+func From(checkpoint string) RequestOption {
+	return newRequestOption(func(r *http.Request) {
+		q := r.URL.Query()
+		q.Set("from", checkpoint)
+		r.URL.RawQuery = q.Encode()
+	})
+}
+
+// Take configures a request to limit the amount of items in the result for a checkpoint based request.
+func Take(items int) RequestOption {
+	return newRequestOption(func(r *http.Request) {
+		q := r.URL.Query()
+		q.Set("take", strconv.FormatInt(int64(items), 10))
 		r.URL.RawQuery = q.Encode()
 	})
 }
