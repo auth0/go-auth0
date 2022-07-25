@@ -108,6 +108,9 @@ type User struct {
 
 	// List of multi-factor authentication providers with which this user has enrolled.
 	Multifactor *[]string `json:"multifactor,omitempty"`
+
+	// Auth0 client ID. Only valid when updating email address.
+	ClientID *string `json:"client_id,omitempty"`
 }
 
 // UnmarshalJSON is a custom deserializer for the User type.
