@@ -6293,6 +6293,14 @@ func (u *User) GetLoginsCount() int64 {
 	return *u.LoginsCount
 }
 
+// GetMultifactor returns the Multifactor field if it's non-nil, zero value otherwise.
+func (u *User) GetMultifactor() []string {
+	if u == nil || u.Multifactor == nil {
+		return nil
+	}
+	return *u.Multifactor
+}
+
 // GetName returns the Name field if it's non-nil, zero value otherwise.
 func (u *User) GetName() string {
 	if u == nil || u.Name == nil {
