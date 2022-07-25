@@ -7999,6 +7999,16 @@ func TestUser_GetLoginsCount(tt *testing.T) {
 	u.GetLoginsCount()
 }
 
+func TestUser_GetMultifactor(tt *testing.T) {
+	var zeroValue []string
+	u := &User{Multifactor: &zeroValue}
+	u.GetMultifactor()
+	u = &User{}
+	u.GetMultifactor()
+	u = nil
+	u.GetMultifactor()
+}
+
 func TestUser_GetName(tt *testing.T) {
 	var zeroValue string
 	u := &User{Name: &zeroValue}
