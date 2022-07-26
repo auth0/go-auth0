@@ -7879,6 +7879,16 @@ func TestUser_GetBlocked(tt *testing.T) {
 	u.GetBlocked()
 }
 
+func TestUser_GetClientID(tt *testing.T) {
+	var zeroValue string
+	u := &User{ClientID: &zeroValue}
+	u.GetClientID()
+	u = &User{}
+	u.GetClientID()
+	u = nil
+	u.GetClientID()
+}
+
 func TestUser_GetConnection(tt *testing.T) {
 	var zeroValue string
 	u := &User{Connection: &zeroValue}

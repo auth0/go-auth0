@@ -6197,6 +6197,14 @@ func (u *User) GetBlocked() bool {
 	return *u.Blocked
 }
 
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (u *User) GetClientID() string {
+	if u == nil || u.ClientID == nil {
+		return ""
+	}
+	return *u.ClientID
+}
+
 // GetConnection returns the Connection field if it's non-nil, zero value otherwise.
 func (u *User) GetConnection() string {
 	if u == nil || u.Connection == nil {
