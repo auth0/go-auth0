@@ -1,5 +1,17 @@
 # Change Log
 
+<a name="v0.9.3"></a>
+## [v0.9.3](https://github.com/auth0/go-auth0/tree/v0.9.3) (2022-07-26)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.9.2...v0.9.3)
+
+### Added
+
+- Added support for checkpoint based pagination ([#97](https://github.com/auth0/go-auth0/pull/97))
+- Added Multifactor field to User struct ([#97](https://github.com/auth0/go-auth0/pull/97))
+- Added ClientID field to User struct ([#97](https://github.com/auth0/go-auth0/pull/97))
+
+
 <a name="v0.9.2"></a>
 ## [v0.9.2](https://github.com/auth0/go-auth0/tree/v0.9.2) (2022-07-18)
 
