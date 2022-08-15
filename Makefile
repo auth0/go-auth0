@@ -21,7 +21,7 @@ test-e2e: ## Runs tests without http recordings
 
 .PHONY: test
 test: ## Runs tests with http recordings
-	@echo "Running tests with vcr recordings..."
+	@echo "Running tests with http recordings..."
 	@AUTH0_HTTP_RECORDINGS=on AUTH0_DOMAIN=go-auth0-dev.eu.auth0.com go test -cover -covermode=atomic -coverprofile=coverage.out ./...
 
 .PHONY: generate
