@@ -395,8 +395,6 @@ func TestConnectionManager_ReadByName(t *testing.T) {
 	}
 
 	t.Run("throw an error when connection name is empty", func(t *testing.T) {
-		setupHTTPRecordings(t)
-
 		actualConnection, err := m.Connection.ReadByName("")
 
 		assert.EqualError(t, err, "400 Bad Request: Name cannot be empty")
