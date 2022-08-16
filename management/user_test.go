@@ -365,6 +365,8 @@ func givenAUser(t *testing.T) *User {
 		Username:      auth0.String(fmt.Sprintf("test-user%d", rand.Intn(999))),
 		GivenName:     auth0.String("Chuck"),
 		FamilyName:    auth0.String("Sanchez"),
+		FirstName:     auth0.String("Chuck"),
+		LastName:      auth0.String("Sanchez"),
 		Nickname:      auth0.String("Chucky"),
 		UserMetadata:  &userMetadata,
 		EmailVerified: auth0.Bool(true),
