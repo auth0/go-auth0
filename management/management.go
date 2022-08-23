@@ -3,83 +3,15 @@ package management
 //go:generate go run gen-methods.go
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
-	"fmt"
-	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
-	"strconv"
 	"strings"
 
 	"golang.org/x/oauth2"
 
 	"github.com/auth0/go-auth0/internal/client"
 )
-
-// Option is used for passing options to the Management client.
-type Option func(*Management)
-
-// WithDebug configures the management client to dump http requests and
-// responses to stdout.
-func WithDebug(d bool) Option {
-	return func(m *Management) {
-		m.debug = d
-	}
-}
-
-// WithContext configures the management client to use the provided context
-// instead of the provided one.
-func WithContext(ctx context.Context) Option {
-	return func(m *Management) {
-		m.ctx = ctx
-	}
-}
-
-// WithUserAgent configures the management client to use the provided user agent
-// string instead of the default one.
-func WithUserAgent(userAgent string) Option {
-	return func(m *Management) {
-		m.userAgent = userAgent
-	}
-}
-
-// WithClientCredentials configures management to authenticate using the client
-// credentials authentication flow.
-func WithClientCredentials(clientID, clientSecret string) Option {
-	return func(m *Management) {
-		m.tokenSource = client.OAuth2ClientCredentials(m.ctx, m.url.String(), clientID, clientSecret)
-	}
-}
-
-// WithStaticToken configures management to authenticate using a static
-// authentication token.
-func WithStaticToken(token string) Option {
-	return func(m *Management) {
-		m.tokenSource = client.StaticToken(token)
-	}
-}
-
-// WithInsecure configures management to not use an authentication token and
-// use HTTP instead of HTTPS.
-//
-// This option is available for testing purposes and should not be used in
-// production.
-func WithInsecure() Option {
-	return func(m *Management) {
-		m.tokenSource = client.StaticToken("insecure")
-		m.url.Scheme = "http"
-	}
-}
-
-// WithClient configures management to use the provided client.
-func WithClient(client *http.Client) Option {
-	return func(m *Management) {
-		m.http = client
-	}
-}
 
 // Management is an Auth0 management client used to interact with the Auth0
 // Management API v2.
@@ -184,8 +116,8 @@ type Management struct {
 // New creates a new Auth0 Management client by authenticating using the
 // supplied client id and secret.
 func New(domain string, options ...Option) (*Management, error) {
-	// Ignore the scheme if it was defined in the domain variable. Then prefix
-	// with https as its the only scheme supported by the Auth0 API.
+	// Ignore the scheme if it was defined in the domain variable, then prefix
+	// with https as it's the only scheme supported by the Auth0 API.
 	if i := strings.Index(domain, "//"); i != -1 {
 		domain = domain[i+2:]
 	}
@@ -209,10 +141,13 @@ func New(domain string, options ...Option) (*Management, error) {
 		option(m)
 	}
 
-	m.http = client.Wrap(m.http, m.tokenSource,
+	m.http = client.Wrap(
+		m.http,
+		m.tokenSource,
 		client.WithDebug(m.debug),
 		client.WithUserAgent(m.userAgent),
-		client.WithRateLimit())
+		client.WithRateLimit(),
+	)
 
 	m.Client = newClientManager(m)
 	m.ClientGrant = newClientGrantManager(m)
@@ -245,304 +180,4 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.BrandingTheme = newBrandingThemeManager(m)
 
 	return m, nil
-}
-
-// URI returns the absolute URL of the Management API with any path segments
-// appended to the end.
-func (m *Management) URI(path ...string) string {
-	baseURL := &url.URL{
-		Scheme: m.url.Scheme,
-		Host:   m.url.Host,
-		Path:   m.basePath + "/",
-	}
-
-	const escapedForwardSlash = "%2F"
-	var escapedPath []string
-	for _, unescapedPath := range path {
-		// Go's url.PathEscape will not escape "/", but some user IDs do have a valid "/" in them.
-		// See https://github.com/golang/go/blob/b55a2fb3b0d67b346bac871737b862f16e5a6447/src/net/url/url.go#L141.
-		defaultPathEscaped := url.PathEscape(unescapedPath)
-		escapedPath = append(
-			escapedPath,
-			strings.Replace(defaultPathEscaped, "/", escapedForwardSlash, -1),
-		)
-	}
-
-	return baseURL.String() + strings.Join(escapedPath, "/")
-}
-
-// NewRequest returns a new HTTP request. If the payload is not nil it will be
-// encoded as JSON.
-func (m *Management) NewRequest(method, uri string, payload interface{}, options ...RequestOption) (r *http.Request, err error) {
-	var buf bytes.Buffer
-	if payload != nil {
-		err := json.NewEncoder(&buf).Encode(payload)
-		if err != nil {
-			return nil, fmt.Errorf("encoding request payload failed: %w", err)
-		}
-	}
-
-	r, err = http.NewRequest(method, uri, &buf)
-	if err != nil {
-		return nil, err
-	}
-	r.Header.Add("Content-Type", "application/json")
-
-	for _, option := range options {
-		option.apply(r)
-	}
-
-	return
-}
-
-// Do sends an HTTP request and returns an HTTP response, handling any context
-// cancellations or timeouts.
-func (m *Management) Do(req *http.Request) (*http.Response, error) {
-	ctx := req.Context()
-
-	res, err := m.http.Do(req)
-	if err != nil {
-		select {
-		case <-ctx.Done():
-			return nil, ctx.Err()
-		default:
-			return nil, err
-		}
-	}
-
-	return res, nil
-}
-
-// Request combines NewRequest and Do, while also handling decoding of response payload.
-func (m *Management) Request(method, uri string, v interface{}, options ...RequestOption) error {
-	req, err := m.NewRequest(method, uri, v, options...)
-	if err != nil {
-		return err
-	}
-
-	res, err := m.Do(req)
-	if err != nil {
-		return fmt.Errorf("request failed: %w", err)
-	}
-
-	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
-		return newError(res.Body)
-	}
-
-	if res.StatusCode != http.StatusNoContent && res.StatusCode != http.StatusAccepted {
-		err := json.NewDecoder(res.Body).Decode(v)
-		if err != nil {
-			return fmt.Errorf("decoding response payload failed: %w", err)
-		}
-		return res.Body.Close()
-	}
-
-	return nil
-}
-
-// Error is an interface describing any error which could be returned by the
-// Auth0 Management API.
-type Error interface {
-	// Status returns the status code returned by the server together with the
-	// present error.
-	Status() int
-	error
-}
-
-type managementError struct {
-	StatusCode int    `json:"statusCode"`
-	Err        string `json:"error"`
-	Message    string `json:"message"`
-}
-
-func newError(r io.Reader) error {
-	m := &managementError{}
-	err := json.NewDecoder(r).Decode(m)
-	if err != nil {
-		return err
-	}
-	return m
-}
-
-// Error formats the error into a string representation.
-func (m *managementError) Error() string {
-	return fmt.Sprintf("%d %s: %s", m.StatusCode, m.Err, m.Message)
-}
-
-// Status returns the status code of the error.
-func (m *managementError) Status() int {
-	return m.StatusCode
-}
-
-// List is an envelope which is typically used when calling List() or Search()
-// methods.
-//
-// It holds metadata such as the total result count, starting offset and limit.
-//
-// Specific implementations embed this struct, therefore its direct use is not
-// useful. Rather it has been made public in order to aid documentation.
-type List struct {
-	Start  int    `json:"start"`
-	Limit  int    `json:"limit"`
-	Length int    `json:"length"`
-	Total  int    `json:"total"`
-	Next   string `json:"next"`
-}
-
-// HasNext returns true if the list has more results.
-func (l List) HasNext() bool {
-	return l.Total > l.Start+l.Limit
-}
-
-// RequestOption configures a call (typically to retrieve a resource) to Auth0 with
-// query parameters.
-type RequestOption interface {
-	apply(*http.Request)
-}
-
-func newRequestOption(fn func(r *http.Request)) *requestOption {
-	return &requestOption{applyFn: fn}
-}
-
-type requestOption struct {
-	applyFn func(r *http.Request)
-}
-
-func (o *requestOption) apply(r *http.Request) {
-	o.applyFn(r)
-}
-
-func applyListDefaults(options []RequestOption) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		PerPage(50).apply(r)
-		for _, option := range options {
-			option.apply(r)
-		}
-		IncludeTotals(true).apply(r)
-	})
-}
-
-// Context configures a request to use the specified context.
-func Context(ctx context.Context) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		*r = *r.WithContext(ctx)
-	})
-}
-
-// IncludeFields configures a request to include the desired fields.
-func IncludeFields(fields ...string) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		q := r.URL.Query()
-		q.Set("fields", strings.Join(fields, ","))
-		q.Set("include_fields", "true")
-		r.URL.RawQuery = q.Encode()
-	})
-}
-
-// ExcludeFields configures a request to exclude the desired fields.
-func ExcludeFields(fields ...string) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		q := r.URL.Query()
-		q.Set("fields", strings.Join(fields, ","))
-		q.Set("include_fields", "false")
-		r.URL.RawQuery = q.Encode()
-	})
-}
-
-// Page configures a request to receive a specific page, if the results where
-// concatenated.
-func Page(page int) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		q := r.URL.Query()
-		q.Set("page", strconv.FormatInt(int64(page), 10))
-		r.URL.RawQuery = q.Encode()
-	})
-}
-
-// PerPage configures a request to limit the amount of items in the result.
-func PerPage(items int) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		q := r.URL.Query()
-		q.Set("per_page", strconv.FormatInt(int64(items), 10))
-		r.URL.RawQuery = q.Encode()
-	})
-}
-
-// IncludeTotals configures a request to include totals.
-func IncludeTotals(include bool) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		q := r.URL.Query()
-		q.Set("include_totals", strconv.FormatBool(include))
-		r.URL.RawQuery = q.Encode()
-	})
-}
-
-// From configures a request to start from the specified checkpoint.
-func From(checkpoint string) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		q := r.URL.Query()
-		q.Set("from", checkpoint)
-		r.URL.RawQuery = q.Encode()
-	})
-}
-
-// Take configures a request to limit the amount of items in the result for a checkpoint based request.
-func Take(items int) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		q := r.URL.Query()
-		q.Set("take", strconv.FormatInt(int64(items), 10))
-		r.URL.RawQuery = q.Encode()
-	})
-}
-
-// Query configures a request to search on specific query parameters.
-//
-// For example:
-//
-//	List(Query(`email:"alice@example.com"`))
-//	List(Query(`name:"jane smith"`))
-//	List(Query(`logins_count:[100 TO 200}`))
-//	List(Query(`logins_count:{100 TO *]`))
-//
-// See: https://auth0.com/docs/users/search/v3/query-syntax
-func Query(s string) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		q := r.URL.Query()
-		q.Set("search_engine", "v3")
-		q.Set("q", s)
-		r.URL.RawQuery = q.Encode()
-	})
-}
-
-// Parameter configures a request to add arbitrary query parameters to requests
-// made to Auth0.
-func Parameter(key, value string) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		q := r.URL.Query()
-		q.Set(key, value)
-		r.URL.RawQuery = q.Encode()
-	})
-}
-
-// Header configures a request to add HTTP headers to requests made to Auth0.
-func Header(key, value string) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		r.Header.Set(key, value)
-	})
-}
-
-// Body configures a requests body.
-func Body(b []byte) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		r.Body = ioutil.NopCloser(bytes.NewReader(b))
-	})
-}
-
-// Stringify returns a string representation of the value passed as an argument.
-func Stringify(v interface{}) string {
-	b, err := json.MarshalIndent(v, "", "  ")
-	if err != nil {
-		panic(err)
-	}
-	return string(b)
 }
