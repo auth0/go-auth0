@@ -558,6 +558,73 @@ func (b *BrandingPageBackgroundGradient) String() string {
 	return Stringify(b)
 }
 
+// GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
+func (b *BrandingTheme) GetDisplayName() string {
+	if b == nil || b.DisplayName == nil {
+		return ""
+	}
+	return *b.DisplayName
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (b *BrandingTheme) GetID() string {
+	if b == nil || b.ID == nil {
+		return ""
+	}
+	return *b.ID
+}
+
+// String returns a string representation of BrandingTheme.
+func (b *BrandingTheme) String() string {
+	return Stringify(b)
+}
+
+// String returns a string representation of BrandingThemeBorders.
+func (b *BrandingThemeBorders) String() string {
+	return Stringify(b)
+}
+
+// GetBaseFocusColor returns the BaseFocusColor field if it's non-nil, zero value otherwise.
+func (b *BrandingThemeColors) GetBaseFocusColor() string {
+	if b == nil || b.BaseFocusColor == nil {
+		return ""
+	}
+	return *b.BaseFocusColor
+}
+
+// GetBaseHoverColor returns the BaseHoverColor field if it's non-nil, zero value otherwise.
+func (b *BrandingThemeColors) GetBaseHoverColor() string {
+	if b == nil || b.BaseHoverColor == nil {
+		return ""
+	}
+	return *b.BaseHoverColor
+}
+
+// String returns a string representation of BrandingThemeColors.
+func (b *BrandingThemeColors) String() string {
+	return Stringify(b)
+}
+
+// String returns a string representation of BrandingThemeFonts.
+func (b *BrandingThemeFonts) String() string {
+	return Stringify(b)
+}
+
+// String returns a string representation of BrandingThemePageBackground.
+func (b *BrandingThemePageBackground) String() string {
+	return Stringify(b)
+}
+
+// String returns a string representation of BrandingThemeText.
+func (b *BrandingThemeText) String() string {
+	return Stringify(b)
+}
+
+// String returns a string representation of BrandingThemeWidget.
+func (b *BrandingThemeWidget) String() string {
+	return Stringify(b)
+}
+
 // GetBody returns the Body field if it's non-nil, zero value otherwise.
 func (b *BrandingUniversalLogin) GetBody() string {
 	if b == nil || b.Body == nil {
