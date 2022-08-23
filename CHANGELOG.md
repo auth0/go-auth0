@@ -1,5 +1,16 @@
 # Change Log
 
+<a name="v0.10.0"></a>
+## [v0.10.0](https://github.com/auth0/go-auth0/tree/v0.10.0) (2022-08-23)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.9.3...v0.10.0)
+
+### Added
+
+- Added support for branding themes ([#103](https://github.com/auth0/go-auth0/pull/103), [#104](https://github.com/auth0/go-auth0/pull/104))
+- Added ability to pass a custom audience when using client credentials ([#106](https://github.com/auth0/go-auth0/pull/106))
+
+
 <a name="v0.9.3"></a>
 ## [v0.9.3](https://github.com/auth0/go-auth0/tree/v0.9.3) (2022-07-26)
 
