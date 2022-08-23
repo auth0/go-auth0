@@ -1,11 +1,15 @@
 package client
 
 import (
+	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestWrapRateLimit(t *testing.T) {
@@ -57,4 +61,35 @@ func TestWrapUserAgent(t *testing.T) {
 
 	c := Wrap(s.Client(), StaticToken(""), WithUserAgent(UserAgent))
 	c.Get(s.URL)
+}
+
+func TestOAuth2ClientCredentialsAndAudience(t *testing.T) {
+	const expectedAudience = "myAudience"
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/oauth/token":
+			requestBody, err := io.ReadAll(r.Body)
+			assert.NoError(t, err)
+			assert.Contains(t, string(requestBody), expectedAudience)
+
+			w.Header().Set("Content-Type", "application/json")
+			w.Write([]byte(`{"access_token":"someToken","token_type":"Bearer"}`))
+		default:
+			http.NotFound(w, r)
+		}
+	})
+	testServer := httptest.NewServer(handler)
+
+	tokenSource := OAuth2ClientCredentialsAndAudience(
+		context.Background(),
+		testServer.URL,
+		"clientID",
+		"clientSecret",
+		expectedAudience,
+	)
+
+	token, err := tokenSource.Token()
+	assert.NoError(t, err)
+	assert.Equal(t, "someToken", token.AccessToken)
 }

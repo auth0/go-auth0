@@ -42,6 +42,20 @@ func WithClientCredentials(clientID, clientSecret string) Option {
 	}
 }
 
+// WithClientCredentialsAndAudience configures management to authenticate using the client
+// credentials authentication flow and a custom audience.
+func WithClientCredentialsAndAudience(clientID, clientSecret, audience string) Option {
+	return func(m *Management) {
+		m.tokenSource = client.OAuth2ClientCredentialsAndAudience(
+			m.ctx,
+			m.url.String(),
+			clientID,
+			clientSecret,
+			audience,
+		)
+	}
+}
+
 // WithStaticToken configures management to authenticate using a static
 // authentication token.
 func WithStaticToken(token string) Option {

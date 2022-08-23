@@ -143,14 +143,29 @@ func Wrap(base *http.Client, tokenSource oauth2.TokenSource, options ...Option) 
 
 // OAuth2ClientCredentials sets the oauth2 client credentials.
 func OAuth2ClientCredentials(ctx context.Context, uri, clientID, clientSecret string) oauth2.TokenSource {
-	return (&clientcredentials.Config{
+	audience := uri + "/api/v2/"
+	return OAuth2ClientCredentialsAndAudience(ctx, uri, clientID, clientSecret, audience)
+}
+
+// OAuth2ClientCredentialsAndAudience sets the oauth2
+// client credentials with a custom audience.
+func OAuth2ClientCredentialsAndAudience(
+	ctx context.Context,
+	uri,
+	clientID,
+	clientSecret,
+	audience string,
+) oauth2.TokenSource {
+	cfg := &clientcredentials.Config{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		TokenURL:     uri + "/oauth/token",
 		EndpointParams: url.Values{
-			"audience": {uri + "/api/v2/"},
+			"audience": []string{audience},
 		},
-	}).TokenSource(ctx)
+	}
+
+	return cfg.TokenSource(ctx)
 }
 
 // StaticToken sets a static token to be used for oauth2.
