@@ -6253,6 +6253,14 @@ func (u *User) GetFamilyName() string {
 	return *u.FamilyName
 }
 
+// GetFirstName returns the FirstName field if it's non-nil, zero value otherwise.
+func (u *User) GetFirstName() string {
+	if u == nil || u.FirstName == nil {
+		return ""
+	}
+	return *u.FirstName
+}
+
 // GetGivenName returns the GivenName field if it's non-nil, zero value otherwise.
 func (u *User) GetGivenName() string {
 	if u == nil || u.GivenName == nil {
@@ -6283,6 +6291,14 @@ func (u *User) GetLastLogin() time.Time {
 		return time.Time{}
 	}
 	return *u.LastLogin
+}
+
+// GetLastName returns the LastName field if it's non-nil, zero value otherwise.
+func (u *User) GetLastName() string {
+	if u == nil || u.LastName == nil {
+		return ""
+	}
+	return *u.LastName
 }
 
 // GetLocation returns the Location field if it's non-nil, zero value otherwise.

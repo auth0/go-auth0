@@ -7949,6 +7949,16 @@ func TestUser_GetFamilyName(tt *testing.T) {
 	u.GetFamilyName()
 }
 
+func TestUser_GetFirstName(tt *testing.T) {
+	var zeroValue string
+	u := &User{FirstName: &zeroValue}
+	u.GetFirstName()
+	u = &User{}
+	u.GetFirstName()
+	u = nil
+	u.GetFirstName()
+}
+
 func TestUser_GetGivenName(tt *testing.T) {
 	var zeroValue string
 	u := &User{GivenName: &zeroValue}
@@ -7987,6 +7997,16 @@ func TestUser_GetLastLogin(tt *testing.T) {
 	u.GetLastLogin()
 	u = nil
 	u.GetLastLogin()
+}
+
+func TestUser_GetLastName(tt *testing.T) {
+	var zeroValue string
+	u := &User{LastName: &zeroValue}
+	u.GetLastName()
+	u = &User{}
+	u.GetLastName()
+	u = nil
+	u.GetLastName()
 }
 
 func TestUser_GetLocation(tt *testing.T) {
