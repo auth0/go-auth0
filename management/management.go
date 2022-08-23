@@ -169,6 +169,9 @@ type Management struct {
 	// AttackProtection manages Auth0 Attack Protection.
 	AttackProtection *AttackProtectionManager
 
+	// BrandingTheme manages Auth0 Branding Themes.
+	BrandingTheme *BrandingThemeManager
+
 	url         *url.URL
 	basePath    string
 	userAgent   string
@@ -239,6 +242,7 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.Action = newActionManager(m)
 	m.Organization = newOrganizationManager(m)
 	m.AttackProtection = newAttackProtectionManager(m)
+	m.BrandingTheme = newBrandingThemeManager(m)
 
 	return m, nil
 }
@@ -494,10 +498,11 @@ func Take(items int) RequestOption {
 // Query configures a request to search on specific query parameters.
 //
 // For example:
-//   List(Query(`email:"alice@example.com"`))
-//   List(Query(`name:"jane smith"`))
-//   List(Query(`logins_count:[100 TO 200}`))
-//   List(Query(`logins_count:{100 TO *]`))
+//
+//	List(Query(`email:"alice@example.com"`))
+//	List(Query(`name:"jane smith"`))
+//	List(Query(`logins_count:[100 TO 200}`))
+//	List(Query(`logins_count:{100 TO *]`))
 //
 // See: https://auth0.com/docs/users/search/v3/query-syntax
 func Query(s string) RequestOption {

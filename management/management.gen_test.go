@@ -710,6 +710,102 @@ func TestBrandingPageBackgroundGradient_String(t *testing.T) {
 	}
 }
 
+func TestBrandingTheme_GetDisplayName(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingTheme{DisplayName: &zeroValue}
+	b.GetDisplayName()
+	b = &BrandingTheme{}
+	b.GetDisplayName()
+	b = nil
+	b.GetDisplayName()
+}
+
+func TestBrandingTheme_GetID(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingTheme{ID: &zeroValue}
+	b.GetID()
+	b = &BrandingTheme{}
+	b.GetID()
+	b = nil
+	b.GetID()
+}
+
+func TestBrandingTheme_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingTheme{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingThemeBorders_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingThemeBorders{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingThemeColors_GetBaseFocusColor(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingThemeColors{BaseFocusColor: &zeroValue}
+	b.GetBaseFocusColor()
+	b = &BrandingThemeColors{}
+	b.GetBaseFocusColor()
+	b = nil
+	b.GetBaseFocusColor()
+}
+
+func TestBrandingThemeColors_GetBaseHoverColor(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingThemeColors{BaseHoverColor: &zeroValue}
+	b.GetBaseHoverColor()
+	b = &BrandingThemeColors{}
+	b.GetBaseHoverColor()
+	b = nil
+	b.GetBaseHoverColor()
+}
+
+func TestBrandingThemeColors_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingThemeColors{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingThemeFonts_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingThemeFonts{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingThemePageBackground_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingThemePageBackground{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingThemeText_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingThemeText{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingThemeWidget_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingThemeWidget{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBrandingUniversalLogin_GetBody(tt *testing.T) {
 	var zeroValue string
 	b := &BrandingUniversalLogin{Body: &zeroValue}
