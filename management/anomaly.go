@@ -18,27 +18,28 @@ func newAnomalyManager(m *Management) *AnomalyManager {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Anomaly/get_ips_by_id
 func (m *AnomalyManager) CheckIP(ip string, opts ...RequestOption) (isBlocked bool, err error) {
-	req, err := m.NewRequest("GET", m.URI("anomaly", "blocks", "ips", ip), nil, opts...)
+	request, err := m.NewRequest("GET", m.URI("anomaly", "blocks", "ips", ip), nil, opts...)
 	if err != nil {
 		return false, err
 	}
 
-	res, err := m.Do(req)
+	response, err := m.Do(request)
 	if err != nil {
 		return false, err
 	}
+	defer response.Body.Close()
 
 	// 200: IP address specified is currently blocked.
-	if res.StatusCode == http.StatusOK {
+	if response.StatusCode == http.StatusOK {
 		return true, nil
 	}
 
 	// 404: IP address specified is not currently blocked.
-	if res.StatusCode == http.StatusNotFound {
+	if response.StatusCode == http.StatusNotFound {
 		return false, nil
 	}
 
-	return false, newError(res.Body)
+	return false, newError(response)
 }
 
 // UnblockIP unblocks an IP address currently blocked by the multiple

@@ -2,6 +2,8 @@ package management
 
 import (
 	"encoding/json"
+	"fmt"
+	"io"
 	"net/http"
 	"reflect"
 	"strconv"
@@ -530,26 +532,30 @@ func (m *UserManager) InvalidateRememberBrowser(id string, opts ...RequestOption
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/post_identities
 func (m *UserManager) Link(id string, il *UserIdentityLink, opts ...RequestOption) (uIDs []UserIdentity, err error) {
-	req, err := m.NewRequest("POST", m.URI("users", id, "identities"), il, opts...)
+	request, err := m.NewRequest("POST", m.URI("users", id, "identities"), il, opts...)
 	if err != nil {
 		return uIDs, err
 	}
 
-	res, err := m.Do(req)
+	response, err := m.Do(request)
 	if err != nil {
 		return uIDs, err
 	}
+	defer response.Body.Close()
 
-	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
-		return uIDs, newError(res.Body)
+	if response.StatusCode >= http.StatusBadRequest {
+		return uIDs, newError(response)
 	}
 
-	if res.StatusCode != http.StatusNoContent && res.StatusCode != http.StatusAccepted {
-		err := json.NewDecoder(res.Body).Decode(&uIDs)
-		if err != nil {
-			return uIDs, err
+	responseBody, err := io.ReadAll(response.Body)
+	if err != nil {
+		return uIDs, fmt.Errorf("failed to read the response body: %w", err)
+	}
+
+	if len(responseBody) > 0 {
+		if err = json.Unmarshal(responseBody, &uIDs); err != nil {
+			return uIDs, fmt.Errorf("failed to unmarshal response payload: %w", err)
 		}
-		return uIDs, res.Body.Close()
 	}
 
 	return uIDs, nil

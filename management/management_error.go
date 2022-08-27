@@ -3,7 +3,7 @@ package management
 import (
 	"encoding/json"
 	"fmt"
-	"io"
+	"net/http"
 )
 
 // Error is an interface describing any error which
@@ -21,13 +21,25 @@ type managementError struct {
 	Message    string `json:"message"`
 }
 
-func newError(r io.Reader) error {
-	m := &managementError{}
-	if err := json.NewDecoder(r).Decode(m); err != nil {
-		return err
+func newError(response *http.Response) error {
+	apiError := &managementError{}
+
+	if err := json.NewDecoder(response.Body).Decode(apiError); err != nil {
+		return &managementError{
+			StatusCode: response.StatusCode,
+			Err:        http.StatusText(response.StatusCode),
+			Message:    fmt.Errorf("failed to decode json error response payload: %w", err).Error(),
+		}
 	}
 
-	return m
+	// This can happen in case the error message structure changes.
+	// If that happens we still want to display the correct code.
+	if apiError.Status() == 0 {
+		apiError.StatusCode = response.StatusCode
+		apiError.Err = http.StatusText(response.StatusCode)
+	}
+
+	return apiError
 }
 
 // Error formats the error into a string representation.
