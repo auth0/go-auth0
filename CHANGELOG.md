@@ -1,5 +1,15 @@
 # Change Log
 
+<a name="v0.10.1"></a>
+## [v0.10.1](https://github.com/auth0/go-auth0/tree/v0.10.1) (2022-08-30)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.10.0...v0.10.1)
+
+### Changed
+
+- Enhance reliability of how we make requests and parse errors ([#108](https://github.com/auth0/go-auth0/pull/108)
+
+
 <a name="v0.10.0"></a>
 ## [v0.10.0](https://github.com/auth0/go-auth0/tree/v0.10.0) (2022-08-23)
 
