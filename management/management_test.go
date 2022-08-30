@@ -129,7 +129,7 @@ func TestOptionParameter(t *testing.T) {
 	assert.Equal(t, "xyz", bar)
 }
 
-func TestOptionDefauls(t *testing.T) {
+func TestOptionDefaults(t *testing.T) {
 	r, _ := http.NewRequest("GET", "/", nil)
 
 	applyListDefaults([]RequestOption{

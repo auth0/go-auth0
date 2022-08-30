@@ -3,7 +3,6 @@ package management
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
 )
 
 // Branding is used to customize the look and feel of Auth0 to align
@@ -168,21 +167,7 @@ func (m *BrandingManager) UniversalLogin(opts ...RequestOption) (ul *BrandingUni
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/put_universal_login
 func (m *BrandingManager) SetUniversalLogin(ul *BrandingUniversalLogin, opts ...RequestOption) (err error) {
-	req, err := m.NewRequest("PUT", m.URI("branding", "templates", "universal-login"), ul.Body, opts...)
-	if err != nil {
-		return err
-	}
-
-	res, err := m.Do(req)
-	if err != nil {
-		return err
-	}
-
-	if res.StatusCode >= http.StatusBadRequest {
-		return newError(res.Body)
-	}
-
-	return nil
+	return m.Request("PUT", m.URI("branding", "templates", "universal-login"), ul.Body, opts...)
 }
 
 // DeleteUniversalLogin deletes the template for the New Universal Login Experience.

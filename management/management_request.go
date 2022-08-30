@@ -84,27 +84,32 @@ func (m *Management) Do(req *http.Request) (*http.Response, error) {
 }
 
 // Request combines NewRequest and Do, while also handling decoding of response payload.
-func (m *Management) Request(method, uri string, v interface{}, options ...RequestOption) error {
-	request, err := m.NewRequest(method, uri, v, options...)
+func (m *Management) Request(method, uri string, payload interface{}, options ...RequestOption) error {
+	request, err := m.NewRequest(method, uri, payload, options...)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to create a new request: %w", err)
 	}
 
 	response, err := m.Do(request)
 	if err != nil {
-		return fmt.Errorf("request failed: %w", err)
+		return fmt.Errorf("failed to send the request: %w", err)
+	}
+	defer response.Body.Close()
+
+	// If the response contains a client or a server error then return the error.
+	if response.StatusCode >= http.StatusBadRequest {
+		return newError(response)
 	}
 
-	if response.StatusCode < http.StatusOK || response.StatusCode >= http.StatusBadRequest {
-		return newError(response.Body)
+	responseBody, err := io.ReadAll(response.Body)
+	if err != nil {
+		return fmt.Errorf("failed to read the response body: %w", err)
 	}
 
-	if response.StatusCode != http.StatusNoContent && response.StatusCode != http.StatusAccepted {
-		if err := json.NewDecoder(response.Body).Decode(v); err != nil {
-			return fmt.Errorf("decoding response payload failed: %w", err)
+	if len(responseBody) > 0 && string(responseBody) != "{}" {
+		if err = json.Unmarshal(responseBody, &payload); err != nil {
+			return fmt.Errorf("failed to unmarshal response payload: %w", err)
 		}
-
-		return response.Body.Close()
 	}
 
 	return nil

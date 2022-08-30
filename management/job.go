@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"mime/multipart"
-	"net/http"
 	"net/textproto"
 	"strconv"
 	"time"
@@ -126,29 +125,7 @@ func (m *JobManager) ImportUsers(j *Job, opts ...RequestOption) error {
 	}
 	mp.Close()
 
-	req, err := http.NewRequest("POST", m.URI("jobs", "users-imports"), &payload)
-	if err != nil {
-		return err
-	}
-	req.Header.Add("Content-Type", mp.FormDataContentType())
+	opts = append(opts, Header("Content-Type", mp.FormDataContentType()))
 
-	for _, option := range opts {
-		option.apply(req)
-	}
-
-	res, err := m.Do(req)
-	if err != nil {
-		return err
-	}
-
-	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
-		return newError(res.Body)
-	}
-
-	if res.StatusCode != http.StatusNoContent {
-		defer res.Body.Close()
-		return json.NewDecoder(res.Body).Decode(j)
-	}
-
-	return nil
+	return m.Request("POST", m.URI("jobs", "users-imports"), &payload, opts...)
 }

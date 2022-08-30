@@ -146,23 +146,23 @@ type EnrollmentTicket struct {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/post_ticket
 func (m *EnrollmentManager) CreateTicket(t *CreateEnrollmentTicket, opts ...RequestOption) (EnrollmentTicket, error) {
-	req, err := m.NewRequest("POST", m.URI("guardian", "enrollments", "ticket"), t, opts...)
+	request, err := m.NewRequest("POST", m.URI("guardian", "enrollments", "ticket"), t, opts...)
 	if err != nil {
 		return EnrollmentTicket{}, err
 	}
 
-	res, err := m.Do(req)
+	response, err := m.Do(request)
 	if err != nil {
 		return EnrollmentTicket{}, err
 	}
-	defer res.Body.Close()
+	defer response.Body.Close()
 
-	if res.StatusCode != http.StatusOK {
-		return EnrollmentTicket{}, newError(res.Body)
+	if response.StatusCode != http.StatusOK {
+		return EnrollmentTicket{}, newError(response)
 	}
 
 	var out EnrollmentTicket
-	err = json.NewDecoder(res.Body).Decode(&out)
+	err = json.NewDecoder(response.Body).Decode(&out)
 	return out, err
 }
 
