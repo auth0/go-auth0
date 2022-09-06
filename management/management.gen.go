@@ -7,6 +7,14 @@ import (
 	"time"
 )
 
+// GetAllChangesDeployed returns the AllChangesDeployed field if it's non-nil, zero value otherwise.
+func (a *Action) GetAllChangesDeployed() bool {
+	if a == nil || a.AllChangesDeployed == nil {
+		return false
+	}
+	return *a.AllChangesDeployed
+}
+
 // GetBuiltAt returns the BuiltAt field if it's non-nil, zero value otherwise.
 func (a *Action) GetBuiltAt() time.Time {
 	if a == nil || a.BuiltAt == nil {
@@ -29,6 +37,14 @@ func (a *Action) GetCreatedAt() time.Time {
 		return time.Time{}
 	}
 	return *a.CreatedAt
+}
+
+// GetDependencies returns the Dependencies field if it's non-nil, zero value otherwise.
+func (a *Action) GetDependencies() []ActionDependency {
+	if a == nil || a.Dependencies == nil {
+		return nil
+	}
+	return *a.Dependencies
 }
 
 // GetDeployedVersion returns the DeployedVersion field.
@@ -63,12 +79,28 @@ func (a *Action) GetRuntime() string {
 	return *a.Runtime
 }
 
+// GetSecrets returns the Secrets field if it's non-nil, zero value otherwise.
+func (a *Action) GetSecrets() []ActionSecret {
+	if a == nil || a.Secrets == nil {
+		return nil
+	}
+	return *a.Secrets
+}
+
 // GetStatus returns the Status field if it's non-nil, zero value otherwise.
 func (a *Action) GetStatus() string {
 	if a == nil || a.Status == nil {
 		return ""
 	}
 	return *a.Status
+}
+
+// GetSupportedTriggers returns the SupportedTriggers field if it's non-nil, zero value otherwise.
+func (a *Action) GetSupportedTriggers() []ActionTrigger {
+	if a == nil || a.SupportedTriggers == nil {
+		return nil
+	}
+	return *a.SupportedTriggers
 }
 
 // GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
@@ -124,6 +156,14 @@ func (a *ActionBinding) GetRef() *ActionBindingReference {
 	return a.Ref
 }
 
+// GetSecrets returns the Secrets field if it's non-nil, zero value otherwise.
+func (a *ActionBinding) GetSecrets() []ActionSecret {
+	if a == nil || a.Secrets == nil {
+		return nil
+	}
+	return *a.Secrets
+}
+
 // GetTriggerID returns the TriggerID field if it's non-nil, zero value otherwise.
 func (a *ActionBinding) GetTriggerID() string {
 	if a == nil || a.TriggerID == nil {
@@ -143,6 +183,14 @@ func (a *ActionBinding) GetUpdatedAt() time.Time {
 // String returns a string representation of ActionBinding.
 func (a *ActionBinding) String() string {
 	return Stringify(a)
+}
+
+// GetBindings returns the Bindings field if it's non-nil, zero value otherwise.
+func (a *ActionBindingList) GetBindings() []ActionBinding {
+	if a == nil || a.Bindings == nil {
+		return nil
+	}
+	return *a.Bindings
 }
 
 // String returns a string representation of ActionBindingList.
@@ -216,6 +264,14 @@ func (a *ActionExecution) GetID() string {
 	return *a.ID
 }
 
+// GetResults returns the Results field if it's non-nil, zero value otherwise.
+func (a *ActionExecution) GetResults() []ActionExecutionResult {
+	if a == nil || a.Results == nil {
+		return nil
+	}
+	return *a.Results
+}
+
 // GetStatus returns the Status field if it's non-nil, zero value otherwise.
 func (a *ActionExecution) GetStatus() string {
 	if a == nil || a.Status == nil {
@@ -272,6 +328,14 @@ func (a *ActionExecutionResult) GetStartedAt() time.Time {
 // String returns a string representation of ActionExecutionResult.
 func (a *ActionExecutionResult) String() string {
 	return Stringify(a)
+}
+
+// GetActions returns the Actions field if it's non-nil, zero value otherwise.
+func (a *ActionList) GetActions() []Action {
+	if a == nil || a.Actions == nil {
+		return nil
+	}
+	return *a.Actions
 }
 
 // String returns a string representation of ActionList.
@@ -337,6 +401,14 @@ func (a *ActionTrigger) String() string {
 	return Stringify(a)
 }
 
+// GetTriggers returns the Triggers field if it's non-nil, zero value otherwise.
+func (a *ActionTriggerList) GetTriggers() []ActionTrigger {
+	if a == nil || a.Triggers == nil {
+		return nil
+	}
+	return *a.Triggers
+}
+
 // String returns a string representation of ActionTriggerList.
 func (a *ActionTriggerList) String() string {
 	return Stringify(a)
@@ -374,12 +446,36 @@ func (a *ActionVersion) GetCreatedAt() time.Time {
 	return *a.CreatedAt
 }
 
+// GetDependencies returns the Dependencies field if it's non-nil, zero value otherwise.
+func (a *ActionVersion) GetDependencies() []ActionDependency {
+	if a == nil || a.Dependencies == nil {
+		return nil
+	}
+	return *a.Dependencies
+}
+
+// GetErrors returns the Errors field if it's non-nil, zero value otherwise.
+func (a *ActionVersion) GetErrors() []ActionVersionError {
+	if a == nil || a.Errors == nil {
+		return nil
+	}
+	return *a.Errors
+}
+
 // GetID returns the ID field if it's non-nil, zero value otherwise.
 func (a *ActionVersion) GetID() string {
 	if a == nil || a.ID == nil {
 		return ""
 	}
 	return *a.ID
+}
+
+// GetNumber returns the Number field if it's non-nil, zero value otherwise.
+func (a *ActionVersion) GetNumber() int {
+	if a == nil || a.Number == nil {
+		return 0
+	}
+	return *a.Number
 }
 
 // GetStatus returns the Status field if it's non-nil, zero value otherwise.

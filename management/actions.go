@@ -23,7 +23,7 @@ type ActionTrigger struct {
 
 // ActionTriggerList is a list of ActionTriggers.
 type ActionTriggerList struct {
-	Triggers []*ActionTrigger `json:"triggers"`
+	Triggers *[]ActionTrigger `json:"triggers"`
 }
 
 // ActionDependency is used to allow the use of packages from the npm registry.
@@ -74,25 +74,25 @@ type Action struct {
 	// ID of the action
 	ID *string `json:"id,omitempty"`
 	// The name of an action
-	Name *string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// List of triggers that this action supports. At this time, an action can
 	// only target a single trigger at a time.
-	SupportedTriggers []*ActionTrigger `json:"supported_triggers"`
+	SupportedTriggers *[]ActionTrigger `json:"supported_triggers,omitempty"`
 	// The source code of the action.
 	Code *string `json:"code,omitempty"`
 	// List of third party npm modules, and their versions, that this action
 	// depends on.
-	Dependencies []*ActionDependency `json:"dependencies,omitempty"`
+	Dependencies *[]ActionDependency `json:"dependencies,omitempty"`
 	// The Node runtime. For example `node16`, defaults to `node12`
 	Runtime *string `json:"runtime,omitempty"`
 	// List of secrets that are included in an action or a version of an action.
-	Secrets []*ActionSecret `json:"secrets,omitempty"`
+	Secrets *[]ActionSecret `json:"secrets,omitempty"`
 	// Version of the action that is currently deployed.
 	DeployedVersion *ActionVersion `json:"deployed_version,omitempty"`
 	// The build status of this action.
 	Status *string `json:"status,omitempty"`
 	// True if all of an Action's contents have been deployed.
-	AllChangesDeployed bool `json:"all_changes_deployed,omitempty"`
+	AllChangesDeployed *bool `json:"all_changes_deployed,omitempty"`
 	// The time when this action was built successfully.
 	BuiltAt *time.Time `json:"built_at,omitempty"`
 	// The time when this action was created.
@@ -104,7 +104,7 @@ type Action struct {
 // ActionList is a list of Actions.
 type ActionList struct {
 	List
-	Actions []*Action `json:"actions"`
+	Actions *[]Action `json:"actions"`
 }
 
 // ActionVersion is used to manage Actions version history.
@@ -113,12 +113,12 @@ type ActionList struct {
 type ActionVersion struct {
 	ID           *string             `json:"id,omitempty"`
 	Code         *string             `json:"code"`
-	Dependencies []*ActionDependency `json:"dependencies,omitempty"`
+	Dependencies *[]ActionDependency `json:"dependencies,omitempty"`
 	Deployed     bool                `json:"deployed"`
 	Status       *string             `json:"status,omitempty"`
-	Number       int                 `json:"number,omitempty"`
+	Number       *int                `json:"number,omitempty"`
 
-	Errors []*ActionVersionError `json:"errors,omitempty"`
+	Errors *[]ActionVersionError `json:"errors,omitempty"`
 	Action *Action               `json:"action,omitempty"`
 
 	BuiltAt   *time.Time `json:"built_at,omitempty"`
@@ -129,7 +129,7 @@ type ActionVersion struct {
 // ActionVersionList is a list of ActionVersions.
 type ActionVersionList struct {
 	List
-	Versions []*ActionVersion `json:"versions"`
+	Versions []ActionVersion `json:"versions"`
 }
 
 const (
@@ -154,7 +154,7 @@ type ActionBinding struct {
 
 	Ref     *ActionBindingReference `json:"ref,omitempty"`
 	Action  *Action                 `json:"action,omitempty"`
-	Secrets []*ActionSecret         `json:"secrets,omitempty"`
+	Secrets *[]ActionSecret         `json:"secrets,omitempty"`
 
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
@@ -163,11 +163,11 @@ type ActionBinding struct {
 // ActionBindingList is a list of ActionBindings.
 type ActionBindingList struct {
 	List
-	Bindings []*ActionBinding `json:"bindings"`
+	Bindings *[]ActionBinding `json:"bindings"`
 }
 
 type actionBindingsPerTrigger struct {
-	Bindings []*ActionBinding `json:"bindings"`
+	Bindings *[]ActionBinding `json:"bindings"`
 }
 
 // ActionTestPayload is used for testing Actions prior to being deployed.
@@ -181,8 +181,8 @@ type actionTestRequest struct {
 
 // ActionExecutionResult holds the results of an ActionExecution.
 type ActionExecutionResult struct {
-	ActionName *string                `json:"action_name,omitempty"`
-	Error      map[string]interface{} `json:"error,omitempty"`
+	ActionName *string                 `json:"action_name,omitempty"`
+	Error      *map[string]interface{} `json:"error,omitempty"`
 
 	StartedAt *time.Time `json:"started_at,omitempty"`
 	EndedAt   *time.Time `json:"ended_at,omitempty"`
@@ -194,7 +194,7 @@ type ActionExecution struct {
 	ID        *string                  `json:"id"`
 	TriggerID *string                  `json:"trigger_id"`
 	Status    *string                  `json:"status"`
-	Results   []*ActionExecutionResult `json:"results"`
+	Results   *[]ActionExecutionResult `json:"results"`
 
 	CreatedAt *time.Time `json:"created_at"`
 	UpdatedAt *time.Time `json:"updated_at"`
@@ -282,7 +282,7 @@ func (m *ActionManager) Versions(id string, opts ...RequestOption) (c *ActionVer
 // UpdateBindings of a trigger.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/patch_bindings
-func (m *ActionManager) UpdateBindings(triggerID string, b []*ActionBinding, opts ...RequestOption) error {
+func (m *ActionManager) UpdateBindings(triggerID string, b *[]ActionBinding, opts ...RequestOption) error {
 	bl := &actionBindingsPerTrigger{
 		Bindings: b,
 	}

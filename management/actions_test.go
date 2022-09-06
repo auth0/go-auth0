@@ -17,20 +17,20 @@ func TestActionManager_Create(t *testing.T) {
 	expectedAction := &Action{
 		Name: auth0.Stringf("Test Action (%s)", time.Now().Format(time.StampMilli)),
 		Code: auth0.String("exports.onExecutePostLogin = async (event, api) =\u003e {}"),
-		SupportedTriggers: []*ActionTrigger{
+		SupportedTriggers: &[]ActionTrigger{
 			{
 				ID:      auth0.String(ActionTriggerPostLogin),
 				Version: auth0.String("v2"),
 			},
 		},
-		Dependencies: []*ActionDependency{
+		Dependencies: &[]ActionDependency{
 			{
 				Name:        auth0.String("lodash"),
 				Version:     auth0.String("4.0.0"),
 				RegistryURL: auth0.String("https://www.npmjs.com/package/lodash"),
 			},
 		},
-		Secrets: []*ActionSecret{
+		Secrets: &[]ActionSecret{
 			{
 				Name:  auth0.String("mySecretName"),
 				Value: auth0.String("mySecretValue"),
@@ -103,7 +103,8 @@ func TestActionManager_List(t *testing.T) {
 	actionList, err := m.Action.List(Parameter("actionName", expectedAction.GetName()))
 
 	assert.NoError(t, err)
-	assert.Equal(t, expectedAction.GetID(), actionList.Actions[0].GetID())
+
+	assert.Equal(t, expectedAction.GetID(), actionList.GetActions()[0].GetID())
 }
 
 func TestActionManager_Triggers(t *testing.T) {
@@ -181,11 +182,11 @@ func TestActionManager_Bindings(t *testing.T) {
 	_, err := m.Action.Deploy(action.GetID())
 	require.NoError(t, err)
 
-	emptyBinding := make([]*ActionBinding, 0)
-	err = m.Action.UpdateBindings(ActionTriggerPostLogin, emptyBinding)
+	emptyBinding := make([]ActionBinding, 0)
+	err = m.Action.UpdateBindings(ActionTriggerPostLogin, &emptyBinding)
 	assert.NoError(t, err)
 
-	binding := []*ActionBinding{
+	binding := []ActionBinding{
 		{
 			Ref: &ActionBindingReference{
 				Type:  auth0.String(ActionBindingReferenceByName),
@@ -195,16 +196,16 @@ func TestActionManager_Bindings(t *testing.T) {
 		},
 	}
 
-	err = m.Action.UpdateBindings(ActionTriggerPostLogin, binding)
+	err = m.Action.UpdateBindings(ActionTriggerPostLogin, &binding)
 	assert.NoError(t, err)
 
 	bindingList, err := m.Action.Bindings(ActionTriggerPostLogin)
 
 	assert.NoError(t, err)
-	assert.Len(t, bindingList.Bindings, 1)
+	assert.Len(t, bindingList.GetBindings(), 1)
 
 	t.Cleanup(func() {
-		err = m.Action.UpdateBindings(ActionTriggerPostLogin, emptyBinding)
+		err = m.Action.UpdateBindings(ActionTriggerPostLogin, &emptyBinding)
 		assert.NoError(t, err)
 	})
 }
@@ -255,20 +256,20 @@ func givenAnAction(t *testing.T) *Action {
 	action := &Action{
 		Name: auth0.Stringf("Test Action (%s)", time.Now().Format(time.StampMilli)),
 		Code: auth0.String("exports.onExecutePostLogin = async (event, api) =\u003e {}"),
-		SupportedTriggers: []*ActionTrigger{
+		SupportedTriggers: &[]ActionTrigger{
 			{
 				ID:      auth0.String(ActionTriggerPostLogin),
 				Version: auth0.String("v2"),
 			},
 		},
-		Dependencies: []*ActionDependency{
+		Dependencies: &[]ActionDependency{
 			{
 				Name:        auth0.String("lodash"),
 				Version:     auth0.String("4.0.0"),
 				RegistryURL: auth0.String("https://www.npmjs.com/package/lodash"),
 			},
 		},
-		Secrets: []*ActionSecret{
+		Secrets: &[]ActionSecret{
 			{
 				Name:  auth0.String("mySecretName"),
 				Value: auth0.String("mySecretValue"),

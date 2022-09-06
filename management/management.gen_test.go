@@ -9,6 +9,16 @@ import (
 	"time"
 )
 
+func TestAction_GetAllChangesDeployed(tt *testing.T) {
+	var zeroValue bool
+	a := &Action{AllChangesDeployed: &zeroValue}
+	a.GetAllChangesDeployed()
+	a = &Action{}
+	a.GetAllChangesDeployed()
+	a = nil
+	a.GetAllChangesDeployed()
+}
+
 func TestAction_GetBuiltAt(tt *testing.T) {
 	var zeroValue time.Time
 	a := &Action{BuiltAt: &zeroValue}
@@ -37,6 +47,16 @@ func TestAction_GetCreatedAt(tt *testing.T) {
 	a.GetCreatedAt()
 	a = nil
 	a.GetCreatedAt()
+}
+
+func TestAction_GetDependencies(tt *testing.T) {
+	var zeroValue []ActionDependency
+	a := &Action{Dependencies: &zeroValue}
+	a.GetDependencies()
+	a = &Action{}
+	a.GetDependencies()
+	a = nil
+	a.GetDependencies()
 }
 
 func TestAction_GetDeployedVersion(tt *testing.T) {
@@ -76,6 +96,16 @@ func TestAction_GetRuntime(tt *testing.T) {
 	a.GetRuntime()
 }
 
+func TestAction_GetSecrets(tt *testing.T) {
+	var zeroValue []ActionSecret
+	a := &Action{Secrets: &zeroValue}
+	a.GetSecrets()
+	a = &Action{}
+	a.GetSecrets()
+	a = nil
+	a.GetSecrets()
+}
+
 func TestAction_GetStatus(tt *testing.T) {
 	var zeroValue string
 	a := &Action{Status: &zeroValue}
@@ -84,6 +114,16 @@ func TestAction_GetStatus(tt *testing.T) {
 	a.GetStatus()
 	a = nil
 	a.GetStatus()
+}
+
+func TestAction_GetSupportedTriggers(tt *testing.T) {
+	var zeroValue []ActionTrigger
+	a := &Action{SupportedTriggers: &zeroValue}
+	a.GetSupportedTriggers()
+	a = &Action{}
+	a.GetSupportedTriggers()
+	a = nil
+	a.GetSupportedTriggers()
 }
 
 func TestAction_GetUpdatedAt(tt *testing.T) {
@@ -148,6 +188,16 @@ func TestActionBinding_GetRef(tt *testing.T) {
 	a.GetRef()
 }
 
+func TestActionBinding_GetSecrets(tt *testing.T) {
+	var zeroValue []ActionSecret
+	a := &ActionBinding{Secrets: &zeroValue}
+	a.GetSecrets()
+	a = &ActionBinding{}
+	a.GetSecrets()
+	a = nil
+	a.GetSecrets()
+}
+
 func TestActionBinding_GetTriggerID(tt *testing.T) {
 	var zeroValue string
 	a := &ActionBinding{TriggerID: &zeroValue}
@@ -174,6 +224,16 @@ func TestActionBinding_String(t *testing.T) {
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
+}
+
+func TestActionBindingList_GetBindings(tt *testing.T) {
+	var zeroValue []ActionBinding
+	a := &ActionBindingList{Bindings: &zeroValue}
+	a.GetBindings()
+	a = &ActionBindingList{}
+	a.GetBindings()
+	a = nil
+	a.GetBindings()
 }
 
 func TestActionBindingList_String(t *testing.T) {
@@ -270,6 +330,16 @@ func TestActionExecution_GetID(tt *testing.T) {
 	a.GetID()
 }
 
+func TestActionExecution_GetResults(tt *testing.T) {
+	var zeroValue []ActionExecutionResult
+	a := &ActionExecution{Results: &zeroValue}
+	a.GetResults()
+	a = &ActionExecution{}
+	a.GetResults()
+	a = nil
+	a.GetResults()
+}
+
 func TestActionExecution_GetStatus(tt *testing.T) {
 	var zeroValue string
 	a := &ActionExecution{Status: &zeroValue}
@@ -344,6 +414,16 @@ func TestActionExecutionResult_String(t *testing.T) {
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
+}
+
+func TestActionList_GetActions(tt *testing.T) {
+	var zeroValue []Action
+	a := &ActionList{Actions: &zeroValue}
+	a.GetActions()
+	a = &ActionList{}
+	a.GetActions()
+	a = nil
+	a.GetActions()
 }
 
 func TestActionList_String(t *testing.T) {
@@ -430,6 +510,16 @@ func TestActionTrigger_String(t *testing.T) {
 	}
 }
 
+func TestActionTriggerList_GetTriggers(tt *testing.T) {
+	var zeroValue []ActionTrigger
+	a := &ActionTriggerList{Triggers: &zeroValue}
+	a.GetTriggers()
+	a = &ActionTriggerList{}
+	a.GetTriggers()
+	a = nil
+	a.GetTriggers()
+}
+
 func TestActionTriggerList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ActionTriggerList{}
@@ -475,6 +565,26 @@ func TestActionVersion_GetCreatedAt(tt *testing.T) {
 	a.GetCreatedAt()
 }
 
+func TestActionVersion_GetDependencies(tt *testing.T) {
+	var zeroValue []ActionDependency
+	a := &ActionVersion{Dependencies: &zeroValue}
+	a.GetDependencies()
+	a = &ActionVersion{}
+	a.GetDependencies()
+	a = nil
+	a.GetDependencies()
+}
+
+func TestActionVersion_GetErrors(tt *testing.T) {
+	var zeroValue []ActionVersionError
+	a := &ActionVersion{Errors: &zeroValue}
+	a.GetErrors()
+	a = &ActionVersion{}
+	a.GetErrors()
+	a = nil
+	a.GetErrors()
+}
+
 func TestActionVersion_GetID(tt *testing.T) {
 	var zeroValue string
 	a := &ActionVersion{ID: &zeroValue}
@@ -483,6 +593,16 @@ func TestActionVersion_GetID(tt *testing.T) {
 	a.GetID()
 	a = nil
 	a.GetID()
+}
+
+func TestActionVersion_GetNumber(tt *testing.T) {
+	var zeroValue int
+	a := &ActionVersion{Number: &zeroValue}
+	a.GetNumber()
+	a = &ActionVersion{}
+	a.GetNumber()
+	a = nil
+	a.GetNumber()
 }
 
 func TestActionVersion_GetStatus(tt *testing.T) {
