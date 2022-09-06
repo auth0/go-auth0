@@ -6933,6 +6933,16 @@ func TestResourceServer_GetName(tt *testing.T) {
 	r.GetName()
 }
 
+func TestResourceServer_GetScopes(tt *testing.T) {
+	var zeroValue []ResourceServerScope
+	r := &ResourceServer{Scopes: &zeroValue}
+	r.GetScopes()
+	r = &ResourceServer{}
+	r.GetScopes()
+	r = nil
+	r.GetScopes()
+}
+
 func TestResourceServer_GetSigningAlgorithm(tt *testing.T) {
 	var zeroValue string
 	r := &ResourceServer{SigningAlgorithm: &zeroValue}

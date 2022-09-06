@@ -14,7 +14,7 @@ type ResourceServer struct {
 	Identifier *string `json:"identifier,omitempty"`
 
 	// Scopes supported by the resource server.
-	Scopes []*ResourceServerScope `json:"scopes,omitempty"`
+	Scopes *[]ResourceServerScope `json:"scopes,omitempty"`
 
 	// The algorithm used to sign tokens ["HS256" or "RS256"].
 	SigningAlgorithm *string `json:"signing_alg,omitempty"`
@@ -63,7 +63,7 @@ type ResourceServerScope struct {
 // ResourceServerList is a list of ResourceServers.
 type ResourceServerList struct {
 	List
-	ResourceServers []*ResourceServer `json:"resource_servers"`
+	ResourceServers []ResourceServer `json:"resource_servers"`
 }
 
 // ResourceServerManager is used for managing a ResourceServer.
@@ -121,7 +121,7 @@ func (m *ResourceServerManager) Stream(fn func(s *ResourceServer), opts ...Reque
 			return err
 		}
 		for _, s := range l.ResourceServers {
-			fn(s)
+			fn(&s)
 		}
 		if !l.HasNext() {
 			break

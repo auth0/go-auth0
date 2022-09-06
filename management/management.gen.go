@@ -5431,6 +5431,14 @@ func (r *ResourceServer) GetName() string {
 	return *r.Name
 }
 
+// GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetScopes() []ResourceServerScope {
+	if r == nil || r.Scopes == nil {
+		return nil
+	}
+	return *r.Scopes
+}
+
 // GetSigningAlgorithm returns the SigningAlgorithm field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetSigningAlgorithm() string {
 	if r == nil || r.SigningAlgorithm == nil {
