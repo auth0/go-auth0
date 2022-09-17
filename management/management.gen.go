@@ -6066,6 +6066,14 @@ func (t *TenantFlags) GetEnableSSO() bool {
 	return *t.EnableSSO
 }
 
+// GetLegacyCustomClaims returns the LegacyCustomClaims field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetLegacyCustomClaims() bool {
+	if t == nil || t.LegacyCustomClaims == nil {
+		return false
+	}
+	return *t.LegacyCustomClaims
+}
+
 // GetNoDisclosureEnterpriseConnections returns the NoDisclosureEnterpriseConnections field if it's non-nil, zero value otherwise.
 func (t *TenantFlags) GetNoDisclosureEnterpriseConnections() bool {
 	if t == nil || t.NoDisclosureEnterpriseConnections == nil {

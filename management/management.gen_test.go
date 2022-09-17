@@ -7723,6 +7723,16 @@ func TestTenantFlags_GetEnableSSO(tt *testing.T) {
 	t.GetEnableSSO()
 }
 
+func TestTenantFlags_GetLegacyCustomClaims(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{LegacyCustomClaims: &zeroValue}
+	t.GetLegacyCustomClaims()
+	t = &TenantFlags{}
+	t.GetLegacyCustomClaims()
+	t = nil
+	t.GetLegacyCustomClaims()
+}
+
 func TestTenantFlags_GetNoDisclosureEnterpriseConnections(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{NoDisclosureEnterpriseConnections: &zeroValue}

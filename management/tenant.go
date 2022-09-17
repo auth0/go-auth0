@@ -236,6 +236,11 @@ type TenantFlags struct {
 
 	// Disables SAML fields map fix for bad mappings with repeated attributes
 	DisableFieldsMapFix *bool `json:"disable_fields_map_fix,omitempty"`
+
+	// If enabled, custom claims must be namespaced when they are added through
+	// rules / actions / hooks. If disabled, non namespaced custom claims are
+	// allowed.
+	LegacyCustomClaims *bool `json:"legacy_custom_claims,omitempty"`
 }
 
 // TenantUniversalLogin holds universal login settings.
