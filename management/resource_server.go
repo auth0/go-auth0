@@ -14,7 +14,7 @@ type ResourceServer struct {
 	Identifier *string `json:"identifier,omitempty"`
 
 	// Scopes supported by the resource server.
-	Scopes []*ResourceServerScope `json:"scopes,omitempty"`
+	Scopes *[]ResourceServerScope `json:"scopes,omitempty"`
 
 	// The algorithm used to sign tokens ["HS256" or "RS256"].
 	SigningAlgorithm *string `json:"signing_alg,omitempty"`
@@ -41,7 +41,7 @@ type ResourceServer struct {
 	// verifying the JWT sent to Auth0 for token introspection.
 	VerificationLocation *string `json:"verificationLocation,omitempty"`
 
-	Options map[string]interface{} `json:"options,omitempty"`
+	Options *map[string]string `json:"options,omitempty"`
 
 	// Enables the enforcement of the authorization policies.
 	EnforcePolicies *bool `json:"enforce_policies,omitempty"`
