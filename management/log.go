@@ -63,32 +63,73 @@ var logTypeName = map[string]string{
 //
 // See: https://auth0.com/docs/deploy-monitor/logs
 type Log struct {
-	ID    *string `json:"_id"`
+	ID *string `json:"_id"`
+
+	// Unique ID of the log event.
 	LogID *string `json:"log_id"`
 
-	// The date when the event was created
+	// The date when the log event was created.
 	Date *time.Time `json:"date"`
 
-	// The log event type
+	// The log event type.
 	Type *string `json:"type"`
 
-	// The log event description
+	// The log event description.
 	Description *string `json:"description"`
 
-	// The id of the client
+	// Name of the connection the log event relates to.
+	Connection *string `json:"connection"`
+
+	// ID of the connection the log event relates to.
+	ConnectionID *string `json:"connection_id"`
+
+	// ID of the organization the log event relates to.
+	OrganizationID *string `json:"organization_id"`
+
+	// Name of the organization the log event relates to.
+	OrganizationName *string `json:"organization_name"`
+
+	// The ID of the client (application).
 	ClientID *string `json:"client_id"`
 
-	// The name of the client
+	// The name of the client (application).
 	ClientName *string `json:"client_name"`
 
-	// The IP of the log event source
+	// The IP address of the log event source.
 	IP *string `json:"ip"`
 
-	LocationInfo map[string]interface{} `json:"location_info"`
-	Details      map[string]interface{} `json:"details"`
+	// Hostname the log event applies to.
+	Hostname *string `json:"hostname"`
 
-	// The user's unique identifier
+	// Additional useful details about this event (structure is dependent upon event type).
+	Details map[string]interface{} `json:"details"`
+
+	// ID of the user involved in the log event.
 	UserID *string `json:"user_id"`
+
+	// Name of the user involved in the log event.
+	UserName *string `json:"user_name"`
+
+	// User agent string from the client device that caused the event.
+	UserAgent *string `json:"user_agent"`
+
+	// API audience the event applies to.
+	Audience *string `json:"audience"`
+
+	// Scope permissions applied to the event.
+	Scope *string `json:"scope"`
+
+	// Name of the strategy involved in the event.
+	Strategy *string `json:"strategy"`
+
+	// Type of strategy involved in the event.
+	StrategyType *string `json:"strategy_type"`
+
+	// Whether the client was a mobile device (true) or desktop/laptop/server (false).
+	IsMobile *bool `json:"isMobile"`
+
+	// Information about the location that triggered this event based on the `ip`.
+	LocationInfo map[string]interface{} `json:"location_info"`
 }
 
 // TypeName returns the type name of an Event Log.
