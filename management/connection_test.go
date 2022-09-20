@@ -33,7 +33,7 @@ var connectionTestCases = []connectionTestCase{
 			Strategy: auth0.String("google-oauth2"),
 		},
 		options: &ConnectionOptionsGoogleOAuth2{
-			AllowedAudiences: []interface{}{
+			AllowedAudiences: &[]string{
 				"example.com",
 				"api.example.com",
 			},

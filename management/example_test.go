@@ -161,7 +161,7 @@ func ExampleConnectionManager_Create() {
 		Options: &management.ConnectionOptionsGoogleOAuth2{
 			ClientID:     auth0.String(""), // replace with your client id
 			ClientSecret: auth0.String(""),
-			AllowedAudiences: []interface{}{
+			AllowedAudiences: &[]string{
 				"example.com",
 				"api.example.com",
 			},
