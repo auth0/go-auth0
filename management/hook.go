@@ -22,7 +22,7 @@ type Hook struct {
 	TriggerID *string `json:"triggerId,omitempty"`
 
 	// Used to store additional metadata
-	Dependencies *map[string]interface{} `json:"dependencies,omitempty"`
+	Dependencies *map[string]string `json:"dependencies,omitempty"`
 
 	// Enabled should be set to true if the hook is enabled, false otherwise.
 	Enabled *bool `json:"enabled,omitempty"`
