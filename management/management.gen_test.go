@@ -930,6 +930,36 @@ func TestBruteForceProtection_String(t *testing.T) {
 	}
 }
 
+func TestClient_GetAllowedClients(tt *testing.T) {
+	var zeroValue []string
+	c := &Client{AllowedClients: &zeroValue}
+	c.GetAllowedClients()
+	c = &Client{}
+	c.GetAllowedClients()
+	c = nil
+	c.GetAllowedClients()
+}
+
+func TestClient_GetAllowedLogoutURLs(tt *testing.T) {
+	var zeroValue []string
+	c := &Client{AllowedLogoutURLs: &zeroValue}
+	c.GetAllowedLogoutURLs()
+	c = &Client{}
+	c.GetAllowedLogoutURLs()
+	c = nil
+	c.GetAllowedLogoutURLs()
+}
+
+func TestClient_GetAllowedOrigins(tt *testing.T) {
+	var zeroValue []string
+	c := &Client{AllowedOrigins: &zeroValue}
+	c.GetAllowedOrigins()
+	c = &Client{}
+	c.GetAllowedOrigins()
+	c = nil
+	c.GetAllowedOrigins()
+}
+
 func TestClient_GetAppType(tt *testing.T) {
 	var zeroValue string
 	c := &Client{AppType: &zeroValue}
@@ -938,6 +968,26 @@ func TestClient_GetAppType(tt *testing.T) {
 	c.GetAppType()
 	c = nil
 	c.GetAppType()
+}
+
+func TestClient_GetCallbacks(tt *testing.T) {
+	var zeroValue []string
+	c := &Client{Callbacks: &zeroValue}
+	c.GetCallbacks()
+	c = &Client{}
+	c.GetCallbacks()
+	c = nil
+	c.GetCallbacks()
+}
+
+func TestClient_GetClientAliases(tt *testing.T) {
+	var zeroValue []string
+	c := &Client{ClientAliases: &zeroValue}
+	c.GetClientAliases()
+	c = &Client{}
+	c.GetClientAliases()
+	c = nil
+	c.GetClientAliases()
 }
 
 func TestClient_GetClientID(tt *testing.T) {
@@ -951,8 +1001,8 @@ func TestClient_GetClientID(tt *testing.T) {
 }
 
 func TestClient_GetClientMetadata(tt *testing.T) {
-	zeroValue := map[string]string{}
-	c := &Client{ClientMetadata: zeroValue}
+	var zeroValue map[string]string
+	c := &Client{ClientMetadata: &zeroValue}
 	c.GetClientMetadata()
 	c = &Client{}
 	c.GetClientMetadata()
@@ -1031,8 +1081,8 @@ func TestClient_GetDescription(tt *testing.T) {
 }
 
 func TestClient_GetEncryptionKey(tt *testing.T) {
-	zeroValue := map[string]string{}
-	c := &Client{EncryptionKey: zeroValue}
+	var zeroValue map[string]string
+	c := &Client{EncryptionKey: &zeroValue}
 	c.GetEncryptionKey()
 	c = &Client{}
 	c.GetEncryptionKey()
@@ -1048,6 +1098,16 @@ func TestClient_GetFormTemplate(tt *testing.T) {
 	c.GetFormTemplate()
 	c = nil
 	c.GetFormTemplate()
+}
+
+func TestClient_GetGrantTypes(tt *testing.T) {
+	var zeroValue []string
+	c := &Client{GrantTypes: &zeroValue}
+	c.GetGrantTypes()
+	c = &Client{}
+	c.GetGrantTypes()
+	c = nil
+	c.GetGrantTypes()
 }
 
 func TestClient_GetInitiateLoginURI(tt *testing.T) {
@@ -1181,6 +1241,16 @@ func TestClient_GetTokenEndpointAuthMethod(tt *testing.T) {
 	c.GetTokenEndpointAuthMethod()
 }
 
+func TestClient_GetWebOrigins(tt *testing.T) {
+	var zeroValue []string
+	c := &Client{WebOrigins: &zeroValue}
+	c.GetWebOrigins()
+	c = &Client{}
+	c.GetWebOrigins()
+	c = nil
+	c.GetWebOrigins()
+}
+
 func TestClient_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &Client{}
@@ -1217,6 +1287,16 @@ func TestClientGrant_GetID(tt *testing.T) {
 	c.GetID()
 	c = nil
 	c.GetID()
+}
+
+func TestClientGrant_GetScope(tt *testing.T) {
+	var zeroValue []string
+	c := &ClientGrant{Scope: &zeroValue}
+	c.GetScope()
+	c = &ClientGrant{}
+	c.GetScope()
+	c = nil
+	c.GetScope()
 }
 
 func TestClientGrant_String(t *testing.T) {
@@ -1377,6 +1457,16 @@ func TestConnection_GetDisplayName(tt *testing.T) {
 	c.GetDisplayName()
 }
 
+func TestConnection_GetEnabledClients(tt *testing.T) {
+	var zeroValue []string
+	c := &Connection{EnabledClients: &zeroValue}
+	c.GetEnabledClients()
+	c = &Connection{}
+	c.GetEnabledClients()
+	c = nil
+	c.GetEnabledClients()
+}
+
 func TestConnection_GetID(tt *testing.T) {
 	var zeroValue string
 	c := &Connection{ID: &zeroValue}
@@ -1398,8 +1488,8 @@ func TestConnection_GetIsDomainConnection(tt *testing.T) {
 }
 
 func TestConnection_GetMetadata(tt *testing.T) {
-	zeroValue := map[string]string{}
-	c := &Connection{Metadata: zeroValue}
+	var zeroValue map[string]string
+	c := &Connection{Metadata: &zeroValue}
 	c.GetMetadata()
 	c = &Connection{}
 	c.GetMetadata()
@@ -1425,6 +1515,16 @@ func TestConnection_GetProvisioningTicketURL(tt *testing.T) {
 	c.GetProvisioningTicketURL()
 	c = nil
 	c.GetProvisioningTicketURL()
+}
+
+func TestConnection_GetRealms(tt *testing.T) {
+	var zeroValue []string
+	c := &Connection{Realms: &zeroValue}
+	c.GetRealms()
+	c = &Connection{}
+	c.GetRealms()
+	c = nil
+	c.GetRealms()
 }
 
 func TestConnection_GetShowAsButton(tt *testing.T) {
@@ -1529,6 +1629,26 @@ func TestConnectionOptions_GetBruteForceProtection(tt *testing.T) {
 	c.GetBruteForceProtection()
 	c = nil
 	c.GetBruteForceProtection()
+}
+
+func TestConnectionOptions_GetConfiguration(tt *testing.T) {
+	var zeroValue map[string]string
+	c := &ConnectionOptions{Configuration: &zeroValue}
+	c.GetConfiguration()
+	c = &ConnectionOptions{}
+	c.GetConfiguration()
+	c = nil
+	c.GetConfiguration()
+}
+
+func TestConnectionOptions_GetCustomScripts(tt *testing.T) {
+	var zeroValue map[string]string
+	c := &ConnectionOptions{CustomScripts: &zeroValue}
+	c.GetCustomScripts()
+	c = &ConnectionOptions{}
+	c.GetCustomScripts()
+	c = nil
+	c.GetCustomScripts()
 }
 
 func TestConnectionOptions_GetDisableSignup(tt *testing.T) {
@@ -1649,6 +1769,26 @@ func TestConnectionOptionsAD_GetDisableCache(tt *testing.T) {
 	c.GetDisableCache()
 }
 
+func TestConnectionOptionsAD_GetDomainAliases(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsAD{DomainAliases: &zeroValue}
+	c.GetDomainAliases()
+	c = &ConnectionOptionsAD{}
+	c.GetDomainAliases()
+	c = nil
+	c.GetDomainAliases()
+}
+
+func TestConnectionOptionsAD_GetIPs(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsAD{IPs: &zeroValue}
+	c.GetIPs()
+	c = &ConnectionOptionsAD{}
+	c.GetIPs()
+	c = nil
+	c.GetIPs()
+}
+
 func TestConnectionOptionsAD_GetKerberos(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsAD{Kerberos: &zeroValue}
@@ -1715,6 +1855,16 @@ func TestConnectionOptionsADFS_GetADFSServer(tt *testing.T) {
 	c.GetADFSServer()
 	c = nil
 	c.GetADFSServer()
+}
+
+func TestConnectionOptionsADFS_GetDomainAliases(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsADFS{DomainAliases: &zeroValue}
+	c.GetDomainAliases()
+	c = &ConnectionOptionsADFS{}
+	c.GetDomainAliases()
+	c = nil
+	c.GetDomainAliases()
 }
 
 func TestConnectionOptionsADFS_GetEnableUsersAPI(tt *testing.T) {
@@ -1951,6 +2101,16 @@ func TestConnectionOptionsAzureAD_GetDomain(tt *testing.T) {
 	c.GetDomain()
 	c = nil
 	c.GetDomain()
+}
+
+func TestConnectionOptionsAzureAD_GetDomainAliases(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsAzureAD{DomainAliases: &zeroValue}
+	c.GetDomainAliases()
+	c = &ConnectionOptionsAzureAD{}
+	c.GetDomainAliases()
+	c = nil
+	c.GetDomainAliases()
 }
 
 func TestConnectionOptionsAzureAD_GetEnableUsersAPI(tt *testing.T) {
@@ -3017,6 +3177,16 @@ func TestConnectionOptionsGoogleApps_GetDomain(tt *testing.T) {
 	c.GetDomain()
 }
 
+func TestConnectionOptionsGoogleApps_GetDomainAliases(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsGoogleApps{DomainAliases: &zeroValue}
+	c.GetDomainAliases()
+	c = &ConnectionOptionsGoogleApps{}
+	c.GetDomainAliases()
+	c = nil
+	c.GetDomainAliases()
+}
+
 func TestConnectionOptionsGoogleApps_GetEnableUsersAPI(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsGoogleApps{EnableUsersAPI: &zeroValue}
@@ -3113,6 +3283,16 @@ func TestConnectionOptionsGoogleOAuth2_GetAdsenseManagement(tt *testing.T) {
 	c.GetAdsenseManagement()
 	c = nil
 	c.GetAdsenseManagement()
+}
+
+func TestConnectionOptionsGoogleOAuth2_GetAllowedAudiences(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsGoogleOAuth2{AllowedAudiences: &zeroValue}
+	c.GetAllowedAudiences()
+	c = &ConnectionOptionsGoogleOAuth2{}
+	c.GetAllowedAudiences()
+	c = nil
+	c.GetAllowedAudiences()
 }
 
 func TestConnectionOptionsGoogleOAuth2_GetAnalytics(tt *testing.T) {
@@ -3611,6 +3791,16 @@ func TestConnectionOptionsOAuth2_GetScope(tt *testing.T) {
 	c.GetScope()
 }
 
+func TestConnectionOptionsOAuth2_GetScripts(tt *testing.T) {
+	var zeroValue map[string]string
+	c := &ConnectionOptionsOAuth2{Scripts: &zeroValue}
+	c.GetScripts()
+	c = &ConnectionOptionsOAuth2{}
+	c.GetScripts()
+	c = nil
+	c.GetScripts()
+}
+
 func TestConnectionOptionsOAuth2_GetSetUserAttributes(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOAuth2{SetUserAttributes: &zeroValue}
@@ -3677,6 +3867,16 @@ func TestConnectionOptionsOIDC_GetDiscoveryURL(tt *testing.T) {
 	c.GetDiscoveryURL()
 	c = nil
 	c.GetDiscoveryURL()
+}
+
+func TestConnectionOptionsOIDC_GetDomainAliases(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsOIDC{DomainAliases: &zeroValue}
+	c.GetDomainAliases()
+	c = &ConnectionOptionsOIDC{}
+	c.GetDomainAliases()
+	c = nil
+	c.GetDomainAliases()
 }
 
 func TestConnectionOptionsOIDC_GetIssuer(tt *testing.T) {
@@ -3921,6 +4121,16 @@ func TestConnectionOptionsSAML_GetDisableSignOut(tt *testing.T) {
 	c.GetDisableSignOut()
 	c = nil
 	c.GetDisableSignOut()
+}
+
+func TestConnectionOptionsSAML_GetDomainAliases(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsSAML{DomainAliases: &zeroValue}
+	c.GetDomainAliases()
+	c = &ConnectionOptionsSAML{}
+	c.GetDomainAliases()
+	c = nil
+	c.GetDomainAliases()
 }
 
 func TestConnectionOptionsSAML_GetEntityID(tt *testing.T) {
@@ -5213,6 +5423,16 @@ func TestGrantList_String(t *testing.T) {
 	}
 }
 
+func TestHook_GetDependencies(tt *testing.T) {
+	var zeroValue map[string]string
+	h := &Hook{Dependencies: &zeroValue}
+	h.GetDependencies()
+	h = &Hook{}
+	h.GetDependencies()
+	h = nil
+	h.GetDependencies()
+}
+
 func TestHook_GetEnabled(tt *testing.T) {
 	var zeroValue bool
 	h := &Hook{Enabled: &zeroValue}
@@ -6222,6 +6442,16 @@ func TestOrganization_GetID(tt *testing.T) {
 	o.GetID()
 }
 
+func TestOrganization_GetMetadata(tt *testing.T) {
+	var zeroValue map[string]string
+	o := &Organization{Metadata: &zeroValue}
+	o.GetMetadata()
+	o = &Organization{}
+	o.GetMetadata()
+	o = nil
+	o.GetMetadata()
+}
+
 func TestOrganization_GetName(tt *testing.T) {
 	var zeroValue string
 	o := &Organization{Name: &zeroValue}
@@ -6238,6 +6468,16 @@ func TestOrganization_String(t *testing.T) {
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
+}
+
+func TestOrganizationBranding_GetColors(tt *testing.T) {
+	var zeroValue map[string]string
+	o := &OrganizationBranding{Colors: &zeroValue}
+	o.GetColors()
+	o = &OrganizationBranding{}
+	o.GetColors()
+	o = nil
+	o.GetColors()
 }
 
 func TestOrganizationBranding_GetLogoURL(tt *testing.T) {
@@ -6813,6 +7053,26 @@ func TestResourceServer_GetName(tt *testing.T) {
 	r.GetName()
 }
 
+func TestResourceServer_GetOptions(tt *testing.T) {
+	var zeroValue map[string]string
+	r := &ResourceServer{Options: &zeroValue}
+	r.GetOptions()
+	r = &ResourceServer{}
+	r.GetOptions()
+	r = nil
+	r.GetOptions()
+}
+
+func TestResourceServer_GetScopes(tt *testing.T) {
+	var zeroValue []ResourceServerScope
+	r := &ResourceServer{Scopes: &zeroValue}
+	r.GetScopes()
+	r = &ResourceServer{}
+	r.GetScopes()
+	r = nil
+	r.GetScopes()
+}
+
 func TestResourceServer_GetSigningAlgorithm(tt *testing.T) {
 	var zeroValue string
 	r := &ResourceServer{SigningAlgorithm: &zeroValue}
@@ -7262,6 +7522,16 @@ func TestSuspiciousIPThrottling_String(t *testing.T) {
 	}
 }
 
+func TestTenant_GetAllowedLogoutURLs(tt *testing.T) {
+	var zeroValue []string
+	t := &Tenant{AllowedLogoutURLs: &zeroValue}
+	t.GetAllowedLogoutURLs()
+	t = &Tenant{}
+	t.GetAllowedLogoutURLs()
+	t = nil
+	t.GetAllowedLogoutURLs()
+}
+
 func TestTenant_GetChangePassword(tt *testing.T) {
 	t := &Tenant{}
 	t.GetChangePassword()
@@ -7304,6 +7574,16 @@ func TestTenant_GetDeviceFlow(tt *testing.T) {
 	t.GetDeviceFlow()
 	t = nil
 	t.GetDeviceFlow()
+}
+
+func TestTenant_GetEnabledLocales(tt *testing.T) {
+	var zeroValue []string
+	t := &Tenant{EnabledLocales: &zeroValue}
+	t.GetEnabledLocales()
+	t = &Tenant{}
+	t.GetEnabledLocales()
+	t = nil
+	t.GetEnabledLocales()
 }
 
 func TestTenant_GetErrorPage(tt *testing.T) {
@@ -7365,6 +7645,16 @@ func TestTenant_GetSandboxVersion(tt *testing.T) {
 	t.GetSandboxVersion()
 	t = nil
 	t.GetSandboxVersion()
+}
+
+func TestTenant_GetSandboxVersionAvailable(tt *testing.T) {
+	var zeroValue []string
+	t := &Tenant{SandboxVersionAvailable: &zeroValue}
+	t.GetSandboxVersionAvailable()
+	t = &Tenant{}
+	t.GetSandboxVersionAvailable()
+	t = nil
+	t.GetSandboxVersionAvailable()
 }
 
 func TestTenant_GetSessionCookie(tt *testing.T) {
