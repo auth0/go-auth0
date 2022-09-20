@@ -40,7 +40,7 @@ type LogStream struct {
 
 	// Only logs events matching these filters will be delivered by the stream.
 	// If omitted or empty, all events will be delivered.
-	Filters []interface{} `json:"filters,omitempty"`
+	Filters *[]map[string]string `json:"filters,omitempty"`
 
 	// Sink for validation.
 	Sink interface{} `json:"-"`
@@ -146,7 +146,7 @@ type LogStreamSinkHTTP struct {
 	// HTTP Authorization
 	Authorization *string `json:"httpAuthorization,omitempty"`
 	// Custom HTTP headers
-	CustomHeaders []interface{} `json:"httpCustomHeaders,omitempty"`
+	CustomHeaders *[]map[string]string `json:"httpCustomHeaders,omitempty"`
 }
 
 // LogStreamSinkDatadog is used to export logs to Datadog.
