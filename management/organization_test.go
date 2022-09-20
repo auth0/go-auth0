@@ -102,9 +102,9 @@ func TestOrganizationManager_AddConnection(t *testing.T) {
 		Name:        auth0.String(fmt.Sprintf("test-conn%v", rand.Intn(999))),
 		DisplayName: auth0.String(fmt.Sprintf("Test Connection %v", rand.Intn(999))),
 		Strategy:    auth0.String(ConnectionStrategyAuth0),
-		EnabledClients: []interface{}{
+		EnabledClients: &[]string{
 			os.Getenv("AUTH0_CLIENT_ID"),
-			client.ClientID,
+			client.GetClientID(),
 		},
 	}})
 	orgConn := &OrganizationConnection{
@@ -329,9 +329,9 @@ func givenAnOrganizationConnection(t *testing.T, orgID string) *OrganizationConn
 			Name:        auth0.String(fmt.Sprintf("test-conn%v", rand.Intn(999))),
 			DisplayName: auth0.String(fmt.Sprintf("Test Connection %v", rand.Intn(999))),
 			Strategy:    auth0.String(ConnectionStrategyAuth0),
-			EnabledClients: []interface{}{
+			EnabledClients: &[]string{
 				os.Getenv("AUTH0_CLIENT_ID"),
-				client.ClientID,
+				client.GetClientID(),
 			},
 		},
 	})
