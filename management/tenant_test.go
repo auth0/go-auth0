@@ -34,6 +34,9 @@ func TestTenantManager(t *testing.T) {
 		SessionCookie: &TenantSessionCookie{
 			Mode: auth0.String("non-persistent"),
 		},
+		AllowedLogoutURLs:       &[]string{"https://app.com/logout", "localhost/logout"},
+		EnabledLocales:          &[]string{"fr", "en", "es"},
+		SandboxVersionAvailable: nil,
 	}
 	err = m.Tenant.Update(newTenantSettings)
 	assert.NoError(t, err)
@@ -47,6 +50,9 @@ func TestTenantManager(t *testing.T) {
 	assert.Equal(t, newTenantSettings.GetSupportEmail(), actualTenantSettings.GetSupportEmail())
 	assert.Equal(t, newTenantSettings.GetSupportURL(), actualTenantSettings.GetSupportURL())
 	assert.Equal(t, newTenantSettings.SessionCookie.GetMode(), actualTenantSettings.SessionCookie.GetMode())
+	assert.Equal(t, newTenantSettings.GetAllowedLogoutURLs(), actualTenantSettings.GetAllowedLogoutURLs())
+	assert.Equal(t, newTenantSettings.GetEnabledLocales(), actualTenantSettings.GetEnabledLocales())
+	assert.Equal(t, newTenantSettings.GetSandboxVersion(), actualTenantSettings.GetSandboxVersion())
 }
 
 func TestTenant_MarshalJSON(t *testing.T) {
@@ -62,6 +68,8 @@ func TestTenant_MarshalJSON(t *testing.T) {
 		{SessionLifetime: auth0.Float64(0.5)}:      `{"session_lifetime_in_minutes":30}`,
 		{SessionLifetime: auth0.Float64(0.99)}:     `{"session_lifetime_in_minutes":59}`,
 		{IdleSessionLifetime: auth0.Float64(0.25)}: `{"idle_session_lifetime_in_minutes":15}`,
+		{AllowedLogoutURLs: nil}:                   `{}`,
+		{AllowedLogoutURLs: &[]string{}}:           `{"allowed_logout_urls":[]}`,
 	} {
 		payload, err := json.Marshal(tenant)
 		assert.NoError(t, err)
