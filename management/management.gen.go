@@ -31,6 +31,14 @@ func (a *Action) GetCreatedAt() time.Time {
 	return *a.CreatedAt
 }
 
+// GetDependencies returns the Dependencies field if it's non-nil, zero value otherwise.
+func (a *Action) GetDependencies() []ActionDependency {
+	if a == nil || a.Dependencies == nil {
+		return nil
+	}
+	return *a.Dependencies
+}
+
 // GetDeployedVersion returns the DeployedVersion field.
 func (a *Action) GetDeployedVersion() *ActionVersion {
 	if a == nil {
@@ -61,6 +69,14 @@ func (a *Action) GetRuntime() string {
 		return ""
 	}
 	return *a.Runtime
+}
+
+// GetSecrets returns the Secrets field if it's non-nil, zero value otherwise.
+func (a *Action) GetSecrets() []ActionSecret {
+	if a == nil || a.Secrets == nil {
+		return nil
+	}
+	return *a.Secrets
 }
 
 // GetStatus returns the Status field if it's non-nil, zero value otherwise.

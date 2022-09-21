@@ -77,16 +77,16 @@ type Action struct {
 	Name *string `json:"name"`
 	// List of triggers that this action supports. At this time, an action can
 	// only target a single trigger at a time.
-	SupportedTriggers []*ActionTrigger `json:"supported_triggers"`
+	SupportedTriggers []ActionTrigger `json:"supported_triggers"`
 	// The source code of the action.
 	Code *string `json:"code,omitempty"`
 	// List of third party npm modules, and their versions, that this action
 	// depends on.
-	Dependencies []*ActionDependency `json:"dependencies,omitempty"`
+	Dependencies *[]ActionDependency `json:"dependencies,omitempty"`
 	// The Node runtime. For example `node16`, defaults to `node12`
 	Runtime *string `json:"runtime,omitempty"`
 	// List of secrets that are included in an action or a version of an action.
-	Secrets []*ActionSecret `json:"secrets,omitempty"`
+	Secrets *[]ActionSecret `json:"secrets,omitempty"`
 	// Version of the action that is currently deployed.
 	DeployedVersion *ActionVersion `json:"deployed_version,omitempty"`
 	// The build status of this action.

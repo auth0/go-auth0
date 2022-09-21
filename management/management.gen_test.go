@@ -39,6 +39,16 @@ func TestAction_GetCreatedAt(tt *testing.T) {
 	a.GetCreatedAt()
 }
 
+func TestAction_GetDependencies(tt *testing.T) {
+	var zeroValue []ActionDependency
+	a := &Action{Dependencies: &zeroValue}
+	a.GetDependencies()
+	a = &Action{}
+	a.GetDependencies()
+	a = nil
+	a.GetDependencies()
+}
+
 func TestAction_GetDeployedVersion(tt *testing.T) {
 	a := &Action{}
 	a.GetDeployedVersion()
@@ -74,6 +84,16 @@ func TestAction_GetRuntime(tt *testing.T) {
 	a.GetRuntime()
 	a = nil
 	a.GetRuntime()
+}
+
+func TestAction_GetSecrets(tt *testing.T) {
+	var zeroValue []ActionSecret
+	a := &Action{Secrets: &zeroValue}
+	a.GetSecrets()
+	a = &Action{}
+	a.GetSecrets()
+	a = nil
+	a.GetSecrets()
 }
 
 func TestAction_GetStatus(tt *testing.T) {
