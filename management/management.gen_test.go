@@ -1177,6 +1177,13 @@ func TestClient_GetLogoURI(tt *testing.T) {
 	c.GetLogoURI()
 }
 
+func TestClient_GetMobile(tt *testing.T) {
+	c := &Client{}
+	c.GetMobile()
+	c = nil
+	c.GetMobile()
+}
+
 func TestClient_GetName(tt *testing.T) {
 	var zeroValue string
 	c := &Client{Name: &zeroValue}
@@ -1355,6 +1362,16 @@ func TestClientJWTConfiguration_GetLifetimeInSeconds(tt *testing.T) {
 	c.GetLifetimeInSeconds()
 }
 
+func TestClientJWTConfiguration_GetScopes(tt *testing.T) {
+	var zeroValue map[string]string
+	c := &ClientJWTConfiguration{Scopes: &zeroValue}
+	c.GetScopes()
+	c = &ClientJWTConfiguration{}
+	c.GetScopes()
+	c = nil
+	c.GetScopes()
+}
+
 func TestClientJWTConfiguration_GetSecretEncoded(tt *testing.T) {
 	var zeroValue bool
 	c := &ClientJWTConfiguration{SecretEncoded: &zeroValue}
@@ -1381,9 +1398,119 @@ func TestClientList_String(t *testing.T) {
 	}
 }
 
+func TestClientMobile_GetAndroid(tt *testing.T) {
+	c := &ClientMobile{}
+	c.GetAndroid()
+	c = nil
+	c.GetAndroid()
+}
+
+func TestClientMobile_GetIOS(tt *testing.T) {
+	c := &ClientMobile{}
+	c.GetIOS()
+	c = nil
+	c.GetIOS()
+}
+
+func TestClientMobile_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientMobile{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientMobileAndroid_GetAppPackageName(tt *testing.T) {
+	var zeroValue string
+	c := &ClientMobileAndroid{AppPackageName: &zeroValue}
+	c.GetAppPackageName()
+	c = &ClientMobileAndroid{}
+	c.GetAppPackageName()
+	c = nil
+	c.GetAppPackageName()
+}
+
+func TestClientMobileAndroid_GetKeyHashes(tt *testing.T) {
+	var zeroValue []string
+	c := &ClientMobileAndroid{KeyHashes: &zeroValue}
+	c.GetKeyHashes()
+	c = &ClientMobileAndroid{}
+	c.GetKeyHashes()
+	c = nil
+	c.GetKeyHashes()
+}
+
+func TestClientMobileAndroid_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientMobileAndroid{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientMobileIOS_GetAppID(tt *testing.T) {
+	var zeroValue string
+	c := &ClientMobileIOS{AppID: &zeroValue}
+	c.GetAppID()
+	c = &ClientMobileIOS{}
+	c.GetAppID()
+	c = nil
+	c.GetAppID()
+}
+
+func TestClientMobileIOS_GetTeamID(tt *testing.T) {
+	var zeroValue string
+	c := &ClientMobileIOS{TeamID: &zeroValue}
+	c.GetTeamID()
+	c = &ClientMobileIOS{}
+	c.GetTeamID()
+	c = nil
+	c.GetTeamID()
+}
+
+func TestClientMobileIOS_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientMobileIOS{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientNativeSocialLogin_GetApple(tt *testing.T) {
+	c := &ClientNativeSocialLogin{}
+	c.GetApple()
+	c = nil
+	c.GetApple()
+}
+
+func TestClientNativeSocialLogin_GetFacebook(tt *testing.T) {
+	c := &ClientNativeSocialLogin{}
+	c.GetFacebook()
+	c = nil
+	c.GetFacebook()
+}
+
 func TestClientNativeSocialLogin_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientNativeSocialLogin{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientNativeSocialLoginSupportEnabled_GetEnabled(tt *testing.T) {
+	var zeroValue bool
+	c := &ClientNativeSocialLoginSupportEnabled{Enabled: &zeroValue}
+	c.GetEnabled()
+	c = &ClientNativeSocialLoginSupportEnabled{}
+	c.GetEnabled()
+	c = nil
+	c.GetEnabled()
+}
+
+func TestClientNativeSocialLoginSupportEnabled_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientNativeSocialLoginSupportEnabled{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

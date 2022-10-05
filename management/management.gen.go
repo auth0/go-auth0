@@ -920,6 +920,14 @@ func (c *Client) GetLogoURI() string {
 	return *c.LogoURI
 }
 
+// GetMobile returns the Mobile field.
+func (c *Client) GetMobile() *ClientMobile {
+	if c == nil {
+		return nil
+	}
+	return c.Mobile
+}
+
 // GetName returns the Name field if it's non-nil, zero value otherwise.
 func (c *Client) GetName() string {
 	if c == nil || c.Name == nil {
@@ -1063,6 +1071,14 @@ func (c *ClientJWTConfiguration) GetLifetimeInSeconds() int {
 	return *c.LifetimeInSeconds
 }
 
+// GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
+func (c *ClientJWTConfiguration) GetScopes() map[string]string {
+	if c == nil || c.Scopes == nil {
+		return map[string]string{}
+	}
+	return *c.Scopes
+}
+
 // GetSecretEncoded returns the SecretEncoded field if it's non-nil, zero value otherwise.
 func (c *ClientJWTConfiguration) GetSecretEncoded() bool {
 	if c == nil || c.SecretEncoded == nil {
@@ -1081,8 +1097,100 @@ func (c *ClientList) String() string {
 	return Stringify(c)
 }
 
+// GetAndroid returns the Android field.
+func (c *ClientMobile) GetAndroid() *ClientMobileAndroid {
+	if c == nil {
+		return nil
+	}
+	return c.Android
+}
+
+// GetIOS returns the IOS field.
+func (c *ClientMobile) GetIOS() *ClientMobileIOS {
+	if c == nil {
+		return nil
+	}
+	return c.IOS
+}
+
+// String returns a string representation of ClientMobile.
+func (c *ClientMobile) String() string {
+	return Stringify(c)
+}
+
+// GetAppPackageName returns the AppPackageName field if it's non-nil, zero value otherwise.
+func (c *ClientMobileAndroid) GetAppPackageName() string {
+	if c == nil || c.AppPackageName == nil {
+		return ""
+	}
+	return *c.AppPackageName
+}
+
+// GetKeyHashes returns the KeyHashes field if it's non-nil, zero value otherwise.
+func (c *ClientMobileAndroid) GetKeyHashes() []string {
+	if c == nil || c.KeyHashes == nil {
+		return nil
+	}
+	return *c.KeyHashes
+}
+
+// String returns a string representation of ClientMobileAndroid.
+func (c *ClientMobileAndroid) String() string {
+	return Stringify(c)
+}
+
+// GetAppID returns the AppID field if it's non-nil, zero value otherwise.
+func (c *ClientMobileIOS) GetAppID() string {
+	if c == nil || c.AppID == nil {
+		return ""
+	}
+	return *c.AppID
+}
+
+// GetTeamID returns the TeamID field if it's non-nil, zero value otherwise.
+func (c *ClientMobileIOS) GetTeamID() string {
+	if c == nil || c.TeamID == nil {
+		return ""
+	}
+	return *c.TeamID
+}
+
+// String returns a string representation of ClientMobileIOS.
+func (c *ClientMobileIOS) String() string {
+	return Stringify(c)
+}
+
+// GetApple returns the Apple field.
+func (c *ClientNativeSocialLogin) GetApple() *ClientNativeSocialLoginSupportEnabled {
+	if c == nil {
+		return nil
+	}
+	return c.Apple
+}
+
+// GetFacebook returns the Facebook field.
+func (c *ClientNativeSocialLogin) GetFacebook() *ClientNativeSocialLoginSupportEnabled {
+	if c == nil {
+		return nil
+	}
+	return c.Facebook
+}
+
 // String returns a string representation of ClientNativeSocialLogin.
 func (c *ClientNativeSocialLogin) String() string {
+	return Stringify(c)
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (c *ClientNativeSocialLoginSupportEnabled) GetEnabled() bool {
+	if c == nil || c.Enabled == nil {
+		return false
+	}
+	return *c.Enabled
+}
+
+// String returns a string representation of ClientNativeSocialLoginSupportEnabled.
+func (c *ClientNativeSocialLoginSupportEnabled) String() string {
 	return Stringify(c)
 }
 
