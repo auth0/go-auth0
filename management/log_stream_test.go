@@ -129,8 +129,8 @@ func TestLogStreamManager_Update(t *testing.T) {
 
 			logStream := givenALogStream(t, testCase)
 			updatedLogStream := &LogStream{
-				Filters: []interface{}{
-					map[string]string{
+				Filters: &[]map[string]string{
+					{
 						"type": "category",
 						"name": "auth.login.fail",
 					},

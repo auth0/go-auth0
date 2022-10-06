@@ -123,14 +123,14 @@ type Connection struct {
 	// The identifiers of the clients for which the connection is to be
 	// enabled. If the array is empty or the property is not specified, no
 	// clients are enabled.
-	EnabledClients []interface{} `json:"enabled_clients,omitempty"`
+	EnabledClients *[]string `json:"enabled_clients,omitempty"`
 
 	// Defines the realms for which the connection will be used (ie: email
 	// domains). If the array is empty or the property is not specified, the
 	// connection name will be added as realm.
-	Realms []interface{} `json:"realms,omitempty"`
+	Realms *[]string `json:"realms,omitempty"`
 
-	Metadata map[string]string `json:"metadata,omitempty"`
+	Metadata *map[string]string `json:"metadata,omitempty"`
 
 	// Provisioning Ticket URL is Ticket URL for Active Directory/LDAP, etc.
 	ProvisioningTicketURL *string `json:"provisioning_ticket_url,omitempty"`
@@ -283,11 +283,12 @@ type ConnectionOptions struct {
 
 	RequiresUsername *bool `json:"requires_username,omitempty"`
 
-	// Scripts for the connection
+	// Scripts for the connection.
 	// Allowed keys are: "get_user", "login", "create", "verify", "change_password", "delete" or "change_email".
-	CustomScripts map[string]interface{} `json:"customScripts,omitempty"`
-	// configuration variables that can be used in custom scripts
-	Configuration map[string]interface{} `json:"configuration,omitempty"`
+	CustomScripts *map[string]string `json:"customScripts,omitempty"`
+
+	// Configuration variables that can be used in custom scripts.
+	Configuration *map[string]string `json:"configuration,omitempty"`
 
 	StrategyVersion *int `json:"strategy_version,omitempty"`
 
@@ -302,7 +303,7 @@ type ConnectionOptionsGoogleOAuth2 struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
 
-	AllowedAudiences []interface{} `json:"allowed_audiences,omitempty"`
+	AllowedAudiences *[]string `json:"allowed_audiences,omitempty"`
 
 	Email                  *bool         `json:"email,omitempty" scope:"email"`
 	Profile                *bool         `json:"profile,omitempty" scope:"profile"`
@@ -665,9 +666,9 @@ type ConnectionOptionsOIDC struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
 
-	TenantDomain  *string       `json:"tenant_domain,omitempty"`
-	DomainAliases []interface{} `json:"domain_aliases,omitempty"`
-	LogoURL       *string       `json:"icon_url,omitempty"`
+	TenantDomain  *string   `json:"tenant_domain,omitempty"`
+	DomainAliases *[]string `json:"domain_aliases,omitempty"`
+	LogoURL       *string   `json:"icon_url,omitempty"`
 
 	DiscoveryURL          *string `json:"discovery_url"`
 	AuthorizationEndpoint *string `json:"authorization_endpoint"`
@@ -722,7 +723,7 @@ type ConnectionOptionsOAuth2 struct {
 	PKCEEnabled        *bool     `json:"pkce_enabled,omitempty"`
 	// Scripts for the connection
 	// Allowed keys are: "fetchUserProfile"
-	Scripts map[string]interface{} `json:"scripts,omitempty"`
+	Scripts *map[string]string `json:"scripts,omitempty"`
 
 	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
@@ -754,10 +755,10 @@ func (c *ConnectionOptionsOAuth2) SetScopes(enable bool, scopes ...string) {
 
 // ConnectionOptionsAD is used to configure an AD Connection.
 type ConnectionOptionsAD struct {
-	TenantDomain  *string       `json:"tenant_domain,omitempty"`
-	DomainAliases []interface{} `json:"domain_aliases,omitempty"`
-	LogoURL       *string       `json:"icon_url,omitempty"`
-	IPs           []interface{} `json:"ips"`
+	TenantDomain  *string   `json:"tenant_domain,omitempty"`
+	DomainAliases *[]string `json:"domain_aliases,omitempty"`
+	LogoURL       *string   `json:"icon_url,omitempty"`
+	IPs           *[]string `json:"ips,omitempty"`
 
 	CertAuth             *bool `json:"certAuth,omitempty"`
 	Kerberos             *bool `json:"kerberos,omitempty"`
@@ -775,11 +776,11 @@ type ConnectionOptionsAzureAD struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
 
-	AppID         *string       `json:"app_id,omitempty"`
-	TenantDomain  *string       `json:"tenant_domain,omitempty"`
-	Domain        *string       `json:"domain,omitempty"`
-	DomainAliases []interface{} `json:"domain_aliases,omitempty"`
-	LogoURL       *string       `json:"icon_url,omitempty"`
+	AppID         *string   `json:"app_id,omitempty"`
+	TenantDomain  *string   `json:"tenant_domain,omitempty"`
+	Domain        *string   `json:"domain,omitempty"`
+	DomainAliases *[]string `json:"domain_aliases,omitempty"`
+	LogoURL       *string   `json:"icon_url,omitempty"`
 
 	IdentityAPI *string `json:"identity_api"`
 
@@ -819,10 +820,10 @@ func (c *ConnectionOptionsAzureAD) SetScopes(enable bool, scopes ...string) {
 
 // ConnectionOptionsADFS is used to configure an ADFS Connection.
 type ConnectionOptionsADFS struct {
-	TenantDomain  *string       `json:"tenant_domain,omitempty"`
-	DomainAliases []interface{} `json:"domain_aliases,omitempty"`
-	LogoURL       *string       `json:"icon_url,omitempty"`
-	ADFSServer    *string       `json:"adfs_server,omitempty"`
+	TenantDomain  *string   `json:"tenant_domain,omitempty"`
+	DomainAliases *[]string `json:"domain_aliases,omitempty"`
+	LogoURL       *string   `json:"icon_url,omitempty"`
+	ADFSServer    *string   `json:"adfs_server,omitempty"`
 
 	EnableUsersAPI *bool `json:"api_enable_users,omitempty"`
 
@@ -844,7 +845,7 @@ type ConnectionOptionsSAML struct {
 	Thumbprints        []interface{}                      `json:"thumbprints,omitempty"`
 	ProtocolBinding    *string                            `json:"protocolBinding,omitempty"`
 	TenantDomain       *string                            `json:"tenant_domain,omitempty"`
-	DomainAliases      []interface{}                      `json:"domain_aliases,omitempty"`
+	DomainAliases      *[]string                          `json:"domain_aliases,omitempty"`
 	SignInEndpoint     *string                            `json:"signInEndpoint,omitempty"`
 	SignOutEndpoint    *string                            `json:"signOutEndpoint,omitempty"`
 	DisableSignOut     *bool                              `json:"disableSignout,omitempty"`
@@ -903,8 +904,8 @@ type ConnectionOptionsGoogleApps struct {
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 
-	DomainAliases []interface{} `json:"domain_aliases,omitempty"`
-	LogoURL       *string       `json:"icon_url,omitempty"`
+	DomainAliases *[]string `json:"domain_aliases,omitempty"`
+	LogoURL       *string   `json:"icon_url,omitempty"`
 
 	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }

@@ -154,7 +154,7 @@ func TestUserManager_Permissions(t *testing.T) {
 	resourceServer := givenAResourceServer(t)
 	permissions := []*Permission{
 		{
-			Name:                     resourceServer.Scopes[0].Value,
+			Name:                     resourceServer.GetScopes()[0].Value,
 			ResourceServerIdentifier: resourceServer.Identifier,
 		},
 	}

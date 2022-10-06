@@ -42,19 +42,19 @@ type Client struct {
 	OIDCConformant *bool `json:"oidc_conformant,omitempty"`
 
 	// The URLs that Auth0 can use to as a callback for the client.
-	Callbacks      []interface{} `json:"callbacks,omitempty"`
-	AllowedOrigins []interface{} `json:"allowed_origins,omitempty"`
+	Callbacks      *[]string `json:"callbacks,omitempty"`
+	AllowedOrigins *[]string `json:"allowed_origins,omitempty"`
 
 	// A set of URLs that represents valid web origins for use with web message response mode.
-	WebOrigins        []interface{}           `json:"web_origins,omitempty"`
-	ClientAliases     []interface{}           `json:"client_aliases,omitempty"`
-	AllowedClients    []interface{}           `json:"allowed_clients,omitempty"`
-	AllowedLogoutURLs []interface{}           `json:"allowed_logout_urls,omitempty"`
+	WebOrigins        *[]string               `json:"web_origins,omitempty"`
+	ClientAliases     *[]string               `json:"client_aliases,omitempty"`
+	AllowedClients    *[]string               `json:"allowed_clients,omitempty"`
+	AllowedLogoutURLs *[]string               `json:"allowed_logout_urls,omitempty"`
 	JWTConfiguration  *ClientJWTConfiguration `json:"jwt_configuration,omitempty"`
 
 	// Client signing keys.
 	SigningKeys   []map[string]string `json:"signing_keys,omitempty"`
-	EncryptionKey map[string]string   `json:"encryption_key,omitempty"`
+	EncryptionKey *map[string]string  `json:"encryption_key,omitempty"`
 	SSO           *bool               `json:"sso,omitempty"`
 
 	// True to disable Single Sign On, false otherwise (default: false).
@@ -65,7 +65,7 @@ type Client struct {
 	CrossOriginAuth *bool `json:"cross_origin_auth,omitempty"`
 
 	// List of acceptable Grant Types for this Client.
-	GrantTypes []interface{} `json:"grant_types,omitempty"`
+	GrantTypes *[]string `json:"grant_types,omitempty"`
 
 	// URL for the location in your site where the cross origin verification
 	// takes place for the cross-origin auth flow when performing Auth in your
@@ -84,9 +84,9 @@ type Client struct {
 	// 	'none' (public client without a client secret),
 	// 	'client_secret_post' (client uses HTTP POST parameters) or
 	// 	'client_secret_basic' (client uses HTTP Basic)
-	TokenEndpointAuthMethod *string                `json:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          map[string]string      `json:"client_metadata,omitempty"`
-	Mobile                  map[string]interface{} `json:"mobile,omitempty"`
+	TokenEndpointAuthMethod *string            `json:"token_endpoint_auth_method,omitempty"`
+	ClientMetadata          *map[string]string `json:"client_metadata,omitempty"`
+	Mobile                  *ClientMobile      `json:"mobile,omitempty"`
 
 	// Initiate login uri, must be https and cannot contain a fragment.
 	InitiateLoginURI *string `json:"initiate_login_uri,omitempty"`
@@ -107,7 +107,7 @@ type ClientJWTConfiguration struct {
 	// true
 	SecretEncoded *bool `json:"secret_encoded,omitempty"`
 
-	Scopes map[string]interface{} `json:"scopes,omitempty"`
+	Scopes *map[string]string `json:"scopes,omitempty"`
 
 	// Algorithm used to sign JWTs. Can be "HS256" or "RS256"
 	Algorithm *string `json:"alg,omitempty"`
@@ -116,10 +116,33 @@ type ClientJWTConfiguration struct {
 // ClientNativeSocialLogin is used to configure Native Social Login for our Client.
 type ClientNativeSocialLogin struct {
 	// Native Social Login support for the Apple connection
-	Apple map[string]interface{} `json:"apple,omitempty"`
+	Apple *ClientNativeSocialLoginSupportEnabled `json:"apple,omitempty"`
 
 	// Native Social Login support for the Facebook connection
-	Facebook map[string]interface{} `json:"facebook,omitempty"`
+	Facebook *ClientNativeSocialLoginSupportEnabled `json:"facebook,omitempty"`
+}
+
+// ClientNativeSocialLoginSupportEnabled used to indicate if support is enabled or not.
+type ClientNativeSocialLoginSupportEnabled struct {
+	Enabled *bool `json:"enabled,omitempty"`
+}
+
+// ClientMobile is used to configure mobile app settings.
+type ClientMobile struct {
+	Android *ClientMobileAndroid `json:"android,omitempty"`
+	IOS     *ClientMobileIOS     `json:"ios,omitempty"`
+}
+
+// ClientMobileAndroid is used to configure Android app settings.
+type ClientMobileAndroid struct {
+	AppPackageName *string   `json:"app_package_name,omitempty"`
+	KeyHashes      *[]string `json:"sha256_cert_fingerprints,omitempty"`
+}
+
+// ClientMobileIOS is used to configure iOS app settings.
+type ClientMobileIOS struct {
+	TeamID *string `json:"team_id,omitempty"`
+	AppID  *string `json:"app_bundle_identifier,omitempty"`
 }
 
 // ClientRefreshToken is used to configure the Refresh Token settings for our Client.

@@ -31,6 +31,14 @@ func (a *Action) GetCreatedAt() time.Time {
 	return *a.CreatedAt
 }
 
+// GetDependencies returns the Dependencies field if it's non-nil, zero value otherwise.
+func (a *Action) GetDependencies() []ActionDependency {
+	if a == nil || a.Dependencies == nil {
+		return nil
+	}
+	return *a.Dependencies
+}
+
 // GetDeployedVersion returns the DeployedVersion field.
 func (a *Action) GetDeployedVersion() *ActionVersion {
 	if a == nil {
@@ -61,6 +69,14 @@ func (a *Action) GetRuntime() string {
 		return ""
 	}
 	return *a.Runtime
+}
+
+// GetSecrets returns the Secrets field if it's non-nil, zero value otherwise.
+func (a *Action) GetSecrets() []ActionSecret {
+	if a == nil || a.Secrets == nil {
+		return nil
+	}
+	return *a.Secrets
 }
 
 // GetStatus returns the Status field if it's non-nil, zero value otherwise.
@@ -720,12 +736,52 @@ func (b *BruteForceProtection) String() string {
 	return Stringify(b)
 }
 
+// GetAllowedClients returns the AllowedClients field if it's non-nil, zero value otherwise.
+func (c *Client) GetAllowedClients() []string {
+	if c == nil || c.AllowedClients == nil {
+		return nil
+	}
+	return *c.AllowedClients
+}
+
+// GetAllowedLogoutURLs returns the AllowedLogoutURLs field if it's non-nil, zero value otherwise.
+func (c *Client) GetAllowedLogoutURLs() []string {
+	if c == nil || c.AllowedLogoutURLs == nil {
+		return nil
+	}
+	return *c.AllowedLogoutURLs
+}
+
+// GetAllowedOrigins returns the AllowedOrigins field if it's non-nil, zero value otherwise.
+func (c *Client) GetAllowedOrigins() []string {
+	if c == nil || c.AllowedOrigins == nil {
+		return nil
+	}
+	return *c.AllowedOrigins
+}
+
 // GetAppType returns the AppType field if it's non-nil, zero value otherwise.
 func (c *Client) GetAppType() string {
 	if c == nil || c.AppType == nil {
 		return ""
 	}
 	return *c.AppType
+}
+
+// GetCallbacks returns the Callbacks field if it's non-nil, zero value otherwise.
+func (c *Client) GetCallbacks() []string {
+	if c == nil || c.Callbacks == nil {
+		return nil
+	}
+	return *c.Callbacks
+}
+
+// GetClientAliases returns the ClientAliases field if it's non-nil, zero value otherwise.
+func (c *Client) GetClientAliases() []string {
+	if c == nil || c.ClientAliases == nil {
+		return nil
+	}
+	return *c.ClientAliases
 }
 
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
@@ -736,12 +792,12 @@ func (c *Client) GetClientID() string {
 	return *c.ClientID
 }
 
-// GetClientMetadata returns the ClientMetadata map if it's non-nil, an empty map otherwise.
+// GetClientMetadata returns the ClientMetadata field if it's non-nil, zero value otherwise.
 func (c *Client) GetClientMetadata() map[string]string {
 	if c == nil || c.ClientMetadata == nil {
 		return map[string]string{}
 	}
-	return c.ClientMetadata
+	return *c.ClientMetadata
 }
 
 // GetClientSecret returns the ClientSecret field if it's non-nil, zero value otherwise.
@@ -800,12 +856,12 @@ func (c *Client) GetDescription() string {
 	return *c.Description
 }
 
-// GetEncryptionKey returns the EncryptionKey map if it's non-nil, an empty map otherwise.
+// GetEncryptionKey returns the EncryptionKey field if it's non-nil, zero value otherwise.
 func (c *Client) GetEncryptionKey() map[string]string {
 	if c == nil || c.EncryptionKey == nil {
 		return map[string]string{}
 	}
-	return c.EncryptionKey
+	return *c.EncryptionKey
 }
 
 // GetFormTemplate returns the FormTemplate field if it's non-nil, zero value otherwise.
@@ -814,6 +870,14 @@ func (c *Client) GetFormTemplate() string {
 		return ""
 	}
 	return *c.FormTemplate
+}
+
+// GetGrantTypes returns the GrantTypes field if it's non-nil, zero value otherwise.
+func (c *Client) GetGrantTypes() []string {
+	if c == nil || c.GrantTypes == nil {
+		return nil
+	}
+	return *c.GrantTypes
 }
 
 // GetInitiateLoginURI returns the InitiateLoginURI field if it's non-nil, zero value otherwise.
@@ -854,6 +918,14 @@ func (c *Client) GetLogoURI() string {
 		return ""
 	}
 	return *c.LogoURI
+}
+
+// GetMobile returns the Mobile field.
+func (c *Client) GetMobile() *ClientMobile {
+	if c == nil {
+		return nil
+	}
+	return c.Mobile
 }
 
 // GetName returns the Name field if it's non-nil, zero value otherwise.
@@ -928,6 +1000,14 @@ func (c *Client) GetTokenEndpointAuthMethod() string {
 	return *c.TokenEndpointAuthMethod
 }
 
+// GetWebOrigins returns the WebOrigins field if it's non-nil, zero value otherwise.
+func (c *Client) GetWebOrigins() []string {
+	if c == nil || c.WebOrigins == nil {
+		return nil
+	}
+	return *c.WebOrigins
+}
+
 // String returns a string representation of Client.
 func (c *Client) String() string {
 	return Stringify(c)
@@ -983,6 +1063,14 @@ func (c *ClientJWTConfiguration) GetLifetimeInSeconds() int {
 	return *c.LifetimeInSeconds
 }
 
+// GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
+func (c *ClientJWTConfiguration) GetScopes() map[string]string {
+	if c == nil || c.Scopes == nil {
+		return map[string]string{}
+	}
+	return *c.Scopes
+}
+
 // GetSecretEncoded returns the SecretEncoded field if it's non-nil, zero value otherwise.
 func (c *ClientJWTConfiguration) GetSecretEncoded() bool {
 	if c == nil || c.SecretEncoded == nil {
@@ -1001,8 +1089,100 @@ func (c *ClientList) String() string {
 	return Stringify(c)
 }
 
+// GetAndroid returns the Android field.
+func (c *ClientMobile) GetAndroid() *ClientMobileAndroid {
+	if c == nil {
+		return nil
+	}
+	return c.Android
+}
+
+// GetIOS returns the IOS field.
+func (c *ClientMobile) GetIOS() *ClientMobileIOS {
+	if c == nil {
+		return nil
+	}
+	return c.IOS
+}
+
+// String returns a string representation of ClientMobile.
+func (c *ClientMobile) String() string {
+	return Stringify(c)
+}
+
+// GetAppPackageName returns the AppPackageName field if it's non-nil, zero value otherwise.
+func (c *ClientMobileAndroid) GetAppPackageName() string {
+	if c == nil || c.AppPackageName == nil {
+		return ""
+	}
+	return *c.AppPackageName
+}
+
+// GetKeyHashes returns the KeyHashes field if it's non-nil, zero value otherwise.
+func (c *ClientMobileAndroid) GetKeyHashes() []string {
+	if c == nil || c.KeyHashes == nil {
+		return nil
+	}
+	return *c.KeyHashes
+}
+
+// String returns a string representation of ClientMobileAndroid.
+func (c *ClientMobileAndroid) String() string {
+	return Stringify(c)
+}
+
+// GetAppID returns the AppID field if it's non-nil, zero value otherwise.
+func (c *ClientMobileIOS) GetAppID() string {
+	if c == nil || c.AppID == nil {
+		return ""
+	}
+	return *c.AppID
+}
+
+// GetTeamID returns the TeamID field if it's non-nil, zero value otherwise.
+func (c *ClientMobileIOS) GetTeamID() string {
+	if c == nil || c.TeamID == nil {
+		return ""
+	}
+	return *c.TeamID
+}
+
+// String returns a string representation of ClientMobileIOS.
+func (c *ClientMobileIOS) String() string {
+	return Stringify(c)
+}
+
+// GetApple returns the Apple field.
+func (c *ClientNativeSocialLogin) GetApple() *ClientNativeSocialLoginSupportEnabled {
+	if c == nil {
+		return nil
+	}
+	return c.Apple
+}
+
+// GetFacebook returns the Facebook field.
+func (c *ClientNativeSocialLogin) GetFacebook() *ClientNativeSocialLoginSupportEnabled {
+	if c == nil {
+		return nil
+	}
+	return c.Facebook
+}
+
 // String returns a string representation of ClientNativeSocialLogin.
 func (c *ClientNativeSocialLogin) String() string {
+	return Stringify(c)
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (c *ClientNativeSocialLoginSupportEnabled) GetEnabled() bool {
+	if c == nil || c.Enabled == nil {
+		return false
+	}
+	return *c.Enabled
+}
+
+// String returns a string representation of ClientNativeSocialLoginSupportEnabled.
+func (c *ClientNativeSocialLoginSupportEnabled) String() string {
 	return Stringify(c)
 }
 
@@ -1075,6 +1255,14 @@ func (c *Connection) GetDisplayName() string {
 	return *c.DisplayName
 }
 
+// GetEnabledClients returns the EnabledClients field if it's non-nil, zero value otherwise.
+func (c *Connection) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
 // GetID returns the ID field if it's non-nil, zero value otherwise.
 func (c *Connection) GetID() string {
 	if c == nil || c.ID == nil {
@@ -1091,12 +1279,12 @@ func (c *Connection) GetIsDomainConnection() bool {
 	return *c.IsDomainConnection
 }
 
-// GetMetadata returns the Metadata map if it's non-nil, an empty map otherwise.
+// GetMetadata returns the Metadata field if it's non-nil, zero value otherwise.
 func (c *Connection) GetMetadata() map[string]string {
 	if c == nil || c.Metadata == nil {
 		return map[string]string{}
 	}
-	return c.Metadata
+	return *c.Metadata
 }
 
 // GetName returns the Name field if it's non-nil, zero value otherwise.
@@ -1113,6 +1301,14 @@ func (c *Connection) GetProvisioningTicketURL() string {
 		return ""
 	}
 	return *c.ProvisioningTicketURL
+}
+
+// GetRealms returns the Realms field if it's non-nil, zero value otherwise.
+func (c *Connection) GetRealms() []string {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
 }
 
 // GetShowAsButton returns the ShowAsButton field if it's non-nil, zero value otherwise.
@@ -1192,6 +1388,22 @@ func (c *ConnectionOptions) GetBruteForceProtection() bool {
 		return false
 	}
 	return *c.BruteForceProtection
+}
+
+// GetConfiguration returns the Configuration field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptions) GetConfiguration() map[string]string {
+	if c == nil || c.Configuration == nil {
+		return map[string]string{}
+	}
+	return *c.Configuration
+}
+
+// GetCustomScripts returns the CustomScripts field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptions) GetCustomScripts() map[string]string {
+	if c == nil || c.CustomScripts == nil {
+		return map[string]string{}
+	}
+	return *c.CustomScripts
 }
 
 // GetDisableSignup returns the DisableSignup field if it's non-nil, zero value otherwise.
@@ -1287,6 +1499,22 @@ func (c *ConnectionOptionsAD) GetDisableCache() bool {
 	return *c.DisableCache
 }
 
+// GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAD) GetDomainAliases() []string {
+	if c == nil || c.DomainAliases == nil {
+		return nil
+	}
+	return *c.DomainAliases
+}
+
+// GetIPs returns the IPs field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAD) GetIPs() []string {
+	if c == nil || c.IPs == nil {
+		return nil
+	}
+	return *c.IPs
+}
+
 // GetKerberos returns the Kerberos field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsAD) GetKerberos() bool {
 	if c == nil || c.Kerberos == nil {
@@ -1338,6 +1566,14 @@ func (c *ConnectionOptionsADFS) GetADFSServer() string {
 		return ""
 	}
 	return *c.ADFSServer
+}
+
+// GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsADFS) GetDomainAliases() []string {
+	if c == nil || c.DomainAliases == nil {
+		return nil
+	}
+	return *c.DomainAliases
 }
 
 // GetEnableUsersAPI returns the EnableUsersAPI field if it's non-nil, zero value otherwise.
@@ -1524,6 +1760,14 @@ func (c *ConnectionOptionsAzureAD) GetDomain() string {
 		return ""
 	}
 	return *c.Domain
+}
+
+// GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAzureAD) GetDomainAliases() []string {
+	if c == nil || c.DomainAliases == nil {
+		return nil
+	}
+	return *c.DomainAliases
 }
 
 // GetEnableUsersAPI returns the EnableUsersAPI field if it's non-nil, zero value otherwise.
@@ -2375,6 +2619,14 @@ func (c *ConnectionOptionsGoogleApps) GetDomain() string {
 	return *c.Domain
 }
 
+// GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsGoogleApps) GetDomainAliases() []string {
+	if c == nil || c.DomainAliases == nil {
+		return nil
+	}
+	return *c.DomainAliases
+}
+
 // GetEnableUsersAPI returns the EnableUsersAPI field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsGoogleApps) GetEnableUsersAPI() bool {
 	if c == nil || c.EnableUsersAPI == nil {
@@ -2450,6 +2702,14 @@ func (c *ConnectionOptionsGoogleOAuth2) GetAdsenseManagement() bool {
 		return false
 	}
 	return *c.AdsenseManagement
+}
+
+// GetAllowedAudiences returns the AllowedAudiences field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsGoogleOAuth2) GetAllowedAudiences() []string {
+	if c == nil || c.AllowedAudiences == nil {
+		return nil
+	}
+	return *c.AllowedAudiences
 }
 
 // GetAnalytics returns the Analytics field if it's non-nil, zero value otherwise.
@@ -2846,6 +3106,14 @@ func (c *ConnectionOptionsOAuth2) GetScope() string {
 	return *c.Scope
 }
 
+// GetScripts returns the Scripts field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth2) GetScripts() map[string]string {
+	if c == nil || c.Scripts == nil {
+		return map[string]string{}
+	}
+	return *c.Scripts
+}
+
 // GetSetUserAttributes returns the SetUserAttributes field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOAuth2) GetSetUserAttributes() string {
 	if c == nil || c.SetUserAttributes == nil {
@@ -2897,6 +3165,14 @@ func (c *ConnectionOptionsOIDC) GetDiscoveryURL() string {
 		return ""
 	}
 	return *c.DiscoveryURL
+}
+
+// GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOIDC) GetDomainAliases() []string {
+	if c == nil || c.DomainAliases == nil {
+		return nil
+	}
+	return *c.DomainAliases
 }
 
 // GetIssuer returns the Issuer field if it's non-nil, zero value otherwise.
@@ -3088,6 +3364,14 @@ func (c *ConnectionOptionsSAML) GetDisableSignOut() bool {
 		return false
 	}
 	return *c.DisableSignOut
+}
+
+// GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetDomainAliases() []string {
+	if c == nil || c.DomainAliases == nil {
+		return nil
+	}
+	return *c.DomainAliases
 }
 
 // GetEntityID returns the EntityID field if it's non-nil, zero value otherwise.
@@ -4114,6 +4398,14 @@ func (g *GrantList) String() string {
 	return Stringify(g)
 }
 
+// GetDependencies returns the Dependencies field if it's non-nil, zero value otherwise.
+func (h *Hook) GetDependencies() map[string]string {
+	if h == nil || h.Dependencies == nil {
+		return map[string]string{}
+	}
+	return *h.Dependencies
+}
+
 // GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
 func (h *Hook) GetEnabled() bool {
 	if h == nil || h.Enabled == nil {
@@ -4883,6 +5175,14 @@ func (o *Organization) GetID() string {
 	return *o.ID
 }
 
+// GetMetadata returns the Metadata field if it's non-nil, zero value otherwise.
+func (o *Organization) GetMetadata() map[string]string {
+	if o == nil || o.Metadata == nil {
+		return map[string]string{}
+	}
+	return *o.Metadata
+}
+
 // GetName returns the Name field if it's non-nil, zero value otherwise.
 func (o *Organization) GetName() string {
 	if o == nil || o.Name == nil {
@@ -4894,6 +5194,14 @@ func (o *Organization) GetName() string {
 // String returns a string representation of Organization.
 func (o *Organization) String() string {
 	return Stringify(o)
+}
+
+// GetColors returns the Colors field if it's non-nil, zero value otherwise.
+func (o *OrganizationBranding) GetColors() map[string]string {
+	if o == nil || o.Colors == nil {
+		return map[string]string{}
+	}
+	return *o.Colors
 }
 
 // GetLogoURL returns the LogoURL field if it's non-nil, zero value otherwise.
@@ -5335,6 +5643,22 @@ func (r *ResourceServer) GetName() string {
 	return *r.Name
 }
 
+// GetOptions returns the Options field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetOptions() map[string]string {
+	if r == nil || r.Options == nil {
+		return map[string]string{}
+	}
+	return *r.Options
+}
+
+// GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetScopes() []ResourceServerScope {
+	if r == nil || r.Scopes == nil {
+		return nil
+	}
+	return *r.Scopes
+}
+
 // GetSigningAlgorithm returns the SigningAlgorithm field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetSigningAlgorithm() string {
 	if r == nil || r.SigningAlgorithm == nil {
@@ -5686,6 +6010,14 @@ func (s *SuspiciousIPThrottling) String() string {
 	return Stringify(s)
 }
 
+// GetAllowedLogoutURLs returns the AllowedLogoutURLs field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetAllowedLogoutURLs() []string {
+	if t == nil || t.AllowedLogoutURLs == nil {
+		return nil
+	}
+	return *t.AllowedLogoutURLs
+}
+
 // GetChangePassword returns the ChangePassword field.
 func (t *Tenant) GetChangePassword() *TenantChangePassword {
 	if t == nil {
@@ -5724,6 +6056,14 @@ func (t *Tenant) GetDeviceFlow() *TenantDeviceFlow {
 		return nil
 	}
 	return t.DeviceFlow
+}
+
+// GetEnabledLocales returns the EnabledLocales field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetEnabledLocales() []string {
+	if t == nil || t.EnabledLocales == nil {
+		return nil
+	}
+	return *t.EnabledLocales
 }
 
 // GetErrorPage returns the ErrorPage field.
@@ -5780,6 +6120,14 @@ func (t *Tenant) GetSandboxVersion() string {
 		return ""
 	}
 	return *t.SandboxVersion
+}
+
+// GetSandboxVersionAvailable returns the SandboxVersionAvailable field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetSandboxVersionAvailable() []string {
+	if t == nil || t.SandboxVersionAvailable == nil {
+		return nil
+	}
+	return *t.SandboxVersionAvailable
 }
 
 // GetSessionCookie returns the SessionCookie field.

@@ -46,7 +46,7 @@ type Tenant struct {
 	UniversalLogin *TenantUniversalLogin `json:"universal_login,omitempty"`
 
 	// A set of URLs that are valid to redirect to after logout from Auth0.
-	AllowedLogoutURLs []interface{} `json:"allowed_logout_urls,omitempty"`
+	AllowedLogoutURLs *[]string `json:"allowed_logout_urls,omitempty"`
 
 	// Login session lifetime, how long the session will stay valid (hours).
 	//
@@ -67,14 +67,14 @@ type Tenant struct {
 	SandboxVersion *string `json:"sandbox_version,omitempty"`
 
 	// A set of available sandbox versions for the extensibility environment
-	SandboxVersionAvailable []interface{} `json:"sandbox_versions_available,omitempty"`
+	SandboxVersionAvailable *[]string `json:"sandbox_versions_available,omitempty"`
 
 	// The default absolute redirection uri, must be https and cannot contain a
 	// fragment.
 	DefaultRedirectionURI *string `json:"default_redirection_uri,omitempty"`
 
 	// Supported locales for the UI
-	EnabledLocales []interface{} `json:"enabled_locales,omitempty"`
+	EnabledLocales *[]string `json:"enabled_locales,omitempty"`
 
 	SessionCookie *TenantSessionCookie `json:"session_cookie,omitempty"`
 }

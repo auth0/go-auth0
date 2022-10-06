@@ -17,20 +17,20 @@ func TestActionManager_Create(t *testing.T) {
 	expectedAction := &Action{
 		Name: auth0.Stringf("Test Action (%s)", time.Now().Format(time.StampMilli)),
 		Code: auth0.String("exports.onExecutePostLogin = async (event, api) =\u003e {}"),
-		SupportedTriggers: []*ActionTrigger{
+		SupportedTriggers: []ActionTrigger{
 			{
 				ID:      auth0.String(ActionTriggerPostLogin),
 				Version: auth0.String("v2"),
 			},
 		},
-		Dependencies: []*ActionDependency{
+		Dependencies: &[]ActionDependency{
 			{
 				Name:        auth0.String("lodash"),
 				Version:     auth0.String("4.0.0"),
 				RegistryURL: auth0.String("https://www.npmjs.com/package/lodash"),
 			},
 		},
-		Secrets: []*ActionSecret{
+		Secrets: &[]ActionSecret{
 			{
 				Name:  auth0.String("mySecretName"),
 				Value: auth0.String("mySecretValue"),
@@ -255,20 +255,20 @@ func givenAnAction(t *testing.T) *Action {
 	action := &Action{
 		Name: auth0.Stringf("Test Action (%s)", time.Now().Format(time.StampMilli)),
 		Code: auth0.String("exports.onExecutePostLogin = async (event, api) =\u003e {}"),
-		SupportedTriggers: []*ActionTrigger{
+		SupportedTriggers: []ActionTrigger{
 			{
 				ID:      auth0.String(ActionTriggerPostLogin),
 				Version: auth0.String("v2"),
 			},
 		},
-		Dependencies: []*ActionDependency{
+		Dependencies: &[]ActionDependency{
 			{
 				Name:        auth0.String("lodash"),
 				Version:     auth0.String("4.0.0"),
 				RegistryURL: auth0.String("https://www.npmjs.com/package/lodash"),
 			},
 		},
-		Secrets: []*ActionSecret{
+		Secrets: &[]ActionSecret{
 			{
 				Name:  auth0.String("mySecretName"),
 				Value: auth0.String("mySecretValue"),

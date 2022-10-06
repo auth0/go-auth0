@@ -15,7 +15,7 @@ func TestClientGrantManager_Create(t *testing.T) {
 	expectedClientGrant := &ClientGrant{
 		ClientID: client.ClientID,
 		Audience: resourceServer.Identifier,
-		Scope:    []interface{}{"create:resource"},
+		Scope:    []string{"create:resource"},
 	}
 
 	err := m.ClientGrant.Create(expectedClientGrant)
@@ -51,7 +51,9 @@ func TestClientGrantManager_Update(t *testing.T) {
 	expectedClientGrant.Audience = nil // Read-Only: Additional properties not allowed.
 	expectedClientGrant.ClientID = nil // Read-Only: Additional properties not allowed.
 
-	expectedClientGrant.Scope = append(expectedClientGrant.Scope, "update:resource")
+	scope := expectedClientGrant.Scope
+	scope = append(scope, "update:resource")
+	expectedClientGrant.Scope = scope
 
 	err := m.ClientGrant.Update(clientGrantID, expectedClientGrant)
 	assert.NoError(t, err)
@@ -93,7 +95,7 @@ func givenAClientGrant(t *testing.T) (clientGrant *ClientGrant) {
 	clientGrant = &ClientGrant{
 		ClientID: client.ClientID,
 		Audience: resourceServer.Identifier,
-		Scope:    []interface{}{"create:resource"},
+		Scope:    []string{"create:resource"},
 	}
 
 	err := m.ClientGrant.Create(clientGrant)

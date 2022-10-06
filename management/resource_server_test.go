@@ -20,7 +20,7 @@ func TestResourceServer_Create(t *testing.T) {
 		SigningAlgorithm:    auth0.String("HS256"),
 		TokenLifetime:       auth0.Int(7200),
 		TokenLifetimeForWeb: auth0.Int(3600),
-		Scopes: []*ResourceServerScope{
+		Scopes: &[]ResourceServerScope{
 			{
 				Value:       auth0.String("create:resource"),
 				Description: auth0.String("Create Resource"),
@@ -64,10 +64,11 @@ func TestResourceServer_Update(t *testing.T) {
 	expectedResourceServer.SkipConsentForVerifiableFirstPartyClients = auth0.Bool(true)
 	expectedResourceServer.TokenLifetime = auth0.Int(7200)
 	expectedResourceServer.TokenLifetimeForWeb = auth0.Int(5400)
-	expectedResourceServer.Scopes = append(expectedResourceServer.Scopes, &ResourceServerScope{
+	scopes := append(expectedResourceServer.GetScopes(), ResourceServerScope{
 		Value:       auth0.String("update:resource"),
 		Description: auth0.String("Update Resource"),
 	})
+	expectedResourceServer.Scopes = &scopes
 
 	err := m.ResourceServer.Update(resourceServerID, expectedResourceServer)
 
@@ -77,7 +78,7 @@ func TestResourceServer_Update(t *testing.T) {
 	assert.Equal(t, expectedResourceServer.GetSkipConsentForVerifiableFirstPartyClients(), true)
 	assert.Equal(t, expectedResourceServer.GetTokenLifetime(), 7200)
 	assert.Equal(t, expectedResourceServer.GetTokenLifetimeForWeb(), 5400)
-	assert.Equal(t, len(expectedResourceServer.Scopes), 2)
+	assert.Equal(t, len(expectedResourceServer.GetScopes()), 2)
 }
 
 func TestResourceServer_Delete(t *testing.T) {
@@ -115,7 +116,7 @@ func givenAResourceServer(t *testing.T) *ResourceServer {
 		SigningAlgorithm:    auth0.String("HS256"),
 		TokenLifetime:       auth0.Int(7200),
 		TokenLifetimeForWeb: auth0.Int(3600),
-		Scopes: []*ResourceServerScope{
+		Scopes: &[]ResourceServerScope{
 			{
 				Value:       auth0.String("create:resource"),
 				Description: auth0.String("Create Resource"),
