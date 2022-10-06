@@ -1037,14 +1037,6 @@ func (c *ClientGrant) GetID() string {
 	return *c.ID
 }
 
-// GetScope returns the Scope field if it's non-nil, zero value otherwise.
-func (c *ClientGrant) GetScope() []string {
-	if c == nil || c.Scope == nil {
-		return nil
-	}
-	return *c.Scope
-}
-
 // String returns a string representation of ClientGrant.
 func (c *ClientGrant) String() string {
 	return Stringify(c)

@@ -13,7 +13,7 @@ type ClientGrant struct {
 	// The audience.
 	Audience *string `json:"audience,omitempty"`
 
-	Scope *[]string `json:"scope"`
+	Scope []string `json:"scope"`
 }
 
 // ClientGrantList is a list of ClientGrants.

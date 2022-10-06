@@ -1316,16 +1316,6 @@ func TestClientGrant_GetID(tt *testing.T) {
 	c.GetID()
 }
 
-func TestClientGrant_GetScope(tt *testing.T) {
-	var zeroValue []string
-	c := &ClientGrant{Scope: &zeroValue}
-	c.GetScope()
-	c = &ClientGrant{}
-	c.GetScope()
-	c = nil
-	c.GetScope()
-}
-
 func TestClientGrant_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientGrant{}
