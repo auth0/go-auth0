@@ -1,6 +1,90 @@
 # Change Log
 
+<a name="v0.11.0"></a>
+
+## [v0.11.0](https://github.com/auth0/go-auth0/tree/v0.11.0) (2022-10-07)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.10.1...v0.11.0)
+
+### Notice of Breaking Changes
+
+Please note that this version introduces many minor breaking changes. The intention with this release was to capture as many breaking changes into a single release to minimize future disruption.
+
+These changes were introduced for three primary reasons: 
+- Decoupling from [Auth0 Terraform Provider](https://github.com/auth0/terraform-provider-auth0) implementation
+- More precise typing of struct properties for better DX
+- Enabling Auth0 Terraform provider to explicitly set empty values (see: [related Github issue](https://github.com/auth0/terraform-provider-auth0/issues/14))
+
+Review the complete list below before upgrading.
+
+### Changed
+
+- `Action` struct
+  - `SupportedTriggers` to `[]ActionTrigger` type
+  - `Dependencies` to ` *[]ActionDependency` type
+  - `Secrets` to `*[]ActionSecret` type
+- `Client` struct
+  - `Callbacks` to `*[]string` type
+  - `AllowedOrigins` to `*[]string` type
+  - `WebOrigins` to `*[]string` type
+  - `ClientAliases` to `*[]string` type
+  - `AllowedClients` to `*[]string` type
+  - `AllowedLogoutURLs` to `*[]string` type
+  - `EncryptionKey` to `*map[string]string` type
+  - `GrantTypes` to `*[]string` type
+  - `ClientMetadata` to `*map[string]string` type
+  - `Mobile` to dedicated `*ClientMobile` type
+  - `Scopes` to `*map[string]string` type
+- `ClientNativeSocialLogin` struct
+  - `Apple` to dedicated `*ClientNativeSocialLoginSupportEnabled` type
+  - `Facebook` to dedicated `*ClientNativeSocialLoginSupportEnabled` type
+- `ClientGrant` struct
+  - `Scope` to `[]string` field
+- `Connection` struct
+  - `EnabledClients` to `*[]string` type
+  - `Realms` to `*[]string` type
+  - `Metadata` to `*map[string]string` type
+- `ConnectionOptions` struct
+  `CustomScripts` to `*map[string]string` type
+  `Configuration` to `*map[string]string` type
+- `ConnectionOptionsGoogleOAuth2` struct
+  `AllowedAudiences` to `*[]string` type
+- `ConnectionOptionsOIDC` struct
+  - `DomainAliases` to `*[]string` type
+- `ConnectionOptionsOAuth2` struct
+  `Scripts` to `*map[string]string` type
+- `ConnectionOptionsAD` struct
+  - `DomainAliases` to `*[]string` type
+  - `IPs` to `*[]string` type
+  - `IPs` added `omitempty` JSON struct tag
+- `ConnectionOptionsAzureAD` struct
+  - `DomainAliases` to `*[]string` type
+- `ConnectionOptionsADFS` struct
+  - `DomainAliases` to `*[]string` type
+- `ConnectionOptionsSAML` struct
+  - `DomainAliases` to `*[]string` type
+- `ConnectionOptionsGoogleApps` struct
+  - `DomainAliases` to `*[]string` type
+- `Hook` struct
+  - `Dependencies` to `*map[string]string` type
+- `LogStream` struct
+  - `Filters` to `*[]map[string]string` type
+- `LogStreamSinkHTTP` struct
+  - `CustomHeaders` to `*[]map[string]string` type
+- `Organization` struct
+  - `Metadata` to `*map[string]string` type
+- `OrganizationBranding` struct
+  - `Colors` to `*map[string]string` type
+- `ResourceServer` struct
+  - `Scopes` to `*[]ResourceServerScope` type
+  - `Options` to `*map[string]string` type
+- `Tenant` struct
+  - `AllowedLogoutURLs` to `*[]string` type
+  - `SandboxVersionAvailable` to `*[]string` type
+  - `EnabledLocales` to `*[]string` type
+
 <a name="v0.10.1"></a>
+
 ## [v0.10.1](https://github.com/auth0/go-auth0/tree/v0.10.1) (2022-08-30)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.10.0...v0.10.1)
@@ -9,8 +93,8 @@
 
 - Enhance reliability of how we make requests and parse errors ([#108](https://github.com/auth0/go-auth0/pull/108)
 
-
 <a name="v0.10.0"></a>
+
 ## [v0.10.0](https://github.com/auth0/go-auth0/tree/v0.10.0) (2022-08-23)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.9.3...v0.10.0)
@@ -20,8 +104,8 @@
 - Added support for branding themes ([#103](https://github.com/auth0/go-auth0/pull/103), [#104](https://github.com/auth0/go-auth0/pull/104))
 - Added ability to pass a custom audience when using client credentials ([#106](https://github.com/auth0/go-auth0/pull/106))
 
-
 <a name="v0.9.3"></a>
+
 ## [v0.9.3](https://github.com/auth0/go-auth0/tree/v0.9.3) (2022-07-26)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.9.2...v0.9.3)
@@ -32,8 +116,8 @@
 - Added Multifactor field to User struct ([#97](https://github.com/auth0/go-auth0/pull/97))
 - Added ClientID field to User struct ([#97](https://github.com/auth0/go-auth0/pull/97))
 
-
 <a name="v0.9.2"></a>
+
 ## [v0.9.2](https://github.com/auth0/go-auth0/tree/v0.9.2) (2022-07-18)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.9.1...v0.9.2)
@@ -43,8 +127,8 @@
 - **[Breaking]** Change Metadata to `*map[string]interface{}` in Organization ([#95](https://github.com/auth0/go-auth0/pull/95))
 - **[Breaking]** Change Metadata fields to `*map[string]interface{}` in User ([#96s](https://github.com/auth0/go-auth0/pull/95))
 
-
 <a name="v0.9.1"></a>
+
 ## [v0.9.1](https://github.com/auth0/go-auth0/tree/v0.9.1) (2022-07-15)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.9.0...v0.9.1)
@@ -53,8 +137,8 @@
 
 - Added more connection strategies that default to OAuth2 ([#93](https://github.com/auth0/go-auth0/pull/93))
 
-
 <a name="v0.9.0"></a>
+
 ## [v0.9.0](https://github.com/auth0/go-auth0/tree/v0.9.0) (2022-07-12)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.8.0...v0.9.0)
@@ -66,6 +150,7 @@
 - Added `include_email_in_redirect` email template property ([#90](https://github.com/auth0/go-auth0/pull/90))
 
 <a name="v0.8.0"></a>
+
 ## [v0.8.0](https://github.com/auth0/go-auth0/tree/v0.8.0) (2022-07-06)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.7.0...v0.8.0)
@@ -81,8 +166,8 @@
 - Added `Read()` and `Update()` to Push CustomApp Settings ([#85](https://github.com/auth0/go-auth0/pull/85))
 - Added `Enable()` Recovery Code MFA ([#86](https://github.com/auth0/go-auth0/pull/86))
 
-
 <a name="v0.7.0"></a>
+
 ## [v0.7.0](https://github.com/auth0/go-auth0/tree/v0.7.0) (2022-06-22)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.4...v0.7.0)
@@ -95,8 +180,8 @@
 
 - **[Breaking]** Changed `AuthParams` to an `interface{}` in Email and SMS connection options ([#75](https://github.com/auth0/go-auth0/pull/75))
 
-
 <a name="v0.6.4"></a>
+
 ## [v0.6.4](https://github.com/auth0/go-auth0/tree/v0.6.4) (2022-06-08)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.3...v0.6.4)
@@ -108,12 +193,12 @@
 ### Changed
 
 - Bumped Go version to 1.18 ([#71](https://github.com/auth0/go-auth0/pull/71))
-- Ensured that all the tests can be run in any order 
+- Ensured that all the tests can be run in any order
 - Ensured that all the tests clean up the test tenant afterwards of any created resources
 - Enabled http recordings with go-vcr to be used within tests for more reliable testing
 
-
 <a name="v0.6.3"></a>
+
 ## [v0.6.3](https://github.com/auth0/go-auth0/tree/v0.6.3) (2022-04-13)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.2...v0.6.3)
@@ -122,8 +207,8 @@
 
 - Fixed uri path escaping for param IDs that have a forward slash in them ([#40](https://github.com/auth0/go-auth0/pull/40))
 
-
 <a name="v0.6.2"></a>
+
 ## [v0.6.2](https://github.com/auth0/go-auth0/tree/v0.6.2) (2022-04-07)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.1...v0.6.2)
@@ -135,8 +220,8 @@
 - Added `profileData` key to `UserIdentity` ([#33](https://github.com/auth0/go-auth0/pull/33))
 - [DXCDT-104] Added `Filters` to `LogStream` ([#38](https://github.com/auth0/go-auth0/pull/38))
 
-
 <a name="v0.6.1"></a>
+
 ## [v0.6.1](https://github.com/auth0/go-auth0/tree/v0.6.1) (2022-03-03)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.6.0...v0.6.1)
@@ -150,17 +235,19 @@
 - Fixed json tags on AllowList for Attack Protection structs ([#30](https://github.com/auth0/go-auth0/pull/30))
 
 <a name="v0.6.0"></a>
+
 ## [v0.6.0](https://github.com/auth0/go-auth0/tree/v0.6.0) (2022-02-22)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.5.0...v0.6.0)
 
-### Added 
+### Added
 
 - [DXCDT-44] Add attack protection endpoints ([#27](https://github.com/auth0/go-auth0/pull/27))
 - Added missing field `ClientID` to `Ticket` ([#25](https://github.com/auth0/go-auth0/pull/25/))
 - Clarify intended usage of roles in app metadata vs RBAC ([#24](https://github.com/auth0/go-auth0/pull/24))
 
 <a name="v0.5.0"></a>
+
 ## [v0.5.0](https://github.com/auth0/go-auth0/tree/v0.5.0) (2022-02-14)
 
 This project is a continuation of [go-auth0/auth0](https://github.com/go-auth0/auth0).
