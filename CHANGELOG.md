@@ -45,14 +45,14 @@ Review the complete list below before upgrading.
   - `Realms` to `*[]string` type
   - `Metadata` to `*map[string]string` type
 - `ConnectionOptions` struct
-  `CustomScripts` to `*map[string]string` type
-  `Configuration` to `*map[string]string` type
+ - `CustomScripts` to `*map[string]string` type
+ - `Configuration` to `*map[string]string` type
 - `ConnectionOptionsGoogleOAuth2` struct
-  `AllowedAudiences` to `*[]string` type
+  - `AllowedAudiences` to `*[]string` type
 - `ConnectionOptionsOIDC` struct
   - `DomainAliases` to `*[]string` type
 - `ConnectionOptionsOAuth2` struct
-  `Scripts` to `*map[string]string` type
+  - `Scripts` to `*map[string]string` type
 - `ConnectionOptionsAD` struct
   - `DomainAliases` to `*[]string` type
   - `IPs` to `*[]string` type
