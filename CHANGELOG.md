@@ -6,7 +6,7 @@
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.10.1...v0.11.0)
 
-### Notice of Breaking Changes
+### ⚠️ Notice of Breaking Changes
 
 Please note that this version introduces many minor breaking changes. The intention with this release was to capture as many breaking changes into a single release to minimize future disruption.
 
