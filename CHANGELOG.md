@@ -19,11 +19,11 @@ Review the complete list below before upgrading.
 
 ### Changed
 
-- `Action` struct
+- `Action` struct fields
   - `SupportedTriggers` to `[]ActionTrigger` type
   - `Dependencies` to ` *[]ActionDependency` type
   - `Secrets` to `*[]ActionSecret` type
-- `Client` struct
+- `Client` struct fields
   - `Callbacks` to `*[]string` type
   - `AllowedOrigins` to `*[]string` type
   - `WebOrigins` to `*[]string` type
@@ -38,47 +38,47 @@ Review the complete list below before upgrading.
 - `ClientNativeSocialLogin` struct
   - `Apple` to dedicated `*ClientNativeSocialLoginSupportEnabled` type
   - `Facebook` to dedicated `*ClientNativeSocialLoginSupportEnabled` type
-- `ClientGrant` struct
-  - `Scope` to `[]string` field
-- `Connection` struct
+- `ClientGrant` struct field
+  - `Scope` to `[]string` type
+- `Connection` struct fields
   - `EnabledClients` to `*[]string` type
   - `Realms` to `*[]string` type
   - `Metadata` to `*map[string]string` type
-- `ConnectionOptions` struct
+- `ConnectionOptions` struct fields
  - `CustomScripts` to `*map[string]string` type
  - `Configuration` to `*map[string]string` type
-- `ConnectionOptionsGoogleOAuth2` struct
+- `ConnectionOptionsGoogleOAuth2` struct field
   - `AllowedAudiences` to `*[]string` type
-- `ConnectionOptionsOIDC` struct
+- `ConnectionOptionsOIDC` struct field
   - `DomainAliases` to `*[]string` type
-- `ConnectionOptionsOAuth2` struct
+- `ConnectionOptionsOAuth2` struct field
   - `Scripts` to `*map[string]string` type
-- `ConnectionOptionsAD` struct
+- `ConnectionOptionsAD` struct fields
   - `DomainAliases` to `*[]string` type
   - `IPs` to `*[]string` type
   - `IPs` added `omitempty` JSON struct tag
-- `ConnectionOptionsAzureAD` struct
+- `ConnectionOptionsAzureAD` struct field
   - `DomainAliases` to `*[]string` type
-- `ConnectionOptionsADFS` struct
+- `ConnectionOptionsADFS` struct field
   - `DomainAliases` to `*[]string` type
-- `ConnectionOptionsSAML` struct
+- `ConnectionOptionsSAML` struct field
   - `DomainAliases` to `*[]string` type
-- `ConnectionOptionsGoogleApps` struct
+- `ConnectionOptionsGoogleApps` struct field
   - `DomainAliases` to `*[]string` type
-- `Hook` struct
+- `Hook` struct field
   - `Dependencies` to `*map[string]string` type
-- `LogStream` struct
+- `LogStream` struct field
   - `Filters` to `*[]map[string]string` type
-- `LogStreamSinkHTTP` struct
+- `LogStreamSinkHTTP` struct field
   - `CustomHeaders` to `*[]map[string]string` type
-- `Organization` struct
+- `Organization` struct field
   - `Metadata` to `*map[string]string` type
-- `OrganizationBranding` struct
+- `OrganizationBranding` struct field
   - `Colors` to `*map[string]string` type
-- `ResourceServer` struct
+- `ResourceServer` struct fields
   - `Scopes` to `*[]ResourceServerScope` type
   - `Options` to `*map[string]string` type
-- `Tenant` struct
+- `Tenant` struct fields
   - `AllowedLogoutURLs` to `*[]string` type
   - `SandboxVersionAvailable` to `*[]string` type
   - `EnabledLocales` to `*[]string` type
