@@ -1020,16 +1020,6 @@ func TestClient_GetClientID(tt *testing.T) {
 	c.GetClientID()
 }
 
-func TestClient_GetClientMetadata(tt *testing.T) {
-	var zeroValue map[string]string
-	c := &Client{ClientMetadata: &zeroValue}
-	c.GetClientMetadata()
-	c = &Client{}
-	c.GetClientMetadata()
-	c = nil
-	c.GetClientMetadata()
-}
-
 func TestClient_GetClientSecret(tt *testing.T) {
 	var zeroValue string
 	c := &Client{ClientSecret: &zeroValue}

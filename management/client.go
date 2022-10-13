@@ -84,9 +84,15 @@ type Client struct {
 	// 	'none' (public client without a client secret),
 	// 	'client_secret_post' (client uses HTTP POST parameters) or
 	// 	'client_secret_basic' (client uses HTTP Basic)
-	TokenEndpointAuthMethod *string            `json:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          *map[string]string `json:"client_metadata,omitempty"`
-	Mobile                  *ClientMobile      `json:"mobile,omitempty"`
+	TokenEndpointAuthMethod *string `json:"token_endpoint_auth_method,omitempty"`
+
+	// Metadata associated with the client, in the form of an object with string values (max 255 chars).
+	// Maximum of 10 metadata properties allowed. Field names (max 255 chars) are alphanumeric and may
+	// only include the following special characters: :,-+=_*?"/\()<>@ [Tab] [Space].
+	// To remove a key, the value needs to be sent as null.
+	ClientMetadata *map[string]interface{} `json:"client_metadata,omitempty"`
+
+	Mobile *ClientMobile `json:"mobile,omitempty"`
 
 	// Initiate login uri, must be https and cannot contain a fragment.
 	InitiateLoginURI *string `json:"initiate_login_uri,omitempty"`
