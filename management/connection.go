@@ -782,7 +782,7 @@ type ConnectionOptionsAzureAD struct {
 	DomainAliases *[]string `json:"domain_aliases,omitempty"`
 	LogoURL       *string   `json:"icon_url,omitempty"`
 
-	IdentityAPI *string `json:"identity_api"`
+	IdentityAPI *string `json:"identity_api,omitempty"`
 
 	WAADProtocol       *string `json:"waad_protocol,omitempty"`
 	WAADCommonEndpoint *bool   `json:"waad_common_endpoint,omitempty"`
