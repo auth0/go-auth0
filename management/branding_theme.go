@@ -18,15 +18,15 @@ type BrandingTheme struct {
 
 // BrandingThemeBorders contains borders settings for the BrandingTheme.
 type BrandingThemeBorders struct {
-	ButtonBorderRadius int    `json:"button_border_radius"`
-	ButtonBorderWeight int    `json:"button_border_weight"`
-	ButtonsStyle       string `json:"buttons_style"`
-	InputBorderRadius  int    `json:"input_border_radius"`
-	InputBorderWeight  int    `json:"input_border_weight"`
-	InputsStyle        string `json:"inputs_style"`
-	ShowWidgetShadow   bool   `json:"show_widget_shadow"`
-	WidgetBorderWeight int    `json:"widget_border_weight"`
-	WidgetCornerRadius int    `json:"widget_corner_radius"`
+	ButtonBorderRadius float64 `json:"button_border_radius"`
+	ButtonBorderWeight float64 `json:"button_border_weight"`
+	ButtonsStyle       string  `json:"buttons_style"`
+	InputBorderRadius  float64 `json:"input_border_radius"`
+	InputBorderWeight  float64 `json:"input_border_weight"`
+	InputsStyle        string  `json:"inputs_style"`
+	ShowWidgetShadow   bool    `json:"show_widget_shadow"`
+	WidgetBorderWeight float64 `json:"widget_border_weight"`
+	WidgetCornerRadius float64 `json:"widget_corner_radius"`
 }
 
 // BrandingThemeColors contains colors settings for the BrandingTheme.
@@ -59,7 +59,7 @@ type BrandingThemeFonts struct {
 	InputLabels       BrandingThemeText `json:"input_labels"`
 	Links             BrandingThemeText `json:"links"`
 	LinksStyle        string            `json:"links_style"`
-	ReferenceTextSize int               `json:"reference_text_size"`
+	ReferenceTextSize float64           `json:"reference_text_size"`
 	Subtitle          BrandingThemeText `json:"subtitle"`
 	Title             BrandingThemeText `json:"title"`
 }
@@ -67,8 +67,8 @@ type BrandingThemeFonts struct {
 // BrandingThemeText contains text settings
 // for the BrandingThemeFonts.
 type BrandingThemeText struct {
-	Bold bool `json:"bold"`
-	Size int  `json:"size"`
+	Bold bool    `json:"bold"`
+	Size float64 `json:"size"`
 }
 
 // BrandingThemePageBackground contains page
@@ -81,11 +81,11 @@ type BrandingThemePageBackground struct {
 
 // BrandingThemeWidget contains widget settings for the BrandingTheme.
 type BrandingThemeWidget struct {
-	HeaderTextAlignment string `json:"header_text_alignment"`
-	LogoHeight          int    `json:"logo_height"`
-	LogoPosition        string `json:"logo_position"`
-	LogoURL             string `json:"logo_url"`
-	SocialButtonsLayout string `json:"social_buttons_layout"`
+	HeaderTextAlignment string  `json:"header_text_alignment"`
+	LogoHeight          float64 `json:"logo_height"`
+	LogoPosition        string  `json:"logo_position"`
+	LogoURL             string  `json:"logo_url"`
+	SocialButtonsLayout string  `json:"social_buttons_layout"`
 }
 
 // BrandingThemeManager manages Auth0 BrandingTheme resources.
