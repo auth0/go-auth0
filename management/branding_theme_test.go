@@ -10,6 +10,17 @@ import (
 	"github.com/auth0/go-auth0"
 )
 
+func TestBrandingThemeManager_Default(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	expectedTheme := givenABrandingTheme(t)
+
+	actualTheme, err := m.BrandingTheme.Default()
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedTheme.GetDisplayName(), actualTheme.GetDisplayName())
+}
+
 func TestBrandingThemeManager_Create(t *testing.T) {
 	setupHTTPRecordings(t)
 

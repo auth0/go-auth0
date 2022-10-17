@@ -97,6 +97,14 @@ func newBrandingThemeManager(m *Management) *BrandingThemeManager {
 	return &BrandingThemeManager{m}
 }
 
+// Default retrieves the default BrandingTheme.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/get_default_branding_theme
+func (m *BrandingThemeManager) Default(opts ...RequestOption) (theme *BrandingTheme, err error) {
+	err = m.Request(http.MethodGet, m.URI("branding", "themes", "default"), &theme, opts...)
+	return
+}
+
 // Create a new BrandingTheme.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/post_branding_theme
