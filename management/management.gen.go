@@ -792,14 +792,6 @@ func (c *Client) GetClientID() string {
 	return *c.ClientID
 }
 
-// GetClientMetadata returns the ClientMetadata field if it's non-nil, zero value otherwise.
-func (c *Client) GetClientMetadata() map[string]string {
-	if c == nil || c.ClientMetadata == nil {
-		return map[string]string{}
-	}
-	return *c.ClientMetadata
-}
-
 // GetClientSecret returns the ClientSecret field if it's non-nil, zero value otherwise.
 func (c *Client) GetClientSecret() string {
 	if c == nil || c.ClientSecret == nil {
