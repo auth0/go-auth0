@@ -64,7 +64,7 @@ type User struct {
 	LastLogin *time.Time `json:"last_login,omitempty"`
 
 	// The last time the user had their password reset.
-	// Only available for Database Connection users.
+	// Only available for Database connection users.
 	LastPasswordReset *time.Time `json:"last_password_reset,omitempty"`
 
 	// UserMetadata holds data that the user has read/write access to.
