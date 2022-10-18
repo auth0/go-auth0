@@ -5792,6 +5792,16 @@ func TestList_String(t *testing.T) {
 	}
 }
 
+func TestLog_GetAudience(tt *testing.T) {
+	var zeroValue string
+	l := &Log{Audience: &zeroValue}
+	l.GetAudience()
+	l = &Log{}
+	l.GetAudience()
+	l = nil
+	l.GetAudience()
+}
+
 func TestLog_GetClientID(tt *testing.T) {
 	var zeroValue string
 	l := &Log{ClientID: &zeroValue}
@@ -5810,6 +5820,26 @@ func TestLog_GetClientName(tt *testing.T) {
 	l.GetClientName()
 	l = nil
 	l.GetClientName()
+}
+
+func TestLog_GetConnection(tt *testing.T) {
+	var zeroValue string
+	l := &Log{Connection: &zeroValue}
+	l.GetConnection()
+	l = &Log{}
+	l.GetConnection()
+	l = nil
+	l.GetConnection()
+}
+
+func TestLog_GetConnectionID(tt *testing.T) {
+	var zeroValue string
+	l := &Log{ConnectionID: &zeroValue}
+	l.GetConnectionID()
+	l = &Log{}
+	l.GetConnectionID()
+	l = nil
+	l.GetConnectionID()
 }
 
 func TestLog_GetDate(tt *testing.T) {
@@ -5832,6 +5862,16 @@ func TestLog_GetDescription(tt *testing.T) {
 	l.GetDescription()
 }
 
+func TestLog_GetHostname(tt *testing.T) {
+	var zeroValue string
+	l := &Log{Hostname: &zeroValue}
+	l.GetHostname()
+	l = &Log{}
+	l.GetHostname()
+	l = nil
+	l.GetHostname()
+}
+
 func TestLog_GetID(tt *testing.T) {
 	var zeroValue string
 	l := &Log{ID: &zeroValue}
@@ -5852,6 +5892,16 @@ func TestLog_GetIP(tt *testing.T) {
 	l.GetIP()
 }
 
+func TestLog_GetIsMobile(tt *testing.T) {
+	var zeroValue bool
+	l := &Log{IsMobile: &zeroValue}
+	l.GetIsMobile()
+	l = &Log{}
+	l.GetIsMobile()
+	l = nil
+	l.GetIsMobile()
+}
+
 func TestLog_GetLogID(tt *testing.T) {
 	var zeroValue string
 	l := &Log{LogID: &zeroValue}
@@ -5860,6 +5910,56 @@ func TestLog_GetLogID(tt *testing.T) {
 	l.GetLogID()
 	l = nil
 	l.GetLogID()
+}
+
+func TestLog_GetOrganizationID(tt *testing.T) {
+	var zeroValue string
+	l := &Log{OrganizationID: &zeroValue}
+	l.GetOrganizationID()
+	l = &Log{}
+	l.GetOrganizationID()
+	l = nil
+	l.GetOrganizationID()
+}
+
+func TestLog_GetOrganizationName(tt *testing.T) {
+	var zeroValue string
+	l := &Log{OrganizationName: &zeroValue}
+	l.GetOrganizationName()
+	l = &Log{}
+	l.GetOrganizationName()
+	l = nil
+	l.GetOrganizationName()
+}
+
+func TestLog_GetScope(tt *testing.T) {
+	var zeroValue string
+	l := &Log{Scope: &zeroValue}
+	l.GetScope()
+	l = &Log{}
+	l.GetScope()
+	l = nil
+	l.GetScope()
+}
+
+func TestLog_GetStrategy(tt *testing.T) {
+	var zeroValue string
+	l := &Log{Strategy: &zeroValue}
+	l.GetStrategy()
+	l = &Log{}
+	l.GetStrategy()
+	l = nil
+	l.GetStrategy()
+}
+
+func TestLog_GetStrategyType(tt *testing.T) {
+	var zeroValue string
+	l := &Log{StrategyType: &zeroValue}
+	l.GetStrategyType()
+	l = &Log{}
+	l.GetStrategyType()
+	l = nil
+	l.GetStrategyType()
 }
 
 func TestLog_GetType(tt *testing.T) {
@@ -5872,6 +5972,16 @@ func TestLog_GetType(tt *testing.T) {
 	l.GetType()
 }
 
+func TestLog_GetUserAgent(tt *testing.T) {
+	var zeroValue string
+	l := &Log{UserAgent: &zeroValue}
+	l.GetUserAgent()
+	l = &Log{}
+	l.GetUserAgent()
+	l = nil
+	l.GetUserAgent()
+}
+
 func TestLog_GetUserID(tt *testing.T) {
 	var zeroValue string
 	l := &Log{UserID: &zeroValue}
@@ -5880,6 +5990,16 @@ func TestLog_GetUserID(tt *testing.T) {
 	l.GetUserID()
 	l = nil
 	l.GetUserID()
+}
+
+func TestLog_GetUserName(tt *testing.T) {
+	var zeroValue string
+	l := &Log{UserName: &zeroValue}
+	l.GetUserName()
+	l = &Log{}
+	l.GetUserName()
+	l = nil
+	l.GetUserName()
 }
 
 func TestLog_String(t *testing.T) {

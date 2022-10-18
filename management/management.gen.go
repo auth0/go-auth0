@@ -4578,6 +4578,14 @@ func (l *List) String() string {
 	return Stringify(l)
 }
 
+// GetAudience returns the Audience field if it's non-nil, zero value otherwise.
+func (l *Log) GetAudience() string {
+	if l == nil || l.Audience == nil {
+		return ""
+	}
+	return *l.Audience
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (l *Log) GetClientID() string {
 	if l == nil || l.ClientID == nil {
@@ -4592,6 +4600,22 @@ func (l *Log) GetClientName() string {
 		return ""
 	}
 	return *l.ClientName
+}
+
+// GetConnection returns the Connection field if it's non-nil, zero value otherwise.
+func (l *Log) GetConnection() string {
+	if l == nil || l.Connection == nil {
+		return ""
+	}
+	return *l.Connection
+}
+
+// GetConnectionID returns the ConnectionID field if it's non-nil, zero value otherwise.
+func (l *Log) GetConnectionID() string {
+	if l == nil || l.ConnectionID == nil {
+		return ""
+	}
+	return *l.ConnectionID
 }
 
 // GetDate returns the Date field if it's non-nil, zero value otherwise.
@@ -4610,6 +4634,14 @@ func (l *Log) GetDescription() string {
 	return *l.Description
 }
 
+// GetHostname returns the Hostname field if it's non-nil, zero value otherwise.
+func (l *Log) GetHostname() string {
+	if l == nil || l.Hostname == nil {
+		return ""
+	}
+	return *l.Hostname
+}
+
 // GetID returns the ID field if it's non-nil, zero value otherwise.
 func (l *Log) GetID() string {
 	if l == nil || l.ID == nil {
@@ -4626,12 +4658,60 @@ func (l *Log) GetIP() string {
 	return *l.IP
 }
 
+// GetIsMobile returns the IsMobile field if it's non-nil, zero value otherwise.
+func (l *Log) GetIsMobile() bool {
+	if l == nil || l.IsMobile == nil {
+		return false
+	}
+	return *l.IsMobile
+}
+
 // GetLogID returns the LogID field if it's non-nil, zero value otherwise.
 func (l *Log) GetLogID() string {
 	if l == nil || l.LogID == nil {
 		return ""
 	}
 	return *l.LogID
+}
+
+// GetOrganizationID returns the OrganizationID field if it's non-nil, zero value otherwise.
+func (l *Log) GetOrganizationID() string {
+	if l == nil || l.OrganizationID == nil {
+		return ""
+	}
+	return *l.OrganizationID
+}
+
+// GetOrganizationName returns the OrganizationName field if it's non-nil, zero value otherwise.
+func (l *Log) GetOrganizationName() string {
+	if l == nil || l.OrganizationName == nil {
+		return ""
+	}
+	return *l.OrganizationName
+}
+
+// GetScope returns the Scope field if it's non-nil, zero value otherwise.
+func (l *Log) GetScope() string {
+	if l == nil || l.Scope == nil {
+		return ""
+	}
+	return *l.Scope
+}
+
+// GetStrategy returns the Strategy field if it's non-nil, zero value otherwise.
+func (l *Log) GetStrategy() string {
+	if l == nil || l.Strategy == nil {
+		return ""
+	}
+	return *l.Strategy
+}
+
+// GetStrategyType returns the StrategyType field if it's non-nil, zero value otherwise.
+func (l *Log) GetStrategyType() string {
+	if l == nil || l.StrategyType == nil {
+		return ""
+	}
+	return *l.StrategyType
 }
 
 // GetType returns the Type field if it's non-nil, zero value otherwise.
@@ -4642,12 +4722,28 @@ func (l *Log) GetType() string {
 	return *l.Type
 }
 
+// GetUserAgent returns the UserAgent field if it's non-nil, zero value otherwise.
+func (l *Log) GetUserAgent() string {
+	if l == nil || l.UserAgent == nil {
+		return ""
+	}
+	return *l.UserAgent
+}
+
 // GetUserID returns the UserID field if it's non-nil, zero value otherwise.
 func (l *Log) GetUserID() string {
 	if l == nil || l.UserID == nil {
 		return ""
 	}
 	return *l.UserID
+}
+
+// GetUserName returns the UserName field if it's non-nil, zero value otherwise.
+func (l *Log) GetUserName() string {
+	if l == nil || l.UserName == nil {
+		return ""
+	}
+	return *l.UserName
 }
 
 // String returns a string representation of Log.
