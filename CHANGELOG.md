@@ -1,5 +1,24 @@
 # Change Log
 
+<a name="v0.12.0"></a>
+
+## [v0.12.0](https://github.com/auth0/go-auth0/tree/v0.12.0) (2022-10-18)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.11.0...v0.12.0)
+
+### Added
+
+- Added `omitempty` json tag to `IdentityAPI` on `ConnectionOptionsAzureAD` ([#119](https://github.com/auth0/go-auth0/pull/119))
+- Added ability to retrieve the default `BrandingTheme` ([#122](https://github.com/auth0/go-auth0/pull/122))
+- Added missing fields to `Log` ([#115](https://github.com/auth0/go-auth0/pull/115))
+- Added `LastPasswordReset` to `User` ([#125](https://github.com/auth0/go-auth0/pull/125))
+
+### ⚠️Breaking Changes
+
+- Changed `ClientMetadata` to `*map[string]interface{}` in `Client` ([#120](https://github.com/auth0/go-auth0/pull/120))
+- Changed `BrandingTheme` fields from `int` to `float64` to increase precision ([#121](https://github.com/auth0/go-auth0/pull/121))
+
+
 <a name="v0.11.0"></a>
 
 ## [v0.11.0](https://github.com/auth0/go-auth0/tree/v0.11.0) (2022-10-07)
