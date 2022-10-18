@@ -8622,6 +8622,16 @@ func TestUser_GetLastLogin(tt *testing.T) {
 	u.GetLastLogin()
 }
 
+func TestUser_GetLastPasswordReset(tt *testing.T) {
+	var zeroValue time.Time
+	u := &User{LastPasswordReset: &zeroValue}
+	u.GetLastPasswordReset()
+	u = &User{}
+	u.GetLastPasswordReset()
+	u = nil
+	u.GetLastPasswordReset()
+}
+
 func TestUser_GetLocation(tt *testing.T) {
 	var zeroValue string
 	u := &User{Location: &zeroValue}

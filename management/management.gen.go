@@ -6788,6 +6788,14 @@ func (u *User) GetLastLogin() time.Time {
 	return *u.LastLogin
 }
 
+// GetLastPasswordReset returns the LastPasswordReset field if it's non-nil, zero value otherwise.
+func (u *User) GetLastPasswordReset() time.Time {
+	if u == nil || u.LastPasswordReset == nil {
+		return time.Time{}
+	}
+	return *u.LastPasswordReset
+}
+
 // GetLocation returns the Location field if it's non-nil, zero value otherwise.
 func (u *User) GetLocation() string {
 	if u == nil || u.Location == nil {
