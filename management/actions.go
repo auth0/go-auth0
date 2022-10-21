@@ -200,6 +200,21 @@ type ActionExecution struct {
 	UpdatedAt *time.Time `json:"updated_at"`
 }
 
+// ActionLogSessionFilter defines a filter for
+type ActionLogSessionFilter struct {
+	Key *string `json:"key,omitempty"`
+	Val *string `json:"val,omitempty"`
+}
+
+// ActionLogSession contains a presigned URL that can be used for tailing realtime
+// logs from Actions
+type ActionLogSession struct {
+	Url     *string    `json:"url,omitempty"`
+	Expires *time.Time `json:"expires,omitempty"`
+
+	Filters []ActionLogSessionFilter `json:"filters,omitempty"`
+}
+
 // ActionManager manages Auth0 Action resources.
 type ActionManager struct {
 	*Management
@@ -329,5 +344,13 @@ func (m *ActionManager) Test(id string, payload *ActionTestPayload, opts ...Requ
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_execution
 func (m *ActionManager) Execution(executionID string, opts ...RequestOption) (v *ActionExecution, err error) {
 	err = m.Request("GET", m.URI("actions", "executions", executionID), &v, opts...)
+	return
+}
+
+// Create a log session for tailing Actions logs.
+//
+// See: https://auth0.com/docs/api/management/v2/#!/Actions/post_actions_log_sessions
+func (m *ActionManager) LogSession(l *ActionLogSession, opts ...RequestOption) (err error) {
+	err = m.Request("POST", m.URI("actions", "log-sessions"), &l, opts...)
 	return
 }
