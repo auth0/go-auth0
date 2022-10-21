@@ -374,6 +374,62 @@ func TestActionList_String(t *testing.T) {
 	}
 }
 
+func TestActionLogSession_GetExpires(tt *testing.T) {
+	var zeroValue time.Time
+	a := &ActionLogSession{Expires: &zeroValue}
+	a.GetExpires()
+	a = &ActionLogSession{}
+	a.GetExpires()
+	a = nil
+	a.GetExpires()
+}
+
+func TestActionLogSession_GetUrl(tt *testing.T) {
+	var zeroValue string
+	a := &ActionLogSession{Url: &zeroValue}
+	a.GetUrl()
+	a = &ActionLogSession{}
+	a.GetUrl()
+	a = nil
+	a.GetUrl()
+}
+
+func TestActionLogSession_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ActionLogSession{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestActionLogSessionFilter_GetKey(tt *testing.T) {
+	var zeroValue string
+	a := &ActionLogSessionFilter{Key: &zeroValue}
+	a.GetKey()
+	a = &ActionLogSessionFilter{}
+	a.GetKey()
+	a = nil
+	a.GetKey()
+}
+
+func TestActionLogSessionFilter_GetVal(tt *testing.T) {
+	var zeroValue string
+	a := &ActionLogSessionFilter{Val: &zeroValue}
+	a.GetVal()
+	a = &ActionLogSessionFilter{}
+	a.GetVal()
+	a = nil
+	a.GetVal()
+}
+
+func TestActionLogSessionFilter_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ActionLogSessionFilter{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestActionSecret_GetName(tt *testing.T) {
 	var zeroValue string
 	a := &ActionSecret{Name: &zeroValue}

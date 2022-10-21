@@ -295,6 +295,48 @@ func (a *ActionList) String() string {
 	return Stringify(a)
 }
 
+// GetExpires returns the Expires field if it's non-nil, zero value otherwise.
+func (a *ActionLogSession) GetExpires() time.Time {
+	if a == nil || a.Expires == nil {
+		return time.Time{}
+	}
+	return *a.Expires
+}
+
+// GetUrl returns the Url field if it's non-nil, zero value otherwise.
+func (a *ActionLogSession) GetUrl() string {
+	if a == nil || a.Url == nil {
+		return ""
+	}
+	return *a.Url
+}
+
+// String returns a string representation of ActionLogSession.
+func (a *ActionLogSession) String() string {
+	return Stringify(a)
+}
+
+// GetKey returns the Key field if it's non-nil, zero value otherwise.
+func (a *ActionLogSessionFilter) GetKey() string {
+	if a == nil || a.Key == nil {
+		return ""
+	}
+	return *a.Key
+}
+
+// GetVal returns the Val field if it's non-nil, zero value otherwise.
+func (a *ActionLogSessionFilter) GetVal() string {
+	if a == nil || a.Val == nil {
+		return ""
+	}
+	return *a.Val
+}
+
+// String returns a string representation of ActionLogSessionFilter.
+func (a *ActionLogSessionFilter) String() string {
+	return Stringify(a)
+}
+
 // GetName returns the Name field if it's non-nil, zero value otherwise.
 func (a *ActionSecret) GetName() string {
 	if a == nil || a.Name == nil {
