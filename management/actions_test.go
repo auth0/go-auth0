@@ -251,7 +251,7 @@ func TestActionManager_LogSession(t *testing.T) {
 	err := m.Action.LogSession(expectedLogSession)
 
 	assert.NoError(t, err)
-	assert.Equal(t, *expectedLogSession.Url, "https://go-auth0-dev.eu.auth0.com/actions/log-sessions/tail?token=tkn_123")
+	assert.Equal(t, *expectedLogSession.URL, "https://go-auth0-dev.eu.auth0.com/actions/log-sessions/tail?token=tkn_123")
 	assert.NotEmpty(t, expectedLogSession.Expires)
 }
 

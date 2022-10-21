@@ -384,14 +384,14 @@ func TestActionLogSession_GetExpires(tt *testing.T) {
 	a.GetExpires()
 }
 
-func TestActionLogSession_GetUrl(tt *testing.T) {
+func TestActionLogSession_GetURL(tt *testing.T) {
 	var zeroValue string
-	a := &ActionLogSession{Url: &zeroValue}
-	a.GetUrl()
+	a := &ActionLogSession{URL: &zeroValue}
+	a.GetURL()
 	a = &ActionLogSession{}
-	a.GetUrl()
+	a.GetURL()
 	a = nil
-	a.GetUrl()
+	a.GetURL()
 }
 
 func TestActionLogSession_String(t *testing.T) {

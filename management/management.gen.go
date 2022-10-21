@@ -303,12 +303,12 @@ func (a *ActionLogSession) GetExpires() time.Time {
 	return *a.Expires
 }
 
-// GetUrl returns the Url field if it's non-nil, zero value otherwise.
-func (a *ActionLogSession) GetUrl() string {
-	if a == nil || a.Url == nil {
+// GetURL returns the URL field if it's non-nil, zero value otherwise.
+func (a *ActionLogSession) GetURL() string {
+	if a == nil || a.URL == nil {
 		return ""
 	}
-	return *a.Url
+	return *a.URL
 }
 
 // String returns a string representation of ActionLogSession.
