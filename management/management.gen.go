@@ -316,22 +316,6 @@ func (a *ActionLogSession) String() string {
 	return Stringify(a)
 }
 
-// GetKey returns the Key field if it's non-nil, zero value otherwise.
-func (a *ActionLogSessionFilter) GetKey() string {
-	if a == nil || a.Key == nil {
-		return ""
-	}
-	return *a.Key
-}
-
-// GetVal returns the Val field if it's non-nil, zero value otherwise.
-func (a *ActionLogSessionFilter) GetVal() string {
-	if a == nil || a.Val == nil {
-		return ""
-	}
-	return *a.Val
-}
-
 // String returns a string representation of ActionLogSessionFilter.
 func (a *ActionLogSessionFilter) String() string {
 	return Stringify(a)

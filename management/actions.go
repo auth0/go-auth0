@@ -202,8 +202,8 @@ type ActionExecution struct {
 
 // ActionLogSessionFilter defines a filter for the log session.
 type ActionLogSessionFilter struct {
-	Key *string `json:"key,omitempty"`
-	Val *string `json:"val,omitempty"`
+	Key string `json:"key"`
+	Val string `json:"val"`
 }
 
 // ActionLogSession contains a presigned URL that can be used for tailing realtime

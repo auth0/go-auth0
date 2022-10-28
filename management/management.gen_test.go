@@ -402,26 +402,6 @@ func TestActionLogSession_String(t *testing.T) {
 	}
 }
 
-func TestActionLogSessionFilter_GetKey(tt *testing.T) {
-	var zeroValue string
-	a := &ActionLogSessionFilter{Key: &zeroValue}
-	a.GetKey()
-	a = &ActionLogSessionFilter{}
-	a.GetKey()
-	a = nil
-	a.GetKey()
-}
-
-func TestActionLogSessionFilter_GetVal(tt *testing.T) {
-	var zeroValue string
-	a := &ActionLogSessionFilter{Val: &zeroValue}
-	a.GetVal()
-	a = &ActionLogSessionFilter{}
-	a.GetVal()
-	a = nil
-	a.GetVal()
-}
-
 func TestActionLogSessionFilter_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ActionLogSessionFilter{}

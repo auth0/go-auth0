@@ -243,8 +243,8 @@ func TestActionManager_LogSession(t *testing.T) {
 
 	expectedLogSession := &ActionLogSession{
 		Filters: []ActionLogSessionFilter{{
-			Key: auth0.String("action_id"),
-			Val: auth0.String("act_123"),
+			Key: "action_id",
+			Val: "act_123",
 		}},
 	}
 
