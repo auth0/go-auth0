@@ -238,6 +238,23 @@ func TestActionManager_Execution(t *testing.T) {
 	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
 
+func TestActionManager_LogSession(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	expectedLogSession := &ActionLogSession{
+		Filters: []ActionLogSessionFilter{{
+			Key: "action_id",
+			Val: "act_123",
+		}},
+	}
+
+	err := m.Action.LogSession(expectedLogSession)
+
+	assert.NoError(t, err)
+	assert.Equal(t, *expectedLogSession.URL, "https://go-auth0-dev.eu.auth0.com/actions/log-sessions/tail?token=tkn_123")
+	assert.NotEmpty(t, expectedLogSession.Expires)
+}
+
 func cleanupAction(t *testing.T, actionID string) {
 	t.Helper()
 

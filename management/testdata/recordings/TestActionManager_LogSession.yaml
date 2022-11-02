@@ -1,0 +1,22 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {}
+    form: {}
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Go-Auth0-SDK/latest
+    url: https://go-auth0-dev.eu.auth0.com/api/v2/actions/log-sessions
+    method: POST
+  response:
+    body: '{"url":"https://go-auth0-dev.eu.auth0.com/actions/log-sessions/tail?token=tkn_123","expires":"2022-10-21T16:48:15.576883302Z"}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status: 201 Created
+    code: 201
+    duration: 1ms
