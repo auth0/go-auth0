@@ -104,14 +104,14 @@ func TestEmailProviderJSON(t *testing.T) {
 				Name:               auth0.String("smtp"),
 				Enabled:            auth0.Bool(true),
 				DefaultFromAddress: auth0.String("accounts@example.com"),
-				Credentials: &EmailProviderCredentialsSmtp{
+				Credentials: &EmailProviderCredentialsSMTP{
 					SMTPHost: auth0.String("example.com"),
 					SMTPPort: auth0.Int(3000),
 					SMTPUser: auth0.String("user"),
 					SMTPPass: auth0.String("pass"),
 				},
-				Settings: &EmailProviderSettingsSmtp{
-					Headers: &EmailProviderSettingsSmtpHeaders{
+				Settings: &EmailProviderSettingsSMTP{
+					Headers: &EmailProviderSettingsSMTPHeaders{
 						XMCViewContentLink:   auth0.String("true"),
 						XSESConfigurationSet: auth0.String("example"),
 					},
@@ -146,7 +146,7 @@ func TestEmailProviderManager_Create(t *testing.T) {
 		Name:               auth0.String("smtp"),
 		Enabled:            auth0.Bool(true),
 		DefaultFromAddress: auth0.String("no-reply@example.com"),
-		Credentials: &EmailProviderCredentialsSmtp{
+		Credentials: &EmailProviderCredentialsSMTP{
 			SMTPHost: auth0.String("smtp.example.com"),
 			SMTPPort: auth0.Int(587),
 			SMTPUser: auth0.String("user"),
@@ -173,7 +173,7 @@ func TestEmailProviderManager_Read(t *testing.T) {
 	assert.Equal(t, expectedEmailProvider.GetName(), actualEmailProvider.GetName())
 	assert.Equal(t, expectedEmailProvider.GetEnabled(), actualEmailProvider.GetEnabled())
 	assert.Equal(t, expectedEmailProvider.GetDefaultFromAddress(), actualEmailProvider.GetDefaultFromAddress())
-	assert.IsType(t, &EmailProviderCredentialsSmtp{}, expectedEmailProvider.Credentials)
+	assert.IsType(t, &EmailProviderCredentialsSMTP{}, expectedEmailProvider.Credentials)
 }
 
 func TestEmailProviderManager_Update(t *testing.T) {
@@ -215,7 +215,7 @@ func givenAnEmailProvider(t *testing.T) *EmailProvider {
 		Name:               auth0.String("smtp"),
 		Enabled:            auth0.Bool(true),
 		DefaultFromAddress: auth0.String("no-reply@example.com"),
-		Credentials: &EmailProviderCredentialsSmtp{
+		Credentials: &EmailProviderCredentialsSMTP{
 			SMTPHost: auth0.String("smtp.example.com"),
 			SMTPPort: auth0.Int(587),
 			SMTPUser: auth0.String("user"),

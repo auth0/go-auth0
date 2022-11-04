@@ -5496,49 +5496,49 @@ func TestEmailProviderCredentialsSES_String(t *testing.T) {
 	}
 }
 
-func TestEmailProviderCredentialsSmtp_GetSMTPHost(tt *testing.T) {
+func TestEmailProviderCredentialsSMTP_GetSMTPHost(tt *testing.T) {
 	var zeroValue string
-	e := &EmailProviderCredentialsSmtp{SMTPHost: &zeroValue}
+	e := &EmailProviderCredentialsSMTP{SMTPHost: &zeroValue}
 	e.GetSMTPHost()
-	e = &EmailProviderCredentialsSmtp{}
+	e = &EmailProviderCredentialsSMTP{}
 	e.GetSMTPHost()
 	e = nil
 	e.GetSMTPHost()
 }
 
-func TestEmailProviderCredentialsSmtp_GetSMTPPass(tt *testing.T) {
+func TestEmailProviderCredentialsSMTP_GetSMTPPass(tt *testing.T) {
 	var zeroValue string
-	e := &EmailProviderCredentialsSmtp{SMTPPass: &zeroValue}
+	e := &EmailProviderCredentialsSMTP{SMTPPass: &zeroValue}
 	e.GetSMTPPass()
-	e = &EmailProviderCredentialsSmtp{}
+	e = &EmailProviderCredentialsSMTP{}
 	e.GetSMTPPass()
 	e = nil
 	e.GetSMTPPass()
 }
 
-func TestEmailProviderCredentialsSmtp_GetSMTPPort(tt *testing.T) {
+func TestEmailProviderCredentialsSMTP_GetSMTPPort(tt *testing.T) {
 	var zeroValue int
-	e := &EmailProviderCredentialsSmtp{SMTPPort: &zeroValue}
+	e := &EmailProviderCredentialsSMTP{SMTPPort: &zeroValue}
 	e.GetSMTPPort()
-	e = &EmailProviderCredentialsSmtp{}
+	e = &EmailProviderCredentialsSMTP{}
 	e.GetSMTPPort()
 	e = nil
 	e.GetSMTPPort()
 }
 
-func TestEmailProviderCredentialsSmtp_GetSMTPUser(tt *testing.T) {
+func TestEmailProviderCredentialsSMTP_GetSMTPUser(tt *testing.T) {
 	var zeroValue string
-	e := &EmailProviderCredentialsSmtp{SMTPUser: &zeroValue}
+	e := &EmailProviderCredentialsSMTP{SMTPUser: &zeroValue}
 	e.GetSMTPUser()
-	e = &EmailProviderCredentialsSmtp{}
+	e = &EmailProviderCredentialsSMTP{}
 	e.GetSMTPUser()
 	e = nil
 	e.GetSMTPUser()
 }
 
-func TestEmailProviderCredentialsSmtp_String(t *testing.T) {
+func TestEmailProviderCredentialsSMTP_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &EmailProviderCredentialsSmtp{}
+	v := &EmailProviderCredentialsSMTP{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -5638,44 +5638,44 @@ func TestEmailProviderSettingsSESMessage_String(t *testing.T) {
 	}
 }
 
-func TestEmailProviderSettingsSmtp_GetHeaders(tt *testing.T) {
-	e := &EmailProviderSettingsSmtp{}
+func TestEmailProviderSettingsSMTP_GetHeaders(tt *testing.T) {
+	e := &EmailProviderSettingsSMTP{}
 	e.GetHeaders()
 	e = nil
 	e.GetHeaders()
 }
 
-func TestEmailProviderSettingsSmtp_String(t *testing.T) {
+func TestEmailProviderSettingsSMTP_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &EmailProviderSettingsSmtp{}
+	v := &EmailProviderSettingsSMTP{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
 }
 
-func TestEmailProviderSettingsSmtpHeaders_GetXMCViewContentLink(tt *testing.T) {
+func TestEmailProviderSettingsSMTPHeaders_GetXMCViewContentLink(tt *testing.T) {
 	var zeroValue string
-	e := &EmailProviderSettingsSmtpHeaders{XMCViewContentLink: &zeroValue}
+	e := &EmailProviderSettingsSMTPHeaders{XMCViewContentLink: &zeroValue}
 	e.GetXMCViewContentLink()
-	e = &EmailProviderSettingsSmtpHeaders{}
+	e = &EmailProviderSettingsSMTPHeaders{}
 	e.GetXMCViewContentLink()
 	e = nil
 	e.GetXMCViewContentLink()
 }
 
-func TestEmailProviderSettingsSmtpHeaders_GetXSESConfigurationSet(tt *testing.T) {
+func TestEmailProviderSettingsSMTPHeaders_GetXSESConfigurationSet(tt *testing.T) {
 	var zeroValue string
-	e := &EmailProviderSettingsSmtpHeaders{XSESConfigurationSet: &zeroValue}
+	e := &EmailProviderSettingsSMTPHeaders{XSESConfigurationSet: &zeroValue}
 	e.GetXSESConfigurationSet()
-	e = &EmailProviderSettingsSmtpHeaders{}
+	e = &EmailProviderSettingsSMTPHeaders{}
 	e.GetXSESConfigurationSet()
 	e = nil
 	e.GetXSESConfigurationSet()
 }
 
-func TestEmailProviderSettingsSmtpHeaders_String(t *testing.T) {
+func TestEmailProviderSettingsSMTPHeaders_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &EmailProviderSettingsSmtpHeaders{}
+	v := &EmailProviderSettingsSMTPHeaders{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

@@ -4345,7 +4345,7 @@ func (e *EmailProviderCredentialsSES) String() string {
 }
 
 // GetSMTPHost returns the SMTPHost field if it's non-nil, zero value otherwise.
-func (e *EmailProviderCredentialsSmtp) GetSMTPHost() string {
+func (e *EmailProviderCredentialsSMTP) GetSMTPHost() string {
 	if e == nil || e.SMTPHost == nil {
 		return ""
 	}
@@ -4353,7 +4353,7 @@ func (e *EmailProviderCredentialsSmtp) GetSMTPHost() string {
 }
 
 // GetSMTPPass returns the SMTPPass field if it's non-nil, zero value otherwise.
-func (e *EmailProviderCredentialsSmtp) GetSMTPPass() string {
+func (e *EmailProviderCredentialsSMTP) GetSMTPPass() string {
 	if e == nil || e.SMTPPass == nil {
 		return ""
 	}
@@ -4361,7 +4361,7 @@ func (e *EmailProviderCredentialsSmtp) GetSMTPPass() string {
 }
 
 // GetSMTPPort returns the SMTPPort field if it's non-nil, zero value otherwise.
-func (e *EmailProviderCredentialsSmtp) GetSMTPPort() int {
+func (e *EmailProviderCredentialsSMTP) GetSMTPPort() int {
 	if e == nil || e.SMTPPort == nil {
 		return 0
 	}
@@ -4369,15 +4369,15 @@ func (e *EmailProviderCredentialsSmtp) GetSMTPPort() int {
 }
 
 // GetSMTPUser returns the SMTPUser field if it's non-nil, zero value otherwise.
-func (e *EmailProviderCredentialsSmtp) GetSMTPUser() string {
+func (e *EmailProviderCredentialsSMTP) GetSMTPUser() string {
 	if e == nil || e.SMTPUser == nil {
 		return ""
 	}
 	return *e.SMTPUser
 }
 
-// String returns a string representation of EmailProviderCredentialsSmtp.
-func (e *EmailProviderCredentialsSmtp) String() string {
+// String returns a string representation of EmailProviderCredentialsSMTP.
+func (e *EmailProviderCredentialsSMTP) String() string {
 	return Stringify(e)
 }
 
@@ -4455,20 +4455,20 @@ func (e *EmailProviderSettingsSESMessage) String() string {
 }
 
 // GetHeaders returns the Headers field.
-func (e *EmailProviderSettingsSmtp) GetHeaders() *EmailProviderSettingsSmtpHeaders {
+func (e *EmailProviderSettingsSMTP) GetHeaders() *EmailProviderSettingsSMTPHeaders {
 	if e == nil {
 		return nil
 	}
 	return e.Headers
 }
 
-// String returns a string representation of EmailProviderSettingsSmtp.
-func (e *EmailProviderSettingsSmtp) String() string {
+// String returns a string representation of EmailProviderSettingsSMTP.
+func (e *EmailProviderSettingsSMTP) String() string {
 	return Stringify(e)
 }
 
 // GetXMCViewContentLink returns the XMCViewContentLink field if it's non-nil, zero value otherwise.
-func (e *EmailProviderSettingsSmtpHeaders) GetXMCViewContentLink() string {
+func (e *EmailProviderSettingsSMTPHeaders) GetXMCViewContentLink() string {
 	if e == nil || e.XMCViewContentLink == nil {
 		return ""
 	}
@@ -4476,15 +4476,15 @@ func (e *EmailProviderSettingsSmtpHeaders) GetXMCViewContentLink() string {
 }
 
 // GetXSESConfigurationSet returns the XSESConfigurationSet field if it's non-nil, zero value otherwise.
-func (e *EmailProviderSettingsSmtpHeaders) GetXSESConfigurationSet() string {
+func (e *EmailProviderSettingsSMTPHeaders) GetXSESConfigurationSet() string {
 	if e == nil || e.XSESConfigurationSet == nil {
 		return ""
 	}
 	return *e.XSESConfigurationSet
 }
 
-// String returns a string representation of EmailProviderSettingsSmtpHeaders.
-func (e *EmailProviderSettingsSmtpHeaders) String() string {
+// String returns a string representation of EmailProviderSettingsSMTPHeaders.
+func (e *EmailProviderSettingsSMTPHeaders) String() string {
 	return Stringify(e)
 }
 

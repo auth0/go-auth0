@@ -21,8 +21,8 @@ const (
 	// EmailProviderMailgun constant.
 	EmailProviderMailgun = "mailgun"
 
-	// EmailProviderSmtp constant.
-	EmailProviderSmtp = "smtp"
+	// EmailProviderSMTP constant.
+	EmailProviderSMTP = "smtp"
 )
 
 // EmailProvider is used to configure Email Providers.
@@ -82,9 +82,9 @@ type EmailProviderCredentialsMailgun struct {
 	Region *string `json:"region,omitempty"`
 }
 
-// EmailProviderCredentialsSmtp represent the
+// EmailProviderCredentialsSMTP represent the
 // credentials required to use the smtp provider.
-type EmailProviderCredentialsSmtp struct {
+type EmailProviderCredentialsSMTP struct {
 	SMTPHost *string `json:"smtp_host,omitempty"`
 	SMTPPort *int    `json:"smtp_port,omitempty"`
 	SMTPUser *string `json:"smtp_user,omitempty"`
@@ -115,15 +115,15 @@ type EmailProviderSettingsSESMessage struct {
 	ConfigurationSetName *string `json:"configuration_set_name,omitempty"`
 }
 
-// EmailProviderSettingsSmtp are the provider
+// EmailProviderSettingsSMTP are the provider
 // specific settings used by the smtp provider.
-type EmailProviderSettingsSmtp struct {
-	Headers *EmailProviderSettingsSmtpHeaders `json:"headers,omitempty"`
+type EmailProviderSettingsSMTP struct {
+	Headers *EmailProviderSettingsSMTPHeaders `json:"headers,omitempty"`
 }
 
-// EmailProviderSettingsSmtpHeaders contains the
+// EmailProviderSettingsSMTPHeaders contains the
 // headers setting content for the smtp provider.
-type EmailProviderSettingsSmtpHeaders struct {
+type EmailProviderSettingsSMTPHeaders struct {
 	XMCViewContentLink   *string `json:"X-MC-ViewContentLink,omitempty"`
 	XSESConfigurationSet *string `json:"X-SES-Configuration-Set,omitempty"`
 }
@@ -194,9 +194,9 @@ func (ep *EmailProvider) UnmarshalJSON(b []byte) error {
 		credentials = &EmailProviderCredentialsMailgun{}
 		// No settings for mailgun.
 		settings = nil
-	case EmailProviderSmtp:
-		credentials = &EmailProviderCredentialsSmtp{}
-		settings = &EmailProviderSettingsSmtp{}
+	case EmailProviderSMTP:
+		credentials = &EmailProviderCredentialsSMTP{}
+		settings = &EmailProviderSettingsSMTP{}
 	case "":
 		credentials = nil
 		settings = nil
