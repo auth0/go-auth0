@@ -3,6 +3,7 @@ package management
 // Email is used to configure Email Providers.
 //
 // See: https://auth0.com/docs/customize/email
+// Deprecated: Use EmailProvider instead.
 type Email struct {
 	// The name of the email provider. Can be one of "mandrill", "sendgrid",
 	// "sparkpost", "ses" or "smtp".
@@ -19,6 +20,7 @@ type Email struct {
 }
 
 // EmailCredentials are used for authenticating Email Providers.
+// Deprecated: Use EmailProvider instead.
 type EmailCredentials struct {
 	// API User
 	APIUser *string `json:"api_user,omitempty"`
@@ -43,6 +45,7 @@ type EmailCredentials struct {
 }
 
 // EmailManager manages Auth0 Email resources.
+// Deprecated: Use EmailProviderManager instead.
 type EmailManager struct {
 	*Management
 }

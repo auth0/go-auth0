@@ -29,14 +29,14 @@ func TestEmailManager_Create(t *testing.T) {
 	assert.NoError(t, err)
 
 	t.Cleanup(func() {
-		cleanupEmailProvider(t)
+		cleanupEmail(t)
 	})
 }
 
 func TestEmailManager_Read(t *testing.T) {
 	setupHTTPRecordings(t)
 
-	expectedEmailProvider := givenAnEmailProvider(t)
+	expectedEmailProvider := givenAnEmail(t)
 
 	actualEmailProvider, err := m.Email.Read()
 
@@ -59,7 +59,7 @@ func TestEmailManager_Read(t *testing.T) {
 func TestEmailManager_Update(t *testing.T) {
 	setupHTTPRecordings(t)
 
-	emailProvider := givenAnEmailProvider(t)
+	emailProvider := givenAnEmail(t)
 
 	emailProvider.Enabled = auth0.Bool(false)
 	emailProvider.DefaultFromAddress = auth0.String("info@example.com")
@@ -77,7 +77,7 @@ func TestEmailManager_Update(t *testing.T) {
 func TestEmailManager_Delete(t *testing.T) {
 	setupHTTPRecordings(t)
 
-	givenAnEmailProvider(t)
+	givenAnEmail(t)
 
 	err := m.Email.Delete()
 	assert.NoError(t, err)
@@ -88,7 +88,7 @@ func TestEmailManager_Delete(t *testing.T) {
 	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
 
-func givenAnEmailProvider(t *testing.T) *Email {
+func givenAnEmail(t *testing.T) *Email {
 	t.Helper()
 
 	emailProvider := &Email{
@@ -111,13 +111,13 @@ func givenAnEmailProvider(t *testing.T) *Email {
 	}
 
 	t.Cleanup(func() {
-		cleanupEmailProvider(t)
+		cleanupEmail(t)
 	})
 
 	return emailProvider
 }
 
-func cleanupEmailProvider(t *testing.T) {
+func cleanupEmail(t *testing.T) {
 	t.Helper()
 
 	err := m.Email.Delete()

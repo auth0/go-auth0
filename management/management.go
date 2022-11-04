@@ -54,6 +54,7 @@ type Management struct {
 	RuleConfig *RuleConfigManager
 
 	// Email manages Auth0 Email Providers.
+	// Deprecated: Use EmailProvider instead.
 	Email *EmailManager
 
 	// EmailTemplate manages Auth0 Email Templates.
