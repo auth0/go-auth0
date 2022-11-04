@@ -98,7 +98,7 @@ type EmailProviderSettingsMandrill struct {
 }
 
 // EmailProviderSettingsMandrillMessage contains the
-// message setting content for the mandrill provider.
+// message settings content for the mandrill provider.
 type EmailProviderSettingsMandrillMessage struct {
 	ViewContentLink *bool `json:"view_content_link,omitempty"`
 }
