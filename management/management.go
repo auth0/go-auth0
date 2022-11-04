@@ -105,6 +105,9 @@ type Management struct {
 	// BrandingTheme manages Auth0 Branding Themes.
 	BrandingTheme *BrandingThemeManager
 
+	// EmailProvider manages Auth0 Email Providers.
+	EmailProvider *EmailProviderManager
+
 	url         *url.URL
 	basePath    string
 	userAgent   string
@@ -179,6 +182,7 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.Organization = newOrganizationManager(m)
 	m.AttackProtection = newAttackProtectionManager(m)
 	m.BrandingTheme = newBrandingThemeManager(m)
+	m.EmailProvider = newEmailProviderManager(m)
 
 	return m, nil
 }
