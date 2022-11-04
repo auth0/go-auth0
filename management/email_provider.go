@@ -43,7 +43,7 @@ type EmailProvider struct {
 	// Credentials required to use the provider.
 	Credentials interface{} `json:"-"`
 
-	// Specific provider setting.
+	// Specific provider settings.
 	Settings interface{} `json:"-"`
 }
 
