@@ -11,6 +11,8 @@ import (
 const (
 	// ConnectionStrategyAuth0 constant.
 	ConnectionStrategyAuth0 = "auth0"
+	// ConnectionStrategyOkta constant.
+	ConnectionStrategyOkta = "okta"
 	// ConnectionStrategyGoogleOAuth2 constant.
 	ConnectionStrategyGoogleOAuth2 = "google-oauth2"
 	// ConnectionStrategyFacebook constant.
@@ -111,7 +113,7 @@ type Connection struct {
 	//  "salesforce", "samlp", "sharepoint", "shopify", "sms", "soundcloud",
 	// "thecity-sandbox", "thecity", "thirtysevensignals", "twitter", "untappd",
 	//  "vkontakte", "waad", "weibo", "windowslive", "wordpress", "yahoo",
-	// "yammer" or "yandex".
+	// "yammer", "okta" or "yandex".
 	Strategy *string `json:"strategy,omitempty"`
 
 	// True if the connection is domain level
@@ -181,6 +183,8 @@ func (c *Connection) UnmarshalJSON(b []byte) error {
 		switch *c.Strategy {
 		case ConnectionStrategyAuth0:
 			v = &ConnectionOptions{}
+		case ConnectionStrategyOkta:
+			v = &ConnectionOptionsOkta{}
 		case ConnectionStrategyGoogleOAuth2:
 			v = &ConnectionOptionsGoogleOAuth2{}
 		case ConnectionStrategyFacebook:
@@ -296,6 +300,48 @@ type ConnectionOptions struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 
 	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
+}
+
+// ConnectionOptionsOkta is used to configure an Okta Workforce Connection.
+type ConnectionOptionsOkta struct {
+	ClientID              *string                `json:"client_id,omitempty"`
+	ClientSecret          *string                `json:"client_secret,omitempty"`
+	Domain                *string                `json:"domain,omitempty"`
+	DomainAliases         *[]string              `json:"domain_aliases,omitempty"`
+	AuthorizationEndpoint *string                `json:"authorization_endpoint"`
+	Issuer                *string                `json:"issuer"`
+	JWKSURI               *string                `json:"jwks_uri"`
+	UserInfoEndpoint      *string                `json:"userinfo_endpoint"`
+	TokenEndpoint         *string                `json:"token_endpoint"`
+	Scope                 *string                `json:"scope,omitempty"`
+	SetUserAttributes     *string                `json:"set_user_root_attributes,omitempty"`
+	NonPersistentAttrs    *[]string              `json:"non_persistent_attrs,omitempty"`
+	UpstreamParams        map[string]interface{} `json:"upstream_params,omitempty"`
+}
+
+// Scopes returns the scopes for ConnectionOptionsOkta.
+func (c *ConnectionOptionsOkta) Scopes() []string {
+	return strings.Fields(c.GetScope())
+}
+
+// SetScopes sets the scopes for ConnectionOptionsOkta.
+func (c *ConnectionOptionsOkta) SetScopes(enable bool, scopes ...string) {
+	scopeMap := make(map[string]bool)
+	for _, scope := range c.Scopes() {
+		scopeMap[scope] = true
+	}
+	for _, scope := range scopes {
+		scopeMap[scope] = enable
+	}
+	scopeSlice := make([]string, 0, len(scopeMap))
+	for scope, enabled := range scopeMap {
+		if enabled {
+			scopeSlice = append(scopeSlice, scope)
+		}
+	}
+	sort.Strings(scopeSlice)
+	scope := strings.Join(scopeSlice, " ")
+	c.Scope = &scope
 }
 
 // ConnectionOptionsGoogleOAuth2 is used to configure a GoogleOAuth2 Connection.

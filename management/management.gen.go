@@ -3278,6 +3278,107 @@ func (c *ConnectionOptionsOIDC) String() string {
 	return Stringify(c)
 }
 
+// GetAuthorizationEndpoint returns the AuthorizationEndpoint field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetAuthorizationEndpoint() string {
+	if c == nil || c.AuthorizationEndpoint == nil {
+		return ""
+	}
+	return *c.AuthorizationEndpoint
+}
+
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetClientID() string {
+	if c == nil || c.ClientID == nil {
+		return ""
+	}
+	return *c.ClientID
+}
+
+// GetClientSecret returns the ClientSecret field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetClientSecret() string {
+	if c == nil || c.ClientSecret == nil {
+		return ""
+	}
+	return *c.ClientSecret
+}
+
+// GetDomain returns the Domain field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetDomain() string {
+	if c == nil || c.Domain == nil {
+		return ""
+	}
+	return *c.Domain
+}
+
+// GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetDomainAliases() []string {
+	if c == nil || c.DomainAliases == nil {
+		return nil
+	}
+	return *c.DomainAliases
+}
+
+// GetIssuer returns the Issuer field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetIssuer() string {
+	if c == nil || c.Issuer == nil {
+		return ""
+	}
+	return *c.Issuer
+}
+
+// GetJWKSURI returns the JWKSURI field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetJWKSURI() string {
+	if c == nil || c.JWKSURI == nil {
+		return ""
+	}
+	return *c.JWKSURI
+}
+
+// GetNonPersistentAttrs returns the NonPersistentAttrs field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetNonPersistentAttrs() []string {
+	if c == nil || c.NonPersistentAttrs == nil {
+		return nil
+	}
+	return *c.NonPersistentAttrs
+}
+
+// GetScope returns the Scope field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetScope() string {
+	if c == nil || c.Scope == nil {
+		return ""
+	}
+	return *c.Scope
+}
+
+// GetSetUserAttributes returns the SetUserAttributes field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetSetUserAttributes() string {
+	if c == nil || c.SetUserAttributes == nil {
+		return ""
+	}
+	return *c.SetUserAttributes
+}
+
+// GetTokenEndpoint returns the TokenEndpoint field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetTokenEndpoint() string {
+	if c == nil || c.TokenEndpoint == nil {
+		return ""
+	}
+	return *c.TokenEndpoint
+}
+
+// GetUserInfoEndpoint returns the UserInfoEndpoint field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetUserInfoEndpoint() string {
+	if c == nil || c.UserInfoEndpoint == nil {
+		return ""
+	}
+	return *c.UserInfoEndpoint
+}
+
+// String returns a string representation of ConnectionOptionsOkta.
+func (c *ConnectionOptionsOkta) String() string {
+	return Stringify(c)
+}
+
 // GetLength returns the Length field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOTP) GetLength() int {
 	if c == nil || c.Length == nil {

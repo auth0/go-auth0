@@ -322,6 +322,27 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			},
 		},
 	},
+	{
+		name: "Okta Connection",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Okta-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("okta"),
+		},
+		options: &ConnectionOptionsOkta{
+			ClientID:              auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+			ClientSecret:          auth0.String("mySecret"),
+			Scope:                 auth0.String("openid"),
+			Domain:                auth0.String("domain.okta.com"),
+			Issuer:                auth0.String("https://example.com"),
+			AuthorizationEndpoint: auth0.String("https://example.com"),
+			JWKSURI:               auth0.String("https://example.com/jwks"),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
+	},
 }
 
 type connectionTestCase struct {
@@ -405,8 +426,10 @@ func TestConnectionManager_ReadByName(t *testing.T) {
 func TestConnectionManager_Update(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully update a "+testCase.name, func(t *testing.T) {
-			if testCase.connection.GetStrategy() == "oidc" || testCase.connection.GetStrategy() == "samlp" {
-				t.Skip("Skipping because we can't create an oidc or samlp connection with no options")
+			if testCase.connection.GetStrategy() == "oidc" ||
+				testCase.connection.GetStrategy() == "samlp" ||
+				testCase.connection.GetStrategy() == "okta" {
+				t.Skip("Skipping because we can't create an oidc, okta or samlp connection with no options")
 			}
 
 			setupHTTPRecordings(t)
@@ -477,8 +500,18 @@ func TestConnectionOptionsScopes(t *testing.T) {
 		assert.Equal(t, []string{"bar"}, options.Scopes())
 	})
 
-	t.Run("It can successfully set the scopes on the options of a OAuth2 connection", func(t *testing.T) {
+	t.Run("It can successfully set the scopes on the options of an OAuth2 connection", func(t *testing.T) {
 		options := &ConnectionOptionsOAuth2{}
+
+		options.SetScopes(true, "foo", "bar", "baz")
+		assert.Equal(t, []string{"bar", "baz", "foo"}, options.Scopes())
+
+		options.SetScopes(false, "foo", "baz")
+		assert.Equal(t, []string{"bar"}, options.Scopes())
+	})
+
+	t.Run("It can successfully set the scopes on the options of an Okta connection", func(t *testing.T) {
+		options := &ConnectionOptionsOkta{}
 
 		options.SetScopes(true, "foo", "bar", "baz")
 		assert.Equal(t, []string{"bar", "baz", "foo"}, options.Scopes())

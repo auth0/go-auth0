@@ -4150,6 +4150,134 @@ func TestConnectionOptionsOIDC_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptionsOkta_GetAuthorizationEndpoint(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{AuthorizationEndpoint: &zeroValue}
+	c.GetAuthorizationEndpoint()
+	c = &ConnectionOptionsOkta{}
+	c.GetAuthorizationEndpoint()
+	c = nil
+	c.GetAuthorizationEndpoint()
+}
+
+func TestConnectionOptionsOkta_GetClientID(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{ClientID: &zeroValue}
+	c.GetClientID()
+	c = &ConnectionOptionsOkta{}
+	c.GetClientID()
+	c = nil
+	c.GetClientID()
+}
+
+func TestConnectionOptionsOkta_GetClientSecret(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{ClientSecret: &zeroValue}
+	c.GetClientSecret()
+	c = &ConnectionOptionsOkta{}
+	c.GetClientSecret()
+	c = nil
+	c.GetClientSecret()
+}
+
+func TestConnectionOptionsOkta_GetDomain(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{Domain: &zeroValue}
+	c.GetDomain()
+	c = &ConnectionOptionsOkta{}
+	c.GetDomain()
+	c = nil
+	c.GetDomain()
+}
+
+func TestConnectionOptionsOkta_GetDomainAliases(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsOkta{DomainAliases: &zeroValue}
+	c.GetDomainAliases()
+	c = &ConnectionOptionsOkta{}
+	c.GetDomainAliases()
+	c = nil
+	c.GetDomainAliases()
+}
+
+func TestConnectionOptionsOkta_GetIssuer(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{Issuer: &zeroValue}
+	c.GetIssuer()
+	c = &ConnectionOptionsOkta{}
+	c.GetIssuer()
+	c = nil
+	c.GetIssuer()
+}
+
+func TestConnectionOptionsOkta_GetJWKSURI(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{JWKSURI: &zeroValue}
+	c.GetJWKSURI()
+	c = &ConnectionOptionsOkta{}
+	c.GetJWKSURI()
+	c = nil
+	c.GetJWKSURI()
+}
+
+func TestConnectionOptionsOkta_GetNonPersistentAttrs(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsOkta{NonPersistentAttrs: &zeroValue}
+	c.GetNonPersistentAttrs()
+	c = &ConnectionOptionsOkta{}
+	c.GetNonPersistentAttrs()
+	c = nil
+	c.GetNonPersistentAttrs()
+}
+
+func TestConnectionOptionsOkta_GetScope(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{Scope: &zeroValue}
+	c.GetScope()
+	c = &ConnectionOptionsOkta{}
+	c.GetScope()
+	c = nil
+	c.GetScope()
+}
+
+func TestConnectionOptionsOkta_GetSetUserAttributes(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{SetUserAttributes: &zeroValue}
+	c.GetSetUserAttributes()
+	c = &ConnectionOptionsOkta{}
+	c.GetSetUserAttributes()
+	c = nil
+	c.GetSetUserAttributes()
+}
+
+func TestConnectionOptionsOkta_GetTokenEndpoint(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{TokenEndpoint: &zeroValue}
+	c.GetTokenEndpoint()
+	c = &ConnectionOptionsOkta{}
+	c.GetTokenEndpoint()
+	c = nil
+	c.GetTokenEndpoint()
+}
+
+func TestConnectionOptionsOkta_GetUserInfoEndpoint(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{UserInfoEndpoint: &zeroValue}
+	c.GetUserInfoEndpoint()
+	c = &ConnectionOptionsOkta{}
+	c.GetUserInfoEndpoint()
+	c = nil
+	c.GetUserInfoEndpoint()
+}
+
+func TestConnectionOptionsOkta_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsOkta{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestConnectionOptionsOTP_GetLength(tt *testing.T) {
 	var zeroValue int
 	c := &ConnectionOptionsOTP{Length: &zeroValue}
