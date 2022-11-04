@@ -110,7 +110,7 @@ type EmailProviderSettingsSES struct {
 }
 
 // EmailProviderSettingsSESMessage contains the
-// message setting content for the ses provider.
+// message settings content for the ses provider.
 type EmailProviderSettingsSESMessage struct {
 	ConfigurationSetName *string `json:"configuration_set_name,omitempty"`
 }
