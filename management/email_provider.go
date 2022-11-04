@@ -122,7 +122,7 @@ type EmailProviderSettingsSMTP struct {
 }
 
 // EmailProviderSettingsSMTPHeaders contains the
-// headers setting content for the smtp provider.
+// headers settings content for the smtp provider.
 type EmailProviderSettingsSMTPHeaders struct {
 	XMCViewContentLink   *string `json:"X-MC-ViewContentLink,omitempty"`
 	XSESConfigurationSet *string `json:"X-SES-Configuration-Set,omitempty"`
