@@ -128,15 +128,16 @@ type EmailProviderSettingsSMTPHeaders struct {
 	XSESConfigurationSet *string `json:"X-SES-Configuration-Set,omitempty"`
 }
 
+type emailProvider EmailProvider
+
+type emailProviderWrapper struct {
+	*emailProvider
+	RawCredentials json.RawMessage `json:"credentials,omitempty"`
+	RawSettings    json.RawMessage `json:"settings,omitempty"`
+}
+
 // MarshalJSON is a custom serializer for the EmailProvider type.
 func (ep *EmailProvider) MarshalJSON() ([]byte, error) {
-	type emailProvider EmailProvider
-	type emailProviderWrapper struct {
-		*emailProvider
-		RawCredentials json.RawMessage `json:"credentials,omitempty"`
-		RawSettings    json.RawMessage `json:"settings,omitempty"`
-	}
-
 	wrapper := &emailProviderWrapper{(*emailProvider)(ep), nil, nil}
 
 	if ep.Credentials != nil {
@@ -160,13 +161,6 @@ func (ep *EmailProvider) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON is a custom deserializer for the EmailProvider type.
 func (ep *EmailProvider) UnmarshalJSON(b []byte) error {
-	type emailProvider EmailProvider
-	type emailProviderWrapper struct {
-		*emailProvider
-		RawCredentials json.RawMessage `json:"credentials,omitempty"`
-		RawSettings    json.RawMessage `json:"settings,omitempty"`
-	}
-
 	wrapper := &emailProviderWrapper{(*emailProvider)(ep), nil, nil}
 
 	if err := json.Unmarshal(b, wrapper); err != nil {
