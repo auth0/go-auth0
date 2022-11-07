@@ -1,5 +1,22 @@
 # Change Log
 
+<a name="v0.13.0"></a>
+
+## [v0.13.0](https://github.com/auth0/go-auth0/tree/v0.13.0) (2022-11-07)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.12.0...v0.13.0)
+
+### Added
+
+- Added support for creating action log sessions ([#127](https://github.com/auth0/go-auth0/pull/127))
+- Added new email provider manager ([#129](https://github.com/auth0/go-auth0/pull/129))
+- Added support for Okta connection ([#130](https://github.com/auth0/go-auth0/pull/130))
+
+### Deprecated
+
+- Deprecated email manager ([#129](https://github.com/auth0/go-auth0/pull/129))
+
+
 <a name="v0.12.0"></a>
 
 ## [v0.12.0](https://github.com/auth0/go-auth0/tree/v0.12.0) (2022-10-18)
