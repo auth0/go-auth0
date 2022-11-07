@@ -5346,6 +5346,341 @@ func TestEmailCredentials_String(t *testing.T) {
 	}
 }
 
+func TestEmailProvider_GetDefaultFromAddress(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProvider{DefaultFromAddress: &zeroValue}
+	e.GetDefaultFromAddress()
+	e = &EmailProvider{}
+	e.GetDefaultFromAddress()
+	e = nil
+	e.GetDefaultFromAddress()
+}
+
+func TestEmailProvider_GetEnabled(tt *testing.T) {
+	var zeroValue bool
+	e := &EmailProvider{Enabled: &zeroValue}
+	e.GetEnabled()
+	e = &EmailProvider{}
+	e.GetEnabled()
+	e = nil
+	e.GetEnabled()
+}
+
+func TestEmailProvider_GetName(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProvider{Name: &zeroValue}
+	e.GetName()
+	e = &EmailProvider{}
+	e.GetName()
+	e = nil
+	e.GetName()
+}
+
+func TestEmailProvider_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProvider{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderCredentialsMailgun_GetAPIKey(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsMailgun{APIKey: &zeroValue}
+	e.GetAPIKey()
+	e = &EmailProviderCredentialsMailgun{}
+	e.GetAPIKey()
+	e = nil
+	e.GetAPIKey()
+}
+
+func TestEmailProviderCredentialsMailgun_GetDomain(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsMailgun{Domain: &zeroValue}
+	e.GetDomain()
+	e = &EmailProviderCredentialsMailgun{}
+	e.GetDomain()
+	e = nil
+	e.GetDomain()
+}
+
+func TestEmailProviderCredentialsMailgun_GetRegion(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsMailgun{Region: &zeroValue}
+	e.GetRegion()
+	e = &EmailProviderCredentialsMailgun{}
+	e.GetRegion()
+	e = nil
+	e.GetRegion()
+}
+
+func TestEmailProviderCredentialsMailgun_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderCredentialsMailgun{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderCredentialsMandrill_GetAPIKey(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsMandrill{APIKey: &zeroValue}
+	e.GetAPIKey()
+	e = &EmailProviderCredentialsMandrill{}
+	e.GetAPIKey()
+	e = nil
+	e.GetAPIKey()
+}
+
+func TestEmailProviderCredentialsMandrill_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderCredentialsMandrill{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderCredentialsSendGrid_GetAPIKey(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsSendGrid{APIKey: &zeroValue}
+	e.GetAPIKey()
+	e = &EmailProviderCredentialsSendGrid{}
+	e.GetAPIKey()
+	e = nil
+	e.GetAPIKey()
+}
+
+func TestEmailProviderCredentialsSendGrid_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderCredentialsSendGrid{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderCredentialsSES_GetAccessKeyID(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsSES{AccessKeyID: &zeroValue}
+	e.GetAccessKeyID()
+	e = &EmailProviderCredentialsSES{}
+	e.GetAccessKeyID()
+	e = nil
+	e.GetAccessKeyID()
+}
+
+func TestEmailProviderCredentialsSES_GetRegion(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsSES{Region: &zeroValue}
+	e.GetRegion()
+	e = &EmailProviderCredentialsSES{}
+	e.GetRegion()
+	e = nil
+	e.GetRegion()
+}
+
+func TestEmailProviderCredentialsSES_GetSecretAccessKey(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsSES{SecretAccessKey: &zeroValue}
+	e.GetSecretAccessKey()
+	e = &EmailProviderCredentialsSES{}
+	e.GetSecretAccessKey()
+	e = nil
+	e.GetSecretAccessKey()
+}
+
+func TestEmailProviderCredentialsSES_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderCredentialsSES{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderCredentialsSMTP_GetSMTPHost(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsSMTP{SMTPHost: &zeroValue}
+	e.GetSMTPHost()
+	e = &EmailProviderCredentialsSMTP{}
+	e.GetSMTPHost()
+	e = nil
+	e.GetSMTPHost()
+}
+
+func TestEmailProviderCredentialsSMTP_GetSMTPPass(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsSMTP{SMTPPass: &zeroValue}
+	e.GetSMTPPass()
+	e = &EmailProviderCredentialsSMTP{}
+	e.GetSMTPPass()
+	e = nil
+	e.GetSMTPPass()
+}
+
+func TestEmailProviderCredentialsSMTP_GetSMTPPort(tt *testing.T) {
+	var zeroValue int
+	e := &EmailProviderCredentialsSMTP{SMTPPort: &zeroValue}
+	e.GetSMTPPort()
+	e = &EmailProviderCredentialsSMTP{}
+	e.GetSMTPPort()
+	e = nil
+	e.GetSMTPPort()
+}
+
+func TestEmailProviderCredentialsSMTP_GetSMTPUser(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsSMTP{SMTPUser: &zeroValue}
+	e.GetSMTPUser()
+	e = &EmailProviderCredentialsSMTP{}
+	e.GetSMTPUser()
+	e = nil
+	e.GetSMTPUser()
+}
+
+func TestEmailProviderCredentialsSMTP_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderCredentialsSMTP{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderCredentialsSparkPost_GetAPIKey(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsSparkPost{APIKey: &zeroValue}
+	e.GetAPIKey()
+	e = &EmailProviderCredentialsSparkPost{}
+	e.GetAPIKey()
+	e = nil
+	e.GetAPIKey()
+}
+
+func TestEmailProviderCredentialsSparkPost_GetRegion(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsSparkPost{Region: &zeroValue}
+	e.GetRegion()
+	e = &EmailProviderCredentialsSparkPost{}
+	e.GetRegion()
+	e = nil
+	e.GetRegion()
+}
+
+func TestEmailProviderCredentialsSparkPost_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderCredentialsSparkPost{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderSettingsMandrill_GetMessage(tt *testing.T) {
+	e := &EmailProviderSettingsMandrill{}
+	e.GetMessage()
+	e = nil
+	e.GetMessage()
+}
+
+func TestEmailProviderSettingsMandrill_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderSettingsMandrill{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderSettingsMandrillMessage_GetViewContentLink(tt *testing.T) {
+	var zeroValue bool
+	e := &EmailProviderSettingsMandrillMessage{ViewContentLink: &zeroValue}
+	e.GetViewContentLink()
+	e = &EmailProviderSettingsMandrillMessage{}
+	e.GetViewContentLink()
+	e = nil
+	e.GetViewContentLink()
+}
+
+func TestEmailProviderSettingsMandrillMessage_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderSettingsMandrillMessage{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderSettingsSES_GetMessage(tt *testing.T) {
+	e := &EmailProviderSettingsSES{}
+	e.GetMessage()
+	e = nil
+	e.GetMessage()
+}
+
+func TestEmailProviderSettingsSES_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderSettingsSES{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderSettingsSESMessage_GetConfigurationSetName(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderSettingsSESMessage{ConfigurationSetName: &zeroValue}
+	e.GetConfigurationSetName()
+	e = &EmailProviderSettingsSESMessage{}
+	e.GetConfigurationSetName()
+	e = nil
+	e.GetConfigurationSetName()
+}
+
+func TestEmailProviderSettingsSESMessage_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderSettingsSESMessage{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderSettingsSMTP_GetHeaders(tt *testing.T) {
+	e := &EmailProviderSettingsSMTP{}
+	e.GetHeaders()
+	e = nil
+	e.GetHeaders()
+}
+
+func TestEmailProviderSettingsSMTP_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderSettingsSMTP{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderSettingsSMTPHeaders_GetXMCViewContentLink(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderSettingsSMTPHeaders{XMCViewContentLink: &zeroValue}
+	e.GetXMCViewContentLink()
+	e = &EmailProviderSettingsSMTPHeaders{}
+	e.GetXMCViewContentLink()
+	e = nil
+	e.GetXMCViewContentLink()
+}
+
+func TestEmailProviderSettingsSMTPHeaders_GetXSESConfigurationSet(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderSettingsSMTPHeaders{XSESConfigurationSet: &zeroValue}
+	e.GetXSESConfigurationSet()
+	e = &EmailProviderSettingsSMTPHeaders{}
+	e.GetXSESConfigurationSet()
+	e = nil
+	e.GetXSESConfigurationSet()
+}
+
+func TestEmailProviderSettingsSMTPHeaders_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderSettingsSMTPHeaders{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestEmailTemplate_GetBody(tt *testing.T) {
 	var zeroValue string
 	e := &EmailTemplate{Body: &zeroValue}

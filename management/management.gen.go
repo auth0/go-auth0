@@ -4231,6 +4231,263 @@ func (e *EmailCredentials) String() string {
 	return Stringify(e)
 }
 
+// GetDefaultFromAddress returns the DefaultFromAddress field if it's non-nil, zero value otherwise.
+func (e *EmailProvider) GetDefaultFromAddress() string {
+	if e == nil || e.DefaultFromAddress == nil {
+		return ""
+	}
+	return *e.DefaultFromAddress
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (e *EmailProvider) GetEnabled() bool {
+	if e == nil || e.Enabled == nil {
+		return false
+	}
+	return *e.Enabled
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (e *EmailProvider) GetName() string {
+	if e == nil || e.Name == nil {
+		return ""
+	}
+	return *e.Name
+}
+
+// String returns a string representation of EmailProvider.
+func (e *EmailProvider) String() string {
+	return Stringify(e)
+}
+
+// GetAPIKey returns the APIKey field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsMailgun) GetAPIKey() string {
+	if e == nil || e.APIKey == nil {
+		return ""
+	}
+	return *e.APIKey
+}
+
+// GetDomain returns the Domain field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsMailgun) GetDomain() string {
+	if e == nil || e.Domain == nil {
+		return ""
+	}
+	return *e.Domain
+}
+
+// GetRegion returns the Region field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsMailgun) GetRegion() string {
+	if e == nil || e.Region == nil {
+		return ""
+	}
+	return *e.Region
+}
+
+// String returns a string representation of EmailProviderCredentialsMailgun.
+func (e *EmailProviderCredentialsMailgun) String() string {
+	return Stringify(e)
+}
+
+// GetAPIKey returns the APIKey field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsMandrill) GetAPIKey() string {
+	if e == nil || e.APIKey == nil {
+		return ""
+	}
+	return *e.APIKey
+}
+
+// String returns a string representation of EmailProviderCredentialsMandrill.
+func (e *EmailProviderCredentialsMandrill) String() string {
+	return Stringify(e)
+}
+
+// GetAPIKey returns the APIKey field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsSendGrid) GetAPIKey() string {
+	if e == nil || e.APIKey == nil {
+		return ""
+	}
+	return *e.APIKey
+}
+
+// String returns a string representation of EmailProviderCredentialsSendGrid.
+func (e *EmailProviderCredentialsSendGrid) String() string {
+	return Stringify(e)
+}
+
+// GetAccessKeyID returns the AccessKeyID field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsSES) GetAccessKeyID() string {
+	if e == nil || e.AccessKeyID == nil {
+		return ""
+	}
+	return *e.AccessKeyID
+}
+
+// GetRegion returns the Region field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsSES) GetRegion() string {
+	if e == nil || e.Region == nil {
+		return ""
+	}
+	return *e.Region
+}
+
+// GetSecretAccessKey returns the SecretAccessKey field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsSES) GetSecretAccessKey() string {
+	if e == nil || e.SecretAccessKey == nil {
+		return ""
+	}
+	return *e.SecretAccessKey
+}
+
+// String returns a string representation of EmailProviderCredentialsSES.
+func (e *EmailProviderCredentialsSES) String() string {
+	return Stringify(e)
+}
+
+// GetSMTPHost returns the SMTPHost field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsSMTP) GetSMTPHost() string {
+	if e == nil || e.SMTPHost == nil {
+		return ""
+	}
+	return *e.SMTPHost
+}
+
+// GetSMTPPass returns the SMTPPass field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsSMTP) GetSMTPPass() string {
+	if e == nil || e.SMTPPass == nil {
+		return ""
+	}
+	return *e.SMTPPass
+}
+
+// GetSMTPPort returns the SMTPPort field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsSMTP) GetSMTPPort() int {
+	if e == nil || e.SMTPPort == nil {
+		return 0
+	}
+	return *e.SMTPPort
+}
+
+// GetSMTPUser returns the SMTPUser field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsSMTP) GetSMTPUser() string {
+	if e == nil || e.SMTPUser == nil {
+		return ""
+	}
+	return *e.SMTPUser
+}
+
+// String returns a string representation of EmailProviderCredentialsSMTP.
+func (e *EmailProviderCredentialsSMTP) String() string {
+	return Stringify(e)
+}
+
+// GetAPIKey returns the APIKey field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsSparkPost) GetAPIKey() string {
+	if e == nil || e.APIKey == nil {
+		return ""
+	}
+	return *e.APIKey
+}
+
+// GetRegion returns the Region field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsSparkPost) GetRegion() string {
+	if e == nil || e.Region == nil {
+		return ""
+	}
+	return *e.Region
+}
+
+// String returns a string representation of EmailProviderCredentialsSparkPost.
+func (e *EmailProviderCredentialsSparkPost) String() string {
+	return Stringify(e)
+}
+
+// GetMessage returns the Message field.
+func (e *EmailProviderSettingsMandrill) GetMessage() *EmailProviderSettingsMandrillMessage {
+	if e == nil {
+		return nil
+	}
+	return e.Message
+}
+
+// String returns a string representation of EmailProviderSettingsMandrill.
+func (e *EmailProviderSettingsMandrill) String() string {
+	return Stringify(e)
+}
+
+// GetViewContentLink returns the ViewContentLink field if it's non-nil, zero value otherwise.
+func (e *EmailProviderSettingsMandrillMessage) GetViewContentLink() bool {
+	if e == nil || e.ViewContentLink == nil {
+		return false
+	}
+	return *e.ViewContentLink
+}
+
+// String returns a string representation of EmailProviderSettingsMandrillMessage.
+func (e *EmailProviderSettingsMandrillMessage) String() string {
+	return Stringify(e)
+}
+
+// GetMessage returns the Message field.
+func (e *EmailProviderSettingsSES) GetMessage() *EmailProviderSettingsSESMessage {
+	if e == nil {
+		return nil
+	}
+	return e.Message
+}
+
+// String returns a string representation of EmailProviderSettingsSES.
+func (e *EmailProviderSettingsSES) String() string {
+	return Stringify(e)
+}
+
+// GetConfigurationSetName returns the ConfigurationSetName field if it's non-nil, zero value otherwise.
+func (e *EmailProviderSettingsSESMessage) GetConfigurationSetName() string {
+	if e == nil || e.ConfigurationSetName == nil {
+		return ""
+	}
+	return *e.ConfigurationSetName
+}
+
+// String returns a string representation of EmailProviderSettingsSESMessage.
+func (e *EmailProviderSettingsSESMessage) String() string {
+	return Stringify(e)
+}
+
+// GetHeaders returns the Headers field.
+func (e *EmailProviderSettingsSMTP) GetHeaders() *EmailProviderSettingsSMTPHeaders {
+	if e == nil {
+		return nil
+	}
+	return e.Headers
+}
+
+// String returns a string representation of EmailProviderSettingsSMTP.
+func (e *EmailProviderSettingsSMTP) String() string {
+	return Stringify(e)
+}
+
+// GetXMCViewContentLink returns the XMCViewContentLink field if it's non-nil, zero value otherwise.
+func (e *EmailProviderSettingsSMTPHeaders) GetXMCViewContentLink() string {
+	if e == nil || e.XMCViewContentLink == nil {
+		return ""
+	}
+	return *e.XMCViewContentLink
+}
+
+// GetXSESConfigurationSet returns the XSESConfigurationSet field if it's non-nil, zero value otherwise.
+func (e *EmailProviderSettingsSMTPHeaders) GetXSESConfigurationSet() string {
+	if e == nil || e.XSESConfigurationSet == nil {
+		return ""
+	}
+	return *e.XSESConfigurationSet
+}
+
+// String returns a string representation of EmailProviderSettingsSMTPHeaders.
+func (e *EmailProviderSettingsSMTPHeaders) String() string {
+	return Stringify(e)
+}
+
 // GetBody returns the Body field if it's non-nil, zero value otherwise.
 func (e *EmailTemplate) GetBody() string {
 	if e == nil || e.Body == nil {
