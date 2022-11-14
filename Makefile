@@ -28,3 +28,11 @@ test: ## Runs tests with http recordings
 generate: ## Generate management accessor methods
 	@echo "Generating management accessor methods..."
 	@go generate ./...
+
+$(GO_BIN)/govulncheck:
+	@go install -v golang.org/x/vuln/cmd/govulncheck@latest
+
+.PHONY: check-vuln
+check-vuln: $(GO_BIN)/govulncheck ## Check for vulnerabilities
+	@echo "Checking for vulnerabilities..."
+	@govulncheck -v ./...
