@@ -5296,6 +5296,43 @@ func (l *LogStreamSinkHTTP) String() string {
 	return Stringify(l)
 }
 
+// GetProjectID returns the ProjectID field if it's non-nil, zero value otherwise.
+func (l *LogStreamSinkMixpanel) GetProjectID() string {
+	if l == nil || l.ProjectID == nil {
+		return ""
+	}
+	return *l.ProjectID
+}
+
+// GetRegion returns the Region field if it's non-nil, zero value otherwise.
+func (l *LogStreamSinkMixpanel) GetRegion() string {
+	if l == nil || l.Region == nil {
+		return ""
+	}
+	return *l.Region
+}
+
+// GetServiceAccountPassword returns the ServiceAccountPassword field if it's non-nil, zero value otherwise.
+func (l *LogStreamSinkMixpanel) GetServiceAccountPassword() string {
+	if l == nil || l.ServiceAccountPassword == nil {
+		return ""
+	}
+	return *l.ServiceAccountPassword
+}
+
+// GetServiceAccountUsername returns the ServiceAccountUsername field if it's non-nil, zero value otherwise.
+func (l *LogStreamSinkMixpanel) GetServiceAccountUsername() string {
+	if l == nil || l.ServiceAccountUsername == nil {
+		return ""
+	}
+	return *l.ServiceAccountUsername
+}
+
+// String returns a string representation of LogStreamSinkMixpanel.
+func (l *LogStreamSinkMixpanel) String() string {
+	return Stringify(l)
+}
+
 // GetDomain returns the Domain field if it's non-nil, zero value otherwise.
 func (l *LogStreamSinkSplunk) GetDomain() string {
 	if l == nil || l.Domain == nil {

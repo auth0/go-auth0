@@ -1,0 +1,65 @@
+---
+version: 1
+interactions:
+    - request:
+        body: |
+            {"name":"Test-LogStream-1671019388","type":"mixpanel","sink":{"mixpanelRegion":"us","mixpanelProjectId":"123456789","mixpanelServiceAccountUsername":"fake-account.123abc.mp-service-account","mixpanelServiceAccountPassword":"8iwyKSzwV2brfakepassGGKhsZ3INozo"}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
+        method: POST
+      response:
+        body: '{"id":"lst_0000000000011192","name":"Test-LogStream-1671019388","type":"mixpanel","status":"active","sink":{"mixpanelRegion":"us","mixpanelProjectId":"123456789","mixpanelServiceAccountUsername":"fake-account.123abc.mp-service-account","mixpanelServiceAccountPassword":"********"}}'
+        headers:
+            Access-Control-Expose-Headers:
+                - WWW-Authenticate,Server-Authorization
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 1ms
+    - request:
+        body: |
+            null
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011192
+        method: GET
+      response:
+        body: '{"id":"lst_0000000000011192","name":"Test-LogStream-1671019388","type":"mixpanel","status":"active","sink":{"mixpanelRegion":"us","mixpanelProjectId":"123456789","mixpanelServiceAccountUsername":"fake-account.123abc.mp-service-account","mixpanelServiceAccountPassword":"********"}}'
+        headers:
+            Access-Control-Expose-Headers:
+                - WWW-Authenticate,Server-Authorization
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 1ms
+    - request:
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011192
+        method: DELETE
+      response:
+        body: ""
+        headers:
+            Access-Control-Expose-Headers:
+                - WWW-Authenticate,Server-Authorization
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 1ms
