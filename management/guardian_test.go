@@ -171,6 +171,27 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("Push", func(t *testing.T) {
+			t.Run("Provider", func(t *testing.T) {
+				setupHTTPRecordings(t)
+
+				initialProvider, err := m.Guardian.MultiFactor.Push.Provider()
+				assert.NoError(t, err)
+
+				t.Cleanup(func() {
+					err = m.Guardian.MultiFactor.Push.UpdateProvider(initialProvider)
+					assert.NoError(t, err)
+				})
+
+				expectedProvider := &MultiFactorProvider{Provider: auth0.String("sns")}
+
+				err = m.Guardian.MultiFactor.Push.UpdateProvider(expectedProvider)
+				assert.NoError(t, err)
+
+				actualProvider, err := m.Guardian.MultiFactor.Push.Provider()
+				assert.NoError(t, err)
+				assert.Equal(t, expectedProvider, actualProvider)
+			})
+
 			t.Run("Enable", func(t *testing.T) {
 				setupHTTPRecordings(t)
 

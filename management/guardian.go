@@ -78,6 +78,13 @@ type MultiFactorProviderAmazonSNS struct {
 	GCMPlatformApplicationARN *string `json:"sns_gcm_platform_application_arn,omitempty"`
 }
 
+// MultiFactorPushCustomApp holds custom multi-factor authentication app settings.
+type MultiFactorPushCustomApp struct {
+	AppName       *string `json:"app_name,omitempty"`
+	AppleAppLink  *string `json:"apple_app_link,omitempty"`
+	GoogleAppLink *string `json:"google_app_link,omitempty"`
+}
+
 // MultiFactorProviderTwilio is used for Twilio MultiFactor Authentication.
 type MultiFactorProviderTwilio struct {
 	// From number
@@ -303,15 +310,10 @@ func (m *MultiFactorSMS) UpdateTwilio(t *MultiFactorProviderTwilio, opts ...Requ
 	return m.Request("PUT", m.URI("guardian", "factors", "sms", "providers", "twilio"), t, opts...)
 }
 
-// MultiFactorPushCustomApp holds custom multi-factor authentication app settings.
-type MultiFactorPushCustomApp struct {
-	AppName       *string `json:"app_name,omitempty"`
-	AppleAppLink  *string `json:"apple_app_link,omitempty"`
-	GoogleAppLink *string `json:"google_app_link,omitempty"`
-}
-
 // MultiFactorPush is used for Push MFA.
-type MultiFactorPush struct{ *Management }
+type MultiFactorPush struct {
+	*Management
+}
 
 // Enable enables or disables the Push Notification (via Auth0 Guardian)
 // Multi-factor Authentication.
@@ -321,6 +323,21 @@ func (m *MultiFactorPush) Enable(enabled bool, opts ...RequestOption) error {
 	return m.Request("PUT", m.URI("guardian", "factors", "push-notification"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
+}
+
+// Provider retrieves the Push Notification provider, one of ["guardian", "sns" or "direct"].
+//
+// See: https://auth0.com/docs/api/management/v2#!/Guardian/get_selected_provider_0
+func (m *MultiFactorPush) Provider(opts ...RequestOption) (p *MultiFactorProvider, err error) {
+	err = m.Request("GET", m.URI("guardian", "factors", "push-notification", "selected-provider"), &p, opts...)
+	return
+}
+
+// UpdateProvider updates the Push Notification provider, one of ["guardian", "sns" or "direct"].
+//
+// See: https://auth0.com/docs/api/management/v2#!/Guardian/put_selected_provider_0
+func (m *MultiFactorPush) UpdateProvider(p *MultiFactorProvider, opts ...RequestOption) error {
+	return m.Request("PUT", m.URI("guardian", "factors", "push-notification", "selected-provider"), &p, opts...)
 }
 
 // CustomApp retrieves the custom multi-factor authentication app's settings.
