@@ -1,5 +1,17 @@
 # Change Log
 
+<a name="v0.13.1"></a>
+
+## [v0.13.1](https://github.com/auth0/go-auth0/tree/v0.13.1) (2022-12-14)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.13.0...v0.13.1)
+
+### Added
+
+- Added `Provider()` and `UpdateProvider()` to MFA Push ([#136](https://github.com/auth0/go-auth0/pull/136))
+- Added Mixpanel `LogStream` ([#133](https://github.com/auth0/go-auth0/pull/133))
+
+
 <a name="v0.13.0"></a>
 
 ## [v0.13.0](https://github.com/auth0/go-auth0/tree/v0.13.0) (2022-11-07)
