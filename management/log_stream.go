@@ -17,6 +17,8 @@ const (
 	LogStreamTypeSplunk = "splunk"
 	// LogStreamTypeSumo constant.
 	LogStreamTypeSumo = "sumo"
+	// LogStreamTypeMixpanel constant.
+	LogStreamTypeMixpanel = "mixpanel"
 )
 
 // LogStream is used to export tenant log
@@ -98,6 +100,8 @@ func (ls *LogStream) UnmarshalJSON(b []byte) error {
 			v = &LogStreamSinkSplunk{}
 		case LogStreamTypeSumo:
 			v = &LogStreamSinkSumo{}
+		case LogStreamTypeMixpanel:
+			v = &LogStreamSinkMixpanel{}
 		default:
 			v = make(map[string]interface{})
 		}
@@ -173,6 +177,14 @@ type LogStreamSinkSplunk struct {
 type LogStreamSinkSumo struct {
 	// Sumo Source Address
 	SourceAddress *string `json:"sumoSourceAddress,omitempty"`
+}
+
+// LogStreamSinkMixpanel is used to export logs to Mixpanel.
+type LogStreamSinkMixpanel struct {
+	Region                 *string `json:"mixpanelRegion,omitempty"`
+	ProjectID              *string `json:"mixpanelProjectId,omitempty"`
+	ServiceAccountUsername *string `json:"mixpanelServiceAccountUsername,omitempty"`
+	ServiceAccountPassword *string `json:"mixpanelServiceAccountPassword,omitempty"`
 }
 
 // LogStreamManager manages Auth0 LogStream resources.

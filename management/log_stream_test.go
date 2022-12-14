@@ -82,6 +82,19 @@ var logStreamTestCases = []logStreamTestCase{
 			},
 		},
 	},
+	{
+		name: "Mixpanel LogStream",
+		logStream: LogStream{
+			Name: auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
+			Type: auth0.String(LogStreamTypeMixpanel),
+			Sink: &LogStreamSinkMixpanel{
+				Region:                 auth0.String("us"),
+				ProjectID:              auth0.String("123456789"),
+				ServiceAccountUsername: auth0.String("fake-account.123abc.mp-service-account"),
+				ServiceAccountPassword: auth0.String("8iwyKSzwV2brfakepassGGKhsZ3INozo"),
+			},
+		},
+	},
 }
 
 type logStreamTestCase struct {

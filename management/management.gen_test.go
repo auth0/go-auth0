@@ -6719,6 +6719,54 @@ func TestLogStreamSinkHTTP_String(t *testing.T) {
 	}
 }
 
+func TestLogStreamSinkMixpanel_GetProjectID(tt *testing.T) {
+	var zeroValue string
+	l := &LogStreamSinkMixpanel{ProjectID: &zeroValue}
+	l.GetProjectID()
+	l = &LogStreamSinkMixpanel{}
+	l.GetProjectID()
+	l = nil
+	l.GetProjectID()
+}
+
+func TestLogStreamSinkMixpanel_GetRegion(tt *testing.T) {
+	var zeroValue string
+	l := &LogStreamSinkMixpanel{Region: &zeroValue}
+	l.GetRegion()
+	l = &LogStreamSinkMixpanel{}
+	l.GetRegion()
+	l = nil
+	l.GetRegion()
+}
+
+func TestLogStreamSinkMixpanel_GetServiceAccountPassword(tt *testing.T) {
+	var zeroValue string
+	l := &LogStreamSinkMixpanel{ServiceAccountPassword: &zeroValue}
+	l.GetServiceAccountPassword()
+	l = &LogStreamSinkMixpanel{}
+	l.GetServiceAccountPassword()
+	l = nil
+	l.GetServiceAccountPassword()
+}
+
+func TestLogStreamSinkMixpanel_GetServiceAccountUsername(tt *testing.T) {
+	var zeroValue string
+	l := &LogStreamSinkMixpanel{ServiceAccountUsername: &zeroValue}
+	l.GetServiceAccountUsername()
+	l = &LogStreamSinkMixpanel{}
+	l.GetServiceAccountUsername()
+	l = nil
+	l.GetServiceAccountUsername()
+}
+
+func TestLogStreamSinkMixpanel_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &LogStreamSinkMixpanel{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestLogStreamSinkSplunk_GetDomain(tt *testing.T) {
 	var zeroValue string
 	l := &LogStreamSinkSplunk{Domain: &zeroValue}
