@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0"
 )
@@ -49,24 +50,35 @@ func TestJobManager_ImportUsers(t *testing.T) {
 	setupHTTPRecordings(t)
 
 	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	job := &Job{
 		ConnectionID:        conn.ID,
 		Upsert:              auth0.Bool(true),
 		SendCompletionEmail: auth0.Bool(false),
 		Users: []map[string]interface{}{
-			{"email": "auzironian@example.com", "email_verified": true},
+			{
+				"email":          "auzironian@example.com",
+				"email_verified": true,
+			},
 		},
 	}
 	err = m.Job.ImportUsers(job)
 	assert.NoError(t, err)
 
-	t.Cleanup(func() {
-		// The ListByEmail() endpoint is slow to pick up the newly created user,
-		// so we wait a second before executing the request.
-		time.Sleep(time.Second)
+	// Let's give the ImportUsers job enough time to complete,
+	// so we can ensure the Read Job has the summary field set.
+	time.Sleep(time.Second * 2)
 
+	actualJob, err := m.Job.Read(job.GetID())
+	assert.NoError(t, err)
+	assert.NotEmpty(t, actualJob.GetSummary())
+	assert.Equal(t, 0, actualJob.GetSummary().GetFailed())
+	assert.Equal(t, 0, actualJob.GetSummary().GetUpdated())
+	assert.Equal(t, 1, actualJob.GetSummary().GetInserted())
+	assert.Equal(t, 1, actualJob.GetSummary().GetTotal())
+
+	t.Cleanup(func() {
 		users, err := m.User.ListByEmail("auzironian@example.com")
 		assert.NoError(t, err)
 		assert.Len(t, users, 1)

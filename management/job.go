@@ -15,21 +15,19 @@ import (
 //
 // See: https://auth0.com/docs/manage-users/user-migration/bulk-user-imports
 type Job struct {
-	// The job's identifier. Useful to retrieve its status
+	// The job's identifier. Useful to retrieve its status.
 	ID *string `json:"id,omitempty"`
-	// The job's status
+	// The job's status.
 	Status *string `json:"status,omitempty"`
-	// The type of job
+	// The type of job.
 	Type *string `json:"type,omitempty"`
 	// The date when the job was created.
 	CreatedAt *time.Time `json:"created_at,omitempty"`
-
-	// The user_id of the user to whom the email will be sent
+	// The user_id of the user to whom the email will be sent.
 	UserID *string `json:"user_id,omitempty"`
-	// The id of the client, if not provided the global one will be used
+	// The ID of the client, if not provided the global one will be used.
 	ClientID *string `json:"client_id,omitempty"`
-
-	// The id of the connection.
+	// The ID of the connection.
 	ConnectionID *string `json:"connection_id,omitempty"`
 	// The url to download the result of the job.
 	Location *string `json:"location,omitempty"`
@@ -41,10 +39,9 @@ type Job struct {
 	Format *string `json:"format,omitempty"`
 	// Limit the number of records.
 	Limit *int `json:"limit,omitempty"`
-	// A list of fields to be included in the CSV. If omitted, a set of
-	// predefined fields will be exported.
+	// A list of fields to be included in the CSV. If omitted,
+	// a set of predefined fields will be exported.
 	Fields []map[string]interface{} `json:"fields,omitempty"`
-
 	// A list of users. Used when importing users in bulk.
 	Users []map[string]interface{} `json:"users,omitempty"`
 	// If false, users will only be inserted. If there are already user(s) with
@@ -59,6 +56,17 @@ type Job struct {
 	// finished. The default is true, so you must explicitly set this parameter
 	// to false if you do not want emails sent.
 	SendCompletionEmail *bool `json:"send_completion_email,omitempty"`
+	// If a job is completed, the job status response will include a summary.
+	Summary *JobSummary `json:"summary,omitempty"`
+}
+
+// JobSummary includes totals of successful,
+// failed, inserted, and updated records.
+type JobSummary struct {
+	Failed   *int `json:"failed,omitempty"`
+	Updated  *int `json:"updated,omitempty"`
+	Inserted *int `json:"inserted,omitempty"`
+	Total    *int `json:"total,omitempty"`
 }
 
 // JobManager manages Auth0 Job resources.
@@ -70,18 +78,18 @@ func newJobManager(m *Management) *JobManager {
 	return &JobManager{m}
 }
 
-// VerifyEmail sends an email to the specified user that asks them to
-// click a link to verify their email address.
-func (m *JobManager) VerifyEmail(j *Job, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("jobs", "verification-email"), j, opts...)
-}
-
 // Read retrieves a job. Useful to check its status.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Jobs/get_jobs_by_id
 func (m *JobManager) Read(id string, opts ...RequestOption) (j *Job, err error) {
-	err = m.Request("GET", m.URI("jobs", id), &j)
+	err = m.Request("GET", m.URI("jobs", id), &j, opts...)
 	return
+}
+
+// VerifyEmail sends an email to the specified user that asks them to
+// click a link to verify their email address.
+func (m *JobManager) VerifyEmail(j *Job, opts ...RequestOption) error {
+	return m.Request("POST", m.URI("jobs", "verification-email"), j, opts...)
 }
 
 // ExportUsers exports all users to a file via a long-running job.
