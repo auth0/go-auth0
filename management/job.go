@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"mime/multipart"
+	"net/http"
 	"net/textproto"
 	"strconv"
 	"time"
@@ -97,35 +98,65 @@ func (m *JobManager) ImportUsers(j *Job, opts ...RequestOption) error {
 	var payload bytes.Buffer
 	mp := multipart.NewWriter(&payload)
 
-	if j.ConnectionID != nil {
-		mp.WriteField("connection_id", *j.ConnectionID)
+	if err := mp.WriteField("connection_id", j.GetConnectionID()); err != nil {
+		return err
 	}
-	if j.Upsert != nil {
-		mp.WriteField("upsert", strconv.FormatBool(*j.Upsert))
+	if err := mp.WriteField("upsert", strconv.FormatBool(j.GetUpsert())); err != nil {
+		return err
 	}
-	if j.ExternalID != nil {
-		mp.WriteField("external_id", *j.ExternalID)
+	if err := mp.WriteField("external_id", j.GetExternalID()); err != nil {
+		return err
 	}
-	if j.SendCompletionEmail != nil {
-		mp.WriteField("send_completion_email", strconv.FormatBool(*j.SendCompletionEmail))
+	if err := mp.WriteField("send_completion_email", strconv.FormatBool(j.GetSendCompletionEmail())); err != nil {
+		return err
 	}
+
 	if j.Users != nil {
-		b, err := json.Marshal(j.Users)
+		usersJSON, err := json.Marshal(j.Users)
 		if err != nil {
 			return err
 		}
-		h := textproto.MIMEHeader{}
-		h.Set("Content-Disposition", `form-data; name="users"; filename="users.json"`)
-		h.Set("Content-Type", "application/json")
-		w, err := mp.CreatePart(h)
+
+		header := textproto.MIMEHeader{}
+		header.Set("Content-Disposition", `form-data; name="users"; filename="users.json"`)
+		header.Set("Content-Type", "application/json")
+
+		writer, err := mp.CreatePart(header)
 		if err != nil {
 			return err
 		}
-		w.Write(b)
+
+		if _, err := writer.Write(usersJSON); err != nil {
+			return err
+		}
 	}
-	mp.Close()
+	if err := mp.Close(); err != nil {
+		return err
+	}
 
-	opts = append(opts, Header("Content-Type", mp.FormDataContentType()))
+	request, err := http.NewRequest("POST", m.URI("jobs", "users-imports"), &payload)
+	if err != nil {
+		return err
+	}
+	request.Header.Add("Content-Type", mp.FormDataContentType())
 
-	return m.Request("POST", m.URI("jobs", "users-imports"), &payload, opts...)
+	for _, option := range opts {
+		option.apply(request)
+	}
+
+	response, err := m.Do(request)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= http.StatusBadRequest {
+		return newError(response)
+	}
+
+	if response.StatusCode != http.StatusNoContent {
+		return json.NewDecoder(response.Body).Decode(j)
+	}
+
+	return nil
 }
