@@ -86,3 +86,44 @@ func TestJobManager_ImportUsers(t *testing.T) {
 		cleanupUser(t, users[0].GetID())
 	})
 }
+
+func TestJobManager_ReadErrors(t *testing.T) {
+	setupHTTPRecordings(t)
+
+	alreadyExistingUser := givenAUser(t)
+	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
+	require.NoError(t, err)
+
+	job := &Job{
+		ConnectionID: conn.ID,
+		Users: []map[string]interface{}{
+			{
+				"email":          alreadyExistingUser.GetEmail(),
+				"email_verified": true,
+			},
+		},
+	}
+	err = m.Job.ImportUsers(job)
+	assert.NoError(t, err)
+
+	// Let's give the ImportUsers job enough time to complete.
+	time.Sleep(time.Second * 2)
+
+	expectedJobErrors := JobError{
+		User: map[string]interface{}{
+			"email":          alreadyExistingUser.GetEmail(),
+			"email_verified": true,
+		},
+		Errors: []JobUserErrors{
+			{
+				Code:    "DUPLICATED_USER",
+				Message: "The user already exist and upsert parameter is false",
+			},
+		},
+	}
+
+	actualJobErrors, err := m.Job.ReadErrors(job.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, actualJobErrors, 1)
+	assert.Equal(t, expectedJobErrors, actualJobErrors[0])
+}

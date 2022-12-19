@@ -6290,6 +6290,14 @@ func TestJob_String(t *testing.T) {
 	}
 }
 
+func TestJobError_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &JobError{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestJobSummary_GetFailed(tt *testing.T) {
 	var zeroValue int
 	j := &JobSummary{Failed: &zeroValue}
@@ -6333,6 +6341,14 @@ func TestJobSummary_GetUpdated(tt *testing.T) {
 func TestJobSummary_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &JobSummary{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestJobUserErrors_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &JobUserErrors{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
