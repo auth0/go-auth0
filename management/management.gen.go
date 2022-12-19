@@ -4920,6 +4920,14 @@ func (j *Job) GetStatus() string {
 	return *j.Status
 }
 
+// GetSummary returns the Summary field.
+func (j *Job) GetSummary() *JobSummary {
+	if j == nil {
+		return nil
+	}
+	return j.Summary
+}
+
 // GetTimeLeftSeconds returns the TimeLeftSeconds field if it's non-nil, zero value otherwise.
 func (j *Job) GetTimeLeftSeconds() int {
 	if j == nil || j.TimeLeftSeconds == nil {
@@ -4954,6 +4962,43 @@ func (j *Job) GetUserID() string {
 
 // String returns a string representation of Job.
 func (j *Job) String() string {
+	return Stringify(j)
+}
+
+// GetFailed returns the Failed field if it's non-nil, zero value otherwise.
+func (j *JobSummary) GetFailed() int {
+	if j == nil || j.Failed == nil {
+		return 0
+	}
+	return *j.Failed
+}
+
+// GetInserted returns the Inserted field if it's non-nil, zero value otherwise.
+func (j *JobSummary) GetInserted() int {
+	if j == nil || j.Inserted == nil {
+		return 0
+	}
+	return *j.Inserted
+}
+
+// GetTotal returns the Total field if it's non-nil, zero value otherwise.
+func (j *JobSummary) GetTotal() int {
+	if j == nil || j.Total == nil {
+		return 0
+	}
+	return *j.Total
+}
+
+// GetUpdated returns the Updated field if it's non-nil, zero value otherwise.
+func (j *JobSummary) GetUpdated() int {
+	if j == nil || j.Updated == nil {
+		return 0
+	}
+	return *j.Updated
+}
+
+// String returns a string representation of JobSummary.
+func (j *JobSummary) String() string {
 	return Stringify(j)
 }
 

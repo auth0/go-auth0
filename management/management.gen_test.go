@@ -6235,6 +6235,13 @@ func TestJob_GetStatus(tt *testing.T) {
 	j.GetStatus()
 }
 
+func TestJob_GetSummary(tt *testing.T) {
+	j := &Job{}
+	j.GetSummary()
+	j = nil
+	j.GetSummary()
+}
+
 func TestJob_GetTimeLeftSeconds(tt *testing.T) {
 	var zeroValue int
 	j := &Job{TimeLeftSeconds: &zeroValue}
@@ -6278,6 +6285,54 @@ func TestJob_GetUserID(tt *testing.T) {
 func TestJob_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &Job{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestJobSummary_GetFailed(tt *testing.T) {
+	var zeroValue int
+	j := &JobSummary{Failed: &zeroValue}
+	j.GetFailed()
+	j = &JobSummary{}
+	j.GetFailed()
+	j = nil
+	j.GetFailed()
+}
+
+func TestJobSummary_GetInserted(tt *testing.T) {
+	var zeroValue int
+	j := &JobSummary{Inserted: &zeroValue}
+	j.GetInserted()
+	j = &JobSummary{}
+	j.GetInserted()
+	j = nil
+	j.GetInserted()
+}
+
+func TestJobSummary_GetTotal(tt *testing.T) {
+	var zeroValue int
+	j := &JobSummary{Total: &zeroValue}
+	j.GetTotal()
+	j = &JobSummary{}
+	j.GetTotal()
+	j = nil
+	j.GetTotal()
+}
+
+func TestJobSummary_GetUpdated(tt *testing.T) {
+	var zeroValue int
+	j := &JobSummary{Updated: &zeroValue}
+	j.GetUpdated()
+	j = &JobSummary{}
+	j.GetUpdated()
+	j = nil
+	j.GetUpdated()
+}
+
+func TestJobSummary_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &JobSummary{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
