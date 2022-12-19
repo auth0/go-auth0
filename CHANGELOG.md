@@ -1,5 +1,21 @@
 # Change Log
 
+<a name="v0.14.0"></a>
+
+## [v0.14.0](https://github.com/auth0/go-auth0/tree/v0.14.0) (2022-12-19)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.13.1...v0.14.0)
+
+### Added
+
+- Added ability to retrieve job errors ([#141](https://github.com/auth0/go-auth0/pull/141))
+- Added summary to jobs ([#140](https://github.com/auth0/go-auth0/pull/140))
+
+### Fixed
+
+- Fixed import users job ([#139](https://github.com/auth0/go-auth0/pull/139))
+
+
 <a name="v0.13.1"></a>
 
 ## [v0.13.1](https://github.com/auth0/go-auth0/tree/v0.13.1) (2022-12-14)
