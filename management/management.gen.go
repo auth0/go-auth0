@@ -4965,6 +4965,11 @@ func (j *Job) String() string {
 	return Stringify(j)
 }
 
+// String returns a string representation of JobError.
+func (j *JobError) String() string {
+	return Stringify(j)
+}
+
 // GetFailed returns the Failed field if it's non-nil, zero value otherwise.
 func (j *JobSummary) GetFailed() int {
 	if j == nil || j.Failed == nil {
@@ -4999,6 +5004,11 @@ func (j *JobSummary) GetUpdated() int {
 
 // String returns a string representation of JobSummary.
 func (j *JobSummary) String() string {
+	return Stringify(j)
+}
+
+// String returns a string representation of JobUserErrors.
+func (j *JobUserErrors) String() string {
 	return Stringify(j)
 }
 

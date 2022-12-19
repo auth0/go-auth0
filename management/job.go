@@ -69,6 +69,21 @@ type JobSummary struct {
 	Total    *int `json:"total,omitempty"`
 }
 
+// JobError is used to check for errors during jobs.
+//
+// See: https://auth0.com/docs/manage-users/user-migration/bulk-user-imports#retrieve-failed-entries
+type JobError struct {
+	User   map[string]interface{} `json:"user,omitempty"`
+	Errors []JobUserErrors        `json:"errors,omitempty"`
+}
+
+// JobUserErrors holds errors for the specific user during a job.
+type JobUserErrors struct {
+	Code    string `json:"code,omitempty"`
+	Message string `json:"message,omitempty"`
+	Path    string `json:"path,omitempty"`
+}
+
 // JobManager manages Auth0 Job resources.
 type JobManager struct {
 	*Management
@@ -83,6 +98,14 @@ func newJobManager(m *Management) *JobManager {
 // See: https://auth0.com/docs/api/management/v2#!/Jobs/get_jobs_by_id
 func (m *JobManager) Read(id string, opts ...RequestOption) (j *Job, err error) {
 	err = m.Request("GET", m.URI("jobs", id), &j, opts...)
+	return
+}
+
+// ReadErrors retrieves error details of a failed job.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Jobs/get_errors
+func (m *JobManager) ReadErrors(id string, opts ...RequestOption) (jobErrors []JobError, err error) {
+	err = m.Request("GET", m.URI("jobs", id, "errors"), &jobErrors, opts...)
 	return
 }
 
