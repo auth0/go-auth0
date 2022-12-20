@@ -38,8 +38,8 @@ go get github.com/auth0/go-auth0
 
 ## Documentation
 
-Reference documentation can be found at [pkg.go.dev](https://pkg.go.dev/gopkg.in/auth0.v5).
-For more information about [Auth0](http://auth0.com/) please visit the [Auth0 Docs](http://docs.auth0.com/) page and the
+Reference documentation can be found at [pkg.go.dev](https://pkg.go.dev/github.com/auth0/go-auth0).
+For more information about [Auth0](http://auth0.com/) please visit the [Auth0 Docs](http://auth0.com/docs) page and the
 [Auth0 Management API Docs](https://auth0.com/docs/api/management/v2).
 
 [[table of contents]](#table-of-contents)
