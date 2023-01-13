@@ -27,10 +27,13 @@ type BreachedPasswordDetection struct {
 	Stage                      *BreachedPasswordDetectionStage `json:"stage,omitempty"`
 }
 
+// BreachedPasswordDetectionStage is used to specify per-stage configuration options.
 type BreachedPasswordDetectionStage struct {
 	PreUserRegistration *PreUserRegistration `json:"pre-user-registration,omitempty"`
 }
 
+// BreachedPasswordDetectionPreUserRegistration is used to specify breached password detection
+// configuration (shields) for the sign up flow.
 type BreachedPasswordDetectionPreUserRegistration struct {
 	Shields *[]string `json:"shields,omitempty"`
 }
