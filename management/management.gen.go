@@ -712,8 +712,42 @@ func (b *BreachedPasswordDetection) GetShields() []string {
 	return *b.Shields
 }
 
+// GetStage returns the Stage field.
+func (b *BreachedPasswordDetection) GetStage() *BreachedPasswordDetectionStage {
+	if b == nil {
+		return nil
+	}
+	return b.Stage
+}
+
 // String returns a string representation of BreachedPasswordDetection.
 func (b *BreachedPasswordDetection) String() string {
+	return Stringify(b)
+}
+
+// GetShields returns the Shields field if it's non-nil, zero value otherwise.
+func (b *BreachedPasswordDetectionPreUserRegistration) GetShields() []string {
+	if b == nil || b.Shields == nil {
+		return nil
+	}
+	return *b.Shields
+}
+
+// String returns a string representation of BreachedPasswordDetectionPreUserRegistration.
+func (b *BreachedPasswordDetectionPreUserRegistration) String() string {
+	return Stringify(b)
+}
+
+// GetPreUserRegistration returns the PreUserRegistration field.
+func (b *BreachedPasswordDetectionStage) GetPreUserRegistration() *PreUserRegistration {
+	if b == nil {
+		return nil
+	}
+	return b.PreUserRegistration
+}
+
+// String returns a string representation of BreachedPasswordDetectionStage.
+func (b *BreachedPasswordDetectionStage) String() string {
 	return Stringify(b)
 }
 

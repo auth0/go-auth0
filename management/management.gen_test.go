@@ -920,9 +920,49 @@ func TestBreachedPasswordDetection_GetShields(tt *testing.T) {
 	b.GetShields()
 }
 
+func TestBreachedPasswordDetection_GetStage(tt *testing.T) {
+	b := &BreachedPasswordDetection{}
+	b.GetStage()
+	b = nil
+	b.GetStage()
+}
+
 func TestBreachedPasswordDetection_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &BreachedPasswordDetection{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBreachedPasswordDetectionPreUserRegistration_GetShields(tt *testing.T) {
+	var zeroValue []string
+	b := &BreachedPasswordDetectionPreUserRegistration{Shields: &zeroValue}
+	b.GetShields()
+	b = &BreachedPasswordDetectionPreUserRegistration{}
+	b.GetShields()
+	b = nil
+	b.GetShields()
+}
+
+func TestBreachedPasswordDetectionPreUserRegistration_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BreachedPasswordDetectionPreUserRegistration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBreachedPasswordDetectionStage_GetPreUserRegistration(tt *testing.T) {
+	b := &BreachedPasswordDetectionStage{}
+	b.GetPreUserRegistration()
+	b = nil
+	b.GetPreUserRegistration()
+}
+
+func TestBreachedPasswordDetectionStage_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BreachedPasswordDetectionStage{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

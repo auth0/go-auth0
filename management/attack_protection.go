@@ -20,10 +20,19 @@ func newAttackProtectionManager(m *Management) *AttackProtectionManager {
 //
 // See: https://auth0.com/docs/secure/attack-protection/breached-password-detection
 type BreachedPasswordDetection struct {
-	Enabled                    *bool     `json:"enabled,omitempty"`
-	Shields                    *[]string `json:"shields,omitempty"`
-	AdminNotificationFrequency *[]string `json:"admin_notification_frequency,omitempty"`
-	Method                     *string   `json:"method,omitempty"`
+	Enabled                    *bool                           `json:"enabled,omitempty"`
+	Shields                    *[]string                       `json:"shields,omitempty"`
+	AdminNotificationFrequency *[]string                       `json:"admin_notification_frequency,omitempty"`
+	Method                     *string                         `json:"method,omitempty"`
+	Stage                      *BreachedPasswordDetectionStage `json:"stage,omitempty"`
+}
+
+type BreachedPasswordDetectionStage struct {
+	PreUserRegistration *PreUserRegistration `json:"pre-user-registration,omitempty"`
+}
+
+type BreachedPasswordDetectionPreUserRegistration struct {
+	Shields *[]string `json:"shields,omitempty"`
 }
 
 // GetBreachedPasswordDetection retrieves breached password detection settings.
