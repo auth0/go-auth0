@@ -739,7 +739,7 @@ func (b *BreachedPasswordDetectionPreUserRegistration) String() string {
 }
 
 // GetPreUserRegistration returns the PreUserRegistration field.
-func (b *BreachedPasswordDetectionStage) GetPreUserRegistration() *PreUserRegistration {
+func (b *BreachedPasswordDetectionStage) GetPreUserRegistration() *BreachedPasswordDetectionPreUserRegistration {
 	if b == nil {
 		return nil
 	}
