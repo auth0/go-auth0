@@ -19,6 +19,8 @@ const (
 	LogStreamTypeSumo = "sumo"
 	// LogStreamTypeMixpanel constant.
 	LogStreamTypeMixpanel = "mixpanel"
+	// LogStreamTypeSegment constant.
+	LogStreamTypeSegment = "segment"
 )
 
 // LogStream is used to export tenant log
@@ -102,6 +104,8 @@ func (ls *LogStream) UnmarshalJSON(b []byte) error {
 			v = &LogStreamSinkSumo{}
 		case LogStreamTypeMixpanel:
 			v = &LogStreamSinkMixpanel{}
+		case LogStreamTypeSegment:
+			v = &LogStreamSinkSegment{}
 		default:
 			v = make(map[string]interface{})
 		}
@@ -159,6 +163,12 @@ type LogStreamSinkDatadog struct {
 	Region *string `json:"datadogRegion,omitempty"`
 	// Datadog Api Key
 	APIKey *string `json:"datadogApiKey,omitempty"`
+}
+
+// LogStreamSinkSegment is used to export logs to Segment.
+type LogStreamSinkSegment struct {
+	// Segment Api Key
+	APIKey *string `json:"segmentApiKey,omitempty"`
 }
 
 // LogStreamSinkSplunk is used to export logs to Splunk.

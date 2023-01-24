@@ -60,6 +60,16 @@ var logStreamTestCases = []logStreamTestCase{
 		},
 	},
 	{
+		name: "Segment LogStream",
+		logStream: LogStream{
+			Name: auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
+			Type: auth0.String(LogStreamTypeSegment),
+			Sink: &LogStreamSinkSegment{
+				APIKey: auth0.String("121233123455"),
+			},
+		},
+	},
+	{
 		name: "Splunk LogStream",
 		logStream: LogStream{
 			Name: auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
