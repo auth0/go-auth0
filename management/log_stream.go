@@ -36,7 +36,7 @@ type LogStream struct {
 	Name *string `json:"name,omitempty"`
 
 	// The type of the log-stream. Can be one of "http", "eventbridge",
-	// "eventgrid", "datadog" or "splunk".
+	// "eventgrid", "datadog", "splunk", "sumo", "mixpanel", "segment.
 	Type *string `json:"type,omitempty"`
 
 	// The status of the log-stream. Can be one of "active", "paused", or "suspended".
@@ -167,8 +167,8 @@ type LogStreamSinkDatadog struct {
 
 // LogStreamSinkSegment is used to export logs to Segment.
 type LogStreamSinkSegment struct {
-	// Segment Api Key
-	APIKey *string `json:"segmentApiKey,omitempty"`
+	// Segment Write Key
+	WriteKey *string `json:"segmentWriteKey,omitempty"`
 }
 
 // LogStreamSinkSplunk is used to export logs to Splunk.

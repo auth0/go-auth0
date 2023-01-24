@@ -1,0 +1,44 @@
+---
+version: 1
+interactions:
+    - request:
+        body: |
+            {"name":"Test-LogStream-1674586425","type":"segment","sink":{"segmentWriteKey":"121233123455"}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
+        method: POST
+      response:
+        body: '{"id":"lst_0000000000011465","name":"Test-LogStream-1674586425","type":"segment","status":"active","sink":{"segmentWriteKey":"121233123455"}}'
+        headers:
+            Access-Control-Expose-Headers:
+                - WWW-Authenticate,Server-Authorization
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 1ms
+    - request:
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011465
+        method: DELETE
+      response:
+        body: ""
+        headers:
+            Access-Control-Expose-Headers:
+                - WWW-Authenticate,Server-Authorization
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 1ms

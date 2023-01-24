@@ -65,7 +65,7 @@ var logStreamTestCases = []logStreamTestCase{
 			Name: auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
 			Type: auth0.String(LogStreamTypeSegment),
 			Sink: &LogStreamSinkSegment{
-				APIKey: auth0.String("121233123455"),
+				WriteKey: auth0.String("121233123455"),
 			},
 		},
 	},
