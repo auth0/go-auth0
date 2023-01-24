@@ -5388,6 +5388,19 @@ func (l *LogStreamSinkMixpanel) String() string {
 	return Stringify(l)
 }
 
+// GetWriteKey returns the WriteKey field if it's non-nil, zero value otherwise.
+func (l *LogStreamSinkSegment) GetWriteKey() string {
+	if l == nil || l.WriteKey == nil {
+		return ""
+	}
+	return *l.WriteKey
+}
+
+// String returns a string representation of LogStreamSinkSegment.
+func (l *LogStreamSinkSegment) String() string {
+	return Stringify(l)
+}
+
 // GetDomain returns the Domain field if it's non-nil, zero value otherwise.
 func (l *LogStreamSinkSplunk) GetDomain() string {
 	if l == nil || l.Domain == nil {

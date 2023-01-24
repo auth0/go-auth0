@@ -6838,6 +6838,24 @@ func TestLogStreamSinkMixpanel_String(t *testing.T) {
 	}
 }
 
+func TestLogStreamSinkSegment_GetWriteKey(tt *testing.T) {
+	var zeroValue string
+	l := &LogStreamSinkSegment{WriteKey: &zeroValue}
+	l.GetWriteKey()
+	l = &LogStreamSinkSegment{}
+	l.GetWriteKey()
+	l = nil
+	l.GetWriteKey()
+}
+
+func TestLogStreamSinkSegment_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &LogStreamSinkSegment{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestLogStreamSinkSplunk_GetDomain(tt *testing.T) {
 	var zeroValue string
 	l := &LogStreamSinkSplunk{Domain: &zeroValue}
