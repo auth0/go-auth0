@@ -40,7 +40,7 @@ func TestSigningKey(t *testing.T) {
 		// Our last test revokes the key used to sign the token we're currently
 		// using, so we need to re-authenticate so that subsequent tests still work.
 		t.Cleanup(func() {
-			initTestManagement()
+			initializeTestClient()
 		})
 
 		signingKeys, err := api.SigningKey.List()

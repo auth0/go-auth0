@@ -24,18 +24,25 @@ var (
 	api                   = &Management{}
 )
 
-func init() {
-	httpRecordingsEnabled = httpRecordings == "true" || httpRecordings == "1" || httpRecordings == "on"
-	initTestManagement()
+func envVarEnabled(envVar string) bool {
+	return envVar == "true" || envVar == "1" || envVar == "on"
 }
 
-func initTestManagement() {
+func TestMain(m *testing.M) {
+	httpRecordingsEnabled = envVarEnabled(httpRecordings)
+	initializeTestClient()
+
+	code := m.Run()
+	os.Exit(code)
+}
+
+func initializeTestClient() {
 	var err error
 
 	api, err = New(
 		domain,
 		WithClientCredentials(clientID, clientSecret),
-		WithDebug(debug == "true" || debug == "1" || debug == "on"),
+		WithDebug(envVarEnabled(debug)),
 	)
 	if err != nil {
 		log.Fatal("failed to initialize the api client")
