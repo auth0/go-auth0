@@ -220,7 +220,6 @@ func redactSensitiveDataInResourceServer(t *testing.T, i *cassette.Interaction) 
 func redactSensitiveDataInLogSession(t *testing.T, i *cassette.Interaction) {
 	isLogSessionURL := strings.Contains(i.Request.URL, "https://"+domain+"/api/v2/actions/log-sessions")
 	if isLogSessionURL {
-
 		var logSession ActionLogSession
 		err := json.Unmarshal([]byte(i.Response.Body), &logSession)
 		require.NoError(t, err)
