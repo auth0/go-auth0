@@ -20,10 +20,24 @@ func newAttackProtectionManager(m *Management) *AttackProtectionManager {
 //
 // See: https://auth0.com/docs/secure/attack-protection/breached-password-detection
 type BreachedPasswordDetection struct {
-	Enabled                    *bool     `json:"enabled,omitempty"`
-	Shields                    *[]string `json:"shields,omitempty"`
-	AdminNotificationFrequency *[]string `json:"admin_notification_frequency,omitempty"`
-	Method                     *string   `json:"method,omitempty"`
+	Enabled                    *bool                           `json:"enabled,omitempty"`
+	Shields                    *[]string                       `json:"shields,omitempty"`
+	AdminNotificationFrequency *[]string                       `json:"admin_notification_frequency,omitempty"`
+	Method                     *string                         `json:"method,omitempty"`
+	Stage                      *BreachedPasswordDetectionStage `json:"stage,omitempty"`
+}
+
+// BreachedPasswordDetectionStage is used to specify per-stage configuration options.
+type BreachedPasswordDetectionStage struct {
+	PreUserRegistration *BreachedPasswordDetectionPreUserRegistration `json:"pre-user-registration,omitempty"`
+}
+
+// BreachedPasswordDetectionPreUserRegistration is used to specify breached password detection
+// configuration (shields) for the sign up flow.
+type BreachedPasswordDetectionPreUserRegistration struct {
+	// Action to take when a breached password is detected during a signup.
+	// Possible values: block, admin_notification.
+	Shields *[]string `json:"shields,omitempty"`
 }
 
 // GetBreachedPasswordDetection retrieves breached password detection settings.

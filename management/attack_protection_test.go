@@ -27,6 +27,11 @@ func TestAttackProtection(t *testing.T) {
 		expected := &BreachedPasswordDetection{
 			Enabled: auth0.Bool(true),
 			Method:  auth0.String("standard"),
+			Stage: &BreachedPasswordDetectionStage{
+				PreUserRegistration: &BreachedPasswordDetectionPreUserRegistration{
+					Shields: &[]string{"block"},
+				},
+			},
 		}
 
 		err = m.AttackProtection.UpdateBreachedPasswordDetection(expected)
@@ -36,6 +41,7 @@ func TestAttackProtection(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected.GetEnabled(), actual.GetEnabled())
 		assert.Equal(t, expected.GetMethod(), actual.GetMethod())
+		assert.Equal(t, expected.GetStage().GetPreUserRegistration().GetShields(), actual.GetStage().GetPreUserRegistration().GetShields())
 
 		// Restore initial settings.
 		err = m.AttackProtection.UpdateBreachedPasswordDetection(preTestBPDSettings)
