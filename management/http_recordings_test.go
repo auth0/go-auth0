@@ -125,17 +125,17 @@ func redactSensitiveDataInSigningKey(t *testing.T, i *cassette.Interaction) {
 		Revoked:     auth0.Bool(false),
 	}
 
-	isSigningKeysURL := strings.Contains(i.Request.URL, "https://"+domain+"/api/v2/keys/signing")
-
-	if isSigningKeysURL && i.Request.Method == http.MethodGet {
+	if i.Request.URL == "https://"+domain+"/api/v2/keys/signing" && i.Request.Method == http.MethodGet {
 		signingKeyBody, err := json.Marshal(signingKey)
 		require.NoError(t, err)
 		previousSigningKeyBody, err := json.Marshal(previousSigningKey)
 		require.NoError(t, err)
 
 		i.Response.Body = fmt.Sprintf(`[%s,%s]`, signingKeyBody, previousSigningKeyBody)
+		return
 	}
 
+	isSigningKeysURL := strings.Contains(i.Request.URL, "https://"+domain+"/api/v2/keys/signing")
 	if isSigningKeysURL && i.Request.Method == http.MethodGet {
 		i.Request.URL = "https://" + domain + "/api/v2/keys/signing/111111111111111111111"
 
@@ -143,6 +143,7 @@ func redactSensitiveDataInSigningKey(t *testing.T, i *cassette.Interaction) {
 		require.NoError(t, err)
 
 		i.Response.Body = string(signingKeyBody)
+		return
 	}
 
 	if isSigningKeysURL && strings.Contains(i.Request.URL, "/revoke") && i.Request.Method == http.MethodPut {
@@ -153,6 +154,7 @@ func redactSensitiveDataInSigningKey(t *testing.T, i *cassette.Interaction) {
 		require.NoError(t, err)
 
 		i.Response.Body = string(signingKeyBody)
+		return
 	}
 
 	if isSigningKeysURL && strings.Contains(i.Request.URL, "/rotate") && i.Request.Method == http.MethodPost {
@@ -160,6 +162,7 @@ func redactSensitiveDataInSigningKey(t *testing.T, i *cassette.Interaction) {
 		require.NoError(t, err)
 
 		i.Response.Body = string(signingKeyBody)
+		return
 	}
 }
 
@@ -169,14 +172,22 @@ func redactSensitiveDataInClient(t *testing.T, i *cassette.Interaction) {
 	read := isClientURL && i.Request.Method == http.MethodGet
 	update := isClientURL && i.Request.Method == http.MethodPatch
 	rotateSecret := isClientURL && strings.Contains(i.Request.URL, "/rotate-secret")
+	list := isClientURL && strings.Contains(i.Request.URL, "include_totals")
 
-	if create || read || update || rotateSecret {
+	if (create || read || update || rotateSecret) && !list {
 		var client Client
 		err := json.Unmarshal([]byte(i.Response.Body), &client)
 		require.NoError(t, err)
 
-		client.SigningKeys = nil
-		client.ClientSecret = nil
+		redacted := "[REDACTED]"
+		if rotateSecret {
+			redacted = "[ROTATED-REDACTED]"
+		}
+
+		client.SigningKeys = []map[string]string{
+			{"cert": redacted},
+		}
+		client.ClientSecret = &redacted
 
 		clientBody, err := json.Marshal(client)
 		require.NoError(t, err)
@@ -190,8 +201,9 @@ func redactSensitiveDataInResourceServer(t *testing.T, i *cassette.Interaction) 
 	create := isResourceServerURL && i.Request.Method == http.MethodPost
 	read := isResourceServerURL && i.Request.Method == http.MethodGet
 	update := isResourceServerURL && i.Request.Method == http.MethodPatch
+	list := isResourceServerURL && strings.Contains(i.Request.URL, "include_totals")
 
-	if create || read || update {
+	if (create || read || update) && !list {
 		var rs ResourceServer
 		err := json.Unmarshal([]byte(i.Response.Body), &rs)
 		require.NoError(t, err)
