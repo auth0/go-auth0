@@ -1,0 +1,110 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 239
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test Resource Server (Jan 25 18:49:47.456)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create Resource"}],"signing_alg":"HS256","token_lifetime":7200,"token_lifetime_for_web":3600}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 407
+        uncompressed: false
+        body: '{"id":"63d16bbba28a2652d689903c","name":"Test Resource Server (Jan 25 18:49:47.456)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create Resource"}],"signing_alg":"HS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 120.959542ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 342
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test Resource Server (Jan 25 18:49:47.456)","scopes":[{"value":"create:resource","description":"Create Resource"},{"value":"update:resource","description":"Update Resource"}],"signing_alg":"RS256","allow_offline_access":true,"token_lifetime":7200,"token_lifetime_for_web":5400,"skip_consent_for_verifiable_first_party_clients":true}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/63d16bbba28a2652d689903c
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"id":"63d16bbba28a2652d689903c","name":"Test Resource Server (Jan 25 18:49:47.456)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create Resource"},{"value":"update:resource","description":"Update Resource"}],"signing_alg":"RS256","allow_offline_access":true,"token_lifetime":7200,"token_lifetime_for_web":5400,"skip_consent_for_verifiable_first_party_clients":true}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 88.902625ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/63d16bbba28a2652d689903c
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 142.643208ms

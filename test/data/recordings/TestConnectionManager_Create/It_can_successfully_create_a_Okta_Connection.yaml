@@ -1,0 +1,74 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 415
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test-Okta-Connection-1674668511","strategy":"okta","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","client_secret":"mySecret","domain":"domain.okta.com","authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","userinfo_endpoint":null,"token_endpoint":null,"scope":"openid","upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 687
+        uncompressed: false
+        body: '{"id":"con_xSoqAdBdR6y6ufdN","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","client_secret":"mySecret","domain":"domain.okta.com","authorization_endpoint":"https://domain.okta.com/oauth2/v1/authorize","issuer":"https://domain.okta.com","jwks_uri":"https://domain.okta.com/oauth2/v1/keys","userinfo_endpoint":"https://domain.okta.com/oauth2/v1/userinfo","token_endpoint":"https://domain.okta.com/oauth2/v1/token","scope":"openid profile","upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"okta","name":"Test-Okta-Connection-1674668511","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-Okta-Connection-1674668511"]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 753.129042ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_xSoqAdBdR6y6ufdN
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 41
+        uncompressed: false
+        body: '{"deleted_at":"2023-01-25T17:43:45.307Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 202 Accepted
+        code: 202
+        duration: 246.875292ms
