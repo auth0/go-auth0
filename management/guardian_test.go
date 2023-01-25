@@ -13,7 +13,7 @@ import (
 func TestGuardian(t *testing.T) {
 	t.Run("MultiFactor", func(t *testing.T) {
 		t.Run("List", func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			mfa, err := api.Guardian.MultiFactor.List()
 			assert.NoError(t, err)
@@ -21,7 +21,7 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("Policy", func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			initialPolicy, err := api.Guardian.MultiFactor.Policy()
 			assert.NoError(t, err)
@@ -44,7 +44,7 @@ func TestGuardian(t *testing.T) {
 
 		t.Run("Phone", func(t *testing.T) {
 			t.Run("Provider", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialProvider, err := api.Guardian.MultiFactor.Phone.Provider()
 				assert.NoError(t, err)
@@ -65,7 +65,7 @@ func TestGuardian(t *testing.T) {
 			})
 
 			t.Run("Enable", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialStatus, err := getInitialMFAStatus("sms")
 				assert.NoError(t, err)
@@ -81,7 +81,7 @@ func TestGuardian(t *testing.T) {
 			})
 
 			t.Run("Message-types", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialMessageTypes, err := api.Guardian.MultiFactor.Phone.MessageTypes()
 				assert.NoError(t, err)
@@ -107,7 +107,7 @@ func TestGuardian(t *testing.T) {
 
 		t.Run("SMS", func(t *testing.T) {
 			t.Run("Enable", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialStatus, err := getInitialMFAStatus("sms")
 				assert.NoError(t, err)
@@ -123,7 +123,7 @@ func TestGuardian(t *testing.T) {
 			})
 
 			t.Run("Template", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialTemplate, err := api.Guardian.MultiFactor.SMS.Template()
 				assert.NoError(t, err)
@@ -146,7 +146,7 @@ func TestGuardian(t *testing.T) {
 			})
 
 			t.Run("Twilio", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialTwilio, err := api.Guardian.MultiFactor.SMS.Twilio()
 				assert.NoError(t, err)
@@ -172,7 +172,7 @@ func TestGuardian(t *testing.T) {
 
 		t.Run("Push", func(t *testing.T) {
 			t.Run("Provider", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialProvider, err := api.Guardian.MultiFactor.Push.Provider()
 				assert.NoError(t, err)
@@ -193,7 +193,7 @@ func TestGuardian(t *testing.T) {
 			})
 
 			t.Run("Enable", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialStatus, err := getInitialMFAStatus("push-notification")
 				assert.NoError(t, err)
@@ -209,7 +209,7 @@ func TestGuardian(t *testing.T) {
 			})
 
 			t.Run("AmazonSNS", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialSNS, err := api.Guardian.MultiFactor.Push.AmazonSNS()
 				assert.NoError(t, err)
@@ -238,7 +238,7 @@ func TestGuardian(t *testing.T) {
 			})
 
 			t.Run("CustomApp", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialCustomApp, err := api.Guardian.MultiFactor.Push.CustomApp()
 				assert.NoError(t, err)
@@ -265,7 +265,7 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("Email Enable", func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			initialStatus, err := getInitialMFAStatus("email")
 			assert.NoError(t, err)
@@ -282,7 +282,7 @@ func TestGuardian(t *testing.T) {
 
 		t.Run("DUO", func(t *testing.T) {
 			t.Run("Enable", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialStatus, err := getInitialMFAStatus("duo")
 				assert.NoError(t, err)
@@ -297,7 +297,7 @@ func TestGuardian(t *testing.T) {
 				assertMFAIsEnabled(t, "duo")
 			})
 			t.Run("Settings", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialSettings, err := api.Guardian.MultiFactor.DUO.Read()
 				assert.NoError(t, err)
@@ -323,7 +323,7 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("OTP Enable", func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			initialStatus, err := getInitialMFAStatus("otp")
 			assert.NoError(t, err)
@@ -340,7 +340,7 @@ func TestGuardian(t *testing.T) {
 
 		t.Run("WebAuthn Roaming", func(t *testing.T) {
 			t.Run("Enable", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialStatus, err := getInitialMFAStatus("webauthn-roaming")
 				assert.NoError(t, err)
@@ -355,7 +355,7 @@ func TestGuardian(t *testing.T) {
 				assertMFAIsEnabled(t, "webauthn-roaming")
 			})
 			t.Run("Settings", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialSettings, err := api.Guardian.MultiFactor.WebAuthnRoaming.Read()
 				assert.NoError(t, err)
@@ -378,7 +378,7 @@ func TestGuardian(t *testing.T) {
 
 		t.Run("WebAuthn Platform", func(t *testing.T) {
 			t.Run("Enable", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialStatus, err := getInitialMFAStatus("webauthn-platform")
 				assert.NoError(t, err)
@@ -393,7 +393,7 @@ func TestGuardian(t *testing.T) {
 				assertMFAIsEnabled(t, "webauthn-platform")
 			})
 			t.Run("Settings", func(t *testing.T) {
-				setupHTTPRecordings(t)
+				configureHTTPTestRecordings(t)
 
 				initialSettings, err := api.Guardian.MultiFactor.WebAuthnPlatform.Read()
 				assert.NoError(t, err)
@@ -415,7 +415,7 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("Recovery Code Enable", func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			initialStatus, err := getInitialMFAStatus("recovery-code")
 			assert.NoError(t, err)
@@ -433,7 +433,7 @@ func TestGuardian(t *testing.T) {
 
 	t.Run("Enrollment", func(t *testing.T) {
 		t.Run("CreateTicket", func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			user := givenAUser(t)
 
@@ -449,7 +449,7 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("Get", func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			_, err := api.Guardian.Enrollment.Get("dev_0000000000000001")
 			// Expect a 404 as we can't set this up through the API.
@@ -459,7 +459,7 @@ func TestGuardian(t *testing.T) {
 		})
 
 		t.Run("Delete", func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			err := api.Guardian.Enrollment.Delete("dev_0000000000000001")
 			// Expect a 404 as we can't set this up through the API.

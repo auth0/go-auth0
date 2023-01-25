@@ -11,7 +11,7 @@ import (
 )
 
 func TestCustomDomainManager_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expected := &CustomDomain{
 		Domain:    auth0.Stringf("%d.auth.uat.auth0.com", time.Now().UTC().Unix()),
@@ -29,7 +29,7 @@ func TestCustomDomainManager_Create(t *testing.T) {
 }
 
 func TestCustomDomainManager_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expected := givenACustomDomain(t)
 
@@ -40,7 +40,7 @@ func TestCustomDomainManager_Read(t *testing.T) {
 }
 
 func TestCustomDomainManager_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	customDomain := givenACustomDomain(t)
 
@@ -54,7 +54,7 @@ func TestCustomDomainManager_Update(t *testing.T) {
 }
 
 func TestCustomDomainManager_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	customDomain := givenACustomDomain(t)
 
@@ -69,7 +69,7 @@ func TestCustomDomainManager_Delete(t *testing.T) {
 }
 
 func TestCustomDomainManager_List(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	customDomain := givenACustomDomain(t)
 
@@ -81,7 +81,7 @@ func TestCustomDomainManager_List(t *testing.T) {
 }
 
 func TestCustomDomainManager_Verify(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	customDomain := givenACustomDomain(t)
 

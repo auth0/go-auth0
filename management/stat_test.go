@@ -7,7 +7,7 @@ import (
 )
 
 func TestStatManager_ActiveUsers(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	activeUsers, err := api.Stat.ActiveUsers()
 	assert.NoError(t, err)
@@ -15,7 +15,7 @@ func TestStatManager_ActiveUsers(t *testing.T) {
 }
 
 func TestStatManager_Daily(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	daily, err := api.Stat.Daily()
 	assert.NoError(t, err)

@@ -12,7 +12,7 @@ import (
 )
 
 func TestActionManager_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedAction := &Action{
 		Name: auth0.Stringf("Test Action (%s)", time.Now().Format(time.StampMilli)),
@@ -49,7 +49,7 @@ func TestActionManager_Create(t *testing.T) {
 }
 
 func TestActionManager_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedAction := givenAnAction(t)
 	actualAction, err := api.Action.Read(expectedAction.GetID())
@@ -59,7 +59,7 @@ func TestActionManager_Read(t *testing.T) {
 }
 
 func TestActionManager_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedAction := givenAnAction(t)
 
@@ -80,7 +80,7 @@ func TestActionManager_Update(t *testing.T) {
 }
 
 func TestActionManager_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedAction := givenAnAction(t)
 
@@ -96,7 +96,7 @@ func TestActionManager_Delete(t *testing.T) {
 }
 
 func TestActionManager_List(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedAction := givenAnAction(t)
 
@@ -107,7 +107,7 @@ func TestActionManager_List(t *testing.T) {
 }
 
 func TestActionManager_Triggers(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	actionTriggerList, err := api.Action.Triggers()
 
@@ -116,7 +116,7 @@ func TestActionManager_Triggers(t *testing.T) {
 }
 
 func TestActionManager_Deploy(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedAction := givenAnAction(t)
 
@@ -129,7 +129,7 @@ func TestActionManager_Deploy(t *testing.T) {
 }
 
 func TestActionManager_DeployVersion(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	action := givenAnAction(t)
 	ensureActionBuilt(t, action.GetID())
@@ -143,7 +143,7 @@ func TestActionManager_DeployVersion(t *testing.T) {
 }
 
 func TestActionManager_Version(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	action := givenAnAction(t)
 	ensureActionBuilt(t, action.GetID())
@@ -158,7 +158,7 @@ func TestActionManager_Version(t *testing.T) {
 }
 
 func TestActionManager_Versions(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	action := givenAnAction(t)
 	ensureActionBuilt(t, action.GetID())
@@ -173,7 +173,7 @@ func TestActionManager_Versions(t *testing.T) {
 }
 
 func TestActionManager_Bindings(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	action := givenAnAction(t)
 	ensureActionBuilt(t, action.GetID())
@@ -210,7 +210,7 @@ func TestActionManager_Bindings(t *testing.T) {
 }
 
 func TestActionManager_Test(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	action := givenAnAction(t)
 	ensureActionBuilt(t, action.GetID())
@@ -229,7 +229,7 @@ func TestActionManager_Test(t *testing.T) {
 }
 
 func TestActionManager_Execution(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	_, err := api.Action.Execution("M9IqRp9wQLaYNrSwz6YPTTIwMjEwNDA0")
 	// Expect a 404 as we can't get execution ID via API
@@ -239,7 +239,7 @@ func TestActionManager_Execution(t *testing.T) {
 }
 
 func TestActionManager_LogSession(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedLogSession := &ActionLogSession{
 		Filters: []ActionLogSessionFilter{{

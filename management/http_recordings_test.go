@@ -15,7 +15,7 @@ import (
 	"github.com/auth0/go-auth0"
 )
 
-func setupHTTPRecordings(t *testing.T) {
+func configureHTTPTestRecordings(t *testing.T) {
 	t.Helper()
 
 	if !httpRecordingsEnabled {

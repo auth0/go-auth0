@@ -8,7 +8,7 @@ import (
 
 func TestAnomaly(t *testing.T) {
 	t.Run("CheckIP", func(t *testing.T) {
-		setupHTTPRecordings(t)
+		configureHTTPTestRecordings(t)
 
 		isBlocked, err := api.Anomaly.CheckIP("1.1.1.1")
 		assert.NoError(t, err)
@@ -16,7 +16,7 @@ func TestAnomaly(t *testing.T) {
 	})
 
 	t.Run("UnblockIP", func(t *testing.T) {
-		setupHTTPRecordings(t)
+		configureHTTPTestRecordings(t)
 
 		err := api.Anomaly.UnblockIP("1.1.1.1")
 		assert.NoError(t, err)

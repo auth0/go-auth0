@@ -11,7 +11,7 @@ import (
 )
 
 func TestBrandingThemeManager_Default(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedTheme := givenABrandingTheme(t)
 
@@ -22,7 +22,7 @@ func TestBrandingThemeManager_Default(t *testing.T) {
 }
 
 func TestBrandingThemeManager_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedTheme := BrandingTheme{
 		Borders: BrandingThemeBorders{
@@ -107,7 +107,7 @@ func TestBrandingThemeManager_Create(t *testing.T) {
 }
 
 func TestBrandingThemeManager_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedTheme := givenABrandingTheme(t)
 
@@ -118,7 +118,7 @@ func TestBrandingThemeManager_Read(t *testing.T) {
 }
 
 func TestBrandingThemeManager_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedTheme := givenABrandingTheme(t)
 
@@ -205,7 +205,7 @@ func TestBrandingThemeManager_Update(t *testing.T) {
 }
 
 func TestBrandingThemeManager_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	theme := givenABrandingTheme(t)
 

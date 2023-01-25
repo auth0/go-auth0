@@ -11,7 +11,7 @@ import (
 )
 
 func TestEmailTemplateManager_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	template := &EmailTemplate{
 		Template:               auth0.String("verify_email"),
@@ -37,7 +37,7 @@ func TestEmailTemplateManager_Create(t *testing.T) {
 }
 
 func TestEmailTemplateManager_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedTemplate := givenAnEmailTemplate(t)
 
@@ -48,7 +48,7 @@ func TestEmailTemplateManager_Read(t *testing.T) {
 }
 
 func TestEmailTemplateManager_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	template := givenAnEmailTemplate(t)
 
@@ -70,7 +70,7 @@ func TestEmailTemplateManager_Update(t *testing.T) {
 }
 
 func TestEmailTemplateManager_Replace(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	givenAnEmailProvider(t)
 	template := givenAnEmailTemplate(t)

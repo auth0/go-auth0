@@ -9,7 +9,7 @@ import (
 )
 
 func TestTicketManager_VerifyEmail(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	ticket := &Ticket{
@@ -23,7 +23,7 @@ func TestTicketManager_VerifyEmail(t *testing.T) {
 }
 
 func TestTicketManager_ChangePassword(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	ticket := &Ticket{

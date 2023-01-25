@@ -11,7 +11,7 @@ import (
 )
 
 func TestTenantManager(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	initialSettings, err := api.Tenant.Read()
 	assert.NoError(t, err)

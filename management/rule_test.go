@@ -13,7 +13,7 @@ import (
 )
 
 func TestRuleManager_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	rule := &Rule{
 		Name:    auth0.String("test-rule"),
@@ -31,7 +31,7 @@ func TestRuleManager_Create(t *testing.T) {
 }
 
 func TestRuleManager_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedRule := givenARule(t)
 
@@ -42,7 +42,7 @@ func TestRuleManager_Read(t *testing.T) {
 }
 
 func TestRuleManager_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	rule := givenARule(t)
 	updatedRule := &Rule{
@@ -60,7 +60,7 @@ func TestRuleManager_Update(t *testing.T) {
 }
 
 func TestRuleManager_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	rule := givenARule(t)
 
@@ -75,7 +75,7 @@ func TestRuleManager_Delete(t *testing.T) {
 }
 
 func TestRuleManager_List(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	rule := givenARule(t)
 

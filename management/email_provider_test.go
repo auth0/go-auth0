@@ -140,7 +140,7 @@ func TestEmailProviderJSON(t *testing.T) {
 }
 
 func TestEmailProviderManager_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	emailProvider := &EmailProvider{
 		Name:               auth0.String("smtp"),
@@ -163,7 +163,7 @@ func TestEmailProviderManager_Create(t *testing.T) {
 }
 
 func TestEmailProviderManager_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedEmailProvider := givenAnEmailProvider(t)
 
@@ -177,7 +177,7 @@ func TestEmailProviderManager_Read(t *testing.T) {
 }
 
 func TestEmailProviderManager_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	emailProvider := givenAnEmailProvider(t)
 
@@ -195,7 +195,7 @@ func TestEmailProviderManager_Update(t *testing.T) {
 }
 
 func TestEmailProviderManager_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	givenAnEmailProvider(t)
 

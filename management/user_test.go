@@ -16,7 +16,7 @@ import (
 )
 
 func TestUserManager_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := &User{
 		Connection: auth0.String("Username-Password-Authentication"),
@@ -34,7 +34,7 @@ func TestUserManager_Create(t *testing.T) {
 }
 
 func TestUserManager_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -46,7 +46,7 @@ func TestUserManager_Read(t *testing.T) {
 }
 
 func TestUserManager_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -71,7 +71,7 @@ func TestUserManager_Update(t *testing.T) {
 }
 
 func TestUserManager_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -88,7 +88,7 @@ func TestUserManager_Delete(t *testing.T) {
 }
 
 func TestUserManager_List(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -104,7 +104,7 @@ func TestUserManager_List(t *testing.T) {
 }
 
 func TestUserManager_Search(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -115,7 +115,7 @@ func TestUserManager_Search(t *testing.T) {
 }
 
 func TestUserManager_ListByEmail(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -126,7 +126,7 @@ func TestUserManager_ListByEmail(t *testing.T) {
 }
 
 func TestUserManager_Roles(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	role := givenARole(t)
@@ -148,7 +148,7 @@ func TestUserManager_Roles(t *testing.T) {
 }
 
 func TestUserManager_Permissions(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	resourceServer := givenAResourceServer(t)
@@ -177,7 +177,7 @@ func TestUserManager_Permissions(t *testing.T) {
 }
 
 func TestUserManager_Blocks(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	blockedIPs, err := api.User.Blocks(user.GetID())
@@ -186,7 +186,7 @@ func TestUserManager_Blocks(t *testing.T) {
 }
 
 func TestUserManager_BlocksByIdentifier(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	blockedIPs, err := api.User.BlocksByIdentifier(user.GetUsername())
@@ -195,7 +195,7 @@ func TestUserManager_BlocksByIdentifier(t *testing.T) {
 }
 
 func TestUserManager_Unblock(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	err := api.User.Unblock(user.GetID())
@@ -203,7 +203,7 @@ func TestUserManager_Unblock(t *testing.T) {
 }
 
 func TestUserManager_UnblockByIdentifier(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	err := api.User.UnblockByIdentifier(user.GetUsername())
@@ -211,7 +211,7 @@ func TestUserManager_UnblockByIdentifier(t *testing.T) {
 }
 
 func TestUserManager_Enrollments(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	userEnrollments, err := api.User.Enrollments(user.GetID())
@@ -220,7 +220,7 @@ func TestUserManager_Enrollments(t *testing.T) {
 }
 
 func TestUserManager_RegenerateRecoveryCode(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	recoveryCode, err := api.User.RegenerateRecoveryCode(user.GetID())
@@ -229,7 +229,7 @@ func TestUserManager_RegenerateRecoveryCode(t *testing.T) {
 }
 
 func TestUserManager_InvalidateRememberBrowser(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	err := api.User.InvalidateRememberBrowser(user.GetID())
@@ -237,7 +237,7 @@ func TestUserManager_InvalidateRememberBrowser(t *testing.T) {
 }
 
 func TestUserManager_Link(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	mainUser := givenAUser(t)
 	secondaryUser := givenAUser(t)
@@ -259,7 +259,7 @@ func TestUserManager_Link(t *testing.T) {
 }
 
 func TestUserManager_Unlink(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	provider := "auth0"
 	mainUser := givenAUser(t)

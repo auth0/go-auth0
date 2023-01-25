@@ -7,7 +7,7 @@ import (
 )
 
 func TestBlacklist(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	client := givenAClient(t)
 

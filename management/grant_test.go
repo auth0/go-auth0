@@ -7,7 +7,7 @@ import (
 )
 
 func TestGrantManager_List(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	grantList, err := api.Grant.List()
 	assert.NoError(t, err)

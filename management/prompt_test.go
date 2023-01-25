@@ -10,7 +10,7 @@ import (
 )
 
 func TestPrompt(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	t.Cleanup(func() {
 		err := api.Prompt.Update(&Prompt{
@@ -53,7 +53,7 @@ func TestPrompt(t *testing.T) {
 }
 
 func TestPromptCustomText(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	const prompt = "login"
 	const lang = "en"

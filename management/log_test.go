@@ -10,7 +10,7 @@ import (
 const successfulAPIOperation = "sapi"
 
 func TestLogManager(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	// Limit results to 5 entries, starting from the first page.
 	logs, err := api.Log.List(Page(1), PerPage(5))

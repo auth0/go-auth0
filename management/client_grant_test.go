@@ -8,7 +8,7 @@ import (
 )
 
 func TestClientGrantManager_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	client := givenAClient(t)
 	resourceServer := givenAResourceServer(t)
@@ -28,7 +28,7 @@ func TestClientGrantManager_Create(t *testing.T) {
 }
 
 func TestClientGrantManager_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedClientGrant := givenAClientGrant(t)
 
@@ -41,7 +41,7 @@ func TestClientGrantManager_Read(t *testing.T) {
 }
 
 func TestClientGrantManager_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedClientGrant := givenAClientGrant(t)
 
@@ -61,7 +61,7 @@ func TestClientGrantManager_Update(t *testing.T) {
 }
 
 func TestClientGrantManager_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedClientGrant := givenAClientGrant(t)
 
@@ -74,7 +74,7 @@ func TestClientGrantManager_Delete(t *testing.T) {
 }
 
 func TestClientGrantManager_List(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedClientGrant := givenAClientGrant(t)
 

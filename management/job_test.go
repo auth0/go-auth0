@@ -11,7 +11,7 @@ import (
 )
 
 func TestJobManager_VerifyEmail(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	job := &Job{UserID: user.ID}
@@ -25,7 +25,7 @@ func TestJobManager_VerifyEmail(t *testing.T) {
 }
 
 func TestJobManager_ExportUsers(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	givenAUser(t)
 	conn, err := api.Connection.ReadByName("Username-Password-Authentication")
@@ -47,7 +47,7 @@ func TestJobManager_ExportUsers(t *testing.T) {
 }
 
 func TestJobManager_ImportUsers(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	conn, err := api.Connection.ReadByName("Username-Password-Authentication")
 	require.NoError(t, err)
@@ -88,7 +88,7 @@ func TestJobManager_ImportUsers(t *testing.T) {
 }
 
 func TestJobManager_ReadErrors(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	alreadyExistingUser := givenAUser(t)
 	conn, err := api.Connection.ReadByName("Username-Password-Authentication")

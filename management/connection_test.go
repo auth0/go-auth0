@@ -354,7 +354,7 @@ type connectionTestCase struct {
 func TestConnectionManager_Create(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully create a "+testCase.name, func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			expectedConnection := testCase.connection
 			expectedConnection.Options = testCase.options
@@ -375,7 +375,7 @@ func TestConnectionManager_Create(t *testing.T) {
 func TestConnectionManager_Read(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully read a "+testCase.name, func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			expectedConnection := givenAConnection(t, testCase)
 
@@ -397,7 +397,7 @@ func TestConnectionManager_Read(t *testing.T) {
 func TestConnectionManager_ReadByName(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully find a "+testCase.name+" by its name", func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			expectedConnection := givenAConnection(t, testCase)
 
@@ -432,7 +432,7 @@ func TestConnectionManager_Update(t *testing.T) {
 				t.Skip("Skipping because we can't create an oidc, okta or samlp connection with no options")
 			}
 
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			connection := givenAConnection(t, connectionTestCase{connection: testCase.connection})
 
@@ -451,7 +451,7 @@ func TestConnectionManager_Update(t *testing.T) {
 }
 
 func TestConnectionManager_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAConnection(t, connectionTestCase{
 		connection: Connection{
@@ -471,7 +471,7 @@ func TestConnectionManager_Delete(t *testing.T) {
 }
 
 func TestConnectionManager_List(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAConnection(t, connectionTestCase{
 		connection: Connection{
