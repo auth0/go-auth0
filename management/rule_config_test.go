@@ -16,7 +16,7 @@ func TestRuleConfigManager_Upsert(t *testing.T) {
 	key := "foo"
 	ruleConfig := &RuleConfig{Value: auth0.String("bar")}
 
-	err := m.RuleConfig.Upsert(key, ruleConfig)
+	err := api.RuleConfig.Upsert(key, ruleConfig)
 	assert.NoError(t, err)
 	assert.Equal(t, key, ruleConfig.GetKey())
 
@@ -30,7 +30,7 @@ func TestRuleConfigManager_Read(t *testing.T) {
 
 	expected := givenARuleConfig(t)
 
-	actual, err := m.RuleConfig.Read(expected.GetKey())
+	actual, err := api.RuleConfig.Read(expected.GetKey())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expected.GetKey(), actual.GetKey())
@@ -41,10 +41,10 @@ func TestRuleConfigManager_Delete(t *testing.T) {
 
 	ruleConfig := givenARuleConfig(t)
 
-	err := m.RuleConfig.Delete(ruleConfig.GetKey())
+	err := api.RuleConfig.Delete(ruleConfig.GetKey())
 	assert.NoError(t, err)
 
-	actualRuleConfig, err := m.RuleConfig.Read(ruleConfig.GetKey())
+	actualRuleConfig, err := api.RuleConfig.Read(ruleConfig.GetKey())
 	assert.Empty(t, actualRuleConfig)
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -56,7 +56,7 @@ func TestRuleConfigManager_List(t *testing.T) {
 
 	ruleConfig := givenARuleConfig(t)
 
-	ruleConfigs, err := m.RuleConfig.List()
+	ruleConfigs, err := api.RuleConfig.List()
 
 	assert.NoError(t, err)
 	assert.Len(t, ruleConfigs, 1)
@@ -69,7 +69,7 @@ func givenARuleConfig(t *testing.T) *RuleConfig {
 	key := "foo"
 	ruleConfig := &RuleConfig{Value: auth0.String("bar")}
 
-	err := m.RuleConfig.Upsert(key, ruleConfig)
+	err := api.RuleConfig.Upsert(key, ruleConfig)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -82,6 +82,6 @@ func givenARuleConfig(t *testing.T) *RuleConfig {
 func cleanupRuleConfig(t *testing.T, key string) {
 	t.Helper()
 
-	err := m.RuleConfig.Delete(key)
+	err := api.RuleConfig.Delete(key)
 	require.NoError(t, err)
 }

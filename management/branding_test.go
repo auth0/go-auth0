@@ -12,7 +12,7 @@ import (
 func TestBrandingManager_Read(t *testing.T) {
 	setupHTTPRecordings(t)
 
-	branding, err := m.Branding.Read()
+	branding, err := api.Branding.Read()
 	assert.NoError(t, err)
 	assert.IsType(t, &Branding{}, branding)
 }
@@ -21,7 +21,7 @@ func TestBrandingManager_Update(t *testing.T) {
 	setupHTTPRecordings(t)
 
 	// Save initial branding settings.
-	preTestBrandingSettings, err := m.Branding.Read()
+	preTestBrandingSettings, err := api.Branding.Read()
 	assert.NoError(t, err)
 
 	expected := &Branding{
@@ -41,17 +41,17 @@ func TestBrandingManager_Update(t *testing.T) {
 		},
 	}
 
-	err = m.Branding.Update(expected)
+	err = api.Branding.Update(expected)
 	assert.NoError(t, err)
 
-	actual, err := m.Branding.Read()
+	actual, err := api.Branding.Read()
 	assert.NoError(t, err)
 	assert.Equal(t, expected.GetColors().GetPrimary(), actual.GetColors().GetPrimary())
 	assert.Equal(t, expected.GetFont().GetURL(), actual.GetFont().GetURL())
 	assert.Equal(t, expected.GetFaviconURL(), actual.GetFaviconURL())
 
 	// Restore initial branding settings.
-	err = m.Branding.Update(preTestBrandingSettings)
+	err = api.Branding.Update(preTestBrandingSettings)
 	assert.NoError(t, err)
 }
 
@@ -65,15 +65,15 @@ func TestBrandingManager_UniversalLogin(t *testing.T) {
 		Body: auth0.String(body),
 	}
 
-	err := m.Branding.SetUniversalLogin(expectedUL)
+	err := api.Branding.SetUniversalLogin(expectedUL)
 	assert.NoError(t, err)
 
-	actualUL, err := m.Branding.UniversalLogin()
+	actualUL, err := api.Branding.UniversalLogin()
 	assert.NoError(t, err)
 	assert.Equal(t, expectedUL, actualUL)
 
 	t.Cleanup(func() {
-		err = m.Branding.DeleteUniversalLogin()
+		err = api.Branding.DeleteUniversalLogin()
 		assert.NoError(t, err)
 	})
 }

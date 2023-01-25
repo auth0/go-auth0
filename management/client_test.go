@@ -20,7 +20,7 @@ func TestClient_Create(t *testing.T) {
 		Description: auth0.String("This is just a test client."),
 	}
 
-	err := m.Client.Create(expectedClient)
+	err := api.Client.Create(expectedClient)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedClient.GetClientID())
 
@@ -34,7 +34,7 @@ func TestClient_Read(t *testing.T) {
 
 	expectedClient := givenAClient(t)
 
-	actualClient, err := m.Client.Read(expectedClient.GetClientID())
+	actualClient, err := api.Client.Read(expectedClient.GetClientID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedClient.GetName(), actualClient.GetName())
@@ -54,7 +54,7 @@ func TestClient_Update(t *testing.T) {
 	expectedClient.JWTConfiguration.SecretEncoded = nil // Read-Only: Additional properties not allowed.
 	expectedClient.ClientSecret = nil
 
-	err := m.Client.Update(clientID, expectedClient)
+	err := api.Client.Update(clientID, expectedClient)
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedDescription, *expectedClient.Description)
@@ -65,10 +65,10 @@ func TestClient_Delete(t *testing.T) {
 
 	expectedClient := givenAClient(t)
 
-	err := m.Client.Delete(expectedClient.GetClientID())
+	err := api.Client.Delete(expectedClient.GetClientID())
 	assert.NoError(t, err)
 
-	actualClient, err := m.Client.Read(expectedClient.GetClientID())
+	actualClient, err := api.Client.Read(expectedClient.GetClientID())
 
 	assert.Empty(t, actualClient)
 	assert.Error(t, err)
@@ -81,7 +81,7 @@ func TestClient_List(t *testing.T) {
 
 	expectedClient := givenAClient(t)
 
-	clientList, err := m.Client.List(IncludeFields("client_id"))
+	clientList, err := api.Client.List(IncludeFields("client_id"))
 
 	assert.NoError(t, err)
 	assert.Contains(t, clientList.Clients, &Client{ClientID: expectedClient.ClientID})
@@ -93,7 +93,7 @@ func TestClient_RotateSecret(t *testing.T) {
 	expectedClient := givenAClient(t)
 
 	oldSecret := expectedClient.GetClientSecret()
-	actualClient, err := m.Client.RotateSecret(expectedClient.GetClientID())
+	actualClient, err := api.Client.RotateSecret(expectedClient.GetClientID())
 
 	assert.NoError(t, err)
 	assert.NotEqual(t, oldSecret, actualClient.GetClientSecret())
@@ -135,7 +135,7 @@ func givenAClient(t *testing.T) *Client {
 		OrganizationUsage: auth0.String("allow"),
 	}
 
-	err := m.Client.Create(client)
+	err := api.Client.Create(client)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -148,6 +148,6 @@ func givenAClient(t *testing.T) *Client {
 func cleanupClient(t *testing.T, clientID string) {
 	t.Helper()
 
-	err := m.Client.Delete(clientID)
+	err := api.Client.Delete(clientID)
 	require.NoError(t, err)
 }

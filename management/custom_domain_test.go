@@ -19,7 +19,7 @@ func TestCustomDomainManager_Create(t *testing.T) {
 		TLSPolicy: auth0.String("recommended"),
 	}
 
-	err := m.CustomDomain.Create(expected)
+	err := api.CustomDomain.Create(expected)
 	assertNoCustomDomainErr(t, err)
 	assert.NotEmpty(t, expected.GetID())
 
@@ -33,7 +33,7 @@ func TestCustomDomainManager_Read(t *testing.T) {
 
 	expected := givenACustomDomain(t)
 
-	actual, err := m.CustomDomain.Read(expected.GetID())
+	actual, err := api.CustomDomain.Read(expected.GetID())
 
 	assertNoCustomDomainErr(t, err)
 	assert.Equal(t, expected.GetDomain(), actual.GetDomain())
@@ -44,10 +44,10 @@ func TestCustomDomainManager_Update(t *testing.T) {
 
 	customDomain := givenACustomDomain(t)
 
-	err := m.CustomDomain.Update(customDomain.GetID(), &CustomDomain{TLSPolicy: auth0.String("recommended")})
+	err := api.CustomDomain.Update(customDomain.GetID(), &CustomDomain{TLSPolicy: auth0.String("recommended")})
 	assertNoCustomDomainErr(t, err)
 
-	actual, err := m.CustomDomain.Read(customDomain.GetID())
+	actual, err := api.CustomDomain.Read(customDomain.GetID())
 
 	assertNoCustomDomainErr(t, err)
 	assert.Equal(t, "recommended", actual.GetTLSPolicy())
@@ -58,10 +58,10 @@ func TestCustomDomainManager_Delete(t *testing.T) {
 
 	customDomain := givenACustomDomain(t)
 
-	err := m.CustomDomain.Delete(customDomain.GetID())
+	err := api.CustomDomain.Delete(customDomain.GetID())
 	assertNoCustomDomainErr(t, err)
 
-	_, err = m.CustomDomain.Read(customDomain.GetID())
+	_, err = api.CustomDomain.Read(customDomain.GetID())
 
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -73,7 +73,7 @@ func TestCustomDomainManager_List(t *testing.T) {
 
 	customDomain := givenACustomDomain(t)
 
-	customDomainList, err := m.CustomDomain.List()
+	customDomainList, err := api.CustomDomain.List()
 
 	assertNoCustomDomainErr(t, err)
 	assert.Len(t, customDomainList, 1)
@@ -85,7 +85,7 @@ func TestCustomDomainManager_Verify(t *testing.T) {
 
 	customDomain := givenACustomDomain(t)
 
-	actualDomain, err := m.CustomDomain.Verify(customDomain.GetID())
+	actualDomain, err := api.CustomDomain.Verify(customDomain.GetID())
 
 	assertNoCustomDomainErr(t, err)
 	assert.Equal(t, "pending_verification", actualDomain.GetStatus())
@@ -100,7 +100,7 @@ func givenACustomDomain(t *testing.T) *CustomDomain {
 		TLSPolicy: auth0.String("recommended"),
 	}
 
-	err := m.CustomDomain.Create(customDomain)
+	err := api.CustomDomain.Create(customDomain)
 	assertNoCustomDomainErr(t, err)
 
 	t.Cleanup(func() {
@@ -113,7 +113,7 @@ func givenACustomDomain(t *testing.T) *CustomDomain {
 func cleanupCustomDomain(t *testing.T, customDomainID string) {
 	t.Helper()
 
-	err := m.CustomDomain.Delete(customDomainID)
+	err := api.CustomDomain.Delete(customDomainID)
 	assertNoCustomDomainErr(t, err)
 }
 

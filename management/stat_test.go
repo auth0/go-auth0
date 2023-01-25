@@ -9,7 +9,7 @@ import (
 func TestStatManager_ActiveUsers(t *testing.T) {
 	setupHTTPRecordings(t)
 
-	activeUsers, err := m.Stat.ActiveUsers()
+	activeUsers, err := api.Stat.ActiveUsers()
 	assert.NoError(t, err)
 	assert.GreaterOrEqual(t, activeUsers, 0)
 }
@@ -17,7 +17,7 @@ func TestStatManager_ActiveUsers(t *testing.T) {
 func TestStatManager_Daily(t *testing.T) {
 	setupHTTPRecordings(t)
 
-	daily, err := m.Stat.Daily()
+	daily, err := api.Stat.Daily()
 	assert.NoError(t, err)
 	assert.NotEmpty(t, daily)
 }

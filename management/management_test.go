@@ -21,7 +21,7 @@ var (
 	debug                 = os.Getenv("AUTH0_DEBUG")
 	httpRecordings        = os.Getenv("AUTH0_HTTP_RECORDINGS")
 	httpRecordingsEnabled = false
-	m                     = &Management{}
+	api                   = &Management{}
 )
 
 func init() {
@@ -32,7 +32,7 @@ func init() {
 func initTestManagement() {
 	var err error
 
-	m, err = New(
+	api, err = New(
 		domain,
 		WithClientCredentials(clientID, clientSecret),
 		WithDebug(debug == "true" || debug == "1" || debug == "on"),
@@ -165,7 +165,7 @@ func TestRequestOptionContextCancel(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel() // Cancel the request.
 
-	err := m.Request("GET", "/", nil, Context(ctx))
+	err := api.Request("GET", "/", nil, Context(ctx))
 	if !errors.Is(err, context.Canceled) {
 		t.Errorf("expected err to be context.Canceled, got %v", err)
 	}
@@ -177,7 +177,7 @@ func TestRequestOptionContextTimeout(t *testing.T) {
 
 	time.Sleep(50 * time.Millisecond) // Delay until the deadline is exceeded.
 
-	err := m.Request("GET", "/", nil, Context(ctx))
+	err := api.Request("GET", "/", nil, Context(ctx))
 	if !errors.Is(err, context.DeadlineExceeded) {
 		t.Errorf("expected err to be context.DeadlineExceeded, got %v", err)
 	}
@@ -242,7 +242,7 @@ func TestManagement_URI(t *testing.T) {
 
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
-			actual := m.URI(testCase.given...)
+			actual := api.URI(testCase.given...)
 			assert.Equal(t, testCase.expected, actual)
 		})
 	}

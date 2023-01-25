@@ -24,23 +24,23 @@ func setupHTTPRecordings(t *testing.T) {
 
 	const recordingsDIR = "testdata/recordings/"
 
-	initialTransport := m.http.Transport
+	initialTransport := api.http.Transport
 
 	vcrTransport, err := recorder.NewAsMode(
 		recordingsDIR+t.Name(),
 		recorder.ModeReplaying,
-		m.http.Transport,
+		api.http.Transport,
 	)
 	require.NoError(t, err)
 
 	removeSensitiveDataFromRecordings(t, vcrTransport)
 
-	m.http.Transport = vcrTransport
+	api.http.Transport = vcrTransport
 
 	t.Cleanup(func() {
 		err := vcrTransport.Stop()
 		require.NoError(t, err)
-		m.http.Transport = initialTransport
+		api.http.Transport = initialTransport
 	})
 }
 

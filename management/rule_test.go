@@ -21,7 +21,7 @@ func TestRuleManager_Create(t *testing.T) {
 		Enabled: auth0.Bool(false),
 	}
 
-	err := m.Rule.Create(rule)
+	err := api.Rule.Create(rule)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, rule.GetID())
 
@@ -35,7 +35,7 @@ func TestRuleManager_Read(t *testing.T) {
 
 	expectedRule := givenARule(t)
 
-	actualRule, err := m.Rule.Read(expectedRule.GetID())
+	actualRule, err := api.Rule.Read(expectedRule.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedRule, actualRule)
@@ -50,10 +50,10 @@ func TestRuleManager_Update(t *testing.T) {
 		Enabled: auth0.Bool(true),
 	}
 
-	err := m.Rule.Update(rule.GetID(), updatedRule)
+	err := api.Rule.Update(rule.GetID(), updatedRule)
 	assert.NoError(t, err)
 
-	actualRule, err := m.Rule.Read(rule.GetID())
+	actualRule, err := api.Rule.Read(rule.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, updatedRule.GetOrder(), actualRule.GetOrder())
 	assert.Equal(t, updatedRule.GetEnabled(), actualRule.GetEnabled())
@@ -64,10 +64,10 @@ func TestRuleManager_Delete(t *testing.T) {
 
 	rule := givenARule(t)
 
-	err := m.Rule.Delete(rule.GetID())
+	err := api.Rule.Delete(rule.GetID())
 	assert.NoError(t, err)
 
-	actualRule, err := m.Rule.Read(rule.GetID())
+	actualRule, err := api.Rule.Read(rule.GetID())
 	assert.Empty(t, actualRule)
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -79,7 +79,7 @@ func TestRuleManager_List(t *testing.T) {
 
 	rule := givenARule(t)
 
-	ruleList, err := m.Rule.List(IncludeFields("id"))
+	ruleList, err := api.Rule.List(IncludeFields("id"))
 
 	assert.NoError(t, err)
 	assert.Contains(t, ruleList.Rules, &Rule{ID: rule.ID})
@@ -94,7 +94,7 @@ func givenARule(t *testing.T) *Rule {
 		Enabled: auth0.Bool(false),
 	}
 
-	err := m.Rule.Create(rule)
+	err := api.Rule.Create(rule)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -107,6 +107,6 @@ func givenARule(t *testing.T) *Rule {
 func cleanupRule(t *testing.T, ruleID string) {
 	t.Helper()
 
-	err := m.Rule.Delete(ruleID)
+	err := api.Rule.Delete(ruleID)
 	require.NoError(t, err)
 }

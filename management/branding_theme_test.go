@@ -15,7 +15,7 @@ func TestBrandingThemeManager_Default(t *testing.T) {
 
 	expectedTheme := givenABrandingTheme(t)
 
-	actualTheme, err := m.BrandingTheme.Default()
+	actualTheme, err := api.BrandingTheme.Default()
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedTheme.GetDisplayName(), actualTheme.GetDisplayName())
@@ -97,7 +97,7 @@ func TestBrandingThemeManager_Create(t *testing.T) {
 		},
 	}
 
-	err := m.BrandingTheme.Create(&expectedTheme)
+	err := api.BrandingTheme.Create(&expectedTheme)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedTheme.GetID())
 
@@ -111,7 +111,7 @@ func TestBrandingThemeManager_Read(t *testing.T) {
 
 	expectedTheme := givenABrandingTheme(t)
 
-	actualTheme, err := m.BrandingTheme.Read(expectedTheme.GetID())
+	actualTheme, err := api.BrandingTheme.Read(expectedTheme.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedTheme.GetDisplayName(), actualTheme.GetDisplayName())
@@ -196,10 +196,10 @@ func TestBrandingThemeManager_Update(t *testing.T) {
 		},
 	}
 
-	err := m.BrandingTheme.Update(expectedTheme.GetID(), actualTheme)
+	err := api.BrandingTheme.Update(expectedTheme.GetID(), actualTheme)
 	assert.NoError(t, err)
 
-	actualTheme, err = m.BrandingTheme.Read(expectedTheme.GetID())
+	actualTheme, err = api.BrandingTheme.Read(expectedTheme.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, "newTheme", actualTheme.GetDisplayName())
 }
@@ -209,10 +209,10 @@ func TestBrandingThemeManager_Delete(t *testing.T) {
 
 	theme := givenABrandingTheme(t)
 
-	err := m.BrandingTheme.Delete(theme.GetID())
+	err := api.BrandingTheme.Delete(theme.GetID())
 	assert.NoError(t, err)
 
-	actualTheme, err := m.BrandingTheme.Read(theme.GetID())
+	actualTheme, err := api.BrandingTheme.Read(theme.GetID())
 	assert.Empty(t, actualTheme)
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -295,7 +295,7 @@ func givenABrandingTheme(t *testing.T) *BrandingTheme {
 		},
 	}
 
-	err := m.BrandingTheme.Create(theme)
+	err := api.BrandingTheme.Create(theme)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -308,7 +308,7 @@ func givenABrandingTheme(t *testing.T) *BrandingTheme {
 func cleanupBrandingTheme(t *testing.T, themeID string) {
 	t.Helper()
 
-	err := m.BrandingTheme.Delete(themeID)
+	err := api.BrandingTheme.Delete(themeID)
 	if err != nil {
 		if err.(Error).Status() != http.StatusNotFound {
 			t.Error(err)
