@@ -27,6 +27,11 @@ func TestAttackProtection(t *testing.T) {
 		expected := &BreachedPasswordDetection{
 			Enabled: auth0.Bool(true),
 			Method:  auth0.String("standard"),
+			Stage: &BreachedPasswordDetectionStage{
+				PreUserRegistration: &BreachedPasswordDetectionPreUserRegistration{
+					Shields: &[]string{"block"},
+				},
+			},
 		}
 
 		err = m.AttackProtection.UpdateBreachedPasswordDetection(expected)

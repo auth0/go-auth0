@@ -35,6 +35,8 @@ type BreachedPasswordDetectionStage struct {
 // BreachedPasswordDetectionPreUserRegistration is used to specify breached password detection
 // configuration (shields) for the sign up flow.
 type BreachedPasswordDetectionPreUserRegistration struct {
+	// Action to take when a breached password is detected during a signup.
+	// Possible values: block, admin_notification.
 	Shields *[]string `json:"shields,omitempty"`
 }
 
