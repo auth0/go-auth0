@@ -251,8 +251,8 @@ func TestActionManager_LogSession(t *testing.T) {
 	err := api.Action.LogSession(expectedLogSession)
 
 	assert.NoError(t, err)
-	assert.Equal(t, *expectedLogSession.URL, "https://go-auth0-dev.eu.auth0.com/actions/log-sessions/tail?token=tkn_123")
-	assert.NotEmpty(t, expectedLogSession.Expires)
+	assert.NotEmpty(t, expectedLogSession.GetURL())
+	assert.NotEmpty(t, expectedLogSession.GetExpires())
 }
 
 func cleanupAction(t *testing.T, actionID string) {

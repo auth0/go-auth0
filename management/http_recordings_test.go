@@ -58,6 +58,7 @@ func removeSensitiveDataFromRecordings(t *testing.T, recorderTransport *recorder
 			redactSensitiveDataInSigningKey(t, i)
 			redactSensitiveDataInClient(t, i)
 			redactSensitiveDataInResourceServer(t, i)
+			redactSensitiveDataInLogSession(i)
 			redactDomain(i, domain)
 
 			return nil
@@ -201,5 +202,12 @@ func redactSensitiveDataInResourceServer(t *testing.T, i *cassette.Interaction) 
 		require.NoError(t, err)
 
 		i.Response.Body = string(rsBody)
+	}
+}
+
+func redactSensitiveDataInLogSession(i *cassette.Interaction) {
+	isLogSessionURL := strings.Contains(i.Request.URL, "https://"+domain+"/api/v2/actions/log-sessions")
+	if isLogSessionURL {
+		i.Request.URL = "https://" + domain + "/api/v2/actions/log-sessions/tail?token=tkn_123"
 	}
 }

@@ -108,6 +108,10 @@ func TestUserManager_Search(t *testing.T) {
 
 	expectedUser := givenAUser(t)
 
+	// Giving the search enough time to be
+	// able to pick up the created user.
+	time.Sleep(time.Second)
+
 	userList, err := api.User.Search(Query(fmt.Sprintf("email:%q", expectedUser.GetEmail())))
 
 	assert.NoError(t, err)
@@ -118,6 +122,10 @@ func TestUserManager_ListByEmail(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
+
+	// Giving the search enough time to be
+	// able to pick up the created user.
+	time.Sleep(time.Second)
 
 	users, err := api.User.ListByEmail(expectedUser.GetEmail())
 

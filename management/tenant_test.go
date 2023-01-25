@@ -34,7 +34,7 @@ func TestTenantManager(t *testing.T) {
 		SessionCookie: &TenantSessionCookie{
 			Mode: auth0.String("non-persistent"),
 		},
-		AllowedLogoutURLs:       &[]string{"https://app.com/logout", "localhost/logout"},
+		AllowedLogoutURLs:       &[]string{"https://app.com/logout", "http://localhost/logout"},
 		EnabledLocales:          &[]string{"fr", "en", "es"},
 		SandboxVersionAvailable: nil,
 	}
