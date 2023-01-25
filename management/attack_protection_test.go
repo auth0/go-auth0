@@ -41,7 +41,7 @@ func TestAttackProtection(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected.GetEnabled(), actual.GetEnabled())
 		assert.Equal(t, expected.GetMethod(), actual.GetMethod())
-		assert.Equal(t, expected.GetStage().GetPreUserRegistration().GetShields(), actual.GetStage().GetPreUserRegistration().GetShields())
+		assert.Equal(t, expected.Stage.GetPreUserRegistration().GetShields(), actual.Stage.GetPreUserRegistration().GetShields())
 
 		// Restore initial settings.
 		err = m.AttackProtection.UpdateBreachedPasswordDetection(preTestBPDSettings)
