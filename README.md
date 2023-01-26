@@ -60,7 +60,7 @@ func main() {
 	clientSecret := "EXAMPLE_XSQGmnt8JdXs23407hrK6XXXXXXX"
 
 	// Initialize a new client using a domain, client ID and client secret.
-	// Alternatively you can make use of a Token:
+	// Alternatively you can specify an access token:
 	// `management.WithStaticToken("token")`
 	auth0API, err := management.New(
 		domain,
