@@ -1,7 +1,7 @@
 # Contributing
 
 We appreciate feedback and contribution to this repo.
-Before you get started, there are a few guidelines you need to follow.
+Before you submit a pull request, there are a couple requirements to satisfy.
 
 ## Generating the Getters
 
@@ -38,11 +38,16 @@ Then create a local `.env` file in the `management` folder with the following se
 * `AUTH0_CLIENT_SECRET`: The **Client Secret** of the M2M app
 * `AUTH0_DEBUG`: Set to `true` to call the Management API in debug mode, which dumps the HTTP requests and responses to the output
 
-The http test recordings can be found in the [recordings](./test/data/recordings) folder.
+> **Note**
+> The http test recordings can be found in the [recordings](./test/data/recordings) folder.
 
 ## Adding New HTTP Test Recordings
 
 To add new http test recordings or to regenerate old ones you can make use of the `make test-record` command.
+
+> **Warning**
+> If you need to regenerate an old recording, make sure to delete the corresponding recording file first. 
+
 To add only one specific http test recording pass the `FILTER` var, e.g. `make test-record FILTER="TestResourceServer_Read"`.
 
 > **Warning**
