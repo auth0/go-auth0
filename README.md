@@ -172,7 +172,7 @@ To provide feedback or report a bug, [please raise an issue on our issue tracker
 
 ### Vulnerability Reporting
 
-Please do not report security vulnerabilities on the public Github issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+Please do not report security vulnerabilities on the public Github issue tracker. The [Responsible Disclosure Program](https://auth0.com/responsible-disclosure-policy) details the procedure for disclosing security issues.
 
 ---
 
