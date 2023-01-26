@@ -10,7 +10,7 @@ The SDK offers safe getters in order to access pointer fields to avoid panics on
 ```go
 // Example
 client, err := auth0API.Client.Read("EXAMPLE_16L9d34h0qe4NVE6SaHxZEid")
-if err != nil{
+if err != nil {
     return err
 }
 
