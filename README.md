@@ -54,7 +54,7 @@ func main() {
 	// Get these from your Auth0 Application Dashboard.
 	// The application needs to be a Machine To Machine authorized
 	// to request access tokens for the Auth0 Management API,
-	// with desired permissions.
+	// with the desired permissions (scopes).
 	domain := "example.auth0.com"
 	clientID := "EXAMPLE_16L9d34h0qe4NVE6SaHxZEid"
 	clientSecret := "EXAMPLE_XSQGmnt8JdXs23407hrK6XXXXXXX"
