@@ -62,7 +62,7 @@ check-getters: ## Check that struct field getters were generated
 #-----------------------------------------------------------------------------------------------------------------------
 .PHONY: test test-record test-e2e
 
-test: ## Run tests with http recordings. To run a specific test pass the FILTER var. Usage `make test FILTER=""`
+test: ## Run tests with http recordings. To run a specific test pass the FILTER var. Usage `make test FILTER="TestResourceServer_Read"`
 	@echo "==> Running tests with http recordings..."
 	@AUTH0_HTTP_RECORDINGS=on \
 		AUTH0_DOMAIN=go-auth0-dev.eu.auth0.com \
@@ -73,7 +73,7 @@ test: ## Run tests with http recordings. To run a specific test pass the FILTER 
 		-coverprofile=coverage.out \
 		./...
 
-test-record: ## Run tests and record http interactions. To run a specific test pass the FILTER var. Usage `make test-record FILTER=""`
+test-record: ## Run tests and record http interactions. To run a specific test pass the FILTER var. Usage `make test-record FILTER="TestResourceServer_Read"`
 	@echo "==> Running tests and recording http interactions..."
 	@AUTH0_HTTP_RECORDINGS=on \
 		go test \

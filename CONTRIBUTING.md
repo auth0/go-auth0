@@ -11,7 +11,7 @@ The SDK offers safe getters in order to access pointer fields to avoid panics on
 // Example
 client, err := auth0API.Client.Read("EXAMPLE_16L9d34h0qe4NVE6SaHxZEid")
 if err != nil{
-return err
+    return err
 }
 
 // GetLogoURI() is safe to use as it will return "" if client.LogoURI is nil. 
