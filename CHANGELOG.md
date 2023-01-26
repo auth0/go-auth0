@@ -1,5 +1,18 @@
 # Change Log
 
+<a name="v0.15.0"></a>
+
+## [v0.15.0](https://github.com/auth0/go-auth0/tree/v0.15.0) (2023-01-26)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.14.0...v0.15.0)
+
+### Added
+
+- Added support for segment log stream type ([#151](https://github.com/auth0/go-auth0/pull/151))
+- Added `Stage` field to `BreachedPasswordDetection` ([#148](https://github.com/auth0/go-auth0/pull/148))
+- Added `LogoURL` field to `ConnectionOptionsOkta` ([#153](https://github.com/auth0/go-auth0/pull/153))
+
+
 <a name="v0.14.0"></a>
 
 ## [v0.14.0](https://github.com/auth0/go-auth0/tree/v0.14.0) (2022-12-19)
