@@ -1,38 +1,85 @@
+#-----------------------------------------------------------------------------------------------------------------------
+# Variables (https://www.gnu.org/software/make/manual/html_node/Using-Variables.html#Using-Variables)
+#-----------------------------------------------------------------------------------------------------------------------
 .DEFAULT_GOAL := help
+GO_BIN ?= $(shell go env GOPATH)/bin
 
-.PHONY: help
-help: ## Shows this help
+#-----------------------------------------------------------------------------------------------------------------------
+# Rules (https://www.gnu.org/software/make/manual/html_node/Rule-Introduction.html#Rule-Introduction)
+#-----------------------------------------------------------------------------------------------------------------------
+.PHONY: help generate
+
+help: ## Show this help
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
+generate: ## Generate management accessor methods
+	@echo "==> Generating management accessor methods..."
+	@go generate ./...
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Dependencies
+#-----------------------------------------------------------------------------------------------------------------------
 .PHONY: deps
-deps: ## Downloads dependencies
-	@echo "Downloading dependencies to vendor folder..."
+
+deps: ## Download dependencies
+	@echo "==> Downloading dependencies to vendor folder..."
 	@go mod vendor -v
 
-.PHONY: lint
-lint: ## Runs linting on the go files. Requires docker to be installed
-	@echo "Running linting on the library..."
-	@docker run --rm -v $(CURDIR):/go-auth0 -w /go-auth0 golangci/golangci-lint:v1.44.0 golangci-lint -c .golangci.yaml run ./...
-
-.PHONY: test-e2e
-test-e2e: ## Runs tests without http recordings
-	@echo "Running tests..."
-	@go test -cover -covermode=atomic -coverprofile=coverage.out ./...
-
-.PHONY: test
-test: ## Runs tests with http recordings
-	@echo "Running tests with http recordings..."
-	@AUTH0_HTTP_RECORDINGS=on AUTH0_DOMAIN=go-auth0-dev.eu.auth0.com go test -cover -covermode=atomic -coverprofile=coverage.out ./...
-
-.PHONY: generate
-generate: ## Generate management accessor methods
-	@echo "Generating management accessor methods..."
-	@go generate ./...
+$(GO_BIN)/golangci-lint:
+	${call print, "Installing golangci-lint"}
+	@go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 $(GO_BIN)/govulncheck:
 	@go install -v golang.org/x/vuln/cmd/govulncheck@latest
 
-.PHONY: check-vuln
+#-----------------------------------------------------------------------------------------------------------------------
+# Checks
+#-----------------------------------------------------------------------------------------------------------------------
+.PHONY: lint check-vuln check-getters
+
+lint: $(GO_BIN)/golangci-lint ## Run linting on the go files
+	@echo "==> Running linting on the library with golangci-lint..."
+	@golangci-lint run -v -c .golangci.yaml ./...
+
 check-vuln: $(GO_BIN)/govulncheck ## Check for vulnerabilities
-	@echo "Checking for vulnerabilities..."
+	@echo "==> Checking for vulnerabilities..."
 	@govulncheck -v ./...
+
+check-getters: ## Check that struct field getters were generated
+	@echo "==> Checking that struct field getters were generated..."
+	@$(MAKE) generate
+	@if [ -n "$$(git status --porcelain)" ]; \
+	then \
+		echo "Go generate resulted in changed files:"; \
+		echo "$$(git diff)"; \
+		echo "Please run \`make generate\` to regenerate struct field getters."; \
+		exit 1; \
+	fi
+	@echo "Struct field getters are generated correctly."
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Testing
+#-----------------------------------------------------------------------------------------------------------------------
+.PHONY: test test-record test-e2e
+
+test: ## Run tests with http recordings. To run a specific test pass the FILTER var. Usage `make test FILTER=""`
+	@echo "==> Running tests with http recordings..."
+	@AUTH0_HTTP_RECORDINGS=on \
+		AUTH0_DOMAIN=go-auth0-dev.eu.auth0.com \
+		go test \
+		-run "$(FILTER)" \
+		-cover \
+		-covermode=atomic \
+		-coverprofile=coverage.out \
+		./...
+
+test-record: ## Run tests and record http interactions. To run a specific test pass the FILTER var. Usage `make test-record FILTER=""`
+	@echo "==> Running tests and recording http interactions..."
+	@AUTH0_HTTP_RECORDINGS=on \
+		go test \
+		-run "$(FILTER)" \
+		./...
+
+test-e2e: ## Run tests without http recordings
+	@echo "==> Running tests against a real Auth0 tenant..."
+	@go test -cover -covermode=atomic -coverprofile=coverage.out ./...
