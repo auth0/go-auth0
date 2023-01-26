@@ -4260,6 +4260,16 @@ func TestConnectionOptionsOkta_GetJWKSURI(tt *testing.T) {
 	c.GetJWKSURI()
 }
 
+func TestConnectionOptionsOkta_GetLogoURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{LogoURL: &zeroValue}
+	c.GetLogoURL()
+	c = &ConnectionOptionsOkta{}
+	c.GetLogoURL()
+	c = nil
+	c.GetLogoURL()
+}
+
 func TestConnectionOptionsOkta_GetNonPersistentAttrs(tt *testing.T) {
 	var zeroValue []string
 	c := &ConnectionOptionsOkta{NonPersistentAttrs: &zeroValue}
