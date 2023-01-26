@@ -105,7 +105,8 @@ the background by retrying the API request when the limit is lifted.
 
 ### Request Options
 
-Request options can be passed to every request to enhance the behavior.
+Fine-grained configuration can be provided on a request basis to enhance the request with specific query params, headers
+or to pass it a custom context.
 
 ```go
 // Example
