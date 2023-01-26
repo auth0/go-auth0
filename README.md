@@ -105,7 +105,7 @@ the background by retrying the API request when the limit is lifted.
 
 ### Request Options
 
-Fine-grained configuration can be provided on a request basis to enhance the request with specific query params, headers
+Fine-grained configuration can be provided on a per-request basis to enhance the request with specific query params, headers
 or to pass it a custom context.
 
 ```go
