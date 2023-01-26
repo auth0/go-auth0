@@ -354,12 +354,12 @@ type connectionTestCase struct {
 func TestConnectionManager_Create(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully create a "+testCase.name, func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			expectedConnection := testCase.connection
 			expectedConnection.Options = testCase.options
 
-			err := m.Connection.Create(&expectedConnection)
+			err := api.Connection.Create(&expectedConnection)
 
 			assert.NoError(t, err)
 			assert.NotEmpty(t, expectedConnection.GetID())
@@ -375,11 +375,11 @@ func TestConnectionManager_Create(t *testing.T) {
 func TestConnectionManager_Read(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully read a "+testCase.name, func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			expectedConnection := givenAConnection(t, testCase)
 
-			actualConnection, err := m.Connection.Read(expectedConnection.GetID())
+			actualConnection, err := api.Connection.Read(expectedConnection.GetID())
 
 			assert.NoError(t, err)
 			assert.Equal(t, expectedConnection.GetID(), actualConnection.GetID())
@@ -397,11 +397,11 @@ func TestConnectionManager_Read(t *testing.T) {
 func TestConnectionManager_ReadByName(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully find a "+testCase.name+" by its name", func(t *testing.T) {
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			expectedConnection := givenAConnection(t, testCase)
 
-			actualConnection, err := m.Connection.ReadByName(expectedConnection.GetName())
+			actualConnection, err := api.Connection.ReadByName(expectedConnection.GetName())
 
 			assert.NoError(t, err)
 			assert.Equal(t, expectedConnection.GetID(), actualConnection.GetID())
@@ -416,7 +416,7 @@ func TestConnectionManager_ReadByName(t *testing.T) {
 	}
 
 	t.Run("throw an error when connection name is empty", func(t *testing.T) {
-		actualConnection, err := m.Connection.ReadByName("")
+		actualConnection, err := api.Connection.ReadByName("")
 
 		assert.EqualError(t, err, "400 Bad Request: Name cannot be empty")
 		assert.Empty(t, actualConnection)
@@ -432,7 +432,7 @@ func TestConnectionManager_Update(t *testing.T) {
 				t.Skip("Skipping because we can't create an oidc, okta or samlp connection with no options")
 			}
 
-			setupHTTPRecordings(t)
+			configureHTTPTestRecordings(t)
 
 			connection := givenAConnection(t, connectionTestCase{connection: testCase.connection})
 
@@ -440,10 +440,10 @@ func TestConnectionManager_Update(t *testing.T) {
 				Options: testCase.options,
 			}
 
-			err := m.Connection.Update(connection.GetID(), connectionWithUpdatedOptions)
+			err := api.Connection.Update(connection.GetID(), connectionWithUpdatedOptions)
 			assert.NoError(t, err)
 
-			actualConnection, err := m.Connection.Read(connection.GetID())
+			actualConnection, err := api.Connection.Read(connection.GetID())
 			assert.NoError(t, err)
 			assert.ObjectsAreEqualValues(testCase.options, actualConnection.Options)
 		})
@@ -451,7 +451,7 @@ func TestConnectionManager_Update(t *testing.T) {
 }
 
 func TestConnectionManager_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAConnection(t, connectionTestCase{
 		connection: Connection{
@@ -460,10 +460,10 @@ func TestConnectionManager_Delete(t *testing.T) {
 		},
 	})
 
-	err := m.Connection.Delete(expectedConnection.GetID())
+	err := api.Connection.Delete(expectedConnection.GetID())
 	assert.NoError(t, err)
 
-	actualConnection, err := m.Connection.Read(expectedConnection.GetID())
+	actualConnection, err := api.Connection.Read(expectedConnection.GetID())
 	assert.Nil(t, actualConnection)
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -471,7 +471,7 @@ func TestConnectionManager_Delete(t *testing.T) {
 }
 
 func TestConnectionManager_List(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAConnection(t, connectionTestCase{
 		connection: Connection{
@@ -484,7 +484,7 @@ func TestConnectionManager_List(t *testing.T) {
 		ID:                 expectedConnection.ID,
 		IsDomainConnection: auth0.Bool(false),
 	}
-	connectionList, err := m.Connection.List(IncludeFields("id"))
+	connectionList, err := api.Connection.List(IncludeFields("id"))
 	assert.NoError(t, err)
 	assert.Contains(t, connectionList.Connections, needle)
 }
@@ -524,7 +524,7 @@ func TestConnectionOptionsScopes(t *testing.T) {
 func cleanupConnection(t *testing.T, connectionID string) {
 	t.Helper()
 
-	err := m.Connection.Delete(connectionID)
+	err := api.Connection.Delete(connectionID)
 	require.NoError(t, err)
 }
 
@@ -534,7 +534,7 @@ func givenAConnection(t *testing.T, testCase connectionTestCase) *Connection {
 	connection := testCase.connection
 	connection.Options = testCase.options
 
-	err := m.Connection.Create(&connection)
+	err := api.Connection.Create(&connection)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {

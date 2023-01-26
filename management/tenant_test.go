@@ -11,16 +11,16 @@ import (
 )
 
 func TestTenantManager(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
-	initialSettings, err := m.Tenant.Read()
+	initialSettings, err := api.Tenant.Read()
 	assert.NoError(t, err)
 
 	t.Cleanup(func() {
 		initialSettings.SandboxVersionAvailable = nil
 		initialSettings.UniversalLogin = nil
 		initialSettings.Flags = nil
-		err := m.Tenant.Update(initialSettings)
+		err := api.Tenant.Update(initialSettings)
 		require.NoError(t, err)
 	})
 
@@ -34,14 +34,14 @@ func TestTenantManager(t *testing.T) {
 		SessionCookie: &TenantSessionCookie{
 			Mode: auth0.String("non-persistent"),
 		},
-		AllowedLogoutURLs:       &[]string{"https://app.com/logout", "localhost/logout"},
+		AllowedLogoutURLs:       &[]string{"https://app.com/logout", "http://localhost/logout"},
 		EnabledLocales:          &[]string{"fr", "en", "es"},
 		SandboxVersionAvailable: nil,
 	}
-	err = m.Tenant.Update(newTenantSettings)
+	err = api.Tenant.Update(newTenantSettings)
 	assert.NoError(t, err)
 
-	actualTenantSettings, err := m.Tenant.Read()
+	actualTenantSettings, err := api.Tenant.Read()
 	assert.NoError(t, err)
 	assert.Equal(t, newTenantSettings.GetFriendlyName(), actualTenantSettings.GetFriendlyName())
 	assert.Equal(t, newTenantSettings.GetIdleSessionLifetime(), actualTenantSettings.GetIdleSessionLifetime())

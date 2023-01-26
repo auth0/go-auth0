@@ -16,7 +16,7 @@ import (
 )
 
 func TestUserManager_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := &User{
 		Connection: auth0.String("Username-Password-Authentication"),
@@ -25,7 +25,7 @@ func TestUserManager_Create(t *testing.T) {
 		Password:   auth0.String("I have a password and its a secret"),
 	}
 
-	err := m.User.Create(user)
+	err := api.User.Create(user)
 
 	assert.NoError(t, err)
 	assert.NotEmpty(t, user.GetID())
@@ -34,11 +34,11 @@ func TestUserManager_Create(t *testing.T) {
 }
 
 func TestUserManager_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
 
-	actualUser, err := m.User.Read(expectedUser.GetID())
+	actualUser, err := api.User.Read(expectedUser.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedUser.GetID(), actualUser.GetID())
@@ -46,7 +46,7 @@ func TestUserManager_Read(t *testing.T) {
 }
 
 func TestUserManager_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -56,7 +56,7 @@ func TestUserManager_Update(t *testing.T) {
 		Password:    auth0.String("I don't need one"),
 		AppMetadata: &appMetadata,
 	}
-	err := m.User.Update(expectedUser.GetID(), actualUser)
+	err := api.User.Update(expectedUser.GetID(), actualUser)
 
 	assert.NoError(t, err)
 	assert.Equal(t, map[string]interface{}{
@@ -71,15 +71,15 @@ func TestUserManager_Update(t *testing.T) {
 }
 
 func TestUserManager_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
 
-	err := m.User.Delete(expectedUser.GetID())
+	err := api.User.Delete(expectedUser.GetID())
 
 	assert.NoError(t, err)
 
-	actualUser, err := m.User.Read(expectedUser.GetID())
+	actualUser, err := api.User.Read(expectedUser.GetID())
 
 	assert.Empty(t, actualUser)
 	assert.Error(t, err)
@@ -88,7 +88,7 @@ func TestUserManager_Delete(t *testing.T) {
 }
 
 func TestUserManager_List(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
 
@@ -97,58 +97,66 @@ func TestUserManager_List(t *testing.T) {
 	time.Sleep(time.Second)
 
 	userQuery := fmt.Sprintf("username:%q", expectedUser.GetUsername())
-	userList, err := m.User.List(Query(userQuery))
+	userList, err := api.User.List(Query(userQuery))
 
 	assert.NoError(t, err)
 	assert.Len(t, userList.Users, 1)
 }
 
 func TestUserManager_Search(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
 
-	userList, err := m.User.Search(Query(fmt.Sprintf("email:%q", expectedUser.GetEmail())))
+	// Giving the search enough time to be
+	// able to pick up the created user.
+	time.Sleep(time.Second)
+
+	userList, err := api.User.Search(Query(fmt.Sprintf("email:%q", expectedUser.GetEmail())))
 
 	assert.NoError(t, err)
 	assert.Len(t, userList.Users, 1)
 }
 
 func TestUserManager_ListByEmail(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedUser := givenAUser(t)
 
-	users, err := m.User.ListByEmail(expectedUser.GetEmail())
+	// Giving the search enough time to be
+	// able to pick up the created user.
+	time.Sleep(time.Second)
+
+	users, err := api.User.ListByEmail(expectedUser.GetEmail())
 
 	assert.NoError(t, err)
 	assert.Len(t, users, 1)
 }
 
 func TestUserManager_Roles(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	role := givenARole(t)
 
-	err := m.User.AssignRoles(user.GetID(), []*Role{role})
+	err := api.User.AssignRoles(user.GetID(), []*Role{role})
 	assert.NoError(t, err)
 
-	roles, err := m.User.Roles(user.GetID())
+	roles, err := api.User.Roles(user.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, roles.Roles, 1)
 	assert.Equal(t, role.GetName(), roles.Roles[0].GetName())
 
-	err = m.User.RemoveRoles(user.GetID(), []*Role{role})
+	err = api.User.RemoveRoles(user.GetID(), []*Role{role})
 	assert.NoError(t, err)
 
-	roles, err = m.User.Roles(user.GetID())
+	roles, err = api.User.Roles(user.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, roles.Roles, 0)
 }
 
 func TestUserManager_Permissions(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	resourceServer := givenAResourceServer(t)
@@ -159,92 +167,92 @@ func TestUserManager_Permissions(t *testing.T) {
 		},
 	}
 
-	err := m.User.AssignPermissions(user.GetID(), permissions)
+	err := api.User.AssignPermissions(user.GetID(), permissions)
 	assert.NoError(t, err)
 
-	permissionList, err := m.User.Permissions(user.GetID())
+	permissionList, err := api.User.Permissions(user.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, permissionList.Permissions, 1)
 	assert.Equal(t, permissions[0].GetName(), permissionList.Permissions[0].GetName())
 	assert.Equal(t, permissions[0].GetResourceServerIdentifier(), permissionList.Permissions[0].GetResourceServerIdentifier())
 
-	err = m.User.RemovePermissions(user.GetID(), permissions)
+	err = api.User.RemovePermissions(user.GetID(), permissions)
 	assert.NoError(t, err)
 
-	permissionList, err = m.User.Permissions(user.GetID())
+	permissionList, err = api.User.Permissions(user.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, permissionList.Permissions, 0)
 }
 
 func TestUserManager_Blocks(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
-	blockedIPs, err := m.User.Blocks(user.GetID())
+	blockedIPs, err := api.User.Blocks(user.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, blockedIPs, 0)
 }
 
 func TestUserManager_BlocksByIdentifier(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
-	blockedIPs, err := m.User.BlocksByIdentifier(user.GetUsername())
+	blockedIPs, err := api.User.BlocksByIdentifier(user.GetUsername())
 	assert.NoError(t, err)
 	assert.Len(t, blockedIPs, 0)
 }
 
 func TestUserManager_Unblock(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
-	err := m.User.Unblock(user.GetID())
+	err := api.User.Unblock(user.GetID())
 	assert.NoError(t, err)
 }
 
 func TestUserManager_UnblockByIdentifier(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
-	err := m.User.UnblockByIdentifier(user.GetUsername())
+	err := api.User.UnblockByIdentifier(user.GetUsername())
 	assert.NoError(t, err)
 }
 
 func TestUserManager_Enrollments(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
-	userEnrollments, err := m.User.Enrollments(user.GetID())
+	userEnrollments, err := api.User.Enrollments(user.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, userEnrollments, 0)
 }
 
 func TestUserManager_RegenerateRecoveryCode(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
-	recoveryCode, err := m.User.RegenerateRecoveryCode(user.GetID())
+	recoveryCode, err := api.User.RegenerateRecoveryCode(user.GetID())
 	assert.NoError(t, err)
 	assert.NotEmpty(t, recoveryCode)
 }
 
 func TestUserManager_InvalidateRememberBrowser(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
-	err := m.User.InvalidateRememberBrowser(user.GetID())
+	err := api.User.InvalidateRememberBrowser(user.GetID())
 	assert.NoError(t, err)
 }
 
 func TestUserManager_Link(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	mainUser := givenAUser(t)
 	secondaryUser := givenAUser(t)
-	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
+	conn, err := api.Connection.ReadByName("Username-Password-Authentication")
 	assert.NoError(t, err)
 
-	mainUserIdentities, err := m.User.Link(
+	mainUserIdentities, err := api.User.Link(
 		mainUser.GetID(),
 		&UserIdentityLink{
 			Provider:     auth0.String("auth0"),
@@ -259,15 +267,15 @@ func TestUserManager_Link(t *testing.T) {
 }
 
 func TestUserManager_Unlink(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	provider := "auth0"
 	mainUser := givenAUser(t)
 	secondaryUser := givenAUser(t)
-	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
+	conn, err := api.Connection.ReadByName("Username-Password-Authentication")
 	assert.NoError(t, err)
 
-	_, err = m.User.Link(
+	_, err = api.User.Link(
 		mainUser.GetID(),
 		&UserIdentityLink{
 			Provider:     &provider,
@@ -277,7 +285,7 @@ func TestUserManager_Unlink(t *testing.T) {
 	)
 	assert.NoError(t, err)
 
-	unlinkedIdentities, err := m.User.Unlink(
+	unlinkedIdentities, err := api.User.Unlink(
 		mainUser.GetID(),
 		provider,
 		strings.TrimPrefix(secondaryUser.GetID(), "auth0|"),
@@ -374,7 +382,7 @@ func givenAUser(t *testing.T) *User {
 		Blocked:       auth0.Bool(false),
 	}
 
-	err := m.User.Create(user)
+	err := api.User.Create(user)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -387,6 +395,6 @@ func givenAUser(t *testing.T) *User {
 func cleanupUser(t *testing.T, userID string) {
 	t.Helper()
 
-	err := m.User.Delete(userID)
+	err := api.User.Delete(userID)
 	require.NoError(t, err)
 }

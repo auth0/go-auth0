@@ -11,7 +11,7 @@ import (
 )
 
 func TestEmailTemplateManager_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	template := &EmailTemplate{
 		Template:               auth0.String("verify_email"),
@@ -24,7 +24,7 @@ func TestEmailTemplateManager_Create(t *testing.T) {
 		IncludeEmailInRedirect: auth0.Bool(true),
 	}
 
-	err := m.EmailTemplate.Create(template)
+	err := api.EmailTemplate.Create(template)
 	if err != nil {
 		if err, ok := err.(Error); ok && err.Status() != http.StatusConflict {
 			t.Error(err)
@@ -37,24 +37,24 @@ func TestEmailTemplateManager_Create(t *testing.T) {
 }
 
 func TestEmailTemplateManager_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedTemplate := givenAnEmailTemplate(t)
 
-	actualTemplate, err := m.EmailTemplate.Read(expectedTemplate.GetTemplate())
+	actualTemplate, err := api.EmailTemplate.Read(expectedTemplate.GetTemplate())
 
 	assert.NoError(t, err)
 	assert.ObjectsAreEqual(expectedTemplate, actualTemplate)
 }
 
 func TestEmailTemplateManager_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	template := givenAnEmailTemplate(t)
 
 	expectedBody := "<html><body><h1>Let's get you verified!</h1></body></html>"
 	expectedIncludeEmailInRedirect := false
-	err := m.EmailTemplate.Update(
+	err := api.EmailTemplate.Update(
 		template.GetTemplate(),
 		&EmailTemplate{
 			Body:                   &expectedBody,
@@ -63,14 +63,14 @@ func TestEmailTemplateManager_Update(t *testing.T) {
 	)
 	assert.NoError(t, err)
 
-	actualTemplate, err := m.EmailTemplate.Read(template.GetTemplate())
+	actualTemplate, err := api.EmailTemplate.Read(template.GetTemplate())
 	assert.NoError(t, err)
 	assert.Equal(t, expectedBody, actualTemplate.GetBody())
 	assert.Equal(t, expectedIncludeEmailInRedirect, actualTemplate.GetIncludeEmailInRedirect())
 }
 
 func TestEmailTemplateManager_Replace(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	givenAnEmailProvider(t)
 	template := givenAnEmailTemplate(t)
@@ -81,10 +81,10 @@ func TestEmailTemplateManager_Replace(t *testing.T) {
 	template.From = auth0.String("someone@example.com")
 	template.IncludeEmailInRedirect = auth0.Bool(true)
 
-	err := m.EmailTemplate.Replace(template.GetTemplate(), template)
+	err := api.EmailTemplate.Replace(template.GetTemplate(), template)
 	assert.NoError(t, err)
 
-	actualTemplate, err := m.EmailTemplate.Read(template.GetTemplate())
+	actualTemplate, err := api.EmailTemplate.Read(template.GetTemplate())
 	assert.NoError(t, err)
 
 	assert.Equal(t, actualTemplate.GetBody(), template.GetBody())
@@ -108,7 +108,7 @@ func givenAnEmailTemplate(t *testing.T) *EmailTemplate {
 		IncludeEmailInRedirect: auth0.Bool(true),
 	}
 
-	err := m.EmailTemplate.Create(template)
+	err := api.EmailTemplate.Create(template)
 	if err != nil {
 		if err, ok := err.(Error); ok && err.Status() != http.StatusConflict {
 			t.Error(err)
@@ -125,6 +125,6 @@ func givenAnEmailTemplate(t *testing.T) *EmailTemplate {
 func cleanupEmailTemplate(t *testing.T, templateName string) {
 	t.Helper()
 
-	err := m.EmailTemplate.Update(templateName, &EmailTemplate{Enabled: auth0.Bool(false)})
+	err := api.EmailTemplate.Update(templateName, &EmailTemplate{Enabled: auth0.Bool(false)})
 	require.NoError(t, err)
 }

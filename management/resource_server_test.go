@@ -12,7 +12,7 @@ import (
 )
 
 func TestResourceServer_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedResourceServer := &ResourceServer{
 		Name:                auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
@@ -28,7 +28,7 @@ func TestResourceServer_Create(t *testing.T) {
 		},
 	}
 
-	err := m.ResourceServer.Create(expectedResourceServer)
+	err := api.ResourceServer.Create(expectedResourceServer)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedResourceServer.GetID())
 
@@ -38,18 +38,18 @@ func TestResourceServer_Create(t *testing.T) {
 }
 
 func TestResourceServer_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedResourceServer := givenAResourceServer(t)
 
-	actualResourceServer, err := m.ResourceServer.Read(expectedResourceServer.GetID())
+	actualResourceServer, err := api.ResourceServer.Read(expectedResourceServer.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedResourceServer.GetName(), actualResourceServer.GetName())
 }
 
 func TestResourceServer_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedResourceServer := givenAResourceServer(t)
 
@@ -70,7 +70,7 @@ func TestResourceServer_Update(t *testing.T) {
 	})
 	expectedResourceServer.Scopes = &scopes
 
-	err := m.ResourceServer.Update(resourceServerID, expectedResourceServer)
+	err := api.ResourceServer.Update(resourceServerID, expectedResourceServer)
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedResourceServer.GetAllowOfflineAccess(), true)
@@ -82,14 +82,14 @@ func TestResourceServer_Update(t *testing.T) {
 }
 
 func TestResourceServer_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedResourceServer := givenAResourceServer(t)
 
-	err := m.ResourceServer.Delete(expectedResourceServer.GetID())
+	err := api.ResourceServer.Delete(expectedResourceServer.GetID())
 	assert.NoError(t, err)
 
-	actualResourceServer, err := m.ResourceServer.Read(expectedResourceServer.GetID())
+	actualResourceServer, err := api.ResourceServer.Read(expectedResourceServer.GetID())
 	assert.Empty(t, actualResourceServer)
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -97,11 +97,11 @@ func TestResourceServer_Delete(t *testing.T) {
 }
 
 func TestResourceServer_List(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedResourceServer := givenAResourceServer(t)
 
-	resourceServerList, err := m.ResourceServer.List(IncludeFields("id"))
+	resourceServerList, err := api.ResourceServer.List(IncludeFields("id"))
 
 	assert.NoError(t, err)
 	assert.Contains(t, resourceServerList.ResourceServers, &ResourceServer{ID: expectedResourceServer.ID})
@@ -124,7 +124,7 @@ func givenAResourceServer(t *testing.T) *ResourceServer {
 		},
 	}
 
-	err := m.ResourceServer.Create(resourceServer)
+	err := api.ResourceServer.Create(resourceServer)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -137,6 +137,6 @@ func givenAResourceServer(t *testing.T) *ResourceServer {
 func cleanupResourceServer(t *testing.T, resourceServerID string) {
 	t.Helper()
 
-	err := m.ResourceServer.Delete(resourceServerID)
+	err := api.ResourceServer.Delete(resourceServerID)
 	require.NoError(t, err)
 }

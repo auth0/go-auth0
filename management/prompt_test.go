@@ -10,10 +10,10 @@ import (
 )
 
 func TestPrompt(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	t.Cleanup(func() {
-		err := m.Prompt.Update(&Prompt{
+		err := api.Prompt.Update(&Prompt{
 			UniversalLoginExperience:    "classic",
 			IdentifierFirst:             auth0.Bool(false),
 			WebAuthnPlatformFirstFactor: auth0.Bool(false),
@@ -22,14 +22,14 @@ func TestPrompt(t *testing.T) {
 	})
 
 	t.Run("Update to the new identifier first experience with biometrics", func(t *testing.T) {
-		err := m.Prompt.Update(&Prompt{
+		err := api.Prompt.Update(&Prompt{
 			UniversalLoginExperience:    "new",
 			IdentifierFirst:             auth0.Bool(true),
 			WebAuthnPlatformFirstFactor: auth0.Bool(true),
 		})
 		assert.NoError(t, err)
 
-		ps, err := m.Prompt.Read()
+		ps, err := api.Prompt.Read()
 		assert.NoError(t, err)
 		assert.Equal(t, "new", ps.UniversalLoginExperience)
 		assert.True(t, ps.GetIdentifierFirst())
@@ -37,14 +37,14 @@ func TestPrompt(t *testing.T) {
 	})
 
 	t.Run("Update to the classic non identifier first experience without biometrics", func(t *testing.T) {
-		err := m.Prompt.Update(&Prompt{
+		err := api.Prompt.Update(&Prompt{
 			UniversalLoginExperience:    "classic",
 			IdentifierFirst:             auth0.Bool(false),
 			WebAuthnPlatformFirstFactor: auth0.Bool(false),
 		})
 		assert.NoError(t, err)
 
-		ps, err := m.Prompt.Read()
+		ps, err := api.Prompt.Read()
 		assert.NoError(t, err)
 		assert.Equal(t, "classic", ps.UniversalLoginExperience)
 		assert.False(t, ps.GetIdentifierFirst())
@@ -53,14 +53,14 @@ func TestPrompt(t *testing.T) {
 }
 
 func TestPromptCustomText(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	const prompt = "login"
 	const lang = "en"
 
 	t.Cleanup(func() {
 		body := make(map[string]interface{})
-		err := m.Prompt.SetCustomText(prompt, lang, body)
+		err := api.Prompt.SetCustomText(prompt, lang, body)
 		require.NoError(t, err)
 	})
 
@@ -70,10 +70,10 @@ func TestPromptCustomText(t *testing.T) {
 		},
 	}
 
-	err := m.Prompt.SetCustomText(prompt, lang, body)
+	err := api.Prompt.SetCustomText(prompt, lang, body)
 	assert.NoError(t, err)
 
-	texts, err := m.Prompt.CustomText(prompt, lang)
+	texts, err := api.Prompt.CustomText(prompt, lang)
 	assert.NoError(t, err)
 	assert.Equal(t, "Welcome", texts["login"].(map[string]interface{})["title"])
 }

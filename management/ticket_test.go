@@ -9,7 +9,7 @@ import (
 )
 
 func TestTicketManager_VerifyEmail(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	ticket := &Ticket{
@@ -18,12 +18,12 @@ func TestTicketManager_VerifyEmail(t *testing.T) {
 		TTLSec:    auth0.Int(3600),
 	}
 
-	err := m.Ticket.VerifyEmail(ticket)
+	err := api.Ticket.VerifyEmail(ticket)
 	assert.NoError(t, err)
 }
 
 func TestTicketManager_ChangePassword(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	ticket := &Ticket{
@@ -34,6 +34,6 @@ func TestTicketManager_ChangePassword(t *testing.T) {
 		IncludeEmailInRedirect: auth0.Bool(true),
 	}
 
-	err := m.Ticket.ChangePassword(ticket)
+	err := api.Ticket.ChangePassword(ticket)
 	assert.NoError(t, err)
 }

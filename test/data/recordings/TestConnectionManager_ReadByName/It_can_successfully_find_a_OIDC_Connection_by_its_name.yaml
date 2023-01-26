@@ -1,0 +1,145 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 394
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test-OIDC-Connection-1674668511","strategy":"oidc","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":null,"authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","type":null,"userinfo_endpoint":null,"token_endpoint":null,"scope":"openid","upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 599
+        uncompressed: false
+        body: '{"id":"con_0j9lwft94QOY5c0S","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":null,"authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","type":"front_channel","userinfo_endpoint":null,"token_endpoint":null,"scope":"openid","upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"oidc","name":"Test-OIDC-Connection-1674668511","is_domain_connection":false,"show_as_button":false,"display_name":"Test-OIDC-Connection-1674668511","enabled_clients":[],"realms":["Test-OIDC-Connection-1674668511"]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 6.264926708s
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 5
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            null
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?include_totals=true&name=Test-OIDC-Connection-1674668511&per_page=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"total":1,"start":0,"limit":50,"connections":[{"id":"con_0j9lwft94QOY5c0S","options":{"type":"front_channel","scope":"openid","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":null,"token_endpoint":null,"upstream_params":{"screen_name":{"alias":"login_hint"}},"userinfo_endpoint":null,"authorization_endpoint":"https://example.com"},"strategy":"oidc","name":"Test-OIDC-Connection-1674668511","is_domain_connection":false,"show_as_button":false,"display_name":"Test-OIDC-Connection-1674668511","realms":["Test-OIDC-Connection-1674668511"],"enabled_clients":[]}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 172.018292ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_0j9lwft94QOY5c0S
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 143.771792ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_0j9lwft94QOY5c0S
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 88.578ms

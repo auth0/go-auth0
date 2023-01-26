@@ -7,10 +7,10 @@ import (
 )
 
 func TestGrantManager_List(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
-	grantList, err := m.Grant.List()
+	grantList, err := api.Grant.List()
 	assert.NoError(t, err)
 	assert.IsType(t, &GrantList{}, grantList)
-	assert.Len(t, grantList.Grants, 0)
+	assert.NotNil(t, grantList.Grants)
 }

@@ -11,24 +11,24 @@ import (
 )
 
 func TestJobManager_VerifyEmail(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
 	job := &Job{UserID: user.ID}
 
-	err := m.Job.VerifyEmail(job)
+	err := api.Job.VerifyEmail(job)
 	assert.NoError(t, err)
 
-	actualJob, err := m.Job.Read(job.GetID())
+	actualJob, err := api.Job.Read(job.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, job.GetID(), actualJob.GetID())
 }
 
 func TestJobManager_ExportUsers(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	givenAUser(t)
-	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
+	conn, err := api.Connection.ReadByName("Username-Password-Authentication")
 	assert.NoError(t, err)
 
 	job := &Job{
@@ -42,14 +42,14 @@ func TestJobManager_ExportUsers(t *testing.T) {
 		},
 	}
 
-	err = m.Job.ExportUsers(job)
+	err = api.Job.ExportUsers(job)
 	assert.NoError(t, err)
 }
 
 func TestJobManager_ImportUsers(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
-	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
+	conn, err := api.Connection.ReadByName("Username-Password-Authentication")
 	require.NoError(t, err)
 
 	job := &Job{
@@ -63,14 +63,14 @@ func TestJobManager_ImportUsers(t *testing.T) {
 			},
 		},
 	}
-	err = m.Job.ImportUsers(job)
+	err = api.Job.ImportUsers(job)
 	assert.NoError(t, err)
 
 	// Let's give the ImportUsers job enough time to complete,
 	// so we can ensure the Read Job has the summary field set.
 	time.Sleep(time.Second * 2)
 
-	actualJob, err := m.Job.Read(job.GetID())
+	actualJob, err := api.Job.Read(job.GetID())
 	assert.NoError(t, err)
 	assert.NotEmpty(t, actualJob.GetSummary())
 	assert.Equal(t, 0, actualJob.GetSummary().GetFailed())
@@ -79,7 +79,7 @@ func TestJobManager_ImportUsers(t *testing.T) {
 	assert.Equal(t, 1, actualJob.GetSummary().GetTotal())
 
 	t.Cleanup(func() {
-		users, err := m.User.ListByEmail("auzironian@example.com")
+		users, err := api.User.ListByEmail("auzironian@example.com")
 		assert.NoError(t, err)
 		assert.Len(t, users, 1)
 
@@ -88,10 +88,10 @@ func TestJobManager_ImportUsers(t *testing.T) {
 }
 
 func TestJobManager_ReadErrors(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	alreadyExistingUser := givenAUser(t)
-	conn, err := m.Connection.ReadByName("Username-Password-Authentication")
+	conn, err := api.Connection.ReadByName("Username-Password-Authentication")
 	require.NoError(t, err)
 
 	job := &Job{
@@ -103,7 +103,7 @@ func TestJobManager_ReadErrors(t *testing.T) {
 			},
 		},
 	}
-	err = m.Job.ImportUsers(job)
+	err = api.Job.ImportUsers(job)
 	assert.NoError(t, err)
 
 	// Let's give the ImportUsers job enough time to complete.
@@ -122,7 +122,7 @@ func TestJobManager_ReadErrors(t *testing.T) {
 		},
 	}
 
-	actualJobErrors, err := m.Job.ReadErrors(job.GetID())
+	actualJobErrors, err := api.Job.ReadErrors(job.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, actualJobErrors, 1)
 	assert.Equal(t, expectedJobErrors, actualJobErrors[0])

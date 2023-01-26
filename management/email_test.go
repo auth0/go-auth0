@@ -11,7 +11,7 @@ import (
 )
 
 func TestEmailManager_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	emailProvider := &Email{
 		Name:               auth0.String("smtp"),
@@ -25,7 +25,7 @@ func TestEmailManager_Create(t *testing.T) {
 		},
 	}
 
-	err := m.Email.Create(emailProvider)
+	err := api.Email.Create(emailProvider)
 	assert.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -34,11 +34,11 @@ func TestEmailManager_Create(t *testing.T) {
 }
 
 func TestEmailManager_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedEmailProvider := givenAnEmail(t)
 
-	actualEmailProvider, err := m.Email.Read()
+	actualEmailProvider, err := api.Email.Read()
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedEmailProvider.GetName(), actualEmailProvider.GetName())
@@ -57,17 +57,17 @@ func TestEmailManager_Read(t *testing.T) {
 }
 
 func TestEmailManager_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	emailProvider := givenAnEmail(t)
 
 	emailProvider.Enabled = auth0.Bool(false)
 	emailProvider.DefaultFromAddress = auth0.String("info@example.com")
 
-	err := m.Email.Update(emailProvider)
+	err := api.Email.Update(emailProvider)
 	assert.NoError(t, err)
 
-	actualEmailProvider, err := m.Email.Read()
+	actualEmailProvider, err := api.Email.Read()
 	assert.NoError(t, err)
 
 	assert.False(t, actualEmailProvider.GetEnabled())
@@ -75,14 +75,14 @@ func TestEmailManager_Update(t *testing.T) {
 }
 
 func TestEmailManager_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	givenAnEmail(t)
 
-	err := m.Email.Delete()
+	err := api.Email.Delete()
 	assert.NoError(t, err)
 
-	_, err = m.Email.Read()
+	_, err = api.Email.Read()
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
 	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
@@ -103,7 +103,7 @@ func givenAnEmail(t *testing.T) *Email {
 		},
 	}
 
-	err := m.Email.Create(emailProvider)
+	err := api.Email.Create(emailProvider)
 	if err != nil {
 		if err.(Error).Status() != http.StatusConflict {
 			t.Error(err)
@@ -120,6 +120,6 @@ func givenAnEmail(t *testing.T) *Email {
 func cleanupEmail(t *testing.T) {
 	t.Helper()
 
-	err := m.Email.Delete()
+	err := api.Email.Delete()
 	require.NoError(t, err)
 }

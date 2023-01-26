@@ -1,0 +1,111 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 5
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            null
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/logs?page=1&per_page=5
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"date":"2023-01-25T17:49:09.692Z","type":"sapi","description":"Create a log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"90.166.243.57","user_agent":"Other 0.0.0 / Other 0.0.0","details":{"request":{"method":"post","path":"/api/v2/log-streams","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{"name":"Test-LogStream-1674668511","type":"sumo","sink":{"sumoSourceAddress":"https://example.com"}},"channel":"api","ip":"90.166.243.57","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":200,"body":{"id":"lst_0000000000011646","name":"Test-LogStream-1674668511","type":"sumo","sink":{"sumoSourceAddress":"https://example.com"}}}},"log_id":"90020230125174911517956897028748113047822407136570245170","_id":"90020230125174911517956897028748113047822407136570245170","isMobile":false},{"date":"2023-01-25T17:49:08.464Z","type":"sapi","description":"Delete log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"90.166.243.57","user_agent":"Other 0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000011643","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"90.166.243.57","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020230125174911195244741572462619216896253190771572818","_id":"90020230125174911195244741572462619216896253190771572818","isMobile":false},{"date":"2023-01-25T17:49:09.360Z","type":"sapi","description":"Delete log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"90.166.243.57","user_agent":"Other 0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000011645","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"90.166.243.57","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020230125174910552956897024958130603330544605146906674","_id":"90020230125174910552956897024958130603330544605146906674","isMobile":false},{"date":"2023-01-25T17:49:08.676Z","type":"sapi","description":"Delete log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"90.166.243.57","user_agent":"Other 0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000011643","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"90.166.243.57","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020230125174910354244741570558561051003212171889868882","_id":"90020230125174910354244741570558561051003212171889868882","isMobile":false},{"date":"2023-01-25T17:49:01.229Z","type":"sapi","description":"Delete log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"90.166.243.57","user_agent":"Other 0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000011641","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"90.166.243.57","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020230125174906292999107184141827692878358823194067042","_id":"90020230125174906292999107184141827692878358823194067042","isMobile":false}]'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 114.053958ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 5
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            null
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/logs/90020230125174911517956897028748113047822407136570245170
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"date":"2023-01-25T17:49:09.692Z","type":"sapi","description":"Create a log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"90.166.243.57","user_agent":"Other 0.0.0 / Other 0.0.0","details":{"request":{"method":"post","path":"/api/v2/log-streams","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{"name":"Test-LogStream-1674668511","type":"sumo","sink":{"sumoSourceAddress":"https://example.com"}},"channel":"api","ip":"90.166.243.57","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":200,"body":{"id":"lst_0000000000011646","name":"Test-LogStream-1674668511","type":"sumo","sink":{"sumoSourceAddress":"https://example.com"}}}},"log_id":"90020230125174911517956897028748113047822407136570245170","_id":"90020230125174911517956897028748113047822407136570245170","isMobile":false}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 94.335667ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 5
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            null
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/logs?per_page=5&q=type%3A%22sapi%22
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"date":"2023-01-25T17:49:09.107Z","type":"sapi","description":"Delete log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"90.166.243.57","user_agent":"Other 0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000011644","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"90.166.243.57","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020230125174913207999107189851584338918252896367673442","_id":"90020230125174913207999107189851584338918252896367673442","isMobile":false},{"date":"2023-01-25T17:49:08.907Z","type":"sapi","description":"Delete log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"90.166.243.57","user_agent":"Other 0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000011644","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"90.166.243.57","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020230125174912755999107189430878153692361874850447458","_id":"90020230125174912755999107189430878153692361874850447458","isMobile":false},{"date":"2023-01-25T17:49:09.559Z","type":"sapi","description":"Delete log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"90.166.243.57","user_agent":"Other 0.0.0 / Other 0.0.0","details":{"request":{"method":"delete","path":"/api/v2/log-streams/lst_0000000000011645","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{},"channel":"api","ip":"90.166.243.57","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":204,"body":{}}},"log_id":"90020230125174912019503351092188044557303381513975365698","_id":"90020230125174912019503351092188044557303381513975365698","isMobile":false},{"date":"2023-01-25T17:49:09.238Z","type":"sapi","description":"Create a log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"90.166.243.57","user_agent":"Other 0.0.0 / Other 0.0.0","details":{"request":{"method":"post","path":"/api/v2/log-streams","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{"name":"Test-LogStream-1674668511","type":"splunk","sink":{"splunkDomain":"demo.splunk.com"}},"channel":"api","ip":"90.166.243.57","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":200,"body":{"id":"lst_0000000000011645","name":"Test-LogStream-1674668511","type":"splunk","sink":{"splunkDomain":"demo.splunk.com"}}}},"log_id":"90020230125174912019503351092186835631483766884800659522","_id":"90020230125174912019503351092186835631483766884800659522","isMobile":false},{"date":"2023-01-25T17:49:08.799Z","type":"sapi","description":"Create a log stream","client_id":"3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","client_name":"","ip":"90.166.243.57","user_agent":"Other 0.0.0 / Other 0.0.0","details":{"request":{"method":"post","path":"/api/v2/log-streams","query":{},"userAgent":"Go-Auth0-SDK/latest","body":{"name":"Test-LogStream-1674668511","type":"segment"},"channel":"api","ip":"90.166.243.57","auth":{"user":{},"strategy":"jwt","credentials":{}}},"response":{"statusCode":200,"body":{"id":"lst_0000000000011644","name":"Test-LogStream-1674668511","type":"segment"}}},"log_id":"90020230125174912019503351092185626705664152255625953346","_id":"90020230125174912019503351092185626705664152255625953346","isMobile":false}]'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 132.358375ms

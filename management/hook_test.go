@@ -13,7 +13,7 @@ import (
 )
 
 func TestHookManager_Create(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	hook := &Hook{
 		Name:      auth0.String("testing-hook-creation"),
@@ -22,7 +22,7 @@ func TestHookManager_Create(t *testing.T) {
 		Enabled:   auth0.Bool(false),
 	}
 
-	err := m.Hook.Create(hook)
+	err := api.Hook.Create(hook)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, hook.GetID())
 
@@ -32,18 +32,18 @@ func TestHookManager_Create(t *testing.T) {
 }
 
 func TestHookManager_Read(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedHook := givenAHook(t, nil)
 
-	actualHook, err := m.Hook.Read(expectedHook.GetID())
+	actualHook, err := api.Hook.Read(expectedHook.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedHook, actualHook)
 }
 
 func TestHookManager_Update(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	hook := givenAHook(t, nil)
 	updatedHook := &Hook{
@@ -51,24 +51,24 @@ func TestHookManager_Update(t *testing.T) {
 		Enabled: auth0.Bool(true),
 	}
 
-	err := m.Hook.Update(hook.GetID(), updatedHook)
+	err := api.Hook.Update(hook.GetID(), updatedHook)
 	assert.NoError(t, err)
 
-	actualHook, err := m.Hook.Read(hook.GetID())
+	actualHook, err := api.Hook.Read(hook.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, updatedHook.GetScript(), actualHook.GetScript())
 	assert.Equal(t, updatedHook.GetEnabled(), actualHook.GetEnabled())
 }
 
 func TestHookManager_Delete(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	hook := givenAHook(t, nil)
 
-	err := m.Hook.Delete(hook.GetID())
+	err := api.Hook.Delete(hook.GetID())
 	assert.NoError(t, err)
 
-	actualHook, err := m.Hook.Read(hook.GetID())
+	actualHook, err := api.Hook.Read(hook.GetID())
 	assert.Empty(t, actualHook)
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -76,11 +76,11 @@ func TestHookManager_Delete(t *testing.T) {
 }
 
 func TestHookManager_List(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	expectedHook := givenAHook(t, nil)
 
-	hookList, err := m.Hook.List(IncludeFields("id"))
+	hookList, err := api.Hook.List(IncludeFields("id"))
 
 	assert.NoError(t, err)
 	assert.Len(t, hookList.Hooks, 1)
@@ -88,7 +88,7 @@ func TestHookManager_List(t *testing.T) {
 }
 
 func TestHookManager_CreateSecrets(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	hook := givenAHook(t, nil)
 	secrets := HookSecrets{
@@ -96,12 +96,12 @@ func TestHookManager_CreateSecrets(t *testing.T) {
 		"SECRET2": "value2",
 	}
 
-	err := m.Hook.CreateSecrets(hook.GetID(), secrets)
+	err := api.Hook.CreateSecrets(hook.GetID(), secrets)
 	assert.NoError(t, err)
 }
 
 func TestHookManager_UpdateSecrets(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	secrets := HookSecrets{
 		"SECRET1": "value1",
@@ -109,17 +109,17 @@ func TestHookManager_UpdateSecrets(t *testing.T) {
 	}
 	hook := givenAHook(t, secrets)
 
-	err := m.Hook.UpdateSecrets(hook.GetID(), HookSecrets{"SECRET1": "something else"})
+	err := api.Hook.UpdateSecrets(hook.GetID(), HookSecrets{"SECRET1": "something else"})
 	assert.NoError(t, err)
 
-	actualSecrets, err := m.Hook.Secrets(hook.GetID())
+	actualSecrets, err := api.Hook.Secrets(hook.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, actualSecrets["SECRET1"], "_VALUE_NOT_SHOWN_")
 	assert.Equal(t, actualSecrets["SECRET2"], "_VALUE_NOT_SHOWN_")
 }
 
 func TestHookManager_ReplaceSecrets(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	secrets := HookSecrets{
 		"SECRET1": "value1",
@@ -131,10 +131,10 @@ func TestHookManager_ReplaceSecrets(t *testing.T) {
 		"SECRET1": "something else",
 		"SECRET3": "other value",
 	}
-	err := m.Hook.ReplaceSecrets(hook.GetID(), newSecrets)
+	err := api.Hook.ReplaceSecrets(hook.GetID(), newSecrets)
 	assert.NoError(t, err)
 
-	actualSecrets, err := m.Hook.Secrets(hook.GetID())
+	actualSecrets, err := api.Hook.Secrets(hook.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, actualSecrets["SECRET1"], "_VALUE_NOT_SHOWN_")
 	assert.Empty(t, actualSecrets["SECRET2"])
@@ -142,7 +142,7 @@ func TestHookManager_ReplaceSecrets(t *testing.T) {
 }
 
 func TestHookManager_Secrets(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	secrets := HookSecrets{
 		"SECRET1": "value1",
@@ -150,14 +150,14 @@ func TestHookManager_Secrets(t *testing.T) {
 	}
 	hook := givenAHook(t, secrets)
 
-	actualSecrets, err := m.Hook.Secrets(hook.GetID())
+	actualSecrets, err := api.Hook.Secrets(hook.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, actualSecrets["SECRET1"], "_VALUE_NOT_SHOWN_")
 	assert.Equal(t, actualSecrets["SECRET2"], "_VALUE_NOT_SHOWN_")
 }
 
 func TestHookManager_RemoveSecrets(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	secrets := HookSecrets{
 		"SECRET1": "value1",
@@ -165,17 +165,17 @@ func TestHookManager_RemoveSecrets(t *testing.T) {
 	}
 	hook := givenAHook(t, secrets)
 
-	err := m.Hook.RemoveSecrets(hook.GetID(), []string{"SECRET1"})
+	err := api.Hook.RemoveSecrets(hook.GetID(), []string{"SECRET1"})
 	assert.NoError(t, err)
 
-	actualSecrets, err := m.Hook.Secrets(hook.GetID())
+	actualSecrets, err := api.Hook.Secrets(hook.GetID())
 	assert.NoError(t, err)
 	assert.Empty(t, actualSecrets["SECRET1"])
 	assert.Equal(t, actualSecrets["SECRET2"], "_VALUE_NOT_SHOWN_")
 }
 
 func TestHookManager_RemoveAllSecrets(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	secrets := HookSecrets{
 		"SECRET1": "value1",
@@ -183,10 +183,10 @@ func TestHookManager_RemoveAllSecrets(t *testing.T) {
 	}
 	hook := givenAHook(t, secrets)
 
-	err := m.Hook.RemoveAllSecrets(hook.GetID())
+	err := api.Hook.RemoveAllSecrets(hook.GetID())
 	assert.NoError(t, err)
 
-	actualSecrets, err := m.Hook.Secrets(hook.GetID())
+	actualSecrets, err := api.Hook.Secrets(hook.GetID())
 	assert.NoError(t, err)
 	assert.Empty(t, actualSecrets["SECRET1"])
 	assert.Empty(t, actualSecrets["SECRET2"])
@@ -240,11 +240,11 @@ func givenAHook(t *testing.T, secrets HookSecrets) *Hook {
 		Enabled:   auth0.Bool(false),
 	}
 
-	err := m.Hook.Create(hook)
+	err := api.Hook.Create(hook)
 	require.NoError(t, err)
 
 	if secrets != nil {
-		err := m.Hook.CreateSecrets(hook.GetID(), secrets)
+		err := api.Hook.CreateSecrets(hook.GetID(), secrets)
 		require.NoError(t, err)
 	}
 
@@ -258,7 +258,7 @@ func givenAHook(t *testing.T, secrets HookSecrets) *Hook {
 func cleanupHook(t *testing.T, hookID string) {
 	t.Helper()
 
-	err := m.Hook.Delete(hookID)
+	err := api.Hook.Delete(hookID)
 	if err != nil {
 		if err.(Error).Status() != http.StatusNotFound {
 			t.Error(err)

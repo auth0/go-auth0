@@ -21,21 +21,28 @@ var (
 	debug                 = os.Getenv("AUTH0_DEBUG")
 	httpRecordings        = os.Getenv("AUTH0_HTTP_RECORDINGS")
 	httpRecordingsEnabled = false
-	m                     = &Management{}
+	api                   = &Management{}
 )
 
-func init() {
-	httpRecordingsEnabled = httpRecordings == "true" || httpRecordings == "1" || httpRecordings == "on"
-	initTestManagement()
+func envVarEnabled(envVar string) bool {
+	return envVar == "true" || envVar == "1" || envVar == "on"
 }
 
-func initTestManagement() {
+func TestMain(m *testing.M) {
+	httpRecordingsEnabled = envVarEnabled(httpRecordings)
+	initializeTestClient()
+
+	code := m.Run()
+	os.Exit(code)
+}
+
+func initializeTestClient() {
 	var err error
 
-	m, err = New(
+	api, err = New(
 		domain,
 		WithClientCredentials(clientID, clientSecret),
-		WithDebug(debug == "true" || debug == "1" || debug == "on"),
+		WithDebug(envVarEnabled(debug)),
 	)
 	if err != nil {
 		log.Fatal("failed to initialize the api client")
@@ -165,7 +172,7 @@ func TestRequestOptionContextCancel(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel() // Cancel the request.
 
-	err := m.Request("GET", "/", nil, Context(ctx))
+	err := api.Request("GET", "/", nil, Context(ctx))
 	if !errors.Is(err, context.Canceled) {
 		t.Errorf("expected err to be context.Canceled, got %v", err)
 	}
@@ -177,7 +184,7 @@ func TestRequestOptionContextTimeout(t *testing.T) {
 
 	time.Sleep(50 * time.Millisecond) // Delay until the deadline is exceeded.
 
-	err := m.Request("GET", "/", nil, Context(ctx))
+	err := api.Request("GET", "/", nil, Context(ctx))
 	if !errors.Is(err, context.DeadlineExceeded) {
 		t.Errorf("expected err to be context.DeadlineExceeded, got %v", err)
 	}
@@ -242,7 +249,7 @@ func TestManagement_URI(t *testing.T) {
 
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
-			actual := m.URI(testCase.given...)
+			actual := api.URI(testCase.given...)
 			assert.Equal(t, testCase.expected, actual)
 		})
 	}

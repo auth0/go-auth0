@@ -10,18 +10,18 @@ import (
 
 func TestAttackProtection(t *testing.T) {
 	t.Run("Get breached password detection settings", func(t *testing.T) {
-		setupHTTPRecordings(t)
+		configureHTTPTestRecordings(t)
 
-		breachedPasswordDetection, err := m.AttackProtection.GetBreachedPasswordDetection()
+		breachedPasswordDetection, err := api.AttackProtection.GetBreachedPasswordDetection()
 		assert.NoError(t, err)
 		assert.IsType(t, &BreachedPasswordDetection{}, breachedPasswordDetection)
 	})
 
 	t.Run("Update breached password detection settings", func(t *testing.T) {
-		setupHTTPRecordings(t)
+		configureHTTPTestRecordings(t)
 
 		// Save initial settings.
-		preTestBPDSettings, err := m.AttackProtection.GetBreachedPasswordDetection()
+		preTestBPDSettings, err := api.AttackProtection.GetBreachedPasswordDetection()
 		assert.NoError(t, err)
 
 		expected := &BreachedPasswordDetection{
@@ -34,33 +34,33 @@ func TestAttackProtection(t *testing.T) {
 			},
 		}
 
-		err = m.AttackProtection.UpdateBreachedPasswordDetection(expected)
+		err = api.AttackProtection.UpdateBreachedPasswordDetection(expected)
 		assert.NoError(t, err)
 
-		actual, err := m.AttackProtection.GetBreachedPasswordDetection()
+		actual, err := api.AttackProtection.GetBreachedPasswordDetection()
 		assert.NoError(t, err)
 		assert.Equal(t, expected.GetEnabled(), actual.GetEnabled())
 		assert.Equal(t, expected.GetMethod(), actual.GetMethod())
 		assert.Equal(t, expected.GetStage().GetPreUserRegistration().GetShields(), actual.GetStage().GetPreUserRegistration().GetShields())
 
 		// Restore initial settings.
-		err = m.AttackProtection.UpdateBreachedPasswordDetection(preTestBPDSettings)
+		err = api.AttackProtection.UpdateBreachedPasswordDetection(preTestBPDSettings)
 		assert.NoError(t, err)
 	})
 
 	t.Run("Get the brute force configuration", func(t *testing.T) {
-		setupHTTPRecordings(t)
+		configureHTTPTestRecordings(t)
 
-		bruteForceProtection, err := m.AttackProtection.GetBruteForceProtection()
+		bruteForceProtection, err := api.AttackProtection.GetBruteForceProtection()
 		assert.NoError(t, err)
 		assert.IsType(t, &BruteForceProtection{}, bruteForceProtection)
 	})
 
 	t.Run("Update the brute force configuration", func(t *testing.T) {
-		setupHTTPRecordings(t)
+		configureHTTPTestRecordings(t)
 
 		// Save initial settings.
-		preTestBFPSettings, err := m.AttackProtection.GetBruteForceProtection()
+		preTestBFPSettings, err := api.AttackProtection.GetBruteForceProtection()
 		assert.NoError(t, err)
 
 		expected := &BruteForceProtection{
@@ -68,32 +68,32 @@ func TestAttackProtection(t *testing.T) {
 			MaxAttempts: auth0.Int(10),
 		}
 
-		err = m.AttackProtection.UpdateBruteForceProtection(expected)
+		err = api.AttackProtection.UpdateBruteForceProtection(expected)
 		assert.NoError(t, err)
 
-		actual, err := m.AttackProtection.GetBruteForceProtection()
+		actual, err := api.AttackProtection.GetBruteForceProtection()
 		assert.NoError(t, err)
 		assert.Equal(t, expected.GetEnabled(), actual.GetEnabled())
 		assert.Equal(t, expected.GetMaxAttempts(), actual.GetMaxAttempts())
 
 		// Restore initial settings.
-		err = m.AttackProtection.UpdateBruteForceProtection(preTestBFPSettings)
+		err = api.AttackProtection.UpdateBruteForceProtection(preTestBFPSettings)
 		assert.NoError(t, err)
 	})
 
 	t.Run("Get the suspicious IP throttling configuration", func(t *testing.T) {
-		setupHTTPRecordings(t)
+		configureHTTPTestRecordings(t)
 
-		suspiciousIPThrottling, err := m.AttackProtection.GetSuspiciousIPThrottling()
+		suspiciousIPThrottling, err := api.AttackProtection.GetSuspiciousIPThrottling()
 		assert.NoError(t, err)
 		assert.IsType(t, &SuspiciousIPThrottling{}, suspiciousIPThrottling)
 	})
 
 	t.Run("Update the suspicious IP throttling configuration", func(t *testing.T) {
-		setupHTTPRecordings(t)
+		configureHTTPTestRecordings(t)
 
 		// Save initial settings.
-		preTestSIPSettings, err := m.AttackProtection.GetSuspiciousIPThrottling()
+		preTestSIPSettings, err := api.AttackProtection.GetSuspiciousIPThrottling()
 		assert.NoError(t, err)
 
 		expected := &SuspiciousIPThrottling{
@@ -110,10 +110,10 @@ func TestAttackProtection(t *testing.T) {
 			},
 		}
 
-		err = m.AttackProtection.UpdateSuspiciousIPThrottling(expected)
+		err = api.AttackProtection.UpdateSuspiciousIPThrottling(expected)
 		assert.NoError(t, err)
 
-		actual, err := m.AttackProtection.GetSuspiciousIPThrottling()
+		actual, err := api.AttackProtection.GetSuspiciousIPThrottling()
 		assert.NoError(t, err)
 		assert.Equal(t, expected.GetEnabled(), actual.GetEnabled())
 		assert.Equal(t, expected.GetStage().GetPreLogin().GetRate(), actual.GetStage().GetPreLogin().GetRate())
@@ -122,7 +122,7 @@ func TestAttackProtection(t *testing.T) {
 		assert.Equal(t, expected.GetStage().GetPreUserRegistration().GetMaxAttempts(), actual.GetStage().GetPreUserRegistration().GetMaxAttempts())
 
 		// Restore initial settings.
-		err = m.AttackProtection.UpdateSuspiciousIPThrottling(preTestSIPSettings)
+		err = api.AttackProtection.UpdateSuspiciousIPThrottling(preTestSIPSettings)
 		assert.NoError(t, err)
 	})
 }

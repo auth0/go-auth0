@@ -7,7 +7,7 @@ import (
 )
 
 func TestBlacklist(t *testing.T) {
-	setupHTTPRecordings(t)
+	configureHTTPTestRecordings(t)
 
 	client := givenAClient(t)
 
@@ -16,10 +16,10 @@ func TestBlacklist(t *testing.T) {
 		JTI:      "test",
 	}
 
-	err := m.Blacklist.Create(blackListToken)
+	err := api.Blacklist.Create(blackListToken)
 	assert.NoError(t, err)
 
-	blackList, err := m.Blacklist.List(Parameter("aud", client.GetClientID()))
+	blackList, err := api.Blacklist.List(Parameter("aud", client.GetClientID()))
 	assert.NoError(t, err)
 	assert.Len(t, blackList, 1)
 	assert.Equal(t, client.GetClientID(), blackList[0].Audience)
