@@ -308,6 +308,7 @@ type ConnectionOptionsOkta struct {
 	ClientSecret          *string                `json:"client_secret,omitempty"`
 	Domain                *string                `json:"domain,omitempty"`
 	DomainAliases         *[]string              `json:"domain_aliases,omitempty"`
+	LogoURL               *string                `json:"icon_url,omitempty"`
 	AuthorizationEndpoint *string                `json:"authorization_endpoint"`
 	Issuer                *string                `json:"issuer"`
 	JWKSURI               *string                `json:"jwks_uri"`

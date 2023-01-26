@@ -3368,6 +3368,14 @@ func (c *ConnectionOptionsOkta) GetJWKSURI() string {
 	return *c.JWKSURI
 }
 
+// GetLogoURL returns the LogoURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetLogoURL() string {
+	if c == nil || c.LogoURL == nil {
+		return ""
+	}
+	return *c.LogoURL
+}
+
 // GetNonPersistentAttrs returns the NonPersistentAttrs field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOkta) GetNonPersistentAttrs() []string {
 	if c == nil || c.NonPersistentAttrs == nil {
