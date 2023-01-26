@@ -49,18 +49,19 @@ func TestWrapRateLimit(t *testing.T) {
 }
 
 func TestWrapUserAgent(t *testing.T) {
-	h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ua := r.Header.Get("User-Agent")
 		if ua != UserAgent {
 			t.Errorf("Expected User-Agent header to match %q but got %q", UserAgent, ua)
 		}
 	})
 
-	s := httptest.NewServer(h)
-	defer s.Close()
+	testServer := httptest.NewServer(testHandler)
+	defer testServer.Close()
 
-	c := Wrap(s.Client(), StaticToken(""), WithUserAgent(UserAgent))
-	c.Get(s.URL)
+	httpClient := Wrap(testServer.Client(), StaticToken(""), WithUserAgent(UserAgent))
+	_, err := httpClient.Get(testServer.URL)
+	assert.NoError(t, err)
 }
 
 func TestOAuth2ClientCredentialsAndAudience(t *testing.T) {
@@ -74,7 +75,8 @@ func TestOAuth2ClientCredentialsAndAudience(t *testing.T) {
 			assert.Contains(t, string(requestBody), expectedAudience)
 
 			w.Header().Set("Content-Type", "application/json")
-			w.Write([]byte(`{"access_token":"someToken","token_type":"Bearer"}`))
+			_, err = w.Write([]byte(`{"access_token":"someToken","token_type":"Bearer"}`))
+			assert.NoError(t, err)
 		default:
 			http.NotFound(w, r)
 		}
