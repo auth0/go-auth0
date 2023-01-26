@@ -1,21 +1,47 @@
-linters-settings:
-  gofmt:
-    simplify: true
-  staticcheck:
-    go: "1.16"
-    checks: [ "all" ]
-  godot:
-    scope: declarations
-    capital: true
+run:
+  go: "1.18"
+  timeout: 5m
+  allow-parallel-runners: true
 
 linters:
   disable-all: true
   enable:
+    - unused
     - gofmt
     - staticcheck
     - revive
     - godot
     - whitespace
+    - goimports
+    - unconvert
+    - gocritic
+    - errcheck
+    - gosec
+    - gocyclo
+
+linters-settings:
+  gofmt:
+    simplify: true
+  staticcheck:
+    checks: [ "all" ]
+  godot:
+    scope: declarations
+    capital: true
+  goimports:
+    local-prefixes: "github.com/auth0/go-auth0"
+  revive:
+    rules:
+      - name: package-comments
+        severity: warning
+        disabled: true
 
 issues:
   exclude-use-default: false
+  exclude:
+    - "Error return value of `response.Body.Close` is not checked"
+    - "Error return value of `w.Write` is not checked"
+  exclude-rules:
+    - path: "(.+)_test.go"
+      linters:
+        - gosec
+  fix: true

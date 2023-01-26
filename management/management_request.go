@@ -29,7 +29,7 @@ func (m *Management) URI(path ...string) string {
 		defaultPathEscaped := url.PathEscape(unescapedPath)
 		escapedPath = append(
 			escapedPath,
-			strings.Replace(defaultPathEscaped, "/", escapedForwardSlash, -1),
+			strings.ReplaceAll(defaultPathEscaped, "/", escapedForwardSlash),
 		)
 	}
 

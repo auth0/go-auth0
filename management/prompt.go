@@ -19,10 +19,6 @@ type PromptManager struct {
 	*Management
 }
 
-type promptCustomText struct {
-	Text *string
-}
-
 func newPromptManager(m *Management) *PromptManager {
 	return &PromptManager{m}
 }

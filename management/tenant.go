@@ -271,11 +271,12 @@ func (c *TenantUniversalLoginColors) MarshalJSON() ([]byte, error) {
 
 	alias := &colorsWrapper{(*colors)(c), nil}
 
-	if c.PageBackground != nil && c.PageBackgroundGradient != nil {
+	switch {
+	case c.PageBackground != nil && c.PageBackgroundGradient != nil:
 		return nil, fmt.Errorf("only one of PageBackground and PageBackgroundGradient is allowed")
-	} else if c.PageBackground != nil {
+	case c.PageBackground != nil:
 		alias.RawPageBackground = c.PageBackground
-	} else if c.PageBackgroundGradient != nil {
+	case c.PageBackgroundGradient != nil:
 		alias.RawPageBackground = c.PageBackgroundGradient
 	}
 

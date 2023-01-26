@@ -62,11 +62,12 @@ func (bc *BrandingColors) MarshalJSON() ([]byte, error) {
 
 	alias := &brandingColorsWrapper{(*brandingColors)(bc), nil}
 
-	if bc.PageBackground != nil && bc.PageBackgroundGradient != nil {
+	switch {
+	case bc.PageBackground != nil && bc.PageBackgroundGradient != nil:
 		return nil, fmt.Errorf("only one of PageBackground and PageBackgroundGradient is allowed")
-	} else if bc.PageBackground != nil {
+	case bc.PageBackground != nil:
 		alias.RawPageBackground = bc.PageBackground
-	} else if bc.PageBackgroundGradient != nil {
+	case bc.PageBackgroundGradient != nil:
 		alias.RawPageBackground = bc.PageBackgroundGradient
 	}
 
