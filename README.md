@@ -14,7 +14,7 @@
 
 Go SDK for the [Auth0](https://auth0.com/) Management API.
 
-📚 [Documentation](#documentation) - 🚀 [Getting Started](#getting-started) - 💬 [Feedback](#feedback)
+📚 [Documentation](#documentation) • 🚀 [Getting Started](#getting-started) • 💬 [Feedback](#feedback)
 
 -------------------------------------
 
