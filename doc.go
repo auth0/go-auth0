@@ -44,11 +44,11 @@ package.
 
 # Rate Limiting
 
-The auth0 package also handles rate limiting by respecting the `X-Ratelimit-*`
+The auth0 package also handles rate limiting by respecting the `X-Rate-Limit-*`
 headers sent by the server.
 
 The amount of time the client waits for the rate limit to be reset is taken from
-the `X-Ratelimit-Reset` header as the amount of seconds to wait.
+the `X-Rate-Limit-Reset` header as the amount of seconds to wait.
 
 # Configuration
 
@@ -62,7 +62,7 @@ new client.
 
 # Request Options
 
-As with the global client configuration, fine grained configuration can be done
+As with the global client configuration, fine-grained configuration can be done
 on a request basis.
 
 	c, err := m.Connection.List(

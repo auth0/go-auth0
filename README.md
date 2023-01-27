@@ -1,175 +1,189 @@
-# Auth0 Go SDK
+<div align="center">
+  <h1>Auth0 Go SDK</h1>
 
 [![GoDoc](https://pkg.go.dev/badge/github.com/auth0/go-auth0.svg)](https://pkg.go.dev/github.com/auth0/go-auth0)
-[![License](https://img.shields.io/github/license/auth0/go-auth0.svg?style=flat-square)](https://github.com/auth0/go-auth0/blob/main/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/auth0/go-auth0?style=flat-square)](https://goreportcard.com/report/github.com/auth0/go-auth0)
 [![Release](https://img.shields.io/github/v/release/auth0/go-auth0?include_prereleases&style=flat-square)](https://github.com/auth0/go-auth0/releases)
-[![Tests](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fauth0%2Fgo-auth0%2Fbadge%3Fref%3Dmain&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Amain)
+[![License](https://img.shields.io/github/license/auth0/go-auth0.svg?style=flat-square)](https://github.com/auth0/go-auth0/blob/main/LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/auth0/go-auth0/main.yml?branch=main&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Amain)
 [![Codecov](https://img.shields.io/codecov/c/github/auth0/go-auth0?style=flat-square)](https://codecov.io/gh/auth0/go-auth0)
+
+</div>
 
 ---
 
-Go client library for the [Auth0](https://auth0.com/) platform.
+Go SDK for the [Auth0](https://auth0.com/) Management API.
 
-_Note: This SDK was previously maintained under [go-auth0/auth0](https://github.com/go-auth0/auth0)._
-
--------------------------------------
-
-## Table of Contents
-
-- [Installation](#installation)
-- [Documentation](#documentation)
-- [Usage](#usage)
-- [Testing](#testing)
-- [What is Auth0?](#what-is-auth0)
-- [Create a free Auth0 Account](#create-a-free-auth0-account)
-- [Issue Reporting](#issue-reporting)
-- [Author](#author)
-- [License](#license)
+📚 [Documentation](#documentation) • 🚀 [Getting Started](#getting-started) • 💬 [Feedback](#feedback)
 
 -------------------------------------
 
-## Installation
+## Documentation
+
+- [Godoc](https://pkg.go.dev/github.com/auth0/go-auth0) - explore the Go SDK documentation.
+- [Management API docs](https://auth0.com/docs/api/management/v2) - explore the Auth0 Management API that this SDK interacts with.
+- [Docs site](https://www.auth0.com/docs) — explore our docs site and learn more about Auth0.
+
+## Getting started
+
+### Requirements
+
+- Go 1.17+
+
+**go-auth0** tracks [Go's version support policy](https://go.dev/doc/devel/release#policy). 
+
+### Installation
 
 ```shell
 go get github.com/auth0/go-auth0
 ```
 
-[[table of contents]](#table-of-contents)
-
-## Documentation
-
-Reference documentation can be found at [pkg.go.dev](https://pkg.go.dev/github.com/auth0/go-auth0).
-For more information about [Auth0](http://auth0.com/) please visit the [Auth0 Docs](http://auth0.com/docs) page and the
-[Auth0 Management API Docs](https://auth0.com/docs/api/management/v2).
-
-[[table of contents]](#table-of-contents)
-
-## Usage
+### Usage
 
 ```go
+package main
+
 import (
+	"log"
+
 	"github.com/auth0/go-auth0"
 	"github.com/auth0/go-auth0/management"
 )
+
+func main() {
+	// Get these from your Auth0 Application Dashboard.
+	// The application needs to be a Machine To Machine authorized
+	// to request access tokens for the Auth0 Management API,
+	// with the desired permissions (scopes).
+	domain := "example.auth0.com"
+	clientID := "EXAMPLE_16L9d34h0qe4NVE6SaHxZEid"
+	clientSecret := "EXAMPLE_XSQGmnt8JdXs23407hrK6XXXXXXX"
+
+	// Initialize a new client using a domain, client ID and client secret.
+	// Alternatively you can specify an access token:
+	// `management.WithStaticToken("token")`
+	auth0API, err := management.New(
+		domain,
+		management.WithClientCredentials(clientID, clientSecret),
+	)
+	if err != nil {
+		log.Fatal("failed to initialize the auth0 management API client: %w", err)
+	}
+
+	// Now we can interact with the Auth0 Management API.
+	// Example: Creating a new client.
+	client := &management.Client{
+		Name:        auth0.String("My Client"),
+		Description: auth0.String("Client created through the Go SDK"),
+	}
+
+	// The passed in client will get hydrated with the response.
+	// This means that after this request, we will have access
+	// to the client ID on the same client object.
+	err = auth0API.Client.Create(client)
+	if err != nil {
+		log.Fatal("failed to create a new client: %w", err)
+	}
+
+	// Make use of the getter functions to safely access
+	// fields without causing a panic due nil pointers.
+	log.Printf(
+		"Created an auth0 client successfully. The ID is: %q",
+		client.GetClientID(),
+	)
+}
 ```
 
-Initialize a new client using a domain, client ID and secret.
+### Rate Limiting
+
+The Auth0 Management API imposes a rate limit on all API clients. When the limit is reached, the SDK will handle it in
+the background by retrying the API request when the limit is lifted.
+
+> **Note**
+> The SDK does not prevent `http.StatusTooManyRequests` errors, instead it waits for the rate limit to be reset based on
+> the value of the `X-Rate-Limit-Reset` header as the amount of seconds to wait.
+
+### Request Options
+
+Fine-grained configuration can be provided on a per-request basis to enhance the request with specific query params, headers
+or to pass it a custom context.
 
 ```go
-m, err := management.New(domain, management.WithClientCredentials(id, secret))
-if err != nil {
-	// handle err
-}
+// Example
+userGrants, err := auth0API.Grant.List(
+	management.Context(ctx)
+	management.Header("MySpecialHeader","MySpecialHeaderValue")
+    management.Parameter("user_id", "someUserID"),
+    management.Parameter("client", "someClientID"),
+    management.Parameter("audience", "someAPIAudience"),
+)
+
+// Other helper funcs.
+management.Query()
+management.ExcludeFields()
+management.IncludeFields()
+management.Page()
+management.PerPage()
+management.Take()
 ```
 
-With the management client we can now interact with the Auth0 Management API.
+### Pagination
+
+When retrieving lists of resources, if no query parameters are passed,
+the following query parameters will get added by default: `?per_page=50,include_totals=true`. 
+
+> **Note**
+> The maximum value of the per_page query param is 100.
+
+To get more than 50 results (the default), iterate through the returned pages.
 
 ```go
-c := &management.Client{
-	Name:        auth0.String("Client Name"),
-	Description: auth0.String("Long description of client"),
-}
+// Example
+var page int
+for {
+    clients, err := auth0API.Client.List(management.Page(page))
+    if err != nil {
+        return err
+    }
+    
+    // Accumulate here the results or check for a specific client.
+    
+    if !clients.HasNext() {
+        break
+    }
 
-err = m.Client.Create(c)
-if err != nil {
-	// handle err
+    page++
 }
-
-fmt.Printf("Created client %s\n", c.ClientID)
 ```
 
-The following Auth0 resources are supported:
+## Feedback
 
-- [x] [Actions](https://auth0.com/docs/api/management/v2/#!/Actions/get_actions)
-- [x] [Attack Protection](https://auth0.com/docs/api/management/v2#!/Attack_Protection/get_breached_password_detection)
-- [x] [Branding](https://auth0.com/docs/api/management/v2/#!/Branding/get_branding)
-- [x] [Clients (Applications)](https://auth0.com/docs/api/management/v2#!/Clients/get_clients)
-- [x] [Client Grants](https://auth0.com/docs/api/management/v2#!/Client_Grants/get_client_grants)
-- [x] [Connections](https://auth0.com/docs/api/management/v2#!/Connections/get_connections)
-- [x] [Custom Domains](https://auth0.com/docs/api/management/v2#!/Custom_Domains/get_custom_domains)
-- [ ] [Device Credentials](https://auth0.com/docs/api/management/v2#!/Device_Credentials/get_device_credentials)
-- [x] [Grants](https://auth0.com/docs/api/management/v2#!/Grants/get_grants)
-- [x] [Hooks](https://auth0.com/docs/api/management/v2#!/Hooks/get_hooks)
-- [x] [Hook Secrets](https://auth0.com/docs/api/management/v2/#!/Hooks/get_secrets)
-- [x] [Log Streams](https://auth0.com/docs/api/management/v2#!/Log_Streams/get_log_streams)
-- [x] [Logs](https://auth0.com/docs/api/management/v2#!/Logs/get_logs)
-- [x] [Organizations](https://auth0.com/docs/api/management/v2#!/Organizations/get_organizations)
-- [x] [Prompts](https://auth0.com/docs/api/management/v2#!/Prompts/get_prompts)
-- [x] [Resource Servers (APIs)](https://auth0.com/docs/api/management/v2#!/Resource_Servers/get_resource_servers)
-- [x] [Roles](https://auth0.com/docs/api/management/v2#!/Roles)
-- [x] [Rules](https://auth0.com/docs/api/management/v2#!/Rules/get_rules)
-- [x] [Rules Configs](https://auth0.com/docs/api/management/v2#!/Rules_Configs/get_rules_configs)
-- [x] [User Blocks](https://auth0.com/docs/api/management/v2#!/User_Blocks/get_user_blocks)
-- [x] [Users](https://auth0.com/docs/api/management/v2#!/Users/get_users)
-- [x] [Users By Email](https://auth0.com/docs/api/management/v2#!/Users_By_Email/get_users_by_email)
-- [x] [Blacklists](https://auth0.com/docs/api/management/v2#!/Blacklists/get_tokens)
-- [x] [Email Templates](https://auth0.com/docs/api/management/v2#!/Email_Templates/get_email_templates_by_templateName)
-- [x] [Emails](https://auth0.com/docs/api/management/v2#!/Emails/get_provider)
-- [x] [Guardian](https://auth0.com/docs/api/management/v2#!/Guardian/get_factors)
-- [x] [Jobs](https://auth0.com/docs/api/management/v2#!/Jobs/get_jobs_by_id)
-- [x] [Stats](https://auth0.com/docs/api/management/v2#!/Stats/get_active_users)
-- [x] [Tenants](https://auth0.com/docs/api/management/v2#!/Tenants/get_settings)
-- [X] [Anomaly](https://auth0.com/docs/api/management/v2#!/Anomaly/get_ips_by_id)
-- [x] [Tickets](https://auth0.com/docs/api/management/v2#!/Tickets/post_email_verification)
-- [x] [Signing Keys](https://auth0.com/docs/api/management/v2#!/Keys/get_signing_keys)
+### Contributing
 
-[[table of contents]](#table-of-contents)
+We appreciate feedback and contribution to this repo! Before you get started, please see the following:
 
-## Testing
+- [Contribution Guide](./CONTRIBUTING.md)
+- [Auth0's General Contribution Guidelines](https://github.com/auth0/open-source-template/blob/master/GENERAL-CONTRIBUTING.md)
+- [Auth0's Code of Conduct Guidelines](https://github.com/auth0/open-source-template/blob/master/CODE-OF-CONDUCT.md)
 
-To run the tests use the `make test` command. This will make use of pre-recorded http interactions found in the
-[recordings](./management/testdata/recordings) folder. To add new recordings run the tests against an Auth0 tenant
-individually using the following env var `AUTH0_HTTP_RECORDINGS=on`.
+### Raise an issue
 
-To run the tests against an Auth0 tenant, use the `make test-e2e` command. Start by creating an
-[M2M app](https://auth0.com/docs/applications/set-up-an-application/register-machine-to-machine-applications) in the
-tenant, that has been authorized to call the Management API and has all the required permissions.
+To provide feedback or report a bug, [please raise an issue on our issue tracker](https://github.com/auth0/go-auth0/issues).
 
-Then create a local `.env` file in the `management` folder with the following settings:
+### Vulnerability Reporting
 
-* `AUTH0_DOMAIN`: The **Domain** of the M2M app
-* `AUTH0_CLIENT_ID`: The **Client ID** of the M2M app
-* `AUTH0_CLIENT_SECRET`: The **Client Secret** of the M2M app
-* `AUTH0_DEBUG`: Set to `true` to call the Management API in debug mode, which dumps the HTTP requests and responses to the output
+Please do not report security vulnerabilities on the public Github issue tracker. The [Responsible Disclosure Program](https://auth0.com/responsible-disclosure-policy) details the procedure for disclosing security issues.
 
-[[table of contents]](#table-of-contents)
+---
 
-## What is Auth0?
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="https://cdn.auth0.com/website/sdks/logos/auth0_light_mode.png" width="150">
+    <source media="(prefers-color-scheme: dark)" srcset="https://cdn.auth0.com/website/sdks/logos/auth0_dark_mode.png" width="150">
+    <img alt="Auth0 Logo" src="https://cdn.auth0.com/website/sdks/logos/auth0_light_mode.png" width="150">
+  </picture>
+</p>
 
-Auth0 helps you to:
+<p align="center">Auth0 is an easy to implement, adaptable authentication and authorization platform.<br />To learn more checkout <a href="https://auth0.com/why-auth0">Why Auth0?</a></p>
 
-- Add authentication with [multiple authentication sources](https://auth0.com/docs/authenticate/identity-providers), either social like **Google, Facebook, Microsoft Account, LinkedIn, GitHub, Twitter, Box, Salesforce, amont others**, or enterprise identity systems like **Windows Azure AD, Google Apps, Active Directory, ADFS or any SAML Identity Provider**.
-- Add authentication through more traditional **[username/password databases](https://auth0.com/docs/authenticate/database-connections/custom-db)**.
-- Add support for **[linking different user accounts](https://auth0.com/docs/manage-users/user-accounts/user-account-linking)** with the same user.
-- Support for generating signed [Json Web Tokens](https://auth0.com/docs/secure/tokens/json-web-tokens) to call your APIs and **flow the user identity** securely.
-- Analytics of how, when and where users are logging in.
-- Pull data from other sources and add it to the user profile, through [JavaScript rules](https://auth0.com/docs/customize/rules).
-
-[[table of contents]](#table-of-contents)
-
-## Create a free Auth0 Account
-
-1.  Go to [Auth0](https://auth0.com) and click "Try Auth0 for Free".
-2.  Use Google, GitHub or Microsoft Account to login.
-
-[[table of contents]](#table-of-contents)
-
-## Issue Reporting
-
-If you have found a bug or if you have a feature request, please report them at this repository issues section.
-Please do not report security vulnerabilities on the public GitHub issue tracker.
-The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
-
-[[table of contents]](#table-of-contents)
-
-## Author
-
-[Auth0](https://auth0.com/)
-
-[[table of contents]](#table-of-contents)
-
-## License
-
-This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more info.
-
-[[table of contents]](#table-of-contents)
+<p align="center">This project is licensed under the MIT license. See the <a href="./LICENSE.md"> LICENSE</a> file for more info.</p>
