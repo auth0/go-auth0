@@ -1874,6 +1874,16 @@ func TestConnectionOptions_GetEnabledDatabaseCustomization(tt *testing.T) {
 	c.GetEnabledDatabaseCustomization()
 }
 
+func TestConnectionOptions_GetEnableScriptContext(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptions{EnableScriptContext: &zeroValue}
+	c.GetEnableScriptContext()
+	c = &ConnectionOptions{}
+	c.GetEnableScriptContext()
+	c = nil
+	c.GetEnableScriptContext()
+}
+
 func TestConnectionOptions_GetImportMode(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptions{ImportMode: &zeroValue}

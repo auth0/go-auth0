@@ -1474,6 +1474,14 @@ func (c *ConnectionOptions) GetEnabledDatabaseCustomization() bool {
 	return *c.EnabledDatabaseCustomization
 }
 
+// GetEnableScriptContext returns the EnableScriptContext field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptions) GetEnableScriptContext() bool {
+	if c == nil || c.EnableScriptContext == nil {
+		return false
+	}
+	return *c.EnableScriptContext
+}
+
 // GetImportMode returns the ImportMode field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptions) GetImportMode() bool {
 	if c == nil || c.ImportMode == nil {
