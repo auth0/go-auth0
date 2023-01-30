@@ -220,6 +220,51 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 		},
 	},
 	{
+		name: "ADFS Connection",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-ADFS-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("adfs"),
+		},
+		options: &ConnectionOptionsADFS{
+			FedMetadataXML: auth0.String(`<?xml version="1.0" encoding="utf-8"?>
+<EntityDescriptor entityID="https://example.com"
+                  xmlns="urn:oasis:names:tc:SAML:2.0:metadata">
+    <RoleDescriptor xsi:type="fed:ApplicationServiceType"
+                    protocolSupportEnumeration="http://docs.oasis-open.org/wsfed/federation/200706"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:fed="http://docs.oasis-open.org/wsfed/federation/200706">
+        <fed:TargetScopes>
+            <wsa:EndpointReference xmlns:wsa="http://www.w3.org/2005/08/addressing">
+                <wsa:Address>https://adfs.provider/</wsa:Address>
+            </wsa:EndpointReference>
+        </fed:TargetScopes>
+        <fed:ApplicationServiceEndpoint>
+            <wsa:EndpointReference xmlns:wsa="http://www.w3.org/2005/08/addressing">
+                <wsa:Address>https://adfs.provider/wsfed</wsa:Address>
+            </wsa:EndpointReference>
+        </fed:ApplicationServiceEndpoint>
+        <fed:PassiveRequestorEndpoint>
+            <wsa:EndpointReference xmlns:wsa="http://www.w3.org/2005/08/addressing">
+                <wsa:Address>https://adfs.provider/wsfed</wsa:Address>
+            </wsa:EndpointReference>
+        </fed:PassiveRequestorEndpoint>
+    </RoleDescriptor>
+    <IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                             Location="https://adfs.provider/sign_out"/>
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                             Location="https://adfs.provider/sign_in"/>
+    </IDPSSODescriptor>
+</EntityDescriptor>
+`),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
+	},
+	{
 		name: "Facebook Connection",
 		connection: Connection{
 			Name:     auth0.Stringf("Test-Facebook-Connection-%d", time.Now().Unix()),
@@ -428,8 +473,9 @@ func TestConnectionManager_Update(t *testing.T) {
 		t.Run("It can successfully update a "+testCase.name, func(t *testing.T) {
 			if testCase.connection.GetStrategy() == "oidc" ||
 				testCase.connection.GetStrategy() == "samlp" ||
-				testCase.connection.GetStrategy() == "okta" {
-				t.Skip("Skipping because we can't create an oidc, okta or samlp connection with no options")
+				testCase.connection.GetStrategy() == "okta" ||
+				testCase.connection.GetStrategy() == "adfs" {
+				t.Skip("Skipping because we can't create an oidc, okta, samlp or adfs connection with no options")
 			}
 
 			configureHTTPTestRecordings(t)

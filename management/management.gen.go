@@ -1644,6 +1644,14 @@ func (c *ConnectionOptionsADFS) GetEnableUsersAPI() bool {
 	return *c.EnableUsersAPI
 }
 
+// GetFedMetadataXML returns the FedMetadataXML field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsADFS) GetFedMetadataXML() string {
+	if c == nil || c.FedMetadataXML == nil {
+		return ""
+	}
+	return *c.FedMetadataXML
+}
+
 // GetLogoURL returns the LogoURL field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsADFS) GetLogoURL() string {
 	if c == nil || c.LogoURL == nil {
@@ -1668,12 +1676,36 @@ func (c *ConnectionOptionsADFS) GetSetUserAttributes() string {
 	return *c.SetUserAttributes
 }
 
+// GetSignInEndpoint returns the SignInEndpoint field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsADFS) GetSignInEndpoint() string {
+	if c == nil || c.SignInEndpoint == nil {
+		return ""
+	}
+	return *c.SignInEndpoint
+}
+
 // GetTenantDomain returns the TenantDomain field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsADFS) GetTenantDomain() string {
 	if c == nil || c.TenantDomain == nil {
 		return ""
 	}
 	return *c.TenantDomain
+}
+
+// GetThumbprints returns the Thumbprints field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsADFS) GetThumbprints() []string {
+	if c == nil || c.Thumbprints == nil {
+		return nil
+	}
+	return *c.Thumbprints
+}
+
+// GetTrustEmailVerified returns the TrustEmailVerified field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsADFS) GetTrustEmailVerified() string {
+	if c == nil || c.TrustEmailVerified == nil {
+		return ""
+	}
+	return *c.TrustEmailVerified
 }
 
 // String returns a string representation of ConnectionOptionsADFS.
