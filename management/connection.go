@@ -873,18 +873,20 @@ func (c *ConnectionOptionsAzureAD) SetScopes(enable bool, scopes ...string) {
 
 // ConnectionOptionsADFS is used to configure an ADFS Connection.
 type ConnectionOptionsADFS struct {
-	TenantDomain  *string   `json:"tenant_domain,omitempty"`
-	DomainAliases *[]string `json:"domain_aliases,omitempty"`
-	LogoURL       *string   `json:"icon_url,omitempty"`
-	ADFSServer    *string   `json:"adfs_server,omitempty"`
-
-	EnableUsersAPI *bool `json:"api_enable_users,omitempty"`
+	TenantDomain       *string                `json:"tenant_domain,omitempty"`
+	DomainAliases      *[]string              `json:"domain_aliases,omitempty"`
+	LogoURL            *string                `json:"icon_url,omitempty"`
+	ADFSServer         *string                `json:"adfs_server,omitempty"`
+	FedMetadataXML     *string                `json:"fedMetadataXml,omitempty"`
+	EnableUsersAPI     *bool                  `json:"api_enable_users,omitempty"`
+	NonPersistentAttrs *[]string              `json:"non_persistent_attrs,omitempty"`
+	UpstreamParams     map[string]interface{} `json:"upstream_params,omitempty"`
+	Thumbprints        *[]string              `json:"thumbprints,omitempty"`
+	SignInEndpoint     *string                `json:"signInEndpoint,omitempty"`
+	TrustEmailVerified *string                `json:"should_trust_email_verified_connection,omitempty"`
 
 	// Set to on_first_login to avoid setting user attributes at each login.
-	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
-	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
-
-	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
+	SetUserAttributes *string `json:"set_user_root_attributes,omitempty"`
 }
 
 // ConnectionOptionsSAML is used to configure a SAML Connection.

@@ -2090,6 +2090,16 @@ func TestConnectionOptionsADFS_GetEnableUsersAPI(tt *testing.T) {
 	c.GetEnableUsersAPI()
 }
 
+func TestConnectionOptionsADFS_GetFedMetadataXML(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsADFS{FedMetadataXML: &zeroValue}
+	c.GetFedMetadataXML()
+	c = &ConnectionOptionsADFS{}
+	c.GetFedMetadataXML()
+	c = nil
+	c.GetFedMetadataXML()
+}
+
 func TestConnectionOptionsADFS_GetLogoURL(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsADFS{LogoURL: &zeroValue}
@@ -2120,6 +2130,16 @@ func TestConnectionOptionsADFS_GetSetUserAttributes(tt *testing.T) {
 	c.GetSetUserAttributes()
 }
 
+func TestConnectionOptionsADFS_GetSignInEndpoint(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsADFS{SignInEndpoint: &zeroValue}
+	c.GetSignInEndpoint()
+	c = &ConnectionOptionsADFS{}
+	c.GetSignInEndpoint()
+	c = nil
+	c.GetSignInEndpoint()
+}
+
 func TestConnectionOptionsADFS_GetTenantDomain(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsADFS{TenantDomain: &zeroValue}
@@ -2128,6 +2148,26 @@ func TestConnectionOptionsADFS_GetTenantDomain(tt *testing.T) {
 	c.GetTenantDomain()
 	c = nil
 	c.GetTenantDomain()
+}
+
+func TestConnectionOptionsADFS_GetThumbprints(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsADFS{Thumbprints: &zeroValue}
+	c.GetThumbprints()
+	c = &ConnectionOptionsADFS{}
+	c.GetThumbprints()
+	c = nil
+	c.GetThumbprints()
+}
+
+func TestConnectionOptionsADFS_GetTrustEmailVerified(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsADFS{TrustEmailVerified: &zeroValue}
+	c.GetTrustEmailVerified()
+	c = &ConnectionOptionsADFS{}
+	c.GetTrustEmailVerified()
+	c = nil
+	c.GetTrustEmailVerified()
 }
 
 func TestConnectionOptionsADFS_String(t *testing.T) {
