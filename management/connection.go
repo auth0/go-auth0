@@ -231,6 +231,8 @@ func (c *Connection) UnmarshalJSON(b []byte) error {
 			v = &ConnectionOptionsAD{}
 		case ConnectionStrategyAzureAD:
 			v = &ConnectionOptionsAzureAD{}
+		case ConnectionStrategyADFS:
+			v = &ConnectionOptionsADFS{}
 		case ConnectionStrategySAML:
 			v = &ConnectionOptionsSAML{}
 		case ConnectionStrategyGoogleApps:
