@@ -62,7 +62,7 @@ type Client struct {
 
 	// True if this client can be used to make cross-origin authentication
 	// requests, false otherwise (default: false).
-	CrossOriginAuth *bool `json:"cross_origin_auth,omitempty"`
+	CrossOriginAuth *bool `json:"cross_origin_authentication,omitempty"`
 
 	// List of acceptable Grant Types for this Client.
 	GrantTypes *[]string `json:"grant_types,omitempty"`
