@@ -62,6 +62,8 @@ type Client struct {
 
 	// True if this client can be used to make cross-origin authentication
 	// requests, false otherwise (default: false).
+	// Requires the 'coa_toggle_enabled' feature flag to be enabled
+	// on the tenant by the support team.
 	CrossOriginAuth *bool `json:"cross_origin_authentication,omitempty"`
 
 	// List of acceptable Grant Types for this Client.
