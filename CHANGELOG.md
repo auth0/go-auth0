@@ -1,5 +1,25 @@
 # Change Log
 
+<a name="v0.15.1"></a>
+
+## [v0.15.1](https://github.com/auth0/go-auth0/tree/v0.15.1) (2023-01-30)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.15.0...v0.15.1)
+
+### Added
+
+- Added `EnableScriptContext` to `ConnectionOptions` ([#158](https://github.com/auth0/go-auth0/pull/158))
+- Added `TrustEmailVerified`, `SignInEndpoint`, `Thumbprints`, `FedMetadataXML` to `ConnectionOptionsADFS` ([#161](https://github.com/auth0/go-auth0/pull/161))
+
+### Fixed
+
+- Fixed the `Connection.UnmarshalJSON()` for `ConnectionStrategyADFS`  ([#160](https://github.com/auth0/go-auth0/pull/160))
+
+### Changed
+
+- Changed the `CrossOriginAuth`'s json tag `cross_origin_auth` to `cross_origin_authentication` ([#159](https://github.com/auth0/go-auth0/pull/159))
+
+
 <a name="v0.15.0"></a>
 
 ## [v0.15.0](https://github.com/auth0/go-auth0/tree/v0.15.0) (2023-01-26)
