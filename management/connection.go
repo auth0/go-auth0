@@ -277,6 +277,10 @@ type ConnectionOptions struct {
 	// Options for password complexity options.
 	PasswordComplexityOptions map[string]interface{} `json:"password_complexity_options,omitempty"`
 
+	// Set to true to inject context into custom DB scripts (warning: cannot be disabled once enabled).
+	EnableScriptContext *bool `json:"enable_script_context,omitempty"`
+
+	// Set to true to use a legacy user store.
 	EnabledDatabaseCustomization *bool `json:"enabledDatabaseCustomization,omitempty"`
 
 	BruteForceProtection *bool `json:"brute_force_protection,omitempty"`
@@ -288,7 +292,7 @@ type ConnectionOptions struct {
 	RequiresUsername *bool `json:"requires_username,omitempty"`
 
 	// Scripts for the connection.
-	// Allowed keys are: "get_user", "login", "create", "verify", "change_password", "delete" or "change_email".
+	// Allowed keys are: "get_user", "login", "create", "verify", "change_password", "delete"".
 	CustomScripts *map[string]string `json:"customScripts,omitempty"`
 
 	// Configuration variables that can be used in custom scripts.
