@@ -115,6 +115,7 @@ type Management struct {
 	ctx         context.Context
 	tokenSource oauth2.TokenSource
 	http        *http.Client
+	telemetry   *client.Telemetry
 }
 
 // New creates a new Auth0 Management client by authenticating using the
@@ -139,6 +140,7 @@ func New(domain string, options ...Option) (*Management, error) {
 		debug:     false,
 		ctx:       context.Background(),
 		http:      http.DefaultClient,
+		telemetry: client.DefaultTelemetryData,
 	}
 
 	for _, option := range options {
@@ -151,6 +153,7 @@ func New(domain string, options ...Option) (*Management, error) {
 		client.WithDebug(m.debug),
 		client.WithUserAgent(m.userAgent),
 		client.WithRateLimit(),
+		client.WithTelemetry(m.telemetry),
 	)
 
 	m.Client = newClientManager(m)

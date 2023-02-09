@@ -95,3 +95,45 @@ func TestOAuth2ClientCredentialsAndAudience(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "someToken", token.AccessToken)
 }
+
+func TestWrapTelemetry(t *testing.T) {
+	var testCases = []struct {
+		name     string
+		given    Telemetry
+		expected string
+	}{
+		{
+			name:     "Default client",
+			given:    *DefaultTelemetryData,
+			expected: "eyJuYW1lIjoiZ28tYXV0aDAiLCJ2ZXJzaW9uIjoibGF0ZXN0In0=",
+		},
+		{
+			name:     "Custom client",
+			given:    Telemetry{"foo", "1.0.0", map[string]string{"os": "windows"}},
+			expected: "eyJuYW1lIjoiZm9vIiwidmVyc2lvbiI6IjEuMC4wIiwiZW52Ijp7Im9zIjoid2luZG93cyJ9fQ==",
+		},
+		{
+			name:     "Missing information",
+			given:    Telemetry{Name: "foo"},
+			expected: "eyJuYW1lIjoiZm9vIiwidmVyc2lvbiI6IiJ9",
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				header := r.Header.Get("Auth0-Client")
+				assert.Equal(t, testCase.expected, header)
+			})
+
+			testServer := httptest.NewServer(testHandler)
+			t.Cleanup(func() {
+				testServer.Close()
+			})
+
+			httpClient := Wrap(testServer.Client(), StaticToken(""), WithTelemetry(&testCase.given))
+			_, err := httpClient.Get(testServer.URL)
+			assert.NoError(t, err)
+		})
+	}
+}

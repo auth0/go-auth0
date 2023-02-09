@@ -12,6 +12,8 @@ import (
 
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/auth0/go-auth0/internal/client"
 )
 
 var (
@@ -253,4 +255,62 @@ func TestManagement_URI(t *testing.T) {
 			assert.Equal(t, testCase.expected, actual)
 		})
 	}
+}
+
+func TestTelemetry(t *testing.T) {
+	t.Run("Defaults to the default data", func(t *testing.T) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			header := r.Header.Get("Auth0-Client")
+			assert.Equal(t, "eyJuYW1lIjoiZ28tYXV0aDAiLCJ2ZXJzaW9uIjoibGF0ZXN0In0=", header)
+		})
+		s := httptest.NewServer(h)
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+		)
+		assert.NoError(t, err)
+
+		_, err = m.User.Read("123")
+
+		assert.NoError(t, err)
+	})
+
+	t.Run("Allows passing a custom telemetry data", func(t *testing.T) {
+		customClient := client.Telemetry{Name: "test-client", Version: "1.0.0"}
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			header := r.Header.Get("Auth0-Client")
+			assert.Equal(t, "eyJuYW1lIjoidGVzdC1jbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjAifQ==", header)
+		})
+		s := httptest.NewServer(h)
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithTelemetry(customClient),
+		)
+		assert.NoError(t, err)
+
+		_, err = m.User.Read("123")
+
+		assert.NoError(t, err)
+	})
+
+	t.Run("Allows disabling telemetry", func(t *testing.T) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			rawHeader := r.Header.Get("Auth0-Client")
+			assert.Empty(t, rawHeader)
+		})
+		s := httptest.NewServer(h)
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithNoTelemetry(),
+		)
+		assert.NoError(t, err)
+		_, err = m.User.Read("123")
+		assert.NoError(t, err)
+	})
 }
