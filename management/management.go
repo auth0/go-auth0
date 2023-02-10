@@ -108,14 +108,14 @@ type Management struct {
 	// EmailProvider manages Auth0 Email Providers.
 	EmailProvider *EmailProviderManager
 
-	url         *url.URL
-	basePath    string
-	userAgent   string
-	debug       bool
-	ctx         context.Context
-	tokenSource oauth2.TokenSource
-	http        *http.Client
-	telemetry   *client.Telemetry
+	url             *url.URL
+	basePath        string
+	userAgent       string
+	debug           bool
+	ctx             context.Context
+	tokenSource     oauth2.TokenSource
+	http            *http.Client
+	auth0ClientInfo *client.Auth0ClientInfo
 }
 
 // New creates a new Auth0 Management client by authenticating using the
@@ -134,13 +134,13 @@ func New(domain string, options ...Option) (*Management, error) {
 	}
 
 	m := &Management{
-		url:       u,
-		basePath:  "api/v2",
-		userAgent: client.UserAgent,
-		debug:     false,
-		ctx:       context.Background(),
-		http:      http.DefaultClient,
-		telemetry: client.DefaultTelemetryData,
+		url:             u,
+		basePath:        "api/v2",
+		userAgent:       client.UserAgent,
+		debug:           false,
+		ctx:             context.Background(),
+		http:            http.DefaultClient,
+		auth0ClientInfo: client.DefaultAuth0ClientInfo,
 	}
 
 	for _, option := range options {
@@ -153,7 +153,7 @@ func New(domain string, options ...Option) (*Management, error) {
 		client.WithDebug(m.debug),
 		client.WithUserAgent(m.userAgent),
 		client.WithRateLimit(),
-		client.WithTelemetry(m.telemetry),
+		client.WithAuth0ClientInfo(m.auth0ClientInfo),
 	)
 
 	m.Client = newClientManager(m)

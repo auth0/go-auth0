@@ -257,7 +257,7 @@ func TestManagement_URI(t *testing.T) {
 	}
 }
 
-func TestTelemetry(t *testing.T) {
+func TestAuth0Client(t *testing.T) {
 	t.Run("Defaults to the default data", func(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			header := r.Header.Get("Auth0-Client")
@@ -276,8 +276,8 @@ func TestTelemetry(t *testing.T) {
 		assert.NoError(t, err)
 	})
 
-	t.Run("Allows passing a custom telemetry data", func(t *testing.T) {
-		customClient := client.Telemetry{Name: "test-client", Version: "1.0.0"}
+	t.Run("Allows passing custom Auth0ClientInfo", func(t *testing.T) {
+		customClient := client.Auth0ClientInfo{Name: "test-client", Version: "1.0.0"}
 
 		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			header := r.Header.Get("Auth0-Client")
@@ -288,7 +288,7 @@ func TestTelemetry(t *testing.T) {
 		m, err := New(
 			s.URL,
 			WithInsecure(),
-			WithTelemetry(customClient),
+			WithAuth0ClientInfo(customClient),
 		)
 		assert.NoError(t, err)
 
@@ -297,7 +297,7 @@ func TestTelemetry(t *testing.T) {
 		assert.NoError(t, err)
 	})
 
-	t.Run("Allows disabling telemetry", func(t *testing.T) {
+	t.Run("Allows disabling Auth0ClientInfo", func(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			rawHeader := r.Header.Get("Auth0-Client")
 			assert.Empty(t, rawHeader)
@@ -307,7 +307,7 @@ func TestTelemetry(t *testing.T) {
 		m, err := New(
 			s.URL,
 			WithInsecure(),
-			WithNoTelemetry(),
+			WithNoAuth0ClientInfo(),
 		)
 		assert.NoError(t, err)
 		_, err = m.User.Read("123")

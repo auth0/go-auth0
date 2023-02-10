@@ -83,20 +83,20 @@ func WithClient(client *http.Client) Option {
 	}
 }
 
-// WithTelemetry configures the management client to use the provided telemetry data
+// WithAuth0ClientInfo configures the management client to use the provided client information
 // instead of the default one.
-func WithTelemetry(telemetry client.Telemetry) Option {
+func WithAuth0ClientInfo(auth0ClientInfo client.Auth0ClientInfo) Option {
 	return func(m *Management) {
-		if !telemetry.IsEmpty() {
-			m.telemetry = &telemetry
+		if !auth0ClientInfo.IsEmpty() {
+			m.auth0ClientInfo = &auth0ClientInfo
 		}
 	}
 }
 
-// WithNoTelemetry configures the management client to not send the "Auth0-Client" header
+// WithNoAuth0ClientInfo configures the management client to not send the "Auth0-Client" header
 // at all.
-func WithNoTelemetry() Option {
+func WithNoAuth0ClientInfo() Option {
 	return func(m *Management) {
-		m.telemetry = nil
+		m.auth0ClientInfo = nil
 	}
 }
