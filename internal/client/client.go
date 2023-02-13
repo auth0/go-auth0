@@ -14,11 +14,33 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
 
+	"encoding/base64"
+	"encoding/json"
+
 	"github.com/auth0/go-auth0"
 )
 
 // UserAgent is the default user agent string.
 var UserAgent = fmt.Sprintf("Go-Auth0-SDK/%s", auth0.Version)
+
+// Auth0ClientInfo is the structure used to send client information in the "Auth0-Client" header.
+type Auth0ClientInfo struct {
+	Name    string            `json:"name"`
+	Version string            `json:"version"`
+	Env     map[string]string `json:"env,omitempty"`
+}
+
+// IsEmpty checks whether the provided Auth0ClientInfo data is nil or has no data to allow
+// short-circuiting the "Auth0-Client" header configuration.
+func (td *Auth0ClientInfo) IsEmpty() bool {
+	if td == nil {
+		return true
+	}
+	return td.Name == "" && td.Version == "" && len(td.Env) == 0
+}
+
+// DefaultAuth0ClientInfo is the default client information sent by the go-auth0 SDK.
+var DefaultAuth0ClientInfo = &Auth0ClientInfo{Name: "go-auth0", Version: auth0.Version}
 
 // RoundTripFunc is an adapter to allow the use of ordinary functions as HTTP
 // round trips.
@@ -67,6 +89,25 @@ func UserAgentTransport(base http.RoundTripper, userAgent string) http.RoundTrip
 		req.Header.Set("User-Agent", userAgent)
 		return base.RoundTrip(req)
 	})
+}
+
+// Auth0ClientInfoTransport wraps base transport with a customized "Auth0-Client" header.
+func Auth0ClientInfoTransport(base http.RoundTripper, auth0ClientInfo *Auth0ClientInfo) (http.RoundTripper, error) {
+	if base == nil {
+		base = http.DefaultTransport
+	}
+
+	auth0ClientJson, err := json.Marshal(auth0ClientInfo)
+	if err != nil {
+		return nil, err
+	}
+
+	auth0ClientEncoded := base64.StdEncoding.EncodeToString(auth0ClientJson)
+
+	return RoundTripFunc(func(req *http.Request) (*http.Response, error) {
+		req.Header.Set("Auth0-Client", auth0ClientEncoded)
+		return base.RoundTrip(req)
+	}), nil
 }
 
 func dumpRequest(r *http.Request) {
@@ -120,6 +161,20 @@ func WithRateLimit() Option {
 func WithUserAgent(userAgent string) Option {
 	return func(c *http.Client) {
 		c.Transport = UserAgentTransport(c.Transport, userAgent)
+	}
+}
+
+// WithAuth0ClientInfo configures the client to overwrite the "Auth0-Client" header.
+func WithAuth0ClientInfo(auth0ClientInfo *Auth0ClientInfo) Option {
+	return func(c *http.Client) {
+		if auth0ClientInfo.IsEmpty() {
+			return
+		}
+		transport, err := Auth0ClientInfoTransport(c.Transport, auth0ClientInfo)
+		if err != nil {
+			return
+		}
+		c.Transport = transport
 	}
 }
 
