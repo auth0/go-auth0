@@ -1,6 +1,6 @@
 module github.com/auth0/go-auth0
 
-go 1.18
+go 1.20
 
 require (
 	github.com/PuerkitoBio/rehttp v1.1.0
