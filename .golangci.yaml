@@ -39,6 +39,7 @@ issues:
   exclude:
     - "Error return value of `response.Body.Close` is not checked"
     - "Error return value of `w.Write` is not checked"
+    - "G307: Deferring unsafe method \"Close\" on type \"io.ReadCloser\""
   exclude-rules:
     - path: "(.+)_test.go"
       linters:
