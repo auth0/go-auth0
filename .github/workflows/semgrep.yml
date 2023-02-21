@@ -1,16 +1,14 @@
-name: Semgrep
+name: semgrep
 
 on:
   pull_request_target: {}
-
   push:
     branches: [main]
-
   schedule:
     - cron: '30 0 1,15 * *'
 
 jobs:
-  semgrep:
+  scan:
     runs-on: ubuntu-latest
     container:
       image: returntocorp/semgrep
