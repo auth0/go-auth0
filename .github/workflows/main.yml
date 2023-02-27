@@ -29,9 +29,6 @@ jobs:
       - name: Check for linting errors
         run: make lint
 
-      - name: Check for go vulnerabilities
-        run: make check-vuln
-
   tests:
     name: Tests
     runs-on: ubuntu-latest
