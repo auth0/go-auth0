@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/PuerkitoBio/rehttp v1.1.0
 	github.com/joho/godotenv v1.5.1
-	github.com/stretchr/testify v1.8.1
+	github.com/stretchr/testify v1.8.2
 	golang.org/x/oauth2 v0.5.0
 	gopkg.in/dnaeon/go-vcr.v3 v3.1.2
 )
