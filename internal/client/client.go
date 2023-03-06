@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"runtime"
 	"strconv"
 	"time"
 
@@ -40,7 +41,13 @@ func (td *Auth0ClientInfo) IsEmpty() bool {
 }
 
 // DefaultAuth0ClientInfo is the default client information sent by the go-auth0 SDK.
-var DefaultAuth0ClientInfo = &Auth0ClientInfo{Name: "go-auth0", Version: auth0.Version}
+var DefaultAuth0ClientInfo = &Auth0ClientInfo{
+	Name:    "go-auth0",
+	Version: auth0.Version,
+	Env: map[string]string{
+		"go": runtime.Version(),
+	},
+}
 
 // RoundTripFunc is an adapter to allow the use of ordinary functions as HTTP
 // round trips.

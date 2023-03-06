@@ -261,7 +261,8 @@ func TestAuth0Client(t *testing.T) {
 	t.Run("Defaults to the default data", func(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			header := r.Header.Get("Auth0-Client")
-			assert.Equal(t, "eyJuYW1lIjoiZ28tYXV0aDAiLCJ2ZXJzaW9uIjoibGF0ZXN0In0=", header)
+			// As the default contains dynamic data (runtime.Version) we just assert the value is set.
+			assert.NotEmpty(t, header)
 		})
 		s := httptest.NewServer(h)
 

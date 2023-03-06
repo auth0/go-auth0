@@ -105,7 +105,7 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 		{
 			name:     "Default client",
 			given:    *DefaultAuth0ClientInfo,
-			expected: "eyJuYW1lIjoiZ28tYXV0aDAiLCJ2ZXJzaW9uIjoibGF0ZXN0In0=",
+			expected: "", // As the default contains dynamic data (runtime.Version) we just assert the value is set.
 		},
 		{
 			name:     "Custom client",
@@ -123,7 +123,11 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 		t.Run(testCase.name, func(t *testing.T) {
 			testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				header := r.Header.Get("Auth0-Client")
-				assert.Equal(t, testCase.expected, header)
+				if testCase.expected == "" {
+					assert.NotEmpty(t, header)
+				} else {
+					assert.Equal(t, testCase.expected, header)
+				}
 			})
 
 			testServer := httptest.NewServer(testHandler)
