@@ -146,11 +146,7 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 		t.Run(testCase.name, func(t *testing.T) {
 			testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				header := r.Header.Get("Auth0-Client")
-				if testCase.expected == "" {
-					assert.NotEmpty(t, header)
-				} else {
-					assert.Equal(t, testCase.expected, header)
-				}
+				assert.Equal(t, testCase.expected, header)
 			})
 
 			testServer := httptest.NewServer(testHandler)
