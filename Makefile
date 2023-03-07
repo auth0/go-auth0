@@ -82,4 +82,9 @@ test-record: ## Run tests and record http interactions. To run a specific test p
 
 test-e2e: ## Run tests without http recordings. To run a specific test pass the FILTER var. Usage `make test-e2e FILTER="TestResourceServer_Read"`
 	@echo "==> Running tests against a real Auth0 tenant..."
-	@go test -run "$(FILTER)"-cover -covermode=atomic -coverprofile=coverage.out ./...
+	@go test \
+		-run "$(FILTER)" \
+		-cover \
+		-covermode=atomic \
+		-coverprofile=coverage.out \
+		./...

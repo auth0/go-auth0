@@ -2,11 +2,14 @@ package management
 
 import (
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"errors"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"runtime"
 	"testing"
 	"time"
 
@@ -261,7 +264,16 @@ func TestAuth0Client(t *testing.T) {
 	t.Run("Defaults to the default data", func(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			header := r.Header.Get("Auth0-Client")
-			assert.Equal(t, "eyJuYW1lIjoiZ28tYXV0aDAiLCJ2ZXJzaW9uIjoibGF0ZXN0In0=", header)
+			auth0ClientDecoded, err := base64.StdEncoding.DecodeString(header)
+			assert.NoError(t, err)
+
+			var auth0Client client.Auth0ClientInfo
+			err = json.Unmarshal(auth0ClientDecoded, &auth0Client)
+
+			assert.NoError(t, err)
+			assert.Equal(t, "go-auth0", auth0Client.Name)
+			assert.Equal(t, "latest", auth0Client.Version)
+			assert.Equal(t, runtime.Version(), auth0Client.Env["go"])
 		})
 		s := httptest.NewServer(h)
 

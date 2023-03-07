@@ -2,10 +2,13 @@ package client
 
 import (
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"runtime"
 	"testing"
 	"time"
 
@@ -97,16 +100,36 @@ func TestOAuth2ClientCredentialsAndAudience(t *testing.T) {
 }
 
 func TestWrapAuth0ClientInfo(t *testing.T) {
+	t.Run("Default client", func(t *testing.T) {
+		testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			header := r.Header.Get("Auth0-Client")
+			auth0ClientDecoded, err := base64.StdEncoding.DecodeString(header)
+			assert.NoError(t, err)
+
+			var auth0Client Auth0ClientInfo
+			err = json.Unmarshal(auth0ClientDecoded, &auth0Client)
+			assert.NoError(t, err)
+
+			assert.Equal(t, "go-auth0", auth0Client.Name)
+			assert.Equal(t, "latest", auth0Client.Version)
+			assert.Equal(t, runtime.Version(), auth0Client.Env["go"])
+		})
+
+		testServer := httptest.NewServer(testHandler)
+		t.Cleanup(func() {
+			testServer.Close()
+		})
+
+		httpClient := Wrap(testServer.Client(), StaticToken(""), WithAuth0ClientInfo(DefaultAuth0ClientInfo))
+		_, err := httpClient.Get(testServer.URL)
+		assert.NoError(t, err)
+	})
+
 	var testCases = []struct {
 		name     string
 		given    Auth0ClientInfo
 		expected string
 	}{
-		{
-			name:     "Default client",
-			given:    *DefaultAuth0ClientInfo,
-			expected: "eyJuYW1lIjoiZ28tYXV0aDAiLCJ2ZXJzaW9uIjoibGF0ZXN0In0=",
-		},
 		{
 			name:     "Custom client",
 			given:    Auth0ClientInfo{"foo", "1.0.0", map[string]string{"os": "windows"}},
