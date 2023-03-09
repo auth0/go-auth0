@@ -1,6 +1,7 @@
 package management
 
 import (
+	"encoding/json"
 	"net/http"
 	"testing"
 	"time"
@@ -564,6 +565,42 @@ func TestConnectionOptionsScopes(t *testing.T) {
 
 		options.SetScopes(false, "foo", "baz")
 		assert.Equal(t, []string{"bar"}, options.Scopes())
+	})
+}
+
+func TestGoogleOauth2Connection_MarshalJSON(t *testing.T) {
+	var emptySlice []string
+	for connection, expected := range map[*ConnectionOptionsGoogleOAuth2]string{
+		{AllowedAudiences: nil}:                                              `{}`,
+		{AllowedAudiences: &emptySlice}:                                      `{"allowed_audiences":null}`,
+		{AllowedAudiences: &[]string{}}:                                      `{"allowed_audiences":[]}`,
+		{AllowedAudiences: &[]string{"foo", "bar"}}:                          `{"allowed_audiences":["foo","bar"]}`,
+		{AllowedAudiences: &[]string{"foo", "bar"}, Email: auth0.Bool(true)}: `{"email":true,"allowed_audiences":["foo","bar"]}`,
+	} {
+		payload, err := json.Marshal(connection)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, string(payload))
+	}
+}
+
+func TestGoogleOauth2Connection_UnmarshalJSON(t *testing.T) {
+	for expectedAsString, expected := range map[string]*ConnectionOptionsGoogleOAuth2{
+		`{}`:                          {},
+		`{"allowed_audiences": null}`: {},
+		`{"allowed_audiences": ""}`:   {AllowedAudiences: &[]string{}},
+		`{"allowed_audiences": []}`:   {AllowedAudiences: &[]string{}},
+		`{"allowed_audiences": ["foo", "bar"], "scope": ["email"] }`: {AllowedAudiences: &[]string{"foo", "bar"}, Scope: []interface{}{"email"}},
+	} {
+		var actual *ConnectionOptionsGoogleOAuth2
+		err := json.Unmarshal([]byte(expectedAsString), &actual)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, actual)
+	}
+
+	t.Run("Throws an unexpected type error", func(t *testing.T) {
+		var actual *ConnectionOptionsGoogleOAuth2
+		err := json.Unmarshal([]byte(`{"allowed_audiences": 1}`), &actual)
+		assert.EqualError(t, err, "unexpected type for field allowed_audiences: float64")
 	})
 }
 

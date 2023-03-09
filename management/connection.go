@@ -2,6 +2,7 @@ package management
 
 import (
 	"encoding/json"
+	"fmt"
 	"sort"
 	"strings"
 
@@ -356,7 +357,7 @@ type ConnectionOptionsGoogleOAuth2 struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
 
-	AllowedAudiences *[]string `json:"allowed_audiences,omitempty"`
+	AllowedAudiences *[]string `json:"-"`
 
 	Email                  *bool         `json:"email,omitempty" scope:"email"`
 	Profile                *bool         `json:"profile,omitempty" scope:"profile"`
@@ -403,6 +404,59 @@ func (c *ConnectionOptionsGoogleOAuth2) Scopes() []string {
 // SetScopes sets the scopes for ConnectionOptionsGoogleOAuth2.
 func (c *ConnectionOptionsGoogleOAuth2) SetScopes(enable bool, scopes ...string) {
 	tag.SetScopes(c, enable, scopes...)
+}
+
+// UnmarshalJSON implements the json.Unmarshaler interface.
+//
+// It is required to handle differences in the allowed_audiences field, which can
+// be an array of strings or a single string.
+func (c *ConnectionOptionsGoogleOAuth2) UnmarshalJSON(data []byte) error {
+	type connectionOptionsGoogleOAuth2 ConnectionOptionsGoogleOAuth2
+	type connectionOptionsGoogleOAuth2Wrapper struct {
+		*connectionOptionsGoogleOAuth2
+		RawAllowedAudiences interface{} `json:"allowed_audiences,omitempty"`
+	}
+
+	alias := &connectionOptionsGoogleOAuth2Wrapper{(*connectionOptionsGoogleOAuth2)(c), nil}
+
+	err := json.Unmarshal(data, alias)
+	if err != nil {
+		return err
+	}
+
+	if alias.RawAllowedAudiences != nil {
+		switch rawAllowedAudiences := alias.RawAllowedAudiences.(type) {
+		case []interface{}:
+			audiences := make([]string, len(rawAllowedAudiences))
+			for i, v := range rawAllowedAudiences {
+				audiences[i] = v.(string)
+			}
+
+			c.AllowedAudiences = &audiences
+		case string:
+			c.AllowedAudiences = &[]string{}
+		default:
+			return fmt.Errorf("unexpected type for field allowed_audiences: %T", alias.RawAllowedAudiences)
+		}
+	}
+
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaler interface.
+func (c *ConnectionOptionsGoogleOAuth2) MarshalJSON() ([]byte, error) {
+	type connectionOptionsGoogleOAuth2 ConnectionOptionsGoogleOAuth2
+	type connectionOptionsGoogleOAuth2Wrapper struct {
+		*connectionOptionsGoogleOAuth2
+		RawAllowedAudiences interface{} `json:"allowed_audiences,omitempty"`
+	}
+
+	alias := &connectionOptionsGoogleOAuth2Wrapper{(*connectionOptionsGoogleOAuth2)(c), nil}
+	if c.AllowedAudiences != nil {
+		alias.RawAllowedAudiences = c.AllowedAudiences
+	}
+
+	return json.Marshal(alias)
 }
 
 // ConnectionOptionsFacebook is used to configure a Facebook Connection.
