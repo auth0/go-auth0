@@ -950,7 +950,6 @@ type ConnectionOptionsADFS struct {
 // ConnectionOptionsPingFederate is used to configure a Ping Federate Connection.
 type ConnectionOptionsPingFederate struct {
 	SigningCert         *string                            `json:"signingCert,omitempty"`
-	Expires             *string                            `json:"expires,omitempty"`
 	LogoURL             *string                            `json:"icon_url,omitempty"`
 	IdpInitiated        *ConnectionOptionsSAMLIdpInitiated `json:"idpinitiated,omitempty"`
 	TenantDomain        *string                            `json:"tenant_domain,omitempty"`
@@ -962,7 +961,6 @@ type ConnectionOptionsPingFederate struct {
 	PingFederateBaseUrl *string                            `json:"pingFederateBaseUrl,omitempty"`
 	NonPersistentAttrs  *[]string                          `json:"non_persistent_attrs,omitempty"`
 	UpstreamParams      map[string]interface{}             `json:"upstream_params,omitempty"`
-	Thumbprints         *[]string                          `json:"thumbprints,omitempty"`
 	SetUserAttributes   *string                            `json:"set_user_root_attributes,omitempty"`
 }
 
