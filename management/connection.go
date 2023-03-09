@@ -86,6 +86,8 @@ const (
 	ConnectionStrategyVimeo = "vimeo"
 	// ConnectionStrategyCustom constant.
 	ConnectionStrategyCustom = "custom"
+	// ConnectionStrategyPingFederate constant.
+	ConnectionStrategyPingFederate = "pingfederate"
 )
 
 // Connection is the relationship between Auth0 and a source of users.
@@ -234,6 +236,8 @@ func (c *Connection) UnmarshalJSON(b []byte) error {
 			v = &ConnectionOptionsAzureAD{}
 		case ConnectionStrategyADFS:
 			v = &ConnectionOptionsADFS{}
+		case ConnectionStrategyPingFederate:
+			v = &ConnectionOptionsPingFederate{}
 		case ConnectionStrategySAML:
 			v = &ConnectionOptionsSAML{}
 		case ConnectionStrategyGoogleApps:
@@ -941,6 +945,25 @@ type ConnectionOptionsADFS struct {
 
 	// Set to on_first_login to avoid setting user attributes at each login.
 	SetUserAttributes *string `json:"set_user_root_attributes,omitempty"`
+}
+
+// ConnectionOptionsPingFederate is used to configure a Ping Federate Connection.
+type ConnectionOptionsPingFederate struct {
+	SigningCert         *string                            `json:"signingCert,omitempty"`
+	Expires             *string                            `json:"expires,omitempty"`
+	LogoURL             *string                            `json:"icon_url,omitempty"`
+	IdpInitiated        *ConnectionOptionsSAMLIdpInitiated `json:"idpinitiated,omitempty"`
+	TenantDomain        *string                            `json:"tenant_domain,omitempty"`
+	DomainAliases       *[]string                          `json:"domain_aliases,omitempty"`
+	SignInEndpoint      *string                            `json:"signInEndpoint,omitempty"`
+	DigestAlgorithm     *string                            `json:"digestAlgorithm,omitempty"`
+	SignSAMLRequest     *bool                              `json:"signSAMLRequest,omitempty"`
+	SignatureAlgorithm  *string                            `json:"signatureAlgorithm,omitempty"`
+	PingFederateBaseUrl *string                            `json:"pingFederateBaseUrl,omitempty"`
+	NonPersistentAttrs  *[]string                          `json:"non_persistent_attrs,omitempty"`
+	UpstreamParams      map[string]interface{}             `json:"upstream_params,omitempty"`
+	Thumbprints         *[]string                          `json:"thumbprints,omitempty"`
+	SetUserAttributes   *string                            `json:"set_user_root_attributes,omitempty"`
 }
 
 // ConnectionOptionsSAML is used to configure a SAML Connection.
