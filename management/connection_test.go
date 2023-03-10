@@ -389,6 +389,42 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			},
 		},
 	},
+	{
+		name: "Ping Federate Connection",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Ping-Federate-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("pingfederate"),
+		},
+		options: &ConnectionOptionsPingFederate{
+			PingFederateBaseUrl: auth0.String("https://ping.example.com"),
+			SigningCert: auth0.String(`-----BEGIN CERTIFICATE-----
+MIID6TCCA1ICAQEwDQYJKoZIhvcNAQEFBQAwgYsxCzAJBgNVBAYTAlVTMRMwEQYD
+VQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMRQwEgYDVQQK
+EwtHb29nbGUgSW5jLjEMMAoGA1UECxMDRW5nMQwwCgYDVQQDEwNhZ2wxHTAbBgkq
+hkiG9w0BCQEWDmFnbEBnb29nbGUuY29tMB4XDTA5MDkwOTIyMDU0M1oXDTEwMDkw
+OTIyMDU0M1owajELMAkGA1UEBhMCQVUxEzARBgNVBAgTClNvbWUtU3RhdGUxITAf
+BgNVBAoTGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEjMCEGA1UEAxMaZXVyb3Bh
+LnNmby5jb3JwLmdvb2dsZS5jb20wggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIK
+AoICAQC6pgYt7/EibBDumASF+S0qvqdL/f+nouJw2T1Qc8GmXF/iiUcrsgzh/Fd8
+pDhz/T96Qg9IyR4ztuc2MXrmPra+zAuSf5bevFReSqvpIt8Duv0HbDbcqs/XKPfB
+uMDe+of7a9GCywvAZ4ZUJcp0thqD9fKTTjUWOBzHY1uNE4RitrhmJCrbBGXbJ249
+bvgmb7jgdInH2PU7PT55hujvOoIsQW2osXBFRur4pF1wmVh4W4lTLD6pjfIMUcML
+ICHEXEN73PDic8KS3EtNYCwoIld+tpIBjE1QOb1KOyuJBNW6Esw9ALZn7stWdYcE
+qAwvv20egN2tEXqj7Q4/1ccyPZc3PQgC3FJ8Be2mtllM+80qf4dAaQ/fWvCtOrQ5
+pnfe9juQvCo8Y0VGlFcrSys/MzSg9LJ/24jZVgzQved/Qupsp89wVidwIzjt+WdS
+fyWfH0/v1aQLvu5cMYuW//C0W2nlYziL5blETntM8My2ybNARy3ICHxCBv2RNtPI
+WQVm+E9/W5rwh2IJR4DHn2LHwUVmT/hHNTdBLl5Uhwr4Wc7JhE7AVqb14pVNz1lr
+5jxsp//ncIwftb7mZQ3DF03Yna+jJhpzx8CQoeLT6aQCHyzmH68MrHHT4MALPyUs
+Pomjn71GNTtDeWAXibjCgdL6iHACCF6Htbl0zGlG0OAK+bdn0QIDAQABMA0GCSqG
+SIb3DQEBBQUAA4GBAOKnQDtqBV24vVqvesL5dnmyFpFPXBn3WdFfwD6DzEb21UVG
+5krmJiu+ViipORJPGMkgoL6BjU21XI95VQbun5P8vvg8Z+FnFsvRFY3e1CCzAVQY
+ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
+-----END CERTIFICATE-----`),
+			SignSAMLRequest:    auth0.Bool(true),
+			SignatureAlgorithm: auth0.String("rsa-sha256"),
+			DigestAlgorithm:    auth0.String("sha256"),
+		},
+	},
 }
 
 type connectionTestCase struct {
@@ -475,8 +511,9 @@ func TestConnectionManager_Update(t *testing.T) {
 			if testCase.connection.GetStrategy() == "oidc" ||
 				testCase.connection.GetStrategy() == "samlp" ||
 				testCase.connection.GetStrategy() == "okta" ||
-				testCase.connection.GetStrategy() == "adfs" {
-				t.Skip("Skipping because we can't create an oidc, okta, samlp or adfs connection with no options")
+				testCase.connection.GetStrategy() == "adfs" ||
+				testCase.connection.GetStrategy() == "pingfederate" {
+				t.Skip("Skipping because we can't create an oidc, okta, samlp, adfs, or pingfederate connection with no options")
 			}
 
 			configureHTTPTestRecordings(t)

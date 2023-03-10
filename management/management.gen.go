@@ -3482,6 +3482,115 @@ func (c *ConnectionOptionsOTP) String() string {
 	return Stringify(c)
 }
 
+// GetCert returns the Cert field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetCert() string {
+	if c == nil || c.Cert == nil {
+		return ""
+	}
+	return *c.Cert
+}
+
+// GetDigestAlgorithm returns the DigestAlgorithm field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetDigestAlgorithm() string {
+	if c == nil || c.DigestAlgorithm == nil {
+		return ""
+	}
+	return *c.DigestAlgorithm
+}
+
+// GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetDomainAliases() []string {
+	if c == nil || c.DomainAliases == nil {
+		return nil
+	}
+	return *c.DomainAliases
+}
+
+// GetIdpInitiated returns the IdpInitiated field.
+func (c *ConnectionOptionsPingFederate) GetIdpInitiated() *ConnectionOptionsSAMLIdpInitiated {
+	if c == nil {
+		return nil
+	}
+	return c.IdpInitiated
+}
+
+// GetLogoURL returns the LogoURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetLogoURL() string {
+	if c == nil || c.LogoURL == nil {
+		return ""
+	}
+	return *c.LogoURL
+}
+
+// GetNonPersistentAttrs returns the NonPersistentAttrs field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetNonPersistentAttrs() []string {
+	if c == nil || c.NonPersistentAttrs == nil {
+		return nil
+	}
+	return *c.NonPersistentAttrs
+}
+
+// GetPingFederateBaseUrl returns the PingFederateBaseUrl field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetPingFederateBaseUrl() string {
+	if c == nil || c.PingFederateBaseUrl == nil {
+		return ""
+	}
+	return *c.PingFederateBaseUrl
+}
+
+// GetSetUserAttributes returns the SetUserAttributes field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetSetUserAttributes() string {
+	if c == nil || c.SetUserAttributes == nil {
+		return ""
+	}
+	return *c.SetUserAttributes
+}
+
+// GetSignatureAlgorithm returns the SignatureAlgorithm field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetSignatureAlgorithm() string {
+	if c == nil || c.SignatureAlgorithm == nil {
+		return ""
+	}
+	return *c.SignatureAlgorithm
+}
+
+// GetSignInEndpoint returns the SignInEndpoint field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetSignInEndpoint() string {
+	if c == nil || c.SignInEndpoint == nil {
+		return ""
+	}
+	return *c.SignInEndpoint
+}
+
+// GetSigningCert returns the SigningCert field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetSigningCert() string {
+	if c == nil || c.SigningCert == nil {
+		return ""
+	}
+	return *c.SigningCert
+}
+
+// GetSignSAMLRequest returns the SignSAMLRequest field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetSignSAMLRequest() bool {
+	if c == nil || c.SignSAMLRequest == nil {
+		return false
+	}
+	return *c.SignSAMLRequest
+}
+
+// GetTenantDomain returns the TenantDomain field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetTenantDomain() string {
+	if c == nil || c.TenantDomain == nil {
+		return ""
+	}
+	return *c.TenantDomain
+}
+
+// String returns a string representation of ConnectionOptionsPingFederate.
+func (c *ConnectionOptionsPingFederate) String() string {
+	return Stringify(c)
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsSalesforce) GetClientID() string {
 	if c == nil || c.ClientID == nil {

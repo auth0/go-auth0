@@ -4406,6 +4406,141 @@ func TestConnectionOptionsOTP_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptionsPingFederate_GetCert(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{Cert: &zeroValue}
+	c.GetCert()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetCert()
+	c = nil
+	c.GetCert()
+}
+
+func TestConnectionOptionsPingFederate_GetDigestAlgorithm(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{DigestAlgorithm: &zeroValue}
+	c.GetDigestAlgorithm()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetDigestAlgorithm()
+	c = nil
+	c.GetDigestAlgorithm()
+}
+
+func TestConnectionOptionsPingFederate_GetDomainAliases(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsPingFederate{DomainAliases: &zeroValue}
+	c.GetDomainAliases()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetDomainAliases()
+	c = nil
+	c.GetDomainAliases()
+}
+
+func TestConnectionOptionsPingFederate_GetIdpInitiated(tt *testing.T) {
+	c := &ConnectionOptionsPingFederate{}
+	c.GetIdpInitiated()
+	c = nil
+	c.GetIdpInitiated()
+}
+
+func TestConnectionOptionsPingFederate_GetLogoURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{LogoURL: &zeroValue}
+	c.GetLogoURL()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetLogoURL()
+	c = nil
+	c.GetLogoURL()
+}
+
+func TestConnectionOptionsPingFederate_GetNonPersistentAttrs(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsPingFederate{NonPersistentAttrs: &zeroValue}
+	c.GetNonPersistentAttrs()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetNonPersistentAttrs()
+	c = nil
+	c.GetNonPersistentAttrs()
+}
+
+func TestConnectionOptionsPingFederate_GetPingFederateBaseUrl(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{PingFederateBaseUrl: &zeroValue}
+	c.GetPingFederateBaseUrl()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetPingFederateBaseUrl()
+	c = nil
+	c.GetPingFederateBaseUrl()
+}
+
+func TestConnectionOptionsPingFederate_GetSetUserAttributes(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{SetUserAttributes: &zeroValue}
+	c.GetSetUserAttributes()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetSetUserAttributes()
+	c = nil
+	c.GetSetUserAttributes()
+}
+
+func TestConnectionOptionsPingFederate_GetSignatureAlgorithm(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{SignatureAlgorithm: &zeroValue}
+	c.GetSignatureAlgorithm()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetSignatureAlgorithm()
+	c = nil
+	c.GetSignatureAlgorithm()
+}
+
+func TestConnectionOptionsPingFederate_GetSignInEndpoint(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{SignInEndpoint: &zeroValue}
+	c.GetSignInEndpoint()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetSignInEndpoint()
+	c = nil
+	c.GetSignInEndpoint()
+}
+
+func TestConnectionOptionsPingFederate_GetSigningCert(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{SigningCert: &zeroValue}
+	c.GetSigningCert()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetSigningCert()
+	c = nil
+	c.GetSigningCert()
+}
+
+func TestConnectionOptionsPingFederate_GetSignSAMLRequest(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsPingFederate{SignSAMLRequest: &zeroValue}
+	c.GetSignSAMLRequest()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetSignSAMLRequest()
+	c = nil
+	c.GetSignSAMLRequest()
+}
+
+func TestConnectionOptionsPingFederate_GetTenantDomain(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{TenantDomain: &zeroValue}
+	c.GetTenantDomain()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetTenantDomain()
+	c = nil
+	c.GetTenantDomain()
+}
+
+func TestConnectionOptionsPingFederate_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsPingFederate{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestConnectionOptionsSalesforce_GetClientID(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsSalesforce{ClientID: &zeroValue}
