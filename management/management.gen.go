@@ -3482,6 +3482,14 @@ func (c *ConnectionOptionsOTP) String() string {
 	return Stringify(c)
 }
 
+// GetCert returns the Cert field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetCert() string {
+	if c == nil || c.Cert == nil {
+		return ""
+	}
+	return *c.Cert
+}
+
 // GetDigestAlgorithm returns the DigestAlgorithm field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsPingFederate) GetDigestAlgorithm() string {
 	if c == nil || c.DigestAlgorithm == nil {

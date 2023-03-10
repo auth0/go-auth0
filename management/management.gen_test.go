@@ -4406,6 +4406,16 @@ func TestConnectionOptionsOTP_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptionsPingFederate_GetCert(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{Cert: &zeroValue}
+	c.GetCert()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetCert()
+	c = nil
+	c.GetCert()
+}
+
 func TestConnectionOptionsPingFederate_GetDigestAlgorithm(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsPingFederate{DigestAlgorithm: &zeroValue}
