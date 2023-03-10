@@ -353,6 +353,78 @@ func TestUserIdentity_UnmarshalJSON(t *testing.T) {
 	}
 }
 
+func TestUserManager_AuthenticationMethods(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	user := givenAUser(t)
+	method := AuthenticationMethod{
+		Name:  auth0.String("Test"),
+		Type:  auth0.String("email"),
+		Email: auth0.String(user.GetEmail()),
+	}
+
+	err := api.User.CreateAuthenticationMethod(user.GetID(), &method)
+	assert.NoError(t, err)
+
+	methods, err := api.User.GetAuthenticationMethods(user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, methods.Authenticators, 1)
+	assert.Equal(t, method.GetID(), methods.Authenticators[0].GetID())
+
+	methodInfo, err := api.User.GetAuthenticationMethodById(user.GetID(), method.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, method.GetID(), methodInfo.GetID())
+
+	err = api.User.UpdateAuthenticationMethod(user.GetID(), methodInfo.GetID(), &AuthenticationMethod{
+		Name: auth0.String("Test2"),
+	})
+	assert.NoError(t, err)
+
+	methodInfo, err = api.User.GetAuthenticationMethodById(user.GetID(), method.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, "Test2", methodInfo.GetName())
+
+	err = api.User.DeleteAuthenticationMethod(user.GetID(), method.GetID())
+	assert.NoError(t, err)
+
+	methods, err = api.User.GetAuthenticationMethods(user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, methods.Authenticators, 0)
+
+	updateMethods := []AuthenticationMethod{
+		{
+			Type:  auth0.String("email"),
+			Name:  auth0.String("MyEmail"),
+			Email: auth0.String("foo@example.com"),
+		},
+		{
+			Type:                          auth0.String("phone"),
+			Name:                          auth0.String("MyPhone"),
+			PhoneNumber:                   auth0.String("+44207183875044"),
+			PreferredAuthenticationMethod: auth0.String("sms"),
+		},
+		{
+			Type:       auth0.String("totp"),
+			Name:       auth0.String("MyTotp"),
+			TOTPSecret: auth0.String("5HCWXIP2MJNSUBGYVUZFLRB2HWIGXR4SYJQXNBQ"),
+		},
+	}
+
+	err = api.User.UpdateAllAuthenticationMethods(user.GetID(), &updateMethods)
+	assert.NoError(t, err)
+
+	methods, err = api.User.GetAuthenticationMethods(user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, methods.Authenticators, 3)
+
+	err = api.User.DeleteAllAuthenticationMethods(user.GetID())
+	assert.NoError(t, err)
+
+	methods, err = api.User.GetAuthenticationMethods(user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, methods.Authenticators, 0)
+}
+
 func givenAUser(t *testing.T) *User {
 	t.Helper()
 
