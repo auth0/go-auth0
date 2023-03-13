@@ -950,11 +950,11 @@ type ConnectionOptionsADFS struct {
 // ConnectionOptionsPingFederate is used to configure a Ping Federate Connection.
 type ConnectionOptionsPingFederate struct {
 	// SigningCert should be used when creating or updating the public key for the Ping Federate server, it will not be
-	// present when reading a connection and instead you should use the Cert field to check the value.
+	// present when reading a connection, and instead you should use the Cert field to check the value.
 	SigningCert *string `json:"signingCert,omitempty"`
 
-	// Cert should only be used when reading the connection. It should not be set on creation or update of a connection, instead
-	// SigningCert should be used to update the public key for the Ping Federate server.
+	// Cert should only be used when reading the connection. It should not be set on creation or update of a connection,
+	// instead SigningCert should be used to update the public key for the Ping Federate server.
 	Cert *string `json:"cert,omitempty"`
 
 	LogoURL             *string                            `json:"icon_url,omitempty"`
@@ -965,7 +965,7 @@ type ConnectionOptionsPingFederate struct {
 	DigestAlgorithm     *string                            `json:"digestAlgorithm,omitempty"`
 	SignSAMLRequest     *bool                              `json:"signSAMLRequest,omitempty"`
 	SignatureAlgorithm  *string                            `json:"signatureAlgorithm,omitempty"`
-	PingFederateBaseUrl *string                            `json:"pingFederateBaseUrl,omitempty"`
+	PingFederateBaseURL *string                            `json:"pingFederateBaseUrl,omitempty"`
 	NonPersistentAttrs  *[]string                          `json:"non_persistent_attrs,omitempty"`
 	UpstreamParams      map[string]interface{}             `json:"upstream_params,omitempty"`
 	SetUserAttributes   *string                            `json:"set_user_root_attributes,omitempty"`

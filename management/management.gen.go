@@ -527,12 +527,12 @@ func (a *AuthenticationMethod) GetID() string {
 	return *a.ID
 }
 
-// GetKeyId returns the KeyId field if it's non-nil, zero value otherwise.
-func (a *AuthenticationMethod) GetKeyId() string {
-	if a == nil || a.KeyId == nil {
+// GetKeyID returns the KeyID field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetKeyID() string {
+	if a == nil || a.KeyID == nil {
 		return ""
 	}
-	return *a.KeyId
+	return *a.KeyID
 }
 
 // GetLastAuthedAt returns the LastAuthedAt field if it's non-nil, zero value otherwise.
@@ -3689,12 +3689,12 @@ func (c *ConnectionOptionsPingFederate) GetNonPersistentAttrs() []string {
 	return *c.NonPersistentAttrs
 }
 
-// GetPingFederateBaseUrl returns the PingFederateBaseUrl field if it's non-nil, zero value otherwise.
-func (c *ConnectionOptionsPingFederate) GetPingFederateBaseUrl() string {
-	if c == nil || c.PingFederateBaseUrl == nil {
+// GetPingFederateBaseURL returns the PingFederateBaseURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetPingFederateBaseURL() string {
+	if c == nil || c.PingFederateBaseURL == nil {
 		return ""
 	}
-	return *c.PingFederateBaseUrl
+	return *c.PingFederateBaseURL
 }
 
 // GetSetUserAttributes returns the SetUserAttributes field if it's non-nil, zero value otherwise.

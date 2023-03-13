@@ -675,14 +675,14 @@ func TestAuthenticationMethod_GetID(tt *testing.T) {
 	a.GetID()
 }
 
-func TestAuthenticationMethod_GetKeyId(tt *testing.T) {
+func TestAuthenticationMethod_GetKeyID(tt *testing.T) {
 	var zeroValue string
-	a := &AuthenticationMethod{KeyId: &zeroValue}
-	a.GetKeyId()
+	a := &AuthenticationMethod{KeyID: &zeroValue}
+	a.GetKeyID()
 	a = &AuthenticationMethod{}
-	a.GetKeyId()
+	a.GetKeyID()
 	a = nil
-	a.GetKeyId()
+	a.GetKeyID()
 }
 
 func TestAuthenticationMethod_GetLastAuthedAt(tt *testing.T) {
@@ -4667,14 +4667,14 @@ func TestConnectionOptionsPingFederate_GetNonPersistentAttrs(tt *testing.T) {
 	c.GetNonPersistentAttrs()
 }
 
-func TestConnectionOptionsPingFederate_GetPingFederateBaseUrl(tt *testing.T) {
+func TestConnectionOptionsPingFederate_GetPingFederateBaseURL(tt *testing.T) {
 	var zeroValue string
-	c := &ConnectionOptionsPingFederate{PingFederateBaseUrl: &zeroValue}
-	c.GetPingFederateBaseUrl()
+	c := &ConnectionOptionsPingFederate{PingFederateBaseURL: &zeroValue}
+	c.GetPingFederateBaseURL()
 	c = &ConnectionOptionsPingFederate{}
-	c.GetPingFederateBaseUrl()
+	c.GetPingFederateBaseURL()
 	c = nil
-	c.GetPingFederateBaseUrl()
+	c.GetPingFederateBaseURL()
 }
 
 func TestConnectionOptionsPingFederate_GetSetUserAttributes(tt *testing.T) {

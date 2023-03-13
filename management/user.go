@@ -305,40 +305,59 @@ type UserList struct {
 	Users []*User `json:"users"`
 }
 
+// AuthenticationMethod belonging to a user.
+//
+// See: https://auth0.com/docs/secure/multi-factor-authentication/manage-mfa-auth0-apis/manage-authentication-methods-with-management-api
 type AuthenticationMethod struct {
 	// The ID of the authentication method (auto generated).
 	ID *string `json:"id,omitempty"`
+
 	// The type of the authentication method. Should be one of "phone", "email", "totp" or "webauthn-roaming".
 	Type *string `json:"type,omitempty"`
+
 	// The authentication method status.
 	Confirmed *bool `json:"confirmed,omitempty"`
+
 	// A human-readable label to identify the authentication method.
 	Name *string `json:"name,omitempty"`
+
 	// The ID of a linked authentication method. Linked authentication methods will be deleted together.
 	LinkID *string `json:"link_id,omitempty"`
+
 	// Applies to phone authentication methods only. The destination phone number used to send verification codes via text and voice.
 	PhoneNumber *string `json:"phone_number,omitempty"`
+
 	// Applies to email authentication method only. The email address used to send verification messages.
 	Email *string `json:"email,omitempty"`
+
 	// Applies to webauthn authentication methods only. The ID of the generated credential.
-	KeyId *string `json:"key_id,omitempty"`
+	KeyID *string `json:"key_id,omitempty"`
+
 	// Applies to webauthn authentication methods only. The public key.
 	PublicKey *string `json:"public_key,omitempty"`
+
 	// Authenticator creation date.
 	CreatedAt *time.Time `json:"created_at,omitempty"`
+
 	// Enrollment date.
 	EnrolledAt *time.Time `json:"enrolled_at,omitempty"`
+
 	// Last authentication.
 	LastAuthedAt *time.Time `json:"last_auth_at,omitempty"`
+
 	// Base32 encoded secret for TOTP generation.
 	TOTPSecret *string `json:"totp_secret,omitempty"`
+
 	// The authentication method preferred for phone authenticators.
 	PreferredAuthenticationMethod *string `json:"preferred_authentication_method,omitempty"`
+
 	// Applies to email webauthn authenticators only. The relying party identifier.
-	RelyingPartyIdentifier *string                          `json:"relying_party_identifier,omitempty"`
-	AuthenticationMethods  *[]AuthenticationMethodReference `json:"authentication_methods,omitempty"`
+	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty"`
+
+	AuthenticationMethods *[]AuthenticationMethodReference `json:"authentication_methods,omitempty"`
 }
 
+// AuthenticationMethodReference used within the AuthenticationMethod.
 type AuthenticationMethodReference struct {
 	// The ID of the authentication method (auto generated).
 	ID *string `json:"id,omitempty"`
@@ -346,6 +365,9 @@ type AuthenticationMethodReference struct {
 	Type *string `json:"type,omitempty"`
 }
 
+// AuthenticationMethodList is an envelope struct which is used when calling GetAuthenticationMethods().
+//
+// It holds metadata such as the total result count, starting offset and limit.
 type AuthenticationMethodList struct {
 	List
 	Authenticators []*AuthenticationMethod `json:"authenticators,omitempty"`
@@ -627,58 +649,58 @@ func (m *UserManager) Organizations(id string, opts ...RequestOption) (p *Organi
 	return
 }
 
-// Gets a list of authentication methods.
+// GetAuthenticationMethods retrieves a list of authentication methods.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_authentication_methods
-func (m *UserManager) GetAuthenticationMethods(userId string, opts ...RequestOption) (a *AuthenticationMethodList, err error) {
-	err = m.Request("GET", m.URI("users", userId, "authentication-methods"), &a, applyListDefaults(opts))
+func (m *UserManager) GetAuthenticationMethods(userID string, opts ...RequestOption) (a *AuthenticationMethodList, err error) {
+	err = m.Request("GET", m.URI("users", userID, "authentication-methods"), &a, applyListDefaults(opts))
 	return
 }
 
-// Gets a specific authentication method for a user.
+// GetAuthenticationMethodByID gets a specific authentication method for a user.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_authentication_methods_by_authentication_method_id
-func (m *UserManager) GetAuthenticationMethodById(userId string, id string, opts ...RequestOption) (a *AuthenticationMethod, err error) {
-	err = m.Request("GET", m.URI("users", userId, "authentication-methods", id), &a, applyListDefaults(opts))
+func (m *UserManager) GetAuthenticationMethodByID(userID string, id string, opts ...RequestOption) (a *AuthenticationMethod, err error) {
+	err = m.Request("GET", m.URI("users", userID, "authentication-methods", id), &a, applyListDefaults(opts))
 	return
 }
 
-// Creates an authentication method for a user.
+// CreateAuthenticationMethod creates an authentication method for a user.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/post_authentication_methods
-func (m *UserManager) CreateAuthenticationMethod(userId string, a *AuthenticationMethod, opts ...RequestOption) (err error) {
-	err = m.Request("POST", m.URI("users", userId, "authentication-methods"), &a, opts...)
+func (m *UserManager) CreateAuthenticationMethod(userID string, a *AuthenticationMethod, opts ...RequestOption) (err error) {
+	err = m.Request("POST", m.URI("users", userID, "authentication-methods"), &a, opts...)
 	return
 }
 
-// Updates all authentication methods by replacing them with the given ones..
+// UpdateAllAuthenticationMethods updates all authentication methods by replacing them with the given ones.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/put_authentication_methods
-func (m *UserManager) UpdateAllAuthenticationMethods(userId string, a *[]AuthenticationMethod, opts ...RequestOption) (err error) {
-	err = m.Request("PUT", m.URI("users", userId, "authentication-methods"), &a, opts...)
+func (m *UserManager) UpdateAllAuthenticationMethods(userID string, a *[]AuthenticationMethod, opts ...RequestOption) (err error) {
+	err = m.Request("PUT", m.URI("users", userID, "authentication-methods"), &a, opts...)
 	return
 }
 
-// Updates an authentication method by ID.
+// UpdateAuthenticationMethod updates an authentication method by ID.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/patch_authentication_methods_by_authentication_method_id
-func (m *UserManager) UpdateAuthenticationMethod(userId string, id string, a *AuthenticationMethod, opts ...RequestOption) (err error) {
-	err = m.Request("PATCH", m.URI("users", userId, "authentication-methods", id), &a, opts...)
+func (m *UserManager) UpdateAuthenticationMethod(userID string, id string, a *AuthenticationMethod, opts ...RequestOption) (err error) {
+	err = m.Request("PATCH", m.URI("users", userID, "authentication-methods", id), &a, opts...)
 	return
 }
 
-// Deletes an authentication method by ID
+// DeleteAuthenticationMethod deletes an authentication method by ID.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/delete_authentication_methods_by_authentication_method_id
-func (m *UserManager) DeleteAuthenticationMethod(userId string, id string, opts ...RequestOption) (err error) {
-	err = m.Request("DELETE", m.URI("users", userId, "authentication-methods", id), nil, opts...)
+func (m *UserManager) DeleteAuthenticationMethod(userID string, id string, opts ...RequestOption) (err error) {
+	err = m.Request("DELETE", m.URI("users", userID, "authentication-methods", id), nil, opts...)
 	return
 }
 
-// Deletes all authentication methods for the given user.
+// DeleteAllAuthenticationMethods deletes all authentication methods for the given user.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/delete_authentication_methods
-func (m *UserManager) DeleteAllAuthenticationMethods(userId string, opts ...RequestOption) (err error) {
-	err = m.Request("DELETE", m.URI("users", userId, "authentication-methods"), nil, opts...)
+func (m *UserManager) DeleteAllAuthenticationMethods(userID string, opts ...RequestOption) (err error) {
+	err = m.Request("DELETE", m.URI("users", userID, "authentication-methods"), nil, opts...)
 	return
 }

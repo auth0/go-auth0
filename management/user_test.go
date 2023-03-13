@@ -371,7 +371,7 @@ func TestUserManager_AuthenticationMethods(t *testing.T) {
 	assert.Len(t, methods.Authenticators, 1)
 	assert.Equal(t, method.GetID(), methods.Authenticators[0].GetID())
 
-	methodInfo, err := api.User.GetAuthenticationMethodById(user.GetID(), method.GetID())
+	methodInfo, err := api.User.GetAuthenticationMethodByID(user.GetID(), method.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, method.GetID(), methodInfo.GetID())
 
@@ -380,7 +380,7 @@ func TestUserManager_AuthenticationMethods(t *testing.T) {
 	})
 	assert.NoError(t, err)
 
-	methodInfo, err = api.User.GetAuthenticationMethodById(user.GetID(), method.GetID())
+	methodInfo, err = api.User.GetAuthenticationMethodByID(user.GetID(), method.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, "Test2", methodInfo.GetName())
 
