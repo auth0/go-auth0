@@ -311,6 +311,9 @@ type ConnectionOptions struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 
 	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
+
+	// Set to true to stop the "Forgot Password" being displayed on login pages
+	DisableSelfServiceChangePassword *bool `json:"disable_self_service_change_password,omitempty"`
 }
 
 // ConnectionOptionsOkta is used to configure an Okta Workforce Connection.
