@@ -2058,6 +2058,16 @@ func TestConnectionOptions_GetCustomScripts(tt *testing.T) {
 	c.GetCustomScripts()
 }
 
+func TestConnectionOptions_GetDisableSelfServiceChangePassword(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptions{DisableSelfServiceChangePassword: &zeroValue}
+	c.GetDisableSelfServiceChangePassword()
+	c = &ConnectionOptions{}
+	c.GetDisableSelfServiceChangePassword()
+	c = nil
+	c.GetDisableSelfServiceChangePassword()
+}
+
 func TestConnectionOptions_GetDisableSignup(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptions{DisableSignup: &zeroValue}

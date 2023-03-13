@@ -1617,6 +1617,14 @@ func (c *ConnectionOptions) GetCustomScripts() map[string]string {
 	return *c.CustomScripts
 }
 
+// GetDisableSelfServiceChangePassword returns the DisableSelfServiceChangePassword field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptions) GetDisableSelfServiceChangePassword() bool {
+	if c == nil || c.DisableSelfServiceChangePassword == nil {
+		return false
+	}
+	return *c.DisableSelfServiceChangePassword
+}
+
 // GetDisableSignup returns the DisableSignup field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptions) GetDisableSignup() bool {
 	if c == nil || c.DisableSignup == nil {
