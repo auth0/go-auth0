@@ -649,7 +649,7 @@ func (m *UserManager) Organizations(id string, opts ...RequestOption) (p *Organi
 	return
 }
 
-// GetAuthenticationMethods retrieves a list of authentication methods.
+// ListAuthenticationMethods retrieves a list of authentication methods.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_authentication_methods
 func (m *UserManager) ListAuthenticationMethods(userID string, opts ...RequestOption) (a *AuthenticationMethodList, err error) {
