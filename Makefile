@@ -27,7 +27,7 @@ deps: ## Download dependencies
 
 $(GO_BIN)/golangci-lint:
 	${call print, "Installing golangci-lint"}
-	@go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@v1.51.2
+	@go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 $(GO_BIN)/govulncheck:
 	@go install -v golang.org/x/vuln/cmd/govulncheck@latest
@@ -39,7 +39,7 @@ $(GO_BIN)/govulncheck:
 
 lint: $(GO_BIN)/golangci-lint ## Run linting on the go files
 	@echo "==> Running linting on the library with golangci-lint..."
-	@golangci-lint run -v -c .golangci.yaml ./...
+	@golangci-lint run -v --fix -c .golangci.yaml ./...
 
 check-vuln: $(GO_BIN)/govulncheck ## Check for vulnerabilities
 	@echo "==> Checking for vulnerabilities..."
