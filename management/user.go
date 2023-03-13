@@ -652,7 +652,7 @@ func (m *UserManager) Organizations(id string, opts ...RequestOption) (p *Organi
 // GetAuthenticationMethods retrieves a list of authentication methods.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_authentication_methods
-func (m *UserManager) GetAuthenticationMethods(userID string, opts ...RequestOption) (a *AuthenticationMethodList, err error) {
+func (m *UserManager) ListAuthenticationMethods(userID string, opts ...RequestOption) (a *AuthenticationMethodList, err error) {
 	err = m.Request("GET", m.URI("users", userID, "authentication-methods"), &a, applyListDefaults(opts))
 	return
 }
