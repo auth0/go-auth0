@@ -615,6 +615,210 @@ func TestActionVersionList_String(t *testing.T) {
 	}
 }
 
+func TestAuthenticationMethod_GetAuthenticationMethods(tt *testing.T) {
+	var zeroValue []AuthenticationMethodReference
+	a := &AuthenticationMethod{AuthenticationMethods: &zeroValue}
+	a.GetAuthenticationMethods()
+	a = &AuthenticationMethod{}
+	a.GetAuthenticationMethods()
+	a = nil
+	a.GetAuthenticationMethods()
+}
+
+func TestAuthenticationMethod_GetConfirmed(tt *testing.T) {
+	var zeroValue bool
+	a := &AuthenticationMethod{Confirmed: &zeroValue}
+	a.GetConfirmed()
+	a = &AuthenticationMethod{}
+	a.GetConfirmed()
+	a = nil
+	a.GetConfirmed()
+}
+
+func TestAuthenticationMethod_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	a := &AuthenticationMethod{CreatedAt: &zeroValue}
+	a.GetCreatedAt()
+	a = &AuthenticationMethod{}
+	a.GetCreatedAt()
+	a = nil
+	a.GetCreatedAt()
+}
+
+func TestAuthenticationMethod_GetEmail(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{Email: &zeroValue}
+	a.GetEmail()
+	a = &AuthenticationMethod{}
+	a.GetEmail()
+	a = nil
+	a.GetEmail()
+}
+
+func TestAuthenticationMethod_GetEnrolledAt(tt *testing.T) {
+	var zeroValue time.Time
+	a := &AuthenticationMethod{EnrolledAt: &zeroValue}
+	a.GetEnrolledAt()
+	a = &AuthenticationMethod{}
+	a.GetEnrolledAt()
+	a = nil
+	a.GetEnrolledAt()
+}
+
+func TestAuthenticationMethod_GetID(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{ID: &zeroValue}
+	a.GetID()
+	a = &AuthenticationMethod{}
+	a.GetID()
+	a = nil
+	a.GetID()
+}
+
+func TestAuthenticationMethod_GetKeyID(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{KeyID: &zeroValue}
+	a.GetKeyID()
+	a = &AuthenticationMethod{}
+	a.GetKeyID()
+	a = nil
+	a.GetKeyID()
+}
+
+func TestAuthenticationMethod_GetLastAuthedAt(tt *testing.T) {
+	var zeroValue time.Time
+	a := &AuthenticationMethod{LastAuthedAt: &zeroValue}
+	a.GetLastAuthedAt()
+	a = &AuthenticationMethod{}
+	a.GetLastAuthedAt()
+	a = nil
+	a.GetLastAuthedAt()
+}
+
+func TestAuthenticationMethod_GetLinkID(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{LinkID: &zeroValue}
+	a.GetLinkID()
+	a = &AuthenticationMethod{}
+	a.GetLinkID()
+	a = nil
+	a.GetLinkID()
+}
+
+func TestAuthenticationMethod_GetName(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{Name: &zeroValue}
+	a.GetName()
+	a = &AuthenticationMethod{}
+	a.GetName()
+	a = nil
+	a.GetName()
+}
+
+func TestAuthenticationMethod_GetPhoneNumber(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{PhoneNumber: &zeroValue}
+	a.GetPhoneNumber()
+	a = &AuthenticationMethod{}
+	a.GetPhoneNumber()
+	a = nil
+	a.GetPhoneNumber()
+}
+
+func TestAuthenticationMethod_GetPreferredAuthenticationMethod(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{PreferredAuthenticationMethod: &zeroValue}
+	a.GetPreferredAuthenticationMethod()
+	a = &AuthenticationMethod{}
+	a.GetPreferredAuthenticationMethod()
+	a = nil
+	a.GetPreferredAuthenticationMethod()
+}
+
+func TestAuthenticationMethod_GetPublicKey(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{PublicKey: &zeroValue}
+	a.GetPublicKey()
+	a = &AuthenticationMethod{}
+	a.GetPublicKey()
+	a = nil
+	a.GetPublicKey()
+}
+
+func TestAuthenticationMethod_GetRelyingPartyIdentifier(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{RelyingPartyIdentifier: &zeroValue}
+	a.GetRelyingPartyIdentifier()
+	a = &AuthenticationMethod{}
+	a.GetRelyingPartyIdentifier()
+	a = nil
+	a.GetRelyingPartyIdentifier()
+}
+
+func TestAuthenticationMethod_GetTOTPSecret(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{TOTPSecret: &zeroValue}
+	a.GetTOTPSecret()
+	a = &AuthenticationMethod{}
+	a.GetTOTPSecret()
+	a = nil
+	a.GetTOTPSecret()
+}
+
+func TestAuthenticationMethod_GetType(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{Type: &zeroValue}
+	a.GetType()
+	a = &AuthenticationMethod{}
+	a.GetType()
+	a = nil
+	a.GetType()
+}
+
+func TestAuthenticationMethod_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &AuthenticationMethod{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestAuthenticationMethodList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &AuthenticationMethodList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestAuthenticationMethodReference_GetID(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethodReference{ID: &zeroValue}
+	a.GetID()
+	a = &AuthenticationMethodReference{}
+	a.GetID()
+	a = nil
+	a.GetID()
+}
+
+func TestAuthenticationMethodReference_GetType(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethodReference{Type: &zeroValue}
+	a.GetType()
+	a = &AuthenticationMethodReference{}
+	a.GetType()
+	a = nil
+	a.GetType()
+}
+
+func TestAuthenticationMethodReference_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &AuthenticationMethodReference{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBlacklistToken_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &BlacklistToken{}
@@ -4463,14 +4667,14 @@ func TestConnectionOptionsPingFederate_GetNonPersistentAttrs(tt *testing.T) {
 	c.GetNonPersistentAttrs()
 }
 
-func TestConnectionOptionsPingFederate_GetPingFederateBaseUrl(tt *testing.T) {
+func TestConnectionOptionsPingFederate_GetPingFederateBaseURL(tt *testing.T) {
 	var zeroValue string
-	c := &ConnectionOptionsPingFederate{PingFederateBaseUrl: &zeroValue}
-	c.GetPingFederateBaseUrl()
+	c := &ConnectionOptionsPingFederate{PingFederateBaseURL: &zeroValue}
+	c.GetPingFederateBaseURL()
 	c = &ConnectionOptionsPingFederate{}
-	c.GetPingFederateBaseUrl()
+	c.GetPingFederateBaseURL()
 	c = nil
-	c.GetPingFederateBaseUrl()
+	c.GetPingFederateBaseURL()
 }
 
 func TestConnectionOptionsPingFederate_GetSetUserAttributes(tt *testing.T) {

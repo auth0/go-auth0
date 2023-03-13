@@ -28,11 +28,6 @@ linters-settings:
     capital: true
   goimports:
     local-prefixes: "github.com/auth0/go-auth0"
-  revive:
-    rules:
-      - name: package-comments
-        severity: warning
-        disabled: true
 
 issues:
   exclude-use-default: false
@@ -40,6 +35,7 @@ issues:
     - "Error return value of `response.Body.Close` is not checked"
     - "Error return value of `w.Write` is not checked"
     - "G307: Deferring unsafe method \"Close\" on type \"io.ReadCloser\""
+    - "should have a package comment"
   exclude-rules:
     - path: "(.+)_test.go"
       linters:

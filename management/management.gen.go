@@ -479,6 +479,165 @@ func (a *ActionVersionList) String() string {
 	return Stringify(a)
 }
 
+// GetAuthenticationMethods returns the AuthenticationMethods field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetAuthenticationMethods() []AuthenticationMethodReference {
+	if a == nil || a.AuthenticationMethods == nil {
+		return nil
+	}
+	return *a.AuthenticationMethods
+}
+
+// GetConfirmed returns the Confirmed field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetConfirmed() bool {
+	if a == nil || a.Confirmed == nil {
+		return false
+	}
+	return *a.Confirmed
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetCreatedAt() time.Time {
+	if a == nil || a.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *a.CreatedAt
+}
+
+// GetEmail returns the Email field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetEmail() string {
+	if a == nil || a.Email == nil {
+		return ""
+	}
+	return *a.Email
+}
+
+// GetEnrolledAt returns the EnrolledAt field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetEnrolledAt() time.Time {
+	if a == nil || a.EnrolledAt == nil {
+		return time.Time{}
+	}
+	return *a.EnrolledAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetID() string {
+	if a == nil || a.ID == nil {
+		return ""
+	}
+	return *a.ID
+}
+
+// GetKeyID returns the KeyID field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetKeyID() string {
+	if a == nil || a.KeyID == nil {
+		return ""
+	}
+	return *a.KeyID
+}
+
+// GetLastAuthedAt returns the LastAuthedAt field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetLastAuthedAt() time.Time {
+	if a == nil || a.LastAuthedAt == nil {
+		return time.Time{}
+	}
+	return *a.LastAuthedAt
+}
+
+// GetLinkID returns the LinkID field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetLinkID() string {
+	if a == nil || a.LinkID == nil {
+		return ""
+	}
+	return *a.LinkID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetName() string {
+	if a == nil || a.Name == nil {
+		return ""
+	}
+	return *a.Name
+}
+
+// GetPhoneNumber returns the PhoneNumber field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetPhoneNumber() string {
+	if a == nil || a.PhoneNumber == nil {
+		return ""
+	}
+	return *a.PhoneNumber
+}
+
+// GetPreferredAuthenticationMethod returns the PreferredAuthenticationMethod field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetPreferredAuthenticationMethod() string {
+	if a == nil || a.PreferredAuthenticationMethod == nil {
+		return ""
+	}
+	return *a.PreferredAuthenticationMethod
+}
+
+// GetPublicKey returns the PublicKey field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetPublicKey() string {
+	if a == nil || a.PublicKey == nil {
+		return ""
+	}
+	return *a.PublicKey
+}
+
+// GetRelyingPartyIdentifier returns the RelyingPartyIdentifier field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetRelyingPartyIdentifier() string {
+	if a == nil || a.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *a.RelyingPartyIdentifier
+}
+
+// GetTOTPSecret returns the TOTPSecret field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetTOTPSecret() string {
+	if a == nil || a.TOTPSecret == nil {
+		return ""
+	}
+	return *a.TOTPSecret
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetType() string {
+	if a == nil || a.Type == nil {
+		return ""
+	}
+	return *a.Type
+}
+
+// String returns a string representation of AuthenticationMethod.
+func (a *AuthenticationMethod) String() string {
+	return Stringify(a)
+}
+
+// String returns a string representation of AuthenticationMethodList.
+func (a *AuthenticationMethodList) String() string {
+	return Stringify(a)
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethodReference) GetID() string {
+	if a == nil || a.ID == nil {
+		return ""
+	}
+	return *a.ID
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethodReference) GetType() string {
+	if a == nil || a.Type == nil {
+		return ""
+	}
+	return *a.Type
+}
+
+// String returns a string representation of AuthenticationMethodReference.
+func (a *AuthenticationMethodReference) String() string {
+	return Stringify(a)
+}
+
 // String returns a string representation of BlacklistToken.
 func (b *BlacklistToken) String() string {
 	return Stringify(b)
@@ -3530,12 +3689,12 @@ func (c *ConnectionOptionsPingFederate) GetNonPersistentAttrs() []string {
 	return *c.NonPersistentAttrs
 }
 
-// GetPingFederateBaseUrl returns the PingFederateBaseUrl field if it's non-nil, zero value otherwise.
-func (c *ConnectionOptionsPingFederate) GetPingFederateBaseUrl() string {
-	if c == nil || c.PingFederateBaseUrl == nil {
+// GetPingFederateBaseURL returns the PingFederateBaseURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetPingFederateBaseURL() string {
+	if c == nil || c.PingFederateBaseURL == nil {
 		return ""
 	}
-	return *c.PingFederateBaseUrl
+	return *c.PingFederateBaseURL
 }
 
 // GetSetUserAttributes returns the SetUserAttributes field if it's non-nil, zero value otherwise.

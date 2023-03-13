@@ -396,7 +396,7 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			Strategy: auth0.String("pingfederate"),
 		},
 		options: &ConnectionOptionsPingFederate{
-			PingFederateBaseUrl: auth0.String("https://ping.example.com"),
+			PingFederateBaseURL: auth0.String("https://ping.example.com"),
 			SigningCert: auth0.String(`-----BEGIN CERTIFICATE-----
 MIID6TCCA1ICAQEwDQYJKoZIhvcNAQEFBQAwgYsxCzAJBgNVBAYTAlVTMRMwEQYD
 VQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMRQwEgYDVQQK

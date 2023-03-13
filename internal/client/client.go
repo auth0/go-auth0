@@ -2,6 +2,8 @@ package client
 
 import (
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -14,9 +16,6 @@ import (
 	"github.com/PuerkitoBio/rehttp"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
-
-	"encoding/base64"
-	"encoding/json"
 
 	"github.com/auth0/go-auth0"
 )
@@ -104,12 +103,12 @@ func Auth0ClientInfoTransport(base http.RoundTripper, auth0ClientInfo *Auth0Clie
 		base = http.DefaultTransport
 	}
 
-	auth0ClientJson, err := json.Marshal(auth0ClientInfo)
+	auth0ClientJSON, err := json.Marshal(auth0ClientInfo)
 	if err != nil {
 		return nil, err
 	}
 
-	auth0ClientEncoded := base64.StdEncoding.EncodeToString(auth0ClientJson)
+	auth0ClientEncoded := base64.StdEncoding.EncodeToString(auth0ClientJSON)
 
 	return RoundTripFunc(func(req *http.Request) (*http.Response, error) {
 		req.Header.Set("Auth0-Client", auth0ClientEncoded)
