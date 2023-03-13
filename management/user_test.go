@@ -366,7 +366,7 @@ func TestUserManager_AuthenticationMethods(t *testing.T) {
 	err := api.User.CreateAuthenticationMethod(user.GetID(), &method)
 	assert.NoError(t, err)
 
-	methods, err := api.User.GetAuthenticationMethods(user.GetID())
+	methods, err := api.User.ListAuthenticationMethods(user.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, methods.Authenticators, 1)
 	assert.Equal(t, method.GetID(), methods.Authenticators[0].GetID())
@@ -387,7 +387,7 @@ func TestUserManager_AuthenticationMethods(t *testing.T) {
 	err = api.User.DeleteAuthenticationMethod(user.GetID(), method.GetID())
 	assert.NoError(t, err)
 
-	methods, err = api.User.GetAuthenticationMethods(user.GetID())
+	methods, err = api.User.ListAuthenticationMethods(user.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, methods.Authenticators, 0)
 
@@ -413,14 +413,14 @@ func TestUserManager_AuthenticationMethods(t *testing.T) {
 	err = api.User.UpdateAllAuthenticationMethods(user.GetID(), &updateMethods)
 	assert.NoError(t, err)
 
-	methods, err = api.User.GetAuthenticationMethods(user.GetID())
+	methods, err = api.User.ListAuthenticationMethods(user.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, methods.Authenticators, 3)
 
 	err = api.User.DeleteAllAuthenticationMethods(user.GetID())
 	assert.NoError(t, err)
 
-	methods, err = api.User.GetAuthenticationMethods(user.GetID())
+	methods, err = api.User.ListAuthenticationMethods(user.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, methods.Authenticators, 0)
 }
