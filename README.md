@@ -95,6 +95,8 @@ func main() {
 }
 ```
 
+For futher examples see the [EXAMPLES.md](./EXAMPLES.md) document.
+
 ### Rate Limiting
 
 The Auth0 Management API imposes a rate limit on all API clients. When the limit is reached, the SDK will handle it in
