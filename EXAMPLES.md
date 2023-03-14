@@ -171,13 +171,13 @@ Then, create a request using the lower level request functionality exposed by th
 // Instantiate the request
 request, err := auth0API.NewRequest(http.MethodGet, auth0API.URI("users", "<userid>"), nil)
 if err != nil {
-    log.Fatalf("error was %d", err)
+    log.Fatal("error was %d", err)
 }
 
 // Perform the request
 response, err := auth0API.Do(request)
 if err != nil {
-    log.Fatalf("error was %d", err)
+    log.Fatal("error was %w", err)
 }
 
 defer response.Body.Close()
@@ -189,13 +189,13 @@ if response.StatusCode >= http.StatusBadRequest {
 // Read in the response body
 responseBody, err := io.ReadAll(response.Body)
 if err != nil {
-    log.Fatalf("error was %d", err)
+    log.Fatal("error was %w", err)
 }
 
 // Unmarshal the response body into the CustomUser struct
 var user CustomUser
 if err = json.Unmarshal(responseBody, &user); err != nil {
-    log.Fatalf("error was %d", err)
+    log.Fatal("error was %w", err)
 }
 
 log.Printf("User %s", user.GetOurCustomId())
