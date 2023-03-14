@@ -167,7 +167,7 @@ First, define a custom struct that embeds the `management.User` struct exposed b
 // Define a custom struct that embeds the `management.User` struct exposed by the SDK.
 type CustomUser struct {
 	management.User
-	OurCustomId *string `json:"custom_id,omitempty"`
+	OurCustomID *string `json:"custom_id,omitempty"`
 }
 
 // Create a helper func that will safely retrieve the `OurCustomId` value from CustomUser in the
