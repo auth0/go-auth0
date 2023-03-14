@@ -46,10 +46,8 @@ When retrieving lists of resources, if no query parameters are set using the `ma
 > **Note**
 > The maximum value of the `per_page` query parameter is 100.
 
-In order to paginate using the page based pagination, you can follow a pattern like below:
-
 <details>
-  <summary>Page based pagination</summary>
+  <summary>Page based pagination example</summary>
 
 ```go
 var page int
@@ -82,10 +80,8 @@ Checkpoint pagination can be used when you wish to retrieve more than 1000 resul
 * `Organization.Members` (`/api/v2/organizations/{id}/members`)
 * `Role.Users` (`/api/v2/roles/{id}/users`)
 
-In general to use checkpoint based pagination you should follow a pattern like below:
-
 <details>
-  <summary>Checkpoint pagination</summary>
+  <summary>Checkpoint pagination example</summary>
 
 ```go
 // For the first call, only pass the `take` query parameter, the API will
@@ -128,7 +124,7 @@ for {
 However, for `Log.List`, the `Next` value is not returned via the API but instead is an ID of a log entry. Determining if there are more logs to retrieved must also be done manually.
 
 <details>
-  <summary>Checkpoint pagination for Log.List</summary>
+  <summary>Checkpoint pagination example for <code>Log.List</code></summary>
 
 ```go
 var logs []*management.Log
