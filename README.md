@@ -24,6 +24,7 @@ Go SDK for the [Auth0](https://auth0.com/) Management API.
 - [Godoc](https://pkg.go.dev/github.com/auth0/go-auth0) - explore the Go SDK documentation.
 - [Management API docs](https://auth0.com/docs/api/management/v2) - explore the Auth0 Management API that this SDK interacts with.
 - [Docs site](https://www.auth0.com/docs) — explore our docs site and learn more about Auth0.
+- [Examples](./EXAMPLES.md) - Further examples around usage of the SDK.
 
 ## Getting started
 
@@ -39,7 +40,7 @@ This library follows the [same support policy as Go](https://go.dev/doc/devel/re
 go get github.com/auth0/go-auth0
 ```
 
-### Configuring the SDK
+### Usage
 
 ```go
 package main
@@ -94,8 +95,6 @@ func main() {
 	)
 }
 ```
-
-For futher examples see the [EXAMPLES.md](./EXAMPLES.md) document.
 
 ### Rate Limiting
 

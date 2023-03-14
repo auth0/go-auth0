@@ -10,17 +10,21 @@
 
 Fine-grained configuration can be provided on a per-request basis to enhance the request with specific query params, headers or to pass it a custom context.
 
+> **Note**
+> Not all of the API endpoints support the query parameters added by these funcs.
+> Review the [API docs](https://auth0.com/docs/api/management/v2) to see full documentation for supported parameters by endpoint.
+
 ```go
 // Example
 userGrants, err := auth0API.Grant.List(
-	management.Context(ctx)
-	management.Header("MySpecialHeader","MySpecialHeaderValue")
+    management.Context(ctx),
+    management.Header("MySpecialHeader","MySpecialHeaderValue"),
     management.Parameter("user_id", "someUserID"),
     management.Parameter("client", "someClientID"),
     management.Parameter("audience", "someAPIAudience"),
 )
 
-// Other helper funcs.
+// Other helper funcs
 management.Query()
 management.ExcludeFields()
 management.IncludeFields()
@@ -76,41 +80,51 @@ Checkpoint pagination can be used when you wish to retrieve more than 1000 resul
 
 In general to use checkpoint based pagination you should follow a pattern like below:
 
+<details>
+  <summary>Checkpoint pagination</summary>
+
 ```go
-var orgList *management.OrganizationList
+// For the first call, only pass the `take` query parameter, the API will
+// then return a `Next` value that can be used for future requests.
+orgList, err := auth0API.Organization.List(management.Take(100))
+if err != nil {
+    log.Fatalf("err: %+v", err)
+}
+
+if !orgList.HasNext() {
+    // No need to continue we can stop here.
+    return
+}
+
 for {
-    if orgList == nil {
-        // For the first call, only pass the `take` query parameter, the API will then return a
-        // `Next` value that can be used for future requests,
-        orgList, err = auth0API.Organization.List(
-            management.Take(100),
-        )
-    } else {
-        // Pass the `next` and `take` query parameters now so that we can correctly paginate the
-        // organizations,
-        orgList, err = auth0API.Organization.List(
-            management.From(orgList.Next),
-            management.Take(100),
-        )
-    }
-
+    // Pass the `next` and `take` query parameters now so
+    // that we can correctly paginate the organizations.
+    orgList, err = auth0API.Organization.List(
+        management.From(orgList.Next),
+        management.Take(100),
+    )
     if err != nil {
-        log.Fatal("err :%w", err)
+        log.Fatalf("err :%+v", err)
     }
-
+    
     for _, org := range orgList.Organizations {
         log.Printf("org %s", org.GetID())
     }
-
-    // The `HasNext` helper func checks whether the API has informed us that there is more data to
-    // retrieve or not.
+    
+    // The `HasNext` helper func checks whether
+    // the API has informed us that there is
+    // more data to retrieve or not.
     if !orgList.HasNext() {
         break
     }
 }
 ```
+</details>
 
 However, for `Log.List`, the `Next` value is not returned via the API but instead is an ID of a log entry and the handling of determining if there are more logs to retrieved must also be done manually.
+
+<details>
+  <summary>Checkpoint pagination for Log.List</summary>
 
 ```go
 var logs []*management.Log
@@ -123,17 +137,17 @@ for {
     )
 
     if err != nil {
-        log.Fatal("err :%w", err)
+        log.Fatalf("err: %+v", err)
     }
 
     for _, logData := range logs {
-        log.Printf("id %s", logData.GetID())
-        log.Printf("msg %s", logData.GetType())
+        log.Printf("ID %s", logData.GetID())
+        log.Printf("Type %s", logData.GetType())
 
     }
 
     // The HasNext helper cannot be used with `Log.List` so instead we check the length of the
-    // returned logs array. When it reached 0 there are no more logs left to process
+    // returned logs array. When it reaches 0 there are no more logs left to process
     if len(logs) == 0 {
         break
     }
@@ -141,10 +155,11 @@ for {
     logFromId = logs[len(logs)-1].GetID()
 }
 ```
+</details>
 
 ## Providing a custom User struct
 
-The User struct within the SDK only supports the properties supported by Auth0, therefore any extra properties added by an external IDP will not be included within the struct returned from the SDK APIs. In order to expose these custom properties we recommend creating a custom struct and then manually calling the API via the lower level request functionality exposed by the SDK, for example:
+The User struct within the SDK only supports the properties supported by Auth0, therefore any extra properties added by an external Identity provider will not be included within the struct returned from the SDK APIs. In order to expose these custom properties we recommend creating a custom struct and then manually calling the API via the lower level request functionality exposed by the SDK, for example:
 
 First, define a custom struct that embeds the `management.User` struct exposed by the SDK, and add any helper funcs required to safely access your custom values.
 
@@ -156,7 +171,7 @@ type CustomUser struct {
 }
 
 // Create a helper func that will safely retrieve the `OurCustomId` value from CustomUser in the
-// cases where it may be nil
+// cases where it may be nil.
 func (u *CustomUser) GetOurCustomId() string {
 	if u == nil || u.OurCustomId == nil {
 		return ""
@@ -168,35 +183,10 @@ func (u *CustomUser) GetOurCustomId() string {
 Then, create a request using the lower level request functionality exposed by the SDK as follows:
 
 ```go
-// Instantiate the request
-request, err := auth0API.NewRequest(http.MethodGet, auth0API.URI("users", "<userid>"), nil)
-if err != nil {
-    log.Fatal("error was %d", err)
-}
-
-// Perform the request
-response, err := auth0API.Do(request)
-if err != nil {
-    log.Fatal("error was %w", err)
-}
-
-defer response.Body.Close()
-
-if response.StatusCode >= http.StatusBadRequest {
-    log.Fatalf("Status code was %d", response.StatusCode)
-}
-
-// Read in the response body
-responseBody, err := io.ReadAll(response.Body)
-if err != nil {
-    log.Fatal("error was %w", err)
-}
-
-// Unmarshal the response body into the CustomUser struct
 var user CustomUser
-if err = json.Unmarshal(responseBody, &user); err != nil {
-    log.Fatal("error was %w", err)
+err := auth0API.Request(http.MethodGet, auth0API.URI("users", "auth0|63cfb8ca89c31c3f33f1dffd"), &user)
+if err != nil {
+    log.Fatalf("error was %+v", err)
 }
-
 log.Printf("User %s", user.GetOurCustomId())
 ```
