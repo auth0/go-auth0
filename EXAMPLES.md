@@ -48,6 +48,9 @@ When retrieving lists of resources, if no query parameters are set using the `ma
 
 In order to paginate using the page based pagination, you can follow a pattern like below:
 
+<details>
+  <summary>Page based pagination</summary>
+
 ```go
 var page int
 for {
@@ -68,6 +71,7 @@ for {
     page++
 }
 ```
+</details>
 
 ### Checkpoint pagination
 
