@@ -132,6 +132,10 @@ type List struct {
 
 // HasNext returns true if the list has more results.
 func (l List) HasNext() bool {
+	if l.Next != "" {
+		return true
+	}
+
 	return l.Total > l.Start+l.Limit
 }
 
