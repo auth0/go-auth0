@@ -6,7 +6,6 @@
   - [Checkpoint pagination](#checkpoint-pagination)
 - [Custom User Structs](#providing-a-custom-user-struct)
 
-
 ## Request Options
 
 Fine-grained configuration can be provided on a per-request basis to enhance the request with specific query params, headers or to pass it a custom context.
