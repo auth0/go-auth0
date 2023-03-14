@@ -8,11 +8,11 @@
 
 ## Request Options
 
-Fine-grained configuration can be provided on a per-request basis to enhance the request with specific query params, headers or to pass it a custom context.
+Fine-grained configuration can be provided on a per-request basis to enhance the request with specific query params, headers, or to pass it a custom context.
 
 > **Note**
 > Not all of the API endpoints support the query parameters added by these funcs.
-> Review the [API docs](https://auth0.com/docs/api/management/v2) to see full documentation for supported parameters by endpoint.
+> Review the [API docs](https://auth0.com/docs/api/management/v2) for the full documentation of the supported parameters per endpoint.
 
 ```go
 // Example
@@ -44,7 +44,7 @@ This SDK supports both offset and checkpoint pagination.
 When retrieving lists of resources, if no query parameters are set using the `management.PerPage` and `Management.IncludeTotals` helper funcs, then the SDK will default to sending `per_page=50` and `include_totals=true`. 
 
 > **Note**
-> The maximum value of the per_page query parameter is 100.
+> The maximum value of the `per_page` query parameter is 100.
 
 In order to paginate using the page based pagination, you can follow a pattern like below:
 
@@ -125,7 +125,7 @@ for {
 ```
 </details>
 
-However, for `Log.List`, the `Next` value is not returned via the API but instead is an ID of a log entry and the handling of determining if there are more logs to retrieved must also be done manually.
+However, for `Log.List`, the `Next` value is not returned via the API but instead is an ID of a log entry. Determining if there are more logs to retrieved must also be done manually.
 
 <details>
   <summary>Checkpoint pagination for Log.List</summary>
@@ -151,7 +151,7 @@ for {
     }
 
     // The HasNext helper cannot be used with `Log.List` so instead we check the length of the
-    // returned logs array. When it reaches 0 there are no more logs left to process
+    // returned logs array. When it reaches 0 there are no more logs left to process.
     if len(logs) == 0 {
         break
     }
@@ -163,7 +163,7 @@ for {
 
 ## Providing a custom User struct
 
-The User struct within the SDK only supports the properties supported by Auth0, therefore any extra properties added by an external Identity provider will not be included within the struct returned from the SDK APIs. In order to expose these custom properties we recommend creating a custom struct and then manually calling the API via the lower level request functionality exposed by the SDK, for example:
+The `management.User` struct within the SDK only contains the properties supported by Auth0. Therefore, any extra properties added by an external identity provider will not be included within the struct returned from the SDK APIs. To expose these custom properties, we recommend creating a custom struct and then manually calling the API via the lower level request functionality exposed by the SDK, as shown below.
 
 First, define a custom struct that embeds the `management.User` struct exposed by the SDK, and add any helper funcs required to safely access your custom values.
 
@@ -176,15 +176,15 @@ type CustomUser struct {
 
 // Create a helper func that will safely retrieve the `OurCustomId` value from CustomUser in the
 // cases where it may be nil.
-func (u *CustomUser) GetOurCustomId() string {
-	if u == nil || u.OurCustomId == nil {
+func (u *CustomUser) GetOurCustomID() string {
+	if u == nil || u.OurCustomID == nil {
 		return ""
 	}
-	return *u.OurCustomId
+	return *u.OurCustomID
 }
 ```
 
-Then, create a request using the lower level request functionality exposed by the SDK as follows:
+Then, create a request using the lower level request functionality exposed by the SDK.
 
 ```go
 var user CustomUser
@@ -192,5 +192,5 @@ err := auth0API.Request(http.MethodGet, auth0API.URI("users", "auth0|63cfb8ca89c
 if err != nil {
     log.Fatalf("error was %+v", err)
 }
-log.Printf("User %s", user.GetOurCustomId())
+log.Printf("User %s", user.GetOurCustomID())
 ```
