@@ -268,5 +268,4 @@ func redactSensitiveDataInLogs(t *testing.T, i *cassette.Interaction) {
 
 		i.Response.Body = string(logsBody)
 	}
-
 }
