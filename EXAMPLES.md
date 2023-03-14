@@ -32,11 +32,11 @@ management.Take()
 management.From()
 ```
 
-# Pagination
+## Pagination
 
 This SDK supports both offset and checkpoint pagination. 
 
-## Page based pagination
+### Page based pagination
 
 When retrieving lists of resources, if no query parameters are set using the `management.PerPage` and `Management.IncludeTotals` helper funcs, then the SDK will default to sending `per_page=50` and `include_totals=true`. 
 
@@ -66,7 +66,7 @@ for {
 }
 ```
 
-## Checkpoint pagination
+### Checkpoint pagination
 
 Checkpoint pagination can be used when you wish to retrieve more than 1000 results from certain APIs. The APIs that support checkpoint based pagination are:
 
