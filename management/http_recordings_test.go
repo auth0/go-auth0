@@ -59,6 +59,9 @@ func removeSensitiveDataFromRecordings(t *testing.T, recorderTransport *recorder
 			redactSensitiveDataInClient(t, i)
 			redactSensitiveDataInResourceServer(t, i)
 			redactSensitiveDataInLogSession(t, i)
+			redactSensitiveDataInLogs(t, i)
+
+			// Redact domain should always be ran last
 			redactDomain(i, domain)
 
 			return nil
@@ -231,5 +234,38 @@ func redactSensitiveDataInLogSession(t *testing.T, i *cassette.Interaction) {
 		require.NoError(t, err)
 
 		i.Response.Body = string(logSessionBody)
+	}
+}
+
+func redactSensitiveDataInLogs(t *testing.T, i *cassette.Interaction) {
+	isMultipleLogsURL := strings.Contains(i.Request.URL, "https://"+domain+"/api/v2/logs?")
+	if isMultipleLogsURL {
+		var logs []Log
+		err := json.Unmarshal([]byte(i.Response.Body), &logs)
+		require.NoError(t, err)
+
+		for i, log := range logs {
+			log.IP = auth0.String("[REDACTED]")
+			logs[i] = log
+		}
+
+		logsBody, err := json.Marshal(logs)
+		require.NoError(t, err)
+
+		i.Response.Body = string(logsBody)
+	}
+
+	isSingleLogURL := strings.Contains(i.Request.URL, "https://"+domain+"/api/v2/logs/")
+	if isSingleLogURL {
+		var log Log
+		err := json.Unmarshal([]byte(i.Response.Body), &log)
+		require.NoError(t, err)
+
+		log.IP = auth0.String("[REDACTED]")
+
+		logsBody, err := json.Marshal(log)
+		require.NoError(t, err)
+
+		i.Response.Body = string(logsBody)
 	}
 }

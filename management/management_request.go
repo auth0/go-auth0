@@ -132,6 +132,10 @@ type List struct {
 
 // HasNext returns true if the list has more results.
 func (l List) HasNext() bool {
+	if l.Next != "" {
+		return true
+	}
+
 	return l.Total > l.Start+l.Limit
 }
 
@@ -156,10 +160,10 @@ func (o *requestOption) apply(r *http.Request) {
 func applyListDefaults(options []RequestOption) RequestOption {
 	return newRequestOption(func(r *http.Request) {
 		PerPage(50).apply(r)
+		IncludeTotals(true).apply(r)
 		for _, option := range options {
 			option.apply(r)
 		}
-		IncludeTotals(true).apply(r)
 	})
 }
 
