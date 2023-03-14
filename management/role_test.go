@@ -98,6 +98,32 @@ func TestRoleManager_Users(t *testing.T) {
 	assert.Equal(t, user.GetID(), roleUsers.Users[0].GetID())
 }
 
+func TestRoleManager_UsersCheckpointPagination(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	users := make([]*User, 0)
+
+	for i := 0; i < 3; i++ {
+		user := givenAUser(t)
+		users = append(users, user)
+	}
+
+	role := givenARole(t)
+
+	err := api.Role.AssignUsers(role.GetID(), users)
+	assert.NoError(t, err)
+
+	roleUsers, err := api.Role.Users(role.GetID(), Take(2))
+	assert.NoError(t, err)
+	assert.Len(t, roleUsers.Users, 2)
+	assert.True(t, roleUsers.HasNext())
+
+	roleUsers, err = api.Role.Users(role.GetID(), Take(2), From(roleUsers.Next))
+	assert.NoError(t, err)
+	assert.Len(t, roleUsers.Users, 1)
+	assert.False(t, roleUsers.HasNext())
+}
+
 func TestRoleManager_Permissions(t *testing.T) {
 	configureHTTPTestRecordings(t)
 

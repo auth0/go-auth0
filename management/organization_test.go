@@ -93,6 +93,24 @@ func TestOrganizationManager_List(t *testing.T) {
 	assert.GreaterOrEqual(t, len(orgList.Organizations), 1)
 }
 
+func TestOrganizationManager_ListCheckpointPagination(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	for i := 0; i < 3; i++ {
+		givenAnOrganization(t)
+	}
+
+	orgList, err := api.Organization.List(Take(2))
+	assert.NoError(t, err)
+	assert.GreaterOrEqual(t, len(orgList.Organizations), 2)
+	assert.True(t, orgList.HasNext())
+
+	orgList, err = api.Organization.List(Take(2), From(orgList.Next))
+	assert.NoError(t, err)
+	assert.GreaterOrEqual(t, len(orgList.Organizations), 1)
+	assert.False(t, orgList.HasNext())
+}
+
 func TestOrganizationManager_AddConnection(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -275,6 +293,38 @@ func TestOrganizationManager_Members(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Len(t, members.Members, 1)
 	assert.Equal(t, user.GetID(), members.Members[0].GetUserID())
+}
+
+func TestOrganizationManager_MembersCheckpointPagination(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := givenAnOrganization(t)
+	users := make([]string, 0)
+
+	for i := 0; i < 3; i++ {
+		user := givenAUser(t)
+		users = append(users, user.GetID())
+	}
+
+	err := api.Organization.AddMembers(org.GetID(), users)
+	assert.NoError(t, err)
+
+	members, err := api.Organization.Members(org.GetID(), Take(2))
+	assert.NoError(t, err)
+	assert.Len(t, members.Members, 2)
+	assert.True(t, members.HasNext())
+
+	members, err = api.Organization.Members(org.GetID(), Take(2), From(members.Next))
+	assert.NoError(t, err)
+	assert.Len(t, members.Members, 1)
+	assert.True(t, members.HasNext())
+
+	// Org members pagination will only return an empty `Next` value when the number of members
+	// returned is 0 unlike other pagination APIs
+	members, err = api.Organization.Members(org.GetID(), Take(2), From(members.Next))
+	assert.NoError(t, err)
+	assert.Len(t, members.Members, 0)
+	assert.False(t, members.HasNext())
 }
 
 func TestOrganizationManager_MemberRoles(t *testing.T) {
