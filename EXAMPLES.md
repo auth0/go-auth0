@@ -34,7 +34,7 @@ management.From()
 
 ## Pagination
 
-This SDK supports both offset and checkpoint pagination. 
+This SDK supports both offset and checkpoint pagination.
 
 ### Page based pagination
 
@@ -43,7 +43,7 @@ When retrieving lists of resources, if no query parameters are set using the `ma
 > **Note**
 > The maximum value of the per_page query parameter is 100.
 
-In order to paginate using the
+In order to paginate using the page based pagination, you can follow a pattern like below:
 
 ```go
 var page int
@@ -75,7 +75,7 @@ Checkpoint pagination can be used when you wish to retrieve more than 1000 resul
 * `Organization.Members` (`/api/v2/organizations/{id}/members`)
 * `Role.Users` (`/api/v2/roles/{id}/users`)
 
-In general to use checkpoint based pagination you should follow a pattern as follows:
+In general to use checkpoint based pagination you should follow a pattern like below:
 
 ```go
 var orgList *management.OrganizationList
