@@ -146,7 +146,7 @@ func TestOptionDefaults(t *testing.T) {
 
 	applyListDefaults([]RequestOption{
 		PerPage(20),          // This should be persisted (default is 50).
-		IncludeTotals(false), // This should be altered to true by withListDefaults.
+		IncludeTotals(false), // This should be persisted (default is true).
 	}).apply(r)
 
 	v := r.URL.Query()
@@ -155,7 +155,7 @@ func TestOptionDefaults(t *testing.T) {
 	assert.Equal(t, "20", perPage)
 
 	includeTotals := v.Get("include_totals")
-	assert.Equal(t, "true", includeTotals)
+	assert.Equal(t, "false", includeTotals)
 }
 
 func TestStringify(t *testing.T) {
