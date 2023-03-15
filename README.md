@@ -68,7 +68,7 @@ func main() {
 		management.WithClientCredentials(clientID, clientSecret),
 	)
 	if err != nil {
-		log.Fatal("failed to initialize the auth0 management API client: %w", err)
+		log.Fatalf("failed to initialize the auth0 management API client: %+v", err)
 	}
 
 	// Now we can interact with the Auth0 Management API.
@@ -83,7 +83,7 @@ func main() {
 	// to the client ID on the same client object.
 	err = auth0API.Client.Create(client)
 	if err != nil {
-		log.Fatal("failed to create a new client: %w", err)
+		log.Fatalf("failed to create a new client: %+v", err)
 	}
 
 	// Make use of the getter functions to safely access
