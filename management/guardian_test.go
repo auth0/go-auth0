@@ -1,6 +1,7 @@
 package management
 
 import (
+	"io/ioutil"
 	"net/http"
 	"testing"
 
@@ -261,6 +262,49 @@ func TestGuardian(t *testing.T) {
 				assert.Equal(t, expectedCustomApp.GetAppName(), actualCustomApp.GetAppName())
 				assert.Equal(t, expectedCustomApp.GetAppleAppLink(), actualCustomApp.GetAppleAppLink())
 				assert.Equal(t, expectedCustomApp.GetGoogleAppLink(), actualCustomApp.GetGoogleAppLink())
+			})
+
+			t.Run("DirectAPNS", func(t *testing.T) {
+				configureHTTPTestRecordings(t)
+
+				_, err := api.Guardian.MultiFactor.Push.DirectAPNS()
+				assert.NoError(t, err)
+
+				// Cannot reflect back the payload we initially received
+				// as it is incompatible
+
+				// Read the p12 from file
+				expectedP12, err := ioutil.ReadFile("../test/data/apns.p12")
+				assert.NoError(t, err)
+
+				expectedDirectAPNS := &MultiFactorPushDirectAPNS{
+					Sandbox:       auth0.Bool(false),
+					BundleID:      auth0.String("com.my.app"),
+					P12:           auth0.String(string(expectedP12)),
+				}
+				err = api.Guardian.MultiFactor.Push.UpdateDirectAPNS(expectedDirectAPNS)
+				assert.NoError(t, err)
+
+				actualDirectAPNS, err := api.Guardian.MultiFactor.Push.DirectAPNS()
+				assert.NoError(t, err)
+				assert.Equal(t, expectedDirectAPNS.GetSandbox(), actualDirectAPNS.GetSandbox())
+				assert.Equal(t, expectedDirectAPNS.GetBundleID(), actualDirectAPNS.GetBundleID())
+				// Cannot test enabled parameter as we cannot send it
+
+			})
+
+			t.Run("DirectFCM", func(t *testing.T) {
+				configureHTTPTestRecordings(t)
+
+				// This is a write only property 
+
+				err := error(nil)
+
+				expectedDirectFCM := &MultiFactorPushDirectFCM{
+					ServerKey:     auth0.String("abc123"),
+				}
+				err = api.Guardian.MultiFactor.Push.UpdateDirectFCM(expectedDirectFCM)
+				assert.NoError(t, err)
 			})
 		})
 
