@@ -24,14 +24,15 @@ Go SDK for the [Auth0](https://auth0.com/) Management API.
 - [Godoc](https://pkg.go.dev/github.com/auth0/go-auth0) - explore the Go SDK documentation.
 - [Management API docs](https://auth0.com/docs/api/management/v2) - explore the Auth0 Management API that this SDK interacts with.
 - [Docs site](https://www.auth0.com/docs) — explore our docs site and learn more about Auth0.
+- [Examples](./EXAMPLES.md) - Further examples around usage of the SDK.
 
 ## Getting started
 
 ### Requirements
 
-- Go 1.17+
+This library follows the [same support policy as Go](https://go.dev/doc/devel/release#policy). The last two major Go releases are actively supported and compatibility issues will be fixed. While you may find that older versions of Go may work, we will not actively test and fix compatibility issues with these versions.
 
-**go-auth0** tracks [Go's version support policy](https://go.dev/doc/devel/release#policy). 
+- Go 1.19+
 
 ### Installation
 
@@ -104,59 +105,6 @@ the background by retrying the API request when the limit is lifted.
 > The SDK does not prevent `http.StatusTooManyRequests` errors, instead it waits for the rate limit to be reset based on
 > the value of the `X-Rate-Limit-Reset` header as the amount of seconds to wait.
 
-### Request Options
-
-Fine-grained configuration can be provided on a per-request basis to enhance the request with specific query params, headers
-or to pass it a custom context.
-
-```go
-// Example
-userGrants, err := auth0API.Grant.List(
-	management.Context(ctx)
-	management.Header("MySpecialHeader","MySpecialHeaderValue")
-    management.Parameter("user_id", "someUserID"),
-    management.Parameter("client", "someClientID"),
-    management.Parameter("audience", "someAPIAudience"),
-)
-
-// Other helper funcs.
-management.Query()
-management.ExcludeFields()
-management.IncludeFields()
-management.Page()
-management.PerPage()
-management.Take()
-```
-
-### Pagination
-
-When retrieving lists of resources, if no query parameters are passed,
-the following query parameters will get added by default: `?per_page=50,include_totals=true`. 
-
-> **Note**
-> The maximum value of the per_page query param is 100.
-
-To get more than 50 results (the default), iterate through the returned pages.
-
-```go
-// Example
-var page int
-for {
-    clients, err := auth0API.Client.List(management.Page(page))
-    if err != nil {
-        return err
-    }
-    
-    // Accumulate here the results or check for a specific client.
-    
-    if !clients.HasNext() {
-        break
-    }
-
-    page++
-}
-```
-
 ## Feedback
 
 ### Contributing
@@ -188,7 +136,3 @@ Please do not report security vulnerabilities on the public Github issue tracker
 <p align="center">Auth0 is an easy to implement, adaptable authentication and authorization platform.<br />To learn more checkout <a href="https://auth0.com/why-auth0">Why Auth0?</a></p>
 
 <p align="center">This project is licensed under the MIT license. See the <a href="./LICENSE.md"> LICENSE</a> file for more info.</p>
-
-
-## License
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fauth0%2Fgo-auth0.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fauth0%2Fgo-auth0?ref=badge_large)
