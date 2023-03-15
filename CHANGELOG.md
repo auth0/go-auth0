@@ -1,5 +1,24 @@
 # Change Log
 
+<a name="v0.16.0"></a>
+
+## [v0.16.0](https://github.com/auth0/go-auth0/tree/v0.16.0) (2023-03-15)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.15.1...v0.16.0)
+
+### Added
+
+- Introduce sending client information with requests ([#164](https://github.com/auth0/go-auth0/pull/164))
+- Added support for `Ping Federate` connection ([#175](https://github.com/auth0/go-auth0/pull/175))
+- Added support for Factor Management endpoints ([#176](https://github.com/auth0/go-auth0/pull/176))
+- Added support for setting `disable_self_service_change_password` on database connections ([#178](https://github.com/auth0/go-auth0/pull/178))
+
+### Fixed
+
+- Fixed issue when decoding `ConnectionOptionsGoogleOAuth2` with `allowed_audiences` set as an empty string ([#174](https://github.com/auth0/go-auth0/pull/174))
+- Fixed support for checkpoint pagination ([#179](https://github.com/auth0/go-auth0/pull/179))
+
+
 <a name="v0.15.1"></a>
 
 ## [v0.15.1](https://github.com/auth0/go-auth0/tree/v0.15.1) (2023-01-30)
