@@ -1,8 +1,8 @@
 package management
 
 import (
-	"io/ioutil"
 	"net/http"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -274,7 +274,7 @@ func TestGuardian(t *testing.T) {
 				// as it is incompatible
 
 				// Read the p12 from file
-				expectedP12, err := ioutil.ReadFile("../test/data/apns.p12")
+				expectedP12, err := os.ReadFile("../test/data/apns.p12")
 				assert.NoError(t, err)
 
 				expectedDirectAPNS := &MultiFactorPushDirectAPNS{
