@@ -7649,6 +7649,72 @@ func TestMultiFactorPushCustomApp_String(t *testing.T) {
 	}
 }
 
+func TestMultiFactorPushDirectAPNS_GetBundleID(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorPushDirectAPNS{BundleID: &zeroValue}
+	m.GetBundleID()
+	m = &MultiFactorPushDirectAPNS{}
+	m.GetBundleID()
+	m = nil
+	m.GetBundleID()
+}
+
+func TestMultiFactorPushDirectAPNS_GetEnabled(tt *testing.T) {
+	var zeroValue bool
+	m := &MultiFactorPushDirectAPNS{Enabled: &zeroValue}
+	m.GetEnabled()
+	m = &MultiFactorPushDirectAPNS{}
+	m.GetEnabled()
+	m = nil
+	m.GetEnabled()
+}
+
+func TestMultiFactorPushDirectAPNS_GetP12(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorPushDirectAPNS{P12: &zeroValue}
+	m.GetP12()
+	m = &MultiFactorPushDirectAPNS{}
+	m.GetP12()
+	m = nil
+	m.GetP12()
+}
+
+func TestMultiFactorPushDirectAPNS_GetSandbox(tt *testing.T) {
+	var zeroValue bool
+	m := &MultiFactorPushDirectAPNS{Sandbox: &zeroValue}
+	m.GetSandbox()
+	m = &MultiFactorPushDirectAPNS{}
+	m.GetSandbox()
+	m = nil
+	m.GetSandbox()
+}
+
+func TestMultiFactorPushDirectAPNS_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorPushDirectAPNS{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestMultiFactorPushDirectFCM_GetServerKey(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorPushDirectFCM{ServerKey: &zeroValue}
+	m.GetServerKey()
+	m = &MultiFactorPushDirectFCM{}
+	m.GetServerKey()
+	m = nil
+	m.GetServerKey()
+}
+
+func TestMultiFactorPushDirectFCM_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorPushDirectFCM{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestMultiFactorRecoveryCode_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorRecoveryCode{}

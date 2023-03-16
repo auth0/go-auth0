@@ -6016,6 +6016,56 @@ func (m *MultiFactorPushCustomApp) String() string {
 	return Stringify(m)
 }
 
+// GetBundleID returns the BundleID field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushDirectAPNS) GetBundleID() string {
+	if m == nil || m.BundleID == nil {
+		return ""
+	}
+	return *m.BundleID
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushDirectAPNS) GetEnabled() bool {
+	if m == nil || m.Enabled == nil {
+		return false
+	}
+	return *m.Enabled
+}
+
+// GetP12 returns the P12 field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushDirectAPNS) GetP12() string {
+	if m == nil || m.P12 == nil {
+		return ""
+	}
+	return *m.P12
+}
+
+// GetSandbox returns the Sandbox field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushDirectAPNS) GetSandbox() bool {
+	if m == nil || m.Sandbox == nil {
+		return false
+	}
+	return *m.Sandbox
+}
+
+// String returns a string representation of MultiFactorPushDirectAPNS.
+func (m *MultiFactorPushDirectAPNS) String() string {
+	return Stringify(m)
+}
+
+// GetServerKey returns the ServerKey field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushDirectFCM) GetServerKey() string {
+	if m == nil || m.ServerKey == nil {
+		return ""
+	}
+	return *m.ServerKey
+}
+
+// String returns a string representation of MultiFactorPushDirectFCM.
+func (m *MultiFactorPushDirectFCM) String() string {
+	return Stringify(m)
+}
+
 // String returns a string representation of MultiFactorRecoveryCode.
 func (m *MultiFactorRecoveryCode) String() string {
 	return Stringify(m)
