@@ -85,18 +85,18 @@ type MultiFactorPushCustomApp struct {
 	GoogleAppLink *string `json:"google_app_link,omitempty"`
 }
 
-// MultiFactorPushDirectAPNS holds the Apple APNS provider configuration
+// MultiFactorPushDirectAPNS holds the Apple APNS provider configuration.
 type MultiFactorPushDirectAPNS struct {
-        Sandbox       *bool   `json:"sandbox,omitempty"`
-        BundleID      *string `json:"bundle_id,omitempty"`
-        P12           *string `json:"p12,omitempty"`
-        Enabled       *bool   `json:"enabled,omitempty"`
+	Sandbox  *bool   `json:"sandbox,omitempty"`
+	BundleID *string `json:"bundle_id,omitempty"`
+	P12      *string `json:"p12,omitempty"`
+	Enabled  *bool   `json:"enabled,omitempty"`
 }
 
-// MultiFactorPushDirectFCM holds the Google FCM provider configuration
+// MultiFactorPushDirectFCM holds the Google FCM provider configuration.
 type MultiFactorPushDirectFCM struct {
-        // FCM Server Key
-        ServerKey     *string  `json:"server_key,omitempty"`
+	// FCM Server Key
+	ServerKey *string `json:"server_key,omitempty"`
 }
 
 // MultiFactorProviderTwilio is used for Twilio MultiFactor Authentication.
@@ -369,25 +369,25 @@ func (m *MultiFactorPush) UpdateCustomApp(a *MultiFactorPushCustomApp, opts ...R
 	return m.Request("PATCH", m.URI("prompts", "mfa-push"), a, opts...)
 }
 
-// APNS returns the Apple APNS provider configuration for direct mode
+// DirectAPNS returns the Apple APNS provider configuration for direct mode.
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/get_apns
 func (m *MultiFactorPush) DirectAPNS(opts ...RequestOption) (s *MultiFactorPushDirectAPNS, err error) {
-        err = m.Request("GET", m.URI("guardian", "factors", "push-notification", "providers", "apns"), &s, opts...)
-        return
+	err = m.Request("GET", m.URI("guardian", "factors", "push-notification", "providers", "apns"), &s, opts...)
+	return
 }
 
-// UpdateAPNS updates the Apple APNS provider configuration for direct mode
+// UpdateDirectAPNS updates the Apple APNS provider configuration for direct mode.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/patch_apns
 func (m *MultiFactorPush) UpdateDirectAPNS(sc *MultiFactorPushDirectAPNS, opts ...RequestOption) error {
-        return m.Request("PUT", m.URI("guardian", "factors", "push-notification", "providers", "apns"), sc, opts...)
+	return m.Request("PUT", m.URI("guardian", "factors", "push-notification", "providers", "apns"), sc, opts...)
 }
 
-// UpdateFCM updates the Google FCM provider configuration for direct mode
+// UpdateDirectFCM updates the Google FCM provider configuration for direct mode.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/patch_fcm
 func (m *MultiFactorPush) UpdateDirectFCM(sc *MultiFactorPushDirectFCM, opts ...RequestOption) error {
-        return m.Request("PUT", m.URI("guardian", "factors", "push-notification", "providers", "fcm"), sc, opts...)
+	return m.Request("PUT", m.URI("guardian", "factors", "push-notification", "providers", "fcm"), sc, opts...)
 }
 
 // AmazonSNS returns the Amazon Web Services (AWS) Simple Notification Service

@@ -278,9 +278,9 @@ func TestGuardian(t *testing.T) {
 				assert.NoError(t, err)
 
 				expectedDirectAPNS := &MultiFactorPushDirectAPNS{
-					Sandbox:       auth0.Bool(false),
-					BundleID:      auth0.String("com.my.app"),
-					P12:           auth0.String(string(expectedP12)),
+					Sandbox:  auth0.Bool(false),
+					BundleID: auth0.String("com.my.app"),
+					P12:      auth0.String(string(expectedP12)),
 				}
 				err = api.Guardian.MultiFactor.Push.UpdateDirectAPNS(expectedDirectAPNS)
 				assert.NoError(t, err)
@@ -290,18 +290,17 @@ func TestGuardian(t *testing.T) {
 				assert.Equal(t, expectedDirectAPNS.GetSandbox(), actualDirectAPNS.GetSandbox())
 				assert.Equal(t, expectedDirectAPNS.GetBundleID(), actualDirectAPNS.GetBundleID())
 				// Cannot test enabled parameter as we cannot send it
-
 			})
 
 			t.Run("DirectFCM", func(t *testing.T) {
 				configureHTTPTestRecordings(t)
 
-				// This is a write only property 
+				// This is a write only property
 
 				err := error(nil)
 
 				expectedDirectFCM := &MultiFactorPushDirectFCM{
-					ServerKey:     auth0.String("abc123"),
+					ServerKey: auth0.String("abc123"),
 				}
 				err = api.Guardian.MultiFactor.Push.UpdateDirectFCM(expectedDirectFCM)
 				assert.NoError(t, err)
