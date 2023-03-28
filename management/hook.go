@@ -178,13 +178,13 @@ func (m *HookManager) RemoveSecrets(hookID string, keys []string, opts ...Reques
 
 // RemoveAllSecrets removes all secrets associated with a given hook.
 func (m *HookManager) RemoveAllSecrets(hookID string, opts ...RequestOption) (err error) {
-	s, err := m.Secrets(hookID)
+	s, err := m.Secrets(hookID, opts...)
 	if err != nil {
 		return err
 	}
 	keys := s.Keys()
 	if len(keys) > 0 {
-		err = m.RemoveSecrets(hookID, keys)
+		err = m.RemoveSecrets(hookID, keys, opts...)
 	}
 	return err
 }
