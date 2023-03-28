@@ -9411,6 +9411,16 @@ func TestTenantFlags_GetEnableSSO(tt *testing.T) {
 	t.GetEnableSSO()
 }
 
+func TestTenantFlags_GetMFAShowFactorListOnEnrollment(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{MFAShowFactorListOnEnrollment: &zeroValue}
+	t.GetMFAShowFactorListOnEnrollment()
+	t = &TenantFlags{}
+	t.GetMFAShowFactorListOnEnrollment()
+	t = nil
+	t.GetMFAShowFactorListOnEnrollment()
+}
+
 func TestTenantFlags_GetNoDisclosureEnterpriseConnections(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{NoDisclosureEnterpriseConnections: &zeroValue}
