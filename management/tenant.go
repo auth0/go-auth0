@@ -236,6 +236,9 @@ type TenantFlags struct {
 
 	// Disables SAML fields map fix for bad mappings with repeated attributes
 	DisableFieldsMapFix *bool `json:"disable_fields_map_fix,omitempty"`
+
+	// Used to allow users to pick what factor to enroll of the available MFA factors.
+	MFAShowFactorListOnEnrollment *bool `json:"mfa_show_factor_list_on_enrollment,omitempty"`
 }
 
 // TenantUniversalLogin holds universal login settings.

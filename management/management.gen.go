@@ -7399,6 +7399,14 @@ func (t *TenantFlags) GetEnableSSO() bool {
 	return *t.EnableSSO
 }
 
+// GetMFAShowFactorListOnEnrollment returns the MFAShowFactorListOnEnrollment field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetMFAShowFactorListOnEnrollment() bool {
+	if t == nil || t.MFAShowFactorListOnEnrollment == nil {
+		return false
+	}
+	return *t.MFAShowFactorListOnEnrollment
+}
+
 // GetNoDisclosureEnterpriseConnections returns the NoDisclosureEnterpriseConnections field if it's non-nil, zero value otherwise.
 func (t *TenantFlags) GetNoDisclosureEnterpriseConnections() bool {
 	if t == nil || t.NoDisclosureEnterpriseConnections == nil {
