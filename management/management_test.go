@@ -325,4 +325,40 @@ func TestAuth0Client(t *testing.T) {
 		_, err = m.User.Read("123")
 		assert.NoError(t, err)
 	})
+
+	t.Run("Allows passing extra env info", func(t *testing.T) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			header := r.Header.Get("Auth0-Client")
+			assert.Equal(t, "eyJuYW1lIjoiZ28tYXV0aDAiLCJ2ZXJzaW9uIjoibGF0ZXN0IiwiZW52Ijp7ImZvbyI6ImJhciIsImdvIjoiZ28xLjIwLjIifX0=", header)
+		})
+		s := httptest.NewServer(h)
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithAuth0ClientEnvOption("foo", "bar"),
+		)
+		assert.NoError(t, err)
+		_, err = m.User.Read("123")
+		assert.NoError(t, err)
+	})
+
+	t.Run("Allows passing extra env info with custom client", func(t *testing.T) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			header := r.Header.Get("Auth0-Client")
+			assert.Equal(t, "eyJuYW1lIjoidGVzdC1jbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjAiLCJlbnYiOnsiZm9vIjoiYmFyIn19", header)
+		})
+		s := httptest.NewServer(h)
+		customClient := client.Auth0ClientInfo{Name: "test-client", Version: "1.0.0"}
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithAuth0ClientInfo(customClient),
+			WithAuth0ClientEnvOption("foo", "bar"),
+		)
+		assert.NoError(t, err)
+		_, err = m.User.Read("123")
+		assert.NoError(t, err)
+	})
 }
