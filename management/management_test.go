@@ -361,4 +361,22 @@ func TestAuth0Client(t *testing.T) {
 		_, err = m.User.Read("123")
 		assert.NoError(t, err)
 	})
+
+	t.Run("Handles when client info has been disabled", func(t *testing.T) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			header := r.Header.Get("Auth0-Client")
+			assert.Equal(t, "", header)
+		})
+		s := httptest.NewServer(h)
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithNoAuth0ClientInfo(),
+			WithAuth0ClientEnvOption("foo", "bar"),
+		)
+		assert.NoError(t, err)
+		_, err = m.User.Read("123")
+		assert.NoError(t, err)
+	})
 }
