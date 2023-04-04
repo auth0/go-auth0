@@ -329,7 +329,17 @@ func TestAuth0Client(t *testing.T) {
 	t.Run("Allows passing extra env info", func(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			header := r.Header.Get("Auth0-Client")
-			assert.Equal(t, "eyJuYW1lIjoiZ28tYXV0aDAiLCJ2ZXJzaW9uIjoibGF0ZXN0IiwiZW52Ijp7ImZvbyI6ImJhciIsImdvIjoiZ28xLjIwLjIifX0=", header)
+			auth0ClientDecoded, err := base64.StdEncoding.DecodeString(header)
+			assert.NoError(t, err)
+
+			var auth0Client client.Auth0ClientInfo
+			err = json.Unmarshal(auth0ClientDecoded, &auth0Client)
+
+			assert.NoError(t, err)
+			assert.Equal(t, "go-auth0", auth0Client.Name)
+			assert.Equal(t, "latest", auth0Client.Version)
+			assert.Equal(t, runtime.Version(), auth0Client.Env["go"])
+			assert.Equal(t, "bar", auth0Client.Env["foo"])
 		})
 		s := httptest.NewServer(h)
 
