@@ -346,7 +346,7 @@ func TestAuth0Client(t *testing.T) {
 		m, err := New(
 			s.URL,
 			WithInsecure(),
-			WithAuth0ClientEnvOption("foo", "bar"),
+			WithAuth0ClientEnvEntry("foo", "bar"),
 		)
 		assert.NoError(t, err)
 		_, err = m.User.Read("123")
@@ -365,7 +365,7 @@ func TestAuth0Client(t *testing.T) {
 			s.URL,
 			WithInsecure(),
 			WithAuth0ClientInfo(customClient),
-			WithAuth0ClientEnvOption("foo", "bar"),
+			WithAuth0ClientEnvEntry("foo", "bar"),
 		)
 		assert.NoError(t, err)
 		_, err = m.User.Read("123")
@@ -383,7 +383,7 @@ func TestAuth0Client(t *testing.T) {
 			s.URL,
 			WithInsecure(),
 			WithNoAuth0ClientInfo(),
-			WithAuth0ClientEnvOption("foo", "bar"),
+			WithAuth0ClientEnvEntry("foo", "bar"),
 		)
 		assert.NoError(t, err)
 		_, err = m.User.Read("123")

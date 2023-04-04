@@ -93,8 +93,8 @@ func WithAuth0ClientInfo(auth0ClientInfo client.Auth0ClientInfo) Option {
 	}
 }
 
-// WithAuth0ClientEnvOption allows adding extra environment keys to the client information.
-func WithAuth0ClientEnvOption(key string, value string) Option {
+// WithAuth0ClientEnvEntry allows adding extra environment keys to the client information.
+func WithAuth0ClientEnvEntry(key string, value string) Option {
 	return func(m *Management) {
 		if !m.auth0ClientInfo.IsEmpty() {
 			if m.auth0ClientInfo.Env == nil {
