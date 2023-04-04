@@ -325,4 +325,68 @@ func TestAuth0Client(t *testing.T) {
 		_, err = m.User.Read("123")
 		assert.NoError(t, err)
 	})
+
+	t.Run("Allows passing extra env info", func(t *testing.T) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			header := r.Header.Get("Auth0-Client")
+			auth0ClientDecoded, err := base64.StdEncoding.DecodeString(header)
+			assert.NoError(t, err)
+
+			var auth0Client client.Auth0ClientInfo
+			err = json.Unmarshal(auth0ClientDecoded, &auth0Client)
+
+			assert.NoError(t, err)
+			assert.Equal(t, "go-auth0", auth0Client.Name)
+			assert.Equal(t, "latest", auth0Client.Version)
+			assert.Equal(t, runtime.Version(), auth0Client.Env["go"])
+			assert.Equal(t, "bar", auth0Client.Env["foo"])
+		})
+		s := httptest.NewServer(h)
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithAuth0ClientEnvEntry("foo", "bar"),
+		)
+		assert.NoError(t, err)
+		_, err = m.User.Read("123")
+		assert.NoError(t, err)
+	})
+
+	t.Run("Allows passing extra env info with custom client", func(t *testing.T) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			header := r.Header.Get("Auth0-Client")
+			assert.Equal(t, "eyJuYW1lIjoidGVzdC1jbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjAiLCJlbnYiOnsiZm9vIjoiYmFyIn19", header)
+		})
+		s := httptest.NewServer(h)
+		customClient := client.Auth0ClientInfo{Name: "test-client", Version: "1.0.0"}
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithAuth0ClientInfo(customClient),
+			WithAuth0ClientEnvEntry("foo", "bar"),
+		)
+		assert.NoError(t, err)
+		_, err = m.User.Read("123")
+		assert.NoError(t, err)
+	})
+
+	t.Run("Handles when client info has been disabled", func(t *testing.T) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			header := r.Header.Get("Auth0-Client")
+			assert.Equal(t, "", header)
+		})
+		s := httptest.NewServer(h)
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithNoAuth0ClientInfo(),
+			WithAuth0ClientEnvEntry("foo", "bar"),
+		)
+		assert.NoError(t, err)
+		_, err = m.User.Read("123")
+		assert.NoError(t, err)
+	})
 }

@@ -93,6 +93,18 @@ func WithAuth0ClientInfo(auth0ClientInfo client.Auth0ClientInfo) Option {
 	}
 }
 
+// WithAuth0ClientEnvEntry allows adding extra environment keys to the client information.
+func WithAuth0ClientEnvEntry(key string, value string) Option {
+	return func(m *Management) {
+		if !m.auth0ClientInfo.IsEmpty() {
+			if m.auth0ClientInfo.Env == nil {
+				m.auth0ClientInfo.Env = map[string]string{}
+			}
+			m.auth0ClientInfo.Env[key] = value
+		}
+	}
+}
+
 // WithNoAuth0ClientInfo configures the management client to not send the "Auth0-Client" header
 // at all.
 func WithNoAuth0ClientInfo() Option {
