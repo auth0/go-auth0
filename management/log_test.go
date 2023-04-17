@@ -1,10 +1,13 @@
 package management
 
 import (
+	"encoding/json"
 	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/auth0/go-auth0"
 )
 
 const successfulAPIOperation = "sapi"
@@ -48,4 +51,21 @@ func TestLogManager_CheckpointPagination(t *testing.T) {
 	log2 := logList[2]
 	assert.Equal(t, log1.GetID(), logs[0].GetID())
 	assert.Equal(t, log2.GetID(), logs[1].GetID())
+}
+
+func TestLogManagerScope_UnmarshalJSON(t *testing.T) {
+	for expectedAsString, expected := range map[string]*Log{
+		`{}`: {},
+		`{"scope": "openid profile email"}`: {
+			Scope: auth0.String("openid profile email"),
+		},
+		`{"scope": ["openid", "profile", "email"]}`: {
+			Scope: auth0.String("openid profile email"),
+		},
+	} {
+		var actual *Log
+		err := json.Unmarshal([]byte(expectedAsString), &actual)
+		assert.NoError(t, err)
+		assert.Equal(t, actual, expected)
+	}
 }

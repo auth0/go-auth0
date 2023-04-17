@@ -1,6 +1,9 @@
 package management
 
 import (
+	"encoding/json"
+	"fmt"
+	"strings"
 	"time"
 )
 
@@ -117,7 +120,7 @@ type Log struct {
 	Audience *string `json:"audience"`
 
 	// Scope permissions applied to the event.
-	Scope *string `json:"scope"`
+	Scope *string `json:"-"`
 
 	// Name of the strategy involved in the event.
 	Strategy *string `json:"strategy"`
@@ -141,6 +144,43 @@ func (l *Log) TypeName() string {
 		return name
 	}
 	return ""
+}
+
+// UnmarshalJSON is a custom deserializer for the Log type.
+//
+// It is required due to differences in the scope field which cane be a string or array of strings.
+func (l *Log) UnmarshalJSON(data []byte) error {
+	type log Log
+	type logWrapper struct {
+		*log
+		RawScope interface{} `json:"scope"`
+	}
+
+	alias := &logWrapper{(*log)(l), nil}
+
+	err := json.Unmarshal(data, alias)
+
+	if err != nil {
+		return err
+	}
+
+	if alias.RawScope != nil {
+		switch rawScope := alias.RawScope.(type) {
+		case []interface{}:
+			scopes := make([]string, len(rawScope))
+			for i, v := range rawScope {
+				scopes[i] = v.(string)
+			}
+			scope := strings.Join(scopes, " ")
+			l.Scope = &scope
+		case string:
+			l.Scope = &rawScope
+		default:
+			return fmt.Errorf("unexpected type for field scope: %T", alias.RawScope)
+		}
+	}
+
+	return nil
 }
 
 // LogManager manages Auth0 Log resources.
