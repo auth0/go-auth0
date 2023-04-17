@@ -62,6 +62,9 @@ func TestLogManagerScope_UnmarshalJSON(t *testing.T) {
 		`{"scope": ["openid", "profile", "email"]}`: {
 			Scope: auth0.String("openid profile email"),
 		},
+		`{"scope": []}`: {
+			Scope: auth0.String(""),
+		},
 	} {
 		var actual *Log
 		err := json.Unmarshal([]byte(expectedAsString), &actual)
