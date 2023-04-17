@@ -45,6 +45,14 @@ type Ticket struct {
 	// Whether to include the email address as part of the returnUrl in
 	// the reset_email (true), or not (false - default).
 	IncludeEmailInRedirect *bool `json:"includeEmailInRedirect,omitempty"`
+
+	// The ID of the Organization. If provided, organization parameters will be made
+	// available to the email template and organization branding will be applied to the
+	// prompt. In addition, the redirect link in the prompt will include organization_id
+	// and organization_name query string parameters.
+	//
+	// Conflicts with: ResultURL
+	OrganizationID *string `json:"organization_id,omitempty"`
 }
 
 // TicketManager manages Auth0 Ticket resources.

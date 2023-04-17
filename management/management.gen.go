@@ -7560,6 +7560,14 @@ func (t *Ticket) GetMarkEmailAsVerified() bool {
 	return *t.MarkEmailAsVerified
 }
 
+// GetOrganizationID returns the OrganizationID field if it's non-nil, zero value otherwise.
+func (t *Ticket) GetOrganizationID() string {
+	if t == nil || t.OrganizationID == nil {
+		return ""
+	}
+	return *t.OrganizationID
+}
+
 // GetResultURL returns the ResultURL field if it's non-nil, zero value otherwise.
 func (t *Ticket) GetResultURL() string {
 	if t == nil || t.ResultURL == nil {
