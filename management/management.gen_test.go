@@ -9615,6 +9615,16 @@ func TestTicket_GetMarkEmailAsVerified(tt *testing.T) {
 	t.GetMarkEmailAsVerified()
 }
 
+func TestTicket_GetOrganizationID(tt *testing.T) {
+	var zeroValue string
+	t := &Ticket{OrganizationID: &zeroValue}
+	t.GetOrganizationID()
+	t = &Ticket{}
+	t.GetOrganizationID()
+	t = nil
+	t.GetOrganizationID()
+}
+
 func TestTicket_GetResultURL(tt *testing.T) {
 	var zeroValue string
 	t := &Ticket{ResultURL: &zeroValue}
