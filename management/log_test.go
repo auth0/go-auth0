@@ -71,4 +71,10 @@ func TestLogManagerScope_UnmarshalJSON(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, actual, expected)
 	}
+
+	t.Run("Throws an unexpected type error", func(t *testing.T) {
+		var actual *Log
+		err := json.Unmarshal([]byte(`{"scope": 1}`), &actual)
+		assert.EqualError(t, err, "unexpected type for field scope: float64")
+	})
 }
