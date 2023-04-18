@@ -190,7 +190,7 @@ type Credential struct {
 	Name *string `json:"name,omitempty"`
 	// The key identifier of the credential.
 	KeyID *string `json:"kid,omitempty"`
-	// The credential type, only
+	// The type of credential.
 	CredentialType *string `json:"credential_type,omitempty"`
 	// PEM-formatted public key or X509 certificate.
 	PEM *string `json:"pem,omitempty"`
@@ -202,7 +202,7 @@ type Credential struct {
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// The time that this credential was last updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
-	//
+	// The time that this credential will expire.
 	ExpiresAt *time.Time `json:"expires_at,omitempty"`
 }
 
