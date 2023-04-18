@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/auth0/go-auth0"
 )
@@ -104,6 +105,8 @@ type Client struct {
 
 	OrganizationUsage           *string `json:"organization_usage,omitempty"`
 	OrganizationRequireBehavior *string `json:"organization_require_behavior,omitempty"`
+
+	ClientAuthenticationMethods *ClientAuthenticationMethods `json:"client_authentication_methods,omitempty"`
 }
 
 // ClientJWTConfiguration is used to configure JWT settings for our Client.
@@ -179,6 +182,40 @@ type ClientRefreshToken struct {
 	IdleTokenLifetime *int `json:"idle_token_lifetime,omitempty"`
 }
 
+// Credential is used to configure Client Credentials.
+type Credential struct {
+	// The ID of the credential.
+	ID *string `json:"id,omitempty"`
+	// The name of the credential
+	Name *string `json:"name,omitempty"`
+	// The key identifier of the credential.
+	KeyID *string `json:"kid,omitempty"`
+	// The credential type, only
+	CredentialType *string `json:"credential_type,omitempty"`
+	// PEM-formatted public key or X509 certificate.
+	PEM *string `json:"pem,omitempty"`
+	// Algorithm which will be used with the credential.
+	Algorithm *string `json:"alg,omitempty"`
+	// Parse expiry from x509 certificate. If true, attempts to parse the expiry date from the provided PEM.
+	ParseExpiryFromCert *bool `json:"parse_expiry_from_cert,omitempty"`
+	// The time that this credential was created.
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+	// The time that this credential was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
+	//
+	ExpiresAt *time.Time `json:"expires_at,omitempty"`
+}
+
+// ClientAuthenticationMethods defines client authentication method settings for the client.
+type ClientAuthenticationMethods struct {
+	PrivateKeyJWT *PrivateKeyJWT `json:"private_key_jwt,omitempty"`
+}
+
+// PrivateKeyJWT defines the `private_key_jwt` client authentication method settings for the client.
+type PrivateKeyJWT struct {
+	Credentials *[]Credential `json:"credentials,omitempty"`
+}
+
 // ClientList is a list of Clients.
 type ClientList struct {
 	List
@@ -238,6 +275,28 @@ func (m *ClientManager) RotateSecret(id string, opts ...RequestOption) (c *Clien
 // See: https://auth0.com/docs/api/management/v2#!/Clients/delete_clients_by_id
 func (m *ClientManager) Delete(id string, opts ...RequestOption) error {
 	return m.Request("DELETE", m.URI("clients", id), nil, opts...)
+}
+
+// CreateCredential creates an client application's client credential.
+func (m *ClientManager) CreateCredential(id string, credential *Credential, opts ...RequestOption) error {
+	return m.Request("POST", m.URI("clients", id, "credentials"), credential, opts...)
+}
+
+// ListCredentials lists all client credentials associated with the client application.
+func (m *ClientManager) ListCredentials(id string, opts ...RequestOption) (c []*Credential, err error) {
+	err = m.Request("GET", m.URI("clients", id, "credentials"), &c, applyListDefaults(opts))
+	return
+}
+
+// GetCredential gets a client credentials object.
+func (m *ClientManager) GetCredential(clientID string, credentialID string, opts ...RequestOption) (c *Credential, err error) {
+	err = m.Request("GET", m.URI("clients", clientID, "credentials", credentialID), &c, opts...)
+	return
+}
+
+// DeleteCredential deletes a client credentials object.
+func (m *ClientManager) DeleteCredential(clientID string, credentialID string, opts ...RequestOption) error {
+	return m.Request("DELETE", m.URI("clients", clientID, "credentials", credentialID), nil, opts...)
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.

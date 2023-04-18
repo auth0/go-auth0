@@ -176,8 +176,9 @@ func redactSensitiveDataInClient(t *testing.T, i *cassette.Interaction) {
 	update := isClientURL && i.Request.Method == http.MethodPatch
 	rotateSecret := isClientURL && strings.Contains(i.Request.URL, "/rotate-secret")
 	list := isClientURL && strings.Contains(i.Request.URL, "include_totals")
+	credentials := isClientURL && strings.Contains(i.Request.URL, "/credentials")
 
-	if (create || read || update || rotateSecret) && !list {
+	if (create || read || update || rotateSecret) && !list && !credentials {
 		var client Client
 		err := json.Unmarshal([]byte(i.Response.Body), &client)
 		require.NoError(t, err)
