@@ -5238,6 +5238,14 @@ func (j *Job) GetID() string {
 	return *j.ID
 }
 
+// GetIdentity returns the Identity field.
+func (j *Job) GetIdentity() *UserIdentity {
+	if j == nil {
+		return nil
+	}
+	return j.Identity
+}
+
 // GetLimit returns the Limit field if it's non-nil, zero value otherwise.
 func (j *Job) GetLimit() int {
 	if j == nil || j.Limit == nil {

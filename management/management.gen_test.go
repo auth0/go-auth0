@@ -6634,6 +6634,13 @@ func TestJob_GetID(tt *testing.T) {
 	j.GetID()
 }
 
+func TestJob_GetIdentity(tt *testing.T) {
+	j := &Job{}
+	j.GetIdentity()
+	j = nil
+	j.GetIdentity()
+}
+
 func TestJob_GetLimit(tt *testing.T) {
 	var zeroValue int
 	j := &Job{Limit: &zeroValue}
