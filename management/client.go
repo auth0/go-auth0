@@ -278,13 +278,13 @@ func (m *ClientManager) Delete(id string, opts ...RequestOption) error {
 }
 
 // CreateCredential creates a client application's client credential.
-func (m *ClientManager) CreateCredential(id string, credential *Credential, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("clients", id, "credentials"), credential, opts...)
+func (m *ClientManager) CreateCredential(clientID string, credential *Credential, opts ...RequestOption) error {
+	return m.Request("POST", m.URI("clients", clientID, "credentials"), credential, opts...)
 }
 
 // ListCredentials lists all client credentials associated with the client application.
-func (m *ClientManager) ListCredentials(id string, opts ...RequestOption) (c []*Credential, err error) {
-	err = m.Request("GET", m.URI("clients", id, "credentials"), &c, applyListDefaults(opts))
+func (m *ClientManager) ListCredentials(clientID string, opts ...RequestOption) (c []*Credential, err error) {
+	err = m.Request("GET", m.URI("clients", clientID, "credentials"), &c, applyListDefaults(opts))
 	return
 }
 
