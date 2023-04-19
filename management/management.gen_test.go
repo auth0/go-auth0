@@ -6661,6 +6661,16 @@ func TestJob_GetLocation(tt *testing.T) {
 	j.GetLocation()
 }
 
+func TestJob_GetOrganizationID(tt *testing.T) {
+	var zeroValue string
+	j := &Job{OrganizationID: &zeroValue}
+	j.GetOrganizationID()
+	j = &Job{}
+	j.GetOrganizationID()
+	j = nil
+	j.GetOrganizationID()
+}
+
 func TestJob_GetPercentageDone(tt *testing.T) {
 	var zeroValue int
 	j := &Job{PercentageDone: &zeroValue}

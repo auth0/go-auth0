@@ -5262,6 +5262,14 @@ func (j *Job) GetLocation() string {
 	return *j.Location
 }
 
+// GetOrganizationID returns the OrganizationID field if it's non-nil, zero value otherwise.
+func (j *Job) GetOrganizationID() string {
+	if j == nil || j.OrganizationID == nil {
+		return ""
+	}
+	return *j.OrganizationID
+}
+
 // GetPercentageDone returns the PercentageDone field if it's non-nil, zero value otherwise.
 func (j *Job) GetPercentageDone() int {
 	if j == nil || j.PercentageDone == nil {

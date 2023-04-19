@@ -60,6 +60,9 @@ type Job struct {
 	SendCompletionEmail *bool `json:"send_completion_email,omitempty"`
 	// If a job is completed, the job status response will include a summary.
 	Summary *JobSummary `json:"summary,omitempty"`
+	// The ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will
+	// be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
+	OrganizationID *string `json:"organization_id,omitempty"`
 }
 
 // MarshalJSON is a custom serializer for the Job type.
