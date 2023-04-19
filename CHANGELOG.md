@@ -1,5 +1,23 @@
 # Change Log
 
+<a name="v0.17.0"></a>
+
+## [v0.17.0](https://github.com/auth0/go-auth0/tree/v0.17.0) (2023-04-19)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.16.0...v0.17.0)
+
+### Added
+
+- Added support for managing `APNS` and `FCM` provider configurations ([#184](https://github.com/auth0/go-auth0/pull/184))
+- Added support for the `MFAShowFactorListOnEnrollment` tenant flag ([#187](https://github.com/auth0/go-auth0/pull/187))
+- Added support for setting `OrganizationID` on a `Ticket` ([#195](https://github.com/auth0/go-auth0/pull/195))
+- Added support for managing Client Credentials ([#196](https://github.com/auth0/go-auth0/pull/196))
+- Added support for setting `Identity` and `OrganizationID` on `VerifyEmail` calls ([#197](https://github.com/auth0/go-auth0/pull/197))
+
+### Fixed
+
+- Fixed handling of `Log` entries where `Scope` is returned as an array of strings ([#194](https://github.com/auth0/go-auth0/pull/194))
+
 <a name="v0.16.0"></a>
 
 ## [v0.16.0](https://github.com/auth0/go-auth0/tree/v0.16.0) (2023-03-15)
