@@ -14,7 +14,10 @@ func TestJobManager_VerifyEmail(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	user := givenAUser(t)
-	job := &Job{UserID: user.ID}
+	job := &Job{
+		UserID:   user.ID,
+		Identity: user.Identities[0],
+	}
 
 	err := api.Job.VerifyEmail(job)
 	assert.NoError(t, err)

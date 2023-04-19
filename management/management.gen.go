@@ -5344,6 +5344,14 @@ func (j *Job) GetID() string {
 	return *j.ID
 }
 
+// GetIdentity returns the Identity field.
+func (j *Job) GetIdentity() *UserIdentity {
+	if j == nil {
+		return nil
+	}
+	return j.Identity
+}
+
 // GetLimit returns the Limit field if it's non-nil, zero value otherwise.
 func (j *Job) GetLimit() int {
 	if j == nil || j.Limit == nil {
@@ -5358,6 +5366,14 @@ func (j *Job) GetLocation() string {
 		return ""
 	}
 	return *j.Location
+}
+
+// GetOrganizationID returns the OrganizationID field if it's non-nil, zero value otherwise.
+func (j *Job) GetOrganizationID() string {
+	if j == nil || j.OrganizationID == nil {
+		return ""
+	}
+	return *j.OrganizationID
 }
 
 // GetPercentageDone returns the PercentageDone field if it's non-nil, zero value otherwise.

@@ -6764,6 +6764,13 @@ func TestJob_GetID(tt *testing.T) {
 	j.GetID()
 }
 
+func TestJob_GetIdentity(tt *testing.T) {
+	j := &Job{}
+	j.GetIdentity()
+	j = nil
+	j.GetIdentity()
+}
+
 func TestJob_GetLimit(tt *testing.T) {
 	var zeroValue int
 	j := &Job{Limit: &zeroValue}
@@ -6782,6 +6789,16 @@ func TestJob_GetLocation(tt *testing.T) {
 	j.GetLocation()
 	j = nil
 	j.GetLocation()
+}
+
+func TestJob_GetOrganizationID(tt *testing.T) {
+	var zeroValue string
+	j := &Job{OrganizationID: &zeroValue}
+	j.GetOrganizationID()
+	j = &Job{}
+	j.GetOrganizationID()
+	j = nil
+	j.GetOrganizationID()
 }
 
 func TestJob_GetPercentageDone(tt *testing.T) {

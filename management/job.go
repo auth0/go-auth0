@@ -27,6 +27,8 @@ type Job struct {
 	UserID *string `json:"user_id,omitempty"`
 	// The ID of the client, if not provided the global one will be used.
 	ClientID *string `json:"client_id,omitempty"`
+	// The identity of the user. This must be provided to verify primary social, enterprise and passwordless email identities. Also, is needed to verify secondary identities.
+	Identity *UserIdentity `json:"-"`
 	// The ID of the connection.
 	ConnectionID *string `json:"connection_id,omitempty"`
 	// The url to download the result of the job.
@@ -58,6 +60,32 @@ type Job struct {
 	SendCompletionEmail *bool `json:"send_completion_email,omitempty"`
 	// If a job is completed, the job status response will include a summary.
 	Summary *JobSummary `json:"summary,omitempty"`
+	// The ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will
+	// be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
+	OrganizationID *string `json:"organization_id,omitempty"`
+}
+
+// MarshalJSON is a custom serializer for the Job type.
+func (j *Job) MarshalJSON() ([]byte, error) {
+	type job Job
+	type identity struct {
+		UserID   *string `json:"user_id,omitempty"`
+		Provider *string `json:"provider,omitempty"`
+	}
+	type jobWrapper struct {
+		*job
+		Identity *identity `json:"identity,omitempty"`
+	}
+
+	w := &jobWrapper{job: (*job)(j)}
+	if j.Identity != nil {
+		w.Identity = &identity{
+			UserID:   j.Identity.UserID,
+			Provider: j.Identity.Provider,
+		}
+	}
+
+	return json.Marshal(w)
 }
 
 // JobSummary includes totals of successful,
