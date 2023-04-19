@@ -196,7 +196,7 @@ type Credential struct {
 	PEM *string `json:"pem,omitempty"`
 	// Algorithm which will be used with the credential.
 	Algorithm *string `json:"alg,omitempty"`
-	// Parse expiry from x509 certificate. If true, attempts to parse the expiry date from the provided PEM.
+	// Parse expiry from x509 certificate. If `true`, attempts to parse the expiry date from the provided PEM.
 	ParseExpiryFromCert *bool `json:"parse_expiry_from_cert,omitempty"`
 	// The time that this credential was created.
 	CreatedAt *time.Time `json:"created_at,omitempty"`
@@ -277,7 +277,7 @@ func (m *ClientManager) Delete(id string, opts ...RequestOption) error {
 	return m.Request("DELETE", m.URI("clients", id), nil, opts...)
 }
 
-// CreateCredential creates an client application's client credential.
+// CreateCredential creates a client application's client credential.
 func (m *ClientManager) CreateCredential(id string, credential *Credential, opts ...RequestOption) error {
 	return m.Request("POST", m.URI("clients", id, "credentials"), credential, opts...)
 }
