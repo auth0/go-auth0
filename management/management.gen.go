@@ -1003,6 +1003,14 @@ func (c *Client) GetClientAliases() []string {
 	return *c.ClientAliases
 }
 
+// GetClientAuthenticationMethods returns the ClientAuthenticationMethods field.
+func (c *Client) GetClientAuthenticationMethods() *ClientAuthenticationMethods {
+	if c == nil {
+		return nil
+	}
+	return c.ClientAuthenticationMethods
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (c *Client) GetClientID() string {
 	if c == nil || c.ClientID == nil {
@@ -1221,6 +1229,19 @@ func (c *Client) GetWebOrigins() []string {
 
 // String returns a string representation of Client.
 func (c *Client) String() string {
+	return Stringify(c)
+}
+
+// GetPrivateKeyJWT returns the PrivateKeyJWT field.
+func (c *ClientAuthenticationMethods) GetPrivateKeyJWT() *PrivateKeyJWT {
+	if c == nil {
+		return nil
+	}
+	return c.PrivateKeyJWT
+}
+
+// String returns a string representation of ClientAuthenticationMethods.
+func (c *ClientAuthenticationMethods) String() string {
 	return Stringify(c)
 }
 
@@ -4417,6 +4438,91 @@ func (c *CreateEnrollmentTicket) String() string {
 	return Stringify(c)
 }
 
+// GetAlgorithm returns the Algorithm field if it's non-nil, zero value otherwise.
+func (c *Credential) GetAlgorithm() string {
+	if c == nil || c.Algorithm == nil {
+		return ""
+	}
+	return *c.Algorithm
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (c *Credential) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *c.CreatedAt
+}
+
+// GetCredentialType returns the CredentialType field if it's non-nil, zero value otherwise.
+func (c *Credential) GetCredentialType() string {
+	if c == nil || c.CredentialType == nil {
+		return ""
+	}
+	return *c.CredentialType
+}
+
+// GetExpiresAt returns the ExpiresAt field if it's non-nil, zero value otherwise.
+func (c *Credential) GetExpiresAt() time.Time {
+	if c == nil || c.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *c.ExpiresAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (c *Credential) GetID() string {
+	if c == nil || c.ID == nil {
+		return ""
+	}
+	return *c.ID
+}
+
+// GetKeyID returns the KeyID field if it's non-nil, zero value otherwise.
+func (c *Credential) GetKeyID() string {
+	if c == nil || c.KeyID == nil {
+		return ""
+	}
+	return *c.KeyID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (c *Credential) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
+	}
+	return *c.Name
+}
+
+// GetParseExpiryFromCert returns the ParseExpiryFromCert field if it's non-nil, zero value otherwise.
+func (c *Credential) GetParseExpiryFromCert() bool {
+	if c == nil || c.ParseExpiryFromCert == nil {
+		return false
+	}
+	return *c.ParseExpiryFromCert
+}
+
+// GetPEM returns the PEM field if it's non-nil, zero value otherwise.
+func (c *Credential) GetPEM() string {
+	if c == nil || c.PEM == nil {
+		return ""
+	}
+	return *c.PEM
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (c *Credential) GetUpdatedAt() time.Time {
+	if c == nil || c.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *c.UpdatedAt
+}
+
+// String returns a string representation of Credential.
+func (c *Credential) String() string {
+	return Stringify(c)
+}
+
 // GetCNAMEAPIKey returns the CNAMEAPIKey field if it's non-nil, zero value otherwise.
 func (c *CustomDomain) GetCNAMEAPIKey() string {
 	if c == nil || c.CNAMEAPIKey == nil {
@@ -6580,6 +6686,19 @@ func (p *PreUserRegistration) GetRate() int {
 
 // String returns a string representation of PreUserRegistration.
 func (p *PreUserRegistration) String() string {
+	return Stringify(p)
+}
+
+// GetCredentials returns the Credentials field if it's non-nil, zero value otherwise.
+func (p *PrivateKeyJWT) GetCredentials() []Credential {
+	if p == nil || p.Credentials == nil {
+		return nil
+	}
+	return *p.Credentials
+}
+
+// String returns a string representation of PrivateKeyJWT.
+func (p *PrivateKeyJWT) String() string {
 	return Stringify(p)
 }
 
