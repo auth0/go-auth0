@@ -1290,6 +1290,13 @@ func TestClient_GetClientAliases(tt *testing.T) {
 	c.GetClientAliases()
 }
 
+func TestClient_GetClientAuthenticationMethods(tt *testing.T) {
+	c := &Client{}
+	c.GetClientAuthenticationMethods()
+	c = nil
+	c.GetClientAuthenticationMethods()
+}
+
 func TestClient_GetClientID(tt *testing.T) {
 	var zeroValue string
 	c := &Client{ClientID: &zeroValue}
@@ -1551,6 +1558,21 @@ func TestClient_GetWebOrigins(tt *testing.T) {
 func TestClient_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &Client{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientAuthenticationMethods_GetPrivateKeyJWT(tt *testing.T) {
+	c := &ClientAuthenticationMethods{}
+	c.GetPrivateKeyJWT()
+	c = nil
+	c.GetPrivateKeyJWT()
+}
+
+func TestClientAuthenticationMethods_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientAuthenticationMethods{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -5579,6 +5601,114 @@ func TestCreateEnrollmentTicket_String(t *testing.T) {
 	}
 }
 
+func TestCredential_GetAlgorithm(tt *testing.T) {
+	var zeroValue string
+	c := &Credential{Algorithm: &zeroValue}
+	c.GetAlgorithm()
+	c = &Credential{}
+	c.GetAlgorithm()
+	c = nil
+	c.GetAlgorithm()
+}
+
+func TestCredential_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	c := &Credential{CreatedAt: &zeroValue}
+	c.GetCreatedAt()
+	c = &Credential{}
+	c.GetCreatedAt()
+	c = nil
+	c.GetCreatedAt()
+}
+
+func TestCredential_GetCredentialType(tt *testing.T) {
+	var zeroValue string
+	c := &Credential{CredentialType: &zeroValue}
+	c.GetCredentialType()
+	c = &Credential{}
+	c.GetCredentialType()
+	c = nil
+	c.GetCredentialType()
+}
+
+func TestCredential_GetExpiresAt(tt *testing.T) {
+	var zeroValue time.Time
+	c := &Credential{ExpiresAt: &zeroValue}
+	c.GetExpiresAt()
+	c = &Credential{}
+	c.GetExpiresAt()
+	c = nil
+	c.GetExpiresAt()
+}
+
+func TestCredential_GetID(tt *testing.T) {
+	var zeroValue string
+	c := &Credential{ID: &zeroValue}
+	c.GetID()
+	c = &Credential{}
+	c.GetID()
+	c = nil
+	c.GetID()
+}
+
+func TestCredential_GetKeyID(tt *testing.T) {
+	var zeroValue string
+	c := &Credential{KeyID: &zeroValue}
+	c.GetKeyID()
+	c = &Credential{}
+	c.GetKeyID()
+	c = nil
+	c.GetKeyID()
+}
+
+func TestCredential_GetName(tt *testing.T) {
+	var zeroValue string
+	c := &Credential{Name: &zeroValue}
+	c.GetName()
+	c = &Credential{}
+	c.GetName()
+	c = nil
+	c.GetName()
+}
+
+func TestCredential_GetParseExpiryFromCert(tt *testing.T) {
+	var zeroValue bool
+	c := &Credential{ParseExpiryFromCert: &zeroValue}
+	c.GetParseExpiryFromCert()
+	c = &Credential{}
+	c.GetParseExpiryFromCert()
+	c = nil
+	c.GetParseExpiryFromCert()
+}
+
+func TestCredential_GetPEM(tt *testing.T) {
+	var zeroValue string
+	c := &Credential{PEM: &zeroValue}
+	c.GetPEM()
+	c = &Credential{}
+	c.GetPEM()
+	c = nil
+	c.GetPEM()
+}
+
+func TestCredential_GetUpdatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	c := &Credential{UpdatedAt: &zeroValue}
+	c.GetUpdatedAt()
+	c = &Credential{}
+	c.GetUpdatedAt()
+	c = nil
+	c.GetUpdatedAt()
+}
+
+func TestCredential_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &Credential{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestCustomDomain_GetCNAMEAPIKey(tt *testing.T) {
 	var zeroValue string
 	c := &CustomDomain{CNAMEAPIKey: &zeroValue}
@@ -8368,6 +8498,24 @@ func TestPreUserRegistration_GetRate(tt *testing.T) {
 func TestPreUserRegistration_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &PreUserRegistration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPrivateKeyJWT_GetCredentials(tt *testing.T) {
+	var zeroValue []Credential
+	p := &PrivateKeyJWT{Credentials: &zeroValue}
+	p.GetCredentials()
+	p = &PrivateKeyJWT{}
+	p.GetCredentials()
+	p = nil
+	p.GetCredentials()
+}
+
+func TestPrivateKeyJWT_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PrivateKeyJWT{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
