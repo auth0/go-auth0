@@ -283,7 +283,7 @@ func (t *templateData) addMapType(x *ast.MapType, receiverType, fieldName string
 	case *ast.Ident:
 		valueType = value.String()
 	case *ast.InterfaceType:
-		valueType = "any"
+		valueType = "interface{}"
 	default:
 		logf("addMapType: type %q, field %q: unknown value type: %T %+v; skipping.", receiverType, fieldName, value, value)
 		return

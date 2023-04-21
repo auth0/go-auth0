@@ -278,9 +278,9 @@ func (a *ActionExecutionResult) GetEndedAt() time.Time {
 }
 
 // GetError returns the Error map if it's non-nil, an empty map otherwise.
-func (a *ActionExecutionResult) GetError() map[string]any {
+func (a *ActionExecutionResult) GetError() map[string]interface{} {
 	if a == nil || a.Error == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return a.Error
 }
@@ -964,9 +964,9 @@ func (b *BruteForceProtection) String() string {
 }
 
 // GetAddons returns the Addons map if it's non-nil, an empty map otherwise.
-func (c *Client) GetAddons() map[string]any {
+func (c *Client) GetAddons() map[string]interface{} {
 	if c == nil || c.Addons == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.Addons
 }
@@ -1036,9 +1036,9 @@ func (c *Client) GetClientID() string {
 }
 
 // GetClientMetadata returns the ClientMetadata field if it's non-nil, zero value otherwise.
-func (c *Client) GetClientMetadata() map[string]any {
+func (c *Client) GetClientMetadata() map[string]interface{} {
 	if c == nil || c.ClientMetadata == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return *c.ClientMetadata
 }
@@ -1719,9 +1719,9 @@ func (c *ConnectionOptions) GetImportMode() bool {
 }
 
 // GetMFA returns the MFA map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptions) GetMFA() map[string]any {
+func (c *ConnectionOptions) GetMFA() map[string]interface{} {
 	if c == nil || c.MFA == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.MFA
 }
@@ -1735,33 +1735,33 @@ func (c *ConnectionOptions) GetNonPersistentAttrs() []string {
 }
 
 // GetPasswordComplexityOptions returns the PasswordComplexityOptions map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptions) GetPasswordComplexityOptions() map[string]any {
+func (c *ConnectionOptions) GetPasswordComplexityOptions() map[string]interface{} {
 	if c == nil || c.PasswordComplexityOptions == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.PasswordComplexityOptions
 }
 
 // GetPasswordDictionary returns the PasswordDictionary map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptions) GetPasswordDictionary() map[string]any {
+func (c *ConnectionOptions) GetPasswordDictionary() map[string]interface{} {
 	if c == nil || c.PasswordDictionary == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.PasswordDictionary
 }
 
 // GetPasswordHistory returns the PasswordHistory map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptions) GetPasswordHistory() map[string]any {
+func (c *ConnectionOptions) GetPasswordHistory() map[string]interface{} {
 	if c == nil || c.PasswordHistory == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.PasswordHistory
 }
 
 // GetPasswordNoPersonalInfo returns the PasswordNoPersonalInfo map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptions) GetPasswordNoPersonalInfo() map[string]any {
+func (c *ConnectionOptions) GetPasswordNoPersonalInfo() map[string]interface{} {
 	if c == nil || c.PasswordNoPersonalInfo == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.PasswordNoPersonalInfo
 }
@@ -1799,17 +1799,17 @@ func (c *ConnectionOptions) GetStrategyVersion() int {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptions) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptions) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
 
 // GetValidation returns the Validation map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptions) GetValidation() map[string]any {
+func (c *ConnectionOptions) GetValidation() map[string]interface{} {
 	if c == nil || c.Validation == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.Validation
 }
@@ -1900,9 +1900,9 @@ func (c *ConnectionOptionsAD) GetTenantDomain() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsAD) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsAD) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -2001,9 +2001,9 @@ func (c *ConnectionOptionsADFS) GetTrustEmailVerified() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsADFS) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsADFS) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -2086,9 +2086,9 @@ func (c *ConnectionOptionsApple) GetTeamID() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsApple) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsApple) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -2267,9 +2267,9 @@ func (c *ConnectionOptionsAzureAD) GetTrustEmailVerified() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsAzureAD) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsAzureAD) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -2368,9 +2368,9 @@ func (c *ConnectionOptionsEmail) GetSetUserAttributes() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsEmail) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsEmail) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -2658,9 +2658,9 @@ func (c *ConnectionOptionsFacebook) GetSetUserAttributes() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsFacebook) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsFacebook) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -2967,9 +2967,9 @@ func (c *ConnectionOptionsGitHub) GetSetUserAttributes() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsGitHub) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsGitHub) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -3124,9 +3124,9 @@ func (c *ConnectionOptionsGoogleApps) GetTenantDomain() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsGoogleApps) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsGoogleApps) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -3393,9 +3393,9 @@ func (c *ConnectionOptionsGoogleOAuth2) GetTasks() bool {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsGoogleOAuth2) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsGoogleOAuth2) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -3494,9 +3494,9 @@ func (c *ConnectionOptionsLinkedin) GetStrategyVersion() int {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsLinkedin) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsLinkedin) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -3587,9 +3587,9 @@ func (c *ConnectionOptionsOAuth2) GetTokenURL() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsOAuth2) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsOAuth2) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -3712,9 +3712,9 @@ func (c *ConnectionOptionsOIDC) GetType() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsOIDC) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsOIDC) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -3829,9 +3829,9 @@ func (c *ConnectionOptionsOkta) GetTokenEndpoint() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsOkta) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsOkta) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -3975,9 +3975,9 @@ func (c *ConnectionOptionsPingFederate) GetTenantDomain() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsPingFederate) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsPingFederate) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -4036,9 +4036,9 @@ func (c *ConnectionOptionsSalesforce) GetSetUserAttributes() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsSalesforce) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsSalesforce) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -4105,9 +4105,9 @@ func (c *ConnectionOptionsSAML) GetExpires() string {
 }
 
 // GetFieldsMap returns the FieldsMap map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsSAML) GetFieldsMap() map[string]any {
+func (c *ConnectionOptionsSAML) GetFieldsMap() map[string]interface{} {
 	if c == nil || c.FieldsMap == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.FieldsMap
 }
@@ -4225,9 +4225,9 @@ func (c *ConnectionOptionsSAML) GetSignSAMLRequest() bool {
 }
 
 // GetSubject returns the Subject map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsSAML) GetSubject() map[string]any {
+func (c *ConnectionOptionsSAML) GetSubject() map[string]interface{} {
 	if c == nil || c.Subject == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.Subject
 }
@@ -4241,9 +4241,9 @@ func (c *ConnectionOptionsSAML) GetTenantDomain() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsSAML) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsSAML) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -4448,9 +4448,9 @@ func (c *ConnectionOptionsSMS) GetTwilioToken() string {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsSMS) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsSMS) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -4653,9 +4653,9 @@ func (c *ConnectionOptionsWindowsLive) GetTasksUpdate() bool {
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsWindowsLive) GetUpstreamParams() map[string]any {
+func (c *ConnectionOptionsWindowsLive) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return c.UpstreamParams
 }
@@ -4963,9 +4963,9 @@ func (e *Email) GetName() string {
 }
 
 // GetSettings returns the Settings map if it's non-nil, an empty map otherwise.
-func (e *Email) GetSettings() map[string]any {
+func (e *Email) GetSettings() map[string]interface{} {
 	if e == nil || e.Settings == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return e.Settings
 }
@@ -5710,9 +5710,9 @@ func (j *Job) String() string {
 }
 
 // GetUser returns the User map if it's non-nil, an empty map otherwise.
-func (j *JobError) GetUser() map[string]any {
+func (j *JobError) GetUser() map[string]interface{} {
 	if j == nil || j.User == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return j.User
 }
@@ -5826,9 +5826,9 @@ func (l *Log) GetDescription() string {
 }
 
 // GetDetails returns the Details map if it's non-nil, an empty map otherwise.
-func (l *Log) GetDetails() map[string]any {
+func (l *Log) GetDetails() map[string]interface{} {
 	if l == nil || l.Details == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return l.Details
 }
@@ -5866,9 +5866,9 @@ func (l *Log) GetIsMobile() bool {
 }
 
 // GetLocationInfo returns the LocationInfo map if it's non-nil, an empty map otherwise.
-func (l *Log) GetLocationInfo() map[string]any {
+func (l *Log) GetLocationInfo() map[string]interface{} {
 	if l == nil || l.LocationInfo == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return l.LocationInfo
 }
@@ -6681,9 +6681,9 @@ func (o *OrganizationConnectionList) String() string {
 }
 
 // GetAppMetadata returns the AppMetadata map if it's non-nil, an empty map otherwise.
-func (o *OrganizationInvitation) GetAppMetadata() map[string]any {
+func (o *OrganizationInvitation) GetAppMetadata() map[string]interface{} {
 	if o == nil || o.AppMetadata == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return o.AppMetadata
 }
@@ -6785,9 +6785,9 @@ func (o *OrganizationInvitation) GetTTLSec() int {
 }
 
 // GetUserMetadata returns the UserMetadata map if it's non-nil, an empty map otherwise.
-func (o *OrganizationInvitation) GetUserMetadata() map[string]any {
+func (o *OrganizationInvitation) GetUserMetadata() map[string]interface{} {
 	if o == nil || o.UserMetadata == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return o.UserMetadata
 }
@@ -8066,9 +8066,9 @@ func (t *Ticket) String() string {
 }
 
 // GetAppMetadata returns the AppMetadata field if it's non-nil, zero value otherwise.
-func (u *User) GetAppMetadata() map[string]any {
+func (u *User) GetAppMetadata() map[string]interface{} {
 	if u == nil || u.AppMetadata == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return *u.AppMetadata
 }
@@ -8274,9 +8274,9 @@ func (u *User) GetURL() string {
 }
 
 // GetUserMetadata returns the UserMetadata field if it's non-nil, zero value otherwise.
-func (u *User) GetUserMetadata() map[string]any {
+func (u *User) GetUserMetadata() map[string]interface{} {
 	if u == nil || u.UserMetadata == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return *u.UserMetadata
 }
@@ -8433,9 +8433,9 @@ func (u *UserIdentity) GetIsSocial() bool {
 }
 
 // GetProfileData returns the ProfileData field if it's non-nil, zero value otherwise.
-func (u *UserIdentity) GetProfileData() map[string]any {
+func (u *UserIdentity) GetProfileData() map[string]interface{} {
 	if u == nil || u.ProfileData == nil {
-		return map[string]any{}
+		return map[string]interface{}{}
 	}
 	return *u.ProfileData
 }
