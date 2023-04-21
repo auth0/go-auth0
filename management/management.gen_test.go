@@ -7533,6 +7533,16 @@ func TestLog_String(t *testing.T) {
 	}
 }
 
+func TestLogStream_GetFilters(tt *testing.T) {
+	var zeroValue []map[string]string
+	l := &LogStream{Filters: &zeroValue}
+	l.GetFilters()
+	l = &LogStream{}
+	l.GetFilters()
+	l = nil
+	l.GetFilters()
+}
+
 func TestLogStream_GetID(tt *testing.T) {
 	var zeroValue string
 	l := &LogStream{ID: &zeroValue}
@@ -7723,6 +7733,16 @@ func TestLogStreamSinkHTTP_GetContentType(tt *testing.T) {
 	l.GetContentType()
 	l = nil
 	l.GetContentType()
+}
+
+func TestLogStreamSinkHTTP_GetCustomHeaders(tt *testing.T) {
+	var zeroValue []map[string]string
+	l := &LogStreamSinkHTTP{CustomHeaders: &zeroValue}
+	l.GetCustomHeaders()
+	l = &LogStreamSinkHTTP{}
+	l.GetCustomHeaders()
+	l = nil
+	l.GetCustomHeaders()
 }
 
 func TestLogStreamSinkHTTP_GetEndpoint(tt *testing.T) {

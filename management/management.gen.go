@@ -5958,6 +5958,14 @@ func (l *Log) String() string {
 	return Stringify(l)
 }
 
+// GetFilters returns the Filters field if it's non-nil, zero value otherwise.
+func (l *LogStream) GetFilters() []map[string]string {
+	if l == nil || l.Filters == nil {
+		return []map[string]string{}
+	}
+	return *l.Filters
+}
+
 // GetID returns the ID field if it's non-nil, zero value otherwise.
 func (l *LogStream) GetID() string {
 	if l == nil || l.ID == nil {
@@ -6104,6 +6112,14 @@ func (l *LogStreamSinkHTTP) GetContentType() string {
 		return ""
 	}
 	return *l.ContentType
+}
+
+// GetCustomHeaders returns the CustomHeaders field if it's non-nil, zero value otherwise.
+func (l *LogStreamSinkHTTP) GetCustomHeaders() []map[string]string {
+	if l == nil || l.CustomHeaders == nil {
+		return []map[string]string{}
+	}
+	return *l.CustomHeaders
 }
 
 // GetEndpoint returns the Endpoint field if it's non-nil, zero value otherwise.

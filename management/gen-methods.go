@@ -224,6 +224,26 @@ func newGetter(receiverType, fieldName, fieldType, zeroValue string, namedStruct
 	}
 }
 
+func getMapKeyType(key ast.Expr) (valueType string, unknownType ast.Expr) {
+	switch key := key.(type) {
+	case *ast.Ident:
+		return key.String(), nil
+	default:
+		return "", key
+	}
+}
+
+func getMapValueType(value ast.Expr) (valueType string, unknownType ast.Expr) {
+	switch value := value.(type) {
+	case *ast.Ident:
+		return value.String(), nil
+	case *ast.InterfaceType:
+		return "interface{}", nil
+	default:
+		return "", value
+	}
+}
+
 func (t *templateData) addStringer(receiverType string) {
 	t.Getters = append(t.Getters, &getter{
 		sortVal:      strings.ToLower(receiverType) + ".zzz",
@@ -235,15 +255,31 @@ func (t *templateData) addStringer(receiverType string) {
 
 func (t *templateData) addArrayType(x *ast.ArrayType, receiverType, fieldName string) {
 	var eltType string
+	var zeroValue string
 	switch elt := x.Elt.(type) {
 	case *ast.Ident:
 		eltType = elt.String()
+		zeroValue = "nil"
+	case *ast.MapType:
+		keyType, unknownType := getMapKeyType(elt.Key)
+		if unknownType != nil {
+			logf("addArrayType MapType: type %q, field %q: unknown key type: %T %+v; skipping.", receiverType, fieldName, unknownType, unknownType)
+			return
+		}
+		valueType, unknownType := getMapValueType(elt.Value)
+		if unknownType != nil {
+			logf("addArrayType MapType: type %q, field %q: unknown value type: %T %+v; skipping.", receiverType, fieldName, unknownType, unknownType)
+			return
+		}
+
+		eltType = "map[" + keyType + "]" + valueType
+		zeroValue = "[]map[" + keyType + "]" + valueType + "{}"
 	default:
 		logf("addArrayType: type %q, field %q: unknown elt type: %T %+v; skipping.", receiverType, fieldName, elt, elt)
 		return
 	}
 
-	t.Getters = append(t.Getters, newGetter(receiverType, fieldName, "[]"+eltType, "nil", false))
+	t.Getters = append(t.Getters, newGetter(receiverType, fieldName, "[]"+eltType, zeroValue, false))
 }
 
 func (t *templateData) addIdent(x *ast.Ident, receiverType, fieldName string) {
@@ -269,23 +305,15 @@ func (t *templateData) addIdent(x *ast.Ident, receiverType, fieldName string) {
 }
 
 func (t *templateData) addMapType(x *ast.MapType, receiverType, fieldName string, isAPointer bool) {
-	var keyType string
-	switch key := x.Key.(type) {
-	case *ast.Ident:
-		keyType = key.String()
-	default:
-		logf("addMapType: type %q, field %q: unknown key type: %T %+v; skipping.", receiverType, fieldName, key, key)
+	keyType, unknownType := getMapKeyType(x.Key)
+	if unknownType != nil {
+		logf("addMapType: type %q, field %q: unknown key type: %T %+v; skipping.", receiverType, fieldName, unknownType, unknownType)
 		return
 	}
 
-	var valueType string
-	switch value := x.Value.(type) {
-	case *ast.Ident:
-		valueType = value.String()
-	case *ast.InterfaceType:
-		valueType = "interface{}"
-	default:
-		logf("addMapType: type %q, field %q: unknown value type: %T %+v; skipping.", receiverType, fieldName, value, value)
+	valueType, unknownType := getMapValueType(x.Value)
+	if unknownType != nil {
+		logf("addMapType: type %q, field %q: unknown value type: %T %+v; skipping.", receiverType, fieldName, unknownType, unknownType)
 		return
 	}
 
