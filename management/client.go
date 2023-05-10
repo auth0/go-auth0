@@ -107,6 +107,9 @@ type Client struct {
 	OrganizationRequireBehavior *string `json:"organization_require_behavior,omitempty"`
 
 	ClientAuthenticationMethods *ClientAuthenticationMethods `json:"client_authentication_methods,omitempty"`
+
+	// If `true` then the client will require Pushed Authorization Requests
+	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty"`
 }
 
 // ClientJWTConfiguration is used to configure JWT settings for our Client.

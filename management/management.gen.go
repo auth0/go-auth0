@@ -1195,6 +1195,14 @@ func (c *Client) GetRefreshToken() *ClientRefreshToken {
 	return c.RefreshToken
 }
 
+// GetRequirePushedAuthorizationRequests returns the RequirePushedAuthorizationRequests field if it's non-nil, zero value otherwise.
+func (c *Client) GetRequirePushedAuthorizationRequests() bool {
+	if c == nil || c.RequirePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *c.RequirePushedAuthorizationRequests
+}
+
 // GetSSO returns the SSO field if it's non-nil, zero value otherwise.
 func (c *Client) GetSSO() bool {
 	if c == nil || c.SSO == nil {
@@ -7548,6 +7556,14 @@ func (t *TenantFlags) GetNoDisclosureEnterpriseConnections() bool {
 		return false
 	}
 	return *t.NoDisclosureEnterpriseConnections
+}
+
+// GetRequirePushedAuthorizationRequests returns the RequirePushedAuthorizationRequests field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetRequirePushedAuthorizationRequests() bool {
+	if t == nil || t.RequirePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *t.RequirePushedAuthorizationRequests
 }
 
 // GetRevokeRefreshTokenGrant returns the RevokeRefreshTokenGrant field if it's non-nil, zero value otherwise.
