@@ -1478,6 +1478,13 @@ func TestClient_GetNativeSocialLogin(tt *testing.T) {
 	c.GetNativeSocialLogin()
 }
 
+func TestClient_GetOIDCBackchannelLogout(tt *testing.T) {
+	c := &Client{}
+	c.GetOIDCBackchannelLogout()
+	c = nil
+	c.GetOIDCBackchannelLogout()
+}
+
 func TestClient_GetOIDCConformant(tt *testing.T) {
 	var zeroValue bool
 	c := &Client{OIDCConformant: &zeroValue}
@@ -7965,6 +7972,24 @@ func TestMultiFactorWebAuthnSettings_GetUserVerification(tt *testing.T) {
 func TestMultiFactorWebAuthnSettings_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorWebAuthnSettings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestOIDCBackchannelLogout_GetBackChannelLogoutURLs(tt *testing.T) {
+	var zeroValue []string
+	o := &OIDCBackchannelLogout{BackChannelLogoutURLs: &zeroValue}
+	o.GetBackChannelLogoutURLs()
+	o = &OIDCBackchannelLogout{}
+	o.GetBackChannelLogoutURLs()
+	o = nil
+	o.GetBackChannelLogoutURLs()
+}
+
+func TestOIDCBackchannelLogout_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &OIDCBackchannelLogout{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

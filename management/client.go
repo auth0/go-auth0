@@ -110,6 +110,8 @@ type Client struct {
 
 	// If `true` then the client will require Pushed Authorization Requests
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty"`
+
+	OIDCBackchannelLogout *OIDCBackchannelLogout `json:"oidc_backchannel_logout,omitempty"`
 }
 
 // ClientJWTConfiguration is used to configure JWT settings for our Client.
@@ -217,6 +219,11 @@ type ClientAuthenticationMethods struct {
 // PrivateKeyJWT defines the `private_key_jwt` client authentication method settings for the client.
 type PrivateKeyJWT struct {
 	Credentials *[]Credential `json:"credentials,omitempty"`
+}
+
+// OIDCBackchannelLogout defines the `oidc_backchannel_logout` settings for the client.
+type OIDCBackchannelLogout struct {
+	BackChannelLogoutURLs *[]string `json:"backchannel_logout_urls,omitempty"`
 }
 
 // ClientList is a list of Clients.
