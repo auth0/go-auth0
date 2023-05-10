@@ -1515,6 +1515,16 @@ func TestClient_GetRefreshToken(tt *testing.T) {
 	c.GetRefreshToken()
 }
 
+func TestClient_GetRequirePushedAuthorizationRequests(tt *testing.T) {
+	var zeroValue bool
+	c := &Client{RequirePushedAuthorizationRequests: &zeroValue}
+	c.GetRequirePushedAuthorizationRequests()
+	c = &Client{}
+	c.GetRequirePushedAuthorizationRequests()
+	c = nil
+	c.GetRequirePushedAuthorizationRequests()
+}
+
 func TestClient_GetSSO(tt *testing.T) {
 	var zeroValue bool
 	c := &Client{SSO: &zeroValue}
@@ -9594,6 +9604,16 @@ func TestTenantFlags_GetNoDisclosureEnterpriseConnections(tt *testing.T) {
 	t.GetNoDisclosureEnterpriseConnections()
 	t = nil
 	t.GetNoDisclosureEnterpriseConnections()
+}
+
+func TestTenantFlags_GetRequirePushedAuthorizationRequests(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{RequirePushedAuthorizationRequests: &zeroValue}
+	t.GetRequirePushedAuthorizationRequests()
+	t = &TenantFlags{}
+	t.GetRequirePushedAuthorizationRequests()
+	t = nil
+	t.GetRequirePushedAuthorizationRequests()
 }
 
 func TestTenantFlags_GetRevokeRefreshTokenGrant(tt *testing.T) {
