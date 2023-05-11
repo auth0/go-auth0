@@ -111,6 +111,7 @@ type Client struct {
 	// If `true` then the client will require Pushed Authorization Requests
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty"`
 
+	// URLs that are valid to call back from Auth0 for OIDC backchannel logout.
 	OIDCBackchannelLogout *OIDCBackchannelLogout `json:"oidc_backchannel_logout,omitempty"`
 }
 
