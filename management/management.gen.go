@@ -1163,6 +1163,14 @@ func (c *Client) GetNativeSocialLogin() *ClientNativeSocialLogin {
 	return c.NativeSocialLogin
 }
 
+// GetOIDCBackchannelLogout returns the OIDCBackchannelLogout field.
+func (c *Client) GetOIDCBackchannelLogout() *OIDCBackchannelLogout {
+	if c == nil {
+		return nil
+	}
+	return c.OIDCBackchannelLogout
+}
+
 // GetOIDCConformant returns the OIDCConformant field if it's non-nil, zero value otherwise.
 func (c *Client) GetOIDCConformant() bool {
 	if c == nil || c.OIDCConformant == nil {
@@ -6264,6 +6272,19 @@ func (m *MultiFactorWebAuthnSettings) GetUserVerification() string {
 // String returns a string representation of MultiFactorWebAuthnSettings.
 func (m *MultiFactorWebAuthnSettings) String() string {
 	return Stringify(m)
+}
+
+// GetBackChannelLogoutURLs returns the BackChannelLogoutURLs field if it's non-nil, zero value otherwise.
+func (o *OIDCBackchannelLogout) GetBackChannelLogoutURLs() []string {
+	if o == nil || o.BackChannelLogoutURLs == nil {
+		return nil
+	}
+	return *o.BackChannelLogoutURLs
+}
+
+// String returns a string representation of OIDCBackchannelLogout.
+func (o *OIDCBackchannelLogout) String() string {
+	return Stringify(o)
 }
 
 // GetBranding returns the Branding field.
