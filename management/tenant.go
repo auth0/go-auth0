@@ -240,7 +240,8 @@ type TenantFlags struct {
 	// Used to allow users to pick what factor to enroll of the available MFA factors.
 	MFAShowFactorListOnEnrollment *bool `json:"mfa_show_factor_list_on_enrollment,omitempty"`
 
-	// If `true`, all Clients will be required to use Pushed Authorization Requests
+	// If `true`, all Clients will be required to use Pushed Authorization Requests.
+	// This feature currently must be enabled for your tenant.
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty"`
 }
 
