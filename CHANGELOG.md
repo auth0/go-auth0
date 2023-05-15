@@ -1,5 +1,19 @@
 # Change Log
 
+<a name="v0.17.1"></a>
+
+## [v0.17.1](https://github.com/auth0/go-auth0/tree/v0.17.1) (2023-05-15)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.17.0...v0.17.1)
+
+### Added
+
+- Added support for configuring `RequirePushedAuthorizationRequests` on Clients and Tenants ([#201](https://github.com/auth0/go-auth0/pull/201))
+- Added support for settings the `OIDCBackchannelLogout` configuration for a Client ([#202](https://github.com/auth0/go-auth0/pull/202))
+
+> **Note**
+> At the time of release, both of these features require enablement for a tenant
+
 <a name="v0.17.0"></a>
 
 ## [v0.17.0](https://github.com/auth0/go-auth0/tree/v0.17.0) (2023-04-19)
