@@ -348,6 +348,16 @@ func TestActionExecutionResult_GetEndedAt(tt *testing.T) {
 	a.GetEndedAt()
 }
 
+func TestActionExecutionResult_GetError(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	a := &ActionExecutionResult{Error: zeroValue}
+	a.GetError()
+	a = &ActionExecutionResult{}
+	a.GetError()
+	a = nil
+	a.GetError()
+}
+
 func TestActionExecutionResult_GetStartedAt(tt *testing.T) {
 	var zeroValue time.Time
 	a := &ActionExecutionResult{StartedAt: &zeroValue}
@@ -1230,6 +1240,16 @@ func TestBruteForceProtection_String(t *testing.T) {
 	}
 }
 
+func TestClient_GetAddons(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &Client{Addons: zeroValue}
+	c.GetAddons()
+	c = &Client{}
+	c.GetAddons()
+	c = nil
+	c.GetAddons()
+}
+
 func TestClient_GetAllowedClients(tt *testing.T) {
 	var zeroValue []string
 	c := &Client{AllowedClients: &zeroValue}
@@ -1305,6 +1325,16 @@ func TestClient_GetClientID(tt *testing.T) {
 	c.GetClientID()
 	c = nil
 	c.GetClientID()
+}
+
+func TestClient_GetClientMetadata(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	c := &Client{ClientMetadata: &zeroValue}
+	c.GetClientMetadata()
+	c = &Client{}
+	c.GetClientMetadata()
+	c = nil
+	c.GetClientMetadata()
 }
 
 func TestClient_GetClientSecret(tt *testing.T) {
@@ -2147,6 +2177,16 @@ func TestConnectionOptions_GetImportMode(tt *testing.T) {
 	c.GetImportMode()
 }
 
+func TestConnectionOptions_GetMFA(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptions{MFA: zeroValue}
+	c.GetMFA()
+	c = &ConnectionOptions{}
+	c.GetMFA()
+	c = nil
+	c.GetMFA()
+}
+
 func TestConnectionOptions_GetNonPersistentAttrs(tt *testing.T) {
 	var zeroValue []string
 	c := &ConnectionOptions{NonPersistentAttrs: &zeroValue}
@@ -2155,6 +2195,46 @@ func TestConnectionOptions_GetNonPersistentAttrs(tt *testing.T) {
 	c.GetNonPersistentAttrs()
 	c = nil
 	c.GetNonPersistentAttrs()
+}
+
+func TestConnectionOptions_GetPasswordComplexityOptions(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptions{PasswordComplexityOptions: zeroValue}
+	c.GetPasswordComplexityOptions()
+	c = &ConnectionOptions{}
+	c.GetPasswordComplexityOptions()
+	c = nil
+	c.GetPasswordComplexityOptions()
+}
+
+func TestConnectionOptions_GetPasswordDictionary(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptions{PasswordDictionary: zeroValue}
+	c.GetPasswordDictionary()
+	c = &ConnectionOptions{}
+	c.GetPasswordDictionary()
+	c = nil
+	c.GetPasswordDictionary()
+}
+
+func TestConnectionOptions_GetPasswordHistory(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptions{PasswordHistory: zeroValue}
+	c.GetPasswordHistory()
+	c = &ConnectionOptions{}
+	c.GetPasswordHistory()
+	c = nil
+	c.GetPasswordHistory()
+}
+
+func TestConnectionOptions_GetPasswordNoPersonalInfo(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptions{PasswordNoPersonalInfo: zeroValue}
+	c.GetPasswordNoPersonalInfo()
+	c = &ConnectionOptions{}
+	c.GetPasswordNoPersonalInfo()
+	c = nil
+	c.GetPasswordNoPersonalInfo()
 }
 
 func TestConnectionOptions_GetPasswordPolicy(tt *testing.T) {
@@ -2195,6 +2275,26 @@ func TestConnectionOptions_GetStrategyVersion(tt *testing.T) {
 	c.GetStrategyVersion()
 	c = nil
 	c.GetStrategyVersion()
+}
+
+func TestConnectionOptions_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptions{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptions{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
+}
+
+func TestConnectionOptions_GetValidation(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptions{Validation: zeroValue}
+	c.GetValidation()
+	c = &ConnectionOptions{}
+	c.GetValidation()
+	c = nil
+	c.GetValidation()
 }
 
 func TestConnectionOptions_String(t *testing.T) {
@@ -2303,6 +2403,16 @@ func TestConnectionOptionsAD_GetTenantDomain(tt *testing.T) {
 	c.GetTenantDomain()
 	c = nil
 	c.GetTenantDomain()
+}
+
+func TestConnectionOptionsAD_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsAD{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsAD{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
 }
 
 func TestConnectionOptionsAD_String(t *testing.T) {
@@ -2423,6 +2533,16 @@ func TestConnectionOptionsADFS_GetTrustEmailVerified(tt *testing.T) {
 	c.GetTrustEmailVerified()
 }
 
+func TestConnectionOptionsADFS_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsADFS{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsADFS{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
+}
+
 func TestConnectionOptionsADFS_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsADFS{}
@@ -2519,6 +2639,16 @@ func TestConnectionOptionsApple_GetTeamID(tt *testing.T) {
 	c.GetTeamID()
 	c = nil
 	c.GetTeamID()
+}
+
+func TestConnectionOptionsApple_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsApple{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsApple{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
 }
 
 func TestConnectionOptionsApple_String(t *testing.T) {
@@ -2739,6 +2869,16 @@ func TestConnectionOptionsAzureAD_GetTrustEmailVerified(tt *testing.T) {
 	c.GetTrustEmailVerified()
 }
 
+func TestConnectionOptionsAzureAD_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsAzureAD{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsAzureAD{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
+}
+
 func TestConnectionOptionsAzureAD_GetUseCommonEndpoint(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsAzureAD{UseCommonEndpoint: &zeroValue}
@@ -2849,6 +2989,16 @@ func TestConnectionOptionsEmail_GetSetUserAttributes(tt *testing.T) {
 	c.GetSetUserAttributes()
 	c = nil
 	c.GetSetUserAttributes()
+}
+
+func TestConnectionOptionsEmail_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsEmail{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsEmail{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
 }
 
 func TestConnectionOptionsEmail_String(t *testing.T) {
@@ -3205,6 +3355,16 @@ func TestConnectionOptionsFacebook_GetSetUserAttributes(tt *testing.T) {
 	c.GetSetUserAttributes()
 	c = nil
 	c.GetSetUserAttributes()
+}
+
+func TestConnectionOptionsFacebook_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsFacebook{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsFacebook{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
 }
 
 func TestConnectionOptionsFacebook_GetUserAgeRange(tt *testing.T) {
@@ -3585,6 +3745,16 @@ func TestConnectionOptionsGitHub_GetSetUserAttributes(tt *testing.T) {
 	c.GetSetUserAttributes()
 }
 
+func TestConnectionOptionsGitHub_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsGitHub{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsGitHub{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
+}
+
 func TestConnectionOptionsGitHub_GetWriteOrg(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsGitHub{WriteOrg: &zeroValue}
@@ -3771,6 +3941,16 @@ func TestConnectionOptionsGoogleApps_GetTenantDomain(tt *testing.T) {
 	c.GetTenantDomain()
 	c = nil
 	c.GetTenantDomain()
+}
+
+func TestConnectionOptionsGoogleApps_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsGoogleApps{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsGoogleApps{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
 }
 
 func TestConnectionOptionsGoogleApps_String(t *testing.T) {
@@ -4101,6 +4281,16 @@ func TestConnectionOptionsGoogleOAuth2_GetTasks(tt *testing.T) {
 	c.GetTasks()
 }
 
+func TestConnectionOptionsGoogleOAuth2_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsGoogleOAuth2{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsGoogleOAuth2{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
+}
+
 func TestConnectionOptionsGoogleOAuth2_GetURLShortener(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsGoogleOAuth2{URLShortener: &zeroValue}
@@ -4219,6 +4409,16 @@ func TestConnectionOptionsLinkedin_GetStrategyVersion(tt *testing.T) {
 	c.GetStrategyVersion()
 }
 
+func TestConnectionOptionsLinkedin_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsLinkedin{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsLinkedin{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
+}
+
 func TestConnectionOptionsLinkedin_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsLinkedin{}
@@ -4325,6 +4525,16 @@ func TestConnectionOptionsOAuth2_GetTokenURL(tt *testing.T) {
 	c.GetTokenURL()
 	c = nil
 	c.GetTokenURL()
+}
+
+func TestConnectionOptionsOAuth2_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsOAuth2{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsOAuth2{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
 }
 
 func TestConnectionOptionsOAuth2_String(t *testing.T) {
@@ -4475,6 +4685,16 @@ func TestConnectionOptionsOIDC_GetType(tt *testing.T) {
 	c.GetType()
 }
 
+func TestConnectionOptionsOIDC_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsOIDC{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsOIDC{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
+}
+
 func TestConnectionOptionsOIDC_GetUserInfoEndpoint(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOIDC{UserInfoEndpoint: &zeroValue}
@@ -4611,6 +4831,16 @@ func TestConnectionOptionsOkta_GetTokenEndpoint(tt *testing.T) {
 	c.GetTokenEndpoint()
 	c = nil
 	c.GetTokenEndpoint()
+}
+
+func TestConnectionOptionsOkta_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsOkta{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsOkta{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
 }
 
 func TestConnectionOptionsOkta_GetUserInfoEndpoint(tt *testing.T) {
@@ -4786,6 +5016,16 @@ func TestConnectionOptionsPingFederate_GetTenantDomain(tt *testing.T) {
 	c.GetTenantDomain()
 }
 
+func TestConnectionOptionsPingFederate_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsPingFederate{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
+}
+
 func TestConnectionOptionsPingFederate_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsPingFederate{}
@@ -4852,6 +5092,16 @@ func TestConnectionOptionsSalesforce_GetSetUserAttributes(tt *testing.T) {
 	c.GetSetUserAttributes()
 	c = nil
 	c.GetSetUserAttributes()
+}
+
+func TestConnectionOptionsSalesforce_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsSalesforce{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsSalesforce{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
 }
 
 func TestConnectionOptionsSalesforce_String(t *testing.T) {
@@ -4930,6 +5180,16 @@ func TestConnectionOptionsSAML_GetExpires(tt *testing.T) {
 	c.GetExpires()
 	c = nil
 	c.GetExpires()
+}
+
+func TestConnectionOptionsSAML_GetFieldsMap(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsSAML{FieldsMap: zeroValue}
+	c.GetFieldsMap()
+	c = &ConnectionOptionsSAML{}
+	c.GetFieldsMap()
+	c = nil
+	c.GetFieldsMap()
 }
 
 func TestConnectionOptionsSAML_GetIdpInitiated(tt *testing.T) {
@@ -5066,6 +5326,16 @@ func TestConnectionOptionsSAML_GetSignSAMLRequest(tt *testing.T) {
 	c.GetSignSAMLRequest()
 }
 
+func TestConnectionOptionsSAML_GetSubject(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsSAML{Subject: zeroValue}
+	c.GetSubject()
+	c = &ConnectionOptionsSAML{}
+	c.GetSubject()
+	c = nil
+	c.GetSubject()
+}
+
 func TestConnectionOptionsSAML_GetTenantDomain(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsSAML{TenantDomain: &zeroValue}
@@ -5074,6 +5344,16 @@ func TestConnectionOptionsSAML_GetTenantDomain(tt *testing.T) {
 	c.GetTenantDomain()
 	c = nil
 	c.GetTenantDomain()
+}
+
+func TestConnectionOptionsSAML_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsSAML{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsSAML{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
 }
 
 func TestConnectionOptionsSAML_GetUserIDAttribute(tt *testing.T) {
@@ -5324,6 +5604,16 @@ func TestConnectionOptionsSMS_GetTwilioToken(tt *testing.T) {
 	c.GetTwilioToken()
 }
 
+func TestConnectionOptionsSMS_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsSMS{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsSMS{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
+}
+
 func TestConnectionOptionsSMS_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsSMS{}
@@ -5570,6 +5860,16 @@ func TestConnectionOptionsWindowsLive_GetTasksUpdate(tt *testing.T) {
 	c.GetTasksUpdate()
 	c = nil
 	c.GetTasksUpdate()
+}
+
+func TestConnectionOptionsWindowsLive_GetUpstreamParams(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsWindowsLive{UpstreamParams: zeroValue}
+	c.GetUpstreamParams()
+	c = &ConnectionOptionsWindowsLive{}
+	c.GetUpstreamParams()
+	c = nil
+	c.GetUpstreamParams()
 }
 
 func TestConnectionOptionsWindowsLive_GetUser(tt *testing.T) {
@@ -5952,6 +6252,16 @@ func TestEmail_GetName(tt *testing.T) {
 	e.GetName()
 	e = nil
 	e.GetName()
+}
+
+func TestEmail_GetSettings(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	e := &Email{Settings: zeroValue}
+	e.GetSettings()
+	e = &Email{}
+	e.GetSettings()
+	e = nil
+	e.GetSettings()
 }
 
 func TestEmail_String(t *testing.T) {
@@ -6903,6 +7213,16 @@ func TestJob_String(t *testing.T) {
 	}
 }
 
+func TestJobError_GetUser(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	j := &JobError{User: zeroValue}
+	j.GetUser()
+	j = &JobError{}
+	j.GetUser()
+	j = nil
+	j.GetUser()
+}
+
 func TestJobError_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &JobError{}
@@ -7045,6 +7365,16 @@ func TestLog_GetDescription(tt *testing.T) {
 	l.GetDescription()
 }
 
+func TestLog_GetDetails(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	l := &Log{Details: zeroValue}
+	l.GetDetails()
+	l = &Log{}
+	l.GetDetails()
+	l = nil
+	l.GetDetails()
+}
+
 func TestLog_GetHostname(tt *testing.T) {
 	var zeroValue string
 	l := &Log{Hostname: &zeroValue}
@@ -7083,6 +7413,16 @@ func TestLog_GetIsMobile(tt *testing.T) {
 	l.GetIsMobile()
 	l = nil
 	l.GetIsMobile()
+}
+
+func TestLog_GetLocationInfo(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	l := &Log{LocationInfo: zeroValue}
+	l.GetLocationInfo()
+	l = &Log{}
+	l.GetLocationInfo()
+	l = nil
+	l.GetLocationInfo()
 }
 
 func TestLog_GetLogID(tt *testing.T) {
@@ -7191,6 +7531,16 @@ func TestLog_String(t *testing.T) {
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
+}
+
+func TestLogStream_GetFilters(tt *testing.T) {
+	var zeroValue []map[string]string
+	l := &LogStream{Filters: &zeroValue}
+	l.GetFilters()
+	l = &LogStream{}
+	l.GetFilters()
+	l = nil
+	l.GetFilters()
 }
 
 func TestLogStream_GetID(tt *testing.T) {
@@ -7383,6 +7733,16 @@ func TestLogStreamSinkHTTP_GetContentType(tt *testing.T) {
 	l.GetContentType()
 	l = nil
 	l.GetContentType()
+}
+
+func TestLogStreamSinkHTTP_GetCustomHeaders(tt *testing.T) {
+	var zeroValue []map[string]string
+	l := &LogStreamSinkHTTP{CustomHeaders: &zeroValue}
+	l.GetCustomHeaders()
+	l = &LogStreamSinkHTTP{}
+	l.GetCustomHeaders()
+	l = nil
+	l.GetCustomHeaders()
 }
 
 func TestLogStreamSinkHTTP_GetEndpoint(tt *testing.T) {
@@ -8149,6 +8509,16 @@ func TestOrganizationConnectionList_String(t *testing.T) {
 	}
 }
 
+func TestOrganizationInvitation_GetAppMetadata(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	o := &OrganizationInvitation{AppMetadata: zeroValue}
+	o.GetAppMetadata()
+	o = &OrganizationInvitation{}
+	o.GetAppMetadata()
+	o = nil
+	o.GetAppMetadata()
+}
+
 func TestOrganizationInvitation_GetClientID(tt *testing.T) {
 	var zeroValue string
 	o := &OrganizationInvitation{ClientID: &zeroValue}
@@ -8261,6 +8631,16 @@ func TestOrganizationInvitation_GetTTLSec(tt *testing.T) {
 	o.GetTTLSec()
 	o = nil
 	o.GetTTLSec()
+}
+
+func TestOrganizationInvitation_GetUserMetadata(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	o := &OrganizationInvitation{UserMetadata: zeroValue}
+	o.GetUserMetadata()
+	o = &OrganizationInvitation{}
+	o.GetUserMetadata()
+	o = nil
+	o.GetUserMetadata()
 }
 
 func TestOrganizationInvitation_String(t *testing.T) {
@@ -9883,6 +10263,16 @@ func TestTicket_String(t *testing.T) {
 	}
 }
 
+func TestUser_GetAppMetadata(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	u := &User{AppMetadata: &zeroValue}
+	u.GetAppMetadata()
+	u = &User{}
+	u.GetAppMetadata()
+	u = nil
+	u.GetAppMetadata()
+}
+
 func TestUser_GetBlocked(tt *testing.T) {
 	var zeroValue bool
 	u := &User{Blocked: &zeroValue}
@@ -10133,6 +10523,16 @@ func TestUser_GetURL(tt *testing.T) {
 	u.GetURL()
 }
 
+func TestUser_GetUserMetadata(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	u := &User{UserMetadata: &zeroValue}
+	u.GetUserMetadata()
+	u = &User{}
+	u.GetUserMetadata()
+	u = nil
+	u.GetUserMetadata()
+}
+
 func TestUser_GetUsername(tt *testing.T) {
 	var zeroValue string
 	u := &User{Username: &zeroValue}
@@ -10325,6 +10725,16 @@ func TestUserIdentity_GetIsSocial(tt *testing.T) {
 	u.GetIsSocial()
 	u = nil
 	u.GetIsSocial()
+}
+
+func TestUserIdentity_GetProfileData(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	u := &UserIdentity{ProfileData: &zeroValue}
+	u.GetProfileData()
+	u = &UserIdentity{}
+	u.GetProfileData()
+	u = nil
+	u.GetProfileData()
 }
 
 func TestUserIdentity_GetProvider(tt *testing.T) {
