@@ -4127,12 +4127,12 @@ func (c *ConnectionOptionsSMS) GetDisableSignup() bool {
 	return *c.DisableSignup
 }
 
-// GetForwardReqInfo returns the ForwardReqInfo field if it's non-nil, zero value otherwise.
-func (c *ConnectionOptionsSMS) GetForwardReqInfo() bool {
-	if c == nil || c.ForwardReqInfo == nil {
+// GetForwardRequestInfo returns the ForwardRequestInfo field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSMS) GetForwardRequestInfo() bool {
+	if c == nil || c.ForwardRequestInfo == nil {
 		return false
 	}
-	return *c.ForwardReqInfo
+	return *c.ForwardRequestInfo
 }
 
 // GetFrom returns the From field if it's non-nil, zero value otherwise.
