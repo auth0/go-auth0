@@ -295,6 +295,12 @@ func (m *ClientManager) CreateCredential(clientID string, credential *Credential
 	return m.Request("POST", m.URI("clients", clientID, "credentials"), credential, opts...)
 }
 
+// UpdateCredential updates a client application's client credential expiry.
+func (m *ClientManager) UpdateCredential(clientID, credentialID string, credential *Credential, opts ...RequestOption) error {
+	credential = &Credential{ExpiresAt: credential.ExpiresAt} // The API only accepts the expires_at property.
+	return m.Request("PATCH", m.URI("clients", clientID, "credentials", credentialID), credential, opts...)
+}
+
 // ListCredentials lists all client credentials associated with the client application.
 func (m *ClientManager) ListCredentials(clientID string, opts ...RequestOption) (c []*Credential, err error) {
 	err = m.Request("GET", m.URI("clients", clientID, "credentials"), &c, applyListDefaults(opts))

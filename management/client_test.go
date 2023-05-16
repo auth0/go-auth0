@@ -186,6 +186,21 @@ func TestClient_GetCredentials(t *testing.T) {
 	assert.Equal(t, expectedCredential.GetID(), credential.GetID())
 }
 
+func TestClient_UpdateCredential(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedClient := givenAClient(t)
+	expectedCredential := givenACredential(t, expectedClient)
+
+	expiresAt := time.Now().Add(time.Minute * 10)
+	expectedCredential.ExpiresAt = &expiresAt
+
+	err := api.Client.UpdateCredential(expectedClient.GetClientID(), expectedCredential.GetID(), expectedCredential)
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedCredential.GetExpiresAt(), expiresAt)
+}
+
 func TestClient_DeleteCredential(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
