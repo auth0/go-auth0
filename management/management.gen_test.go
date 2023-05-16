@@ -5210,14 +5210,14 @@ func TestConnectionOptionsSMS_GetDisableSignup(tt *testing.T) {
 	c.GetDisableSignup()
 }
 
-func TestConnectionOptionsSMS_GetForwardRequestInfo(tt *testing.T) {
+func TestConnectionOptionsSMS_GetForwardReqInfo(tt *testing.T) {
 	var zeroValue bool
-	c := &ConnectionOptionsSMS{ForwardRequestInfo: &zeroValue}
-	c.GetForwardRequestInfo()
+	c := &ConnectionOptionsSMS{ForwardReqInfo: &zeroValue}
+	c.GetForwardReqInfo()
 	c = &ConnectionOptionsSMS{}
-	c.GetForwardRequestInfo()
+	c.GetForwardReqInfo()
 	c = nil
-	c.GetForwardRequestInfo()
+	c.GetForwardReqInfo()
 }
 
 func TestConnectionOptionsSMS_GetFrom(tt *testing.T) {
