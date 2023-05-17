@@ -76,11 +76,11 @@ type Client struct {
 	CrossOriginLocation *string `json:"cross_origin_loc,omitempty"`
 
 	// True if the custom login page is to be used, false otherwise. Defaults to true.
-	CustomLoginPageOn      *bool                  `json:"custom_login_page_on,omitempty"`
-	CustomLoginPage        *string                `json:"custom_login_page,omitempty"`
-	CustomLoginPagePreview *string                `json:"custom_login_page_preview,omitempty"`
-	FormTemplate           *string                `json:"form_template,omitempty"`
-	Addons                 map[string]interface{} `json:"addons,omitempty"`
+	CustomLoginPageOn      *bool   `json:"custom_login_page_on,omitempty"`
+	CustomLoginPage        *string `json:"custom_login_page,omitempty"`
+	CustomLoginPagePreview *string `json:"custom_login_page_preview,omitempty"`
+	FormTemplate           *string `json:"form_template,omitempty"`
+	Addons                 *Addons `json:"addons,omitempty"`
 
 	// Defines the requested authentication method for the token endpoint.
 	// Possible values are:
@@ -227,6 +227,84 @@ type PrivateKeyJWT struct {
 // OIDCBackchannelLogout defines the `oidc_backchannel_logout` settings for the client.
 type OIDCBackchannelLogout struct {
 	BackChannelLogoutURLs *[]string `json:"backchannel_logout_urls,omitempty"`
+}
+
+// Addons defines the `addons` settings for a Client.
+type Addons struct {
+	// SAML2 Addon configuration. Set this property to indicate that the Addon should be enabled, all settings are optional.
+	// The first entry in `Callbacks` should be the URL to post the SAML Token to
+	SAML2 *SAML2Addon `json:"samlp,omitempty"`
+	// WS-Fed Addon. Set this property to indicate the Addon should be enabled and then store the
+	// configuration in `Callbacks` and `ClientAliases` properties on the Client.
+	// The first entry in `Callbacks` should be the URL to post the SAML Token to.
+	// ClientAliases should include the Realm which is the identifier sent by the application.
+	WSFED *WSFEDAddon `json:"wsfed,omitempty"`
+}
+
+// SAML2Addon defines the `SAML2` settings for a Client.
+type SAML2Addon struct {
+	// The mappings between the Auth0 user profile and the output attributes on the SAML Assertion.
+	// Each "name" represents the property name on the Auth0 user profile.
+	// Each "value" is the name (including namespace) for the resulting SAML attribute in the assertion.
+	Mappings *map[string]string `json:"mappings,omitempty"`
+	// The audience of the SAML Assertion.
+	Audience *string `json:"audience,omitempty"`
+	// The recipient of the SAML Assertion.
+	Recipient *string `json:"recipient,omitempty"`
+	// Whether or not a UPN claim should be created.
+	CreateUPNClaim *bool `json:"create_upn_claim,omitempty"`
+	// If `PassthroughClaimsWithNoMapping` is true and this is false, for each claim that is not mapped to the common profile Auth0 will add a prefix
+	// 	http://schema.auth0.com	. If true it will passthrough the claim as-is.
+	MapUnknownClaimsAsIs *bool `json:"map_unknown_claims_as_is,omitempty"`
+	// If true, for each claim that is not mapped to the common profile, Auth0 will passthrough those in the output assertion.
+	// If false, those claims won't be mapped.
+	PassthroughClaimsWithNoMapping *bool `json:"passthrough_claims_with_no_mapping,omitempty"`
+	// If true, it will will add more information in the token like the provider used (google, adfs, ad, etc.) and the access_token if available.
+	MapIdentities *bool `json:"map_identities,omitempty"`
+	// Signature algorithm to sign the SAML Assertion or response.
+	SignatureAlgorithm *string `json:"signature_algorithm,omitempty"`
+	// Digest algorithm to calculate digest of the SAML Assertion or response.
+	DigestAlgorithm *string `json:"digest_algorithm,omitempty"`
+	Issuer          *string `json:"issuer,omitempty"`
+	// Destination of the SAML Response. If not specified, it will be AssertionConsumerUrlof SAMLRequest or Callback URL if there was no SAMLRequest.
+	Destination *string `json:"destination,omitempty"`
+	// Expiration of the token.
+	LifetimeInSeconds *int `json:"lifetime_in_seconds,omitempty"`
+	// Whether or not the SAML Response should be signed. By default the SAML Assertion will be signed, but not the SAML Response.
+	// If true, SAML Response will be signed instead of SAML Assertion.
+	SignResponse         *bool   `json:"sign_response,omitempty"`
+	NameIdentifierFormat *string `json:"name_identifier_format,omitempty"`
+	// Auth0 will try each of the attributes of this array in order. If one of them has a value, it will use that for the Subject/NameID
+	NameIdentifierProbes *[]string `json:"name_identifier_probes,omitempty"`
+	AuthnContextClassRef *string   `json:"authn_context_class_ref,omitempty"`
+	// When set to true, the xs:type of the element is inferred. Types are xs:string, xs:boolean, xs:double, and xs:anyType.
+	// When set to false all xs:type are xs:anyType
+	TypedAttributes *bool `json:"typed_attributes,omitempty"`
+	// When set to true, the NameFormat is inferred based on the attribute name.
+	// NameFormat values are urn:oasis:names:tc:SAML:2.0:attrname-format:uri, urn:oasis:names:tc:SAML:2.0:attrname-format:basic,
+	// and urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified.
+	// If set to false, the attribute NameFormat is not set in the assertion.
+	IncludeAttributeNameFormat *bool `json:"include_attribute_name_format,omitempty"`
+	// Indicates the protocol binding used for SAML logout responses.
+	// By default Auth0 uses HTTP-POST, but you can switch to HTTP-Redirect by setting to `urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect`.
+	Binding *string `json:"binding,omitempty"`
+	// Optionally indicates the public key certificate used to validate SAML requests. If set, SAML requests will be required to be signed.
+	SigningCert *string `json:"signing_cert,omitempty"`
+	//  An object that controls SAML logout behavior.
+	Logout *SAML2AddonLogout `json:"logout,omitempty"`
+}
+
+// SAML2AddonLogout defines the `logout` settings for the SAML2Addon.
+type SAML2AddonLogout struct {
+	// The service provider (client application)'s Single Logout Service URL, where Auth0 will send logout requests and responses
+	Callback *string `json:"callback,omitempty"`
+	// Controls whether Auth0 should notify service providers of session termination
+	SLOEnabled *bool `json:"slo_enabled,omitempty"`
+}
+
+// WSFEDAddon is an empty struct used to indicate that the WS-FED Addon should be enabled.
+// Configuration for this Addon is stored in the `Callbacks` and `ClientAliases` properties on the Client.
+type WSFEDAddon struct {
 }
 
 // ClientList is a list of Clients.
