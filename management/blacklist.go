@@ -1,5 +1,7 @@
 package management
 
+import "context"
+
 // BlacklistToken is a token that has been blacklisted.
 type BlacklistToken struct {
 	// The "aud" (audience) claim identifies the
@@ -35,14 +37,14 @@ func newBlacklistManager(m *Management) *BlacklistManager {
 // and let expire.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Blacklists/get_tokens
-func (m *BlacklistManager) List(opts ...RequestOption) (bl []*BlacklistToken, err error) {
-	err = m.Request("GET", m.URI("blacklists", "tokens"), &bl, applyListDefaults(opts))
+func (m *BlacklistManager) List(ctx context.Context, opts ...RequestOption) (bl []*BlacklistToken, err error) {
+	err = m.Request(ctx, "GET", m.URI("blacklists", "tokens"), &bl, applyListDefaults(opts))
 	return
 }
 
 // Create a blacklist for a token.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Blacklists/post_tokens
-func (m *BlacklistManager) Create(t *BlacklistToken, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("blacklists", "tokens"), t, opts...)
+func (m *BlacklistManager) Create(ctx context.Context, t *BlacklistToken, opts ...RequestOption) error {
+	return m.Request(ctx, "POST", m.URI("blacklists", "tokens"), t, opts...)
 }

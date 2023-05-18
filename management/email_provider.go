@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 )
@@ -254,29 +255,29 @@ func newEmailProviderManager(m *Management) *EmailProviderManager {
 // `X-SES-Configuration-Set` header. The value must be a string.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/post_provider
-func (m *EmailProviderManager) Create(ep *EmailProvider, opts ...RequestOption) error {
-	return m.Request(http.MethodPost, m.URI("emails", "provider"), ep, opts...)
+func (m *EmailProviderManager) Create(ctx context.Context, ep *EmailProvider, opts ...RequestOption) error {
+	return m.Request(ctx, http.MethodPost, m.URI("emails", "provider"), ep, opts...)
 }
 
 // Read email provider details.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/get_provider
-func (m *EmailProviderManager) Read(opts ...RequestOption) (ep *EmailProvider, err error) {
+func (m *EmailProviderManager) Read(ctx context.Context, opts ...RequestOption) (ep *EmailProvider, err error) {
 	opts = append(opts, IncludeFields("name", "enabled", "default_from_address", "credentials", "settings"))
-	err = m.Request(http.MethodGet, m.URI("emails", "provider"), &ep, opts...)
+	err = m.Request(ctx, http.MethodGet, m.URI("emails", "provider"), &ep, opts...)
 	return
 }
 
 // Update an email provider.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/patch_provider
-func (m *EmailProviderManager) Update(ep *EmailProvider, opts ...RequestOption) (err error) {
-	return m.Request(http.MethodPatch, m.URI("emails", "provider"), ep, opts...)
+func (m *EmailProviderManager) Update(ctx context.Context, ep *EmailProvider, opts ...RequestOption) (err error) {
+	return m.Request(ctx, http.MethodPatch, m.URI("emails", "provider"), ep, opts...)
 }
 
 // Delete the email provider.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/delete_provider
-func (m *EmailProviderManager) Delete(opts ...RequestOption) (err error) {
-	return m.Request(http.MethodDelete, m.URI("emails", "provider"), nil, opts...)
+func (m *EmailProviderManager) Delete(ctx context.Context, opts ...RequestOption) (err error) {
+	return m.Request(ctx, http.MethodDelete, m.URI("emails", "provider"), nil, opts...)
 }

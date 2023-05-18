@@ -1,5 +1,7 @@
 package management
 
+import "context"
+
 // Grant is a way of retrieving an Access Token.
 //
 // See: https://auth0.com/docs/get-started/authentication-and-authorization-flow/which-oauth-2-0-flow-should-i-use
@@ -37,14 +39,14 @@ func newGrantManager(m *Management) *GrantManager {
 // List the grants associated with your account.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Grants/get_grants
-func (m *GrantManager) List(opts ...RequestOption) (g *GrantList, err error) {
-	err = m.Request("GET", m.URI("grants"), &g, applyListDefaults(opts))
+func (m *GrantManager) List(ctx context.Context, opts ...RequestOption) (g *GrantList, err error) {
+	err = m.Request(ctx, "GET", m.URI("grants"), &g, applyListDefaults(opts))
 	return
 }
 
 // Delete revokes a grant associated with a user-id.
 //
 // https://auth0.com/docs/api/management/v2#!/Grants/delete_grants_by_id
-func (m *GrantManager) Delete(id string, opts ...RequestOption) error {
-	return m.Request("DELETE", m.URI("grants", id), nil, opts...)
+func (m *GrantManager) Delete(ctx context.Context, id string, opts ...RequestOption) error {
+	return m.Request(ctx, "DELETE", m.URI("grants", id), nil, opts...)
 }

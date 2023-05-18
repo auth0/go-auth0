@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"time"
@@ -166,8 +167,8 @@ type EnrollmentTicket struct {
 // a specified user.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/post_ticket
-func (m *EnrollmentManager) CreateTicket(t *CreateEnrollmentTicket, opts ...RequestOption) (EnrollmentTicket, error) {
-	request, err := m.NewRequest("POST", m.URI("guardian", "enrollments", "ticket"), t, opts...)
+func (m *EnrollmentManager) CreateTicket(ctx context.Context, t *CreateEnrollmentTicket, opts ...RequestOption) (EnrollmentTicket, error) {
+	request, err := m.NewRequest(ctx, "POST", m.URI("guardian", "enrollments", "ticket"), t, opts...)
 	if err != nil {
 		return EnrollmentTicket{}, err
 	}
@@ -190,16 +191,16 @@ func (m *EnrollmentManager) CreateTicket(t *CreateEnrollmentTicket, opts ...Requ
 // Get retrieves an enrollment (including its status and type).
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/get_enrollments_by_id
-func (m *EnrollmentManager) Get(id string, opts ...RequestOption) (en *Enrollment, err error) {
-	err = m.Request("GET", m.URI("guardian", "enrollments", id), &en, opts...)
+func (m *EnrollmentManager) Get(ctx context.Context, id string, opts ...RequestOption) (en *Enrollment, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "enrollments", id), &en, opts...)
 	return
 }
 
 // Delete an enrollment to allow the user to enroll with multi-factor authentication again.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/delete_enrollments_by_id
-func (m *EnrollmentManager) Delete(id string, opts ...RequestOption) (err error) {
-	err = m.Request("DELETE", m.URI("guardian", "enrollments", id), nil, opts...)
+func (m *EnrollmentManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
+	err = m.Request(ctx, "DELETE", m.URI("guardian", "enrollments", id), nil, opts...)
 	return
 }
 
@@ -220,16 +221,16 @@ type MultiFactorManager struct {
 // List retrieves all factors.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/get_factors
-func (m *MultiFactorManager) List(opts ...RequestOption) (mf []*MultiFactor, err error) {
-	err = m.Request("GET", m.URI("guardian", "factors"), &mf, opts...)
+func (m *MultiFactorManager) List(ctx context.Context, opts ...RequestOption) (mf []*MultiFactor, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "factors"), &mf, opts...)
 	return
 }
 
 // Policy retrieves MFA policies.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/get_policies
-func (m *MultiFactorManager) Policy(opts ...RequestOption) (p *MultiFactorPolicies, err error) {
-	err = m.Request("GET", m.URI("guardian", "policies"), &p, opts...)
+func (m *MultiFactorManager) Policy(ctx context.Context, opts ...RequestOption) (p *MultiFactorPolicies, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "policies"), &p, opts...)
 	return
 }
 
@@ -237,8 +238,8 @@ func (m *MultiFactorManager) Policy(opts ...RequestOption) (p *MultiFactorPolici
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/put_policies
 // Expects an array of either ["all-applications"] or ["confidence-score"].
-func (m *MultiFactorManager) UpdatePolicy(p *MultiFactorPolicies, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "policies"), p, opts...)
+func (m *MultiFactorManager) UpdatePolicy(ctx context.Context, p *MultiFactorPolicies, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "policies"), p, opts...)
 }
 
 // MultiFactorPhone is used to manage Phone MFA.
@@ -246,38 +247,38 @@ type MultiFactorPhone struct{ *Management }
 
 // Enable Phone MFA.
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/put_factors_by_name
-func (m *MultiFactorPhone) Enable(enabled bool, opts ...RequestOption) error {
+func (m *MultiFactorPhone) Enable(ctx context.Context, enabled bool, opts ...RequestOption) error {
 	// An endpoint for enabling Phone doesn't exist yet so we go towards
 	// sms endpoint to be consistent with the other methods available for this struct.
-	return m.Request("PUT", m.URI("guardian", "factors", "sms"), &MultiFactor{
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "sms"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
 }
 
 // Provider retrieves the MFA Phone provider, one of ["auth0" or "twilio" or "phone-message-hook"]
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/get_selected_provider
-func (m *MultiFactorPhone) Provider(opts ...RequestOption) (p *MultiFactorProvider, err error) {
-	err = m.Request("GET", m.URI("guardian", "factors", "phone", "selected-provider"), &p, opts...)
+func (m *MultiFactorPhone) Provider(ctx context.Context, opts ...RequestOption) (p *MultiFactorProvider, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "factors", "phone", "selected-provider"), &p, opts...)
 	return
 }
 
 // UpdateProvider updates MFA Phone provider, one of ["auth0" or "twilio" or "phone-message-hook"]
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/put_selected_provider
-func (m *MultiFactorPhone) UpdateProvider(p *MultiFactorProvider, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "phone", "selected-provider"), &p, opts...)
+func (m *MultiFactorPhone) UpdateProvider(ctx context.Context, p *MultiFactorProvider, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "phone", "selected-provider"), &p, opts...)
 }
 
 // MessageTypes retrieves the MFA Phone Message Type.
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/get_message_types
-func (m *MultiFactorPhone) MessageTypes(opts ...RequestOption) (mt *PhoneMessageTypes, err error) {
-	err = m.Request("GET", m.URI("guardian", "factors", "phone", "message-types"), &mt, opts...)
+func (m *MultiFactorPhone) MessageTypes(ctx context.Context, opts ...RequestOption) (mt *PhoneMessageTypes, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "factors", "phone", "message-types"), &mt, opts...)
 	return
 }
 
 // UpdateMessageTypes updates MFA Phone Message Type.
 // See: https://auth0.com/docs/api/management/v2/#!/Guardian/put_message_types
-func (m *MultiFactorPhone) UpdateMessageTypes(mt *PhoneMessageTypes, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "phone", "message-types"), &mt, opts...)
+func (m *MultiFactorPhone) UpdateMessageTypes(ctx context.Context, mt *PhoneMessageTypes, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "phone", "message-types"), &mt, opts...)
 }
 
 // MultiFactorSMS is used for SMS MFA.
@@ -286,8 +287,8 @@ type MultiFactorSMS struct{ *Management }
 // Enable enables or disables the SMS Multi-factor Authentication.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_factors_by_name
-func (m *MultiFactorSMS) Enable(enabled bool, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "sms"), &MultiFactor{
+func (m *MultiFactorSMS) Enable(ctx context.Context, enabled bool, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "sms"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
 }
@@ -296,8 +297,8 @@ func (m *MultiFactorSMS) Enable(enabled bool, opts ...RequestOption) error {
 // check the current values for your templates.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/get_templates
-func (m *MultiFactorSMS) Template(opts ...RequestOption) (t *MultiFactorSMSTemplate, err error) {
-	err = m.Request("GET", m.URI("guardian", "factors", "sms", "templates"), &t, opts...)
+func (m *MultiFactorSMS) Template(ctx context.Context, opts ...RequestOption) (t *MultiFactorSMSTemplate, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "factors", "sms", "templates"), &t, opts...)
 	return
 }
 
@@ -305,23 +306,23 @@ func (m *MultiFactorSMS) Template(opts ...RequestOption) (t *MultiFactorSMSTempl
 // to send custom messages on SMS enrollment and verification.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_templates
-func (m *MultiFactorSMS) UpdateTemplate(t *MultiFactorSMSTemplate, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "sms", "templates"), t, opts...)
+func (m *MultiFactorSMS) UpdateTemplate(ctx context.Context, t *MultiFactorSMSTemplate, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "sms", "templates"), t, opts...)
 }
 
 // Twilio returns the Twilio provider configuration.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/get_twilio
-func (m *MultiFactorSMS) Twilio(opts ...RequestOption) (t *MultiFactorProviderTwilio, err error) {
-	err = m.Request("GET", m.URI("guardian", "factors", "sms", "providers", "twilio"), &t, opts...)
+func (m *MultiFactorSMS) Twilio(ctx context.Context, opts ...RequestOption) (t *MultiFactorProviderTwilio, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "factors", "sms", "providers", "twilio"), &t, opts...)
 	return
 }
 
 // UpdateTwilio updates the Twilio provider configuration.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_twilio
-func (m *MultiFactorSMS) UpdateTwilio(t *MultiFactorProviderTwilio, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "sms", "providers", "twilio"), t, opts...)
+func (m *MultiFactorSMS) UpdateTwilio(ctx context.Context, t *MultiFactorProviderTwilio, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "sms", "providers", "twilio"), t, opts...)
 }
 
 // MultiFactorPush is used for Push MFA.
@@ -333,8 +334,8 @@ type MultiFactorPush struct {
 // Multi-factor Authentication.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_factors_by_name
-func (m *MultiFactorPush) Enable(enabled bool, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "push-notification"), &MultiFactor{
+func (m *MultiFactorPush) Enable(ctx context.Context, enabled bool, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "push-notification"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
 }
@@ -342,60 +343,60 @@ func (m *MultiFactorPush) Enable(enabled bool, opts ...RequestOption) error {
 // Provider retrieves the Push Notification provider, one of ["guardian", "sns" or "direct"].
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/get_selected_provider_0
-func (m *MultiFactorPush) Provider(opts ...RequestOption) (p *MultiFactorProvider, err error) {
-	err = m.Request("GET", m.URI("guardian", "factors", "push-notification", "selected-provider"), &p, opts...)
+func (m *MultiFactorPush) Provider(ctx context.Context, opts ...RequestOption) (p *MultiFactorProvider, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "factors", "push-notification", "selected-provider"), &p, opts...)
 	return
 }
 
 // UpdateProvider updates the Push Notification provider, one of ["guardian", "sns" or "direct"].
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_selected_provider_0
-func (m *MultiFactorPush) UpdateProvider(p *MultiFactorProvider, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "push-notification", "selected-provider"), &p, opts...)
+func (m *MultiFactorPush) UpdateProvider(ctx context.Context, p *MultiFactorProvider, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "push-notification", "selected-provider"), &p, opts...)
 }
 
 // CustomApp retrieves the custom multi-factor authentication app's settings.
 //
 // See: https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa
-func (m *MultiFactorPush) CustomApp(opts ...RequestOption) (a *MultiFactorPushCustomApp, err error) {
-	err = m.Request("GET", m.URI("prompts", "mfa-push"), &a, opts...)
+func (m *MultiFactorPush) CustomApp(ctx context.Context, opts ...RequestOption) (a *MultiFactorPushCustomApp, err error) {
+	err = m.Request(ctx, "GET", m.URI("prompts", "mfa-push"), &a, opts...)
 	return
 }
 
 // UpdateCustomApp updates the custom multi-factor authentication app's settings.
 //
 // See: https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa
-func (m *MultiFactorPush) UpdateCustomApp(a *MultiFactorPushCustomApp, opts ...RequestOption) error {
-	return m.Request("PATCH", m.URI("prompts", "mfa-push"), a, opts...)
+func (m *MultiFactorPush) UpdateCustomApp(ctx context.Context, a *MultiFactorPushCustomApp, opts ...RequestOption) error {
+	return m.Request(ctx, "PATCH", m.URI("prompts", "mfa-push"), a, opts...)
 }
 
 // DirectAPNS returns the Apple APNS provider configuration for direct mode.
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/get_apns
-func (m *MultiFactorPush) DirectAPNS(opts ...RequestOption) (s *MultiFactorPushDirectAPNS, err error) {
-	err = m.Request("GET", m.URI("guardian", "factors", "push-notification", "providers", "apns"), &s, opts...)
+func (m *MultiFactorPush) DirectAPNS(ctx context.Context, opts ...RequestOption) (s *MultiFactorPushDirectAPNS, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "factors", "push-notification", "providers", "apns"), &s, opts...)
 	return
 }
 
 // UpdateDirectAPNS updates the Apple APNS provider configuration for direct mode.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/patch_apns
-func (m *MultiFactorPush) UpdateDirectAPNS(sc *MultiFactorPushDirectAPNS, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "push-notification", "providers", "apns"), sc, opts...)
+func (m *MultiFactorPush) UpdateDirectAPNS(ctx context.Context, sc *MultiFactorPushDirectAPNS, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "push-notification", "providers", "apns"), sc, opts...)
 }
 
 // UpdateDirectFCM updates the Google FCM provider configuration for direct mode.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/patch_fcm
-func (m *MultiFactorPush) UpdateDirectFCM(sc *MultiFactorPushDirectFCM, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "push-notification", "providers", "fcm"), sc, opts...)
+func (m *MultiFactorPush) UpdateDirectFCM(ctx context.Context, sc *MultiFactorPushDirectFCM, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "push-notification", "providers", "fcm"), sc, opts...)
 }
 
 // AmazonSNS returns the Amazon Web Services (AWS) Simple Notification Service
 // (SNS) provider configuration.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/get_sns
-func (m *MultiFactorPush) AmazonSNS(opts ...RequestOption) (s *MultiFactorProviderAmazonSNS, err error) {
-	err = m.Request("GET", m.URI("guardian", "factors", "push-notification", "providers", "sns"), &s, opts...)
+func (m *MultiFactorPush) AmazonSNS(ctx context.Context, opts ...RequestOption) (s *MultiFactorProviderAmazonSNS, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "factors", "push-notification", "providers", "sns"), &s, opts...)
 	return
 }
 
@@ -403,8 +404,8 @@ func (m *MultiFactorPush) AmazonSNS(opts ...RequestOption) (s *MultiFactorProvid
 // Service (SNS) provider configuration.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_sns
-func (m *MultiFactorPush) UpdateAmazonSNS(sc *MultiFactorProviderAmazonSNS, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "push-notification", "providers", "sns"), sc, opts...)
+func (m *MultiFactorPush) UpdateAmazonSNS(ctx context.Context, sc *MultiFactorProviderAmazonSNS, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "push-notification", "providers", "sns"), sc, opts...)
 }
 
 // MultiFactorEmail is used for Email MFA.
@@ -413,8 +414,8 @@ type MultiFactorEmail struct{ *Management }
 // Enable enables or disables the Email Multi-factor Authentication.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_factors_by_name
-func (m *MultiFactorEmail) Enable(enabled bool, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "email"), &MultiFactor{
+func (m *MultiFactorEmail) Enable(ctx context.Context, enabled bool, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "email"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
 }
@@ -432,8 +433,8 @@ type MultiFactorDUO struct{ *Management }
 // Enable enables or disables DUO Security Multi-factor Authentication.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_factors_by_name
-func (m *MultiFactorDUO) Enable(enabled bool, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "duo"), &MultiFactor{
+func (m *MultiFactorDUO) Enable(ctx context.Context, enabled bool, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "duo"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
 }
@@ -441,16 +442,16 @@ func (m *MultiFactorDUO) Enable(enabled bool, opts ...RequestOption) error {
 // Read WebAuthn Roaming Multi-factor Authentication Settings.
 //
 // See: https://auth0.com/docs/secure/multi-factor-authentication/configure-cisco-duo-for-mfa
-func (m *MultiFactorDUO) Read(opts ...RequestOption) (s *MultiFactorDUOSettings, err error) {
-	err = m.Request("GET", m.URI("guardian", "factors", "duo", "settings"), &s, opts...)
+func (m *MultiFactorDUO) Read(ctx context.Context, opts ...RequestOption) (s *MultiFactorDUOSettings, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "factors", "duo", "settings"), &s, opts...)
 	return
 }
 
 // Update WebAuthn Roaming Multi-factor Authentication Settings.
 //
 // See: https://auth0.com/docs/secure/multi-factor-authentication/configure-cisco-duo-for-mfa
-func (m *MultiFactorDUO) Update(s *MultiFactorDUOSettings, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "duo", "settings"), &s, opts...)
+func (m *MultiFactorDUO) Update(ctx context.Context, s *MultiFactorDUOSettings, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "duo", "settings"), &s, opts...)
 }
 
 // MultiFactorWebAuthnSettings holds settings for
@@ -467,8 +468,8 @@ type MultiFactorWebAuthnRoaming struct{ *Management }
 // Enable enables or disables WebAuthn Roaming Multi-factor Authentication.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_factors_by_name
-func (m *MultiFactorWebAuthnRoaming) Enable(enabled bool, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "webauthn-roaming"), &MultiFactor{
+func (m *MultiFactorWebAuthnRoaming) Enable(ctx context.Context, enabled bool, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "webauthn-roaming"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
 }
@@ -476,16 +477,16 @@ func (m *MultiFactorWebAuthnRoaming) Enable(enabled bool, opts ...RequestOption)
 // Read WebAuthn Roaming Multi-factor Authentication Settings.
 //
 // See: https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-security-keys-for-mfa
-func (m *MultiFactorWebAuthnRoaming) Read(opts ...RequestOption) (s *MultiFactorWebAuthnSettings, err error) {
-	err = m.Request("GET", m.URI("guardian", "factors", "webauthn-roaming", "settings"), &s, opts...)
+func (m *MultiFactorWebAuthnRoaming) Read(ctx context.Context, opts ...RequestOption) (s *MultiFactorWebAuthnSettings, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "factors", "webauthn-roaming", "settings"), &s, opts...)
 	return
 }
 
 // Update WebAuthn Roaming Multi-factor Authentication Settings.
 //
 // See: https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-security-keys-for-mfa
-func (m *MultiFactorWebAuthnRoaming) Update(s *MultiFactorWebAuthnSettings, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "webauthn-roaming", "settings"), &s, opts...)
+func (m *MultiFactorWebAuthnRoaming) Update(ctx context.Context, s *MultiFactorWebAuthnSettings, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "webauthn-roaming", "settings"), &s, opts...)
 }
 
 // MultiFactorWebAuthnPlatform is used for WebAuthnPlatform MFA.
@@ -494,8 +495,8 @@ type MultiFactorWebAuthnPlatform struct{ *Management }
 // Enable enables or disables WebAuthn Platform Multi-factor Authentication.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_factors_by_name
-func (m *MultiFactorWebAuthnPlatform) Enable(enabled bool, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "webauthn-platform"), &MultiFactor{
+func (m *MultiFactorWebAuthnPlatform) Enable(ctx context.Context, enabled bool, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "webauthn-platform"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
 }
@@ -503,16 +504,16 @@ func (m *MultiFactorWebAuthnPlatform) Enable(enabled bool, opts ...RequestOption
 // Read WebAuthn Platform Multi-factor Authentication Settings.
 //
 // See: https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-device-biometrics-for-mfa
-func (m *MultiFactorWebAuthnPlatform) Read(opts ...RequestOption) (s *MultiFactorWebAuthnSettings, err error) {
-	err = m.Request("GET", m.URI("guardian", "factors", "webauthn-platform", "settings"), &s, opts...)
+func (m *MultiFactorWebAuthnPlatform) Read(ctx context.Context, opts ...RequestOption) (s *MultiFactorWebAuthnSettings, err error) {
+	err = m.Request(ctx, "GET", m.URI("guardian", "factors", "webauthn-platform", "settings"), &s, opts...)
 	return
 }
 
 // Update WebAuthn Platform Multi-factor Authentication Settings.
 //
 // See: https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-device-biometrics-for-mfa
-func (m *MultiFactorWebAuthnPlatform) Update(s *MultiFactorWebAuthnSettings, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "webauthn-platform", "settings"), &s, opts...)
+func (m *MultiFactorWebAuthnPlatform) Update(ctx context.Context, s *MultiFactorWebAuthnSettings, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "webauthn-platform", "settings"), &s, opts...)
 }
 
 // MultiFactorOTP is used for OTP MFA.
@@ -521,8 +522,8 @@ type MultiFactorOTP struct{ *Management }
 // Enable enables or disables One-time Password Multi-factor Authentication.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Guardian/put_factors_by_name
-func (m *MultiFactorOTP) Enable(enabled bool, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "otp"), &MultiFactor{
+func (m *MultiFactorOTP) Enable(ctx context.Context, enabled bool, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "otp"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
 }
@@ -535,8 +536,8 @@ type MultiFactorRecoveryCode struct {
 // Enable enables or disables Recovery Code Multi-factor Authentication.
 //
 // See: https://auth0.com/docs/secure/multi-factor-authentication/configure-recovery-codes-for-mfa
-func (m *MultiFactorRecoveryCode) Enable(enabled bool, opts ...RequestOption) error {
-	return m.Request("PUT", m.URI("guardian", "factors", "recovery-code"), &MultiFactor{
+func (m *MultiFactorRecoveryCode) Enable(ctx context.Context, enabled bool, opts ...RequestOption) error {
+	return m.Request(ctx, "PUT", m.URI("guardian", "factors", "recovery-code"), &MultiFactor{
 		Enabled: &enabled,
 	}, opts...)
 }

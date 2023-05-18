@@ -1,5 +1,7 @@
 package management
 
+import "context"
+
 // Email is used to configure Email Providers.
 //
 // See: https://auth0.com/docs/customize/email
@@ -80,29 +82,29 @@ func newEmailManager(m *Management) *EmailManager {
 // `X-SES-Configuration-Set` header. The value must be a string.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/post_provider
-func (m *EmailManager) Create(e *Email, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("emails", "provider"), e, opts...)
+func (m *EmailManager) Create(ctx context.Context, e *Email, opts ...RequestOption) error {
+	return m.Request(ctx, "POST", m.URI("emails", "provider"), e, opts...)
 }
 
 // Read email provider details.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/get_provider
-func (m *EmailManager) Read(opts ...RequestOption) (e *Email, err error) {
+func (m *EmailManager) Read(ctx context.Context, opts ...RequestOption) (e *Email, err error) {
 	opts = append(opts, IncludeFields("name", "enabled", "default_from_address", "credentials", "settings"))
-	err = m.Request("GET", m.URI("emails", "provider"), &e, opts...)
+	err = m.Request(ctx, "GET", m.URI("emails", "provider"), &e, opts...)
 	return
 }
 
 // Update an email provider.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/patch_provider
-func (m *EmailManager) Update(e *Email, opts ...RequestOption) (err error) {
-	return m.Request("PATCH", m.URI("emails", "provider"), e, opts...)
+func (m *EmailManager) Update(ctx context.Context, e *Email, opts ...RequestOption) (err error) {
+	return m.Request(ctx, "PATCH", m.URI("emails", "provider"), e, opts...)
 }
 
 // Delete the email provider.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/delete_provider
-func (m *EmailManager) Delete(opts ...RequestOption) (err error) {
-	return m.Request("DELETE", m.URI("emails", "provider"), nil, opts...)
+func (m *EmailManager) Delete(ctx context.Context, opts ...RequestOption) (err error) {
+	return m.Request(ctx, "DELETE", m.URI("emails", "provider"), nil, opts...)
 }

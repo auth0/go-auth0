@@ -1,6 +1,9 @@
 package management
 
-import "time"
+import (
+	"context"
+	"time"
+)
 
 // SigningKey is used for signing tokens.
 type SigningKey struct {
@@ -53,31 +56,31 @@ func newSigningKeyManager(m *Management) *SigningKeyManager {
 // List all Application Signing Keys.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Keys/get_signing_keys
-func (m *SigningKeyManager) List(opts ...RequestOption) (ks []*SigningKey, err error) {
-	err = m.Request("GET", m.URI("keys", "signing"), &ks, opts...)
+func (m *SigningKeyManager) List(ctx context.Context, opts ...RequestOption) (ks []*SigningKey, err error) {
+	err = m.Request(ctx, "GET", m.URI("keys", "signing"), &ks, opts...)
 	return
 }
 
 // Read an Application Signing Key by its key id.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Keys/get_signing_key
-func (m *SigningKeyManager) Read(kid string, opts ...RequestOption) (k *SigningKey, err error) {
-	err = m.Request("GET", m.URI("keys", "signing", kid), &k, opts...)
+func (m *SigningKeyManager) Read(ctx context.Context, kid string, opts ...RequestOption) (k *SigningKey, err error) {
+	err = m.Request(ctx, "GET", m.URI("keys", "signing", kid), &k, opts...)
 	return
 }
 
 // Rotate the Application Signing Key.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Keys/post_signing_keys
-func (m *SigningKeyManager) Rotate(opts ...RequestOption) (k *SigningKey, err error) {
-	err = m.Request("POST", m.URI("keys", "signing", "rotate"), &k, opts...)
+func (m *SigningKeyManager) Rotate(ctx context.Context, opts ...RequestOption) (k *SigningKey, err error) {
+	err = m.Request(ctx, "POST", m.URI("keys", "signing", "rotate"), &k, opts...)
 	return
 }
 
 // Revoke an Application Signing Key by its key id.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Keys/put_signing_keys
-func (m *SigningKeyManager) Revoke(kid string, opts ...RequestOption) (k *SigningKey, err error) {
-	err = m.Request("PUT", m.URI("keys", "signing", kid, "revoke"), &k, opts...)
+func (m *SigningKeyManager) Revoke(ctx context.Context, kid string, opts ...RequestOption) (k *SigningKey, err error) {
+	err = m.Request(ctx, "PUT", m.URI("keys", "signing", kid, "revoke"), &k, opts...)
 	return
 }

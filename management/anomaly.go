@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"net/http"
 )
 
@@ -17,8 +18,8 @@ func newAnomalyManager(m *Management) *AnomalyManager {
 // user accounts trigger due to multiple failed logins.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Anomaly/get_ips_by_id
-func (m *AnomalyManager) CheckIP(ip string, opts ...RequestOption) (isBlocked bool, err error) {
-	request, err := m.NewRequest("GET", m.URI("anomaly", "blocks", "ips", ip), nil, opts...)
+func (m *AnomalyManager) CheckIP(ctx context.Context, ip string, opts ...RequestOption) (isBlocked bool, err error) {
+	request, err := m.NewRequest(ctx, "GET", m.URI("anomaly", "blocks", "ips", ip), nil, opts...)
 	if err != nil {
 		return false, err
 	}
@@ -46,6 +47,6 @@ func (m *AnomalyManager) CheckIP(ip string, opts ...RequestOption) (isBlocked bo
 // user accounts trigger due to multiple failed logins.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Anomaly/delete_ips_by_id
-func (m *AnomalyManager) UnblockIP(ip string, opts ...RequestOption) (err error) {
-	return m.Request("DELETE", m.URI("anomaly", "blocks", "ips", ip), nil, opts...)
+func (m *AnomalyManager) UnblockIP(ctx context.Context, ip string, opts ...RequestOption) (err error) {
+	return m.Request(ctx, "DELETE", m.URI("anomaly", "blocks", "ips", ip), nil, opts...)
 }

@@ -1,5 +1,7 @@
 package management
 
+import "context"
+
 // Ticket is used for a users' email verification or password change.
 type Ticket struct {
 	// The user will be redirected to this endpoint once the ticket is used.
@@ -67,13 +69,13 @@ func newTicketManager(m *Management) *TicketManager {
 // VerifyEmail creates a ticket to verify a user's email address.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Tickets/post_email_verification
-func (m *TicketManager) VerifyEmail(t *Ticket, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("tickets", "email-verification"), t, opts...)
+func (m *TicketManager) VerifyEmail(ctx context.Context, t *Ticket, opts ...RequestOption) error {
+	return m.Request(ctx, "POST", m.URI("tickets", "email-verification"), t, opts...)
 }
 
 // ChangePassword creates a password change ticket for a user.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Tickets/post_password_change
-func (m *TicketManager) ChangePassword(t *Ticket, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("tickets", "password-change"), t, opts...)
+func (m *TicketManager) ChangePassword(ctx context.Context, t *Ticket, opts ...RequestOption) error {
+	return m.Request(ctx, "POST", m.URI("tickets", "password-change"), t, opts...)
 }

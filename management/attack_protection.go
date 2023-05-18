@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"net/http"
 )
 
@@ -46,10 +47,12 @@ type BreachedPasswordDetectionPreUserRegistration struct {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Attack_Protection/get_breached_password_detection
 func (m *AttackProtectionManager) GetBreachedPasswordDetection(
+	ctx context.Context,
 	opts ...RequestOption,
 ) (*BreachedPasswordDetection, error) {
 	var breachedPasswordDetection BreachedPasswordDetection
 	err := m.Request(
+		ctx,
 		http.MethodGet,
 		m.URI("attack-protection", "breached-password-detection"),
 		&breachedPasswordDetection,
@@ -65,10 +68,12 @@ func (m *AttackProtectionManager) GetBreachedPasswordDetection(
 //
 // See: https://auth0.com/docs/api/management/v2#!/Attack_Protection/patch_breached_password_detection
 func (m *AttackProtectionManager) UpdateBreachedPasswordDetection(
+	ctx context.Context,
 	breachedPasswordDetection *BreachedPasswordDetection,
 	opts ...RequestOption,
 ) error {
 	return m.Request(
+		ctx,
 		http.MethodPatch,
 		m.URI("attack-protection", "breached-password-detection"),
 		breachedPasswordDetection,
@@ -94,10 +99,12 @@ type BruteForceProtection struct {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Attack_Protection/get_brute_force_protection
 func (m *AttackProtectionManager) GetBruteForceProtection(
+	ctx context.Context,
 	opts ...RequestOption,
 ) (*BruteForceProtection, error) {
 	var bruteForceProtection BruteForceProtection
 	err := m.Request(
+		ctx,
 		http.MethodGet,
 		m.URI("attack-protection", "brute-force-protection"),
 		&bruteForceProtection,
@@ -113,10 +120,12 @@ func (m *AttackProtectionManager) GetBruteForceProtection(
 //
 // See: https://auth0.com/docs/api/management/v2#!/Attack_Protection/patch_brute_force_protection
 func (m *AttackProtectionManager) UpdateBruteForceProtection(
+	ctx context.Context,
 	bruteForceProtection *BruteForceProtection,
 	opts ...RequestOption,
 ) error {
 	return m.Request(
+		ctx,
 		http.MethodPatch,
 		m.URI("attack-protection", "brute-force-protection"),
 		bruteForceProtection,
@@ -160,10 +169,12 @@ type PreUserRegistration struct {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Attack_Protection/get_suspicious_ip_throttling
 func (m *AttackProtectionManager) GetSuspiciousIPThrottling(
+	ctx context.Context,
 	opts ...RequestOption,
 ) (*SuspiciousIPThrottling, error) {
 	var suspiciousIPThrottling SuspiciousIPThrottling
 	err := m.Request(
+		ctx,
 		http.MethodGet,
 		m.URI("attack-protection", "suspicious-ip-throttling"),
 		&suspiciousIPThrottling,
@@ -179,10 +190,12 @@ func (m *AttackProtectionManager) GetSuspiciousIPThrottling(
 //
 // See: https://auth0.com/docs/api/management/v2#!/Attack_Protection/patch_suspicious_ip_throttling
 func (m *AttackProtectionManager) UpdateSuspiciousIPThrottling(
+	ctx context.Context,
 	suspiciousIPThrottling *SuspiciousIPThrottling,
 	opts ...RequestOption,
 ) error {
 	return m.Request(
+		ctx,
 		http.MethodPatch,
 		m.URI("attack-protection", "suspicious-ip-throttling"),
 		suspiciousIPThrottling,
