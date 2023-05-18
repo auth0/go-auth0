@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -154,7 +155,7 @@ func TestEmailProviderManager_Create(t *testing.T) {
 		},
 	}
 
-	err := api.EmailProvider.Create(emailProvider)
+	err := api.EmailProvider.Create(context.Background(), emailProvider)
 	assert.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -167,7 +168,7 @@ func TestEmailProviderManager_Read(t *testing.T) {
 
 	expectedEmailProvider := givenAnEmailProvider(t)
 
-	actualEmailProvider, err := api.EmailProvider.Read()
+	actualEmailProvider, err := api.EmailProvider.Read(context.Background())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedEmailProvider.GetName(), actualEmailProvider.GetName())
@@ -184,10 +185,10 @@ func TestEmailProviderManager_Update(t *testing.T) {
 	emailProvider.Enabled = auth0.Bool(false)
 	emailProvider.DefaultFromAddress = auth0.String("info@example.com")
 
-	err := api.EmailProvider.Update(emailProvider)
+	err := api.EmailProvider.Update(context.Background(), emailProvider)
 	assert.NoError(t, err)
 
-	actualEmailProvider, err := api.EmailProvider.Read()
+	actualEmailProvider, err := api.EmailProvider.Read(context.Background())
 	assert.NoError(t, err)
 
 	assert.False(t, actualEmailProvider.GetEnabled())
@@ -199,10 +200,10 @@ func TestEmailProviderManager_Delete(t *testing.T) {
 
 	givenAnEmailProvider(t)
 
-	err := api.Email.Delete()
+	err := api.Email.Delete(context.Background())
 	assert.NoError(t, err)
 
-	_, err = api.Email.Read()
+	_, err = api.Email.Read(context.Background())
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
 	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
@@ -223,7 +224,7 @@ func givenAnEmailProvider(t *testing.T) *EmailProvider {
 		},
 	}
 
-	err := api.EmailProvider.Create(emailProvider)
+	err := api.EmailProvider.Create(context.Background(), emailProvider)
 	if err != nil {
 		if err.(Error).Status() != http.StatusConflict {
 			t.Error(err)
@@ -240,6 +241,6 @@ func givenAnEmailProvider(t *testing.T) *EmailProvider {
 func cleanupEmailProvider(t *testing.T) {
 	t.Helper()
 
-	err := api.EmailProvider.Delete()
+	err := api.EmailProvider.Delete(context.Background())
 	require.NoError(t, err)
 }

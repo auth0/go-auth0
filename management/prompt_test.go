@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -13,7 +14,7 @@ func TestPrompt(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	t.Cleanup(func() {
-		err := api.Prompt.Update(&Prompt{
+		err := api.Prompt.Update(context.Background(), &Prompt{
 			UniversalLoginExperience:    "classic",
 			IdentifierFirst:             auth0.Bool(false),
 			WebAuthnPlatformFirstFactor: auth0.Bool(false),
@@ -22,14 +23,14 @@ func TestPrompt(t *testing.T) {
 	})
 
 	t.Run("Update to the new identifier first experience with biometrics", func(t *testing.T) {
-		err := api.Prompt.Update(&Prompt{
+		err := api.Prompt.Update(context.Background(), &Prompt{
 			UniversalLoginExperience:    "new",
 			IdentifierFirst:             auth0.Bool(true),
 			WebAuthnPlatformFirstFactor: auth0.Bool(true),
 		})
 		assert.NoError(t, err)
 
-		ps, err := api.Prompt.Read()
+		ps, err := api.Prompt.Read(context.Background())
 		assert.NoError(t, err)
 		assert.Equal(t, "new", ps.UniversalLoginExperience)
 		assert.True(t, ps.GetIdentifierFirst())
@@ -37,14 +38,14 @@ func TestPrompt(t *testing.T) {
 	})
 
 	t.Run("Update to the classic non identifier first experience without biometrics", func(t *testing.T) {
-		err := api.Prompt.Update(&Prompt{
+		err := api.Prompt.Update(context.Background(), &Prompt{
 			UniversalLoginExperience:    "classic",
 			IdentifierFirst:             auth0.Bool(false),
 			WebAuthnPlatformFirstFactor: auth0.Bool(false),
 		})
 		assert.NoError(t, err)
 
-		ps, err := api.Prompt.Read()
+		ps, err := api.Prompt.Read(context.Background())
 		assert.NoError(t, err)
 		assert.Equal(t, "classic", ps.UniversalLoginExperience)
 		assert.False(t, ps.GetIdentifierFirst())
@@ -60,7 +61,7 @@ func TestPromptCustomText(t *testing.T) {
 
 	t.Cleanup(func() {
 		body := make(map[string]interface{})
-		err := api.Prompt.SetCustomText(prompt, lang, body)
+		err := api.Prompt.SetCustomText(context.Background(), prompt, lang, body)
 		require.NoError(t, err)
 	})
 
@@ -70,10 +71,10 @@ func TestPromptCustomText(t *testing.T) {
 		},
 	}
 
-	err := api.Prompt.SetCustomText(prompt, lang, body)
+	err := api.Prompt.SetCustomText(context.Background(), prompt, lang, body)
 	assert.NoError(t, err)
 
-	texts, err := api.Prompt.CustomText(prompt, lang)
+	texts, err := api.Prompt.CustomText(context.Background(), prompt, lang)
 	assert.NoError(t, err)
 	assert.Equal(t, "Welcome", texts["login"].(map[string]interface{})["title"])
 }

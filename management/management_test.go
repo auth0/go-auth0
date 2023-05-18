@@ -177,7 +177,7 @@ func TestRequestOptionContextCancel(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel() // Cancel the request.
 
-	err := api.Request("GET", "/", nil, Context(ctx))
+	err := api.Request(ctx, "GET", "/", nil, Context(ctx))
 	if !errors.Is(err, context.Canceled) {
 		t.Errorf("expected err to be context.Canceled, got %v", err)
 	}
@@ -189,7 +189,7 @@ func TestRequestOptionContextTimeout(t *testing.T) {
 
 	time.Sleep(50 * time.Millisecond) // Delay until the deadline is exceeded.
 
-	err := api.Request("GET", "/", nil, Context(ctx))
+	err := api.Request(ctx, "GET", "/", nil, Context(ctx))
 	if !errors.Is(err, context.DeadlineExceeded) {
 		t.Errorf("expected err to be context.DeadlineExceeded, got %v", err)
 	}
@@ -209,7 +209,7 @@ func TestNew_WithInsecure(t *testing.T) {
 	m, err := New(s.URL, WithInsecure())
 	assert.NoError(t, err)
 
-	u, err := m.User.Read("123")
+	u, err := m.User.Read(context.Background(), "123")
 	assert.NoError(t, err)
 	assert.Equal(t, "123", u.GetID())
 }
@@ -283,7 +283,7 @@ func TestAuth0Client(t *testing.T) {
 		)
 		assert.NoError(t, err)
 
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 
 		assert.NoError(t, err)
 	})
@@ -304,7 +304,7 @@ func TestAuth0Client(t *testing.T) {
 		)
 		assert.NoError(t, err)
 
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 
 		assert.NoError(t, err)
 	})
@@ -322,7 +322,7 @@ func TestAuth0Client(t *testing.T) {
 			WithNoAuth0ClientInfo(),
 		)
 		assert.NoError(t, err)
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 		assert.NoError(t, err)
 	})
 
@@ -349,7 +349,7 @@ func TestAuth0Client(t *testing.T) {
 			WithAuth0ClientEnvEntry("foo", "bar"),
 		)
 		assert.NoError(t, err)
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 		assert.NoError(t, err)
 	})
 
@@ -368,7 +368,7 @@ func TestAuth0Client(t *testing.T) {
 			WithAuth0ClientEnvEntry("foo", "bar"),
 		)
 		assert.NoError(t, err)
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 		assert.NoError(t, err)
 	})
 
@@ -386,7 +386,7 @@ func TestAuth0Client(t *testing.T) {
 			WithAuth0ClientEnvEntry("foo", "bar"),
 		)
 		assert.NoError(t, err)
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 		assert.NoError(t, err)
 	})
 }

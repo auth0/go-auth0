@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"net/http"
 	"testing"
 
@@ -25,7 +26,7 @@ func TestEmailManager_Create(t *testing.T) {
 		},
 	}
 
-	err := api.Email.Create(emailProvider)
+	err := api.Email.Create(context.Background(), emailProvider)
 	assert.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -38,7 +39,7 @@ func TestEmailManager_Read(t *testing.T) {
 
 	expectedEmailProvider := givenAnEmail(t)
 
-	actualEmailProvider, err := api.Email.Read()
+	actualEmailProvider, err := api.Email.Read(context.Background())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedEmailProvider.GetName(), actualEmailProvider.GetName())
@@ -64,10 +65,10 @@ func TestEmailManager_Update(t *testing.T) {
 	emailProvider.Enabled = auth0.Bool(false)
 	emailProvider.DefaultFromAddress = auth0.String("info@example.com")
 
-	err := api.Email.Update(emailProvider)
+	err := api.Email.Update(context.Background(), emailProvider)
 	assert.NoError(t, err)
 
-	actualEmailProvider, err := api.Email.Read()
+	actualEmailProvider, err := api.Email.Read(context.Background())
 	assert.NoError(t, err)
 
 	assert.False(t, actualEmailProvider.GetEnabled())
@@ -79,10 +80,10 @@ func TestEmailManager_Delete(t *testing.T) {
 
 	givenAnEmail(t)
 
-	err := api.Email.Delete()
+	err := api.Email.Delete(context.Background())
 	assert.NoError(t, err)
 
-	_, err = api.Email.Read()
+	_, err = api.Email.Read(context.Background())
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
 	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
@@ -103,7 +104,7 @@ func givenAnEmail(t *testing.T) *Email {
 		},
 	}
 
-	err := api.Email.Create(emailProvider)
+	err := api.Email.Create(context.Background(), emailProvider)
 	if err != nil {
 		if err.(Error).Status() != http.StatusConflict {
 			t.Error(err)
@@ -120,6 +121,6 @@ func givenAnEmail(t *testing.T) *Email {
 func cleanupEmail(t *testing.T) {
 	t.Helper()
 
-	err := api.Email.Delete()
+	err := api.Email.Delete(context.Background())
 	require.NoError(t, err)
 }

@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"net/http"
 	"os"
 	"testing"
@@ -16,7 +17,7 @@ func TestGuardian(t *testing.T) {
 		t.Run("List", func(t *testing.T) {
 			configureHTTPTestRecordings(t)
 
-			mfa, err := api.Guardian.MultiFactor.List()
+			mfa, err := api.Guardian.MultiFactor.List(context.Background())
 			assert.NoError(t, err)
 			assert.Greater(t, len(mfa), 1)
 		})
@@ -24,21 +25,21 @@ func TestGuardian(t *testing.T) {
 		t.Run("Policy", func(t *testing.T) {
 			configureHTTPTestRecordings(t)
 
-			initialPolicy, err := api.Guardian.MultiFactor.Policy()
+			initialPolicy, err := api.Guardian.MultiFactor.Policy(context.Background())
 			assert.NoError(t, err)
 
 			t.Cleanup(func() {
-				err = api.Guardian.MultiFactor.UpdatePolicy(initialPolicy)
+				err = api.Guardian.MultiFactor.UpdatePolicy(context.Background(), initialPolicy)
 				assert.NoError(t, err)
 			})
 
 			// Has to be one of "all-applications" or "confidence-score",
 			// but not both. If omitted, it removes all policies.
 			expectedPolicy := &MultiFactorPolicies{"all-applications"}
-			err = api.Guardian.MultiFactor.UpdatePolicy(expectedPolicy)
+			err = api.Guardian.MultiFactor.UpdatePolicy(context.Background(), expectedPolicy)
 			assert.NoError(t, err)
 
-			actualPolicy, err := api.Guardian.MultiFactor.Policy()
+			actualPolicy, err := api.Guardian.MultiFactor.Policy(context.Background())
 			assert.NoError(t, err)
 			assert.Equal(t, expectedPolicy, actualPolicy)
 		})
@@ -47,20 +48,20 @@ func TestGuardian(t *testing.T) {
 			t.Run("Provider", func(t *testing.T) {
 				configureHTTPTestRecordings(t)
 
-				initialProvider, err := api.Guardian.MultiFactor.Phone.Provider()
+				initialProvider, err := api.Guardian.MultiFactor.Phone.Provider(context.Background())
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err = api.Guardian.MultiFactor.Phone.UpdateProvider(initialProvider)
+					err = api.Guardian.MultiFactor.Phone.UpdateProvider(context.Background(), initialProvider)
 					assert.NoError(t, err)
 				})
 
 				expectedProvider := &MultiFactorProvider{Provider: auth0.String("phone-message-hook")}
 
-				err = api.Guardian.MultiFactor.Phone.UpdateProvider(expectedProvider)
+				err = api.Guardian.MultiFactor.Phone.UpdateProvider(context.Background(), expectedProvider)
 				assert.NoError(t, err)
 
-				actualProvider, err := api.Guardian.MultiFactor.Phone.Provider()
+				actualProvider, err := api.Guardian.MultiFactor.Phone.Provider(context.Background())
 				assert.NoError(t, err)
 				assert.Equal(t, expectedProvider, actualProvider)
 			})
@@ -72,11 +73,11 @@ func TestGuardian(t *testing.T) {
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.Phone.Enable(initialStatus)
+					err := api.Guardian.MultiFactor.Phone.Enable(context.Background(), initialStatus)
 					require.NoError(t, err)
 				})
 
-				err = api.Guardian.MultiFactor.Phone.Enable(true)
+				err = api.Guardian.MultiFactor.Phone.Enable(context.Background(), true)
 				assert.NoError(t, err)
 				assertMFAIsEnabled(t, "sms")
 			})
@@ -84,11 +85,11 @@ func TestGuardian(t *testing.T) {
 			t.Run("Message-types", func(t *testing.T) {
 				configureHTTPTestRecordings(t)
 
-				initialMessageTypes, err := api.Guardian.MultiFactor.Phone.MessageTypes()
+				initialMessageTypes, err := api.Guardian.MultiFactor.Phone.MessageTypes(context.Background())
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err = api.Guardian.MultiFactor.Phone.UpdateMessageTypes(initialMessageTypes)
+					err = api.Guardian.MultiFactor.Phone.UpdateMessageTypes(context.Background(), initialMessageTypes)
 					assert.NoError(t, err)
 				})
 
@@ -97,10 +98,10 @@ func TestGuardian(t *testing.T) {
 					MessageTypes: &messageTypes,
 				}
 
-				err = api.Guardian.MultiFactor.Phone.UpdateMessageTypes(expectedPhoneMessageTypes)
+				err = api.Guardian.MultiFactor.Phone.UpdateMessageTypes(context.Background(), expectedPhoneMessageTypes)
 				assert.NoError(t, err)
 
-				actualMessageTypes, err := api.Guardian.MultiFactor.Phone.MessageTypes()
+				actualMessageTypes, err := api.Guardian.MultiFactor.Phone.MessageTypes(context.Background())
 				assert.NoError(t, err)
 				assert.Equal(t, expectedPhoneMessageTypes, actualMessageTypes)
 			})
@@ -114,11 +115,11 @@ func TestGuardian(t *testing.T) {
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.SMS.Enable(initialStatus)
+					err := api.Guardian.MultiFactor.SMS.Enable(context.Background(), initialStatus)
 					require.NoError(t, err)
 				})
 
-				err = api.Guardian.MultiFactor.SMS.Enable(true)
+				err = api.Guardian.MultiFactor.SMS.Enable(context.Background(), true)
 				assert.NoError(t, err)
 				assertMFAIsEnabled(t, "sms")
 			})
@@ -126,11 +127,11 @@ func TestGuardian(t *testing.T) {
 			t.Run("Template", func(t *testing.T) {
 				configureHTTPTestRecordings(t)
 
-				initialTemplate, err := api.Guardian.MultiFactor.SMS.Template()
+				initialTemplate, err := api.Guardian.MultiFactor.SMS.Template(context.Background())
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.SMS.UpdateTemplate(initialTemplate)
+					err := api.Guardian.MultiFactor.SMS.UpdateTemplate(context.Background(), initialTemplate)
 					assert.NoError(t, err)
 				})
 
@@ -138,10 +139,10 @@ func TestGuardian(t *testing.T) {
 					EnrollmentMessage:   auth0.String("Test {{code}} for {{tenant.friendly_name}}"),
 					VerificationMessage: auth0.String("Test {{code}} for {{tenant.friendly_name}}"),
 				}
-				err = api.Guardian.MultiFactor.SMS.UpdateTemplate(expectedTemplate)
+				err = api.Guardian.MultiFactor.SMS.UpdateTemplate(context.Background(), expectedTemplate)
 				assert.NoError(t, err)
 
-				actualTemplate, err := api.Guardian.MultiFactor.SMS.Template()
+				actualTemplate, err := api.Guardian.MultiFactor.SMS.Template(context.Background())
 				assert.NoError(t, err)
 				assert.Equal(t, expectedTemplate, actualTemplate)
 			})
@@ -149,11 +150,11 @@ func TestGuardian(t *testing.T) {
 			t.Run("Twilio", func(t *testing.T) {
 				configureHTTPTestRecordings(t)
 
-				initialTwilio, err := api.Guardian.MultiFactor.SMS.Twilio()
+				initialTwilio, err := api.Guardian.MultiFactor.SMS.Twilio(context.Background())
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.SMS.UpdateTwilio(initialTwilio)
+					err := api.Guardian.MultiFactor.SMS.UpdateTwilio(context.Background(), initialTwilio)
 					assert.NoError(t, err)
 				})
 
@@ -162,10 +163,10 @@ func TestGuardian(t *testing.T) {
 					AuthToken: auth0.String("test_token"),
 					SID:       auth0.String("test_sid"),
 				}
-				err = api.Guardian.MultiFactor.SMS.UpdateTwilio(expectedTwilio)
+				err = api.Guardian.MultiFactor.SMS.UpdateTwilio(context.Background(), expectedTwilio)
 				assert.NoError(t, err)
 
-				actualTwilio, err := api.Guardian.MultiFactor.SMS.Twilio()
+				actualTwilio, err := api.Guardian.MultiFactor.SMS.Twilio(context.Background())
 				assert.NoError(t, err)
 				assert.Equal(t, expectedTwilio, actualTwilio)
 			})
@@ -175,20 +176,20 @@ func TestGuardian(t *testing.T) {
 			t.Run("Provider", func(t *testing.T) {
 				configureHTTPTestRecordings(t)
 
-				initialProvider, err := api.Guardian.MultiFactor.Push.Provider()
+				initialProvider, err := api.Guardian.MultiFactor.Push.Provider(context.Background())
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err = api.Guardian.MultiFactor.Push.UpdateProvider(initialProvider)
+					err = api.Guardian.MultiFactor.Push.UpdateProvider(context.Background(), initialProvider)
 					assert.NoError(t, err)
 				})
 
 				expectedProvider := &MultiFactorProvider{Provider: auth0.String("sns")}
 
-				err = api.Guardian.MultiFactor.Push.UpdateProvider(expectedProvider)
+				err = api.Guardian.MultiFactor.Push.UpdateProvider(context.Background(), expectedProvider)
 				assert.NoError(t, err)
 
-				actualProvider, err := api.Guardian.MultiFactor.Push.Provider()
+				actualProvider, err := api.Guardian.MultiFactor.Push.Provider(context.Background())
 				assert.NoError(t, err)
 				assert.Equal(t, expectedProvider, actualProvider)
 			})
@@ -200,11 +201,11 @@ func TestGuardian(t *testing.T) {
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.Push.Enable(initialStatus)
+					err := api.Guardian.MultiFactor.Push.Enable(context.Background(), initialStatus)
 					require.NoError(t, err)
 				})
 
-				err = api.Guardian.MultiFactor.Push.Enable(true)
+				err = api.Guardian.MultiFactor.Push.Enable(context.Background(), true)
 				assert.NoError(t, err)
 				assertMFAIsEnabled(t, "push-notification")
 			})
@@ -212,11 +213,11 @@ func TestGuardian(t *testing.T) {
 			t.Run("AmazonSNS", func(t *testing.T) {
 				configureHTTPTestRecordings(t)
 
-				initialSNS, err := api.Guardian.MultiFactor.Push.AmazonSNS()
+				initialSNS, err := api.Guardian.MultiFactor.Push.AmazonSNS(context.Background())
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.Push.UpdateAmazonSNS(initialSNS)
+					err := api.Guardian.MultiFactor.Push.UpdateAmazonSNS(context.Background(), initialSNS)
 					assert.NoError(t, err)
 				})
 
@@ -227,10 +228,10 @@ func TestGuardian(t *testing.T) {
 					APNSPlatformApplicationARN: auth0.String("test_arn"),
 					GCMPlatformApplicationARN:  auth0.String("test_arn"),
 				}
-				err = api.Guardian.MultiFactor.Push.UpdateAmazonSNS(expectedSNS)
+				err = api.Guardian.MultiFactor.Push.UpdateAmazonSNS(context.Background(), expectedSNS)
 				assert.NoError(t, err)
 
-				actualSNS, err := api.Guardian.MultiFactor.Push.AmazonSNS()
+				actualSNS, err := api.Guardian.MultiFactor.Push.AmazonSNS(context.Background())
 				assert.NoError(t, err)
 				assert.Equal(t, expectedSNS.GetAccessKeyID(), actualSNS.GetAccessKeyID())
 				assert.Equal(t, expectedSNS.GetRegion(), actualSNS.GetRegion())
@@ -241,11 +242,11 @@ func TestGuardian(t *testing.T) {
 			t.Run("CustomApp", func(t *testing.T) {
 				configureHTTPTestRecordings(t)
 
-				initialCustomApp, err := api.Guardian.MultiFactor.Push.CustomApp()
+				initialCustomApp, err := api.Guardian.MultiFactor.Push.CustomApp(context.Background())
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.Push.UpdateCustomApp(initialCustomApp)
+					err := api.Guardian.MultiFactor.Push.UpdateCustomApp(context.Background(), initialCustomApp)
 					assert.NoError(t, err)
 				})
 
@@ -254,10 +255,10 @@ func TestGuardian(t *testing.T) {
 					AppleAppLink:  auth0.String("https://itunes.apple.com/us/app/my-app/id123121"),
 					GoogleAppLink: auth0.String("https://play.google.com/store/apps/details?id=com.my.app"),
 				}
-				err = api.Guardian.MultiFactor.Push.UpdateCustomApp(expectedCustomApp)
+				err = api.Guardian.MultiFactor.Push.UpdateCustomApp(context.Background(), expectedCustomApp)
 				assert.NoError(t, err)
 
-				actualCustomApp, err := api.Guardian.MultiFactor.Push.CustomApp()
+				actualCustomApp, err := api.Guardian.MultiFactor.Push.CustomApp(context.Background())
 				assert.NoError(t, err)
 				assert.Equal(t, expectedCustomApp.GetAppName(), actualCustomApp.GetAppName())
 				assert.Equal(t, expectedCustomApp.GetAppleAppLink(), actualCustomApp.GetAppleAppLink())
@@ -267,7 +268,7 @@ func TestGuardian(t *testing.T) {
 			t.Run("DirectAPNS", func(t *testing.T) {
 				configureHTTPTestRecordings(t)
 
-				_, err := api.Guardian.MultiFactor.Push.DirectAPNS()
+				_, err := api.Guardian.MultiFactor.Push.DirectAPNS(context.Background())
 				assert.NoError(t, err)
 
 				// Cannot reflect back the payload we initially received
@@ -282,10 +283,10 @@ func TestGuardian(t *testing.T) {
 					BundleID: auth0.String("com.my.app"),
 					P12:      auth0.String(string(expectedP12)),
 				}
-				err = api.Guardian.MultiFactor.Push.UpdateDirectAPNS(expectedDirectAPNS)
+				err = api.Guardian.MultiFactor.Push.UpdateDirectAPNS(context.Background(), expectedDirectAPNS)
 				assert.NoError(t, err)
 
-				actualDirectAPNS, err := api.Guardian.MultiFactor.Push.DirectAPNS()
+				actualDirectAPNS, err := api.Guardian.MultiFactor.Push.DirectAPNS(context.Background())
 				assert.NoError(t, err)
 				assert.Equal(t, expectedDirectAPNS.GetSandbox(), actualDirectAPNS.GetSandbox())
 				assert.Equal(t, expectedDirectAPNS.GetBundleID(), actualDirectAPNS.GetBundleID())
@@ -302,7 +303,7 @@ func TestGuardian(t *testing.T) {
 				expectedDirectFCM := &MultiFactorPushDirectFCM{
 					ServerKey: auth0.String("abc123"),
 				}
-				err = api.Guardian.MultiFactor.Push.UpdateDirectFCM(expectedDirectFCM)
+				err = api.Guardian.MultiFactor.Push.UpdateDirectFCM(context.Background(), expectedDirectFCM)
 				assert.NoError(t, err)
 			})
 		})
@@ -314,11 +315,11 @@ func TestGuardian(t *testing.T) {
 			assert.NoError(t, err)
 
 			t.Cleanup(func() {
-				err := api.Guardian.MultiFactor.Email.Enable(initialStatus)
+				err := api.Guardian.MultiFactor.Email.Enable(context.Background(), initialStatus)
 				require.NoError(t, err)
 			})
 
-			err = api.Guardian.MultiFactor.Email.Enable(true)
+			err = api.Guardian.MultiFactor.Email.Enable(context.Background(), true)
 			assert.NoError(t, err)
 			assertMFAIsEnabled(t, "email")
 		})
@@ -331,21 +332,21 @@ func TestGuardian(t *testing.T) {
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.DUO.Enable(initialStatus)
+					err := api.Guardian.MultiFactor.DUO.Enable(context.Background(), initialStatus)
 					require.NoError(t, err)
 				})
 
-				err = api.Guardian.MultiFactor.DUO.Enable(true)
+				err = api.Guardian.MultiFactor.DUO.Enable(context.Background(), true)
 				assert.NoError(t, err)
 				assertMFAIsEnabled(t, "duo")
 			})
 			t.Run("Settings", func(t *testing.T) {
 				configureHTTPTestRecordings(t)
 
-				initialSettings, err := api.Guardian.MultiFactor.DUO.Read()
+				initialSettings, err := api.Guardian.MultiFactor.DUO.Read(context.Background())
 				assert.NoError(t, err)
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.DUO.Update(initialSettings)
+					err := api.Guardian.MultiFactor.DUO.Update(context.Background(), initialSettings)
 					require.NoError(t, err)
 				})
 
@@ -354,10 +355,10 @@ func TestGuardian(t *testing.T) {
 					IntegrationKey: auth0.String("someKey"),
 					SecretKey:      auth0.String("someSecret"),
 				}
-				err = api.Guardian.MultiFactor.DUO.Update(updatedSettings)
+				err = api.Guardian.MultiFactor.DUO.Update(context.Background(), updatedSettings)
 				assert.NoError(t, err)
 
-				actualSettings, err := api.Guardian.MultiFactor.DUO.Read()
+				actualSettings, err := api.Guardian.MultiFactor.DUO.Read(context.Background())
 				assert.NoError(t, err)
 				assert.Equal(t, "api-hostname", actualSettings.GetHostname())
 				assert.Equal(t, "someKey", actualSettings.GetIntegrationKey())
@@ -372,11 +373,11 @@ func TestGuardian(t *testing.T) {
 			assert.NoError(t, err)
 
 			t.Cleanup(func() {
-				err := api.Guardian.MultiFactor.OTP.Enable(initialStatus)
+				err := api.Guardian.MultiFactor.OTP.Enable(context.Background(), initialStatus)
 				require.NoError(t, err)
 			})
 
-			err = api.Guardian.MultiFactor.OTP.Enable(true)
+			err = api.Guardian.MultiFactor.OTP.Enable(context.Background(), true)
 			assert.NoError(t, err)
 			assertMFAIsEnabled(t, "otp")
 		})
@@ -389,31 +390,31 @@ func TestGuardian(t *testing.T) {
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.WebAuthnRoaming.Enable(initialStatus)
+					err := api.Guardian.MultiFactor.WebAuthnRoaming.Enable(context.Background(), initialStatus)
 					require.NoError(t, err)
 				})
 
-				err = api.Guardian.MultiFactor.WebAuthnRoaming.Enable(true)
+				err = api.Guardian.MultiFactor.WebAuthnRoaming.Enable(context.Background(), true)
 				assert.NoError(t, err)
 				assertMFAIsEnabled(t, "webauthn-roaming")
 			})
 			t.Run("Settings", func(t *testing.T) {
 				configureHTTPTestRecordings(t)
 
-				initialSettings, err := api.Guardian.MultiFactor.WebAuthnRoaming.Read()
+				initialSettings, err := api.Guardian.MultiFactor.WebAuthnRoaming.Read(context.Background())
 				assert.NoError(t, err)
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.WebAuthnRoaming.Update(initialSettings)
+					err := api.Guardian.MultiFactor.WebAuthnRoaming.Update(context.Background(), initialSettings)
 					require.NoError(t, err)
 				})
 
 				updatedSettings := &MultiFactorWebAuthnSettings{
 					UserVerification: auth0.String("preferred"),
 				}
-				err = api.Guardian.MultiFactor.WebAuthnRoaming.Update(updatedSettings)
+				err = api.Guardian.MultiFactor.WebAuthnRoaming.Update(context.Background(), updatedSettings)
 				assert.NoError(t, err)
 
-				actualSettings, err := api.Guardian.MultiFactor.WebAuthnRoaming.Read()
+				actualSettings, err := api.Guardian.MultiFactor.WebAuthnRoaming.Read(context.Background())
 				assert.NoError(t, err)
 				assert.Equal(t, "preferred", actualSettings.GetUserVerification())
 			})
@@ -427,31 +428,31 @@ func TestGuardian(t *testing.T) {
 				assert.NoError(t, err)
 
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.WebAuthnPlatform.Enable(initialStatus)
+					err := api.Guardian.MultiFactor.WebAuthnPlatform.Enable(context.Background(), initialStatus)
 					require.NoError(t, err)
 				})
 
-				err = api.Guardian.MultiFactor.WebAuthnPlatform.Enable(true)
+				err = api.Guardian.MultiFactor.WebAuthnPlatform.Enable(context.Background(), true)
 				assert.NoError(t, err)
 				assertMFAIsEnabled(t, "webauthn-platform")
 			})
 			t.Run("Settings", func(t *testing.T) {
 				configureHTTPTestRecordings(t)
 
-				initialSettings, err := api.Guardian.MultiFactor.WebAuthnPlatform.Read()
+				initialSettings, err := api.Guardian.MultiFactor.WebAuthnPlatform.Read(context.Background())
 				assert.NoError(t, err)
 				t.Cleanup(func() {
-					err := api.Guardian.MultiFactor.WebAuthnPlatform.Update(initialSettings)
+					err := api.Guardian.MultiFactor.WebAuthnPlatform.Update(context.Background(), initialSettings)
 					require.NoError(t, err)
 				})
 
 				updatedSettings := &MultiFactorWebAuthnSettings{
 					OverrideRelyingParty: auth0.Bool(false),
 				}
-				err = api.Guardian.MultiFactor.WebAuthnPlatform.Update(updatedSettings)
+				err = api.Guardian.MultiFactor.WebAuthnPlatform.Update(context.Background(), updatedSettings)
 				assert.NoError(t, err)
 
-				actualSettings, err := api.Guardian.MultiFactor.WebAuthnPlatform.Read()
+				actualSettings, err := api.Guardian.MultiFactor.WebAuthnPlatform.Read(context.Background())
 				assert.NoError(t, err)
 				assert.Equal(t, false, actualSettings.GetOverrideRelyingParty())
 			})
@@ -464,11 +465,11 @@ func TestGuardian(t *testing.T) {
 			assert.NoError(t, err)
 
 			t.Cleanup(func() {
-				err := api.Guardian.MultiFactor.RecoveryCode.Enable(initialStatus)
+				err := api.Guardian.MultiFactor.RecoveryCode.Enable(context.Background(), initialStatus)
 				require.NoError(t, err)
 			})
 
-			err = api.Guardian.MultiFactor.RecoveryCode.Enable(true)
+			err = api.Guardian.MultiFactor.RecoveryCode.Enable(context.Background(), true)
 			assert.NoError(t, err)
 			assertMFAIsEnabled(t, "recovery-code")
 		})
@@ -485,7 +486,7 @@ func TestGuardian(t *testing.T) {
 				SendMail: false,
 			}
 
-			createdTicket, err := api.Guardian.Enrollment.CreateTicket(ticket)
+			createdTicket, err := api.Guardian.Enrollment.CreateTicket(context.Background(), ticket)
 			assert.NoError(t, err)
 			assert.NotEmpty(t, createdTicket.TicketURL)
 			assert.NotEmpty(t, createdTicket.TicketID)
@@ -494,7 +495,7 @@ func TestGuardian(t *testing.T) {
 		t.Run("Get", func(t *testing.T) {
 			configureHTTPTestRecordings(t)
 
-			_, err := api.Guardian.Enrollment.Get("dev_0000000000000001")
+			_, err := api.Guardian.Enrollment.Get(context.Background(), "dev_0000000000000001")
 			// Expect a 404 as we can't set this up through the API.
 			assert.Error(t, err)
 			assert.Implements(t, (*Error)(nil), err)
@@ -504,7 +505,7 @@ func TestGuardian(t *testing.T) {
 		t.Run("Delete", func(t *testing.T) {
 			configureHTTPTestRecordings(t)
 
-			err := api.Guardian.Enrollment.Delete("dev_0000000000000001")
+			err := api.Guardian.Enrollment.Delete(context.Background(), "dev_0000000000000001")
 			// Expect a 404 as we can't set this up through the API.
 			assert.Error(t, err)
 			assert.Implements(t, (*Error)(nil), err)
@@ -514,7 +515,7 @@ func TestGuardian(t *testing.T) {
 }
 
 func getInitialMFAStatus(mfaName string) (bool, error) {
-	mfaList, err := api.Guardian.MultiFactor.List()
+	mfaList, err := api.Guardian.MultiFactor.List(context.Background())
 	if err != nil {
 		return false, err
 	}
@@ -531,7 +532,7 @@ func getInitialMFAStatus(mfaName string) (bool, error) {
 func assertMFAIsEnabled(t *testing.T, mfaName string) {
 	t.Helper()
 
-	mfaList, err := api.Guardian.MultiFactor.List()
+	mfaList, err := api.Guardian.MultiFactor.List(context.Background())
 	assert.NoError(t, err)
 
 	enabled := false

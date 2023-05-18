@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"testing"
 
@@ -13,14 +14,14 @@ import (
 func TestTenantManager(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	initialSettings, err := api.Tenant.Read()
+	initialSettings, err := api.Tenant.Read(context.Background())
 	assert.NoError(t, err)
 
 	t.Cleanup(func() {
 		initialSettings.SandboxVersionAvailable = nil
 		initialSettings.UniversalLogin = nil
 		initialSettings.Flags = nil
-		err := api.Tenant.Update(initialSettings)
+		err := api.Tenant.Update(context.Background(), initialSettings)
 		require.NoError(t, err)
 	})
 
@@ -38,10 +39,10 @@ func TestTenantManager(t *testing.T) {
 		EnabledLocales:          &[]string{"fr", "en", "es"},
 		SandboxVersionAvailable: nil,
 	}
-	err = api.Tenant.Update(newTenantSettings)
+	err = api.Tenant.Update(context.Background(), newTenantSettings)
 	assert.NoError(t, err)
 
-	actualTenantSettings, err := api.Tenant.Read()
+	actualTenantSettings, err := api.Tenant.Read(context.Background())
 	assert.NoError(t, err)
 	assert.Equal(t, newTenantSettings.GetFriendlyName(), actualTenantSettings.GetFriendlyName())
 	assert.Equal(t, newTenantSettings.GetIdleSessionLifetime(), actualTenantSettings.GetIdleSessionLifetime())

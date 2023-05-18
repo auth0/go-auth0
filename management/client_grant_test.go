@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -18,7 +19,7 @@ func TestClientGrantManager_Create(t *testing.T) {
 		Scope:    []string{"create:resource"},
 	}
 
-	err := api.ClientGrant.Create(expectedClientGrant)
+	err := api.ClientGrant.Create(context.Background(), expectedClientGrant)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedClientGrant.GetID())
 
@@ -32,7 +33,7 @@ func TestClientGrantManager_Read(t *testing.T) {
 
 	expectedClientGrant := givenAClientGrant(t)
 
-	actualClientGrant, err := api.ClientGrant.Read(expectedClientGrant.GetID())
+	actualClientGrant, err := api.ClientGrant.Read(context.Background(), expectedClientGrant.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedClientGrant.GetID(), actualClientGrant.GetID())
@@ -55,7 +56,7 @@ func TestClientGrantManager_Update(t *testing.T) {
 	scope = append(scope, "update:resource")
 	expectedClientGrant.Scope = scope
 
-	err := api.ClientGrant.Update(clientGrantID, expectedClientGrant)
+	err := api.ClientGrant.Update(context.Background(), clientGrantID, expectedClientGrant)
 	assert.NoError(t, err)
 	assert.Equal(t, len(expectedClientGrant.Scope), 2)
 }
@@ -65,10 +66,10 @@ func TestClientGrantManager_Delete(t *testing.T) {
 
 	expectedClientGrant := givenAClientGrant(t)
 
-	err := api.ClientGrant.Delete(expectedClientGrant.GetID())
+	err := api.ClientGrant.Delete(context.Background(), expectedClientGrant.GetID())
 	assert.NoError(t, err)
 
-	actualClientGrant, err := api.ClientGrant.Read(expectedClientGrant.GetID())
+	actualClientGrant, err := api.ClientGrant.Read(context.Background(), expectedClientGrant.GetID())
 	assert.Empty(t, actualClientGrant)
 	assert.EqualError(t, err, "404 Not Found: Client grant not found")
 }
@@ -79,6 +80,7 @@ func TestClientGrantManager_List(t *testing.T) {
 	expectedClientGrant := givenAClientGrant(t)
 
 	clientGrantList, err := api.ClientGrant.List(
+		context.Background(),
 		Parameter("client_id", expectedClientGrant.GetClientID()),
 	)
 
@@ -98,7 +100,7 @@ func givenAClientGrant(t *testing.T) (clientGrant *ClientGrant) {
 		Scope:    []string{"create:resource"},
 	}
 
-	err := api.ClientGrant.Create(clientGrant)
+	err := api.ClientGrant.Create(context.Background(), clientGrant)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -111,6 +113,6 @@ func givenAClientGrant(t *testing.T) (clientGrant *ClientGrant) {
 func cleanupClientGrant(t *testing.T, clientGrantID string) {
 	t.Helper()
 
-	err := api.ClientGrant.Delete(clientGrantID)
+	err := api.ClientGrant.Delete(context.Background(), clientGrantID)
 	require.NoError(t, err)
 }

@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -441,7 +442,7 @@ func TestConnectionManager_Create(t *testing.T) {
 			expectedConnection := testCase.connection
 			expectedConnection.Options = testCase.options
 
-			err := api.Connection.Create(&expectedConnection)
+			err := api.Connection.Create(context.Background(), &expectedConnection)
 
 			assert.NoError(t, err)
 			assert.NotEmpty(t, expectedConnection.GetID())
@@ -461,7 +462,7 @@ func TestConnectionManager_Read(t *testing.T) {
 
 			expectedConnection := givenAConnection(t, testCase)
 
-			actualConnection, err := api.Connection.Read(expectedConnection.GetID())
+			actualConnection, err := api.Connection.Read(context.Background(), expectedConnection.GetID())
 
 			assert.NoError(t, err)
 			assert.Equal(t, expectedConnection.GetID(), actualConnection.GetID())
@@ -483,7 +484,7 @@ func TestConnectionManager_ReadByName(t *testing.T) {
 
 			expectedConnection := givenAConnection(t, testCase)
 
-			actualConnection, err := api.Connection.ReadByName(expectedConnection.GetName())
+			actualConnection, err := api.Connection.ReadByName(context.Background(), expectedConnection.GetName())
 
 			assert.NoError(t, err)
 			assert.Equal(t, expectedConnection.GetID(), actualConnection.GetID())
@@ -498,7 +499,7 @@ func TestConnectionManager_ReadByName(t *testing.T) {
 	}
 
 	t.Run("throw an error when connection name is empty", func(t *testing.T) {
-		actualConnection, err := api.Connection.ReadByName("")
+		actualConnection, err := api.Connection.ReadByName(context.Background(), "")
 
 		assert.EqualError(t, err, "400 Bad Request: Name cannot be empty")
 		assert.Empty(t, actualConnection)
@@ -524,10 +525,10 @@ func TestConnectionManager_Update(t *testing.T) {
 				Options: testCase.options,
 			}
 
-			err := api.Connection.Update(connection.GetID(), connectionWithUpdatedOptions)
+			err := api.Connection.Update(context.Background(), connection.GetID(), connectionWithUpdatedOptions)
 			assert.NoError(t, err)
 
-			actualConnection, err := api.Connection.Read(connection.GetID())
+			actualConnection, err := api.Connection.Read(context.Background(), connection.GetID())
 			assert.NoError(t, err)
 			assert.ObjectsAreEqualValues(testCase.options, actualConnection.Options)
 		})
@@ -544,10 +545,10 @@ func TestConnectionManager_Delete(t *testing.T) {
 		},
 	})
 
-	err := api.Connection.Delete(expectedConnection.GetID())
+	err := api.Connection.Delete(context.Background(), expectedConnection.GetID())
 	assert.NoError(t, err)
 
-	actualConnection, err := api.Connection.Read(expectedConnection.GetID())
+	actualConnection, err := api.Connection.Read(context.Background(), expectedConnection.GetID())
 	assert.Nil(t, actualConnection)
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -568,7 +569,7 @@ func TestConnectionManager_List(t *testing.T) {
 		ID:                 expectedConnection.ID,
 		IsDomainConnection: auth0.Bool(false),
 	}
-	connectionList, err := api.Connection.List(IncludeFields("id"))
+	connectionList, err := api.Connection.List(context.Background(), IncludeFields("id"))
 	assert.NoError(t, err)
 	assert.Contains(t, connectionList.Connections, needle)
 }
@@ -644,7 +645,7 @@ func TestGoogleOauth2Connection_UnmarshalJSON(t *testing.T) {
 func cleanupConnection(t *testing.T, connectionID string) {
 	t.Helper()
 
-	err := api.Connection.Delete(connectionID)
+	err := api.Connection.Delete(context.Background(), connectionID)
 	require.NoError(t, err)
 }
 
@@ -654,7 +655,7 @@ func givenAConnection(t *testing.T, testCase connectionTestCase) *Connection {
 	connection := testCase.connection
 	connection.Options = testCase.options
 
-	err := api.Connection.Create(&connection)
+	err := api.Connection.Create(context.Background(), &connection)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {

@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -18,7 +19,7 @@ func TestTicketManager_VerifyEmail(t *testing.T) {
 		TTLSec:    auth0.Int(3600),
 	}
 
-	err := api.Ticket.VerifyEmail(ticket)
+	err := api.Ticket.VerifyEmail(context.Background(), ticket)
 	assert.NoError(t, err)
 }
 
@@ -34,6 +35,6 @@ func TestTicketManager_ChangePassword(t *testing.T) {
 		IncludeEmailInRedirect: auth0.Bool(true),
 	}
 
-	err := api.Ticket.ChangePassword(ticket)
+	err := api.Ticket.ChangePassword(context.Background(), ticket)
 	assert.NoError(t, err)
 }

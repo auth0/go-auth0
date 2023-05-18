@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
 	"net/http"
@@ -21,7 +22,7 @@ func TestRuleManager_Create(t *testing.T) {
 		Enabled: auth0.Bool(false),
 	}
 
-	err := api.Rule.Create(rule)
+	err := api.Rule.Create(context.Background(), rule)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, rule.GetID())
 
@@ -35,7 +36,7 @@ func TestRuleManager_Read(t *testing.T) {
 
 	expectedRule := givenARule(t)
 
-	actualRule, err := api.Rule.Read(expectedRule.GetID())
+	actualRule, err := api.Rule.Read(context.Background(), expectedRule.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedRule, actualRule)
@@ -50,10 +51,10 @@ func TestRuleManager_Update(t *testing.T) {
 		Enabled: auth0.Bool(true),
 	}
 
-	err := api.Rule.Update(rule.GetID(), updatedRule)
+	err := api.Rule.Update(context.Background(), rule.GetID(), updatedRule)
 	assert.NoError(t, err)
 
-	actualRule, err := api.Rule.Read(rule.GetID())
+	actualRule, err := api.Rule.Read(context.Background(), rule.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, updatedRule.GetOrder(), actualRule.GetOrder())
 	assert.Equal(t, updatedRule.GetEnabled(), actualRule.GetEnabled())
@@ -64,10 +65,10 @@ func TestRuleManager_Delete(t *testing.T) {
 
 	rule := givenARule(t)
 
-	err := api.Rule.Delete(rule.GetID())
+	err := api.Rule.Delete(context.Background(), rule.GetID())
 	assert.NoError(t, err)
 
-	actualRule, err := api.Rule.Read(rule.GetID())
+	actualRule, err := api.Rule.Read(context.Background(), rule.GetID())
 	assert.Empty(t, actualRule)
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -79,7 +80,7 @@ func TestRuleManager_List(t *testing.T) {
 
 	rule := givenARule(t)
 
-	ruleList, err := api.Rule.List(IncludeFields("id"))
+	ruleList, err := api.Rule.List(context.Background(), IncludeFields("id"))
 
 	assert.NoError(t, err)
 	assert.Contains(t, ruleList.Rules, &Rule{ID: rule.ID})
@@ -94,7 +95,7 @@ func givenARule(t *testing.T) *Rule {
 		Enabled: auth0.Bool(false),
 	}
 
-	err := api.Rule.Create(rule)
+	err := api.Rule.Create(context.Background(), rule)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -107,6 +108,6 @@ func givenARule(t *testing.T) *Rule {
 func cleanupRule(t *testing.T, ruleID string) {
 	t.Helper()
 
-	err := api.Rule.Delete(ruleID)
+	err := api.Rule.Delete(context.Background(), ruleID)
 	require.NoError(t, err)
 }
