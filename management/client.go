@@ -76,11 +76,11 @@ type Client struct {
 	CrossOriginLocation *string `json:"cross_origin_loc,omitempty"`
 
 	// True if the custom login page is to be used, false otherwise. Defaults to true.
-	CustomLoginPageOn      *bool   `json:"custom_login_page_on,omitempty"`
-	CustomLoginPage        *string `json:"custom_login_page,omitempty"`
-	CustomLoginPagePreview *string `json:"custom_login_page_preview,omitempty"`
-	FormTemplate           *string `json:"form_template,omitempty"`
-	Addons                 *Addons `json:"addons,omitempty"`
+	CustomLoginPageOn      *bool         `json:"custom_login_page_on,omitempty"`
+	CustomLoginPage        *string       `json:"custom_login_page,omitempty"`
+	CustomLoginPagePreview *string       `json:"custom_login_page_preview,omitempty"`
+	FormTemplate           *string       `json:"form_template,omitempty"`
+	Addons                 *ClientAddons `json:"addons,omitempty"`
 
 	// Defines the requested authentication method for the token endpoint.
 	// Possible values are:
@@ -229,20 +229,20 @@ type OIDCBackchannelLogout struct {
 	BackChannelLogoutURLs *[]string `json:"backchannel_logout_urls,omitempty"`
 }
 
-// Addons defines the `addons` settings for a Client.
-type Addons struct {
+// ClientAddons defines the `addons` settings for a Client.
+type ClientAddons struct {
 	// SAML2 Addon configuration. Set this property to indicate that the Addon should be enabled, all settings are optional.
-	// The first entry in `Callbacks` should be the URL to post the SAML Token to
-	SAML2 *SAML2Addon `json:"samlp,omitempty"`
+	// The first entry in `Callbacks` should be the URL to post the SAML Token to.
+	SAML2 *SAML2ClientAddon `json:"samlp,omitempty"`
 	// WS-Fed Addon. Set this property to indicate the Addon should be enabled and then store the
 	// configuration in `Callbacks` and `ClientAliases` properties on the Client.
 	// The first entry in `Callbacks` should be the URL to post the SAML Token to.
 	// ClientAliases should include the Realm which is the identifier sent by the application.
-	WSFED *WSFEDAddon `json:"wsfed,omitempty"`
+	WSFED *WSFEDClientAddon `json:"wsfed,omitempty"`
 }
 
-// SAML2Addon defines the `SAML2` settings for a Client.
-type SAML2Addon struct {
+// SAML2ClientAddon defines the `SAML2` settings for a Client.
+type SAML2ClientAddon struct {
 	// The mappings between the Auth0 user profile and the output attributes on the SAML Assertion.
 	// Each "name" represents the property name on the Auth0 user profile.
 	// Each "value" is the name (including namespace) for the resulting SAML attribute in the assertion.
@@ -291,20 +291,20 @@ type SAML2Addon struct {
 	// Optionally indicates the public key certificate used to validate SAML requests. If set, SAML requests will be required to be signed.
 	SigningCert *string `json:"signing_cert,omitempty"`
 	//  An object that controls SAML logout behavior.
-	Logout *SAML2AddonLogout `json:"logout,omitempty"`
+	Logout *SAML2ClientAddonLogout `json:"logout,omitempty"`
 }
 
-// SAML2AddonLogout defines the `logout` settings for the SAML2Addon.
-type SAML2AddonLogout struct {
+// SAML2ClientAddonLogout defines the `logout` settings for the SAML2Addon.
+type SAML2ClientAddonLogout struct {
 	// The service provider (client application)'s Single Logout Service URL, where Auth0 will send logout requests and responses
 	Callback *string `json:"callback,omitempty"`
 	// Controls whether Auth0 should notify service providers of session termination
 	SLOEnabled *bool `json:"slo_enabled,omitempty"`
 }
 
-// WSFEDAddon is an empty struct used to indicate that the WS-FED Addon should be enabled.
+// WSFEDClientAddon is an empty struct used to indicate that the WS-FED Addon should be enabled.
 // Configuration for this Addon is stored in the `Callbacks` and `ClientAliases` properties on the Client.
-type WSFEDAddon struct {
+type WSFEDClientAddon struct {
 }
 
 // ClientList is a list of Clients.

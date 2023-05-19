@@ -99,6 +99,33 @@ func TestClient_RotateSecret(t *testing.T) {
 	assert.NotEqual(t, oldSecret, actualClient.GetClientSecret())
 }
 
+func TestClient_CreateWithClientAddons(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedClient := &Client{
+		Name:        auth0.Stringf("Test Client Addons (%s)", time.Now().Format(time.StampMilli)),
+		Description: auth0.String("This is just a test client with addons."),
+		Addons: &ClientAddons{
+			SAML2: &SAML2ClientAddon{
+				Audience: auth0.String("my-audience"),
+			},
+			WSFED: &WSFEDClientAddon{},
+		},
+	}
+
+	err := api.Client.Create(expectedClient)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedClient.GetClientID())
+
+	addons := expectedClient.GetAddons()
+	assert.Equal(t, "my-audience", addons.GetSAML2().GetAudience())
+	assert.NotNil(t, addons.GetWSFED())
+
+	t.Cleanup(func() {
+		cleanupClient(t, expectedClient.GetClientID())
+	})
+}
+
 func TestJWTConfiguration(t *testing.T) {
 	t.Run("MarshalJSON", func(t *testing.T) {
 		for clientJWTConfiguration, expected := range map[*ClientJWTConfiguration]string{

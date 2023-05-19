@@ -625,28 +625,6 @@ func TestActionVersionList_String(t *testing.T) {
 	}
 }
 
-func TestAddons_GetSAML2(tt *testing.T) {
-	a := &Addons{}
-	a.GetSAML2()
-	a = nil
-	a.GetSAML2()
-}
-
-func TestAddons_GetWSFED(tt *testing.T) {
-	a := &Addons{}
-	a.GetWSFED()
-	a = nil
-	a.GetWSFED()
-}
-
-func TestAddons_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &Addons{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestAuthenticationMethod_GetAuthenticationMethods(tt *testing.T) {
 	var zeroValue []AuthenticationMethodReference
 	a := &AuthenticationMethod{AuthenticationMethods: &zeroValue}
@@ -1624,6 +1602,28 @@ func TestClient_GetWebOrigins(tt *testing.T) {
 func TestClient_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &Client{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientAddons_GetSAML2(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetSAML2()
+	c = nil
+	c.GetSAML2()
+}
+
+func TestClientAddons_GetWSFED(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetWSFED()
+	c = nil
+	c.GetWSFED()
+}
+
+func TestClientAddons_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientAddons{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -9324,244 +9324,244 @@ func TestRuleList_String(t *testing.T) {
 	}
 }
 
-func TestSAML2Addon_GetAudience(tt *testing.T) {
+func TestSAML2ClientAddon_GetAudience(tt *testing.T) {
 	var zeroValue string
-	s := &SAML2Addon{Audience: &zeroValue}
+	s := &SAML2ClientAddon{Audience: &zeroValue}
 	s.GetAudience()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetAudience()
 	s = nil
 	s.GetAudience()
 }
 
-func TestSAML2Addon_GetAuthnContextClassRef(tt *testing.T) {
+func TestSAML2ClientAddon_GetAuthnContextClassRef(tt *testing.T) {
 	var zeroValue string
-	s := &SAML2Addon{AuthnContextClassRef: &zeroValue}
+	s := &SAML2ClientAddon{AuthnContextClassRef: &zeroValue}
 	s.GetAuthnContextClassRef()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetAuthnContextClassRef()
 	s = nil
 	s.GetAuthnContextClassRef()
 }
 
-func TestSAML2Addon_GetBinding(tt *testing.T) {
+func TestSAML2ClientAddon_GetBinding(tt *testing.T) {
 	var zeroValue string
-	s := &SAML2Addon{Binding: &zeroValue}
+	s := &SAML2ClientAddon{Binding: &zeroValue}
 	s.GetBinding()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetBinding()
 	s = nil
 	s.GetBinding()
 }
 
-func TestSAML2Addon_GetCreateUPNClaim(tt *testing.T) {
+func TestSAML2ClientAddon_GetCreateUPNClaim(tt *testing.T) {
 	var zeroValue bool
-	s := &SAML2Addon{CreateUPNClaim: &zeroValue}
+	s := &SAML2ClientAddon{CreateUPNClaim: &zeroValue}
 	s.GetCreateUPNClaim()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetCreateUPNClaim()
 	s = nil
 	s.GetCreateUPNClaim()
 }
 
-func TestSAML2Addon_GetDestination(tt *testing.T) {
+func TestSAML2ClientAddon_GetDestination(tt *testing.T) {
 	var zeroValue string
-	s := &SAML2Addon{Destination: &zeroValue}
+	s := &SAML2ClientAddon{Destination: &zeroValue}
 	s.GetDestination()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetDestination()
 	s = nil
 	s.GetDestination()
 }
 
-func TestSAML2Addon_GetDigestAlgorithm(tt *testing.T) {
+func TestSAML2ClientAddon_GetDigestAlgorithm(tt *testing.T) {
 	var zeroValue string
-	s := &SAML2Addon{DigestAlgorithm: &zeroValue}
+	s := &SAML2ClientAddon{DigestAlgorithm: &zeroValue}
 	s.GetDigestAlgorithm()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetDigestAlgorithm()
 	s = nil
 	s.GetDigestAlgorithm()
 }
 
-func TestSAML2Addon_GetIncludeAttributeNameFormat(tt *testing.T) {
+func TestSAML2ClientAddon_GetIncludeAttributeNameFormat(tt *testing.T) {
 	var zeroValue bool
-	s := &SAML2Addon{IncludeAttributeNameFormat: &zeroValue}
+	s := &SAML2ClientAddon{IncludeAttributeNameFormat: &zeroValue}
 	s.GetIncludeAttributeNameFormat()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetIncludeAttributeNameFormat()
 	s = nil
 	s.GetIncludeAttributeNameFormat()
 }
 
-func TestSAML2Addon_GetIssuer(tt *testing.T) {
+func TestSAML2ClientAddon_GetIssuer(tt *testing.T) {
 	var zeroValue string
-	s := &SAML2Addon{Issuer: &zeroValue}
+	s := &SAML2ClientAddon{Issuer: &zeroValue}
 	s.GetIssuer()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetIssuer()
 	s = nil
 	s.GetIssuer()
 }
 
-func TestSAML2Addon_GetLifetimeInSeconds(tt *testing.T) {
+func TestSAML2ClientAddon_GetLifetimeInSeconds(tt *testing.T) {
 	var zeroValue int
-	s := &SAML2Addon{LifetimeInSeconds: &zeroValue}
+	s := &SAML2ClientAddon{LifetimeInSeconds: &zeroValue}
 	s.GetLifetimeInSeconds()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetLifetimeInSeconds()
 	s = nil
 	s.GetLifetimeInSeconds()
 }
 
-func TestSAML2Addon_GetLogout(tt *testing.T) {
-	s := &SAML2Addon{}
+func TestSAML2ClientAddon_GetLogout(tt *testing.T) {
+	s := &SAML2ClientAddon{}
 	s.GetLogout()
 	s = nil
 	s.GetLogout()
 }
 
-func TestSAML2Addon_GetMapIdentities(tt *testing.T) {
+func TestSAML2ClientAddon_GetMapIdentities(tt *testing.T) {
 	var zeroValue bool
-	s := &SAML2Addon{MapIdentities: &zeroValue}
+	s := &SAML2ClientAddon{MapIdentities: &zeroValue}
 	s.GetMapIdentities()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetMapIdentities()
 	s = nil
 	s.GetMapIdentities()
 }
 
-func TestSAML2Addon_GetMappings(tt *testing.T) {
+func TestSAML2ClientAddon_GetMappings(tt *testing.T) {
 	var zeroValue map[string]string
-	s := &SAML2Addon{Mappings: &zeroValue}
+	s := &SAML2ClientAddon{Mappings: &zeroValue}
 	s.GetMappings()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetMappings()
 	s = nil
 	s.GetMappings()
 }
 
-func TestSAML2Addon_GetMapUnknownClaimsAsIs(tt *testing.T) {
+func TestSAML2ClientAddon_GetMapUnknownClaimsAsIs(tt *testing.T) {
 	var zeroValue bool
-	s := &SAML2Addon{MapUnknownClaimsAsIs: &zeroValue}
+	s := &SAML2ClientAddon{MapUnknownClaimsAsIs: &zeroValue}
 	s.GetMapUnknownClaimsAsIs()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetMapUnknownClaimsAsIs()
 	s = nil
 	s.GetMapUnknownClaimsAsIs()
 }
 
-func TestSAML2Addon_GetNameIdentifierFormat(tt *testing.T) {
+func TestSAML2ClientAddon_GetNameIdentifierFormat(tt *testing.T) {
 	var zeroValue string
-	s := &SAML2Addon{NameIdentifierFormat: &zeroValue}
+	s := &SAML2ClientAddon{NameIdentifierFormat: &zeroValue}
 	s.GetNameIdentifierFormat()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetNameIdentifierFormat()
 	s = nil
 	s.GetNameIdentifierFormat()
 }
 
-func TestSAML2Addon_GetNameIdentifierProbes(tt *testing.T) {
+func TestSAML2ClientAddon_GetNameIdentifierProbes(tt *testing.T) {
 	var zeroValue []string
-	s := &SAML2Addon{NameIdentifierProbes: &zeroValue}
+	s := &SAML2ClientAddon{NameIdentifierProbes: &zeroValue}
 	s.GetNameIdentifierProbes()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetNameIdentifierProbes()
 	s = nil
 	s.GetNameIdentifierProbes()
 }
 
-func TestSAML2Addon_GetPassthroughClaimsWithNoMapping(tt *testing.T) {
+func TestSAML2ClientAddon_GetPassthroughClaimsWithNoMapping(tt *testing.T) {
 	var zeroValue bool
-	s := &SAML2Addon{PassthroughClaimsWithNoMapping: &zeroValue}
+	s := &SAML2ClientAddon{PassthroughClaimsWithNoMapping: &zeroValue}
 	s.GetPassthroughClaimsWithNoMapping()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetPassthroughClaimsWithNoMapping()
 	s = nil
 	s.GetPassthroughClaimsWithNoMapping()
 }
 
-func TestSAML2Addon_GetRecipient(tt *testing.T) {
+func TestSAML2ClientAddon_GetRecipient(tt *testing.T) {
 	var zeroValue string
-	s := &SAML2Addon{Recipient: &zeroValue}
+	s := &SAML2ClientAddon{Recipient: &zeroValue}
 	s.GetRecipient()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetRecipient()
 	s = nil
 	s.GetRecipient()
 }
 
-func TestSAML2Addon_GetSignatureAlgorithm(tt *testing.T) {
+func TestSAML2ClientAddon_GetSignatureAlgorithm(tt *testing.T) {
 	var zeroValue string
-	s := &SAML2Addon{SignatureAlgorithm: &zeroValue}
+	s := &SAML2ClientAddon{SignatureAlgorithm: &zeroValue}
 	s.GetSignatureAlgorithm()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetSignatureAlgorithm()
 	s = nil
 	s.GetSignatureAlgorithm()
 }
 
-func TestSAML2Addon_GetSigningCert(tt *testing.T) {
+func TestSAML2ClientAddon_GetSigningCert(tt *testing.T) {
 	var zeroValue string
-	s := &SAML2Addon{SigningCert: &zeroValue}
+	s := &SAML2ClientAddon{SigningCert: &zeroValue}
 	s.GetSigningCert()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetSigningCert()
 	s = nil
 	s.GetSigningCert()
 }
 
-func TestSAML2Addon_GetSignResponse(tt *testing.T) {
+func TestSAML2ClientAddon_GetSignResponse(tt *testing.T) {
 	var zeroValue bool
-	s := &SAML2Addon{SignResponse: &zeroValue}
+	s := &SAML2ClientAddon{SignResponse: &zeroValue}
 	s.GetSignResponse()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetSignResponse()
 	s = nil
 	s.GetSignResponse()
 }
 
-func TestSAML2Addon_GetTypedAttributes(tt *testing.T) {
+func TestSAML2ClientAddon_GetTypedAttributes(tt *testing.T) {
 	var zeroValue bool
-	s := &SAML2Addon{TypedAttributes: &zeroValue}
+	s := &SAML2ClientAddon{TypedAttributes: &zeroValue}
 	s.GetTypedAttributes()
-	s = &SAML2Addon{}
+	s = &SAML2ClientAddon{}
 	s.GetTypedAttributes()
 	s = nil
 	s.GetTypedAttributes()
 }
 
-func TestSAML2Addon_String(t *testing.T) {
+func TestSAML2ClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &SAML2Addon{}
+	v := &SAML2ClientAddon{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
 }
 
-func TestSAML2AddonLogout_GetCallback(tt *testing.T) {
+func TestSAML2ClientAddonLogout_GetCallback(tt *testing.T) {
 	var zeroValue string
-	s := &SAML2AddonLogout{Callback: &zeroValue}
+	s := &SAML2ClientAddonLogout{Callback: &zeroValue}
 	s.GetCallback()
-	s = &SAML2AddonLogout{}
+	s = &SAML2ClientAddonLogout{}
 	s.GetCallback()
 	s = nil
 	s.GetCallback()
 }
 
-func TestSAML2AddonLogout_GetSLOEnabled(tt *testing.T) {
+func TestSAML2ClientAddonLogout_GetSLOEnabled(tt *testing.T) {
 	var zeroValue bool
-	s := &SAML2AddonLogout{SLOEnabled: &zeroValue}
+	s := &SAML2ClientAddonLogout{SLOEnabled: &zeroValue}
 	s.GetSLOEnabled()
-	s = &SAML2AddonLogout{}
+	s = &SAML2ClientAddonLogout{}
 	s.GetSLOEnabled()
 	s = nil
 	s.GetSLOEnabled()
 }
 
-func TestSAML2AddonLogout_String(t *testing.T) {
+func TestSAML2ClientAddonLogout_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &SAML2AddonLogout{}
+	v := &SAML2ClientAddonLogout{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -11111,9 +11111,9 @@ func TestUserRecoveryCode_String(t *testing.T) {
 	}
 }
 
-func TestWSFEDAddon_String(t *testing.T) {
+func TestWSFEDClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &WSFEDAddon{}
+	v := &WSFEDClientAddon{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
