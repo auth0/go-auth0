@@ -963,10 +963,10 @@ func (b *BruteForceProtection) String() string {
 	return Stringify(b)
 }
 
-// GetAddons returns the Addons map if it's non-nil, an empty map otherwise.
-func (c *Client) GetAddons() map[string]interface{} {
-	if c == nil || c.Addons == nil {
-		return map[string]interface{}{}
+// GetAddons returns the Addons field.
+func (c *Client) GetAddons() *ClientAddons {
+	if c == nil {
+		return nil
 	}
 	return c.Addons
 }
@@ -1269,6 +1269,27 @@ func (c *Client) GetWebOrigins() []string {
 
 // String returns a string representation of Client.
 func (c *Client) String() string {
+	return Stringify(c)
+}
+
+// GetSAML2 returns the SAML2 field.
+func (c *ClientAddons) GetSAML2() *SAML2ClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.SAML2
+}
+
+// GetWSFED returns the WSFED field.
+func (c *ClientAddons) GetWSFED() *WSFEDClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.WSFED
+}
+
+// String returns a string representation of ClientAddons.
+func (c *ClientAddons) String() string {
 	return Stringify(c)
 }
 
@@ -7304,6 +7325,200 @@ func (r *RuleList) String() string {
 	return Stringify(r)
 }
 
+// GetAudience returns the Audience field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetAudience() string {
+	if s == nil || s.Audience == nil {
+		return ""
+	}
+	return *s.Audience
+}
+
+// GetAuthnContextClassRef returns the AuthnContextClassRef field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetAuthnContextClassRef() string {
+	if s == nil || s.AuthnContextClassRef == nil {
+		return ""
+	}
+	return *s.AuthnContextClassRef
+}
+
+// GetBinding returns the Binding field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetBinding() string {
+	if s == nil || s.Binding == nil {
+		return ""
+	}
+	return *s.Binding
+}
+
+// GetCreateUPNClaim returns the CreateUPNClaim field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetCreateUPNClaim() bool {
+	if s == nil || s.CreateUPNClaim == nil {
+		return false
+	}
+	return *s.CreateUPNClaim
+}
+
+// GetDestination returns the Destination field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetDestination() string {
+	if s == nil || s.Destination == nil {
+		return ""
+	}
+	return *s.Destination
+}
+
+// GetDigestAlgorithm returns the DigestAlgorithm field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetDigestAlgorithm() string {
+	if s == nil || s.DigestAlgorithm == nil {
+		return ""
+	}
+	return *s.DigestAlgorithm
+}
+
+// GetIncludeAttributeNameFormat returns the IncludeAttributeNameFormat field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetIncludeAttributeNameFormat() bool {
+	if s == nil || s.IncludeAttributeNameFormat == nil {
+		return false
+	}
+	return *s.IncludeAttributeNameFormat
+}
+
+// GetIssuer returns the Issuer field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetIssuer() string {
+	if s == nil || s.Issuer == nil {
+		return ""
+	}
+	return *s.Issuer
+}
+
+// GetLifetimeInSeconds returns the LifetimeInSeconds field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetLifetimeInSeconds() int {
+	if s == nil || s.LifetimeInSeconds == nil {
+		return 0
+	}
+	return *s.LifetimeInSeconds
+}
+
+// GetLogout returns the Logout field.
+func (s *SAML2ClientAddon) GetLogout() *SAML2ClientAddonLogout {
+	if s == nil {
+		return nil
+	}
+	return s.Logout
+}
+
+// GetMapIdentities returns the MapIdentities field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetMapIdentities() bool {
+	if s == nil || s.MapIdentities == nil {
+		return false
+	}
+	return *s.MapIdentities
+}
+
+// GetMappings returns the Mappings field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetMappings() map[string]string {
+	if s == nil || s.Mappings == nil {
+		return map[string]string{}
+	}
+	return *s.Mappings
+}
+
+// GetMapUnknownClaimsAsIs returns the MapUnknownClaimsAsIs field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetMapUnknownClaimsAsIs() bool {
+	if s == nil || s.MapUnknownClaimsAsIs == nil {
+		return false
+	}
+	return *s.MapUnknownClaimsAsIs
+}
+
+// GetNameIdentifierFormat returns the NameIdentifierFormat field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetNameIdentifierFormat() string {
+	if s == nil || s.NameIdentifierFormat == nil {
+		return ""
+	}
+	return *s.NameIdentifierFormat
+}
+
+// GetNameIdentifierProbes returns the NameIdentifierProbes field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetNameIdentifierProbes() []string {
+	if s == nil || s.NameIdentifierProbes == nil {
+		return nil
+	}
+	return *s.NameIdentifierProbes
+}
+
+// GetPassthroughClaimsWithNoMapping returns the PassthroughClaimsWithNoMapping field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetPassthroughClaimsWithNoMapping() bool {
+	if s == nil || s.PassthroughClaimsWithNoMapping == nil {
+		return false
+	}
+	return *s.PassthroughClaimsWithNoMapping
+}
+
+// GetRecipient returns the Recipient field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetRecipient() string {
+	if s == nil || s.Recipient == nil {
+		return ""
+	}
+	return *s.Recipient
+}
+
+// GetSignatureAlgorithm returns the SignatureAlgorithm field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetSignatureAlgorithm() string {
+	if s == nil || s.SignatureAlgorithm == nil {
+		return ""
+	}
+	return *s.SignatureAlgorithm
+}
+
+// GetSigningCert returns the SigningCert field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetSigningCert() string {
+	if s == nil || s.SigningCert == nil {
+		return ""
+	}
+	return *s.SigningCert
+}
+
+// GetSignResponse returns the SignResponse field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetSignResponse() bool {
+	if s == nil || s.SignResponse == nil {
+		return false
+	}
+	return *s.SignResponse
+}
+
+// GetTypedAttributes returns the TypedAttributes field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddon) GetTypedAttributes() bool {
+	if s == nil || s.TypedAttributes == nil {
+		return false
+	}
+	return *s.TypedAttributes
+}
+
+// String returns a string representation of SAML2ClientAddon.
+func (s *SAML2ClientAddon) String() string {
+	return Stringify(s)
+}
+
+// GetCallback returns the Callback field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddonLogout) GetCallback() string {
+	if s == nil || s.Callback == nil {
+		return ""
+	}
+	return *s.Callback
+}
+
+// GetSLOEnabled returns the SLOEnabled field if it's non-nil, zero value otherwise.
+func (s *SAML2ClientAddonLogout) GetSLOEnabled() bool {
+	if s == nil || s.SLOEnabled == nil {
+		return false
+	}
+	return *s.SLOEnabled
+}
+
+// String returns a string representation of SAML2ClientAddonLogout.
+func (s *SAML2ClientAddonLogout) String() string {
+	return Stringify(s)
+}
+
 // GetCert returns the Cert field if it's non-nil, zero value otherwise.
 func (s *SigningKey) GetCert() string {
 	if s == nil || s.Cert == nil {
@@ -8538,4 +8753,9 @@ func (u *UserRecoveryCode) GetRecoveryCode() string {
 // String returns a string representation of UserRecoveryCode.
 func (u *UserRecoveryCode) String() string {
 	return Stringify(u)
+}
+
+// String returns a string representation of WSFEDClientAddon.
+func (w *WSFEDClientAddon) String() string {
+	return Stringify(w)
 }
