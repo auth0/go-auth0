@@ -81,7 +81,7 @@ func main() {
 	// The passed in client will get hydrated with the response.
 	// This means that after this request, we will have access
 	// to the client ID on the same client object.
-	err = auth0API.Client.Create(client)
+	err = auth0API.Client.Create(context.Background(), client)
 	if err != nil {
 		log.Fatalf("failed to create a new client: %+v", err)
 	}

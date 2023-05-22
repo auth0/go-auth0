@@ -29,7 +29,7 @@ With a management client we can then interact with the Auth0 Management API.
 	    Description: auth0.String("Long description of client"),
 	}
 
-	err = m.Client.Create(c)
+	err = m.Client.Create(context.Background(), c)
 	if err != nil {
 	    // handle err
 	}
