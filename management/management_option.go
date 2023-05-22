@@ -18,14 +18,6 @@ func WithDebug(d bool) Option {
 	}
 }
 
-// WithContext configures the management client to use the provided context
-// instead of the provided one.
-func WithContext(ctx context.Context) Option {
-	return func(m *Management) {
-		m.ctx = ctx
-	}
-}
-
 // WithUserAgent configures the management client to use the provided user agent
 // string instead of the default one.
 func WithUserAgent(userAgent string) Option {
@@ -36,18 +28,18 @@ func WithUserAgent(userAgent string) Option {
 
 // WithClientCredentials configures management to authenticate using the client
 // credentials authentication flow.
-func WithClientCredentials(clientID, clientSecret string) Option {
+func WithClientCredentials(ctx context.Context, clientID, clientSecret string) Option {
 	return func(m *Management) {
-		m.tokenSource = client.OAuth2ClientCredentials(m.ctx, m.url.String(), clientID, clientSecret)
+		m.tokenSource = client.OAuth2ClientCredentials(ctx, m.url.String(), clientID, clientSecret)
 	}
 }
 
 // WithClientCredentialsAndAudience configures management to authenticate using the client
 // credentials authentication flow and a custom audience.
-func WithClientCredentialsAndAudience(clientID, clientSecret, audience string) Option {
+func WithClientCredentialsAndAudience(ctx context.Context, clientID, clientSecret, audience string) Option {
 	return func(m *Management) {
 		m.tokenSource = client.OAuth2ClientCredentialsAndAudience(
-			m.ctx,
+			ctx,
 			m.url.String(),
 			clientID,
 			clientSecret,

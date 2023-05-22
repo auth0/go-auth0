@@ -168,13 +168,6 @@ func applyListDefaults(options []RequestOption) RequestOption {
 	})
 }
 
-// Context configures a request to use the specified context.
-func Context(ctx context.Context) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		*r = *r.WithContext(ctx)
-	})
-}
-
 // IncludeFields configures a request to include the desired fields.
 func IncludeFields(fields ...string) RequestOption {
 	return newRequestOption(func(r *http.Request) {
