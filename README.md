@@ -45,6 +45,7 @@ go get github.com/auth0/go-auth0
 package main
 
 import (
+	"context"
 	"log"
 
 	"github.com/auth0/go-auth0"
@@ -65,7 +66,7 @@ func main() {
 	// `management.WithStaticToken("token")`
 	auth0API, err := management.New(
 		domain,
-		management.WithClientCredentials(clientID, clientSecret),
+		management.WithClientCredentials(context.Background(), clientID, clientSecret),
 	)
 	if err != nil {
 		log.Fatalf("failed to initialize the auth0 management API client: %+v", err)
@@ -94,6 +95,9 @@ func main() {
 	)
 }
 ```
+
+> **Note**
+> The [context](https://pkg.go.dev/context?utm_source=godoc) package can be used to pass cancellation signals and deadlines to the Client for handling a request. If there is no context available then `context.Background()` can be used.
 
 ### Rate Limiting
 

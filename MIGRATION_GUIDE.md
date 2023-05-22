@@ -54,7 +54,9 @@ client := &management.Client{
 
 ### Require Passing Context To APIs
 
-All APIs have now been updated to require a [`context.Context`](https://pkg.go.dev/context?utm_source=godoc) argument as the first parameter.
+All relevant methods have now been updated to require a [`context.Context`](https://pkg.go.dev/context?utm_source=godoc) argument as the first parameter. This applies to all management APIs and the helpers used to configure the `ClientCredential` used.
+
+Subsequently, the `management.Context` and `management.WithContext` helpers has been removed.
 
 <table>
 <tr>
@@ -65,23 +67,30 @@ All APIs have now been updated to require a [`context.Context`](https://pkg.go.d
 <td>
 
 ```go
-// Context could be passed to the Management Client
-auth0API, err := management.New(
+// Context could be set on the Management Client for the ClientCredential methods to use.
+m, err := management.New(
     domain,
-    management.WithClientCredentials(clientID, clientSecret),
-    management.WithContext(ctx),
+    management.WithClientCredentials(id, secret),
+    management.WithContext(context.Background())
 )
-// Or to an API call
+
+// Context could be passed to individual requests with the `Context` method.
 err := auth0API.Client.Create(
     client,
-    management.WithContext(context.Background()),
+    management.Context(context.Background()),
 )
 ```
 </td>
 <td>
 
 ```go
-// Pass Context on the call directly.
+// Context should be passed directly to the `WithClientCredentials` or `WithClientCredentialsAndAudience` methods.
+m, err := management.New(
+    domain,
+    management.WithClientCredentials(context.Background(), id, secret),
+)
+
+// Context should be passed to to the method as the first argument.
 err := auth0API.Client.Create(
     context.Background(),
     client

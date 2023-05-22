@@ -10,7 +10,10 @@ Usage
 
 Initialize a new client using a domain, client ID and secret.
 
-	m, err := management.New(domain, management.WithClientCredentials(id, secret))
+	m, err := management.New(
+		domain,
+		management.WithClientCredentials(context.Background(), id, secret)
+	)
 	if err != nil {
 	    // handle err
 	}
@@ -55,10 +58,11 @@ the `X-Rate-Limit-Reset` header as the amount of seconds to wait.
 There are several other options that can be specified during the creation of a
 new client.
 
-	m, err := management.New(domain,
-	    management.WithClientCredentials(id, secret),
-	    management.WithContext(context.Background()),
-	    management.WithDebug(true))
+	m, err := management.New(
+		domain,
+		management.WithClientCredentials(context.Background(), id, secret),
+		management.WithDebug(true)
+	)
 
 # Request Options
 
@@ -66,11 +70,11 @@ As with the global client configuration, fine-grained configuration can be done
 on a request basis.
 
 	c, err := m.Connection.List(
-	    management.Context(ctx),
-	    management.Page(2),
-	    management.PerPage(10),
-	    management.IncludeFields("id", "name", "options")
-	    management.Parameter("strategy", "auth0"),
+		context.Background(),
+		management.Page(2),
+		management.PerPage(10),
+		management.IncludeFields("id", "name", "options")
+		management.Parameter("strategy", "auth0"),
 	)
 */
 package auth0

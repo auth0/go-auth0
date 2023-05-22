@@ -17,7 +17,7 @@ Fine-grained configuration can be provided on a per-request basis to enhance the
 ```go
 // Example
 userGrants, err := auth0API.Grant.List(
-    management.Context(ctx),
+    context.Background(),
     management.Header("MySpecialHeader","MySpecialHeaderValue"),
     management.Parameter("user_id", "someUserID"),
     management.Parameter("client", "someClientID"),
