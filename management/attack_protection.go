@@ -8,13 +8,7 @@ import (
 // AttackProtectionManager manages Auth0 Attack Protection settings.
 //
 // See: https://auth0.com/docs/secure/attack-protection
-type AttackProtectionManager struct {
-	*Management
-}
-
-func newAttackProtectionManager(m *Management) *AttackProtectionManager {
-	return &AttackProtectionManager{m}
-}
+type AttackProtectionManager manager
 
 // BreachedPasswordDetection protects applications from
 // bad actors logging in with stolen credentials.
@@ -51,10 +45,10 @@ func (m *AttackProtectionManager) GetBreachedPasswordDetection(
 	opts ...RequestOption,
 ) (*BreachedPasswordDetection, error) {
 	var breachedPasswordDetection BreachedPasswordDetection
-	err := m.Request(
+	err := m.management.Request(
 		ctx,
 		http.MethodGet,
-		m.URI("attack-protection", "breached-password-detection"),
+		m.management.URI("attack-protection", "breached-password-detection"),
 		&breachedPasswordDetection,
 		opts...,
 	)
@@ -72,10 +66,10 @@ func (m *AttackProtectionManager) UpdateBreachedPasswordDetection(
 	breachedPasswordDetection *BreachedPasswordDetection,
 	opts ...RequestOption,
 ) error {
-	return m.Request(
+	return m.management.Request(
 		ctx,
 		http.MethodPatch,
-		m.URI("attack-protection", "breached-password-detection"),
+		m.management.URI("attack-protection", "breached-password-detection"),
 		breachedPasswordDetection,
 		opts...,
 	)
@@ -103,10 +97,10 @@ func (m *AttackProtectionManager) GetBruteForceProtection(
 	opts ...RequestOption,
 ) (*BruteForceProtection, error) {
 	var bruteForceProtection BruteForceProtection
-	err := m.Request(
+	err := m.management.Request(
 		ctx,
 		http.MethodGet,
-		m.URI("attack-protection", "brute-force-protection"),
+		m.management.URI("attack-protection", "brute-force-protection"),
 		&bruteForceProtection,
 		opts...,
 	)
@@ -124,10 +118,10 @@ func (m *AttackProtectionManager) UpdateBruteForceProtection(
 	bruteForceProtection *BruteForceProtection,
 	opts ...RequestOption,
 ) error {
-	return m.Request(
+	return m.management.Request(
 		ctx,
 		http.MethodPatch,
-		m.URI("attack-protection", "brute-force-protection"),
+		m.management.URI("attack-protection", "brute-force-protection"),
 		bruteForceProtection,
 		opts...,
 	)
@@ -173,10 +167,10 @@ func (m *AttackProtectionManager) GetSuspiciousIPThrottling(
 	opts ...RequestOption,
 ) (*SuspiciousIPThrottling, error) {
 	var suspiciousIPThrottling SuspiciousIPThrottling
-	err := m.Request(
+	err := m.management.Request(
 		ctx,
 		http.MethodGet,
-		m.URI("attack-protection", "suspicious-ip-throttling"),
+		m.management.URI("attack-protection", "suspicious-ip-throttling"),
 		&suspiciousIPThrottling,
 		opts...,
 	)
@@ -194,10 +188,10 @@ func (m *AttackProtectionManager) UpdateSuspiciousIPThrottling(
 	suspiciousIPThrottling *SuspiciousIPThrottling,
 	opts ...RequestOption,
 ) error {
-	return m.Request(
+	return m.management.Request(
 		ctx,
 		http.MethodPatch,
-		m.URI("attack-protection", "suspicious-ip-throttling"),
+		m.management.URI("attack-protection", "suspicious-ip-throttling"),
 		suspiciousIPThrottling,
 		opts...,
 	)

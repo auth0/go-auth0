@@ -18,13 +18,7 @@ type BlacklistToken struct {
 }
 
 // BlacklistManager manages Auth0 BlacklistToken resources.
-type BlacklistManager struct {
-	*Management
-}
-
-func newBlacklistManager(m *Management) *BlacklistManager {
-	return &BlacklistManager{m}
-}
+type BlacklistManager manager
 
 // List all tokens that are blacklisted.
 //
@@ -38,7 +32,7 @@ func newBlacklistManager(m *Management) *BlacklistManager {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Blacklists/get_tokens
 func (m *BlacklistManager) List(ctx context.Context, opts ...RequestOption) (bl []*BlacklistToken, err error) {
-	err = m.Request(ctx, "GET", m.URI("blacklists", "tokens"), &bl, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("blacklists", "tokens"), &bl, applyListDefaults(opts))
 	return
 }
 
@@ -46,5 +40,5 @@ func (m *BlacklistManager) List(ctx context.Context, opts ...RequestOption) (bl 
 //
 // See: https://auth0.com/docs/api/management/v2#!/Blacklists/post_tokens
 func (m *BlacklistManager) Create(ctx context.Context, t *BlacklistToken, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("blacklists", "tokens"), t, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("blacklists", "tokens"), t, opts...)
 }

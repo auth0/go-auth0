@@ -315,26 +315,20 @@ type ClientList struct {
 }
 
 // ClientManager manages Auth0 Client resources.
-type ClientManager struct {
-	*Management
-}
-
-func newClientManager(m *Management) *ClientManager {
-	return &ClientManager{m}
-}
+type ClientManager manager
 
 // Create a new client application.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/post_clients
 func (m *ClientManager) Create(ctx context.Context, c *Client, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "POST", m.URI("clients"), c, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("clients"), c, opts...)
 }
 
 // Read a client by its ID.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/get_clients_by_id
 func (m *ClientManager) Read(ctx context.Context, id string, opts ...RequestOption) (c *Client, err error) {
-	err = m.Request(ctx, "GET", m.URI("clients", id), &c, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("clients", id), &c, opts...)
 	return
 }
 
@@ -342,7 +336,7 @@ func (m *ClientManager) Read(ctx context.Context, id string, opts ...RequestOpti
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/get_clients
 func (m *ClientManager) List(ctx context.Context, opts ...RequestOption) (c *ClientList, err error) {
-	err = m.Request(ctx, "GET", m.URI("clients"), &c, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("clients"), &c, applyListDefaults(opts))
 	return
 }
 
@@ -350,14 +344,14 @@ func (m *ClientManager) List(ctx context.Context, opts ...RequestOption) (c *Cli
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/patch_clients_by_id
 func (m *ClientManager) Update(ctx context.Context, id string, c *Client, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "PATCH", m.URI("clients", id), c, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("clients", id), c, opts...)
 }
 
 // RotateSecret rotates a client secret.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/post_rotate_secret
 func (m *ClientManager) RotateSecret(ctx context.Context, id string, opts ...RequestOption) (c *Client, err error) {
-	err = m.Request(ctx, "POST", m.URI("clients", id, "rotate-secret"), &c, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("clients", id, "rotate-secret"), &c, opts...)
 	return
 }
 
@@ -366,29 +360,29 @@ func (m *ClientManager) RotateSecret(ctx context.Context, id string, opts ...Req
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/delete_clients_by_id
 func (m *ClientManager) Delete(ctx context.Context, id string, opts ...RequestOption) error {
-	return m.Request(ctx, "DELETE", m.URI("clients", id), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("clients", id), nil, opts...)
 }
 
 // CreateCredential creates a client application's client credential.
 func (m *ClientManager) CreateCredential(ctx context.Context, clientID string, credential *Credential, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("clients", clientID, "credentials"), credential, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("clients", clientID, "credentials"), credential, opts...)
 }
 
 // ListCredentials lists all client credentials associated with the client application.
 func (m *ClientManager) ListCredentials(ctx context.Context, clientID string, opts ...RequestOption) (c []*Credential, err error) {
-	err = m.Request(ctx, "GET", m.URI("clients", clientID, "credentials"), &c, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("clients", clientID, "credentials"), &c, applyListDefaults(opts))
 	return
 }
 
 // GetCredential gets a client credentials object.
 func (m *ClientManager) GetCredential(ctx context.Context, clientID string, credentialID string, opts ...RequestOption) (c *Credential, err error) {
-	err = m.Request(ctx, "GET", m.URI("clients", clientID, "credentials", credentialID), &c, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("clients", clientID, "credentials", credentialID), &c, opts...)
 	return
 }
 
 // DeleteCredential deletes a client credentials object.
 func (m *ClientManager) DeleteCredential(ctx context.Context, clientID string, credentialID string, opts ...RequestOption) error {
-	return m.Request(ctx, "DELETE", m.URI("clients", clientID, "credentials", credentialID), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("clients", clientID, "credentials", credentialID), nil, opts...)
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.

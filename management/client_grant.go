@@ -25,19 +25,13 @@ type ClientGrantList struct {
 }
 
 // ClientGrantManager manages Auth0 ClientGrant resources.
-type ClientGrantManager struct {
-	*Management
-}
-
-func newClientGrantManager(m *Management) *ClientGrantManager {
-	return &ClientGrantManager{m}
-}
+type ClientGrantManager manager
 
 // Create a client grant.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Client_Grants/post_client_grants
 func (m *ClientGrantManager) Create(ctx context.Context, g *ClientGrant, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "POST", m.URI("client-grants"), g, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("client-grants"), g, opts...)
 }
 
 // Read a client grant by its ID.
@@ -73,14 +67,14 @@ func (m *ClientGrantManager) Read(ctx context.Context, id string, opts ...Reques
 //
 // See: https://auth0.com/docs/api/management/v2#!/Client_Grants/patch_client_grants_by_id
 func (m *ClientGrantManager) Update(ctx context.Context, id string, g *ClientGrant, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "PATCH", m.URI("client-grants", id), g, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("client-grants", id), g, opts...)
 }
 
 // Delete a client grant.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Client_Grants/delete_client_grants_by_id
 func (m *ClientGrantManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "DELETE", m.URI("client-grants", id), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("client-grants", id), nil, opts...)
 }
 
 // List all client grants.
@@ -90,6 +84,6 @@ func (m *ClientGrantManager) Delete(ctx context.Context, id string, opts ...Requ
 //
 // See: https://auth0.com/docs/api/management/v2#!/Client_Grants/get_client_grants
 func (m *ClientGrantManager) List(ctx context.Context, opts ...RequestOption) (gs *ClientGrantList, err error) {
-	err = m.Request(ctx, "GET", m.URI("client-grants"), &gs, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("client-grants"), &gs, applyListDefaults(opts))
 	return
 }

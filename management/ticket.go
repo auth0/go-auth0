@@ -58,24 +58,18 @@ type Ticket struct {
 }
 
 // TicketManager manages Auth0 Ticket resources.
-type TicketManager struct {
-	*Management
-}
-
-func newTicketManager(m *Management) *TicketManager {
-	return &TicketManager{m}
-}
+type TicketManager manager
 
 // VerifyEmail creates a ticket to verify a user's email address.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Tickets/post_email_verification
 func (m *TicketManager) VerifyEmail(ctx context.Context, t *Ticket, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("tickets", "email-verification"), t, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("tickets", "email-verification"), t, opts...)
 }
 
 // ChangePassword creates a password change ticket for a user.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Tickets/post_password_change
 func (m *TicketManager) ChangePassword(ctx context.Context, t *Ticket, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("tickets", "password-change"), t, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("tickets", "password-change"), t, opts...)
 }

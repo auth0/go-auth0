@@ -45,19 +45,13 @@ type SigningKey struct {
 }
 
 // SigningKeyManager manages Auth0 SigningKey resources.
-type SigningKeyManager struct {
-	*Management
-}
-
-func newSigningKeyManager(m *Management) *SigningKeyManager {
-	return &SigningKeyManager{m}
-}
+type SigningKeyManager manager
 
 // List all Application Signing Keys.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Keys/get_signing_keys
 func (m *SigningKeyManager) List(ctx context.Context, opts ...RequestOption) (ks []*SigningKey, err error) {
-	err = m.Request(ctx, "GET", m.URI("keys", "signing"), &ks, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("keys", "signing"), &ks, opts...)
 	return
 }
 
@@ -65,7 +59,7 @@ func (m *SigningKeyManager) List(ctx context.Context, opts ...RequestOption) (ks
 //
 // See: https://auth0.com/docs/api/management/v2#!/Keys/get_signing_key
 func (m *SigningKeyManager) Read(ctx context.Context, kid string, opts ...RequestOption) (k *SigningKey, err error) {
-	err = m.Request(ctx, "GET", m.URI("keys", "signing", kid), &k, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("keys", "signing", kid), &k, opts...)
 	return
 }
 
@@ -73,7 +67,7 @@ func (m *SigningKeyManager) Read(ctx context.Context, kid string, opts ...Reques
 //
 // See: https://auth0.com/docs/api/management/v2#!/Keys/post_signing_keys
 func (m *SigningKeyManager) Rotate(ctx context.Context, opts ...RequestOption) (k *SigningKey, err error) {
-	err = m.Request(ctx, "POST", m.URI("keys", "signing", "rotate"), &k, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("keys", "signing", "rotate"), &k, opts...)
 	return
 }
 
@@ -81,6 +75,6 @@ func (m *SigningKeyManager) Rotate(ctx context.Context, opts ...RequestOption) (
 //
 // See: https://auth0.com/docs/api/management/v2#!/Keys/put_signing_keys
 func (m *SigningKeyManager) Revoke(ctx context.Context, kid string, opts ...RequestOption) (k *SigningKey, err error) {
-	err = m.Request(ctx, "PUT", m.URI("keys", "signing", kid, "revoke"), &k, opts...)
+	err = m.management.Request(ctx, "PUT", m.management.URI("keys", "signing", kid, "revoke"), &k, opts...)
 	return
 }

@@ -6,20 +6,14 @@ import (
 )
 
 // StatManager manages Auth0 DailyStat resources.
-type StatManager struct {
-	*Management
-}
-
-func newStatManager(m *Management) *StatManager {
-	return &StatManager{m}
-}
+type StatManager manager
 
 // ActiveUsers retrieves the number of active users that logged in during the
 // last 30 days.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Stats/get_active_users
 func (m *StatManager) ActiveUsers(ctx context.Context, opts ...RequestOption) (i int, err error) {
-	err = m.Request(ctx, "GET", m.URI("stats", "active-users"), &i, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("stats", "active-users"), &i, opts...)
 	return
 }
 
@@ -39,6 +33,6 @@ type DailyStat struct {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Stats/get_daily
 func (m *StatManager) Daily(ctx context.Context, opts ...RequestOption) (ds []*DailyStat, err error) {
-	err = m.Request(ctx, "GET", m.URI("stats", "daily"), &ds, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("stats", "daily"), &ds, opts...)
 	return
 }

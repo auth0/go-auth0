@@ -17,19 +17,13 @@ type Prompt struct {
 }
 
 // PromptManager is used for managing a Prompt.
-type PromptManager struct {
-	*Management
-}
-
-func newPromptManager(m *Management) *PromptManager {
-	return &PromptManager{m}
-}
+type PromptManager manager
 
 // Read retrieves prompts settings.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Prompts/get_prompts
 func (m *PromptManager) Read(ctx context.Context, opts ...RequestOption) (p *Prompt, err error) {
-	err = m.Request(ctx, "GET", m.URI("prompts"), &p, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("prompts"), &p, opts...)
 	return
 }
 
@@ -37,14 +31,14 @@ func (m *PromptManager) Read(ctx context.Context, opts ...RequestOption) (p *Pro
 //
 // See: https://auth0.com/docs/api/management/v2#!/Prompts/patch_prompts
 func (m *PromptManager) Update(ctx context.Context, p *Prompt, opts ...RequestOption) error {
-	return m.Request(ctx, "PATCH", m.URI("prompts"), p, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("prompts"), p, opts...)
 }
 
 // CustomText retrieves the custom text for a specific prompt and language.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Prompts/get_custom_text_by_language
 func (m *PromptManager) CustomText(ctx context.Context, p string, l string, opts ...RequestOption) (t map[string]interface{}, err error) {
-	err = m.Request(ctx, "GET", m.URI("prompts", p, "custom-text", l), &t, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("prompts", p, "custom-text", l), &t, opts...)
 	return
 }
 
@@ -52,6 +46,6 @@ func (m *PromptManager) CustomText(ctx context.Context, p string, l string, opts
 //
 // See: https://auth0.com/docs/api/management/v2#!/Prompts/put_custom_text_by_language
 func (m *PromptManager) SetCustomText(ctx context.Context, p string, l string, b map[string]interface{}, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "PUT", m.URI("prompts", p, "custom-text", l), &b, opts...)
+	err = m.management.Request(ctx, "PUT", m.management.URI("prompts", p, "custom-text", l), &b, opts...)
 	return
 }

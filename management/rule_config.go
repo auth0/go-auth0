@@ -12,19 +12,13 @@ type RuleConfig struct {
 }
 
 // RuleConfigManager manages Auth0 RuleConfig resources.
-type RuleConfigManager struct {
-	*Management
-}
-
-func newRuleConfigManager(m *Management) *RuleConfigManager {
-	return &RuleConfigManager{m}
-}
+type RuleConfigManager manager
 
 // Upsert sets a rule configuration variable.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Rules_Configs/put_rules_configs_by_key
 func (m *RuleConfigManager) Upsert(ctx context.Context, key string, r *RuleConfig, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "PUT", m.URI("rules-configs", key), r, opts...)
+	return m.management.Request(ctx, "PUT", m.management.URI("rules-configs", key), r, opts...)
 }
 
 // Read a rule configuration variable by key.
@@ -50,13 +44,13 @@ func (m *RuleConfigManager) Read(ctx context.Context, key string, opts ...Reques
 //
 // See: https://auth0.com/docs/api/management/v2#!/Rules_Configs/delete_rules_configs_by_key
 func (m *RuleConfigManager) Delete(ctx context.Context, key string, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "DELETE", m.URI("rules-configs", key), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("rules-configs", key), nil, opts...)
 }
 
 // List all rule configuration variables.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Rules_Configs/get_rules_configs
 func (m *RuleConfigManager) List(ctx context.Context, opts ...RequestOption) (r []*RuleConfig, err error) {
-	err = m.Request(ctx, "GET", m.URI("rules-configs"), &r, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("rules-configs"), &r, applyListDefaults(opts))
 	return
 }

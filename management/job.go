@@ -114,19 +114,13 @@ type JobUserErrors struct {
 }
 
 // JobManager manages Auth0 Job resources.
-type JobManager struct {
-	*Management
-}
-
-func newJobManager(m *Management) *JobManager {
-	return &JobManager{m}
-}
+type JobManager manager
 
 // Read retrieves a job. Useful to check its status.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Jobs/get_jobs_by_id
 func (m *JobManager) Read(ctx context.Context, id string, opts ...RequestOption) (j *Job, err error) {
-	err = m.Request(ctx, "GET", m.URI("jobs", id), &j, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("jobs", id), &j, opts...)
 	return
 }
 
@@ -134,21 +128,21 @@ func (m *JobManager) Read(ctx context.Context, id string, opts ...RequestOption)
 //
 // See: https://auth0.com/docs/api/management/v2#!/Jobs/get_errors
 func (m *JobManager) ReadErrors(ctx context.Context, id string, opts ...RequestOption) (jobErrors []JobError, err error) {
-	err = m.Request(ctx, "GET", m.URI("jobs", id, "errors"), &jobErrors, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("jobs", id, "errors"), &jobErrors, opts...)
 	return
 }
 
 // VerifyEmail sends an email to the specified user that asks them to
 // click a link to verify their email address.
 func (m *JobManager) VerifyEmail(ctx context.Context, j *Job, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("jobs", "verification-email"), j, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("jobs", "verification-email"), j, opts...)
 }
 
 // ExportUsers exports all users to a file via a long-running job.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Jobs/post_users_exports
 func (m *JobManager) ExportUsers(ctx context.Context, j *Job, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("jobs", "users-exports"), j, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("jobs", "users-exports"), j, opts...)
 }
 
 // ImportUsers imports users from a formatted file into a connection via a long-running job.
@@ -194,7 +188,7 @@ func (m *JobManager) ImportUsers(ctx context.Context, j *Job, opts ...RequestOpt
 		return err
 	}
 
-	request, err := http.NewRequestWithContext(ctx, "POST", m.URI("jobs", "users-imports"), &payload)
+	request, err := http.NewRequestWithContext(ctx, "POST", m.management.URI("jobs", "users-imports"), &payload)
 	if err != nil {
 		return err
 	}
@@ -204,7 +198,7 @@ func (m *JobManager) ImportUsers(ctx context.Context, j *Job, opts ...RequestOpt
 		option.apply(request)
 	}
 
-	response, err := m.Do(request)
+	response, err := m.management.Do(request)
 	if err != nil {
 		return err
 	}

@@ -90,19 +90,13 @@ type BrandingThemeWidget struct {
 }
 
 // BrandingThemeManager manages Auth0 BrandingTheme resources.
-type BrandingThemeManager struct {
-	*Management
-}
-
-func newBrandingThemeManager(m *Management) *BrandingThemeManager {
-	return &BrandingThemeManager{m}
-}
+type BrandingThemeManager manager
 
 // Default retrieves the default BrandingTheme.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/get_default_branding_theme
 func (m *BrandingThemeManager) Default(ctx context.Context, opts ...RequestOption) (theme *BrandingTheme, err error) {
-	err = m.Request(ctx, http.MethodGet, m.URI("branding", "themes", "default"), &theme, opts...)
+	err = m.management.Request(ctx, http.MethodGet, m.management.URI("branding", "themes", "default"), &theme, opts...)
 	return
 }
 
@@ -110,14 +104,14 @@ func (m *BrandingThemeManager) Default(ctx context.Context, opts ...RequestOptio
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/post_branding_theme
 func (m *BrandingThemeManager) Create(ctx context.Context, theme *BrandingTheme, opts ...RequestOption) (err error) {
-	return m.Request(ctx, http.MethodPost, m.URI("branding", "themes"), theme, opts...)
+	return m.management.Request(ctx, http.MethodPost, m.management.URI("branding", "themes"), theme, opts...)
 }
 
 // Read retrieves a BrandingTheme.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/get_branding_theme
 func (m *BrandingThemeManager) Read(ctx context.Context, id string, opts ...RequestOption) (theme *BrandingTheme, err error) {
-	err = m.Request(ctx, http.MethodGet, m.URI("branding", "themes", id), &theme, opts...)
+	err = m.management.Request(ctx, http.MethodGet, m.management.URI("branding", "themes", id), &theme, opts...)
 	return
 }
 
@@ -125,12 +119,12 @@ func (m *BrandingThemeManager) Read(ctx context.Context, id string, opts ...Requ
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/patch_branding_theme
 func (m *BrandingThemeManager) Update(ctx context.Context, id string, theme *BrandingTheme, opts ...RequestOption) (err error) {
-	return m.Request(ctx, http.MethodPatch, m.URI("branding", "themes", id), theme, opts...)
+	return m.management.Request(ctx, http.MethodPatch, m.management.URI("branding", "themes", id), theme, opts...)
 }
 
 // Delete a BrandingTheme.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/delete_branding_theme
 func (m *BrandingThemeManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
-	return m.Request(ctx, http.MethodDelete, m.URI("branding", "themes", id), nil, opts...)
+	return m.management.Request(ctx, http.MethodDelete, m.management.URI("branding", "themes", id), nil, opts...)
 }

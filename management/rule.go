@@ -30,13 +30,7 @@ type RuleList struct {
 }
 
 // RuleManager manages Auth0 Rule resources.
-type RuleManager struct {
-	*Management
-}
-
-func newRuleManager(m *Management) *RuleManager {
-	return &RuleManager{m}
-}
+type RuleManager manager
 
 // Create a new rule.
 //
@@ -45,14 +39,14 @@ func newRuleManager(m *Management) *RuleManager {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Rules/post_rules
 func (m *RuleManager) Create(ctx context.Context, r *Rule, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("rules"), r, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("rules"), r, opts...)
 }
 
 // Retrieve rule details. Accepts a list of fields to include or exclude in the result.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Rules/get_rules_by_id
 func (m *RuleManager) Read(ctx context.Context, id string, opts ...RequestOption) (r *Rule, err error) {
-	err = m.Request(ctx, "GET", m.URI("rules", id), &r, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("rules", id), &r, opts...)
 	return
 }
 
@@ -60,20 +54,20 @@ func (m *RuleManager) Read(ctx context.Context, id string, opts ...RequestOption
 //
 // See: https://auth0.com/docs/api/management/v2#!/Rules/patch_rules_by_id
 func (m *RuleManager) Update(ctx context.Context, id string, r *Rule, opts ...RequestOption) error {
-	return m.Request(ctx, "PATCH", m.URI("rules", id), r, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("rules", id), r, opts...)
 }
 
 // Delete a rule.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Rules/delete_rules_by_id
 func (m *RuleManager) Delete(ctx context.Context, id string, opts ...RequestOption) error {
-	return m.Request(ctx, "DELETE", m.URI("rules", id), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("rules", id), nil, opts...)
 }
 
 // List all rules.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Rules/get_rules
 func (m *RuleManager) List(ctx context.Context, opts ...RequestOption) (r *RuleList, err error) {
-	err = m.Request(ctx, "GET", m.URI("rules"), &r, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("rules"), &r, applyListDefaults(opts))
 	return
 }

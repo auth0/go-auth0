@@ -175,19 +175,13 @@ type OrganizationList struct {
 }
 
 // OrganizationManager is used for managing an Organization.
-type OrganizationManager struct {
-	*Management
-}
-
-func newOrganizationManager(m *Management) *OrganizationManager {
-	return &OrganizationManager{m}
-}
+type OrganizationManager manager
 
 // List available organizations.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_organizations
 func (m *OrganizationManager) List(ctx context.Context, opts ...RequestOption) (o *OrganizationList, err error) {
-	err = m.Request(ctx, "GET", m.URI("organizations"), &o, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations"), &o, applyListDefaults(opts))
 	return
 }
 
@@ -195,7 +189,7 @@ func (m *OrganizationManager) List(ctx context.Context, opts ...RequestOption) (
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_organizations
 func (m *OrganizationManager) Create(ctx context.Context, o *Organization, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "POST", m.URI("organizations"), &o, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations"), &o, opts...)
 	return
 }
 
@@ -203,7 +197,7 @@ func (m *OrganizationManager) Create(ctx context.Context, o *Organization, opts 
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_organizations_by_id
 func (m *OrganizationManager) Read(ctx context.Context, id string, opts ...RequestOption) (o *Organization, err error) {
-	err = m.Request(ctx, "GET", m.URI("organizations", id), &o, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id), &o, opts...)
 	return
 }
 
@@ -211,7 +205,7 @@ func (m *OrganizationManager) Read(ctx context.Context, id string, opts ...Reque
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_organizations_by_id
 func (m *OrganizationManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "DELETE", m.URI("organizations", id), nil, opts...)
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id), nil, opts...)
 	return
 }
 
@@ -219,7 +213,7 @@ func (m *OrganizationManager) Delete(ctx context.Context, id string, opts ...Req
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/patch_organizations_by_id
 func (m *OrganizationManager) Update(ctx context.Context, id string, o *Organization, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "PATCH", m.URI("organizations", id), &o, opts...)
+	err = m.management.Request(ctx, "PATCH", m.management.URI("organizations", id), &o, opts...)
 	return
 }
 
@@ -227,7 +221,7 @@ func (m *OrganizationManager) Update(ctx context.Context, id string, o *Organiza
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_name_by_name
 func (m *OrganizationManager) ReadByName(ctx context.Context, name string, opts ...RequestOption) (o *Organization, err error) {
-	err = m.Request(ctx, "GET", m.URI("organizations", "name", name), &o, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", "name", name), &o, opts...)
 	return
 }
 
@@ -235,7 +229,7 @@ func (m *OrganizationManager) ReadByName(ctx context.Context, name string, opts 
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_enabled_connections
 func (m *OrganizationManager) Connections(ctx context.Context, id string, opts ...RequestOption) (c *OrganizationConnectionList, err error) {
-	err = m.Request(ctx, "GET", m.URI("organizations", id, "enabled_connections"), &c, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "enabled_connections"), &c, applyListDefaults(opts))
 	return
 }
 
@@ -243,7 +237,7 @@ func (m *OrganizationManager) Connections(ctx context.Context, id string, opts .
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_enabled_connections
 func (m *OrganizationManager) AddConnection(ctx context.Context, id string, c *OrganizationConnection, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "POST", m.URI("organizations", id, "enabled_connections"), &c, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations", id, "enabled_connections"), &c, opts...)
 	return
 }
 
@@ -251,7 +245,7 @@ func (m *OrganizationManager) AddConnection(ctx context.Context, id string, c *O
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_enabled_connections_by_connectionId
 func (m *OrganizationManager) Connection(ctx context.Context, id string, connectionID string, opts ...RequestOption) (c *OrganizationConnection, err error) {
-	err = m.Request(ctx, "GET", m.URI("organizations", id, "enabled_connections", connectionID), &c, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "enabled_connections", connectionID), &c, opts...)
 	return
 }
 
@@ -259,7 +253,7 @@ func (m *OrganizationManager) Connection(ctx context.Context, id string, connect
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_enabled_connections_by_connectionId
 func (m *OrganizationManager) DeleteConnection(ctx context.Context, id string, connectionID string, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "DELETE", m.URI("organizations", id, "enabled_connections", connectionID), nil, opts...)
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "enabled_connections", connectionID), nil, opts...)
 	return
 }
 
@@ -267,7 +261,7 @@ func (m *OrganizationManager) DeleteConnection(ctx context.Context, id string, c
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/patch_enabled_connections_by_connectionId
 func (m *OrganizationManager) UpdateConnection(ctx context.Context, id string, connectionID string, c *OrganizationConnection, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "PATCH", m.URI("organizations", id, "enabled_connections", connectionID), &c, opts...)
+	err = m.management.Request(ctx, "PATCH", m.management.URI("organizations", id, "enabled_connections", connectionID), &c, opts...)
 	return
 }
 
@@ -277,7 +271,7 @@ func (m *OrganizationManager) UpdateConnection(ctx context.Context, id string, c
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_invitations
 func (m *OrganizationManager) Invitations(ctx context.Context, id string, opts ...RequestOption) (i *OrganizationInvitationList, err error) {
-	err = m.Request(ctx, "GET", m.URI("organizations", id, "invitations"), &i, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "invitations"), &i, applyListDefaults(opts))
 	return
 }
 
@@ -285,7 +279,7 @@ func (m *OrganizationManager) Invitations(ctx context.Context, id string, opts .
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_invitations
 func (m *OrganizationManager) CreateInvitation(ctx context.Context, id string, i *OrganizationInvitation, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "POST", m.URI("organizations", id, "invitations"), &i, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations", id, "invitations"), &i, opts...)
 	return
 }
 
@@ -293,7 +287,7 @@ func (m *OrganizationManager) CreateInvitation(ctx context.Context, id string, i
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_invitations_by_invitation_id
 func (m *OrganizationManager) Invitation(ctx context.Context, id string, invitationID string, opts ...RequestOption) (i *OrganizationInvitation, err error) {
-	err = m.Request(ctx, "GET", m.URI("organizations", id, "invitations", invitationID), &i, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "invitations", invitationID), &i, opts...)
 	return
 }
 
@@ -301,7 +295,7 @@ func (m *OrganizationManager) Invitation(ctx context.Context, id string, invitat
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_invitations_by_invitation_id
 func (m *OrganizationManager) DeleteInvitation(ctx context.Context, id string, invitationID string, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "DELETE", m.URI("organizations", id, "invitations", invitationID), nil, opts...)
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "invitations", invitationID), nil, opts...)
 	return
 }
 
@@ -309,7 +303,7 @@ func (m *OrganizationManager) DeleteInvitation(ctx context.Context, id string, i
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_members
 func (m *OrganizationManager) Members(ctx context.Context, id string, opts ...RequestOption) (o *OrganizationMemberList, err error) {
-	err = m.Request(ctx, "GET", m.URI("organizations", id, "members"), &o, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "members"), &o, applyListDefaults(opts))
 	return
 }
 
@@ -322,7 +316,7 @@ func (m *OrganizationManager) AddMembers(ctx context.Context, id string, memberI
 	}{
 		Members: memberIDs,
 	}
-	err = m.Request(ctx, "POST", m.URI("organizations", id, "members"), &body, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations", id, "members"), &body, opts...)
 	return
 }
 
@@ -335,7 +329,7 @@ func (m *OrganizationManager) DeleteMember(ctx context.Context, id string, membe
 	}{
 		Members: memberIDs,
 	}
-	err = m.Request(ctx, "DELETE", m.URI("organizations", id, "members"), &body, opts...)
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "members"), &body, opts...)
 	return
 }
 
@@ -343,7 +337,7 @@ func (m *OrganizationManager) DeleteMember(ctx context.Context, id string, membe
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_organization_member_roles
 func (m *OrganizationManager) MemberRoles(ctx context.Context, id string, memberID string, opts ...RequestOption) (r *OrganizationMemberRoleList, err error) {
-	err = m.Request(ctx, "GET", m.URI("organizations", id, "members", memberID, "roles"), &r, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "members", memberID, "roles"), &r, applyListDefaults(opts))
 	return
 }
 
@@ -356,7 +350,7 @@ func (m *OrganizationManager) AssignMemberRoles(ctx context.Context, id string, 
 	}{
 		Roles: roles,
 	}
-	err = m.Request(ctx, "POST", m.URI("organizations", id, "members", memberID, "roles"), &body, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations", id, "members", memberID, "roles"), &body, opts...)
 	return
 }
 
@@ -369,6 +363,6 @@ func (m *OrganizationManager) DeleteMemberRoles(ctx context.Context, id string, 
 	}{
 		Roles: roles,
 	}
-	err = m.Request(ctx, "DELETE", m.URI("organizations", id, "members", memberID, "roles"), &body, opts...)
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "members", memberID, "roles"), &body, opts...)
 	return
 }
