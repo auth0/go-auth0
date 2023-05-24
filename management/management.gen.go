@@ -6285,11 +6285,6 @@ func (m *MultiFactor) String() string {
 	return Stringify(m)
 }
 
-// String returns a string representation of MultiFactorDUO.
-func (m *MultiFactorDUO) String() string {
-	return Stringify(m)
-}
-
 // GetHostname returns the Hostname field if it's non-nil, zero value otherwise.
 func (m *MultiFactorDUOSettings) GetHostname() string {
 	if m == nil || m.Hostname == nil {
@@ -6316,21 +6311,6 @@ func (m *MultiFactorDUOSettings) GetSecretKey() string {
 
 // String returns a string representation of MultiFactorDUOSettings.
 func (m *MultiFactorDUOSettings) String() string {
-	return Stringify(m)
-}
-
-// String returns a string representation of MultiFactorEmail.
-func (m *MultiFactorEmail) String() string {
-	return Stringify(m)
-}
-
-// String returns a string representation of MultiFactorOTP.
-func (m *MultiFactorOTP) String() string {
-	return Stringify(m)
-}
-
-// String returns a string representation of MultiFactorPhone.
-func (m *MultiFactorPhone) String() string {
 	return Stringify(m)
 }
 
@@ -6429,11 +6409,6 @@ func (m *MultiFactorProviderTwilio) String() string {
 	return Stringify(m)
 }
 
-// String returns a string representation of MultiFactorPush.
-func (m *MultiFactorPush) String() string {
-	return Stringify(m)
-}
-
 // GetAppleAppLink returns the AppleAppLink field if it's non-nil, zero value otherwise.
 func (m *MultiFactorPushCustomApp) GetAppleAppLink() string {
 	if m == nil || m.AppleAppLink == nil {
@@ -6513,16 +6488,6 @@ func (m *MultiFactorPushDirectFCM) String() string {
 	return Stringify(m)
 }
 
-// String returns a string representation of MultiFactorRecoveryCode.
-func (m *MultiFactorRecoveryCode) String() string {
-	return Stringify(m)
-}
-
-// String returns a string representation of MultiFactorSMS.
-func (m *MultiFactorSMS) String() string {
-	return Stringify(m)
-}
-
 // GetEnrollmentMessage returns the EnrollmentMessage field if it's non-nil, zero value otherwise.
 func (m *MultiFactorSMSTemplate) GetEnrollmentMessage() string {
 	if m == nil || m.EnrollmentMessage == nil {
@@ -6541,16 +6506,6 @@ func (m *MultiFactorSMSTemplate) GetVerificationMessage() string {
 
 // String returns a string representation of MultiFactorSMSTemplate.
 func (m *MultiFactorSMSTemplate) String() string {
-	return Stringify(m)
-}
-
-// String returns a string representation of MultiFactorWebAuthnPlatform.
-func (m *MultiFactorWebAuthnPlatform) String() string {
-	return Stringify(m)
-}
-
-// String returns a string representation of MultiFactorWebAuthnRoaming.
-func (m *MultiFactorWebAuthnRoaming) String() string {
 	return Stringify(m)
 }
 

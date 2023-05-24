@@ -7952,14 +7952,6 @@ func TestMultiFactor_String(t *testing.T) {
 	}
 }
 
-func TestMultiFactorDUO_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &MultiFactorDUO{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestMultiFactorDUOSettings_GetHostname(tt *testing.T) {
 	var zeroValue string
 	m := &MultiFactorDUOSettings{Hostname: &zeroValue}
@@ -7993,30 +7985,6 @@ func TestMultiFactorDUOSettings_GetSecretKey(tt *testing.T) {
 func TestMultiFactorDUOSettings_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorDUOSettings{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestMultiFactorEmail_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &MultiFactorEmail{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestMultiFactorOTP_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &MultiFactorOTP{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestMultiFactorPhone_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &MultiFactorPhone{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -8146,14 +8114,6 @@ func TestMultiFactorProviderTwilio_String(t *testing.T) {
 	}
 }
 
-func TestMultiFactorPush_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &MultiFactorPush{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestMultiFactorPushCustomApp_GetAppleAppLink(tt *testing.T) {
 	var zeroValue string
 	m := &MultiFactorPushCustomApp{AppleAppLink: &zeroValue}
@@ -8258,22 +8218,6 @@ func TestMultiFactorPushDirectFCM_String(t *testing.T) {
 	}
 }
 
-func TestMultiFactorRecoveryCode_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &MultiFactorRecoveryCode{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestMultiFactorSMS_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &MultiFactorSMS{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestMultiFactorSMSTemplate_GetEnrollmentMessage(tt *testing.T) {
 	var zeroValue string
 	m := &MultiFactorSMSTemplate{EnrollmentMessage: &zeroValue}
@@ -8297,22 +8241,6 @@ func TestMultiFactorSMSTemplate_GetVerificationMessage(tt *testing.T) {
 func TestMultiFactorSMSTemplate_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorSMSTemplate{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestMultiFactorWebAuthnPlatform_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &MultiFactorWebAuthnPlatform{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestMultiFactorWebAuthnRoaming_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &MultiFactorWebAuthnRoaming{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
