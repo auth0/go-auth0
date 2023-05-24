@@ -75,13 +75,7 @@ func (s HookSecrets) intersection(other HookSecrets) HookSecrets {
 }
 
 // HookManager manages Auth0 Hook resources.
-type HookManager struct {
-	*Management
-}
-
-func newHookManager(m *Management) *HookManager {
-	return &HookManager{m}
-}
+type HookManager manager
 
 // Create a new hook.
 //
@@ -89,14 +83,14 @@ func newHookManager(m *Management) *HookManager {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Hooks/post_hooks
 func (m *HookManager) Create(ctx context.Context, h *Hook, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("hooks"), h, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("hooks"), h, opts...)
 }
 
 // Read hook details. Accepts a list of fields to include or exclude in the result.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Hooks/get_hooks_by_id
 func (m *HookManager) Read(ctx context.Context, id string, opts ...RequestOption) (h *Hook, err error) {
-	err = m.Request(ctx, "GET", m.URI("hooks", id), &h, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("hooks", id), &h, opts...)
 	return
 }
 
@@ -104,21 +98,21 @@ func (m *HookManager) Read(ctx context.Context, id string, opts ...RequestOption
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Hooks/patch_hooks_by_id
 func (m *HookManager) Update(ctx context.Context, id string, h *Hook, opts ...RequestOption) error {
-	return m.Request(ctx, "PATCH", m.URI("hooks", id), h, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("hooks", id), h, opts...)
 }
 
 // Delete a hook.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Hooks/delete_hooks_by_id
 func (m *HookManager) Delete(ctx context.Context, id string, opts ...RequestOption) error {
-	return m.Request(ctx, "DELETE", m.URI("hooks", id), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("hooks", id), nil, opts...)
 }
 
 // List all hooks.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Hooks/get_hooks
 func (m *HookManager) List(ctx context.Context, opts ...RequestOption) (l *HookList, err error) {
-	err = m.Request(ctx, "GET", m.URI("hooks"), &l, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("hooks"), &l, applyListDefaults(opts))
 	return
 }
 
@@ -127,14 +121,14 @@ func (m *HookManager) List(ctx context.Context, opts ...RequestOption) (l *HookL
 //
 // See: https://auth0.com/docs/api/management/v2#!/Hooks/post_secrets
 func (m *HookManager) CreateSecrets(ctx context.Context, hookID string, s HookSecrets, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "POST", m.URI("hooks", hookID, "secrets"), &s, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("hooks", hookID, "secrets"), &s, opts...)
 }
 
 // UpdateSecrets updates one or more existing secrets for an existing hook.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Hooks/patch_secrets
 func (m *HookManager) UpdateSecrets(ctx context.Context, hookID string, s HookSecrets, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "PATCH", m.URI("hooks", hookID, "secrets"), &s, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("hooks", hookID, "secrets"), &s, opts...)
 }
 
 // ReplaceSecrets replaces existing secrets with the provided ones.
@@ -166,7 +160,7 @@ func (m *HookManager) ReplaceSecrets(ctx context.Context, hookID string, s HookS
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Hooks/get_secrets
 func (m *HookManager) Secrets(ctx context.Context, hookID string, opts ...RequestOption) (s HookSecrets, err error) {
-	err = m.Request(ctx, "GET", m.URI("hooks", hookID, "secrets"), &s, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("hooks", hookID, "secrets"), &s, opts...)
 	return
 }
 
@@ -175,7 +169,7 @@ func (m *HookManager) Secrets(ctx context.Context, hookID string, opts ...Reques
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Hooks/delete_secrets
 func (m *HookManager) RemoveSecrets(ctx context.Context, hookID string, keys []string, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "DELETE", m.URI("hooks", hookID, "secrets"), keys, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("hooks", hookID, "secrets"), keys, opts...)
 }
 
 // RemoveAllSecrets removes all secrets associated with a given hook.

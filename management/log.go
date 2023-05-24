@@ -185,20 +185,14 @@ func (l *Log) UnmarshalJSON(data []byte) error {
 }
 
 // LogManager manages Auth0 Log resources.
-type LogManager struct {
-	*Management
-}
-
-func newLogManager(m *Management) *LogManager {
-	return &LogManager{m}
-}
+type LogManager manager
 
 // Read the data related to the log entry identified by id. This returns a
 // single log entry representation as specified in the schema.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Logs/get_logs_by_id
 func (m *LogManager) Read(ctx context.Context, id string, opts ...RequestOption) (l *Log, err error) {
-	err = m.Request(ctx, "GET", m.URI("logs", id), &l, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("logs", id), &l, opts...)
 	return
 }
 
@@ -211,7 +205,7 @@ func (m *LogManager) Read(ctx context.Context, id string, opts ...RequestOption)
 //
 // See: https://auth0.com/docs/api/management/v2#!/Logs/get_logs
 func (m *LogManager) List(ctx context.Context, opts ...RequestOption) (l []*Log, err error) {
-	err = m.Request(ctx, "GET", m.URI("logs"), &l, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("logs"), &l, opts...)
 	return
 }
 

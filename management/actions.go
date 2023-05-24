@@ -217,13 +217,7 @@ type ActionLogSession struct {
 }
 
 // ActionManager manages Auth0 Action resources.
-type ActionManager struct {
-	*Management
-}
-
-func newActionManager(m *Management) *ActionManager {
-	return &ActionManager{m}
-}
+type ActionManager manager
 
 func applyActionsListDefaults(options []RequestOption) RequestOption {
 	return newRequestOption(func(r *http.Request) {
@@ -238,7 +232,7 @@ func applyActionsListDefaults(options []RequestOption) RequestOption {
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/get_triggers
 func (m *ActionManager) Triggers(ctx context.Context, opts ...RequestOption) (l *ActionTriggerList, err error) {
-	err = m.Request(ctx, "GET", m.URI("actions", "triggers"), &l, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("actions", "triggers"), &l, opts...)
 	return
 }
 
@@ -246,14 +240,14 @@ func (m *ActionManager) Triggers(ctx context.Context, opts ...RequestOption) (l 
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/post_action
 func (m *ActionManager) Create(ctx context.Context, a *Action, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("actions", "actions"), a, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("actions", "actions"), a, opts...)
 }
 
 // Retrieve action details.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/get_action
 func (m *ActionManager) Read(ctx context.Context, id string, opts ...RequestOption) (a *Action, err error) {
-	err = m.Request(ctx, "GET", m.URI("actions", "actions", id), &a, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("actions", "actions", id), &a, opts...)
 	return
 }
 
@@ -261,21 +255,21 @@ func (m *ActionManager) Read(ctx context.Context, id string, opts ...RequestOpti
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/patch_action
 func (m *ActionManager) Update(ctx context.Context, id string, a *Action, opts ...RequestOption) error {
-	return m.Request(ctx, "PATCH", m.URI("actions", "actions", id), &a, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("actions", "actions", id), &a, opts...)
 }
 
 // Delete an action
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/delete_action
 func (m *ActionManager) Delete(ctx context.Context, id string, opts ...RequestOption) error {
-	return m.Request(ctx, "DELETE", m.URI("actions", "actions", id), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("actions", "actions", id), nil, opts...)
 }
 
 // List all actions.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/get_actions
 func (m *ActionManager) List(ctx context.Context, opts ...RequestOption) (l *ActionList, err error) {
-	err = m.Request(ctx, "GET", m.URI("actions", "actions"), &l, applyActionsListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("actions", "actions"), &l, applyActionsListDefaults(opts))
 	return
 }
 
@@ -283,7 +277,7 @@ func (m *ActionManager) List(ctx context.Context, opts ...RequestOption) (l *Act
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_action_version
 func (m *ActionManager) Version(ctx context.Context, id string, versionID string, opts ...RequestOption) (v *ActionVersion, err error) {
-	err = m.Request(ctx, "GET", m.URI("actions", "actions", id, "versions", versionID), &v, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("actions", "actions", id, "versions", versionID), &v, opts...)
 	return
 }
 
@@ -291,7 +285,7 @@ func (m *ActionManager) Version(ctx context.Context, id string, versionID string
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_action_versions
 func (m *ActionManager) Versions(ctx context.Context, id string, opts ...RequestOption) (c *ActionVersionList, err error) {
-	err = m.Request(ctx, "GET", m.URI("actions", "actions", id, "versions"), &c, applyActionsListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("actions", "actions", id, "versions"), &c, applyActionsListDefaults(opts))
 	return
 }
 
@@ -302,14 +296,14 @@ func (m *ActionManager) UpdateBindings(ctx context.Context, triggerID string, b 
 	bl := &actionBindingsPerTrigger{
 		Bindings: b,
 	}
-	return m.Request(ctx, "PATCH", m.URI("actions", "triggers", triggerID, "bindings"), &bl, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("actions", "triggers", triggerID, "bindings"), &bl, opts...)
 }
 
 // Bindings lists the bindings of a trigger.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_bindings
 func (m *ActionManager) Bindings(ctx context.Context, triggerID string, opts ...RequestOption) (bl *ActionBindingList, err error) {
-	err = m.Request(ctx, "GET", m.URI("actions", "triggers", triggerID, "bindings"), &bl, applyActionsListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("actions", "triggers", triggerID, "bindings"), &bl, applyActionsListDefaults(opts))
 	return
 }
 
@@ -317,7 +311,7 @@ func (m *ActionManager) Bindings(ctx context.Context, triggerID string, opts ...
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/post_deploy_action
 func (m *ActionManager) Deploy(ctx context.Context, id string, opts ...RequestOption) (v *ActionVersion, err error) {
-	err = m.Request(ctx, "POST", m.URI("actions", "actions", id, "deploy"), &v, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("actions", "actions", id, "deploy"), &v, opts...)
 	return
 }
 
@@ -325,7 +319,7 @@ func (m *ActionManager) Deploy(ctx context.Context, id string, opts ...RequestOp
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/post_deploy_draft_version
 func (m *ActionManager) DeployVersion(ctx context.Context, id string, versionID string, opts ...RequestOption) (v *ActionVersion, err error) {
-	err = m.Request(ctx, "POST", m.URI("actions", "actions", id, "versions", versionID, "deploy"), &v, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("actions", "actions", id, "versions", versionID, "deploy"), &v, opts...)
 	return
 }
 
@@ -336,7 +330,7 @@ func (m *ActionManager) Test(ctx context.Context, id string, payload *ActionTest
 	r := &actionTestRequest{
 		Payload: payload,
 	}
-	err = m.Request(ctx, "POST", m.URI("actions", "actions", id, "test"), &r, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("actions", "actions", id, "test"), &r, opts...)
 	return
 }
 
@@ -344,7 +338,7 @@ func (m *ActionManager) Test(ctx context.Context, id string, payload *ActionTest
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_execution
 func (m *ActionManager) Execution(ctx context.Context, executionID string, opts ...RequestOption) (v *ActionExecution, err error) {
-	err = m.Request(ctx, "GET", m.URI("actions", "executions", executionID), &v, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("actions", "executions", executionID), &v, opts...)
 	return
 }
 
@@ -352,6 +346,6 @@ func (m *ActionManager) Execution(ctx context.Context, executionID string, opts 
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/post_actions_log_sessions
 func (m *ActionManager) LogSession(ctx context.Context, l *ActionLogSession, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "POST", m.URI("actions", "log-sessions"), &l, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("actions", "log-sessions"), &l, opts...)
 	return
 }

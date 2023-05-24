@@ -42,26 +42,20 @@ type PermissionList struct {
 }
 
 // RoleManager manages Auth0 Role resources.
-type RoleManager struct {
-	*Management
-}
-
-func newRoleManager(m *Management) *RoleManager {
-	return &RoleManager{m}
-}
+type RoleManager manager
 
 // Create a new role.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Roles/post_roles
 func (m *RoleManager) Create(ctx context.Context, r *Role, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("roles"), r, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("roles"), r, opts...)
 }
 
 // Retrieve a role.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Roles/get_roles_by_id
 func (m *RoleManager) Read(ctx context.Context, id string, opts ...RequestOption) (r *Role, err error) {
-	err = m.Request(ctx, "GET", m.URI("roles", id), &r, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("roles", id), &r, opts...)
 	return
 }
 
@@ -69,7 +63,7 @@ func (m *RoleManager) Read(ctx context.Context, id string, opts ...RequestOption
 //
 // See: https://auth0.com/docs/api/management/v2#!/Roles/patch_roles_by_id
 func (m *RoleManager) Update(ctx context.Context, id string, r *Role, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "PATCH", m.URI("roles", id), r, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("roles", id), r, opts...)
 }
 
 // Delete a role.
@@ -80,14 +74,14 @@ func (m *RoleManager) Delete(ctx context.Context, id string, opts ...RequestOpti
 	// triggers decoding of the response payload.
 	//
 	// In order to avoid Unmarshal(nil) errors, we pass an empty &Role{}.
-	return m.Request(ctx, "DELETE", m.URI("roles", id), &Role{}, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("roles", id), &Role{}, opts...)
 }
 
 // List all roles that can be assigned to users or groups.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Roles/get_roles
 func (m *RoleManager) List(ctx context.Context, opts ...RequestOption) (r *RoleList, err error) {
-	err = m.Request(ctx, "GET", m.URI("roles"), &r, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("roles"), &r, applyListDefaults(opts))
 	return
 }
 
@@ -100,14 +94,14 @@ func (m *RoleManager) AssignUsers(ctx context.Context, id string, users []*User,
 	for i, user := range users {
 		u["users"][i] = user.ID
 	}
-	return m.Request(ctx, "POST", m.URI("roles", id, "users"), &u, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("roles", id, "users"), &u, opts...)
 }
 
 // Users retrieves all users associated with a role.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Roles/get_role_user
 func (m *RoleManager) Users(ctx context.Context, id string, opts ...RequestOption) (u *UserList, err error) {
-	err = m.Request(ctx, "GET", m.URI("roles", id, "users"), &u, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("roles", id, "users"), &u, applyListDefaults(opts))
 	return
 }
 
@@ -117,14 +111,14 @@ func (m *RoleManager) Users(ctx context.Context, id string, opts ...RequestOptio
 func (m *RoleManager) AssociatePermissions(ctx context.Context, id string, permissions []*Permission, opts ...RequestOption) error {
 	p := make(map[string][]*Permission)
 	p["permissions"] = permissions
-	return m.Request(ctx, "POST", m.URI("roles", id, "permissions"), &p, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("roles", id, "permissions"), &p, opts...)
 }
 
 // Permissions retrieves all permissions granted by a role.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Roles/get_role_permission
 func (m *RoleManager) Permissions(ctx context.Context, id string, opts ...RequestOption) (p *PermissionList, err error) {
-	err = m.Request(ctx, "GET", m.URI("roles", id, "permissions"), &p, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("roles", id, "permissions"), &p, applyListDefaults(opts))
 	return
 }
 
@@ -134,5 +128,5 @@ func (m *RoleManager) Permissions(ctx context.Context, id string, opts ...Reques
 func (m *RoleManager) RemovePermissions(ctx context.Context, id string, permissions []*Permission, opts ...RequestOption) error {
 	p := make(map[string][]*Permission)
 	p["permissions"] = permissions
-	return m.Request(ctx, "DELETE", m.URI("roles", id, "permissions"), &p, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("roles", id, "permissions"), &p, opts...)
 }

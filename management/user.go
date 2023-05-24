@@ -375,14 +375,9 @@ type AuthenticationMethodList struct {
 }
 
 // UserManager manages Auth0 User resources.
-type UserManager struct {
-	*Management
-}
+type UserManager manager
 
 // newUserManager returns a new instance of a user manager.
-func newUserManager(m *Management) *UserManager {
-	return &UserManager{m}
-}
 
 // Create a new user. It works only for database and passwordless connections.
 //
@@ -393,14 +388,14 @@ func newUserManager(m *Management) *UserManager {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/post_users
 func (m *UserManager) Create(ctx context.Context, u *User, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("users"), u, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("users"), u, opts...)
 }
 
 // Read user details for a given user_id.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_users_by_id
 func (m *UserManager) Read(ctx context.Context, id string, opts ...RequestOption) (u *User, err error) {
-	err = m.Request(ctx, "GET", m.URI("users", id), &u, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("users", id), &u, opts...)
 	return
 }
 
@@ -426,21 +421,21 @@ func (m *UserManager) Read(ctx context.Context, id string, opts ...RequestOption
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/patch_users_by_id
 func (m *UserManager) Update(ctx context.Context, id string, u *User, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "PATCH", m.URI("users", id), u, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("users", id), u, opts...)
 }
 
 // Delete a single user based on its id.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/delete_users_by_id
 func (m *UserManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "DELETE", m.URI("users", id), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("users", id), nil, opts...)
 }
 
 // List all users. This method forces the `include_totals` option.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_users
 func (m *UserManager) List(ctx context.Context, opts ...RequestOption) (ul *UserList, err error) {
-	err = m.Request(ctx, "GET", m.URI("users"), &ul, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("users"), &ul, applyListDefaults(opts))
 	return
 }
 
@@ -465,7 +460,7 @@ func (m *UserManager) Search(ctx context.Context, opts ...RequestOption) (ul *Us
 // See: https://auth0.com/docs/api/management/v2#!/Users_By_Email/get_users_by_email
 func (m *UserManager) ListByEmail(ctx context.Context, email string, opts ...RequestOption) (us []*User, err error) {
 	opts = append(opts, Parameter("email", email))
-	err = m.Request(ctx, "GET", m.URI("users-by-email"), &us, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("users-by-email"), &us, opts...)
 	return
 }
 
@@ -473,7 +468,7 @@ func (m *UserManager) ListByEmail(ctx context.Context, email string, opts ...Req
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_user_roles
 func (m *UserManager) Roles(ctx context.Context, id string, opts ...RequestOption) (r *RoleList, err error) {
-	err = m.Request(ctx, "GET", m.URI("users", id, "roles"), &r, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("users", id, "roles"), &r, applyListDefaults(opts))
 	return
 }
 
@@ -486,7 +481,7 @@ func (m *UserManager) AssignRoles(ctx context.Context, id string, roles []*Role,
 	for i, role := range roles {
 		r["roles"][i] = role.ID
 	}
-	return m.Request(ctx, "POST", m.URI("users", id, "roles"), &r, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("users", id, "roles"), &r, opts...)
 }
 
 // RemoveRoles removes any roles associated to a user.
@@ -498,14 +493,14 @@ func (m *UserManager) RemoveRoles(ctx context.Context, id string, roles []*Role,
 	for i, role := range roles {
 		r["roles"][i] = role.ID
 	}
-	return m.Request(ctx, "DELETE", m.URI("users", id, "roles"), &r, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("users", id, "roles"), &r, opts...)
 }
 
 // Permissions lists the permissions associated to the user.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_permissions
 func (m *UserManager) Permissions(ctx context.Context, id string, opts ...RequestOption) (p *PermissionList, err error) {
-	err = m.Request(ctx, "GET", m.URI("users", id, "permissions"), &p, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("users", id, "permissions"), &p, applyListDefaults(opts))
 	return
 }
 
@@ -515,7 +510,7 @@ func (m *UserManager) Permissions(ctx context.Context, id string, opts ...Reques
 func (m *UserManager) AssignPermissions(ctx context.Context, id string, permissions []*Permission, opts ...RequestOption) error {
 	p := make(map[string][]*Permission)
 	p["permissions"] = permissions
-	return m.Request(ctx, "POST", m.URI("users", id, "permissions"), &p, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("users", id, "permissions"), &p, opts...)
 }
 
 // RemovePermissions removes any permissions associated to a user.
@@ -524,7 +519,7 @@ func (m *UserManager) AssignPermissions(ctx context.Context, id string, permissi
 func (m *UserManager) RemovePermissions(ctx context.Context, id string, permissions []*Permission, opts ...RequestOption) error {
 	p := make(map[string][]*Permission)
 	p["permissions"] = permissions
-	return m.Request(ctx, "DELETE", m.URI("users", id, "permissions"), &p, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("users", id, "permissions"), &p, opts...)
 }
 
 // Blocks retrieves a list of blocked IP addresses of a particular user using the
@@ -533,7 +528,7 @@ func (m *UserManager) RemovePermissions(ctx context.Context, id string, permissi
 // See: https://auth0.com/docs/api/management/v2#!/User_Blocks/get_user_blocks_by_id
 func (m *UserManager) Blocks(ctx context.Context, id string, opts ...RequestOption) ([]*UserBlock, error) {
 	b := new(userBlock)
-	err := m.Request(ctx, "GET", m.URI("user-blocks", id), &b, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("user-blocks", id), &b, opts...)
 	return b.BlockedFor, err
 }
 
@@ -544,7 +539,7 @@ func (m *UserManager) Blocks(ctx context.Context, id string, opts ...RequestOpti
 func (m *UserManager) BlocksByIdentifier(ctx context.Context, identifier string, opts ...RequestOption) ([]*UserBlock, error) {
 	b := new(userBlock)
 	opts = append(opts, Parameter("identifier", identifier))
-	err := m.Request(ctx, "GET", m.URI("user-blocks"), &b, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("user-blocks"), &b, opts...)
 	return b.BlockedFor, err
 }
 
@@ -555,7 +550,7 @@ func (m *UserManager) BlocksByIdentifier(ctx context.Context, identifier string,
 //
 // See: https://auth0.com/docs/api/management/v2#!/User_Blocks/delete_user_blocks_by_id
 func (m *UserManager) Unblock(ctx context.Context, id string, opts ...RequestOption) error {
-	return m.Request(ctx, "DELETE", m.URI("user-blocks", id), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("user-blocks", id), nil, opts...)
 }
 
 // UnblockByIdentifier a user that was blocked due to an excessive amount of incorrectly
@@ -566,14 +561,14 @@ func (m *UserManager) Unblock(ctx context.Context, id string, opts ...RequestOpt
 // See: https://auth0.com/docs/api/management/v2#!/User_Blocks/delete_user_blocks
 func (m *UserManager) UnblockByIdentifier(ctx context.Context, identifier string, opts ...RequestOption) error {
 	opts = append(opts, Parameter("identifier", identifier))
-	return m.Request(ctx, "DELETE", m.URI("user-blocks"), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("user-blocks"), nil, opts...)
 }
 
 // Enrollments retrieves all Guardian enrollments for a user.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_enrollments
 func (m *UserManager) Enrollments(ctx context.Context, id string, opts ...RequestOption) (enrolls []*UserEnrollment, err error) {
-	err = m.Request(ctx, "GET", m.URI("users", id, "enrollments"), &enrolls, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("users", id, "enrollments"), &enrolls, opts...)
 	return
 }
 
@@ -582,7 +577,7 @@ func (m *UserManager) Enrollments(ctx context.Context, id string, opts ...Reques
 // See: https://auth0.com/docs/api/management/v2#!/Users/post_recovery_code_regeneration
 func (m *UserManager) RegenerateRecoveryCode(ctx context.Context, id string, opts ...RequestOption) (*UserRecoveryCode, error) {
 	r := new(UserRecoveryCode)
-	err := m.Request(ctx, "POST", m.URI("users", id, "recovery-code-regeneration"), &r, opts...)
+	err := m.management.Request(ctx, "POST", m.management.URI("users", id, "recovery-code-regeneration"), &r, opts...)
 	return r, err
 }
 
@@ -590,14 +585,14 @@ func (m *UserManager) RegenerateRecoveryCode(ctx context.Context, id string, opt
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/post_invalidate_remember_browser
 func (m *UserManager) InvalidateRememberBrowser(ctx context.Context, id string, opts ...RequestOption) error {
-	uri := m.URI(
+	uri := m.management.URI(
 		"users",
 		id,
 		"multifactor",
 		"actions",
 		"invalidate-remember-browser",
 	)
-	err := m.Request(ctx, "POST", uri, nil, opts...)
+	err := m.management.Request(ctx, "POST", uri, nil, opts...)
 	return err
 }
 
@@ -605,12 +600,12 @@ func (m *UserManager) InvalidateRememberBrowser(ctx context.Context, id string, 
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/post_identities
 func (m *UserManager) Link(ctx context.Context, id string, il *UserIdentityLink, opts ...RequestOption) (uIDs []UserIdentity, err error) {
-	request, err := m.NewRequest(ctx, "POST", m.URI("users", id, "identities"), il, opts...)
+	request, err := m.management.NewRequest(ctx, "POST", m.management.URI("users", id, "identities"), il, opts...)
 	if err != nil {
 		return uIDs, err
 	}
 
-	response, err := m.Do(request)
+	response, err := m.management.Do(request)
 	if err != nil {
 		return uIDs, err
 	}
@@ -638,7 +633,7 @@ func (m *UserManager) Link(ctx context.Context, id string, il *UserIdentityLink,
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/delete_user_identity_by_user_id
 func (m *UserManager) Unlink(ctx context.Context, id, provider, userID string, opts ...RequestOption) (uIDs []UserIdentity, err error) {
-	err = m.Request(ctx, "DELETE", m.URI("users", id, "identities", provider, userID), &uIDs, opts...)
+	err = m.management.Request(ctx, "DELETE", m.management.URI("users", id, "identities", provider, userID), &uIDs, opts...)
 	return
 }
 
@@ -646,7 +641,7 @@ func (m *UserManager) Unlink(ctx context.Context, id, provider, userID string, o
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_organizations
 func (m *UserManager) Organizations(ctx context.Context, id string, opts ...RequestOption) (p *OrganizationList, err error) {
-	err = m.Request(ctx, "GET", m.URI("users", id, "organizations"), &p, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("users", id, "organizations"), &p, applyListDefaults(opts))
 	return
 }
 
@@ -654,7 +649,7 @@ func (m *UserManager) Organizations(ctx context.Context, id string, opts ...Requ
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_authentication_methods
 func (m *UserManager) ListAuthenticationMethods(ctx context.Context, userID string, opts ...RequestOption) (a *AuthenticationMethodList, err error) {
-	err = m.Request(ctx, "GET", m.URI("users", userID, "authentication-methods"), &a, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("users", userID, "authentication-methods"), &a, applyListDefaults(opts))
 	return
 }
 
@@ -662,7 +657,7 @@ func (m *UserManager) ListAuthenticationMethods(ctx context.Context, userID stri
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_authentication_methods_by_authentication_method_id
 func (m *UserManager) GetAuthenticationMethodByID(ctx context.Context, userID string, id string, opts ...RequestOption) (a *AuthenticationMethod, err error) {
-	err = m.Request(ctx, "GET", m.URI("users", userID, "authentication-methods", id), &a, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("users", userID, "authentication-methods", id), &a, applyListDefaults(opts))
 	return
 }
 
@@ -670,7 +665,7 @@ func (m *UserManager) GetAuthenticationMethodByID(ctx context.Context, userID st
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/post_authentication_methods
 func (m *UserManager) CreateAuthenticationMethod(ctx context.Context, userID string, a *AuthenticationMethod, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "POST", m.URI("users", userID, "authentication-methods"), &a, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("users", userID, "authentication-methods"), &a, opts...)
 	return
 }
 
@@ -678,7 +673,7 @@ func (m *UserManager) CreateAuthenticationMethod(ctx context.Context, userID str
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/put_authentication_methods
 func (m *UserManager) UpdateAllAuthenticationMethods(ctx context.Context, userID string, a *[]AuthenticationMethod, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "PUT", m.URI("users", userID, "authentication-methods"), &a, opts...)
+	err = m.management.Request(ctx, "PUT", m.management.URI("users", userID, "authentication-methods"), &a, opts...)
 	return
 }
 
@@ -686,7 +681,7 @@ func (m *UserManager) UpdateAllAuthenticationMethods(ctx context.Context, userID
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/patch_authentication_methods_by_authentication_method_id
 func (m *UserManager) UpdateAuthenticationMethod(ctx context.Context, userID string, id string, a *AuthenticationMethod, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "PATCH", m.URI("users", userID, "authentication-methods", id), &a, opts...)
+	err = m.management.Request(ctx, "PATCH", m.management.URI("users", userID, "authentication-methods", id), &a, opts...)
 	return
 }
 
@@ -694,7 +689,7 @@ func (m *UserManager) UpdateAuthenticationMethod(ctx context.Context, userID str
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/delete_authentication_methods_by_authentication_method_id
 func (m *UserManager) DeleteAuthenticationMethod(ctx context.Context, userID string, id string, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "DELETE", m.URI("users", userID, "authentication-methods", id), nil, opts...)
+	err = m.management.Request(ctx, "DELETE", m.management.URI("users", userID, "authentication-methods", id), nil, opts...)
 	return
 }
 
@@ -702,6 +697,6 @@ func (m *UserManager) DeleteAuthenticationMethod(ctx context.Context, userID str
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/delete_authentication_methods
 func (m *UserManager) DeleteAllAuthenticationMethods(ctx context.Context, userID string, opts ...RequestOption) (err error) {
-	err = m.Request(ctx, "DELETE", m.URI("users", userID, "authentication-methods"), nil, opts...)
+	err = m.management.Request(ctx, "DELETE", m.management.URI("users", userID, "authentication-methods"), nil, opts...)
 	return
 }

@@ -28,19 +28,13 @@ type GrantList struct {
 }
 
 // GrantManager manages Auth0 Grant resources.
-type GrantManager struct {
-	*Management
-}
-
-func newGrantManager(m *Management) *GrantManager {
-	return &GrantManager{m}
-}
+type GrantManager manager
 
 // List the grants associated with your account.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Grants/get_grants
 func (m *GrantManager) List(ctx context.Context, opts ...RequestOption) (g *GrantList, err error) {
-	err = m.Request(ctx, "GET", m.URI("grants"), &g, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("grants"), &g, applyListDefaults(opts))
 	return
 }
 
@@ -48,5 +42,5 @@ func (m *GrantManager) List(ctx context.Context, opts ...RequestOption) (g *Gran
 //
 // https://auth0.com/docs/api/management/v2#!/Grants/delete_grants_by_id
 func (m *GrantManager) Delete(ctx context.Context, id string, opts ...RequestOption) error {
-	return m.Request(ctx, "DELETE", m.URI("grants", id), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("grants", id), nil, opts...)
 }

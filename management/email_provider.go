@@ -221,13 +221,7 @@ func (ep *EmailProvider) UnmarshalJSON(b []byte) error {
 }
 
 // EmailProviderManager manages the Auth0 EmailProvider.
-type EmailProviderManager struct {
-	*Management
-}
-
-func newEmailProviderManager(m *Management) *EmailProviderManager {
-	return &EmailProviderManager{m}
-}
+type EmailProviderManager manager
 
 // Create an email provider.
 //
@@ -256,7 +250,7 @@ func newEmailProviderManager(m *Management) *EmailProviderManager {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/post_provider
 func (m *EmailProviderManager) Create(ctx context.Context, ep *EmailProvider, opts ...RequestOption) error {
-	return m.Request(ctx, http.MethodPost, m.URI("emails", "provider"), ep, opts...)
+	return m.management.Request(ctx, http.MethodPost, m.management.URI("emails", "provider"), ep, opts...)
 }
 
 // Read email provider details.
@@ -264,7 +258,7 @@ func (m *EmailProviderManager) Create(ctx context.Context, ep *EmailProvider, op
 // See: https://auth0.com/docs/api/management/v2#!/Emails/get_provider
 func (m *EmailProviderManager) Read(ctx context.Context, opts ...RequestOption) (ep *EmailProvider, err error) {
 	opts = append(opts, IncludeFields("name", "enabled", "default_from_address", "credentials", "settings"))
-	err = m.Request(ctx, http.MethodGet, m.URI("emails", "provider"), &ep, opts...)
+	err = m.management.Request(ctx, http.MethodGet, m.management.URI("emails", "provider"), &ep, opts...)
 	return
 }
 
@@ -272,12 +266,12 @@ func (m *EmailProviderManager) Read(ctx context.Context, opts ...RequestOption) 
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/patch_provider
 func (m *EmailProviderManager) Update(ctx context.Context, ep *EmailProvider, opts ...RequestOption) (err error) {
-	return m.Request(ctx, http.MethodPatch, m.URI("emails", "provider"), ep, opts...)
+	return m.management.Request(ctx, http.MethodPatch, m.management.URI("emails", "provider"), ep, opts...)
 }
 
 // Delete the email provider.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/delete_provider
 func (m *EmailProviderManager) Delete(ctx context.Context, opts ...RequestOption) (err error) {
-	return m.Request(ctx, http.MethodDelete, m.URI("emails", "provider"), nil, opts...)
+	return m.management.Request(ctx, http.MethodDelete, m.management.URI("emails", "provider"), nil, opts...)
 }

@@ -1062,9 +1062,7 @@ func (c *ConnectionOptionsGoogleApps) SetScopes(enable bool, scopes ...string) {
 }
 
 // ConnectionManager manages Auth0 Connection resources.
-type ConnectionManager struct {
-	*Management
-}
+type ConnectionManager manager
 
 // ConnectionList is a list of Connections.
 type ConnectionList struct {
@@ -1072,22 +1070,18 @@ type ConnectionList struct {
 	Connections []*Connection `json:"connections"`
 }
 
-func newConnectionManager(m *Management) *ConnectionManager {
-	return &ConnectionManager{m}
-}
-
 // Create a new connection.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/post_connections
 func (m *ConnectionManager) Create(ctx context.Context, c *Connection, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("connections"), c, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("connections"), c, opts...)
 }
 
 // Read retrieves a connection by its id.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/get_connections_by_id
 func (m *ConnectionManager) Read(ctx context.Context, id string, opts ...RequestOption) (c *Connection, err error) {
-	err = m.Request(ctx, "GET", m.URI("connections", id), &c, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("connections", id), &c, opts...)
 	return
 }
 
@@ -1095,7 +1089,7 @@ func (m *ConnectionManager) Read(ctx context.Context, id string, opts ...Request
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/get_connections
 func (m *ConnectionManager) List(ctx context.Context, opts ...RequestOption) (c *ConnectionList, err error) {
-	err = m.Request(ctx, "GET", m.URI("connections"), &c, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("connections"), &c, applyListDefaults(opts))
 	return
 }
 
@@ -1106,14 +1100,14 @@ func (m *ConnectionManager) List(ctx context.Context, opts ...RequestOption) (c 
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/patch_connections_by_id
 func (m *ConnectionManager) Update(ctx context.Context, id string, c *Connection, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "PATCH", m.URI("connections", id), c, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("connections", id), c, opts...)
 }
 
 // Delete a connection and all its users.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/delete_connections_by_id
 func (m *ConnectionManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "DELETE", m.URI("connections", id), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("connections", id), nil, opts...)
 }
 
 // ReadByName retrieves a connection by its name. This is a helper method when a

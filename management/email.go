@@ -48,13 +48,7 @@ type EmailCredentials struct {
 
 // EmailManager manages Auth0 Email resources.
 // Deprecated: Use EmailProviderManager instead.
-type EmailManager struct {
-	*Management
-}
-
-func newEmailManager(m *Management) *EmailManager {
-	return &EmailManager{m}
-}
+type EmailManager manager
 
 // Create an email provider.
 //
@@ -83,7 +77,7 @@ func newEmailManager(m *Management) *EmailManager {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/post_provider
 func (m *EmailManager) Create(ctx context.Context, e *Email, opts ...RequestOption) error {
-	return m.Request(ctx, "POST", m.URI("emails", "provider"), e, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("emails", "provider"), e, opts...)
 }
 
 // Read email provider details.
@@ -91,7 +85,7 @@ func (m *EmailManager) Create(ctx context.Context, e *Email, opts ...RequestOpti
 // See: https://auth0.com/docs/api/management/v2#!/Emails/get_provider
 func (m *EmailManager) Read(ctx context.Context, opts ...RequestOption) (e *Email, err error) {
 	opts = append(opts, IncludeFields("name", "enabled", "default_from_address", "credentials", "settings"))
-	err = m.Request(ctx, "GET", m.URI("emails", "provider"), &e, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("emails", "provider"), &e, opts...)
 	return
 }
 
@@ -99,12 +93,12 @@ func (m *EmailManager) Read(ctx context.Context, opts ...RequestOption) (e *Emai
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/patch_provider
 func (m *EmailManager) Update(ctx context.Context, e *Email, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "PATCH", m.URI("emails", "provider"), e, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("emails", "provider"), e, opts...)
 }
 
 // Delete the email provider.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/delete_provider
 func (m *EmailManager) Delete(ctx context.Context, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "DELETE", m.URI("emails", "provider"), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("emails", "provider"), nil, opts...)
 }

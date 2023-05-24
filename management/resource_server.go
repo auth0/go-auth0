@@ -69,26 +69,20 @@ type ResourceServerList struct {
 }
 
 // ResourceServerManager is used for managing a ResourceServer.
-type ResourceServerManager struct {
-	*Management
-}
-
-func newResourceServerManager(m *Management) *ResourceServerManager {
-	return &ResourceServerManager{m}
-}
+type ResourceServerManager manager
 
 // Create a resource server.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Resource_Servers/post_resource_servers
 func (m *ResourceServerManager) Create(ctx context.Context, rs *ResourceServer, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "POST", m.URI("resource-servers"), rs, opts...)
+	return m.management.Request(ctx, "POST", m.management.URI("resource-servers"), rs, opts...)
 }
 
 // Read retrieves a resource server by its id or audience.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Resource_Servers/get_resource_servers_by_id
 func (m *ResourceServerManager) Read(ctx context.Context, id string, opts ...RequestOption) (rs *ResourceServer, err error) {
-	err = m.Request(ctx, "GET", m.URI("resource-servers", id), &rs, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("resource-servers", id), &rs, opts...)
 	return
 }
 
@@ -96,21 +90,21 @@ func (m *ResourceServerManager) Read(ctx context.Context, id string, opts ...Req
 //
 // See: https://auth0.com/docs/api/management/v2#!/Resource_Servers/patch_resource_servers_by_id
 func (m *ResourceServerManager) Update(ctx context.Context, id string, rs *ResourceServer, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "PATCH", m.URI("resource-servers", id), rs, opts...)
+	return m.management.Request(ctx, "PATCH", m.management.URI("resource-servers", id), rs, opts...)
 }
 
 // Delete a resource server.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Resource_Servers/delete_resource_servers_by_id
 func (m *ResourceServerManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
-	return m.Request(ctx, "DELETE", m.URI("resource-servers", id), nil, opts...)
+	return m.management.Request(ctx, "DELETE", m.management.URI("resource-servers", id), nil, opts...)
 }
 
 // List all resource server.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Resource_Servers/get_resource_servers
 func (m *ResourceServerManager) List(ctx context.Context, opts ...RequestOption) (rl *ResourceServerList, err error) {
-	err = m.Request(ctx, "GET", m.URI("resource-servers"), &rl, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("resource-servers"), &rl, applyListDefaults(opts))
 	return
 }
 
