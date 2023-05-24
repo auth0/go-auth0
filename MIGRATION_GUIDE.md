@@ -99,3 +99,32 @@ err := auth0API.Client.Create(
 </td>
 </tr>
 </table>
+
+### Removal Of Manager Chaining
+
+Previously, the individual Manager instances in the Management Client could be chained when calling them, this was unintended and has now been removed.
+
+This should improve code completion features such as IntelliSense to only provide the relevant methods rather than all the individual Managers.
+
+<table>
+<tr>
+<th>Before (v0.17.1)</th>
+<th>After (v1.0.0)</th>
+</tr>
+<tr>
+<td>
+
+```go
+// Managers could be chained before calling the desired method.
+api.Action.Client.Action.Client.Create()
+```
+</td>
+<td>
+
+```go
+// Chaining is no longer supported.
+api.Client.Create()
+```
+</td>
+</tr>
+</table>
