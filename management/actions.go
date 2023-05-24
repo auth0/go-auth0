@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"net/http"
 	"time"
 )
@@ -236,121 +237,121 @@ func applyActionsListDefaults(options []RequestOption) RequestOption {
 // Triggers lists the available triggers.
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/get_triggers
-func (m *ActionManager) Triggers(opts ...RequestOption) (l *ActionTriggerList, err error) {
-	err = m.Request("GET", m.URI("actions", "triggers"), &l, opts...)
+func (m *ActionManager) Triggers(ctx context.Context, opts ...RequestOption) (l *ActionTriggerList, err error) {
+	err = m.Request(ctx, "GET", m.URI("actions", "triggers"), &l, opts...)
 	return
 }
 
 // Create a new action.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/post_action
-func (m *ActionManager) Create(a *Action, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("actions", "actions"), a, opts...)
+func (m *ActionManager) Create(ctx context.Context, a *Action, opts ...RequestOption) error {
+	return m.Request(ctx, "POST", m.URI("actions", "actions"), a, opts...)
 }
 
 // Retrieve action details.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/get_action
-func (m *ActionManager) Read(id string, opts ...RequestOption) (a *Action, err error) {
-	err = m.Request("GET", m.URI("actions", "actions", id), &a, opts...)
+func (m *ActionManager) Read(ctx context.Context, id string, opts ...RequestOption) (a *Action, err error) {
+	err = m.Request(ctx, "GET", m.URI("actions", "actions", id), &a, opts...)
 	return
 }
 
 // Update an existing action.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/patch_action
-func (m *ActionManager) Update(id string, a *Action, opts ...RequestOption) error {
-	return m.Request("PATCH", m.URI("actions", "actions", id), &a, opts...)
+func (m *ActionManager) Update(ctx context.Context, id string, a *Action, opts ...RequestOption) error {
+	return m.Request(ctx, "PATCH", m.URI("actions", "actions", id), &a, opts...)
 }
 
 // Delete an action
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/delete_action
-func (m *ActionManager) Delete(id string, opts ...RequestOption) error {
-	return m.Request("DELETE", m.URI("actions", "actions", id), nil, opts...)
+func (m *ActionManager) Delete(ctx context.Context, id string, opts ...RequestOption) error {
+	return m.Request(ctx, "DELETE", m.URI("actions", "actions", id), nil, opts...)
 }
 
 // List all actions.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/get_actions
-func (m *ActionManager) List(opts ...RequestOption) (l *ActionList, err error) {
-	err = m.Request("GET", m.URI("actions", "actions"), &l, applyActionsListDefaults(opts))
+func (m *ActionManager) List(ctx context.Context, opts ...RequestOption) (l *ActionList, err error) {
+	err = m.Request(ctx, "GET", m.URI("actions", "actions"), &l, applyActionsListDefaults(opts))
 	return
 }
 
 // Version retrieves the version of an action.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_action_version
-func (m *ActionManager) Version(id string, versionID string, opts ...RequestOption) (v *ActionVersion, err error) {
-	err = m.Request("GET", m.URI("actions", "actions", id, "versions", versionID), &v, opts...)
+func (m *ActionManager) Version(ctx context.Context, id string, versionID string, opts ...RequestOption) (v *ActionVersion, err error) {
+	err = m.Request(ctx, "GET", m.URI("actions", "actions", id, "versions", versionID), &v, opts...)
 	return
 }
 
 // Versions lists all versions of an action.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_action_versions
-func (m *ActionManager) Versions(id string, opts ...RequestOption) (c *ActionVersionList, err error) {
-	err = m.Request("GET", m.URI("actions", "actions", id, "versions"), &c, applyActionsListDefaults(opts))
+func (m *ActionManager) Versions(ctx context.Context, id string, opts ...RequestOption) (c *ActionVersionList, err error) {
+	err = m.Request(ctx, "GET", m.URI("actions", "actions", id, "versions"), &c, applyActionsListDefaults(opts))
 	return
 }
 
 // UpdateBindings of a trigger.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/patch_bindings
-func (m *ActionManager) UpdateBindings(triggerID string, b []*ActionBinding, opts ...RequestOption) error {
+func (m *ActionManager) UpdateBindings(ctx context.Context, triggerID string, b []*ActionBinding, opts ...RequestOption) error {
 	bl := &actionBindingsPerTrigger{
 		Bindings: b,
 	}
-	return m.Request("PATCH", m.URI("actions", "triggers", triggerID, "bindings"), &bl, opts...)
+	return m.Request(ctx, "PATCH", m.URI("actions", "triggers", triggerID, "bindings"), &bl, opts...)
 }
 
 // Bindings lists the bindings of a trigger.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_bindings
-func (m *ActionManager) Bindings(triggerID string, opts ...RequestOption) (bl *ActionBindingList, err error) {
-	err = m.Request("GET", m.URI("actions", "triggers", triggerID, "bindings"), &bl, applyActionsListDefaults(opts))
+func (m *ActionManager) Bindings(ctx context.Context, triggerID string, opts ...RequestOption) (bl *ActionBindingList, err error) {
+	err = m.Request(ctx, "GET", m.URI("actions", "triggers", triggerID, "bindings"), &bl, applyActionsListDefaults(opts))
 	return
 }
 
 // Deploy an action
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/post_deploy_action
-func (m *ActionManager) Deploy(id string, opts ...RequestOption) (v *ActionVersion, err error) {
-	err = m.Request("POST", m.URI("actions", "actions", id, "deploy"), &v, opts...)
+func (m *ActionManager) Deploy(ctx context.Context, id string, opts ...RequestOption) (v *ActionVersion, err error) {
+	err = m.Request(ctx, "POST", m.URI("actions", "actions", id, "deploy"), &v, opts...)
 	return
 }
 
 // DeployVersion of an action
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/post_deploy_draft_version
-func (m *ActionManager) DeployVersion(id string, versionID string, opts ...RequestOption) (v *ActionVersion, err error) {
-	err = m.Request("POST", m.URI("actions", "actions", id, "versions", versionID, "deploy"), &v, opts...)
+func (m *ActionManager) DeployVersion(ctx context.Context, id string, versionID string, opts ...RequestOption) (v *ActionVersion, err error) {
+	err = m.Request(ctx, "POST", m.URI("actions", "actions", id, "versions", versionID, "deploy"), &v, opts...)
 	return
 }
 
 // Test an action.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/post_test_action
-func (m *ActionManager) Test(id string, payload *ActionTestPayload, opts ...RequestOption) (err error) {
+func (m *ActionManager) Test(ctx context.Context, id string, payload *ActionTestPayload, opts ...RequestOption) (err error) {
 	r := &actionTestRequest{
 		Payload: payload,
 	}
-	err = m.Request("POST", m.URI("actions", "actions", id, "test"), &r, opts...)
+	err = m.Request(ctx, "POST", m.URI("actions", "actions", id, "test"), &r, opts...)
 	return
 }
 
 // Execution retrieves the details of an action execution.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_execution
-func (m *ActionManager) Execution(executionID string, opts ...RequestOption) (v *ActionExecution, err error) {
-	err = m.Request("GET", m.URI("actions", "executions", executionID), &v, opts...)
+func (m *ActionManager) Execution(ctx context.Context, executionID string, opts ...RequestOption) (v *ActionExecution, err error) {
+	err = m.Request(ctx, "GET", m.URI("actions", "executions", executionID), &v, opts...)
 	return
 }
 
 // LogSession creates a log session for tailing Actions logs.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/post_actions_log_sessions
-func (m *ActionManager) LogSession(l *ActionLogSession, opts ...RequestOption) (err error) {
-	err = m.Request("POST", m.URI("actions", "log-sessions"), &l, opts...)
+func (m *ActionManager) LogSession(ctx context.Context, l *ActionLogSession, opts ...RequestOption) (err error) {
+	err = m.Request(ctx, "POST", m.URI("actions", "log-sessions"), &l, opts...)
 	return
 }

@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
 	"net/http"
@@ -24,7 +25,7 @@ func TestOrganizationManager_Create(t *testing.T) {
 		},
 	}
 
-	err := api.Organization.Create(org)
+	err := api.Organization.Create(context.Background(), org)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, org.GetID())
 
@@ -38,7 +39,7 @@ func TestOrganizationManager_Read(t *testing.T) {
 
 	org := givenAnOrganization(t)
 
-	actualOrg, err := api.Organization.Read(org.GetID())
+	actualOrg, err := api.Organization.Read(context.Background(), org.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, org, actualOrg)
@@ -49,7 +50,7 @@ func TestOrganizationManager_ReadByName(t *testing.T) {
 
 	org := givenAnOrganization(t)
 
-	actualOrg, err := api.Organization.ReadByName(org.GetName())
+	actualOrg, err := api.Organization.ReadByName(context.Background(), org.GetName())
 
 	assert.NoError(t, err)
 	assert.Equal(t, org, actualOrg)
@@ -60,10 +61,10 @@ func TestOrganizationManager_Update(t *testing.T) {
 
 	org := givenAnOrganization(t)
 
-	err := api.Organization.Update(org.GetID(), &Organization{Name: auth0.String("new-org-name")})
+	err := api.Organization.Update(context.Background(), org.GetID(), &Organization{Name: auth0.String("new-org-name")})
 	assert.NoError(t, err)
 
-	actualOrg, err := api.Organization.Read(org.GetID())
+	actualOrg, err := api.Organization.Read(context.Background(), org.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, "new-org-name", actualOrg.GetName())
 }
@@ -73,10 +74,10 @@ func TestOrganizationManager_Delete(t *testing.T) {
 
 	org := givenAnOrganization(t)
 
-	err := api.Organization.Delete(org.GetID())
+	err := api.Organization.Delete(context.Background(), org.GetID())
 	assert.NoError(t, err)
 
-	actualOrg, err := api.Organization.Read(org.GetID())
+	actualOrg, err := api.Organization.Read(context.Background(), org.GetID())
 	assert.Empty(t, actualOrg)
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -88,7 +89,7 @@ func TestOrganizationManager_List(t *testing.T) {
 
 	givenAnOrganization(t)
 
-	orgList, err := api.Organization.List()
+	orgList, err := api.Organization.List(context.Background())
 	assert.NoError(t, err)
 	assert.GreaterOrEqual(t, len(orgList.Organizations), 1)
 }
@@ -100,12 +101,12 @@ func TestOrganizationManager_ListCheckpointPagination(t *testing.T) {
 		givenAnOrganization(t)
 	}
 
-	orgList, err := api.Organization.List(Take(2))
+	orgList, err := api.Organization.List(context.Background(), Take(2))
 	assert.NoError(t, err)
 	assert.GreaterOrEqual(t, len(orgList.Organizations), 2)
 	assert.True(t, orgList.HasNext())
 
-	orgList, err = api.Organization.List(Take(2), From(orgList.Next))
+	orgList, err = api.Organization.List(context.Background(), Take(2), From(orgList.Next))
 	assert.NoError(t, err)
 	assert.GreaterOrEqual(t, len(orgList.Organizations), 1)
 	assert.False(t, orgList.HasNext())
@@ -130,7 +131,7 @@ func TestOrganizationManager_AddConnection(t *testing.T) {
 		AssignMembershipOnLogin: auth0.Bool(true),
 	}
 
-	err := api.Organization.AddConnection(org.GetID(), orgConn)
+	err := api.Organization.AddConnection(context.Background(), org.GetID(), orgConn)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, orgConn.GetConnection())
 }
@@ -141,7 +142,7 @@ func TestOrganizationManager_Connection(t *testing.T) {
 	org := givenAnOrganization(t)
 	orgConn := givenAnOrganizationConnection(t, org.GetID())
 
-	actualOrgConn, err := api.Organization.Connection(org.GetID(), orgConn.GetConnectionID())
+	actualOrgConn, err := api.Organization.Connection(context.Background(), org.GetID(), orgConn.GetConnectionID())
 	assert.NoError(t, err)
 	assert.Equal(t, orgConn, actualOrgConn)
 }
@@ -153,6 +154,7 @@ func TestOrganizationManager_UpdateConnection(t *testing.T) {
 	orgConn := givenAnOrganizationConnection(t, org.GetID())
 
 	err := api.Organization.UpdateConnection(
+		context.Background(),
 		org.GetID(),
 		orgConn.GetConnectionID(),
 		&OrganizationConnection{
@@ -161,7 +163,7 @@ func TestOrganizationManager_UpdateConnection(t *testing.T) {
 	)
 	assert.NoError(t, err)
 
-	actualOrgConn, err := api.Organization.Connection(org.GetID(), orgConn.GetConnectionID())
+	actualOrgConn, err := api.Organization.Connection(context.Background(), org.GetID(), orgConn.GetConnectionID())
 	assert.NoError(t, err)
 	assert.Equal(t, false, actualOrgConn.GetAssignMembershipOnLogin())
 }
@@ -172,10 +174,10 @@ func TestOrganizationManager_DeleteConnection(t *testing.T) {
 	org := givenAnOrganization(t)
 	orgConn := givenAnOrganizationConnection(t, org.GetID())
 
-	err := api.Organization.DeleteConnection(org.GetID(), orgConn.GetConnectionID())
+	err := api.Organization.DeleteConnection(context.Background(), org.GetID(), orgConn.GetConnectionID())
 	assert.NoError(t, err)
 
-	actualOrgConn, err := api.Organization.Connection(org.GetID(), orgConn.GetConnectionID())
+	actualOrgConn, err := api.Organization.Connection(context.Background(), org.GetID(), orgConn.GetConnectionID())
 	assert.Error(t, err)
 	assert.Empty(t, actualOrgConn)
 	assert.Implements(t, (*Error)(nil), err)
@@ -188,7 +190,7 @@ func TestOrganizationManager_Connections(t *testing.T) {
 	org := givenAnOrganization(t)
 	orgConn := givenAnOrganizationConnection(t, org.GetID())
 
-	orgConnList, err := api.Organization.Connections(org.GetID())
+	orgConnList, err := api.Organization.Connections(context.Background(), org.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, orgConnList.OrganizationConnections, 1)
 	assert.Equal(t, orgConn.GetConnectionID(), orgConnList.OrganizationConnections[0].GetConnectionID())
@@ -209,7 +211,7 @@ func TestOrganizationManager_CreateInvitation(t *testing.T) {
 		ClientID: client.ClientID,
 	}
 
-	err := api.Organization.CreateInvitation(org.GetID(), orgInvite)
+	err := api.Organization.CreateInvitation(context.Background(), org.GetID(), orgInvite)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, orgInvite.GetID())
 }
@@ -220,7 +222,7 @@ func TestOrganizationManager_Invitation(t *testing.T) {
 	org := givenAnOrganization(t)
 	orgInvite := givenAnOrganizationInvitation(t, org.GetID())
 
-	actualOrgInvite, err := api.Organization.Invitation(org.GetID(), orgInvite.GetID())
+	actualOrgInvite, err := api.Organization.Invitation(context.Background(), org.GetID(), orgInvite.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, orgInvite, actualOrgInvite)
 }
@@ -231,10 +233,10 @@ func TestOrganizationManager_DeleteInvitation(t *testing.T) {
 	org := givenAnOrganization(t)
 	orgInvite := givenAnOrganizationInvitation(t, org.GetID())
 
-	err := api.Organization.DeleteInvitation(org.GetID(), orgInvite.GetID())
+	err := api.Organization.DeleteInvitation(context.Background(), org.GetID(), orgInvite.GetID())
 	assert.NoError(t, err)
 
-	actualOrgInvite, err := api.Organization.Invitation(org.GetID(), orgInvite.GetID())
+	actualOrgInvite, err := api.Organization.Invitation(context.Background(), org.GetID(), orgInvite.GetID())
 	assert.Error(t, err)
 	assert.Empty(t, actualOrgInvite)
 	assert.Implements(t, (*Error)(nil), err)
@@ -247,7 +249,7 @@ func TestOrganizationManager_Invitations(t *testing.T) {
 	org := givenAnOrganization(t)
 	orgInvite := givenAnOrganizationInvitation(t, org.GetID())
 
-	invitations, err := api.Organization.Invitations(org.GetID())
+	invitations, err := api.Organization.Invitations(context.Background(), org.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, invitations.OrganizationInvitations, 1)
 	assert.Equal(t, orgInvite.GetID(), invitations.OrganizationInvitations[0].GetID())
@@ -259,7 +261,7 @@ func TestOrganizationManager_AddMembers(t *testing.T) {
 	org := givenAnOrganization(t)
 	user := givenAUser(t)
 
-	err := api.Organization.AddMembers(org.GetID(), []string{user.GetID()})
+	err := api.Organization.AddMembers(context.Background(), org.GetID(), []string{user.GetID()})
 	assert.NoError(t, err)
 }
 
@@ -269,13 +271,13 @@ func TestOrganizationManager_DeleteMembers(t *testing.T) {
 	org := givenAnOrganization(t)
 	user := givenAUser(t)
 
-	err := api.Organization.AddMembers(org.GetID(), []string{user.GetID()})
+	err := api.Organization.AddMembers(context.Background(), org.GetID(), []string{user.GetID()})
 	assert.NoError(t, err)
 
-	err = api.Organization.DeleteMember(org.GetID(), []string{user.GetID()})
+	err = api.Organization.DeleteMember(context.Background(), org.GetID(), []string{user.GetID()})
 	assert.NoError(t, err)
 
-	members, err := api.Organization.Members(org.GetID())
+	members, err := api.Organization.Members(context.Background(), org.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, members.Members, 0)
 }
@@ -286,10 +288,10 @@ func TestOrganizationManager_Members(t *testing.T) {
 	org := givenAnOrganization(t)
 	user := givenAUser(t)
 
-	err := api.Organization.AddMembers(org.GetID(), []string{user.GetID()})
+	err := api.Organization.AddMembers(context.Background(), org.GetID(), []string{user.GetID()})
 	assert.NoError(t, err)
 
-	members, err := api.Organization.Members(org.GetID())
+	members, err := api.Organization.Members(context.Background(), org.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, members.Members, 1)
 	assert.Equal(t, user.GetID(), members.Members[0].GetUserID())
@@ -306,22 +308,22 @@ func TestOrganizationManager_MembersCheckpointPagination(t *testing.T) {
 		users = append(users, user.GetID())
 	}
 
-	err := api.Organization.AddMembers(org.GetID(), users)
+	err := api.Organization.AddMembers(context.Background(), org.GetID(), users)
 	assert.NoError(t, err)
 
-	members, err := api.Organization.Members(org.GetID(), Take(2))
+	members, err := api.Organization.Members(context.Background(), org.GetID(), Take(2))
 	assert.NoError(t, err)
 	assert.Len(t, members.Members, 2)
 	assert.True(t, members.HasNext())
 
-	members, err = api.Organization.Members(org.GetID(), Take(2), From(members.Next))
+	members, err = api.Organization.Members(context.Background(), org.GetID(), Take(2), From(members.Next))
 	assert.NoError(t, err)
 	assert.Len(t, members.Members, 1)
 	assert.True(t, members.HasNext())
 
 	// Org members pagination will only return an empty `Next` value when the number of members
 	// returned is 0 unlike other pagination APIs
-	members, err = api.Organization.Members(org.GetID(), Take(2), From(members.Next))
+	members, err = api.Organization.Members(context.Background(), org.GetID(), Take(2), From(members.Next))
 	assert.NoError(t, err)
 	assert.Len(t, members.Members, 0)
 	assert.False(t, members.HasNext())
@@ -334,21 +336,21 @@ func TestOrganizationManager_MemberRoles(t *testing.T) {
 	user := givenAUser(t)
 	role := givenARole(t)
 
-	err := api.Organization.AddMembers(org.GetID(), []string{user.GetID()})
+	err := api.Organization.AddMembers(context.Background(), org.GetID(), []string{user.GetID()})
 	assert.NoError(t, err)
 
-	err = api.Organization.AssignMemberRoles(org.GetID(), user.GetID(), []string{role.GetID()})
+	err = api.Organization.AssignMemberRoles(context.Background(), org.GetID(), user.GetID(), []string{role.GetID()})
 	assert.NoError(t, err)
 
-	roles, err := api.Organization.MemberRoles(org.GetID(), user.GetID())
+	roles, err := api.Organization.MemberRoles(context.Background(), org.GetID(), user.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, roles.Roles, 1)
 	assert.Equal(t, role.GetID(), roles.Roles[0].GetID())
 
-	err = api.Organization.DeleteMemberRoles(org.GetID(), user.GetID(), []string{role.GetID()})
+	err = api.Organization.DeleteMemberRoles(context.Background(), org.GetID(), user.GetID(), []string{role.GetID()})
 	assert.NoError(t, err)
 
-	roles, err = api.Organization.MemberRoles(org.GetID(), user.GetID())
+	roles, err = api.Organization.MemberRoles(context.Background(), org.GetID(), user.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, roles.Roles, 0)
 }
@@ -362,7 +364,7 @@ func givenAnOrganization(t *testing.T) *Organization {
 		},
 	}
 
-	err := api.Organization.Create(org)
+	err := api.Organization.Create(context.Background(), org)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -390,7 +392,7 @@ func givenAnOrganizationConnection(t *testing.T, orgID string) *OrganizationConn
 		AssignMembershipOnLogin: auth0.Bool(true),
 	}
 
-	err := api.Organization.AddConnection(orgID, orgConn)
+	err := api.Organization.AddConnection(context.Background(), orgID, orgConn)
 	require.NoError(t, err)
 
 	return orgConn
@@ -410,7 +412,7 @@ func givenAnOrganizationInvitation(t *testing.T, orgID string) *OrganizationInvi
 		ClientID: client.ClientID,
 	}
 
-	err := api.Organization.CreateInvitation(orgID, orgInvite)
+	err := api.Organization.CreateInvitation(context.Background(), orgID, orgInvite)
 	require.NoError(t, err)
 
 	return orgInvite
@@ -419,7 +421,7 @@ func givenAnOrganizationInvitation(t *testing.T, orgID string) *OrganizationInvi
 func cleanupOrganization(t *testing.T, orgID string) {
 	t.Helper()
 
-	err := api.Organization.Delete(orgID)
+	err := api.Organization.Delete(context.Background(), orgID)
 	if err != nil {
 		if err.(Error).Status() != http.StatusNotFound {
 			t.Error(err)

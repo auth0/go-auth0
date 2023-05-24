@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"net/http"
 	"testing"
 
@@ -15,7 +16,7 @@ func TestBrandingThemeManager_Default(t *testing.T) {
 
 	expectedTheme := givenABrandingTheme(t)
 
-	actualTheme, err := api.BrandingTheme.Default()
+	actualTheme, err := api.BrandingTheme.Default(context.Background())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedTheme.GetDisplayName(), actualTheme.GetDisplayName())
@@ -97,7 +98,7 @@ func TestBrandingThemeManager_Create(t *testing.T) {
 		},
 	}
 
-	err := api.BrandingTheme.Create(&expectedTheme)
+	err := api.BrandingTheme.Create(context.Background(), &expectedTheme)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedTheme.GetID())
 
@@ -111,7 +112,7 @@ func TestBrandingThemeManager_Read(t *testing.T) {
 
 	expectedTheme := givenABrandingTheme(t)
 
-	actualTheme, err := api.BrandingTheme.Read(expectedTheme.GetID())
+	actualTheme, err := api.BrandingTheme.Read(context.Background(), expectedTheme.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedTheme.GetDisplayName(), actualTheme.GetDisplayName())
@@ -196,10 +197,10 @@ func TestBrandingThemeManager_Update(t *testing.T) {
 		},
 	}
 
-	err := api.BrandingTheme.Update(expectedTheme.GetID(), actualTheme)
+	err := api.BrandingTheme.Update(context.Background(), expectedTheme.GetID(), actualTheme)
 	assert.NoError(t, err)
 
-	actualTheme, err = api.BrandingTheme.Read(expectedTheme.GetID())
+	actualTheme, err = api.BrandingTheme.Read(context.Background(), expectedTheme.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, "newTheme", actualTheme.GetDisplayName())
 }
@@ -209,10 +210,10 @@ func TestBrandingThemeManager_Delete(t *testing.T) {
 
 	theme := givenABrandingTheme(t)
 
-	err := api.BrandingTheme.Delete(theme.GetID())
+	err := api.BrandingTheme.Delete(context.Background(), theme.GetID())
 	assert.NoError(t, err)
 
-	actualTheme, err := api.BrandingTheme.Read(theme.GetID())
+	actualTheme, err := api.BrandingTheme.Read(context.Background(), theme.GetID())
 	assert.Empty(t, actualTheme)
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -295,7 +296,7 @@ func givenABrandingTheme(t *testing.T) *BrandingTheme {
 		},
 	}
 
-	err := api.BrandingTheme.Create(theme)
+	err := api.BrandingTheme.Create(context.Background(), theme)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -308,7 +309,7 @@ func givenABrandingTheme(t *testing.T) *BrandingTheme {
 func cleanupBrandingTheme(t *testing.T, themeID string) {
 	t.Helper()
 
-	err := api.BrandingTheme.Delete(themeID)
+	err := api.BrandingTheme.Delete(context.Background(), themeID)
 	if err != nil {
 		if err.(Error).Status() != http.StatusNotFound {
 			t.Error(err)

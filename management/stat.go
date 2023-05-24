@@ -1,6 +1,9 @@
 package management
 
-import "time"
+import (
+	"context"
+	"time"
+)
 
 // StatManager manages Auth0 DailyStat resources.
 type StatManager struct {
@@ -15,8 +18,8 @@ func newStatManager(m *Management) *StatManager {
 // last 30 days.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Stats/get_active_users
-func (m *StatManager) ActiveUsers(opts ...RequestOption) (i int, err error) {
-	err = m.Request("GET", m.URI("stats", "active-users"), &i, opts...)
+func (m *StatManager) ActiveUsers(ctx context.Context, opts ...RequestOption) (i int, err error) {
+	err = m.Request(ctx, "GET", m.URI("stats", "active-users"), &i, opts...)
 	return
 }
 
@@ -35,7 +38,7 @@ type DailyStat struct {
 // date range.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Stats/get_daily
-func (m *StatManager) Daily(opts ...RequestOption) (ds []*DailyStat, err error) {
-	err = m.Request("GET", m.URI("stats", "daily"), &ds, opts...)
+func (m *StatManager) Daily(ctx context.Context, opts ...RequestOption) (ds []*DailyStat, err error) {
+	err = m.Request(ctx, "GET", m.URI("stats", "daily"), &ds, opts...)
 	return
 }

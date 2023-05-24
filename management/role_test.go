@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
 	"net/http"
@@ -20,7 +21,7 @@ func TestRoleManager_Create(t *testing.T) {
 		Description: auth0.String("Test Role"),
 	}
 
-	err := api.Role.Create(role)
+	err := api.Role.Create(context.Background(), role)
 
 	assert.NoError(t, err)
 	assert.NotEmpty(t, role.GetID())
@@ -35,7 +36,7 @@ func TestRoleManager_Read(t *testing.T) {
 
 	expectedRole := givenARole(t)
 
-	actualRole, err := api.Role.Read(expectedRole.GetID())
+	actualRole, err := api.Role.Read(context.Background(), expectedRole.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedRole, actualRole)
@@ -49,7 +50,7 @@ func TestRoleManager_Update(t *testing.T) {
 	updatedRole := &Role{
 		Description: auth0.String("The Administrator"),
 	}
-	err := api.Role.Update(expectedRole.GetID(), updatedRole)
+	err := api.Role.Update(context.Background(), expectedRole.GetID(), updatedRole)
 
 	assert.NoError(t, err)
 	assert.Equal(t, "The Administrator", updatedRole.GetDescription())
@@ -61,10 +62,10 @@ func TestRoleManager_Delete(t *testing.T) {
 
 	expectedRole := givenARole(t)
 
-	err := api.Role.Delete(expectedRole.GetID())
+	err := api.Role.Delete(context.Background(), expectedRole.GetID())
 	assert.NoError(t, err)
 
-	actualRole, err := api.Role.Read(expectedRole.GetID())
+	actualRole, err := api.Role.Read(context.Background(), expectedRole.GetID())
 	assert.Empty(t, actualRole)
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -76,7 +77,7 @@ func TestRoleManager_List(t *testing.T) {
 
 	role := givenARole(t)
 
-	roleList, err := api.Role.List(Parameter("name_filter", role.GetName()))
+	roleList, err := api.Role.List(context.Background(), Parameter("name_filter", role.GetName()))
 
 	assert.NoError(t, err)
 	assert.Len(t, roleList.Roles, 1)
@@ -89,10 +90,10 @@ func TestRoleManager_Users(t *testing.T) {
 	user := givenAUser(t)
 	role := givenARole(t)
 
-	err := api.Role.AssignUsers(role.GetID(), []*User{user})
+	err := api.Role.AssignUsers(context.Background(), role.GetID(), []*User{user})
 	assert.NoError(t, err)
 
-	roleUsers, err := api.Role.Users(role.GetID())
+	roleUsers, err := api.Role.Users(context.Background(), role.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, roleUsers.Users, 1)
 	assert.Equal(t, user.GetID(), roleUsers.Users[0].GetID())
@@ -110,15 +111,15 @@ func TestRoleManager_UsersCheckpointPagination(t *testing.T) {
 
 	role := givenARole(t)
 
-	err := api.Role.AssignUsers(role.GetID(), users)
+	err := api.Role.AssignUsers(context.Background(), role.GetID(), users)
 	assert.NoError(t, err)
 
-	roleUsers, err := api.Role.Users(role.GetID(), Take(2))
+	roleUsers, err := api.Role.Users(context.Background(), role.GetID(), Take(2))
 	assert.NoError(t, err)
 	assert.Len(t, roleUsers.Users, 2)
 	assert.True(t, roleUsers.HasNext())
 
-	roleUsers, err = api.Role.Users(role.GetID(), Take(2), From(roleUsers.Next))
+	roleUsers, err = api.Role.Users(context.Background(), role.GetID(), Take(2), From(roleUsers.Next))
 	assert.NoError(t, err)
 	assert.Len(t, roleUsers.Users, 1)
 	assert.False(t, roleUsers.HasNext())
@@ -136,19 +137,19 @@ func TestRoleManager_Permissions(t *testing.T) {
 		},
 	}
 
-	err := api.Role.AssociatePermissions(role.GetID(), permissions)
+	err := api.Role.AssociatePermissions(context.Background(), role.GetID(), permissions)
 	assert.NoError(t, err)
 
-	permissionList, err := api.Role.Permissions(role.GetID())
+	permissionList, err := api.Role.Permissions(context.Background(), role.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, permissionList.Permissions, 1)
 	assert.Equal(t, permissions[0].GetName(), permissionList.Permissions[0].GetName())
 	assert.Equal(t, permissions[0].GetResourceServerIdentifier(), permissionList.Permissions[0].GetResourceServerIdentifier())
 
-	err = api.Role.RemovePermissions(role.GetID(), permissions)
+	err = api.Role.RemovePermissions(context.Background(), role.GetID(), permissions)
 	assert.NoError(t, err)
 
-	permissionList, err = api.Role.Permissions(role.GetID())
+	permissionList, err = api.Role.Permissions(context.Background(), role.GetID())
 	assert.NoError(t, err)
 	assert.Len(t, permissionList.Permissions, 0)
 }
@@ -161,7 +162,7 @@ func givenARole(t *testing.T) *Role {
 		Description: auth0.String("Test Role"),
 	}
 
-	err := api.Role.Create(role)
+	err := api.Role.Create(context.Background(), role)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -174,7 +175,7 @@ func givenARole(t *testing.T) *Role {
 func cleanupRole(t *testing.T, roleID string) {
 	t.Helper()
 
-	err := api.Role.Delete(roleID)
+	err := api.Role.Delete(context.Background(), roleID)
 	if err != nil {
 		if err.(Error).Status() != http.StatusNotFound {
 			t.Error(err)

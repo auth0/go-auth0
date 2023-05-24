@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"testing"
@@ -20,7 +21,7 @@ func TestClient_Create(t *testing.T) {
 		Description: auth0.String("This is just a test client."),
 	}
 
-	err := api.Client.Create(expectedClient)
+	err := api.Client.Create(context.Background(), expectedClient)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedClient.GetClientID())
 
@@ -34,7 +35,7 @@ func TestClient_Read(t *testing.T) {
 
 	expectedClient := givenAClient(t)
 
-	actualClient, err := api.Client.Read(expectedClient.GetClientID())
+	actualClient, err := api.Client.Read(context.Background(), expectedClient.GetClientID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedClient.GetName(), actualClient.GetName())
@@ -54,7 +55,7 @@ func TestClient_Update(t *testing.T) {
 	expectedClient.JWTConfiguration.SecretEncoded = nil // Read-Only: Additional properties not allowed.
 	expectedClient.ClientSecret = nil
 
-	err := api.Client.Update(clientID, expectedClient)
+	err := api.Client.Update(context.Background(), clientID, expectedClient)
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedDescription, *expectedClient.Description)
@@ -65,10 +66,10 @@ func TestClient_Delete(t *testing.T) {
 
 	expectedClient := givenAClient(t)
 
-	err := api.Client.Delete(expectedClient.GetClientID())
+	err := api.Client.Delete(context.Background(), expectedClient.GetClientID())
 	assert.NoError(t, err)
 
-	actualClient, err := api.Client.Read(expectedClient.GetClientID())
+	actualClient, err := api.Client.Read(context.Background(), expectedClient.GetClientID())
 
 	assert.Empty(t, actualClient)
 	assert.Error(t, err)
@@ -81,7 +82,7 @@ func TestClient_List(t *testing.T) {
 
 	expectedClient := givenAClient(t)
 
-	clientList, err := api.Client.List(IncludeFields("client_id"))
+	clientList, err := api.Client.List(context.Background(), IncludeFields("client_id"))
 
 	assert.NoError(t, err)
 	assert.Contains(t, clientList.Clients, &Client{ClientID: expectedClient.ClientID})
@@ -93,7 +94,7 @@ func TestClient_RotateSecret(t *testing.T) {
 	expectedClient := givenAClient(t)
 
 	oldSecret := expectedClient.GetClientSecret()
-	actualClient, err := api.Client.RotateSecret(expectedClient.GetClientID())
+	actualClient, err := api.Client.RotateSecret(context.Background(), expectedClient.GetClientID())
 
 	assert.NoError(t, err)
 	assert.NotEqual(t, oldSecret, actualClient.GetClientSecret())
@@ -113,7 +114,7 @@ func TestClient_CreateWithClientAddons(t *testing.T) {
 		},
 	}
 
-	err := api.Client.Create(expectedClient)
+	err := api.Client.Create(context.Background(), expectedClient)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedClient.GetClientID())
 
@@ -177,7 +178,7 @@ XzvXjHGyxWVu0jdvS9hyhJzP4165k1cYDgx8mmg0VxR7j79LmCUDsFcvvSrAOf6y
 -----END PUBLIC KEY-----`),
 	}
 
-	err := api.Client.CreateCredential(expectedClient.GetClientID(), credential)
+	err := api.Client.CreateCredential(context.Background(), expectedClient.GetClientID(), credential)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, credential.GetID())
 
@@ -194,7 +195,7 @@ func TestClient_ListCredentials(t *testing.T) {
 	createdCredential := createdCredentials[0]
 	expectedCredential := givenACredential(t, expectedClient)
 
-	credentials, err := api.Client.ListCredentials(expectedClient.GetClientID())
+	credentials, err := api.Client.ListCredentials(context.Background(), expectedClient.GetClientID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, createdCredential.GetID(), credentials[0].GetID())
@@ -207,7 +208,7 @@ func TestClient_GetCredentials(t *testing.T) {
 	expectedClient := givenAClient(t)
 	expectedCredential := givenACredential(t, expectedClient)
 
-	credential, err := api.Client.GetCredential(expectedClient.GetClientID(), expectedCredential.GetID())
+	credential, err := api.Client.GetCredential(context.Background(), expectedClient.GetClientID(), expectedCredential.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedCredential.GetID(), credential.GetID())
@@ -219,10 +220,10 @@ func TestClient_DeleteCredential(t *testing.T) {
 	expectedClient := givenAClient(t)
 	expectedCredential := givenACredential(t, expectedClient)
 
-	err := api.Client.DeleteCredential(expectedClient.GetClientID(), expectedCredential.GetID())
+	err := api.Client.DeleteCredential(context.Background(), expectedClient.GetClientID(), expectedCredential.GetID())
 	assert.NoError(t, err)
 
-	actualCredential, err := api.Client.Read(expectedCredential.GetID())
+	actualCredential, err := api.Client.Read(context.Background(), expectedCredential.GetID())
 
 	assert.Empty(t, actualCredential)
 	assert.Error(t, err)
@@ -266,7 +267,7 @@ aibASY5pIRiKENmbZELDtucCAwEAAQ==
 		},
 	}
 
-	err := api.Client.Create(client)
+	err := api.Client.Create(context.Background(), client)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -279,7 +280,7 @@ aibASY5pIRiKENmbZELDtucCAwEAAQ==
 func cleanupClient(t *testing.T, clientID string) {
 	t.Helper()
 
-	err := api.Client.Delete(clientID)
+	err := api.Client.Delete(context.Background(), clientID)
 	require.NoError(t, err)
 }
 
@@ -305,7 +306,7 @@ XzvXjHGyxWVu0jdvS9hyhJzP4165k1cYDgx8mmg0VxR7j79LmCUDsFcvvSrAOf6y
 -----END PUBLIC KEY-----`),
 	}
 
-	err := api.Client.CreateCredential(client.GetClientID(), credential)
+	err := api.Client.CreateCredential(context.Background(), client.GetClientID(), credential)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -318,6 +319,6 @@ XzvXjHGyxWVu0jdvS9hyhJzP4165k1cYDgx8mmg0VxR7j79LmCUDsFcvvSrAOf6y
 func cleanupCredential(t *testing.T, clientID string, credentialID string) {
 	t.Helper()
 
-	err := api.Client.DeleteCredential(clientID, credentialID)
+	err := api.Client.DeleteCredential(context.Background(), clientID, credentialID)
 	require.NoError(t, err)
 }

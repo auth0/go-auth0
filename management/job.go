@@ -2,6 +2,7 @@ package management
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"mime/multipart"
 	"net/http"
@@ -124,36 +125,36 @@ func newJobManager(m *Management) *JobManager {
 // Read retrieves a job. Useful to check its status.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Jobs/get_jobs_by_id
-func (m *JobManager) Read(id string, opts ...RequestOption) (j *Job, err error) {
-	err = m.Request("GET", m.URI("jobs", id), &j, opts...)
+func (m *JobManager) Read(ctx context.Context, id string, opts ...RequestOption) (j *Job, err error) {
+	err = m.Request(ctx, "GET", m.URI("jobs", id), &j, opts...)
 	return
 }
 
 // ReadErrors retrieves error details of a failed job.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Jobs/get_errors
-func (m *JobManager) ReadErrors(id string, opts ...RequestOption) (jobErrors []JobError, err error) {
-	err = m.Request("GET", m.URI("jobs", id, "errors"), &jobErrors, opts...)
+func (m *JobManager) ReadErrors(ctx context.Context, id string, opts ...RequestOption) (jobErrors []JobError, err error) {
+	err = m.Request(ctx, "GET", m.URI("jobs", id, "errors"), &jobErrors, opts...)
 	return
 }
 
 // VerifyEmail sends an email to the specified user that asks them to
 // click a link to verify their email address.
-func (m *JobManager) VerifyEmail(j *Job, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("jobs", "verification-email"), j, opts...)
+func (m *JobManager) VerifyEmail(ctx context.Context, j *Job, opts ...RequestOption) error {
+	return m.Request(ctx, "POST", m.URI("jobs", "verification-email"), j, opts...)
 }
 
 // ExportUsers exports all users to a file via a long-running job.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Jobs/post_users_exports
-func (m *JobManager) ExportUsers(j *Job, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("jobs", "users-exports"), j, opts...)
+func (m *JobManager) ExportUsers(ctx context.Context, j *Job, opts ...RequestOption) error {
+	return m.Request(ctx, "POST", m.URI("jobs", "users-exports"), j, opts...)
 }
 
 // ImportUsers imports users from a formatted file into a connection via a long-running job.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Jobs/post_users_imports
-func (m *JobManager) ImportUsers(j *Job, opts ...RequestOption) error {
+func (m *JobManager) ImportUsers(ctx context.Context, j *Job, opts ...RequestOption) error {
 	var payload bytes.Buffer
 	mp := multipart.NewWriter(&payload)
 
@@ -193,7 +194,7 @@ func (m *JobManager) ImportUsers(j *Job, opts ...RequestOption) error {
 		return err
 	}
 
-	request, err := http.NewRequest("POST", m.URI("jobs", "users-imports"), &payload)
+	request, err := http.NewRequestWithContext(ctx, "POST", m.URI("jobs", "users-imports"), &payload)
 	if err != nil {
 		return err
 	}

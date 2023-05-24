@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 )
 
@@ -209,23 +210,23 @@ func newLogStreamManager(m *Management) *LogStreamManager {
 // Create a log stream.
 //
 // See: https://auth0.com/docs/api/management/v2#!/log-streams
-func (m *LogStreamManager) Create(l *LogStream, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("log-streams"), l, opts...)
+func (m *LogStreamManager) Create(ctx context.Context, l *LogStream, opts ...RequestOption) error {
+	return m.Request(ctx, "POST", m.URI("log-streams"), l, opts...)
 }
 
 // Read a log stream.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Log_Streams/get_log_streams_by_id
-func (m *LogStreamManager) Read(id string, opts ...RequestOption) (l *LogStream, err error) {
-	err = m.Request("GET", m.URI("log-streams", id), &l, opts...)
+func (m *LogStreamManager) Read(ctx context.Context, id string, opts ...RequestOption) (l *LogStream, err error) {
+	err = m.Request(ctx, "GET", m.URI("log-streams", id), &l, opts...)
 	return
 }
 
 // List all log streams.
 //
 // See: https://auth0.com/docs/api/management/v2#!/log-streams/get_log_streams
-func (m *LogStreamManager) List(opts ...RequestOption) (ls []*LogStream, err error) {
-	err = m.Request("GET", m.URI("log-streams"), &ls, opts...)
+func (m *LogStreamManager) List(ctx context.Context, opts ...RequestOption) (ls []*LogStream, err error) {
+	err = m.Request(ctx, "GET", m.URI("log-streams"), &ls, opts...)
 	return
 }
 
@@ -237,13 +238,13 @@ func (m *LogStreamManager) List(opts ...RequestOption) (ls []*LogStream, err err
 // not permitted.
 //
 // See: https://auth0.com/docs/api/management/v2#!/log-streams
-func (m *LogStreamManager) Update(id string, l *LogStream, opts ...RequestOption) (err error) {
-	return m.Request("PATCH", m.URI("log-streams", id), l, opts...)
+func (m *LogStreamManager) Update(ctx context.Context, id string, l *LogStream, opts ...RequestOption) (err error) {
+	return m.Request(ctx, "PATCH", m.URI("log-streams", id), l, opts...)
 }
 
 // Delete a log stream.
 //
 // See: https://auth0.com/docs/api/management/v2#!/log-streams
-func (m *LogStreamManager) Delete(id string, opts ...RequestOption) (err error) {
-	return m.Request("DELETE", m.URI("log-streams", id), nil, opts...)
+func (m *LogStreamManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
+	return m.Request(ctx, "DELETE", m.URI("log-streams", id), nil, opts...)
 }

@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"net/http"
 	"testing"
 	"time"
@@ -28,7 +29,7 @@ func TestResourceServer_Create(t *testing.T) {
 		},
 	}
 
-	err := api.ResourceServer.Create(expectedResourceServer)
+	err := api.ResourceServer.Create(context.Background(), expectedResourceServer)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedResourceServer.GetID())
 
@@ -42,7 +43,7 @@ func TestResourceServer_Read(t *testing.T) {
 
 	expectedResourceServer := givenAResourceServer(t)
 
-	actualResourceServer, err := api.ResourceServer.Read(expectedResourceServer.GetID())
+	actualResourceServer, err := api.ResourceServer.Read(context.Background(), expectedResourceServer.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedResourceServer.GetName(), actualResourceServer.GetName())
@@ -70,7 +71,7 @@ func TestResourceServer_Update(t *testing.T) {
 	})
 	expectedResourceServer.Scopes = &scopes
 
-	err := api.ResourceServer.Update(resourceServerID, expectedResourceServer)
+	err := api.ResourceServer.Update(context.Background(), resourceServerID, expectedResourceServer)
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedResourceServer.GetAllowOfflineAccess(), true)
@@ -86,10 +87,10 @@ func TestResourceServer_Delete(t *testing.T) {
 
 	expectedResourceServer := givenAResourceServer(t)
 
-	err := api.ResourceServer.Delete(expectedResourceServer.GetID())
+	err := api.ResourceServer.Delete(context.Background(), expectedResourceServer.GetID())
 	assert.NoError(t, err)
 
-	actualResourceServer, err := api.ResourceServer.Read(expectedResourceServer.GetID())
+	actualResourceServer, err := api.ResourceServer.Read(context.Background(), expectedResourceServer.GetID())
 	assert.Empty(t, actualResourceServer)
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -101,7 +102,7 @@ func TestResourceServer_List(t *testing.T) {
 
 	expectedResourceServer := givenAResourceServer(t)
 
-	resourceServerList, err := api.ResourceServer.List(IncludeFields("id"))
+	resourceServerList, err := api.ResourceServer.List(context.Background(), IncludeFields("id"))
 
 	assert.NoError(t, err)
 	assert.Contains(t, resourceServerList.ResourceServers, &ResourceServer{ID: expectedResourceServer.ID})
@@ -124,7 +125,7 @@ func givenAResourceServer(t *testing.T) *ResourceServer {
 		},
 	}
 
-	err := api.ResourceServer.Create(resourceServer)
+	err := api.ResourceServer.Create(context.Background(), resourceServer)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -137,6 +138,6 @@ func givenAResourceServer(t *testing.T) *ResourceServer {
 func cleanupResourceServer(t *testing.T, resourceServerID string) {
 	t.Helper()
 
-	err := api.ResourceServer.Delete(resourceServerID)
+	err := api.ResourceServer.Delete(context.Background(), resourceServerID)
 	require.NoError(t, err)
 }

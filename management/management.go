@@ -3,7 +3,6 @@ package management
 //go:generate go run gen-methods.go
 
 import (
-	"context"
 	"net/http"
 	"net/url"
 	"strings"
@@ -112,7 +111,6 @@ type Management struct {
 	basePath        string
 	userAgent       string
 	debug           bool
-	ctx             context.Context
 	tokenSource     oauth2.TokenSource
 	http            *http.Client
 	auth0ClientInfo *client.Auth0ClientInfo
@@ -138,7 +136,6 @@ func New(domain string, options ...Option) (*Management, error) {
 		basePath:        "api/v2",
 		userAgent:       client.UserAgent,
 		debug:           false,
-		ctx:             context.Background(),
 		http:            http.DefaultClient,
 		auth0ClientInfo: client.DefaultAuth0ClientInfo,
 	}

@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"math"
@@ -363,14 +364,14 @@ func newTenantManager(m *Management) *TenantManager {
 // A list of fields to include or exclude may also be specified.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Tenants/get_settings
-func (m *TenantManager) Read(opts ...RequestOption) (t *Tenant, err error) {
-	err = m.Request("GET", m.URI("tenants", "settings"), &t, opts...)
+func (m *TenantManager) Read(ctx context.Context, opts ...RequestOption) (t *Tenant, err error) {
+	err = m.Request(ctx, "GET", m.URI("tenants", "settings"), &t, opts...)
 	return
 }
 
 // Update settings for a tenant.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Tenants/patch_settings
-func (m *TenantManager) Update(t *Tenant, opts ...RequestOption) (err error) {
-	return m.Request("PATCH", m.URI("tenants", "settings"), t, opts...)
+func (m *TenantManager) Update(ctx context.Context, t *Tenant, opts ...RequestOption) (err error) {
+	return m.Request(ctx, "PATCH", m.URI("tenants", "settings"), t, opts...)
 }

@@ -3,6 +3,10 @@
 
 **Please review this guide thoroughly to understand the changes required to migrate your usage of go-auth0 to v1**
 
+- [Public API Changes](#public-api-changes)
+  - [Improve Typing Of Client Addons](#improve-typing-of-client-addons)
+  - [Require Passing Context To APIs](#require-passing-context-to-apis)
+
 ## Public API Changes
 
 ### Improve Typing Of Client Addons
@@ -43,6 +47,54 @@ client := &management.Client{
         WSFED: &management.WSFEDClientAddon{},
     },
 }
+```
+</td>
+</tr>
+</table>
+
+### Require Passing Context To APIs
+
+All relevant methods have now been updated to require a [`context.Context`](https://pkg.go.dev/context?utm_source=godoc) argument as the first parameter. This applies to all management APIs and the helpers used to configure the `ClientCredential`.
+
+Subsequently, the `management.Context` and `management.WithContext` helpers have been removed.
+
+<table>
+<tr>
+<th>Before (v0.17.1)</th>
+<th>After (v1.0.0)</th>
+</tr>
+<tr>
+<td>
+
+```go
+// Context could be set on the Management Client for the ClientCredential methods to use.
+m, err := management.New(
+    domain,
+    management.WithClientCredentials(id, secret),
+    management.WithContext(context.Background())
+)
+
+// Context could be passed to individual requests with the `Context` method.
+err := auth0API.Client.Create(
+    client,
+    management.Context(context.Background()),
+)
+```
+</td>
+<td>
+
+```go
+// Context should be passed directly to the `WithClientCredentials` or `WithClientCredentialsAndAudience` methods.
+m, err := management.New(
+    domain,
+    management.WithClientCredentials(context.Background(), id, secret),
+)
+
+// Context should be passed to the method as the first argument.
+err := auth0API.Client.Create(
+    context.Background(),
+    client
+)
 ```
 </td>
 </tr>

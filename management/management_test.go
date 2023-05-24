@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
-	"errors"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -46,7 +45,7 @@ func initializeTestClient() {
 
 	api, err = New(
 		domain,
-		WithClientCredentials(clientID, clientSecret),
+		WithClientCredentials(context.Background(), clientID, clientSecret),
 		WithDebug(envVarEnabled(debug)),
 	)
 	if err != nil {
@@ -173,26 +172,22 @@ func TestStringify(t *testing.T) {
 	assert.Equal(t, expected, s)
 }
 
-func TestRequestOptionContextCancel(t *testing.T) {
+func TestRequestContextCancel(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel() // Cancel the request.
 
-	err := api.Request("GET", "/", nil, Context(ctx))
-	if !errors.Is(err, context.Canceled) {
-		t.Errorf("expected err to be context.Canceled, got %v", err)
-	}
+	err := api.Request(ctx, "GET", "/", nil)
+	assert.ErrorIs(t, err, context.Canceled)
 }
 
-func TestRequestOptionContextTimeout(t *testing.T) {
+func TestRequestContextTimeout(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Millisecond)
 	defer cancel()
 
 	time.Sleep(50 * time.Millisecond) // Delay until the deadline is exceeded.
 
-	err := api.Request("GET", "/", nil, Context(ctx))
-	if !errors.Is(err, context.DeadlineExceeded) {
-		t.Errorf("expected err to be context.DeadlineExceeded, got %v", err)
-	}
+	err := api.Request(ctx, "GET", "/", nil)
+	assert.ErrorIs(t, err, context.DeadlineExceeded)
 }
 
 func TestNew_WithInsecure(t *testing.T) {
@@ -209,7 +204,7 @@ func TestNew_WithInsecure(t *testing.T) {
 	m, err := New(s.URL, WithInsecure())
 	assert.NoError(t, err)
 
-	u, err := m.User.Read("123")
+	u, err := m.User.Read(context.Background(), "123")
 	assert.NoError(t, err)
 	assert.Equal(t, "123", u.GetID())
 }
@@ -283,7 +278,7 @@ func TestAuth0Client(t *testing.T) {
 		)
 		assert.NoError(t, err)
 
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 
 		assert.NoError(t, err)
 	})
@@ -304,7 +299,7 @@ func TestAuth0Client(t *testing.T) {
 		)
 		assert.NoError(t, err)
 
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 
 		assert.NoError(t, err)
 	})
@@ -322,7 +317,7 @@ func TestAuth0Client(t *testing.T) {
 			WithNoAuth0ClientInfo(),
 		)
 		assert.NoError(t, err)
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 		assert.NoError(t, err)
 	})
 
@@ -349,7 +344,7 @@ func TestAuth0Client(t *testing.T) {
 			WithAuth0ClientEnvEntry("foo", "bar"),
 		)
 		assert.NoError(t, err)
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 		assert.NoError(t, err)
 	})
 
@@ -368,7 +363,7 @@ func TestAuth0Client(t *testing.T) {
 			WithAuth0ClientEnvEntry("foo", "bar"),
 		)
 		assert.NoError(t, err)
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 		assert.NoError(t, err)
 	})
 
@@ -386,7 +381,37 @@ func TestAuth0Client(t *testing.T) {
 			WithAuth0ClientEnvEntry("foo", "bar"),
 		)
 		assert.NoError(t, err)
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 		assert.NoError(t, err)
 	})
+}
+
+func TestApiCallContextCancel(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel() // Cancel the request.
+
+	m, err := New(
+		"http://localhost:8080",
+		WithInsecure(),
+	)
+	assert.NoError(t, err)
+
+	_, err = m.User.Read(ctx, "123")
+	assert.ErrorIs(t, err, context.Canceled)
+}
+
+func TestApiCallContextTimeout(t *testing.T) {
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Millisecond)
+	defer cancel()
+
+	time.Sleep(50 * time.Millisecond) // Delay until the deadline is exceeded.
+
+	m, err := New(
+		"http://localhost:8080",
+		WithInsecure(),
+	)
+	assert.NoError(t, err)
+
+	_, err = m.User.Read(ctx, "123")
+	assert.ErrorIs(t, err, context.DeadlineExceeded)
 }
