@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -15,40 +14,112 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestWrapRateLimit(t *testing.T) {
-	start := time.Now()
-	first := true
+func TestRetries(t *testing.T) {
+	t.Run("Default config", func(t *testing.T) {
+		start := time.Now()
+		i := 0
+		first := true
 
-	h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if first {
-			t.Log(start.Unix())
-			w.Header().Set("X-RateLimit-Limit", "1")
-			w.Header().Set("X-RateLimit-Remaining", "0")
-			w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(time.Second).Unix()))
-			w.WriteHeader(http.StatusTooManyRequests)
-			first = !first
-			return
-		}
-		w.WriteHeader(http.StatusOK)
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if first {
+				w.WriteHeader(http.StatusTooManyRequests)
+				first = !first
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		c := Wrap(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+		assert.NoError(t, err)
+
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+
+		elapsed := time.Since(start)
+		assert.Greater(t, elapsed, 500*time.Millisecond)
+		assert.Equal(t, 3, i)
 	})
 
-	s := httptest.NewServer(h)
-	defer s.Close()
+	t.Run("Max retries", func(t *testing.T) {
+		i := 0
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i <= 5 {
+				w.WriteHeader(http.StatusGatewayTimeout)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
 
-	c := Wrap(s.Client(), StaticToken(""), WithRateLimit(), WithDebug(true))
-	r, err := c.Get(s.URL)
-	if err != nil {
-		t.Error(err)
-	}
+		s := httptest.NewServer(h)
+		defer s.Close()
 
-	if r.StatusCode != http.StatusOK {
-		t.Errorf("Expected status code to be %d but got %d", http.StatusOK, r.StatusCode)
-	}
+		rc := RetryOptions{MaxRetries: 5, Statuses: []int{http.StatusGatewayTimeout}}
+		c := Wrap(s.Client(), StaticToken(""), WithRetries(rc))
+		r, err := c.Get(s.URL)
 
-	elapsed := time.Since(start)
-	if elapsed < time.Second {
-		t.Errorf("Time since start is sooner than expected. Expected >= 1s but got %s", elapsed)
-	}
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+		assert.Equal(t, 6, i)
+		assert.NoError(t, err)
+	})
+
+	t.Run("Pass empty struct to disable", func(t *testing.T) {
+		i := 0
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i <= 2 {
+				w.WriteHeader(http.StatusGatewayTimeout)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		c := Wrap(s.Client(), StaticToken(""), WithRetries(RetryOptions{}))
+		r, err := c.Get(s.URL)
+
+		assert.Equal(t, http.StatusGatewayTimeout, r.StatusCode)
+		assert.Equal(t, 1, i)
+		assert.NoError(t, err)
+	})
+
+	t.Run("Should retry errors", func(t *testing.T) {
+		start := time.Now()
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {})
+
+		s := httptest.NewUnstartedServer(h)
+		c := Wrap(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		_, err := c.Get(s.URL)
+
+		assert.Error(t, err)
+		elapsed := time.Since(start)
+		assert.Greater(t, elapsed, 250*time.Millisecond)
+	})
+
+	t.Run("Should not retry some errors", func(t *testing.T) {
+		i := 0
+		start := time.Now()
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewTLSServer(h)
+		c := Wrap(http.DefaultClient, StaticToken(""), WithRetries(DefaultRetryOptions))
+		_, err := c.Get(s.URL)
+
+		elapsed := time.Since(start)
+		assert.Error(t, err)
+		assert.Equal(t, 0, i)
+		assert.Less(t, elapsed, 250*time.Millisecond)
+	})
 }
 
 func TestWrapUserAgent(t *testing.T) {

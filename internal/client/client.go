@@ -2,15 +2,18 @@ package client
 
 import (
 	"context"
+	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"log"
+	"math"
+	"math/rand"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"regexp"
 	"runtime"
-	"strconv"
 	"time"
 
 	"github.com/PuerkitoBio/rehttp"
@@ -48,6 +51,28 @@ var DefaultAuth0ClientInfo = &Auth0ClientInfo{
 	},
 }
 
+// RetryOptions defines the retry rules that should be followed by the SDK when making requests.
+type RetryOptions struct {
+	MaxRetries int
+	Statuses   []int
+}
+
+// IsEmpty checks whether the provided Auth0ClientInfo data is nil or has no data to allow
+// short-circuiting the "Auth0-Client" header configuration.
+func (r *RetryOptions) IsEmpty() bool {
+	if r == nil {
+		return true
+	}
+	return r.MaxRetries == 0 && len(r.Statuses) == 0
+}
+
+// DefaultRetryOptions is the default retry configuration used by the SDK.
+// It will only retry on 429 errors and will retry twice.
+var DefaultRetryOptions = RetryOptions{
+	MaxRetries: 2,
+	Statuses:   []int{http.StatusTooManyRequests},
+}
+
 // RoundTripFunc is an adapter to allow the use of ordinary functions as HTTP
 // round trips.
 type RoundTripFunc func(*http.Request) (*http.Response, error)
@@ -63,27 +88,75 @@ func (rf RoundTripFunc) RoundTrip(req *http.Request) (*http.Response, error) {
 // When a 429 status code is returned by the remote server, the
 // "X-RateLimit-Reset" header is used to determine how long the transport will
 // wait until re-issuing the failed request.
-func RateLimitTransport(base http.RoundTripper) http.RoundTripper {
+func RateLimitTransport(base http.RoundTripper, r RetryOptions) http.RoundTripper {
 	if base == nil {
 		base = http.DefaultTransport
 	}
-	return rehttp.NewTransport(base, retry, delay)
+
+	// Configure a retry transport that will retry if:
+	// Total retries is less than the configured amount
+	// AND
+	// The configuration specifies to retry on the status OR the error
+	tr := rehttp.NewTransport(
+		base,
+		rehttp.RetryAll(
+			rehttp.RetryMaxRetries(r.MaxRetries),
+			rehttp.RetryAny(
+				rehttp.RetryStatuses(r.Statuses...),
+				rehttp.RetryIsErr(retryErrors),
+			),
+		),
+		backoffDelay(),
+	)
+
+	return tr
 }
 
-func retry(attempt rehttp.Attempt) bool {
-	if attempt.Response == nil {
-		return false
-	}
-	return attempt.Response.StatusCode == http.StatusTooManyRequests
-}
+// Matches the error returned by net/http when the configured number of
+// is exhausted.
+var redirectsErrorRe = regexp.MustCompile(`stopped after \d+ redirects\z`)
 
-func delay(attempt rehttp.Attempt) time.Duration {
-	resetAt := attempt.Response.Header.Get("X-RateLimit-Reset")
-	resetAtUnix, err := strconv.ParseInt(resetAt, 10, 64)
+// retryErrors checks whether the error returned is a potentially recoverable
+// error and returns true if it is.
+// By default the errors retried are too many redirects and unknown cert.
+func retryErrors(err error) bool {
 	if err != nil {
-		resetAtUnix = time.Now().Add(5 * time.Second).Unix()
+		// Too many redirects.
+		if redirectsErrorRe.MatchString(err.Error()) {
+			return false
+		}
+		// Certificate verification error.
+		if _, ok := err.(*tls.CertificateVerificationError); ok {
+			return false
+		}
 	}
-	return time.Duration(resetAtUnix-time.Now().Unix()) * time.Second
+
+	// Retry other errors as they are most likely recoverable.
+	return true
+}
+
+// backoffDelay implements a DelayFn that is an exponential backoff with jitter
+// and a minimum value.
+func backoffDelay() rehttp.DelayFn {
+	// Disable gosec lint for as we don't need secure randomness here and the error
+	// handling of  adds needless complexity
+	//nolint:gosec
+	PRNG := rand.New(rand.NewSource(time.Now().UnixNano()))
+	minDelay := float64(250 * time.Millisecond)
+	maxDelay := float64(5 * time.Second)
+	baseDelay := float64(250 * time.Millisecond)
+
+	return func(attempt rehttp.Attempt) time.Duration {
+		wait := baseDelay * math.Pow(2, float64(attempt.Index))
+		min := wait + 1
+		max := wait + baseDelay
+		wait = float64(PRNG.Int63n(int64(max-min))) + min
+
+		wait = math.Min(wait, maxDelay)
+		wait = math.Max(wait, minDelay)
+
+		return time.Duration(wait)
+	}
 }
 
 // UserAgentTransport wraps base transport with a customized "User-Agent" header.
@@ -156,10 +229,12 @@ func WithDebug(debug bool) Option {
 	}
 }
 
-// WithRateLimit configures the client to enable rate limiting.
-func WithRateLimit() Option {
+// WithRetries configures the retry transports on the http client used.
+func WithRetries(r RetryOptions) Option {
 	return func(c *http.Client) {
-		c.Transport = RateLimitTransport(c.Transport)
+		if !r.IsEmpty() {
+			c.Transport = RateLimitTransport(c.Transport, r)
+		}
 	}
 }
 

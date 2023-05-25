@@ -394,10 +394,41 @@ func TestApiCallContextCancel(t *testing.T) {
 		"http://localhost:8080",
 		WithInsecure(),
 	)
+
 	assert.NoError(t, err)
 
 	_, err = m.User.Read(ctx, "123")
 	assert.ErrorIs(t, err, context.Canceled)
+}
+
+func TestRateLimit(t *testing.T) {
+	start := time.Now()
+	first := true
+
+	h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if first {
+			w.WriteHeader(http.StatusTooManyRequests)
+			first = !first
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+	})
+
+	s := httptest.NewServer(h)
+	defer s.Close()
+
+	m, err := New(
+		s.URL,
+		WithInsecure(),
+	)
+	assert.NoError(t, err)
+
+	_, err = m.User.Read(context.Background(), "123")
+	assert.NoError(t, err)
+
+	elapsed := time.Since(start)
+	assert.Greater(t, elapsed, 500*time.Millisecond)
+	assert.NoError(t, err)
 }
 
 func TestApiCallContextTimeout(t *testing.T) {
