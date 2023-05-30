@@ -67,7 +67,7 @@ func (r *RetryOptions) IsEmpty() bool {
 }
 
 // DefaultRetryOptions is the default retry configuration used by the SDK.
-// It will only retry on 429 errors and will retry twice.
+// It will only retry on 429 errors and will retry a request twice.
 var DefaultRetryOptions = RetryOptions{
 	MaxRetries: 2,
 	Statuses:   []int{http.StatusTooManyRequests},
@@ -83,12 +83,13 @@ func (rf RoundTripFunc) RoundTrip(req *http.Request) (*http.Response, error) {
 	return rf(req)
 }
 
-// RateLimitTransport wraps base transport with rate limiting functionality.
+// RetriesTransport wraps base transport with retry functionality.
 //
-// When a 429 status code is returned by the remote server, the
-// "X-RateLimit-Reset" header is used to determine how long the transport will
-// wait until re-issuing the failed request.
-func RateLimitTransport(base http.RoundTripper, r RetryOptions) http.RoundTripper {
+// This transport will retry in the following circumstances:
+// Total retries is less than the configured amount
+// AND
+// The configuration specifies to retry on the status OR the error.
+func RetriesTransport(base http.RoundTripper, r RetryOptions) http.RoundTripper {
 	if base == nil {
 		base = http.DefaultTransport
 	}
@@ -139,7 +140,7 @@ func retryErrors(err error) bool {
 // and a minimum value.
 func backoffDelay() rehttp.DelayFn {
 	// Disable gosec lint for as we don't need secure randomness here and the error
-	// handling of  adds needless complexity
+	// handling of an error adds needless complexity
 	//nolint:gosec
 	PRNG := rand.New(rand.NewSource(time.Now().UnixNano()))
 	minDelay := float64(250 * time.Millisecond)
@@ -233,7 +234,7 @@ func WithDebug(debug bool) Option {
 func WithRetries(r RetryOptions) Option {
 	return func(c *http.Client) {
 		if !r.IsEmpty() {
-			c.Transport = RateLimitTransport(c.Transport, r)
+			c.Transport = RetriesTransport(c.Transport, r)
 		}
 	}
 }
