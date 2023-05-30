@@ -2,9 +2,10 @@ package client
 
 import (
 	"context"
-	"crypto/tls"
+	"crypto/x509"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"math"
@@ -117,6 +118,10 @@ func RetriesTransport(base http.RoundTripper, r RetryOptions) http.RoundTripper 
 // is exhausted.
 var redirectsErrorRe = regexp.MustCompile(`stopped after \d+ redirects\z`)
 
+// Matches the error returned by net/http when the TLS certificate is not trusted.
+// When version 1.20 is the minimum supported this can be replaced by tls.CertificateVerificationError.
+var certVerificationErrorRe = regexp.MustCompile(`certificate is not trusted`)
+
 // retryErrors checks whether the error returned is a potentially recoverable
 // error and returns true if it is.
 // By default the errors retried are too many redirects and unknown cert.
@@ -126,8 +131,12 @@ func retryErrors(err error) bool {
 		if redirectsErrorRe.MatchString(err.Error()) {
 			return false
 		}
-		// Certificate verification error.
-		if _, ok := err.(*tls.CertificateVerificationError); ok {
+
+		// These two checks handle a bad certificate error across our supported versions.
+		if certVerificationErrorRe.MatchString(err.Error()) {
+			return false
+		}
+		if ok := errors.As(err, &x509.UnknownAuthorityError{}); ok {
 			return false
 		}
 	}
