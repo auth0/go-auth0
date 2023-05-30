@@ -52,10 +52,6 @@ type Management struct {
 	// RuleManager manages Auth0 Rule Configurations.
 	RuleConfig *RuleConfigManager
 
-	// Email manages Auth0 Email Providers.
-	// Deprecated: Use EmailProvider instead.
-	Email *EmailManager
-
 	// EmailTemplate manages Auth0 Email Templates.
 	EmailTemplate *EmailTemplateManager
 
@@ -170,7 +166,6 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.ClientGrant = (*ClientGrantManager)(&m.common)
 	m.Connection = (*ConnectionManager)(&m.common)
 	m.CustomDomain = (*CustomDomainManager)(&m.common)
-	m.Email = (*EmailManager)(&m.common)
 	m.EmailProvider = (*EmailProviderManager)(&m.common)
 	m.EmailTemplate = (*EmailTemplateManager)(&m.common)
 	m.Grant = (*GrantManager)(&m.common)

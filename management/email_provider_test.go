@@ -200,10 +200,10 @@ func TestEmailProviderManager_Delete(t *testing.T) {
 
 	givenAnEmailProvider(t)
 
-	err := api.Email.Delete(context.Background())
+	err := api.EmailProvider.Delete(context.Background())
 	assert.NoError(t, err)
 
-	_, err = api.Email.Read(context.Background())
+	_, err = api.EmailProvider.Read(context.Background())
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
 	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
