@@ -194,7 +194,7 @@ Previously, when retrying requests the SDK would retry only for 429 status codes
 
 Now, by default the SDK will retry 429 status codes and request errors that are deemed to be recoverable, and will retry a maximum of 2 times. Instead of waiting for the `X-RateLimit-Reset` header value, it will instead use an exponential backoff with a minimum time of 250 milliseconds.
 
-This logic can be customised by using the `management.WithRetries` helper, and can be disabled using the `management.WithNoRetries`
+This logic can be customised by using the `management.WithRetries` helper, and can be disabled using the `management.WithNoRetries` method.
 
 ```go
 // Enable a retry strategy with 3 retries that will retry on 429 and 503 status codes
