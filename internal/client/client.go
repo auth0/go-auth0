@@ -114,7 +114,7 @@ func RetriesTransport(base http.RoundTripper, r RetryOptions) http.RoundTripper 
 	return tr
 }
 
-// Matches the error returned by net/http when the configured number of
+// Matches the error returned by net/http when the configured number of redirects
 // is exhausted.
 var redirectsErrorRe = regexp.MustCompile(`stopped after \d+ redirects\z`)
 
@@ -149,7 +149,7 @@ func retryErrors(err error) bool {
 // and a minimum value.
 func backoffDelay() rehttp.DelayFn {
 	// Disable gosec lint for as we don't need secure randomness here and the error
-	// handling of an error adds needless complexity
+	// handling of an error adds needless complexity.
 	//nolint:gosec
 	PRNG := rand.New(rand.NewSource(time.Now().UnixNano()))
 	minDelay := float64(250 * time.Millisecond)
