@@ -164,7 +164,7 @@ emailConfig := &management.Email{
 <td>
 
 ```go
-// Use the `EmailProvider` manager and use the provider specific configuration for `Credential` and `Settings`
+// Use the `EmailProvider` manager and use the provider specific configuration for `Credential` and `Settings`.
 emailProviderConfig := &management.EmailProvider{
     Name:               auth0.String("mandrill"),
     Enabled:            auth0.Bool(true),
