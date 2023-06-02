@@ -44,7 +44,7 @@ func TestClient_Read(t *testing.T) {
 func TestClient_Update(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	expectedClient := givenAClient(t)
+	expectedClient := givenASimpleClient(t)
 
 	expectedDescription := "This is more than just a test client."
 	expectedClient.Description = &expectedDescription
@@ -53,7 +53,6 @@ func TestClient_Update(t *testing.T) {
 	expectedClient.ClientID = nil                       // Read-Only: Additional properties not allowed.
 	expectedClient.SigningKeys = nil                    // Read-Only: Additional properties not allowed.
 	expectedClient.JWTConfiguration.SecretEncoded = nil // Read-Only: Additional properties not allowed.
-	expectedClient.ClientSecret = nil
 
 	err := api.Client.Update(context.Background(), clientID, expectedClient)
 
@@ -91,7 +90,7 @@ func TestClient_List(t *testing.T) {
 func TestClient_RotateSecret(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	expectedClient := givenAClient(t)
+	expectedClient := givenASimpleClient(t)
 
 	oldSecret := expectedClient.GetClientSecret()
 	actualClient, err := api.Client.RotateSecret(context.Background(), expectedClient.GetClientID())
@@ -229,6 +228,25 @@ func TestClient_DeleteCredential(t *testing.T) {
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
 	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
+}
+
+func givenASimpleClient(t *testing.T) *Client {
+	t.Helper()
+
+	client := &Client{
+		Name:              auth0.Stringf("Test Simple Client (%s)", time.Now().Format(time.StampMilli)),
+		Description:       auth0.String("This is just a simple test client."),
+		OrganizationUsage: auth0.String("allow"),
+	}
+
+	err := api.Client.Create(context.Background(), client)
+	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupClient(t, client.GetClientID())
+	})
+
+	return client
 }
 
 func givenAClient(t *testing.T) *Client {
