@@ -87,4 +87,5 @@ test-e2e: ## Run tests without http recordings. To run a specific test pass the 
 		-cover \
 		-covermode=atomic \
 		-coverprofile=coverage.out \
+		-timeout 20m \
 		./...

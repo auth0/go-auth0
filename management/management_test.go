@@ -404,12 +404,12 @@ func TestApiCallContextCancel(t *testing.T) {
 func TestRetries(t *testing.T) {
 	t.Run("Default retry logic", func(t *testing.T) {
 		start := time.Now()
-		first := true
+		i := 0
 
 		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if first {
+			i++
+			if i == 1 {
 				w.WriteHeader(http.StatusTooManyRequests)
-				first = !first
 				return
 			}
 			w.WriteHeader(http.StatusOK)
@@ -427,9 +427,9 @@ func TestRetries(t *testing.T) {
 		_, err = m.User.Read(context.Background(), "123")
 		assert.NoError(t, err)
 
-		elapsed := time.Since(start)
-		assert.Greater(t, elapsed, 500*time.Millisecond)
-		assert.NoError(t, err)
+		elapsed := time.Since(start).Milliseconds()
+		assert.Greater(t, elapsed, int64(250))
+		assert.Equal(t, 2, i)
 	})
 
 	t.Run("Custom retry logic", func(t *testing.T) {

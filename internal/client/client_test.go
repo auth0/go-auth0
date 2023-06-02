@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -18,13 +19,11 @@ func TestRetries(t *testing.T) {
 	t.Run("Default config", func(t *testing.T) {
 		start := time.Now()
 		i := 0
-		first := true
 
 		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			i++
-			if first {
+			if i == 1 {
 				w.WriteHeader(http.StatusTooManyRequests)
-				first = !first
 				return
 			}
 			w.WriteHeader(http.StatusOK)
@@ -39,9 +38,10 @@ func TestRetries(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, r.StatusCode)
 
-		elapsed := time.Since(start)
-		assert.Greater(t, elapsed, 500*time.Millisecond)
-		assert.Equal(t, 3, i)
+		elapsed := time.Since(start).Milliseconds()
+		assert.Greater(t, elapsed, int64(250))
+		assert.Less(t, elapsed, int64(500))
+		assert.Equal(t, 2, i)
 	})
 
 	t.Run("Max retries", func(t *testing.T) {
@@ -99,8 +99,9 @@ func TestRetries(t *testing.T) {
 		_, err := c.Get(s.URL)
 
 		assert.Error(t, err)
-		elapsed := time.Since(start)
-		assert.Greater(t, elapsed, 250*time.Millisecond)
+		elapsed := time.Since(start).Milliseconds()
+		assert.Greater(t, elapsed, int64(250))
+		assert.Greater(t, elapsed, int64(500))
 	})
 
 	t.Run("Should not retry some errors", func(t *testing.T) {
@@ -115,10 +116,74 @@ func TestRetries(t *testing.T) {
 		c := Wrap(http.DefaultClient, StaticToken(""), WithRetries(DefaultRetryOptions))
 		_, err := c.Get(s.URL)
 
-		elapsed := time.Since(start)
+		elapsed := time.Since(start).Milliseconds()
 		assert.Error(t, err)
 		assert.Equal(t, 0, i)
-		assert.Less(t, elapsed, 250*time.Millisecond)
+		assert.Less(t, elapsed, int64(250))
+	})
+
+	t.Run("Should ensure time is after rate limit reset when retrying", func(t *testing.T) {
+		start := time.Now()
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i == 1 {
+				t.Log(start.Unix())
+				w.Header().Set("X-RateLimit-Limit", "1")
+				w.Header().Set("X-RateLimit-Remaining", "0")
+				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(2*time.Second).Unix()))
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		c := Wrap(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+		assert.NoError(t, err)
+
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+
+		elapsed := time.Since(start).Seconds()
+		assert.Greater(t, elapsed, float64(2))
+		assert.Less(t, elapsed, float64(3))
+		assert.Equal(t, 2, i)
+	})
+
+	t.Run("Should not use rate limit if it is exceptionally long", func(t *testing.T) {
+		start := time.Now()
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i == 1 {
+				t.Log(start.Unix())
+				w.Header().Set("X-RateLimit-Limit", "1")
+				w.Header().Set("X-RateLimit-Remaining", "0")
+				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(2*time.Hour).Unix()))
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		c := Wrap(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+		assert.NoError(t, err)
+
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+
+		elapsed := time.Since(start).Milliseconds()
+		assert.GreaterOrEqual(t, elapsed, int64(250))
+		assert.Less(t, elapsed, int64(500))
+		assert.Equal(t, 2, i)
 	})
 }
 

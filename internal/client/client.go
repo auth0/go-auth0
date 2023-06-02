@@ -15,6 +15,7 @@ import (
 	"net/url"
 	"regexp"
 	"runtime"
+	"strconv"
 	"time"
 
 	"github.com/PuerkitoBio/rehttp"
@@ -126,19 +127,21 @@ var certVerificationErrorRe = regexp.MustCompile(`certificate is not trusted`)
 // error and returns true if it is.
 // By default the errors retried are too many redirects and unknown cert.
 func retryErrors(err error) bool {
-	if err != nil {
-		// Too many redirects.
-		if redirectsErrorRe.MatchString(err.Error()) {
-			return false
-		}
+	if err == nil {
+		return false
+	}
 
-		// These two checks handle a bad certificate error across our supported versions.
-		if certVerificationErrorRe.MatchString(err.Error()) {
-			return false
-		}
-		if ok := errors.As(err, &x509.UnknownAuthorityError{}); ok {
-			return false
-		}
+	// Too many redirects.
+	if redirectsErrorRe.MatchString(err.Error()) {
+		return false
+	}
+
+	// These two checks handle a bad certificate error across our supported versions.
+	if certVerificationErrorRe.MatchString(err.Error()) {
+		return false
+	}
+	if ok := errors.As(err, &x509.UnknownAuthorityError{}); ok {
+		return false
 	}
 
 	// Retry other errors as they are most likely recoverable.
@@ -153,19 +156,38 @@ func backoffDelay() rehttp.DelayFn {
 	//nolint:gosec
 	PRNG := rand.New(rand.NewSource(time.Now().UnixNano()))
 	minDelay := float64(250 * time.Millisecond)
-	maxDelay := float64(5 * time.Second)
+	maxDelay := float64(10 * time.Second)
 	baseDelay := float64(250 * time.Millisecond)
 
 	return func(attempt rehttp.Attempt) time.Duration {
 		wait := baseDelay * math.Pow(2, float64(attempt.Index))
 		min := wait + 1
 		max := wait + baseDelay
-		wait = float64(PRNG.Int63n(int64(max-min))) + min
+		wait = PRNG.Float64()*(max-min) + min
 
 		wait = math.Min(wait, maxDelay)
 		wait = math.Max(wait, minDelay)
 
-		return time.Duration(wait)
+		// If we're calculating the delay for anything other than a 429 status code then return now
+		if attempt.Response == nil || attempt.Response.StatusCode != http.StatusTooManyRequests {
+			return time.Duration(wait)
+		}
+
+		// Check against the rate limit reset value, if that is longer than use that.
+		resetAtS := attempt.Response.Header.Get("X-RateLimit-Reset")
+		resetAt, err := strconv.ParseInt(resetAtS, 10, 64)
+
+		if err != nil {
+			return time.Duration(wait)
+		}
+
+		// However don't use that rate limit value if it will take us beyond the max wait time.
+		maxDelayTime := time.Now().Add(time.Duration(maxDelay)).Unix()
+		if resetAt > maxDelayTime {
+			return time.Duration(wait)
+		}
+
+		return time.Duration(resetAt-time.Now().Unix()) * time.Second
 	}
 }
 
