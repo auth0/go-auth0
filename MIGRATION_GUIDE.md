@@ -128,3 +128,60 @@ api.Client.Create()
 </td>
 </tr>
 </table>
+
+### Removal Of Email
+
+In version `0.13.0` the `Email` manager was deprecated in favour of the `EmailProvider` manager to improve the configurations provided. `Email` has now been removed so the `EmailProvider` manager should be used instead.
+
+<table>
+<tr>
+<th>Before (v0.17.1)</th>
+<th>After (v1.0.0)</th>
+</tr>
+<tr>
+<td>
+
+```go
+// `Email` manager was used and there was only one type for `Credentials` and `Settings`.
+emailConfig := &management.Email{
+    Name:               auth0.String("smtp"),
+    Enabled:            auth0.Bool(true),
+    DefaultFromAddress: auth0.String("no-reply@example.com"),
+    Credentials: &management.EmailCredentials{
+        SMTPHost: auth0.String("smtp.example.com"),
+        SMTPPort: auth0.Int(587),
+        SMTPUser: auth0.String("user"),
+        SMTPPass: auth0.String("pass"),
+    },
+    Settings: map[string]interface{}{
+        "Headers": &map[string]interface{}{
+            "XSESConfigurationSet": auth0.String("example"),
+        },
+    },
+}
+```
+</td>
+<td>
+
+```go
+// Use the `EmailProvider` manager and use the provider specific configuration for `Credential` and `Settings`.
+emailProviderConfig := &management.EmailProvider{
+    Name:               auth0.String("mandrill"),
+    Enabled:            auth0.Bool(true),
+    DefaultFromAddress: auth0.String("no-reply@example.com"),
+    Credentials: &management.EmailProviderCredentialsSMTP{
+        SMTPHost: auth0.String("smtp.example.com"),
+        SMTPPort: auth0.Int(587),
+        SMTPUser: auth0.String("user"),
+        SMTPPass: auth0.String("pass"),
+    },
+    Settings: &management.EmailProviderSettingsSMTP{
+        Headers: &management.EmailProviderSettingsSMTPHeaders{
+            XSESConfigurationSet: auth0.String("example"),
+        },
+    },
+}
+```
+</td>
+</tr>
+</table>
