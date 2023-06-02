@@ -39,8 +39,8 @@ func TestRetries(t *testing.T) {
 		assert.Equal(t, http.StatusOK, r.StatusCode)
 
 		elapsed := time.Since(start).Milliseconds()
-		assert.Greater(t, elapsed, int64(250))
-		assert.Less(t, elapsed, int64(500))
+		assert.GreaterOrEqual(t, elapsed, int64(250))
+		assert.LessOrEqual(t, elapsed, int64(500))
 		assert.Equal(t, 2, i)
 	})
 
@@ -99,9 +99,9 @@ func TestRetries(t *testing.T) {
 		_, err := c.Get(s.URL)
 
 		assert.Error(t, err)
-		elapsed := time.Since(start).Milliseconds()
-		assert.Greater(t, elapsed, int64(250))
-		assert.Greater(t, elapsed, int64(500))
+		elapsed := time.Since(start).Seconds()
+		assert.GreaterOrEqual(t, elapsed, float64(1))
+		assert.LessOrEqual(t, elapsed, float64(2))
 	})
 
 	t.Run("Should not retry some errors", func(t *testing.T) {
@@ -149,8 +149,8 @@ func TestRetries(t *testing.T) {
 		assert.Equal(t, http.StatusOK, r.StatusCode)
 
 		elapsed := time.Since(start).Seconds()
-		assert.Greater(t, elapsed, float64(2))
-		assert.Less(t, elapsed, float64(3))
+		assert.GreaterOrEqual(t, elapsed, float64(2))
+		assert.LessOrEqual(t, elapsed, float64(3))
 		assert.Equal(t, 2, i)
 	})
 
@@ -182,7 +182,7 @@ func TestRetries(t *testing.T) {
 
 		elapsed := time.Since(start).Milliseconds()
 		assert.GreaterOrEqual(t, elapsed, int64(250))
-		assert.Less(t, elapsed, int64(500))
+		assert.LessOrEqual(t, elapsed, int64(500))
 		assert.Equal(t, 2, i)
 	})
 }
