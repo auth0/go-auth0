@@ -38,19 +38,19 @@ func TestLogManager(t *testing.T) {
 func TestLogManager_CheckpointPagination(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	logList, err := api.Log.List(context.Background(), Page(1), PerPage(5))
+	logList, err := api.Log.List(context.Background(), Page(1), PerPage(10))
 	assert.NoError(t, err)
 	assert.Greater(t, len(logList), 0, "can't seem to find any logs, have you ran any tests before?")
 
-	from := logList[4].GetID()
+	from := logList[9].GetID()
 
-	// Take the first 2 entries from the 5th log
+	// Take the first 2 entries from the 10th log
 	logs, err := api.Log.List(context.Background(), Take(2), From(from))
 	assert.NoError(t, err)
 	assert.Len(t, logs, 2)
 
-	log1 := logList[3]
-	log2 := logList[2]
+	log1 := logList[8]
+	log2 := logList[7]
 	assert.Equal(t, log1.GetID(), logs[0].GetID())
 	assert.Equal(t, log2.GetID(), logs[1].GetID())
 }
