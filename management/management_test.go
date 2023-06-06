@@ -394,10 +394,124 @@ func TestApiCallContextCancel(t *testing.T) {
 		"http://localhost:8080",
 		WithInsecure(),
 	)
+
 	assert.NoError(t, err)
 
 	_, err = m.User.Read(ctx, "123")
 	assert.ErrorIs(t, err, context.Canceled)
+}
+
+func TestRetries(t *testing.T) {
+	t.Run("Default retry logic", func(t *testing.T) {
+		start := time.Now()
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i == 1 {
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+		)
+		assert.NoError(t, err)
+
+		_, err = m.User.Read(context.Background(), "123")
+		assert.NoError(t, err)
+
+		elapsed := time.Since(start).Milliseconds()
+		assert.Greater(t, elapsed, int64(250))
+		assert.Equal(t, 2, i)
+	})
+
+	t.Run("Custom retry logic", func(t *testing.T) {
+		start := time.Now()
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i < 2 {
+				w.WriteHeader(http.StatusBadGateway)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithRetries(client.RetryOptions{MaxRetries: 1, Statuses: []int{http.StatusBadGateway}}),
+		)
+		assert.NoError(t, err)
+
+		_, err = m.User.Read(context.Background(), "123")
+		assert.NoError(t, err)
+		assert.Equal(t, 2, i)
+
+		elapsed := time.Since(start)
+		assert.Greater(t, elapsed, 250*time.Millisecond)
+		assert.NoError(t, err)
+	})
+
+	t.Run("Disabling retries", func(t *testing.T) {
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			w.WriteHeader(http.StatusBadGateway)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithNoRetries(),
+		)
+		assert.NoError(t, err)
+
+		_, err = m.User.Read(context.Background(), "123")
+		assert.Equal(t, http.StatusBadGateway, err.(*managementError).StatusCode)
+		assert.Equal(t, 1, i)
+	})
+
+	t.Run("Retry and context", func(t *testing.T) {
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			w.WriteHeader(http.StatusBadGateway)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithRetries(client.RetryOptions{MaxRetries: 3, Statuses: []int{http.StatusBadGateway}}),
+		)
+		assert.NoError(t, err)
+
+		ctx, cancel := context.WithTimeout(context.Background(), 1*time.Millisecond)
+		defer cancel()
+
+		_, err = m.User.Read(ctx, "123")
+		assert.ErrorIs(t, err, context.DeadlineExceeded)
+		assert.Equal(t, 1, i) // 1 request should have been made before the context times out
+	})
 }
 
 func TestApiCallContextTimeout(t *testing.T) {

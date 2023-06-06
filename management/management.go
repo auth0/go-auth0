@@ -111,6 +111,7 @@ type Management struct {
 	http            *http.Client
 	auth0ClientInfo *client.Auth0ClientInfo
 	common          manager
+	retryStrategy   client.RetryOptions
 }
 
 type manager struct {
@@ -139,6 +140,7 @@ func New(domain string, options ...Option) (*Management, error) {
 		debug:           false,
 		http:            http.DefaultClient,
 		auth0ClientInfo: client.DefaultAuth0ClientInfo,
+		retryStrategy:   client.DefaultRetryOptions,
 	}
 
 	for _, option := range options {
@@ -150,8 +152,8 @@ func New(domain string, options ...Option) (*Management, error) {
 		m.tokenSource,
 		client.WithDebug(m.debug),
 		client.WithUserAgent(m.userAgent),
-		client.WithRateLimit(),
 		client.WithAuth0ClientInfo(m.auth0ClientInfo),
+		client.WithRetries(m.retryStrategy),
 	)
 
 	m.common.management = m

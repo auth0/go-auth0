@@ -6,6 +6,8 @@
 - [Public API Changes](#public-api-changes)
   - [Improve Typing Of Client Addons](#improve-typing-of-client-addons)
   - [Require Passing Context To APIs](#require-passing-context-to-apis)
+  - [Removal Of Manager Chaining](#removal-of-manager-chaining)
+  - [Changes To Retry Strategy](#changes-to-retry-strategy)
 
 ## Public API Changes
 
@@ -185,3 +187,27 @@ emailProviderConfig := &management.EmailProvider{
 </td>
 </tr>
 </table>
+
+### Changes To Retry Strategy
+
+Previously, when retrying requests the SDK would retry only for 429 status codes, waiting until the time indicated by the `X-RateLimit-Reset` header and would not have a maximum number of requests (i.e would retry infinitely).
+
+Now, by default the SDK will retry 429 status codes and request errors that are deemed to be recoverable, and will retry a maximum of 2 times. The SDK will instead use an exponential backoff with a minimum time of 250 milliseconds, and a maximum delay time of 10 seconds and consult the `X-RateLimit-Reset` header to ensure that the next request will pass.
+
+This logic can be customised by using the `management.WithRetries` helper, and can be disabled using the `management.WithNoRetries` method.
+
+```go
+// Enable a retry strategy with 3 retries that will retry on 429 and 503 status codes
+m, err := management.New(
+    domain,
+    management.WithClientCredentials(context.Background(), id, secret),
+    management.WithRetries(RetryOptions{MaxRetries: 3, Statuses: []int{http.StatusTooManyRequests, http.StatusBadGateway}}),
+)
+
+// Disable retries
+m, err := management.New(
+    domain,
+    management.WithClientCredentials(context.Background(), id, secret),
+    management.WithNoRetries(),
+)
+```
