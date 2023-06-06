@@ -107,22 +107,3 @@ func (m *ResourceServerManager) List(ctx context.Context, opts ...RequestOption)
 	err = m.management.Request(ctx, "GET", m.management.URI("resource-servers"), &rl, applyListDefaults(opts))
 	return
 }
-
-// Stream is a helper method which handles pagination.
-func (m *ResourceServerManager) Stream(ctx context.Context, fn func(s *ResourceServer), opts ...RequestOption) error {
-	var page int
-	for {
-		l, err := m.List(ctx, append(opts, Page(page))...)
-		if err != nil {
-			return err
-		}
-		for _, s := range l.ResourceServers {
-			fn(s)
-		}
-		if !l.HasNext() {
-			break
-		}
-		page++
-	}
-	return nil
-}
