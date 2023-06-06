@@ -320,10 +320,10 @@ func (m *OrganizationManager) AddMembers(ctx context.Context, id string, memberI
 	return
 }
 
-// DeleteMember deletes members from an organization.
+// DeleteMembers deletes members from an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_members
-func (m *OrganizationManager) DeleteMember(ctx context.Context, id string, memberIDs []string, opts ...RequestOption) (err error) {
+func (m *OrganizationManager) DeleteMembers(ctx context.Context, id string, memberIDs []string, opts ...RequestOption) (err error) {
 	body := struct {
 		Members []string `json:"members"`
 	}{

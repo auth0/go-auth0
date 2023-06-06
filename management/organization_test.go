@@ -274,7 +274,7 @@ func TestOrganizationManager_DeleteMembers(t *testing.T) {
 	err := api.Organization.AddMembers(context.Background(), org.GetID(), []string{user.GetID()})
 	assert.NoError(t, err)
 
-	err = api.Organization.DeleteMember(context.Background(), org.GetID(), []string{user.GetID()})
+	err = api.Organization.DeleteMembers(context.Background(), org.GetID(), []string{user.GetID()})
 	assert.NoError(t, err)
 
 	members, err := api.Organization.Members(context.Background(), org.GetID())

@@ -211,3 +211,12 @@ m, err := management.New(
     management.WithNoRetries(),
 )
 ```
+
+### API Removals
+
+Some APIs have been renamed or removed in order to ensure consistency in the SDK. Here is the list of removed/renamed APIs and the recommended replacements 
+
+|Removed API|Reasoning|Resolution|
+|-----------|--------------|--------------|
+|`Organization.DeleteMember`|Renamed to align with other APIs|`Organization.DeleteMembers`|
+|`ResourceServer.Stream`|Removed to allow potential for consistent pagination functionality across the SDK| Implement pagination manually similar to other APIs|
