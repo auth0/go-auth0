@@ -18,8 +18,6 @@ import (
 var (
 	domain                = os.Getenv("AUTH0_DOMAIN")
 	clientID              = os.Getenv("AUTH0_AUTH_CLIENT_ID")
-	clientSecret          = os.Getenv("AUTH0_AUTH_CLIENT_SECRET")
-	debug                 = os.Getenv("AUTH0_DEBUG")
 	httpRecordings        = os.Getenv("AUTH0_HTTP_RECORDINGS")
 	httpRecordingsEnabled = false
 	authAPI               = &Authentication{}

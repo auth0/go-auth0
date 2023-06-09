@@ -1,9 +1,12 @@
 package authentication
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
 	"testing"
+
+	"github.com/auth0/go-auth0/authentication/oauth"
 
 	"github.com/stretchr/testify/require"
 	"gopkg.in/dnaeon/go-vcr.v3/cassette"
@@ -34,7 +37,7 @@ func configureHTTPTestRecordings(t *testing.T) {
 	)
 	require.NoError(t, err)
 
-	removeSensitiveDataFromRecordings(recorderTransport)
+	removeSensitiveDataFromRecordings(t, recorderTransport)
 
 	authAPI.http.Transport = recorderTransport
 
@@ -45,11 +48,13 @@ func configureHTTPTestRecordings(t *testing.T) {
 	})
 }
 
-func removeSensitiveDataFromRecordings(recorderTransport *recorder.Recorder) {
+func removeSensitiveDataFromRecordings(t *testing.T, recorderTransport *recorder.Recorder) {
 	recorderTransport.AddHook(
 		func(i *cassette.Interaction) error {
 			skip429Response(i)
 			redactHeaders(i)
+			redactClientAuth(i)
+			redactTokens(t, i)
 
 			// Redact domain should always be ran last
 			redactDomain(i, domain)
@@ -82,6 +87,48 @@ func redactHeaders(i *cassette.Interaction) {
 			delete(i.Response.Headers, header)
 		}
 	}
+}
+
+func redactClientAuth(i *cassette.Interaction) {
+	if i.Request.Headers.Get("Content-Type") != "application/x-www-form-urlencoded" {
+		return
+	}
+
+	clientAuthParams := []string{
+		"client_id",
+		"client_secret",
+	}
+
+	for _, param := range clientAuthParams {
+		if i.Request.Form.Has(param) {
+			i.Request.Form.Set(param, "test-"+param)
+		}
+	}
+
+	i.Request.Body = i.Request.Form.Encode()
+}
+
+func redactTokens(t *testing.T, i *cassette.Interaction) {
+	if i.Response.Headers.Get("Content-Type") != "application/json" {
+		return
+	}
+
+	tokenSet := &oauth.TokenSet{}
+
+	err := json.Unmarshal([]byte(i.Response.Body), tokenSet)
+	require.NoError(t, err)
+
+	tokenSet.AccessToken = "test-access-token"
+	tokenSet.IDToken = "test-id-token"
+
+	if tokenSet.RefreshToken != "" {
+		tokenSet.RefreshToken = "test-refresh-token"
+	}
+
+	body, err := json.Marshal(tokenSet)
+	require.NoError(t, err)
+
+	i.Response.Body = string(body)
 }
 
 func redactDomain(i *cassette.Interaction, domain string) {
