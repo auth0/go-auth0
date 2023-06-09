@@ -51,6 +51,19 @@ func Test_newError(t *testing.T) {
 				Message:    "",
 			},
 		},
+		{
+			name: "it will handle a invalid sign up response",
+			givenResponse: http.Response{
+				StatusCode: http.StatusBadRequest,
+				Body:       io.NopCloser(strings.NewReader(`{"name":"BadRequestError","code":"invalid_signup","description":"Invalid sign up","statusCode":400}`)),
+			},
+			expectedError: authenticationError{
+				StatusCode: 400,
+				Err:        "invalid_signup",
+				Message:    "Invalid sign up",
+			},
+		},
+	}
 
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {

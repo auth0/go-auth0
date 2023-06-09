@@ -43,3 +43,32 @@ func (a *authenticationError) Error() string {
 func (a *authenticationError) Status() int {
 	return a.StatusCode
 }
+
+// UnmarshalJSON implements the json.Unmarshaler interface.
+//
+// It is required to handle the differences between error responses between the APIs.
+func (a *authenticationError) UnmarshalJSON(b []byte) error {
+	type authError authenticationError
+	type authErrorWrapper struct {
+		*authError
+		Code        string `json:"code"`
+		Description string `json:"description"`
+	}
+
+	alias := &authErrorWrapper{(*authError)(a), "", ""}
+
+	err := json.Unmarshal(b, alias)
+	if err != nil {
+		return err
+	}
+
+	if alias.Code != "" {
+		a.Err = alias.Code
+	}
+
+	if alias.Description != "" {
+		a.Message = alias.Description
+	}
+
+	return nil
+}

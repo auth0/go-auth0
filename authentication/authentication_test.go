@@ -89,3 +89,39 @@ func TestAuthenticationRequestContextTimeout(t *testing.T) {
 	err := authAPI.Request(ctx, "GET", "/", nil, nil)
 	assert.ErrorIs(t, err, context.DeadlineExceeded)
 }
+
+func TestAuthenticationApiCallContextCancel(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel() // Cancel the request.
+
+	a, err := New(
+		"http://localhost:8080",
+	)
+
+	assert.NoError(t, err)
+
+	_, err = a.Database.SignUp(ctx, database.SignUpRequest{
+		Username: "test",
+		Password: "test",
+	})
+	assert.ErrorIs(t, err, context.Canceled)
+}
+
+func TestAuthenticationApiCallContextTimeout(t *testing.T) {
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Millisecond)
+	defer cancel()
+
+	time.Sleep(50 * time.Millisecond) // Delay until the deadline is exceeded.
+
+	a, err := New(
+		"http://localhost:8080",
+	)
+
+	assert.NoError(t, err)
+
+	_, err = a.Database.SignUp(ctx, database.SignUpRequest{
+		Username: "test",
+		Password: "test",
+	})
+	assert.ErrorIs(t, err, context.DeadlineExceeded)
+}
