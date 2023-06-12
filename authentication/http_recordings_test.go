@@ -53,7 +53,7 @@ func removeSensitiveDataFromRecordings(t *testing.T, recorderTransport *recorder
 		func(i *cassette.Interaction) error {
 			skip429Response(i)
 			redactHeaders(i)
-			redactClientAuth(i)
+			redactClientAuth(t, i)
 			redactTokens(t, i)
 
 			// Redact domain should always be ran last
@@ -89,23 +89,38 @@ func redactHeaders(i *cassette.Interaction) {
 	}
 }
 
-func redactClientAuth(i *cassette.Interaction) {
-	if i.Request.Headers.Get("Content-Type") != "application/x-www-form-urlencoded" {
-		return
+func redactClientAuth(t *testing.T, i *cassette.Interaction) {
+	contentType := i.Request.Headers.Get("Content-Type")
+	clientAuthParams := map[string]bool{
+		"client_id":     true,
+		"client_secret": true,
 	}
 
-	clientAuthParams := []string{
-		"client_id",
-		"client_secret",
-	}
-
-	for _, param := range clientAuthParams {
-		if i.Request.Form.Has(param) {
-			i.Request.Form.Set(param, "test-"+param)
+	if contentType == "application/x-www-form-urlencoded" {
+		for param := range clientAuthParams {
+			if i.Request.Form.Has(param) {
+				i.Request.Form.Set(param, "test-"+param)
+			}
 		}
-	}
 
-	i.Request.Body = i.Request.Form.Encode()
+		i.Request.Body = i.Request.Form.Encode()
+	} else if contentType == "application/json" {
+		jsonBody := map[string]interface{}{}
+
+		err := json.Unmarshal([]byte(i.Request.Body), &jsonBody)
+		require.NoError(t, err)
+
+		for k := range jsonBody {
+			if _, ok := clientAuthParams[k]; ok {
+				jsonBody[k] = "test-" + k
+			}
+		}
+
+		body, err := json.Marshal(jsonBody)
+		require.NoError(t, err)
+
+		i.Request.Body = string(body)
+	}
 }
 
 func redactTokens(t *testing.T, i *cassette.Interaction) {
