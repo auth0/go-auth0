@@ -99,9 +99,9 @@ func TestRetries(t *testing.T) {
 		_, err := c.Get(s.URL)
 
 		assert.Error(t, err)
-		elapsed := time.Since(start).Seconds()
-		assert.GreaterOrEqual(t, elapsed, float64(1))
-		assert.LessOrEqual(t, elapsed, float64(2))
+		elapsed := time.Since(start).Milliseconds()
+		assert.GreaterOrEqual(t, elapsed, int64(750))
+		assert.LessOrEqual(t, elapsed, int64(2000))
 	})
 
 	t.Run("Should not retry some errors", func(t *testing.T) {
