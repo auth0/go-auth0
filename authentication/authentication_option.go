@@ -10,7 +10,7 @@ func WithClientID(clientID string) Option {
 	}
 }
 
-// WithClientSecret configures the Client ID to be provided with requests if one is not provided.
+// WithClientSecret configures the Client secret to be provided with requests if one is not provided.
 func WithClientSecret(clientSecret string) Option {
 	return func(a *Authentication) {
 		a.clientSecret = clientSecret

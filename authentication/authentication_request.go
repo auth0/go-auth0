@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-// URI returns the absolute URL of the Management API with any path segments
+// URI returns the absolute URL of the Authentication API with any path segments
 // appended to the end.
 func (a *Authentication) URI(path ...string) string {
 	baseURL := &url.URL{
@@ -20,19 +20,7 @@ func (a *Authentication) URI(path ...string) string {
 		Path:   a.basePath + "/",
 	}
 
-	const escapedForwardSlash = "%2F"
-	var escapedPath []string
-	for _, unescapedPath := range path {
-		// Go's url.PathEscape will not escape "/", but some user IDs do have a valid "/" in them.
-		// See https://github.com/golang/go/blob/b55a2fb3b0d67b346bac871737b862f16e5a6447/src/net/url/url.go#L141.
-		defaultPathEscaped := url.PathEscape(unescapedPath)
-		escapedPath = append(
-			escapedPath,
-			strings.ReplaceAll(defaultPathEscaped, "/", escapedForwardSlash),
-		)
-	}
-
-	return baseURL.String() + strings.Join(escapedPath, "/")
+	return baseURL.String() + strings.Join(path, "/")
 }
 
 // NewRequest returns a new HTTP request. If the payload is not nil it will be
@@ -175,8 +163,7 @@ func (a *Authentication) FormRequest(ctx context.Context, method, uri string, pa
 	return nil
 }
 
-// RequestOption configures a call (typically to retrieve a resource) to Auth0 with
-// query parameters.
+// RequestOption configures a call to Auth0 with query parameters.
 type RequestOption interface {
 	apply(*http.Request, url.Values)
 }

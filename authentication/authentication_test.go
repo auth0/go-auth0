@@ -98,7 +98,7 @@ func TestAuthenticationApiCallContextCancel(t *testing.T) {
 
 	assert.NoError(t, err)
 
-	_, err = a.Database.SignUp(ctx, database.SignUpRequest{
+	_, err = a.Database.Signup(ctx, database.SignupRequest{
 		Username: "test",
 		Password: "test",
 	})
@@ -117,7 +117,7 @@ func TestAuthenticationApiCallContextTimeout(t *testing.T) {
 
 	assert.NoError(t, err)
 
-	_, err = a.Database.SignUp(ctx, database.SignUpRequest{
+	_, err = a.Database.Signup(ctx, database.SignupRequest{
 		Username: "test",
 		Password: "test",
 	})

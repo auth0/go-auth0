@@ -6,8 +6,8 @@ import (
 	"go.devnw.com/structs"
 )
 
-// SignUpRequest is a sign up request.
-type SignUpRequest struct {
+// SignupRequest is a sign up request.
+type SignupRequest struct {
 	// The client_id of your client.
 	ClientID string `json:"client_id,omitempty"`
 	// The user's email address.
@@ -31,17 +31,17 @@ type SignUpRequest struct {
 	// The user metadata to be associated with the user. If set, the field must be an object containing no more than ten properties.
 	// Property names can have a maximum of 100 characters, and property values must be strings of no more than 500 characters.
 	UserMetadata *map[string]interface{} `json:"user_metadata,omitempty"`
-	// Extra parameters to be merged into the request body. Values set here will override any existing values
+	// Extra parameters to be merged into the request body. Values set here will override any existing values.
 	ExtraParameters map[string]string `json:"-"`
 }
 
-// SignUpResponse is a sign up response.
-type SignUpResponse struct {
+// SignupResponse is a sign up response.
+type SignupResponse struct {
 	// The user's email address.
 	Email string `json:"email,omitempty"`
 	// Indicates whether a user has verified their email address.
 	EmailVerified bool `json:"email_verified,omitempty"`
-	// The users ID
+	// The user's ID.
 	ID string `json:"_id,omitempty"`
 	// The user's username. Only valid if the connection requires a username.
 	Username string `json:"username,omitempty"`
@@ -64,7 +64,7 @@ type SignUpResponse struct {
 //
 // It is required to support adding parameters from the `ExtraParameters`
 // field onto the request object.
-func (s *SignUpRequest) MarshalJSON() ([]byte, error) {
+func (s *SignupRequest) MarshalJSON() ([]byte, error) {
 	n := structs.New(s)
 	n.TagName = "json"
 

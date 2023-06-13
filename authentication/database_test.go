@@ -12,14 +12,14 @@ import (
 func TestDatabaseSignUp(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	userData := database.SignUpRequest{
+	userData := database.SignupRequest{
 		Connection: "Username-Password-Authentication",
 		Username:   "mytestaccount",
 		Password:   "mypassword",
 		Email:      "mytestaccount@example.com",
 	}
 
-	createdUser, err := authAPI.Database.SignUp(context.Background(), userData)
+	createdUser, err := authAPI.Database.Signup(context.Background(), userData)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, createdUser.ID)
 	assert.Equal(t, userData.Username, createdUser.Username)

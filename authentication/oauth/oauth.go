@@ -4,7 +4,7 @@ package oauth
 type ClientAuthentication struct {
 	// ClientID to use for the specific request.
 	ClientID string
-	// ClientSecret to use for the specific request .Required when Client Secret Basic or Client
+	// ClientSecret to use for the specific request. Required when Client Secret Basic or Client
 	// Secret Post is the application authentication method.
 	ClientSecret string
 }
@@ -13,7 +13,7 @@ type ClientAuthentication struct {
 type TokenSet struct {
 	// The access token.
 	AccessToken string `json:"access_token,omitempty"`
-	// The duration in seconds. that the access token is valid.
+	// The duration in seconds that the access token is valid for.
 	ExpiresIn int64 `json:"expires_in,omitempty"`
 	// The user's ID token.
 	IDToken string `json:"id_token,omitempty"`
@@ -34,8 +34,8 @@ type LoginWithPasswordRequest struct {
 	Scope string
 	// The unique identifier of the target API you want to access.
 	Audience string
-	// String value of the realm the user belongs. Set this if you want to add realm support at this grant.
+	// String value of the realm the user belongs. Set this if you want to add realm support to this grant.
 	Realm string
-	// Extra parameters to be merged into the request body. Values set here will override any existing values
+	// Extra parameters to be merged into the request body. Values set here will override any existing values.
 	ExtraParameters map[string]string
 }

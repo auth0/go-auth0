@@ -16,10 +16,10 @@ func Test_newError(t *testing.T) {
 		expectedError authenticationError
 	}{
 		{
-			name: "it fails to decode if body is not a json",
+			name: "it fails to decode if body is not json",
 			givenResponse: http.Response{
 				StatusCode: http.StatusForbidden,
-				Body:       io.NopCloser(strings.NewReader("Hello, I'm not a JSON.")),
+				Body:       io.NopCloser(strings.NewReader("Hello, I'm not JSON.")),
 			},
 			expectedError: authenticationError{
 				StatusCode: 403,
@@ -52,7 +52,7 @@ func Test_newError(t *testing.T) {
 			},
 		},
 		{
-			name: "it will handle a invalid sign up response",
+			name: "it will handle an invalid sign up response",
 			givenResponse: http.Response{
 				StatusCode: http.StatusBadRequest,
 				Body:       io.NopCloser(strings.NewReader(`{"name":"BadRequestError","code":"invalid_signup","description":"Invalid sign up","statusCode":400}`)),

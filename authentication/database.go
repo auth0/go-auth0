@@ -9,11 +9,11 @@ import (
 // Database manager.
 type Database manager
 
-// SignUp given a user's credentials, and a connection, will create a new user using active authentication.
+// Signup given a user's credentials and a connection, will create a new user using active authentication.
 //
 // This endpoint only works for database connections.
 // See: https://auth0.com/docs/api/authentication?http#signup
-func (d *Database) SignUp(ctx context.Context, params database.SignUpRequest) (r *database.SignUpResponse, err error) {
+func (d *Database) Signup(ctx context.Context, params database.SignupRequest) (r *database.SignupResponse, err error) {
 	if params.ClientID == "" {
 		params.ClientID = d.authentication.clientID
 	}
