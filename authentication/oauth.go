@@ -16,7 +16,7 @@ type OAuth manager
 func (o *OAuth) LoginWithGrant(ctx context.Context, grantType string, body url.Values, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	body.Add("grant_type", grantType)
 
-	err = o.authentication.FormRequest(ctx, "POST", o.authentication.URI("oauth", "token"), body, &t, opts...)
+	err = o.authentication.Request(ctx, "POST", o.authentication.URI("oauth", "token"), body, &t, opts...)
 	return
 }
 

@@ -53,56 +53,6 @@ func (a *Authentication) NewRequest(
 	return request, nil
 }
 
-// Do triggers an HTTP request and returns an HTTP response,
-// handling any context cancellations or timeouts.
-func (a *Authentication) Do(req *http.Request) (*http.Response, error) {
-	ctx := req.Context()
-
-	response, err := a.http.Do(req)
-	if err != nil {
-		select {
-		case <-ctx.Done():
-			return nil, ctx.Err()
-		default:
-			return nil, err
-		}
-	}
-
-	return response, nil
-}
-
-// Request combines NewRequest and Do, while also handling decoding of response payload.
-func (a *Authentication) Request(ctx context.Context, method, uri string, payload interface{}, resp interface{}) error {
-	request, err := a.NewRequest(ctx, method, uri, &payload)
-	if err != nil {
-		return fmt.Errorf("failed to create a new request: %w", err)
-	}
-
-	response, err := a.Do(request)
-	if err != nil {
-		return fmt.Errorf("failed to send the request: %w", err)
-	}
-	defer response.Body.Close()
-
-	// If the response contains a client or a server error then return the error.
-	if response.StatusCode >= http.StatusBadRequest {
-		return newError(response)
-	}
-
-	responseBody, err := io.ReadAll(response.Body)
-	if err != nil {
-		return fmt.Errorf("failed to read the response body: %w", err)
-	}
-
-	if len(responseBody) > 0 && string(responseBody) != "{}" {
-		if err = json.Unmarshal(responseBody, &resp); err != nil {
-			return fmt.Errorf("failed to unmarshal response payload: %w", err)
-		}
-	}
-
-	return nil
-}
-
 // NewFormRequest returns a new HTTP request. If the payload is not nil it will be
 // encoded as JSON.
 func (a *Authentication) NewFormRequest(
@@ -131,9 +81,37 @@ func (a *Authentication) NewFormRequest(
 	return request, nil
 }
 
-// FormRequest combines FormRequest and Do, while also handling decoding of response payload.
-func (a *Authentication) FormRequest(ctx context.Context, method, uri string, payload url.Values, resp interface{}, opts ...RequestOption) error {
-	request, err := a.NewFormRequest(ctx, method, uri, payload, opts...)
+// Do triggers an HTTP request and returns an HTTP response,
+// handling any context cancellations or timeouts.
+func (a *Authentication) Do(req *http.Request) (*http.Response, error) {
+	ctx := req.Context()
+
+	response, err := a.http.Do(req)
+	if err != nil {
+		select {
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		default:
+			return nil, err
+		}
+	}
+
+	return response, nil
+}
+
+// Request combines NewRequest and Do, while also handling decoding of response payload. If payload
+// is of type url.Values then a request with content type `application/x-www-form-urlencoded` will be
+// performed otherwise a a request of type `"application/json` will be performed
+func (a *Authentication) Request(ctx context.Context, method, uri string, payload interface{}, resp interface{}, opts ...RequestOption) error {
+	var request *http.Request
+	var err error
+	switch p := payload.(type) {
+	case url.Values:
+		request, err = a.NewFormRequest(ctx, method, uri, p, opts...)
+	default:
+		request, err = a.NewRequest(ctx, method, uri, p)
+	}
+
 	if err != nil {
 		return fmt.Errorf("failed to create a new request: %w", err)
 	}
