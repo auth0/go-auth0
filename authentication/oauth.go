@@ -20,9 +20,12 @@ func (o *OAuth) LoginWithGrant(ctx context.Context, grantType string, body url.V
 	return
 }
 
-// LoginWithPassword is for logging in with information that is typically received from a highly trusted
-// public client like a SPA.
-// For single-page applications and native/mobile apps, we recommend using web flows instead.
+// LoginWithPassword performs the Password OAuth 2.0 grant that highly-trusted apps use to access an API.
+// In this flow, the end-user is asked to fill in credentials (username/password), typically using
+// an interactive form in the user-agent (browser). This information is sent to the backend and
+// from there to Auth0. It is therefore imperative that the application is absolutely trusted with
+// this information. For single-page applications and native/mobile apps, we recommend using web flows
+// instead.
 //
 // See: https://auth0.com/docs/api/authentication#resource-owner-password
 //
