@@ -489,9 +489,11 @@ func TestRetries(t *testing.T) {
 
 	t.Run("Retry and context", func(t *testing.T) {
 		i := 0
+		ctx, cancel := context.WithCancel(context.Background())
 
 		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			i++
+			cancel()
 			w.WriteHeader(http.StatusBadGateway)
 		})
 
@@ -505,11 +507,8 @@ func TestRetries(t *testing.T) {
 		)
 		assert.NoError(t, err)
 
-		ctx, cancel := context.WithTimeout(context.Background(), 1*time.Millisecond)
-		defer cancel()
-
 		_, err = m.User.Read(ctx, "123")
-		assert.ErrorIs(t, err, context.DeadlineExceeded)
+		assert.ErrorIs(t, err, context.Canceled)
 		assert.Equal(t, 1, i) // 1 request should have been made before the context times out
 	})
 }
