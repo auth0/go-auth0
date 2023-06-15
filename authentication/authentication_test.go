@@ -133,5 +133,4 @@ func TestUserInfo(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "test-sub", user.Sub)
 	assert.Equal(t, "test-value", user.AdditionalClaims["unknown-param"])
-
 }
