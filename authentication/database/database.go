@@ -78,11 +78,11 @@ func (s *SignupRequest) MarshalJSON() ([]byte, error) {
 
 // ChangePasswordRequest defines the request body for calling the change password API.
 type ChangePasswordRequest struct {
-	// The client_id of your client.
+	// The client_id of your Auth0 Application.
 	ClientID string `json:"client_id,omitempty"`
 	// The user's email address.
 	Email string `json:"email,omitempty"`
-	// The name of the database configured to your client.
+	// The name of the database connection configured on your client.
 	Connection string `json:"connection,omitempty"`
 	// Extra parameters to be merged into the request body. Values set here will override any existing values.
 	ExtraParameters map[string]string `json:"-"`
