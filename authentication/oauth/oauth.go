@@ -19,11 +19,13 @@ type TokenSet struct {
 	IDToken string `json:"id_token,omitempty"`
 	// The refresh token, only available if `offline_access` scope was provided.
 	RefreshToken string `json:"refresh_token,omitempty"`
+	//
+	Scope string `json:"scope,omitempty"`
 	// The type of the access token.
 	TokenType string `json:"token_type,omitempty"`
 }
 
-// LoginWithPasswordRequest defines the request body for logging in with a password grant.
+// LoginWithPasswordRequest defines the request body for logging in with the Password grant.
 type LoginWithPasswordRequest struct {
 	ClientAuthentication
 	// The user's username.
@@ -38,4 +40,62 @@ type LoginWithPasswordRequest struct {
 	Realm string
 	// Extra parameters to be merged into the request body. Values set here will override any existing values.
 	ExtraParameters map[string]string
+}
+
+// LoginWithAuthCodeRequest defines the request body for logging in with the Authorization Code grant.
+type LoginWithAuthCodeRequest struct {
+	ClientAuthentication
+	// The Authorization Code received from the initial /authorize call.
+	Code string
+	// This is required only if it was set at the GET /authorize endpoint. The values must match.
+	RedirectURI string
+	// Extra parameters to be merged into the request body. Values set here will override any existing values.
+	ExtraParameters map[string]string
+}
+
+// LoginWithAuthCodeWithPKCERequest defines the request body for logging in with the Authorization Code with
+// Proof Key for Code Exchange grant.
+type LoginWithAuthCodeWithPKCERequest struct {
+	ClientAuthentication
+	// The Authorization Code received from the initial /authorize call.
+	Code string
+	// Cryptographically random key that was used to generate the code_challenge passed to /authorize.
+	CodeVerifier string
+	// This is required only if it was set at the GET /authorize endpoint. The values must match.
+	RedirectURI string
+	// Extra parameters to be merged into the request body. Values set here will override any existing values.
+	ExtraParameters map[string]string
+}
+
+// LoginWithClientCredentialsRequest defines the request body for logging in with Authorization Code grant.
+type LoginWithClientCredentialsRequest struct {
+	ClientAuthentication
+	// The unique identifier of the target API you want to access.
+	Audience string
+	// Extra parameters to be merged into the request body. Values set here will override any existing values.
+	ExtraParameters map[string]string
+}
+
+// RefreshTokenRequest defines the request body for logging in with Authorization Code grant.
+type RefreshTokenRequest struct {
+	ClientAuthentication
+	// The Refresh Token to use.
+	RefreshToken string
+	// 	A space-delimited list of requested scope permissions. If not sent, the original scopes will be used;
+	// otherwise you can request a reduced set of scopes. Note that this must be URL encoded.
+	Scope string
+	// Extra parameters to be merged into the request body. Values set here will override any existing values.
+	ExtraParameters map[string]string
+}
+
+// RevokeRefreshTokenRequest defines the request body for logging in with Authorization Code grant.
+type RevokeRefreshTokenRequest struct {
+	// The client_id of your client.
+	ClientID string `json:"client_id,omitempty"`
+	// The client_secret of your client.
+	ClientSecret string `json:"client_secret,omitempty"`
+	// The Refresh Token you want to revoke.
+	Token string `json:"token,omitempty"`
+	// Extra parameters to be merged into the request body. Values set here will override any existing values.
+	ExtraParameters map[string]string `json:"-"`
 }

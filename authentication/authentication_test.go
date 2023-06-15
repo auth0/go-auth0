@@ -18,6 +18,7 @@ import (
 var (
 	domain                = os.Getenv("AUTH0_DOMAIN")
 	clientID              = os.Getenv("AUTH0_AUTH_CLIENT_ID")
+	clientSecret          = os.Getenv("AUTH0_AUTH_CLIENT_SECRET")
 	httpRecordings        = os.Getenv("AUTH0_HTTP_RECORDINGS")
 	httpRecordingsEnabled = false
 	authAPI               = &Authentication{}
@@ -122,4 +123,15 @@ func TestAuthenticationApiCallContextTimeout(t *testing.T) {
 		Password: "test",
 	})
 	assert.ErrorIs(t, err, context.DeadlineExceeded)
+}
+
+func TestUserInfo(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	user, err := authAPI.UserInfo(context.Background(), "test-access-token")
+
+	assert.NoError(t, err)
+	assert.Equal(t, "test-sub", user.Sub)
+	assert.Equal(t, "test-value", user.AdditionalClaims["unknown-param"])
+
 }
