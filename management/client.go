@@ -232,14 +232,160 @@ type OIDCBackchannelLogout struct {
 
 // ClientAddons defines the `addons` settings for a Client.
 type ClientAddons struct {
+	AWS                  *AWSClientAddon                  `json:"aws,omitempty"`
+	AzureBlob            *AzureBlobClientAddon            `json:"azure_blob,omitempty"`
+	AzureSB              *AzureSBClientAddon              `json:"azure_sb,omitempty"`
+	Box                  *BoxClientAddon                  `json:"box,omitempty"`
+	CloudBees            *CloudBeesClientAddon            `json:"cloudbees,omitempty"`
+	Concur               *ConcurClientAddon               `json:"concur,omitempty"`
+	Dropbox              *DropboxClientAddon              `json:"dropbox,omitempty"`
+	EchoSign             *EchoSignClientAddon             `json:"echosign,omitempty"`
+	Egnyte               *EgnyteClientAddon               `json:"egnyte,omitempty"`
+	Firebase             *FirebaseClientAddon             `json:"firebase,omitempty"`
+	Layer                *LayerClientAddon                `json:"layer,omitempty"`
+	MSCRM                *MSCRMClientAddon                `json:"mscrm,omitempty"`
+	NewRelic             *NewRelicClientAddon             `json:"newrelic,omitempty"`
+	Office365            *Office365ClientAddon            `json:"office365,omitempty"`
+	RMS                  *RMSClientAddon                  `json:"rms,omitempty"`
+	Salesforce           *SalesforceClientAddon           `json:"salesforce,omitempty"`
+	SalesforceAPI        *SalesforceAPIClientAddon        `json:"salesforce_api,omitempty"`
+	SalesforceSandboxAPI *SalesforceSandboxAPIClientAddon `json:"salesforce_sandbox_api,omitempty"`
+	SAML2                *SAML2ClientAddon                `json:"samlp,omitempty"`
+	SAPAPI               *SAPAPIClientAddon               `json:"sap_api,omitempty"`
+	Sharepoint           *SharepointClientAddon           `json:"sharepoint,omitempty"`
+	Sentry               *SentryClientAddon               `json:"sentry,omitempty"`
+	Slack                *SlackClientAddon                `json:"slack,omitempty"`
+	SpringCM             *SpringCMClientAddon             `json:"springcm,omitempty"`
+	SSOIntegration       *SSOntegrationClientAddon        `json:"sso_integration,omitempty"`
+	WAMS                 *WAMSClientAddon                 `json:"wams,omitempty"`
 	// SAML2 Addon configuration. Set this property to indicate that the Addon should be enabled, all settings are optional.
 	// The first entry in `Callbacks` should be the URL to post the SAML Token to.
-	SAML2 *SAML2ClientAddon `json:"samlp,omitempty"`
 	// WS-Fed Addon. Set this property to indicate the Addon should be enabled and then store the
 	// configuration in `Callbacks` and `ClientAliases` properties on the Client.
 	// The first entry in `Callbacks` should be the URL to post the SAML Token to.
 	// ClientAliases should include the Realm which is the identifier sent by the application.
-	WSFED *WSFEDClientAddon `json:"wsfed,omitempty"`
+	WSFED   *WSFEDClientAddon   `json:"wsfed,omitempty"`
+	Zendesk *ZendeskClientAddon `json:"zendesk,omitempty"`
+	Zoom    *ZoomClientAddon    `json:"zoom,omitempty"`
+}
+
+// AWSClientAddon defines the `aws` settings for a client.
+type AWSClientAddon struct {
+	Principal         *string `json:"principal,omitempty"`
+	Role              *string `json:"role,omitempty"`
+	LifetimeInSeconds *int    `json:"lifetime_in_seconds,omitempty"`
+}
+
+// AzureBlobClientAddon defines the `azure_blob` settings for a client.
+type AzureBlobClientAddon struct {
+	AccountName      *string `json:"accountName,omitempty"`
+	StorageAccessKey *string `json:"storageAccessKey,omitempty"`
+	ContainerName    *string `json:"containerName,omitempty"`
+	BlobName         *string `json:"blobName,omitempty"`
+	Expiration       *int    `json:"expiration,omitempty"`
+	SignedIdentifier *string `json:"signedIdentifier,omitempty"`
+	BlobRead         *bool   `json:"blob_read,omitempty"`
+	BlobWrite        *bool   `json:"blob_write,omitempty"`
+	BlobDelete       *bool   `json:"blob_delete,omitempty"`
+	ContainerRead    *bool   `json:"container_read,omitempty"`
+	ContainerWrite   *bool   `json:"container_write,omitempty"`
+	ContainerDelete  *bool   `json:"container_delete,omitempty"`
+	ContainerList    *bool   `json:"container_list,omitempty"`
+}
+
+// AzureSBClientAddon defines the `azure_sb` settings for a client.
+type AzureSBClientAddon struct {
+	Namespace  *string `json:"namespace,omitempty"`
+	SASKeyName *string `json:"sasKeyName,omitempty"`
+	SASKey     *string `json:"sasKey,omitempty"`
+	EntityPath *string `json:"entityPath,omitempty"`
+	Expiration *int    `json:"expiration,omitempty"`
+}
+
+// BoxClientAddon defines the `box` settings for a client.
+type BoxClientAddon struct {
+}
+
+// CloudBeesClientAddon defines the `cloudbees` settings for a client.
+type CloudBeesClientAddon struct {
+}
+
+// ConcurClientAddon defines the `concur` settings for a client.
+type ConcurClientAddon struct {
+}
+
+// DropboxClientAddon defines the `dropbox` settings for a client.
+type DropboxClientAddon struct {
+}
+
+// EchoSignClientAddon defines the `echosign` settings for a client.
+type EchoSignClientAddon struct {
+	Domain *string `json:"domain,omitempty"`
+}
+
+// EgnyteClientAddon defines the `egnyte` settings for a client.
+type EgnyteClientAddon struct {
+	Domain *string `json:"domain,omitempty"`
+}
+
+// FirebaseClientAddon defines the `firebase` settings for a client.
+type FirebaseClientAddon struct {
+	Secret            *string `json:"secret,omitempty"`
+	PrivateKeyID      *string `json:"private_key_id,omitempty"`
+	PrivateKey        *string `json:"private_key,omitempty"`
+	ClientEmail       *string `json:"client_email,omitempty"`
+	LifetimeInSeconds *int    `json:"lifetime_in_seconds,omitempty"`
+}
+
+// LayerClientAddon defines the `layer` settings for a client.
+type LayerClientAddon struct {
+	ProviderID *string `json:"providerId,omitempty"`
+	KeyID      *string `json:"keyId,omitempty"`
+	PrivateKey *string `json:"privateKey,omitempty"`
+	Principal  *string `json:"principal,omitempty"`
+	Expiration *int    `json:"expiration,omitempty"`
+}
+
+// MSCRMClientAddon defines the `mscrm` settings for a client.
+type MSCRMClientAddon struct {
+	URL *string `json:"url,omitempty"`
+}
+
+// NewRelicClientAddon defines the `newrelic` settings for a client.
+type NewRelicClientAddon struct {
+	Account *string `json:"account,omitempty"`
+}
+
+// Office365ClientAddon defines the `office365` settings for a client.
+type Office365ClientAddon struct {
+	Domain     *string `json:"domain,omitempty"`
+	Connection *string `json:"connection,omitempty"`
+}
+
+// RMSClientAddon defines the `rms` settings for a client.
+type RMSClientAddon struct {
+	URL *string `json:"url,omitempty"`
+}
+
+// SalesforceClientAddon defines the `salesforce` settings for a client.
+type SalesforceClientAddon struct {
+	EntityID *string `json:"entity_id,omitempty"`
+}
+
+// SalesforceAPIClientAddon defines the `salesforce_api` settings for a client.
+type SalesforceAPIClientAddon struct {
+	ClientID            *string `json:"clientid,omitempty"`
+	Principal           *string `json:"principal,omitempty"`
+	CommunityName       *string `json:"communityName,omitempty"`
+	CommunityURLSection *string `json:"community_url_section,omitempty"`
+}
+
+// SalesforceSandboxAPIClientAddon defines the `salesforce_sandbox_api` settings for a client.
+type SalesforceSandboxAPIClientAddon struct {
+	ClientID            *string `json:"clientid,omitempty"`
+	Principal           *string `json:"principal,omitempty"`
+	CommunityName       *string `json:"communityName,omitempty"`
+	CommunityURLSection *string `json:"community_url_section,omitempty"`
 }
 
 // SAML2ClientAddon defines the `SAML2` settings for a Client.
@@ -301,6 +447,59 @@ type SAML2ClientAddonLogout struct {
 	Callback *string `json:"callback,omitempty"`
 	// Controls whether Auth0 should notify service providers of session termination
 	SLOEnabled *bool `json:"slo_enabled,omitempty"`
+}
+
+// SAPAPIClientAddon defines the `sap` settings for a client.
+type SAPAPIClientAddon struct {
+	ClientID             *string `json:"clientid,omitempty"`
+	UsernameAttribute    *string `json:"usernameAttribute,omitempty"`
+	TokenEndpointURL     *string `json:"tokenEndpointUrl,omitempty"`
+	Scope                *string `json:"scope,omitempty"`
+	ServicePassword      *string `json:"servicePassword,omitempty"`
+	NameIdentifierFormat *string `json:"nameIdentifierFormat,omitempty"`
+}
+
+// SentryClientAddon defines the `sentry` settings for a client.
+type SentryClientAddon struct {
+	OrgSlug *string `json:"org_slug,omitempty"`
+	BaseURL *string `json:"base_url,omitempty"`
+}
+
+// SharepointClientAddon defines the `sharepoint` settings for a client.
+type SharepointClientAddon struct {
+	URL         *string   `json:"url,omitempty"`
+	ExternalURL *[]string `json:"external_url,omitempty"`
+}
+
+// SlackClientAddon defines the `slack` settings for a client.
+type SlackClientAddon struct {
+	Team *string `json:"team,omitempty"`
+}
+
+// SpringCMClientAddon defines the `springcm` settings for a client.
+type SpringCMClientAddon struct {
+	Acsurl *string `json:"acsurl,omitempty"`
+}
+
+// SSOntegrationClientAddon defines the `sso_integration` settings for a client.
+type SSOntegrationClientAddon struct {
+	Name    *string `json:"name,omitempty"`
+	Version *string `json:"version,omitempty"`
+}
+
+// WAMSClientAddon defines the `wams` settings for a client.
+type WAMSClientAddon struct {
+	Masterkey *string `json:"masterkey,omitempty"`
+}
+
+// ZendeskClientAddon defines the `zendesk` settings for a client.
+type ZendeskClientAddon struct {
+	AccountName *string `json:"accountName,omitempty"`
+}
+
+// ZoomClientAddon defines the `zoom` settings for a client.
+type ZoomClientAddon struct {
+	Account *string `json:"account,omitempty"`
 }
 
 // WSFEDClientAddon is an empty struct used to indicate that the WS-FED Addon should be enabled.
