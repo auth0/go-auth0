@@ -1996,11 +1996,11 @@ func TestClientAddons_GetSentry(tt *testing.T) {
 	c.GetSentry()
 }
 
-func TestClientAddons_GetSharepoint(tt *testing.T) {
+func TestClientAddons_GetSharePoint(tt *testing.T) {
 	c := &ClientAddons{}
-	c.GetSharepoint()
+	c.GetSharePoint()
 	c = nil
-	c.GetSharepoint()
+	c.GetSharePoint()
 }
 
 func TestClientAddons_GetSlack(tt *testing.T) {
@@ -10231,29 +10231,29 @@ func TestSentryClientAddon_String(t *testing.T) {
 	}
 }
 
-func TestSharepointClientAddon_GetExternalURL(tt *testing.T) {
+func TestSharePointClientAddon_GetExternalURL(tt *testing.T) {
 	var zeroValue []string
-	s := &SharepointClientAddon{ExternalURL: &zeroValue}
+	s := &SharePointClientAddon{ExternalURL: &zeroValue}
 	s.GetExternalURL()
-	s = &SharepointClientAddon{}
+	s = &SharePointClientAddon{}
 	s.GetExternalURL()
 	s = nil
 	s.GetExternalURL()
 }
 
-func TestSharepointClientAddon_GetURL(tt *testing.T) {
+func TestSharePointClientAddon_GetURL(tt *testing.T) {
 	var zeroValue string
-	s := &SharepointClientAddon{URL: &zeroValue}
+	s := &SharePointClientAddon{URL: &zeroValue}
 	s.GetURL()
-	s = &SharepointClientAddon{}
+	s = &SharePointClientAddon{}
 	s.GetURL()
 	s = nil
 	s.GetURL()
 }
 
-func TestSharepointClientAddon_String(t *testing.T) {
+func TestSharePointClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &SharepointClientAddon{}
+	v := &SharePointClientAddon{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -10405,14 +10405,14 @@ func TestSlackClientAddon_String(t *testing.T) {
 	}
 }
 
-func TestSpringCMClientAddon_GetAcsurl(tt *testing.T) {
+func TestSpringCMClientAddon_GetACSURL(tt *testing.T) {
 	var zeroValue string
-	s := &SpringCMClientAddon{Acsurl: &zeroValue}
-	s.GetAcsurl()
+	s := &SpringCMClientAddon{ACSURL: &zeroValue}
+	s.GetACSURL()
 	s = &SpringCMClientAddon{}
-	s.GetAcsurl()
+	s.GetACSURL()
 	s = nil
-	s.GetAcsurl()
+	s.GetACSURL()
 }
 
 func TestSpringCMClientAddon_String(t *testing.T) {
@@ -10423,29 +10423,29 @@ func TestSpringCMClientAddon_String(t *testing.T) {
 	}
 }
 
-func TestSSOntegrationClientAddon_GetName(tt *testing.T) {
+func TestSSOIntegrationClientAddon_GetName(tt *testing.T) {
 	var zeroValue string
-	s := &SSOntegrationClientAddon{Name: &zeroValue}
+	s := &SSOIntegrationClientAddon{Name: &zeroValue}
 	s.GetName()
-	s = &SSOntegrationClientAddon{}
+	s = &SSOIntegrationClientAddon{}
 	s.GetName()
 	s = nil
 	s.GetName()
 }
 
-func TestSSOntegrationClientAddon_GetVersion(tt *testing.T) {
+func TestSSOIntegrationClientAddon_GetVersion(tt *testing.T) {
 	var zeroValue string
-	s := &SSOntegrationClientAddon{Version: &zeroValue}
+	s := &SSOIntegrationClientAddon{Version: &zeroValue}
 	s.GetVersion()
-	s = &SSOntegrationClientAddon{}
+	s = &SSOIntegrationClientAddon{}
 	s.GetVersion()
 	s = nil
 	s.GetVersion()
 }
 
-func TestSSOntegrationClientAddon_String(t *testing.T) {
+func TestSSOIntegrationClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &SSOntegrationClientAddon{}
+	v := &SSOIntegrationClientAddon{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

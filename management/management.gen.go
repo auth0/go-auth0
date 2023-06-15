@@ -1628,12 +1628,12 @@ func (c *ClientAddons) GetSentry() *SentryClientAddon {
 	return c.Sentry
 }
 
-// GetSharepoint returns the Sharepoint field.
-func (c *ClientAddons) GetSharepoint() *SharepointClientAddon {
+// GetSharePoint returns the SharePoint field.
+func (c *ClientAddons) GetSharePoint() *SharePointClientAddon {
 	if c == nil {
 		return nil
 	}
-	return c.Sharepoint
+	return c.SharePoint
 }
 
 // GetSlack returns the Slack field.
@@ -1653,7 +1653,7 @@ func (c *ClientAddons) GetSpringCM() *SpringCMClientAddon {
 }
 
 // GetSSOIntegration returns the SSOIntegration field.
-func (c *ClientAddons) GetSSOIntegration() *SSOntegrationClientAddon {
+func (c *ClientAddons) GetSSOIntegration() *SSOIntegrationClientAddon {
 	if c == nil {
 		return nil
 	}
@@ -8101,7 +8101,7 @@ func (s *SentryClientAddon) String() string {
 }
 
 // GetExternalURL returns the ExternalURL field if it's non-nil, zero value otherwise.
-func (s *SharepointClientAddon) GetExternalURL() []string {
+func (s *SharePointClientAddon) GetExternalURL() []string {
 	if s == nil || s.ExternalURL == nil {
 		return nil
 	}
@@ -8109,15 +8109,15 @@ func (s *SharepointClientAddon) GetExternalURL() []string {
 }
 
 // GetURL returns the URL field if it's non-nil, zero value otherwise.
-func (s *SharepointClientAddon) GetURL() string {
+func (s *SharePointClientAddon) GetURL() string {
 	if s == nil || s.URL == nil {
 		return ""
 	}
 	return *s.URL
 }
 
-// String returns a string representation of SharepointClientAddon.
-func (s *SharepointClientAddon) String() string {
+// String returns a string representation of SharePointClientAddon.
+func (s *SharePointClientAddon) String() string {
 	return Stringify(s)
 }
 
@@ -8235,12 +8235,12 @@ func (s *SlackClientAddon) String() string {
 	return Stringify(s)
 }
 
-// GetAcsurl returns the Acsurl field if it's non-nil, zero value otherwise.
-func (s *SpringCMClientAddon) GetAcsurl() string {
-	if s == nil || s.Acsurl == nil {
+// GetACSURL returns the ACSURL field if it's non-nil, zero value otherwise.
+func (s *SpringCMClientAddon) GetACSURL() string {
+	if s == nil || s.ACSURL == nil {
 		return ""
 	}
-	return *s.Acsurl
+	return *s.ACSURL
 }
 
 // String returns a string representation of SpringCMClientAddon.
@@ -8249,7 +8249,7 @@ func (s *SpringCMClientAddon) String() string {
 }
 
 // GetName returns the Name field if it's non-nil, zero value otherwise.
-func (s *SSOntegrationClientAddon) GetName() string {
+func (s *SSOIntegrationClientAddon) GetName() string {
 	if s == nil || s.Name == nil {
 		return ""
 	}
@@ -8257,15 +8257,15 @@ func (s *SSOntegrationClientAddon) GetName() string {
 }
 
 // GetVersion returns the Version field if it's non-nil, zero value otherwise.
-func (s *SSOntegrationClientAddon) GetVersion() string {
+func (s *SSOIntegrationClientAddon) GetVersion() string {
 	if s == nil || s.Version == nil {
 		return ""
 	}
 	return *s.Version
 }
 
-// String returns a string representation of SSOntegrationClientAddon.
-func (s *SSOntegrationClientAddon) String() string {
+// String returns a string representation of SSOIntegrationClientAddon.
+func (s *SSOIntegrationClientAddon) String() string {
 	return Stringify(s)
 }
 

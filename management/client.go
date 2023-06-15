@@ -250,16 +250,16 @@ type ClientAddons struct {
 	Salesforce           *SalesforceClientAddon           `json:"salesforce,omitempty"`
 	SalesforceAPI        *SalesforceAPIClientAddon        `json:"salesforce_api,omitempty"`
 	SalesforceSandboxAPI *SalesforceSandboxAPIClientAddon `json:"salesforce_sandbox_api,omitempty"`
-	SAML2                *SAML2ClientAddon                `json:"samlp,omitempty"`
-	SAPAPI               *SAPAPIClientAddon               `json:"sap_api,omitempty"`
-	Sharepoint           *SharepointClientAddon           `json:"sharepoint,omitempty"`
-	Sentry               *SentryClientAddon               `json:"sentry,omitempty"`
-	Slack                *SlackClientAddon                `json:"slack,omitempty"`
-	SpringCM             *SpringCMClientAddon             `json:"springcm,omitempty"`
-	SSOIntegration       *SSOntegrationClientAddon        `json:"sso_integration,omitempty"`
-	WAMS                 *WAMSClientAddon                 `json:"wams,omitempty"`
 	// SAML2 Addon configuration. Set this property to indicate that the Addon should be enabled, all settings are optional.
 	// The first entry in `Callbacks` should be the URL to post the SAML Token to.
+	SAML2          *SAML2ClientAddon          `json:"samlp,omitempty"`
+	SAPAPI         *SAPAPIClientAddon         `json:"sap_api,omitempty"`
+	SharePoint     *SharePointClientAddon     `json:"sharepoint,omitempty"`
+	Sentry         *SentryClientAddon         `json:"sentry,omitempty"`
+	Slack          *SlackClientAddon          `json:"slack,omitempty"`
+	SpringCM       *SpringCMClientAddon       `json:"springcm,omitempty"`
+	SSOIntegration *SSOIntegrationClientAddon `json:"sso_integration,omitempty"`
+	WAMS           *WAMSClientAddon           `json:"wams,omitempty"`
 	// WS-Fed Addon. Set this property to indicate the Addon should be enabled and then store the
 	// configuration in `Callbacks` and `ClientAliases` properties on the Client.
 	// The first entry in `Callbacks` should be the URL to post the SAML Token to.
@@ -465,8 +465,8 @@ type SentryClientAddon struct {
 	BaseURL *string `json:"base_url,omitempty"`
 }
 
-// SharepointClientAddon defines the `sharepoint` settings for a client.
-type SharepointClientAddon struct {
+// SharePointClientAddon defines the `sharepoint` settings for a client.
+type SharePointClientAddon struct {
 	URL         *string   `json:"url,omitempty"`
 	ExternalURL *[]string `json:"external_url,omitempty"`
 }
@@ -478,11 +478,11 @@ type SlackClientAddon struct {
 
 // SpringCMClientAddon defines the `springcm` settings for a client.
 type SpringCMClientAddon struct {
-	Acsurl *string `json:"acsurl,omitempty"`
+	ACSURL *string `json:"acsurl,omitempty"`
 }
 
-// SSOntegrationClientAddon defines the `sso_integration` settings for a client.
-type SSOntegrationClientAddon struct {
+// SSOIntegrationClientAddon defines the `sso_integration` settings for a client.
+type SSOIntegrationClientAddon struct {
 	Name    *string `json:"name,omitempty"`
 	Version *string `json:"version,omitempty"`
 }
