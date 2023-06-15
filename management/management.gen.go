@@ -646,8 +646,196 @@ func (a *AuthenticationMethodReference) String() string {
 	return Stringify(a)
 }
 
+// GetLifetimeInSeconds returns the LifetimeInSeconds field if it's non-nil, zero value otherwise.
+func (a *AWSClientAddon) GetLifetimeInSeconds() int {
+	if a == nil || a.LifetimeInSeconds == nil {
+		return 0
+	}
+	return *a.LifetimeInSeconds
+}
+
+// GetPrincipal returns the Principal field if it's non-nil, zero value otherwise.
+func (a *AWSClientAddon) GetPrincipal() string {
+	if a == nil || a.Principal == nil {
+		return ""
+	}
+	return *a.Principal
+}
+
+// GetRole returns the Role field if it's non-nil, zero value otherwise.
+func (a *AWSClientAddon) GetRole() string {
+	if a == nil || a.Role == nil {
+		return ""
+	}
+	return *a.Role
+}
+
+// String returns a string representation of AWSClientAddon.
+func (a *AWSClientAddon) String() string {
+	return Stringify(a)
+}
+
+// GetAccountName returns the AccountName field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetAccountName() string {
+	if a == nil || a.AccountName == nil {
+		return ""
+	}
+	return *a.AccountName
+}
+
+// GetBlobDelete returns the BlobDelete field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetBlobDelete() bool {
+	if a == nil || a.BlobDelete == nil {
+		return false
+	}
+	return *a.BlobDelete
+}
+
+// GetBlobName returns the BlobName field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetBlobName() string {
+	if a == nil || a.BlobName == nil {
+		return ""
+	}
+	return *a.BlobName
+}
+
+// GetBlobRead returns the BlobRead field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetBlobRead() bool {
+	if a == nil || a.BlobRead == nil {
+		return false
+	}
+	return *a.BlobRead
+}
+
+// GetBlobWrite returns the BlobWrite field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetBlobWrite() bool {
+	if a == nil || a.BlobWrite == nil {
+		return false
+	}
+	return *a.BlobWrite
+}
+
+// GetContainerDelete returns the ContainerDelete field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetContainerDelete() bool {
+	if a == nil || a.ContainerDelete == nil {
+		return false
+	}
+	return *a.ContainerDelete
+}
+
+// GetContainerList returns the ContainerList field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetContainerList() bool {
+	if a == nil || a.ContainerList == nil {
+		return false
+	}
+	return *a.ContainerList
+}
+
+// GetContainerName returns the ContainerName field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetContainerName() string {
+	if a == nil || a.ContainerName == nil {
+		return ""
+	}
+	return *a.ContainerName
+}
+
+// GetContainerRead returns the ContainerRead field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetContainerRead() bool {
+	if a == nil || a.ContainerRead == nil {
+		return false
+	}
+	return *a.ContainerRead
+}
+
+// GetContainerWrite returns the ContainerWrite field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetContainerWrite() bool {
+	if a == nil || a.ContainerWrite == nil {
+		return false
+	}
+	return *a.ContainerWrite
+}
+
+// GetExpiration returns the Expiration field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetExpiration() int {
+	if a == nil || a.Expiration == nil {
+		return 0
+	}
+	return *a.Expiration
+}
+
+// GetSignedIdentifier returns the SignedIdentifier field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetSignedIdentifier() string {
+	if a == nil || a.SignedIdentifier == nil {
+		return ""
+	}
+	return *a.SignedIdentifier
+}
+
+// GetStorageAccessKey returns the StorageAccessKey field if it's non-nil, zero value otherwise.
+func (a *AzureBlobClientAddon) GetStorageAccessKey() string {
+	if a == nil || a.StorageAccessKey == nil {
+		return ""
+	}
+	return *a.StorageAccessKey
+}
+
+// String returns a string representation of AzureBlobClientAddon.
+func (a *AzureBlobClientAddon) String() string {
+	return Stringify(a)
+}
+
+// GetEntityPath returns the EntityPath field if it's non-nil, zero value otherwise.
+func (a *AzureSBClientAddon) GetEntityPath() string {
+	if a == nil || a.EntityPath == nil {
+		return ""
+	}
+	return *a.EntityPath
+}
+
+// GetExpiration returns the Expiration field if it's non-nil, zero value otherwise.
+func (a *AzureSBClientAddon) GetExpiration() int {
+	if a == nil || a.Expiration == nil {
+		return 0
+	}
+	return *a.Expiration
+}
+
+// GetNamespace returns the Namespace field if it's non-nil, zero value otherwise.
+func (a *AzureSBClientAddon) GetNamespace() string {
+	if a == nil || a.Namespace == nil {
+		return ""
+	}
+	return *a.Namespace
+}
+
+// GetSASKey returns the SASKey field if it's non-nil, zero value otherwise.
+func (a *AzureSBClientAddon) GetSASKey() string {
+	if a == nil || a.SASKey == nil {
+		return ""
+	}
+	return *a.SASKey
+}
+
+// GetSASKeyName returns the SASKeyName field if it's non-nil, zero value otherwise.
+func (a *AzureSBClientAddon) GetSASKeyName() string {
+	if a == nil || a.SASKeyName == nil {
+		return ""
+	}
+	return *a.SASKeyName
+}
+
+// String returns a string representation of AzureSBClientAddon.
+func (a *AzureSBClientAddon) String() string {
+	return Stringify(a)
+}
+
 // String returns a string representation of BlacklistToken.
 func (b *BlacklistToken) String() string {
+	return Stringify(b)
+}
+
+// String returns a string representation of BoxClientAddon.
+func (b *BoxClientAddon) String() string {
 	return Stringify(b)
 }
 
@@ -1272,6 +1460,150 @@ func (c *Client) String() string {
 	return Stringify(c)
 }
 
+// GetAWS returns the AWS field.
+func (c *ClientAddons) GetAWS() *AWSClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.AWS
+}
+
+// GetAzureBlob returns the AzureBlob field.
+func (c *ClientAddons) GetAzureBlob() *AzureBlobClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.AzureBlob
+}
+
+// GetAzureSB returns the AzureSB field.
+func (c *ClientAddons) GetAzureSB() *AzureSBClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.AzureSB
+}
+
+// GetBox returns the Box field.
+func (c *ClientAddons) GetBox() *BoxClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.Box
+}
+
+// GetCloudBees returns the CloudBees field.
+func (c *ClientAddons) GetCloudBees() *CloudBeesClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.CloudBees
+}
+
+// GetConcur returns the Concur field.
+func (c *ClientAddons) GetConcur() *ConcurClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.Concur
+}
+
+// GetDropbox returns the Dropbox field.
+func (c *ClientAddons) GetDropbox() *DropboxClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.Dropbox
+}
+
+// GetEchoSign returns the EchoSign field.
+func (c *ClientAddons) GetEchoSign() *EchoSignClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.EchoSign
+}
+
+// GetEgnyte returns the Egnyte field.
+func (c *ClientAddons) GetEgnyte() *EgnyteClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.Egnyte
+}
+
+// GetFirebase returns the Firebase field.
+func (c *ClientAddons) GetFirebase() *FirebaseClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.Firebase
+}
+
+// GetLayer returns the Layer field.
+func (c *ClientAddons) GetLayer() *LayerClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.Layer
+}
+
+// GetMSCRM returns the MSCRM field.
+func (c *ClientAddons) GetMSCRM() *MSCRMClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.MSCRM
+}
+
+// GetNewRelic returns the NewRelic field.
+func (c *ClientAddons) GetNewRelic() *NewRelicClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.NewRelic
+}
+
+// GetOffice365 returns the Office365 field.
+func (c *ClientAddons) GetOffice365() *Office365ClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.Office365
+}
+
+// GetRMS returns the RMS field.
+func (c *ClientAddons) GetRMS() *RMSClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.RMS
+}
+
+// GetSalesforce returns the Salesforce field.
+func (c *ClientAddons) GetSalesforce() *SalesforceClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.Salesforce
+}
+
+// GetSalesforceAPI returns the SalesforceAPI field.
+func (c *ClientAddons) GetSalesforceAPI() *SalesforceAPIClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.SalesforceAPI
+}
+
+// GetSalesforceSandboxAPI returns the SalesforceSandboxAPI field.
+func (c *ClientAddons) GetSalesforceSandboxAPI() *SalesforceSandboxAPIClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.SalesforceSandboxAPI
+}
+
 // GetSAML2 returns the SAML2 field.
 func (c *ClientAddons) GetSAML2() *SAML2ClientAddon {
 	if c == nil {
@@ -1280,12 +1612,84 @@ func (c *ClientAddons) GetSAML2() *SAML2ClientAddon {
 	return c.SAML2
 }
 
+// GetSAPAPI returns the SAPAPI field.
+func (c *ClientAddons) GetSAPAPI() *SAPAPIClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.SAPAPI
+}
+
+// GetSentry returns the Sentry field.
+func (c *ClientAddons) GetSentry() *SentryClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.Sentry
+}
+
+// GetSharePoint returns the SharePoint field.
+func (c *ClientAddons) GetSharePoint() *SharePointClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.SharePoint
+}
+
+// GetSlack returns the Slack field.
+func (c *ClientAddons) GetSlack() *SlackClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.Slack
+}
+
+// GetSpringCM returns the SpringCM field.
+func (c *ClientAddons) GetSpringCM() *SpringCMClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.SpringCM
+}
+
+// GetSSOIntegration returns the SSOIntegration field.
+func (c *ClientAddons) GetSSOIntegration() *SSOIntegrationClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.SSOIntegration
+}
+
+// GetWAMS returns the WAMS field.
+func (c *ClientAddons) GetWAMS() *WAMSClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.WAMS
+}
+
 // GetWSFED returns the WSFED field.
 func (c *ClientAddons) GetWSFED() *WSFEDClientAddon {
 	if c == nil {
 		return nil
 	}
 	return c.WSFED
+}
+
+// GetZendesk returns the Zendesk field.
+func (c *ClientAddons) GetZendesk() *ZendeskClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.Zendesk
+}
+
+// GetZoom returns the Zoom field.
+func (c *ClientAddons) GetZoom() *ZoomClientAddon {
+	if c == nil {
+		return nil
+	}
+	return c.Zoom
 }
 
 // String returns a string representation of ClientAddons.
@@ -1537,6 +1941,16 @@ func (c *ClientRefreshToken) GetTokenLifetime() int {
 
 // String returns a string representation of ClientRefreshToken.
 func (c *ClientRefreshToken) String() string {
+	return Stringify(c)
+}
+
+// String returns a string representation of CloudBeesClientAddon.
+func (c *CloudBeesClientAddon) String() string {
+	return Stringify(c)
+}
+
+// String returns a string representation of ConcurClientAddon.
+func (c *ConcurClientAddon) String() string {
 	return Stringify(c)
 }
 
@@ -4951,6 +5365,37 @@ func (d *DailyStat) String() string {
 	return Stringify(d)
 }
 
+// String returns a string representation of DropboxClientAddon.
+func (d *DropboxClientAddon) String() string {
+	return Stringify(d)
+}
+
+// GetDomain returns the Domain field if it's non-nil, zero value otherwise.
+func (e *EchoSignClientAddon) GetDomain() string {
+	if e == nil || e.Domain == nil {
+		return ""
+	}
+	return *e.Domain
+}
+
+// String returns a string representation of EchoSignClientAddon.
+func (e *EchoSignClientAddon) String() string {
+	return Stringify(e)
+}
+
+// GetDomain returns the Domain field if it's non-nil, zero value otherwise.
+func (e *EgnyteClientAddon) GetDomain() string {
+	if e == nil || e.Domain == nil {
+		return ""
+	}
+	return *e.Domain
+}
+
+// String returns a string representation of EgnyteClientAddon.
+func (e *EgnyteClientAddon) String() string {
+	return Stringify(e)
+}
+
 // GetDefaultFromAddress returns the DefaultFromAddress field if it's non-nil, zero value otherwise.
 func (e *EmailProvider) GetDefaultFromAddress() string {
 	if e == nil || e.DefaultFromAddress == nil {
@@ -5351,6 +5796,51 @@ func (e *EnrollmentTicket) String() string {
 	return Stringify(e)
 }
 
+// GetClientEmail returns the ClientEmail field if it's non-nil, zero value otherwise.
+func (f *FirebaseClientAddon) GetClientEmail() string {
+	if f == nil || f.ClientEmail == nil {
+		return ""
+	}
+	return *f.ClientEmail
+}
+
+// GetLifetimeInSeconds returns the LifetimeInSeconds field if it's non-nil, zero value otherwise.
+func (f *FirebaseClientAddon) GetLifetimeInSeconds() int {
+	if f == nil || f.LifetimeInSeconds == nil {
+		return 0
+	}
+	return *f.LifetimeInSeconds
+}
+
+// GetPrivateKey returns the PrivateKey field if it's non-nil, zero value otherwise.
+func (f *FirebaseClientAddon) GetPrivateKey() string {
+	if f == nil || f.PrivateKey == nil {
+		return ""
+	}
+	return *f.PrivateKey
+}
+
+// GetPrivateKeyID returns the PrivateKeyID field if it's non-nil, zero value otherwise.
+func (f *FirebaseClientAddon) GetPrivateKeyID() string {
+	if f == nil || f.PrivateKeyID == nil {
+		return ""
+	}
+	return *f.PrivateKeyID
+}
+
+// GetSecret returns the Secret field if it's non-nil, zero value otherwise.
+func (f *FirebaseClientAddon) GetSecret() string {
+	if f == nil || f.Secret == nil {
+		return ""
+	}
+	return *f.Secret
+}
+
+// String returns a string representation of FirebaseClientAddon.
+func (f *FirebaseClientAddon) String() string {
+	return Stringify(f)
+}
+
 // GetAudience returns the Audience field if it's non-nil, zero value otherwise.
 func (g *Grant) GetAudience() string {
 	if g == nil || g.Audience == nil {
@@ -5653,6 +6143,51 @@ func (j *JobSummary) String() string {
 // String returns a string representation of JobUserErrors.
 func (j *JobUserErrors) String() string {
 	return Stringify(j)
+}
+
+// GetExpiration returns the Expiration field if it's non-nil, zero value otherwise.
+func (l *LayerClientAddon) GetExpiration() int {
+	if l == nil || l.Expiration == nil {
+		return 0
+	}
+	return *l.Expiration
+}
+
+// GetKeyID returns the KeyID field if it's non-nil, zero value otherwise.
+func (l *LayerClientAddon) GetKeyID() string {
+	if l == nil || l.KeyID == nil {
+		return ""
+	}
+	return *l.KeyID
+}
+
+// GetPrincipal returns the Principal field if it's non-nil, zero value otherwise.
+func (l *LayerClientAddon) GetPrincipal() string {
+	if l == nil || l.Principal == nil {
+		return ""
+	}
+	return *l.Principal
+}
+
+// GetPrivateKey returns the PrivateKey field if it's non-nil, zero value otherwise.
+func (l *LayerClientAddon) GetPrivateKey() string {
+	if l == nil || l.PrivateKey == nil {
+		return ""
+	}
+	return *l.PrivateKey
+}
+
+// GetProviderID returns the ProviderID field if it's non-nil, zero value otherwise.
+func (l *LayerClientAddon) GetProviderID() string {
+	if l == nil || l.ProviderID == nil {
+		return ""
+	}
+	return *l.ProviderID
+}
+
+// String returns a string representation of LayerClientAddon.
+func (l *LayerClientAddon) String() string {
+	return Stringify(l)
 }
 
 // String returns a string representation of List.
@@ -6126,6 +6661,19 @@ func (l *LogStreamSinkSumo) String() string {
 	return Stringify(l)
 }
 
+// GetURL returns the URL field if it's non-nil, zero value otherwise.
+func (m *MSCRMClientAddon) GetURL() string {
+	if m == nil || m.URL == nil {
+		return ""
+	}
+	return *m.URL
+}
+
+// String returns a string representation of MSCRMClientAddon.
+func (m *MSCRMClientAddon) String() string {
+	return Stringify(m)
+}
+
 // GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
 func (m *MultiFactor) GetEnabled() bool {
 	if m == nil || m.Enabled == nil {
@@ -6406,6 +6954,40 @@ func (m *MultiFactorWebAuthnSettings) GetUserVerification() string {
 // String returns a string representation of MultiFactorWebAuthnSettings.
 func (m *MultiFactorWebAuthnSettings) String() string {
 	return Stringify(m)
+}
+
+// GetAccount returns the Account field if it's non-nil, zero value otherwise.
+func (n *NewRelicClientAddon) GetAccount() string {
+	if n == nil || n.Account == nil {
+		return ""
+	}
+	return *n.Account
+}
+
+// String returns a string representation of NewRelicClientAddon.
+func (n *NewRelicClientAddon) String() string {
+	return Stringify(n)
+}
+
+// GetConnection returns the Connection field if it's non-nil, zero value otherwise.
+func (o *Office365ClientAddon) GetConnection() string {
+	if o == nil || o.Connection == nil {
+		return ""
+	}
+	return *o.Connection
+}
+
+// GetDomain returns the Domain field if it's non-nil, zero value otherwise.
+func (o *Office365ClientAddon) GetDomain() string {
+	if o == nil || o.Domain == nil {
+		return ""
+	}
+	return *o.Domain
+}
+
+// String returns a string representation of Office365ClientAddon.
+func (o *Office365ClientAddon) String() string {
+	return Stringify(o)
 }
 
 // GetBackChannelLogoutURLs returns the BackChannelLogoutURLs field if it's non-nil, zero value otherwise.
@@ -7045,6 +7627,19 @@ func (r *ResourceServerScope) String() string {
 	return Stringify(r)
 }
 
+// GetURL returns the URL field if it's non-nil, zero value otherwise.
+func (r *RMSClientAddon) GetURL() string {
+	if r == nil || r.URL == nil {
+		return ""
+	}
+	return *r.URL
+}
+
+// String returns a string representation of RMSClientAddon.
+func (r *RMSClientAddon) String() string {
+	return Stringify(r)
+}
+
 // GetDescription returns the Description field if it's non-nil, zero value otherwise.
 func (r *Role) GetDescription() string {
 	if r == nil || r.Description == nil {
@@ -7148,6 +7743,93 @@ func (r *RuleConfig) String() string {
 // String returns a string representation of RuleList.
 func (r *RuleList) String() string {
 	return Stringify(r)
+}
+
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (s *SalesforceAPIClientAddon) GetClientID() string {
+	if s == nil || s.ClientID == nil {
+		return ""
+	}
+	return *s.ClientID
+}
+
+// GetCommunityName returns the CommunityName field if it's non-nil, zero value otherwise.
+func (s *SalesforceAPIClientAddon) GetCommunityName() string {
+	if s == nil || s.CommunityName == nil {
+		return ""
+	}
+	return *s.CommunityName
+}
+
+// GetCommunityURLSection returns the CommunityURLSection field if it's non-nil, zero value otherwise.
+func (s *SalesforceAPIClientAddon) GetCommunityURLSection() string {
+	if s == nil || s.CommunityURLSection == nil {
+		return ""
+	}
+	return *s.CommunityURLSection
+}
+
+// GetPrincipal returns the Principal field if it's non-nil, zero value otherwise.
+func (s *SalesforceAPIClientAddon) GetPrincipal() string {
+	if s == nil || s.Principal == nil {
+		return ""
+	}
+	return *s.Principal
+}
+
+// String returns a string representation of SalesforceAPIClientAddon.
+func (s *SalesforceAPIClientAddon) String() string {
+	return Stringify(s)
+}
+
+// GetEntityID returns the EntityID field if it's non-nil, zero value otherwise.
+func (s *SalesforceClientAddon) GetEntityID() string {
+	if s == nil || s.EntityID == nil {
+		return ""
+	}
+	return *s.EntityID
+}
+
+// String returns a string representation of SalesforceClientAddon.
+func (s *SalesforceClientAddon) String() string {
+	return Stringify(s)
+}
+
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (s *SalesforceSandboxAPIClientAddon) GetClientID() string {
+	if s == nil || s.ClientID == nil {
+		return ""
+	}
+	return *s.ClientID
+}
+
+// GetCommunityName returns the CommunityName field if it's non-nil, zero value otherwise.
+func (s *SalesforceSandboxAPIClientAddon) GetCommunityName() string {
+	if s == nil || s.CommunityName == nil {
+		return ""
+	}
+	return *s.CommunityName
+}
+
+// GetCommunityURLSection returns the CommunityURLSection field if it's non-nil, zero value otherwise.
+func (s *SalesforceSandboxAPIClientAddon) GetCommunityURLSection() string {
+	if s == nil || s.CommunityURLSection == nil {
+		return ""
+	}
+	return *s.CommunityURLSection
+}
+
+// GetPrincipal returns the Principal field if it's non-nil, zero value otherwise.
+func (s *SalesforceSandboxAPIClientAddon) GetPrincipal() string {
+	if s == nil || s.Principal == nil {
+		return ""
+	}
+	return *s.Principal
+}
+
+// String returns a string representation of SalesforceSandboxAPIClientAddon.
+func (s *SalesforceSandboxAPIClientAddon) String() string {
+	return Stringify(s)
 }
 
 // GetAudience returns the Audience field if it's non-nil, zero value otherwise.
@@ -7344,6 +8026,101 @@ func (s *SAML2ClientAddonLogout) String() string {
 	return Stringify(s)
 }
 
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (s *SAPAPIClientAddon) GetClientID() string {
+	if s == nil || s.ClientID == nil {
+		return ""
+	}
+	return *s.ClientID
+}
+
+// GetNameIdentifierFormat returns the NameIdentifierFormat field if it's non-nil, zero value otherwise.
+func (s *SAPAPIClientAddon) GetNameIdentifierFormat() string {
+	if s == nil || s.NameIdentifierFormat == nil {
+		return ""
+	}
+	return *s.NameIdentifierFormat
+}
+
+// GetScope returns the Scope field if it's non-nil, zero value otherwise.
+func (s *SAPAPIClientAddon) GetScope() string {
+	if s == nil || s.Scope == nil {
+		return ""
+	}
+	return *s.Scope
+}
+
+// GetServicePassword returns the ServicePassword field if it's non-nil, zero value otherwise.
+func (s *SAPAPIClientAddon) GetServicePassword() string {
+	if s == nil || s.ServicePassword == nil {
+		return ""
+	}
+	return *s.ServicePassword
+}
+
+// GetTokenEndpointURL returns the TokenEndpointURL field if it's non-nil, zero value otherwise.
+func (s *SAPAPIClientAddon) GetTokenEndpointURL() string {
+	if s == nil || s.TokenEndpointURL == nil {
+		return ""
+	}
+	return *s.TokenEndpointURL
+}
+
+// GetUsernameAttribute returns the UsernameAttribute field if it's non-nil, zero value otherwise.
+func (s *SAPAPIClientAddon) GetUsernameAttribute() string {
+	if s == nil || s.UsernameAttribute == nil {
+		return ""
+	}
+	return *s.UsernameAttribute
+}
+
+// String returns a string representation of SAPAPIClientAddon.
+func (s *SAPAPIClientAddon) String() string {
+	return Stringify(s)
+}
+
+// GetBaseURL returns the BaseURL field if it's non-nil, zero value otherwise.
+func (s *SentryClientAddon) GetBaseURL() string {
+	if s == nil || s.BaseURL == nil {
+		return ""
+	}
+	return *s.BaseURL
+}
+
+// GetOrgSlug returns the OrgSlug field if it's non-nil, zero value otherwise.
+func (s *SentryClientAddon) GetOrgSlug() string {
+	if s == nil || s.OrgSlug == nil {
+		return ""
+	}
+	return *s.OrgSlug
+}
+
+// String returns a string representation of SentryClientAddon.
+func (s *SentryClientAddon) String() string {
+	return Stringify(s)
+}
+
+// GetExternalURL returns the ExternalURL field if it's non-nil, zero value otherwise.
+func (s *SharePointClientAddon) GetExternalURL() []string {
+	if s == nil || s.ExternalURL == nil {
+		return nil
+	}
+	return *s.ExternalURL
+}
+
+// GetURL returns the URL field if it's non-nil, zero value otherwise.
+func (s *SharePointClientAddon) GetURL() string {
+	if s == nil || s.URL == nil {
+		return ""
+	}
+	return *s.URL
+}
+
+// String returns a string representation of SharePointClientAddon.
+func (s *SharePointClientAddon) String() string {
+	return Stringify(s)
+}
+
 // GetCert returns the Cert field if it's non-nil, zero value otherwise.
 func (s *SigningKey) GetCert() string {
 	if s == nil || s.Cert == nil {
@@ -7442,6 +8219,53 @@ func (s *SigningKey) GetThumbprint() string {
 
 // String returns a string representation of SigningKey.
 func (s *SigningKey) String() string {
+	return Stringify(s)
+}
+
+// GetTeam returns the Team field if it's non-nil, zero value otherwise.
+func (s *SlackClientAddon) GetTeam() string {
+	if s == nil || s.Team == nil {
+		return ""
+	}
+	return *s.Team
+}
+
+// String returns a string representation of SlackClientAddon.
+func (s *SlackClientAddon) String() string {
+	return Stringify(s)
+}
+
+// GetACSURL returns the ACSURL field if it's non-nil, zero value otherwise.
+func (s *SpringCMClientAddon) GetACSURL() string {
+	if s == nil || s.ACSURL == nil {
+		return ""
+	}
+	return *s.ACSURL
+}
+
+// String returns a string representation of SpringCMClientAddon.
+func (s *SpringCMClientAddon) String() string {
+	return Stringify(s)
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (s *SSOIntegrationClientAddon) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+// GetVersion returns the Version field if it's non-nil, zero value otherwise.
+func (s *SSOIntegrationClientAddon) GetVersion() string {
+	if s == nil || s.Version == nil {
+		return ""
+	}
+	return *s.Version
+}
+
+// String returns a string representation of SSOIntegrationClientAddon.
+func (s *SSOIntegrationClientAddon) String() string {
 	return Stringify(s)
 }
 
@@ -8580,7 +9404,46 @@ func (u *UserRecoveryCode) String() string {
 	return Stringify(u)
 }
 
+// GetMasterkey returns the Masterkey field if it's non-nil, zero value otherwise.
+func (w *WAMSClientAddon) GetMasterkey() string {
+	if w == nil || w.Masterkey == nil {
+		return ""
+	}
+	return *w.Masterkey
+}
+
+// String returns a string representation of WAMSClientAddon.
+func (w *WAMSClientAddon) String() string {
+	return Stringify(w)
+}
+
 // String returns a string representation of WSFEDClientAddon.
 func (w *WSFEDClientAddon) String() string {
 	return Stringify(w)
+}
+
+// GetAccountName returns the AccountName field if it's non-nil, zero value otherwise.
+func (z *ZendeskClientAddon) GetAccountName() string {
+	if z == nil || z.AccountName == nil {
+		return ""
+	}
+	return *z.AccountName
+}
+
+// String returns a string representation of ZendeskClientAddon.
+func (z *ZendeskClientAddon) String() string {
+	return Stringify(z)
+}
+
+// GetAccount returns the Account field if it's non-nil, zero value otherwise.
+func (z *ZoomClientAddon) GetAccount() string {
+	if z == nil || z.Account == nil {
+		return ""
+	}
+	return *z.Account
+}
+
+// String returns a string representation of ZoomClientAddon.
+func (z *ZoomClientAddon) String() string {
+	return Stringify(z)
 }

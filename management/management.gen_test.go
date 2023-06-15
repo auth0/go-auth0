@@ -829,9 +829,251 @@ func TestAuthenticationMethodReference_String(t *testing.T) {
 	}
 }
 
+func TestAWSClientAddon_GetLifetimeInSeconds(tt *testing.T) {
+	var zeroValue int
+	a := &AWSClientAddon{LifetimeInSeconds: &zeroValue}
+	a.GetLifetimeInSeconds()
+	a = &AWSClientAddon{}
+	a.GetLifetimeInSeconds()
+	a = nil
+	a.GetLifetimeInSeconds()
+}
+
+func TestAWSClientAddon_GetPrincipal(tt *testing.T) {
+	var zeroValue string
+	a := &AWSClientAddon{Principal: &zeroValue}
+	a.GetPrincipal()
+	a = &AWSClientAddon{}
+	a.GetPrincipal()
+	a = nil
+	a.GetPrincipal()
+}
+
+func TestAWSClientAddon_GetRole(tt *testing.T) {
+	var zeroValue string
+	a := &AWSClientAddon{Role: &zeroValue}
+	a.GetRole()
+	a = &AWSClientAddon{}
+	a.GetRole()
+	a = nil
+	a.GetRole()
+}
+
+func TestAWSClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &AWSClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestAzureBlobClientAddon_GetAccountName(tt *testing.T) {
+	var zeroValue string
+	a := &AzureBlobClientAddon{AccountName: &zeroValue}
+	a.GetAccountName()
+	a = &AzureBlobClientAddon{}
+	a.GetAccountName()
+	a = nil
+	a.GetAccountName()
+}
+
+func TestAzureBlobClientAddon_GetBlobDelete(tt *testing.T) {
+	var zeroValue bool
+	a := &AzureBlobClientAddon{BlobDelete: &zeroValue}
+	a.GetBlobDelete()
+	a = &AzureBlobClientAddon{}
+	a.GetBlobDelete()
+	a = nil
+	a.GetBlobDelete()
+}
+
+func TestAzureBlobClientAddon_GetBlobName(tt *testing.T) {
+	var zeroValue string
+	a := &AzureBlobClientAddon{BlobName: &zeroValue}
+	a.GetBlobName()
+	a = &AzureBlobClientAddon{}
+	a.GetBlobName()
+	a = nil
+	a.GetBlobName()
+}
+
+func TestAzureBlobClientAddon_GetBlobRead(tt *testing.T) {
+	var zeroValue bool
+	a := &AzureBlobClientAddon{BlobRead: &zeroValue}
+	a.GetBlobRead()
+	a = &AzureBlobClientAddon{}
+	a.GetBlobRead()
+	a = nil
+	a.GetBlobRead()
+}
+
+func TestAzureBlobClientAddon_GetBlobWrite(tt *testing.T) {
+	var zeroValue bool
+	a := &AzureBlobClientAddon{BlobWrite: &zeroValue}
+	a.GetBlobWrite()
+	a = &AzureBlobClientAddon{}
+	a.GetBlobWrite()
+	a = nil
+	a.GetBlobWrite()
+}
+
+func TestAzureBlobClientAddon_GetContainerDelete(tt *testing.T) {
+	var zeroValue bool
+	a := &AzureBlobClientAddon{ContainerDelete: &zeroValue}
+	a.GetContainerDelete()
+	a = &AzureBlobClientAddon{}
+	a.GetContainerDelete()
+	a = nil
+	a.GetContainerDelete()
+}
+
+func TestAzureBlobClientAddon_GetContainerList(tt *testing.T) {
+	var zeroValue bool
+	a := &AzureBlobClientAddon{ContainerList: &zeroValue}
+	a.GetContainerList()
+	a = &AzureBlobClientAddon{}
+	a.GetContainerList()
+	a = nil
+	a.GetContainerList()
+}
+
+func TestAzureBlobClientAddon_GetContainerName(tt *testing.T) {
+	var zeroValue string
+	a := &AzureBlobClientAddon{ContainerName: &zeroValue}
+	a.GetContainerName()
+	a = &AzureBlobClientAddon{}
+	a.GetContainerName()
+	a = nil
+	a.GetContainerName()
+}
+
+func TestAzureBlobClientAddon_GetContainerRead(tt *testing.T) {
+	var zeroValue bool
+	a := &AzureBlobClientAddon{ContainerRead: &zeroValue}
+	a.GetContainerRead()
+	a = &AzureBlobClientAddon{}
+	a.GetContainerRead()
+	a = nil
+	a.GetContainerRead()
+}
+
+func TestAzureBlobClientAddon_GetContainerWrite(tt *testing.T) {
+	var zeroValue bool
+	a := &AzureBlobClientAddon{ContainerWrite: &zeroValue}
+	a.GetContainerWrite()
+	a = &AzureBlobClientAddon{}
+	a.GetContainerWrite()
+	a = nil
+	a.GetContainerWrite()
+}
+
+func TestAzureBlobClientAddon_GetExpiration(tt *testing.T) {
+	var zeroValue int
+	a := &AzureBlobClientAddon{Expiration: &zeroValue}
+	a.GetExpiration()
+	a = &AzureBlobClientAddon{}
+	a.GetExpiration()
+	a = nil
+	a.GetExpiration()
+}
+
+func TestAzureBlobClientAddon_GetSignedIdentifier(tt *testing.T) {
+	var zeroValue string
+	a := &AzureBlobClientAddon{SignedIdentifier: &zeroValue}
+	a.GetSignedIdentifier()
+	a = &AzureBlobClientAddon{}
+	a.GetSignedIdentifier()
+	a = nil
+	a.GetSignedIdentifier()
+}
+
+func TestAzureBlobClientAddon_GetStorageAccessKey(tt *testing.T) {
+	var zeroValue string
+	a := &AzureBlobClientAddon{StorageAccessKey: &zeroValue}
+	a.GetStorageAccessKey()
+	a = &AzureBlobClientAddon{}
+	a.GetStorageAccessKey()
+	a = nil
+	a.GetStorageAccessKey()
+}
+
+func TestAzureBlobClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &AzureBlobClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestAzureSBClientAddon_GetEntityPath(tt *testing.T) {
+	var zeroValue string
+	a := &AzureSBClientAddon{EntityPath: &zeroValue}
+	a.GetEntityPath()
+	a = &AzureSBClientAddon{}
+	a.GetEntityPath()
+	a = nil
+	a.GetEntityPath()
+}
+
+func TestAzureSBClientAddon_GetExpiration(tt *testing.T) {
+	var zeroValue int
+	a := &AzureSBClientAddon{Expiration: &zeroValue}
+	a.GetExpiration()
+	a = &AzureSBClientAddon{}
+	a.GetExpiration()
+	a = nil
+	a.GetExpiration()
+}
+
+func TestAzureSBClientAddon_GetNamespace(tt *testing.T) {
+	var zeroValue string
+	a := &AzureSBClientAddon{Namespace: &zeroValue}
+	a.GetNamespace()
+	a = &AzureSBClientAddon{}
+	a.GetNamespace()
+	a = nil
+	a.GetNamespace()
+}
+
+func TestAzureSBClientAddon_GetSASKey(tt *testing.T) {
+	var zeroValue string
+	a := &AzureSBClientAddon{SASKey: &zeroValue}
+	a.GetSASKey()
+	a = &AzureSBClientAddon{}
+	a.GetSASKey()
+	a = nil
+	a.GetSASKey()
+}
+
+func TestAzureSBClientAddon_GetSASKeyName(tt *testing.T) {
+	var zeroValue string
+	a := &AzureSBClientAddon{SASKeyName: &zeroValue}
+	a.GetSASKeyName()
+	a = &AzureSBClientAddon{}
+	a.GetSASKeyName()
+	a = nil
+	a.GetSASKeyName()
+}
+
+func TestAzureSBClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &AzureSBClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBlacklistToken_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &BlacklistToken{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBoxClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BoxClientAddon{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -1607,6 +1849,132 @@ func TestClient_String(t *testing.T) {
 	}
 }
 
+func TestClientAddons_GetAWS(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetAWS()
+	c = nil
+	c.GetAWS()
+}
+
+func TestClientAddons_GetAzureBlob(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetAzureBlob()
+	c = nil
+	c.GetAzureBlob()
+}
+
+func TestClientAddons_GetAzureSB(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetAzureSB()
+	c = nil
+	c.GetAzureSB()
+}
+
+func TestClientAddons_GetBox(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetBox()
+	c = nil
+	c.GetBox()
+}
+
+func TestClientAddons_GetCloudBees(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetCloudBees()
+	c = nil
+	c.GetCloudBees()
+}
+
+func TestClientAddons_GetConcur(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetConcur()
+	c = nil
+	c.GetConcur()
+}
+
+func TestClientAddons_GetDropbox(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetDropbox()
+	c = nil
+	c.GetDropbox()
+}
+
+func TestClientAddons_GetEchoSign(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetEchoSign()
+	c = nil
+	c.GetEchoSign()
+}
+
+func TestClientAddons_GetEgnyte(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetEgnyte()
+	c = nil
+	c.GetEgnyte()
+}
+
+func TestClientAddons_GetFirebase(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetFirebase()
+	c = nil
+	c.GetFirebase()
+}
+
+func TestClientAddons_GetLayer(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetLayer()
+	c = nil
+	c.GetLayer()
+}
+
+func TestClientAddons_GetMSCRM(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetMSCRM()
+	c = nil
+	c.GetMSCRM()
+}
+
+func TestClientAddons_GetNewRelic(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetNewRelic()
+	c = nil
+	c.GetNewRelic()
+}
+
+func TestClientAddons_GetOffice365(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetOffice365()
+	c = nil
+	c.GetOffice365()
+}
+
+func TestClientAddons_GetRMS(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetRMS()
+	c = nil
+	c.GetRMS()
+}
+
+func TestClientAddons_GetSalesforce(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetSalesforce()
+	c = nil
+	c.GetSalesforce()
+}
+
+func TestClientAddons_GetSalesforceAPI(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetSalesforceAPI()
+	c = nil
+	c.GetSalesforceAPI()
+}
+
+func TestClientAddons_GetSalesforceSandboxAPI(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetSalesforceSandboxAPI()
+	c = nil
+	c.GetSalesforceSandboxAPI()
+}
+
 func TestClientAddons_GetSAML2(tt *testing.T) {
 	c := &ClientAddons{}
 	c.GetSAML2()
@@ -1614,11 +1982,74 @@ func TestClientAddons_GetSAML2(tt *testing.T) {
 	c.GetSAML2()
 }
 
+func TestClientAddons_GetSAPAPI(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetSAPAPI()
+	c = nil
+	c.GetSAPAPI()
+}
+
+func TestClientAddons_GetSentry(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetSentry()
+	c = nil
+	c.GetSentry()
+}
+
+func TestClientAddons_GetSharePoint(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetSharePoint()
+	c = nil
+	c.GetSharePoint()
+}
+
+func TestClientAddons_GetSlack(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetSlack()
+	c = nil
+	c.GetSlack()
+}
+
+func TestClientAddons_GetSpringCM(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetSpringCM()
+	c = nil
+	c.GetSpringCM()
+}
+
+func TestClientAddons_GetSSOIntegration(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetSSOIntegration()
+	c = nil
+	c.GetSSOIntegration()
+}
+
+func TestClientAddons_GetWAMS(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetWAMS()
+	c = nil
+	c.GetWAMS()
+}
+
 func TestClientAddons_GetWSFED(tt *testing.T) {
 	c := &ClientAddons{}
 	c.GetWSFED()
 	c = nil
 	c.GetWSFED()
+}
+
+func TestClientAddons_GetZendesk(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetZendesk()
+	c = nil
+	c.GetZendesk()
+}
+
+func TestClientAddons_GetZoom(tt *testing.T) {
+	c := &ClientAddons{}
+	c.GetZoom()
+	c = nil
+	c.GetZoom()
 }
 
 func TestClientAddons_String(t *testing.T) {
@@ -1937,6 +2368,22 @@ func TestClientRefreshToken_GetTokenLifetime(tt *testing.T) {
 func TestClientRefreshToken_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientRefreshToken{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestCloudBeesClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CloudBeesClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConcurClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConcurClientAddon{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -6236,6 +6683,50 @@ func TestDailyStat_String(t *testing.T) {
 	}
 }
 
+func TestDropboxClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &DropboxClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEchoSignClientAddon_GetDomain(tt *testing.T) {
+	var zeroValue string
+	e := &EchoSignClientAddon{Domain: &zeroValue}
+	e.GetDomain()
+	e = &EchoSignClientAddon{}
+	e.GetDomain()
+	e = nil
+	e.GetDomain()
+}
+
+func TestEchoSignClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EchoSignClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEgnyteClientAddon_GetDomain(tt *testing.T) {
+	var zeroValue string
+	e := &EgnyteClientAddon{Domain: &zeroValue}
+	e.GetDomain()
+	e = &EgnyteClientAddon{}
+	e.GetDomain()
+	e = nil
+	e.GetDomain()
+}
+
+func TestEgnyteClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EgnyteClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestEmailProvider_GetDefaultFromAddress(tt *testing.T) {
 	var zeroValue string
 	e := &EmailProvider{DefaultFromAddress: &zeroValue}
@@ -6755,6 +7246,64 @@ func TestEnrollmentTicket_String(t *testing.T) {
 	}
 }
 
+func TestFirebaseClientAddon_GetClientEmail(tt *testing.T) {
+	var zeroValue string
+	f := &FirebaseClientAddon{ClientEmail: &zeroValue}
+	f.GetClientEmail()
+	f = &FirebaseClientAddon{}
+	f.GetClientEmail()
+	f = nil
+	f.GetClientEmail()
+}
+
+func TestFirebaseClientAddon_GetLifetimeInSeconds(tt *testing.T) {
+	var zeroValue int
+	f := &FirebaseClientAddon{LifetimeInSeconds: &zeroValue}
+	f.GetLifetimeInSeconds()
+	f = &FirebaseClientAddon{}
+	f.GetLifetimeInSeconds()
+	f = nil
+	f.GetLifetimeInSeconds()
+}
+
+func TestFirebaseClientAddon_GetPrivateKey(tt *testing.T) {
+	var zeroValue string
+	f := &FirebaseClientAddon{PrivateKey: &zeroValue}
+	f.GetPrivateKey()
+	f = &FirebaseClientAddon{}
+	f.GetPrivateKey()
+	f = nil
+	f.GetPrivateKey()
+}
+
+func TestFirebaseClientAddon_GetPrivateKeyID(tt *testing.T) {
+	var zeroValue string
+	f := &FirebaseClientAddon{PrivateKeyID: &zeroValue}
+	f.GetPrivateKeyID()
+	f = &FirebaseClientAddon{}
+	f.GetPrivateKeyID()
+	f = nil
+	f.GetPrivateKeyID()
+}
+
+func TestFirebaseClientAddon_GetSecret(tt *testing.T) {
+	var zeroValue string
+	f := &FirebaseClientAddon{Secret: &zeroValue}
+	f.GetSecret()
+	f = &FirebaseClientAddon{}
+	f.GetSecret()
+	f = nil
+	f.GetSecret()
+}
+
+func TestFirebaseClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &FirebaseClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestGrant_GetAudience(tt *testing.T) {
 	var zeroValue string
 	g := &Grant{Audience: &zeroValue}
@@ -7138,6 +7687,64 @@ func TestJobSummary_String(t *testing.T) {
 func TestJobUserErrors_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &JobUserErrors{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestLayerClientAddon_GetExpiration(tt *testing.T) {
+	var zeroValue int
+	l := &LayerClientAddon{Expiration: &zeroValue}
+	l.GetExpiration()
+	l = &LayerClientAddon{}
+	l.GetExpiration()
+	l = nil
+	l.GetExpiration()
+}
+
+func TestLayerClientAddon_GetKeyID(tt *testing.T) {
+	var zeroValue string
+	l := &LayerClientAddon{KeyID: &zeroValue}
+	l.GetKeyID()
+	l = &LayerClientAddon{}
+	l.GetKeyID()
+	l = nil
+	l.GetKeyID()
+}
+
+func TestLayerClientAddon_GetPrincipal(tt *testing.T) {
+	var zeroValue string
+	l := &LayerClientAddon{Principal: &zeroValue}
+	l.GetPrincipal()
+	l = &LayerClientAddon{}
+	l.GetPrincipal()
+	l = nil
+	l.GetPrincipal()
+}
+
+func TestLayerClientAddon_GetPrivateKey(tt *testing.T) {
+	var zeroValue string
+	l := &LayerClientAddon{PrivateKey: &zeroValue}
+	l.GetPrivateKey()
+	l = &LayerClientAddon{}
+	l.GetPrivateKey()
+	l = nil
+	l.GetPrivateKey()
+}
+
+func TestLayerClientAddon_GetProviderID(tt *testing.T) {
+	var zeroValue string
+	l := &LayerClientAddon{ProviderID: &zeroValue}
+	l.GetProviderID()
+	l = &LayerClientAddon{}
+	l.GetProviderID()
+	l = nil
+	l.GetProviderID()
+}
+
+func TestLayerClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &LayerClientAddon{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -7751,6 +8358,24 @@ func TestLogStreamSinkSumo_String(t *testing.T) {
 	}
 }
 
+func TestMSCRMClientAddon_GetURL(tt *testing.T) {
+	var zeroValue string
+	m := &MSCRMClientAddon{URL: &zeroValue}
+	m.GetURL()
+	m = &MSCRMClientAddon{}
+	m.GetURL()
+	m = nil
+	m.GetURL()
+}
+
+func TestMSCRMClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MSCRMClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestMultiFactor_GetEnabled(tt *testing.T) {
 	var zeroValue bool
 	m := &MultiFactor{Enabled: &zeroValue}
@@ -8116,6 +8741,52 @@ func TestMultiFactorWebAuthnSettings_GetUserVerification(tt *testing.T) {
 func TestMultiFactorWebAuthnSettings_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorWebAuthnSettings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestNewRelicClientAddon_GetAccount(tt *testing.T) {
+	var zeroValue string
+	n := &NewRelicClientAddon{Account: &zeroValue}
+	n.GetAccount()
+	n = &NewRelicClientAddon{}
+	n.GetAccount()
+	n = nil
+	n.GetAccount()
+}
+
+func TestNewRelicClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &NewRelicClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestOffice365ClientAddon_GetConnection(tt *testing.T) {
+	var zeroValue string
+	o := &Office365ClientAddon{Connection: &zeroValue}
+	o.GetConnection()
+	o = &Office365ClientAddon{}
+	o.GetConnection()
+	o = nil
+	o.GetConnection()
+}
+
+func TestOffice365ClientAddon_GetDomain(tt *testing.T) {
+	var zeroValue string
+	o := &Office365ClientAddon{Domain: &zeroValue}
+	o.GetDomain()
+	o = &Office365ClientAddon{}
+	o.GetDomain()
+	o = nil
+	o.GetDomain()
+}
+
+func TestOffice365ClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &Office365ClientAddon{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -8949,6 +9620,24 @@ func TestResourceServerScope_String(t *testing.T) {
 	}
 }
 
+func TestRMSClientAddon_GetURL(tt *testing.T) {
+	var zeroValue string
+	r := &RMSClientAddon{URL: &zeroValue}
+	r.GetURL()
+	r = &RMSClientAddon{}
+	r.GetURL()
+	r = nil
+	r.GetURL()
+}
+
+func TestRMSClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &RMSClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestRole_GetDescription(tt *testing.T) {
 	var zeroValue string
 	r := &Role{Description: &zeroValue}
@@ -9084,6 +9773,120 @@ func TestRuleConfig_String(t *testing.T) {
 func TestRuleList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &RuleList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSalesforceAPIClientAddon_GetClientID(tt *testing.T) {
+	var zeroValue string
+	s := &SalesforceAPIClientAddon{ClientID: &zeroValue}
+	s.GetClientID()
+	s = &SalesforceAPIClientAddon{}
+	s.GetClientID()
+	s = nil
+	s.GetClientID()
+}
+
+func TestSalesforceAPIClientAddon_GetCommunityName(tt *testing.T) {
+	var zeroValue string
+	s := &SalesforceAPIClientAddon{CommunityName: &zeroValue}
+	s.GetCommunityName()
+	s = &SalesforceAPIClientAddon{}
+	s.GetCommunityName()
+	s = nil
+	s.GetCommunityName()
+}
+
+func TestSalesforceAPIClientAddon_GetCommunityURLSection(tt *testing.T) {
+	var zeroValue string
+	s := &SalesforceAPIClientAddon{CommunityURLSection: &zeroValue}
+	s.GetCommunityURLSection()
+	s = &SalesforceAPIClientAddon{}
+	s.GetCommunityURLSection()
+	s = nil
+	s.GetCommunityURLSection()
+}
+
+func TestSalesforceAPIClientAddon_GetPrincipal(tt *testing.T) {
+	var zeroValue string
+	s := &SalesforceAPIClientAddon{Principal: &zeroValue}
+	s.GetPrincipal()
+	s = &SalesforceAPIClientAddon{}
+	s.GetPrincipal()
+	s = nil
+	s.GetPrincipal()
+}
+
+func TestSalesforceAPIClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SalesforceAPIClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSalesforceClientAddon_GetEntityID(tt *testing.T) {
+	var zeroValue string
+	s := &SalesforceClientAddon{EntityID: &zeroValue}
+	s.GetEntityID()
+	s = &SalesforceClientAddon{}
+	s.GetEntityID()
+	s = nil
+	s.GetEntityID()
+}
+
+func TestSalesforceClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SalesforceClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSalesforceSandboxAPIClientAddon_GetClientID(tt *testing.T) {
+	var zeroValue string
+	s := &SalesforceSandboxAPIClientAddon{ClientID: &zeroValue}
+	s.GetClientID()
+	s = &SalesforceSandboxAPIClientAddon{}
+	s.GetClientID()
+	s = nil
+	s.GetClientID()
+}
+
+func TestSalesforceSandboxAPIClientAddon_GetCommunityName(tt *testing.T) {
+	var zeroValue string
+	s := &SalesforceSandboxAPIClientAddon{CommunityName: &zeroValue}
+	s.GetCommunityName()
+	s = &SalesforceSandboxAPIClientAddon{}
+	s.GetCommunityName()
+	s = nil
+	s.GetCommunityName()
+}
+
+func TestSalesforceSandboxAPIClientAddon_GetCommunityURLSection(tt *testing.T) {
+	var zeroValue string
+	s := &SalesforceSandboxAPIClientAddon{CommunityURLSection: &zeroValue}
+	s.GetCommunityURLSection()
+	s = &SalesforceSandboxAPIClientAddon{}
+	s.GetCommunityURLSection()
+	s = nil
+	s.GetCommunityURLSection()
+}
+
+func TestSalesforceSandboxAPIClientAddon_GetPrincipal(tt *testing.T) {
+	var zeroValue string
+	s := &SalesforceSandboxAPIClientAddon{Principal: &zeroValue}
+	s.GetPrincipal()
+	s = &SalesforceSandboxAPIClientAddon{}
+	s.GetPrincipal()
+	s = nil
+	s.GetPrincipal()
+}
+
+func TestSalesforceSandboxAPIClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SalesforceSandboxAPIClientAddon{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -9332,6 +10135,130 @@ func TestSAML2ClientAddonLogout_String(t *testing.T) {
 	}
 }
 
+func TestSAPAPIClientAddon_GetClientID(tt *testing.T) {
+	var zeroValue string
+	s := &SAPAPIClientAddon{ClientID: &zeroValue}
+	s.GetClientID()
+	s = &SAPAPIClientAddon{}
+	s.GetClientID()
+	s = nil
+	s.GetClientID()
+}
+
+func TestSAPAPIClientAddon_GetNameIdentifierFormat(tt *testing.T) {
+	var zeroValue string
+	s := &SAPAPIClientAddon{NameIdentifierFormat: &zeroValue}
+	s.GetNameIdentifierFormat()
+	s = &SAPAPIClientAddon{}
+	s.GetNameIdentifierFormat()
+	s = nil
+	s.GetNameIdentifierFormat()
+}
+
+func TestSAPAPIClientAddon_GetScope(tt *testing.T) {
+	var zeroValue string
+	s := &SAPAPIClientAddon{Scope: &zeroValue}
+	s.GetScope()
+	s = &SAPAPIClientAddon{}
+	s.GetScope()
+	s = nil
+	s.GetScope()
+}
+
+func TestSAPAPIClientAddon_GetServicePassword(tt *testing.T) {
+	var zeroValue string
+	s := &SAPAPIClientAddon{ServicePassword: &zeroValue}
+	s.GetServicePassword()
+	s = &SAPAPIClientAddon{}
+	s.GetServicePassword()
+	s = nil
+	s.GetServicePassword()
+}
+
+func TestSAPAPIClientAddon_GetTokenEndpointURL(tt *testing.T) {
+	var zeroValue string
+	s := &SAPAPIClientAddon{TokenEndpointURL: &zeroValue}
+	s.GetTokenEndpointURL()
+	s = &SAPAPIClientAddon{}
+	s.GetTokenEndpointURL()
+	s = nil
+	s.GetTokenEndpointURL()
+}
+
+func TestSAPAPIClientAddon_GetUsernameAttribute(tt *testing.T) {
+	var zeroValue string
+	s := &SAPAPIClientAddon{UsernameAttribute: &zeroValue}
+	s.GetUsernameAttribute()
+	s = &SAPAPIClientAddon{}
+	s.GetUsernameAttribute()
+	s = nil
+	s.GetUsernameAttribute()
+}
+
+func TestSAPAPIClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SAPAPIClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSentryClientAddon_GetBaseURL(tt *testing.T) {
+	var zeroValue string
+	s := &SentryClientAddon{BaseURL: &zeroValue}
+	s.GetBaseURL()
+	s = &SentryClientAddon{}
+	s.GetBaseURL()
+	s = nil
+	s.GetBaseURL()
+}
+
+func TestSentryClientAddon_GetOrgSlug(tt *testing.T) {
+	var zeroValue string
+	s := &SentryClientAddon{OrgSlug: &zeroValue}
+	s.GetOrgSlug()
+	s = &SentryClientAddon{}
+	s.GetOrgSlug()
+	s = nil
+	s.GetOrgSlug()
+}
+
+func TestSentryClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SentryClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSharePointClientAddon_GetExternalURL(tt *testing.T) {
+	var zeroValue []string
+	s := &SharePointClientAddon{ExternalURL: &zeroValue}
+	s.GetExternalURL()
+	s = &SharePointClientAddon{}
+	s.GetExternalURL()
+	s = nil
+	s.GetExternalURL()
+}
+
+func TestSharePointClientAddon_GetURL(tt *testing.T) {
+	var zeroValue string
+	s := &SharePointClientAddon{URL: &zeroValue}
+	s.GetURL()
+	s = &SharePointClientAddon{}
+	s.GetURL()
+	s = nil
+	s.GetURL()
+}
+
+func TestSharePointClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SharePointClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestSigningKey_GetCert(tt *testing.T) {
 	var zeroValue string
 	s := &SigningKey{Cert: &zeroValue}
@@ -9455,6 +10382,70 @@ func TestSigningKey_GetThumbprint(tt *testing.T) {
 func TestSigningKey_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SigningKey{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSlackClientAddon_GetTeam(tt *testing.T) {
+	var zeroValue string
+	s := &SlackClientAddon{Team: &zeroValue}
+	s.GetTeam()
+	s = &SlackClientAddon{}
+	s.GetTeam()
+	s = nil
+	s.GetTeam()
+}
+
+func TestSlackClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SlackClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSpringCMClientAddon_GetACSURL(tt *testing.T) {
+	var zeroValue string
+	s := &SpringCMClientAddon{ACSURL: &zeroValue}
+	s.GetACSURL()
+	s = &SpringCMClientAddon{}
+	s.GetACSURL()
+	s = nil
+	s.GetACSURL()
+}
+
+func TestSpringCMClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SpringCMClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSSOIntegrationClientAddon_GetName(tt *testing.T) {
+	var zeroValue string
+	s := &SSOIntegrationClientAddon{Name: &zeroValue}
+	s.GetName()
+	s = &SSOIntegrationClientAddon{}
+	s.GetName()
+	s = nil
+	s.GetName()
+}
+
+func TestSSOIntegrationClientAddon_GetVersion(tt *testing.T) {
+	var zeroValue string
+	s := &SSOIntegrationClientAddon{Version: &zeroValue}
+	s.GetVersion()
+	s = &SSOIntegrationClientAddon{}
+	s.GetVersion()
+	s = nil
+	s.GetVersion()
+}
+
+func TestSSOIntegrationClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SSOIntegrationClientAddon{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -10876,9 +11867,63 @@ func TestUserRecoveryCode_String(t *testing.T) {
 	}
 }
 
+func TestWAMSClientAddon_GetMasterkey(tt *testing.T) {
+	var zeroValue string
+	w := &WAMSClientAddon{Masterkey: &zeroValue}
+	w.GetMasterkey()
+	w = &WAMSClientAddon{}
+	w.GetMasterkey()
+	w = nil
+	w.GetMasterkey()
+}
+
+func TestWAMSClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &WAMSClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestWSFEDClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &WSFEDClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestZendeskClientAddon_GetAccountName(tt *testing.T) {
+	var zeroValue string
+	z := &ZendeskClientAddon{AccountName: &zeroValue}
+	z.GetAccountName()
+	z = &ZendeskClientAddon{}
+	z.GetAccountName()
+	z = nil
+	z.GetAccountName()
+}
+
+func TestZendeskClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ZendeskClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestZoomClientAddon_GetAccount(tt *testing.T) {
+	var zeroValue string
+	z := &ZoomClientAddon{Account: &zeroValue}
+	z.GetAccount()
+	z = &ZoomClientAddon{}
+	z.GetAccount()
+	z = nil
+	z.GetAccount()
+}
+
+func TestZoomClientAddon_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ZoomClientAddon{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
