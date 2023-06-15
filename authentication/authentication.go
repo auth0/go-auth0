@@ -49,7 +49,7 @@ type UserInfoResponse struct {
 	PreferredUsername string `json:"preferred_username,omitempty"`
 	// URL of the user's profile page.
 	Profile string `json:"profile,omitempty"`
-	// Subject-Identifier for the user at the issuer. A unique value to identify the user.
+	// The Auth0 user identifier. This is unique to each user.
 	Sub string `json:"sub,omitempty"`
 	// Time and date the user's information was last updated.
 	UpdatedAt *time.Time `json:"updated_at"`
