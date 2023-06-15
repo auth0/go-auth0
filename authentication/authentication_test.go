@@ -32,6 +32,11 @@ func TestMain(m *testing.M) {
 	httpRecordingsEnabled = envVarEnabled(httpRecordings)
 	initializeTestClient()
 
+	// If we're running in standard `make test` then set a clientSecret to ensure tests work
+	if httpRecordingsEnabled && clientSecret == "" && domain == "go-auth0-dev.eu.auth0.com" {
+		clientSecret = "test-client-secret"
+	}
+
 	code := m.Run()
 	os.Exit(code)
 }
