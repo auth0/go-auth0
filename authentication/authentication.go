@@ -14,13 +14,13 @@ import (
 
 // UserInfoResponse defines the response from the user info API.
 type UserInfoResponse struct {
-	// Unknown claims in the response object that are not defined in this struct will be stored here
+	// Unknown claims in the response object that are not defined in this struct will be stored here.
 	AdditionalClaims map[string]interface{} `json:"-"`
 	// The user's preferred postal address.
 	Address *UserAddress `json:"address,omitempty"`
 	// The user's birthday, represented as an ISO 8601:2004 [ISO8601‑2004] YYYY-MM-DD format.
 	Birthdate string `json:"birthdate,omitempty"`
-	// The user's preferred e-mail address.
+	// The user's preferred email address.
 	Email string `json:"email,omitempty"`
 	// Whether the user's email address has been verified or not.
 	EmailVerified bool `json:"email_verified,omitempty"`
@@ -53,7 +53,7 @@ type UserInfoResponse struct {
 	Sub string `json:"sub,omitempty"`
 	// Time and date the user's information was last updated.
 	UpdatedAt *time.Time `json:"updated_at"`
-	// URL of the user's Web page or blog.
+	// URL of the user's web page or blog.
 	Website string `json:"website,omitempty"`
 	// User's time zone as a "tz database name".
 	ZoneInformation string `json:"zoneinfo,omitempty"`
@@ -78,7 +78,7 @@ type UserAddress struct {
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
 //
-// It is required to handle the mapping of unknown claims from the main response body into the AdditionalClaims
+// It is required to handle the mapping of unknown claims from the main response body into the `AdditionalClaims`
 // field on the struct.
 func (u *UserInfoResponse) UnmarshalJSON(b []byte) error {
 	type userInfoWrapper UserInfoResponse
@@ -160,11 +160,11 @@ func New(domain string, options ...Option) (*Authentication, error) {
 	return a, nil
 }
 
-// UserInfo returns a user's profile based on the Access Token obtained during login.
+// UserInfo returns a user's profile using the access token obtained during login.
 //
-// This endpoint will work only if openid was granted as a scope for the Access Token. The user profile
+// This endpoint will work only if `openid` was granted as a scope for the access token. The user profile
 // information included in the response depends on the scopes requested. For example, a scope of just openid
-// may return less information than a a scope of openid profile email.
+// may return less information than a a scope of `openid profile email`.
 //
 // See: https://auth0.com/docs/api/authentication?http#get-user-info
 func (a *Authentication) UserInfo(ctx context.Context, accessToken string, opts ...RequestOption) (user *UserInfoResponse, err error) {
