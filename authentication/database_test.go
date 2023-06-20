@@ -24,3 +24,15 @@ func TestDatabaseSignUp(t *testing.T) {
 	assert.NotEmpty(t, createdUser.ID)
 	assert.Equal(t, userData.Username, createdUser.Username)
 }
+
+func TestDatabaseChangePassword(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	resp, err := authAPI.Database.ChangePassword(context.Background(), database.ChangePasswordRequest{
+		Connection: "Username-Password-Authentication",
+		Email:      "mytestaccount@example.com",
+	})
+
+	assert.NoError(t, err)
+	assert.Equal(t, "We've just sent you an email to reset your password.", resp)
+}
