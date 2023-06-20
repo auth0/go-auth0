@@ -65,7 +65,7 @@ func (o *OAuth) LoginWithPassword(ctx context.Context, body oauth.LoginWithPassw
 // LoginWithAuthCode performs the Authorization Code grant type OAuth 2.0 grant.
 //
 // This is the flow that regular web apps use to access an API. Use this endpoint to exchange an
-// Authorization Code for a Token.
+// Authorization Code for a token.
 //
 // See: https://auth0.com/docs/api/authentication?http#authorization-code-flow44
 func (o *OAuth) LoginWithAuthCode(ctx context.Context, body oauth.LoginWithAuthCodeRequest, opts ...RequestOption) (t *oauth.TokenSet, err error) {
@@ -116,14 +116,13 @@ func (o *OAuth) LoginWithAuthCodeWithPKCE(ctx context.Context, body oauth.LoginW
 
 // LoginWithClientCredentials performs the Client Credentials OAuth 2.0 grant type.
 //
-// This flow was originally designed to protect the authorization code flow in mobile apps but its ability
-// to prevent authorization code injection makes it useful for every type of OAuth client, even web apps
-// that use client authentication.
+// Use this endpoint to directly request an access token by using the Client's credentials (a Client ID and
+// a Client Secret).
 //
 // See: https://auth0.com/docs/api/authentication?http#client-credentials-flow
 func (o *OAuth) LoginWithClientCredentials(ctx context.Context, body oauth.LoginWithClientCredentialsRequest, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	data := url.Values{
-		"code": []string{body.Audience},
+		"audience": []string{body.Audience},
 	}
 
 	err = o.addClientAuthentication(body.ClientAuthentication, data, true)
@@ -136,7 +135,7 @@ func (o *OAuth) LoginWithClientCredentials(ctx context.Context, body oauth.Login
 	return
 }
 
-// RefreshToken is used to refresh and Access Token using the Refresh Token you got during authorization.
+// RefreshToken is used to refresh and access token using the refresh token you got during authorization.
 //
 // See: https://auth0.com/docs/api/authentication?http#refresh-token
 func (o *OAuth) RefreshToken(ctx context.Context, body oauth.RefreshTokenRequest, opts ...RequestOption) (t *oauth.TokenSet, err error) {
@@ -158,11 +157,11 @@ func (o *OAuth) RefreshToken(ctx context.Context, body oauth.RefreshTokenRequest
 	return
 }
 
-// RevokeRefreshToken is used to invalidate an Refresh Token if it has been compromised.
+// RevokeRefreshToken is used to invalidate a refresh token if it has been compromised.
 //
-// The behaviour of this endpoint depends on the state of the Refresh Token Revocation Deletes Grant toggle.
+// The behaviour of this endpoint depends on the state of the **Refresh Token Revocation Deletes Grant** toggle.
 // If this toggle is enabled, then each revocation request invalidates not only the specific token, but all
-// other tokens based on the same authorization grant. This means that all Refresh Tokens that have been
+// other tokens based on the same authorization grant. This means that all refresh tokens that have been
 // issued for the same user, application, and audience will be revoked. If this toggle is disabled, then only
 // the refresh token is revoked, while the grant is left intact.
 //

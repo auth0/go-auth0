@@ -79,7 +79,7 @@ type LoginWithClientCredentialsRequest struct {
 // RefreshTokenRequest defines the request body for logging in with Authorization Code grant.
 type RefreshTokenRequest struct {
 	ClientAuthentication
-	// The Refresh Token to use.
+	// The refresh token to use.
 	RefreshToken string
 	// 	A space-delimited list of requested scope permissions. If not sent, the original scopes will be used;
 	// otherwise you can request a reduced set of scopes. Note that this must be URL encoded.
@@ -94,7 +94,7 @@ type RevokeRefreshTokenRequest struct {
 	ClientID string `json:"client_id,omitempty"`
 	// The client_secret of your client.
 	ClientSecret string `json:"client_secret,omitempty"`
-	// The Refresh Token you want to revoke.
+	// The refresh token you want to revoke.
 	Token string `json:"token,omitempty"`
 	// Extra parameters to be merged into the request body. Values set here will override any existing values.
 	ExtraParameters map[string]string `json:"-"`

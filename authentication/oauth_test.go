@@ -62,6 +62,17 @@ func TestLoginWithAuthCode(t *testing.T) {
 }
 
 func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
+	t.Run("Should throw for an invalid code", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		_, err := authAPI.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
+			Code:         "my-invalid-code",
+			CodeVerifier: "test-code-verifier",
+		})
+
+		assert.Error(t, err, "Invalid authorization code")
+	})
+
 	t.Run("Should throw for an invalid code verifier", func(t *testing.T) {
 		configureHTTPTestRecordings(t)
 
@@ -128,10 +139,26 @@ func TestRefreshToken(t *testing.T) {
 		assert.NotEmpty(t, tokenSet.Scope)
 		assert.Equal(t, "Bearer", tokenSet.TokenType)
 	})
+
+	t.Run("Should return tokens with reduced scopes", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		tokenSet, err := authAPI.OAuth.RefreshToken(context.Background(), oauth.RefreshTokenRequest{
+			RefreshToken: "test-refresh-token",
+			Scope:        "openid profile offline_access",
+		})
+
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.NotEmpty(t, tokenSet.IDToken)
+		assert.NotEmpty(t, tokenSet.RefreshToken)
+		assert.Equal(t, "openid profile offline_access", tokenSet.Scope)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
 }
 
 func TestRevokeRefreshToken(t *testing.T) {
-	t.Run("Should return tokens", func(t *testing.T) {
+	t.Run("Should revoke token", func(t *testing.T) {
 		configureHTTPTestRecordings(t)
 
 		err := authAPI.OAuth.RevokeRefreshToken(context.Background(), oauth.RevokeRefreshTokenRequest{

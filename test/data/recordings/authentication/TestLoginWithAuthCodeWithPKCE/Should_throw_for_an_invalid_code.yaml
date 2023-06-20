@@ -12,14 +12,14 @@ interactions:
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: client_id=test-client_id&code=test-code&code_verifier=test-invalid-code-verifier&grant_type=authorization_code
+        body: client_id=test-client_id&code=test-invalid-code&code_verifier=test-code-verifier&grant_type=authorization_code
         form:
             client_id:
                 - test-client_id
             code:
-                - test-code
+                - test-invalid-code
             code_verifier:
-                - test-invalid-code-verifier
+                - test-code-verifier
             grant_type:
                 - authorization_code
         headers:
@@ -33,12 +33,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 120
-        uncompressed: false
-        body: '{"access_token":"test-access-token","id_token":"test-id-token"}'
+        content_length: 74
+        uncompressed: true
+        body: '{"error":"invalid_grant","error_description":"Invalid authorization code"}'
         headers:
             Content-Type:
                 - application/json
-        status: 400 Bad Request
-        code: 400
+        status: 403 Forbidden
+        code: 403
         duration: 180.007042ms

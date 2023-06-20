@@ -12,13 +12,13 @@ interactions:
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: client_id=test-client_id&client_secret=test-client_secret&code=test-audience&grant_type=client_credentials
+        body: client_id=test-client_id&client_secret=test-client_secret&audience=test-audience&grant_type=client_credentials
         form:
             client_id:
                 - test-client_id
             client_secret:
                 - test-client_secret
-            code:
+            audience:
                 - test-audience
             grant_type:
                 - client_credentials
