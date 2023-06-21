@@ -26,9 +26,10 @@ func TestLoginWithEmail(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	token, err := authAPI.Passwordless.LoginWithEmail(context.Background(), passwordless.LoginWithEmailRequest{
-		Code:  "123456",
-		Email: "test-email@example.com",
-		Scope: "openid profile email offline_access",
+		Code:     "123456",
+		Email:    "test-email@example.com",
+		Scope:    "openid profile email offline_access",
+		Audience: "https://api.example.com",
 	})
 
 	assert.NoError(t, err)
@@ -46,7 +47,6 @@ func TestSendSMS(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "+123456789", r.PhoneNumber)
 	assert.Equal(t, true, r.PhoneVerified)
-	assert.Equal(t, "en", r.RequestLanguage)
 }
 
 func TestLoginWithSMS(t *testing.T) {
@@ -56,6 +56,7 @@ func TestLoginWithSMS(t *testing.T) {
 		PhoneNumber: "+123456789",
 		Code:        "123456",
 		Scope:       "openid profile email offline_access",
+		Audience:    "https://api.example.com",
 	})
 
 	assert.NoError(t, err)

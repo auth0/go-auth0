@@ -27,7 +27,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"_id":"6492b5a75bedeae7449299fa","phone_number":"+123456789","phone_verified":true,"request_language":"en"}'
+        body: '{"_id":"6492b5a75bedeae7449299fa","phone_number":"+123456789","phone_verified":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8

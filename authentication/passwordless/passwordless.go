@@ -39,10 +39,9 @@ type SendSMSRequest struct {
 
 // SendSMSResponse defines the response from the `SendSMS` request.
 type SendSMSResponse struct {
-	ID              string `json:"_id,omitempty"`
-	PhoneNumber     string `json:"phone_number,omitempty"`
-	PhoneVerified   bool   `json:"phone_verified,omitempty"`
-	RequestLanguage string `json:"request_language,omitempty"`
+	ID            string `json:"_id,omitempty"`
+	PhoneNumber   string `json:"phone_number,omitempty"`
+	PhoneVerified bool   `json:"phone_verified,omitempty"`
 }
 
 // LoginWithSMSRequest defines the request body for exchanging a code requested by `SendSMS` for a token.
