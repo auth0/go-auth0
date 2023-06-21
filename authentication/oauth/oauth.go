@@ -90,10 +90,7 @@ type RefreshTokenRequest struct {
 
 // RevokeRefreshTokenRequest defines the request body for logging in with Authorization Code grant.
 type RevokeRefreshTokenRequest struct {
-	// The client_id of your client.
-	ClientID string `json:"client_id,omitempty"`
-	// The client_secret of your client.
-	ClientSecret string `json:"client_secret,omitempty"`
+	ClientAuthentication
 	// The refresh token you want to revoke.
 	Token string `json:"token,omitempty"`
 	// Extra parameters to be merged into the request body. Values set here will override any existing values.
