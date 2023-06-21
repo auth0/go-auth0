@@ -201,7 +201,7 @@ This logic can be customised by using the `management.WithRetries` helper, and c
 m, err := management.New(
     domain,
     management.WithClientCredentials(context.Background(), id, secret),
-    management.WithRetries(RetryOptions{MaxRetries: 3, Statuses: []int{http.StatusTooManyRequests, http.StatusBadGateway}}),
+    management.WithRetries(3, []int{http.StatusTooManyRequests, http.StatusBadGateway}),
 )
 
 // Disable retries
