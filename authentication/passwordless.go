@@ -12,6 +12,9 @@ type Passwordless manager
 
 // SendEmail starts a passwordless flow by sending a link or code via email.
 //
+// In order to set the `x-request-language` header when sending this request, use the `Header`RequestOption
+// helper.
+//
 // See: https://auth0.com/docs/api/authentication?http#get-code-or-link
 func (p *Passwordless) SendEmail(ctx context.Context, params passwordless.SendEmailRequest, opts ...RequestOption) (r *passwordless.SendEmailResponse, err error) {
 	if params.ClientID == "" {
@@ -48,6 +51,9 @@ func (p *Passwordless) LoginWithEmail(ctx context.Context, params passwordless.L
 }
 
 // SendSMS starts a passwordless flow by sending a code via SMS.
+//
+// In order to set the `x-request-language` header when sending this request, use the `Header`RequestOption
+// helper.
 //
 // See: https://auth0.com/docs/api/authentication?http#get-code-or-link
 func (p *Passwordless) SendSMS(ctx context.Context, params passwordless.SendSMSRequest, opts ...RequestOption) (r *passwordless.SendSMSResponse, err error) {
