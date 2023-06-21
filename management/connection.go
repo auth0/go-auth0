@@ -694,7 +694,7 @@ type ConnectionOptionsSMS struct {
 	Provider              *string                          `json:"provider,omitempty"`
 	GatewayURL            *string                          `json:"gateway_url,omitempty"`
 	GatewayAuthentication *ConnectionGatewayAuthentication `json:"gateway_authentication,omitempty"`
-	ForwardRequestInfo    *bool                            `json:"forward_request_info,omitempty"`
+	ForwardRequestInfo    *bool                            `json:"forward_req_info,omitempty"`
 
 	DisableSignup        *bool `json:"disable_signup,omitempty"`
 	BruteForceProtection *bool `json:"brute_force_protection,omitempty"`

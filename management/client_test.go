@@ -213,6 +213,27 @@ func TestClient_GetCredentials(t *testing.T) {
 	assert.Equal(t, expectedCredential.GetID(), credential.GetID())
 }
 
+func TestClient_UpdateCredential(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedClient := givenAClient(t)
+	expectedCredential := givenACredential(t, expectedClient)
+
+	expiresAt := time.Now().Add(time.Minute * 10)
+	expectedCredential.ExpiresAt = &expiresAt
+
+	pem := expectedCredential.GetPEM()
+	credentialID := expectedCredential.GetID()
+	expectedCredential.ID = nil
+
+	err := api.Client.UpdateCredential(context.Background(), expectedClient.GetClientID(), credentialID, expectedCredential)
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedCredential.GetExpiresAt(), expiresAt)
+	assert.Equal(t, expectedCredential.GetID(), credentialID) // Check that we unmarshall the result into this struct.
+	assert.Equal(t, expectedCredential.GetPEM(), pem)
+}
+
 func TestClient_DeleteCredential(t *testing.T) {
 	configureHTTPTestRecordings(t)
 

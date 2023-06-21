@@ -567,6 +567,28 @@ func (m *ClientManager) CreateCredential(ctx context.Context, clientID string, c
 	return m.management.Request(ctx, "POST", m.management.URI("clients", clientID, "credentials"), credential, opts...)
 }
 
+// UpdateCredential updates a client application's client credential expiry.
+func (m *ClientManager) UpdateCredential(ctx context.Context, clientID, credentialID string, credential *Credential, opts ...RequestOption) error {
+	credentialClone := &Credential{ExpiresAt: credential.ExpiresAt} // The API only accepts the expires_at property.
+
+	err := m.management.Request(ctx, "PATCH", m.management.URI("clients", clientID, "credentials", credentialID), credentialClone, opts...)
+	if err != nil {
+		return err
+	}
+
+	credential.ID = credentialClone.ID
+	credential.Name = credentialClone.Name
+	credential.CredentialType = credentialClone.CredentialType
+	credential.KeyID = credentialClone.KeyID
+	credential.Algorithm = credentialClone.Algorithm
+	credential.CreatedAt = credentialClone.CreatedAt
+	credential.UpdatedAt = credentialClone.UpdatedAt
+	credential.ExpiresAt = credentialClone.ExpiresAt
+	// PEM and ParseExpiryFromCert don't get returned.
+
+	return nil
+}
+
 // ListCredentials lists all client credentials associated with the client application.
 func (m *ClientManager) ListCredentials(ctx context.Context, clientID string, opts ...RequestOption) (c []*Credential, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("clients", clientID, "credentials"), &c, applyListDefaults(opts))
