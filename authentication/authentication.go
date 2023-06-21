@@ -110,8 +110,9 @@ func (u *UserInfoResponse) UnmarshalJSON(b []byte) error {
 
 // Authentication is the auth client.
 type Authentication struct {
-	Database *Database
-	OAuth    *OAuth
+	Database     *Database
+	OAuth        *OAuth
+	Passwordless *Passwordless
 
 	url             *url.URL
 	basePath        string
@@ -156,6 +157,7 @@ func New(domain string, options ...Option) (*Authentication, error) {
 	a.common.authentication = a
 	a.Database = (*Database)(&a.common)
 	a.OAuth = (*OAuth)(&a.common)
+	a.Passwordless = (*Passwordless)(&a.common)
 
 	return a, nil
 }
