@@ -109,7 +109,7 @@ func (a *Authentication) Request(ctx context.Context, method, uri string, payloa
 	case url.Values:
 		request, err = a.NewFormRequest(ctx, method, uri, p, opts...)
 	default:
-		request, err = a.NewRequest(ctx, method, uri, p)
+		request, err = a.NewRequest(ctx, method, uri, p, opts...)
 	}
 
 	if err != nil {

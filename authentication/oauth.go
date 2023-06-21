@@ -62,6 +62,122 @@ func (o *OAuth) LoginWithPassword(ctx context.Context, body oauth.LoginWithPassw
 	return
 }
 
+// LoginWithAuthCode performs the Authorization Code grant type OAuth 2.0 grant.
+//
+// This is the flow that regular web apps use to access an API. Use this endpoint to exchange an
+// Authorization Code for a token.
+//
+// See: https://auth0.com/docs/api/authentication?http#authorization-code-flow44
+func (o *OAuth) LoginWithAuthCode(ctx context.Context, body oauth.LoginWithAuthCodeRequest, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+	data := url.Values{
+		"code": []string{body.Code},
+	}
+
+	if body.RedirectURI != "" {
+		data.Set("redirect_uri", body.RedirectURI)
+	}
+
+	err = o.addClientAuthentication(body.ClientAuthentication, data, true)
+
+	if err != nil {
+		return
+	}
+
+	t, err = o.LoginWithGrant(ctx, "authorization_code", data, opts...)
+	return
+}
+
+// LoginWithAuthCodeWithPKCE performs the Authorization Code with Proof Key for Code Exchange OAuth 2.0 grant type.
+//
+// This flow was originally designed to protect the authorization code flow in mobile apps but its ability
+// to prevent authorization code injection makes it useful for every type of OAuth client, even web apps
+// that use client authentication.
+//
+// See: https://auth0.com/docs/api/authentication?http#authorization-code-flow-with-pkce45
+func (o *OAuth) LoginWithAuthCodeWithPKCE(ctx context.Context, body oauth.LoginWithAuthCodeWithPKCERequest, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+	data := url.Values{
+		"code":          []string{body.Code},
+		"code_verifier": []string{body.CodeVerifier},
+	}
+
+	if body.RedirectURI != "" {
+		data.Set("redirect_uri", body.RedirectURI)
+	}
+
+	err = o.addClientAuthentication(body.ClientAuthentication, data, false)
+
+	if err != nil {
+		return
+	}
+
+	t, err = o.LoginWithGrant(ctx, "authorization_code", data, opts...)
+	return
+}
+
+// LoginWithClientCredentials performs the Client Credentials OAuth 2.0 grant type.
+//
+// Use this endpoint to directly request an access token by using the Client's credentials (a Client ID and
+// a Client Secret).
+//
+// See: https://auth0.com/docs/api/authentication?http#client-credentials-flow
+func (o *OAuth) LoginWithClientCredentials(ctx context.Context, body oauth.LoginWithClientCredentialsRequest, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+	data := url.Values{
+		"audience": []string{body.Audience},
+	}
+
+	err = o.addClientAuthentication(body.ClientAuthentication, data, true)
+
+	if err != nil {
+		return
+	}
+
+	t, err = o.LoginWithGrant(ctx, "client_credentials", data, opts...)
+	return
+}
+
+// RefreshToken is used to refresh and access token using the refresh token you got during authorization.
+//
+// See: https://auth0.com/docs/api/authentication?http#refresh-token
+func (o *OAuth) RefreshToken(ctx context.Context, body oauth.RefreshTokenRequest, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+	data := url.Values{
+		"refresh_token": []string{body.RefreshToken},
+	}
+
+	if body.Scope != "" {
+		data.Set("scope", body.Scope)
+	}
+
+	err = o.addClientAuthentication(body.ClientAuthentication, data, false)
+
+	if err != nil {
+		return
+	}
+
+	t, err = o.LoginWithGrant(ctx, "refresh_token", data, opts...)
+	return
+}
+
+// RevokeRefreshToken is used to invalidate a refresh token if it has been compromised.
+//
+// The behaviour of this endpoint depends on the state of the **Refresh Token Revocation Deletes Grant** toggle.
+// If this toggle is enabled, then each revocation request invalidates not only the specific token, but all
+// other tokens based on the same authorization grant. This means that all refresh tokens that have been
+// issued for the same user, application, and audience will be revoked. If this toggle is disabled, then only
+// the refresh token is revoked, while the grant is left intact.
+//
+// See: https://auth0.com/docs/api/authentication?http#revoke-refresh-token
+func (o *OAuth) RevokeRefreshToken(ctx context.Context, body oauth.RevokeRefreshTokenRequest, opts ...RequestOption) error {
+	if body.ClientID == "" {
+		body.ClientID = o.authentication.clientID
+	}
+
+	if body.ClientSecret != "" && o.authentication.clientSecret != "" {
+		body.ClientSecret = o.authentication.clientSecret
+	}
+
+	return o.authentication.Request(ctx, "POST", o.authentication.URI("oauth", "revoke"), body, nil, opts...)
+}
+
 func (o *OAuth) addClientAuthentication(params oauth.ClientAuthentication, body url.Values, required bool) error {
 	if params.ClientID != "" {
 		body.Set("client_id", params.ClientID)

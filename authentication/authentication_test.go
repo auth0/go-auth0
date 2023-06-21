@@ -18,6 +18,7 @@ import (
 var (
 	domain                = os.Getenv("AUTH0_DOMAIN")
 	clientID              = os.Getenv("AUTH0_AUTH_CLIENT_ID")
+	clientSecret          = os.Getenv("AUTH0_AUTH_CLIENT_SECRET")
 	httpRecordings        = os.Getenv("AUTH0_HTTP_RECORDINGS")
 	httpRecordingsEnabled = false
 	authAPI               = &Authentication{}
@@ -30,6 +31,11 @@ func envVarEnabled(envVar string) bool {
 func TestMain(m *testing.M) {
 	httpRecordingsEnabled = envVarEnabled(httpRecordings)
 	initializeTestClient()
+
+	// If we're running in standard `make test` then set a clientSecret to ensure tests work
+	if httpRecordingsEnabled && clientSecret == "" && domain == "go-auth0-dev.eu.auth0.com" {
+		clientSecret = "test-client-secret"
+	}
 
 	code := m.Run()
 	os.Exit(code)
@@ -122,4 +128,14 @@ func TestAuthenticationApiCallContextTimeout(t *testing.T) {
 		Password: "test",
 	})
 	assert.ErrorIs(t, err, context.DeadlineExceeded)
+}
+
+func TestUserInfo(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	user, err := authAPI.UserInfo(context.Background(), "test-access-token")
+
+	assert.NoError(t, err)
+	assert.Equal(t, "test-sub", user.Sub)
+	assert.Equal(t, "test-value", user.AdditionalClaims["unknown-param"])
 }
