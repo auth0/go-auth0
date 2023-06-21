@@ -1,5 +1,19 @@
 # Change Log
 
+<a name="v0.17.2"></a>
+
+## [v0.17.2](https://github.com/auth0/go-auth0/tree/v0.17.2) (2023-05-22)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.17.1...v0.17.2)
+
+### Added
+
+- Added support for updating the `Expiry` of a `Credential` ([#206](https://github.com/auth0/go-auth0/pull/206))/([#209](https://github.com/auth0/go-auth0/pull/209))
+
+### Fixed
+
+- Correct the `ForwardReqInfo` property on `ConnectionOptionsSMS` ([#207](https://github.com/auth0/go-auth0/pull/207))
+
 <a name="v0.17.1"></a>
 
 ## [v0.17.1](https://github.com/auth0/go-auth0/tree/v0.17.1) (2023-05-15)
