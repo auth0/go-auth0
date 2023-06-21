@@ -3,10 +3,10 @@ package oauth
 // ClientAuthentication defines the authentication options that can be overridden per request.
 type ClientAuthentication struct {
 	// ClientID to use for the specific request.
-	ClientID string
+	ClientID string `json:"client_id,omitempty"`
 	// ClientSecret to use for the specific request. Required when Client Secret Basic or Client
 	// Secret Post is the application authentication method.
-	ClientSecret string
+	ClientSecret string `json:"client_secret,omitempty"`
 }
 
 // TokenSet defines the response of the OAuth endpoints.
