@@ -226,7 +226,7 @@ func TestClient_UpdateCredential(t *testing.T) {
 	credentialID := expectedCredential.GetID()
 	expectedCredential.ID = nil
 
-	err := api.Client.UpdateCredential(expectedClient.GetClientID(), credentialID, expectedCredential)
+	err := api.Client.UpdateCredential(context.Background(), expectedClient.GetClientID(), credentialID, expectedCredential)
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedCredential.GetExpiresAt(), expiresAt)

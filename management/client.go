@@ -568,10 +568,10 @@ func (m *ClientManager) CreateCredential(ctx context.Context, clientID string, c
 }
 
 // UpdateCredential updates a client application's client credential expiry.
-func (m *ClientManager) UpdateCredential(clientID, credentialID string, credential *Credential, opts ...RequestOption) error {
+func (m *ClientManager) UpdateCredential(ctx context.Context, clientID, credentialID string, credential *Credential, opts ...RequestOption) error {
 	credentialClone := &Credential{ExpiresAt: credential.ExpiresAt} // The API only accepts the expires_at property.
 
-	err := m.Request("PATCH", m.URI("clients", clientID, "credentials", credentialID), credentialClone, opts...)
+	err := m.management.Request(ctx, "PATCH", m.management.URI("clients", clientID, "credentials", credentialID), credentialClone, opts...)
 	if err != nil {
 		return err
 	}
