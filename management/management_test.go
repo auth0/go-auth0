@@ -283,27 +283,6 @@ func TestAuth0Client(t *testing.T) {
 		assert.NoError(t, err)
 	})
 
-	t.Run("Allows passing custom Auth0ClientInfo", func(t *testing.T) {
-		customClient := client.Auth0ClientInfo{Name: "test-client", Version: "1.0.0"}
-
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			header := r.Header.Get("Auth0-Client")
-			assert.Equal(t, "eyJuYW1lIjoidGVzdC1jbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjAifQ==", header)
-		})
-		s := httptest.NewServer(h)
-
-		m, err := New(
-			s.URL,
-			WithInsecure(),
-			WithAuth0ClientInfo(customClient),
-		)
-		assert.NoError(t, err)
-
-		_, err = m.User.Read(context.Background(), "123")
-
-		assert.NoError(t, err)
-	})
-
 	t.Run("Allows disabling Auth0ClientInfo", func(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			rawHeader := r.Header.Get("Auth0-Client")
@@ -341,25 +320,6 @@ func TestAuth0Client(t *testing.T) {
 		m, err := New(
 			s.URL,
 			WithInsecure(),
-			WithAuth0ClientEnvEntry("foo", "bar"),
-		)
-		assert.NoError(t, err)
-		_, err = m.User.Read(context.Background(), "123")
-		assert.NoError(t, err)
-	})
-
-	t.Run("Allows passing extra env info with custom client", func(t *testing.T) {
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			header := r.Header.Get("Auth0-Client")
-			assert.Equal(t, "eyJuYW1lIjoidGVzdC1jbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjAiLCJlbnYiOnsiZm9vIjoiYmFyIn19", header)
-		})
-		s := httptest.NewServer(h)
-		customClient := client.Auth0ClientInfo{Name: "test-client", Version: "1.0.0"}
-
-		m, err := New(
-			s.URL,
-			WithInsecure(),
-			WithAuth0ClientInfo(customClient),
 			WithAuth0ClientEnvEntry("foo", "bar"),
 		)
 		assert.NoError(t, err)
@@ -451,7 +411,7 @@ func TestRetries(t *testing.T) {
 		m, err := New(
 			s.URL,
 			WithInsecure(),
-			WithRetries(client.RetryOptions{MaxRetries: 1, Statuses: []int{http.StatusBadGateway}}),
+			WithRetries(1, []int{http.StatusBadGateway}),
 		)
 		assert.NoError(t, err)
 
@@ -503,7 +463,7 @@ func TestRetries(t *testing.T) {
 		m, err := New(
 			s.URL,
 			WithInsecure(),
-			WithRetries(client.RetryOptions{MaxRetries: 3, Statuses: []int{http.StatusBadGateway}}),
+			WithRetries(3, []int{http.StatusBadGateway}),
 		)
 		assert.NoError(t, err)
 

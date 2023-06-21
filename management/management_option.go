@@ -77,16 +77,6 @@ func WithClient(client *http.Client) Option {
 	}
 }
 
-// WithAuth0ClientInfo configures the management client to use the provided client information
-// instead of the default one.
-func WithAuth0ClientInfo(auth0ClientInfo client.Auth0ClientInfo) Option {
-	return func(m *Management) {
-		if !auth0ClientInfo.IsEmpty() {
-			m.auth0ClientInfo = &auth0ClientInfo
-		}
-	}
-}
-
 // WithAuth0ClientEnvEntry allows adding extra environment keys to the client information.
 func WithAuth0ClientEnvEntry(key string, value string) Option {
 	return func(m *Management) {
@@ -108,9 +98,12 @@ func WithNoAuth0ClientInfo() Option {
 }
 
 // WithRetries configures the management client to only retry under the conditions provided.
-func WithRetries(retryConfig client.RetryOptions) Option {
+func WithRetries(maxRetries int, statuses []int) Option {
 	return func(m *Management) {
-		m.retryStrategy = retryConfig
+		m.retryStrategy = client.RetryOptions{
+			MaxRetries: maxRetries,
+			Statuses:   statuses,
+		}
 	}
 }
 
