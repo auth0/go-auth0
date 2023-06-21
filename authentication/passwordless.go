@@ -17,13 +17,7 @@ type Passwordless manager
 //
 // See: https://auth0.com/docs/api/authentication?http#get-code-or-link
 func (p *Passwordless) SendEmail(ctx context.Context, params passwordless.SendEmailRequest, opts ...RequestOption) (r *passwordless.SendEmailResponse, err error) {
-	if params.ClientID == "" {
-		params.ClientID = p.authentication.clientID
-	}
-
-	if params.ClientSecret == "" && p.authentication.clientSecret != "" {
-		params.ClientSecret = p.authentication.clientSecret
-	}
+	p.addClientAuthentication(&params.ClientAuthentication)
 
 	params.Connection = "email"
 
@@ -35,13 +29,7 @@ func (p *Passwordless) SendEmail(ctx context.Context, params passwordless.SendEm
 //
 // See: https://auth0.com/docs/api/authentication?http#authenticate-user
 func (p *Passwordless) LoginWithEmail(ctx context.Context, params passwordless.LoginWithEmailRequest, opts ...RequestOption) (t *oauth.TokenSet, err error) {
-	if params.ClientID == "" {
-		params.ClientID = p.authentication.clientID
-	}
-
-	if params.ClientSecret == "" && p.authentication.clientSecret != "" {
-		params.ClientSecret = p.authentication.clientSecret
-	}
+	p.addClientAuthentication(&params.ClientAuthentication)
 
 	params.GrantType = "http://auth0.com/oauth/grant-type/passwordless/otp"
 	params.Realm = "email"
@@ -57,13 +45,7 @@ func (p *Passwordless) LoginWithEmail(ctx context.Context, params passwordless.L
 //
 // See: https://auth0.com/docs/api/authentication?http#get-code-or-link
 func (p *Passwordless) SendSMS(ctx context.Context, params passwordless.SendSMSRequest, opts ...RequestOption) (r *passwordless.SendSMSResponse, err error) {
-	if params.ClientID == "" {
-		params.ClientID = p.authentication.clientID
-	}
-
-	if params.ClientSecret == "" && p.authentication.clientSecret != "" {
-		params.ClientSecret = p.authentication.clientSecret
-	}
+	p.addClientAuthentication(&params.ClientAuthentication)
 
 	params.Connection = "sms"
 
@@ -75,6 +57,16 @@ func (p *Passwordless) SendSMS(ctx context.Context, params passwordless.SendSMSR
 //
 // See: https://auth0.com/docs/api/authentication?http#authenticate-user
 func (p *Passwordless) LoginWithSMS(ctx context.Context, params passwordless.LoginWithSMSRequest, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+	p.addClientAuthentication(&params.ClientAuthentication)
+
+	params.GrantType = "http://auth0.com/oauth/grant-type/passwordless/otp"
+	params.Realm = "sms"
+
+	err = p.authentication.Request(ctx, "POST", p.authentication.URI("oauth", "token"), params, &t, opts...)
+	return
+}
+
+func (p *Passwordless) addClientAuthentication(params *oauth.ClientAuthentication) {
 	if params.ClientID == "" {
 		params.ClientID = p.authentication.clientID
 	}
@@ -82,10 +74,4 @@ func (p *Passwordless) LoginWithSMS(ctx context.Context, params passwordless.Log
 	if params.ClientSecret == "" && p.authentication.clientSecret != "" {
 		params.ClientSecret = p.authentication.clientSecret
 	}
-
-	params.GrantType = "http://auth0.com/oauth/grant-type/passwordless/otp"
-	params.Realm = "sms"
-
-	err = p.authentication.Request(ctx, "POST", p.authentication.URI("oauth", "token"), params, &t, opts...)
-	return
 }
