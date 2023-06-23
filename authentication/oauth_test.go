@@ -15,7 +15,7 @@ func TestOAuthLoginWithPassword(t *testing.T) {
 	tokenSet, err := authAPI.OAuth.LoginWithPassword(context.Background(), oauth.LoginWithPasswordRequest{
 		Username: "testuser",
 		Password: "testuser123",
-	})
+	}, oauth.IDTokenValidationOptionalVerification{})
 	assert.NoError(t, err)
 	assert.NotEmpty(t, tokenSet.AccessToken)
 	assert.NotEmpty(t, tokenSet.IDToken)

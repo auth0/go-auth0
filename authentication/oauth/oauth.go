@@ -1,5 +1,7 @@
 package oauth
 
+import "time"
+
 // ClientAuthentication defines the authentication options that can be overridden per request.
 type ClientAuthentication struct {
 	// ClientID to use for the specific request.
@@ -95,4 +97,11 @@ type RevokeRefreshTokenRequest struct {
 	Token string `json:"token,omitempty"`
 	// Extra parameters to be merged into the request body. Values set here will override any existing values.
 	ExtraParameters map[string]string `json:"-"`
+}
+
+// IDTokenValidationOptionalVerification allows validating optional claims that might not always be in the ID token.
+type IDTokenValidationOptionalVerification struct {
+	MaxAge       time.Duration
+	Nonce        string
+	Organization string
 }
