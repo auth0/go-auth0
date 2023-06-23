@@ -88,7 +88,7 @@ With a management client we can then interact with the Auth0 Management API.
 
 ## Authentication
 
-The auth0 management package handles authentication by exchanging the client id and secret
+The auth0 management package handles authentication by exchanging the client ID and secret
 supplied when creating a new management client.
 
 This is handled internally using the https://godoc.org/golang.org/x/oauth2

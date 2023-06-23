@@ -42,9 +42,9 @@ go get github.com/auth0/go-auth0
 
 #### Authentication API Client
 
-The Authentication API client is based on the [Authentication API docs](https://auth0.com/docs/api/authentication)
+The Authentication API client is based on the [Authentication API docs](https://auth0.com/docs/api/authentication).
 
-Create an Authentication API client by providing the details of your Application.
+Create an Authentication API client by providing the details of your Auth0 Application.
 
 ```go
 import (
@@ -56,7 +56,7 @@ import (
 
 func main () {
 	// Get these from your Auth0 Application Dashboard.
-	domain := "example.auth0.com"
+	domain := "example.us.auth0.com"
 	clientID := "EXAMPLE_16L9d34h0qe4NVE6SaHxZEid"
 	clientSecret := "EXAMPLE_XSQGmnt8JdXs23407hrK6XXXXXXX"
 
@@ -83,7 +83,6 @@ func main () {
 	createdUser, err := authAPI.Database.Signup(context.Background(), userData)
 	if err != nil {
 		log.Fatalf("failed to sign user up: %+v", err)
-
 	}
 
 	// Login using OAuth grants
@@ -101,7 +100,7 @@ func main () {
 
 #### Management API Client
 
-The Management API client is based on the [Management API docs](https://auth0.com/docs/api/management/v2)
+The Management API client is based on the [Management API docs](https://auth0.com/docs/api/management/v2).
 
 ```go
 package main
