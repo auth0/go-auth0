@@ -21,7 +21,6 @@
 ## Documentation
 
 - [Godoc](https://pkg.go.dev/github.com/auth0/go-auth0) - explore the Go SDK documentation.
-- [Management API docs](https://auth0.com/docs/api/management/v2) - explore the Auth0 Management API that this SDK interacts with.
 - [Docs site](https://www.auth0.com/docs) — explore our docs site and learn more about Auth0.
 - [Examples](./EXAMPLES.md) - Further examples around usage of the SDK.
 
@@ -40,6 +39,69 @@ go get github.com/auth0/go-auth0
 ```
 
 ### Usage
+
+#### Authentication API Client
+
+The Authentication API client is based on the [Authentication API docs](https://auth0.com/docs/api/authentication)
+
+Create an Authentication API client by providing the details of your Application.
+
+```go
+import (
+	github.com/auth0/go-auth0
+	github.com/auth0/go-auth0/authentication
+	github.com/auth0/go-auth0/authentication/database
+	github.com/auth0/go-auth0/authentication/oauth
+)
+
+func main () {
+	// Get these from your Auth0 Application Dashboard.
+	domain := "example.auth0.com"
+	clientID := "EXAMPLE_16L9d34h0qe4NVE6SaHxZEid"
+	clientSecret := "EXAMPLE_XSQGmnt8JdXs23407hrK6XXXXXXX"
+
+	// Initialize a new client using a domain, client ID and client secret.
+	authAPI, err := authentication.New(
+		context.Background(),
+		domain,
+		authentication.WithClientID(clientID)
+		authentication.WithClientSecret(clientSecret) // Optional depending on the grants used
+	)
+	if err != nil {
+		log.Fatalf("failed to initialize the auth0 authentication API client: %+v", err)
+	}
+
+	// Now we can interact with the Auth0 Authentication API.
+	// Sign up a user
+	userData := database.SignupRequest{
+		Connection: "Username-Password-Authentication",
+		Username:   "mytestaccount",
+		Password:   "mypassword",
+		Email:      "mytestaccount@example.com",
+	}
+
+	createdUser, err := authAPI.Database.Signup(context.Background(), userData)
+	if err != nil {
+		log.Fatalf("failed to sign user up: %+v", err)
+
+	}
+
+	// Login using OAuth grants
+	tokenSet, err := authAPI.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
+		Code:         "test-code",
+		CodeVerifier: "test-code-verifier",
+	}, oauth.IDTokenValidationOptionalVerification{})
+	if err != nil {
+		log.Fatalf("failed to retrieve tokens: %+v", err)
+	}
+}
+```
+> **Note**
+> The [context](https://pkg.go.dev/context?utm_source=godoc) package can be used to pass cancellation signals and deadlines to the Client for handling a request. If there is no context available then `context.Background()` can be used.
+
+#### Management API Client
+
+The Management API client is based on the [Management API docs](https://auth0.com/docs/api/management/v2)
 
 ```go
 package main
