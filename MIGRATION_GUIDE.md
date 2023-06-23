@@ -220,3 +220,7 @@ Some APIs have been renamed or removed in order to ensure consistency in the SDK
 |-----------|--------------|--------------|
 |`Organization.DeleteMember`|Renamed to align with other APIs|`Organization.DeleteMembers`|
 |`ResourceServer.Stream`|Removed to allow potential for consistent pagination functionality across the SDK| Implement pagination manually similar to other APIs|
+
+### Changes To Default User Agent
+
+The default user agent string has changed from `Go-Auth0-SDK/<version>` to `Go-Auth0/<version>`, please be aware however that this is not part of the supported public API so could change in any release in future and should not be relied upon.
