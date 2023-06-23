@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Option is used for passings options to a IDTokenValidator.
+// Option is used for passing options to an `IDTokenValidator`.
 type Option func(*IDTokenValidator)
 
 // WithClockTolerance configures the allowed clock tolerance when validating time based claims.
