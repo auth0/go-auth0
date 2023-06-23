@@ -45,8 +45,10 @@ func initializeTestClient() {
 	var err error
 
 	authAPI, err = New(
+		context.Background(),
 		domain,
 		WithClientID(clientID),
+		WithIDTokenSigningAlg("HS256"),
 	)
 	if err != nil {
 		log.Fatal("failed to initialize the auth api client")
@@ -61,7 +63,7 @@ func TestAuthenticationNew(t *testing.T) {
 		"%2Fexample.com",
 		" a.b.c.example.com",
 	} {
-		_, err := New(domain)
+		_, err := New(context.Background(), domain)
 		assert.Errorf(t, err, "expected New to fail with domain %q", domain)
 	}
 }
@@ -99,7 +101,9 @@ func TestAuthenticationApiCallContextCancel(t *testing.T) {
 	cancel() // Cancel the request.
 
 	a, err := New(
+		context.Background(),
 		"http://localhost:8080",
+		WithIDTokenSigningAlg("HS256"),
 	)
 
 	assert.NoError(t, err)
@@ -118,7 +122,9 @@ func TestAuthenticationApiCallContextTimeout(t *testing.T) {
 	time.Sleep(50 * time.Millisecond) // Delay until the deadline is exceeded.
 
 	a, err := New(
+		context.Background(),
 		"http://localhost:8080",
+		WithIDTokenSigningAlg("HS256"),
 	)
 
 	assert.NoError(t, err)

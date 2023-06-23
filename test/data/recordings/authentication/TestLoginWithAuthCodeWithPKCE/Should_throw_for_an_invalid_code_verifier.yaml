@@ -35,7 +35,7 @@ interactions:
         trailer: {}
         content_length: 60
         uncompressed: false
-        body: '{"access_token":"test-access-token","id_token":"test-id-token"}'
+        body: '{"access_token":"test-access-token"}'
         headers:
             Content-Type:
                 - application/json
