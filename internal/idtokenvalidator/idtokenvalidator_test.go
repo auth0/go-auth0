@@ -265,6 +265,14 @@ func TestIDTokenValidation(t *testing.T) {
 
 		err = validator.Validate(token, ValidationOptions{})
 		assert.ErrorContains(t, err, "\"iss\" not satisfied:")
+
+		args.issuer = ""
+
+		token, _, err = givenAJWT(t, args)
+		assert.NoError(t, err)
+
+		err = validator.Validate(token, ValidationOptions{})
+		assert.ErrorContains(t, err, "\"iss\" not satisfied:")
 	})
 
 	t.Run("verifies sub exists", func(t *testing.T) {
