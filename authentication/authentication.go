@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/auth0/go-auth0/internal/client"
+	"github.com/auth0/go-auth0/internal/idtokenvalidator"
 )
 
 // UserInfoResponse defines the response from the user info API.
@@ -114,14 +115,17 @@ type Authentication struct {
 	OAuth        *OAuth
 	Passwordless *Passwordless
 
-	url             *url.URL
-	basePath        string
-	debug           bool
-	http            *http.Client
-	auth0ClientInfo *client.Auth0ClientInfo
-	common          manager
-	clientID        string
-	clientSecret    string
+	auth0ClientInfo       *client.Auth0ClientInfo
+	basePath              string
+	common                manager
+	clientID              string
+	clientSecret          string
+	idTokenClockTolerance time.Duration
+	debug                 bool
+	http                  *http.Client
+	idTokenSigningAlg     string
+	idTokenValidator      *idtokenvalidator.IDTokenValidator
+	url                   *url.URL
 }
 
 type manager struct {
@@ -129,7 +133,7 @@ type manager struct {
 }
 
 // New creates an auth client.
-func New(domain string, options ...Option) (*Authentication, error) {
+func New(ctx context.Context, domain string, options ...Option) (*Authentication, error) {
 	// Ignore the scheme if it was defined in the domain variable, then prefix
 	// with https as it's the only scheme supported by the Auth0 API.
 	if i := strings.Index(domain, "//"); i != -1 {
@@ -143,11 +147,12 @@ func New(domain string, options ...Option) (*Authentication, error) {
 	}
 
 	a := &Authentication{
-		url:             u,
-		basePath:        "",
-		debug:           false,
-		http:            http.DefaultClient,
-		auth0ClientInfo: client.DefaultAuth0ClientInfo,
+		url:               u,
+		basePath:          "",
+		debug:             false,
+		http:              http.DefaultClient,
+		auth0ClientInfo:   client.DefaultAuth0ClientInfo,
+		idTokenSigningAlg: "RS256",
 	}
 
 	for _, option := range options {
@@ -158,6 +163,30 @@ func New(domain string, options ...Option) (*Authentication, error) {
 	a.Database = (*Database)(&a.common)
 	a.OAuth = (*OAuth)(&a.common)
 	a.Passwordless = (*Passwordless)(&a.common)
+
+	validatorOpts := []idtokenvalidator.Option{}
+
+	if a.http != http.DefaultClient {
+		validatorOpts = append(validatorOpts, idtokenvalidator.WithHTTPClient(a.http))
+	}
+
+	if a.idTokenClockTolerance.Seconds() != 0 {
+		validatorOpts = append(validatorOpts, idtokenvalidator.WithClockTolerance(a.idTokenClockTolerance))
+	}
+
+	validator, err := idtokenvalidator.New(
+		ctx,
+		domain,
+		a.clientID,
+		a.clientSecret,
+		a.idTokenSigningAlg,
+		validatorOpts...,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+	a.idTokenValidator = validator
 
 	return a, nil
 }
