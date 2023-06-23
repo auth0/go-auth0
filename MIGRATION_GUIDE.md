@@ -223,4 +223,4 @@ Some APIs have been renamed or removed in order to ensure consistency in the SDK
 
 ### Changes To Default User Agent
 
-The default user agent string has changed from `Go-Auth0-SDK/<version>` to `Go-Auth0/<version>`, please be aware however that this is not part of the supported public API so could change in any release in future and should not be relied upon.
+The default user agent string has changed from `Go-Auth0-SDK/<version>` to `Go-Auth0/<version>`, please be aware however that this is not part of the supported public API so could change in any future release and should not be relied upon.
