@@ -556,5 +556,4 @@ func configureSigning(t *testing.T, args jwtArgs) (jwa.SignatureAlgorithm, jwk.K
 	}
 	err = privateKey.Set(jwk.AlgorithmKey, jwa.RS256)
 	return jwa.RS256, privateKey, s, err
-
 }

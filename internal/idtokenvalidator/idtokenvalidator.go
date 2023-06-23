@@ -159,7 +159,7 @@ func (i *IDTokenValidator) Validate(idToken string, optional OptionalVerificatio
 	headers := decodedToken.Signatures()[0].ProtectedHeaders()
 
 	if headers.Algorithm() != jwa.HS256 && headers.Algorithm() != jwa.RS256 {
-		return fmt.Errorf("signature algorithm \"%s\" is not supported. Expected the ID Token to be sign with \"HS256\" or \"RS256\"", headers.Algorithm())
+		return fmt.Errorf("signature algorithm \"%s\" is not supported. Expected the ID token to be sign with \"HS256\" or \"RS256\"", headers.Algorithm())
 	}
 
 	if headers.Algorithm() != i.alg {
