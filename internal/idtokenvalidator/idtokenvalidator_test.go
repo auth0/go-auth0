@@ -464,7 +464,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, ValidationOptions{Organization: "12345"})
+		err = validator.Validate(token, ValidationOptions{OrganizationID: "12345"})
 		assert.NoError(t, err)
 	})
 
@@ -479,7 +479,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, ValidationOptions{Organization: "12345"})
+		err = validator.Validate(token, ValidationOptions{OrganizationID: "12345"})
 		assert.ErrorContains(t, err, "org_id claim must be a string present in the ID token")
 	})
 
@@ -496,7 +496,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, ValidationOptions{Organization: "12345"})
+		err = validator.Validate(token, ValidationOptions{OrganizationID: "12345"})
 		assert.ErrorContains(t, err, "org_id claim value mismatch in the ID token")
 	})
 }

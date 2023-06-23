@@ -79,7 +79,7 @@ func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 			Email:    "test-email@example.com",
 			Scope:    "openid profile email offline_access",
 			Audience: "https://api.example.com",
-		}, oauth.IDTokenValidationOptions{Organization: "right-org"})
+		}, oauth.IDTokenValidationOptions{OrganizationID: "right-org"})
 
 		assert.ErrorContains(t, err, "org_id claim value mismatch in the ID token")
 	})

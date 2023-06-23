@@ -101,7 +101,7 @@ type RevokeRefreshTokenRequest struct {
 
 // IDTokenValidationOptions allows validating optional claims that might not always be in the ID token.
 type IDTokenValidationOptions struct {
-	MaxAge       time.Duration
-	Nonce        string
-	Organization string
+	MaxAge         time.Duration
+	Nonce          string
+	OrganizationID string
 }

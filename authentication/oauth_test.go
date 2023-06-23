@@ -182,7 +182,7 @@ func TestWithIDTokenVerification(t *testing.T) {
 
 		_, err = api.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
 			Code: "my-code",
-		}, oauth.IDTokenValidationOptions{Organization: "right-org"})
+		}, oauth.IDTokenValidationOptions{OrganizationID: "right-org"})
 
 		assert.ErrorContains(t, err, "org_id claim value mismatch in the ID token")
 	})

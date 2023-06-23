@@ -29,8 +29,8 @@ func WithIDTokenSigningAlg(alg string) Option {
 	}
 }
 
-// WithClockTolerance configures the allowed clock tolerance when validating time based claims.
-func WithClockTolerance(clockTolerance time.Duration) Option {
+// WithIDTokenClockTolerance configures the allowed clock tolerance when validating time based claims.
+func WithIDTokenClockTolerance(clockTolerance time.Duration) Option {
 	return func(a *Authentication) {
 		a.idTokenClockTolerance = clockTolerance
 	}

@@ -29,7 +29,7 @@ func (p *Passwordless) SendEmail(ctx context.Context, params passwordless.SendEm
 // LoginWithEmail completes the passwordless flow started in `SendEmail` by exchanging the code for a token.
 //
 // See: https://auth0.com/docs/api/authentication?http#authenticate-user
-func (p *Passwordless) LoginWithEmail(ctx context.Context, params passwordless.LoginWithEmailRequest, optionalVerification oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+func (p *Passwordless) LoginWithEmail(ctx context.Context, params passwordless.LoginWithEmailRequest, validationOptions oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	p.addClientAuthentication(&params.ClientAuthentication)
 
 	params.GrantType = "http://auth0.com/oauth/grant-type/passwordless/otp"
@@ -39,9 +39,9 @@ func (p *Passwordless) LoginWithEmail(ctx context.Context, params passwordless.L
 
 	if t != nil && t.IDToken != "" {
 		err = p.authentication.idTokenValidator.Validate(t.IDToken, idtokenvalidator.ValidationOptions{
-			MaxAge:       optionalVerification.MaxAge,
-			Nonce:        optionalVerification.Nonce,
-			Organization: optionalVerification.Organization,
+			MaxAge:         validationOptions.MaxAge,
+			Nonce:          validationOptions.Nonce,
+			OrganizationID: validationOptions.OrganizationID,
 		})
 
 		if err != nil {
@@ -69,7 +69,7 @@ func (p *Passwordless) SendSMS(ctx context.Context, params passwordless.SendSMSR
 // LoginWithSMS completes the passwordless flow started in `SendSMS` by exchanging the code for a token.
 //
 // See: https://auth0.com/docs/api/authentication?http#authenticate-user
-func (p *Passwordless) LoginWithSMS(ctx context.Context, params passwordless.LoginWithSMSRequest, optionalVerification oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+func (p *Passwordless) LoginWithSMS(ctx context.Context, params passwordless.LoginWithSMSRequest, validationOptions oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	p.addClientAuthentication(&params.ClientAuthentication)
 
 	params.GrantType = "http://auth0.com/oauth/grant-type/passwordless/otp"
@@ -79,9 +79,9 @@ func (p *Passwordless) LoginWithSMS(ctx context.Context, params passwordless.Log
 
 	if t != nil && t.IDToken != "" {
 		err = p.authentication.idTokenValidator.Validate(t.IDToken, idtokenvalidator.ValidationOptions{
-			MaxAge:       optionalVerification.MaxAge,
-			Nonce:        optionalVerification.Nonce,
-			Organization: optionalVerification.Organization,
+			MaxAge:         validationOptions.MaxAge,
+			Nonce:          validationOptions.Nonce,
+			OrganizationID: validationOptions.OrganizationID,
 		})
 
 		if err != nil {
