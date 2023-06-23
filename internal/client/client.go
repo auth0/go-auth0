@@ -26,7 +26,7 @@ import (
 )
 
 // UserAgent is the default user agent string.
-var UserAgent = fmt.Sprintf("Go-Auth0-SDK/%s", auth0.Version)
+var UserAgent = fmt.Sprintf("Go-Auth0/%s", auth0.Version)
 
 // Auth0ClientInfo is the structure used to send client information in the "Auth0-Client" header.
 type Auth0ClientInfo struct {
