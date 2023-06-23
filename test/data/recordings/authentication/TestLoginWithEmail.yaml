@@ -27,7 +27,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"test-access-token","expires_in":86400,"id_token":"test-id-token","refresh_token":"test-refresh-token","token_type":"Bearer"}'
+        body: '{"access_token":"test-access-token","expires_in":86400,"refresh_token":"test-refresh-token","token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
