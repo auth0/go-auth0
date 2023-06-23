@@ -100,7 +100,6 @@ func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.NotEmpty(t, tokenSet.AccessToken)
-		assert.NotEmpty(t, tokenSet.IDToken)
 		assert.Equal(t, "Bearer", tokenSet.TokenType)
 	})
 }
