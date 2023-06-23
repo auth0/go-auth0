@@ -243,21 +243,37 @@ func TestIDTokenValidation(t *testing.T) {
 		assert.ErrorContains(t, err, "nonce claim value mismatch in the ID token;")
 	})
 
+	t.Run("verifies iss exists", func(t *testing.T) {
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
+		assert.NoError(t, err)
+
+		// Minimal JWT with no time based values and is missing iss. This can't be achieved by building using jwx
+		err = validator.Validate("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYXVkIjoidGVzdC1jbGllbnQtaWQifQ.52jn1t1Jh_HS2rg1xbyvO1HdNXXVF22e7D1g9TGeWJI", ValidationOptions{})
+		assert.ErrorContains(t, err, "\"iss\" not satisfied: required claim not found")
+	})
+
 	t.Run("verifies iss is valid", func(t *testing.T) {
 		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
 		assert.NoError(t, err)
 
 		args := defaultJWTArgs
 		args.clientSecret = jwtClientSecret
-		args.payload = map[string]interface{}{
-			"iss": "invalid-iss",
-		}
+		args.issuer = "invalid-iss"
 
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
 		err = validator.Validate(token, ValidationOptions{})
 		assert.ErrorContains(t, err, "\"iss\" not satisfied:")
+	})
+
+	t.Run("verifies sub exists", func(t *testing.T) {
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
+		assert.NoError(t, err)
+
+		// Minimal JWT with no time based values and is missing iss. This can't be achieved by building using jwx
+		err = validator.Validate("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJhdWQiOiJ0ZXN0LWNsaWVudC1pZCIsImlzcyI6Imh0dHBzOi8vbm90LWEtdGVuYW50LmNvbS8ifQ.LrVdUAUzsADeOz2TBt4rsiQW93knty1SVEp9eYG48SE", ValidationOptions{})
+		assert.ErrorContains(t, err, "\"sub\" not satisfied: required claim not found")
 	})
 
 	t.Run("verifies sub is valid", func(t *testing.T) {
@@ -275,6 +291,21 @@ func TestIDTokenValidation(t *testing.T) {
 
 		err = validator.Validate(token, ValidationOptions{})
 		assert.ErrorContains(t, err, "sub claim must be a string present in the ID token")
+	})
+
+	t.Run("verifies aud exists", func(t *testing.T) {
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
+		assert.NoError(t, err)
+
+		args := defaultJWTArgs
+		args.clientSecret = jwtClientSecret
+		args.aud = nil
+
+		token, _, err := givenAJWT(t, args)
+		assert.NoError(t, err)
+
+		err = validator.Validate(token, ValidationOptions{})
+		assert.ErrorContains(t, err, "\"aud\" not satisfied: required claim not found")
 	})
 
 	t.Run("verifies aud is valid", func(t *testing.T) {
@@ -398,8 +429,10 @@ func TestIDTokenValidation(t *testing.T) {
 		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
 		assert.NoError(t, err)
 
+		// Test when value doesn't exist
 		args := defaultJWTArgs
 		args.clientSecret = jwtClientSecret
+		args.payload = map[string]interface{}{}
 
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
@@ -407,6 +440,7 @@ func TestIDTokenValidation(t *testing.T) {
 		err = validator.Validate(token, ValidationOptions{MaxAge: 200 * time.Second})
 		assert.ErrorContains(t, err, "auth_time claim must be a number present in the ID token")
 
+		// Test invalid type
 		args.payload = map[string]interface{}{
 			"auth_time": "test-value",
 		}

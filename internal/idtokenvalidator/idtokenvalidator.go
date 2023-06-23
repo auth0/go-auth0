@@ -166,13 +166,18 @@ func (i *IDTokenValidator) Validate(idToken string, optional ValidationOptions) 
 		return fmt.Errorf("unexpected signature algorithm; found \"%s\" but expected \"%s\"", headers.Algorithm(), i.alg)
 	}
 
+	// These options run in the order specified, so changing the order may change the errors returned.
+	// Our own validator func should always be ran last.
 	keyOpts := []jwt.ParseOption{
 		jwt.WithValidate(true),
 		jwt.WithAcceptableSkew(i.clockTolerance),
+		jwt.WithRequiredClaim("aud"),
+		jwt.WithRequiredClaim("sub"),
+		jwt.WithRequiredClaim("iss"),
+		jwt.WithRequiredClaim("iat"),
 		jwt.WithAudience(i.audience),
 		jwt.WithIssuer(i.issuer),
 		jwt.WithValidator(validator),
-		jwt.WithRequiredClaim("iat"),
 	}
 
 	if i.alg == jwa.HS256 {
