@@ -115,17 +115,17 @@ type Authentication struct {
 	OAuth        *OAuth
 	Passwordless *Passwordless
 
-	auth0ClientInfo   *client.Auth0ClientInfo
-	basePath          string
-	common            manager
-	clientID          string
-	clientSecret      string
-	clockTolerance    time.Duration
-	debug             bool
-	http              *http.Client
-	idTokenSigningAlg string
-	idTokenValidator  idtokenvalidator.IDTokenValidator
-	url               *url.URL
+	auth0ClientInfo       *client.Auth0ClientInfo
+	basePath              string
+	common                manager
+	clientID              string
+	clientSecret          string
+	idTokenClockTolerance time.Duration
+	debug                 bool
+	http                  *http.Client
+	idTokenSigningAlg     string
+	idTokenValidator      *idtokenvalidator.IDTokenValidator
+	url                   *url.URL
 }
 
 type manager struct {
@@ -170,8 +170,8 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 		validatorOpts = append(validatorOpts, idtokenvalidator.WithHTTPClient(a.http))
 	}
 
-	if a.clockTolerance.Seconds() != 0 {
-		validatorOpts = append(validatorOpts, idtokenvalidator.WithClockTolerance(a.clockTolerance))
+	if a.idTokenClockTolerance.Seconds() != 0 {
+		validatorOpts = append(validatorOpts, idtokenvalidator.WithClockTolerance(a.idTokenClockTolerance))
 	}
 
 	validator, err := idtokenvalidator.New(
@@ -186,7 +186,7 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 	if err != nil {
 		return nil, err
 	}
-	a.idTokenValidator = *validator
+	a.idTokenValidator = validator
 
 	return a, nil
 }

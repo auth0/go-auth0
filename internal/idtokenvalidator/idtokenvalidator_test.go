@@ -17,7 +17,7 @@ import (
 )
 
 var (
-	jwtDomain       = "ewanharris.eu.auth0.com"
+	jwtDomain       = "not-a-tenant.com"
 	jwtURL          = "https://" + jwtDomain + "/"
 	jwtClientID     = "test-client-id"
 	jwtClientSecret = "test-client-secret"
@@ -73,7 +73,7 @@ func TestIDTokenValidation(t *testing.T) {
 		assert.ErrorContains(t, err, "Unsupported algorithm")
 	})
 
-	t.Run("validates a token sign by a secret", func(t *testing.T) {
+	t.Run("validates a token signed by a secret", func(t *testing.T) {
 		args := defaultJWTArgs
 		args.clientSecret = jwtClientSecret
 
@@ -83,11 +83,11 @@ func TestIDTokenValidation(t *testing.T) {
 		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{})
+		err = validator.Validate(token, ValidationOptions{})
 		assert.NoError(t, err)
 	})
 
-	t.Run("validates a token sign by a private key", func(t *testing.T) {
+	t.Run("validates a token signed by a private key", func(t *testing.T) {
 		args := defaultJWTArgs
 		args.privateKey = jwtPrivateKey
 		args.publicKey = jwtPublicKey
@@ -101,21 +101,25 @@ func TestIDTokenValidation(t *testing.T) {
 		validator, err := New(context.Background(), URL.Host, jwtClientID, jwtClientSecret, "RS256", WithHTTPClient(server.Client()))
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{})
+		err = validator.Validate(token, ValidationOptions{})
 		assert.NoError(t, err)
 	})
 
-	t.Run("validates the signingalg provided is the one used", func(t *testing.T) {
+	t.Run("validates the signing alg provided is the one used", func(t *testing.T) {
 		args := defaultJWTArgs
-		args.clientSecret = jwtClientSecret
+		args.privateKey = jwtPrivateKey
+		args.publicKey = jwtPublicKey
 
-		token, _, err := givenAJWT(t, args)
+		token, server, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		validator, err := New(context.Background(), jwtDomain, jwtClientSecret, jwtClientID, "RS256")
+		URL, err := url.Parse(server.URL)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{})
+		validator, err := New(context.Background(), URL.Host, jwtClientID, jwtClientSecret, "HS256", WithHTTPClient(server.Client()))
+		assert.NoError(t, err)
+
+		err = validator.Validate(token, ValidationOptions{})
 		assert.ErrorContains(t, err, "unexpected signature algorithm; found")
 	})
 
@@ -133,10 +137,10 @@ func TestIDTokenValidation(t *testing.T) {
 		jwt, err := jwt.Sign(token, jwt.WithKey(jwa.HS512, []byte(jwtClientSecret)))
 		assert.NoError(t, err)
 
-		validator, err := New(context.Background(), jwtDomain, jwtClientSecret, jwtClientID, "RS256")
+		validator, err := New(context.Background(), jwtDomain, jwtClientSecret, jwtClientID, "HS256")
 		assert.NoError(t, err)
 
-		err = validator.Validate(string(jwt), OptionalVerification{})
+		err = validator.Validate(string(jwt), ValidationOptions{})
 		assert.ErrorContains(t, err, "signature algorithm \"HS512\" is not supported")
 	})
 
@@ -151,7 +155,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{})
+		err = validator.Validate(token, ValidationOptions{})
 		assert.ErrorContains(t, err, "azp claim must be a string present in the ID token")
 	})
 
@@ -169,7 +173,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{})
+		err = validator.Validate(token, ValidationOptions{})
 		assert.ErrorContains(t, err, "azp claim mismatch in the ID token")
 	})
 
@@ -187,7 +191,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{})
+		err = validator.Validate(token, ValidationOptions{})
 		assert.NoError(t, err)
 	})
 
@@ -204,7 +208,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{Nonce: "test-nonce"})
+		err = validator.Validate(token, ValidationOptions{Nonce: "test-nonce"})
 		assert.NoError(t, err)
 	})
 
@@ -218,7 +222,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{Nonce: "test-nonce"})
+		err = validator.Validate(token, ValidationOptions{Nonce: "test-nonce"})
 		assert.ErrorContains(t, err, "nonce claim must be a string present in the ID token")
 	})
 
@@ -235,7 +239,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{Nonce: "test-nonce"})
+		err = validator.Validate(token, ValidationOptions{Nonce: "test-nonce"})
 		assert.ErrorContains(t, err, "nonce claim value mismatch in the ID token;")
 	})
 
@@ -252,7 +256,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{})
+		err = validator.Validate(token, ValidationOptions{})
 		assert.ErrorContains(t, err, "\"iss\" not satisfied:")
 	})
 
@@ -269,7 +273,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{})
+		err = validator.Validate(token, ValidationOptions{})
 		assert.ErrorContains(t, err, "sub claim must be a string present in the ID token")
 	})
 
@@ -284,11 +288,11 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{})
+		err = validator.Validate(token, ValidationOptions{})
 		assert.ErrorContains(t, err, "\"aud\" not satisfied")
 	})
 
-	t.Run("allows clock skew on at", func(t *testing.T) {
+	t.Run("allows clock skew on iat", func(t *testing.T) {
 		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256", WithClockTolerance(10*time.Second))
 		assert.NoError(t, err)
 
@@ -301,7 +305,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{})
+		err = validator.Validate(token, ValidationOptions{})
 		assert.NoError(t, err)
 	})
 
@@ -318,7 +322,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{})
+		err = validator.Validate(token, ValidationOptions{})
 		assert.ErrorContains(t, err, "\"exp\" not satisfied")
 	})
 
@@ -335,7 +339,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{})
+		err = validator.Validate(token, ValidationOptions{})
 		assert.NoError(t, err)
 	})
 
@@ -352,7 +356,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{MaxAge: 200 * time.Second})
+		err = validator.Validate(token, ValidationOptions{MaxAge: 200 * time.Second})
 		assert.NoError(t, err)
 	})
 
@@ -369,7 +373,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{MaxAge: 200 * time.Second})
+		err = validator.Validate(token, ValidationOptions{MaxAge: 200 * time.Second})
 		assert.ErrorContains(t, err, "auth_time claim in the ID token indicates that too much time has passed since")
 	})
 
@@ -386,7 +390,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{MaxAge: 200 * time.Second})
+		err = validator.Validate(token, ValidationOptions{MaxAge: 200 * time.Second})
 		assert.NoError(t, err)
 	})
 
@@ -400,7 +404,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{MaxAge: 200 * time.Second})
+		err = validator.Validate(token, ValidationOptions{MaxAge: 200 * time.Second})
 		assert.ErrorContains(t, err, "auth_time claim must be a number present in the ID token")
 
 		args.payload = map[string]interface{}{
@@ -409,7 +413,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err = givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{MaxAge: 200 * time.Second})
+		err = validator.Validate(token, ValidationOptions{MaxAge: 200 * time.Second})
 		assert.ErrorContains(t, err, "auth_time claim must be a number present in the ID token")
 	})
 
@@ -426,7 +430,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{Organization: "12345"})
+		err = validator.Validate(token, ValidationOptions{Organization: "12345"})
 		assert.NoError(t, err)
 	})
 
@@ -441,7 +445,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{Organization: "12345"})
+		err = validator.Validate(token, ValidationOptions{Organization: "12345"})
 		assert.ErrorContains(t, err, "org_id claim must be a string present in the ID token")
 	})
 
@@ -458,7 +462,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, OptionalVerification{Organization: "12345"})
+		err = validator.Validate(token, ValidationOptions{Organization: "12345"})
 		assert.ErrorContains(t, err, "org_id claim value mismatch in the ID token")
 	})
 }
@@ -537,8 +541,8 @@ func configureSigning(t *testing.T, args jwtArgs) (jwa.SignatureAlgorithm, jwk.K
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		fmt.Fprintf(w, `{"keys": [%s] }`, b)
 		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, `{"keys": [%s] }`, b)
 	})
 	s := httptest.NewTLSServer(h)
 

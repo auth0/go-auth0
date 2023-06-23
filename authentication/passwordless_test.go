@@ -32,7 +32,7 @@ func TestLoginWithEmail(t *testing.T) {
 		Email:    "test-email@example.com",
 		Scope:    "openid profile email offline_access",
 		Audience: "https://api.example.com",
-	}, oauth.IDTokenValidationOptionalVerification{})
+	}, oauth.IDTokenValidationOptions{})
 
 	assert.NoError(t, err)
 	assert.NotEmpty(t, token.AccessToken)
@@ -59,7 +59,7 @@ func TestLoginWithSMS(t *testing.T) {
 		Code:        "123456",
 		Scope:       "openid profile email offline_access",
 		Audience:    "https://api.example.com",
-	}, oauth.IDTokenValidationOptionalVerification{})
+	}, oauth.IDTokenValidationOptions{})
 
 	assert.NoError(t, err)
 	assert.NotEmpty(t, token.AccessToken)
@@ -79,7 +79,7 @@ func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 			Email:    "test-email@example.com",
 			Scope:    "openid profile email offline_access",
 			Audience: "https://api.example.com",
-		}, oauth.IDTokenValidationOptionalVerification{Organization: "right-org"})
+		}, oauth.IDTokenValidationOptions{Organization: "right-org"})
 
 		assert.ErrorContains(t, err, "org_id claim value mismatch in the ID token")
 	})
@@ -96,7 +96,7 @@ func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 			Email:    "test-email@example.com",
 			Scope:    "openid profile email offline_access",
 			Audience: "https://api.example.com",
-		}, oauth.IDTokenValidationOptionalVerification{Nonce: "test-nonce"})
+		}, oauth.IDTokenValidationOptions{Nonce: "test-nonce"})
 
 		assert.ErrorContains(t, err, "nonce claim value mismatch in the ID token; expected")
 	})
@@ -113,7 +113,7 @@ func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 			Email:    "test-email@example.com",
 			Scope:    "openid profile email offline_access",
 			Audience: "https://api.example.com",
-		}, oauth.IDTokenValidationOptionalVerification{MaxAge: 100 * time.Second})
+		}, oauth.IDTokenValidationOptions{MaxAge: 100 * time.Second})
 
 		assert.ErrorContains(t, err, "auth_time claim in the ID token indicates that too much time has passed")
 	})

@@ -14,8 +14,8 @@ import (
 	"github.com/lestrrat-go/jwx/v2/jwt"
 )
 
-// OptionalVerification allows validating optional claims that might not always be in the ID token.
-type OptionalVerification struct {
+// ValidationOptions allows validating optional claims that might not always be in the ID token.
+type ValidationOptions struct {
 	MaxAge       time.Duration
 	Nonce        string
 	Organization string
@@ -29,7 +29,7 @@ type IDTokenValidator struct {
 	clockTolerance time.Duration
 	httpClient     *http.Client
 	issuer         string
-	jwks           jwk.Cache
+	jwks           *jwk.Cache
 	jwksURL        string
 }
 
@@ -64,7 +64,7 @@ func New(
 
 	if alg == jwa.RS256 {
 		i.jwksURL = i.issuer + ".well-known/jwks.json"
-		i.jwks = *jwk.NewCache(ctx)
+		i.jwks = jwk.NewCache(ctx)
 		registerOpts := []jwk.RegisterOption{}
 		if i.httpClient != nil {
 			registerOpts = append(registerOpts, jwk.WithHTTPClient(i.httpClient))
@@ -85,7 +85,7 @@ func New(
 }
 
 // Validate validates the provided ID token against the values provided during the IDTokenValidator creation.
-func (i *IDTokenValidator) Validate(idToken string, optional OptionalVerification) error {
+func (i *IDTokenValidator) Validate(idToken string, optional ValidationOptions) error {
 	validator := jwt.ValidatorFunc(func(_ context.Context, t jwt.Token) jwt.ValidationError {
 		if t.Subject() == "" {
 			return jwt.NewValidationError(errors.New("sub claim must be a string present in the ID token"))
@@ -159,7 +159,7 @@ func (i *IDTokenValidator) Validate(idToken string, optional OptionalVerificatio
 	headers := decodedToken.Signatures()[0].ProtectedHeaders()
 
 	if headers.Algorithm() != jwa.HS256 && headers.Algorithm() != jwa.RS256 {
-		return fmt.Errorf("signature algorithm \"%s\" is not supported. Expected the ID token to be sign with \"HS256\" or \"RS256\"", headers.Algorithm())
+		return fmt.Errorf("signature algorithm \"%s\" is not supported. Expected the ID token to be signed with \"HS256\" or \"RS256\"", headers.Algorithm())
 	}
 
 	if headers.Algorithm() != i.alg {
@@ -172,12 +172,13 @@ func (i *IDTokenValidator) Validate(idToken string, optional OptionalVerificatio
 		jwt.WithAudience(i.audience),
 		jwt.WithIssuer(i.issuer),
 		jwt.WithValidator(validator),
+		jwt.WithRequiredClaim("iat"),
 	}
 
 	if i.alg == jwa.HS256 {
 		keyOpts = append(keyOpts, jwt.WithKey(i.alg, i.clientSecret))
 	} else {
-		keyOpts = append(keyOpts, jwt.WithKeySet(jwk.NewCachedSet(&i.jwks, i.jwksURL)))
+		keyOpts = append(keyOpts, jwt.WithKeySet(jwk.NewCachedSet(i.jwks, i.jwksURL)))
 	}
 
 	_, err = jwt.Parse([]byte(idToken), keyOpts...)

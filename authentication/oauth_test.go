@@ -23,7 +23,7 @@ func TestOAuthLoginWithPassword(t *testing.T) {
 	tokenSet, err := authAPI.OAuth.LoginWithPassword(context.Background(), oauth.LoginWithPasswordRequest{
 		Username: "testuser",
 		Password: "testuser123",
-	}, oauth.IDTokenValidationOptionalVerification{})
+	}, oauth.IDTokenValidationOptions{})
 	assert.NoError(t, err)
 	assert.NotEmpty(t, tokenSet.AccessToken)
 	assert.Equal(t, "Bearer", tokenSet.TokenType)
@@ -33,7 +33,7 @@ func TestLoginWithAuthCode(t *testing.T) {
 	t.Run("Should require client_secret", func(t *testing.T) {
 		_, err := authAPI.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
 			Code: "my-code",
-		}, oauth.IDTokenValidationOptionalVerification{})
+		}, oauth.IDTokenValidationOptions{})
 
 		assert.Error(t, err, "client_secret is required but not provided")
 	})
@@ -46,7 +46,7 @@ func TestLoginWithAuthCode(t *testing.T) {
 				ClientSecret: clientSecret,
 			},
 			Code: "my-invalid-code",
-		}, oauth.IDTokenValidationOptionalVerification{})
+		}, oauth.IDTokenValidationOptions{})
 
 		assert.Error(t, err, "Invalid authorization code")
 	})
@@ -59,7 +59,7 @@ func TestLoginWithAuthCode(t *testing.T) {
 				ClientSecret: clientSecret,
 			},
 			Code: "my-code",
-		}, oauth.IDTokenValidationOptionalVerification{})
+		}, oauth.IDTokenValidationOptions{})
 
 		assert.NoError(t, err)
 		assert.NotEmpty(t, tokenSet.AccessToken)
@@ -74,7 +74,7 @@ func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
 		_, err := authAPI.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
 			Code:         "my-invalid-code",
 			CodeVerifier: "test-code-verifier",
-		}, oauth.IDTokenValidationOptionalVerification{})
+		}, oauth.IDTokenValidationOptions{})
 
 		assert.Error(t, err, "Invalid authorization code")
 	})
@@ -85,7 +85,7 @@ func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
 		_, err := authAPI.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
 			Code:         "test-code",
 			CodeVerifier: "test-invalid-code-verifier",
-		}, oauth.IDTokenValidationOptionalVerification{})
+		}, oauth.IDTokenValidationOptions{})
 
 		assert.Error(t, err, "Failed to verify code verifier")
 	})
@@ -96,7 +96,7 @@ func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
 		tokenSet, err := authAPI.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
 			Code:         "test-code",
 			CodeVerifier: "test-code-verifier",
-		}, oauth.IDTokenValidationOptionalVerification{})
+		}, oauth.IDTokenValidationOptions{})
 
 		assert.NoError(t, err)
 		assert.NotEmpty(t, tokenSet.AccessToken)
@@ -108,7 +108,7 @@ func TestLoginWithClientCredentials(t *testing.T) {
 	t.Run("Should require client_secret", func(t *testing.T) {
 		_, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
 			Audience: "test-audience",
-		}, oauth.IDTokenValidationOptionalVerification{})
+		}, oauth.IDTokenValidationOptions{})
 
 		assert.Error(t, err, "client_secret is required but not provided")
 	})
@@ -121,7 +121,7 @@ func TestLoginWithClientCredentials(t *testing.T) {
 				ClientSecret: clientSecret,
 			},
 			Audience: "test-audience",
-		}, oauth.IDTokenValidationOptionalVerification{})
+		}, oauth.IDTokenValidationOptions{})
 
 		assert.NoError(t, err)
 		assert.NotEmpty(t, tokenSet.AccessToken)
@@ -135,7 +135,7 @@ func TestRefreshToken(t *testing.T) {
 
 		tokenSet, err := authAPI.OAuth.RefreshToken(context.Background(), oauth.RefreshTokenRequest{
 			RefreshToken: "test-refresh-token",
-		}, oauth.IDTokenValidationOptionalVerification{})
+		}, oauth.IDTokenValidationOptions{})
 
 		assert.NoError(t, err)
 		assert.NotEmpty(t, tokenSet.AccessToken)
@@ -150,7 +150,7 @@ func TestRefreshToken(t *testing.T) {
 		tokenSet, err := authAPI.OAuth.RefreshToken(context.Background(), oauth.RefreshTokenRequest{
 			RefreshToken: "test-refresh-token",
 			Scope:        "openid profile offline_access",
-		}, oauth.IDTokenValidationOptionalVerification{})
+		}, oauth.IDTokenValidationOptions{})
 
 		assert.NoError(t, err)
 		assert.NotEmpty(t, tokenSet.AccessToken)
@@ -182,7 +182,7 @@ func TestWithIDTokenVerification(t *testing.T) {
 
 		_, err = api.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
 			Code: "my-code",
-		}, oauth.IDTokenValidationOptionalVerification{Organization: "right-org"})
+		}, oauth.IDTokenValidationOptions{Organization: "right-org"})
 
 		assert.ErrorContains(t, err, "org_id claim value mismatch in the ID token")
 	})
@@ -196,7 +196,7 @@ func TestWithIDTokenVerification(t *testing.T) {
 
 		_, err = api.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
 			Code: "my-code",
-		}, oauth.IDTokenValidationOptionalVerification{Nonce: "test-nonce"})
+		}, oauth.IDTokenValidationOptions{Nonce: "test-nonce"})
 
 		assert.ErrorContains(t, err, "nonce claim value mismatch in the ID token; expected")
 	})
@@ -210,7 +210,7 @@ func TestWithIDTokenVerification(t *testing.T) {
 
 		_, err = api.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
 			Code: "my-code",
-		}, oauth.IDTokenValidationOptionalVerification{MaxAge: 100 * time.Second})
+		}, oauth.IDTokenValidationOptions{MaxAge: 100 * time.Second})
 
 		assert.ErrorContains(t, err, "auth_time claim in the ID token indicates that too much time has passed")
 	})

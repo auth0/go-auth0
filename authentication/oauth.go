@@ -14,13 +14,13 @@ type OAuth manager
 
 // LoginWithGrant allows logging in with an OAuth 2.0 grant. This should only be needed if a grant
 // type is not supported byt this SDK.
-func (o *OAuth) LoginWithGrant(ctx context.Context, grantType string, body url.Values, optionalVerification oauth.IDTokenValidationOptionalVerification, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+func (o *OAuth) LoginWithGrant(ctx context.Context, grantType string, body url.Values, optionalVerification oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	body.Add("grant_type", grantType)
 
 	err = o.authentication.Request(ctx, "POST", o.authentication.URI("oauth", "token"), body, &t, opts...)
 
 	if t != nil && t.IDToken != "" {
-		err = o.authentication.idTokenValidator.Validate(t.IDToken, idtokenvalidator.OptionalVerification{
+		err = o.authentication.idTokenValidator.Validate(t.IDToken, idtokenvalidator.ValidationOptions{
 			MaxAge:       optionalVerification.MaxAge,
 			Nonce:        optionalVerification.Nonce,
 			Organization: optionalVerification.Organization,
@@ -46,7 +46,7 @@ func (o *OAuth) LoginWithGrant(ctx context.Context, grantType string, body url.V
 // Use the `Header` RequestOption to set the `auth0-forwarded-for` header to an end-user's IP if you
 // you want brute force protection to work in server-side scenarios.
 // See https://auth0.com/docs/get-started/authentication-and-authorization-flow/avoid-common-issues-with-resource-owner-password-flow-and-attack-protection
-func (o *OAuth) LoginWithPassword(ctx context.Context, body oauth.LoginWithPasswordRequest, optionalVerification oauth.IDTokenValidationOptionalVerification, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+func (o *OAuth) LoginWithPassword(ctx context.Context, body oauth.LoginWithPasswordRequest, optionalVerification oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	grantType := "password"
 	data := url.Values{
 		"username": []string{body.Username},
@@ -82,7 +82,7 @@ func (o *OAuth) LoginWithPassword(ctx context.Context, body oauth.LoginWithPassw
 // Authorization Code for a token.
 //
 // See: https://auth0.com/docs/api/authentication?http#authorization-code-flow44
-func (o *OAuth) LoginWithAuthCode(ctx context.Context, body oauth.LoginWithAuthCodeRequest, optionalVerification oauth.IDTokenValidationOptionalVerification, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+func (o *OAuth) LoginWithAuthCode(ctx context.Context, body oauth.LoginWithAuthCodeRequest, optionalVerification oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	data := url.Values{
 		"code": []string{body.Code},
 	}
@@ -108,7 +108,7 @@ func (o *OAuth) LoginWithAuthCode(ctx context.Context, body oauth.LoginWithAuthC
 // that use client authentication.
 //
 // See: https://auth0.com/docs/api/authentication?http#authorization-code-flow-with-pkce45
-func (o *OAuth) LoginWithAuthCodeWithPKCE(ctx context.Context, body oauth.LoginWithAuthCodeWithPKCERequest, optionalVerification oauth.IDTokenValidationOptionalVerification, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+func (o *OAuth) LoginWithAuthCodeWithPKCE(ctx context.Context, body oauth.LoginWithAuthCodeWithPKCERequest, optionalVerification oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	data := url.Values{
 		"code":          []string{body.Code},
 		"code_verifier": []string{body.CodeVerifier},
@@ -134,7 +134,7 @@ func (o *OAuth) LoginWithAuthCodeWithPKCE(ctx context.Context, body oauth.LoginW
 // a Client Secret).
 //
 // See: https://auth0.com/docs/api/authentication?http#client-credentials-flow
-func (o *OAuth) LoginWithClientCredentials(ctx context.Context, body oauth.LoginWithClientCredentialsRequest, optionalVerification oauth.IDTokenValidationOptionalVerification, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+func (o *OAuth) LoginWithClientCredentials(ctx context.Context, body oauth.LoginWithClientCredentialsRequest, optionalVerification oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	data := url.Values{
 		"audience": []string{body.Audience},
 	}
@@ -152,7 +152,7 @@ func (o *OAuth) LoginWithClientCredentials(ctx context.Context, body oauth.Login
 // RefreshToken is used to refresh and access token using the refresh token you got during authorization.
 //
 // See: https://auth0.com/docs/api/authentication?http#refresh-token
-func (o *OAuth) RefreshToken(ctx context.Context, body oauth.RefreshTokenRequest, optionalVerification oauth.IDTokenValidationOptionalVerification, opts ...RequestOption) (t *oauth.TokenSet, err error) {
+func (o *OAuth) RefreshToken(ctx context.Context, body oauth.RefreshTokenRequest, optionalVerification oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	data := url.Values{
 		"refresh_token": []string{body.RefreshToken},
 	}

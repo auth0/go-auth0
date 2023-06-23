@@ -99,8 +99,8 @@ type RevokeRefreshTokenRequest struct {
 	ExtraParameters map[string]string `json:"-"`
 }
 
-// IDTokenValidationOptionalVerification allows validating optional claims that might not always be in the ID token.
-type IDTokenValidationOptionalVerification struct {
+// IDTokenValidationOptions allows validating optional claims that might not always be in the ID token.
+type IDTokenValidationOptions struct {
 	MaxAge       time.Duration
 	Nonce        string
 	Organization string
