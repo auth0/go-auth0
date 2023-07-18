@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"log"
 	"math"
-	"math/rand"
+	"crypto/rand"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
