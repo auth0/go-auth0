@@ -220,12 +220,12 @@ Some APIs have been renamed or removed in order to ensure consistency in the SDK
 |-----------|--------------|--------------|
 |`Organization.DeleteMember`|Renamed to align with other APIs|`Organization.DeleteMembers`|
 |`ResourceServer.Stream`|Removed to allow potential for consistent pagination functionality across the SDK| Implement pagination manually similar to other APIs|
-|`ConnectionStrategyDiscord`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
-|`ConnectionStrategyImgur`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
-|`ConnectionStrategySpotify`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
-|`ConnectionStrategyFigma`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
-|`ConnectionStrategySlack`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
 |`ConnectionStrategyDigitalOcean`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
+|`ConnectionStrategyDiscord`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
+|`ConnectionStrategyFigma`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
+|`ConnectionStrategyImgur`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
+|`ConnectionStrategySlack`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
+|`ConnectionStrategySpotify`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
 |`ConnectionStrategyTwitch`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
 |`ConnectionStrategyVimeo`|No longer supported as a strategy type|Use the `ConnectionStrategyOAuth2` strategy|
 
