@@ -262,3 +262,123 @@ func TestAuth0Client(t *testing.T) {
 		assert.NoError(t, err)
 	})
 }
+
+func TestRetries(t *testing.T) {
+	t.Run("Default retry logic", func(t *testing.T) {
+		start := time.Now()
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i == 1 {
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewTLSServer(h)
+		defer s.Close()
+
+		a, err := New(
+			context.Background(),
+			s.URL,
+			WithIDTokenSigningAlg("HS256"),
+			WithClient(s.Client()),
+		)
+		assert.NoError(t, err)
+
+		_, err = a.UserInfo(context.Background(), "123")
+		assert.NoError(t, err)
+
+		elapsed := time.Since(start).Milliseconds()
+		assert.Greater(t, elapsed, int64(250))
+		assert.Equal(t, 2, i)
+	})
+
+	t.Run("Custom retry logic", func(t *testing.T) {
+		start := time.Now()
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i < 2 {
+				w.WriteHeader(http.StatusBadGateway)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewTLSServer(h)
+		defer s.Close()
+
+		a, err := New(
+			context.Background(),
+			s.URL,
+			WithIDTokenSigningAlg("HS256"),
+			WithClient(s.Client()),
+			WithRetries(1, []int{http.StatusBadGateway}),
+		)
+		assert.NoError(t, err)
+
+		_, err = a.UserInfo(context.Background(), "123")
+		assert.NoError(t, err)
+		assert.Equal(t, 2, i)
+
+		elapsed := time.Since(start)
+		assert.Greater(t, elapsed, 250*time.Millisecond)
+		assert.NoError(t, err)
+	})
+
+	t.Run("Disabling retries", func(t *testing.T) {
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			w.WriteHeader(http.StatusBadGateway)
+		})
+
+		s := httptest.NewTLSServer(h)
+		defer s.Close()
+
+		a, err := New(
+			context.Background(),
+			s.URL,
+			WithIDTokenSigningAlg("HS256"),
+			WithClient(s.Client()),
+			WithNoRetries(),
+		)
+		assert.NoError(t, err)
+
+		_, err = a.UserInfo(context.Background(), "123")
+		assert.Equal(t, http.StatusBadGateway, err.(*authenticationError).StatusCode)
+		assert.Equal(t, 1, i)
+	})
+
+	t.Run("Retry and context", func(t *testing.T) {
+		i := 0
+		ctx, cancel := context.WithCancel(context.Background())
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			cancel()
+			w.WriteHeader(http.StatusBadGateway)
+		})
+
+		s := httptest.NewTLSServer(h)
+		defer s.Close()
+
+		a, err := New(
+			context.Background(),
+			s.URL,
+			WithIDTokenSigningAlg("HS256"),
+			WithClient(s.Client()),
+			WithRetries(3, []int{http.StatusBadGateway}),
+		)
+		assert.NoError(t, err)
+
+		_, err = a.UserInfo(ctx, "123")
+		assert.ErrorIs(t, err, context.Canceled)
+		assert.Equal(t, 1, i) // 1 request should have been made before the context times out
+	})
+}
