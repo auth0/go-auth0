@@ -291,8 +291,8 @@ func WithAuth0ClientInfo(auth0ClientInfo *Auth0ClientInfo) Option {
 	}
 }
 
-// Wrap the base client with transports that enable OAuth2 authentication.
-func Wrap(base *http.Client, tokenSource oauth2.TokenSource, options ...Option) *http.Client {
+// WrapWithTokenSource wraps the base client with transports that enable OAuth2 authentication.
+func WrapWithTokenSource(base *http.Client, tokenSource oauth2.TokenSource, options ...Option) *http.Client {
 	if base == nil {
 		base = http.DefaultClient
 	}
@@ -303,10 +303,20 @@ func Wrap(base *http.Client, tokenSource oauth2.TokenSource, options ...Option) 
 			Source: tokenSource,
 		},
 	}
-	for _, option := range options {
-		option(client)
+
+	return Wrap(client, options...)
+}
+
+// Wrap the base client with just the internal transports.
+func Wrap(base *http.Client, options ...Option) *http.Client {
+	if base == nil {
+		base = http.DefaultClient
 	}
-	return client
+
+	for _, option := range options {
+		option(base)
+	}
+	return base
 }
 
 // OAuth2ClientCredentials sets the oauth2 client credentials.
