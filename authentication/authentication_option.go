@@ -74,3 +74,20 @@ func WithAuth0ClientEnvEntry(key string, value string) Option {
 		}
 	}
 }
+
+// WithRetries configures the management client to only retry under the conditions provided.
+func WithRetries(maxRetries int, statuses []int) Option {
+	return func(a *Authentication) {
+		a.retryStrategy = client.RetryOptions{
+			MaxRetries: maxRetries,
+			Statuses:   statuses,
+		}
+	}
+}
+
+// WithNoRetries configures the management client to only retry under the conditions provided.
+func WithNoRetries() Option {
+	return func(a *Authentication) {
+		a.retryStrategy = client.RetryOptions{}
+	}
+}

@@ -126,6 +126,7 @@ type Authentication struct {
 	idTokenSigningAlg     string
 	idTokenValidator      *idtokenvalidator.IDTokenValidator
 	url                   *url.URL
+	retryStrategy         client.RetryOptions
 }
 
 type manager struct {
@@ -153,6 +154,7 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 		http:              http.DefaultClient,
 		auth0ClientInfo:   client.DefaultAuth0ClientInfo,
 		idTokenSigningAlg: "RS256",
+		retryStrategy:     client.DefaultRetryOptions,
 	}
 
 	for _, option := range options {
@@ -163,6 +165,7 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 		a.http,
 		client.WithDebug(a.debug),
 		client.WithAuth0ClientInfo(a.auth0ClientInfo),
+		client.WithRetries(a.retryStrategy),
 	)
 
 	a.common.authentication = a
