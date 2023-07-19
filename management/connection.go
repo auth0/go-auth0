@@ -67,24 +67,8 @@ const (
 	ConnectionStrategyBox = "box"
 	// ConnectionStrategyWordpress constant.
 	ConnectionStrategyWordpress = "wordpress"
-	// ConnectionStrategyDiscord constant.
-	ConnectionStrategyDiscord = "discord"
-	// ConnectionStrategyImgur constant.
-	ConnectionStrategyImgur = "imgur"
-	// ConnectionStrategySpotify constant.
-	ConnectionStrategySpotify = "spotify"
 	// ConnectionStrategyShopify constant.
 	ConnectionStrategyShopify = "shopify"
-	// ConnectionStrategyFigma constant.
-	ConnectionStrategyFigma = "figma"
-	// ConnectionStrategySlack constant.
-	ConnectionStrategySlack = "slack-oauth-2"
-	// ConnectionStrategyDigitalOcean constant.
-	ConnectionStrategyDigitalOcean = "digitalocean"
-	// ConnectionStrategyTwitch constant.
-	ConnectionStrategyTwitch = "twitch"
-	// ConnectionStrategyVimeo constant.
-	ConnectionStrategyVimeo = "vimeo"
 	// ConnectionStrategyCustom constant.
 	ConnectionStrategyCustom = "custom"
 	// ConnectionStrategyPingFederate constant.
@@ -220,15 +204,7 @@ func (c *Connection) UnmarshalJSON(b []byte) error {
 			ConnectionStrategyYahoo,
 			ConnectionStrategyBox,
 			ConnectionStrategyWordpress,
-			ConnectionStrategyDiscord,
-			ConnectionStrategyImgur,
-			ConnectionStrategySpotify,
 			ConnectionStrategyShopify,
-			ConnectionStrategyFigma,
-			ConnectionStrategySlack,
-			ConnectionStrategyDigitalOcean,
-			ConnectionStrategyTwitch,
-			ConnectionStrategyVimeo,
 			ConnectionStrategyCustom:
 			v = &ConnectionOptionsOAuth2{}
 		case ConnectionStrategyAD:
