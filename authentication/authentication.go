@@ -159,6 +159,12 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 		option(a)
 	}
 
+	a.http = client.Wrap(
+		a.http,
+		client.WithDebug(a.debug),
+		client.WithAuth0ClientInfo(a.auth0ClientInfo),
+	)
+
 	a.common.authentication = a
 	a.Database = (*Database)(&a.common)
 	a.OAuth = (*OAuth)(&a.common)

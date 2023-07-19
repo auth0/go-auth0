@@ -32,7 +32,7 @@ func TestRetries(t *testing.T) {
 		s := httptest.NewServer(h)
 		defer s.Close()
 
-		c := Wrap(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
 		r, err := c.Get(s.URL)
 		assert.NoError(t, err)
 
@@ -59,7 +59,7 @@ func TestRetries(t *testing.T) {
 		defer s.Close()
 
 		rc := RetryOptions{MaxRetries: 5, Statuses: []int{http.StatusGatewayTimeout}}
-		c := Wrap(s.Client(), StaticToken(""), WithRetries(rc))
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(rc))
 		r, err := c.Get(s.URL)
 
 		assert.Equal(t, http.StatusOK, r.StatusCode)
@@ -81,7 +81,7 @@ func TestRetries(t *testing.T) {
 		s := httptest.NewServer(h)
 		defer s.Close()
 
-		c := Wrap(s.Client(), StaticToken(""), WithRetries(RetryOptions{}))
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(RetryOptions{}))
 		r, err := c.Get(s.URL)
 
 		assert.Equal(t, http.StatusGatewayTimeout, r.StatusCode)
@@ -95,7 +95,7 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {})
 
 		s := httptest.NewUnstartedServer(h)
-		c := Wrap(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
 		_, err := c.Get(s.URL)
 
 		assert.Error(t, err)
@@ -113,7 +113,7 @@ func TestRetries(t *testing.T) {
 		})
 
 		s := httptest.NewTLSServer(h)
-		c := Wrap(http.DefaultClient, StaticToken(""), WithRetries(DefaultRetryOptions))
+		c := WrapWithTokenSource(http.DefaultClient, StaticToken(""), WithRetries(DefaultRetryOptions))
 		_, err := c.Get(s.URL)
 
 		elapsed := time.Since(start).Milliseconds()
@@ -142,7 +142,7 @@ func TestRetries(t *testing.T) {
 		s := httptest.NewServer(h)
 		defer s.Close()
 
-		c := Wrap(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
 		r, err := c.Get(s.URL)
 		assert.NoError(t, err)
 
@@ -174,7 +174,7 @@ func TestRetries(t *testing.T) {
 		s := httptest.NewServer(h)
 		defer s.Close()
 
-		c := Wrap(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
 		r, err := c.Get(s.URL)
 		assert.NoError(t, err)
 
@@ -198,7 +198,7 @@ func TestWrapUserAgent(t *testing.T) {
 	testServer := httptest.NewServer(testHandler)
 	defer testServer.Close()
 
-	httpClient := Wrap(testServer.Client(), StaticToken(""), WithUserAgent(UserAgent))
+	httpClient := WrapWithTokenSource(testServer.Client(), StaticToken(""), WithUserAgent(UserAgent))
 	_, err := httpClient.Get(testServer.URL)
 	assert.NoError(t, err)
 }
@@ -256,7 +256,7 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 			testServer.Close()
 		})
 
-		httpClient := Wrap(testServer.Client(), StaticToken(""), WithAuth0ClientInfo(DefaultAuth0ClientInfo))
+		httpClient := WrapWithTokenSource(testServer.Client(), StaticToken(""), WithAuth0ClientInfo(DefaultAuth0ClientInfo))
 		_, err := httpClient.Get(testServer.URL)
 		assert.NoError(t, err)
 	})
@@ -290,7 +290,7 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 				testServer.Close()
 			})
 
-			httpClient := Wrap(testServer.Client(), StaticToken(""), WithAuth0ClientInfo(&testCase.given))
+			httpClient := WrapWithTokenSource(testServer.Client(), StaticToken(""), WithAuth0ClientInfo(&testCase.given))
 			_, err := httpClient.Get(testServer.URL)
 			assert.NoError(t, err)
 		})

@@ -147,7 +147,7 @@ func New(domain string, options ...Option) (*Management, error) {
 		option(m)
 	}
 
-	m.http = client.Wrap(
+	m.http = client.WrapWithTokenSource(
 		m.http,
 		m.tokenSource,
 		client.WithDebug(m.debug),

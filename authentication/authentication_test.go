@@ -2,10 +2,14 @@ package authentication
 
 import (
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"log"
 	"net/http"
+	"net/http/httptest"
 	"net/url"
 	"os"
+	"runtime"
 	"testing"
 	"time"
 
@@ -13,6 +17,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/auth0/go-auth0/authentication/database"
+	"github.com/auth0/go-auth0/internal/client"
 )
 
 var (
@@ -144,4 +149,116 @@ func TestUserInfo(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "test-sub", user.Sub)
 	assert.Equal(t, "test-value", user.AdditionalClaims["unknown-param"])
+}
+
+func TestAuth0Client(t *testing.T) {
+	t.Run("Defaults to the default data", func(t *testing.T) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			header := r.Header.Get("Auth0-Client")
+			auth0ClientDecoded, err := base64.StdEncoding.DecodeString(header)
+			assert.NoError(t, err)
+
+			var auth0Client client.Auth0ClientInfo
+			err = json.Unmarshal(auth0ClientDecoded, &auth0Client)
+
+			assert.NoError(t, err)
+			assert.Equal(t, "go-auth0", auth0Client.Name)
+			assert.Equal(t, "latest", auth0Client.Version)
+			assert.Equal(t, runtime.Version(), auth0Client.Env["go"])
+		})
+		s := httptest.NewTLSServer(h)
+		t.Cleanup(func() {
+			s.Close()
+		})
+
+		a, err := New(
+			context.Background(),
+			s.URL,
+			WithClient(s.Client()),
+			WithIDTokenSigningAlg("HS256"),
+		)
+		assert.NoError(t, err)
+
+		_, err = a.UserInfo(context.Background(), "123")
+
+		assert.NoError(t, err)
+	})
+
+	t.Run("Allows disabling Auth0ClientInfo", func(t *testing.T) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			rawHeader := r.Header.Get("Auth0-Client")
+			assert.Empty(t, rawHeader)
+		})
+		s := httptest.NewTLSServer(h)
+		t.Cleanup(func() {
+			s.Close()
+		})
+
+		a, err := New(
+			context.Background(),
+			s.URL,
+			WithClient(s.Client()),
+			WithIDTokenSigningAlg("HS256"),
+			WithNoAuth0ClientInfo(),
+		)
+		assert.NoError(t, err)
+
+		_, err = a.UserInfo(context.Background(), "123")
+		assert.NoError(t, err)
+	})
+
+	t.Run("Allows passing extra env info", func(t *testing.T) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			header := r.Header.Get("Auth0-Client")
+			auth0ClientDecoded, err := base64.StdEncoding.DecodeString(header)
+			assert.NoError(t, err)
+
+			var auth0Client client.Auth0ClientInfo
+			err = json.Unmarshal(auth0ClientDecoded, &auth0Client)
+
+			assert.NoError(t, err)
+			assert.Equal(t, "go-auth0", auth0Client.Name)
+			assert.Equal(t, "latest", auth0Client.Version)
+			assert.Equal(t, runtime.Version(), auth0Client.Env["go"])
+			assert.Equal(t, "bar", auth0Client.Env["foo"])
+		})
+		s := httptest.NewTLSServer(h)
+		t.Cleanup(func() {
+			s.Close()
+		})
+
+		a, err := New(
+			context.Background(),
+			s.URL,
+			WithClient(s.Client()),
+			WithAuth0ClientEnvEntry("foo", "bar"),
+			WithIDTokenSigningAlg("HS256"),
+		)
+		assert.NoError(t, err)
+		_, err = a.UserInfo(context.Background(), "123")
+		assert.NoError(t, err)
+	})
+
+	t.Run("Handles when client info has been disabled", func(t *testing.T) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			header := r.Header.Get("Auth0-Client")
+			assert.Equal(t, "", header)
+		})
+		s := httptest.NewTLSServer(h)
+		t.Cleanup(func() {
+			s.Close()
+		})
+
+		a, err := New(
+			context.Background(),
+			s.URL,
+			WithClient(s.Client()),
+			WithNoAuth0ClientInfo(),
+			WithAuth0ClientEnvEntry("foo", "bar"),
+			WithIDTokenSigningAlg("HS256"),
+		)
+		assert.NoError(t, err)
+		_, err = a.UserInfo(context.Background(), "123")
+		assert.NoError(t, err)
+	})
 }
