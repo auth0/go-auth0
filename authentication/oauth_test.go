@@ -187,7 +187,7 @@ func TestWithIDTokenVerification(t *testing.T) {
 		assert.ErrorContains(t, err, "org_id claim value mismatch in the ID token")
 	})
 
-	t.Run("error for an invalid organization when using org_id", func(t *testing.T) {
+	t.Run("error for an invalid organization when using org_name", func(t *testing.T) {
 		extras := map[string]interface{}{
 			"org_name": "wrong-org",
 		}
