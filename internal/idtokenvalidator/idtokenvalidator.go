@@ -16,9 +16,9 @@ import (
 
 // ValidationOptions allows validating optional claims that might not always be in the ID token.
 type ValidationOptions struct {
-	MaxAge         time.Duration
-	Nonce          string
-	OrganizationID string
+	MaxAge       time.Duration
+	Nonce        string
+	Organization string
 }
 
 // IDTokenValidator is used to validate ID tokens retrieved from Auth0.
@@ -91,15 +91,26 @@ func (i *IDTokenValidator) Validate(idToken string, optional ValidationOptions) 
 			return jwt.NewValidationError(errors.New("sub claim must be a string present in the ID token"))
 		}
 
-		if optional.OrganizationID != "" {
-			orgID, exists := t.Get("org_id")
+		if optional.Organization != "" {
+			if strings.HasPrefix(optional.Organization, "org_") {
+				orgID, exists := t.Get("org_id")
 
-			if !exists {
-				return jwt.NewValidationError(errors.New("org_id claim must be a string present in the ID token"))
-			}
+				if !exists {
+					return jwt.NewValidationError(errors.New("org_id claim must be a string present in the ID token"))
+				}
 
-			if orgID != optional.OrganizationID {
-				return jwt.NewValidationError(fmt.Errorf("org_id claim value mismatch in the ID token; expected \"%s\", found \"%s\"", optional.OrganizationID, orgID))
+				if orgID != optional.Organization {
+					return jwt.NewValidationError(fmt.Errorf("org_id claim value mismatch in the ID token; expected \"%s\", found \"%s\"", optional.Organization, orgID))
+				}
+			} else {
+				orgName, exists := t.Get("org_name")
+
+				if !exists {
+					return jwt.NewValidationError(errors.New("org_name claim must be a string present in the ID token"))
+				}
+				if orgName != strings.ToLower(optional.Organization) {
+					return jwt.NewValidationError(fmt.Errorf("org_name claim value mismatch in the ID token; expected \"%s\", found \"%s\"", optional.Organization, orgName))
+				}
 			}
 		}
 

@@ -67,9 +67,9 @@ func TestLoginWithSMS(t *testing.T) {
 }
 
 func TestPasswordlessWithIDTokenVerification(t *testing.T) {
-	t.Run("error for an invalid organization", func(t *testing.T) {
+	t.Run("error for an invalid organization when using org_id", func(t *testing.T) {
 		extras := map[string]interface{}{
-			"org_id": "wrong-org",
+			"org_id": "org_124",
 		}
 		api, err := withIDToken(t, extras)
 		assert.NoError(t, err)
@@ -79,9 +79,26 @@ func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 			Email:    "test-email@example.com",
 			Scope:    "openid profile email offline_access",
 			Audience: "https://api.example.com",
-		}, oauth.IDTokenValidationOptions{OrganizationID: "right-org"})
+		}, oauth.IDTokenValidationOptions{Organization: "org_456"})
 
 		assert.ErrorContains(t, err, "org_id claim value mismatch in the ID token")
+	})
+
+	t.Run("error for an invalid organization when using org_name", func(t *testing.T) {
+		extras := map[string]interface{}{
+			"org_name": "wrong-org",
+		}
+		api, err := withIDToken(t, extras)
+		assert.NoError(t, err)
+
+		_, err = api.Passwordless.LoginWithEmail(context.Background(), passwordless.LoginWithEmailRequest{
+			Code:     "123456",
+			Email:    "test-email@example.com",
+			Scope:    "openid profile email offline_access",
+			Audience: "https://api.example.com",
+		}, oauth.IDTokenValidationOptions{Organization: "right-org"})
+
+		assert.ErrorContains(t, err, "org_name claim value mismatch in the ID token")
 	})
 
 	t.Run("error for an invalid nonce", func(t *testing.T) {

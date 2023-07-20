@@ -466,13 +466,13 @@ func TestIDTokenValidation(t *testing.T) {
 		args := defaultJWTArgs
 		args.clientSecret = jwtClientSecret
 		args.payload = map[string]interface{}{
-			"org_id": "12345",
+			"org_id": "org_12345",
 		}
 
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, ValidationOptions{OrganizationID: "12345"})
+		err = validator.Validate(token, ValidationOptions{Organization: "org_12345"})
 		assert.NoError(t, err)
 	})
 
@@ -487,7 +487,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, ValidationOptions{OrganizationID: "12345"})
+		err = validator.Validate(token, ValidationOptions{Organization: "org_12345"})
 		assert.ErrorContains(t, err, "org_id claim must be a string present in the ID token")
 	})
 
@@ -504,8 +504,74 @@ func TestIDTokenValidation(t *testing.T) {
 		token, _, err := givenAJWT(t, args)
 		assert.NoError(t, err)
 
-		err = validator.Validate(token, ValidationOptions{OrganizationID: "12345"})
+		err = validator.Validate(token, ValidationOptions{Organization: "org_12345"})
 		assert.ErrorContains(t, err, "org_id claim value mismatch in the ID token")
+	})
+
+	t.Run("passes if org_name is valid when organization passed", func(t *testing.T) {
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256", WithClockTolerance(100*time.Second))
+		assert.NoError(t, err)
+
+		args := defaultJWTArgs
+		args.clientSecret = jwtClientSecret
+		args.payload = map[string]interface{}{
+			"org_name": "my-org",
+		}
+
+		token, _, err := givenAJWT(t, args)
+		assert.NoError(t, err)
+
+		err = validator.Validate(token, ValidationOptions{Organization: "my-org"})
+		assert.NoError(t, err)
+	})
+
+	t.Run("verifies org_name exists when organization is passed", func(t *testing.T) {
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256", WithClockTolerance(100*time.Second))
+		assert.NoError(t, err)
+
+		args := defaultJWTArgs
+		args.clientSecret = jwtClientSecret
+		args.payload = map[string]interface{}{}
+
+		token, _, err := givenAJWT(t, args)
+		assert.NoError(t, err)
+
+		err = validator.Validate(token, ValidationOptions{Organization: "my-org"})
+		assert.ErrorContains(t, err, "org_name claim must be a string present in the ID token")
+	})
+
+	t.Run("verifies org_name matches when organization is passed", func(t *testing.T) {
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256", WithClockTolerance(100*time.Second))
+		assert.NoError(t, err)
+
+		args := defaultJWTArgs
+		args.clientSecret = jwtClientSecret
+		args.payload = map[string]interface{}{
+			"org_name": "invalid-value",
+		}
+
+		token, _, err := givenAJWT(t, args)
+		assert.NoError(t, err)
+
+		err = validator.Validate(token, ValidationOptions{Organization: "my-org"})
+		assert.ErrorContains(t, err, "org_name claim value mismatch in the ID token")
+	})
+
+	t.Run("verifies org_name matches when organization is passed, case insensitive", func(t *testing.T) {
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256", WithClockTolerance(100*time.Second))
+		assert.NoError(t, err)
+
+		args := defaultJWTArgs
+		args.clientSecret = jwtClientSecret
+		args.payload = map[string]interface{}{
+			"org_name": "my-org",
+		}
+
+		token, _, err := givenAJWT(t, args)
+		assert.NoError(t, err)
+
+		err = validator.Validate(token, ValidationOptions{Organization: "my-Org"})
+		assert.NoError(t, err)
 	})
 }
 

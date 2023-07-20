@@ -21,9 +21,9 @@ func (o *OAuth) LoginWithGrant(ctx context.Context, grantType string, body url.V
 
 	if t != nil && t.IDToken != "" {
 		err = o.authentication.idTokenValidator.Validate(t.IDToken, idtokenvalidator.ValidationOptions{
-			MaxAge:         validationOptions.MaxAge,
-			Nonce:          validationOptions.Nonce,
-			OrganizationID: validationOptions.OrganizationID,
+			MaxAge:       validationOptions.MaxAge,
+			Nonce:        validationOptions.Nonce,
+			Organization: validationOptions.Organization,
 		})
 
 		if err != nil {

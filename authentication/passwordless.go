@@ -39,9 +39,9 @@ func (p *Passwordless) LoginWithEmail(ctx context.Context, params passwordless.L
 
 	if t != nil && t.IDToken != "" {
 		err = p.authentication.idTokenValidator.Validate(t.IDToken, idtokenvalidator.ValidationOptions{
-			MaxAge:         validationOptions.MaxAge,
-			Nonce:          validationOptions.Nonce,
-			OrganizationID: validationOptions.OrganizationID,
+			MaxAge:       validationOptions.MaxAge,
+			Nonce:        validationOptions.Nonce,
+			Organization: validationOptions.Organization,
 		})
 
 		if err != nil {
@@ -79,9 +79,9 @@ func (p *Passwordless) LoginWithSMS(ctx context.Context, params passwordless.Log
 
 	if t != nil && t.IDToken != "" {
 		err = p.authentication.idTokenValidator.Validate(t.IDToken, idtokenvalidator.ValidationOptions{
-			MaxAge:         validationOptions.MaxAge,
-			Nonce:          validationOptions.Nonce,
-			OrganizationID: validationOptions.OrganizationID,
+			MaxAge:       validationOptions.MaxAge,
+			Nonce:        validationOptions.Nonce,
+			Organization: validationOptions.Organization,
 		})
 
 		if err != nil {
