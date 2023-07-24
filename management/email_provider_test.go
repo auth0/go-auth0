@@ -120,6 +120,32 @@ func TestEmailProviderJSON(t *testing.T) {
 			},
 			json: `{"name":"smtp","enabled":true,"default_from_address":"accounts@example.com","credentials":{"smtp_host":"example.com","smtp_port":3000,"smtp_user":"user","smtp_pass":"pass"},"settings":{"headers":{"X-MC-ViewContentLink":"true","X-SES-Configuration-Set":"example"}}}`,
 		},
+		{
+			name: "it can %s an azure_cs email provider",
+			emailProvider: &EmailProvider{
+				Name:               auth0.String("azure_cs"),
+				Enabled:            auth0.Bool(true),
+				DefaultFromAddress: auth0.String("accounts@example.com"),
+				Credentials: &EmailProviderCredentialsAzureCS{
+					ConnectionString: auth0.String("azure_cs_connection_string"),
+				},
+			},
+			json: `{"name":"azure_cs","enabled":true,"default_from_address":"accounts@example.com","credentials":{"connectionString":"azure_cs_connection_string"}}`,
+		},
+		{
+			name: "it can %s a ms365 email provider",
+			emailProvider: &EmailProvider{
+				Name:               auth0.String("ms365"),
+				Enabled:            auth0.Bool(true),
+				DefaultFromAddress: auth0.String("accounts@example.com"),
+				Credentials: &EmailProviderCredentialsMS365{
+					TenantID:     auth0.String("ms365_tenant_id"),
+					ClientID:     auth0.String("ms365_client_id"),
+					ClientSecret: auth0.String("ms365_client_secret"),
+				},
+			},
+			json: `{"name":"ms365","enabled":true,"default_from_address":"accounts@example.com","credentials":{"tenantId":"ms365_tenant_id","clientId":"ms365_client_id","clientSecret":"ms365_client_secret"}}`,
+		},
 	}
 
 	for _, testCase := range jsonTestCases {

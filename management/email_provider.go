@@ -24,6 +24,12 @@ const (
 
 	// EmailProviderSMTP constant.
 	EmailProviderSMTP = "smtp"
+
+	// EmailProviderAzureCS constant.
+	EmailProviderAzureCS = "azure_cs"
+
+	// EmailProviderMS365 constant.
+	EmailProviderMS365 = "ms365"
 )
 
 // EmailProvider is used to configure Email Providers.
@@ -90,6 +96,26 @@ type EmailProviderCredentialsSMTP struct {
 	SMTPPort *int    `json:"smtp_port,omitempty"`
 	SMTPUser *string `json:"smtp_user,omitempty"`
 	SMTPPass *string `json:"smtp_pass,omitempty"`
+}
+
+// EmailProviderCredentialsAzureCS represent the
+// credentials required to use the azure_cs provider.
+type EmailProviderCredentialsAzureCS struct {
+	// Azure Communication Services Connection String.
+	ConnectionString *string `json:"connectionString,omitempty"`
+}
+
+// EmailProviderCredentialsMS365 represent the
+// credentials required to use the ms365 provider.
+type EmailProviderCredentialsMS365 struct {
+	// Microsoft 365 Tenant ID.
+	TenantID *string `json:"tenantId,omitempty"`
+
+	// Microsoft 365 Client ID.
+	ClientID *string `json:"clientId,omitempty"`
+
+	// Microsoft 365 Client Secret.
+	ClientSecret *string `json:"clientSecret,omitempty"`
 }
 
 // EmailProviderSettingsMandrill are the provider
@@ -192,6 +218,14 @@ func (ep *EmailProvider) UnmarshalJSON(b []byte) error {
 	case EmailProviderSMTP:
 		credentials = &EmailProviderCredentialsSMTP{}
 		settings = &EmailProviderSettingsSMTP{}
+	case EmailProviderAzureCS:
+		credentials = &EmailProviderCredentialsAzureCS{}
+		// No settings for azure_cs.
+		settings = nil
+	case EmailProviderMS365:
+		credentials = &EmailProviderCredentialsMS365{}
+		// No settings for ms365.
+		settings = nil
 	case "":
 		credentials = nil
 		settings = nil
