@@ -185,7 +185,7 @@ func (o *OAuth) RevokeRefreshToken(ctx context.Context, body oauth.RevokeRefresh
 		body.ClientID = o.authentication.clientID
 	}
 
-	if body.ClientSecret != "" && o.authentication.clientSecret != "" {
+	if body.ClientSecret == "" && o.authentication.clientSecret != "" {
 		body.ClientSecret = o.authentication.clientSecret
 	}
 
