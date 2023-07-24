@@ -125,11 +125,11 @@ func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 		api, err := withIDToken(t, extras)
 		assert.NoError(t, err)
 
-		_, err = api.Passwordless.LoginWithEmail(context.Background(), passwordless.LoginWithEmailRequest{
-			Code:     "123456",
-			Email:    "test-email@example.com",
-			Scope:    "openid profile email offline_access",
-			Audience: "https://api.example.com",
+		_, err = api.Passwordless.LoginWithSMS(context.Background(), passwordless.LoginWithSMSRequest{
+			PhoneNumber: "+123456789",
+			Code:        "123456",
+			Scope:       "openid profile email offline_access",
+			Audience:    "https://api.example.com",
 		}, oauth.IDTokenValidationOptions{MaxAge: 100 * time.Second})
 
 		assert.ErrorContains(t, err, "auth_time claim in the ID token indicates that too much time has passed")
