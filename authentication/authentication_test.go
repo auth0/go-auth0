@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -14,9 +15,12 @@ import (
 	"time"
 
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/lestrrat-go/jwx/v2/jwa"
+	"github.com/lestrrat-go/jwx/v2/jwt"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/auth0/go-auth0/authentication/database"
+	"github.com/auth0/go-auth0/authentication/oauth"
 	"github.com/auth0/go-auth0/internal/client"
 )
 
@@ -384,4 +388,63 @@ func TestRetries(t *testing.T) {
 		assert.ErrorIs(t, err, context.Canceled)
 		assert.Equal(t, 1, i) // 1 request should have been made before the context times out
 	})
+}
+
+func TestWithClockTolerance(t *testing.T) {
+	idTokenClientSecret := "test-client-secret"
+	idTokenClientid := "test-client-id"
+
+	var idToken string
+	h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		tokenSet := &oauth.TokenSet{
+			AccessToken: "test-access-token",
+			ExpiresIn:   86400,
+			IDToken:     idToken,
+			TokenType:   "Bearer",
+		}
+
+		b, err := json.Marshal(tokenSet)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, string(b))
+	})
+	s := httptest.NewTLSServer(h)
+	t.Cleanup(func() {
+		s.Close()
+	})
+
+	URL, err := url.Parse(s.URL)
+	assert.NoError(t, err)
+	builder := jwt.NewBuilder().
+		Issuer(s.URL + "/").
+		Subject("me").
+		Audience([]string{idTokenClientid}).
+		Expiration(time.Now().Add(time.Hour)).
+		IssuedAt(time.Now().Add(5 * time.Second))
+
+	token, err := builder.Build()
+	assert.NoError(t, err)
+
+	b, err := jwt.Sign(token, jwt.WithKey(jwa.HS256, []byte(idTokenClientSecret)))
+	assert.NoError(t, err)
+	idToken = string(b)
+
+	api, err := New(
+		context.Background(),
+		URL.Host,
+		WithClient(s.Client()),
+		WithClientID(idTokenClientid),
+		WithClientSecret(idTokenClientSecret),
+		WithIDTokenSigningAlg("HS256"),
+		WithIDTokenClockTolerance(1*time.Second), // Set a low clock tolerance to cause a failure
+	)
+	assert.NoError(t, err)
+
+	_, err = api.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
+		Code: "my-code",
+	}, oauth.IDTokenValidationOptions{})
+	assert.ErrorContains(t, err, "\"iat\" not satisfied")
 }

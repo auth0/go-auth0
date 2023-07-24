@@ -63,7 +63,9 @@ func configureHTTPTestRecordings(t *testing.T) {
 		}
 		r.Body = io.NopCloser(bytes.NewBuffer(reqBody))
 
-		return r.Method == i.Method && r.URL.String() == i.URL && strings.TrimSpace(string(reqBody)) == i.Body
+		rb := string(reqBody)
+
+		return r.Method == i.Method && r.URL.String() == i.URL && strings.TrimSpace(rb) == i.Body
 	})
 
 	t.Cleanup(func() {

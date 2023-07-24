@@ -18,15 +18,34 @@ import (
 )
 
 func TestOAuthLoginWithPassword(t *testing.T) {
-	configureHTTPTestRecordings(t)
+	t.Run("Should return tokens", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
 
-	tokenSet, err := authAPI.OAuth.LoginWithPassword(context.Background(), oauth.LoginWithPasswordRequest{
-		Username: "testuser",
-		Password: "testuser123",
-	}, oauth.IDTokenValidationOptions{})
-	assert.NoError(t, err)
-	assert.NotEmpty(t, tokenSet.AccessToken)
-	assert.Equal(t, "Bearer", tokenSet.TokenType)
+		tokenSet, err := authAPI.OAuth.LoginWithPassword(context.Background(), oauth.LoginWithPasswordRequest{
+			Username: "testuser",
+			Password: "testuser123",
+		}, oauth.IDTokenValidationOptions{})
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
+
+	t.Run("Should support passing extra options", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		tokenSet, err := authAPI.OAuth.LoginWithPassword(context.Background(), oauth.LoginWithPasswordRequest{
+			Username: "testuser",
+			Password: "testuser123",
+			Realm:    "my-realm",
+			Scope:    "extra-scope",
+			ExtraParameters: map[string]string{
+				"extra": "value",
+			},
+		}, oauth.IDTokenValidationOptions{})
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
 }
 
 func TestLoginWithAuthCode(t *testing.T) {
@@ -59,6 +78,22 @@ func TestLoginWithAuthCode(t *testing.T) {
 				ClientSecret: clientSecret,
 			},
 			Code: "my-code",
+		}, oauth.IDTokenValidationOptions{})
+
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
+
+	t.Run("Should support setting a redirect uri", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		tokenSet, err := authAPI.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
+			ClientAuthentication: oauth.ClientAuthentication{
+				ClientSecret: clientSecret,
+			},
+			Code:        "test-code",
+			RedirectURI: "http://localhost:3000",
 		}, oauth.IDTokenValidationOptions{})
 
 		assert.NoError(t, err)
@@ -102,6 +137,20 @@ func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
 		assert.NotEmpty(t, tokenSet.AccessToken)
 		assert.Equal(t, "Bearer", tokenSet.TokenType)
 	})
+
+	t.Run("Should support setting a redirect uri", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		tokenSet, err := authAPI.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
+			Code:         "test-code",
+			CodeVerifier: "test-code-verifier",
+			RedirectURI:  "http://localhost:3000",
+		}, oauth.IDTokenValidationOptions{})
+
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
 }
 
 func TestLoginWithClientCredentials(t *testing.T) {
@@ -119,6 +168,22 @@ func TestLoginWithClientCredentials(t *testing.T) {
 		tokenSet, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
 			ClientAuthentication: oauth.ClientAuthentication{
 				ClientSecret: clientSecret,
+			},
+			Audience: "test-audience",
+		}, oauth.IDTokenValidationOptions{})
+
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
+
+	t.Run("Should allow overriding clientid", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		tokenSet, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
+			ClientAuthentication: oauth.ClientAuthentication{
+				ClientSecret: clientSecret,
+				ClientID:     "test-other-clientid",
 			},
 			Audience: "test-audience",
 		}, oauth.IDTokenValidationOptions{})
