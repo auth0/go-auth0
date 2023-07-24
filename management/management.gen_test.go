@@ -6765,6 +6765,24 @@ func TestEmailProvider_String(t *testing.T) {
 	}
 }
 
+func TestEmailProviderCredentialsAzureCS_GetConnectionString(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsAzureCS{ConnectionString: &zeroValue}
+	e.GetConnectionString()
+	e = &EmailProviderCredentialsAzureCS{}
+	e.GetConnectionString()
+	e = nil
+	e.GetConnectionString()
+}
+
+func TestEmailProviderCredentialsAzureCS_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderCredentialsAzureCS{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestEmailProviderCredentialsMailgun_GetAPIKey(tt *testing.T) {
 	var zeroValue string
 	e := &EmailProviderCredentialsMailgun{APIKey: &zeroValue}
@@ -6816,6 +6834,44 @@ func TestEmailProviderCredentialsMandrill_GetAPIKey(tt *testing.T) {
 func TestEmailProviderCredentialsMandrill_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &EmailProviderCredentialsMandrill{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailProviderCredentialsMS365_GetClientID(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsMS365{ClientID: &zeroValue}
+	e.GetClientID()
+	e = &EmailProviderCredentialsMS365{}
+	e.GetClientID()
+	e = nil
+	e.GetClientID()
+}
+
+func TestEmailProviderCredentialsMS365_GetClientSecret(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsMS365{ClientSecret: &zeroValue}
+	e.GetClientSecret()
+	e = &EmailProviderCredentialsMS365{}
+	e.GetClientSecret()
+	e = nil
+	e.GetClientSecret()
+}
+
+func TestEmailProviderCredentialsMS365_GetTenantID(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsMS365{TenantID: &zeroValue}
+	e.GetTenantID()
+	e = &EmailProviderCredentialsMS365{}
+	e.GetTenantID()
+	e = nil
+	e.GetTenantID()
+}
+
+func TestEmailProviderCredentialsMS365_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderCredentialsMS365{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

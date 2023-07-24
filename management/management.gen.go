@@ -5425,6 +5425,19 @@ func (e *EmailProvider) String() string {
 	return Stringify(e)
 }
 
+// GetConnectionString returns the ConnectionString field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsAzureCS) GetConnectionString() string {
+	if e == nil || e.ConnectionString == nil {
+		return ""
+	}
+	return *e.ConnectionString
+}
+
+// String returns a string representation of EmailProviderCredentialsAzureCS.
+func (e *EmailProviderCredentialsAzureCS) String() string {
+	return Stringify(e)
+}
+
 // GetAPIKey returns the APIKey field if it's non-nil, zero value otherwise.
 func (e *EmailProviderCredentialsMailgun) GetAPIKey() string {
 	if e == nil || e.APIKey == nil {
@@ -5464,6 +5477,35 @@ func (e *EmailProviderCredentialsMandrill) GetAPIKey() string {
 
 // String returns a string representation of EmailProviderCredentialsMandrill.
 func (e *EmailProviderCredentialsMandrill) String() string {
+	return Stringify(e)
+}
+
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsMS365) GetClientID() string {
+	if e == nil || e.ClientID == nil {
+		return ""
+	}
+	return *e.ClientID
+}
+
+// GetClientSecret returns the ClientSecret field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsMS365) GetClientSecret() string {
+	if e == nil || e.ClientSecret == nil {
+		return ""
+	}
+	return *e.ClientSecret
+}
+
+// GetTenantID returns the TenantID field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsMS365) GetTenantID() string {
+	if e == nil || e.TenantID == nil {
+		return ""
+	}
+	return *e.TenantID
+}
+
+// String returns a string representation of EmailProviderCredentialsMS365.
+func (e *EmailProviderCredentialsMS365) String() string {
 	return Stringify(e)
 }
 
