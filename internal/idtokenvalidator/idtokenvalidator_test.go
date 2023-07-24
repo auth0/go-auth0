@@ -460,7 +460,7 @@ func TestIDTokenValidation(t *testing.T) {
 	})
 
 	t.Run("passes if org_id is valid when organization passed", func(t *testing.T) {
-		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256", WithClockTolerance(100*time.Second))
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
 		assert.NoError(t, err)
 
 		args := defaultJWTArgs
@@ -477,7 +477,7 @@ func TestIDTokenValidation(t *testing.T) {
 	})
 
 	t.Run("verifies org_id exists when organization is passed", func(t *testing.T) {
-		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256", WithClockTolerance(100*time.Second))
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
 		assert.NoError(t, err)
 
 		args := defaultJWTArgs
@@ -492,7 +492,7 @@ func TestIDTokenValidation(t *testing.T) {
 	})
 
 	t.Run("verifies org_id matches when organization is passed", func(t *testing.T) {
-		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256", WithClockTolerance(100*time.Second))
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
 		assert.NoError(t, err)
 
 		args := defaultJWTArgs
@@ -509,7 +509,7 @@ func TestIDTokenValidation(t *testing.T) {
 	})
 
 	t.Run("passes if org_name is valid when organization passed", func(t *testing.T) {
-		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256", WithClockTolerance(100*time.Second))
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
 		assert.NoError(t, err)
 
 		args := defaultJWTArgs
@@ -526,7 +526,7 @@ func TestIDTokenValidation(t *testing.T) {
 	})
 
 	t.Run("verifies org_name exists when organization is passed", func(t *testing.T) {
-		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256", WithClockTolerance(100*time.Second))
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
 		assert.NoError(t, err)
 
 		args := defaultJWTArgs
@@ -541,7 +541,7 @@ func TestIDTokenValidation(t *testing.T) {
 	})
 
 	t.Run("verifies org_name matches when organization is passed", func(t *testing.T) {
-		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256", WithClockTolerance(100*time.Second))
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
 		assert.NoError(t, err)
 
 		args := defaultJWTArgs
@@ -558,7 +558,7 @@ func TestIDTokenValidation(t *testing.T) {
 	})
 
 	t.Run("verifies org_name matches when organization is passed, case insensitive", func(t *testing.T) {
-		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256", WithClockTolerance(100*time.Second))
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
 		assert.NoError(t, err)
 
 		args := defaultJWTArgs
