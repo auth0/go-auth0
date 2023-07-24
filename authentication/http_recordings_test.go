@@ -1,7 +1,10 @@
 package authentication
 
 import (
+	"bytes"
 	"encoding/json"
+	"io"
+	"log"
 	"net/http"
 	"strings"
 	"testing"
@@ -40,6 +43,28 @@ func configureHTTPTestRecordings(t *testing.T) {
 	removeSensitiveDataFromRecordings(t, recorderTransport)
 
 	authAPI.http.Transport = recorderTransport
+
+	// Set a custom matcher that will ensure the request body matches the recording, as both of
+	// these are strings it requires the strings to match exactly, i.e. JSON or querystring are
+	// exact same order.
+	recorderTransport.SetMatcher(func(r *http.Request, i cassette.Request) bool {
+		if r.Body == nil || r.Body == http.NoBody {
+			return cassette.DefaultMatcher(r, i)
+		}
+
+		err := r.Body.Close()
+		if err != nil {
+			log.Fatal("failed to read request body")
+		}
+
+		reqBody, err := io.ReadAll(r.Body)
+		if err != nil {
+			log.Fatal("failed to read request body")
+		}
+		r.Body = io.NopCloser(bytes.NewBuffer(reqBody))
+
+		return r.Method == i.Method && r.URL.String() == i.URL && strings.TrimSpace(string(reqBody)) == i.Body
+	})
 
 	t.Cleanup(func() {
 		err := recorderTransport.Stop()

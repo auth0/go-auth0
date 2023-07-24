@@ -12,7 +12,7 @@ interactions:
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: '{"client_id":"test-client_id","grant_type":"http://auth0.com/oauth/grant-type/passwordless/otp","otp":"123456","realm":"email","scope":"openid profile email offline_access","username":"test-email@example.com","audience":"https://api.example.com"}'
+        body: '{"client_id":"test-client_id","audience":"https://api.example.com","otp":"123456","username":"test-email@example.com","grant_type":"http://auth0.com/oauth/grant-type/passwordless/otp","realm":"email","scope":"openid profile email offline_access"}'
         form: {}
         headers:
             Content-Type:
