@@ -51,7 +51,8 @@ func configureHTTPTestRecordings(t *testing.T) {
 		}
 
 		defer func() {
-			_ = r.Body.Close()
+			err = r.Body.Close()
+			require.NoError(t, err)
 		}()
 
 		reqBody, err := io.ReadAll(r.Body)
