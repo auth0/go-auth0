@@ -67,15 +67,18 @@ func configureHTTPTestRecordings(t *testing.T) {
 		rb := strings.TrimSpace(string(reqBody))
 
 		bodyMatches := false
-		if r.Header.Get("Content-Type") == "application/json" {
+		switch r.Header.Get("Content-Type") {
+		case "application/json":
 			bodyMatches = assert.JSONEq(t, i.Body, rb)
-		} else if r.Header.Get("Content-Type") == "application/x-www-form-urlencoded" {
+			break
+		case "application/x-www-form-urlencoded":
 			err = r.ParseForm()
 			if err != nil {
 				log.Fatal("failed to read form data")
 			}
 			bodyMatches = assert.Equal(t, i.Form, r.Form)
-		} else {
+			break
+		default:
 			bodyMatches = rb == i.Body
 		}
 
