@@ -21,7 +21,7 @@ interactions:
             refresh_token:
                 - test-refresh-token
             scope:
-                - openid profile
+                - openid profile offline_access
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded

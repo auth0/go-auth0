@@ -16,6 +16,8 @@ interactions:
         form:
             client_id:
                 - test-client_id
+            client_secret:
+                - test-client_secret
             code:
                 - test-code
             grant_type:

@@ -17,7 +17,7 @@ interactions:
             client_id:
                 - test-client_id
             grant_type:
-                - password
+                - http://auth0.com/oauth/grant-type/password-realm
             extra:
                 - value
             password:

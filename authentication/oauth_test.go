@@ -107,7 +107,7 @@ func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
 		configureHTTPTestRecordings(t)
 
 		_, err := authAPI.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
-			Code:         "my-invalid-code",
+			Code:         "test-invalid-code",
 			CodeVerifier: "test-code-verifier",
 		}, oauth.IDTokenValidationOptions{})
 
