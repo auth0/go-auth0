@@ -45,16 +45,6 @@ func WithClient(client *http.Client) Option {
 	}
 }
 
-// WithAuth0ClientInfo configures the authentication client to use the provided client information
-// instead of the default one.
-func WithAuth0ClientInfo(auth0ClientInfo client.Auth0ClientInfo) Option {
-	return func(a *Authentication) {
-		if !auth0ClientInfo.IsEmpty() {
-			a.auth0ClientInfo = &auth0ClientInfo
-		}
-	}
-}
-
 // WithNoAuth0ClientInfo configures the management client to not send the "Auth0-Client" header
 // at all.
 func WithNoAuth0ClientInfo() Option {

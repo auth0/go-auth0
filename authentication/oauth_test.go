@@ -170,6 +170,24 @@ func TestRevokeRefreshToken(t *testing.T) {
 
 		assert.NoError(t, err)
 	})
+
+	t.Run("Should support passing a ClientID and ClientSecret", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		auth, err := New(
+			context.Background(),
+			domain,
+			WithClientID(clientID),
+			WithClientSecret(clientSecret),
+			WithIDTokenSigningAlg("HS256"),
+		)
+		assert.NoError(t, err)
+
+		err = auth.OAuth.RevokeRefreshToken(context.Background(), oauth.RevokeRefreshTokenRequest{
+			Token: "test-refresh-token",
+		})
+		assert.NoError(t, err)
+	})
 }
 
 func TestWithIDTokenVerification(t *testing.T) {
