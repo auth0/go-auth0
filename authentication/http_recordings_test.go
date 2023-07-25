@@ -44,15 +44,15 @@ func configureHTTPTestRecordings(t *testing.T) {
 
 	authAPI.http.Transport = recorderTransport
 
-	// Set a custom matcher that will ensure the request body matches the recording, as both of
-	// these are strings it requires the strings to match exactly, i.e. JSON or querystring are
-	// exact same order.
+	// Set a custom matcher that will ensure the request body matches the recording.
 	recorderTransport.SetMatcher(func(r *http.Request, i cassette.Request) bool {
 		if r.Body == nil || r.Body == http.NoBody {
 			return cassette.DefaultMatcher(r, i)
 		}
 
-		defer r.Body.Close()
+		defer func() {
+			_ = r.Body.Close()
+		}()
 
 		reqBody, err := io.ReadAll(r.Body)
 		require.NoError(t, err)
