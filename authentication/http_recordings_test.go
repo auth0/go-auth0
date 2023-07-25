@@ -11,6 +11,7 @@ import (
 
 	"github.com/auth0/go-auth0/authentication/oauth"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gopkg.in/dnaeon/go-vcr.v3/cassette"
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
@@ -63,9 +64,16 @@ func configureHTTPTestRecordings(t *testing.T) {
 		}
 		r.Body = io.NopCloser(bytes.NewBuffer(reqBody))
 
-		rb := string(reqBody)
+		rb := strings.TrimSpace(string(reqBody))
 
-		return r.Method == i.Method && r.URL.String() == i.URL && strings.TrimSpace(rb) == i.Body
+		bodyMatches := false
+		if strings.HasPrefix(rb, "{") {
+			bodyMatches = assert.JSONEq(t, i.Body, rb)
+		} else {
+			bodyMatches = rb == i.Body
+		}
+
+		return r.Method == i.Method && r.URL.String() == i.URL && bodyMatches
 	})
 
 	t.Cleanup(func() {
