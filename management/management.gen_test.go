@@ -5598,6 +5598,13 @@ func TestConnectionOptionsSAML_GetDebug(tt *testing.T) {
 	c.GetDebug()
 }
 
+func TestConnectionOptionsSAML_GetDecryptionKey(tt *testing.T) {
+	c := &ConnectionOptionsSAML{}
+	c.GetDecryptionKey()
+	c = nil
+	c.GetDecryptionKey()
+}
+
 func TestConnectionOptionsSAML_GetDigestAglorithm(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsSAML{DigestAglorithm: &zeroValue}
@@ -5835,6 +5842,34 @@ func TestConnectionOptionsSAML_GetUserIDAttribute(tt *testing.T) {
 func TestConnectionOptionsSAML_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsSAML{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsSAMLDecryptionKey_GetCert(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAMLDecryptionKey{Cert: &zeroValue}
+	c.GetCert()
+	c = &ConnectionOptionsSAMLDecryptionKey{}
+	c.GetCert()
+	c = nil
+	c.GetCert()
+}
+
+func TestConnectionOptionsSAMLDecryptionKey_GetKey(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAMLDecryptionKey{Key: &zeroValue}
+	c.GetKey()
+	c = &ConnectionOptionsSAMLDecryptionKey{}
+	c.GetKey()
+	c = nil
+	c.GetKey()
+}
+
+func TestConnectionOptionsSAMLDecryptionKey_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsSAMLDecryptionKey{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

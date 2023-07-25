@@ -953,30 +953,31 @@ type ConnectionOptionsPingFederate struct {
 
 // ConnectionOptionsSAML is used to configure a SAML Connection.
 type ConnectionOptionsSAML struct {
-	Cert               *string                            `json:"cert,omitempty"`
-	Debug              *bool                              `json:"debug,omitempty"`
-	Expires            *string                            `json:"expires,omitempty"`
-	IdpInitiated       *ConnectionOptionsSAMLIdpInitiated `json:"idpinitiated,omitempty"`
-	SigningKey         *ConnectionOptionsSAMLSigningKey   `json:"signing_key,omitempty"`
-	SigningCert        *string                            `json:"signingCert,omitempty"`
-	Thumbprints        []interface{}                      `json:"thumbprints,omitempty"`
-	ProtocolBinding    *string                            `json:"protocolBinding,omitempty"`
-	TenantDomain       *string                            `json:"tenant_domain,omitempty"`
-	DomainAliases      *[]string                          `json:"domain_aliases,omitempty"`
-	SignInEndpoint     *string                            `json:"signInEndpoint,omitempty"`
-	SignOutEndpoint    *string                            `json:"signOutEndpoint,omitempty"`
-	DisableSignOut     *bool                              `json:"disableSignout,omitempty"`
-	SignatureAlgorithm *string                            `json:"signatureAlgorithm,omitempty"`
-	DigestAglorithm    *string                            `json:"digestAlgorithm,omitempty"`
-	MetadataXML        *string                            `json:"metadataXml,omitempty"`
-	MetadataURL        *string                            `json:"metadataUrl,omitempty"`
-	FieldsMap          map[string]interface{}             `json:"fieldsMap,omitempty"`
-	Subject            map[string]interface{}             `json:"subject,omitempty"`
-	SignSAMLRequest    *bool                              `json:"signSAMLRequest,omitempty"`
-	RequestTemplate    *string                            `json:"requestTemplate,omitempty"`
-	UserIDAttribute    *string                            `json:"user_id_attribute,omitempty"`
-	LogoURL            *string                            `json:"icon_url,omitempty"`
-	EntityID           *string                            `json:"entityId,omitempty"`
+	Cert               *string                             `json:"cert,omitempty"`
+	Debug              *bool                               `json:"debug,omitempty"`
+	Expires            *string                             `json:"expires,omitempty"`
+	IdpInitiated       *ConnectionOptionsSAMLIdpInitiated  `json:"idpinitiated,omitempty"`
+	SigningKey         *ConnectionOptionsSAMLSigningKey    `json:"signing_key,omitempty"`
+	DecryptionKey      *ConnectionOptionsSAMLDecryptionKey `json:"decryptionKey,omitempty"`
+	SigningCert        *string                             `json:"signingCert,omitempty"`
+	Thumbprints        []interface{}                       `json:"thumbprints,omitempty"`
+	ProtocolBinding    *string                             `json:"protocolBinding,omitempty"`
+	TenantDomain       *string                             `json:"tenant_domain,omitempty"`
+	DomainAliases      *[]string                           `json:"domain_aliases,omitempty"`
+	SignInEndpoint     *string                             `json:"signInEndpoint,omitempty"`
+	SignOutEndpoint    *string                             `json:"signOutEndpoint,omitempty"`
+	DisableSignOut     *bool                               `json:"disableSignout,omitempty"`
+	SignatureAlgorithm *string                             `json:"signatureAlgorithm,omitempty"`
+	DigestAglorithm    *string                             `json:"digestAlgorithm,omitempty"`
+	MetadataXML        *string                             `json:"metadataXml,omitempty"`
+	MetadataURL        *string                             `json:"metadataUrl,omitempty"`
+	FieldsMap          map[string]interface{}              `json:"fieldsMap,omitempty"`
+	Subject            map[string]interface{}              `json:"subject,omitempty"`
+	SignSAMLRequest    *bool                               `json:"signSAMLRequest,omitempty"`
+	RequestTemplate    *string                             `json:"requestTemplate,omitempty"`
+	UserIDAttribute    *string                             `json:"user_id_attribute,omitempty"`
+	LogoURL            *string                             `json:"icon_url,omitempty"`
+	EntityID           *string                             `json:"entityId,omitempty"`
 
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
@@ -999,6 +1000,13 @@ type ConnectionOptionsSAMLIdpInitiated struct {
 // ConnectionOptionsSAMLSigningKey is used to configure the
 // SigningKey settings on a ConnectionOptionsSAML.
 type ConnectionOptionsSAMLSigningKey struct {
+	Key  *string `json:"key,omitempty"`
+	Cert *string `json:"cert,omitempty"`
+}
+
+// ConnectionOptionsSAMLDecryptionKey is used to configure the
+// DecryptionKey settings on a ConnectionOptionsSAML.
+type ConnectionOptionsSAMLDecryptionKey struct {
 	Key  *string `json:"key,omitempty"`
 	Cert *string `json:"cert,omitempty"`
 }
