@@ -10726,6 +10726,13 @@ func TestTenant_GetSessionLifetime(tt *testing.T) {
 	t.GetSessionLifetime()
 }
 
+func TestTenant_GetSessions(tt *testing.T) {
+	t := &Tenant{}
+	t.GetSessions()
+	t = nil
+	t.GetSessions()
+}
+
 func TestTenant_GetSupportEmail(tt *testing.T) {
 	var zeroValue string
 	t := &Tenant{SupportEmail: &zeroValue}
@@ -11174,6 +11181,24 @@ func TestTenantSessionCookie_GetMode(tt *testing.T) {
 func TestTenantSessionCookie_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TenantSessionCookie{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTenantSessions_GetOIDCLogoutPromptEnabled(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantSessions{OIDCLogoutPromptEnabled: &zeroValue}
+	t.GetOIDCLogoutPromptEnabled()
+	t = &TenantSessions{}
+	t.GetOIDCLogoutPromptEnabled()
+	t = nil
+	t.GetOIDCLogoutPromptEnabled()
+}
+
+func TestTenantSessions_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TenantSessions{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
