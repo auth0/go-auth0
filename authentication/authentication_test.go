@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -14,9 +15,13 @@ import (
 	"time"
 
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/lestrrat-go/jwx/v2/jwa"
+	"github.com/lestrrat-go/jwx/v2/jwt"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0/authentication/database"
+	"github.com/auth0/go-auth0/authentication/oauth"
 	"github.com/auth0/go-auth0/internal/client"
 )
 
@@ -35,12 +40,15 @@ func envVarEnabled(envVar string) bool {
 
 func TestMain(m *testing.M) {
 	httpRecordingsEnabled = envVarEnabled(httpRecordings)
-	initializeTestClient()
 
-	// If we're running in standard `make test` then set a clientSecret to ensure tests work
-	if httpRecordingsEnabled && clientSecret == "" && domain == "go-auth0-dev.eu.auth0.com" {
-		clientSecret = "test-client-secret"
+	// If we're running in standard `make test` then set a specific clientID and clientSecret
+	// to ensure that we exactly match the body parameters
+	if httpRecordingsEnabled && domain == "go-auth0-dev.eu.auth0.com" {
+		clientID = "test-client_id"
+		clientSecret = "test-client_secret"
 	}
+
+	initializeTestClient()
 
 	code := m.Run()
 	os.Exit(code)
@@ -381,4 +389,63 @@ func TestRetries(t *testing.T) {
 		assert.ErrorIs(t, err, context.Canceled)
 		assert.Equal(t, 1, i) // 1 request should have been made before the context times out
 	})
+}
+
+func TestWithClockTolerance(t *testing.T) {
+	idTokenClientSecret := "test-client-secret"
+	idTokenClientID := "test-client-id"
+
+	var idToken string
+	h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		tokenSet := &oauth.TokenSet{
+			AccessToken: "test-access-token",
+			ExpiresIn:   86400,
+			IDToken:     idToken,
+			TokenType:   "Bearer",
+		}
+
+		b, err := json.Marshal(tokenSet)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, string(b))
+	})
+	s := httptest.NewTLSServer(h)
+	t.Cleanup(func() {
+		s.Close()
+	})
+
+	URL, err := url.Parse(s.URL)
+	require.NoError(t, err)
+	builder := jwt.NewBuilder().
+		Issuer(s.URL + "/").
+		Subject("me").
+		Audience([]string{idTokenClientID}).
+		Expiration(time.Now().Add(time.Hour)).
+		IssuedAt(time.Now().Add(5 * time.Second))
+
+	token, err := builder.Build()
+	require.NoError(t, err)
+
+	b, err := jwt.Sign(token, jwt.WithKey(jwa.HS256, []byte(idTokenClientSecret)))
+	require.NoError(t, err)
+	idToken = string(b)
+
+	api, err := New(
+		context.Background(),
+		URL.Host,
+		WithClient(s.Client()),
+		WithClientID(idTokenClientID),
+		WithClientSecret(idTokenClientSecret),
+		WithIDTokenSigningAlg("HS256"),
+		WithIDTokenClockTolerance(1*time.Second), // Set a low clock tolerance to cause a failure
+	)
+	assert.NoError(t, err)
+
+	_, err = api.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
+		Code: "my-code",
+	}, oauth.IDTokenValidationOptions{})
+	assert.ErrorContains(t, err, "\"iat\" not satisfied")
 }

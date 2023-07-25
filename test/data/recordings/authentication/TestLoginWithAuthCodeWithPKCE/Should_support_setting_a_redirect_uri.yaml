@@ -6,22 +6,24 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 170
+        content_length: 120
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: audience=test-audience&client_id=test-client_id&client_secret=test-client_secret&grant_type=client_credentials
+        body: "client_id=test-client_id&code=test-code&code_verifier=test-code-verifier&grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost%3A3000"
         form:
             client_id:
                 - test-client_id
-            client_secret:
-                - test-client_secret
-            audience:
-                - test-audience
+            code:
+                - test-code
+            code_verifier:
+                - test-code-verifier
             grant_type:
-                - client_credentials
+                - authorization_code
+            redirect_uri:
+                - http://localhost:3000
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -41,4 +43,4 @@ interactions:
                 - application/json
         status: 200 OK
         code: 200
-        duration: 145.095875ms
+        duration: 147.084416ms

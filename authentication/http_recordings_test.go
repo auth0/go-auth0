@@ -1,13 +1,16 @@
 package authentication
 
 import (
+	"bytes"
 	"encoding/json"
+	"io"
 	"net/http"
 	"strings"
 	"testing"
 
 	"github.com/auth0/go-auth0/authentication/oauth"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gopkg.in/dnaeon/go-vcr.v3/cassette"
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
@@ -40,6 +43,42 @@ func configureHTTPTestRecordings(t *testing.T) {
 	removeSensitiveDataFromRecordings(t, recorderTransport)
 
 	authAPI.http.Transport = recorderTransport
+
+	// Set a custom matcher that will ensure the request body matches the recording.
+	recorderTransport.SetMatcher(func(r *http.Request, i cassette.Request) bool {
+		if r.Body == nil || r.Body == http.NoBody {
+			return cassette.DefaultMatcher(r, i)
+		}
+
+		defer func() {
+			err = r.Body.Close()
+			require.NoError(t, err)
+		}()
+
+		reqBody, err := io.ReadAll(r.Body)
+		require.NoError(t, err)
+
+		r.Body = io.NopCloser(bytes.NewBuffer(reqBody))
+
+		rb := strings.TrimSpace(string(reqBody))
+
+		bodyMatches := false
+		switch r.Header.Get("Content-Type") {
+		case "application/json":
+			bodyMatches = assert.JSONEq(t, i.Body, rb)
+			break
+		case "application/x-www-form-urlencoded":
+			err = r.ParseForm()
+			require.NoError(t, err)
+
+			bodyMatches = assert.Equal(t, i.Form, r.Form)
+			break
+		default:
+			bodyMatches = rb == i.Body
+		}
+
+		return r.Method == i.Method && r.URL.String() == i.URL && bodyMatches
+	})
 
 	t.Cleanup(func() {
 		err := recorderTransport.Stop()

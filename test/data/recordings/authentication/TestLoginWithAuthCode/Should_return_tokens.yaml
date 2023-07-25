@@ -6,7 +6,7 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 164
+        content_length: 100
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com

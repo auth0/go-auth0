@@ -6,22 +6,28 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 170
+        content_length: 101
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: audience=test-audience&client_id=test-client_id&client_secret=test-client_secret&grant_type=client_credentials
+        body: client_id=test-client_id&extra=value&grant_type=http%3A%2F%2Fauth0.com%2Foauth%2Fgrant-type%2Fpassword-realm&password=testuser123&realm=my-realm&scope=extra-scope&username=testuser
         form:
             client_id:
                 - test-client_id
-            client_secret:
-                - test-client_secret
-            audience:
-                - test-audience
             grant_type:
-                - client_credentials
+                - http://auth0.com/oauth/grant-type/password-realm
+            extra:
+                - value
+            password:
+                - testuser123
+            username:
+                - testuser
+            realm:
+                - my-realm
+            scope:
+                - extra-scope
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -41,4 +47,4 @@ interactions:
                 - application/json
         status: 200 OK
         code: 200
-        duration: 145.095875ms
+        duration: 330.676ms

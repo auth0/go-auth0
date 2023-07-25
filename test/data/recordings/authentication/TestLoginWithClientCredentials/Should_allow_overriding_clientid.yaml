@@ -12,10 +12,10 @@ interactions:
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: audience=test-audience&client_id=test-client_id&client_secret=test-client_secret&grant_type=client_credentials
+        body: audience=test-audience&client_id=test-other-clientid&client_secret=test-client_secret&grant_type=client_credentials
         form:
             client_id:
-                - test-client_id
+                - test-other-clientid
             client_secret:
                 - test-client_secret
             audience:
@@ -35,7 +35,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"test-access-token","expires_in":86400,"token_type":"Bearer"}'
+        body: '{"access_token":"test-other-access-token","expires_in":86400,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json

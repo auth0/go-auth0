@@ -12,7 +12,7 @@ interactions:
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: '{"client_id":"test-client_id","connection":"Username-Password-Authentication","email":"mytestaccount@example.com","password":"mypassword","username":"mytestaccount"}'
+        body: '{"client_id":"test-client_id","email":"mytestaccount@example.com","password":"mypassword","connection":"Username-Password-Authentication","username":"mytestaccount"}'
         form: {}
         headers:
             Content-Type:
