@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
-	"log"
 	"net/http"
 	"strings"
 	"testing"
@@ -53,15 +52,11 @@ func configureHTTPTestRecordings(t *testing.T) {
 			return cassette.DefaultMatcher(r, i)
 		}
 
-		err := r.Body.Close()
-		if err != nil {
-			log.Fatal("failed to read request body")
-		}
+		defer r.Body.Close()
 
 		reqBody, err := io.ReadAll(r.Body)
-		if err != nil {
-			log.Fatal("failed to read request body")
-		}
+		require.NoError(t, err)
+
 		r.Body = io.NopCloser(bytes.NewBuffer(reqBody))
 
 		rb := strings.TrimSpace(string(reqBody))
@@ -73,9 +68,8 @@ func configureHTTPTestRecordings(t *testing.T) {
 			break
 		case "application/x-www-form-urlencoded":
 			err = r.ParseForm()
-			if err != nil {
-				log.Fatal("failed to read form data")
-			}
+			require.NoError(t, err)
+
 			bodyMatches = assert.Equal(t, i.Form, r.Form)
 			break
 		default:

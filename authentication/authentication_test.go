@@ -18,6 +18,7 @@ import (
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwt"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0/authentication/database"
 	"github.com/auth0/go-auth0/authentication/oauth"
@@ -417,7 +418,7 @@ func TestWithClockTolerance(t *testing.T) {
 	})
 
 	URL, err := url.Parse(s.URL)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	builder := jwt.NewBuilder().
 		Issuer(s.URL + "/").
 		Subject("me").
@@ -426,10 +427,10 @@ func TestWithClockTolerance(t *testing.T) {
 		IssuedAt(time.Now().Add(5 * time.Second))
 
 	token, err := builder.Build()
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	b, err := jwt.Sign(token, jwt.WithKey(jwa.HS256, []byte(idTokenClientSecret)))
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	idToken = string(b)
 
 	api, err := New(
