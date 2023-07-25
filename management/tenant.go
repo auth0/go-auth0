@@ -78,6 +78,9 @@ type Tenant struct {
 	EnabledLocales *[]string `json:"enabled_locales,omitempty"`
 
 	SessionCookie *TenantSessionCookie `json:"session_cookie,omitempty"`
+
+	// Sessions related settings for the tenant.
+	Sessions *TenantSessions `json:"sessions,omitempty"`
 }
 
 // MarshalJSON is a custom serializer for the Tenant type.
@@ -349,6 +352,12 @@ type TenantDeviceFlow struct {
 // TenantSessionCookie manages behavior of the tenant's session cookie, accepts either 'persistent' or 'non-persistent'.
 type TenantSessionCookie struct {
 	Mode *string `json:"mode,omitempty"`
+}
+
+// TenantSessions manages sessions related settings for the tenant.
+type TenantSessions struct {
+	// Whether to bypass prompting logic (false) when performing OIDC Logout.
+	OIDCLogoutPromptEnabled *bool `json:"oidc_logout_prompt_enabled,omitempty"`
 }
 
 // TenantManager manages Auth0 Tenant resources.
