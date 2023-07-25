@@ -8534,6 +8534,14 @@ func (t *Tenant) GetSessionLifetime() float64 {
 	return *t.SessionLifetime
 }
 
+// GetSessions returns the Sessions field.
+func (t *Tenant) GetSessions() *TenantSessions {
+	if t == nil {
+		return nil
+	}
+	return t.Sessions
+}
+
 // GetSupportEmail returns the SupportEmail field if it's non-nil, zero value otherwise.
 func (t *Tenant) GetSupportEmail() string {
 	if t == nil || t.SupportEmail == nil {
@@ -8886,6 +8894,19 @@ func (t *TenantSessionCookie) GetMode() string {
 
 // String returns a string representation of TenantSessionCookie.
 func (t *TenantSessionCookie) String() string {
+	return Stringify(t)
+}
+
+// GetOIDCLogoutPromptEnabled returns the OIDCLogoutPromptEnabled field if it's non-nil, zero value otherwise.
+func (t *TenantSessions) GetOIDCLogoutPromptEnabled() bool {
+	if t == nil || t.OIDCLogoutPromptEnabled == nil {
+		return false
+	}
+	return *t.OIDCLogoutPromptEnabled
+}
+
+// String returns a string representation of TenantSessions.
+func (t *TenantSessions) String() string {
 	return Stringify(t)
 }
 
