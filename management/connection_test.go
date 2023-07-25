@@ -205,6 +205,10 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 					"alias": "login_hint",
 				},
 			},
+			DecryptionKey: &ConnectionOptionsSAMLDecryptionKey{
+				Key:  auth0.String(`-----BEGIN PRIVATE KEY-----\n...{your private key here}...\n-----END PRIVATE KEY-----`),
+				Cert: auth0.String(`-----BEGIN CERTIFICATE-----\n...{your public key cert here}...\n-----END CERTIFICATE-----`),
+			},
 		},
 	},
 	{

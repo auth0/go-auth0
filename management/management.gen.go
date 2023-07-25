@@ -4499,6 +4499,14 @@ func (c *ConnectionOptionsSAML) GetDebug() bool {
 	return *c.Debug
 }
 
+// GetDecryptionKey returns the DecryptionKey field.
+func (c *ConnectionOptionsSAML) GetDecryptionKey() *ConnectionOptionsSAMLDecryptionKey {
+	if c == nil {
+		return nil
+	}
+	return c.DecryptionKey
+}
+
 // GetDigestAglorithm returns the DigestAglorithm field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsSAML) GetDigestAglorithm() string {
 	if c == nil || c.DigestAglorithm == nil {
@@ -4693,6 +4701,27 @@ func (c *ConnectionOptionsSAML) GetUserIDAttribute() string {
 
 // String returns a string representation of ConnectionOptionsSAML.
 func (c *ConnectionOptionsSAML) String() string {
+	return Stringify(c)
+}
+
+// GetCert returns the Cert field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAMLDecryptionKey) GetCert() string {
+	if c == nil || c.Cert == nil {
+		return ""
+	}
+	return *c.Cert
+}
+
+// GetKey returns the Key field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAMLDecryptionKey) GetKey() string {
+	if c == nil || c.Key == nil {
+		return ""
+	}
+	return *c.Key
+}
+
+// String returns a string representation of ConnectionOptionsSAMLDecryptionKey.
+func (c *ConnectionOptionsSAMLDecryptionKey) String() string {
 	return Stringify(c)
 }
 
