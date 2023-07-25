@@ -392,7 +392,7 @@ func TestRetries(t *testing.T) {
 
 func TestWithClockTolerance(t *testing.T) {
 	idTokenClientSecret := "test-client-secret"
-	idTokenClientid := "test-client-id"
+	idTokenClientID := "test-client-id"
 
 	var idToken string
 	h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -421,7 +421,7 @@ func TestWithClockTolerance(t *testing.T) {
 	builder := jwt.NewBuilder().
 		Issuer(s.URL + "/").
 		Subject("me").
-		Audience([]string{idTokenClientid}).
+		Audience([]string{idTokenClientID}).
 		Expiration(time.Now().Add(time.Hour)).
 		IssuedAt(time.Now().Add(5 * time.Second))
 
@@ -436,7 +436,7 @@ func TestWithClockTolerance(t *testing.T) {
 		context.Background(),
 		URL.Host,
 		WithClient(s.Client()),
-		WithClientID(idTokenClientid),
+		WithClientID(idTokenClientID),
 		WithClientSecret(idTokenClientSecret),
 		WithIDTokenSigningAlg("HS256"),
 		WithIDTokenClockTolerance(1*time.Second), // Set a low clock tolerance to cause a failure
