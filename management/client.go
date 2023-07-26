@@ -399,44 +399,44 @@ type SAML2ClientAddon struct {
 	// The recipient of the SAML Assertion.
 	Recipient *string `json:"recipient,omitempty"`
 	// Whether or not a UPN claim should be created.
-	CreateUPNClaim *bool `json:"create_upn_claim,omitempty"`
+	CreateUPNClaim *bool `json:"createUpnClaim,omitempty"`
 	// If `PassthroughClaimsWithNoMapping` is true and this is false, for each claim that is not mapped to the common profile Auth0 will add a prefix
 	// 	http://schema.auth0.com	. If true it will passthrough the claim as-is.
-	MapUnknownClaimsAsIs *bool `json:"map_unknown_claims_as_is,omitempty"`
+	MapUnknownClaimsAsIs *bool `json:"mapUnknownClaimsAsIs,omitempty"`
 	// If true, for each claim that is not mapped to the common profile, Auth0 will passthrough those in the output assertion.
 	// If false, those claims won't be mapped.
-	PassthroughClaimsWithNoMapping *bool `json:"passthrough_claims_with_no_mapping,omitempty"`
+	PassthroughClaimsWithNoMapping *bool `json:"passthroughClaimsWithNoMapping,omitempty"`
 	// If true, it will will add more information in the token like the provider used (google, adfs, ad, etc.) and the access_token if available.
-	MapIdentities *bool `json:"map_identities,omitempty"`
+	MapIdentities *bool `json:"mapIdentities,omitempty"`
 	// Signature algorithm to sign the SAML Assertion or response.
-	SignatureAlgorithm *string `json:"signature_algorithm,omitempty"`
+	SignatureAlgorithm *string `json:"signatureAlgorithm,omitempty"`
 	// Digest algorithm to calculate digest of the SAML Assertion or response.
-	DigestAlgorithm *string `json:"digest_algorithm,omitempty"`
+	DigestAlgorithm *string `json:"digestAlgorithm,omitempty"`
 	Issuer          *string `json:"issuer,omitempty"`
 	// Destination of the SAML Response. If not specified, it will be AssertionConsumerUrlof SAMLRequest or Callback URL if there was no SAMLRequest.
 	Destination *string `json:"destination,omitempty"`
 	// Expiration of the token.
-	LifetimeInSeconds *int `json:"lifetime_in_seconds,omitempty"`
+	LifetimeInSeconds *int `json:"lifetimeInSeconds,omitempty"`
 	// Whether or not the SAML Response should be signed. By default the SAML Assertion will be signed, but not the SAML Response.
 	// If true, SAML Response will be signed instead of SAML Assertion.
-	SignResponse         *bool   `json:"sign_response,omitempty"`
-	NameIdentifierFormat *string `json:"name_identifier_format,omitempty"`
+	SignResponse         *bool   `json:"signResponse,omitempty"`
+	NameIdentifierFormat *string `json:"nameIdentifierFormat,omitempty"`
 	// Auth0 will try each of the attributes of this array in order. If one of them has a value, it will use that for the Subject/NameID
-	NameIdentifierProbes *[]string `json:"name_identifier_probes,omitempty"`
-	AuthnContextClassRef *string   `json:"authn_context_class_ref,omitempty"`
+	NameIdentifierProbes *[]string `json:"nameIdentifierProbes,omitempty"`
+	AuthnContextClassRef *string   `json:"authnContextClassRef,omitempty"`
 	// When set to true, the xs:type of the element is inferred. Types are xs:string, xs:boolean, xs:double, and xs:anyType.
 	// When set to false all xs:type are xs:anyType
-	TypedAttributes *bool `json:"typed_attributes,omitempty"`
+	TypedAttributes *bool `json:"typedAttributes,omitempty"`
 	// When set to true, the NameFormat is inferred based on the attribute name.
 	// NameFormat values are urn:oasis:names:tc:SAML:2.0:attrname-format:uri, urn:oasis:names:tc:SAML:2.0:attrname-format:basic,
 	// and urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified.
 	// If set to false, the attribute NameFormat is not set in the assertion.
-	IncludeAttributeNameFormat *bool `json:"include_attribute_name_format,omitempty"`
+	IncludeAttributeNameFormat *bool `json:"includeAttributeNameFormat,omitempty"`
 	// Indicates the protocol binding used for SAML logout responses.
 	// By default Auth0 uses HTTP-POST, but you can switch to HTTP-Redirect by setting to `urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect`.
 	Binding *string `json:"binding,omitempty"`
 	// Optionally indicates the public key certificate used to validate SAML requests. If set, SAML requests will be required to be signed.
-	SigningCert *string `json:"signing_cert,omitempty"`
+	SigningCert *string `json:"signingCert,omitempty"`
 	//  An object that controls SAML logout behavior.
 	Logout *SAML2ClientAddonLogout `json:"logout,omitempty"`
 }
