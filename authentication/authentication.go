@@ -115,18 +115,21 @@ type Authentication struct {
 	OAuth        *OAuth
 	Passwordless *Passwordless
 
-	auth0ClientInfo       *client.Auth0ClientInfo
-	basePath              string
-	common                manager
-	clientID              string
-	clientSecret          string
-	idTokenClockTolerance time.Duration
-	debug                 bool
-	http                  *http.Client
-	idTokenSigningAlg     string
-	idTokenValidator      *idtokenvalidator.IDTokenValidator
-	url                   *url.URL
-	retryStrategy         client.RetryOptions
+	auth0ClientInfo           *client.Auth0ClientInfo
+	basePath                  string
+	common                    manager
+	clientID                  string
+	clientSecret              string
+	clientAssertionSigningKey string
+	clientAssertionSigningAlg string
+	idTokenClockTolerance     time.Duration
+	debug                     bool
+	http                      *http.Client
+	idTokenSigningAlg         string
+	idTokenValidator          *idtokenvalidator.IDTokenValidator
+	url                       *url.URL
+	retryStrategy             client.RetryOptions
+	domain                    string
 }
 
 type manager struct {
@@ -155,6 +158,7 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 		auth0ClientInfo:   client.DefaultAuth0ClientInfo,
 		idTokenSigningAlg: "RS256",
 		retryStrategy:     client.DefaultRetryOptions,
+		domain:            domain + "/",
 	}
 
 	for _, option := range options {

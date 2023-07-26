@@ -3,10 +3,15 @@ package authentication
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/auth0/go-auth0/authentication/oauth"
 	"github.com/auth0/go-auth0/internal/idtokenvalidator"
+	"github.com/google/uuid"
+	"github.com/lestrrat-go/jwx/v2/jwa"
+	"github.com/lestrrat-go/jwx/v2/jwt"
 )
 
 // OAuth exposes logging in using OAuth based APIs.
@@ -193,11 +198,38 @@ func (o *OAuth) RevokeRefreshToken(ctx context.Context, body oauth.RevokeRefresh
 }
 
 func (o *OAuth) addClientAuthentication(params oauth.ClientAuthentication, body url.Values, required bool) error {
-	if params.ClientID != "" {
-		body.Set("client_id", params.ClientID)
-	} else {
-		body.Set("client_id", o.authentication.clientID)
+	cid := params.ClientID
+	if params.ClientID == "" {
+		cid = o.authentication.clientID
 	}
+	if o.authentication.clientAssertionSigningKey != "" {
+		alg, err := determineAlg(o.authentication.clientAssertionSigningAlg)
+		if err != nil {
+			return err
+		}
+
+		token, err := jwt.NewBuilder().
+			IssuedAt(time.Now()).
+			Subject(cid).
+			JwtID(uuid.New().String()).
+			Issuer(cid).
+			Audience([]string{o.authentication.domain}).
+			Expiration(time.Now().Add(2 * time.Minute)).
+			Build()
+		if err != nil {
+			return err
+		}
+
+		b, err := jwt.Sign(token, jwt.WithKey(alg, []byte(o.authentication.clientAssertionSigningKey)))
+		if err != nil {
+			return err
+		}
+
+		body.Set("client_assertion", string(b))
+		body.Set("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer")
+	}
+
+	body.Set("client_id", cid)
 
 	if params.ClientSecret != "" && body.Get("client_secret") == "" {
 		body.Set("client_secret", params.ClientSecret)
@@ -205,9 +237,20 @@ func (o *OAuth) addClientAuthentication(params oauth.ClientAuthentication, body 
 		body.Set("client_secret", o.authentication.clientSecret)
 	}
 
-	if required && body.Get("client_secret") == "" {
-		return errors.New("client_secret is required but not provided")
+	if required && (body.Get("client_secret") == "" && body.Get("client_assertion") == "") {
+		return errors.New("client_secret or client_assertion is required but not provided")
 	}
 
 	return nil
+}
+
+func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
+	switch alg {
+	case "HS256":
+		return jwa.HS256, nil
+	case "RS256":
+		return jwa.RS256, nil
+	default:
+		return "", fmt.Errorf("Unsupported algorithm %s provided", alg)
+	}
 }

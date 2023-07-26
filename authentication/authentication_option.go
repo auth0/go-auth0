@@ -24,6 +24,18 @@ func WithClientSecret(clientSecret string) Option {
 	}
 }
 
+func WithClientAssertion(signingKey, signingAlg string) Option {
+	return func(a *Authentication) {
+		a.clientAssertionSigningKey = signingKey
+		if signingAlg == "" {
+			a.clientAssertionSigningAlg = signingAlg
+		} else {
+			a.clientAssertionSigningAlg = "RS256"
+
+		}
+	}
+}
+
 // WithIDTokenSigningAlg configures the signing algorithm used for the ID token.
 func WithIDTokenSigningAlg(alg string) Option {
 	return func(a *Authentication) {
