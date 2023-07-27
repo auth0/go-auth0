@@ -2,7 +2,7 @@
 
 <a name="v1.0.0"></a>
 
-## [v1.0.0](https://github.com/auth0/go-auth0/tree/v1.0.0) (2023-05-22)
+## [v1.0.0](https://github.com/auth0/go-auth0/tree/v1.0.0) (2023-07-27)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.17.2..v1.0.0)
 
