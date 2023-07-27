@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 )
@@ -133,47 +134,41 @@ type BrandingUniversalLogin struct {
 }
 
 // BrandingManager manages Auth0 Branding resources.
-type BrandingManager struct {
-	*Management
-}
-
-func newBrandingManager(m *Management) *BrandingManager {
-	return &BrandingManager{m}
-}
+type BrandingManager manager
 
 // Read retrieves various settings related to branding.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/get_branding
-func (m *BrandingManager) Read(opts ...RequestOption) (b *Branding, err error) {
-	err = m.Request("GET", m.URI("branding"), &b, opts...)
+func (m *BrandingManager) Read(ctx context.Context, opts ...RequestOption) (b *Branding, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("branding"), &b, opts...)
 	return
 }
 
 // Update various fields related to branding.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/patch_branding
-func (m *BrandingManager) Update(t *Branding, opts ...RequestOption) (err error) {
-	return m.Request("PATCH", m.URI("branding"), t, opts...)
+func (m *BrandingManager) Update(ctx context.Context, t *Branding, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "PATCH", m.management.URI("branding"), t, opts...)
 }
 
 // UniversalLogin retrieves the template for the New Universal Login Experience.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/get_universal_login
-func (m *BrandingManager) UniversalLogin(opts ...RequestOption) (ul *BrandingUniversalLogin, err error) {
-	err = m.Request("GET", m.URI("branding", "templates", "universal-login"), &ul, opts...)
+func (m *BrandingManager) UniversalLogin(ctx context.Context, opts ...RequestOption) (ul *BrandingUniversalLogin, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("branding", "templates", "universal-login"), &ul, opts...)
 	return
 }
 
 // SetUniversalLogin sets the template for the New Universal Login Experience.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/put_universal_login
-func (m *BrandingManager) SetUniversalLogin(ul *BrandingUniversalLogin, opts ...RequestOption) (err error) {
-	return m.Request("PUT", m.URI("branding", "templates", "universal-login"), ul.Body, opts...)
+func (m *BrandingManager) SetUniversalLogin(ctx context.Context, ul *BrandingUniversalLogin, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "PUT", m.management.URI("branding", "templates", "universal-login"), ul.Body, opts...)
 }
 
 // DeleteUniversalLogin deletes the template for the New Universal Login Experience.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/delete_universal_login
-func (m *BrandingManager) DeleteUniversalLogin(opts ...RequestOption) (err error) {
-	return m.Request("DELETE", m.URI("branding", "templates", "universal-login"), nil, opts...)
+func (m *BrandingManager) DeleteUniversalLogin(ctx context.Context, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "DELETE", m.management.URI("branding", "templates", "universal-login"), nil, opts...)
 }

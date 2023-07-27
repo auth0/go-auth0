@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"testing"
 
@@ -12,7 +13,7 @@ import (
 func TestBrandingManager_Read(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	branding, err := api.Branding.Read()
+	branding, err := api.Branding.Read(context.Background())
 	assert.NoError(t, err)
 	assert.IsType(t, &Branding{}, branding)
 }
@@ -21,7 +22,7 @@ func TestBrandingManager_Update(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	// Save initial branding settings.
-	preTestBrandingSettings, err := api.Branding.Read()
+	preTestBrandingSettings, err := api.Branding.Read(context.Background())
 	assert.NoError(t, err)
 
 	expected := &Branding{
@@ -41,17 +42,17 @@ func TestBrandingManager_Update(t *testing.T) {
 		},
 	}
 
-	err = api.Branding.Update(expected)
+	err = api.Branding.Update(context.Background(), expected)
 	assert.NoError(t, err)
 
-	actual, err := api.Branding.Read()
+	actual, err := api.Branding.Read(context.Background())
 	assert.NoError(t, err)
 	assert.Equal(t, expected.GetColors().GetPrimary(), actual.GetColors().GetPrimary())
 	assert.Equal(t, expected.GetFont().GetURL(), actual.GetFont().GetURL())
 	assert.Equal(t, expected.GetFaviconURL(), actual.GetFaviconURL())
 
 	// Restore initial branding settings.
-	err = api.Branding.Update(preTestBrandingSettings)
+	err = api.Branding.Update(context.Background(), preTestBrandingSettings)
 	assert.NoError(t, err)
 }
 
@@ -65,15 +66,15 @@ func TestBrandingManager_UniversalLogin(t *testing.T) {
 		Body: auth0.String(body),
 	}
 
-	err := api.Branding.SetUniversalLogin(expectedUL)
+	err := api.Branding.SetUniversalLogin(context.Background(), expectedUL)
 	assert.NoError(t, err)
 
-	actualUL, err := api.Branding.UniversalLogin()
+	actualUL, err := api.Branding.UniversalLogin(context.Background())
 	assert.NoError(t, err)
 	assert.Equal(t, expectedUL, actualUL)
 
 	t.Cleanup(func() {
-		err = api.Branding.DeleteUniversalLogin()
+		err = api.Branding.DeleteUniversalLogin(context.Background())
 		assert.NoError(t, err)
 	})
 }

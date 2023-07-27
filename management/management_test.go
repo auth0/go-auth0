@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
-	"errors"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -46,7 +45,7 @@ func initializeTestClient() {
 
 	api, err = New(
 		domain,
-		WithClientCredentials(clientID, clientSecret),
+		WithClientCredentials(context.Background(), clientID, clientSecret),
 		WithDebug(envVarEnabled(debug)),
 	)
 	if err != nil {
@@ -173,26 +172,22 @@ func TestStringify(t *testing.T) {
 	assert.Equal(t, expected, s)
 }
 
-func TestRequestOptionContextCancel(t *testing.T) {
+func TestRequestContextCancel(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel() // Cancel the request.
 
-	err := api.Request("GET", "/", nil, Context(ctx))
-	if !errors.Is(err, context.Canceled) {
-		t.Errorf("expected err to be context.Canceled, got %v", err)
-	}
+	err := api.Request(ctx, "GET", "/", nil)
+	assert.ErrorIs(t, err, context.Canceled)
 }
 
-func TestRequestOptionContextTimeout(t *testing.T) {
+func TestRequestContextTimeout(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Millisecond)
 	defer cancel()
 
 	time.Sleep(50 * time.Millisecond) // Delay until the deadline is exceeded.
 
-	err := api.Request("GET", "/", nil, Context(ctx))
-	if !errors.Is(err, context.DeadlineExceeded) {
-		t.Errorf("expected err to be context.DeadlineExceeded, got %v", err)
-	}
+	err := api.Request(ctx, "GET", "/", nil)
+	assert.ErrorIs(t, err, context.DeadlineExceeded)
 }
 
 func TestNew_WithInsecure(t *testing.T) {
@@ -209,7 +204,7 @@ func TestNew_WithInsecure(t *testing.T) {
 	m, err := New(s.URL, WithInsecure())
 	assert.NoError(t, err)
 
-	u, err := m.User.Read("123")
+	u, err := m.User.Read(context.Background(), "123")
 	assert.NoError(t, err)
 	assert.Equal(t, "123", u.GetID())
 }
@@ -283,28 +278,7 @@ func TestAuth0Client(t *testing.T) {
 		)
 		assert.NoError(t, err)
 
-		_, err = m.User.Read("123")
-
-		assert.NoError(t, err)
-	})
-
-	t.Run("Allows passing custom Auth0ClientInfo", func(t *testing.T) {
-		customClient := client.Auth0ClientInfo{Name: "test-client", Version: "1.0.0"}
-
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			header := r.Header.Get("Auth0-Client")
-			assert.Equal(t, "eyJuYW1lIjoidGVzdC1jbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjAifQ==", header)
-		})
-		s := httptest.NewServer(h)
-
-		m, err := New(
-			s.URL,
-			WithInsecure(),
-			WithAuth0ClientInfo(customClient),
-		)
-		assert.NoError(t, err)
-
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 
 		assert.NoError(t, err)
 	})
@@ -322,7 +296,7 @@ func TestAuth0Client(t *testing.T) {
 			WithNoAuth0ClientInfo(),
 		)
 		assert.NoError(t, err)
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 		assert.NoError(t, err)
 	})
 
@@ -349,26 +323,7 @@ func TestAuth0Client(t *testing.T) {
 			WithAuth0ClientEnvEntry("foo", "bar"),
 		)
 		assert.NoError(t, err)
-		_, err = m.User.Read("123")
-		assert.NoError(t, err)
-	})
-
-	t.Run("Allows passing extra env info with custom client", func(t *testing.T) {
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			header := r.Header.Get("Auth0-Client")
-			assert.Equal(t, "eyJuYW1lIjoidGVzdC1jbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjAiLCJlbnYiOnsiZm9vIjoiYmFyIn19", header)
-		})
-		s := httptest.NewServer(h)
-		customClient := client.Auth0ClientInfo{Name: "test-client", Version: "1.0.0"}
-
-		m, err := New(
-			s.URL,
-			WithInsecure(),
-			WithAuth0ClientInfo(customClient),
-			WithAuth0ClientEnvEntry("foo", "bar"),
-		)
-		assert.NoError(t, err)
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 		assert.NoError(t, err)
 	})
 
@@ -386,7 +341,150 @@ func TestAuth0Client(t *testing.T) {
 			WithAuth0ClientEnvEntry("foo", "bar"),
 		)
 		assert.NoError(t, err)
-		_, err = m.User.Read("123")
+		_, err = m.User.Read(context.Background(), "123")
 		assert.NoError(t, err)
 	})
+}
+
+func TestApiCallContextCancel(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel() // Cancel the request.
+
+	m, err := New(
+		"http://localhost:8080",
+		WithInsecure(),
+	)
+
+	assert.NoError(t, err)
+
+	_, err = m.User.Read(ctx, "123")
+	assert.ErrorIs(t, err, context.Canceled)
+}
+
+func TestRetries(t *testing.T) {
+	t.Run("Default retry logic", func(t *testing.T) {
+		start := time.Now()
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i == 1 {
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+		)
+		assert.NoError(t, err)
+
+		_, err = m.User.Read(context.Background(), "123")
+		assert.NoError(t, err)
+
+		elapsed := time.Since(start).Milliseconds()
+		assert.Greater(t, elapsed, int64(250))
+		assert.Equal(t, 2, i)
+	})
+
+	t.Run("Custom retry logic", func(t *testing.T) {
+		start := time.Now()
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i < 2 {
+				w.WriteHeader(http.StatusBadGateway)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithRetries(1, []int{http.StatusBadGateway}),
+		)
+		assert.NoError(t, err)
+
+		_, err = m.User.Read(context.Background(), "123")
+		assert.NoError(t, err)
+		assert.Equal(t, 2, i)
+
+		elapsed := time.Since(start)
+		assert.Greater(t, elapsed, 250*time.Millisecond)
+		assert.NoError(t, err)
+	})
+
+	t.Run("Disabling retries", func(t *testing.T) {
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			w.WriteHeader(http.StatusBadGateway)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithNoRetries(),
+		)
+		assert.NoError(t, err)
+
+		_, err = m.User.Read(context.Background(), "123")
+		assert.Equal(t, http.StatusBadGateway, err.(*managementError).StatusCode)
+		assert.Equal(t, 1, i)
+	})
+
+	t.Run("Retry and context", func(t *testing.T) {
+		i := 0
+		ctx, cancel := context.WithCancel(context.Background())
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			cancel()
+			w.WriteHeader(http.StatusBadGateway)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithRetries(3, []int{http.StatusBadGateway}),
+		)
+		assert.NoError(t, err)
+
+		_, err = m.User.Read(ctx, "123")
+		assert.ErrorIs(t, err, context.Canceled)
+		assert.Equal(t, 1, i) // 1 request should have been made before the context times out
+	})
+}
+
+func TestApiCallContextTimeout(t *testing.T) {
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Millisecond)
+	defer cancel()
+
+	time.Sleep(50 * time.Millisecond) // Delay until the deadline is exceeded.
+
+	m, err := New(
+		"http://localhost:8080",
+		WithInsecure(),
+	)
+	assert.NoError(t, err)
+
+	_, err = m.User.Read(ctx, "123")
+	assert.ErrorIs(t, err, context.DeadlineExceeded)
 }

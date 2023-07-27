@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 )
@@ -23,6 +24,12 @@ const (
 
 	// EmailProviderSMTP constant.
 	EmailProviderSMTP = "smtp"
+
+	// EmailProviderAzureCS constant.
+	EmailProviderAzureCS = "azure_cs"
+
+	// EmailProviderMS365 constant.
+	EmailProviderMS365 = "ms365"
 )
 
 // EmailProvider is used to configure Email Providers.
@@ -89,6 +96,26 @@ type EmailProviderCredentialsSMTP struct {
 	SMTPPort *int    `json:"smtp_port,omitempty"`
 	SMTPUser *string `json:"smtp_user,omitempty"`
 	SMTPPass *string `json:"smtp_pass,omitempty"`
+}
+
+// EmailProviderCredentialsAzureCS represent the
+// credentials required to use the azure_cs provider.
+type EmailProviderCredentialsAzureCS struct {
+	// Azure Communication Services Connection String.
+	ConnectionString *string `json:"connectionString,omitempty"`
+}
+
+// EmailProviderCredentialsMS365 represent the
+// credentials required to use the ms365 provider.
+type EmailProviderCredentialsMS365 struct {
+	// Microsoft 365 Tenant ID.
+	TenantID *string `json:"tenantId,omitempty"`
+
+	// Microsoft 365 Client ID.
+	ClientID *string `json:"clientId,omitempty"`
+
+	// Microsoft 365 Client Secret.
+	ClientSecret *string `json:"clientSecret,omitempty"`
 }
 
 // EmailProviderSettingsMandrill are the provider
@@ -191,6 +218,14 @@ func (ep *EmailProvider) UnmarshalJSON(b []byte) error {
 	case EmailProviderSMTP:
 		credentials = &EmailProviderCredentialsSMTP{}
 		settings = &EmailProviderSettingsSMTP{}
+	case EmailProviderAzureCS:
+		credentials = &EmailProviderCredentialsAzureCS{}
+		// No settings for azure_cs.
+		settings = nil
+	case EmailProviderMS365:
+		credentials = &EmailProviderCredentialsMS365{}
+		// No settings for ms365.
+		settings = nil
 	case "":
 		credentials = nil
 		settings = nil
@@ -220,13 +255,7 @@ func (ep *EmailProvider) UnmarshalJSON(b []byte) error {
 }
 
 // EmailProviderManager manages the Auth0 EmailProvider.
-type EmailProviderManager struct {
-	*Management
-}
-
-func newEmailProviderManager(m *Management) *EmailProviderManager {
-	return &EmailProviderManager{m}
-}
+type EmailProviderManager manager
 
 // Create an email provider.
 //
@@ -254,29 +283,29 @@ func newEmailProviderManager(m *Management) *EmailProviderManager {
 // `X-SES-Configuration-Set` header. The value must be a string.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/post_provider
-func (m *EmailProviderManager) Create(ep *EmailProvider, opts ...RequestOption) error {
-	return m.Request(http.MethodPost, m.URI("emails", "provider"), ep, opts...)
+func (m *EmailProviderManager) Create(ctx context.Context, ep *EmailProvider, opts ...RequestOption) error {
+	return m.management.Request(ctx, http.MethodPost, m.management.URI("emails", "provider"), ep, opts...)
 }
 
 // Read email provider details.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/get_provider
-func (m *EmailProviderManager) Read(opts ...RequestOption) (ep *EmailProvider, err error) {
+func (m *EmailProviderManager) Read(ctx context.Context, opts ...RequestOption) (ep *EmailProvider, err error) {
 	opts = append(opts, IncludeFields("name", "enabled", "default_from_address", "credentials", "settings"))
-	err = m.Request(http.MethodGet, m.URI("emails", "provider"), &ep, opts...)
+	err = m.management.Request(ctx, http.MethodGet, m.management.URI("emails", "provider"), &ep, opts...)
 	return
 }
 
 // Update an email provider.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/patch_provider
-func (m *EmailProviderManager) Update(ep *EmailProvider, opts ...RequestOption) (err error) {
-	return m.Request(http.MethodPatch, m.URI("emails", "provider"), ep, opts...)
+func (m *EmailProviderManager) Update(ctx context.Context, ep *EmailProvider, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, http.MethodPatch, m.management.URI("emails", "provider"), ep, opts...)
 }
 
 // Delete the email provider.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Emails/delete_provider
-func (m *EmailProviderManager) Delete(opts ...RequestOption) (err error) {
-	return m.Request(http.MethodDelete, m.URI("emails", "provider"), nil, opts...)
+func (m *EmailProviderManager) Delete(ctx context.Context, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, http.MethodDelete, m.management.URI("emails", "provider"), nil, opts...)
 }

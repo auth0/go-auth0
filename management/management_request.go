@@ -39,6 +39,7 @@ func (m *Management) URI(path ...string) string {
 // NewRequest returns a new HTTP request. If the payload is not nil it will be
 // encoded as JSON.
 func (m *Management) NewRequest(
+	ctx context.Context,
 	method,
 	uri string,
 	payload interface{},
@@ -51,7 +52,7 @@ func (m *Management) NewRequest(
 		}
 	}
 
-	request, err := http.NewRequest(method, uri, &body)
+	request, err := http.NewRequestWithContext(ctx, method, uri, &body)
 	if err != nil {
 		return nil, err
 	}
@@ -84,8 +85,8 @@ func (m *Management) Do(req *http.Request) (*http.Response, error) {
 }
 
 // Request combines NewRequest and Do, while also handling decoding of response payload.
-func (m *Management) Request(method, uri string, payload interface{}, options ...RequestOption) error {
-	request, err := m.NewRequest(method, uri, payload, options...)
+func (m *Management) Request(ctx context.Context, method, uri string, payload interface{}, options ...RequestOption) error {
+	request, err := m.NewRequest(ctx, method, uri, payload, options...)
 	if err != nil {
 		return fmt.Errorf("failed to create a new request: %w", err)
 	}
@@ -164,13 +165,6 @@ func applyListDefaults(options []RequestOption) RequestOption {
 		for _, option := range options {
 			option.apply(r)
 		}
-	})
-}
-
-// Context configures a request to use the specified context.
-func Context(ctx context.Context) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		*r = *r.WithContext(ctx)
 	})
 }
 

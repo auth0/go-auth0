@@ -1,5 +1,7 @@
 package management
 
+import "context"
+
 // CustomDomain to be used on authentication pages.
 //
 // See: https://auth0.com/docs/customize/custom-domains
@@ -50,13 +52,7 @@ type CustomDomainVerification struct {
 }
 
 // CustomDomainManager manages Auth0 CustomDomain resources.
-type CustomDomainManager struct {
-	*Management
-}
-
-func newCustomDomainManager(m *Management) *CustomDomainManager {
-	return &CustomDomainManager{m}
-}
+type CustomDomainManager manager
 
 // Create a new custom domain.
 //
@@ -64,44 +60,44 @@ func newCustomDomainManager(m *Management) *CustomDomainManager {
 // requests.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Custom_Domains/post_custom_domains
-func (m *CustomDomainManager) Create(c *CustomDomain, opts ...RequestOption) (err error) {
-	return m.Request("POST", m.URI("custom-domains"), c, opts...)
+func (m *CustomDomainManager) Create(ctx context.Context, c *CustomDomain, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "POST", m.management.URI("custom-domains"), c, opts...)
 }
 
 // Update a custom domain.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Custom_Domains/patch_custom_domains_by_id
-func (m *CustomDomainManager) Update(id string, c *CustomDomain, opts ...RequestOption) (err error) {
-	return m.Request("PATCH", m.URI("custom-domains", id), c, opts...)
+func (m *CustomDomainManager) Update(ctx context.Context, id string, c *CustomDomain, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "PATCH", m.management.URI("custom-domains", id), c, opts...)
 }
 
 // Read a custom domain configuration and status.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Custom_Domains/get_custom_domains_by_id
-func (m *CustomDomainManager) Read(id string, opts ...RequestOption) (c *CustomDomain, err error) {
-	err = m.Request("GET", m.URI("custom-domains", id), &c, opts...)
+func (m *CustomDomainManager) Read(ctx context.Context, id string, opts ...RequestOption) (c *CustomDomain, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("custom-domains", id), &c, opts...)
 	return
 }
 
 // Verify a custom domain.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Custom_Domains/post_verify
-func (m *CustomDomainManager) Verify(id string, opts ...RequestOption) (c *CustomDomain, err error) {
-	err = m.Request("POST", m.URI("custom-domains", id, "verify"), &c, opts...)
+func (m *CustomDomainManager) Verify(ctx context.Context, id string, opts ...RequestOption) (c *CustomDomain, err error) {
+	err = m.management.Request(ctx, "POST", m.management.URI("custom-domains", id, "verify"), &c, opts...)
 	return
 }
 
 // Delete a custom domain and stop serving requests for it.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Custom_Domains/delete_custom_domains_by_id
-func (m *CustomDomainManager) Delete(id string, opts ...RequestOption) (err error) {
-	return m.Request("DELETE", m.URI("custom-domains", id), nil, opts...)
+func (m *CustomDomainManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "DELETE", m.management.URI("custom-domains", id), nil, opts...)
 }
 
 // List all custom domains.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Custom_Domains/get_custom_domains
-func (m *CustomDomainManager) List(opts ...RequestOption) (c []*CustomDomain, err error) {
-	err = m.Request("GET", m.URI("custom-domains"), &c, opts...)
+func (m *CustomDomainManager) List(ctx context.Context, opts ...RequestOption) (c []*CustomDomain, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("custom-domains"), &c, opts...)
 	return
 }

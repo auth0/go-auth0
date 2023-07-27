@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"testing"
 
@@ -13,14 +14,14 @@ import (
 func TestTenantManager(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	initialSettings, err := api.Tenant.Read()
+	initialSettings, err := api.Tenant.Read(context.Background())
 	assert.NoError(t, err)
 
 	t.Cleanup(func() {
 		initialSettings.SandboxVersionAvailable = nil
 		initialSettings.UniversalLogin = nil
 		initialSettings.Flags = nil
-		err := api.Tenant.Update(initialSettings)
+		err := api.Tenant.Update(context.Background(), initialSettings)
 		require.NoError(t, err)
 	})
 
@@ -37,11 +38,14 @@ func TestTenantManager(t *testing.T) {
 		AllowedLogoutURLs:       &[]string{"https://app.com/logout", "http://localhost/logout"},
 		EnabledLocales:          &[]string{"fr", "en", "es"},
 		SandboxVersionAvailable: nil,
+		Sessions: &TenantSessions{
+			OIDCLogoutPromptEnabled: auth0.Bool(false),
+		},
 	}
-	err = api.Tenant.Update(newTenantSettings)
+	err = api.Tenant.Update(context.Background(), newTenantSettings)
 	assert.NoError(t, err)
 
-	actualTenantSettings, err := api.Tenant.Read()
+	actualTenantSettings, err := api.Tenant.Read(context.Background())
 	assert.NoError(t, err)
 	assert.Equal(t, newTenantSettings.GetFriendlyName(), actualTenantSettings.GetFriendlyName())
 	assert.Equal(t, newTenantSettings.GetIdleSessionLifetime(), actualTenantSettings.GetIdleSessionLifetime())
@@ -49,10 +53,11 @@ func TestTenantManager(t *testing.T) {
 	assert.Equal(t, newTenantSettings.GetSessionLifetime(), actualTenantSettings.GetSessionLifetime())
 	assert.Equal(t, newTenantSettings.GetSupportEmail(), actualTenantSettings.GetSupportEmail())
 	assert.Equal(t, newTenantSettings.GetSupportURL(), actualTenantSettings.GetSupportURL())
-	assert.Equal(t, newTenantSettings.SessionCookie.GetMode(), actualTenantSettings.SessionCookie.GetMode())
+	assert.Equal(t, newTenantSettings.GetSessionCookie().GetMode(), actualTenantSettings.GetSessionCookie().GetMode())
 	assert.Equal(t, newTenantSettings.GetAllowedLogoutURLs(), actualTenantSettings.GetAllowedLogoutURLs())
 	assert.Equal(t, newTenantSettings.GetEnabledLocales(), actualTenantSettings.GetEnabledLocales())
 	assert.Equal(t, newTenantSettings.GetSandboxVersion(), actualTenantSettings.GetSandboxVersion())
+	assert.Equal(t, newTenantSettings.GetSessions().GetOIDCLogoutPromptEnabled(), actualTenantSettings.GetSessions().GetOIDCLogoutPromptEnabled())
 }
 
 func TestTenant_MarshalJSON(t *testing.T) {

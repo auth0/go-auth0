@@ -15,40 +15,176 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestWrapRateLimit(t *testing.T) {
-	start := time.Now()
-	first := true
+func TestRetries(t *testing.T) {
+	t.Run("Default config", func(t *testing.T) {
+		start := time.Now()
+		i := 0
 
-	h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if first {
-			t.Log(start.Unix())
-			w.Header().Set("X-RateLimit-Limit", "1")
-			w.Header().Set("X-RateLimit-Remaining", "0")
-			w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(time.Second).Unix()))
-			w.WriteHeader(http.StatusTooManyRequests)
-			first = !first
-			return
-		}
-		w.WriteHeader(http.StatusOK)
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i == 1 {
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+		assert.NoError(t, err)
+
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+
+		elapsed := time.Since(start).Milliseconds()
+		assert.GreaterOrEqual(t, elapsed, int64(250))
+		assert.LessOrEqual(t, elapsed, int64(500))
+		assert.Equal(t, 2, i)
 	})
 
-	s := httptest.NewServer(h)
-	defer s.Close()
+	t.Run("Max retries", func(t *testing.T) {
+		i := 0
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i <= 5 {
+				w.WriteHeader(http.StatusGatewayTimeout)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
 
-	c := Wrap(s.Client(), StaticToken(""), WithRateLimit(), WithDebug(true))
-	r, err := c.Get(s.URL)
-	if err != nil {
-		t.Error(err)
-	}
+		s := httptest.NewServer(h)
+		defer s.Close()
 
-	if r.StatusCode != http.StatusOK {
-		t.Errorf("Expected status code to be %d but got %d", http.StatusOK, r.StatusCode)
-	}
+		rc := RetryOptions{MaxRetries: 5, Statuses: []int{http.StatusGatewayTimeout}}
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(rc))
+		r, err := c.Get(s.URL)
 
-	elapsed := time.Since(start)
-	if elapsed < time.Second {
-		t.Errorf("Time since start is sooner than expected. Expected >= 1s but got %s", elapsed)
-	}
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+		assert.Equal(t, 6, i)
+		assert.NoError(t, err)
+	})
+
+	t.Run("Pass empty struct to disable", func(t *testing.T) {
+		i := 0
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i <= 2 {
+				w.WriteHeader(http.StatusGatewayTimeout)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(RetryOptions{}))
+		r, err := c.Get(s.URL)
+
+		assert.Equal(t, http.StatusGatewayTimeout, r.StatusCode)
+		assert.Equal(t, 1, i)
+		assert.NoError(t, err)
+	})
+
+	t.Run("Should retry errors", func(t *testing.T) {
+		start := time.Now()
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {})
+
+		s := httptest.NewUnstartedServer(h)
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		_, err := c.Get(s.URL)
+
+		assert.Error(t, err)
+		elapsed := time.Since(start).Milliseconds()
+		assert.GreaterOrEqual(t, elapsed, int64(750))
+		assert.LessOrEqual(t, elapsed, int64(2000))
+	})
+
+	t.Run("Should not retry some errors", func(t *testing.T) {
+		i := 0
+		start := time.Now()
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewTLSServer(h)
+		c := WrapWithTokenSource(http.DefaultClient, StaticToken(""), WithRetries(DefaultRetryOptions))
+		_, err := c.Get(s.URL)
+
+		elapsed := time.Since(start).Milliseconds()
+		assert.Error(t, err)
+		assert.Equal(t, 0, i)
+		assert.Less(t, elapsed, int64(250))
+	})
+
+	t.Run("Should ensure time is after rate limit reset when retrying", func(t *testing.T) {
+		start := time.Now()
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i == 1 {
+				t.Log(start.Unix())
+				w.Header().Set("X-RateLimit-Limit", "1")
+				w.Header().Set("X-RateLimit-Remaining", "0")
+				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(2*time.Second).Unix()))
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+		assert.NoError(t, err)
+
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+
+		elapsed := time.Since(start).Seconds()
+		assert.GreaterOrEqual(t, elapsed, float64(2))
+		assert.LessOrEqual(t, elapsed, float64(3))
+		assert.Equal(t, 2, i)
+	})
+
+	t.Run("Should not use rate limit if it is exceptionally long", func(t *testing.T) {
+		start := time.Now()
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			i++
+			if i == 1 {
+				t.Log(start.Unix())
+				w.Header().Set("X-RateLimit-Limit", "1")
+				w.Header().Set("X-RateLimit-Remaining", "0")
+				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(2*time.Hour).Unix()))
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+		assert.NoError(t, err)
+
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+
+		elapsed := time.Since(start).Milliseconds()
+		assert.GreaterOrEqual(t, elapsed, int64(250))
+		assert.LessOrEqual(t, elapsed, int64(500))
+		assert.Equal(t, 2, i)
+	})
 }
 
 func TestWrapUserAgent(t *testing.T) {
@@ -62,7 +198,7 @@ func TestWrapUserAgent(t *testing.T) {
 	testServer := httptest.NewServer(testHandler)
 	defer testServer.Close()
 
-	httpClient := Wrap(testServer.Client(), StaticToken(""), WithUserAgent(UserAgent))
+	httpClient := WrapWithTokenSource(testServer.Client(), StaticToken(""), WithUserAgent(UserAgent))
 	_, err := httpClient.Get(testServer.URL)
 	assert.NoError(t, err)
 }
@@ -120,7 +256,7 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 			testServer.Close()
 		})
 
-		httpClient := Wrap(testServer.Client(), StaticToken(""), WithAuth0ClientInfo(DefaultAuth0ClientInfo))
+		httpClient := WrapWithTokenSource(testServer.Client(), StaticToken(""), WithAuth0ClientInfo(DefaultAuth0ClientInfo))
 		_, err := httpClient.Get(testServer.URL)
 		assert.NoError(t, err)
 	})
@@ -154,7 +290,7 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 				testServer.Close()
 			})
 
-			httpClient := Wrap(testServer.Client(), StaticToken(""), WithAuth0ClientInfo(&testCase.given))
+			httpClient := WrapWithTokenSource(testServer.Client(), StaticToken(""), WithAuth0ClientInfo(&testCase.given))
 			_, err := httpClient.Get(testServer.URL)
 			assert.NoError(t, err)
 		})

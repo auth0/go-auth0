@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"net/http"
 	"testing"
 	"time"
@@ -119,7 +120,7 @@ func TestLogStreamManager_Create(t *testing.T) {
 
 			expectedLogStream := testCase.logStream
 
-			err := api.LogStream.Create(&expectedLogStream)
+			err := api.LogStream.Create(context.Background(), &expectedLogStream)
 			assert.NoError(t, err)
 			assert.NotEmpty(t, expectedLogStream.GetID())
 
@@ -137,7 +138,7 @@ func TestLogStreamManager_Read(t *testing.T) {
 
 			expectedLogStream := givenALogStream(t, testCase)
 
-			actualLogStream, err := api.LogStream.Read(expectedLogStream.GetID())
+			actualLogStream, err := api.LogStream.Read(context.Background(), expectedLogStream.GetID())
 
 			assert.NoError(t, err)
 			assert.Equal(t, expectedLogStream, actualLogStream)
@@ -160,10 +161,10 @@ func TestLogStreamManager_Update(t *testing.T) {
 				},
 			}
 
-			err := api.LogStream.Update(logStream.GetID(), updatedLogStream)
+			err := api.LogStream.Update(context.Background(), logStream.GetID(), updatedLogStream)
 			assert.NoError(t, err)
 
-			actualLogStream, err := api.LogStream.Read(logStream.GetID())
+			actualLogStream, err := api.LogStream.Read(context.Background(), logStream.GetID())
 			assert.NoError(t, err)
 			assert.Equal(t, updatedLogStream.Filters, actualLogStream.Filters)
 		})
@@ -177,10 +178,10 @@ func TestLogStreamManager_Delete(t *testing.T) {
 
 			logStream := givenALogStream(t, testCase)
 
-			err := api.LogStream.Delete(logStream.GetID())
+			err := api.LogStream.Delete(context.Background(), logStream.GetID())
 			assert.NoError(t, err)
 
-			actualLogStream, err := api.LogStream.Read(logStream.GetID())
+			actualLogStream, err := api.LogStream.Read(context.Background(), logStream.GetID())
 			assert.Nil(t, actualLogStream)
 			assert.Error(t, err)
 			assert.Implements(t, (*Error)(nil), err)
@@ -193,7 +194,7 @@ func TestLogStreamManager_List(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	// There are no params we can add here, unfortunately.
-	logStreamList, err := api.LogStream.List()
+	logStreamList, err := api.LogStream.List(context.Background())
 	assert.NoError(t, err)
 	assert.GreaterOrEqual(t, len(logStreamList), 0)
 }
@@ -203,7 +204,7 @@ func givenALogStream(t *testing.T, testCase logStreamTestCase) *LogStream {
 
 	logStream := testCase.logStream
 
-	err := api.LogStream.Create(&logStream)
+	err := api.LogStream.Create(context.Background(), &logStream)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -216,6 +217,6 @@ func givenALogStream(t *testing.T, testCase logStreamTestCase) *LogStream {
 func cleanupLogStream(t *testing.T, logStreamID string) {
 	t.Helper()
 
-	err := api.LogStream.Delete(logStreamID)
+	err := api.LogStream.Delete(context.Background(), logStreamID)
 	require.NoError(t, err)
 }

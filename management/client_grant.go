@@ -1,5 +1,7 @@
 package management
 
+import "context"
+
 // ClientGrant is a method through which applications can gain Access Tokens.
 //
 // See: https://auth0.com/docs/get-started/applications/application-grant-types
@@ -23,19 +25,13 @@ type ClientGrantList struct {
 }
 
 // ClientGrantManager manages Auth0 ClientGrant resources.
-type ClientGrantManager struct {
-	*Management
-}
-
-func newClientGrantManager(m *Management) *ClientGrantManager {
-	return &ClientGrantManager{m}
-}
+type ClientGrantManager manager
 
 // Create a client grant.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Client_Grants/post_client_grants
-func (m *ClientGrantManager) Create(g *ClientGrant, opts ...RequestOption) (err error) {
-	return m.Request("POST", m.URI("client-grants"), g, opts...)
+func (m *ClientGrantManager) Create(ctx context.Context, g *ClientGrant, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "POST", m.management.URI("client-grants"), g, opts...)
 }
 
 // Read a client grant by its ID.
@@ -43,10 +39,10 @@ func (m *ClientGrantManager) Create(g *ClientGrant, opts ...RequestOption) (err 
 // The Auth0 Management API does not offer a method to retrieve a client grant
 // by id, we fake this by listing all client grants and matching by id on the
 // client side. For this reason this method should be used with caution.
-func (m *ClientGrantManager) Read(id string, opts ...RequestOption) (*ClientGrant, error) {
+func (m *ClientGrantManager) Read(ctx context.Context, id string, opts ...RequestOption) (*ClientGrant, error) {
 	var page int
 	for {
-		l, err := m.List(append(opts, Page(page))...)
+		l, err := m.List(ctx, append(opts, Page(page))...)
 		if err != nil {
 			return nil, err
 		}
@@ -70,15 +66,15 @@ func (m *ClientGrantManager) Read(id string, opts ...RequestOption) (*ClientGran
 // Update a client grant.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Client_Grants/patch_client_grants_by_id
-func (m *ClientGrantManager) Update(id string, g *ClientGrant, opts ...RequestOption) (err error) {
-	return m.Request("PATCH", m.URI("client-grants", id), g, opts...)
+func (m *ClientGrantManager) Update(ctx context.Context, id string, g *ClientGrant, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "PATCH", m.management.URI("client-grants", id), g, opts...)
 }
 
 // Delete a client grant.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Client_Grants/delete_client_grants_by_id
-func (m *ClientGrantManager) Delete(id string, opts ...RequestOption) (err error) {
-	return m.Request("DELETE", m.URI("client-grants", id), nil, opts...)
+func (m *ClientGrantManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "DELETE", m.management.URI("client-grants", id), nil, opts...)
 }
 
 // List all client grants.
@@ -87,7 +83,7 @@ func (m *ClientGrantManager) Delete(id string, opts ...RequestOption) (err error
 // not provided.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Client_Grants/get_client_grants
-func (m *ClientGrantManager) List(opts ...RequestOption) (gs *ClientGrantList, err error) {
-	err = m.Request("GET", m.URI("client-grants"), &gs, applyListDefaults(opts))
+func (m *ClientGrantManager) List(ctx context.Context, opts ...RequestOption) (gs *ClientGrantList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("client-grants"), &gs, applyListDefaults(opts))
 	return
 }

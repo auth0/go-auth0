@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"net/http"
 	"testing"
 	"time"
@@ -38,7 +39,7 @@ func TestActionManager_Create(t *testing.T) {
 		},
 	}
 
-	err := api.Action.Create(expectedAction)
+	err := api.Action.Create(context.Background(), expectedAction)
 
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedAction.GetID())
@@ -52,7 +53,7 @@ func TestActionManager_Read(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedAction := givenAnAction(t)
-	actualAction, err := api.Action.Read(expectedAction.GetID())
+	actualAction, err := api.Action.Read(context.Background(), expectedAction.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedAction.GetID(), actualAction.GetID())
@@ -73,7 +74,7 @@ func TestActionManager_Update(t *testing.T) {
 	expectedCode := "exports.onExecutePostLogin = async (event, api) => { api.user.setUserMetadata('myParam', 'foo'); };"
 	expectedAction.Code = &expectedCode
 
-	err := api.Action.Update(actionID, expectedAction)
+	err := api.Action.Update(context.Background(), actionID, expectedAction)
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedCode, *expectedAction.Code)
@@ -84,10 +85,10 @@ func TestActionManager_Delete(t *testing.T) {
 
 	expectedAction := givenAnAction(t)
 
-	err := api.Action.Delete(expectedAction.GetID())
+	err := api.Action.Delete(context.Background(), expectedAction.GetID())
 	assert.NoError(t, err)
 
-	actualAction, err := api.Action.Read(expectedAction.GetID())
+	actualAction, err := api.Action.Read(context.Background(), expectedAction.GetID())
 
 	assert.Empty(t, actualAction)
 	assert.Error(t, err)
@@ -100,7 +101,7 @@ func TestActionManager_List(t *testing.T) {
 
 	expectedAction := givenAnAction(t)
 
-	actionList, err := api.Action.List(Parameter("actionName", expectedAction.GetName()))
+	actionList, err := api.Action.List(context.Background(), Parameter("actionName", expectedAction.GetName()))
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedAction.GetID(), actionList.Actions[0].GetID())
@@ -109,7 +110,7 @@ func TestActionManager_List(t *testing.T) {
 func TestActionManager_Triggers(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	actionTriggerList, err := api.Action.Triggers()
+	actionTriggerList, err := api.Action.Triggers(context.Background())
 
 	assert.NoError(t, err)
 	assert.NotEmpty(t, actionTriggerList)
@@ -122,7 +123,7 @@ func TestActionManager_Deploy(t *testing.T) {
 
 	ensureActionBuilt(t, expectedAction.GetID())
 
-	actualActionVersion, err := api.Action.Deploy(expectedAction.GetID())
+	actualActionVersion, err := api.Action.Deploy(context.Background(), expectedAction.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedAction.GetID(), actualActionVersion.Action.GetID())
@@ -134,10 +135,10 @@ func TestActionManager_DeployVersion(t *testing.T) {
 	action := givenAnAction(t)
 	ensureActionBuilt(t, action.GetID())
 
-	version, err := api.Action.Deploy(action.GetID())
+	version, err := api.Action.Deploy(context.Background(), action.GetID())
 	require.NoError(t, err)
 
-	_, err = api.Action.DeployVersion(action.GetID(), version.GetID())
+	_, err = api.Action.DeployVersion(context.Background(), action.GetID(), version.GetID())
 
 	assert.NoError(t, err)
 }
@@ -148,10 +149,10 @@ func TestActionManager_Version(t *testing.T) {
 	action := givenAnAction(t)
 	ensureActionBuilt(t, action.GetID())
 
-	deployedVersion, err := api.Action.Deploy(action.GetID())
+	deployedVersion, err := api.Action.Deploy(context.Background(), action.GetID())
 	require.NoError(t, err)
 
-	actualVersion, err := api.Action.Version(action.GetID(), deployedVersion.GetID())
+	actualVersion, err := api.Action.Version(context.Background(), action.GetID(), deployedVersion.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, deployedVersion.GetID(), actualVersion.GetID())
@@ -163,10 +164,10 @@ func TestActionManager_Versions(t *testing.T) {
 	action := givenAnAction(t)
 	ensureActionBuilt(t, action.GetID())
 
-	deployedVersion, err := api.Action.Deploy(action.GetID())
+	deployedVersion, err := api.Action.Deploy(context.Background(), action.GetID())
 	require.NoError(t, err)
 
-	actualVersions, err := api.Action.Versions(action.GetID())
+	actualVersions, err := api.Action.Versions(context.Background(), action.GetID())
 
 	assert.NoError(t, err)
 	assert.Equal(t, deployedVersion.GetID(), actualVersions.Versions[0].GetID())
@@ -178,11 +179,11 @@ func TestActionManager_Bindings(t *testing.T) {
 	action := givenAnAction(t)
 	ensureActionBuilt(t, action.GetID())
 
-	_, err := api.Action.Deploy(action.GetID())
+	_, err := api.Action.Deploy(context.Background(), action.GetID())
 	require.NoError(t, err)
 
 	emptyBinding := make([]*ActionBinding, 0)
-	err = api.Action.UpdateBindings(ActionTriggerPostLogin, emptyBinding)
+	err = api.Action.UpdateBindings(context.Background(), ActionTriggerPostLogin, emptyBinding)
 	assert.NoError(t, err)
 
 	binding := []*ActionBinding{
@@ -195,16 +196,16 @@ func TestActionManager_Bindings(t *testing.T) {
 		},
 	}
 
-	err = api.Action.UpdateBindings(ActionTriggerPostLogin, binding)
+	err = api.Action.UpdateBindings(context.Background(), ActionTriggerPostLogin, binding)
 	assert.NoError(t, err)
 
-	bindingList, err := api.Action.Bindings(ActionTriggerPostLogin)
+	bindingList, err := api.Action.Bindings(context.Background(), ActionTriggerPostLogin)
 
 	assert.NoError(t, err)
 	assert.Len(t, bindingList.Bindings, 1)
 
 	t.Cleanup(func() {
-		err = api.Action.UpdateBindings(ActionTriggerPostLogin, emptyBinding)
+		err = api.Action.UpdateBindings(context.Background(), ActionTriggerPostLogin, emptyBinding)
 		assert.NoError(t, err)
 	})
 }
@@ -224,14 +225,14 @@ func TestActionManager_Test(t *testing.T) {
 			},
 		},
 	}
-	err := api.Action.Test(action.GetID(), test)
+	err := api.Action.Test(context.Background(), action.GetID(), test)
 	assert.NoError(t, err)
 }
 
 func TestActionManager_Execution(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	_, err := api.Action.Execution("M9IqRp9wQLaYNrSwz6YPTTIwMjEwNDA0")
+	_, err := api.Action.Execution(context.Background(), "M9IqRp9wQLaYNrSwz6YPTTIwMjEwNDA0")
 	// Expect a 404 as we can't get execution ID via API
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
@@ -248,7 +249,7 @@ func TestActionManager_LogSession(t *testing.T) {
 		}},
 	}
 
-	err := api.Action.LogSession(expectedLogSession)
+	err := api.Action.LogSession(context.Background(), expectedLogSession)
 
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedLogSession.GetURL())
@@ -258,7 +259,7 @@ func TestActionManager_LogSession(t *testing.T) {
 func cleanupAction(t *testing.T, actionID string) {
 	t.Helper()
 
-	err := api.Action.Delete(actionID)
+	err := api.Action.Delete(context.Background(), actionID)
 	if err != nil {
 		if err.(Error).Status() != http.StatusNotFound {
 			t.Error(err)
@@ -293,7 +294,7 @@ func givenAnAction(t *testing.T) *Action {
 		},
 	}
 
-	err := api.Action.Create(action)
+	err := api.Action.Create(context.Background(), action)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -309,7 +310,7 @@ func ensureActionBuilt(t *testing.T, actionID string) {
 	var actionBuilt bool
 
 	for i := 0; i < 60; i++ {
-		action, err := api.Action.Read(actionID)
+		action, err := api.Action.Read(context.Background(), actionID)
 		assert.NoError(t, err)
 
 		if action.GetStatus() == ActionStatusBuilt {

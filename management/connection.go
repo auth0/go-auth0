@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"sort"
@@ -66,24 +67,8 @@ const (
 	ConnectionStrategyBox = "box"
 	// ConnectionStrategyWordpress constant.
 	ConnectionStrategyWordpress = "wordpress"
-	// ConnectionStrategyDiscord constant.
-	ConnectionStrategyDiscord = "discord"
-	// ConnectionStrategyImgur constant.
-	ConnectionStrategyImgur = "imgur"
-	// ConnectionStrategySpotify constant.
-	ConnectionStrategySpotify = "spotify"
 	// ConnectionStrategyShopify constant.
 	ConnectionStrategyShopify = "shopify"
-	// ConnectionStrategyFigma constant.
-	ConnectionStrategyFigma = "figma"
-	// ConnectionStrategySlack constant.
-	ConnectionStrategySlack = "slack-oauth-2"
-	// ConnectionStrategyDigitalOcean constant.
-	ConnectionStrategyDigitalOcean = "digitalocean"
-	// ConnectionStrategyTwitch constant.
-	ConnectionStrategyTwitch = "twitch"
-	// ConnectionStrategyVimeo constant.
-	ConnectionStrategyVimeo = "vimeo"
 	// ConnectionStrategyCustom constant.
 	ConnectionStrategyCustom = "custom"
 	// ConnectionStrategyPingFederate constant.
@@ -219,15 +204,7 @@ func (c *Connection) UnmarshalJSON(b []byte) error {
 			ConnectionStrategyYahoo,
 			ConnectionStrategyBox,
 			ConnectionStrategyWordpress,
-			ConnectionStrategyDiscord,
-			ConnectionStrategyImgur,
-			ConnectionStrategySpotify,
 			ConnectionStrategyShopify,
-			ConnectionStrategyFigma,
-			ConnectionStrategySlack,
-			ConnectionStrategyDigitalOcean,
-			ConnectionStrategyTwitch,
-			ConnectionStrategyVimeo,
 			ConnectionStrategyCustom:
 			v = &ConnectionOptionsOAuth2{}
 		case ConnectionStrategyAD:
@@ -976,30 +953,31 @@ type ConnectionOptionsPingFederate struct {
 
 // ConnectionOptionsSAML is used to configure a SAML Connection.
 type ConnectionOptionsSAML struct {
-	Cert               *string                            `json:"cert,omitempty"`
-	Debug              *bool                              `json:"debug,omitempty"`
-	Expires            *string                            `json:"expires,omitempty"`
-	IdpInitiated       *ConnectionOptionsSAMLIdpInitiated `json:"idpinitiated,omitempty"`
-	SigningKey         *ConnectionOptionsSAMLSigningKey   `json:"signing_key,omitempty"`
-	SigningCert        *string                            `json:"signingCert,omitempty"`
-	Thumbprints        []interface{}                      `json:"thumbprints,omitempty"`
-	ProtocolBinding    *string                            `json:"protocolBinding,omitempty"`
-	TenantDomain       *string                            `json:"tenant_domain,omitempty"`
-	DomainAliases      *[]string                          `json:"domain_aliases,omitempty"`
-	SignInEndpoint     *string                            `json:"signInEndpoint,omitempty"`
-	SignOutEndpoint    *string                            `json:"signOutEndpoint,omitempty"`
-	DisableSignOut     *bool                              `json:"disableSignout,omitempty"`
-	SignatureAlgorithm *string                            `json:"signatureAlgorithm,omitempty"`
-	DigestAglorithm    *string                            `json:"digestAlgorithm,omitempty"`
-	MetadataXML        *string                            `json:"metadataXml,omitempty"`
-	MetadataURL        *string                            `json:"metadataUrl,omitempty"`
-	FieldsMap          map[string]interface{}             `json:"fieldsMap,omitempty"`
-	Subject            map[string]interface{}             `json:"subject,omitempty"`
-	SignSAMLRequest    *bool                              `json:"signSAMLRequest,omitempty"`
-	RequestTemplate    *string                            `json:"requestTemplate,omitempty"`
-	UserIDAttribute    *string                            `json:"user_id_attribute,omitempty"`
-	LogoURL            *string                            `json:"icon_url,omitempty"`
-	EntityID           *string                            `json:"entityId,omitempty"`
+	Cert               *string                             `json:"cert,omitempty"`
+	Debug              *bool                               `json:"debug,omitempty"`
+	Expires            *string                             `json:"expires,omitempty"`
+	IdpInitiated       *ConnectionOptionsSAMLIdpInitiated  `json:"idpinitiated,omitempty"`
+	SigningKey         *ConnectionOptionsSAMLSigningKey    `json:"signing_key,omitempty"`
+	DecryptionKey      *ConnectionOptionsSAMLDecryptionKey `json:"decryptionKey,omitempty"`
+	SigningCert        *string                             `json:"signingCert,omitempty"`
+	Thumbprints        []interface{}                       `json:"thumbprints,omitempty"`
+	ProtocolBinding    *string                             `json:"protocolBinding,omitempty"`
+	TenantDomain       *string                             `json:"tenant_domain,omitempty"`
+	DomainAliases      *[]string                           `json:"domain_aliases,omitempty"`
+	SignInEndpoint     *string                             `json:"signInEndpoint,omitempty"`
+	SignOutEndpoint    *string                             `json:"signOutEndpoint,omitempty"`
+	DisableSignOut     *bool                               `json:"disableSignout,omitempty"`
+	SignatureAlgorithm *string                             `json:"signatureAlgorithm,omitempty"`
+	DigestAglorithm    *string                             `json:"digestAlgorithm,omitempty"`
+	MetadataXML        *string                             `json:"metadataXml,omitempty"`
+	MetadataURL        *string                             `json:"metadataUrl,omitempty"`
+	FieldsMap          map[string]interface{}              `json:"fieldsMap,omitempty"`
+	Subject            map[string]interface{}              `json:"subject,omitempty"`
+	SignSAMLRequest    *bool                               `json:"signSAMLRequest,omitempty"`
+	RequestTemplate    *string                             `json:"requestTemplate,omitempty"`
+	UserIDAttribute    *string                             `json:"user_id_attribute,omitempty"`
+	LogoURL            *string                             `json:"icon_url,omitempty"`
+	EntityID           *string                             `json:"entityId,omitempty"`
 
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
@@ -1022,6 +1000,13 @@ type ConnectionOptionsSAMLIdpInitiated struct {
 // ConnectionOptionsSAMLSigningKey is used to configure the
 // SigningKey settings on a ConnectionOptionsSAML.
 type ConnectionOptionsSAMLSigningKey struct {
+	Key  *string `json:"key,omitempty"`
+	Cert *string `json:"cert,omitempty"`
+}
+
+// ConnectionOptionsSAMLDecryptionKey is used to configure the
+// DecryptionKey settings on a ConnectionOptionsSAML.
+type ConnectionOptionsSAMLDecryptionKey struct {
 	Key  *string `json:"key,omitempty"`
 	Cert *string `json:"cert,omitempty"`
 }
@@ -1061,9 +1046,7 @@ func (c *ConnectionOptionsGoogleApps) SetScopes(enable bool, scopes ...string) {
 }
 
 // ConnectionManager manages Auth0 Connection resources.
-type ConnectionManager struct {
-	*Management
-}
+type ConnectionManager manager
 
 // ConnectionList is a list of Connections.
 type ConnectionList struct {
@@ -1071,30 +1054,26 @@ type ConnectionList struct {
 	Connections []*Connection `json:"connections"`
 }
 
-func newConnectionManager(m *Management) *ConnectionManager {
-	return &ConnectionManager{m}
-}
-
 // Create a new connection.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/post_connections
-func (m *ConnectionManager) Create(c *Connection, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("connections"), c, opts...)
+func (m *ConnectionManager) Create(ctx context.Context, c *Connection, opts ...RequestOption) error {
+	return m.management.Request(ctx, "POST", m.management.URI("connections"), c, opts...)
 }
 
 // Read retrieves a connection by its id.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/get_connections_by_id
-func (m *ConnectionManager) Read(id string, opts ...RequestOption) (c *Connection, err error) {
-	err = m.Request("GET", m.URI("connections", id), &c, opts...)
+func (m *ConnectionManager) Read(ctx context.Context, id string, opts ...RequestOption) (c *Connection, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("connections", id), &c, opts...)
 	return
 }
 
 // List all connections.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/get_connections
-func (m *ConnectionManager) List(opts ...RequestOption) (c *ConnectionList, err error) {
-	err = m.Request("GET", m.URI("connections"), &c, applyListDefaults(opts))
+func (m *ConnectionManager) List(ctx context.Context, opts ...RequestOption) (c *ConnectionList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("connections"), &c, applyListDefaults(opts))
 	return
 }
 
@@ -1104,24 +1083,24 @@ func (m *ConnectionManager) List(opts ...RequestOption) (c *ConnectionList, err 
 // overridden, so ensure that all parameters are present.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/patch_connections_by_id
-func (m *ConnectionManager) Update(id string, c *Connection, opts ...RequestOption) (err error) {
-	return m.Request("PATCH", m.URI("connections", id), c, opts...)
+func (m *ConnectionManager) Update(ctx context.Context, id string, c *Connection, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "PATCH", m.management.URI("connections", id), c, opts...)
 }
 
 // Delete a connection and all its users.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/delete_connections_by_id
-func (m *ConnectionManager) Delete(id string, opts ...RequestOption) (err error) {
-	return m.Request("DELETE", m.URI("connections", id), nil, opts...)
+func (m *ConnectionManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "DELETE", m.management.URI("connections", id), nil, opts...)
 }
 
 // ReadByName retrieves a connection by its name. This is a helper method when a
 // connection id is not readily available.
-func (m *ConnectionManager) ReadByName(name string, opts ...RequestOption) (*Connection, error) {
+func (m *ConnectionManager) ReadByName(ctx context.Context, name string, opts ...RequestOption) (*Connection, error) {
 	if name == "" {
 		return nil, &managementError{400, "Bad Request", "Name cannot be empty"}
 	}
-	c, err := m.List(append(opts, Parameter("name", name))...)
+	c, err := m.List(ctx, append(opts, Parameter("name", name))...)
 	if err != nil {
 		return nil, err
 	}

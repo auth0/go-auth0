@@ -17,7 +17,7 @@ Fine-grained configuration can be provided on a per-request basis to enhance the
 ```go
 // Example
 userGrants, err := auth0API.Grant.List(
-    management.Context(ctx),
+    context.Background(),
     management.Header("MySpecialHeader","MySpecialHeaderValue"),
     management.Parameter("user_id", "someUserID"),
     management.Parameter("client", "someClientID"),
@@ -53,6 +53,7 @@ When retrieving lists of resources, if no query parameters are set using the `ma
 var page int
 for {
     clients, err := auth0API.Client.List(
+        context.Background(),
         management.Page(page),
         management.PerPage(100),
     )
@@ -86,7 +87,7 @@ Checkpoint pagination can be used when you wish to retrieve more than 1000 resul
 ```go
 // For the first call, only pass the `take` query parameter, the API will
 // then return a `Next` value that can be used for future requests.
-orgList, err := auth0API.Organization.List(management.Take(100))
+orgList, err := auth0API.Organization.List(context.Background(), management.Take(100))
 if err != nil {
     log.Fatalf("err: %+v", err)
 }
@@ -100,6 +101,7 @@ for {
     // Pass the `next` and `take` query parameters now so
     // that we can correctly paginate the organizations.
     orgList, err = auth0API.Organization.List(
+        context.Background(),
         management.From(orgList.Next),
         management.Take(100),
     )
@@ -132,6 +134,7 @@ initialLogId := "LOGID"
 for {
     // Retrieve 100 logs after the specified log
     logs, err = auth0API.Log.List(
+        context.Background(),
         management.From(logFromId),
         management.Take(100),
     )
@@ -184,7 +187,7 @@ Then, create a request using the lower level request functionality exposed by th
 
 ```go
 var user CustomUser
-err := auth0API.Request(http.MethodGet, auth0API.URI("users", "auth0|63cfb8ca89c31c3f33f1dffd"), &user)
+err := auth0API.Request(context.Background(), http.MethodGet, auth0API.URI("users", "auth0|63cfb8ca89c31c3f33f1dffd"), &user)
 if err != nil {
     log.Fatalf("error was %+v", err)
 }

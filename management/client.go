@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"strconv"
@@ -76,11 +77,11 @@ type Client struct {
 	CrossOriginLocation *string `json:"cross_origin_loc,omitempty"`
 
 	// True if the custom login page is to be used, false otherwise. Defaults to true.
-	CustomLoginPageOn      *bool                  `json:"custom_login_page_on,omitempty"`
-	CustomLoginPage        *string                `json:"custom_login_page,omitempty"`
-	CustomLoginPagePreview *string                `json:"custom_login_page_preview,omitempty"`
-	FormTemplate           *string                `json:"form_template,omitempty"`
-	Addons                 map[string]interface{} `json:"addons,omitempty"`
+	CustomLoginPageOn      *bool         `json:"custom_login_page_on,omitempty"`
+	CustomLoginPage        *string       `json:"custom_login_page,omitempty"`
+	CustomLoginPagePreview *string       `json:"custom_login_page_preview,omitempty"`
+	FormTemplate           *string       `json:"form_template,omitempty"`
+	Addons                 *ClientAddons `json:"addons,omitempty"`
 
 	// Defines the requested authentication method for the token endpoint.
 	// Possible values are:
@@ -229,6 +230,283 @@ type OIDCBackchannelLogout struct {
 	BackChannelLogoutURLs *[]string `json:"backchannel_logout_urls,omitempty"`
 }
 
+// ClientAddons defines the `addons` settings for a Client.
+type ClientAddons struct {
+	AWS                  *AWSClientAddon                  `json:"aws,omitempty"`
+	AzureBlob            *AzureBlobClientAddon            `json:"azure_blob,omitempty"`
+	AzureSB              *AzureSBClientAddon              `json:"azure_sb,omitempty"`
+	Box                  *BoxClientAddon                  `json:"box,omitempty"`
+	CloudBees            *CloudBeesClientAddon            `json:"cloudbees,omitempty"`
+	Concur               *ConcurClientAddon               `json:"concur,omitempty"`
+	Dropbox              *DropboxClientAddon              `json:"dropbox,omitempty"`
+	EchoSign             *EchoSignClientAddon             `json:"echosign,omitempty"`
+	Egnyte               *EgnyteClientAddon               `json:"egnyte,omitempty"`
+	Firebase             *FirebaseClientAddon             `json:"firebase,omitempty"`
+	Layer                *LayerClientAddon                `json:"layer,omitempty"`
+	MSCRM                *MSCRMClientAddon                `json:"mscrm,omitempty"`
+	NewRelic             *NewRelicClientAddon             `json:"newrelic,omitempty"`
+	Office365            *Office365ClientAddon            `json:"office365,omitempty"`
+	RMS                  *RMSClientAddon                  `json:"rms,omitempty"`
+	Salesforce           *SalesforceClientAddon           `json:"salesforce,omitempty"`
+	SalesforceAPI        *SalesforceAPIClientAddon        `json:"salesforce_api,omitempty"`
+	SalesforceSandboxAPI *SalesforceSandboxAPIClientAddon `json:"salesforce_sandbox_api,omitempty"`
+	// SAML2 Addon configuration. Set this property to indicate that the Addon should be enabled, all settings are optional.
+	// The first entry in `Callbacks` should be the URL to post the SAML Token to.
+	SAML2          *SAML2ClientAddon          `json:"samlp,omitempty"`
+	SAPAPI         *SAPAPIClientAddon         `json:"sap_api,omitempty"`
+	SharePoint     *SharePointClientAddon     `json:"sharepoint,omitempty"`
+	Sentry         *SentryClientAddon         `json:"sentry,omitempty"`
+	Slack          *SlackClientAddon          `json:"slack,omitempty"`
+	SpringCM       *SpringCMClientAddon       `json:"springcm,omitempty"`
+	SSOIntegration *SSOIntegrationClientAddon `json:"sso_integration,omitempty"`
+	WAMS           *WAMSClientAddon           `json:"wams,omitempty"`
+	// WS-Fed Addon. Set this property to indicate the Addon should be enabled and then store the
+	// configuration in `Callbacks` and `ClientAliases` properties on the Client.
+	// The first entry in `Callbacks` should be the URL to post the SAML Token to.
+	// ClientAliases should include the Realm which is the identifier sent by the application.
+	WSFED   *WSFEDClientAddon   `json:"wsfed,omitempty"`
+	Zendesk *ZendeskClientAddon `json:"zendesk,omitempty"`
+	Zoom    *ZoomClientAddon    `json:"zoom,omitempty"`
+}
+
+// AWSClientAddon defines the `aws` settings for a client.
+type AWSClientAddon struct {
+	Principal         *string `json:"principal,omitempty"`
+	Role              *string `json:"role,omitempty"`
+	LifetimeInSeconds *int    `json:"lifetime_in_seconds,omitempty"`
+}
+
+// AzureBlobClientAddon defines the `azure_blob` settings for a client.
+type AzureBlobClientAddon struct {
+	AccountName      *string `json:"accountName,omitempty"`
+	StorageAccessKey *string `json:"storageAccessKey,omitempty"`
+	ContainerName    *string `json:"containerName,omitempty"`
+	BlobName         *string `json:"blobName,omitempty"`
+	Expiration       *int    `json:"expiration,omitempty"`
+	SignedIdentifier *string `json:"signedIdentifier,omitempty"`
+	BlobRead         *bool   `json:"blob_read,omitempty"`
+	BlobWrite        *bool   `json:"blob_write,omitempty"`
+	BlobDelete       *bool   `json:"blob_delete,omitempty"`
+	ContainerRead    *bool   `json:"container_read,omitempty"`
+	ContainerWrite   *bool   `json:"container_write,omitempty"`
+	ContainerDelete  *bool   `json:"container_delete,omitempty"`
+	ContainerList    *bool   `json:"container_list,omitempty"`
+}
+
+// AzureSBClientAddon defines the `azure_sb` settings for a client.
+type AzureSBClientAddon struct {
+	Namespace  *string `json:"namespace,omitempty"`
+	SASKeyName *string `json:"sasKeyName,omitempty"`
+	SASKey     *string `json:"sasKey,omitempty"`
+	EntityPath *string `json:"entityPath,omitempty"`
+	Expiration *int    `json:"expiration,omitempty"`
+}
+
+// BoxClientAddon defines the `box` settings for a client.
+type BoxClientAddon struct {
+}
+
+// CloudBeesClientAddon defines the `cloudbees` settings for a client.
+type CloudBeesClientAddon struct {
+}
+
+// ConcurClientAddon defines the `concur` settings for a client.
+type ConcurClientAddon struct {
+}
+
+// DropboxClientAddon defines the `dropbox` settings for a client.
+type DropboxClientAddon struct {
+}
+
+// EchoSignClientAddon defines the `echosign` settings for a client.
+type EchoSignClientAddon struct {
+	Domain *string `json:"domain,omitempty"`
+}
+
+// EgnyteClientAddon defines the `egnyte` settings for a client.
+type EgnyteClientAddon struct {
+	Domain *string `json:"domain,omitempty"`
+}
+
+// FirebaseClientAddon defines the `firebase` settings for a client.
+type FirebaseClientAddon struct {
+	Secret            *string `json:"secret,omitempty"`
+	PrivateKeyID      *string `json:"private_key_id,omitempty"`
+	PrivateKey        *string `json:"private_key,omitempty"`
+	ClientEmail       *string `json:"client_email,omitempty"`
+	LifetimeInSeconds *int    `json:"lifetime_in_seconds,omitempty"`
+}
+
+// LayerClientAddon defines the `layer` settings for a client.
+type LayerClientAddon struct {
+	ProviderID *string `json:"providerId,omitempty"`
+	KeyID      *string `json:"keyId,omitempty"`
+	PrivateKey *string `json:"privateKey,omitempty"`
+	Principal  *string `json:"principal,omitempty"`
+	Expiration *int    `json:"expiration,omitempty"`
+}
+
+// MSCRMClientAddon defines the `mscrm` settings for a client.
+type MSCRMClientAddon struct {
+	URL *string `json:"url,omitempty"`
+}
+
+// NewRelicClientAddon defines the `newrelic` settings for a client.
+type NewRelicClientAddon struct {
+	Account *string `json:"account,omitempty"`
+}
+
+// Office365ClientAddon defines the `office365` settings for a client.
+type Office365ClientAddon struct {
+	Domain     *string `json:"domain,omitempty"`
+	Connection *string `json:"connection,omitempty"`
+}
+
+// RMSClientAddon defines the `rms` settings for a client.
+type RMSClientAddon struct {
+	URL *string `json:"url,omitempty"`
+}
+
+// SalesforceClientAddon defines the `salesforce` settings for a client.
+type SalesforceClientAddon struct {
+	EntityID *string `json:"entity_id,omitempty"`
+}
+
+// SalesforceAPIClientAddon defines the `salesforce_api` settings for a client.
+type SalesforceAPIClientAddon struct {
+	ClientID            *string `json:"clientid,omitempty"`
+	Principal           *string `json:"principal,omitempty"`
+	CommunityName       *string `json:"communityName,omitempty"`
+	CommunityURLSection *string `json:"community_url_section,omitempty"`
+}
+
+// SalesforceSandboxAPIClientAddon defines the `salesforce_sandbox_api` settings for a client.
+type SalesforceSandboxAPIClientAddon struct {
+	ClientID            *string `json:"clientid,omitempty"`
+	Principal           *string `json:"principal,omitempty"`
+	CommunityName       *string `json:"communityName,omitempty"`
+	CommunityURLSection *string `json:"community_url_section,omitempty"`
+}
+
+// SAML2ClientAddon defines the `SAML2` settings for a Client.
+type SAML2ClientAddon struct {
+	// The mappings between the Auth0 user profile and the output attributes on the SAML Assertion.
+	// Each "name" represents the property name on the Auth0 user profile.
+	// Each "value" is the name (including namespace) for the resulting SAML attribute in the assertion.
+	Mappings *map[string]string `json:"mappings,omitempty"`
+	// The audience of the SAML Assertion.
+	Audience *string `json:"audience,omitempty"`
+	// The recipient of the SAML Assertion.
+	Recipient *string `json:"recipient,omitempty"`
+	// Whether or not a UPN claim should be created.
+	CreateUPNClaim *bool `json:"createUpnClaim,omitempty"`
+	// If `PassthroughClaimsWithNoMapping` is true and this is false, for each claim that is not mapped to the common profile Auth0 will add a prefix
+	// 	http://schema.auth0.com	. If true it will passthrough the claim as-is.
+	MapUnknownClaimsAsIs *bool `json:"mapUnknownClaimsAsIs,omitempty"`
+	// If true, for each claim that is not mapped to the common profile, Auth0 will passthrough those in the output assertion.
+	// If false, those claims won't be mapped.
+	PassthroughClaimsWithNoMapping *bool `json:"passthroughClaimsWithNoMapping,omitempty"`
+	// If true, it will will add more information in the token like the provider used (google, adfs, ad, etc.) and the access_token if available.
+	MapIdentities *bool `json:"mapIdentities,omitempty"`
+	// Signature algorithm to sign the SAML Assertion or response.
+	SignatureAlgorithm *string `json:"signatureAlgorithm,omitempty"`
+	// Digest algorithm to calculate digest of the SAML Assertion or response.
+	DigestAlgorithm *string `json:"digestAlgorithm,omitempty"`
+	Issuer          *string `json:"issuer,omitempty"`
+	// Destination of the SAML Response. If not specified, it will be AssertionConsumerUrlof SAMLRequest or Callback URL if there was no SAMLRequest.
+	Destination *string `json:"destination,omitempty"`
+	// Expiration of the token.
+	LifetimeInSeconds *int `json:"lifetimeInSeconds,omitempty"`
+	// Whether or not the SAML Response should be signed. By default the SAML Assertion will be signed, but not the SAML Response.
+	// If true, SAML Response will be signed instead of SAML Assertion.
+	SignResponse         *bool   `json:"signResponse,omitempty"`
+	NameIdentifierFormat *string `json:"nameIdentifierFormat,omitempty"`
+	// Auth0 will try each of the attributes of this array in order. If one of them has a value, it will use that for the Subject/NameID
+	NameIdentifierProbes *[]string `json:"nameIdentifierProbes,omitempty"`
+	AuthnContextClassRef *string   `json:"authnContextClassRef,omitempty"`
+	// When set to true, the xs:type of the element is inferred. Types are xs:string, xs:boolean, xs:double, and xs:anyType.
+	// When set to false all xs:type are xs:anyType
+	TypedAttributes *bool `json:"typedAttributes,omitempty"`
+	// When set to true, the NameFormat is inferred based on the attribute name.
+	// NameFormat values are urn:oasis:names:tc:SAML:2.0:attrname-format:uri, urn:oasis:names:tc:SAML:2.0:attrname-format:basic,
+	// and urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified.
+	// If set to false, the attribute NameFormat is not set in the assertion.
+	IncludeAttributeNameFormat *bool `json:"includeAttributeNameFormat,omitempty"`
+	// Indicates the protocol binding used for SAML logout responses.
+	// By default Auth0 uses HTTP-POST, but you can switch to HTTP-Redirect by setting to `urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect`.
+	Binding *string `json:"binding,omitempty"`
+	// Optionally indicates the public key certificate used to validate SAML requests. If set, SAML requests will be required to be signed.
+	SigningCert *string `json:"signingCert,omitempty"`
+	//  An object that controls SAML logout behavior.
+	Logout *SAML2ClientAddonLogout `json:"logout,omitempty"`
+}
+
+// SAML2ClientAddonLogout defines the `logout` settings for the SAML2Addon.
+type SAML2ClientAddonLogout struct {
+	// The service provider (client application)'s Single Logout Service URL, where Auth0 will send logout requests and responses
+	Callback *string `json:"callback,omitempty"`
+	// Controls whether Auth0 should notify service providers of session termination
+	SLOEnabled *bool `json:"slo_enabled,omitempty"`
+}
+
+// SAPAPIClientAddon defines the `sap` settings for a client.
+type SAPAPIClientAddon struct {
+	ClientID             *string `json:"clientid,omitempty"`
+	UsernameAttribute    *string `json:"usernameAttribute,omitempty"`
+	TokenEndpointURL     *string `json:"tokenEndpointUrl,omitempty"`
+	Scope                *string `json:"scope,omitempty"`
+	ServicePassword      *string `json:"servicePassword,omitempty"`
+	NameIdentifierFormat *string `json:"nameIdentifierFormat,omitempty"`
+}
+
+// SentryClientAddon defines the `sentry` settings for a client.
+type SentryClientAddon struct {
+	OrgSlug *string `json:"org_slug,omitempty"`
+	BaseURL *string `json:"base_url,omitempty"`
+}
+
+// SharePointClientAddon defines the `sharepoint` settings for a client.
+type SharePointClientAddon struct {
+	URL         *string   `json:"url,omitempty"`
+	ExternalURL *[]string `json:"external_url,omitempty"`
+}
+
+// SlackClientAddon defines the `slack` settings for a client.
+type SlackClientAddon struct {
+	Team *string `json:"team,omitempty"`
+}
+
+// SpringCMClientAddon defines the `springcm` settings for a client.
+type SpringCMClientAddon struct {
+	ACSURL *string `json:"acsurl,omitempty"`
+}
+
+// SSOIntegrationClientAddon defines the `sso_integration` settings for a client.
+type SSOIntegrationClientAddon struct {
+	Name    *string `json:"name,omitempty"`
+	Version *string `json:"version,omitempty"`
+}
+
+// WAMSClientAddon defines the `wams` settings for a client.
+type WAMSClientAddon struct {
+	Masterkey *string `json:"masterkey,omitempty"`
+}
+
+// ZendeskClientAddon defines the `zendesk` settings for a client.
+type ZendeskClientAddon struct {
+	AccountName *string `json:"accountName,omitempty"`
+}
+
+// ZoomClientAddon defines the `zoom` settings for a client.
+type ZoomClientAddon struct {
+	Account *string `json:"account,omitempty"`
+}
+
+// WSFEDClientAddon is an empty struct used to indicate that the WS-FED Addon should be enabled.
+// Configuration for this Addon is stored in the `Callbacks` and `ClientAliases` properties on the Client.
+type WSFEDClientAddon struct {
+}
+
 // ClientList is a list of Clients.
 type ClientList struct {
 	List
@@ -236,49 +514,43 @@ type ClientList struct {
 }
 
 // ClientManager manages Auth0 Client resources.
-type ClientManager struct {
-	*Management
-}
-
-func newClientManager(m *Management) *ClientManager {
-	return &ClientManager{m}
-}
+type ClientManager manager
 
 // Create a new client application.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/post_clients
-func (m *ClientManager) Create(c *Client, opts ...RequestOption) (err error) {
-	return m.Request("POST", m.URI("clients"), c, opts...)
+func (m *ClientManager) Create(ctx context.Context, c *Client, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "POST", m.management.URI("clients"), c, opts...)
 }
 
 // Read a client by its ID.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/get_clients_by_id
-func (m *ClientManager) Read(id string, opts ...RequestOption) (c *Client, err error) {
-	err = m.Request("GET", m.URI("clients", id), &c, opts...)
+func (m *ClientManager) Read(ctx context.Context, id string, opts ...RequestOption) (c *Client, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("clients", id), &c, opts...)
 	return
 }
 
 // List all client applications.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/get_clients
-func (m *ClientManager) List(opts ...RequestOption) (c *ClientList, err error) {
-	err = m.Request("GET", m.URI("clients"), &c, applyListDefaults(opts))
+func (m *ClientManager) List(ctx context.Context, opts ...RequestOption) (c *ClientList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("clients"), &c, applyListDefaults(opts))
 	return
 }
 
 // Update a client.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/patch_clients_by_id
-func (m *ClientManager) Update(id string, c *Client, opts ...RequestOption) (err error) {
-	return m.Request("PATCH", m.URI("clients", id), c, opts...)
+func (m *ClientManager) Update(ctx context.Context, id string, c *Client, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "PATCH", m.management.URI("clients", id), c, opts...)
 }
 
 // RotateSecret rotates a client secret.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/post_rotate_secret
-func (m *ClientManager) RotateSecret(id string, opts ...RequestOption) (c *Client, err error) {
-	err = m.Request("POST", m.URI("clients", id, "rotate-secret"), &c, opts...)
+func (m *ClientManager) RotateSecret(ctx context.Context, id string, opts ...RequestOption) (c *Client, err error) {
+	err = m.management.Request(ctx, "POST", m.management.URI("clients", id, "rotate-secret"), &c, opts...)
 	return
 }
 
@@ -286,20 +558,20 @@ func (m *ClientManager) RotateSecret(id string, opts ...RequestOption) (c *Clien
 // given its ID.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/delete_clients_by_id
-func (m *ClientManager) Delete(id string, opts ...RequestOption) error {
-	return m.Request("DELETE", m.URI("clients", id), nil, opts...)
+func (m *ClientManager) Delete(ctx context.Context, id string, opts ...RequestOption) error {
+	return m.management.Request(ctx, "DELETE", m.management.URI("clients", id), nil, opts...)
 }
 
 // CreateCredential creates a client application's client credential.
-func (m *ClientManager) CreateCredential(clientID string, credential *Credential, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("clients", clientID, "credentials"), credential, opts...)
+func (m *ClientManager) CreateCredential(ctx context.Context, clientID string, credential *Credential, opts ...RequestOption) error {
+	return m.management.Request(ctx, "POST", m.management.URI("clients", clientID, "credentials"), credential, opts...)
 }
 
 // UpdateCredential updates a client application's client credential expiry.
-func (m *ClientManager) UpdateCredential(clientID, credentialID string, credential *Credential, opts ...RequestOption) error {
+func (m *ClientManager) UpdateCredential(ctx context.Context, clientID, credentialID string, credential *Credential, opts ...RequestOption) error {
 	credentialClone := &Credential{ExpiresAt: credential.ExpiresAt} // The API only accepts the expires_at property.
 
-	err := m.Request("PATCH", m.URI("clients", clientID, "credentials", credentialID), credentialClone, opts...)
+	err := m.management.Request(ctx, "PATCH", m.management.URI("clients", clientID, "credentials", credentialID), credentialClone, opts...)
 	if err != nil {
 		return err
 	}
@@ -318,20 +590,20 @@ func (m *ClientManager) UpdateCredential(clientID, credentialID string, credenti
 }
 
 // ListCredentials lists all client credentials associated with the client application.
-func (m *ClientManager) ListCredentials(clientID string, opts ...RequestOption) (c []*Credential, err error) {
-	err = m.Request("GET", m.URI("clients", clientID, "credentials"), &c, applyListDefaults(opts))
+func (m *ClientManager) ListCredentials(ctx context.Context, clientID string, opts ...RequestOption) (c []*Credential, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("clients", clientID, "credentials"), &c, applyListDefaults(opts))
 	return
 }
 
 // GetCredential gets a client credentials object.
-func (m *ClientManager) GetCredential(clientID string, credentialID string, opts ...RequestOption) (c *Credential, err error) {
-	err = m.Request("GET", m.URI("clients", clientID, "credentials", credentialID), &c, opts...)
+func (m *ClientManager) GetCredential(ctx context.Context, clientID string, credentialID string, opts ...RequestOption) (c *Credential, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("clients", clientID, "credentials", credentialID), &c, opts...)
 	return
 }
 
 // DeleteCredential deletes a client credentials object.
-func (m *ClientManager) DeleteCredential(clientID string, credentialID string, opts ...RequestOption) error {
-	return m.Request("DELETE", m.URI("clients", clientID, "credentials", credentialID), nil, opts...)
+func (m *ClientManager) DeleteCredential(ctx context.Context, clientID string, credentialID string, opts ...RequestOption) error {
+	return m.management.Request(ctx, "DELETE", m.management.URI("clients", clientID, "credentials", credentialID), nil, opts...)
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.

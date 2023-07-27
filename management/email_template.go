@@ -1,5 +1,7 @@
 package management
 
+import "context"
+
 // EmailTemplate is used to customize emails.
 //
 // See https://auth0.com/docs/customize/email/email-templates
@@ -38,19 +40,13 @@ type EmailTemplate struct {
 }
 
 // EmailTemplateManager manages Auth0 EmailTemplate resources.
-type EmailTemplateManager struct {
-	*Management
-}
-
-func newEmailTemplateManager(m *Management) *EmailTemplateManager {
-	return &EmailTemplateManager{m}
-}
+type EmailTemplateManager manager
 
 // Create an email template.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Email_Templates/post_email_templates
-func (m *EmailTemplateManager) Create(e *EmailTemplate, opts ...RequestOption) error {
-	return m.Request("POST", m.URI("email-templates"), e, opts...)
+func (m *EmailTemplateManager) Create(ctx context.Context, e *EmailTemplate, opts ...RequestOption) error {
+	return m.management.Request(ctx, "POST", m.management.URI("email-templates"), e, opts...)
 }
 
 // Read an email template by pre-defined name.
@@ -63,21 +59,21 @@ func (m *EmailTemplateManager) Create(e *EmailTemplate, opts ...RequestOption) e
 // legacy scenarios.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Email_Templates/get_email_templates_by_templateName
-func (m *EmailTemplateManager) Read(template string, opts ...RequestOption) (e *EmailTemplate, err error) {
-	err = m.Request("GET", m.URI("email-templates", template), &e, opts...)
+func (m *EmailTemplateManager) Read(ctx context.Context, template string, opts ...RequestOption) (e *EmailTemplate, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("email-templates", template), &e, opts...)
 	return
 }
 
 // Update an email template.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Email_Templates/patch_email_templates_by_templateName
-func (m *EmailTemplateManager) Update(template string, e *EmailTemplate, opts ...RequestOption) (err error) {
-	return m.Request("PATCH", m.URI("email-templates", template), e, opts...)
+func (m *EmailTemplateManager) Update(ctx context.Context, template string, e *EmailTemplate, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "PATCH", m.management.URI("email-templates", template), e, opts...)
 }
 
 // Replace an email template.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Email_Templates/put_email_templates_by_templateName
-func (m *EmailTemplateManager) Replace(template string, e *EmailTemplate, opts ...RequestOption) (err error) {
-	return m.Request("PUT", m.URI("email-templates", template), e, opts...)
+func (m *EmailTemplateManager) Replace(ctx context.Context, template string, e *EmailTemplate, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "PUT", m.management.URI("email-templates", template), e, opts...)
 }

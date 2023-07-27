@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"math"
@@ -77,6 +78,9 @@ type Tenant struct {
 	EnabledLocales *[]string `json:"enabled_locales,omitempty"`
 
 	SessionCookie *TenantSessionCookie `json:"session_cookie,omitempty"`
+
+	// Sessions related settings for the tenant.
+	Sessions *TenantSessions `json:"sessions,omitempty"`
 }
 
 // MarshalJSON is a custom serializer for the Tenant type.
@@ -350,27 +354,27 @@ type TenantSessionCookie struct {
 	Mode *string `json:"mode,omitempty"`
 }
 
-// TenantManager manages Auth0 Tenant resources.
-type TenantManager struct {
-	*Management
+// TenantSessions manages sessions related settings for the tenant.
+type TenantSessions struct {
+	// Whether to bypass prompting logic (false) when performing OIDC Logout.
+	OIDCLogoutPromptEnabled *bool `json:"oidc_logout_prompt_enabled,omitempty"`
 }
 
-func newTenantManager(m *Management) *TenantManager {
-	return &TenantManager{m}
-}
+// TenantManager manages Auth0 Tenant resources.
+type TenantManager manager
 
 // Read tenant settings.
 // A list of fields to include or exclude may also be specified.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Tenants/get_settings
-func (m *TenantManager) Read(opts ...RequestOption) (t *Tenant, err error) {
-	err = m.Request("GET", m.URI("tenants", "settings"), &t, opts...)
+func (m *TenantManager) Read(ctx context.Context, opts ...RequestOption) (t *Tenant, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("tenants", "settings"), &t, opts...)
 	return
 }
 
 // Update settings for a tenant.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Tenants/patch_settings
-func (m *TenantManager) Update(t *Tenant, opts ...RequestOption) (err error) {
-	return m.Request("PATCH", m.URI("tenants", "settings"), t, opts...)
+func (m *TenantManager) Update(ctx context.Context, t *Tenant, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "PATCH", m.management.URI("tenants", "settings"), t, opts...)
 }

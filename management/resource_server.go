@@ -1,5 +1,7 @@
 package management
 
+import "context"
+
 // ResourceServer is an entity that represents an external resource, capable of
 // accepting and responding to protected resource requests made by applications.
 type ResourceServer struct {
@@ -67,66 +69,41 @@ type ResourceServerList struct {
 }
 
 // ResourceServerManager is used for managing a ResourceServer.
-type ResourceServerManager struct {
-	*Management
-}
-
-func newResourceServerManager(m *Management) *ResourceServerManager {
-	return &ResourceServerManager{m}
-}
+type ResourceServerManager manager
 
 // Create a resource server.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Resource_Servers/post_resource_servers
-func (m *ResourceServerManager) Create(rs *ResourceServer, opts ...RequestOption) (err error) {
-	return m.Request("POST", m.URI("resource-servers"), rs, opts...)
+func (m *ResourceServerManager) Create(ctx context.Context, rs *ResourceServer, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "POST", m.management.URI("resource-servers"), rs, opts...)
 }
 
 // Read retrieves a resource server by its id or audience.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Resource_Servers/get_resource_servers_by_id
-func (m *ResourceServerManager) Read(id string, opts ...RequestOption) (rs *ResourceServer, err error) {
-	err = m.Request("GET", m.URI("resource-servers", id), &rs, opts...)
+func (m *ResourceServerManager) Read(ctx context.Context, id string, opts ...RequestOption) (rs *ResourceServer, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("resource-servers", id), &rs, opts...)
 	return
 }
 
 // Update a resource server.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Resource_Servers/patch_resource_servers_by_id
-func (m *ResourceServerManager) Update(id string, rs *ResourceServer, opts ...RequestOption) (err error) {
-	return m.Request("PATCH", m.URI("resource-servers", id), rs, opts...)
+func (m *ResourceServerManager) Update(ctx context.Context, id string, rs *ResourceServer, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "PATCH", m.management.URI("resource-servers", id), rs, opts...)
 }
 
 // Delete a resource server.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Resource_Servers/delete_resource_servers_by_id
-func (m *ResourceServerManager) Delete(id string, opts ...RequestOption) (err error) {
-	return m.Request("DELETE", m.URI("resource-servers", id), nil, opts...)
+func (m *ResourceServerManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "DELETE", m.management.URI("resource-servers", id), nil, opts...)
 }
 
 // List all resource server.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Resource_Servers/get_resource_servers
-func (m *ResourceServerManager) List(opts ...RequestOption) (rl *ResourceServerList, err error) {
-	err = m.Request("GET", m.URI("resource-servers"), &rl, applyListDefaults(opts))
+func (m *ResourceServerManager) List(ctx context.Context, opts ...RequestOption) (rl *ResourceServerList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("resource-servers"), &rl, applyListDefaults(opts))
 	return
-}
-
-// Stream is a helper method which handles pagination.
-func (m *ResourceServerManager) Stream(fn func(s *ResourceServer), opts ...RequestOption) error {
-	var page int
-	for {
-		l, err := m.List(append(opts, Page(page))...)
-		if err != nil {
-			return err
-		}
-		for _, s := range l.ResourceServers {
-			fn(s)
-		}
-		if !l.HasNext() {
-			break
-		}
-		page++
-	}
-	return nil
 }

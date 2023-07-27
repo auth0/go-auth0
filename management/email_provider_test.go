@@ -1,6 +1,7 @@
 package management
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -119,6 +120,32 @@ func TestEmailProviderJSON(t *testing.T) {
 			},
 			json: `{"name":"smtp","enabled":true,"default_from_address":"accounts@example.com","credentials":{"smtp_host":"example.com","smtp_port":3000,"smtp_user":"user","smtp_pass":"pass"},"settings":{"headers":{"X-MC-ViewContentLink":"true","X-SES-Configuration-Set":"example"}}}`,
 		},
+		{
+			name: "it can %s an azure_cs email provider",
+			emailProvider: &EmailProvider{
+				Name:               auth0.String("azure_cs"),
+				Enabled:            auth0.Bool(true),
+				DefaultFromAddress: auth0.String("accounts@example.com"),
+				Credentials: &EmailProviderCredentialsAzureCS{
+					ConnectionString: auth0.String("azure_cs_connection_string"),
+				},
+			},
+			json: `{"name":"azure_cs","enabled":true,"default_from_address":"accounts@example.com","credentials":{"connectionString":"azure_cs_connection_string"}}`,
+		},
+		{
+			name: "it can %s a ms365 email provider",
+			emailProvider: &EmailProvider{
+				Name:               auth0.String("ms365"),
+				Enabled:            auth0.Bool(true),
+				DefaultFromAddress: auth0.String("accounts@example.com"),
+				Credentials: &EmailProviderCredentialsMS365{
+					TenantID:     auth0.String("ms365_tenant_id"),
+					ClientID:     auth0.String("ms365_client_id"),
+					ClientSecret: auth0.String("ms365_client_secret"),
+				},
+			},
+			json: `{"name":"ms365","enabled":true,"default_from_address":"accounts@example.com","credentials":{"tenantId":"ms365_tenant_id","clientId":"ms365_client_id","clientSecret":"ms365_client_secret"}}`,
+		},
 	}
 
 	for _, testCase := range jsonTestCases {
@@ -154,7 +181,7 @@ func TestEmailProviderManager_Create(t *testing.T) {
 		},
 	}
 
-	err := api.EmailProvider.Create(emailProvider)
+	err := api.EmailProvider.Create(context.Background(), emailProvider)
 	assert.NoError(t, err)
 
 	t.Cleanup(func() {
@@ -167,7 +194,7 @@ func TestEmailProviderManager_Read(t *testing.T) {
 
 	expectedEmailProvider := givenAnEmailProvider(t)
 
-	actualEmailProvider, err := api.EmailProvider.Read()
+	actualEmailProvider, err := api.EmailProvider.Read(context.Background())
 
 	assert.NoError(t, err)
 	assert.Equal(t, expectedEmailProvider.GetName(), actualEmailProvider.GetName())
@@ -184,10 +211,10 @@ func TestEmailProviderManager_Update(t *testing.T) {
 	emailProvider.Enabled = auth0.Bool(false)
 	emailProvider.DefaultFromAddress = auth0.String("info@example.com")
 
-	err := api.EmailProvider.Update(emailProvider)
+	err := api.EmailProvider.Update(context.Background(), emailProvider)
 	assert.NoError(t, err)
 
-	actualEmailProvider, err := api.EmailProvider.Read()
+	actualEmailProvider, err := api.EmailProvider.Read(context.Background())
 	assert.NoError(t, err)
 
 	assert.False(t, actualEmailProvider.GetEnabled())
@@ -199,10 +226,10 @@ func TestEmailProviderManager_Delete(t *testing.T) {
 
 	givenAnEmailProvider(t)
 
-	err := api.Email.Delete()
+	err := api.EmailProvider.Delete(context.Background())
 	assert.NoError(t, err)
 
-	_, err = api.Email.Read()
+	_, err = api.EmailProvider.Read(context.Background())
 	assert.Error(t, err)
 	assert.Implements(t, (*Error)(nil), err)
 	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
@@ -223,7 +250,7 @@ func givenAnEmailProvider(t *testing.T) *EmailProvider {
 		},
 	}
 
-	err := api.EmailProvider.Create(emailProvider)
+	err := api.EmailProvider.Create(context.Background(), emailProvider)
 	if err != nil {
 		if err.(Error).Status() != http.StatusConflict {
 			t.Error(err)
@@ -240,6 +267,6 @@ func givenAnEmailProvider(t *testing.T) *EmailProvider {
 func cleanupEmailProvider(t *testing.T) {
 	t.Helper()
 
-	err := api.EmailProvider.Delete()
+	err := api.EmailProvider.Delete(context.Background())
 	require.NoError(t, err)
 }

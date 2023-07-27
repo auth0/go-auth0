@@ -1,5 +1,7 @@
 package management
 
+import "context"
+
 // Organization is used to allow B2B customers to better manage
 // their partners and customers, and to customize the ways that
 // end-users access their applications.
@@ -173,99 +175,93 @@ type OrganizationList struct {
 }
 
 // OrganizationManager is used for managing an Organization.
-type OrganizationManager struct {
-	*Management
-}
-
-func newOrganizationManager(m *Management) *OrganizationManager {
-	return &OrganizationManager{m}
-}
+type OrganizationManager manager
 
 // List available organizations.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_organizations
-func (m *OrganizationManager) List(opts ...RequestOption) (o *OrganizationList, err error) {
-	err = m.Request("GET", m.URI("organizations"), &o, applyListDefaults(opts))
+func (m *OrganizationManager) List(ctx context.Context, opts ...RequestOption) (o *OrganizationList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations"), &o, applyListDefaults(opts))
 	return
 }
 
 // Create an Organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_organizations
-func (m *OrganizationManager) Create(o *Organization, opts ...RequestOption) (err error) {
-	err = m.Request("POST", m.URI("organizations"), &o, opts...)
+func (m *OrganizationManager) Create(ctx context.Context, o *Organization, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations"), &o, opts...)
 	return
 }
 
 // Get a specific organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_organizations_by_id
-func (m *OrganizationManager) Read(id string, opts ...RequestOption) (o *Organization, err error) {
-	err = m.Request("GET", m.URI("organizations", id), &o, opts...)
+func (m *OrganizationManager) Read(ctx context.Context, id string, opts ...RequestOption) (o *Organization, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id), &o, opts...)
 	return
 }
 
 // Delete a specific organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_organizations_by_id
-func (m *OrganizationManager) Delete(id string, opts ...RequestOption) (err error) {
-	err = m.Request("DELETE", m.URI("organizations", id), nil, opts...)
+func (m *OrganizationManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id), nil, opts...)
 	return
 }
 
 // Update an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/patch_organizations_by_id
-func (m *OrganizationManager) Update(id string, o *Organization, opts ...RequestOption) (err error) {
-	err = m.Request("PATCH", m.URI("organizations", id), &o, opts...)
+func (m *OrganizationManager) Update(ctx context.Context, id string, o *Organization, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "PATCH", m.management.URI("organizations", id), &o, opts...)
 	return
 }
 
 // ReadByName retrieves a specific organization by name.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_name_by_name
-func (m *OrganizationManager) ReadByName(name string, opts ...RequestOption) (o *Organization, err error) {
-	err = m.Request("GET", m.URI("organizations", "name", name), &o, opts...)
+func (m *OrganizationManager) ReadByName(ctx context.Context, name string, opts ...RequestOption) (o *Organization, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", "name", name), &o, opts...)
 	return
 }
 
 // Connections retrieves connections enabled for an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_enabled_connections
-func (m *OrganizationManager) Connections(id string, opts ...RequestOption) (c *OrganizationConnectionList, err error) {
-	err = m.Request("GET", m.URI("organizations", id, "enabled_connections"), &c, applyListDefaults(opts))
+func (m *OrganizationManager) Connections(ctx context.Context, id string, opts ...RequestOption) (c *OrganizationConnectionList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "enabled_connections"), &c, applyListDefaults(opts))
 	return
 }
 
 // AddConnection adds connections to an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_enabled_connections
-func (m *OrganizationManager) AddConnection(id string, c *OrganizationConnection, opts ...RequestOption) (err error) {
-	err = m.Request("POST", m.URI("organizations", id, "enabled_connections"), &c, opts...)
+func (m *OrganizationManager) AddConnection(ctx context.Context, id string, c *OrganizationConnection, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations", id, "enabled_connections"), &c, opts...)
 	return
 }
 
 // Connection retrieves an enabled connection for an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_enabled_connections_by_connectionId
-func (m *OrganizationManager) Connection(id string, connectionID string, opts ...RequestOption) (c *OrganizationConnection, err error) {
-	err = m.Request("GET", m.URI("organizations", id, "enabled_connections", connectionID), &c, opts...)
+func (m *OrganizationManager) Connection(ctx context.Context, id string, connectionID string, opts ...RequestOption) (c *OrganizationConnection, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "enabled_connections", connectionID), &c, opts...)
 	return
 }
 
 // DeleteConnection deletes connections from an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_enabled_connections_by_connectionId
-func (m *OrganizationManager) DeleteConnection(id string, connectionID string, opts ...RequestOption) (err error) {
-	err = m.Request("DELETE", m.URI("organizations", id, "enabled_connections", connectionID), nil, opts...)
+func (m *OrganizationManager) DeleteConnection(ctx context.Context, id string, connectionID string, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "enabled_connections", connectionID), nil, opts...)
 	return
 }
 
 // UpdateConnection updates an enabled_connection belonging to an Organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/patch_enabled_connections_by_connectionId
-func (m *OrganizationManager) UpdateConnection(id string, connectionID string, c *OrganizationConnection, opts ...RequestOption) (err error) {
-	err = m.Request("PATCH", m.URI("organizations", id, "enabled_connections", connectionID), &c, opts...)
+func (m *OrganizationManager) UpdateConnection(ctx context.Context, id string, connectionID string, c *OrganizationConnection, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "PATCH", m.management.URI("organizations", id, "enabled_connections", connectionID), &c, opts...)
 	return
 }
 
@@ -274,99 +270,99 @@ func (m *OrganizationManager) UpdateConnection(id string, connectionID string, c
 // manually and break when there are 0 entries. See https://github.com/auth0/go-auth0/issues/48 for more context.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_invitations
-func (m *OrganizationManager) Invitations(id string, opts ...RequestOption) (i *OrganizationInvitationList, err error) {
-	err = m.Request("GET", m.URI("organizations", id, "invitations"), &i, applyListDefaults(opts))
+func (m *OrganizationManager) Invitations(ctx context.Context, id string, opts ...RequestOption) (i *OrganizationInvitationList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "invitations"), &i, applyListDefaults(opts))
 	return
 }
 
 // CreateInvitation creates invitations to an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_invitations
-func (m *OrganizationManager) CreateInvitation(id string, i *OrganizationInvitation, opts ...RequestOption) (err error) {
-	err = m.Request("POST", m.URI("organizations", id, "invitations"), &i, opts...)
+func (m *OrganizationManager) CreateInvitation(ctx context.Context, id string, i *OrganizationInvitation, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations", id, "invitations"), &i, opts...)
 	return
 }
 
 // Invitation retrieves an invitation to an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_invitations_by_invitation_id
-func (m *OrganizationManager) Invitation(id string, invitationID string, opts ...RequestOption) (i *OrganizationInvitation, err error) {
-	err = m.Request("GET", m.URI("organizations", id, "invitations", invitationID), &i, opts...)
+func (m *OrganizationManager) Invitation(ctx context.Context, id string, invitationID string, opts ...RequestOption) (i *OrganizationInvitation, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "invitations", invitationID), &i, opts...)
 	return
 }
 
 // DeleteInvitation deletes an invitation to an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_invitations_by_invitation_id
-func (m *OrganizationManager) DeleteInvitation(id string, invitationID string, opts ...RequestOption) (err error) {
-	err = m.Request("DELETE", m.URI("organizations", id, "invitations", invitationID), nil, opts...)
+func (m *OrganizationManager) DeleteInvitation(ctx context.Context, id string, invitationID string, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "invitations", invitationID), nil, opts...)
 	return
 }
 
 // Members lists organization members.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_members
-func (m *OrganizationManager) Members(id string, opts ...RequestOption) (o *OrganizationMemberList, err error) {
-	err = m.Request("GET", m.URI("organizations", id, "members"), &o, applyListDefaults(opts))
+func (m *OrganizationManager) Members(ctx context.Context, id string, opts ...RequestOption) (o *OrganizationMemberList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "members"), &o, applyListDefaults(opts))
 	return
 }
 
 // AddMembers adds members to an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_members
-func (m *OrganizationManager) AddMembers(id string, memberIDs []string, opts ...RequestOption) (err error) {
+func (m *OrganizationManager) AddMembers(ctx context.Context, id string, memberIDs []string, opts ...RequestOption) (err error) {
 	body := struct {
 		Members []string `json:"members"`
 	}{
 		Members: memberIDs,
 	}
-	err = m.Request("POST", m.URI("organizations", id, "members"), &body, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations", id, "members"), &body, opts...)
 	return
 }
 
-// DeleteMember deletes members from an organization.
+// DeleteMembers deletes members from an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_members
-func (m *OrganizationManager) DeleteMember(id string, memberIDs []string, opts ...RequestOption) (err error) {
+func (m *OrganizationManager) DeleteMembers(ctx context.Context, id string, memberIDs []string, opts ...RequestOption) (err error) {
 	body := struct {
 		Members []string `json:"members"`
 	}{
 		Members: memberIDs,
 	}
-	err = m.Request("DELETE", m.URI("organizations", id, "members"), &body, opts...)
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "members"), &body, opts...)
 	return
 }
 
 // MemberRoles retrieves the roles assigned to an organization member.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_organization_member_roles
-func (m *OrganizationManager) MemberRoles(id string, memberID string, opts ...RequestOption) (r *OrganizationMemberRoleList, err error) {
-	err = m.Request("GET", m.URI("organizations", id, "members", memberID, "roles"), &r, applyListDefaults(opts))
+func (m *OrganizationManager) MemberRoles(ctx context.Context, id string, memberID string, opts ...RequestOption) (r *OrganizationMemberRoleList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "members", memberID, "roles"), &r, applyListDefaults(opts))
 	return
 }
 
 // AssignMemberRoles assigns one or more roles to a given user that will be applied in the context of the provided organization
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/post_organization_member_roles
-func (m *OrganizationManager) AssignMemberRoles(id string, memberID string, roles []string, opts ...RequestOption) (err error) {
+func (m *OrganizationManager) AssignMemberRoles(ctx context.Context, id string, memberID string, roles []string, opts ...RequestOption) (err error) {
 	body := struct {
 		Roles []string `json:"roles"`
 	}{
 		Roles: roles,
 	}
-	err = m.Request("POST", m.URI("organizations", id, "members", memberID, "roles"), &body, opts...)
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations", id, "members", memberID, "roles"), &body, opts...)
 	return
 }
 
 // DeleteMemberRoles removes one or more roles from a given user in the context of the provided organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/delete_organization_member_roles
-func (m *OrganizationManager) DeleteMemberRoles(id string, memberID string, roles []string, opts ...RequestOption) (err error) {
+func (m *OrganizationManager) DeleteMemberRoles(ctx context.Context, id string, memberID string, roles []string, opts ...RequestOption) (err error) {
 	body := struct {
 		Roles []string `json:"roles"`
 	}{
 		Roles: roles,
 	}
-	err = m.Request("DELETE", m.URI("organizations", id, "members", memberID, "roles"), &body, opts...)
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "members", memberID, "roles"), &body, opts...)
 	return
 }
