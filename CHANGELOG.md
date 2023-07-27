@@ -10,11 +10,11 @@
 
 - Generate safe getters for `map[string]interface{}` types ([#205](https://github.com/auth0/go-auth0/pull/205))
 - Expose configuration of retry strategy ([#216](https://github.com/auth0/go-auth0/pull/216))
-- Add Authentication Client ([#222](https://github.com/auth0/go-auth0/pull/222), [#227](https://github.com/auth0/go-auth0/pull/227), [#226](https://github.com/auth0/go-auth0/pull/226), [#229](https://github.com/auth0/go-auth0/pull/229), [#232](https://github.com/auth0/go-auth0/pull/232))
+- Authentication client ([#222](https://github.com/auth0/go-auth0/pull/222), [#227](https://github.com/auth0/go-auth0/pull/227), [#226](https://github.com/auth0/go-auth0/pull/226), [#229](https://github.com/auth0/go-auth0/pull/229), [#232](https://github.com/auth0/go-auth0/pull/232))
 - Validate `org_name` claim in ID token ([#246](https://github.com/auth0/go-auth0/pull/246))
-- Added support for `azure_cs` and `ms365` email providers ([#247](https://github.com/auth0/go-auth0/pull/247))
-- Added support for `OIDCLogoutPrompt` setting on tenant ([#249](https://github.com/auth0/go-auth0/pull/249))
-- Added support for `DecryptionKey` on SAML Connection Options ([#251](https://github.com/auth0/go-auth0/pull/251))
+- Support `azure_cs` and `ms365` email providers ([#247](https://github.com/auth0/go-auth0/pull/247))
+- Support `OIDCLogoutPrompt` setting on tenant ([#249](https://github.com/auth0/go-auth0/pull/249))
+- Support `DecryptionKey` on SAML Connection Options ([#251](https://github.com/auth0/go-auth0/pull/251))
 
 ### Breaking Changes
 
