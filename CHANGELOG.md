@@ -1,8 +1,35 @@
 # Change Log
 
+<a name="v1.0.0"></a>
+
+## [v1.0.0](https://github.com/auth0/go-auth0/tree/v1.0.0) (2023-07-27)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.17.2..v1.0.0)
+
+### Added
+
+- Generate safe getters for `map[string]interface{}` types ([#205](https://github.com/auth0/go-auth0/pull/205))
+- Expose configuration of retry strategy ([#216](https://github.com/auth0/go-auth0/pull/216))
+- Authentication client ([#222](https://github.com/auth0/go-auth0/pull/222), [#227](https://github.com/auth0/go-auth0/pull/227), [#226](https://github.com/auth0/go-auth0/pull/226), [#229](https://github.com/auth0/go-auth0/pull/229), [#232](https://github.com/auth0/go-auth0/pull/232))
+- Validate `org_name` claim in ID token ([#246](https://github.com/auth0/go-auth0/pull/246))
+- Support `azure_cs` and `ms365` email providers ([#247](https://github.com/auth0/go-auth0/pull/247))
+- Support `OIDCLogoutPrompt` setting on tenant ([#249](https://github.com/auth0/go-auth0/pull/249))
+- Support `DecryptionKey` on SAML Connection Options ([#251](https://github.com/auth0/go-auth0/pull/251))
+
+### Breaking Changes
+
+- Improve typing of Client Addons ([#208](https://github.com/auth0/go-auth0/pull/208), [#228](https://github.com/auth0/go-auth0/pull/228))
+- Accept a `context.Context` as the first argument for all methods ([#212](https://github.com/auth0/go-auth0/pull/212))
+- Refactor Management struct to avoid chaining issue ([#214](https://github.com/auth0/go-auth0/pull/214))
+- Removed deprecated `EmailManager` ([#218](https://github.com/auth0/go-auth0/pull/218))
+- Removed `ResourceServer.Stream` ([#224](https://github.com/auth0/go-auth0/pull/224))
+- Removed `DigitalOcean`, `Discord`, `Figma`, `Imgur`, `Slack`, `Spotify`, `Twitch`, and `Vimeo` connection strategies ([#245](https://github.com/auth0/go-auth0/pull/245))
+
+Please review the [migration guide](./MIGRATION_GUIDE.md) to understand the changes required to update your application.
+
 <a name="v1.0.0-beta.0"></a>
 
-## [v1.0.0-beta.0](https://github.com/auth0/go-auth0/tree/v1.0.0-beta.0) (2023-05-22)
+## [v1.0.0-beta.0](https://github.com/auth0/go-auth0/tree/v1.0.0-beta.0) (2023-06-26)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.17.2..v1.0.0-beta.0)
 
