@@ -29,7 +29,7 @@ Please review the [migration guide](./MIGRATION_GUIDE.md) to understand the chan
 
 <a name="v1.0.0-beta.0"></a>
 
-## [v1.0.0-beta.0](https://github.com/auth0/go-auth0/tree/v1.0.0-beta.0) (2023-05-22)
+## [v1.0.0-beta.0](https://github.com/auth0/go-auth0/tree/v1.0.0-beta.0) (2023-06-26)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v0.17.2..v1.0.0-beta.0)
 
