@@ -399,6 +399,15 @@ func (m *UserManager) Read(ctx context.Context, id string, opts ...RequestOption
 	return
 }
 
+// Read user details for a given user_id into the provided destination. This allows access
+// to custom or non-standard user properties on the user profile.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Users/get_users_by_id
+func (m *UserManager) ReadCustom(ctx context.Context, id string, destination any, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("users", id), destination, opts...)
+	return
+}
+
 // Update user.
 //
 // The following attributes can be updated at the root level:

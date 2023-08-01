@@ -44,6 +44,52 @@ func TestUserManager_Read(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, expectedUser.GetID(), actualUser.GetID())
 	assert.Equal(t, expectedUser.GetName(), actualUser.GetName())
+	assert.True(t, actualUser.GetEmailVerified())
+}
+
+type CustomUser struct {
+	User
+
+	Locale *string `json:"locale,omitempty"`
+	UPN    *string `json:"upn,omitempty"`
+}
+
+// UnmarshalJSON is a custom deserializer for the CustomUser type.
+func (u *CustomUser) UnmarshalJSON(b []byte) error {
+	// Alias the CustomUser type so we don't recurse infinitely into this method
+	type customUserAlias *CustomUser
+	alias := customUserAlias(u)
+
+	// unmarshal twice- once to the Auth0 management.User object, and then
+	// again to our wrapper so we populate the additional custom fields.
+	err := json.Unmarshal(b, &u.User)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(b, alias)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func TestUserManager_ReadCustom(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedUser := givenAUser(t)
+
+	var actualUser CustomUser
+
+	err := api.User.ReadCustom(context.Background(), expectedUser.GetID(), &actualUser)
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedUser.GetID(), actualUser.GetID())
+	assert.Equal(t, expectedUser.GetName(), actualUser.GetName())
+	assert.True(t, actualUser.GetEmailVerified())
+	assert.Nil(t, actualUser.Locale)
+	assert.Nil(t, actualUser.UPN)
 }
 
 func TestUserManager_Update(t *testing.T) {
