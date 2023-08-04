@@ -8,6 +8,10 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/lestrrat-go/jwx/v2/jwa"
+	"github.com/lestrrat-go/jwx/v2/jwk"
+	"github.com/lestrrat-go/jwx/v2/jws"
+
 	"github.com/auth0/go-auth0/authentication/oauth"
 
 	"github.com/stretchr/testify/assert"
@@ -65,11 +69,28 @@ func configureHTTPTestRecordings(t *testing.T) {
 		bodyMatches := false
 		switch r.Header.Get("Content-Type") {
 		case "application/json":
-			bodyMatches = assert.JSONEq(t, i.Body, rb)
+			v := map[string]string{}
+			err := json.Unmarshal([]byte(rb), &v)
+			require.NoError(t, err)
+
+			if v["client_assertion"] != "" {
+				verifyClientAssertion(t, v["client_assertion"])
+				v["client_assertion"] = "test-client_assertion"
+			}
+
+			body, err := json.Marshal(v)
+			require.NoError(t, err)
+
+			bodyMatches = assert.JSONEq(t, i.Body, string(body))
 			break
 		case "application/x-www-form-urlencoded":
 			err = r.ParseForm()
 			require.NoError(t, err)
+
+			if r.Form.Has("client_assertion") {
+				verifyClientAssertion(t, r.Form.Get("client_assertion"))
+				r.Form.Set("client_assertion", "test-client_assertion")
+			}
 
 			bodyMatches = assert.Equal(t, i.Form, r.Form)
 			break
@@ -131,8 +152,9 @@ func redactHeaders(i *cassette.Interaction) {
 func redactClientAuth(t *testing.T, i *cassette.Interaction) {
 	contentType := i.Request.Headers.Get("Content-Type")
 	clientAuthParams := map[string]bool{
-		"client_id":     true,
-		"client_secret": true,
+		"client_id":        true,
+		"client_secret":    true,
+		"client_assertion": true,
 	}
 
 	if contentType == "application/x-www-form-urlencoded" {
@@ -193,4 +215,15 @@ func redactDomain(i *cassette.Interaction, domain string) {
 
 	i.Response.Body = strings.ReplaceAll(i.Response.Body, domainParts[0], recordingsDomain)
 	i.Request.Body = strings.ReplaceAll(i.Request.Body, domainParts[0], recordingsDomain)
+}
+
+func verifyClientAssertion(t *testing.T, clientAssertion string) {
+	keyS := jwtPublicKey
+
+	key, err := jwk.ParseKey([]byte(keyS), jwk.WithPEM(true))
+	require.NoError(t, err)
+
+	_, err = jws.Verify([]byte(clientAssertion), jws.WithKey(jwa.RS256, key))
+
+	require.NoError(t, err)
 }
