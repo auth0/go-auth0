@@ -7,11 +7,13 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/auth0/go-auth0/authentication/oauth"
-	"github.com/auth0/go-auth0/internal/idtokenvalidator"
 	"github.com/google/uuid"
 	"github.com/lestrrat-go/jwx/v2/jwa"
+	"github.com/lestrrat-go/jwx/v2/jwk"
 	"github.com/lestrrat-go/jwx/v2/jwt"
+
+	"github.com/auth0/go-auth0/authentication/oauth"
+	"github.com/auth0/go-auth0/internal/idtokenvalidator"
 )
 
 // OAuth exposes logging in using OAuth based APIs.
@@ -65,6 +67,10 @@ func (o *OAuth) LoginWithPassword(ctx context.Context, body oauth.LoginWithPassw
 
 	if body.Scope != "" {
 		data.Set("scope", body.Scope)
+	}
+
+	if body.Audience != "" {
+		data.Set("audience", body.Audience)
 	}
 
 	for k, v := range body.ExtraParameters {
@@ -198,43 +204,34 @@ func (o *OAuth) RevokeRefreshToken(ctx context.Context, body oauth.RevokeRefresh
 }
 
 func (o *OAuth) addClientAuthentication(params oauth.ClientAuthentication, body url.Values, required bool) error {
-	cid := params.ClientID
+	clientID := params.ClientID
 	if params.ClientID == "" {
-		cid = o.authentication.clientID
+		clientID = o.authentication.clientID
 	}
-	if o.authentication.clientAssertionSigningKey != "" {
-		alg, err := determineAlg(o.authentication.clientAssertionSigningAlg)
+	body.Set("client_id", clientID)
+
+	clientSecret := params.ClientSecret
+	if params.ClientSecret == "" {
+		clientSecret = o.authentication.clientSecret
+	}
+
+	switch {
+	case o.authentication.clientAssertionSigningKey != "":
+		clientAssertion, err := createClientAssertion(o.authentication.clientAssertionSigningAlg, o.authentication.clientAssertionSigningKey, clientID, o.authentication.domain)
 		if err != nil {
 			return err
 		}
 
-		token, err := jwt.NewBuilder().
-			IssuedAt(time.Now()).
-			Subject(cid).
-			JwtID(uuid.New().String()).
-			Issuer(cid).
-			Audience([]string{o.authentication.domain}).
-			Expiration(time.Now().Add(2 * time.Minute)).
-			Build()
-		if err != nil {
-			return err
-		}
-
-		b, err := jwt.Sign(token, jwt.WithKey(alg, []byte(o.authentication.clientAssertionSigningKey)))
-		if err != nil {
-			return err
-		}
-
-		body.Set("client_assertion", string(b))
+		body.Set("client_assertion", clientAssertion)
 		body.Set("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer")
-	}
-
-	body.Set("client_id", cid)
-
-	if params.ClientSecret != "" && body.Get("client_secret") == "" {
-		body.Set("client_secret", params.ClientSecret)
-	} else if o.authentication.clientSecret != "" {
-		body.Set("client_secret", o.authentication.clientSecret)
+		break
+	case params.ClientAssertion != "":
+		body.Set("client_assertion", params.ClientAssertion)
+		body.Set("client_assertion_type", params.ClientAssertionType)
+		break
+	case clientSecret != "":
+		body.Set("client_secret", clientSecret)
+		break
 	}
 
 	if required && (body.Get("client_secret") == "" && body.Get("client_assertion") == "") {
@@ -253,4 +250,35 @@ func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
 	default:
 		return "", fmt.Errorf("Unsupported algorithm %s provided", alg)
 	}
+}
+
+func createClientAssertion(clientAssertionSigningAlg, clientAssertionSigningKey, clientID, domain string) (string, error) {
+	alg, err := determineAlg(clientAssertionSigningAlg)
+	if err != nil {
+		return "", err
+	}
+
+	key, err := jwk.ParseKey([]byte(clientAssertionSigningKey), jwk.WithPEM(true))
+	if err != nil {
+		return "", err
+	}
+
+	token, err := jwt.NewBuilder().
+		IssuedAt(time.Now()).
+		Subject(clientID).
+		JwtID(uuid.New().String()).
+		Issuer(clientID).
+		Audience([]string{domain}).
+		Expiration(time.Now().Add(2 * time.Minute)).
+		Build()
+	if err != nil {
+		return "", err
+	}
+
+	b, err := jwt.Sign(token, jwt.WithKey(alg, key))
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
 }

@@ -17,22 +17,18 @@ func WithClientID(clientID string) Option {
 	}
 }
 
-// WithClientSecret configures the Client secret to be provided with requests if one is not provided.
+// WithClientSecret configures the Client Secret to be provided with requests if one is not provided.
 func WithClientSecret(clientSecret string) Option {
 	return func(a *Authentication) {
 		a.clientSecret = clientSecret
 	}
 }
 
-func WithClientAssertion(signingKey, signingAlg string) Option {
+// WithClientAssertion configures the signing key to be used when performing Private Key JWT Auth.
+func WithClientAssertion(signingKey string, signingAlg string) Option {
 	return func(a *Authentication) {
 		a.clientAssertionSigningKey = signingKey
-		if signingAlg == "" {
-			a.clientAssertionSigningAlg = signingAlg
-		} else {
-			a.clientAssertionSigningAlg = "RS256"
-
-		}
+		a.clientAssertionSigningAlg = signingAlg
 	}
 }
 

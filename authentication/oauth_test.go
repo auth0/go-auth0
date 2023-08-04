@@ -13,6 +13,7 @@ import (
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwt"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0/authentication/oauth"
 )
@@ -184,6 +185,55 @@ func TestLoginWithClientCredentials(t *testing.T) {
 			ClientAuthentication: oauth.ClientAuthentication{
 				ClientSecret: clientSecret,
 				ClientID:     "test-other-clientid",
+			},
+			Audience: "test-audience",
+		}, oauth.IDTokenValidationOptions{})
+
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
+
+	t.Run("Should support using private key jwt auth", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		api, err := New(
+			context.Background(),
+			domain,
+			WithIDTokenSigningAlg("HS256"),
+			WithClientID(clientID),
+			WithClientAssertion(jwtPrivateKey, "RS256"),
+		)
+
+		require.NoError(t, err)
+
+		tokenSet, err := api.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
+			Audience: "test-audience",
+		}, oauth.IDTokenValidationOptions{})
+
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
+
+	t.Run("Should support passing private key jwt auth", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		api, err := New(
+			context.Background(),
+			domain,
+			WithIDTokenSigningAlg("HS256"),
+			WithClientID(clientID),
+		)
+		require.NoError(t, err)
+
+		auth, err := createClientAssertion("RS256", jwtPrivateKey, clientID, "https://"+domain+"/")
+		require.NoError(t, err)
+
+		tokenSet, err := api.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
+			ClientAuthentication: oauth.ClientAuthentication{
+				ClientAssertion:     auth,
+				ClientAssertionType: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
 			},
 			Audience: "test-audience",
 		}, oauth.IDTokenValidationOptions{})
