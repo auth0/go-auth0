@@ -111,7 +111,12 @@ func (p *Passwordless) addClientAuthentication(params *oauth.ClientAuthenticatio
 	}
 
 	if p.authentication.clientAssertionSigningKey != "" {
-		clientAssertion, err := createClientAssertion(p.authentication.clientAssertionSigningAlg, p.authentication.clientAssertionSigningKey, params.ClientID, p.authentication.domain)
+		clientAssertion, err := createClientAssertion(
+			p.authentication.clientAssertionSigningAlg,
+			p.authentication.clientAssertionSigningKey,
+			params.ClientID,
+			p.authentication.domain,
+		)
 		if err != nil {
 			return err
 		}
