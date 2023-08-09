@@ -216,7 +216,7 @@ func (o *OAuth) addClientAuthentication(params oauth.ClientAuthentication, body 
 	}
 
 	switch {
-	case o.authentication.clientAssertionSigningKey != "":
+	case o.authentication.clientAssertionSigningKey != "" && o.authentication.clientAssertionSigningAlg != "":
 		clientAssertion, err := createClientAssertion(
 			o.authentication.clientAssertionSigningAlg,
 			o.authentication.clientAssertionSigningKey,

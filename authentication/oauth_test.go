@@ -50,12 +50,12 @@ func TestOAuthLoginWithPassword(t *testing.T) {
 }
 
 func TestLoginWithAuthCode(t *testing.T) {
-	t.Run("Should require client_secret", func(t *testing.T) {
+	t.Run("Should require client_secret or client assertion", func(t *testing.T) {
 		_, err := authAPI.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
 			Code: "my-code",
 		}, oauth.IDTokenValidationOptions{})
 
-		assert.Error(t, err, "client_secret is required but not provided")
+		assert.ErrorContains(t, err, "client_secret or client_assertion is required but not provided")
 	})
 
 	t.Run("Should throw for an invalid code", func(t *testing.T) {
@@ -155,12 +155,12 @@ func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
 }
 
 func TestLoginWithClientCredentials(t *testing.T) {
-	t.Run("Should require client_secret", func(t *testing.T) {
+	t.Run("Should require client_secret or client assertion", func(t *testing.T) {
 		_, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
 			Audience: "test-audience",
 		}, oauth.IDTokenValidationOptions{})
 
-		assert.Error(t, err, "client_secret is required but not provided")
+		assert.ErrorContains(t, err, "client_secret or client_assertion is required but not provided")
 	})
 
 	t.Run("Should return tokens", func(t *testing.T) {

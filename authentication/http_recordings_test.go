@@ -218,9 +218,7 @@ func redactDomain(i *cassette.Interaction, domain string) {
 }
 
 func verifyClientAssertion(t *testing.T, clientAssertion string) {
-	keyS := jwtPublicKey
-
-	key, err := jwk.ParseKey([]byte(keyS), jwk.WithPEM(true))
+	key, err := jwk.ParseKey([]byte(jwtPublicKey), jwk.WithPEM(true))
 	require.NoError(t, err)
 
 	_, err = jws.Verify([]byte(clientAssertion), jws.WithKey(jwa.RS256, key))
