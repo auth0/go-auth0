@@ -42,6 +42,7 @@ func TestOAuthLoginWithPassword(t *testing.T) {
 			ExtraParameters: map[string]string{
 				"extra": "value",
 			},
+			Audience: "test-audience",
 		}, oauth.IDTokenValidationOptions{})
 		assert.NoError(t, err)
 		assert.NotEmpty(t, tokenSet.AccessToken)
@@ -219,18 +220,10 @@ func TestLoginWithClientCredentials(t *testing.T) {
 	t.Run("Should support passing private key jwt auth", func(t *testing.T) {
 		configureHTTPTestRecordings(t)
 
-		api, err := New(
-			context.Background(),
-			domain,
-			WithIDTokenSigningAlg("HS256"),
-			WithClientID(clientID),
-		)
-		require.NoError(t, err)
-
 		auth, err := createClientAssertion("RS256", jwtPrivateKey, clientID, "https://"+domain+"/")
 		require.NoError(t, err)
 
-		tokenSet, err := api.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
+		tokenSet, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
 			ClientAuthentication: oauth.ClientAuthentication{
 				ClientAssertion:     auth,
 				ClientAssertionType: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
@@ -241,6 +234,24 @@ func TestLoginWithClientCredentials(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotEmpty(t, tokenSet.AccessToken)
 		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
+
+	t.Run("Should error if provided an invalid algorithm", func(t *testing.T) {
+		api, err := New(
+			context.Background(),
+			domain,
+			WithIDTokenSigningAlg("HS256"),
+			WithClientID(clientID),
+			WithClientAssertion(jwtPrivateKey, "invalid-alg"),
+		)
+
+		require.NoError(t, err)
+
+		_, err = api.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
+			Audience: "test-audience",
+		}, oauth.IDTokenValidationOptions{})
+
+		assert.ErrorContains(t, err, "Unsupported client assertion algorithm \"invalid-alg\" provided")
 	})
 }
 

@@ -12,7 +12,7 @@ interactions:
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: client_id=test-client_id&extra=value&grant_type=http%3A%2F%2Fauth0.com%2Foauth%2Fgrant-type%2Fpassword-realm&password=testuser123&realm=my-realm&scope=extra-scope&username=testuser
+        body: client_id=test-client_id&extra=value&grant_type=http%3A%2F%2Fauth0.com%2Foauth%2Fgrant-type%2Fpassword-realm&password=testuser123&realm=my-realm&scope=extra-scope&username=testuser&audience=test-audience
         form:
             client_id:
                 - test-client_id
@@ -28,6 +28,8 @@ interactions:
                 - my-realm
             scope:
                 - extra-scope
+            audience:
+                - test-audience
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded

@@ -248,12 +248,10 @@ func (o *OAuth) addClientAuthentication(params oauth.ClientAuthentication, body 
 
 func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
 	switch alg {
-	case "HS256":
-		return jwa.HS256, nil
 	case "RS256":
 		return jwa.RS256, nil
 	default:
-		return "", fmt.Errorf("Unsupported algorithm %s provided", alg)
+		return "", fmt.Errorf("Unsupported client assertion algorithm \"%s\" provided", alg)
 	}
 }
 
