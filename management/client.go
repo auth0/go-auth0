@@ -539,6 +539,68 @@ func (m *ClientManager) List(ctx context.Context, opts ...RequestOption) (c *Cli
 	return
 }
 
+// ListAll retrieves all the clients using offset pagination.
+// If limit is 0 it will retrieve all the clients, otherwise it will retrieve all the clients until the limit is reached.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Clients/get_clients
+func (m *ClientManager) ListAll(ctx context.Context, limit int, opts ...RequestOption) (clients []*Client, err error) {
+	clients, err = getWithPagination(ctx, limit, opts, func(ctx context.Context, opts ...RequestOption) ([]*Client, bool, error) {
+		clientList, err := m.List(ctx, opts...)
+		if err != nil {
+			return nil, false, err
+		}
+
+		return clientList.Clients, clientList.HasNext(), nil
+	})
+
+	return
+}
+
+type paginatedResource interface {
+	*Client | *Connection | *Organization
+}
+
+func getWithPagination[Resource paginatedResource](
+	ctx context.Context,
+	limit int,
+	opts []RequestOption,
+	api func(ctx context.Context, opts ...RequestOption) (result []Resource, hasNext bool, err error),
+) ([]Resource, error) {
+	const defaultPageSize = 100
+	var list []Resource
+	var pageSize, pageNumber int
+	for {
+		if limit > 0 {
+			wanted := limit - len(list)
+			if wanted == 0 {
+				return list, nil
+			}
+
+			if wanted < pageSize {
+				pageSize = wanted
+			} else {
+				pageSize = defaultPageSize
+			}
+		}
+
+		opts = append(opts, PerPage(pageSize), Page(pageNumber))
+
+		result, hasNext, err := api(ctx, opts...)
+		if err != nil {
+			return list, err
+		}
+
+		list = append(list, result...)
+		if len(list) == limit || !hasNext {
+			break
+		}
+
+		pageNumber++
+	}
+
+	return list, nil
+}
+
 // Update a client.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/patch_clients_by_id
