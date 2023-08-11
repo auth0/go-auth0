@@ -157,7 +157,7 @@ func TestPasswordlessWithClientAssertion(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.Equal(t, "+123456789", r.PhoneNumber)
-		assert.Equal(t, true, r.PhoneVerified)
+		assert.True(t, r.PhoneVerified)
 	})
 
 	t.Run("Should support passing private key jwt auth", func(t *testing.T) {
@@ -184,6 +184,6 @@ func TestPasswordlessWithClientAssertion(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.Equal(t, "+123456789", r.PhoneNumber)
-		assert.Equal(t, true, r.PhoneVerified)
+		assert.True(t, r.PhoneVerified)
 	})
 }
