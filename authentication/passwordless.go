@@ -115,7 +115,7 @@ func (p *Passwordless) addClientAuthentication(params *oauth.ClientAuthenticatio
 			p.authentication.clientAssertionSigningAlg,
 			p.authentication.clientAssertionSigningKey,
 			params.ClientID,
-			p.authentication.domain,
+			p.authentication.url.JoinPath("/").String(),
 		)
 		if err != nil {
 			return err

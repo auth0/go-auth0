@@ -221,7 +221,7 @@ func (o *OAuth) addClientAuthentication(params oauth.ClientAuthentication, body 
 			o.authentication.clientAssertionSigningAlg,
 			o.authentication.clientAssertionSigningKey,
 			clientID,
-			o.authentication.domain,
+			o.authentication.url.JoinPath("/").String(),
 		)
 		if err != nil {
 			return err
