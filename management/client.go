@@ -531,7 +531,8 @@ func (m *ClientManager) Read(ctx context.Context, id string, opts ...RequestOpti
 	return
 }
 
-// List all client applications.
+// List retrieves client applications using offset pagination.
+// By default, it takes the first page with 50 items.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/get_clients
 func (m *ClientManager) List(ctx context.Context, opts ...RequestOption) (c *ClientList, err error) {
@@ -539,12 +540,18 @@ func (m *ClientManager) List(ctx context.Context, opts ...RequestOption) (c *Cli
 	return
 }
 
-// ListAll retrieves all the clients using offset pagination.
-// If limit is 0 it will retrieve all the clients, otherwise it will retrieve all the clients until the limit is reached.
+// ListAll goes through all available pages and retrieves all the clients using offset pagination.
+// A limit can be provided through a context value named "paginationLimit".
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/get_clients
-func (m *ClientManager) ListAll(ctx context.Context, limit int, opts ...RequestOption) (clients []*Client, err error) {
-	clients, err = getWithPagination(ctx, limit, opts, func(ctx context.Context, opts ...RequestOption) ([]*Client, bool, error) {
+func (m *ClientManager) ListAll(ctx context.Context, opts ...RequestOption) (clients []*Client, err error) {
+	paginationLimit := 0
+	limit, ok := ctx.Value("paginationLimit").(int)
+	if ok {
+		paginationLimit = limit
+	}
+
+	clients, err = getWithPagination(ctx, paginationLimit, opts, func(ctx context.Context, opts ...RequestOption) ([]*Client, bool, error) {
 		clientList, err := m.List(ctx, opts...)
 		if err != nil {
 			return nil, false, err
@@ -554,51 +561,6 @@ func (m *ClientManager) ListAll(ctx context.Context, limit int, opts ...RequestO
 	})
 
 	return
-}
-
-type paginatedResource interface {
-	*Client | *Connection | *Organization
-}
-
-func getWithPagination[Resource paginatedResource](
-	ctx context.Context,
-	limit int,
-	opts []RequestOption,
-	api func(ctx context.Context, opts ...RequestOption) (result []Resource, hasNext bool, err error),
-) ([]Resource, error) {
-	const defaultPageSize = 100
-	var list []Resource
-	var pageSize, pageNumber int
-	for {
-		if limit > 0 {
-			wanted := limit - len(list)
-			if wanted == 0 {
-				return list, nil
-			}
-
-			if wanted < pageSize {
-				pageSize = wanted
-			} else {
-				pageSize = defaultPageSize
-			}
-		}
-
-		opts = append(opts, PerPage(pageSize), Page(pageNumber))
-
-		result, hasNext, err := api(ctx, opts...)
-		if err != nil {
-			return list, err
-		}
-
-		list = append(list, result...)
-		if len(list) == limit || !hasNext {
-			break
-		}
-
-		pageNumber++
-	}
-
-	return list, nil
 }
 
 // Update a client.

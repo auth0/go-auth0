@@ -116,6 +116,47 @@ func (m *Management) Request(ctx context.Context, method, uri string, payload in
 	return nil
 }
 
+func getWithPagination[Resource interface{}](
+	ctx context.Context,
+	limit int,
+	opts []RequestOption,
+	api func(ctx context.Context, opts ...RequestOption) (result []Resource, hasNext bool, err error),
+) ([]Resource, error) {
+	const defaultPageSize = 100
+	var list []Resource
+	var pageSize, pageNumber int
+	for {
+		if limit > 0 {
+			wanted := limit - len(list)
+			if wanted == 0 {
+				return list, nil
+			}
+
+			if wanted < pageSize {
+				pageSize = wanted
+			} else {
+				pageSize = defaultPageSize
+			}
+		}
+
+		opts = append(opts, PerPage(pageSize), Page(pageNumber))
+
+		result, hasNext, err := api(ctx, opts...)
+		if err != nil {
+			return list, err
+		}
+
+		list = append(list, result...)
+		if len(list) == limit || !hasNext {
+			break
+		}
+
+		pageNumber++
+	}
+
+	return list, nil
+}
+
 // List is an envelope which is typically used when calling List() or Search()
 // methods.
 //
@@ -230,6 +271,15 @@ func Take(items int) RequestOption {
 	return newRequestOption(func(r *http.Request) {
 		q := r.URL.Query()
 		q.Set("take", strconv.FormatInt(int64(items), 10))
+		r.URL.RawQuery = q.Encode()
+	})
+}
+
+// Limit configures a request to limit the amount of items in the result for an offset pagination based request.
+func Limit(items int) RequestOption {
+	return newRequestOption(func(r *http.Request) {
+		q := r.URL.Query()
+		q.Set("limit", strconv.FormatInt(int64(items), 10))
 		r.URL.RawQuery = q.Encode()
 	})
 }
