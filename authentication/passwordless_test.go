@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0/authentication/oauth"
 	"github.com/auth0/go-auth0/authentication/passwordless"
@@ -133,5 +134,56 @@ func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 		}, oauth.IDTokenValidationOptions{MaxAge: 100 * time.Second})
 
 		assert.ErrorContains(t, err, "auth_time claim in the ID token indicates that too much time has passed")
+	})
+}
+
+func TestPasswordlessWithClientAssertion(t *testing.T) {
+	t.Run("Should support using private key jwt auth", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		api, err := New(
+			context.Background(),
+			domain,
+			WithIDTokenSigningAlg("HS256"),
+			WithClientID(clientID),
+			WithClientAssertion(jwtPrivateKey, "RS256"),
+		)
+
+		require.NoError(t, err)
+
+		r, err := api.Passwordless.SendSMS(context.Background(), passwordless.SendSMSRequest{
+			PhoneNumber: "+123456789",
+		})
+
+		assert.NoError(t, err)
+		assert.Equal(t, "+123456789", r.PhoneNumber)
+		assert.True(t, r.PhoneVerified)
+	})
+
+	t.Run("Should support passing private key jwt auth", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		api, err := New(
+			context.Background(),
+			domain,
+			WithIDTokenSigningAlg("HS256"),
+			WithClientID(clientID),
+		)
+		require.NoError(t, err)
+
+		auth, err := createClientAssertion("RS256", jwtPrivateKey, clientID, "https://"+domain+"/")
+		require.NoError(t, err)
+
+		r, err := api.Passwordless.SendSMS(context.Background(), passwordless.SendSMSRequest{
+			ClientAuthentication: oauth.ClientAuthentication{
+				ClientAssertion:     auth,
+				ClientAssertionType: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+			},
+			PhoneNumber: "+123456789",
+		})
+
+		assert.NoError(t, err)
+		assert.Equal(t, "+123456789", r.PhoneNumber)
+		assert.True(t, r.PhoneVerified)
 	})
 }

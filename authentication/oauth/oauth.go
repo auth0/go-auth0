@@ -9,6 +9,12 @@ type ClientAuthentication struct {
 	// ClientSecret to use for the specific request. Required when Client Secret Basic or Client
 	// Secret Post is the application authentication method.
 	ClientSecret string `json:"client_secret,omitempty"`
+	// ClientAssertion to use for the specific request. Required if `Private Key JWT` is the
+	// authentication method.
+	ClientAssertion string `json:"client_assertion,omitempty"`
+	// ClientAssertionType to use for the specific request. Required if you are passing your own
+	// ClientAssertion.
+	ClientAssertionType string `json:"client_assertion_type,omitempty"`
 }
 
 // TokenSet defines the response of the OAuth endpoints.
@@ -21,7 +27,8 @@ type TokenSet struct {
 	IDToken string `json:"id_token,omitempty"`
 	// The refresh token, only available if `offline_access` scope was provided.
 	RefreshToken string `json:"refresh_token,omitempty"`
-	//
+	// String value of the different scopes the application is asking for.
+	// Multiple scopes are separated with whitespace.
 	Scope string `json:"scope,omitempty"`
 	// The type of the access token.
 	TokenType string `json:"token_type,omitempty"`

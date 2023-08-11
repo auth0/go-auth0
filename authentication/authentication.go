@@ -115,18 +115,20 @@ type Authentication struct {
 	OAuth        *OAuth
 	Passwordless *Passwordless
 
-	auth0ClientInfo       *client.Auth0ClientInfo
-	basePath              string
-	common                manager
-	clientID              string
-	clientSecret          string
-	idTokenClockTolerance time.Duration
-	debug                 bool
-	http                  *http.Client
-	idTokenSigningAlg     string
-	idTokenValidator      *idtokenvalidator.IDTokenValidator
-	url                   *url.URL
-	retryStrategy         client.RetryOptions
+	auth0ClientInfo           *client.Auth0ClientInfo
+	basePath                  string
+	common                    manager
+	clientID                  string
+	clientSecret              string
+	clientAssertionSigningKey string
+	clientAssertionSigningAlg string
+	idTokenClockTolerance     time.Duration
+	debug                     bool
+	http                      *http.Client
+	idTokenSigningAlg         string
+	idTokenValidator          *idtokenvalidator.IDTokenValidator
+	url                       *url.URL
+	retryStrategy             client.RetryOptions
 }
 
 type manager struct {

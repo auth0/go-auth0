@@ -13,6 +13,7 @@ import (
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwt"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0/authentication/oauth"
 )
@@ -41,6 +42,7 @@ func TestOAuthLoginWithPassword(t *testing.T) {
 			ExtraParameters: map[string]string{
 				"extra": "value",
 			},
+			Audience: "test-audience",
 		}, oauth.IDTokenValidationOptions{})
 		assert.NoError(t, err)
 		assert.NotEmpty(t, tokenSet.AccessToken)
@@ -49,12 +51,12 @@ func TestOAuthLoginWithPassword(t *testing.T) {
 }
 
 func TestLoginWithAuthCode(t *testing.T) {
-	t.Run("Should require client_secret", func(t *testing.T) {
+	t.Run("Should require client_secret or client assertion", func(t *testing.T) {
 		_, err := authAPI.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
 			Code: "my-code",
 		}, oauth.IDTokenValidationOptions{})
 
-		assert.Error(t, err, "client_secret is required but not provided")
+		assert.ErrorContains(t, err, "client_secret or client_assertion is required but not provided")
 	})
 
 	t.Run("Should throw for an invalid code", func(t *testing.T) {
@@ -154,12 +156,12 @@ func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
 }
 
 func TestLoginWithClientCredentials(t *testing.T) {
-	t.Run("Should require client_secret", func(t *testing.T) {
+	t.Run("Should require client_secret or client assertion", func(t *testing.T) {
 		_, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
 			Audience: "test-audience",
 		}, oauth.IDTokenValidationOptions{})
 
-		assert.Error(t, err, "client_secret is required but not provided")
+		assert.ErrorContains(t, err, "client_secret or client_assertion is required but not provided")
 	})
 
 	t.Run("Should return tokens", func(t *testing.T) {
@@ -191,6 +193,65 @@ func TestLoginWithClientCredentials(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotEmpty(t, tokenSet.AccessToken)
 		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
+
+	t.Run("Should support using private key jwt auth", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		api, err := New(
+			context.Background(),
+			domain,
+			WithIDTokenSigningAlg("HS256"),
+			WithClientID(clientID),
+			WithClientAssertion(jwtPrivateKey, "RS256"),
+		)
+
+		require.NoError(t, err)
+
+		tokenSet, err := api.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
+			Audience: "test-audience",
+		}, oauth.IDTokenValidationOptions{})
+
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
+
+	t.Run("Should support passing private key jwt auth", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		auth, err := createClientAssertion("RS256", jwtPrivateKey, clientID, "https://"+domain+"/")
+		require.NoError(t, err)
+
+		tokenSet, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
+			ClientAuthentication: oauth.ClientAuthentication{
+				ClientAssertion:     auth,
+				ClientAssertionType: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+			},
+			Audience: "test-audience",
+		}, oauth.IDTokenValidationOptions{})
+
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
+
+	t.Run("Should error if provided an invalid algorithm", func(t *testing.T) {
+		api, err := New(
+			context.Background(),
+			domain,
+			WithIDTokenSigningAlg("HS256"),
+			WithClientID(clientID),
+			WithClientAssertion(jwtPrivateKey, "invalid-alg"),
+		)
+
+		require.NoError(t, err)
+
+		_, err = api.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
+			Audience: "test-audience",
+		}, oauth.IDTokenValidationOptions{})
+
+		assert.ErrorContains(t, err, "Unsupported client assertion algorithm \"invalid-alg\" provided")
 	})
 }
 

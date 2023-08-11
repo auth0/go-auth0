@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/PuerkitoBio/rehttp v1.2.0
+	github.com/google/uuid v1.3.0
 	github.com/joho/godotenv v1.5.1
 	github.com/lestrrat-go/jwx/v2 v2.0.12
 	github.com/stretchr/testify v1.8.4
