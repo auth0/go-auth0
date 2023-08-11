@@ -275,15 +275,6 @@ func Take(items int) RequestOption {
 	})
 }
 
-// Limit configures a request to limit the amount of items in the result for an offset pagination based request.
-func Limit(items int) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		q := r.URL.Query()
-		q.Set("limit", strconv.FormatInt(int64(items), 10))
-		r.URL.RawQuery = q.Encode()
-	})
-}
-
 // Query configures a request to search on specific query parameters.
 //
 // For example:
