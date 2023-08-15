@@ -1739,6 +1739,30 @@ func (c *ConnectionOptions) String() string {
 	return Stringify(c)
 }
 
+// GetAgentIP returns the AgentIP field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAD) GetAgentIP() string {
+	if c == nil || c.AgentIP == nil {
+		return ""
+	}
+	return *c.AgentIP
+}
+
+// GetAgentMode returns the AgentMode field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAD) GetAgentMode() bool {
+	if c == nil || c.AgentMode == nil {
+		return false
+	}
+	return *c.AgentMode
+}
+
+// GetAgentVersion returns the AgentVersion field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAD) GetAgentVersion() string {
+	if c == nil || c.AgentVersion == nil {
+		return ""
+	}
+	return *c.AgentVersion
+}
+
 // GetBruteForceProtection returns the BruteForceProtection field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsAD) GetBruteForceProtection() bool {
 	if c == nil || c.BruteForceProtection == nil {
@@ -1753,6 +1777,14 @@ func (c *ConnectionOptionsAD) GetCertAuth() bool {
 		return false
 	}
 	return *c.CertAuth
+}
+
+// GetCerts returns the Certs field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAD) GetCerts() []string {
+	if c == nil || c.Certs == nil {
+		return nil
+	}
+	return *c.Certs
 }
 
 // GetDisableCache returns the DisableCache field if it's non-nil, zero value otherwise.
@@ -1832,6 +1864,14 @@ func (c *ConnectionOptionsADFS) GetADFSServer() string {
 	return *c.ADFSServer
 }
 
+// GetCertRolloverNotification returns the CertRolloverNotification field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsADFS) GetCertRolloverNotification() string {
+	if c == nil || c.CertRolloverNotification == nil {
+		return ""
+	}
+	return *c.CertRolloverNotification
+}
+
 // GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsADFS) GetDomainAliases() []string {
 	if c == nil || c.DomainAliases == nil {
@@ -1846,6 +1886,14 @@ func (c *ConnectionOptionsADFS) GetEnableUsersAPI() bool {
 		return false
 	}
 	return *c.EnableUsersAPI
+}
+
+// GetEntityID returns the EntityID field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsADFS) GetEntityID() string {
+	if c == nil || c.EntityID == nil {
+		return ""
+	}
+	return *c.EntityID
 }
 
 // GetFedMetadataXML returns the FedMetadataXML field if it's non-nil, zero value otherwise.
@@ -1870,6 +1918,14 @@ func (c *ConnectionOptionsADFS) GetNonPersistentAttrs() []string {
 		return nil
 	}
 	return *c.NonPersistentAttrs
+}
+
+// GetPreviousThumbprints returns the PreviousThumbprints field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsADFS) GetPreviousThumbprints() []string {
+	if c == nil || c.PreviousThumbprints == nil {
+		return nil
+	}
+	return *c.PreviousThumbprints
 }
 
 // GetSetUserAttributes returns the SetUserAttributes field if it's non-nil, zero value otherwise.
@@ -2010,6 +2066,14 @@ func (c *ConnectionOptionsAzureAD) GetAgreedTerms() bool {
 	return *c.AgreedTerms
 }
 
+// GetAppDomain returns the AppDomain field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAzureAD) GetAppDomain() string {
+	if c == nil || c.AppDomain == nil {
+		return ""
+	}
+	return *c.AppDomain
+}
+
 // GetAppID returns the AppID field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsAzureAD) GetAppID() string {
 	if c == nil || c.AppID == nil {
@@ -2032,6 +2096,14 @@ func (c *ConnectionOptionsAzureAD) GetBasicProfile() bool {
 		return false
 	}
 	return *c.BasicProfile
+}
+
+// GetCertRolloverNotification returns the CertRolloverNotification field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAzureAD) GetCertRolloverNotification() string {
+	if c == nil || c.CertRolloverNotification == nil {
+		return ""
+	}
+	return *c.CertRolloverNotification
 }
 
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
@@ -2080,6 +2152,14 @@ func (c *ConnectionOptionsAzureAD) GetExtendedProfile() bool {
 		return false
 	}
 	return *c.ExtendedProfile
+}
+
+// GetGranted returns the Granted field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAzureAD) GetGranted() bool {
+	if c == nil || c.Granted == nil {
+		return false
+	}
+	return *c.Granted
 }
 
 // GetGroups returns the Groups field if it's non-nil, zero value otherwise.
@@ -2152,6 +2232,22 @@ func (c *ConnectionOptionsAzureAD) GetTenantDomain() string {
 		return ""
 	}
 	return *c.TenantDomain
+}
+
+// GetTenantID returns the TenantID field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAzureAD) GetTenantID() string {
+	if c == nil || c.TenantID == nil {
+		return ""
+	}
+	return *c.TenantID
+}
+
+// GetThumbprints returns the Thumbprints field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAzureAD) GetThumbprints() []string {
+	if c == nil || c.Thumbprints == nil {
+		return nil
+	}
+	return *c.Thumbprints
 }
 
 // GetTrustEmailVerified returns the TrustEmailVerified field if it's non-nil, zero value otherwise.
@@ -3686,12 +3782,76 @@ func (c *ConnectionOptionsOTP) String() string {
 	return Stringify(c)
 }
 
+// GetAgentIP returns the AgentIP field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetAgentIP() string {
+	if c == nil || c.AgentIP == nil {
+		return ""
+	}
+	return *c.AgentIP
+}
+
+// GetAgentMode returns the AgentMode field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetAgentMode() bool {
+	if c == nil || c.AgentMode == nil {
+		return false
+	}
+	return *c.AgentMode
+}
+
+// GetAgentVersion returns the AgentVersion field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetAgentVersion() string {
+	if c == nil || c.AgentVersion == nil {
+		return ""
+	}
+	return *c.AgentVersion
+}
+
+// GetAPIEnableUsers returns the APIEnableUsers field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetAPIEnableUsers() bool {
+	if c == nil || c.APIEnableUsers == nil {
+		return false
+	}
+	return *c.APIEnableUsers
+}
+
+// GetBindingMethod returns the BindingMethod field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetBindingMethod() string {
+	if c == nil || c.BindingMethod == nil {
+		return ""
+	}
+	return *c.BindingMethod
+}
+
 // GetCert returns the Cert field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsPingFederate) GetCert() string {
 	if c == nil || c.Cert == nil {
 		return ""
 	}
 	return *c.Cert
+}
+
+// GetCertRolloverNotification returns the CertRolloverNotification field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetCertRolloverNotification() string {
+	if c == nil || c.CertRolloverNotification == nil {
+		return ""
+	}
+	return *c.CertRolloverNotification
+}
+
+// GetDebug returns the Debug field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetDebug() bool {
+	if c == nil || c.Debug == nil {
+		return false
+	}
+	return *c.Debug
+}
+
+// GetDecryptionKey returns the DecryptionKey field.
+func (c *ConnectionOptionsPingFederate) GetDecryptionKey() *ConnectionOptionsSAMLDecryptionKey {
+	if c == nil {
+		return nil
+	}
+	return c.DecryptionKey
 }
 
 // GetDigestAlgorithm returns the DigestAlgorithm field if it's non-nil, zero value otherwise.
@@ -3702,12 +3862,52 @@ func (c *ConnectionOptionsPingFederate) GetDigestAlgorithm() string {
 	return *c.DigestAlgorithm
 }
 
+// GetDisableSignout returns the DisableSignout field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetDisableSignout() bool {
+	if c == nil || c.DisableSignout == nil {
+		return false
+	}
+	return *c.DisableSignout
+}
+
 // GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsPingFederate) GetDomainAliases() []string {
 	if c == nil || c.DomainAliases == nil {
 		return nil
 	}
 	return *c.DomainAliases
+}
+
+// GetEntityID returns the EntityID field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetEntityID() string {
+	if c == nil || c.EntityID == nil {
+		return ""
+	}
+	return *c.EntityID
+}
+
+// GetExpires returns the Expires field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetExpires() string {
+	if c == nil || c.Expires == nil {
+		return ""
+	}
+	return *c.Expires
+}
+
+// GetExtGroups returns the ExtGroups field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetExtGroups() bool {
+	if c == nil || c.ExtGroups == nil {
+		return false
+	}
+	return *c.ExtGroups
+}
+
+// GetExtProfile returns the ExtProfile field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetExtProfile() bool {
+	if c == nil || c.ExtProfile == nil {
+		return false
+	}
+	return *c.ExtProfile
 }
 
 // GetIdpInitiated returns the IdpInitiated field.
@@ -3726,6 +3926,22 @@ func (c *ConnectionOptionsPingFederate) GetLogoURL() string {
 	return *c.LogoURL
 }
 
+// GetMetadataURL returns the MetadataURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetMetadataURL() string {
+	if c == nil || c.MetadataURL == nil {
+		return ""
+	}
+	return *c.MetadataURL
+}
+
+// GetMetadataXML returns the MetadataXML field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetMetadataXML() string {
+	if c == nil || c.MetadataXML == nil {
+		return ""
+	}
+	return *c.MetadataXML
+}
+
 // GetNonPersistentAttrs returns the NonPersistentAttrs field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsPingFederate) GetNonPersistentAttrs() []string {
 	if c == nil || c.NonPersistentAttrs == nil {
@@ -3740,6 +3956,22 @@ func (c *ConnectionOptionsPingFederate) GetPingFederateBaseURL() string {
 		return ""
 	}
 	return *c.PingFederateBaseURL
+}
+
+// GetProtocolBinding returns the ProtocolBinding field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetProtocolBinding() string {
+	if c == nil || c.ProtocolBinding == nil {
+		return ""
+	}
+	return *c.ProtocolBinding
+}
+
+// GetRequestTemplate returns the RequestTemplate field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetRequestTemplate() string {
+	if c == nil || c.RequestTemplate == nil {
+		return ""
+	}
+	return *c.RequestTemplate
 }
 
 // GetSetUserAttributes returns the SetUserAttributes field if it's non-nil, zero value otherwise.
@@ -3774,6 +4006,22 @@ func (c *ConnectionOptionsPingFederate) GetSigningCert() string {
 	return *c.SigningCert
 }
 
+// GetSigningKey returns the SigningKey field.
+func (c *ConnectionOptionsPingFederate) GetSigningKey() *ConnectionOptionsSAMLSigningKey {
+	if c == nil {
+		return nil
+	}
+	return c.SigningKey
+}
+
+// GetSignOutEndpoint returns the SignOutEndpoint field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetSignOutEndpoint() string {
+	if c == nil || c.SignOutEndpoint == nil {
+		return ""
+	}
+	return *c.SignOutEndpoint
+}
+
 // GetSignSAMLRequest returns the SignSAMLRequest field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsPingFederate) GetSignSAMLRequest() bool {
 	if c == nil || c.SignSAMLRequest == nil {
@@ -3788,6 +4036,22 @@ func (c *ConnectionOptionsPingFederate) GetTenantDomain() string {
 		return ""
 	}
 	return *c.TenantDomain
+}
+
+// GetThumbprints returns the Thumbprints field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetThumbprints() []string {
+	if c == nil || c.Thumbprints == nil {
+		return nil
+	}
+	return *c.Thumbprints
+}
+
+// GetUserIDAttribute returns the UserIDAttribute field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPingFederate) GetUserIDAttribute() string {
+	if c == nil || c.UserIDAttribute == nil {
+		return ""
+	}
+	return *c.UserIDAttribute
 }
 
 // String returns a string representation of ConnectionOptionsPingFederate.
@@ -3848,12 +4112,52 @@ func (c *ConnectionOptionsSalesforce) String() string {
 	return Stringify(c)
 }
 
+// GetAgentIP returns the AgentIP field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetAgentIP() string {
+	if c == nil || c.AgentIP == nil {
+		return ""
+	}
+	return *c.AgentIP
+}
+
+// GetAgentMode returns the AgentMode field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetAgentMode() bool {
+	if c == nil || c.AgentMode == nil {
+		return false
+	}
+	return *c.AgentMode
+}
+
+// GetAgentVersion returns the AgentVersion field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetAgentVersion() string {
+	if c == nil || c.AgentVersion == nil {
+		return ""
+	}
+	return *c.AgentVersion
+}
+
+// GetBindingMethod returns the BindingMethod field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetBindingMethod() string {
+	if c == nil || c.BindingMethod == nil {
+		return ""
+	}
+	return *c.BindingMethod
+}
+
 // GetCert returns the Cert field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsSAML) GetCert() string {
 	if c == nil || c.Cert == nil {
 		return ""
 	}
 	return *c.Cert
+}
+
+// GetCertRolloverNotification returns the CertRolloverNotification field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetCertRolloverNotification() string {
+	if c == nil || c.CertRolloverNotification == nil {
+		return ""
+	}
+	return *c.CertRolloverNotification
 }
 
 // GetDebug returns the Debug field if it's non-nil, zero value otherwise.
@@ -3910,6 +4214,22 @@ func (c *ConnectionOptionsSAML) GetExpires() string {
 		return ""
 	}
 	return *c.Expires
+}
+
+// GetExtGroups returns the ExtGroups field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetExtGroups() bool {
+	if c == nil || c.ExtGroups == nil {
+		return false
+	}
+	return *c.ExtGroups
+}
+
+// GetExtProfile returns the ExtProfile field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetExtProfile() bool {
+	if c == nil || c.ExtProfile == nil {
+		return false
+	}
+	return *c.ExtProfile
 }
 
 // GetIdpInitiated returns the IdpInitiated field.

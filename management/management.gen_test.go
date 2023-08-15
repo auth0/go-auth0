@@ -2205,6 +2205,36 @@ func TestConnectionOptions_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptionsAD_GetAgentIP(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsAD{AgentIP: &zeroValue}
+	c.GetAgentIP()
+	c = &ConnectionOptionsAD{}
+	c.GetAgentIP()
+	c = nil
+	c.GetAgentIP()
+}
+
+func TestConnectionOptionsAD_GetAgentMode(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsAD{AgentMode: &zeroValue}
+	c.GetAgentMode()
+	c = &ConnectionOptionsAD{}
+	c.GetAgentMode()
+	c = nil
+	c.GetAgentMode()
+}
+
+func TestConnectionOptionsAD_GetAgentVersion(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsAD{AgentVersion: &zeroValue}
+	c.GetAgentVersion()
+	c = &ConnectionOptionsAD{}
+	c.GetAgentVersion()
+	c = nil
+	c.GetAgentVersion()
+}
+
 func TestConnectionOptionsAD_GetBruteForceProtection(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsAD{BruteForceProtection: &zeroValue}
@@ -2223,6 +2253,16 @@ func TestConnectionOptionsAD_GetCertAuth(tt *testing.T) {
 	c.GetCertAuth()
 	c = nil
 	c.GetCertAuth()
+}
+
+func TestConnectionOptionsAD_GetCerts(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsAD{Certs: &zeroValue}
+	c.GetCerts()
+	c = &ConnectionOptionsAD{}
+	c.GetCerts()
+	c = nil
+	c.GetCerts()
 }
 
 func TestConnectionOptionsAD_GetDisableCache(tt *testing.T) {
@@ -2323,6 +2363,16 @@ func TestConnectionOptionsADFS_GetADFSServer(tt *testing.T) {
 	c.GetADFSServer()
 }
 
+func TestConnectionOptionsADFS_GetCertRolloverNotification(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsADFS{CertRolloverNotification: &zeroValue}
+	c.GetCertRolloverNotification()
+	c = &ConnectionOptionsADFS{}
+	c.GetCertRolloverNotification()
+	c = nil
+	c.GetCertRolloverNotification()
+}
+
 func TestConnectionOptionsADFS_GetDomainAliases(tt *testing.T) {
 	var zeroValue []string
 	c := &ConnectionOptionsADFS{DomainAliases: &zeroValue}
@@ -2341,6 +2391,16 @@ func TestConnectionOptionsADFS_GetEnableUsersAPI(tt *testing.T) {
 	c.GetEnableUsersAPI()
 	c = nil
 	c.GetEnableUsersAPI()
+}
+
+func TestConnectionOptionsADFS_GetEntityID(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsADFS{EntityID: &zeroValue}
+	c.GetEntityID()
+	c = &ConnectionOptionsADFS{}
+	c.GetEntityID()
+	c = nil
+	c.GetEntityID()
 }
 
 func TestConnectionOptionsADFS_GetFedMetadataXML(tt *testing.T) {
@@ -2371,6 +2431,16 @@ func TestConnectionOptionsADFS_GetNonPersistentAttrs(tt *testing.T) {
 	c.GetNonPersistentAttrs()
 	c = nil
 	c.GetNonPersistentAttrs()
+}
+
+func TestConnectionOptionsADFS_GetPreviousThumbprints(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsADFS{PreviousThumbprints: &zeroValue}
+	c.GetPreviousThumbprints()
+	c = &ConnectionOptionsADFS{}
+	c.GetPreviousThumbprints()
+	c = nil
+	c.GetPreviousThumbprints()
 }
 
 func TestConnectionOptionsADFS_GetSetUserAttributes(tt *testing.T) {
@@ -2549,6 +2619,16 @@ func TestConnectionOptionsAzureAD_GetAgreedTerms(tt *testing.T) {
 	c.GetAgreedTerms()
 }
 
+func TestConnectionOptionsAzureAD_GetAppDomain(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsAzureAD{AppDomain: &zeroValue}
+	c.GetAppDomain()
+	c = &ConnectionOptionsAzureAD{}
+	c.GetAppDomain()
+	c = nil
+	c.GetAppDomain()
+}
+
 func TestConnectionOptionsAzureAD_GetAppID(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsAzureAD{AppID: &zeroValue}
@@ -2577,6 +2657,16 @@ func TestConnectionOptionsAzureAD_GetBasicProfile(tt *testing.T) {
 	c.GetBasicProfile()
 	c = nil
 	c.GetBasicProfile()
+}
+
+func TestConnectionOptionsAzureAD_GetCertRolloverNotification(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsAzureAD{CertRolloverNotification: &zeroValue}
+	c.GetCertRolloverNotification()
+	c = &ConnectionOptionsAzureAD{}
+	c.GetCertRolloverNotification()
+	c = nil
+	c.GetCertRolloverNotification()
 }
 
 func TestConnectionOptionsAzureAD_GetClientID(tt *testing.T) {
@@ -2637,6 +2727,16 @@ func TestConnectionOptionsAzureAD_GetExtendedProfile(tt *testing.T) {
 	c.GetExtendedProfile()
 	c = nil
 	c.GetExtendedProfile()
+}
+
+func TestConnectionOptionsAzureAD_GetGranted(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsAzureAD{Granted: &zeroValue}
+	c.GetGranted()
+	c = &ConnectionOptionsAzureAD{}
+	c.GetGranted()
+	c = nil
+	c.GetGranted()
 }
 
 func TestConnectionOptionsAzureAD_GetGroups(tt *testing.T) {
@@ -2727,6 +2827,26 @@ func TestConnectionOptionsAzureAD_GetTenantDomain(tt *testing.T) {
 	c.GetTenantDomain()
 	c = nil
 	c.GetTenantDomain()
+}
+
+func TestConnectionOptionsAzureAD_GetTenantID(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsAzureAD{TenantID: &zeroValue}
+	c.GetTenantID()
+	c = &ConnectionOptionsAzureAD{}
+	c.GetTenantID()
+	c = nil
+	c.GetTenantID()
+}
+
+func TestConnectionOptionsAzureAD_GetThumbprints(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsAzureAD{Thumbprints: &zeroValue}
+	c.GetThumbprints()
+	c = &ConnectionOptionsAzureAD{}
+	c.GetThumbprints()
+	c = nil
+	c.GetThumbprints()
 }
 
 func TestConnectionOptionsAzureAD_GetTrustEmailVerified(tt *testing.T) {
@@ -4659,6 +4779,56 @@ func TestConnectionOptionsOTP_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptionsPingFederate_GetAgentIP(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{AgentIP: &zeroValue}
+	c.GetAgentIP()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetAgentIP()
+	c = nil
+	c.GetAgentIP()
+}
+
+func TestConnectionOptionsPingFederate_GetAgentMode(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsPingFederate{AgentMode: &zeroValue}
+	c.GetAgentMode()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetAgentMode()
+	c = nil
+	c.GetAgentMode()
+}
+
+func TestConnectionOptionsPingFederate_GetAgentVersion(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{AgentVersion: &zeroValue}
+	c.GetAgentVersion()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetAgentVersion()
+	c = nil
+	c.GetAgentVersion()
+}
+
+func TestConnectionOptionsPingFederate_GetAPIEnableUsers(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsPingFederate{APIEnableUsers: &zeroValue}
+	c.GetAPIEnableUsers()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetAPIEnableUsers()
+	c = nil
+	c.GetAPIEnableUsers()
+}
+
+func TestConnectionOptionsPingFederate_GetBindingMethod(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{BindingMethod: &zeroValue}
+	c.GetBindingMethod()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetBindingMethod()
+	c = nil
+	c.GetBindingMethod()
+}
+
 func TestConnectionOptionsPingFederate_GetCert(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsPingFederate{Cert: &zeroValue}
@@ -4667,6 +4837,33 @@ func TestConnectionOptionsPingFederate_GetCert(tt *testing.T) {
 	c.GetCert()
 	c = nil
 	c.GetCert()
+}
+
+func TestConnectionOptionsPingFederate_GetCertRolloverNotification(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{CertRolloverNotification: &zeroValue}
+	c.GetCertRolloverNotification()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetCertRolloverNotification()
+	c = nil
+	c.GetCertRolloverNotification()
+}
+
+func TestConnectionOptionsPingFederate_GetDebug(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsPingFederate{Debug: &zeroValue}
+	c.GetDebug()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetDebug()
+	c = nil
+	c.GetDebug()
+}
+
+func TestConnectionOptionsPingFederate_GetDecryptionKey(tt *testing.T) {
+	c := &ConnectionOptionsPingFederate{}
+	c.GetDecryptionKey()
+	c = nil
+	c.GetDecryptionKey()
 }
 
 func TestConnectionOptionsPingFederate_GetDigestAlgorithm(tt *testing.T) {
@@ -4679,6 +4876,16 @@ func TestConnectionOptionsPingFederate_GetDigestAlgorithm(tt *testing.T) {
 	c.GetDigestAlgorithm()
 }
 
+func TestConnectionOptionsPingFederate_GetDisableSignout(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsPingFederate{DisableSignout: &zeroValue}
+	c.GetDisableSignout()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetDisableSignout()
+	c = nil
+	c.GetDisableSignout()
+}
+
 func TestConnectionOptionsPingFederate_GetDomainAliases(tt *testing.T) {
 	var zeroValue []string
 	c := &ConnectionOptionsPingFederate{DomainAliases: &zeroValue}
@@ -4687,6 +4894,46 @@ func TestConnectionOptionsPingFederate_GetDomainAliases(tt *testing.T) {
 	c.GetDomainAliases()
 	c = nil
 	c.GetDomainAliases()
+}
+
+func TestConnectionOptionsPingFederate_GetEntityID(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{EntityID: &zeroValue}
+	c.GetEntityID()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetEntityID()
+	c = nil
+	c.GetEntityID()
+}
+
+func TestConnectionOptionsPingFederate_GetExpires(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{Expires: &zeroValue}
+	c.GetExpires()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetExpires()
+	c = nil
+	c.GetExpires()
+}
+
+func TestConnectionOptionsPingFederate_GetExtGroups(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsPingFederate{ExtGroups: &zeroValue}
+	c.GetExtGroups()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetExtGroups()
+	c = nil
+	c.GetExtGroups()
+}
+
+func TestConnectionOptionsPingFederate_GetExtProfile(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsPingFederate{ExtProfile: &zeroValue}
+	c.GetExtProfile()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetExtProfile()
+	c = nil
+	c.GetExtProfile()
 }
 
 func TestConnectionOptionsPingFederate_GetIdpInitiated(tt *testing.T) {
@@ -4704,6 +4951,26 @@ func TestConnectionOptionsPingFederate_GetLogoURL(tt *testing.T) {
 	c.GetLogoURL()
 	c = nil
 	c.GetLogoURL()
+}
+
+func TestConnectionOptionsPingFederate_GetMetadataURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{MetadataURL: &zeroValue}
+	c.GetMetadataURL()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetMetadataURL()
+	c = nil
+	c.GetMetadataURL()
+}
+
+func TestConnectionOptionsPingFederate_GetMetadataXML(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{MetadataXML: &zeroValue}
+	c.GetMetadataXML()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetMetadataXML()
+	c = nil
+	c.GetMetadataXML()
 }
 
 func TestConnectionOptionsPingFederate_GetNonPersistentAttrs(tt *testing.T) {
@@ -4724,6 +4991,26 @@ func TestConnectionOptionsPingFederate_GetPingFederateBaseURL(tt *testing.T) {
 	c.GetPingFederateBaseURL()
 	c = nil
 	c.GetPingFederateBaseURL()
+}
+
+func TestConnectionOptionsPingFederate_GetProtocolBinding(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{ProtocolBinding: &zeroValue}
+	c.GetProtocolBinding()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetProtocolBinding()
+	c = nil
+	c.GetProtocolBinding()
+}
+
+func TestConnectionOptionsPingFederate_GetRequestTemplate(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{RequestTemplate: &zeroValue}
+	c.GetRequestTemplate()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetRequestTemplate()
+	c = nil
+	c.GetRequestTemplate()
 }
 
 func TestConnectionOptionsPingFederate_GetSetUserAttributes(tt *testing.T) {
@@ -4766,6 +5053,23 @@ func TestConnectionOptionsPingFederate_GetSigningCert(tt *testing.T) {
 	c.GetSigningCert()
 }
 
+func TestConnectionOptionsPingFederate_GetSigningKey(tt *testing.T) {
+	c := &ConnectionOptionsPingFederate{}
+	c.GetSigningKey()
+	c = nil
+	c.GetSigningKey()
+}
+
+func TestConnectionOptionsPingFederate_GetSignOutEndpoint(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{SignOutEndpoint: &zeroValue}
+	c.GetSignOutEndpoint()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetSignOutEndpoint()
+	c = nil
+	c.GetSignOutEndpoint()
+}
+
 func TestConnectionOptionsPingFederate_GetSignSAMLRequest(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsPingFederate{SignSAMLRequest: &zeroValue}
@@ -4784,6 +5088,26 @@ func TestConnectionOptionsPingFederate_GetTenantDomain(tt *testing.T) {
 	c.GetTenantDomain()
 	c = nil
 	c.GetTenantDomain()
+}
+
+func TestConnectionOptionsPingFederate_GetThumbprints(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsPingFederate{Thumbprints: &zeroValue}
+	c.GetThumbprints()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetThumbprints()
+	c = nil
+	c.GetThumbprints()
+}
+
+func TestConnectionOptionsPingFederate_GetUserIDAttribute(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsPingFederate{UserIDAttribute: &zeroValue}
+	c.GetUserIDAttribute()
+	c = &ConnectionOptionsPingFederate{}
+	c.GetUserIDAttribute()
+	c = nil
+	c.GetUserIDAttribute()
 }
 
 func TestConnectionOptionsPingFederate_String(t *testing.T) {
@@ -4862,6 +5186,46 @@ func TestConnectionOptionsSalesforce_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptionsSAML_GetAgentIP(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{AgentIP: &zeroValue}
+	c.GetAgentIP()
+	c = &ConnectionOptionsSAML{}
+	c.GetAgentIP()
+	c = nil
+	c.GetAgentIP()
+}
+
+func TestConnectionOptionsSAML_GetAgentMode(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsSAML{AgentMode: &zeroValue}
+	c.GetAgentMode()
+	c = &ConnectionOptionsSAML{}
+	c.GetAgentMode()
+	c = nil
+	c.GetAgentMode()
+}
+
+func TestConnectionOptionsSAML_GetAgentVersion(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{AgentVersion: &zeroValue}
+	c.GetAgentVersion()
+	c = &ConnectionOptionsSAML{}
+	c.GetAgentVersion()
+	c = nil
+	c.GetAgentVersion()
+}
+
+func TestConnectionOptionsSAML_GetBindingMethod(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{BindingMethod: &zeroValue}
+	c.GetBindingMethod()
+	c = &ConnectionOptionsSAML{}
+	c.GetBindingMethod()
+	c = nil
+	c.GetBindingMethod()
+}
+
 func TestConnectionOptionsSAML_GetCert(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsSAML{Cert: &zeroValue}
@@ -4870,6 +5234,16 @@ func TestConnectionOptionsSAML_GetCert(tt *testing.T) {
 	c.GetCert()
 	c = nil
 	c.GetCert()
+}
+
+func TestConnectionOptionsSAML_GetCertRolloverNotification(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{CertRolloverNotification: &zeroValue}
+	c.GetCertRolloverNotification()
+	c = &ConnectionOptionsSAML{}
+	c.GetCertRolloverNotification()
+	c = nil
+	c.GetCertRolloverNotification()
 }
 
 func TestConnectionOptionsSAML_GetDebug(tt *testing.T) {
@@ -4937,6 +5311,26 @@ func TestConnectionOptionsSAML_GetExpires(tt *testing.T) {
 	c.GetExpires()
 	c = nil
 	c.GetExpires()
+}
+
+func TestConnectionOptionsSAML_GetExtGroups(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsSAML{ExtGroups: &zeroValue}
+	c.GetExtGroups()
+	c = &ConnectionOptionsSAML{}
+	c.GetExtGroups()
+	c = nil
+	c.GetExtGroups()
+}
+
+func TestConnectionOptionsSAML_GetExtProfile(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsSAML{ExtProfile: &zeroValue}
+	c.GetExtProfile()
+	c = &ConnectionOptionsSAML{}
+	c.GetExtProfile()
+	c = nil
+	c.GetExtProfile()
 }
 
 func TestConnectionOptionsSAML_GetIdpInitiated(tt *testing.T) {
