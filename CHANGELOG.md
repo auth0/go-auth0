@@ -1,5 +1,16 @@
 # Change Log
 
+<a name="v1.0.1"></a>
+
+## [v1.0.1](https://github.com/auth0/go-auth0/tree/v1.0.1) (2023-08-22)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.0.0..v1.0.1)
+
+### Added
+
+- Support Client Assertion authentication on Authentication Client ([#260](https://github.com/auth0/go-auth0/pull/260))
+- Add more known properties onto `ad`, `adfs`, `pingfederate`, `saml`, and `waad` connection options ([#263](https://github.com/auth0/go-auth0/pull/263))
+
 <a name="v1.0.0"></a>
 
 ## [v1.0.0](https://github.com/auth0/go-auth0/tree/v1.0.0) (2023-07-27)
