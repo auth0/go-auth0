@@ -1,0 +1,110 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 1125
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test Client (Aug 22 17:07:31.379)","description":"This is just a test client.","jwt_configuration":{"alg":"RS256"},"organization_usage":"allow","client_authentication_methods":{"private_key_jwt":{"credentials":[{"name":"Test Credential (Aug 22 17:07:31.379)","credential_type":"public_key","pem":"-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAua6LXMfgDE/tDdkOL1Oe\n3oWUwg1r4dSTg9L7RCcI5hItUzmkVofHtWN0H4CH2lm2ANmaJUsnhzctYowYW2+R\ntHvU9afTmtbdhpy993972hUqZSYLsE3iGziphYkOKVsqq38+VRH3TNg93zSLoRao\nJnTTkMXseVqiyqYRmFN8+gQQoEclHSGPUWQG5XMZ+hhuXeFyo+Yw/qbZWca/6/2I\n3rsca9jXR1alhxhHrXrg8N4Dm3gBgGbmiht6YYYT2Tyl1OqB9+iOI/9D7dfoCF6X\nAWJXRE454cmC8k8oucpjZVpflA+ocKshwPDR6YTLQYbXYiaWxEoaz0QGUErNQBnG\nI+sr9jDY3ua/s6HF6h0qyi/HVZH4wx+m4CtOfJoYTjrGBbaRszzUxhtSN2/MhXDu\n+a35q9/2zcu/3fjkkfVvGUt+NyyiYOKQ9vsJC1g/xxdUWtowjNwjfZE2zcG4usi8\nr38Bp0lmiipAsMLduZM/D5dFXkRdWCBNDfULmmg/4nv2wwjbjQuLemAMh7mmrztW\ni/85WMnjKQZT8NqS43pmgyIzg1gK1neMqdS90YmQ/PvJ36qALxCs245w1JpN9BAL\nJbwxCg/dbmKT7PalfWrksx9hGcJxtGqebldaOpw+5GVIPxxtC1C0gVr9BKeiDS3f\naibASY5pIRiKENmbZELDtucCAwEAAQ==\n-----END PUBLIC KEY-----"}]}}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"name":"Test Client (Aug 22 17:07:31.379)","description":"This is just a test client.","client_id":"F8CR935AFHbil10IRyTja5iU3KEJmiTg","client_secret":"[REDACTED]","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"alg":"RS256"},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"organization_usage":"allow","client_authentication_methods":{"private_key_jwt":{"credentials":[{"id":"cred_7eY7KZXkNxjVJp1TsEBqYP","name":"Test Credential (Aug 22 17:07:31.379)","kid":"4e7yYf0TKdyTLbVnpq2wLN6mZ8t7eb9UJkMksyHj9iU","credential_type":"public_key","alg":"RS256","created_at":"2023-08-22T16:07:32.271Z","updated_at":"2023-08-22T16:07:32.271Z"}]}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 753.161667ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 5
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            null
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients?fields=client_id&include_fields=true&include_totals=true&page=0&per_page=100
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"total":41,"start":0,"limit":100,"clients":[{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"PwdhfD7XJhB9JKjpYR1tm2UphBQkZjen"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"KJbYgCWcmtKNSYaBcRJ53mzHg6ANFIF8"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"zKyyptacYUyJ3iIbfCKyuomzj0QbSriq"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"jSjcB7zlmfTocm4ESJSBEswpAHtY3rSm"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"DZ2Ev6hX8fnAkMYIXPkJKEgMfhNN828K"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"MQDtIBl5PYjDdOXOomTS4EEbgIKUIKsW"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"7a1Suog0cNUbqD0hauA7O3mTXd1Oyn5A"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"GJq8FueBsuIJd0DhsrdKomRgr3F8Hptn"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"FpO1i4X8blsYuXndqRkazt0WEdxZZGNS"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"Cn1LPdA3GSnt5tj4kXn52JoKJcmxH9Ug"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"26bKbRBkfBay9rJ5RP4UsDgBweFEq3E0"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"naTYUHwINwCEtmhj8umEL7bHoB57L5e2"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"j7UX8NIj1Rxu8ChTcQG2X4ptrfV6vvrn"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"5a5Zmc1yt2x5TBqRzNSHp1YxmJH6BFhz"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"ebSKYixslFzIcb6ZpiymbLCIT4ywoGV8"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"PTxdcvckUkcG1ID5kCgVInLw2Xpe3Ljh"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"kZKdOdkrXDnJG87Wlfy9Ed4SPRKCIRwQ"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"zx0h5oaByZhxgqhiY1GMYh4bLjKlKR2b"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"t5d3iP6dO7gv4EtVxzv9CbOWQZmuzgQl"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"5ZbXEK5uwA26QTAn3vXGddVpjuoAj92q"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"SB0NmOWvjeb3e72w3iUADVmCq29GMVL7"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"kcmOcemx3PenLENSmelOvHOiUp3qS6VO"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"iDyx3ihNSr7EwgBx7gPNc9k2lOpUzT2J"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"0cH0p87kppd2OlUXliU83q8vBAIkMAYs"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"ijGoAmAq6a8400eir44fqfRX4vN6psO7"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"HCJ3Pwy3MNgBV3JlQS7f0daWKqdnxI1F"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"Ce9APp6rUUwyg1xevTC2iQkMIc6oIrES"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"vHtad47lLWQKpc0apMgAeUu5JrMedNbs"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"ZJIJnlBPWvf37FxvtHTN6mKA9EJfczEd"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"v15qGNFNKayHH4wSjnDTgSYMTKd1xyYJ"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"FuL0fqpVSHrmxh1dbNo8wFgC9hbXTHrO"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"Blp0YMTHqAPAkIz9wQXeuUWdc8ltYPlI"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"3toQfgyOVY3Zb8RRWLStzVIVwjtdDX1O"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"JJu0JT6ystFx8U2elYeHhG5fwc62T8ZK"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"nOiadSsZZI13AoN9CCkQK7y3lYZpRqoN"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"x06eeYRsITNqwrmaHabiLFSrxLo79Hvj"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"ajIdgcWSwEw554mAHDXLuzwt5bLYpTeZ"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"PtAMybIknAuYgPgL0NBXoUMwg6mpElCo"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"qNeD3vMqdAuqAPJYeTmU0NzvZ272ZlyK"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"F8CR935AFHbil10IRyTja5iU3KEJmiTg"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"VOY5j75scFh4K7HaTZfz6J1pNByXZbsH"}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 109.770708ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/F8CR935AFHbil10IRyTja5iU3KEJmiTg
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 197.952791ms

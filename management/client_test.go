@@ -87,6 +87,17 @@ func TestClient_List(t *testing.T) {
 	assert.Contains(t, clientList.Clients, &Client{ClientID: expectedClient.ClientID})
 }
 
+func TestClient_ListAll(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedClient := givenAClient(t)
+
+	clientList, err := api.Client.ListAll(context.Background(), IncludeFields("client_id"))
+
+	assert.NoError(t, err)
+	assert.Contains(t, clientList, &Client{ClientID: expectedClient.ClientID})
+}
+
 func TestClient_RotateSecret(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
