@@ -883,6 +883,11 @@ type ConnectionOptionsAD struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 
 	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
+
+	Certs        *[]string `json:"certs,omitempty"`
+	AgentIP      *string   `json:"agentIP,omitempty"`
+	AgentVersion *string   `json:"agentVersion,omitempty"`
+	AgentMode    *bool     `json:"agentMode,omitempty"`
 }
 
 // ConnectionOptionsAzureAD is used to configure an AzureAD Connection.
@@ -920,6 +925,12 @@ type ConnectionOptionsAzureAD struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 
 	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
+
+	AppDomain                *string   `json:"app_domain,omitempty"`
+	Thumbprints              *[]string `json:"thumbprints,omitempty"`
+	CertRolloverNotification *string   `json:"cert_rollover_notification,omitempty"`
+	Granted                  *bool     `json:"granted,omitempty"`
+	TenantID                 *string   `json:"tenantId,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsAzureAD.
@@ -948,6 +959,10 @@ type ConnectionOptionsADFS struct {
 
 	// Set to on_first_login to avoid setting user attributes at each login.
 	SetUserAttributes *string `json:"set_user_root_attributes,omitempty"`
+
+	EntityID                 *string   `json:"entityID,omitempty"`
+	CertRolloverNotification *string   `json:"cert_rollover_notification,omitempty"`
+	PreviousThumbprints      *[]string `json:"prev_thumprints,omitempty"`
 }
 
 // ConnectionOptionsPingFederate is used to configure a Ping Federate Connection.
@@ -972,6 +987,30 @@ type ConnectionOptionsPingFederate struct {
 	NonPersistentAttrs  *[]string                          `json:"non_persistent_attrs,omitempty"`
 	UpstreamParams      map[string]interface{}             `json:"upstream_params,omitempty"`
 	SetUserAttributes   *string                            `json:"set_user_root_attributes,omitempty"`
+
+	APIEnableUsers           *bool                               `json:"api_enable_users,omitempty"`
+	SignOutEndpoint          *string                             `json:"signOuEndpoint,omitempty"`
+	Subject                  map[string]interface{}              `json:"subject,omitempty"`
+	DisableSignout           *bool                               `json:"disableSignout,omitempty"`
+	UserIDAttribute          *string                             `json:"user_id_attribute,omitempty"`
+	Debug                    *bool                               `json:"debug,omitempty"`
+	ProtocolBinding          *string                             `json:"protocolBinding,omitempty"`
+	RequestTemplate          *string                             `json:"requestTemplate,omitempty"`
+	BindingMethod            *string                             `json:"bindingMethod,omitempty"`
+	Thumbprints              *[]string                           `json:"thumbprints,omitempty"`
+	Expires                  *string                             `json:"expires,omitempty"`
+	MetadataURL              *string                             `json:"metadataUrl,omitempty"`
+	FieldsMap                map[string]interface{}              `json:"fields_map,omitempty"`
+	MetadataXML              *string                             `json:"metadataXml,omitempty"`
+	EntityID                 *string                             `json:"entityId,omitempty"`
+	CertRolloverNotification *string                             `json:"cert_rollover_notification,omitempty"`
+	SigningKey               *ConnectionOptionsSAMLSigningKey    `json:"signing_key,omitempty"`
+	DecryptionKey            *ConnectionOptionsSAMLDecryptionKey `json:"decryption_key,omitempty"`
+	AgentIP                  *string                             `json:"agentIP,omitempty"`
+	AgentVersion             *string                             `json:"agentVersion,omitempty"`
+	AgentMode                *bool                               `json:"agentMode,omitempty"`
+	ExtGroups                *bool                               `json:"ext_groups,omitempty"`
+	ExtProfile               *bool                               `json:"ext_profile,omitempty"`
 }
 
 // ConnectionOptionsSAML is used to configure a SAML Connection.
@@ -1001,6 +1040,14 @@ type ConnectionOptionsSAML struct {
 	UserIDAttribute    *string                             `json:"user_id_attribute,omitempty"`
 	LogoURL            *string                             `json:"icon_url,omitempty"`
 	EntityID           *string                             `json:"entityId,omitempty"`
+
+	BindingMethod            *string `json:"binding_method,omitempty"`
+	CertRolloverNotification *string `json:"cert_rollover_notification,omitempty"`
+	AgentIP                  *string `json:"agentIP,omitempty"`
+	AgentVersion             *string `json:"agentVersion,omitempty"`
+	AgentMode                *bool   `json:"agentMode,omitempty"`
+	ExtGroups                *bool   `json:"ext_groups,omitempty"`
+	ExtProfile               *bool   `json:"ext_profile,omitempty"`
 
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
