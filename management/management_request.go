@@ -118,27 +118,13 @@ func (m *Management) Request(ctx context.Context, method, uri string, payload in
 
 func getWithPagination[Resource interface{}](
 	ctx context.Context,
-	limit int,
 	opts []RequestOption,
 	api func(ctx context.Context, opts ...RequestOption) (result []Resource, hasNext bool, err error),
 ) ([]Resource, error) {
-	const defaultPageSize = 100
+	const pageSize = 100
 	var list []Resource
-	var pageSize, pageNumber int
+	var pageNumber int
 	for {
-		if limit > 0 {
-			wanted := limit - len(list)
-			if wanted == 0 {
-				return list, nil
-			}
-
-			if wanted < pageSize {
-				pageSize = wanted
-			} else {
-				pageSize = defaultPageSize
-			}
-		}
-
 		opts = append(opts, PerPage(pageSize), Page(pageNumber))
 
 		result, hasNext, err := api(ctx, opts...)
@@ -147,7 +133,7 @@ func getWithPagination[Resource interface{}](
 		}
 
 		list = append(list, result...)
-		if len(list) == limit || !hasNext {
+		if !hasNext {
 			break
 		}
 

@@ -541,17 +541,10 @@ func (m *ClientManager) List(ctx context.Context, opts ...RequestOption) (c *Cli
 }
 
 // ListAll goes through all available pages and retrieves all the clients using offset pagination.
-// A limit can be provided through a context value named "paginationLimit".
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/get_clients
 func (m *ClientManager) ListAll(ctx context.Context, opts ...RequestOption) (clients []*Client, err error) {
-	paginationLimit := 0
-	limit, ok := ctx.Value("paginationLimit").(int)
-	if ok {
-		paginationLimit = limit
-	}
-
-	clients, err = getWithPagination(ctx, paginationLimit, opts, func(ctx context.Context, opts ...RequestOption) ([]*Client, bool, error) {
+	clients, err = getWithPagination(ctx, opts, func(ctx context.Context, opts ...RequestOption) ([]*Client, bool, error) {
 		clientList, err := m.List(ctx, opts...)
 		if err != nil {
 			return nil, false, err
