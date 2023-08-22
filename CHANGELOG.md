@@ -1,5 +1,16 @@
 # Change Log
 
+<a name="v0.17.3"></a>
+
+## [v0.17.3](https://github.com/auth0/go-auth0/tree/v0.17.3) (2023-08-22)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v0.17.2..v0.17.3)
+
+### Added
+
+- Add more known properties onto `ad`, `adfs`, `pingfederate`, `saml`, and `waad` connection options ([#265](https://github.com/auth0/go-auth0/pull/265))
+- Support DecryptionKey on SAML Connection Options ([#251](https://github.com/auth0/go-auth0/pull/251))
+
 <a name="v0.17.2"></a>
 
 ## [v0.17.2](https://github.com/auth0/go-auth0/tree/v0.17.2) (2023-05-22)
