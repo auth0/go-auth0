@@ -986,8 +986,8 @@ type ConnectionOptionsPingFederate struct {
 	AgentIP                  *string                             `json:"agentIP,omitempty"`
 	AgentVersion             *string                             `json:"agentVersion,omitempty"`
 	AgentMode                *bool                               `json:"agentMode,omitempty"`
-	ExtGroups                *bool                               `json:"ext_groups,omitempty"`
-	ExtProfile               *bool                               `json:"ext_profile,omitempty"`
+	ExtGroups                *bool                               `json:"ext_groups,omitempty" scope:"ext_groups"`
+	ExtProfile               *bool                               `json:"ext_profile,omitempty" scope:"ext_profile"`
 }
 
 // ConnectionOptionsSAML is used to configure a SAML Connection.
@@ -1023,8 +1023,8 @@ type ConnectionOptionsSAML struct {
 	AgentIP                  *string `json:"agentIP,omitempty"`
 	AgentVersion             *string `json:"agentVersion,omitempty"`
 	AgentMode                *bool   `json:"agentMode,omitempty"`
-	ExtGroups                *bool   `json:"ext_groups,omitempty"`
-	ExtProfile               *bool   `json:"ext_profile,omitempty"`
+	ExtGroups                *bool   `json:"ext_groups,omitempty" scope:"ext_groups"`
+	ExtProfile               *bool   `json:"ext_profile,omitempty" scope:"ext_profile"`
 
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
