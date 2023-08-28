@@ -2911,6 +2911,16 @@ func TestConnectionOptionsAD_GetTenantDomain(tt *testing.T) {
 	c.GetTenantDomain()
 }
 
+func TestConnectionOptionsAD_GetThumbprints(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsAD{Thumbprints: &zeroValue}
+	c.GetThumbprints()
+	c = &ConnectionOptionsAD{}
+	c.GetThumbprints()
+	c = nil
+	c.GetThumbprints()
+}
+
 func TestConnectionOptionsAD_GetUpstreamParams(tt *testing.T) {
 	zeroValue := map[string]interface{}{}
 	c := &ConnectionOptionsAD{UpstreamParams: zeroValue}

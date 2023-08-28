@@ -2366,6 +2366,14 @@ func (c *ConnectionOptionsAD) GetTenantDomain() string {
 	return *c.TenantDomain
 }
 
+// GetThumbprints returns the Thumbprints field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAD) GetThumbprints() []string {
+	if c == nil || c.Thumbprints == nil {
+		return nil
+	}
+	return *c.Thumbprints
+}
+
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
 func (c *ConnectionOptionsAD) GetUpstreamParams() map[string]interface{} {
 	if c == nil || c.UpstreamParams == nil {

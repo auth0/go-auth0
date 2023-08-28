@@ -861,6 +861,8 @@ type ConnectionOptionsAD struct {
 
 	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 
+	Thumbprints *[]string `json:"thumbprints,omitempty"`
+
 	Certs        *[]string `json:"certs,omitempty"`
 	AgentIP      *string   `json:"agentIP,omitempty"`
 	AgentVersion *string   `json:"agentVersion,omitempty"`
