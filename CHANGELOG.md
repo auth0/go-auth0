@@ -1,5 +1,20 @@
 # Change Log
 
+<a name="v1.0.2"></a>
+
+## [v1.0.2](https://github.com/auth0/go-auth0/tree/v1.0.2) (2023-08-30)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.0.1..v1.0.2)
+
+### Added
+
+- Add line connection strategy ([#271](https://github.com/auth0/go-auth0/pull/271))
+
+### Fixed
+
+- Add missing scope tags to connection options ([#269](https://github.com/auth0/go-auth0/pull/269))
+- Fix incorrect json tag for `PreviousThumbprints` on `ConnectionOptionsADFS` ([#270](https://github.com/auth0/go-auth0/pull/270))
+
 <a name="v1.0.1"></a>
 
 ## [v1.0.1](https://github.com/auth0/go-auth0/tree/v1.0.1) (2023-08-22)
