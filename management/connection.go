@@ -944,7 +944,7 @@ type ConnectionOptionsADFS struct {
 
 	EntityID                 *string   `json:"entityID,omitempty"`
 	CertRolloverNotification *string   `json:"cert_rollover_notification,omitempty"`
-	PreviousThumbprints      *[]string `json:"prev_thumprints,omitempty"`
+	PreviousThumbprints      *[]string `json:"prev_thumbprints,omitempty"`
 }
 
 // ConnectionOptionsPingFederate is used to configure a Ping Federate Connection.
