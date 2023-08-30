@@ -73,6 +73,8 @@ const (
 	ConnectionStrategyCustom = "custom"
 	// ConnectionStrategyPingFederate constant.
 	ConnectionStrategyPingFederate = "pingfederate"
+	// ConnectionStrategyLine constant.
+	ConnectionStrategyLine = "line"
 )
 
 // Connection is the relationship between Auth0 and a source of users.
@@ -100,7 +102,7 @@ type Connection struct {
 	// "planningcenter", "renren", "salesforce-community", "salesforce-sandbox",
 	//  "salesforce", "samlp", "sharepoint", "shopify", "sms", "soundcloud",
 	// "thecity-sandbox", "thecity", "thirtysevensignals", "twitter", "untappd",
-	//  "vkontakte", "waad", "weibo", "windowslive", "wordpress", "yahoo",
+	//  "vkontakte", "waad", "weibo", "windowslive", "wordpress", "yahoo", "line",
 	// "yammer", "okta" or "yandex".
 	Strategy *string `json:"strategy,omitempty"`
 
@@ -205,6 +207,7 @@ func (c *Connection) UnmarshalJSON(b []byte) error {
 			ConnectionStrategyBox,
 			ConnectionStrategyWordpress,
 			ConnectionStrategyShopify,
+			ConnectionStrategyLine,
 			ConnectionStrategyCustom:
 			v = &ConnectionOptionsOAuth2{}
 		case ConnectionStrategyAD:
