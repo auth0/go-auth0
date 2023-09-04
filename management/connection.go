@@ -658,7 +658,7 @@ type ConnectionGatewayAuthentication struct {
 // ConnectionOptionsSMS is used to configure an SMS Connection.
 type ConnectionOptionsSMS struct {
 	Name     *string `json:"name,omitempty"`
-	From     *string `json:"from,omitempty"`
+	From     *string `json:"from"`
 	Syntax   *string `json:"syntax,omitempty"`
 	Template *string `json:"template,omitempty"`
 
@@ -668,7 +668,7 @@ type ConnectionOptionsSMS struct {
 
 	TwilioSID           *string `json:"twilio_sid,omitempty"`
 	TwilioToken         *string `json:"twilio_token,omitempty"`
-	MessagingServiceSID *string `json:"messaging_service_sid,omitempty"`
+	MessagingServiceSID *string `json:"messaging_service_sid"`
 
 	Provider              *string                          `json:"provider,omitempty"`
 	GatewayURL            *string                          `json:"gateway_url,omitempty"`
