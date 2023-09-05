@@ -77,6 +77,31 @@ const (
 	ConnectionStrategyLine = "line"
 )
 
+var (
+	// Enforcing the ConnectionOptionsScoper interface.
+	_ ConnectionOptionsScoper = &ConnectionOptionsOkta{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsGoogleOAuth2{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsFacebook{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsApple{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsLinkedin{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsGitHub{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsWindowsLive{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsSalesforce{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsOIDC{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsOAuth2{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsAzureAD{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsPingFederate{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsSAML{}
+	_ ConnectionOptionsScoper = &ConnectionOptionsGoogleApps{}
+)
+
+// ConnectionOptionsScoper is used to enforce being able to read and
+// set scopes through the scope tag on connection options properties.
+type ConnectionOptionsScoper interface {
+	Scopes() []string
+	SetScopes(enable bool, scopes ...string)
+}
+
 // Connection is the relationship between Auth0 and a source of users.
 //
 // See: https://auth0.com/docs/authenticate/identity-providers
@@ -995,6 +1020,16 @@ type ConnectionOptionsPingFederate struct {
 	ExtProfile               *bool                               `json:"ext_profile,omitempty" scope:"ext_profile"`
 }
 
+// Scopes returns the scopes for ConnectionOptionsPingFederate.
+func (c *ConnectionOptionsPingFederate) Scopes() []string {
+	return tag.Scopes(c)
+}
+
+// SetScopes sets the scopes for ConnectionOptionsPingFederate.
+func (c *ConnectionOptionsPingFederate) SetScopes(enable bool, scopes ...string) {
+	tag.SetScopes(c, enable, scopes...)
+}
+
 // ConnectionOptionsSAML is used to configure a SAML Connection.
 type ConnectionOptionsSAML struct {
 	Cert               *string                             `json:"cert,omitempty"`
@@ -1061,6 +1096,16 @@ type ConnectionOptionsSAMLSigningKey struct {
 type ConnectionOptionsSAMLDecryptionKey struct {
 	Key  *string `json:"key,omitempty"`
 	Cert *string `json:"cert,omitempty"`
+}
+
+// Scopes returns the scopes for ConnectionOptionsSAML.
+func (c *ConnectionOptionsSAML) Scopes() []string {
+	return tag.Scopes(c)
+}
+
+// SetScopes sets the scopes for ConnectionOptionsSAML.
+func (c *ConnectionOptionsSAML) SetScopes(enable bool, scopes ...string) {
+	tag.SetScopes(c, enable, scopes...)
 }
 
 // ConnectionOptionsGoogleApps is used to configure a GoogleApps Connection.
