@@ -337,6 +337,9 @@ type ConnectionOptionsOkta struct {
 	SetUserAttributes     *string                `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs    *[]string              `json:"non_persistent_attrs,omitempty"`
 	UpstreamParams        map[string]interface{} `json:"upstream_params,omitempty"`
+
+	ConnectionSettings *ConnectionOptionsOIDCConnectionSettings `json:"connection_settings,omitempty"`
+	AttributeMap       *ConnectionOptionsOIDCAttributeMap       `json:"attribute_map,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsOkta.
@@ -802,6 +805,35 @@ type ConnectionOptionsOIDC struct {
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 
 	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
+
+	ConnectionSettings *ConnectionOptionsOIDCConnectionSettings `json:"connection_settings,omitempty"`
+	AttributeMap       *ConnectionOptionsOIDCAttributeMap       `json:"attribute_map,omitempty"`
+}
+
+// ConnectionOptionsOIDCConnectionSettings contains PKCE configuration for the connection.
+//
+// PKCE possible values:
+//
+//	auto     - Uses the strongest algorithm available.
+//	S256     - Uses the SHA-256 algorithm. Auth0 does not currently support RS512 tokens.
+//	plain    - Uses plaintext as described in the PKCE specification.
+//	disabled - Disables support for PKCE.
+//
+// Setting the PKCE property to a value other than auto may prevent a connection from
+// working properly if the selected value is not supported by the identity provider.
+type ConnectionOptionsOIDCConnectionSettings struct {
+	PKCE *string `json:"pkce,omitempty"`
+}
+
+// ConnectionOptionsOIDCAttributeMap contains the mapping of claims received from the identity provider (IdP).
+type ConnectionOptionsOIDCAttributeMap struct {
+	// Scopes to send to the IdP's Userinfo endpoint.
+	UserInfoScope *string `json:"userinfo_scope,omitempty"`
+	// Method used to map incoming claims.
+	// Possible values: `use_map`, `bind_all`, `basic_profile`.
+	MappingMode *string `json:"mapping_mode,omitempty"`
+	// Object containing mapping details for incoming claims.
+	Attributes map[string]interface{} `json:"attributes,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsOIDC.

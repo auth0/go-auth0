@@ -4138,6 +4138,14 @@ func (c *ConnectionOptionsOAuth2) String() string {
 	return Stringify(c)
 }
 
+// GetAttributeMap returns the AttributeMap field.
+func (c *ConnectionOptionsOIDC) GetAttributeMap() *ConnectionOptionsOIDCAttributeMap {
+	if c == nil {
+		return nil
+	}
+	return c.AttributeMap
+}
+
 // GetAuthorizationEndpoint returns the AuthorizationEndpoint field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOIDC) GetAuthorizationEndpoint() string {
 	if c == nil || c.AuthorizationEndpoint == nil {
@@ -4160,6 +4168,14 @@ func (c *ConnectionOptionsOIDC) GetClientSecret() string {
 		return ""
 	}
 	return *c.ClientSecret
+}
+
+// GetConnectionSettings returns the ConnectionSettings field.
+func (c *ConnectionOptionsOIDC) GetConnectionSettings() *ConnectionOptionsOIDCConnectionSettings {
+	if c == nil {
+		return nil
+	}
+	return c.ConnectionSettings
 }
 
 // GetDiscoveryURL returns the DiscoveryURL field if it's non-nil, zero value otherwise.
@@ -4271,6 +4287,56 @@ func (c *ConnectionOptionsOIDC) String() string {
 	return Stringify(c)
 }
 
+// GetAttributes returns the Attributes map if it's non-nil, an empty map otherwise.
+func (c *ConnectionOptionsOIDCAttributeMap) GetAttributes() map[string]interface{} {
+	if c == nil || c.Attributes == nil {
+		return map[string]interface{}{}
+	}
+	return c.Attributes
+}
+
+// GetMappingMode returns the MappingMode field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOIDCAttributeMap) GetMappingMode() string {
+	if c == nil || c.MappingMode == nil {
+		return ""
+	}
+	return *c.MappingMode
+}
+
+// GetUserInfoScope returns the UserInfoScope field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOIDCAttributeMap) GetUserInfoScope() string {
+	if c == nil || c.UserInfoScope == nil {
+		return ""
+	}
+	return *c.UserInfoScope
+}
+
+// String returns a string representation of ConnectionOptionsOIDCAttributeMap.
+func (c *ConnectionOptionsOIDCAttributeMap) String() string {
+	return Stringify(c)
+}
+
+// GetPKCE returns the PKCE field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOIDCConnectionSettings) GetPKCE() string {
+	if c == nil || c.PKCE == nil {
+		return ""
+	}
+	return *c.PKCE
+}
+
+// String returns a string representation of ConnectionOptionsOIDCConnectionSettings.
+func (c *ConnectionOptionsOIDCConnectionSettings) String() string {
+	return Stringify(c)
+}
+
+// GetAttributeMap returns the AttributeMap field.
+func (c *ConnectionOptionsOkta) GetAttributeMap() *ConnectionOptionsOIDCAttributeMap {
+	if c == nil {
+		return nil
+	}
+	return c.AttributeMap
+}
+
 // GetAuthorizationEndpoint returns the AuthorizationEndpoint field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOkta) GetAuthorizationEndpoint() string {
 	if c == nil || c.AuthorizationEndpoint == nil {
@@ -4293,6 +4359,14 @@ func (c *ConnectionOptionsOkta) GetClientSecret() string {
 		return ""
 	}
 	return *c.ClientSecret
+}
+
+// GetConnectionSettings returns the ConnectionSettings field.
+func (c *ConnectionOptionsOkta) GetConnectionSettings() *ConnectionOptionsOIDCConnectionSettings {
+	if c == nil {
+		return nil
+	}
+	return c.ConnectionSettings
 }
 
 // GetDomain returns the Domain field if it's non-nil, zero value otherwise.

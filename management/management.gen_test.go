@@ -5141,6 +5141,13 @@ func TestConnectionOptionsOAuth2_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptionsOIDC_GetAttributeMap(tt *testing.T) {
+	c := &ConnectionOptionsOIDC{}
+	c.GetAttributeMap()
+	c = nil
+	c.GetAttributeMap()
+}
+
 func TestConnectionOptionsOIDC_GetAuthorizationEndpoint(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOIDC{AuthorizationEndpoint: &zeroValue}
@@ -5169,6 +5176,13 @@ func TestConnectionOptionsOIDC_GetClientSecret(tt *testing.T) {
 	c.GetClientSecret()
 	c = nil
 	c.GetClientSecret()
+}
+
+func TestConnectionOptionsOIDC_GetConnectionSettings(tt *testing.T) {
+	c := &ConnectionOptionsOIDC{}
+	c.GetConnectionSettings()
+	c = nil
+	c.GetConnectionSettings()
 }
 
 func TestConnectionOptionsOIDC_GetDiscoveryURL(tt *testing.T) {
@@ -5309,6 +5323,69 @@ func TestConnectionOptionsOIDC_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptionsOIDCAttributeMap_GetAttributes(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsOIDCAttributeMap{Attributes: zeroValue}
+	c.GetAttributes()
+	c = &ConnectionOptionsOIDCAttributeMap{}
+	c.GetAttributes()
+	c = nil
+	c.GetAttributes()
+}
+
+func TestConnectionOptionsOIDCAttributeMap_GetMappingMode(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOIDCAttributeMap{MappingMode: &zeroValue}
+	c.GetMappingMode()
+	c = &ConnectionOptionsOIDCAttributeMap{}
+	c.GetMappingMode()
+	c = nil
+	c.GetMappingMode()
+}
+
+func TestConnectionOptionsOIDCAttributeMap_GetUserInfoScope(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOIDCAttributeMap{UserInfoScope: &zeroValue}
+	c.GetUserInfoScope()
+	c = &ConnectionOptionsOIDCAttributeMap{}
+	c.GetUserInfoScope()
+	c = nil
+	c.GetUserInfoScope()
+}
+
+func TestConnectionOptionsOIDCAttributeMap_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsOIDCAttributeMap{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsOIDCConnectionSettings_GetPKCE(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOIDCConnectionSettings{PKCE: &zeroValue}
+	c.GetPKCE()
+	c = &ConnectionOptionsOIDCConnectionSettings{}
+	c.GetPKCE()
+	c = nil
+	c.GetPKCE()
+}
+
+func TestConnectionOptionsOIDCConnectionSettings_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsOIDCConnectionSettings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsOkta_GetAttributeMap(tt *testing.T) {
+	c := &ConnectionOptionsOkta{}
+	c.GetAttributeMap()
+	c = nil
+	c.GetAttributeMap()
+}
+
 func TestConnectionOptionsOkta_GetAuthorizationEndpoint(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOkta{AuthorizationEndpoint: &zeroValue}
@@ -5337,6 +5414,13 @@ func TestConnectionOptionsOkta_GetClientSecret(tt *testing.T) {
 	c.GetClientSecret()
 	c = nil
 	c.GetClientSecret()
+}
+
+func TestConnectionOptionsOkta_GetConnectionSettings(tt *testing.T) {
+	c := &ConnectionOptionsOkta{}
+	c.GetConnectionSettings()
+	c = nil
+	c.GetConnectionSettings()
 }
 
 func TestConnectionOptionsOkta_GetDomain(tt *testing.T) {
