@@ -3550,6 +3550,30 @@ func (c *ConnectionOptionsGoogleApps) GetAdmin() bool {
 	return *c.Admin
 }
 
+// GetAdminAccessToken returns the AdminAccessToken field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsGoogleApps) GetAdminAccessToken() string {
+	if c == nil || c.AdminAccessToken == nil {
+		return ""
+	}
+	return *c.AdminAccessToken
+}
+
+// GetAdminAccessTokenExpiresIn returns the AdminAccessTokenExpiresIn field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsGoogleApps) GetAdminAccessTokenExpiresIn() string {
+	if c == nil || c.AdminAccessTokenExpiresIn == nil {
+		return ""
+	}
+	return *c.AdminAccessTokenExpiresIn
+}
+
+// GetAdminRefreshToken returns the AdminRefreshToken field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsGoogleApps) GetAdminRefreshToken() string {
+	if c == nil || c.AdminRefreshToken == nil {
+		return ""
+	}
+	return *c.AdminRefreshToken
+}
+
 // GetAgreedTerms returns the AgreedTerms field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsGoogleApps) GetAgreedTerms() bool {
 	if c == nil || c.AgreedTerms == nil {
@@ -3622,6 +3646,14 @@ func (c *ConnectionOptionsGoogleApps) GetGroups() bool {
 	return *c.Groups
 }
 
+// GetHandleLoginFromSocial returns the HandleLoginFromSocial field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsGoogleApps) GetHandleLoginFromSocial() bool {
+	if c == nil || c.HandleLoginFromSocial == nil {
+		return false
+	}
+	return *c.HandleLoginFromSocial
+}
+
 // GetIsSuspended returns the IsSuspended field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsGoogleApps) GetIsSuspended() bool {
 	if c == nil || c.IsSuspended == nil {
@@ -3636,6 +3668,14 @@ func (c *ConnectionOptionsGoogleApps) GetLogoURL() string {
 		return ""
 	}
 	return *c.LogoURL
+}
+
+// GetMapUserIDtoID returns the MapUserIDtoID field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsGoogleApps) GetMapUserIDtoID() bool {
+	if c == nil || c.MapUserIDtoID == nil {
+		return false
+	}
+	return *c.MapUserIDtoID
 }
 
 // GetNonPersistentAttrs returns the NonPersistentAttrs field if it's non-nil, zero value otherwise.

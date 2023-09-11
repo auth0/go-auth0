@@ -1142,26 +1142,27 @@ func (c *ConnectionOptionsSAML) SetScopes(enable bool, scopes ...string) {
 
 // ConnectionOptionsGoogleApps is used to configure a GoogleApps Connection.
 type ConnectionOptionsGoogleApps struct {
-	ClientID     *string `json:"client_id,omitempty"`
-	ClientSecret *string `json:"client_secret,omitempty"`
-	Domain       *string `json:"domain,omitempty"`
-	TenantDomain *string `json:"tenant_domain,omitempty"`
-
-	EnableUsersAPI  *bool `json:"api_enable_users,omitempty"`
-	BasicProfile    *bool `json:"basic_profile,omitempty" scope:"basic_profile"`
-	ExtendedProfile *bool `json:"ext_profile,omitempty" scope:"ext_profile"`
-	Groups          *bool `json:"ext_groups,omitempty" scope:"ext_groups"`
-	Admin           *bool `json:"ext_is_admin,omitempty" scope:"ext_is_admin"`
-	IsSuspended     *bool `json:"ext_is_suspended,omitempty" scope:"ext_is_suspended"`
-	AgreedTerms     *bool `json:"ext_agreed_terms,omitempty" scope:"ext_agreed_terms"`
-
-	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
-	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
-
-	DomainAliases *[]string `json:"domain_aliases,omitempty"`
-	LogoURL       *string   `json:"icon_url,omitempty"`
-
-	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
+	ClientID                  *string                `json:"client_id,omitempty"`
+	ClientSecret              *string                `json:"client_secret,omitempty"`
+	Domain                    *string                `json:"domain,omitempty"`
+	TenantDomain              *string                `json:"tenant_domain,omitempty"`
+	BasicProfile              *bool                  `json:"basic_profile,omitempty" scope:"basic_profile"`
+	ExtendedProfile           *bool                  `json:"ext_profile,omitempty" scope:"ext_profile"`
+	Groups                    *bool                  `json:"ext_groups,omitempty" scope:"ext_groups"`
+	Admin                     *bool                  `json:"ext_is_admin,omitempty" scope:"ext_is_admin"`
+	IsSuspended               *bool                  `json:"ext_is_suspended,omitempty" scope:"ext_is_suspended"`
+	AgreedTerms               *bool                  `json:"ext_agreed_terms,omitempty" scope:"ext_agreed_terms"`
+	EnableUsersAPI            *bool                  `json:"api_enable_users,omitempty"`
+	SetUserAttributes         *string                `json:"set_user_root_attributes,omitempty"`
+	MapUserIDtoID             *bool                  `json:"map_user_id_to_id,omitempty"`
+	HandleLoginFromSocial     *bool                  `json:"handle_login_from_social,omitempty"`
+	DomainAliases             *[]string              `json:"domain_aliases,omitempty"`
+	LogoURL                   *string                `json:"icon_url,omitempty"`
+	AdminAccessTokenExpiresIn *string                `json:"admin_access_token_expiresin,omitempty"`
+	AdminAccessToken          *string                `json:"admin_access_token,omitempty"`
+	AdminRefreshToken         *string                `json:"admin_refresh_token,omitempty"`
+	UpstreamParams            map[string]interface{} `json:"upstream_params,omitempty"`
+	NonPersistentAttrs        *[]string              `json:"non_persistent_attrs,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsGoogleApps.

@@ -4399,6 +4399,36 @@ func TestConnectionOptionsGoogleApps_GetAdmin(tt *testing.T) {
 	c.GetAdmin()
 }
 
+func TestConnectionOptionsGoogleApps_GetAdminAccessToken(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsGoogleApps{AdminAccessToken: &zeroValue}
+	c.GetAdminAccessToken()
+	c = &ConnectionOptionsGoogleApps{}
+	c.GetAdminAccessToken()
+	c = nil
+	c.GetAdminAccessToken()
+}
+
+func TestConnectionOptionsGoogleApps_GetAdminAccessTokenExpiresIn(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsGoogleApps{AdminAccessTokenExpiresIn: &zeroValue}
+	c.GetAdminAccessTokenExpiresIn()
+	c = &ConnectionOptionsGoogleApps{}
+	c.GetAdminAccessTokenExpiresIn()
+	c = nil
+	c.GetAdminAccessTokenExpiresIn()
+}
+
+func TestConnectionOptionsGoogleApps_GetAdminRefreshToken(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsGoogleApps{AdminRefreshToken: &zeroValue}
+	c.GetAdminRefreshToken()
+	c = &ConnectionOptionsGoogleApps{}
+	c.GetAdminRefreshToken()
+	c = nil
+	c.GetAdminRefreshToken()
+}
+
 func TestConnectionOptionsGoogleApps_GetAgreedTerms(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsGoogleApps{AgreedTerms: &zeroValue}
@@ -4489,6 +4519,16 @@ func TestConnectionOptionsGoogleApps_GetGroups(tt *testing.T) {
 	c.GetGroups()
 }
 
+func TestConnectionOptionsGoogleApps_GetHandleLoginFromSocial(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsGoogleApps{HandleLoginFromSocial: &zeroValue}
+	c.GetHandleLoginFromSocial()
+	c = &ConnectionOptionsGoogleApps{}
+	c.GetHandleLoginFromSocial()
+	c = nil
+	c.GetHandleLoginFromSocial()
+}
+
 func TestConnectionOptionsGoogleApps_GetIsSuspended(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsGoogleApps{IsSuspended: &zeroValue}
@@ -4507,6 +4547,16 @@ func TestConnectionOptionsGoogleApps_GetLogoURL(tt *testing.T) {
 	c.GetLogoURL()
 	c = nil
 	c.GetLogoURL()
+}
+
+func TestConnectionOptionsGoogleApps_GetMapUserIDtoID(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsGoogleApps{MapUserIDtoID: &zeroValue}
+	c.GetMapUserIDtoID()
+	c = &ConnectionOptionsGoogleApps{}
+	c.GetMapUserIDtoID()
+	c = nil
+	c.GetMapUserIDtoID()
 }
 
 func TestConnectionOptionsGoogleApps_GetNonPersistentAttrs(tt *testing.T) {
