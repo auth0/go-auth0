@@ -10,12 +10,10 @@ on:
 jobs:
   scan:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
       - name: Scan for Vulnerabilities in Code
-        uses: Templum/govulncheck-action@435a35e28c7e56076f6daf838b81c1aa76ee0c95 # pin@0.10.1
+        uses: golang/govulncheck-action@7da72f730e37eeaad891fcff0a532d27ed737cd4 # pin@1.0.1
         with:
-          go-version: 1.19
-          package: ./...
-          fail-on-vuln: true
+          go-version-file: go.mod
+          go-package: ./...
+          check-latest: true

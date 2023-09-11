@@ -2,9 +2,7 @@ name: Main Workflow
 
 on:
   push:
-    branches:
-      - main
-      - beta
+    branches: [main]
   pull_request:
 
 jobs:
@@ -13,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version-file: go.mod
           check-latest: true
@@ -28,7 +26,7 @@ jobs:
         run: go build ./...
 
       - name: Check for linting errors
-        uses: golangci/golangci-lint-action@639cd343e1d3b897ff35927a75193d57cfcba299 # pin@3.6.0
+        uses: golangci/golangci-lint-action@3a919529898de77ec3da873e3063ca4b10e7f5cc # pin@3.7.0
         with:
           version: latest
           args: -v -c .golangci.yml
@@ -38,10 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version-file: go.mod
           check-latest: true
