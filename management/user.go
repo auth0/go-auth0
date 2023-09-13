@@ -313,7 +313,7 @@ type AuthenticationMethod struct {
 	// The ID of the authentication method (auto generated).
 	ID *string `json:"id,omitempty"`
 
-	// The type of the authentication method. Should be one of "phone", "email", "totp" or "webauthn-roaming".
+	// The type of the authentication method. Should be one of "recovery-code", "totp", "push", "phone", "email", "email-verification", "webauthn-roaming", "webauthn-platform", "guardian" or "passkey".
 	Type *string `json:"type,omitempty"`
 
 	// The authentication method status.
