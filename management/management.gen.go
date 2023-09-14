@@ -9132,6 +9132,14 @@ func (t *TenantFlags) GetAllowLegacyTokenInfoEndpoint() bool {
 	return *t.AllowLegacyTokenInfoEndpoint
 }
 
+// GetAllowOrgNameInAuthAPI returns the AllowOrgNameInAuthAPI field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetAllowOrgNameInAuthAPI() bool {
+	if t == nil || t.AllowOrgNameInAuthAPI == nil {
+		return false
+	}
+	return *t.AllowOrgNameInAuthAPI
+}
+
 // GetDashboardInsightsView returns the DashboardInsightsView field if it's non-nil, zero value otherwise.
 func (t *TenantFlags) GetDashboardInsightsView() bool {
 	if t == nil || t.DashboardInsightsView == nil {
