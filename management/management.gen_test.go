@@ -11495,6 +11495,16 @@ func TestTenantFlags_GetAllowLegacyTokenInfoEndpoint(tt *testing.T) {
 	t.GetAllowLegacyTokenInfoEndpoint()
 }
 
+func TestTenantFlags_GetAllowOrgNameInAuthAPI(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{AllowOrgNameInAuthAPI: &zeroValue}
+	t.GetAllowOrgNameInAuthAPI()
+	t = &TenantFlags{}
+	t.GetAllowOrgNameInAuthAPI()
+	t = nil
+	t.GetAllowOrgNameInAuthAPI()
+}
+
 func TestTenantFlags_GetDashboardInsightsView(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{DashboardInsightsView: &zeroValue}

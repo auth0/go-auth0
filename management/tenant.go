@@ -247,6 +247,9 @@ type TenantFlags struct {
 	// If `true`, all Clients will be required to use Pushed Authorization Requests.
 	// This feature currently must be enabled for your tenant.
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty"`
+
+	// If `true`, allows accepting an organization name or organization ID on auth endpoints.
+	AllowOrgNameInAuthAPI *bool `json:"allow_organization_name_in_authentication_api,omitempty"`
 }
 
 // TenantUniversalLogin holds universal login settings.
