@@ -1,5 +1,26 @@
 # Change Log
 
+<a name="v1.1.0"></a>
+
+## [v1.1.0](https://github.com/auth0/go-auth0/tree/v1.1.0) (2023-09-14)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.0.2..v1.1.0)
+
+### Added
+
+- Add `ConnectionSettings` and `AttributeMap` to `ConnectionOptionsOIDC` and `ConnectionOptionsOkta` ([#277](https://github.com/auth0/go-auth0/pull/277))
+- Add properties to `ConnectionOptionsGoogleApps` ([#278](https://github.com/auth0/go-auth0/pull/278))
+- Add `Scopes` and `SetScopes` for `ConnectionOptionsPingFederate` and `ConnectionOptionsSAML` ([#274](https://github.com/auth0/go-auth0/pull/274))
+- Add support for `allow_organization_name_in_authentication_api` tenant setting ([#280](https://github.com/auth0/go-auth0/pull/280)/[#281](https://github.com/auth0/go-auth0/pull/281))
+
+### Changed
+
+- Bump Go version to 1.20 ([#279](https://github.com/auth0/go-auth0/pull/279))
+
+### Fixed
+
+- Allow sending null values for `From` and `MessagingServiceSID` in `ConnectionOptionsSMS` ([#275](https://github.com/auth0/go-auth0/pull/275))
+
 <a name="v1.0.2"></a>
 
 ## [v1.0.2](https://github.com/auth0/go-auth0/tree/v1.0.2) (2023-08-30)
