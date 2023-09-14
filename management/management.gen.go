@@ -8864,6 +8864,14 @@ func (t *Tenant) GetAllowedLogoutURLs() []string {
 	return *t.AllowedLogoutURLs
 }
 
+// GetAllowOrgNameInAuthAPI returns the AllowOrgNameInAuthAPI field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetAllowOrgNameInAuthAPI() bool {
+	if t == nil || t.AllowOrgNameInAuthAPI == nil {
+		return false
+	}
+	return *t.AllowOrgNameInAuthAPI
+}
+
 // GetChangePassword returns the ChangePassword field.
 func (t *Tenant) GetChangePassword() *TenantChangePassword {
 	if t == nil {
@@ -9130,14 +9138,6 @@ func (t *TenantFlags) GetAllowLegacyTokenInfoEndpoint() bool {
 		return false
 	}
 	return *t.AllowLegacyTokenInfoEndpoint
-}
-
-// GetAllowOrgNameInAuthAPI returns the AllowOrgNameInAuthAPI field if it's non-nil, zero value otherwise.
-func (t *TenantFlags) GetAllowOrgNameInAuthAPI() bool {
-	if t == nil || t.AllowOrgNameInAuthAPI == nil {
-		return false
-	}
-	return *t.AllowOrgNameInAuthAPI
 }
 
 // GetDashboardInsightsView returns the DashboardInsightsView field if it's non-nil, zero value otherwise.
