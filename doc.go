@@ -18,7 +18,7 @@ Initialize a new client using a context, domain, client ID, and client secret if
 		context.Background(),
 		domain,
 		authentication.WithClientID(id),
-		authentication.WithClientSecret(secret) // Optional depending on the grants used
+		authentication.WithClientSecret(secret), // Optional depending on the grants used
 	)
 	if err != nil {
 		// handle err
