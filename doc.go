@@ -6,10 +6,10 @@ Package auth0 provides a client for using the Auth0 Authentication and Managemen
 # Usage
 
 	import (
-		github.com/auth0/go-auth0
-		github.com/auth0/go-auth0/authentication
-		github.com/auth0/go-auth0/authentication/database
-		github.com/auth0/go-auth0/authentication/oauth
+		"github.com/auth0/go-auth0"
+		"github.com/auth0/go-auth0/authentication"
+		"github.com/auth0/go-auth0/authentication/database"
+		"github.com/auth0/go-auth0/authentication/oauth"
 	)
 
 Initialize a new client using a context, domain, client ID, and client secret if required.
