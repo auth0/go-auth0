@@ -53,15 +53,15 @@ Now we have an authentication client, we can interact with the Auth0 Authenticat
 Usage
 
 	import (
-		github.com/auth0/go-auth0
-		github.com/auth0/go-auth0/management
+		"github.com/auth0/go-auth0"
+		"github.com/auth0/go-auth0/management"
 	)
 
 Initialize a new client using a domain, client ID and secret.
 
 	m, err := management.New(
 		domain,
-		management.WithClientCredentials(context.Background(), id, secret)
+		management.WithClientCredentials(context.Background(), id, secret),
 	)
 	if err != nil {
 		// handle err
@@ -110,7 +110,7 @@ new client.
 	m, err := management.New(
 		domain,
 		management.WithClientCredentials(context.Background(), id, secret),
-		management.WithDebug(true)
+		management.WithDebug(true),
 	)
 
 ## Request Options
@@ -122,7 +122,7 @@ on a request basis.
 		context.Background(),
 		management.Page(2),
 		management.PerPage(10),
-		management.IncludeFields("id", "name", "options")
+		management.IncludeFields("id", "name", "options"),
 		management.Parameter("strategy", "auth0"),
 	)
 */
