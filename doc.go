@@ -17,7 +17,7 @@ Initialize a new client using a context, domain, client ID, and client secret if
 	authAPI, err := authentication.New(
 		context.Background(),
 		domain,
-		authentication.WithClientID(id)
+		authentication.WithClientID(id),
 		authentication.WithClientSecret(secret) // Optional depending on the grants used
 	)
 	if err != nil {
