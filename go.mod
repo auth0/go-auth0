@@ -3,7 +3,7 @@ module github.com/auth0/go-auth0
 go 1.20
 
 require (
-	github.com/PuerkitoBio/rehttp v1.2.0
+	github.com/PuerkitoBio/rehttp v1.3.0
 	github.com/google/uuid v1.3.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lestrrat-go/jwx/v2 v2.0.13
