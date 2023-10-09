@@ -47,14 +47,18 @@ The Authentication API client is based on the [Authentication API docs](https://
 Create an Authentication API client by providing the details of your Auth0 Application.
 
 ```go
+package main
+
 import (
-	github.com/auth0/go-auth0
-	github.com/auth0/go-auth0/authentication
-	github.com/auth0/go-auth0/authentication/database
-	github.com/auth0/go-auth0/authentication/oauth
+	"context"
+	"log"
+
+	"github.com/auth0/go-auth0/authentication"
+	"github.com/auth0/go-auth0/authentication/database"
+	"github.com/auth0/go-auth0/authentication/oauth"
 )
 
-func main () {
+func main() {
 	// Get these from your Auth0 Application Dashboard.
 	domain := "example.us.auth0.com"
 	clientID := "EXAMPLE_16L9d34h0qe4NVE6SaHxZEid"
@@ -64,8 +68,8 @@ func main () {
 	authAPI, err := authentication.New(
 		context.Background(),
 		domain,
-		authentication.WithClientID(clientID)
-		authentication.WithClientSecret(clientSecret) // Optional depending on the grants used
+		authentication.WithClientID(clientID),
+		authentication.WithClientSecret(clientSecret), // Optional depending on the grants used
 	)
 	if err != nil {
 		log.Fatalf("failed to initialize the auth0 authentication API client: %+v", err)
@@ -89,7 +93,7 @@ func main () {
 	tokenSet, err := authAPI.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
 		Code:         "test-code",
 		CodeVerifier: "test-code-verifier",
-	}, oauth.IDTokenValidationOptionalVerification{})
+	}, oauth.IDTokenValidationOptions{})
 	if err != nil {
 		log.Fatalf("failed to retrieve tokens: %+v", err)
 	}
