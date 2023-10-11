@@ -45,6 +45,9 @@ type User struct {
 	// The user-defined UTF-8 string describing their account.
 	Description *string `json:"description,omitempty"`
 
+	// The user-defined locale for this account’s profile.
+	Locale *string `json:"locale,omitempty"`
+
 	// The user-defined location for this account’s profile.
 	Location *string `json:"location,omitempty"`
 

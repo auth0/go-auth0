@@ -9615,6 +9615,14 @@ func (u *User) GetLastPasswordReset() time.Time {
 	return *u.LastPasswordReset
 }
 
+// GetLocale returns the Locale field if it's non-nil, zero value otherwise.
+func (u *User) GetLocale() string {
+	if u == nil || u.Locale == nil {
+		return ""
+	}
+	return *u.Locale
+}
+
 // GetLocation returns the Location field if it's non-nil, zero value otherwise.
 func (u *User) GetLocation() string {
 	if u == nil || u.Location == nil {

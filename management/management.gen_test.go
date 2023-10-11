@@ -12105,6 +12105,16 @@ func TestUser_GetLastPasswordReset(tt *testing.T) {
 	u.GetLastPasswordReset()
 }
 
+func TestUser_GetLocale(tt *testing.T) {
+	var zeroValue string
+	u := &User{Locale: &zeroValue}
+	u.GetLocale()
+	u = &User{}
+	u.GetLocale()
+	u = nil
+	u.GetLocale()
+}
+
 func TestUser_GetLocation(tt *testing.T) {
 	var zeroValue string
 	u := &User{Location: &zeroValue}
