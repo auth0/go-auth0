@@ -11533,6 +11533,16 @@ func TestTenantFlags_GetAllowLegacyTokenInfoEndpoint(tt *testing.T) {
 	t.GetAllowLegacyTokenInfoEndpoint()
 }
 
+func TestTenantFlags_GetCustomizeMFAInPostLoginAction(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{CustomizeMFAInPostLoginAction: &zeroValue}
+	t.GetCustomizeMFAInPostLoginAction()
+	t = &TenantFlags{}
+	t.GetCustomizeMFAInPostLoginAction()
+	t = nil
+	t.GetCustomizeMFAInPostLoginAction()
+}
+
 func TestTenantFlags_GetDashboardInsightsView(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{DashboardInsightsView: &zeroValue}

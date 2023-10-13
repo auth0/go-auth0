@@ -9161,6 +9161,14 @@ func (t *TenantFlags) GetAllowLegacyTokenInfoEndpoint() bool {
 	return *t.AllowLegacyTokenInfoEndpoint
 }
 
+// GetCustomizeMFAInPostLoginAction returns the CustomizeMFAInPostLoginAction field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetCustomizeMFAInPostLoginAction() bool {
+	if t == nil || t.CustomizeMFAInPostLoginAction == nil {
+		return false
+	}
+	return *t.CustomizeMFAInPostLoginAction
+}
+
 // GetDashboardInsightsView returns the DashboardInsightsView field if it's non-nil, zero value otherwise.
 func (t *TenantFlags) GetDashboardInsightsView() bool {
 	if t == nil || t.DashboardInsightsView == nil {
