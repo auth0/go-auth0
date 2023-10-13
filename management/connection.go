@@ -319,6 +319,40 @@ type ConnectionOptions struct {
 
 	// Set to true to stop the "Forgot Password" being displayed on login pages
 	DisableSelfServiceChangePassword *bool `json:"disable_self_service_change_password,omitempty"`
+
+	// Options for enabling authentication methods.
+	AuthenticationMethods *AuthenticationMethods `json:"authentication_methods,omitempty"`
+
+	// Options for the passkey authentication method.
+	PasskeyOptions *PasskeyOptions `json:"passkey_options,omitempty"`
+}
+
+// AuthenticationMethods represents the options for enabling authentication methods for the connection.
+type AuthenticationMethods struct {
+	Password *PasswordAuthenticationMethod `json:"password,omitempty"`
+	Passkey  *PasskeyAuthenticationMethod  `json:"passkey,omitempty"`
+}
+
+// PasswordAuthenticationMethod represents password authentication enablement for the connection.
+type PasswordAuthenticationMethod struct {
+	// Determines whether passwords are enabled.
+	Enabled *bool `json:"enabled,omitempty"`
+}
+
+// PasskeyAuthenticationMethod represents passkey authentication enablement for the connection.
+type PasskeyAuthenticationMethod struct {
+	// Determines whether passkeys are enabled.
+	Enabled *bool `json:"enabled,omitempty"`
+}
+
+// PasskeyOptions contains Passkey configuration for the connection.
+type PasskeyOptions struct {
+	// Controls the UI used to challenge the user for their passkey. Should be one of "both", "autofill", or "button"
+	ChallengeUI *string `json:"challenge_ui,omitempty"`
+	// Enables or disables progressive enrollment of passkeys for the connection.
+	ProgressiveEnrollmentEnabled *bool `json:"progressive_enrollment_enabled,omitempty"`
+	// Enables or disables enrollment prompt for local passkey when user authenticates using a cross-device passkey for the connection.
+	LocalEnrollmentEnabled *bool `json:"local_enrollment_enabled,omitempty"`
 }
 
 // ConnectionOptionsOkta is used to configure an Okta Workforce Connection.
