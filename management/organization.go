@@ -36,10 +36,11 @@ type OrganizationBranding struct {
 
 // OrganizationMember holds member information for an Organization.
 type OrganizationMember struct {
-	UserID  *string `json:"user_id,omitempty"`
-	Picture *string `json:"picture,omitempty"`
-	Name    *string `json:"name,omitempty"`
-	Email   *string `json:"email,omitempty"`
+	UserID  *string                  `json:"user_id,omitempty"`
+	Picture *string                  `json:"picture,omitempty"`
+	Name    *string                  `json:"name,omitempty"`
+	Email   *string                  `json:"email,omitempty"`
+	Roles   []OrganizationMemberRole `json:"roles,omitempty"`
 }
 
 // OrganizationConnection holds connection information for an Organization.
