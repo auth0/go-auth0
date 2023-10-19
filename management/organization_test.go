@@ -287,14 +287,25 @@ func TestOrganizationManager_Members(t *testing.T) {
 
 	org := givenAnOrganization(t)
 	user := givenAUser(t)
+	role := givenARole(t)
 
 	err := api.Organization.AddMembers(context.Background(), org.GetID(), []string{user.GetID()})
 	assert.NoError(t, err)
 
-	members, err := api.Organization.Members(context.Background(), org.GetID())
+	err = api.Organization.AssignMemberRoles(context.Background(), org.GetID(), user.GetID(), []string{role.GetID()})
+	assert.NoError(t, err)
+
+	members, err := api.Organization.Members(
+		context.Background(), org.GetID(),
+		IncludeFields("user_id", "roles"),
+	)
+
 	assert.NoError(t, err)
 	assert.Len(t, members.Members, 1)
 	assert.Equal(t, user.GetID(), members.Members[0].GetUserID())
+
+	assert.Len(t, members.Members[0].Roles, 1)
+	assert.Equal(t, role.GetID(), members.Members[0].Roles[0].GetID())
 }
 
 func TestOrganizationManager_MembersCheckpointPagination(t *testing.T) {
