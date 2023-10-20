@@ -9863,6 +9863,34 @@ func TestOrganizationMemberList_String(t *testing.T) {
 	}
 }
 
+func TestOrganizationMemberListRole_GetID(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationMemberListRole{ID: &zeroValue}
+	o.GetID()
+	o = &OrganizationMemberListRole{}
+	o.GetID()
+	o = nil
+	o.GetID()
+}
+
+func TestOrganizationMemberListRole_GetName(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationMemberListRole{Name: &zeroValue}
+	o.GetName()
+	o = &OrganizationMemberListRole{}
+	o.GetName()
+	o = nil
+	o.GetName()
+}
+
+func TestOrganizationMemberListRole_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &OrganizationMemberListRole{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestOrganizationMemberRole_GetDescription(tt *testing.T) {
 	var zeroValue string
 	o := &OrganizationMemberRole{Description: &zeroValue}
