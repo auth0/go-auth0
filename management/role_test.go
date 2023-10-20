@@ -177,7 +177,12 @@ func cleanupRole(t *testing.T, roleID string) {
 
 	err := api.Role.Delete(context.Background(), roleID)
 	if err != nil {
-		if err.(Error).Status() != http.StatusNotFound {
+		managementErr, ok := err.(Error)
+
+		// Some test (e.g. TestRoleManager_Delete) expects a 404 error during
+		// clean up, therefore we only raise non-404 errors.
+		// If `err` doesn't cast to management.Error, we raise it immediately.
+		if !ok || ok && managementErr.Status() != http.StatusNotFound {
 			t.Error(err)
 		}
 	}

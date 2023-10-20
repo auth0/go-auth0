@@ -40,6 +40,19 @@ type OrganizationMember struct {
 	Picture *string `json:"picture,omitempty"`
 	Name    *string `json:"name,omitempty"`
 	Email   *string `json:"email,omitempty"`
+	// Roles is only included when the field is requested using the `IncludeFields` RequestOption.
+	// All fields that are required must also be included in the `IncludeFields` call so to requests
+	// all fields use `IncludeFields("user_id", "picture", "name", "email", "roles")`.
+	Roles []*OrganizationMemberListRole `json:"roles,omitempty"`
+}
+
+// OrganizationMemberListRole holds member role information.
+type OrganizationMemberListRole struct {
+	// ID for this role.
+	ID *string `json:"id,omitempty"`
+
+	// Name of the role.
+	Name *string `json:"name,omitempty"`
 }
 
 // OrganizationConnection holds connection information for an Organization.

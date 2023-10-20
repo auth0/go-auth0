@@ -7848,6 +7848,27 @@ func (o *OrganizationMemberList) String() string {
 	return Stringify(o)
 }
 
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (o *OrganizationMemberListRole) GetID() string {
+	if o == nil || o.ID == nil {
+		return ""
+	}
+	return *o.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (o *OrganizationMemberListRole) GetName() string {
+	if o == nil || o.Name == nil {
+		return ""
+	}
+	return *o.Name
+}
+
+// String returns a string representation of OrganizationMemberListRole.
+func (o *OrganizationMemberListRole) String() string {
+	return Stringify(o)
+}
+
 // GetDescription returns the Description field if it's non-nil, zero value otherwise.
 func (o *OrganizationMemberRole) GetDescription() string {
 	if o == nil || o.Description == nil {
