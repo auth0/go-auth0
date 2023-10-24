@@ -313,7 +313,7 @@ type AuthenticationMethod struct {
 	// The ID of the authentication method (auto generated).
 	ID *string `json:"id,omitempty"`
 
-	// The type of the authentication method. Should be one of "phone", "email", "totp" or "webauthn-roaming".
+	// The type of the authentication method. Should be one of "phone", "email", "totp", "webauthn-roaming", or "passkey".
 	Type *string `json:"type,omitempty"`
 
 	// The authentication method status.
@@ -356,6 +356,20 @@ type AuthenticationMethod struct {
 	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty"`
 
 	AuthenticationMethods *[]AuthenticationMethodReference `json:"authentication_methods,omitempty"`
+
+	// Applies to passkeys only. The kind of device the credential is stored on as defined by backup eligibility.
+	// "single_device" credentials cannot be backed up and synced to another device,
+	// "multi_device" credentials can be backed up if enabled by the end-user.
+	CredentialDeviceType *string `json:"credential_device_type,omitempty"`
+
+	// Applies to passkeys only. Whether the credential was backed up.
+	CredentialBackedUp *bool `json:"credential_backed_up,omitempty"`
+
+	// Applies to passkeys only. The ID of the user identity linked with the authentication method.
+	IdentityUserID *string `json:"identity_user_id,omitempty"`
+
+	// Applies to passkeys only. The user-agent of the browser used to create the passkey.
+	UserAgent *string `json:"user_agent,omitempty"`
 }
 
 // AuthenticationMethodReference used within the AuthenticationMethod.
