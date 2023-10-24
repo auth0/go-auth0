@@ -655,6 +655,26 @@ func TestAuthenticationMethod_GetCreatedAt(tt *testing.T) {
 	a.GetCreatedAt()
 }
 
+func TestAuthenticationMethod_GetCredentialBackedUp(tt *testing.T) {
+	var zeroValue bool
+	a := &AuthenticationMethod{CredentialBackedUp: &zeroValue}
+	a.GetCredentialBackedUp()
+	a = &AuthenticationMethod{}
+	a.GetCredentialBackedUp()
+	a = nil
+	a.GetCredentialBackedUp()
+}
+
+func TestAuthenticationMethod_GetCredentialDeviceType(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{CredentialDeviceType: &zeroValue}
+	a.GetCredentialDeviceType()
+	a = &AuthenticationMethod{}
+	a.GetCredentialDeviceType()
+	a = nil
+	a.GetCredentialDeviceType()
+}
+
 func TestAuthenticationMethod_GetEmail(tt *testing.T) {
 	var zeroValue string
 	a := &AuthenticationMethod{Email: &zeroValue}
@@ -683,6 +703,16 @@ func TestAuthenticationMethod_GetID(tt *testing.T) {
 	a.GetID()
 	a = nil
 	a.GetID()
+}
+
+func TestAuthenticationMethod_GetIdentityUserID(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{IdentityUserID: &zeroValue}
+	a.GetIdentityUserID()
+	a = &AuthenticationMethod{}
+	a.GetIdentityUserID()
+	a = nil
+	a.GetIdentityUserID()
 }
 
 func TestAuthenticationMethod_GetKeyID(tt *testing.T) {
@@ -785,6 +815,16 @@ func TestAuthenticationMethod_GetType(tt *testing.T) {
 	a.GetType()
 }
 
+func TestAuthenticationMethod_GetUserAgent(tt *testing.T) {
+	var zeroValue string
+	a := &AuthenticationMethod{UserAgent: &zeroValue}
+	a.GetUserAgent()
+	a = &AuthenticationMethod{}
+	a.GetUserAgent()
+	a = nil
+	a.GetUserAgent()
+}
+
 func TestAuthenticationMethod_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &AuthenticationMethod{}
@@ -824,6 +864,28 @@ func TestAuthenticationMethodReference_GetType(tt *testing.T) {
 func TestAuthenticationMethodReference_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &AuthenticationMethodReference{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestAuthenticationMethods_GetPasskey(tt *testing.T) {
+	a := &AuthenticationMethods{}
+	a.GetPasskey()
+	a = nil
+	a.GetPasskey()
+}
+
+func TestAuthenticationMethods_GetPassword(tt *testing.T) {
+	a := &AuthenticationMethods{}
+	a.GetPassword()
+	a = nil
+	a.GetPassword()
+}
+
+func TestAuthenticationMethods_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &AuthenticationMethods{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -2563,6 +2625,13 @@ func TestConnectionList_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptions_GetAuthenticationMethods(tt *testing.T) {
+	c := &ConnectionOptions{}
+	c.GetAuthenticationMethods()
+	c = nil
+	c.GetAuthenticationMethods()
+}
+
 func TestConnectionOptions_GetBruteForceProtection(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptions{BruteForceProtection: &zeroValue}
@@ -2661,6 +2730,13 @@ func TestConnectionOptions_GetNonPersistentAttrs(tt *testing.T) {
 	c.GetNonPersistentAttrs()
 	c = nil
 	c.GetNonPersistentAttrs()
+}
+
+func TestConnectionOptions_GetPasskeyOptions(tt *testing.T) {
+	c := &ConnectionOptions{}
+	c.GetPasskeyOptions()
+	c = nil
+	c.GetPasskeyOptions()
 }
 
 func TestConnectionOptions_GetPasswordComplexityOptions(tt *testing.T) {
@@ -9932,6 +10008,80 @@ func TestOrganizationMemberRole_String(t *testing.T) {
 func TestOrganizationMemberRoleList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &OrganizationMemberRoleList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPasskeyAuthenticationMethod_GetEnabled(tt *testing.T) {
+	var zeroValue bool
+	p := &PasskeyAuthenticationMethod{Enabled: &zeroValue}
+	p.GetEnabled()
+	p = &PasskeyAuthenticationMethod{}
+	p.GetEnabled()
+	p = nil
+	p.GetEnabled()
+}
+
+func TestPasskeyAuthenticationMethod_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PasskeyAuthenticationMethod{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPasskeyOptions_GetChallengeUI(tt *testing.T) {
+	var zeroValue string
+	p := &PasskeyOptions{ChallengeUI: &zeroValue}
+	p.GetChallengeUI()
+	p = &PasskeyOptions{}
+	p.GetChallengeUI()
+	p = nil
+	p.GetChallengeUI()
+}
+
+func TestPasskeyOptions_GetLocalEnrollmentEnabled(tt *testing.T) {
+	var zeroValue bool
+	p := &PasskeyOptions{LocalEnrollmentEnabled: &zeroValue}
+	p.GetLocalEnrollmentEnabled()
+	p = &PasskeyOptions{}
+	p.GetLocalEnrollmentEnabled()
+	p = nil
+	p.GetLocalEnrollmentEnabled()
+}
+
+func TestPasskeyOptions_GetProgressiveEnrollmentEnabled(tt *testing.T) {
+	var zeroValue bool
+	p := &PasskeyOptions{ProgressiveEnrollmentEnabled: &zeroValue}
+	p.GetProgressiveEnrollmentEnabled()
+	p = &PasskeyOptions{}
+	p.GetProgressiveEnrollmentEnabled()
+	p = nil
+	p.GetProgressiveEnrollmentEnabled()
+}
+
+func TestPasskeyOptions_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PasskeyOptions{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPasswordAuthenticationMethod_GetEnabled(tt *testing.T) {
+	var zeroValue bool
+	p := &PasswordAuthenticationMethod{Enabled: &zeroValue}
+	p.GetEnabled()
+	p = &PasswordAuthenticationMethod{}
+	p.GetEnabled()
+	p = nil
+	p.GetEnabled()
+}
+
+func TestPasswordAuthenticationMethod_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PasswordAuthenticationMethod{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

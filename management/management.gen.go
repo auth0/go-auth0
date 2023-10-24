@@ -511,6 +511,22 @@ func (a *AuthenticationMethod) GetCreatedAt() time.Time {
 	return *a.CreatedAt
 }
 
+// GetCredentialBackedUp returns the CredentialBackedUp field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetCredentialBackedUp() bool {
+	if a == nil || a.CredentialBackedUp == nil {
+		return false
+	}
+	return *a.CredentialBackedUp
+}
+
+// GetCredentialDeviceType returns the CredentialDeviceType field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetCredentialDeviceType() string {
+	if a == nil || a.CredentialDeviceType == nil {
+		return ""
+	}
+	return *a.CredentialDeviceType
+}
+
 // GetEmail returns the Email field if it's non-nil, zero value otherwise.
 func (a *AuthenticationMethod) GetEmail() string {
 	if a == nil || a.Email == nil {
@@ -533,6 +549,14 @@ func (a *AuthenticationMethod) GetID() string {
 		return ""
 	}
 	return *a.ID
+}
+
+// GetIdentityUserID returns the IdentityUserID field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetIdentityUserID() string {
+	if a == nil || a.IdentityUserID == nil {
+		return ""
+	}
+	return *a.IdentityUserID
 }
 
 // GetKeyID returns the KeyID field if it's non-nil, zero value otherwise.
@@ -615,6 +639,14 @@ func (a *AuthenticationMethod) GetType() string {
 	return *a.Type
 }
 
+// GetUserAgent returns the UserAgent field if it's non-nil, zero value otherwise.
+func (a *AuthenticationMethod) GetUserAgent() string {
+	if a == nil || a.UserAgent == nil {
+		return ""
+	}
+	return *a.UserAgent
+}
+
 // String returns a string representation of AuthenticationMethod.
 func (a *AuthenticationMethod) String() string {
 	return Stringify(a)
@@ -643,6 +675,27 @@ func (a *AuthenticationMethodReference) GetType() string {
 
 // String returns a string representation of AuthenticationMethodReference.
 func (a *AuthenticationMethodReference) String() string {
+	return Stringify(a)
+}
+
+// GetPasskey returns the Passkey field.
+func (a *AuthenticationMethods) GetPasskey() *PasskeyAuthenticationMethod {
+	if a == nil {
+		return nil
+	}
+	return a.Passkey
+}
+
+// GetPassword returns the Password field.
+func (a *AuthenticationMethods) GetPassword() *PasswordAuthenticationMethod {
+	if a == nil {
+		return nil
+	}
+	return a.Password
+}
+
+// String returns a string representation of AuthenticationMethods.
+func (a *AuthenticationMethods) String() string {
 	return Stringify(a)
 }
 
@@ -2089,6 +2142,14 @@ func (c *ConnectionList) String() string {
 	return Stringify(c)
 }
 
+// GetAuthenticationMethods returns the AuthenticationMethods field.
+func (c *ConnectionOptions) GetAuthenticationMethods() *AuthenticationMethods {
+	if c == nil {
+		return nil
+	}
+	return c.AuthenticationMethods
+}
+
 // GetBruteForceProtection returns the BruteForceProtection field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptions) GetBruteForceProtection() bool {
 	if c == nil || c.BruteForceProtection == nil {
@@ -2167,6 +2228,14 @@ func (c *ConnectionOptions) GetNonPersistentAttrs() []string {
 		return nil
 	}
 	return *c.NonPersistentAttrs
+}
+
+// GetPasskeyOptions returns the PasskeyOptions field.
+func (c *ConnectionOptions) GetPasskeyOptions() *PasskeyOptions {
+	if c == nil {
+		return nil
+	}
+	return c.PasskeyOptions
 }
 
 // GetPasswordComplexityOptions returns the PasswordComplexityOptions map if it's non-nil, an empty map otherwise.
@@ -7901,6 +7970,61 @@ func (o *OrganizationMemberRole) String() string {
 // String returns a string representation of OrganizationMemberRoleList.
 func (o *OrganizationMemberRoleList) String() string {
 	return Stringify(o)
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (p *PasskeyAuthenticationMethod) GetEnabled() bool {
+	if p == nil || p.Enabled == nil {
+		return false
+	}
+	return *p.Enabled
+}
+
+// String returns a string representation of PasskeyAuthenticationMethod.
+func (p *PasskeyAuthenticationMethod) String() string {
+	return Stringify(p)
+}
+
+// GetChallengeUI returns the ChallengeUI field if it's non-nil, zero value otherwise.
+func (p *PasskeyOptions) GetChallengeUI() string {
+	if p == nil || p.ChallengeUI == nil {
+		return ""
+	}
+	return *p.ChallengeUI
+}
+
+// GetLocalEnrollmentEnabled returns the LocalEnrollmentEnabled field if it's non-nil, zero value otherwise.
+func (p *PasskeyOptions) GetLocalEnrollmentEnabled() bool {
+	if p == nil || p.LocalEnrollmentEnabled == nil {
+		return false
+	}
+	return *p.LocalEnrollmentEnabled
+}
+
+// GetProgressiveEnrollmentEnabled returns the ProgressiveEnrollmentEnabled field if it's non-nil, zero value otherwise.
+func (p *PasskeyOptions) GetProgressiveEnrollmentEnabled() bool {
+	if p == nil || p.ProgressiveEnrollmentEnabled == nil {
+		return false
+	}
+	return *p.ProgressiveEnrollmentEnabled
+}
+
+// String returns a string representation of PasskeyOptions.
+func (p *PasskeyOptions) String() string {
+	return Stringify(p)
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (p *PasswordAuthenticationMethod) GetEnabled() bool {
+	if p == nil || p.Enabled == nil {
+		return false
+	}
+	return *p.Enabled
+}
+
+// String returns a string representation of PasswordAuthenticationMethod.
+func (p *PasswordAuthenticationMethod) String() string {
+	return Stringify(p)
 }
 
 // GetDescription returns the Description field if it's non-nil, zero value otherwise.
