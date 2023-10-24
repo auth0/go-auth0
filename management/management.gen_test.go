@@ -11222,6 +11222,16 @@ func TestTenant_GetChangePassword(tt *testing.T) {
 	t.GetChangePassword()
 }
 
+func TestTenant_GetCustomizeMFAInPostLoginAction(tt *testing.T) {
+	var zeroValue bool
+	t := &Tenant{CustomizeMFAInPostLoginAction: &zeroValue}
+	t.GetCustomizeMFAInPostLoginAction()
+	t = &Tenant{}
+	t.GetCustomizeMFAInPostLoginAction()
+	t = nil
+	t.GetCustomizeMFAInPostLoginAction()
+}
+
 func TestTenant_GetDefaultAudience(tt *testing.T) {
 	var zeroValue string
 	t := &Tenant{DefaultAudience: &zeroValue}
@@ -11531,16 +11541,6 @@ func TestTenantFlags_GetAllowLegacyTokenInfoEndpoint(tt *testing.T) {
 	t.GetAllowLegacyTokenInfoEndpoint()
 	t = nil
 	t.GetAllowLegacyTokenInfoEndpoint()
-}
-
-func TestTenantFlags_GetCustomizeMFAInPostLoginAction(tt *testing.T) {
-	var zeroValue bool
-	t := &TenantFlags{CustomizeMFAInPostLoginAction: &zeroValue}
-	t.GetCustomizeMFAInPostLoginAction()
-	t = &TenantFlags{}
-	t.GetCustomizeMFAInPostLoginAction()
-	t = nil
-	t.GetCustomizeMFAInPostLoginAction()
 }
 
 func TestTenantFlags_GetDashboardInsightsView(tt *testing.T) {

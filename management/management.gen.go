@@ -8901,6 +8901,14 @@ func (t *Tenant) GetChangePassword() *TenantChangePassword {
 	return t.ChangePassword
 }
 
+// GetCustomizeMFAInPostLoginAction returns the CustomizeMFAInPostLoginAction field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetCustomizeMFAInPostLoginAction() bool {
+	if t == nil || t.CustomizeMFAInPostLoginAction == nil {
+		return false
+	}
+	return *t.CustomizeMFAInPostLoginAction
+}
+
 // GetDefaultAudience returns the DefaultAudience field if it's non-nil, zero value otherwise.
 func (t *Tenant) GetDefaultAudience() string {
 	if t == nil || t.DefaultAudience == nil {
@@ -9159,14 +9167,6 @@ func (t *TenantFlags) GetAllowLegacyTokenInfoEndpoint() bool {
 		return false
 	}
 	return *t.AllowLegacyTokenInfoEndpoint
-}
-
-// GetCustomizeMFAInPostLoginAction returns the CustomizeMFAInPostLoginAction field if it's non-nil, zero value otherwise.
-func (t *TenantFlags) GetCustomizeMFAInPostLoginAction() bool {
-	if t == nil || t.CustomizeMFAInPostLoginAction == nil {
-		return false
-	}
-	return *t.CustomizeMFAInPostLoginAction
 }
 
 // GetDashboardInsightsView returns the DashboardInsightsView field if it's non-nil, zero value otherwise.
