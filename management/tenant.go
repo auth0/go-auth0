@@ -84,6 +84,9 @@ type Tenant struct {
 
 	// If `true`, allows accepting an organization name or organization ID on auth endpoints.
 	AllowOrgNameInAuthAPI *bool `json:"allow_organization_name_in_authentication_api,omitempty"`
+
+	// If `true`, flexible factors will be enabled for MFA in the PostLogin action.
+	CustomizeMFAInPostLoginAction *bool `json:"customize_mfa_in_postlogin_action,omitempty"`
 }
 
 // MarshalJSON is a custom serializer for the Tenant type.
@@ -250,9 +253,6 @@ type TenantFlags struct {
 	// If `true`, all Clients will be required to use Pushed Authorization Requests.
 	// This feature currently must be enabled for your tenant.
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty"`
-
-	// If `true`, flexible factors will be enabled for MFA in the PostLogin action.
-	CustomizeMFAInPostLoginAction *bool `json:"customize_mfa_in_postlogin_action,omitempty"`
 }
 
 // TenantUniversalLogin holds universal login settings.
