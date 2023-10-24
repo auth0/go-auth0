@@ -33,6 +33,7 @@ management.PerPage()
 management.IncludeTotals()
 management.Take()
 management.From()
+management.Sort()
 ```
 
 ## Pagination

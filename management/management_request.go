@@ -285,3 +285,13 @@ func Stringify(v interface{}) string {
 	}
 	return string(b)
 }
+
+// Sort configures a request to sort data by the selected field.
+// Use 1 to sort ascending and -1 to sort descending.
+func Sort(sort string) RequestOption {
+	return newRequestOption(func(r *http.Request) {
+		q := r.URL.Query()
+		q.Set("sort", sort)
+		r.URL.RawQuery = q.Encode()
+	})
+}
