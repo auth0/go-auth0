@@ -347,7 +347,7 @@ type PasskeyAuthenticationMethod struct {
 
 // PasskeyOptions contains Passkey configuration for the connection.
 type PasskeyOptions struct {
-	// Controls the UI used to challenge the user for their passkey. Should be one of "both", "autofill", or "button"
+	// Controls the UI used to challenge the user for their passkey. Should be one of "both", "autofill", or "button".
 	ChallengeUI *string `json:"challenge_ui,omitempty"`
 	// Enables or disables progressive enrollment of passkeys for the connection.
 	ProgressiveEnrollmentEnabled *bool `json:"progressive_enrollment_enabled,omitempty"`
