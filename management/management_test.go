@@ -157,6 +157,17 @@ func TestOptionDefaults(t *testing.T) {
 	assert.Equal(t, "false", includeTotals)
 }
 
+func TestOptionSort(t *testing.T) {
+	r, _ := http.NewRequest("GET", "/", nil)
+
+	Sort("name:-1").apply(r)
+
+	v := r.URL.Query()
+
+	sort := v.Get("sort")
+	assert.Equal(t, "name:-1", sort)
+}
+
 func TestStringify(t *testing.T) {
 	expected := `{
   "foo": "bar"
