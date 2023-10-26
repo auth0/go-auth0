@@ -1,5 +1,19 @@
 # Change Log
 
+<a name="v1.2.0"></a>
+
+## [v1.2.0](https://github.com/auth0/go-auth0/tree/v1.2.0) (2023-10-25)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.1.0..v1.2.0)
+
+### Added
+
+- Add `Roles` field to the `OrganizationMember` struct ([#293](https://github.com/auth0/go-auth0/pull/293))
+- Add `CustomizeMFAInPostLoginAction` tenant setting ([#294](https://github.com/auth0/go-auth0/pull/294))
+- Add Passkey data to `AuthenticationMethod` and `ConnectionOptions` ([#296](https://github.com/auth0/go-auth0/pull/296))
+- Add a `Sort` RequestOption helper to sort fields ([#298](https://github.com/auth0/go-auth0/pull/298))
+
+
 <a name="v1.1.0"></a>
 
 ## [v1.1.0](https://github.com/auth0/go-auth0/tree/v1.1.0) (2023-09-14)
