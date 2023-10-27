@@ -8,7 +8,7 @@ on:
       - synchronize
   push:
     branches:
-      - master
+      - main
   schedule:
     - cron: "30 0 1,15 * *"
 
@@ -46,4 +46,4 @@ jobs:
 
       - run: semgrep ci
         env:
-          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
