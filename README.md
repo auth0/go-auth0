@@ -66,7 +66,7 @@ func main() {
 
 	// Initialize a new client using a domain, client ID and client secret.
 	authAPI, err := authentication.New(
-		context.Background(),
+		context.TODO(), // Replace with a Context that better suits your usage
 		domain,
 		authentication.WithClientID(clientID),
 		authentication.WithClientSecret(clientSecret), // Optional depending on the grants used
@@ -131,7 +131,7 @@ func main() {
 	// `management.WithStaticToken("token")`
 	auth0API, err := management.New(
 		domain,
-		management.WithClientCredentials(context.Background(), clientID, clientSecret),
+		management.WithClientCredentials(context.TODO(), clientID, clientSecret),  // Replace with a Context that better suits your usage
 	)
 	if err != nil {
 		log.Fatalf("failed to initialize the auth0 management API client: %+v", err)
@@ -147,7 +147,7 @@ func main() {
 	// The passed in client will get hydrated with the response.
 	// This means that after this request, we will have access
 	// to the client ID on the same client object.
-	err = auth0API.Client.Create(context.Background(), client)
+	err = auth0API.Client.Create(context.TODO(), client)  // Replace with a Context that better suits your usage
 	if err != nil {
 		log.Fatalf("failed to create a new client: %+v", err)
 	}
@@ -160,7 +160,6 @@ func main() {
 	)
 }
 ```
-
 > **Note**
 > The [context](https://pkg.go.dev/context?utm_source=godoc) package can be used to pass cancellation signals and deadlines to the Client for handling a request. If there is no context available then `context.Background()` can be used.
 
