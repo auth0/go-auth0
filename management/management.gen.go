@@ -2379,6 +2379,14 @@ func (c *ConnectionOptionsAD) GetDisableCache() bool {
 	return *c.DisableCache
 }
 
+// GetDisableSelfServiceChangePassword returns the DisableSelfServiceChangePassword field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAD) GetDisableSelfServiceChangePassword() bool {
+	if c == nil || c.DisableSelfServiceChangePassword == nil {
+		return false
+	}
+	return *c.DisableSelfServiceChangePassword
+}
+
 // GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsAD) GetDomainAliases() []string {
 	if c == nil || c.DomainAliases == nil {
