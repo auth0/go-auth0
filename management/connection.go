@@ -940,27 +940,25 @@ func (c *ConnectionOptionsOAuth2) SetScopes(enable bool, scopes ...string) {
 
 // ConnectionOptionsAD is used to configure an AD Connection.
 type ConnectionOptionsAD struct {
-	TenantDomain  *string   `json:"tenant_domain,omitempty"`
-	DomainAliases *[]string `json:"domain_aliases,omitempty"`
-	LogoURL       *string   `json:"icon_url,omitempty"`
-	IPs           *[]string `json:"ips,omitempty"`
+	TenantDomain         *string                `json:"tenant_domain,omitempty"`
+	DomainAliases        *[]string              `json:"domain_aliases,omitempty"`
+	LogoURL              *string                `json:"icon_url,omitempty"`
+	IPs                  *[]string              `json:"ips,omitempty"`
+	CertAuth             *bool                  `json:"certAuth,omitempty"`
+	Kerberos             *bool                  `json:"kerberos,omitempty"`
+	DisableCache         *bool                  `json:"disable_cache,omitempty"`
+	BruteForceProtection *bool                  `json:"brute_force_protection,omitempty"`
+	SetUserAttributes    *string                `json:"set_user_root_attributes,omitempty"`
+	NonPersistentAttrs   *[]string              `json:"non_persistent_attrs,omitempty"`
+	UpstreamParams       map[string]interface{} `json:"upstream_params,omitempty"`
+	Thumbprints          *[]string              `json:"thumbprints,omitempty"`
+	Certs                *[]string              `json:"certs,omitempty"`
+	AgentIP              *string                `json:"agentIP,omitempty"`
+	AgentVersion         *string                `json:"agentVersion,omitempty"`
+	AgentMode            *bool                  `json:"agentMode,omitempty"`
 
-	CertAuth             *bool `json:"certAuth,omitempty"`
-	Kerberos             *bool `json:"kerberos,omitempty"`
-	DisableCache         *bool `json:"disable_cache,omitempty"`
-	BruteForceProtection *bool `json:"brute_force_protection,omitempty"`
-
-	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
-	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
-
-	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
-
-	Thumbprints *[]string `json:"thumbprints,omitempty"`
-
-	Certs        *[]string `json:"certs,omitempty"`
-	AgentIP      *string   `json:"agentIP,omitempty"`
-	AgentVersion *string   `json:"agentVersion,omitempty"`
-	AgentMode    *bool     `json:"agentMode,omitempty"`
+	// Set to true to stop the "Forgot Password" being displayed on login pages.
+	DisableSelfServiceChangePassword *bool `json:"disable_self_service_change_password,omitempty"`
 }
 
 // ConnectionOptionsAzureAD is used to configure an AzureAD Connection.

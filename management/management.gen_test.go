@@ -2917,6 +2917,16 @@ func TestConnectionOptionsAD_GetDisableCache(tt *testing.T) {
 	c.GetDisableCache()
 }
 
+func TestConnectionOptionsAD_GetDisableSelfServiceChangePassword(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsAD{DisableSelfServiceChangePassword: &zeroValue}
+	c.GetDisableSelfServiceChangePassword()
+	c = &ConnectionOptionsAD{}
+	c.GetDisableSelfServiceChangePassword()
+	c = nil
+	c.GetDisableSelfServiceChangePassword()
+}
+
 func TestConnectionOptionsAD_GetDomainAliases(tt *testing.T) {
 	var zeroValue []string
 	c := &ConnectionOptionsAD{DomainAliases: &zeroValue}
