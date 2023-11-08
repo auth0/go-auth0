@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/auth0/go-auth0"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -31,7 +32,7 @@ func TestClientGrantManager_Create(t *testing.T) {
 func TestClientGrantManager_Read(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	expectedClientGrant := givenAClientGrant(t)
+	expectedClientGrant := givenAClientGrant(t, false)
 
 	actualClientGrant, err := api.ClientGrant.Read(context.Background(), expectedClientGrant.GetID())
 
@@ -44,7 +45,7 @@ func TestClientGrantManager_Read(t *testing.T) {
 func TestClientGrantManager_Update(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	expectedClientGrant := givenAClientGrant(t)
+	expectedClientGrant := givenAClientGrant(t, false)
 
 	clientGrantID := expectedClientGrant.GetID()
 
@@ -64,7 +65,7 @@ func TestClientGrantManager_Update(t *testing.T) {
 func TestClientGrantManager_Delete(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	expectedClientGrant := givenAClientGrant(t)
+	expectedClientGrant := givenAClientGrant(t, false)
 
 	err := api.ClientGrant.Delete(context.Background(), expectedClientGrant.GetID())
 	assert.NoError(t, err)
@@ -77,7 +78,7 @@ func TestClientGrantManager_Delete(t *testing.T) {
 func TestClientGrantManager_List(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	expectedClientGrant := givenAClientGrant(t)
+	expectedClientGrant := givenAClientGrant(t, false)
 
 	clientGrantList, err := api.ClientGrant.List(
 		context.Background(),
@@ -88,7 +89,21 @@ func TestClientGrantManager_List(t *testing.T) {
 	assert.Equal(t, len(clientGrantList.ClientGrants), 1)
 }
 
-func givenAClientGrant(t *testing.T) (clientGrant *ClientGrant) {
+func TestClientGrantManager_Organizations(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := givenAnOrganization(t)
+	clientGrant := givenAClientGrant(t, true)
+
+	err := api.Organization.AssociateClientGrant(context.Background(), org.GetID(), clientGrant.GetID())
+	require.NoError(t, err)
+
+	associatedOrg, err := api.ClientGrant.Organizations(context.Background(), clientGrant.GetID())
+	require.NoError(t, err)
+	assert.Equal(t, org.GetID(), associatedOrg.Organizations[0].GetID())
+}
+
+func givenAClientGrant(t *testing.T, allowOrganizations bool) (clientGrant *ClientGrant) {
 	t.Helper()
 
 	client := givenAClient(t)
@@ -98,6 +113,11 @@ func givenAClientGrant(t *testing.T) (clientGrant *ClientGrant) {
 		ClientID: client.ClientID,
 		Audience: resourceServer.Identifier,
 		Scope:    []string{"create:resource"},
+	}
+
+	if allowOrganizations {
+		clientGrant.AllowAnyOrganization = auth0.Bool(true)
+		clientGrant.OrganizationUsage = auth0.String("allow")
 	}
 
 	err := api.ClientGrant.Create(context.Background(), clientGrant)

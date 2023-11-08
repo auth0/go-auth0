@@ -366,6 +366,28 @@ func TestOrganizationManager_MemberRoles(t *testing.T) {
 	assert.Len(t, roles.Roles, 0)
 }
 
+func TestOrganizationManager_ClientGrants(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := givenAnOrganization(t)
+	clientGrant := givenAClientGrant(t, true)
+
+	err := api.Organization.AssociateClientGrant(context.Background(), org.GetID(), clientGrant.GetID())
+	require.NoError(t, err)
+
+	associatedGrants, err := api.Organization.ClientGrants(context.Background(), org.GetID())
+	require.NoError(t, err)
+	assert.Len(t, associatedGrants.ClientGrants, 1)
+	assert.Equal(t, clientGrant.GetID(), associatedGrants.ClientGrants[0].GetID())
+
+	err = api.Organization.RemoveClientGrant(context.Background(), org.GetID(), clientGrant.GetID())
+	require.NoError(t, err)
+
+	associatedGrants, err = api.Organization.ClientGrants(context.Background(), org.GetID())
+	require.NoError(t, err)
+	assert.Len(t, associatedGrants.ClientGrants, 0)
+}
+
 func givenAnOrganization(t *testing.T) *Organization {
 	org := &Organization{
 		Name:        auth0.String(fmt.Sprintf("test-organization%v", rand.Intn(999))),

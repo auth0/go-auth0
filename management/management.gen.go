@@ -1763,6 +1763,14 @@ func (c *ClientAuthenticationMethods) String() string {
 	return Stringify(c)
 }
 
+// GetAllowAnyOrganization returns the AllowAnyOrganization field if it's non-nil, zero value otherwise.
+func (c *ClientGrant) GetAllowAnyOrganization() bool {
+	if c == nil || c.AllowAnyOrganization == nil {
+		return false
+	}
+	return *c.AllowAnyOrganization
+}
+
 // GetAudience returns the Audience field if it's non-nil, zero value otherwise.
 func (c *ClientGrant) GetAudience() string {
 	if c == nil || c.Audience == nil {
@@ -1785,6 +1793,14 @@ func (c *ClientGrant) GetID() string {
 		return ""
 	}
 	return *c.ID
+}
+
+// GetOrganizationUsage returns the OrganizationUsage field if it's non-nil, zero value otherwise.
+func (c *ClientGrant) GetOrganizationUsage() string {
+	if c == nil || c.OrganizationUsage == nil {
+		return ""
+	}
+	return *c.OrganizationUsage
 }
 
 // String returns a string representation of ClientGrant.

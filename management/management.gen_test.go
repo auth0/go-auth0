@@ -2137,6 +2137,16 @@ func TestClientAuthenticationMethods_String(t *testing.T) {
 	}
 }
 
+func TestClientGrant_GetAllowAnyOrganization(tt *testing.T) {
+	var zeroValue bool
+	c := &ClientGrant{AllowAnyOrganization: &zeroValue}
+	c.GetAllowAnyOrganization()
+	c = &ClientGrant{}
+	c.GetAllowAnyOrganization()
+	c = nil
+	c.GetAllowAnyOrganization()
+}
+
 func TestClientGrant_GetAudience(tt *testing.T) {
 	var zeroValue string
 	c := &ClientGrant{Audience: &zeroValue}
@@ -2165,6 +2175,16 @@ func TestClientGrant_GetID(tt *testing.T) {
 	c.GetID()
 	c = nil
 	c.GetID()
+}
+
+func TestClientGrant_GetOrganizationUsage(tt *testing.T) {
+	var zeroValue string
+	c := &ClientGrant{OrganizationUsage: &zeroValue}
+	c.GetOrganizationUsage()
+	c = &ClientGrant{}
+	c.GetOrganizationUsage()
+	c = nil
+	c.GetOrganizationUsage()
 }
 
 func TestClientGrant_String(t *testing.T) {
