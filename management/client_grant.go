@@ -22,7 +22,7 @@ type ClientGrant struct {
 	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty"`
 
 	// Defines whether organizations can be used with client credentials exchanges for this grant.
-	// Can be one of deny, allow, or require. Defaults to deny when not defined.
+	// Can be one of `deny`, `allow`, or `require`. Defaults to `deny` when not defined.
 	OrganizationUsage *string `json:"organization_usage,omitempty"`
 }
 

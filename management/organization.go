@@ -401,7 +401,7 @@ func (m *OrganizationManager) AssociateClientGrant(ctx context.Context, id strin
 	return
 }
 
-// RemoveClientGrant assigns a client grant to an organization.
+// RemoveClientGrant removes a client grant from an organization.
 //
 // See: https://auth0.com/docs/api/management/v2/organizations/delete-client-grants-by-grant-id
 func (m *OrganizationManager) RemoveClientGrant(ctx context.Context, id string, grantID string, opts ...RequestOption) (err error) {

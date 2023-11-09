@@ -83,7 +83,7 @@ type LoginWithClientCredentialsRequest struct {
 	Audience string
 	// Extra parameters to be merged into the request body. Values set here will override any existing values.
 	ExtraParameters map[string]string
-	// And organization name or ID. When included the access token will include the org_id or org_name claim.
+	// And organization name or ID. When included, the access token will include the `org_id` or `org_name` claim.
 	Organization string
 }
 
