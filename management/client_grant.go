@@ -15,7 +15,15 @@ type ClientGrant struct {
 	// The audience.
 	Audience *string `json:"audience,omitempty"`
 
-	Scope []string `json:"scope"`
+	Scope []string `json:"scope,omitempty"`
+
+	// If enabled, any organization can be used with this grant.
+	// If disabled (default), the grant must be explicitly assigned to the desired organizations.
+	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty"`
+
+	// Defines whether organizations can be used with client credentials exchanges for this grant.
+	// Can be one of `deny`, `allow`, or `require`. Defaults to `deny` when not defined.
+	OrganizationUsage *string `json:"organization_usage,omitempty"`
 }
 
 // ClientGrantList is a list of ClientGrants.
@@ -85,5 +93,14 @@ func (m *ClientGrantManager) Delete(ctx context.Context, id string, opts ...Requ
 // See: https://auth0.com/docs/api/management/v2#!/Client_Grants/get_client_grants
 func (m *ClientGrantManager) List(ctx context.Context, opts ...RequestOption) (gs *ClientGrantList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("client-grants"), &gs, applyListDefaults(opts))
+	return
+}
+
+// Organizations lists client grants associated to an organization.
+//
+// This method forces the `include_totals=true` and defaults to `per_page=50` if
+// not provided.
+func (m *ClientGrantManager) Organizations(ctx context.Context, id string, opts ...RequestOption) (o *OrganizationList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("client-grants", id, "organizations"), &o, applyListDefaults(opts))
 	return
 }

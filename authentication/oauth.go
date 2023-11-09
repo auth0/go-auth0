@@ -150,6 +150,10 @@ func (o *OAuth) LoginWithClientCredentials(ctx context.Context, body oauth.Login
 		"audience": []string{body.Audience},
 	}
 
+	if body.Organization != "" {
+		data.Set("organization", body.Organization)
+	}
+
 	err = o.addClientAuthentication(body.ClientAuthentication, data, true)
 
 	if err != nil {

@@ -379,3 +379,26 @@ func (m *OrganizationManager) DeleteMemberRoles(ctx context.Context, id string, 
 	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "members", memberID, "roles"), &body, opts...)
 	return
 }
+
+// ClientGrants retrieves the client grants assigned to an organization.
+func (m *OrganizationManager) ClientGrants(ctx context.Context, id string, opts ...RequestOption) (g *ClientGrantList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "client-grants"), &g, applyListDefaults(opts))
+	return
+}
+
+// AssociateClientGrant assigns a client grant to an organization.
+func (m *OrganizationManager) AssociateClientGrant(ctx context.Context, id string, grantID string, opts ...RequestOption) (err error) {
+	body := struct {
+		GrantID string `json:"grant_id"`
+	}{
+		GrantID: grantID,
+	}
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations", id, "client-grants"), &body, applyListDefaults(opts))
+	return
+}
+
+// RemoveClientGrant removes a client grant from an organization.
+func (m *OrganizationManager) RemoveClientGrant(ctx context.Context, id string, grantID string, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "client-grants", grantID), nil, applyListDefaults(opts))
+	return
+}

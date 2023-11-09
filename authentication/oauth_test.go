@@ -253,6 +253,22 @@ func TestLoginWithClientCredentials(t *testing.T) {
 
 		assert.ErrorContains(t, err, "Unsupported client assertion algorithm \"invalid-alg\" provided")
 	})
+
+	t.Run("Should support passing an organization", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		tokenSet, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
+			ClientAuthentication: oauth.ClientAuthentication{
+				ClientSecret: clientSecret,
+			},
+			Audience:     "my-api",
+			Organization: "org_test",
+		}, oauth.IDTokenValidationOptions{})
+
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
 }
 
 func TestRefreshToken(t *testing.T) {
