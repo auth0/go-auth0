@@ -381,16 +381,12 @@ func (m *OrganizationManager) DeleteMemberRoles(ctx context.Context, id string, 
 }
 
 // ClientGrants retrieves the client grants assigned to an organization.
-//
-// See: https://auth0.com/docs/api/management/v2/organizations/get-client-grants
 func (m *OrganizationManager) ClientGrants(ctx context.Context, id string, opts ...RequestOption) (g *ClientGrantList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "client-grants"), &g, applyListDefaults(opts))
 	return
 }
 
 // AssociateClientGrant assigns a client grant to an organization.
-//
-// See: https://auth0.com/docs/api/management/v2/organizations/post-client-grants
 func (m *OrganizationManager) AssociateClientGrant(ctx context.Context, id string, grantID string, opts ...RequestOption) (err error) {
 	body := struct {
 		GrantID string `json:"grant_id"`
@@ -402,8 +398,6 @@ func (m *OrganizationManager) AssociateClientGrant(ctx context.Context, id strin
 }
 
 // RemoveClientGrant removes a client grant from an organization.
-//
-// See: https://auth0.com/docs/api/management/v2/organizations/delete-client-grants-by-grant-id
 func (m *OrganizationManager) RemoveClientGrant(ctx context.Context, id string, grantID string, opts ...RequestOption) (err error) {
 	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "client-grants", grantID), nil, applyListDefaults(opts))
 	return

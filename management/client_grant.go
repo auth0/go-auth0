@@ -100,8 +100,6 @@ func (m *ClientGrantManager) List(ctx context.Context, opts ...RequestOption) (g
 //
 // This method forces the `include_totals=true` and defaults to `per_page=50` if
 // not provided.
-//
-// See: https://auth0.com/docs/api/management/v2/client-grants/get-organizations
 func (m *ClientGrantManager) Organizations(ctx context.Context, id string, opts ...RequestOption) (o *OrganizationList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("client-grants", id, "organizations"), &o, applyListDefaults(opts))
 	return
