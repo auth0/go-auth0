@@ -9,7 +9,7 @@
 //		"github.com/auth0/go-auth0/authentication/oauth"
 //	)
 //	a, err := authentication.New(
-//		context.Background(),
+//		context.TODO(),
 //		domain,
 //		authentication.WithClientID(id),
 //		authentication.WithClientSecret(secret), // Optional depending on the grants used
@@ -25,12 +25,12 @@
 //		Password:   "mypassword",
 //		Email:      "mytestaccount@example.com",
 //	}
-//	createdUser, err := a.Database.Signup(context.Background(), userData)
+//	createdUser, err := a.Database.Signup(context.TODO(), userData)
 //	if err != nil {
 //		// handle err
 //	}
 //	// Login using OAuth grants
-//	tokenSet, err := a.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
+//	tokenSet, err := a.OAuth.LoginWithAuthCodeWithPKCE(context.TODO(), oauth.LoginWithAuthCodeWithPKCERequest{
 //		Code:         "test-code",
 //		CodeVerifier: "test-code-verifier",
 //	}, oauth.IDTokenValidationOptionalVerification{})
@@ -45,7 +45,7 @@
 // For a complete list see [Option].
 //
 //	a, err := authentication.New(
-//		context.Background(),
+//		context.TODO(),
 //		domain,
 //		authentication.WithClientID(id),
 //		authentication.WithClientSecret(secret), // Optional depending on the grants used

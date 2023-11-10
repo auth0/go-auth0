@@ -21,7 +21,7 @@
 // [authentication client docs].
 //
 //	authAPI, err := authentication.New(
-//		context.Background(),
+//		context.TODO(),
 //		domain,
 //		authentication.WithClientID(id),
 //		authentication.WithClientSecret(secret), // Optional depending on the grants used
@@ -37,7 +37,7 @@
 //		Password:   "mypassword",
 //		Email:      "mytestaccount@example.com",
 //	}
-//	createdUser, err := authAPI.Database.Signup(context.Background(), userData)
+//	createdUser, err := authAPI.Database.Signup(context.TODO(), userData)
 //	if err != nil {
 //		// handle err
 //	}
@@ -54,7 +54,7 @@
 //	// Initialize a new client using a domain, client ID and secret.
 //	m, err := management.New(
 //		domain,
-//		management.WithClientCredentials(context.Background(), id, secret),
+//		management.WithClientCredentials(context.TODO(), id, secret),
 //	)
 //	if err != nil {
 //		// handle err
@@ -63,7 +63,7 @@
 //		Name:        auth0.String("Client Name"),
 //		Description: auth0.String("Long description of client"),
 //	}
-//	err = m.Client.Create(context.Background(), c)
+//	err = m.Client.Create(context.TODO(), c)
 //	if err != nil {
 //		// handle err
 //	}

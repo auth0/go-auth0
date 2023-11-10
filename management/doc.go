@@ -1,4 +1,4 @@
-// Package management provides a client for using the Auth0 Management API
+// Package management provides a client for using the Auth0 Management API.
 //
 // # Usage
 //
@@ -11,7 +11,7 @@
 //	// Initialize a new client using a domain, client ID and secret.
 //	m, err := management.New(
 //		domain,
-//		management.WithClientCredentials(context.Background(), id, secret),
+//		management.WithClientCredentials(context.TODO(), id, secret),
 //	)
 //	if err != nil {
 //		// handle err
@@ -35,7 +35,7 @@
 //		Name:        auth0.String("Client Name"),
 //		Description: auth0.String("Long description of client"),
 //	}
-//	err = m.Client.Create(context.Background(), c)
+//	err = m.Client.Create(context.TODO(), c)
 //	if err != nil {
 //		// handle err
 //	}
@@ -67,7 +67,7 @@
 //
 //	m, err := management.New(
 //		domain,
-//		management.WithClientCredentials(context.Background(), id, secret),
+//		management.WithClientCredentials(context.TODO(), id, secret),
 //		management.WithDebug(true),
 //	)
 //
@@ -77,7 +77,7 @@
 // on a request basis. For a complete list see [RequestOption].
 //
 //	c, err := m.Connection.List(
-//		context.Background(),
+//		context.TODO(),
 //		management.Page(2),
 //		management.PerPage(10),
 //		management.IncludeFields("id", "name", "options"),
@@ -91,7 +91,7 @@
 //
 //	for {
 //		clients, err := m.Client.List(
-//			context.Background(),
+//			context.TODO(),
 //			management.Page(page),
 //			management.PerPage(100),
 //		)
@@ -122,7 +122,7 @@
 // the API will then return a `Next` value that can be used for future requests with the [From]
 // RequestOption.//
 //
-//	orgList, err := m.Organization.List(context.Background(), management.Take(100))
+//	orgList, err := m.Organization.List(context.TODO(), management.Take(100))
 //	if err != nil {
 //		log.Fatalf("err: %+v", err)
 //	}
@@ -134,7 +134,7 @@
 //		// Pass the `next` and `take` query parameters now so
 //		// that we can correctly paginate the organizations.
 //		orgList, err = m.Organization.List(
-//		context.Background(),
+//			context.TODO(),
 //			management.From(orgList.Next),
 //			management.Take(100),
 //		)
