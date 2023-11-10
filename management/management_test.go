@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
+	"io"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -166,6 +167,26 @@ func TestOptionSort(t *testing.T) {
 
 	sort := v.Get("sort")
 	assert.Equal(t, "name:-1", sort)
+}
+
+func TestOptionHeader(t *testing.T) {
+	r, _ := http.NewRequest("GET", "/", nil)
+
+	Header("foo", "bar").apply(r)
+
+	v := r.Header.Get("foo")
+	assert.Equal(t, "bar", v)
+}
+
+func TestOptionBody(t *testing.T) {
+	r, _ := http.NewRequest("GET", "/", nil)
+
+	body := []byte("fooo")
+	Body(body).apply(r)
+
+	v, err := io.ReadAll(r.Body)
+	assert.NoError(t, err)
+	assert.Equal(t, body, v)
 }
 
 func TestStringify(t *testing.T) {

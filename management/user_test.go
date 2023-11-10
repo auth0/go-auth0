@@ -429,6 +429,21 @@ func TestUserManager_AuthenticationMethods(t *testing.T) {
 	assert.Len(t, methods.Authenticators, 0)
 }
 
+func TestUserManager_Organizations(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	user := givenAUser(t)
+	org := givenAnOrganization(t)
+
+	err := api.Organization.AddMembers(context.Background(), org.GetID(), []string{user.GetID()})
+	require.NoError(t, err)
+
+	orgs, err := api.User.Organizations(context.Background(), user.GetID())
+	require.NoError(t, err)
+	assert.Len(t, orgs.Organizations, 1)
+	assert.Equal(t, org.GetID(), orgs.Organizations[0].GetID())
+}
+
 func givenAUser(t *testing.T) *User {
 	t.Helper()
 

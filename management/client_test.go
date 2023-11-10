@@ -150,6 +150,15 @@ func TestJWTConfiguration(t *testing.T) {
 			assert.NoError(t, err)
 			assert.Equal(t, &actual, expected)
 		}
+
+		t.Run("Should error if unexpected type", func(t *testing.T) {
+			var actual ClientJWTConfiguration
+			err := json.Unmarshal([]byte(`{"lifetime_in_seconds":true}`), &actual)
+			assert.Contains(t, err.Error(), "unexpected type for field lifetime_in_seconds")
+
+			err = json.Unmarshal([]byte(`{"lifetime_in_seconds":"fooo"}`), &actual)
+			assert.Contains(t, err.Error(), "unexpected type for field lifetime_in_seconds")
+		})
 	})
 }
 
