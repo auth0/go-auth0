@@ -1,5 +1,16 @@
 # Change Log
 
+<a name="v1.3.0"></a>
+
+## [v1.3.0](https://github.com/auth0/go-auth0/tree/v1.2.0) (2023-11-10)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.2.0..v1.3.0)
+
+### Added
+
+- Add `DisableSelfServiceChangePassword` to `ConnectionOptionsAD` ([#308](https://github.com/auth0/go-auth0/pull/308))
+- Add support for using Organizations with Client Grants ([#309](https://github.com/auth0/go-auth0/pull/309))
+
 <a name="v1.2.0"></a>
 
 ## [v1.2.0](https://github.com/auth0/go-auth0/tree/v1.2.0) (2023-10-25)
@@ -12,7 +23,6 @@
 - Add `CustomizeMFAInPostLoginAction` tenant setting ([#294](https://github.com/auth0/go-auth0/pull/294))
 - Add Passkey data to `AuthenticationMethod` and `ConnectionOptions` ([#296](https://github.com/auth0/go-auth0/pull/296))
 - Add a `Sort` RequestOption helper to sort fields ([#298](https://github.com/auth0/go-auth0/pull/298))
-
 
 <a name="v1.1.0"></a>
 
