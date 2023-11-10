@@ -72,6 +72,23 @@ func TestString(t *testing.T) {
 	}
 }
 
+func TestStringf(t *testing.T) {
+	for _, test := range []struct {
+		in       *string
+		expected string
+	}{
+		{nil, ""},
+		{Stringf(""), ""},
+		{Stringf("%s", "foo"), "foo"},
+		{Stringf("%s %d", "bar", 1), "bar 1"},
+	} {
+		have := StringValue(test.in)
+		if have != test.expected {
+			t.Errorf("unexpected output. have %v, expected %v", have, test.expected)
+		}
+	}
+}
+
 func TestTime(t *testing.T) {
 	for _, test := range []struct {
 		in       *time.Time

@@ -101,6 +101,19 @@ func TestTenantUniversalLoginColors_MarshalJSON(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected, string(payload))
 	}
+
+	t.Run("Should disallow setting PageBackground and PageBackgroundGradient", func(t *testing.T) {
+		_, err := json.Marshal(&TenantUniversalLoginColors{
+			PageBackground: auth0.String("#ffffff"),
+			PageBackgroundGradient: &BrandingPageBackgroundGradient{
+				Type:        auth0.String("linear-gradient"),
+				Start:       auth0.String("#ffffff"),
+				End:         auth0.String("#000000"),
+				AngleDegree: auth0.Int(3),
+			},
+		})
+		assert.Contains(t, err.Error(), "only one of PageBackground and PageBackgroundGradient is allowed")
+	})
 }
 
 func TestTenantUniversalLoginColors_UnmarshalJSON(t *testing.T) {
@@ -123,4 +136,10 @@ func TestTenantUniversalLoginColors_UnmarshalJSON(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, &actual, expected)
 	}
+
+	t.Run("Should error is not expected type", func(t *testing.T) {
+		var actual TenantUniversalLoginColors
+		err := json.Unmarshal([]byte(`{"page_background":123}`), &actual)
+		assert.Contains(t, err.Error(), "unexpected type for field page_background")
+	})
 }

@@ -59,4 +59,14 @@ func TestNewError(t *testing.T) {
 			assert.Equal(t, &testCase.expectedError, actualError)
 		})
 	}
+
+	t.Run("Error should format into a string", func(t *testing.T) {
+		err := managementError{
+			StatusCode: 403,
+			Err:        "Forbidden",
+			Message:    "message",
+		}
+
+		assert.Equal(t, "403 Forbidden: message", err.Error())
+	})
 }
