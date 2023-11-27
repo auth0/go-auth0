@@ -6,7 +6,7 @@ require (
 	github.com/PuerkitoBio/rehttp v1.3.0
 	github.com/google/uuid v1.4.0
 	github.com/joho/godotenv v1.5.1
-	github.com/lestrrat-go/jwx/v2 v2.0.16
+	github.com/lestrrat-go/jwx/v2 v2.0.17
 	github.com/stretchr/testify v1.8.4
 	go.devnw.com/structs v1.0.0
 	golang.org/x/oauth2 v0.14.0
