@@ -15,7 +15,8 @@ type ClientGrant struct {
 	// The audience.
 	Audience *string `json:"audience,omitempty"`
 
-	Scope []string `json:"scope,omitempty"`
+	// The list of permissions (scopes) that are granted to the client.
+	Scope *[]string `json:"scope,omitempty"`
 
 	// If enabled, any organization can be used with this grant.
 	// If disabled (default), the grant must be explicitly assigned to the desired organizations.
