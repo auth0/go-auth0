@@ -18,7 +18,7 @@ func TestClientGrantManager_Create(t *testing.T) {
 	expectedClientGrant := &ClientGrant{
 		ClientID: client.ClientID,
 		Audience: resourceServer.Identifier,
-		Scope:    []string{"create:resource"},
+		Scope:    &[]string{"create:resource"},
 	}
 
 	err := api.ClientGrant.Create(context.Background(), expectedClientGrant)
@@ -54,13 +54,13 @@ func TestClientGrantManager_Update(t *testing.T) {
 	expectedClientGrant.Audience = nil // Read-Only: Additional properties not allowed.
 	expectedClientGrant.ClientID = nil // Read-Only: Additional properties not allowed.
 
-	scope := expectedClientGrant.Scope
+	scope := expectedClientGrant.GetScope()
 	scope = append(scope, "update:resource")
-	expectedClientGrant.Scope = scope
+	expectedClientGrant.Scope = &scope
 
 	err := api.ClientGrant.Update(context.Background(), clientGrantID, expectedClientGrant)
 	assert.NoError(t, err)
-	assert.Equal(t, len(expectedClientGrant.Scope), 2)
+	assert.Equal(t, len(expectedClientGrant.GetScope()), 2)
 }
 
 func TestClientGrantManager_Delete(t *testing.T) {
@@ -113,7 +113,7 @@ func givenAClientGrant(t *testing.T, allowOrganizations bool) (clientGrant *Clie
 	clientGrant = &ClientGrant{
 		ClientID: client.ClientID,
 		Audience: resourceServer.Identifier,
-		Scope:    []string{"create:resource"},
+		Scope:    &[]string{"create:resource"},
 	}
 
 	if allowOrganizations {
