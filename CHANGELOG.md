@@ -1,5 +1,15 @@
 # Change Log
 
+<a name="v1.3.1"></a>
+
+## [v1.3.1](https://github.com/auth0/go-auth0/tree/v1.3.1) (2023-11-28)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.3.0..v1.3.1)
+
+### Changed
+
+- Allow `Scopes` in `ClientGrant` to be sent as an empty array ([#318](https://github.com/auth0/go-auth0/pull/318))
+
 <a name="v1.3.0"></a>
 
 ## [v1.3.0](https://github.com/auth0/go-auth0/tree/v1.3.0) (2023-11-10)
