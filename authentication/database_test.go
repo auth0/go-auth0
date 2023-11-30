@@ -10,7 +10,7 @@ import (
 )
 
 func TestDatabaseSignUp(t *testing.T) {
-	configureHTTPTestRecordings(t)
+	configureHTTPTestRecordings(t, authAPI)
 
 	userData := database.SignupRequest{
 		Connection: "Username-Password-Authentication",
@@ -26,7 +26,7 @@ func TestDatabaseSignUp(t *testing.T) {
 }
 
 func TestDatabaseChangePassword(t *testing.T) {
-	configureHTTPTestRecordings(t)
+	configureHTTPTestRecordings(t, authAPI)
 
 	resp, err := authAPI.Database.ChangePassword(context.Background(), database.ChangePasswordRequest{
 		Connection: "Username-Password-Authentication",

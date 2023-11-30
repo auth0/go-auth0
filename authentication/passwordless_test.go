@@ -13,7 +13,7 @@ import (
 )
 
 func TestSendEmail(t *testing.T) {
-	configureHTTPTestRecordings(t)
+	configureHTTPTestRecordings(t, authAPI)
 
 	r, err := authAPI.Passwordless.SendEmail(context.Background(), passwordless.SendEmailRequest{
 		Email: "test-email@example.com",
@@ -26,7 +26,7 @@ func TestSendEmail(t *testing.T) {
 }
 
 func TestLoginWithEmail(t *testing.T) {
-	configureHTTPTestRecordings(t)
+	configureHTTPTestRecordings(t, authAPI)
 
 	token, err := authAPI.Passwordless.LoginWithEmail(context.Background(), passwordless.LoginWithEmailRequest{
 		Code:     "123456",
@@ -41,7 +41,7 @@ func TestLoginWithEmail(t *testing.T) {
 }
 
 func TestSendSMS(t *testing.T) {
-	configureHTTPTestRecordings(t)
+	configureHTTPTestRecordings(t, authAPI)
 
 	r, err := authAPI.Passwordless.SendSMS(context.Background(), passwordless.SendSMSRequest{
 		PhoneNumber: "+123456789",
@@ -53,7 +53,7 @@ func TestSendSMS(t *testing.T) {
 }
 
 func TestLoginWithSMS(t *testing.T) {
-	configureHTTPTestRecordings(t)
+	configureHTTPTestRecordings(t, authAPI)
 
 	token, err := authAPI.Passwordless.LoginWithSMS(context.Background(), passwordless.LoginWithSMSRequest{
 		PhoneNumber: "+123456789",
@@ -139,8 +139,6 @@ func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 
 func TestPasswordlessWithClientAssertion(t *testing.T) {
 	t.Run("Should support using private key jwt auth", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
-
 		api, err := New(
 			context.Background(),
 			domain,
@@ -150,6 +148,7 @@ func TestPasswordlessWithClientAssertion(t *testing.T) {
 		)
 
 		require.NoError(t, err)
+		configureHTTPTestRecordings(t, api)
 
 		r, err := api.Passwordless.SendSMS(context.Background(), passwordless.SendSMSRequest{
 			PhoneNumber: "+123456789",
@@ -161,8 +160,6 @@ func TestPasswordlessWithClientAssertion(t *testing.T) {
 	})
 
 	t.Run("Should support passing private key jwt auth", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
-
 		api, err := New(
 			context.Background(),
 			domain,
@@ -170,6 +167,7 @@ func TestPasswordlessWithClientAssertion(t *testing.T) {
 			WithClientID(clientID),
 		)
 		require.NoError(t, err)
+		configureHTTPTestRecordings(t, api)
 
 		auth, err := createClientAssertion("RS256", jwtPrivateKey, clientID, "https://"+domain+"/")
 		require.NoError(t, err)

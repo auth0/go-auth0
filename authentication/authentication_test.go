@@ -188,7 +188,7 @@ func TestAuthenticationApiCallContextTimeout(t *testing.T) {
 }
 
 func TestUserInfo(t *testing.T) {
-	configureHTTPTestRecordings(t)
+	configureHTTPTestRecordings(t, authAPI)
 
 	user, err := authAPI.UserInfo(context.Background(), "test-access-token")
 

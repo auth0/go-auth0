@@ -20,7 +20,7 @@ import (
 
 func TestOAuthLoginWithPassword(t *testing.T) {
 	t.Run("Should return tokens", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		tokenSet, err := authAPI.OAuth.LoginWithPassword(context.Background(), oauth.LoginWithPasswordRequest{
 			Username: "testuser",
@@ -32,7 +32,7 @@ func TestOAuthLoginWithPassword(t *testing.T) {
 	})
 
 	t.Run("Should support passing extra options", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		tokenSet, err := authAPI.OAuth.LoginWithPassword(context.Background(), oauth.LoginWithPasswordRequest{
 			Username: "testuser",
@@ -60,7 +60,7 @@ func TestLoginWithAuthCode(t *testing.T) {
 	})
 
 	t.Run("Should throw for an invalid code", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		_, err := authAPI.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
 			ClientAuthentication: oauth.ClientAuthentication{
@@ -73,7 +73,7 @@ func TestLoginWithAuthCode(t *testing.T) {
 	})
 
 	t.Run("Should return tokens", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		tokenSet, err := authAPI.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
 			ClientAuthentication: oauth.ClientAuthentication{
@@ -88,7 +88,7 @@ func TestLoginWithAuthCode(t *testing.T) {
 	})
 
 	t.Run("Should support setting a redirect uri", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		tokenSet, err := authAPI.OAuth.LoginWithAuthCode(context.Background(), oauth.LoginWithAuthCodeRequest{
 			ClientAuthentication: oauth.ClientAuthentication{
@@ -106,7 +106,7 @@ func TestLoginWithAuthCode(t *testing.T) {
 
 func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
 	t.Run("Should throw for an invalid code", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		_, err := authAPI.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
 			Code:         "test-invalid-code",
@@ -117,7 +117,7 @@ func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
 	})
 
 	t.Run("Should throw for an invalid code verifier", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		_, err := authAPI.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
 			Code:         "test-code",
@@ -128,7 +128,7 @@ func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
 	})
 
 	t.Run("Should return tokens", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		tokenSet, err := authAPI.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
 			Code:         "test-code",
@@ -141,7 +141,7 @@ func TestLoginWithAuthCodeWithPKCE(t *testing.T) {
 	})
 
 	t.Run("Should support setting a redirect uri", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		tokenSet, err := authAPI.OAuth.LoginWithAuthCodeWithPKCE(context.Background(), oauth.LoginWithAuthCodeWithPKCERequest{
 			Code:         "test-code",
@@ -165,7 +165,7 @@ func TestLoginWithClientCredentials(t *testing.T) {
 	})
 
 	t.Run("Should return tokens", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		tokenSet, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
 			ClientAuthentication: oauth.ClientAuthentication{
@@ -180,7 +180,7 @@ func TestLoginWithClientCredentials(t *testing.T) {
 	})
 
 	t.Run("Should allow overriding clientid", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		tokenSet, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
 			ClientAuthentication: oauth.ClientAuthentication{
@@ -196,8 +196,6 @@ func TestLoginWithClientCredentials(t *testing.T) {
 	})
 
 	t.Run("Should support using private key jwt auth", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
-
 		api, err := New(
 			context.Background(),
 			domain,
@@ -205,8 +203,8 @@ func TestLoginWithClientCredentials(t *testing.T) {
 			WithClientID(clientID),
 			WithClientAssertion(jwtPrivateKey, "RS256"),
 		)
-
 		require.NoError(t, err)
+		configureHTTPTestRecordings(t, api)
 
 		tokenSet, err := api.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
 			Audience: "test-audience",
@@ -218,7 +216,7 @@ func TestLoginWithClientCredentials(t *testing.T) {
 	})
 
 	t.Run("Should support passing private key jwt auth", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		auth, err := createClientAssertion("RS256", jwtPrivateKey, clientID, "https://"+domain+"/")
 		require.NoError(t, err)
@@ -255,7 +253,7 @@ func TestLoginWithClientCredentials(t *testing.T) {
 	})
 
 	t.Run("Should support passing an organization", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		tokenSet, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
 			ClientAuthentication: oauth.ClientAuthentication{
@@ -273,7 +271,7 @@ func TestLoginWithClientCredentials(t *testing.T) {
 
 func TestRefreshToken(t *testing.T) {
 	t.Run("Should return tokens", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		tokenSet, err := authAPI.OAuth.RefreshToken(context.Background(), oauth.RefreshTokenRequest{
 			RefreshToken: "test-refresh-token",
@@ -287,7 +285,7 @@ func TestRefreshToken(t *testing.T) {
 	})
 
 	t.Run("Should return tokens with reduced scopes", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		tokenSet, err := authAPI.OAuth.RefreshToken(context.Background(), oauth.RefreshTokenRequest{
 			RefreshToken: "test-refresh-token",
@@ -304,7 +302,7 @@ func TestRefreshToken(t *testing.T) {
 
 func TestRevokeRefreshToken(t *testing.T) {
 	t.Run("Should revoke token", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
+		configureHTTPTestRecordings(t, authAPI)
 
 		err := authAPI.OAuth.RevokeRefreshToken(context.Background(), oauth.RevokeRefreshTokenRequest{
 			Token: "test-refresh-token",
@@ -314,8 +312,6 @@ func TestRevokeRefreshToken(t *testing.T) {
 	})
 
 	t.Run("Should support passing a ClientID and ClientSecret", func(t *testing.T) {
-		configureHTTPTestRecordings(t)
-
 		auth, err := New(
 			context.Background(),
 			domain,
@@ -324,6 +320,7 @@ func TestRevokeRefreshToken(t *testing.T) {
 			WithIDTokenSigningAlg("HS256"),
 		)
 		assert.NoError(t, err)
+		configureHTTPTestRecordings(t, auth)
 
 		err = auth.OAuth.RevokeRefreshToken(context.Background(), oauth.RevokeRefreshTokenRequest{
 			Token: "test-refresh-token",
@@ -430,6 +427,7 @@ func withIDToken(t *testing.T, extras map[string]interface{}) (*Authentication, 
 		WithIDTokenSigningAlg("HS256"),
 	)
 	assert.NoError(t, err)
+	configureHTTPTestRecordings(t, api)
 
 	builder := jwt.NewBuilder().
 		Issuer(s.URL + "/").
