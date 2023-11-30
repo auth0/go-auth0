@@ -13,6 +13,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/auth0/go-auth0"
 )
 
 func TestRetries(t *testing.T) {
@@ -247,7 +249,7 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 			assert.NoError(t, err)
 
 			assert.Equal(t, "go-auth0", auth0Client.Name)
-			assert.Equal(t, "latest", auth0Client.Version)
+			assert.Equal(t, auth0.Version, auth0Client.Version)
 			assert.Equal(t, runtime.Version(), auth0Client.Env["go"])
 		})
 
