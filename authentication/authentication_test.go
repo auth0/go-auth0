@@ -20,6 +20,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	"github.com/auth0/go-auth0"
 	"github.com/auth0/go-auth0/authentication/database"
 	"github.com/auth0/go-auth0/authentication/oauth"
 	"github.com/auth0/go-auth0/internal/client"
@@ -208,7 +209,7 @@ func TestAuth0Client(t *testing.T) {
 
 			assert.NoError(t, err)
 			assert.Equal(t, "go-auth0", auth0Client.Name)
-			assert.Equal(t, "latest", auth0Client.Version)
+			assert.Equal(t, auth0.Version, auth0Client.Version)
 			assert.Equal(t, runtime.Version(), auth0Client.Env["go"])
 		})
 		s := httptest.NewTLSServer(h)
@@ -263,7 +264,7 @@ func TestAuth0Client(t *testing.T) {
 
 			assert.NoError(t, err)
 			assert.Equal(t, "go-auth0", auth0Client.Name)
-			assert.Equal(t, "latest", auth0Client.Version)
+			assert.Equal(t, auth0.Version, auth0Client.Version)
 			assert.Equal(t, runtime.Version(), auth0Client.Env["go"])
 			assert.Equal(t, "bar", auth0Client.Env["foo"])
 		})
