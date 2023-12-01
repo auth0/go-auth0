@@ -195,7 +195,7 @@ func redactTokens(t *testing.T, i *cassette.Interaction) {
 	require.NoError(t, err)
 
 	tokenSet.AccessToken = "test-access-token"
-	tokenSet.IDToken = "test-id-token"
+	tokenSet.IDToken = "" // Unset IDToken rather than strip it as we don't want to verify it
 
 	if tokenSet.RefreshToken != "" {
 		tokenSet.RefreshToken = "test-refresh-token"
