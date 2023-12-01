@@ -533,7 +533,8 @@ func givenAUser(t *testing.T) userDetails {
 		require.NoError(t, err)
 
 		t.Cleanup(func() {
-			mgmtAPI.User.Delete(context.Background(), user.GetID())
+			err := mgmtAPI.User.Delete(context.Background(), user.GetID())
+			require.NoError(t, err)
 		})
 	}
 
