@@ -34,7 +34,7 @@ run `auth0 apps open <CLIENT ID>`. Authorize the Management API in the `APIs` ta
 
 Then create a local `.env` file in the `management` folder with the following settings:
 
-* `AUTH0_DOMAIN`: The **Domain** of the M2M app
+* `AUTH0_DOMAIN`: The **Domain** of the Auth0 tenant
 * `AUTH0_CLIENT_ID`: The **Client ID** of the M2M app
 * `AUTH0_CLIENT_SECRET`: The **Client Secret** of the M2M app
 * `AUTH0_DEBUG`: Set to `true` to call the Management API in debug mode, which dumps the HTTP requests and responses to the output
@@ -45,7 +45,7 @@ Now for the Authentication tests create another M2M app using `auth0 apps create
 
 Then create a local `.env` file in the `authentication` folder with the following settings:
 
-* `AUTH0_DOMAIN`: The **Domain** of the M2M app
+* `AUTH0_DOMAIN`: The **Domain** of the Auth0 tenant
 * `AUTH0_CLIENT_ID`: The **Client ID** of the management M2M app
 * `AUTH0_CLIENT_SECRET`: The **Client Secret** of the management M2M app
 * `AUTH0_AUTH_CLIENT_ID`: The **Client ID** of the authentication M2M app
