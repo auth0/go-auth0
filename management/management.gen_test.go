@@ -384,42 +384,6 @@ func TestActionList_String(t *testing.T) {
 	}
 }
 
-func TestActionLogSession_GetExpires(tt *testing.T) {
-	var zeroValue time.Time
-	a := &ActionLogSession{Expires: &zeroValue}
-	a.GetExpires()
-	a = &ActionLogSession{}
-	a.GetExpires()
-	a = nil
-	a.GetExpires()
-}
-
-func TestActionLogSession_GetURL(tt *testing.T) {
-	var zeroValue string
-	a := &ActionLogSession{URL: &zeroValue}
-	a.GetURL()
-	a = &ActionLogSession{}
-	a.GetURL()
-	a = nil
-	a.GetURL()
-}
-
-func TestActionLogSession_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &ActionLogSession{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestActionLogSessionFilter_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &ActionLogSessionFilter{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestActionSecret_GetName(tt *testing.T) {
 	var zeroValue string
 	a := &ActionSecret{Name: &zeroValue}
