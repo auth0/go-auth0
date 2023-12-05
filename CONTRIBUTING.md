@@ -27,15 +27,29 @@ There are two ways of running the tests:
 - `make test` - runs the tests with http recordings. To run a specific test pass the `FILTER` var. Usage `make test FILTER="TestResourceServer_Read"`.
 - `make test-e2e` - runs the tests against a real Auth0 tenant. To run a specific test pass the `FILTER` var. Usage `make test-record FILTER="TestResourceServer_Read"`.
 
-To run the tests against an Auth0 tenant start by creating an
-[M2M app](https://auth0.com/docs/applications/set-up-an-application/register-machine-to-machine-applications) in the
-tenant, that has been authorized to request access tokens for the Management API and has all the required permissions.
+### Running against an Auth0 tenant
+
+To run the tests against an Auth0 tenant start by creating an M2M app using `auth0 apps create --name go-auth0-mgmt-tests --description "App used for go-auth0 management tests" --type m2m`, then
+run `auth0 apps open <CLIENT ID>`. Authorize the Management API in the `APIs` tab and enable all permissions.
 
 Then create a local `.env` file in the `management` folder with the following settings:
 
-* `AUTH0_DOMAIN`: The **Domain** of the M2M app
+* `AUTH0_DOMAIN`: The **Domain** of the Auth0 tenant
 * `AUTH0_CLIENT_ID`: The **Client ID** of the M2M app
 * `AUTH0_CLIENT_SECRET`: The **Client Secret** of the M2M app
+* `AUTH0_DEBUG`: Set to `true` to call the Management API in debug mode, which dumps the HTTP requests and responses to the output
+
+
+Now for the Authentication tests create another M2M app using `auth0 apps create --name go-auth0-auth-tests --description "App used for go-auth0 authentication tests" --type m2m`, then run
+`auth0 apps open <CLIENT ID>`. Ensure all `Grant Types` except `Client Credentials` are enabled in `Advanced Settings`, then set the `Authentication Method` to `None` in the `Credentials` tab.
+
+Then create a local `.env` file in the `authentication` folder with the following settings:
+
+* `AUTH0_DOMAIN`: The **Domain** of the Auth0 tenant
+* `AUTH0_CLIENT_ID`: The **Client ID** of the management M2M app
+* `AUTH0_CLIENT_SECRET`: The **Client Secret** of the management M2M app
+* `AUTH0_AUTH_CLIENT_ID`: The **Client ID** of the authentication M2M app
+* `AUTH0_AUTH_CLIENT_SECRET`: The **Client Secret** of the authentication M2M app
 * `AUTH0_DEBUG`: Set to `true` to call the Management API in debug mode, which dumps the HTTP requests and responses to the output
 
 > **Note**

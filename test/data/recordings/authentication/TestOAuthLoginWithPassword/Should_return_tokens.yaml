@@ -6,22 +6,22 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 101
+        content_length: 109
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: client_id=test-client_id&grant_type=password&password=testuser123&username=testuser
+        body: client_id=test-client_id&grant_type=password&password=Testpassword123%21&username=test-user
         form:
             client_id:
                 - test-client_id
             grant_type:
                 - password
             password:
-                - testuser123
+                - Testpassword123!
             username:
-                - testuser
+                - test-user
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -35,10 +35,10 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"test-access-token","expires_in":86400,"token_type":"Bearer"}'
+        body: '{"access_token":"test-access-token","expires_in":86400,"scope":"openid profile email address phone","token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
         status: 200 OK
         code: 200
-        duration: 330.676ms
+        duration: 511.569542ms

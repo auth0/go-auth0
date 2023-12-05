@@ -24,15 +24,19 @@ import (
 	"github.com/auth0/go-auth0/authentication/database"
 	"github.com/auth0/go-auth0/authentication/oauth"
 	"github.com/auth0/go-auth0/internal/client"
+	"github.com/auth0/go-auth0/management"
 )
 
 var (
 	domain                = os.Getenv("AUTH0_DOMAIN")
 	clientID              = os.Getenv("AUTH0_AUTH_CLIENT_ID")
 	clientSecret          = os.Getenv("AUTH0_AUTH_CLIENT_SECRET")
+	mgmtClientID          = os.Getenv("AUTH0_CLIENT_ID")
+	mgmtClientSecret      = os.Getenv("AUTH0_CLIENT_SECRET")
 	httpRecordings        = os.Getenv("AUTH0_HTTP_RECORDINGS")
 	httpRecordingsEnabled = false
 	authAPI               = &Authentication{}
+	mgmtAPI               = &management.Management{}
 	jwtPublicKey          = `-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8foXPIpkeLKAVfVg/W0X
 steFas2XwrxAGG0lnLS3mc/cYc/pD/plsR779O8It/2YmHFWIDmCIcW57boDae/K
@@ -99,10 +103,19 @@ func initializeTestClient() {
 		context.Background(),
 		domain,
 		WithClientID(clientID),
-		WithIDTokenSigningAlg("HS256"),
+		// WithIDTokenSigningAlg("HS256"),
 	)
 	if err != nil {
 		log.Fatal("failed to initialize the auth api client")
+	}
+
+	mgmtAPI, err = management.New(
+		domain,
+		management.WithClientCredentials(context.Background(), mgmtClientID, mgmtClientSecret),
+	)
+
+	if err != nil {
+		log.Fatal("failed to initialize the management api client")
 	}
 }
 
@@ -188,7 +201,8 @@ func TestAuthenticationApiCallContextTimeout(t *testing.T) {
 }
 
 func TestUserInfo(t *testing.T) {
-	configureHTTPTestRecordings(t)
+	skipE2E(t)
+	configureHTTPTestRecordings(t, authAPI)
 
 	user, err := authAPI.UserInfo(context.Background(), "test-access-token")
 
@@ -486,4 +500,48 @@ func TestWithClockTolerance(t *testing.T) {
 		Code: "my-code",
 	}, oauth.IDTokenValidationOptions{})
 	assert.ErrorContains(t, err, "\"iat\" not satisfied")
+}
+
+func skipE2E(t *testing.T) {
+	t.Helper()
+
+	if !httpRecordingsEnabled {
+		t.Skip("Skipped as cannot be test in E2E scenario")
+	}
+}
+
+func usingRecordingResponses(t *testing.T) bool {
+	t.Helper()
+
+	return httpRecordingsEnabled && domain == "go-auth0-dev.eu.auth0.com"
+}
+
+func givenAUser(t *testing.T) userDetails {
+	t.Helper()
+
+	if !usingRecordingResponses(t) {
+		user := &management.User{
+			Connection:    auth0.String("Username-Password-Authentication"),
+			Email:         auth0.String("chuck@example.com"),
+			Password:      auth0.String("Testpassword123!"),
+			Username:      auth0.String("test-user"),
+			EmailVerified: auth0.Bool(true),
+			VerifyEmail:   auth0.Bool(false),
+		}
+
+		err := mgmtAPI.User.Create(context.Background(), user)
+		require.NoError(t, err)
+
+		t.Cleanup(func() {
+			err := mgmtAPI.User.Delete(context.Background(), user.GetID())
+			require.NoError(t, err)
+		})
+	}
+
+	return userDetails{
+		connection: "Username-Password-Authentication",
+		email:      "chuck@example.com",
+		password:   "Testpassword123!",
+		username:   "test-user",
+	}
 }

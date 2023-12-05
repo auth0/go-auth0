@@ -25,20 +25,20 @@ const (
 	recordingsDomain = "go-auth0-dev.eu.auth0.com"
 )
 
-func configureHTTPTestRecordings(t *testing.T) {
+func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 	t.Helper()
 
 	if !httpRecordingsEnabled {
 		return
 	}
 
-	initialTransport := authAPI.http.Transport
+	initialTransport := auth.http.Transport
 
 	recorderTransport, err := recorder.NewWithOptions(
 		&recorder.Options{
 			CassetteName:       recordingsDIR + t.Name(),
 			Mode:               recorder.ModeRecordOnce,
-			RealTransport:      authAPI.http.Transport,
+			RealTransport:      auth.http.Transport,
 			SkipRequestLatency: true,
 		},
 	)
@@ -46,7 +46,7 @@ func configureHTTPTestRecordings(t *testing.T) {
 
 	removeSensitiveDataFromRecordings(t, recorderTransport)
 
-	authAPI.http.Transport = recorderTransport
+	auth.http.Transport = recorderTransport
 
 	// Set a custom matcher that will ensure the request body matches the recording.
 	recorderTransport.SetMatcher(func(r *http.Request, i cassette.Request) bool {
@@ -104,7 +104,7 @@ func configureHTTPTestRecordings(t *testing.T) {
 	t.Cleanup(func() {
 		err := recorderTransport.Stop()
 		require.NoError(t, err)
-		authAPI.http.Transport = initialTransport
+		auth.http.Transport = initialTransport
 	})
 }
 
@@ -195,7 +195,7 @@ func redactTokens(t *testing.T, i *cassette.Interaction) {
 	require.NoError(t, err)
 
 	tokenSet.AccessToken = "test-access-token"
-	tokenSet.IDToken = "test-id-token"
+	tokenSet.IDToken = "" // Unset IDToken rather than strip it as we don't want to verify it
 
 	if tokenSet.RefreshToken != "" {
 		tokenSet.RefreshToken = "test-refresh-token"
