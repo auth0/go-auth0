@@ -239,23 +239,6 @@ func TestActionManager_Execution(t *testing.T) {
 	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
 
-func TestActionManager_LogSession(t *testing.T) {
-	configureHTTPTestRecordings(t)
-
-	expectedLogSession := &ActionLogSession{
-		Filters: []ActionLogSessionFilter{{
-			Key: "action_id",
-			Val: "act_123",
-		}},
-	}
-
-	err := api.Action.LogSession(context.Background(), expectedLogSession)
-
-	assert.NoError(t, err)
-	assert.NotEmpty(t, expectedLogSession.GetURL())
-	assert.NotEmpty(t, expectedLogSession.GetExpires())
-}
-
 func cleanupAction(t *testing.T, actionID string) {
 	t.Helper()
 
