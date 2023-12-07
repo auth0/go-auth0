@@ -207,6 +207,44 @@ func (o *OAuth) RevokeRefreshToken(ctx context.Context, body oauth.RevokeRefresh
 	return o.authentication.Request(ctx, "POST", o.authentication.URI("oauth", "revoke"), body, nil, opts...)
 }
 
+// PushedAuthorization performs a Pushed Authorization Request that can be used to initiate an OAuth flow from
+// the backchannel instead of building a URL.
+//
+// See: https://www.rfc-editor.org/rfc/rfc9126.html
+func (o *OAuth) PushedAuthorization(ctx context.Context, body oauth.PushedAuthorizationRequest, opts ...RequestOption) (p *oauth.PushedAuthorizationRequestResponse, err error) {
+	data := url.Values{
+		"response_type": []string{body.ResponseType},
+		"redirect_uri":  []string{body.RedirectURI},
+	}
+
+	addIfNotEmpty("scope", body.Scope, data)
+	addIfNotEmpty("audience", body.Audience, data)
+	addIfNotEmpty("nonce", body.Nonce, data)
+	addIfNotEmpty("response_mode", body.ResponseMode, data)
+	addIfNotEmpty("organization", body.Organization, data)
+	addIfNotEmpty("invitation", body.Invitation, data)
+	addIfNotEmpty("connection", body.Connection, data)
+	addIfNotEmpty("code_challenge", body.CodeChallenge, data)
+
+	for key, value := range body.ExtraParameters {
+		data.Set(key, value)
+	}
+
+	err = o.addClientAuthentication(body.ClientAuthentication, data, true)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = o.authentication.Request(ctx, "POST", o.authentication.URI("oauth", "par"), data, &p, opts...)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return
+}
+
 func (o *OAuth) addClientAuthentication(params oauth.ClientAuthentication, body url.Values, required bool) error {
 	clientID := params.ClientID
 	if params.ClientID == "" {
@@ -288,4 +326,10 @@ func createClientAssertion(clientAssertionSigningAlg, clientAssertionSigningKey,
 	}
 
 	return string(b), nil
+}
+
+func addIfNotEmpty(key string, value string, qs url.Values) {
+	if value != "" {
+		qs.Set(key, value)
+	}
 }
