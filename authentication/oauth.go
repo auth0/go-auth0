@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -212,6 +213,15 @@ func (o *OAuth) RevokeRefreshToken(ctx context.Context, body oauth.RevokeRefresh
 //
 // See: https://www.rfc-editor.org/rfc/rfc9126.html
 func (o *OAuth) PushedAuthorization(ctx context.Context, body oauth.PushedAuthorizationRequest, opts ...RequestOption) (p *oauth.PushedAuthorizationRequestResponse, err error) {
+	missing := []string{}
+	check(&missing, "ClientID", (body.ClientID != "" || o.authentication.clientID != ""))
+	check(&missing, "ResponseType", body.ResponseType != "")
+	check(&missing, "RedirectURI", body.RedirectURI != "")
+
+	if len(missing) > 0 {
+		return nil, fmt.Errorf("Missing required fields: %s", strings.Join(missing, ", "))
+	}
+
 	data := url.Values{
 		"response_type": []string{body.ResponseType},
 		"redirect_uri":  []string{body.RedirectURI},
@@ -331,5 +341,11 @@ func createClientAssertion(clientAssertionSigningAlg, clientAssertionSigningKey,
 func addIfNotEmpty(key string, value string, qs url.Values) {
 	if value != "" {
 		qs.Set(key, value)
+	}
+}
+
+func check(errors *[]string, key string, c bool) {
+	if !c {
+		*errors = append(*errors, key)
 	}
 }

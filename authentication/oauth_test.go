@@ -410,8 +410,21 @@ func TestOAuthWithIDTokenVerification(t *testing.T) {
 
 func TestPushedAuthorizationRequest(t *testing.T) {
 	t.Run("Should require a client secret", func(t *testing.T) {
-		_, err := authAPI.OAuth.PushedAuthorization(context.Background(), oauth.PushedAuthorizationRequest{})
+		_, err := authAPI.OAuth.PushedAuthorization(context.Background(), oauth.PushedAuthorizationRequest{
+			ResponseType: "code",
+			RedirectURI:  "http://localhost:3000/callback",
+		})
 		assert.ErrorContains(t, err, "client_secret or client_assertion is required but not provided")
+	})
+
+	t.Run("Should require a ClientID, ResponseType and RedirectURI", func(t *testing.T) {
+		auth, err := New(
+			context.Background(),
+			domain,
+		)
+		require.NoError(t, err)
+		_, err = auth.OAuth.PushedAuthorization(context.Background(), oauth.PushedAuthorizationRequest{})
+		assert.ErrorContains(t, err, "Missing required fields: ClientID, ResponseType, RedirectURI")
 	})
 
 	t.Run("Should make a PAR request", func(t *testing.T) {
