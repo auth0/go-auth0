@@ -108,7 +108,9 @@ func (m *HookManager) Delete(ctx context.Context, id string, opts ...RequestOpti
 	return m.management.Request(ctx, "DELETE", m.management.URI("hooks", id), nil, opts...)
 }
 
-// List all hooks.
+// List hooks.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Hooks/get_hooks
 func (m *HookManager) List(ctx context.Context, opts ...RequestOption) (l *HookList, err error) {

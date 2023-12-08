@@ -192,6 +192,8 @@ type OrganizationManager manager
 
 // List available organizations.
 //
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
+//
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_organizations
 func (m *OrganizationManager) List(ctx context.Context, opts ...RequestOption) (o *OrganizationList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("organizations"), &o, applyListDefaults(opts))
@@ -240,6 +242,8 @@ func (m *OrganizationManager) ReadByName(ctx context.Context, name string, opts 
 
 // Connections retrieves connections enabled for an organization.
 //
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
+//
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_enabled_connections
 func (m *OrganizationManager) Connections(ctx context.Context, id string, opts ...RequestOption) (c *OrganizationConnectionList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "enabled_connections"), &c, applyListDefaults(opts))
@@ -279,6 +283,8 @@ func (m *OrganizationManager) UpdateConnection(ctx context.Context, id string, c
 }
 
 // Invitations retrieves invitations to organization.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 // Note that when paginating this response the `HasNext` helper cannot be used, so instead check the length of the returned list
 // manually and break when there are 0 entries. See https://github.com/auth0/go-auth0/issues/48 for more context.
 //
@@ -314,6 +320,8 @@ func (m *OrganizationManager) DeleteInvitation(ctx context.Context, id string, i
 
 // Members lists organization members.
 //
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
+//
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_members
 func (m *OrganizationManager) Members(ctx context.Context, id string, opts ...RequestOption) (o *OrganizationMemberList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "members"), &o, applyListDefaults(opts))
@@ -348,6 +356,8 @@ func (m *OrganizationManager) DeleteMembers(ctx context.Context, id string, memb
 
 // MemberRoles retrieves the roles assigned to an organization member.
 //
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
+//
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_organization_member_roles
 func (m *OrganizationManager) MemberRoles(ctx context.Context, id string, memberID string, opts ...RequestOption) (r *OrganizationMemberRoleList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "members", memberID, "roles"), &r, applyListDefaults(opts))
@@ -381,6 +391,8 @@ func (m *OrganizationManager) DeleteMemberRoles(ctx context.Context, id string, 
 }
 
 // ClientGrants retrieves the client grants assigned to an organization.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 func (m *OrganizationManager) ClientGrants(ctx context.Context, id string, opts ...RequestOption) (g *ClientGrantList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "client-grants"), &g, applyListDefaults(opts))
 	return
@@ -393,12 +405,12 @@ func (m *OrganizationManager) AssociateClientGrant(ctx context.Context, id strin
 	}{
 		GrantID: grantID,
 	}
-	err = m.management.Request(ctx, "POST", m.management.URI("organizations", id, "client-grants"), &body, applyListDefaults(opts))
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations", id, "client-grants"), &body, opts...)
 	return
 }
 
 // RemoveClientGrant removes a client grant from an organization.
 func (m *OrganizationManager) RemoveClientGrant(ctx context.Context, id string, grantID string, opts ...RequestOption) (err error) {
-	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "client-grants", grantID), nil, applyListDefaults(opts))
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "client-grants", grantID), nil, opts...)
 	return
 }

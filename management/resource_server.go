@@ -100,7 +100,9 @@ func (m *ResourceServerManager) Delete(ctx context.Context, id string, opts ...R
 	return m.management.Request(ctx, "DELETE", m.management.URI("resource-servers", id), nil, opts...)
 }
 
-// List all resource server.
+// List resource server.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Resource_Servers/get_resource_servers
 func (m *ResourceServerManager) List(ctx context.Context, opts ...RequestOption) (rl *ResourceServerList, err error) {

@@ -529,7 +529,9 @@ func (m *ClientManager) Read(ctx context.Context, id string, opts ...RequestOpti
 	return
 }
 
-// List all client applications.
+// List client applications.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/get_clients
 func (m *ClientManager) List(ctx context.Context, opts ...RequestOption) (c *ClientList, err error) {
@@ -587,7 +589,9 @@ func (m *ClientManager) UpdateCredential(ctx context.Context, clientID, credenti
 	return nil
 }
 
-// ListCredentials lists all client credentials associated with the client application.
+// ListCredentials lists client credentials associated with the client application.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 func (m *ClientManager) ListCredentials(ctx context.Context, clientID string, opts ...RequestOption) (c []*Credential, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("clients", clientID, "credentials"), &c, applyListDefaults(opts))
 	return
