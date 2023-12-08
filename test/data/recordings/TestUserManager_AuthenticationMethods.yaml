@@ -128,7 +128,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/users/auth0%7C640b5a0ed3534be8b2db9dd3/authentication-methods/email%7Cdev_f0O81fTcftc0kN2v?include_totals=true&per_page=50
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/users/auth0%7C640b5a0ed3534be8b2db9dd3/authentication-methods/email%7Cdev_f0O81fTcftc0kN2v
         method: GET
       response:
         proto: HTTP/2.0
@@ -200,7 +200,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/users/auth0%7C640b5a0ed3534be8b2db9dd3/authentication-methods/email%7Cdev_f0O81fTcftc0kN2v?include_totals=true&per_page=50
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/users/auth0%7C640b5a0ed3534be8b2db9dd3/authentication-methods/email%7Cdev_f0O81fTcftc0kN2v
         method: GET
       response:
         proto: HTTP/2.0

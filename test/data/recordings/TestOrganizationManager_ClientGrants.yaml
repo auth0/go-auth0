@@ -164,7 +164,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_kRblHAs7YQpHZNTA/client-grants?include_totals=true&per_page=50
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_kRblHAs7YQpHZNTA/client-grants
         method: POST
       response:
         proto: HTTP/2.0
@@ -235,7 +235,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_kRblHAs7YQpHZNTA/client-grants/cgr_T6Rmz31CTGVHlCmh?include_totals=true&per_page=50
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_kRblHAs7YQpHZNTA/client-grants/cgr_T6Rmz31CTGVHlCmh
         method: DELETE
       response:
         proto: HTTP/2.0
