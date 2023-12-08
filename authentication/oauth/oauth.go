@@ -142,7 +142,7 @@ type PushedAuthorizationRequest struct {
 	ExtraParameters map[string]string
 }
 
-// PushedAuthorizationRequestResponse defines the response when performing a Pushed Authorization Request.
+// PushedAuthorizationRequestResponse defines the response from a Pushed Authorization Request.
 type PushedAuthorizationRequestResponse struct {
 	RequestURI string `json:"request_uri,omitempty"`
 	ExpiresIn  int    `json:"expires_in,omitempty"`
