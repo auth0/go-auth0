@@ -408,6 +408,71 @@ func TestOAuthWithIDTokenVerification(t *testing.T) {
 	})
 }
 
+func TestPushedAuthorizationRequest(t *testing.T) {
+	t.Run("Should require a client secret", func(t *testing.T) {
+		_, err := authAPI.OAuth.PushedAuthorization(context.Background(), oauth.PushedAuthorizationRequest{
+			ResponseType: "code",
+			RedirectURI:  "http://localhost:3000/callback",
+		})
+		assert.ErrorContains(t, err, "client_secret or client_assertion is required but not provided")
+	})
+
+	t.Run("Should require a ClientID, ResponseType and RedirectURI", func(t *testing.T) {
+		auth, err := New(
+			context.Background(),
+			domain,
+		)
+		require.NoError(t, err)
+		_, err = auth.OAuth.PushedAuthorization(context.Background(), oauth.PushedAuthorizationRequest{})
+		assert.ErrorContains(t, err, "Missing required fields: ClientID, ResponseType, RedirectURI")
+	})
+
+	t.Run("Should make a PAR request", func(t *testing.T) {
+		skipE2E(t)
+		configureHTTPTestRecordings(t, authAPI)
+
+		res, err := authAPI.OAuth.PushedAuthorization(context.Background(), oauth.PushedAuthorizationRequest{
+			ClientAuthentication: oauth.ClientAuthentication{
+				ClientSecret: clientSecret,
+			},
+			ResponseType: "code",
+			RedirectURI:  "http://localhost:3000/callback",
+		})
+
+		require.NoError(t, err)
+		assert.NotEmpty(t, res.RequestURI)
+		assert.NotEmpty(t, res.ExpiresIn)
+	})
+
+	t.Run("Should support all arguments", func(t *testing.T) {
+		skipE2E(t)
+		configureHTTPTestRecordings(t, authAPI)
+
+		res, err := authAPI.OAuth.PushedAuthorization(context.Background(), oauth.PushedAuthorizationRequest{
+			ClientAuthentication: oauth.ClientAuthentication{
+				ClientSecret: clientSecret,
+			},
+			ResponseType:  "code",
+			RedirectURI:   "http://localhost:3000/callback",
+			Audience:      "test-audience",
+			Nonce:         "abc123",
+			ResponseMode:  "form_post",
+			Scope:         "openid profile email",
+			Organization:  "my-org",
+			Invitation:    "invite",
+			Connection:    "Username-Password",
+			CodeChallenge: "n4bQgYhMfWWaL-qgxVrQFaO_TxsrC4Is0V1sFbDwCgg",
+			ExtraParameters: map[string]string{
+				"test": "value",
+			},
+		})
+
+		require.NoError(t, err)
+		assert.NotEmpty(t, res.RequestURI)
+		assert.NotEmpty(t, res.ExpiresIn)
+	})
+}
+
 func withIDToken(t *testing.T, extras map[string]interface{}) (*Authentication, error) {
 	t.Helper()
 

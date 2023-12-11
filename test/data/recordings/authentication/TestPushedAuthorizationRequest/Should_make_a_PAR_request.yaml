@@ -1,0 +1,44 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 194
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: client_id=test-client_id&client_secret=test-client_secret&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&response_type=code
+        form:
+            client_id:
+                - test-client_id
+            client_secret:
+                - test-client_secret
+            redirect_uri:
+                - http://localhost:3000/callback
+            response_type:
+                - code
+        headers:
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://go-auth0-dev.eu.auth0.com/oauth/par
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 132
+        uncompressed: false
+        body: '{"expires_in":30,"request_uri":"urn:ietf:params:oauth:request_uri:test-value"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 669.090416ms

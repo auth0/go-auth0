@@ -114,3 +114,36 @@ type IDTokenValidationOptions struct {
 	Nonce        string
 	Organization string
 }
+
+// PushedAuthorizationRequest defines the request body for performing a Pushed Authorization Request (PAR).
+type PushedAuthorizationRequest struct {
+	ClientAuthentication
+	// The URI to redirect to.
+	RedirectURI string
+	// Scopes to request.
+	Scope string
+	// The unique identifier of the target API you want to access.
+	Audience string
+	// The nonce.
+	Nonce string
+	// The response mode to use.
+	ResponseMode string
+	// The response type the client expects.
+	ResponseType string
+	// The organization to log the user in to.
+	Organization string
+	// The ID of an invitation to accept.
+	Invitation string
+	// Name of the connection.
+	Connection string
+	// A Base64-encoded SHA-256 hash of the code_verifier used for the Authorization Code Flow with PKCE.
+	CodeChallenge string
+	// Extra parameters to be added to the request. Values set here will override any existing values.
+	ExtraParameters map[string]string
+}
+
+// PushedAuthorizationRequestResponse defines the response from a Pushed Authorization Request.
+type PushedAuthorizationRequestResponse struct {
+	RequestURI string `json:"request_uri,omitempty"`
+	ExpiresIn  int    `json:"expires_in,omitempty"`
+}
