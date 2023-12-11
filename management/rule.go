@@ -64,7 +64,9 @@ func (m *RuleManager) Delete(ctx context.Context, id string, opts ...RequestOpti
 	return m.management.Request(ctx, "DELETE", m.management.URI("rules", id), nil, opts...)
 }
 
-// List all rules.
+// List rules.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Rules/get_rules
 func (m *RuleManager) List(ctx context.Context, opts ...RequestOption) (r *RuleList, err error) {

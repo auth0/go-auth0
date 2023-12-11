@@ -20,7 +20,7 @@ type BlacklistToken struct {
 // BlacklistManager manages Auth0 BlacklistToken resources.
 type BlacklistManager manager
 
-// List all tokens that are blacklisted.
+// List tokens that are blacklisted.
 //
 // Note: The JWT specification states that the `jti` field can be used to
 // prevent replay attacks. Though Auth0 tokens do not include a `jti`, you can
@@ -30,6 +30,7 @@ type BlacklistManager manager
 // token gets stolen, it (or the tokens issued after it) should be blacklisted
 // and let expire.
 //
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 // See: https://auth0.com/docs/api/management/v2#!/Blacklists/get_tokens
 func (m *BlacklistManager) List(ctx context.Context, opts ...RequestOption) (bl []*BlacklistToken, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("blacklists", "tokens"), &bl, applyListDefaults(opts))

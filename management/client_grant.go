@@ -86,10 +86,12 @@ func (m *ClientGrantManager) Delete(ctx context.Context, id string, opts ...Requ
 	return m.management.Request(ctx, "DELETE", m.management.URI("client-grants", id), nil, opts...)
 }
 
-// List all client grants.
+// List client grants.
 //
 // This method forces the `include_totals=true` and defaults to `per_page=50` if
 // not provided.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Client_Grants/get_client_grants
 func (m *ClientGrantManager) List(ctx context.Context, opts ...RequestOption) (gs *ClientGrantList, err error) {
@@ -101,6 +103,8 @@ func (m *ClientGrantManager) List(ctx context.Context, opts ...RequestOption) (g
 //
 // This method forces the `include_totals=true` and defaults to `per_page=50` if
 // not provided.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 func (m *ClientGrantManager) Organizations(ctx context.Context, id string, opts ...RequestOption) (o *OrganizationList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("client-grants", id, "organizations"), &o, applyListDefaults(opts))
 	return

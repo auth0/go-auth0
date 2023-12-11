@@ -77,7 +77,9 @@ func (m *RoleManager) Delete(ctx context.Context, id string, opts ...RequestOpti
 	return m.management.Request(ctx, "DELETE", m.management.URI("roles", id), &Role{}, opts...)
 }
 
-// List all roles that can be assigned to users or groups.
+// List roles that can be assigned to users or groups.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Roles/get_roles
 func (m *RoleManager) List(ctx context.Context, opts ...RequestOption) (r *RoleList, err error) {
@@ -97,7 +99,9 @@ func (m *RoleManager) AssignUsers(ctx context.Context, id string, users []*User,
 	return m.management.Request(ctx, "POST", m.management.URI("roles", id, "users"), &u, opts...)
 }
 
-// Users retrieves all users associated with a role.
+// Users retrieves users associated with a role.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Roles/get_role_user
 func (m *RoleManager) Users(ctx context.Context, id string, opts ...RequestOption) (u *UserList, err error) {
@@ -114,7 +118,9 @@ func (m *RoleManager) AssociatePermissions(ctx context.Context, id string, permi
 	return m.management.Request(ctx, "POST", m.management.URI("roles", id, "permissions"), &p, opts...)
 }
 
-// Permissions retrieves all permissions granted by a role.
+// Permissions retrieves permissions granted by a role.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Roles/get_role_permission
 func (m *RoleManager) Permissions(ctx context.Context, id string, opts ...RequestOption) (p *PermissionList, err error) {

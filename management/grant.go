@@ -32,6 +32,8 @@ type GrantManager manager
 
 // List the grants associated with your account.
 //
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
+//
 // See: https://auth0.com/docs/api/management/v2#!/Grants/get_grants
 func (m *GrantManager) List(ctx context.Context, opts ...RequestOption) (g *GrantList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("grants"), &g, applyListDefaults(opts))

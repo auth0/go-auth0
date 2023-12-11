@@ -250,7 +250,9 @@ func (m *ActionManager) Delete(ctx context.Context, id string, opts ...RequestOp
 	return m.management.Request(ctx, "DELETE", m.management.URI("actions", "actions", id), nil, opts...)
 }
 
-// List all actions.
+// List actions.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/get_actions
 func (m *ActionManager) List(ctx context.Context, opts ...RequestOption) (l *ActionList, err error) {
@@ -266,7 +268,9 @@ func (m *ActionManager) Version(ctx context.Context, id string, versionID string
 	return
 }
 
-// Versions lists all versions of an action.
+// Versions lists versions of an action.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_action_versions
 func (m *ActionManager) Versions(ctx context.Context, id string, opts ...RequestOption) (c *ActionVersionList, err error) {
@@ -285,6 +289,8 @@ func (m *ActionManager) UpdateBindings(ctx context.Context, triggerID string, b 
 }
 
 // Bindings lists the bindings of a trigger.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Actions/get_bindings
 func (m *ActionManager) Bindings(ctx context.Context, triggerID string, opts ...RequestOption) (bl *ActionBindingList, err error) {

@@ -164,7 +164,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_OjbL69ZRTlpNCzsC/client-grants?include_totals=true&per_page=50
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_OjbL69ZRTlpNCzsC/client-grants
         method: POST
       response:
         proto: HTTP/2.0

@@ -445,7 +445,9 @@ func (m *UserManager) Delete(ctx context.Context, id string, opts ...RequestOpti
 	return m.management.Request(ctx, "DELETE", m.management.URI("users", id), nil, opts...)
 }
 
-// List all users. This method forces the `include_totals` option.
+// List users. This method forces the `include_totals` option.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_users
 func (m *UserManager) List(ctx context.Context, opts ...RequestOption) (ul *UserList, err error) {
@@ -478,7 +480,9 @@ func (m *UserManager) ListByEmail(ctx context.Context, email string, opts ...Req
 	return
 }
 
-// Roles lists all roles associated with a user.
+// Roles lists roles associated with a user.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_user_roles
 func (m *UserManager) Roles(ctx context.Context, id string, opts ...RequestOption) (r *RoleList, err error) {
@@ -511,6 +515,8 @@ func (m *UserManager) RemoveRoles(ctx context.Context, id string, roles []*Role,
 }
 
 // Permissions lists the permissions associated to the user.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_permissions
 func (m *UserManager) Permissions(ctx context.Context, id string, opts ...RequestOption) (p *PermissionList, err error) {
@@ -653,6 +659,8 @@ func (m *UserManager) Unlink(ctx context.Context, id, provider, userID string, o
 
 // Organizations lists user's organizations.
 //
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
+//
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_organizations
 func (m *UserManager) Organizations(ctx context.Context, id string, opts ...RequestOption) (p *OrganizationList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("users", id, "organizations"), &p, applyListDefaults(opts))
@@ -660,6 +668,8 @@ func (m *UserManager) Organizations(ctx context.Context, id string, opts ...Requ
 }
 
 // ListAuthenticationMethods retrieves a list of authentication methods.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_authentication_methods
 func (m *UserManager) ListAuthenticationMethods(ctx context.Context, userID string, opts ...RequestOption) (a *AuthenticationMethodList, err error) {
@@ -671,7 +681,7 @@ func (m *UserManager) ListAuthenticationMethods(ctx context.Context, userID stri
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get_authentication_methods_by_authentication_method_id
 func (m *UserManager) GetAuthenticationMethodByID(ctx context.Context, userID string, id string, opts ...RequestOption) (a *AuthenticationMethod, err error) {
-	err = m.management.Request(ctx, "GET", m.management.URI("users", userID, "authentication-methods", id), &a, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("users", userID, "authentication-methods", id), &a, opts...)
 	return
 }
 

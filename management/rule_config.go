@@ -47,7 +47,9 @@ func (m *RuleConfigManager) Delete(ctx context.Context, key string, opts ...Requ
 	return m.management.Request(ctx, "DELETE", m.management.URI("rules-configs", key), nil, opts...)
 }
 
-// List all rule configuration variables.
+// List rule configuration variables.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Rules_Configs/get_rules_configs
 func (m *RuleConfigManager) List(ctx context.Context, opts ...RequestOption) (r []*RuleConfig, err error) {
