@@ -337,15 +337,3 @@ func createClientAssertion(clientAssertionSigningAlg, clientAssertionSigningKey,
 
 	return string(b), nil
 }
-
-func addIfNotEmpty(key string, value string, qs url.Values) {
-	if value != "" {
-		qs.Set(key, value)
-	}
-}
-
-func check(errors *[]string, key string, c bool) {
-	if !c {
-		*errors = append(*errors, key)
-	}
-}

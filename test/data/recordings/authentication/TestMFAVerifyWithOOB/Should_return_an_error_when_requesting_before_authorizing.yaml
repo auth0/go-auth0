@@ -1,0 +1,46 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 2841
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: client_id=test-client_id&client_secret=test-client_secret&grant_type=http%3A%2F%2Fauth0.com%2Foauth%2Fgrant-type%2Fmfa-oob&mfa_token=Fe26.2%2ASERVER_1694679013%2A128335406d32734e3942fb0228910d81018ef8bfc846bb4394ce317a75eb282e%2AvDuTz2vAGS6UMvQfCLbsDA%2APfQVZpO9jY2q0tjCokImhCt5wBCOL5o9Jg-r0gpfxbK6wxi7I-Qnyri6v2C0OOYAPL4xILCwY_R7ZSu4TeEPFUnRAeWhAl9vnQBg444l8W1k9kyhWWHkL8mG6Qroa3zgOl7FfE55jgpWomzNxoUhoKJXJ-Q4YnVT4KYKOGCskizRa8Gssmbc5rwUSgdLDWJbnFtsRtErNHVYLphBW4_OwlsOOr5fsfEUyyu5Q23PpiaUEQXb31SULFi35Ne8VTisrEiOhl-0ZPDZjF7oEY5t1dL8pZ69uZ9NflHAq6mgqEINBbQJuzRVFj2zL-NFHBMmkooREkyohtetC9mifDAQPCAZbF6JW1DWCnGa4sKyNLLyEzs2Nap8eyGr3c7KcbwdtAMRBtVJgbaKx9K9tevwwEWqzXt124VeP2vd5dWsZh_UqIJyLqioQUlVqYEjDbwUiI19KlmGPTqiYnq8vG9HZpHOEHIZlHX1pvvFWKMZhlhcPhMLXqkRYNVxd7Q_OwvmxktHJBBK2NCit8-VRAaCIg47CPyqqbbmz7aKJge6zeJw-C4XjWtOEQa1cQ49_K1lzlLEFcuG6i52IuV2WOJD5lfSbSVza5x-x9ngvii87faR5utRoFVfwlTlXQ6BgZEpyFYzyOPhSazhinLwa0WjIHqsjoZkMftb8pFcEN5I0BqS3rSFr22JbeNpUDkl5L1_qhV5ZVLy0W2uNfJn9idajjFHDy-YAiGFrRPVcqujpi8ahZWl5QZ9orcwQqlO6p3Eg4sklr_ve7VhxUW1SdzflCEjLv7tsM65ICxqNoSWEg6OcsnZl8eTfySJL27Wtr2EyjPDUS7-zdpXG8aCILCyVISZp3kxXIbyxVA7cVFzo21xARcHbKRoGuk3SCl2FpmNl-fI0hX5Gf7dPj00_3pcglXcOQs4YB3wiFO12F3fGMrd2oHdoBzjU5tytOS4iPccbGATmXzV-rKZYND9goDPOqNqgOab51z6TevsZC38Q0klUkRaalBX9QUEgUo4_s6hD444ZeEOKEKMQnjCDzgY7vwK4-knUx79kSJYWrk4wMg_K6-Rh6iRiCi4EvXBsatHSnsc3ifewm55YprCNc63TjpYkVG8bQR6N8iob0lPMkx9yyW6OPuyFMhfKgXPDbMsU8dPR42MKTAuZX5jVvAshe7H3g4c3q5Xf4X7o74qE4xGpdWFA1xNnf_7JepBVI9VccKohClYQhXlIsIxwVd5O68cd55-k42t78VNpLX8ac-L129oJuYjr1dNjcmXJeBUzdfU76smfu26DMO1LcZKQJcdWAoW14fFG9tjxUlOuO9N-HS-caw-uZ7tS7jcvZpr-tgvLPQvK3IyfXZpv_2STiq3z4ZSFtQFoTGNXAZizd14mCyD50GXa_xnc-6L3R6-01dw4D1M1SUbvuohRJk-5RPx-O6c5BDluxW7t7bVZNeqP3roCPQYywB6H0mJZ-nThHTut4gfh4HSsypzNL_z17ZkSFMY8J2CBN2xz4nir8moewJxTXt8L1C31oJjbXDdfVc95zqwCQD-_nSqn4OROe29X0ZcEy3UfZBPP18Qog0ruJyC4UtRKbcwyS3tkcfjcsaavTkk_vf-Sb3lW4pyJY_BkQSShTOQDZ81k1SpeRNJ5gx-EzDsXj5k223jvZRLxaHSFvYBNe0UKqqVjNL34ivzLNZAFkS1z4_PryHdRO-rynCCv246R4ZIeRMqD5a6b7NevxaiNBq4n4wWRpYnxg%2A1702418337761%2Af6e4f44e15baa18514763a53b7d13b77b0b8cb87b403c9173838aede9b085af1%2AIhGeK5_f1n29wdEBWNVhWNuD6pmoUacDWJj1xI52EKI&oob_code=Fe26.2%2ASERVER_1694679013%2A81ede61fa49cb00d07af2c6eb2ba6378d0401ee4451a3ee413f1358efa51a735%2AAMyr3pz3Lvsa81WDiRGU3g%2Ark89VByS16if8JtuDctPn4TgsoVpkSa3hsUdXWqh6DXhhShfZ3IabazqqJTLg3e8uvI0BWZzhYJZ6L5cGHb8QlGV1uTliyter-44lifFYVbsIE5ejncanbG69Oi_BwahMZE5HHXnypy_yOhNOQ2-hYQ4gOloap9bt0WVPoHTbtfkzd-TQ8gkSLNxslXFbUYi5oGugXMUofeXjChCg_nw9A2n7WUEbfJLsJoPuXOWuVyufs9h6HCDDfKxY7mQkI5CqXJ3D2JVq0Ppxz0mOUeGD5ARiFrIKBB_uaPP83UxbWG_A7fyGsxxkFVLDtom2hFe5E2dQEbuaB8a0-pXVVSfuxdrWBpkpQSA46HfUXlGW2o5gCyeKLPVSdVcvylgVqkW%2A1702418352726%2A372c6acbeba7eed8c327fa94a00c6203992c2e88aaa3d0c1b09b0ea91de66e79%2AUfaHi7ArVGjLfEBoHfUiz4ASYN7RmJZSo3H19_tA9rA
+        form:
+            client_id:
+                - test-client_id
+            client_secret:
+                - test-client_secret
+            grant_type:
+                - http://auth0.com/oauth/grant-type/mfa-oob
+            mfa_token:
+                - mfa-token
+            oob_code:
+                - oob-token
+        headers:
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://go-auth0-dev.eu.auth0.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 122
+        uncompressed: false
+        body: '{"error":"authorization_pending","error_description":"Authorization pending: please repeat the request in a few seconds."}'
+        headers:
+            Content-Type:
+                - application/json
+        status: 400 Bad Request
+        code: 400
+        duration: 321.844959ms

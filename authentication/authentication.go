@@ -3,12 +3,14 @@ package authentication
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/url"
 	"reflect"
 	"strings"
 	"time"
 
+	"github.com/auth0/go-auth0/authentication/oauth"
 	"github.com/auth0/go-auth0/internal/client"
 	"github.com/auth0/go-auth0/internal/idtokenvalidator"
 )
@@ -112,6 +114,7 @@ func (u *UserInfoResponse) UnmarshalJSON(b []byte) error {
 // Authentication is the auth client.
 type Authentication struct {
 	Database     *Database
+	MFA          *MFA
 	OAuth        *OAuth
 	Passwordless *Passwordless
 
@@ -172,6 +175,7 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 
 	a.common.authentication = a
 	a.Database = (*Database)(&a.common)
+	a.MFA = (*MFA)(&a.common)
 	a.OAuth = (*OAuth)(&a.common)
 	a.Passwordless = (*Passwordless)(&a.common)
 
@@ -213,4 +217,86 @@ func (a *Authentication) UserInfo(ctx context.Context, accessToken string, opts 
 	opts = append(opts, Header("Authorization", "Bearer "+accessToken))
 	err = a.Request(ctx, "GET", a.URI("userinfo"), nil, &user, opts...)
 	return
+}
+
+// Helper for adding values to a url.Values instance if they are not empty.
+func addIfNotEmpty(key string, value string, qs url.Values) {
+	if value != "" {
+		qs.Set(key, value)
+	}
+}
+
+// Helper for enforcing that required values are set.
+func check(errors *[]string, key string, c bool) {
+	if !c {
+		*errors = append(*errors, key)
+	}
+}
+
+func (a *Authentication) addClientAuthentication(params oauth.ClientAuthentication, body url.Values, required bool) error {
+	clientID := params.ClientID
+	if params.ClientID == "" {
+		clientID = a.clientID
+	}
+	body.Set("client_id", clientID)
+
+	clientSecret := params.ClientSecret
+	if params.ClientSecret == "" {
+		clientSecret = a.clientSecret
+	}
+
+	switch {
+	case a.clientAssertionSigningKey != "" && a.clientAssertionSigningAlg != "":
+		clientAssertion, err := createClientAssertion(
+			a.clientAssertionSigningAlg,
+			a.clientAssertionSigningKey,
+			clientID,
+			a.url.JoinPath("/").String(),
+		)
+		if err != nil {
+			return err
+		}
+
+		body.Set("client_assertion", clientAssertion)
+		body.Set("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer")
+		break
+	case params.ClientAssertion != "":
+		body.Set("client_assertion", params.ClientAssertion)
+		body.Set("client_assertion_type", params.ClientAssertionType)
+		break
+	case clientSecret != "":
+		body.Set("client_secret", clientSecret)
+		break
+	}
+
+	if required && (body.Get("client_secret") == "" && body.Get("client_assertion") == "") {
+		return errors.New("client_secret or client_assertion is required but not provided")
+	}
+
+	return nil
+}
+
+func (a *Authentication) addClientAuthenticationToClientAuthStruct(params *oauth.ClientAuthentication) error {
+	if params.ClientID == "" {
+		params.ClientID = a.clientID
+	}
+
+	if a.clientAssertionSigningKey != "" && a.clientAssertionSigningAlg != "" {
+		clientAssertion, err := createClientAssertion(
+			a.clientAssertionSigningAlg,
+			a.clientAssertionSigningKey,
+			params.ClientID,
+			a.url.JoinPath("/").String(),
+		)
+		if err != nil {
+			return err
+		}
+
+		params.ClientAssertion = clientAssertion
+		params.ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
+	} else if params.ClientSecret == "" && a.clientSecret != "" {
+		params.ClientSecret = a.clientSecret
+	}
+
+	return nil
 }

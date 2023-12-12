@@ -27,7 +27,9 @@ func newError(response *http.Response) error {
 	// If that happens we still want to display the correct code.
 	if apiError.Status() == 0 {
 		apiError.StatusCode = response.StatusCode
-		apiError.Err = http.StatusText(response.StatusCode)
+		if apiError.Err == "" {
+			apiError.Err = http.StatusText(response.StatusCode)
+		}
 	}
 
 	return apiError

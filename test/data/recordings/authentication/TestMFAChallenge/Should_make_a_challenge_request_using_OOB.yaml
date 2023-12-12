@@ -1,0 +1,36 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 2203
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: '{"authenticator_id":"push|dev_ADbB4Y2ozSOwynKu","challenge_type":"oob","client_id":"test-client_id","client_secret":"test-client_secret","mfa_token":"mfa-token"}'
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+        url: https://go-auth0-dev.eu.auth0.com/mfa/challenge
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"challenge_type":"oob","oob_code":"Fe26.2*SERVER_1694679013*def856556124896473b3d70a01f29206b3ff9cb080fcf7dc8e6324f6fc53031d*t7bZ0gpcMM6L-f1jbS064g*45jI_dLZYYbxVoslBE54qW20Q2HPKx8tgrXbQDiXecUgecY3JRTBhfVuGDWAOI17pBstb2_x82UauagaDKj6mIUtIw8hvormDTADgJyIBtPV1Tuy_mS0SboudsP7N6Dsldg7AOgDslIsHHu4YOf_F_JdGxG4dvyyef3nS-1GFkdwLPXe8nke8Fg5BwsOquJ7pg9LkW9afwXyXjh9G7xY7WJzMQGmLE5PxixmEyndYDN5OJamYjqEE03kfeO6ayQpZ5bOB4nROQRR64rP9oaD_Ks0u7FMXezboIZ3S47IJPc2vdj1BIybF5M1sBPB73I0L9TWEadpUIXHvBBmSlChqSVM_eW9e0I4O_ttc8UEXguWFRBnbSBv6xikZMyWkeSW*1702398000157*e7f9754853f9f6c8a8c2d41d42d0bc05d56b1b09857285c269c199f0ae057368*thX4yBz-DPgu2GZjq6bZQ3nPgeN83wBix6LisM1n4S8"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 395.86025ms
