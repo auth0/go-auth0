@@ -51,4 +51,22 @@
 //		authentication.WithClientSecret(secret), // Optional depending on the grants used
 //		authentication.WithClockTolerance(10 * time.Second),
 //	)
+//
+// # Handling Errors
+//
+// This package exports an [authentication.Error] type that can be used to check errors
+// returned from the Authentication API and handle them as necessary, for example
+//
+//	tokens, err := auth.OAuth.LoginWithPassword(context.Background(), oauth.LoginWithPasswordRequest{
+//		Username: "test@example.com",
+//		Password: "hunter2",
+//	}, oauth.IDTokenValidationOptions{})
+//
+//	if err != nil {
+//		if aerr, ok := err.(*authentication.Error); ok {
+//			if aerr.Err == "mfa_required" {
+//				// Handle prompting for MFA usage
+//			}
+//		}
+//	}
 package authentication
