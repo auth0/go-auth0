@@ -267,7 +267,7 @@ func (a *Authentication) addClientAuthenticationToURLValues(params oauth.ClientA
 		body.Set("client_assertion", clientAssertion)
 		body.Set("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer")
 		break
-	case params.ClientAssertion != "":
+	case params.ClientAssertion != "" && params.ClientAssertionType != "":
 		body.Set("client_assertion", params.ClientAssertion)
 		body.Set("client_assertion_type", params.ClientAssertionType)
 		break
@@ -284,7 +284,7 @@ func (a *Authentication) addClientAuthenticationToURLValues(params oauth.ClientA
 }
 
 // Helper for adding client authentication to an oauth.ClientAuthentication struct.
-func (a *Authentication) addClientAuthenticationToClientAuthStruct(params *oauth.ClientAuthentication) error {
+func (a *Authentication) addClientAuthenticationToClientAuthStruct(params *oauth.ClientAuthentication, required bool) error {
 	if params.ClientID == "" {
 		params.ClientID = a.clientID
 	}
@@ -304,6 +304,10 @@ func (a *Authentication) addClientAuthenticationToClientAuthStruct(params *oauth
 		params.ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
 	} else if params.ClientSecret == "" && a.clientSecret != "" {
 		params.ClientSecret = a.clientSecret
+	}
+
+	if required && (params.ClientSecret == "" && params.ClientAssertion == "") {
+		return errors.New("client_secret or client_assertion is required but not provided")
 	}
 
 	return nil

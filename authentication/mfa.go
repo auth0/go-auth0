@@ -26,7 +26,7 @@ func (m *MFA) Challenge(ctx context.Context, body mfa.ChallengeRequest, opts ...
 		return nil, fmt.Errorf("Missing required fields: %s", strings.Join(missing, ", "))
 	}
 
-	err = m.authentication.addClientAuthenticationToClientAuthStruct(&body.ClientAuthentication)
+	err = m.authentication.addClientAuthenticationToClientAuthStruct(&body.ClientAuthentication, false)
 
 	if err != nil {
 		return nil, err
