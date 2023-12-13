@@ -14,6 +14,8 @@ import (
 type MFA manager
 
 // Challenge requests a challenge for multi-factor authentication (MFA) based on the challenge types supported by the application and user.
+//
+// See: https://auth0.com/docs/api/authentication#challenge-request
 func (m *MFA) Challenge(ctx context.Context, body mfa.ChallengeRequest, opts ...RequestOption) (c *mfa.ChallengeResponse, err error) {
 	missing := []string{}
 	check(&missing, "ClientID", (body.ClientID != "" || m.authentication.clientID != ""))
@@ -40,6 +42,8 @@ func (m *MFA) Challenge(ctx context.Context, body mfa.ChallengeRequest, opts ...
 }
 
 // VerifyWithOTP verifies an MFA challenge using a one-time password (OTP).
+//
+// See: https://auth0.com/docs/api/authentication#verify-with-one-time-password-otp-
 func (m *MFA) VerifyWithOTP(ctx context.Context, body mfa.VerifyWithOTPRequest, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	missing := []string{}
 	check(&missing, "ClientID", (body.ClientID != "" || m.authentication.clientID != ""))
@@ -67,7 +71,10 @@ func (m *MFA) VerifyWithOTP(ctx context.Context, body mfa.VerifyWithOTPRequest, 
 	return
 }
 
-// VerifyWithOOB verifies an MFA challenge using an out-of-band challenge.
+// VerifyWithOOB verifies an MFA challenge using an out-of-band challenge (OOB), either Push notification,
+// SMS, or Voice.
+//
+// See: https://auth0.com/docs/api/authentication#verify-with-out-of-band-oob-
 func (m *MFA) VerifyWithOOB(ctx context.Context, body mfa.VerifyWithOOBRequest, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	missing := []string{}
 	check(&missing, "ClientID", (body.ClientID != "" || m.authentication.clientID != ""))
@@ -100,6 +107,8 @@ func (m *MFA) VerifyWithOOB(ctx context.Context, body mfa.VerifyWithOOBRequest, 
 }
 
 // VerifyWithRecoveryCode verifies an MFA challenge using a recovery code.
+//
+// See: https://auth0.com/docs/api/authentication#verify-with-recovery-code
 func (m *MFA) VerifyWithRecoveryCode(ctx context.Context, body mfa.VerifyWithRecoveryCodeRequest, opts ...RequestOption) (t *mfa.VerifyWithRecoveryCodeResponse, err error) {
 	missing := []string{}
 	check(&missing, "ClientID", (body.ClientID != "" || m.authentication.clientID != ""))
