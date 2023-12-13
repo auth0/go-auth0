@@ -2,16 +2,9 @@ package authentication
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"net/url"
 	"strings"
-	"time"
-
-	"github.com/google/uuid"
-	"github.com/lestrrat-go/jwx/v2/jwa"
-	"github.com/lestrrat-go/jwx/v2/jwk"
-	"github.com/lestrrat-go/jwx/v2/jwt"
 
 	"github.com/auth0/go-auth0/authentication/oauth"
 	"github.com/auth0/go-auth0/internal/idtokenvalidator"
@@ -78,7 +71,7 @@ func (o *OAuth) LoginWithPassword(ctx context.Context, body oauth.LoginWithPassw
 		data.Set(k, v)
 	}
 
-	err = o.addClientAuthentication(body.ClientAuthentication, data, false)
+	err = o.authentication.addClientAuthentication(body.ClientAuthentication, data, false)
 
 	if err != nil {
 		return
@@ -103,7 +96,7 @@ func (o *OAuth) LoginWithAuthCode(ctx context.Context, body oauth.LoginWithAuthC
 		data.Set("redirect_uri", body.RedirectURI)
 	}
 
-	err = o.addClientAuthentication(body.ClientAuthentication, data, true)
+	err = o.authentication.addClientAuthentication(body.ClientAuthentication, data, true)
 
 	if err != nil {
 		return
@@ -130,7 +123,7 @@ func (o *OAuth) LoginWithAuthCodeWithPKCE(ctx context.Context, body oauth.LoginW
 		data.Set("redirect_uri", body.RedirectURI)
 	}
 
-	err = o.addClientAuthentication(body.ClientAuthentication, data, false)
+	err = o.authentication.addClientAuthentication(body.ClientAuthentication, data, false)
 
 	if err != nil {
 		return
@@ -155,7 +148,7 @@ func (o *OAuth) LoginWithClientCredentials(ctx context.Context, body oauth.Login
 		data.Set("organization", body.Organization)
 	}
 
-	err = o.addClientAuthentication(body.ClientAuthentication, data, true)
+	err = o.authentication.addClientAuthentication(body.ClientAuthentication, data, true)
 
 	if err != nil {
 		return
@@ -177,7 +170,7 @@ func (o *OAuth) RefreshToken(ctx context.Context, body oauth.RefreshTokenRequest
 		data.Set("scope", body.Scope)
 	}
 
-	err = o.addClientAuthentication(body.ClientAuthentication, data, false)
+	err = o.authentication.addClientAuthentication(body.ClientAuthentication, data, false)
 
 	if err != nil {
 		return
@@ -240,7 +233,7 @@ func (o *OAuth) PushedAuthorization(ctx context.Context, body oauth.PushedAuthor
 		data.Set(key, value)
 	}
 
-	err = o.addClientAuthentication(body.ClientAuthentication, data, true)
+	err = o.authentication.addClientAuthentication(body.ClientAuthentication, data, true)
 
 	if err != nil {
 		return nil, err
@@ -253,87 +246,4 @@ func (o *OAuth) PushedAuthorization(ctx context.Context, body oauth.PushedAuthor
 	}
 
 	return
-}
-
-func (o *OAuth) addClientAuthentication(params oauth.ClientAuthentication, body url.Values, required bool) error {
-	clientID := params.ClientID
-	if params.ClientID == "" {
-		clientID = o.authentication.clientID
-	}
-	body.Set("client_id", clientID)
-
-	clientSecret := params.ClientSecret
-	if params.ClientSecret == "" {
-		clientSecret = o.authentication.clientSecret
-	}
-
-	switch {
-	case o.authentication.clientAssertionSigningKey != "" && o.authentication.clientAssertionSigningAlg != "":
-		clientAssertion, err := createClientAssertion(
-			o.authentication.clientAssertionSigningAlg,
-			o.authentication.clientAssertionSigningKey,
-			clientID,
-			o.authentication.url.JoinPath("/").String(),
-		)
-		if err != nil {
-			return err
-		}
-
-		body.Set("client_assertion", clientAssertion)
-		body.Set("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer")
-		break
-	case params.ClientAssertion != "":
-		body.Set("client_assertion", params.ClientAssertion)
-		body.Set("client_assertion_type", params.ClientAssertionType)
-		break
-	case clientSecret != "":
-		body.Set("client_secret", clientSecret)
-		break
-	}
-
-	if required && (body.Get("client_secret") == "" && body.Get("client_assertion") == "") {
-		return errors.New("client_secret or client_assertion is required but not provided")
-	}
-
-	return nil
-}
-
-func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
-	switch alg {
-	case "RS256":
-		return jwa.RS256, nil
-	default:
-		return "", fmt.Errorf("Unsupported client assertion algorithm \"%s\" provided", alg)
-	}
-}
-
-func createClientAssertion(clientAssertionSigningAlg, clientAssertionSigningKey, clientID, domain string) (string, error) {
-	alg, err := determineAlg(clientAssertionSigningAlg)
-	if err != nil {
-		return "", err
-	}
-
-	key, err := jwk.ParseKey([]byte(clientAssertionSigningKey), jwk.WithPEM(true))
-	if err != nil {
-		return "", err
-	}
-
-	token, err := jwt.NewBuilder().
-		IssuedAt(time.Now()).
-		Subject(clientID).
-		JwtID(uuid.New().String()).
-		Issuer(clientID).
-		Audience([]string{domain}).
-		Expiration(time.Now().Add(2 * time.Minute)).
-		Build()
-	if err != nil {
-		return "", err
-	}
-
-	b, err := jwt.Sign(token, jwt.WithKey(alg, key))
-	if err != nil {
-		return "", err
-	}
-
-	return string(b), nil
 }

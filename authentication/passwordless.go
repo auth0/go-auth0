@@ -18,7 +18,7 @@ type Passwordless manager
 //
 // See: https://auth0.com/docs/api/authentication?http#get-code-or-link
 func (p *Passwordless) SendEmail(ctx context.Context, params passwordless.SendEmailRequest, opts ...RequestOption) (r *passwordless.SendEmailResponse, err error) {
-	err = p.addClientAuthentication(&params.ClientAuthentication)
+	err = p.authentication.addClientAuthenticationToClientAuthStruct(&params.ClientAuthentication)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +33,7 @@ func (p *Passwordless) SendEmail(ctx context.Context, params passwordless.SendEm
 //
 // See: https://auth0.com/docs/api/authentication?http#authenticate-user
 func (p *Passwordless) LoginWithEmail(ctx context.Context, params passwordless.LoginWithEmailRequest, validationOptions oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
-	err = p.addClientAuthentication(&params.ClientAuthentication)
+	err = p.authentication.addClientAuthenticationToClientAuthStruct(&params.ClientAuthentication)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (p *Passwordless) LoginWithEmail(ctx context.Context, params passwordless.L
 //
 // See: https://auth0.com/docs/api/authentication?http#get-code-or-link
 func (p *Passwordless) SendSMS(ctx context.Context, params passwordless.SendSMSRequest, opts ...RequestOption) (r *passwordless.SendSMSResponse, err error) {
-	err = p.addClientAuthentication(&params.ClientAuthentication)
+	err = p.authentication.addClientAuthenticationToClientAuthStruct(&params.ClientAuthentication)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func (p *Passwordless) SendSMS(ctx context.Context, params passwordless.SendSMSR
 //
 // See: https://auth0.com/docs/api/authentication?http#authenticate-user
 func (p *Passwordless) LoginWithSMS(ctx context.Context, params passwordless.LoginWithSMSRequest, validationOptions oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
-	err = p.addClientAuthentication(&params.ClientAuthentication)
+	err = p.authentication.addClientAuthenticationToClientAuthStruct(&params.ClientAuthentication)
 
 	if err != nil {
 		return nil, err
@@ -103,29 +103,4 @@ func (p *Passwordless) LoginWithSMS(ctx context.Context, params passwordless.Log
 	}
 
 	return
-}
-
-func (p *Passwordless) addClientAuthentication(params *oauth.ClientAuthentication) error {
-	if params.ClientID == "" {
-		params.ClientID = p.authentication.clientID
-	}
-
-	if p.authentication.clientAssertionSigningKey != "" && p.authentication.clientAssertionSigningAlg != "" {
-		clientAssertion, err := createClientAssertion(
-			p.authentication.clientAssertionSigningAlg,
-			p.authentication.clientAssertionSigningKey,
-			params.ClientID,
-			p.authentication.url.JoinPath("/").String(),
-		)
-		if err != nil {
-			return err
-		}
-
-		params.ClientAssertion = clientAssertion
-		params.ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
-	} else if params.ClientSecret == "" && p.authentication.clientSecret != "" {
-		params.ClientSecret = p.authentication.clientSecret
-	}
-
-	return nil
 }
