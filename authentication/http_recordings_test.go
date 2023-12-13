@@ -12,7 +12,7 @@ import (
 	"github.com/lestrrat-go/jwx/v2/jwk"
 	"github.com/lestrrat-go/jwx/v2/jws"
 
-	"github.com/auth0/go-auth0/authentication/oauth"
+	"github.com/auth0/go-auth0/authentication/mfa"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -189,7 +189,13 @@ func redactTokens(t *testing.T, i *cassette.Interaction) {
 		return
 	}
 
-	tokenSet := &oauth.TokenSet{}
+	if i.Response.Code >= http.StatusBadRequest {
+		return
+	}
+
+	// We use mfa.VerifyWithRecoveryCodeResponse here as we don't want to lose the RecoveryCode
+	// property when anonymizing the tokenset
+	tokenSet := &mfa.VerifyWithRecoveryCodeResponse{}
 
 	err := json.Unmarshal([]byte(i.Response.Body), tokenSet)
 	require.NoError(t, err)
