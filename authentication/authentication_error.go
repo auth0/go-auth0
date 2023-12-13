@@ -6,17 +6,19 @@ import (
 	"net/http"
 )
 
-type AuthenticationError struct {
+// Error represents errors return from the Authentication API, the `Err` property can
+// be used to check the error code returned from the API.
+type Error struct {
 	StatusCode int    `json:"statusCode"`
 	Err        string `json:"error"`
 	Message    string `json:"error_description"`
 }
 
 func newError(response *http.Response) error {
-	apiError := &AuthenticationError{}
+	apiError := &Error{}
 
 	if err := json.NewDecoder(response.Body).Decode(apiError); err != nil {
-		return &AuthenticationError{
+		return &Error{
 			StatusCode: response.StatusCode,
 			Err:        http.StatusText(response.StatusCode),
 			Message:    fmt.Errorf("failed to decode json error response payload: %w", err).Error(),
@@ -34,20 +36,20 @@ func newError(response *http.Response) error {
 }
 
 // Error formats the error into a string representation.
-func (a *AuthenticationError) Error() string {
+func (a *Error) Error() string {
 	return fmt.Sprintf("%d %s: %s", a.StatusCode, a.Err, a.Message)
 }
 
 // Status returns the status code of the error.
-func (a *AuthenticationError) Status() int {
+func (a *Error) Status() int {
 	return a.StatusCode
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
 //
 // It is required to handle the differences between error responses between the APIs.
-func (a *AuthenticationError) UnmarshalJSON(b []byte) error {
-	type authError AuthenticationError
+func (a *Error) UnmarshalJSON(b []byte) error {
+	type authError Error
 	type authErrorWrapper struct {
 		*authError
 		Code        string `json:"code"`

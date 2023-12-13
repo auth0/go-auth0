@@ -411,7 +411,7 @@ func TestRetries(t *testing.T) {
 		assert.NoError(t, err)
 
 		_, err = a.UserInfo(context.Background(), "123")
-		assert.Equal(t, http.StatusBadGateway, err.(*AuthenticationError).StatusCode)
+		assert.Equal(t, http.StatusBadGateway, err.(*Error).StatusCode)
 		assert.Equal(t, 1, i)
 	})
 
