@@ -13,7 +13,7 @@ func Test_newError(t *testing.T) {
 	var testCases = []struct {
 		name          string
 		givenResponse http.Response
-		expectedError authenticationError
+		expectedError Error
 	}{
 		{
 			name: "it fails to decode if body is not json",
@@ -21,7 +21,7 @@ func Test_newError(t *testing.T) {
 				StatusCode: http.StatusForbidden,
 				Body:       io.NopCloser(strings.NewReader("Hello, I'm not JSON.")),
 			},
-			expectedError: authenticationError{
+			expectedError: Error{
 				StatusCode: 403,
 				Err:        "Forbidden",
 				Message:    "failed to decode json error response payload: invalid character 'H' looking for beginning of value",
@@ -33,7 +33,7 @@ func Test_newError(t *testing.T) {
 				StatusCode: http.StatusBadRequest,
 				Body:       io.NopCloser(strings.NewReader(`{"statusCode":400,"error":"invalid_scope","error_description":"Scope must be an array or a string"}`)),
 			},
-			expectedError: authenticationError{
+			expectedError: Error{
 				StatusCode: 400,
 				Err:        "invalid_scope",
 				Message:    "Scope must be an array or a string",
@@ -45,7 +45,7 @@ func Test_newError(t *testing.T) {
 				StatusCode: http.StatusInternalServerError,
 				Body:       io.NopCloser(strings.NewReader(`{"errorMessage":"wrongStruct"}`)),
 			},
-			expectedError: authenticationError{
+			expectedError: Error{
 				StatusCode: 500,
 				Err:        "Internal Server Error",
 				Message:    "",
@@ -57,7 +57,7 @@ func Test_newError(t *testing.T) {
 				StatusCode: http.StatusBadRequest,
 				Body:       io.NopCloser(strings.NewReader(`{"name":"BadRequestError","code":"invalid_signup","description":"Invalid sign up","statusCode":400}`)),
 			},
-			expectedError: authenticationError{
+			expectedError: Error{
 				StatusCode: 400,
 				Err:        "invalid_signup",
 				Message:    "Invalid sign up",
