@@ -71,7 +71,7 @@ func (o *OAuth) LoginWithPassword(ctx context.Context, body oauth.LoginWithPassw
 		data.Set(k, v)
 	}
 
-	err = o.authentication.addClientAuthentication(body.ClientAuthentication, data, false)
+	err = o.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, false)
 
 	if err != nil {
 		return
@@ -96,7 +96,7 @@ func (o *OAuth) LoginWithAuthCode(ctx context.Context, body oauth.LoginWithAuthC
 		data.Set("redirect_uri", body.RedirectURI)
 	}
 
-	err = o.authentication.addClientAuthentication(body.ClientAuthentication, data, true)
+	err = o.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, true)
 
 	if err != nil {
 		return
@@ -123,7 +123,7 @@ func (o *OAuth) LoginWithAuthCodeWithPKCE(ctx context.Context, body oauth.LoginW
 		data.Set("redirect_uri", body.RedirectURI)
 	}
 
-	err = o.authentication.addClientAuthentication(body.ClientAuthentication, data, false)
+	err = o.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, false)
 
 	if err != nil {
 		return
@@ -148,7 +148,7 @@ func (o *OAuth) LoginWithClientCredentials(ctx context.Context, body oauth.Login
 		data.Set("organization", body.Organization)
 	}
 
-	err = o.authentication.addClientAuthentication(body.ClientAuthentication, data, true)
+	err = o.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, true)
 
 	if err != nil {
 		return
@@ -170,7 +170,7 @@ func (o *OAuth) RefreshToken(ctx context.Context, body oauth.RefreshTokenRequest
 		data.Set("scope", body.Scope)
 	}
 
-	err = o.authentication.addClientAuthentication(body.ClientAuthentication, data, false)
+	err = o.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, false)
 
 	if err != nil {
 		return
@@ -233,7 +233,7 @@ func (o *OAuth) PushedAuthorization(ctx context.Context, body oauth.PushedAuthor
 		data.Set(key, value)
 	}
 
-	err = o.authentication.addClientAuthentication(body.ClientAuthentication, data, true)
+	err = o.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, true)
 
 	if err != nil {
 		return nil, err

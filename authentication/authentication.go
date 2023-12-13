@@ -11,13 +11,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/auth0/go-auth0/authentication/oauth"
-	"github.com/auth0/go-auth0/internal/client"
-	"github.com/auth0/go-auth0/internal/idtokenvalidator"
 	"github.com/google/uuid"
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwk"
 	"github.com/lestrrat-go/jwx/v2/jwt"
+
+	"github.com/auth0/go-auth0/authentication/oauth"
+	"github.com/auth0/go-auth0/internal/client"
+	"github.com/auth0/go-auth0/internal/idtokenvalidator"
 )
 
 // UserInfoResponse defines the response from the user info API.
@@ -238,7 +239,8 @@ func check(errors *[]string, key string, c bool) {
 	}
 }
 
-func (a *Authentication) addClientAuthentication(params oauth.ClientAuthentication, body url.Values, required bool) error {
+// Helper for adding client authentication into a url.Values instance.
+func (a *Authentication) addClientAuthenticationToURLValues(params oauth.ClientAuthentication, body url.Values, required bool) error {
 	clientID := params.ClientID
 	if params.ClientID == "" {
 		clientID = a.clientID
@@ -281,6 +283,7 @@ func (a *Authentication) addClientAuthentication(params oauth.ClientAuthenticati
 	return nil
 }
 
+// Helper for adding client authentication to an oauth.ClientAuthentication struct.
 func (a *Authentication) addClientAuthenticationToClientAuthStruct(params *oauth.ClientAuthentication) error {
 	if params.ClientID == "" {
 		params.ClientID = a.clientID

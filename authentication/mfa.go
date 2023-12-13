@@ -56,7 +56,7 @@ func (m *MFA) VerifyWithOTP(ctx context.Context, body mfa.VerifyWithOTPRequest, 
 		"otp":        []string{body.OTP},
 	}
 
-	err = m.authentication.addClientAuthentication(body.ClientAuthentication, data, true)
+	err = m.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, true)
 
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (m *MFA) VerifyWithOOB(ctx context.Context, body mfa.VerifyWithOOBRequest, 
 		data.Set("binding_code", body.BindingCode)
 	}
 
-	err = m.authentication.addClientAuthentication(body.ClientAuthentication, data, true)
+	err = m.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, true)
 
 	if err != nil {
 		return nil, err
@@ -116,7 +116,7 @@ func (m *MFA) VerifyWithRecoveryCode(ctx context.Context, body mfa.VerifyWithRec
 		"recovery_code": []string{body.RecoveryCode},
 	}
 
-	err = m.authentication.addClientAuthentication(body.ClientAuthentication, data, true)
+	err = m.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, true)
 
 	if err != nil {
 		return nil, err
