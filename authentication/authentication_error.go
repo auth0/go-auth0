@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// Error represents errors return from the Authentication API, the `Err` property can
+// Error represents errors returned from the Authentication API. The `Err` property can
 // be used to check the error code returned from the API.
 type Error struct {
 	StatusCode int    `json:"statusCode"`
