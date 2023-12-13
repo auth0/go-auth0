@@ -4,30 +4,30 @@ import (
 	"github.com/auth0/go-auth0/authentication/oauth"
 )
 
-// ChallengeRequest defines the request body for requesting an MFA Challenge.
+// ChallengeRequest defines the request body for requesting an MFA challenge.
 type ChallengeRequest struct {
 	oauth.ClientAuthentication
-	// The token received from mfa_required error.
+	// The token received from the `mfa_required` error.
 	MFAToken string `json:"mfa_token,omitempty"`
 	// A whitespace-separated list of the challenges types accepted by your application.
-	// Accepted challenge types are oob or otp. Excluding this parameter means that your
-	// client application accepts all supported challenge type
+	// Accepted challenge types are "oob" or "otp". Excluding this parameter means that your
+	// client application accepts all supported challenge types.
 	ChallengeType string `json:"challenge_type,omitempty"`
 	// The ID of the authenticator to challenge. You can get the ID by querying the list of
-	// available authenticators for the user using `management.User.ListAuthenticationMethods`
+	// available authenticators for the user using `management.User.ListAuthenticationMethods`.
 	AuthenticatorID string `json:"authenticator_id,omitempty"`
 }
 
-// ChallengeResponse defines the response body when requesting an MFA Challenge.
+// ChallengeResponse defines the response body when requesting an MFA challenge.
 type ChallengeResponse struct {
 	// The type of challenge requested.
 	ChallengeType string `json:"challenge_type,omitempty"`
 	// The OOB code to use when calling `VerifyWithOOBRequest`
-	// Only present when ChallengeType is "oob".
+	// Only present when `ChallengeType` is "oob".
 	OOBCode string `json:"oob_code,omitempty"`
 	/// If included, then the user should be prompted for a `BindingCode` which should be included
-	// in the VerifyWithOOBRequest provided to VerifyWithOOB.
-	// Only present when ChallengeType is "oob".
+	// in the `VerifyWithOOBRequest` provided to `VerifyWithOOB`.
+	// Only present when `ChallengeType` is "oob".
 	BindingMethod string `json:"binding_method,omitempty"`
 }
 
@@ -38,7 +38,7 @@ type VerifyWithOTPRequest struct {
 	OTP      string
 }
 
-// VerifyWithOOBRequest defines the request body for verifying an MFA challenge with oob.
+// VerifyWithOOBRequest defines the request body for verifying an MFA challenge with an OOB challenge.
 type VerifyWithOOBRequest struct {
 	oauth.ClientAuthentication
 	MFAToken    string

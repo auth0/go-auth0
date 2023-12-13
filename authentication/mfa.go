@@ -71,8 +71,8 @@ func (m *MFA) VerifyWithOTP(ctx context.Context, body mfa.VerifyWithOTPRequest, 
 	return
 }
 
-// VerifyWithOOB verifies an MFA challenge using an out-of-band challenge (OOB), either Push notification,
-// SMS, or Voice.
+// VerifyWithOOB verifies an MFA challenge using an out-of-band challenge (OOB), either push notification,
+// SMS, or voice.
 //
 // See: https://auth0.com/docs/api/authentication#verify-with-out-of-band-oob-
 func (m *MFA) VerifyWithOOB(ctx context.Context, body mfa.VerifyWithOOBRequest, opts ...RequestOption) (t *oauth.TokenSet, err error) {
