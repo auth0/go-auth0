@@ -84,6 +84,8 @@ type ChangePasswordRequest struct {
 	Email string `json:"email,omitempty"`
 	// The name of the database connection configured on your client.
 	Connection string `json:"connection,omitempty"`
+	// The organization_id of the Organization associated with the user.
+	Organization string `json:"organization,omitempty"`
 	// Extra parameters to be merged into the request body. Values set here will override any existing values.
 	ExtraParameters map[string]string `json:"-"`
 }
