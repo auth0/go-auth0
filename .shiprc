@@ -1,5 +1,6 @@
 {
     "files": {
-        "meta.go": []
+        "meta.go": [],
+        ".version": []
     }
 }
