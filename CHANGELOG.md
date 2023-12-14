@@ -1,5 +1,17 @@
 # Change Log
 
+## [v1.4.0](https://github.com/auth0/go-auth0/tree/v1.4.0) (2023-12-14)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.3.1...v1.4.0)
+
+**Added**
+- [SDK-4478] Support organization id when resetting a password [\#333](https://github.com/auth0/go-auth0/pull/333) ([ewanharris](https://github.com/ewanharris))
+- Implement MFA authentication APIs [\#331](https://github.com/auth0/go-auth0/pull/331) ([ewanharris](https://github.com/ewanharris))
+- Export an Authentication Error to allow type assertions [\#330](https://github.com/auth0/go-auth0/pull/330) ([ewanharris](https://github.com/ewanharris))
+- [SDK-4738] Add support for performing Pushed Authorization Requests [\#327](https://github.com/auth0/go-auth0/pull/327) ([ewanharris](https://github.com/ewanharris))
+
+**Removed**
+- [DXEX-3404] chore: revert actions log sessions [\#325](https://github.com/auth0/go-auth0/pull/325) ([johneke-auth0](https://github.com/johneke-auth0))
+
 <a name="v1.3.1"></a>
 
 ## [v1.3.1](https://github.com/auth0/go-auth0/tree/v1.3.1) (2023-11-28)
