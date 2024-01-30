@@ -32,9 +32,19 @@ const (
 	CustomPromptSignup         CustomPromptType = "signup"
 	CustomPromptSignupID       CustomPromptType = "signup-id"
 	CustomPromptSignupPassword CustomPromptType = "signup-password"
+	CustomPromptLogin          CustomPromptType = "login"
+	CustomPromptLoginID        CustomPromptType = "login-id"
+	CustomPromptLoginPassword  CustomPromptType = "login-password"
 )
 
-var validPrompts = []CustomPromptType{CustomPromptSignup, CustomPromptSignupID, CustomPromptSignupPassword}
+var validPrompts = []CustomPromptType{
+	CustomPromptSignup,
+	CustomPromptSignupID,
+	CustomPromptSignupPassword,
+	CustomPromptLogin,
+	CustomPromptLoginID,
+	CustomPromptLoginPassword,
+}
 
 // Create a new custom prompt partial.
 func (m *CustomPromptManager) Create(ctx context.Context, c *CustomPrompt, opts ...RequestOption) error {
