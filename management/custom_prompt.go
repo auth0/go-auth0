@@ -3,7 +3,6 @@ package management
 import (
 	"context"
 	"fmt"
-	"slices"
 )
 
 // CustomPrompt to be used on authentication pages.
@@ -39,24 +38,24 @@ var validPrompts = []CustomPromptType{CustomPromptSignup, CustomPromptSignupID, 
 
 // Create a new custom prompt partial.
 func (m *CustomPromptManager) Create(ctx context.Context, c *CustomPrompt, opts ...RequestOption) error {
-	if !slices.Contains(validPrompts, c.Prompt) {
-		return fmt.Errorf("invalid custom prompt: %s", c.Prompt)
+	if err := validatePrompt(c.Prompt); err != nil {
+		return err
 	}
 	return m.management.Request(ctx, "POST", m.management.URI("prompts", string(c.Prompt), "partials"), c, opts...)
 }
 
 // Update a custom prompt partial.
 func (m *CustomPromptManager) Update(ctx context.Context, c *CustomPrompt, opts ...RequestOption) error {
-	if !slices.Contains(validPrompts, c.Prompt) {
-		return fmt.Errorf("invalid custom prompt: %s", c.Prompt)
+	if err := validatePrompt(c.Prompt); err != nil {
+		return err
 	}
 	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(c.Prompt), "partials"), c, opts...)
 }
 
 // Read a custom prompt partial.
 func (m *CustomPromptManager) Read(ctx context.Context, prompt CustomPromptType, opts ...RequestOption) (c *CustomPrompt, err error) {
-	if !slices.Contains(validPrompts, CustomPromptType(prompt)) {
-		return nil, fmt.Errorf("invalid custom prompt: %s", prompt)
+	if err := validatePrompt(prompt); err != nil {
+		return nil, err
 	}
 	err = m.management.Request(ctx, "GET", m.management.URI("prompts", string(prompt), "partials"), &c, opts...)
 	return
@@ -64,8 +63,17 @@ func (m *CustomPromptManager) Read(ctx context.Context, prompt CustomPromptType,
 
 // Delete a custom prompt partial.
 func (m *CustomPromptManager) Delete(ctx context.Context, c *CustomPrompt, opts ...RequestOption) error {
-	if !slices.Contains(validPrompts, c.Prompt) {
-		return fmt.Errorf("invalid custom prompt: %s", c.Prompt)
+	if err := validatePrompt(c.Prompt); err != nil {
+		return err
 	}
 	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(c.Prompt), "partials"), &CustomPrompt{}, opts...)
+}
+
+func validatePrompt(prompt CustomPromptType) error {
+	for _, p := range validPrompts {
+		if p == prompt {
+			return nil
+		}
+	}
+	return fmt.Errorf("invalid custom prompt: %s", prompt)
 }
