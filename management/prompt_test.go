@@ -78,3 +78,103 @@ func TestPromptCustomText(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "Welcome", texts["login"].(map[string]interface{})["title"])
 }
+
+func TestPromptManager_ReadCustomPartials(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	customDomain := givenACustomDomain(t)
+	prompt := CustomPromptSignup
+	expected := &CustomPrompt{Segment: prompt}
+	got, err := api.Prompt.ReadCustomPartials(context.Background(), prompt)
+
+	assert.NoError(t, err)
+	assert.Equal(t, expected, got)
+
+	t.Cleanup(func() {
+		cleanupCustomDomain(t, customDomain.GetID())
+	})
+}
+
+func TestPromptManager_CreateCustomPartials(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	customDomain := givenACustomDomain(t)
+	prompt := CustomPromptSignup
+	original, err := api.Prompt.ReadCustomPartials(context.Background(), prompt)
+	assert.NoError(t, err)
+
+	expected := &CustomPrompt{Segment: prompt, FormContentStart: `<div>Test Content</div>`}
+
+	err = api.Prompt.CreateCustomPartials(context.Background(), expected)
+	assert.NoError(t, err)
+
+	got, err := api.Prompt.ReadCustomPartials(context.Background(), prompt)
+	assert.NoError(t, err)
+
+	assert.Equal(t, expected, got)
+	assert.NotEqual(t, original, got)
+
+	t.Cleanup(func() {
+		cleanupCustomPrompt(t, customDomain.GetID(), prompt)
+	})
+}
+
+func TestPromptManager_UpdateCustomPartials(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	customDomain := givenACustomDomain(t)
+	prompt := CustomPromptSignup
+	original := &CustomPrompt{Segment: prompt, FormContentStart: `<div>Test Content</div>`}
+
+	err := api.Prompt.CreateCustomPartials(context.Background(), original)
+	assert.NoError(t, err)
+
+	expected := &CustomPrompt{Segment: prompt, FormContentStart: `<div>Updated Test Content</div>`}
+	err = api.Prompt.UpdateCustomPartials(context.Background(), expected)
+	assert.NoError(t, err)
+
+	got, err := api.Prompt.ReadCustomPartials(context.Background(), prompt)
+	assert.NoError(t, err)
+
+	assert.Equal(t, expected, got)
+	assert.NotEqual(t, original, expected)
+
+	t.Cleanup(func() {
+		cleanupCustomPrompt(t, customDomain.GetID(), prompt)
+	})
+}
+
+func TestPromptManager_DeleteCustomPartials(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	customDomain := givenACustomDomain(t)
+	prompt := CustomPromptSignup
+	original := &CustomPrompt{Segment: prompt, FormContentStart: `<div>Test Content</div>`}
+
+	err := api.Prompt.CreateCustomPartials(context.Background(), original)
+	assert.NoError(t, err)
+
+	expected := &CustomPrompt{Segment: prompt}
+	err = api.Prompt.DeleteCustomPartials(context.Background(), expected)
+	assert.NoError(t, err)
+
+	got, err := api.Prompt.ReadCustomPartials(context.Background(), prompt)
+	assert.NoError(t, err)
+
+	assert.Equal(t, expected, got)
+	assert.NotEqual(t, original, expected)
+
+	t.Cleanup(func() {
+		cleanupCustomPrompt(t, customDomain.GetID(), prompt)
+	})
+}
+
+func cleanupCustomPrompt(t *testing.T, customDomainID string, prompt CustomPromptSegment) {
+	t.Helper()
+
+	c := &CustomPrompt{Segment: prompt}
+	err := api.Prompt.DeleteCustomPartials(context.Background(), c)
+	assert.NoError(t, err)
+
+	cleanupCustomDomain(t, customDomainID)
+}
