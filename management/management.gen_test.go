@@ -7288,6 +7288,14 @@ func TestCustomDomainVerification_String(t *testing.T) {
 	}
 }
 
+func TestCustomPrompt_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CustomPrompt{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestDailyStat_GetCreatedAt(tt *testing.T) {
 	var zeroValue time.Time
 	d := &DailyStat{CreatedAt: &zeroValue}

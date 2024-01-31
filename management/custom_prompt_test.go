@@ -11,17 +11,21 @@ import (
 func TestCustomPromptManager_Read(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
+	customDomain := givenACustomDomain(t)
 	prompt := CustomPromptSignup
 	expected := &CustomPrompt{Prompt: prompt}
 	got, err := api.CustomPrompt.Read(context.Background(), prompt)
 
-	assertNoCustomDomainErr(t, err)
+	assertNoCustomPromptError(t, err)
 	assert.Equal(t, expected, got)
+
+	cleanupCustomDomain(t, customDomain.GetID())
 }
 
 func TestCustomPromptManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
+	customDomain := givenACustomDomain(t)
 	prompt := CustomPromptSignup
 	original, err := api.CustomPrompt.Read(context.Background(), prompt)
 	assertNoCustomPromptError(t, err)
@@ -38,13 +42,14 @@ func TestCustomPromptManager_Create(t *testing.T) {
 	assert.NotEqual(t, original, got)
 
 	t.Cleanup(func() {
-		cleanupCustomPrompt(t, prompt)
+		cleanupCustomPrompt(t, customDomain.GetID(), prompt)
 	})
 }
 
 func TestCustomPromptManager_Update(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
+	customDomain := givenACustomDomain(t)
 	prompt := CustomPromptSignup
 	original := &CustomPrompt{Prompt: prompt, FormContentStart: `<div>Test Content</div>`}
 
@@ -62,13 +67,14 @@ func TestCustomPromptManager_Update(t *testing.T) {
 	assert.NotEqual(t, original, expected)
 
 	t.Cleanup(func() {
-		cleanupCustomPrompt(t, prompt)
+		cleanupCustomPrompt(t, customDomain.GetID(), prompt)
 	})
 }
 
 func TestCustomPromptManager_Delete(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
+	customDomain := givenACustomDomain(t)
 	prompt := CustomPromptSignup
 	original := &CustomPrompt{Prompt: prompt, FormContentStart: `<div>Test Content</div>`}
 
@@ -86,16 +92,18 @@ func TestCustomPromptManager_Delete(t *testing.T) {
 	assert.NotEqual(t, original, expected)
 
 	t.Cleanup(func() {
-		cleanupCustomPrompt(t, prompt)
+		cleanupCustomPrompt(t, customDomain.GetID(), prompt)
 	})
 }
 
-func cleanupCustomPrompt(t *testing.T, prompt CustomPromptType) {
+func cleanupCustomPrompt(t *testing.T, customDomainID string, prompt CustomPromptType) {
 	t.Helper()
 
 	c := &CustomPrompt{Prompt: prompt}
 	err := api.CustomPrompt.Delete(context.Background(), c)
 	assertNoCustomPromptError(t, err)
+
+	cleanupCustomDomain(t, customDomainID)
 }
 
 func assertNoCustomPromptError(t *testing.T, err error) {

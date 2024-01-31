@@ -5874,6 +5874,11 @@ func (c *CustomDomainVerification) String() string {
 	return Stringify(c)
 }
 
+// String returns a string representation of CustomPrompt.
+func (c *CustomPrompt) String() string {
+	return Stringify(c)
+}
+
 // GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
 func (d *DailyStat) GetCreatedAt() time.Time {
 	if d == nil || d.CreatedAt == nil {

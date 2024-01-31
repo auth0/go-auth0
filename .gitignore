@@ -42,3 +42,4 @@ vendor/
 
 ### Local .env file
 .env
+.envrc
