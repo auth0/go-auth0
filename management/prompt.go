@@ -2,6 +2,7 @@ package management
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 )
 
@@ -32,6 +33,29 @@ type CustomPrompt struct {
 
 	// Segment for custom prompt
 	Segment CustomPromptSegment `json:"-"`
+}
+
+func (c *CustomPrompt) MarshalJSON() ([]byte, error) {
+	body := map[string]CustomPrompt{string(c.Segment): *c}
+	return json.Marshal(body)
+}
+
+func (c *CustomPrompt) UnmarshalJSON(data []byte) error {
+	var body map[string]map[string]string
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+
+	for k, v := range body {
+		c.FormContentStart = v["form-content-start"]
+		c.FormFooterEnd = v["form-content-end"]
+		c.FormFooterStart = v["form-footer-start"]
+		c.FormFooterEnd = v["form-footer-end"]
+		c.SecondaryActionsStart = v["secondary-actions-start"]
+		c.SecondaryActionsEnd = v["secondary-actions-end"]
+		c.Segment = CustomPromptSegment(k)
+	}
+	return nil
 }
 
 // CustomPromptSegment defines the partials segment that we are managing.
@@ -96,7 +120,7 @@ func (m *PromptManager) CreateCustomPartials(ctx context.Context, c *CustomPromp
 	if err := validateCustomPromptSegment(c.Segment); err != nil {
 		return err
 	}
-	return m.management.Request(ctx, "POST", m.management.URI("prompts", string(c.Segment), "partials"), c, opts...)
+	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(c.Segment), "partials"), c, opts...)
 }
 
 // UpdateCustomPartials updates custom prompt partials for a given segment.
@@ -112,11 +136,12 @@ func (m *PromptManager) UpdateCustomPartials(ctx context.Context, c *CustomPromp
 // ReadCustomPartials reads custom prompt partials for a given segment.
 //
 // See: https://auth0.com/docs/sign-up-prompt-customizations#use-the-api-to-edit-custom-prompts
-func (m *PromptManager) ReadCustomPartials(ctx context.Context, prompt CustomPromptSegment, opts ...RequestOption) (c *CustomPrompt, err error) {
-	if err := validateCustomPromptSegment(prompt); err != nil {
+func (m *PromptManager) ReadCustomPartials(ctx context.Context, segment CustomPromptSegment, opts ...RequestOption) (c *CustomPrompt, err error) {
+	if err := validateCustomPromptSegment(segment); err != nil {
 		return nil, err
 	}
-	err = m.management.Request(ctx, "GET", m.management.URI("prompts", string(prompt), "partials"), &c, opts...)
+	c = &CustomPrompt{Segment: segment}
+	err = m.management.Request(ctx, "GET", m.management.URI("prompts", string(segment), "partials"), c, opts...)
 	return
 }
 

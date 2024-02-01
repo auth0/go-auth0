@@ -83,6 +83,7 @@ func TestPromptManager_ReadCustomPartials(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	customDomain := givenACustomDomain(t)
+	_ = givenAUniversalLogin(t)
 	prompt := CustomPromptSignup
 	expected := &CustomPrompt{Segment: prompt}
 	got, err := api.Prompt.ReadCustomPartials(context.Background(), prompt)
@@ -91,6 +92,7 @@ func TestPromptManager_ReadCustomPartials(t *testing.T) {
 	assert.Equal(t, expected, got)
 
 	t.Cleanup(func() {
+		cleanupUniversalLogin(t)
 		cleanupCustomDomain(t, customDomain.GetID())
 	})
 }
@@ -99,13 +101,12 @@ func TestPromptManager_CreateCustomPartials(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	customDomain := givenACustomDomain(t)
+	_ = givenAUniversalLogin(t)
 	prompt := CustomPromptSignup
-	original, err := api.Prompt.ReadCustomPartials(context.Background(), prompt)
-	assert.NoError(t, err)
-
+	original := &CustomPrompt{Segment: prompt}
 	expected := &CustomPrompt{Segment: prompt, FormContentStart: `<div>Test Content</div>`}
 
-	err = api.Prompt.CreateCustomPartials(context.Background(), expected)
+	err := api.Prompt.CreateCustomPartials(context.Background(), expected)
 	assert.NoError(t, err)
 
 	got, err := api.Prompt.ReadCustomPartials(context.Background(), prompt)
@@ -123,6 +124,7 @@ func TestPromptManager_UpdateCustomPartials(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	customDomain := givenACustomDomain(t)
+	_ = givenAUniversalLogin(t)
 	prompt := CustomPromptSignup
 	original := &CustomPrompt{Segment: prompt, FormContentStart: `<div>Test Content</div>`}
 
@@ -148,6 +150,7 @@ func TestPromptManager_DeleteCustomPartials(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	customDomain := givenACustomDomain(t)
+	_ = givenAUniversalLogin(t)
 	prompt := CustomPromptSignup
 	original := &CustomPrompt{Segment: prompt, FormContentStart: `<div>Test Content</div>`}
 
@@ -169,6 +172,20 @@ func TestPromptManager_DeleteCustomPartials(t *testing.T) {
 	})
 }
 
+func givenAUniversalLogin(t *testing.T) *BrandingUniversalLogin {
+	t.Helper()
+
+	body := `<!DOCTYPE html><html><head>{%- auth0:head -%}</head><body>{%- auth0:widget -%}</body></html>`
+	ul := &BrandingUniversalLogin{
+		Body: auth0.String(body),
+	}
+
+	err := api.Branding.SetUniversalLogin(context.Background(), ul)
+	assert.NoError(t, err)
+
+	return ul
+}
+
 func cleanupCustomPrompt(t *testing.T, customDomainID string, prompt CustomPromptSegment) {
 	t.Helper()
 
@@ -176,5 +193,13 @@ func cleanupCustomPrompt(t *testing.T, customDomainID string, prompt CustomPromp
 	err := api.Prompt.DeleteCustomPartials(context.Background(), c)
 	assert.NoError(t, err)
 
+	cleanupUniversalLogin(t)
 	cleanupCustomDomain(t, customDomainID)
+}
+
+func cleanupUniversalLogin(t *testing.T) {
+	t.Helper()
+
+	err := api.Branding.DeleteUniversalLogin(context.Background())
+	assert.NoError(t, err)
 }
