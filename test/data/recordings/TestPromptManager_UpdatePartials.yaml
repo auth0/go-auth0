@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"domain":"1706802478.auth.uat.auth0.com","type":"auth0_managed_certs","tls_policy":"recommended"}
+            {"domain":"1706811793.auth.uat.auth0.com","type":"auth0_managed_certs","tls_policy":"recommended"}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 300
         uncompressed: false
-        body: '{"custom_domain_id":"cd_97puvOGOSkcnMuJA","domain":"1706802478.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"cname","record":"go-auth0-dev.eu.auth0.com-cd-97puvogoskcnmuja.edge.tenants.eu.auth0.com"}]},"tls_policy":"recommended"}'
+        body: '{"custom_domain_id":"cd_xYFOABHELLbnvV6G","domain":"1706811793.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"cname","record":"go-auth0-dev.eu.auth0.com-cd-xyfoabhellbnvv6g.edge.tenants.eu.auth0.com"}]},"tls_policy":"recommended"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 3.875995542s
+        duration: 3.256333583s
     - id: 1
       request:
         proto: HTTP/1.1
@@ -72,7 +72,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 2.452238292s
+        duration: 2.663866s
     - id: 2
       request:
         proto: HTTP/1.1
@@ -108,7 +108,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 221.358041ms
+        duration: 311.633375ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -144,7 +144,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 189.848125ms
+        duration: 300.099833ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -180,7 +180,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 194.394792ms
+        duration: 232.093667ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -216,7 +216,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 205.682291ms
+        duration: 243.140416ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -251,7 +251,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 300.043166ms
+        duration: 546.529959ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -270,7 +270,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.4.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_97puvOGOSkcnMuJA
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_xYFOABHELLbnvV6G
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -286,7 +286,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 3.798379667s
+        duration: 3.995455792s
     - id: 8
       request:
         proto: HTTP/1.1
@@ -305,7 +305,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.4.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_97puvOGOSkcnMuJA
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_xYFOABHELLbnvV6G
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -321,4 +321,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 183.79625ms
+        duration: 305.543042ms
