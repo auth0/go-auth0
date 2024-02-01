@@ -5874,11 +5874,6 @@ func (c *CustomDomainVerification) String() string {
 	return Stringify(c)
 }
 
-// String returns a string representation of PartialsPrompt.
-func (c *PartialsPrompt) String() string {
-	return Stringify(c)
-}
-
 // GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
 func (d *DailyStat) GetCreatedAt() time.Time {
 	if d == nil || d.CreatedAt == nil {
@@ -7981,6 +7976,11 @@ func (o *OrganizationMemberRole) String() string {
 // String returns a string representation of OrganizationMemberRoleList.
 func (o *OrganizationMemberRoleList) String() string {
 	return Stringify(o)
+}
+
+// String returns a string representation of PartialsPrompt.
+func (p *PartialsPrompt) String() string {
+	return Stringify(p)
 }
 
 // GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
