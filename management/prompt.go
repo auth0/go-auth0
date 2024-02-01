@@ -43,18 +43,13 @@ func (c *CustomPrompt) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements a custom Unmarshaler.
 func (c *CustomPrompt) UnmarshalJSON(data []byte) error {
-	var body map[string]map[string]string
+	var body map[string]struct{ CustomPrompt }
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
 
 	for k, v := range body {
-		c.FormContentStart = v["form-content-start"]
-		c.FormFooterEnd = v["form-content-end"]
-		c.FormFooterStart = v["form-footer-start"]
-		c.FormFooterEnd = v["form-footer-end"]
-		c.SecondaryActionsStart = v["secondary-actions-start"]
-		c.SecondaryActionsEnd = v["secondary-actions-end"]
+		*c = v.CustomPrompt
 		c.Segment = CustomPromptSegment(k)
 	}
 	return nil
