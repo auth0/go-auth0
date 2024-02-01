@@ -64,12 +64,23 @@ func (c *CustomPrompt) UnmarshalJSON(data []byte) error {
 type CustomPromptSegment string
 
 const (
-	CustomPromptSignup         CustomPromptSegment = "signup"
-	CustomPromptSignupID       CustomPromptSegment = "signup-id"
+	// CustomPromptSignup represents the signup segment
+	CustomPromptSignup CustomPromptSegment = "signup"
+
+	// CustomPromptSignupID represents the signup-id segment
+	CustomPromptSignupID CustomPromptSegment = "signup-id"
+
+	// CustomPromptSignupPassword represents the signup-password segment
 	CustomPromptSignupPassword CustomPromptSegment = "signup-password"
-	CustomPromptLogin          CustomPromptSegment = "login"
-	CustomPromptLoginID        CustomPromptSegment = "login-id"
-	CustomPromptLoginPassword  CustomPromptSegment = "login-password"
+
+	// CustomPromptLogin represents the login segment
+	CustomPromptLogin CustomPromptSegment = "login"
+
+	// CustomPromptLoginID represents the login-id segment
+	CustomPromptLoginID CustomPromptSegment = "login-id"
+
+	// CustomPromptLoginPassword represents the login-password segment
+	CustomPromptLoginPassword CustomPromptSegment = "login-password"
 )
 
 var validCustomPromptSegments = []CustomPromptSegment{
