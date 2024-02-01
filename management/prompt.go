@@ -35,13 +35,13 @@ type CustomPrompt struct {
 	Segment CustomPromptSegment `json:"-"`
 }
 
-// MarshalJSON implements a custom Marshaler
+// MarshalJSON implements a custom Marshaler.
 func (c *CustomPrompt) MarshalJSON() ([]byte, error) {
 	body := map[string]CustomPrompt{string(c.Segment): *c}
 	return json.Marshal(body)
 }
 
-// UnmarshalJSON implements a custom Unmarshaler
+// UnmarshalJSON implements a custom Unmarshaler.
 func (c *CustomPrompt) UnmarshalJSON(data []byte) error {
 	var body map[string]map[string]string
 	if err := json.Unmarshal(data, &body); err != nil {
@@ -64,22 +64,22 @@ func (c *CustomPrompt) UnmarshalJSON(data []byte) error {
 type CustomPromptSegment string
 
 const (
-	// CustomPromptSignup represents the signup segment
+	// CustomPromptSignup represents the signup segment.
 	CustomPromptSignup CustomPromptSegment = "signup"
 
-	// CustomPromptSignupID represents the signup-id segment
+	// CustomPromptSignupID represents the signup-id segment.
 	CustomPromptSignupID CustomPromptSegment = "signup-id"
 
-	// CustomPromptSignupPassword represents the signup-password segment
+	// CustomPromptSignupPassword represents the signup-password segment.
 	CustomPromptSignupPassword CustomPromptSegment = "signup-password"
 
-	// CustomPromptLogin represents the login segment
+	// CustomPromptLogin represents the login segment.
 	CustomPromptLogin CustomPromptSegment = "login"
 
-	// CustomPromptLoginID represents the login-id segment
+	// CustomPromptLoginID represents the login-id segment.
 	CustomPromptLoginID CustomPromptSegment = "login-id"
 
-	// CustomPromptLoginPassword represents the login-password segment
+	// CustomPromptLoginPassword represents the login-password segment.
 	CustomPromptLoginPassword CustomPromptSegment = "login-password"
 )
 
