@@ -5874,8 +5874,8 @@ func (c *CustomDomainVerification) String() string {
 	return Stringify(c)
 }
 
-// String returns a string representation of CustomPrompt.
-func (c *CustomPrompt) String() string {
+// String returns a string representation of PartialsPrompt.
+func (c *PartialsPrompt) String() string {
 	return Stringify(c)
 }
 

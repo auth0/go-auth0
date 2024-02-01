@@ -7290,7 +7290,7 @@ func TestCustomDomainVerification_String(t *testing.T) {
 
 func TestCustomPrompt_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &CustomPrompt{}
+	v := &PartialsPrompt{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

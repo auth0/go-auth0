@@ -79,14 +79,14 @@ func TestPromptCustomText(t *testing.T) {
 	assert.Equal(t, "Welcome", texts["login"].(map[string]interface{})["title"])
 }
 
-func TestPromptManager_ReadCustomPartials(t *testing.T) {
+func TestPromptManager_ReadPartials(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	customDomain := givenACustomDomain(t)
 	_ = givenAUniversalLogin(t)
-	prompt := CustomPromptSignup
-	expected := &CustomPrompt{Segment: prompt}
-	got, err := api.Prompt.ReadCustomPartials(context.Background(), prompt)
+	prompt := PartialsPromptSignup
+	expected := &PartialsPrompt{Segment: prompt}
+	got, err := api.Prompt.ReadPartials(context.Background(), prompt)
 
 	assert.NoError(t, err)
 	assert.Equal(t, expected, got)
@@ -97,78 +97,78 @@ func TestPromptManager_ReadCustomPartials(t *testing.T) {
 	})
 }
 
-func TestPromptManager_CreateCustomPartials(t *testing.T) {
+func TestPromptManager_CreatePartials(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	customDomain := givenACustomDomain(t)
 	_ = givenAUniversalLogin(t)
-	prompt := CustomPromptSignup
-	original := &CustomPrompt{Segment: prompt}
-	expected := &CustomPrompt{Segment: prompt, FormContentStart: `<div>Test Content</div>`}
+	prompt := PartialsPromptSignup
+	original := &PartialsPrompt{Segment: prompt}
+	expected := &PartialsPrompt{Segment: prompt, FormContentStart: `<div>Test Content</div>`}
 
-	err := api.Prompt.CreateCustomPartials(context.Background(), expected)
+	err := api.Prompt.CreatePartials(context.Background(), expected)
 	assert.NoError(t, err)
 
-	got, err := api.Prompt.ReadCustomPartials(context.Background(), prompt)
+	got, err := api.Prompt.ReadPartials(context.Background(), prompt)
 	assert.NoError(t, err)
 
 	assert.Equal(t, expected, got)
 	assert.NotEqual(t, original, got)
 
 	t.Cleanup(func() {
-		cleanupCustomPrompt(t, customDomain.GetID(), prompt)
+		cleanupPartialsPrompt(t, customDomain.GetID(), prompt)
 	})
 }
 
-func TestPromptManager_UpdateCustomPartials(t *testing.T) {
+func TestPromptManager_UpdatePartials(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	customDomain := givenACustomDomain(t)
 	_ = givenAUniversalLogin(t)
-	prompt := CustomPromptSignup
-	original := &CustomPrompt{Segment: prompt, FormContentStart: `<div>Test Content</div>`}
+	prompt := PartialsPromptSignup
+	original := &PartialsPrompt{Segment: prompt, FormContentStart: `<div>Test Content</div>`}
 
-	err := api.Prompt.CreateCustomPartials(context.Background(), original)
+	err := api.Prompt.CreatePartials(context.Background(), original)
 	assert.NoError(t, err)
 
-	expected := &CustomPrompt{Segment: prompt, FormContentStart: `<div>Updated Test Content</div>`}
-	err = api.Prompt.UpdateCustomPartials(context.Background(), expected)
+	expected := &PartialsPrompt{Segment: prompt, FormContentStart: `<div>Updated Test Content</div>`}
+	err = api.Prompt.UpdatePartials(context.Background(), expected)
 	assert.NoError(t, err)
 
-	got, err := api.Prompt.ReadCustomPartials(context.Background(), prompt)
+	got, err := api.Prompt.ReadPartials(context.Background(), prompt)
 	assert.NoError(t, err)
 
 	assert.Equal(t, expected, got)
 	assert.NotEqual(t, original, expected)
 
 	t.Cleanup(func() {
-		cleanupCustomPrompt(t, customDomain.GetID(), prompt)
+		cleanupPartialsPrompt(t, customDomain.GetID(), prompt)
 	})
 }
 
-func TestPromptManager_DeleteCustomPartials(t *testing.T) {
+func TestPromptManager_DeletePartials(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	customDomain := givenACustomDomain(t)
 	_ = givenAUniversalLogin(t)
-	prompt := CustomPromptSignup
-	original := &CustomPrompt{Segment: prompt, FormContentStart: `<div>Test Content</div>`}
+	prompt := PartialsPromptSignup
+	original := &PartialsPrompt{Segment: prompt, FormContentStart: `<div>Test Content</div>`}
 
-	err := api.Prompt.CreateCustomPartials(context.Background(), original)
+	err := api.Prompt.CreatePartials(context.Background(), original)
 	assert.NoError(t, err)
 
-	expected := &CustomPrompt{Segment: prompt}
-	err = api.Prompt.DeleteCustomPartials(context.Background(), expected)
+	expected := &PartialsPrompt{Segment: prompt}
+	err = api.Prompt.DeletePartials(context.Background(), expected)
 	assert.NoError(t, err)
 
-	got, err := api.Prompt.ReadCustomPartials(context.Background(), prompt)
+	got, err := api.Prompt.ReadPartials(context.Background(), prompt)
 	assert.NoError(t, err)
 
 	assert.Equal(t, expected, got)
 	assert.NotEqual(t, original, expected)
 
 	t.Cleanup(func() {
-		cleanupCustomPrompt(t, customDomain.GetID(), prompt)
+		cleanupPartialsPrompt(t, customDomain.GetID(), prompt)
 	})
 }
 
@@ -186,11 +186,11 @@ func givenAUniversalLogin(t *testing.T) *BrandingUniversalLogin {
 	return ul
 }
 
-func cleanupCustomPrompt(t *testing.T, customDomainID string, prompt CustomPromptSegment) {
+func cleanupPartialsPrompt(t *testing.T, customDomainID string, prompt PartialsPromptSegment) {
 	t.Helper()
 
-	c := &CustomPrompt{Segment: prompt}
-	err := api.Prompt.DeleteCustomPartials(context.Background(), c)
+	c := &PartialsPrompt{Segment: prompt}
+	err := api.Prompt.DeletePartials(context.Background(), c)
 	assert.NoError(t, err)
 
 	cleanupUniversalLogin(t)
