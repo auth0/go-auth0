@@ -35,11 +35,13 @@ type CustomPrompt struct {
 	Segment CustomPromptSegment `json:"-"`
 }
 
+// MarshalJSON implements a custom Marshaler
 func (c *CustomPrompt) MarshalJSON() ([]byte, error) {
 	body := map[string]CustomPrompt{string(c.Segment): *c}
 	return json.Marshal(body)
 }
 
+// UnmarshalJSON implements a custom Unmarshaler
 func (c *CustomPrompt) UnmarshalJSON(data []byte) error {
 	var body map[string]map[string]string
 	if err := json.Unmarshal(data, &body); err != nil {
