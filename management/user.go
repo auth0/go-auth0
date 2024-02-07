@@ -116,7 +116,7 @@ type User struct {
 	// List of multi-factor authentication providers with which this user has enrolled.
 	Multifactor *[]string `json:"multifactor,omitempty"`
 
-	// Last date of Multifactor Modified
+	//  Last date of Multifactor Modified
 	MultifactorLastModified *time.Time `json:"multifactor_last_modified,omitempty"`
 
 	// Auth0 client ID. Only valid when updating email address.
