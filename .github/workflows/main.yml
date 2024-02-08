@@ -26,7 +26,7 @@ jobs:
         run: go build ./...
 
       - name: Check for linting errors
-        uses: golangci/golangci-lint-action@3a919529898de77ec3da873e3063ca4b10e7f5cc # pin@3.7.0
+        uses: golangci/golangci-lint-action@3cfe3a4abbb849e10058ce4af15d205b6da42804 # pin@3.7.1
         with:
           version: latest
           args: -v -c .golangci.yml
