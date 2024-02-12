@@ -160,7 +160,7 @@ func (o *requestOption) apply(r *http.Request, b url.Values) {
 
 // Header configures a request to add HTTP headers to requests made to Auth0.
 func Header(key, value string) RequestOption {
-	return newRequestOption(func(r *http.Request, b url.Values) {
+	return newRequestOption(func(r *http.Request, _ url.Values) {
 		r.Header.Set(key, value)
 	})
 }

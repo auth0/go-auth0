@@ -643,7 +643,7 @@ func configureSigning(t *testing.T, args jwtArgs) (jwa.SignatureAlgorithm, jwk.K
 	if err != nil {
 		return jwa.RS256, nil, nil, err
 	}
-	h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		b, err := json.Marshal(publicKey)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)

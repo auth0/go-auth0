@@ -480,7 +480,7 @@ func withIDToken(t *testing.T, extras map[string]interface{}) (*Authentication, 
 	idTokenClientid := "test-client-id"
 
 	var idToken string
-	h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		tokenSet := &oauth.TokenSet{
 			AccessToken: "test-access-token",
 			ExpiresIn:   86400,
