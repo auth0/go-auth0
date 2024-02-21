@@ -148,6 +148,10 @@ func (o *OAuth) LoginWithClientCredentials(ctx context.Context, body oauth.Login
 		data.Set("organization", body.Organization)
 	}
 
+	for k, v := range body.ExtraParameters {
+		data.Set(k, v)
+	}
+
 	err = o.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, true)
 
 	if err != nil {

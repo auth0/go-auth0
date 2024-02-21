@@ -207,6 +207,26 @@ func TestLoginWithClientCredentials(t *testing.T) {
 		assert.Equal(t, "Bearer", tokenSet.TokenType)
 	})
 
+	t.Run("Should allow sending extra parameters", func(t *testing.T) {
+		skipE2E(t)
+		configureHTTPTestRecordings(t, authAPI)
+
+		tokenSet, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
+			ClientAuthentication: oauth.ClientAuthentication{
+				ClientSecret: clientSecret,
+				ClientID:     "test-other-clientid",
+			},
+			Audience: "test-audience",
+			ExtraParameters: map[string]string{
+				"test": "value",
+			},
+		}, oauth.IDTokenValidationOptions{})
+
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
+
 	t.Run("Should support using private key jwt auth", func(t *testing.T) {
 		skipE2E(t)
 
