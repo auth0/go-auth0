@@ -22,7 +22,7 @@ func TestRetries(t *testing.T) {
 		start := time.Now()
 		i := 0
 
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
 				w.WriteHeader(http.StatusTooManyRequests)
@@ -48,7 +48,7 @@ func TestRetries(t *testing.T) {
 
 	t.Run("Max retries", func(t *testing.T) {
 		i := 0
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i <= 5 {
 				w.WriteHeader(http.StatusGatewayTimeout)
@@ -71,7 +71,7 @@ func TestRetries(t *testing.T) {
 
 	t.Run("Pass empty struct to disable", func(t *testing.T) {
 		i := 0
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i <= 2 {
 				w.WriteHeader(http.StatusGatewayTimeout)
@@ -94,7 +94,7 @@ func TestRetries(t *testing.T) {
 	t.Run("Should retry errors", func(t *testing.T) {
 		start := time.Now()
 
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {})
+		h := http.HandlerFunc(func(_ http.ResponseWriter, _ *http.Request) {})
 
 		s := httptest.NewUnstartedServer(h)
 		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
@@ -109,7 +109,7 @@ func TestRetries(t *testing.T) {
 	t.Run("Should not retry some errors", func(t *testing.T) {
 		i := 0
 		start := time.Now()
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			w.WriteHeader(http.StatusOK)
 		})
@@ -128,7 +128,7 @@ func TestRetries(t *testing.T) {
 		start := time.Now()
 		i := 0
 
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
 				t.Log(start.Unix())
@@ -160,7 +160,7 @@ func TestRetries(t *testing.T) {
 		start := time.Now()
 		i := 0
 
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
 				t.Log(start.Unix())
@@ -190,7 +190,7 @@ func TestRetries(t *testing.T) {
 }
 
 func TestWrapUserAgent(t *testing.T) {
-	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	testHandler := http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
 		ua := r.Header.Get("User-Agent")
 		if ua != UserAgent {
 			t.Errorf("Expected User-Agent header to match %q but got %q", UserAgent, ua)
@@ -239,7 +239,7 @@ func TestOAuth2ClientCredentialsAndAudience(t *testing.T) {
 
 func TestWrapAuth0ClientInfo(t *testing.T) {
 	t.Run("Default client", func(t *testing.T) {
-		testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		testHandler := http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
 			header := r.Header.Get("Auth0-Client")
 			auth0ClientDecoded, err := base64.StdEncoding.DecodeString(header)
 			assert.NoError(t, err)
@@ -282,7 +282,7 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
-			testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			testHandler := http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
 				header := r.Header.Get("Auth0-Client")
 				assert.Equal(t, testCase.expected, header)
 			})

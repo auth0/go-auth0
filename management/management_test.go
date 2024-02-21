@@ -290,7 +290,7 @@ func TestManagement_URI(t *testing.T) {
 
 func TestAuth0Client(t *testing.T) {
 	t.Run("Defaults to the default data", func(t *testing.T) {
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
 			header := r.Header.Get("Auth0-Client")
 			auth0ClientDecoded, err := base64.StdEncoding.DecodeString(header)
 			assert.NoError(t, err)
@@ -317,7 +317,7 @@ func TestAuth0Client(t *testing.T) {
 	})
 
 	t.Run("Allows disabling Auth0ClientInfo", func(t *testing.T) {
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
 			rawHeader := r.Header.Get("Auth0-Client")
 			assert.Empty(t, rawHeader)
 		})
@@ -334,7 +334,7 @@ func TestAuth0Client(t *testing.T) {
 	})
 
 	t.Run("Allows passing extra env info", func(t *testing.T) {
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
 			header := r.Header.Get("Auth0-Client")
 			auth0ClientDecoded, err := base64.StdEncoding.DecodeString(header)
 			assert.NoError(t, err)
@@ -361,7 +361,7 @@ func TestAuth0Client(t *testing.T) {
 	})
 
 	t.Run("Handles when client info has been disabled", func(t *testing.T) {
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
 			header := r.Header.Get("Auth0-Client")
 			assert.Equal(t, "", header)
 		})
@@ -399,7 +399,7 @@ func TestRetries(t *testing.T) {
 		start := time.Now()
 		i := 0
 
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
 				w.WriteHeader(http.StatusTooManyRequests)
@@ -429,7 +429,7 @@ func TestRetries(t *testing.T) {
 		start := time.Now()
 		i := 0
 
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i < 2 {
 				w.WriteHeader(http.StatusBadGateway)
@@ -460,7 +460,7 @@ func TestRetries(t *testing.T) {
 	t.Run("Disabling retries", func(t *testing.T) {
 		i := 0
 
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			w.WriteHeader(http.StatusBadGateway)
 		})
@@ -484,7 +484,7 @@ func TestRetries(t *testing.T) {
 		i := 0
 		ctx, cancel := context.WithCancel(context.Background())
 
-		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			cancel()
 			w.WriteHeader(http.StatusBadGateway)
