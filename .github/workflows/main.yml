@@ -48,7 +48,7 @@ jobs:
         run: make test
 
       - name: Update codecov report
-        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # pin@3.1.5
+        uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # pin@4.0.2
         with:
           files: ./coverage.out
           fail_ci_if_error: false
