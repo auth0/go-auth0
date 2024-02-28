@@ -1,5 +1,11 @@
 # Change Log
 
+## [v1.4.1](https://github.com/auth0/go-auth0/tree/v1.4.1) (2024-02-28)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.4.0...v1.4.1)
+
+**Added**
+- feat: Add Prompt Partials Support [\#341](https://github.com/auth0/go-auth0/pull/341) ([m3talsmith](https://github.com/m3talsmith)) [#360](https://github.com/auth0/go-auth0/pull/360) ([sergiught](https://github.com/sergiught))
+
 ## [v1.4.0](https://github.com/auth0/go-auth0/tree/v1.4.0) (2023-12-14)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.3.1...v1.4.0)
 
