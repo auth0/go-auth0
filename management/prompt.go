@@ -6,6 +6,38 @@ import (
 	"fmt"
 )
 
+const (
+	// PromptSignup represents the signup prompt.
+	PromptSignup PromptType = "signup"
+
+	// PromptSignupID represents the signup-id prompt.
+	PromptSignupID PromptType = "signup-id"
+
+	// PromptSignupPassword represents the signup-password prompt.
+	PromptSignupPassword PromptType = "signup-password"
+
+	// PromptLogin represents the login prompt.
+	PromptLogin PromptType = "login"
+
+	// PromptLoginID represents the login-id prompt.
+	PromptLoginID PromptType = "login-id"
+
+	// PromptLoginPassword represents the login-password prompt.
+	PromptLoginPassword PromptType = "login-password"
+)
+
+var allowedPromptsWithPartials = []PromptType{
+	PromptSignup,
+	PromptSignupID,
+	PromptSignupPassword,
+	PromptLogin,
+	PromptLoginID,
+	PromptLoginPassword,
+}
+
+// PromptType defines the prompt that we are managing.
+type PromptType string
+
 // Prompt is used within the Login Page.
 //
 // See: https://auth0.com/docs/customize/universal-login-pages/customize-login-text-prompts
@@ -20,10 +52,10 @@ type Prompt struct {
 	WebAuthnPlatformFirstFactor *bool `json:"webauthn_platform_first_factor,omitempty"`
 }
 
-// PartialsPrompt to be used for Custom Prompt Partials.
+// PromptPartials to be used for Custom Prompt Partials.
 //
 // See: https://auth0.com/docs/sign-up-prompt-customizations
-type PartialsPrompt struct {
+type PromptPartials struct {
 	FormContentStart      string `json:"form-content-start,omitempty"`
 	FormContentEnd        string `json:"form-content-end,omitempty"`
 	FormFooterStart       string `json:"form-footer-start,omitempty"`
@@ -31,60 +63,32 @@ type PartialsPrompt struct {
 	SecondaryActionsStart string `json:"secondary-actions-start,omitempty"`
 	SecondaryActionsEnd   string `json:"secondary-actions-end,omitempty"`
 
-	// Segment for custom prompt
-	Segment PartialsPromptSegment `json:"-"`
+	Prompt PromptType `json:"-"`
 }
 
-// MarshalJSON implements a custom Marshaler.
-func (c *PartialsPrompt) MarshalJSON() ([]byte, error) {
-	body := map[string]PartialsPrompt{string(c.Segment): *c}
+// MarshalJSON implements a custom [json.Marshaler].
+func (c *PromptPartials) MarshalJSON() ([]byte, error) {
+	body := map[string]PromptPartials{
+		string(c.Prompt): *c,
+	}
 	return json.Marshal(body)
 }
 
-// UnmarshalJSON implements a custom Unmarshaler.
-func (c *PartialsPrompt) UnmarshalJSON(data []byte) error {
-	var body map[string]struct{ PartialsPrompt }
+// UnmarshalJSON implements a custom [json.Unmarshaler].
+func (c *PromptPartials) UnmarshalJSON(data []byte) error {
+	var body map[string]struct {
+		PromptPartials
+	}
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
 
 	for k, v := range body {
-		*c = v.PartialsPrompt
-		c.Segment = PartialsPromptSegment(k)
+		*c = v.PromptPartials
+		c.Prompt = PromptType(k)
 	}
+
 	return nil
-}
-
-// PartialsPromptSegment defines the partials segment that we are managing.
-type PartialsPromptSegment string
-
-const (
-	// PartialsPromptSignup represents the signup segment.
-	PartialsPromptSignup PartialsPromptSegment = "signup"
-
-	// PartialsPromptSignupID represents the signup-id segment.
-	PartialsPromptSignupID PartialsPromptSegment = "signup-id"
-
-	// PartialsPromptSignupPassword represents the signup-password segment.
-	PartialsPromptSignupPassword PartialsPromptSegment = "signup-password"
-
-	// PartialsPromptLogin represents the login segment.
-	PartialsPromptLogin PartialsPromptSegment = "login"
-
-	// PartialsPromptLoginID represents the login-id segment.
-	PartialsPromptLoginID PartialsPromptSegment = "login-id"
-
-	// PartialsPromptLoginPassword represents the login-password segment.
-	PartialsPromptLoginPassword PartialsPromptSegment = "login-password"
-)
-
-var validPartialsPromptSegments = []PartialsPromptSegment{
-	PartialsPromptSignup,
-	PartialsPromptSignupID,
-	PartialsPromptSignupPassword,
-	PartialsPromptLogin,
-	PartialsPromptLoginID,
-	PartialsPromptLoginPassword,
 }
 
 // PromptManager is used for managing a Prompt.
@@ -124,50 +128,61 @@ func (m *PromptManager) SetCustomText(ctx context.Context, p string, l string, b
 // CreatePartials creates new custom prompt partials for a given segment.
 //
 // See: https://auth0.com/docs/sign-up-prompt-customizations#use-the-api-to-edit-custom-prompts
-func (m *PromptManager) CreatePartials(ctx context.Context, c *PartialsPrompt, opts ...RequestOption) error {
-	if err := validatePartialsPromptSegment(c.Segment); err != nil {
+func (m *PromptManager) CreatePartials(ctx context.Context, c *PromptPartials, opts ...RequestOption) error {
+	if err := guardAgainstPromptTypesWithNoPartials(c.Prompt); err != nil {
 		return err
 	}
-	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(c.Segment), "partials"), c, opts...)
+
+	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(c.Prompt), "partials"), c, opts...)
 }
 
 // UpdatePartials updates custom prompt partials for a given segment.
 //
 // See: https://auth0.com/docs/sign-up-prompt-customizations#use-the-api-to-edit-custom-prompts
-func (m *PromptManager) UpdatePartials(ctx context.Context, c *PartialsPrompt, opts ...RequestOption) error {
-	if err := validatePartialsPromptSegment(c.Segment); err != nil {
+func (m *PromptManager) UpdatePartials(ctx context.Context, c *PromptPartials, opts ...RequestOption) error {
+	if err := guardAgainstPromptTypesWithNoPartials(c.Prompt); err != nil {
 		return err
 	}
-	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(c.Segment), "partials"), c, opts...)
+
+	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(c.Prompt), "partials"), c, opts...)
 }
 
 // ReadPartials reads custom prompt partials for a given segment.
 //
 // See: https://auth0.com/docs/sign-up-prompt-customizations#use-the-api-to-edit-custom-prompts
-func (m *PromptManager) ReadPartials(ctx context.Context, segment PartialsPromptSegment, opts ...RequestOption) (c *PartialsPrompt, err error) {
-	if err := validatePartialsPromptSegment(segment); err != nil {
+func (m *PromptManager) ReadPartials(ctx context.Context, prompt PromptType, opts ...RequestOption) (c *PromptPartials, err error) {
+	if err := guardAgainstPromptTypesWithNoPartials(prompt); err != nil {
 		return nil, err
 	}
-	c = &PartialsPrompt{Segment: segment}
-	err = m.management.Request(ctx, "GET", m.management.URI("prompts", string(segment), "partials"), c, opts...)
+
+	err = m.management.Request(ctx, "GET", m.management.URI("prompts", string(prompt), "partials"), &c, opts...)
+
+	if c == nil {
+		c = &PromptPartials{
+			Prompt: prompt,
+		}
+	}
+
 	return
 }
 
 // DeletePartials deletes custom prompt partials for a given segment.
 //
 // See: https://auth0.com/docs/sign-up-prompt-customizations#use-the-api-to-edit-custom-prompts
-func (m *PromptManager) DeletePartials(ctx context.Context, c *PartialsPrompt, opts ...RequestOption) error {
-	if err := validatePartialsPromptSegment(c.Segment); err != nil {
+func (m *PromptManager) DeletePartials(ctx context.Context, prompt PromptType, opts ...RequestOption) error {
+	if err := guardAgainstPromptTypesWithNoPartials(prompt); err != nil {
 		return err
 	}
-	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(c.Segment), "partials"), &PartialsPrompt{}, opts...)
+
+	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(prompt), "partials"), &PromptPartials{Prompt: prompt}, opts...)
 }
 
-func validatePartialsPromptSegment(segment PartialsPromptSegment) error {
-	for _, p := range validPartialsPromptSegments {
-		if p == segment {
+func guardAgainstPromptTypesWithNoPartials(prompt PromptType) error {
+	for _, p := range allowedPromptsWithPartials {
+		if p == prompt {
 			return nil
 		}
 	}
-	return fmt.Errorf("invalid custom segment: %s", segment)
+
+	return fmt.Errorf("cannot customize partials for prompt: %q", prompt)
 }

@@ -7978,11 +7978,6 @@ func (o *OrganizationMemberRoleList) String() string {
 	return Stringify(o)
 }
 
-// String returns a string representation of PartialsPrompt.
-func (p *PartialsPrompt) String() string {
-	return Stringify(p)
-}
-
 // GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
 func (p *PasskeyAuthenticationMethod) GetEnabled() bool {
 	if p == nil || p.Enabled == nil {
@@ -8166,6 +8161,11 @@ func (p *Prompt) GetWebAuthnPlatformFirstFactor() bool {
 
 // String returns a string representation of Prompt.
 func (p *Prompt) String() string {
+	return Stringify(p)
+}
+
+// String returns a string representation of PromptPartials.
+func (p *PromptPartials) String() string {
 	return Stringify(p)
 }
 

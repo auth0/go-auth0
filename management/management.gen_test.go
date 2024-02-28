@@ -10017,14 +10017,6 @@ func TestOrganizationMemberRoleList_String(t *testing.T) {
 	}
 }
 
-func TestPartialsPrompt_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &PartialsPrompt{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestPasskeyAuthenticationMethod_GetEnabled(tt *testing.T) {
 	var zeroValue bool
 	p := &PasskeyAuthenticationMethod{Enabled: &zeroValue}
@@ -10270,6 +10262,14 @@ func TestPrompt_GetWebAuthnPlatformFirstFactor(tt *testing.T) {
 func TestPrompt_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &Prompt{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPromptPartials_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PromptPartials{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
