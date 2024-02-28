@@ -70,7 +70,7 @@ IDGpghhKHMV2DAyzeM4cDU8=
 func TestIDTokenValidation(t *testing.T) {
 	t.Run("should error if passed unsupported idTokenSigningAlg", func(t *testing.T) {
 		_, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS512")
-		assert.ErrorContains(t, err, "Unsupported algorithm")
+		assert.ErrorContains(t, err, "unsupported algorithm")
 	})
 
 	t.Run("validates a token signed by a secret", func(t *testing.T) {

@@ -208,6 +208,6 @@ func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
 	case "RS256":
 		return jwa.RS256, nil
 	default:
-		return "", fmt.Errorf("Unsupported algorithm %s provided", alg)
+		return "", fmt.Errorf("unsupported algorithm provided: %q", alg)
 	}
 }
