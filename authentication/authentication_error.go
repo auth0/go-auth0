@@ -54,8 +54,8 @@ func (a *Error) UnmarshalJSON(b []byte) error {
 	type authError Error
 	type authErrorWrapper struct {
 		*authError
-		Code        string `json:"code"`
-		Description string `json:"description"`
+		Code        string      `json:"code"`
+		Description interface{} `json:"description"`
 	}
 
 	alias := &authErrorWrapper{(*authError)(a), "", ""}
@@ -68,9 +68,8 @@ func (a *Error) UnmarshalJSON(b []byte) error {
 	if alias.Code != "" {
 		a.Err = alias.Code
 	}
-
 	if alias.Description != "" {
-		a.Message = alias.Description
+		a.Message, _ = alias.Description.(string)
 	}
 
 	return nil
