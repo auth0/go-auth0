@@ -107,7 +107,7 @@ func (m *Management) Request(ctx context.Context, method, uri string, payload in
 		return fmt.Errorf("failed to read the response body: %w", err)
 	}
 
-	if len(responseBody) > 0 && string(responseBody) != "{}" {
+	if len(responseBody) > 0 && string(responseBody) != "{}" && string(responseBody) != "[]" {
 		if err = json.Unmarshal(responseBody, &payload); err != nil {
 			return fmt.Errorf("failed to unmarshal response payload: %w", err)
 		}
