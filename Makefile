@@ -89,7 +89,7 @@ test-record: $(GO_BIN)/godotenv ## Run tests and record http interactions. To ru
 
 test-e2e: $(GO_BIN)/godotenv ## Run tests without http recordings. To run a specific test pass the FILTER var. Usage `make test-e2e FILTER="TestResourceServer_Read"`
 	@echo "==> Running tests against a real Auth0 tenant..."
-	@godotenv \
+	@$(if $(CI),,godotenv) \
 		go test \
 		-run "$(FILTER)" \
 		-cover \
