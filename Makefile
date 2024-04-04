@@ -30,7 +30,12 @@ $(GO_BIN)/golangci-lint:
 	@go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 $(GO_BIN)/govulncheck:
+	${call print, "Installing govulncheck"}
 	@go install -v golang.org/x/vuln/cmd/govulncheck@latest
+
+$(GO_BIN)/godotenv:
+	${call print, "Installing godotenv"}
+	@go install -v github.com/joho/godotenv/cmd/godotenv@latest
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Checks
@@ -62,10 +67,11 @@ check-getters: ## Check that struct field getters were generated
 #-----------------------------------------------------------------------------------------------------------------------
 .PHONY: test test-record test-e2e
 
-test: ## Run tests with http recordings. To run a specific test pass the FILTER var. Usage `make test FILTER="TestResourceServer_Read"`
+test: $(GO_BIN)/godotenv ## Run tests with http recordings. To run a specific test pass the FILTER var. Usage `make test FILTER="TestResourceServer_Read"`
 	@echo "==> Running tests with http recordings..."
 	@AUTH0_HTTP_RECORDINGS=on \
 		AUTH0_DOMAIN=go-auth0-dev.eu.auth0.com \
+		godotenv \
 		go test \
 		-run "$(FILTER)" \
 		-cover \
@@ -73,16 +79,18 @@ test: ## Run tests with http recordings. To run a specific test pass the FILTER 
 		-coverprofile=coverage.out \
 		./...
 
-test-record: ## Run tests and record http interactions. To run a specific test pass the FILTER var. Usage `make test-record FILTER="TestResourceServer_Read"`
+test-record: $(GO_BIN)/godotenv ## Run tests and record http interactions. To run a specific test pass the FILTER var. Usage `make test-record FILTER="TestResourceServer_Read"`
 	@echo "==> Running tests and recording http interactions..."
 	@AUTH0_HTTP_RECORDINGS=on \
+		godotenv \
 		go test \
 		-run "$(FILTER)" \
 		./...
 
-test-e2e: ## Run tests without http recordings. To run a specific test pass the FILTER var. Usage `make test-e2e FILTER="TestResourceServer_Read"`
+test-e2e: $(GO_BIN)/godotenv ## Run tests without http recordings. To run a specific test pass the FILTER var. Usage `make test-e2e FILTER="TestResourceServer_Read"`
 	@echo "==> Running tests against a real Auth0 tenant..."
-	@go test \
+	@godotenv \
+		go test \
 		-run "$(FILTER)" \
 		-cover \
 		-covermode=atomic \

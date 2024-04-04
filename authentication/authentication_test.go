@@ -14,7 +14,6 @@ import (
 	"testing"
 	"time"
 
-	_ "github.com/joho/godotenv/autoload"
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwt"
 	"github.com/stretchr/testify/assert"

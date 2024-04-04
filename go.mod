@@ -5,7 +5,6 @@ go 1.21.9
 require (
 	github.com/PuerkitoBio/rehttp v1.4.0
 	github.com/google/uuid v1.6.0
-	github.com/joho/godotenv v1.5.1
 	github.com/lestrrat-go/jwx/v2 v2.0.21
 	github.com/stretchr/testify v1.9.0
 	go.devnw.com/structs v1.0.0

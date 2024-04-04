@@ -13,7 +13,6 @@ import (
 	"testing"
 	"time"
 
-	_ "github.com/joho/godotenv/autoload"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/auth0/go-auth0"
