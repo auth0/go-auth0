@@ -71,7 +71,7 @@ test: $(GO_BIN)/godotenv ## Run tests with http recordings. To run a specific te
 	@echo "==> Running tests with http recordings..."
 	@AUTH0_HTTP_RECORDINGS=on \
 		AUTH0_DOMAIN=go-auth0-dev.eu.auth0.com \
-		godotenv \
+		$(if $(CI),,godotenv) \
 		go test \
 		-run "$(FILTER)" \
 		-cover \
@@ -82,7 +82,7 @@ test: $(GO_BIN)/godotenv ## Run tests with http recordings. To run a specific te
 test-record: $(GO_BIN)/godotenv ## Run tests and record http interactions. To run a specific test pass the FILTER var. Usage `make test-record FILTER="TestResourceServer_Read"`
 	@echo "==> Running tests and recording http interactions..."
 	@AUTH0_HTTP_RECORDINGS=on \
-		godotenv \
+		$(if $(CI),,godotenv) \
 		go test \
 		-run "$(FILTER)" \
 		./...
