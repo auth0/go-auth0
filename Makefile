@@ -43,7 +43,7 @@ lint: $(GO_BIN)/golangci-lint ## Run linting on the go files
 
 check-vuln: $(GO_BIN)/govulncheck ## Check for vulnerabilities
 	@echo "==> Checking for vulnerabilities..."
-	@govulncheck -v ./...
+	@govulncheck -show verbose ./...
 
 check-getters: ## Check that struct field getters were generated
 	@echo "==> Checking that struct field getters were generated..."
