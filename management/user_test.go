@@ -444,6 +444,14 @@ func TestUserManager_Organizations(t *testing.T) {
 	assert.Equal(t, org.GetID(), orgs.Organizations[0].GetID())
 }
 
+func TestUserManager_DeleteRefreshTokens(t *testing.T){
+	configureHTTPTestRecordings(t);
+
+	user:= givenAUser(t);
+	err := api.User.DeleteRefreshTokens(context.Background(), user.GetID())
+	require.NoError(t,err);
+}
+
 func givenAUser(t *testing.T) *User {
 	t.Helper()
 

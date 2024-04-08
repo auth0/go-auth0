@@ -724,3 +724,11 @@ func (m *UserManager) DeleteAllAuthenticationMethods(ctx context.Context, userID
 	err = m.management.Request(ctx, "DELETE", m.management.URI("users", userID, "authentication-methods"), nil, opts...)
 	return
 }
+
+// DeleteRefreshTokens deletes all refresh tokens for a user
+
+// See: https://auth0.com/docs/api/management/v2#!/Users/delete-refresh-tokens-for-user
+func (m *UserManager) DeleteRefreshTokens(ctx context.Context, userID string, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "DELETE", m.management.URI("users", userID, "refresh-tokens"), nil, opts...)
+	return
+}
