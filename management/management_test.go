@@ -35,11 +35,7 @@ func envVarEnabled(envVar string) bool {
 }
 
 func TestMain(m *testing.M) {
-	err := godotenv.Load("./../.env")
-
-	if err != nil {
-		log.Fatal("failed to initialize the variables")
-	}
+	godotenv.Load("./../.env")
 
 	domain = os.Getenv("AUTH0_DOMAIN")
 	clientID = os.Getenv("AUTH0_CLIENT_ID")
