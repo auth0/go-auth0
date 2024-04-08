@@ -81,7 +81,7 @@ func envVarEnabled(envVar string) bool {
 }
 
 func TestMain(m *testing.M) {
-	_ = godotenv.Load("./../.env")
+	_ = godotenv.Load("./../.env", ".env")
 
 	domain = os.Getenv("AUTH0_DOMAIN")
 	clientID = os.Getenv("AUTH0_AUTH_CLIENT_ID")
