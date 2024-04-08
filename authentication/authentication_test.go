@@ -14,6 +14,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/joho/godotenv"
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwt"
 	"github.com/stretchr/testify/assert"
@@ -27,12 +28,12 @@ import (
 )
 
 var (
-	domain                = os.Getenv("AUTH0_DOMAIN")
-	clientID              = os.Getenv("AUTH0_AUTH_CLIENT_ID")
-	clientSecret          = os.Getenv("AUTH0_AUTH_CLIENT_SECRET")
-	mgmtClientID          = os.Getenv("AUTH0_CLIENT_ID")
-	mgmtClientSecret      = os.Getenv("AUTH0_CLIENT_SECRET")
-	httpRecordings        = os.Getenv("AUTH0_HTTP_RECORDINGS")
+	domain                string
+	clientID              string
+	clientSecret          string
+	mgmtClientID          string
+	mgmtClientSecret      string
+	httpRecordings        string
 	httpRecordingsEnabled = false
 	authAPI               = &Authentication{}
 	mgmtAPI               = &management.Management{}
@@ -80,6 +81,19 @@ func envVarEnabled(envVar string) bool {
 }
 
 func TestMain(m *testing.M) {
+	err := godotenv.Load("./../.env", ".env")
+
+	if err != nil {
+		log.Fatal("failed to initialize the variables")
+	}
+
+	domain = os.Getenv("AUTH0_DOMAIN")
+	clientID = os.Getenv("AUTH0_AUTH_CLIENT_ID")
+	clientSecret = os.Getenv("AUTH0_AUTH_CLIENT_SECRET")
+	mgmtClientID = os.Getenv("AUTH0_CLIENT_ID")
+	mgmtClientSecret = os.Getenv("AUTH0_CLIENT_SECRET")
+	httpRecordings = os.Getenv("AUTH0_HTTP_RECORDINGS")
+
 	httpRecordingsEnabled = envVarEnabled(httpRecordings)
 
 	// If we're running in standard `make test` then set a specific clientID and clientSecret
