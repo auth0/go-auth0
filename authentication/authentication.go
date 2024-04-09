@@ -195,6 +195,11 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 		validatorOpts = append(validatorOpts, idtokenvalidator.WithClockTolerance(a.idTokenClockTolerance))
 	}
 
+	// This option is available for testing purposes and should not be used in production.
+	if a.url.Scheme == "http" {
+		validatorOpts = append(validatorOpts, idtokenvalidator.WithInsecure())
+	}
+
 	validator, err := idtokenvalidator.New(
 		ctx,
 		domain,

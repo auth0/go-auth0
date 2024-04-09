@@ -46,6 +46,15 @@ func WithIDTokenClockTolerance(clockTolerance time.Duration) Option {
 	}
 }
 
+// WithInsecure configures management to use HTTP instead of HTTPS.
+//
+// This option is available for testing purposes and should not be used in production.
+func WithInsecure() Option {
+	return func(a *Authentication) {
+		a.url.Scheme = "http"
+	}
+}
+
 // WithClient configures to use the provided client for authentication and JWKS calls.
 func WithClient(client *http.Client) Option {
 	return func(a *Authentication) {
