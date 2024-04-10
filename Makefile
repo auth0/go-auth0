@@ -30,6 +30,7 @@ $(GO_BIN)/golangci-lint:
 	@go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 $(GO_BIN)/govulncheck:
+	${call print, "Installing govulncheck"}
 	@go install -v golang.org/x/vuln/cmd/govulncheck@latest
 
 #-----------------------------------------------------------------------------------------------------------------------
