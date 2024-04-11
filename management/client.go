@@ -237,12 +237,12 @@ type OIDCBackchannelLogout struct {
 // OIDCLogout defines the `oidc_logout` settings for the client.
 type OIDCLogout struct {
 	BackChannelLogoutURLs       *[]string                    `json:"backchannel_logout_urls,omitempty"`
-	BackChannelLogoutInitiators *BackChannelLogoutInitiators `json:"backchannel_logout_initiators"`
+	BackChannelLogoutInitiators *BackChannelLogoutInitiators `json:"backchannel_logout_initiators,omitempty"`
 }
 
 // BackChannelLogoutInitiators defines the setting for OIDC logout initiators for a Client.
 type BackChannelLogoutInitiators struct {
-	Mode               string    `json:"mode,omitempty"`
+	Mode               *string   `json:"mode,omitempty"`
 	SelectedInitiators *[]string `json:"selected_initiators,omitempty"`
 }
 
