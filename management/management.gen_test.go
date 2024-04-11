@@ -1089,6 +1089,16 @@ func TestAzureSBClientAddon_String(t *testing.T) {
 	}
 }
 
+func TestBackChannelLogoutInitiators_GetMode(tt *testing.T) {
+	var zeroValue string
+	b := &BackChannelLogoutInitiators{Mode: &zeroValue}
+	b.GetMode()
+	b = &BackChannelLogoutInitiators{}
+	b.GetMode()
+	b = nil
+	b.GetMode()
+}
+
 func TestBackChannelLogoutInitiators_GetSelectedInitiators(tt *testing.T) {
 	var zeroValue []string
 	b := &BackChannelLogoutInitiators{SelectedInitiators: &zeroValue}

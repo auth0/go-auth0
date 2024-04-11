@@ -856,6 +856,14 @@ func (a *AzureSBClientAddon) String() string {
 	return Stringify(a)
 }
 
+// GetMode returns the Mode field if it's non-nil, zero value otherwise.
+func (b *BackChannelLogoutInitiators) GetMode() string {
+	if b == nil || b.Mode == nil {
+		return ""
+	}
+	return *b.Mode
+}
+
 // GetSelectedInitiators returns the SelectedInitiators field if it's non-nil, zero value otherwise.
 func (b *BackChannelLogoutInitiators) GetSelectedInitiators() []string {
 	if b == nil || b.SelectedInitiators == nil {
