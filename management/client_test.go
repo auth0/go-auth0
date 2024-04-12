@@ -130,8 +130,7 @@ func TestClient_CreateWithOIDCLogout(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedClient := &Client{
-		Name:        auth0.Stringf("Test Client Addons (%s)", time.Now().Format(time.StampMilli)),
-		Description: auth0.String("This is just a test client with addons."),
+		Name: auth0.Stringf("Test Client OIDC Logout (%s)", time.Now().Format(time.StampMilli)),
 		OIDCLogout: &OIDCLogout{
 			BackChannelLogoutURLs: &[]string{"https://example.com/logout"},
 			BackChannelLogoutInitiators: &BackChannelLogoutInitiators{
