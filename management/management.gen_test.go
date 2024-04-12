@@ -1089,6 +1089,34 @@ func TestAzureSBClientAddon_String(t *testing.T) {
 	}
 }
 
+func TestBackChannelLogoutInitiators_GetMode(tt *testing.T) {
+	var zeroValue string
+	b := &BackChannelLogoutInitiators{Mode: &zeroValue}
+	b.GetMode()
+	b = &BackChannelLogoutInitiators{}
+	b.GetMode()
+	b = nil
+	b.GetMode()
+}
+
+func TestBackChannelLogoutInitiators_GetSelectedInitiators(tt *testing.T) {
+	var zeroValue []string
+	b := &BackChannelLogoutInitiators{SelectedInitiators: &zeroValue}
+	b.GetSelectedInitiators()
+	b = &BackChannelLogoutInitiators{}
+	b.GetSelectedInitiators()
+	b = nil
+	b.GetSelectedInitiators()
+}
+
+func TestBackChannelLogoutInitiators_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BackChannelLogoutInitiators{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBlacklistToken_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &BlacklistToken{}
@@ -1788,6 +1816,13 @@ func TestClient_GetOIDCConformant(tt *testing.T) {
 	c.GetOIDCConformant()
 	c = nil
 	c.GetOIDCConformant()
+}
+
+func TestClient_GetOIDCLogout(tt *testing.T) {
+	c := &Client{}
+	c.GetOIDCLogout()
+	c = nil
+	c.GetOIDCLogout()
 }
 
 func TestClient_GetOrganizationRequireBehavior(tt *testing.T) {
@@ -9534,6 +9569,31 @@ func TestOIDCBackchannelLogout_GetBackChannelLogoutURLs(tt *testing.T) {
 func TestOIDCBackchannelLogout_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &OIDCBackchannelLogout{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestOIDCLogout_GetBackChannelLogoutInitiators(tt *testing.T) {
+	o := &OIDCLogout{}
+	o.GetBackChannelLogoutInitiators()
+	o = nil
+	o.GetBackChannelLogoutInitiators()
+}
+
+func TestOIDCLogout_GetBackChannelLogoutURLs(tt *testing.T) {
+	var zeroValue []string
+	o := &OIDCLogout{BackChannelLogoutURLs: &zeroValue}
+	o.GetBackChannelLogoutURLs()
+	o = &OIDCLogout{}
+	o.GetBackChannelLogoutURLs()
+	o = nil
+	o.GetBackChannelLogoutURLs()
+}
+
+func TestOIDCLogout_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &OIDCLogout{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

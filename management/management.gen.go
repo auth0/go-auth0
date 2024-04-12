@@ -856,6 +856,27 @@ func (a *AzureSBClientAddon) String() string {
 	return Stringify(a)
 }
 
+// GetMode returns the Mode field if it's non-nil, zero value otherwise.
+func (b *BackChannelLogoutInitiators) GetMode() string {
+	if b == nil || b.Mode == nil {
+		return ""
+	}
+	return *b.Mode
+}
+
+// GetSelectedInitiators returns the SelectedInitiators field if it's non-nil, zero value otherwise.
+func (b *BackChannelLogoutInitiators) GetSelectedInitiators() []string {
+	if b == nil || b.SelectedInitiators == nil {
+		return nil
+	}
+	return *b.SelectedInitiators
+}
+
+// String returns a string representation of BackChannelLogoutInitiators.
+func (b *BackChannelLogoutInitiators) String() string {
+	return Stringify(b)
+}
+
 // String returns a string representation of BlacklistToken.
 func (b *BlacklistToken) String() string {
 	return Stringify(b)
@@ -1416,6 +1437,14 @@ func (c *Client) GetOIDCConformant() bool {
 		return false
 	}
 	return *c.OIDCConformant
+}
+
+// GetOIDCLogout returns the OIDCLogout field.
+func (c *Client) GetOIDCLogout() *OIDCLogout {
+	if c == nil {
+		return nil
+	}
+	return c.OIDCLogout
 }
 
 // GetOrganizationRequireBehavior returns the OrganizationRequireBehavior field if it's non-nil, zero value otherwise.
@@ -7604,6 +7633,27 @@ func (o *OIDCBackchannelLogout) GetBackChannelLogoutURLs() []string {
 
 // String returns a string representation of OIDCBackchannelLogout.
 func (o *OIDCBackchannelLogout) String() string {
+	return Stringify(o)
+}
+
+// GetBackChannelLogoutInitiators returns the BackChannelLogoutInitiators field.
+func (o *OIDCLogout) GetBackChannelLogoutInitiators() *BackChannelLogoutInitiators {
+	if o == nil {
+		return nil
+	}
+	return o.BackChannelLogoutInitiators
+}
+
+// GetBackChannelLogoutURLs returns the BackChannelLogoutURLs field if it's non-nil, zero value otherwise.
+func (o *OIDCLogout) GetBackChannelLogoutURLs() []string {
+	if o == nil || o.BackChannelLogoutURLs == nil {
+		return nil
+	}
+	return *o.BackChannelLogoutURLs
+}
+
+// String returns a string representation of OIDCLogout.
+func (o *OIDCLogout) String() string {
 	return Stringify(o)
 }
 
