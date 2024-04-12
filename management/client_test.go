@@ -126,6 +126,38 @@ func TestClient_CreateWithClientAddons(t *testing.T) {
 	})
 }
 
+func TestClient_CreateWithOIDCLogout(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedClient := &Client{
+		Name:        auth0.Stringf("Test Client Addons (%s)", time.Now().Format(time.StampMilli)),
+		Description: auth0.String("This is just a test client with addons."),
+		OIDCLogout: &OIDCLogout{
+			BackChannelLogoutURLs: &[]string{"https://example.com/logout"},
+			BackChannelLogoutInitiators: &BackChannelLogoutInitiators{
+				Mode: auth0.String("custom"),
+				SelectedInitiators: &[]string{
+					"rp-logout",
+					"idp-logout",
+				},
+			},
+		},
+	}
+
+	err := api.Client.Create(context.Background(), expectedClient)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedClient.GetClientID())
+
+	oidcLogout := expectedClient.GetOIDCLogout()
+	assert.Equal(t, oidcLogout.GetBackChannelLogoutURLs(), []string{"https://example.com/logout"})
+	assert.Equal(t, oidcLogout.GetBackChannelLogoutInitiators().GetMode(), "custom")
+	assert.Equal(t, oidcLogout.GetBackChannelLogoutInitiators().GetSelectedInitiators(), []string{"rp-logout", "idp-logout"})
+
+	t.Cleanup(func() {
+		cleanupClient(t, expectedClient.GetClientID())
+	})
+}
+
 func TestJWTConfiguration(t *testing.T) {
 	t.Run("MarshalJSON", func(t *testing.T) {
 		for clientJWTConfiguration, expected := range map[*ClientJWTConfiguration]string{

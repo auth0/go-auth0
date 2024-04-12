@@ -229,6 +229,7 @@ type PrivateKeyJWT struct {
 }
 
 // OIDCBackchannelLogout defines the `oidc_backchannel_logout` settings for the client.
+// Deprecated: use OIDCLogout instead of OIDCBackchannelLogout.
 type OIDCBackchannelLogout struct {
 	BackChannelLogoutURLs *[]string `json:"backchannel_logout_urls,omitempty"`
 }
