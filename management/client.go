@@ -111,13 +111,12 @@ type Client struct {
 	// This feature currently must be enabled for your tenant.
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty"`
 
-	// Deprecated: use OIDCLogout instead of OIDCBackchannelLogout
 	// URLs that are valid to call back from Auth0 for OIDC backchannel logout.
 	// This feature currently must be enabled for your tenant.
+	// Deprecated: use OIDCLogout instead of OIDCBackchannelLogout.
 	OIDCBackchannelLogout *OIDCBackchannelLogout `json:"oidc_backchannel_logout,omitempty"`
 
 	// URLs that are valid to call back from Auth0 for OIDC logout.
-	// This feature currently must be enabled for your tenant.
 	OIDCLogout *OIDCLogout `json:"oidc_logout,omitempty"`
 }
 
