@@ -45,19 +45,29 @@ func (m *Management) NewRequest(
 	payload interface{},
 	options ...RequestOption,
 ) (*http.Request, error) {
-	var body bytes.Buffer
+	var body io.Reader
 	if payload != nil {
-		if err := json.NewEncoder(&body).Encode(payload); err != nil {
+		var bodyBuffer bytes.Buffer
+		if err := json.NewEncoder(&bodyBuffer).Encode(payload); err != nil {
 			return nil, fmt.Errorf("encoding request payload failed: %w", err)
+		}
+
+		// Trim the whitespace and check if the encoded data is not trivial
+		trimmed := bytes.TrimSpace(bodyBuffer.Bytes())
+		if len(trimmed) > 0 && !bytes.Equal(trimmed, []byte("null")) && !bytes.Equal(trimmed, []byte("{}")) {
+			body = bytes.NewReader(trimmed)
 		}
 	}
 
-	request, err := http.NewRequestWithContext(ctx, method, uri, &body)
+	request, err := http.NewRequestWithContext(ctx, method, uri, body)
 	if err != nil {
 		return nil, err
 	}
 
-	request.Header.Add("Content-Type", "application/json")
+	// Set the Content-Type header only if there is a valid body
+	if body != nil {
+		request.Header.Add("Content-Type", "application/json")
+	}
 
 	for _, option := range options {
 		option.apply(request)
