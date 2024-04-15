@@ -129,6 +129,7 @@ func TestOrganizationManager_AddConnection(t *testing.T) {
 	orgConn := &OrganizationConnection{
 		ConnectionID:            conn.ID,
 		AssignMembershipOnLogin: auth0.Bool(true),
+		ShowAsButton:            auth0.Bool(true),
 	}
 
 	err := api.Organization.AddConnection(context.Background(), org.GetID(), orgConn)
@@ -159,6 +160,7 @@ func TestOrganizationManager_UpdateConnection(t *testing.T) {
 		orgConn.GetConnectionID(),
 		&OrganizationConnection{
 			AssignMembershipOnLogin: auth0.Bool(false),
+			ShowAsButton:            auth0.Bool(false),
 		},
 	)
 	assert.NoError(t, err)
@@ -166,6 +168,7 @@ func TestOrganizationManager_UpdateConnection(t *testing.T) {
 	actualOrgConn, err := api.Organization.Connection(context.Background(), org.GetID(), orgConn.GetConnectionID())
 	assert.NoError(t, err)
 	assert.Equal(t, false, actualOrgConn.GetAssignMembershipOnLogin())
+	assert.Equal(t, true, actualOrgConn.GetShowAsButton())
 }
 
 func TestOrganizationManager_DeleteConnection(t *testing.T) {
@@ -423,6 +426,7 @@ func givenAnOrganizationConnection(t *testing.T, orgID string) *OrganizationConn
 	orgConn := &OrganizationConnection{
 		ConnectionID:            conn.ID,
 		AssignMembershipOnLogin: auth0.Bool(true),
+		ShowAsButton:            auth0.Bool(true),
 	}
 
 	err := api.Organization.AddConnection(context.Background(), orgID, orgConn)

@@ -68,6 +68,10 @@ type OrganizationConnection struct {
 
 	// Connection details
 	Connection *OrganizationConnectionDetails `json:"connection,omitempty"`
+
+	// Determines whether a connection should be displayed on this organization’s login prompt.
+	// Only applicable for enterprise connections. Default: true.
+	ShowAsButton *bool `json:"show_as_button,omitempty"`
 }
 
 // OrganizationConnectionDetails holds connection details for an Organization.
