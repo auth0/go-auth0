@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"test-organization135","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"}}
+            {"name":"test-organization500","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.4.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations
         method: POST
       response:
@@ -30,32 +30,32 @@ interactions:
         trailer: {}
         content_length: 149
         uncompressed: false
-        body: '{"name":"test-organization135","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"},"id":"org_Q7iOAmBVkznO9qKC"}'
+        body: '{"name":"test-organization500","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"},"id":"org_gdMDPQMMzny5mkFY"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 115.199042ms
+        duration: 920.381875ms
     - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 118
+        content_length: 1125
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test Client (Jan 25 18:49:19.325)","description":"This is just a test client.","organization_usage":"allow"}
+            {"name":"Test Client (Apr 15 10:24:19.306)","description":"This is just a test client.","jwt_configuration":{"alg":"RS256"},"organization_usage":"allow","client_authentication_methods":{"private_key_jwt":{"credentials":[{"name":"Test Credential (Apr 15 10:24:19.306)","credential_type":"public_key","pem":"-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAua6LXMfgDE/tDdkOL1Oe\n3oWUwg1r4dSTg9L7RCcI5hItUzmkVofHtWN0H4CH2lm2ANmaJUsnhzctYowYW2+R\ntHvU9afTmtbdhpy993972hUqZSYLsE3iGziphYkOKVsqq38+VRH3TNg93zSLoRao\nJnTTkMXseVqiyqYRmFN8+gQQoEclHSGPUWQG5XMZ+hhuXeFyo+Yw/qbZWca/6/2I\n3rsca9jXR1alhxhHrXrg8N4Dm3gBgGbmiht6YYYT2Tyl1OqB9+iOI/9D7dfoCF6X\nAWJXRE454cmC8k8oucpjZVpflA+ocKshwPDR6YTLQYbXYiaWxEoaz0QGUErNQBnG\nI+sr9jDY3ua/s6HF6h0qyi/HVZH4wx+m4CtOfJoYTjrGBbaRszzUxhtSN2/MhXDu\n+a35q9/2zcu/3fjkkfVvGUt+NyyiYOKQ9vsJC1g/xxdUWtowjNwjfZE2zcG4usi8\nr38Bp0lmiipAsMLduZM/D5dFXkRdWCBNDfULmmg/4nv2wwjbjQuLemAMh7mmrztW\ni/85WMnjKQZT8NqS43pmgyIzg1gK1neMqdS90YmQ/PvJ36qALxCs245w1JpN9BAL\nJbwxCg/dbmKT7PalfWrksx9hGcJxtGqebldaOpw+5GVIPxxtC1C0gVr9BKeiDS3f\naibASY5pIRiKENmbZELDtucCAwEAAQ==\n-----END PUBLIC KEY-----"}]}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.4.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/clients
         method: POST
       response:
@@ -66,32 +66,32 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"name":"Test Client (Jan 25 18:49:19.325)","description":"This is just a test client.","client_id":"OflO6yT8umZN1YaR6B0nNuRXFs29ZoE6","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"sso_disabled":false,"cross_origin_auth":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"organization_usage":"allow"}'
+        body: '{"name":"Test Client (Apr 15 10:24:19.306)","description":"This is just a test client.","client_id":"jmYWsxp9QciHdKemxnoajT7BZTYfMEzJ","client_secret":"[REDACTED]","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"alg":"RS256"},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"organization_usage":"allow","client_authentication_methods":{"private_key_jwt":{"credentials":[{"id":"cred_pXWK6WRg8QazwgKA9wzL1f","name":"Test Credential (Apr 15 10:24:19.306)","kid":"4e7yYf0TKdyTLbVnpq2wLN6mZ8t7eb9UJkMksyHj9iU","credential_type":"public_key","alg":"RS256","created_at":"2024-04-15T04:54:19.694Z","updated_at":"2024-04-15T04:54:19.694Z"}]}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 277.429167ms
+        duration: 677.955916ms
     - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 169
+        content_length: 170
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"test-conn565","display_name":"Test Connection 43","strategy":"auth0","enabled_clients":["3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","OflO6yT8umZN1YaR6B0nNuRXFs29ZoE6"]}
+            {"name":"test-conn710","display_name":"Test Connection 778","strategy":"auth0","enabled_clients":["T2QUXhLciH0CSlDCICirlExjNDIrsHJQ","jmYWsxp9QciHdKemxnoajT7BZTYfMEzJ"]}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.4.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -100,35 +100,35 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 390
+        content_length: 586
         uncompressed: false
-        body: '{"id":"con_C8S03WlnbPUvnIIK","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","strategy_version":2,"brute_force_protection":true},"strategy":"auth0","name":"test-conn565","is_domain_connection":false,"display_name":"Test Connection 43","enabled_clients":["3tjbn4dFI04fpHKnVlGs1GYDzQKIEmbF","OflO6yT8umZN1YaR6B0nNuRXFs29ZoE6"],"realms":["test-conn565"]}'
+        body: '{"id":"con_b3bPPrIxEGW7Cw3x","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","strategy_version":2,"authentication_methods":{"password":{"enabled":true},"passkey":{"enabled":false}},"passkey_options":{"challenge_ui":"both","progressive_enrollment_enabled":true,"local_enrollment_enabled":true},"brute_force_protection":true},"strategy":"auth0","name":"test-conn710","is_domain_connection":false,"display_name":"Test Connection 778","enabled_clients":["T2QUXhLciH0CSlDCICirlExjNDIrsHJQ","jmYWsxp9QciHdKemxnoajT7BZTYfMEzJ"],"realms":["test-conn710"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 142.779625ms
+        duration: 409.326875ms
     - id: 3
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 75
+        content_length: 97
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"connection_id":"con_C8S03WlnbPUvnIIK","assign_membership_on_login":true}
+            {"connection_id":"con_b3bPPrIxEGW7Cw3x","assign_membership_on_login":true,"show_as_button":true}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_Q7iOAmBVkznO9qKC/enabled_connections
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_gdMDPQMMzny5mkFY/enabled_connections
         method: POST
       response:
         proto: HTTP/2.0
@@ -136,15 +136,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 130
+        content_length: 152
         uncompressed: false
-        body: '{"connection_id":"con_C8S03WlnbPUvnIIK","assign_membership_on_login":true,"connection":{"name":"test-conn565","strategy":"auth0"}}'
+        body: '{"connection_id":"con_b3bPPrIxEGW7Cw3x","assign_membership_on_login":true,"show_as_button":true,"connection":{"name":"test-conn710","strategy":"auth0"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 111.124041ms
+        duration: 381.618792ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -162,8 +162,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_C8S03WlnbPUvnIIK
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_b3bPPrIxEGW7Cw3x
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -173,13 +173,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2023-01-25T17:49:20.073Z"}'
+        body: '{"deleted_at":"2024-04-15T04:54:21.116Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 172.283375ms
+        duration: 402.213625ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -197,8 +197,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/OflO6yT8umZN1YaR6B0nNuRXFs29ZoE6
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/jmYWsxp9QciHdKemxnoajT7BZTYfMEzJ
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -214,7 +214,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 182.829542ms
+        duration: 435.010625ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -232,8 +232,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_Q7iOAmBVkznO9qKC
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_gdMDPQMMzny5mkFY
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -249,4 +249,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 156.511625ms
+        duration: 390.391708ms
