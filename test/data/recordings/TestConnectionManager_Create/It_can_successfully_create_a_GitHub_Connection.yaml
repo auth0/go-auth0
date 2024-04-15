@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-GitHub-Connection-1713171954","strategy":"github","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-GitHub-Connection-1674668511","strategy":"github","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.4.1
+                - Go-Auth0-SDK/latest
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 269
         uncompressed: false
-        body: '{"id":"con_KTMxnf69wZNgokBA","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":[]},"strategy":"github","name":"Test-GitHub-Connection-1713171954","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GitHub-Connection-1713171954"]}'
+        body: '{"id":"con_ojs63B9jVBIB0C9l","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":[]},"strategy":"github","name":"Test-GitHub-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GitHub-Connection-1674668511"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 339.086209ms
+        duration: 174.726ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.4.1
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_KTMxnf69wZNgokBA
+                - Go-Auth0-SDK/latest
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_ojs63B9jVBIB0C9l
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -65,10 +65,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-04-15T09:06:04.648Z"}'
+        body: '{"deleted_at":"2023-01-25T17:43:37.233Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 319.635208ms
+        duration: 188.55475ms
