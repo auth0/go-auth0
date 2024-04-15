@@ -18,7 +18,7 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 ```
 
-After adding these lines, run source ~/.bashrc or source ~/.zshrc to apply the changes.
+After adding these lines, run source `~/.bashrc` or source `~/.zshrc` to apply the changes.
 
 ## Generating the Getters
 
@@ -81,7 +81,7 @@ There are two ways of running the tests:
 To run the tests against an Auth0 tenant start by creating an M2M app using `auth0 apps create --name go-auth0-mgmt-tests --description "App used for go-auth0 management tests" --type m2m`, then
 run `auth0 apps open <CLIENT ID>`. Authorize the Management API in the `APIs` tab and enable all permissions.
 
-Then create a `.env` file in the root folder of the repository with the following details :- 
+Then create a `.env` file in the root folder of the repository with the following details :
 
 * `AUTH0_DOMAIN`: The **Domain** of the Auth0 tenant
 * `AUTH0_CLIENT_ID`: The **Client ID** of the M2M app
@@ -92,7 +92,7 @@ Then create a `.env` file in the root folder of the repository with the followin
 Now for the Authentication tests create another M2M app using `auth0 apps create --name go-auth0-auth-tests --description "App used for go-auth0 authentication tests" --type m2m`, then run
 `auth0 apps open <CLIENT ID>`. Ensure all `Grant Types` except `Client Credentials` are enabled in `Advanced Settings`, then set the `Authentication Method` to `None` in the `Credentials` tab.
 
-Then create a `.env` file in the root folder of the repository with the following details :- 
+Then create a `.env` file in the root folder of the repository with the following details :
 
 * `AUTH0_DOMAIN`: The **Domain** of the Auth0 tenant
 * `AUTH0_CLIENT_ID`: The **Client ID** of the management M2M app
