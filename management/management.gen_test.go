@@ -12226,7 +12226,7 @@ func TestTicket_String(t *testing.T) {
 }
 
 func TestUser_GetAppMetadata(tt *testing.T) {
-	var zeroValue map[string]interface{}
+	var zeroValue json.RawMessage
 	u := &User{AppMetadata: &zeroValue}
 	u.GetAppMetadata()
 	u = &User{}
@@ -12486,7 +12486,7 @@ func TestUser_GetURL(tt *testing.T) {
 }
 
 func TestUser_GetUserMetadata(tt *testing.T) {
-	var zeroValue map[string]interface{}
+	var zeroValue json.RawMessage
 	u := &User{UserMetadata: &zeroValue}
 	u.GetUserMetadata()
 	u = &User{}

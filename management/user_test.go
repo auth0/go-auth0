@@ -52,13 +52,18 @@ func TestUserManager_Update(t *testing.T) {
 	expectedUser := givenAUser(t)
 
 	appMetadata := map[string]interface{}{"foo": "bar"}
+
+	amJSON, err := json.Marshal(appMetadata)
+	require.NoError(t, err)
 	actualUser := &User{
 		Connection:  auth0.String("Username-Password-Authentication"),
 		Password:    auth0.String("I don't need one"),
-		AppMetadata: &appMetadata,
+		AppMetadata: auth0.JSONRawMessage(amJSON),
 	}
-	err := api.User.Update(context.Background(), expectedUser.GetID(), actualUser)
+	err = api.User.Update(context.Background(), expectedUser.GetID(), actualUser)
 
+	var actualAppMetadata map[string]interface{}
+	require.NoError(t, json.Unmarshal(*actualUser.AppMetadata, &actualAppMetadata))
 	assert.NoError(t, err)
 	assert.Equal(t, map[string]interface{}{
 		"foo": "bar",
@@ -67,7 +72,7 @@ func TestUserManager_Update(t *testing.T) {
 			"kill_two_stones_with_one_bird",
 			"can_hear_sign_language",
 		},
-	}, *actualUser.AppMetadata)
+	}, actualAppMetadata)
 	assert.Equal(t, "Username-Password-Authentication", actualUser.GetConnection())
 }
 
@@ -457,6 +462,11 @@ func givenAUser(t *testing.T) *User {
 			"can_hear_sign_language",
 		},
 	}
+	umJSON, err := json.Marshal(userMetadata)
+	require.NoError(t, err)
+
+	amJSON, err := json.Marshal(appMetadata)
+	require.NoError(t, err)
 	user := &User{
 		Connection:    auth0.String("Username-Password-Authentication"),
 		Email:         auth0.String(fmt.Sprintf("chuck%d@example.com", rand.Intn(999))),
@@ -465,15 +475,15 @@ func givenAUser(t *testing.T) *User {
 		GivenName:     auth0.String("Chuck"),
 		FamilyName:    auth0.String("Sanchez"),
 		Nickname:      auth0.String("Chucky"),
-		UserMetadata:  &userMetadata,
+		UserMetadata:  auth0.JSONRawMessage(umJSON),
 		EmailVerified: auth0.Bool(true),
 		VerifyEmail:   auth0.Bool(false),
-		AppMetadata:   &appMetadata,
+		AppMetadata:   auth0.JSONRawMessage(amJSON),
 		Picture:       auth0.String("https://example-picture-url.jpg"),
 		Blocked:       auth0.Bool(false),
 	}
 
-	err := api.User.Create(context.Background(), user)
+	err = api.User.Create(context.Background(), user)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {

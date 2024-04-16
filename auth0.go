@@ -1,6 +1,7 @@
 package auth0
 
 import (
+	"encoding/json"
 	"fmt"
 	"time"
 )
@@ -77,4 +78,9 @@ func TimeValue(t *time.Time) time.Time {
 		return *t
 	}
 	return time.Time{}
+}
+
+// JSONRawMessage returns a pointer to the json.RawMessage passed in.
+func JSONRawMessage(json json.RawMessage) *json.RawMessage {
+	return &json
 }

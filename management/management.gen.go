@@ -4,6 +4,7 @@
 package management
 
 import (
+	"encoding/json"
 	"time"
 )
 
@@ -9718,9 +9719,9 @@ func (t *Ticket) String() string {
 }
 
 // GetAppMetadata returns the AppMetadata field if it's non-nil, zero value otherwise.
-func (u *User) GetAppMetadata() map[string]interface{} {
+func (u *User) GetAppMetadata() json.RawMessage {
 	if u == nil || u.AppMetadata == nil {
-		return map[string]interface{}{}
+		return json.RawMessage{}
 	}
 	return *u.AppMetadata
 }
@@ -9926,9 +9927,9 @@ func (u *User) GetURL() string {
 }
 
 // GetUserMetadata returns the UserMetadata field if it's non-nil, zero value otherwise.
-func (u *User) GetUserMetadata() map[string]interface{} {
+func (u *User) GetUserMetadata() json.RawMessage {
 	if u == nil || u.UserMetadata == nil {
-		return map[string]interface{}{}
+		return json.RawMessage{}
 	}
 	return *u.UserMetadata
 }
