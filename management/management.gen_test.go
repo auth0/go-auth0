@@ -9709,6 +9709,16 @@ func TestOrganizationConnection_GetConnectionID(tt *testing.T) {
 	o.GetConnectionID()
 }
 
+func TestOrganizationConnection_GetShowAsButton(tt *testing.T) {
+	var zeroValue bool
+	o := &OrganizationConnection{ShowAsButton: &zeroValue}
+	o.GetShowAsButton()
+	o = &OrganizationConnection{}
+	o.GetShowAsButton()
+	o = nil
+	o.GetShowAsButton()
+}
+
 func TestOrganizationConnection_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &OrganizationConnection{}

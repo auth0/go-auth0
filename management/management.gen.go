@@ -7747,6 +7747,14 @@ func (o *OrganizationConnection) GetConnectionID() string {
 	return *o.ConnectionID
 }
 
+// GetShowAsButton returns the ShowAsButton field if it's non-nil, zero value otherwise.
+func (o *OrganizationConnection) GetShowAsButton() bool {
+	if o == nil || o.ShowAsButton == nil {
+		return false
+	}
+	return *o.ShowAsButton
+}
+
 // String returns a string representation of OrganizationConnection.
 func (o *OrganizationConnection) String() string {
 	return Stringify(o)
