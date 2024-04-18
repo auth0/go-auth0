@@ -63,9 +63,7 @@ func (m *Management) NewRequest(
 		return nil, err
 	}
 
-	if body.Len() > 0 {
-		request.Header.Add("Content-Type", "application/json")
-	}
+	request.Header.Add("Content-Type", "application/json")
 
 	for _, option := range options {
 		option.apply(request)
