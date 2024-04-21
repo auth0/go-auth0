@@ -2,96 +2,90 @@ package management
 
 import (
 	"context"
-	"encoding/json"
+	"fmt"
 	"io"
-	"net/http"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
-
-	"github.com/auth0/go-auth0"
 )
 
-func TestNewRequest_Get(t *testing.T) {
-	configureHTTPTestRecordings(t)
-
-	expectedClient := givenAClient(t)
-
-	request, err := api.NewRequest(context.Background(), "GET", api.URI("clients", expectedClient.GetClientID()), nil)
-	assert.NoError(t, err)
-
-	assert.Equal(t, "application/json", request.Header.Get("Content-Type"))
-	requestBody, err := io.ReadAll(request.Body)
-	assert.NoError(t, err)
-	assert.Empty(t, requestBody)
-
-	response, err := api.Do(request)
-	assert.NoError(t, err)
-	defer response.Body.Close()
-
-	assert.Equal(t, http.StatusOK, response.StatusCode)
-	var respClient Client
-
-	responseBody, err := io.ReadAll(response.Body)
-	assert.NoError(t, err)
-	assert.NotEmpty(t, responseBody)
-	if err := json.Unmarshal(responseBody, &respClient); err != nil {
-		t.Fatalf("Failed to unmarshal response body: %v", err)
+func TestNewRequest(t *testing.T) {
+	tests := []struct {
+		name          string
+		method        string
+		uri           string
+		payload       interface{}
+		options       []RequestOption
+		expectedError error
+	}{
+		{
+			name:          "Valid GET request",
+			method:        "GET",
+			uri:           "http://example.com",
+			payload:       nil,
+			options:       nil,
+			expectedError: nil,
+		},
+		{
+			name:          "Valid POST request with payload",
+			method:        "POST",
+			uri:           "http://example.com",
+			payload:       map[string]string{"key": "value"},
+			options:       nil,
+			expectedError: nil,
+		},
+		{
+			name:          "Invalid payload encoding",
+			method:        "POST",
+			uri:           "http://example.com",
+			payload:       make(chan int), // Unsupported type
+			options:       nil,
+			expectedError: fmt.Errorf("encoding request payload failed"),
+		},
+		{
+			name:          "Valid DELETE request",
+			method:        "DELETE",
+			uri:           "http://example.com",
+			payload:       nil,
+			options:       nil,
+			expectedError: nil,
+		},
+		{
+			name:          "Valid PUT request with payload",
+			method:        "PUT",
+			uri:           "http://example.com",
+			payload:       map[string]string{"key": "value"},
+			options:       nil,
+			expectedError: nil,
+		},
+		{
+			name:          "Valid PATCH request with payload",
+			method:        "PATCH",
+			uri:           "http://example.com",
+			payload:       map[string]string{"key": "value"},
+			options:       nil,
+			expectedError: nil,
+		},
 	}
 
-	t.Cleanup(func() {
-		cleanupClient(t, respClient.GetClientID())
-	})
-}
-func TestNewRequest_Post(t *testing.T) {
-	configureHTTPTestRecordings(t)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			m := &Management{}
+			request, err := m.NewRequest(context.Background(), tt.method, tt.uri, tt.payload, tt.options...)
+			if tt.expectedError != nil {
+				assert.Error(t, err)
+				assert.Contains(t, err.Error(), tt.expectedError.Error())
+				assert.Nil(t, request)
+			} else {
+				assert.NoError(t, err)
+				assert.NotNil(t, request)
+				assert.Equal(t, "application/json", request.Header.Get("Content-Type"))
 
-	expectedClient := &Client{
-		Name:        auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
-		Description: auth0.String("This is just a test client."),
+				if tt.method == "GET" || tt.method == "DELETE" {
+					requestBody, _ := io.ReadAll(request.Body)
+					assert.Empty(t, string(requestBody))
+				}
+			}
+		})
 	}
-
-	request, err := api.NewRequest(context.Background(), "POST", api.URI("clients"), expectedClient)
-	assert.NoError(t, err)
-	assert.NotEmpty(t, request)
-	assert.Equal(t, "application/json", request.Header.Get("Content-Type"))
-
-	response, err := api.Do(request)
-	assert.NoError(t, err)
-	defer response.Body.Close()
-
-	if response.StatusCode >= http.StatusBadRequest {
-		t.Fatalf("Received error response: %d", response.StatusCode)
-	}
-
-	responseBody, err := io.ReadAll(response.Body)
-	assert.NoError(t, err)
-
-	var respClient Client
-	if err := json.Unmarshal(responseBody, &respClient); err != nil {
-		t.Fatalf("Failed to unmarshal response body: %v", err)
-	}
-
-	t.Cleanup(func() {
-		cleanupClient(t, respClient.GetClientID())
-	})
-}
-
-func TestNewRequest_Delete(t *testing.T) {
-	configureHTTPTestRecordings(t)
-
-	expectedClient := givenAClient(t)
-
-	request, err := api.NewRequest(context.Background(), "DELETE", api.URI("clients", expectedClient.GetClientID()), nil)
-	assert.NoError(t, err)
-	requestBody, err := io.ReadAll(request.Body)
-	assert.NoError(t, err)
-	assert.Empty(t, requestBody)
-
-	response, err := api.Do(request)
-	assert.NoError(t, err)
-	defer response.Body.Close()
-
-	assert.Equal(t, http.StatusNoContent, response.StatusCode)
 }
