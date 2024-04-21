@@ -21,7 +21,7 @@ func TestNewRequest(t *testing.T) {
 		{
 			name:          "Valid GET request",
 			method:        "GET",
-			uri:           "htestCasep://example.com",
+			uri:           "https://example.com",
 			payload:       nil,
 			options:       nil,
 			expectedError: nil,
@@ -29,7 +29,7 @@ func TestNewRequest(t *testing.T) {
 		{
 			name:          "Valid POST request with payload",
 			method:        "POST",
-			uri:           "htestCasep://example.com",
+			uri:           "https://example.com",
 			payload:       map[string]string{"key": "value"},
 			options:       nil,
 			expectedError: nil,
@@ -37,7 +37,7 @@ func TestNewRequest(t *testing.T) {
 		{
 			name:          "Invalid payload encoding",
 			method:        "POST",
-			uri:           "htestCasep://example.com",
+			uri:           "https://example.com",
 			payload:       make(chan int), // Unsupported type
 			options:       nil,
 			expectedError: fmt.Errorf("encoding request payload failed"),
@@ -45,7 +45,7 @@ func TestNewRequest(t *testing.T) {
 		{
 			name:          "Valid DELETE request",
 			method:        "DELETE",
-			uri:           "htestCasep://example.com",
+			uri:           "https://example.com",
 			payload:       nil,
 			options:       nil,
 			expectedError: nil,
@@ -53,7 +53,7 @@ func TestNewRequest(t *testing.T) {
 		{
 			name:          "Valid PUT request with payload",
 			method:        "PUT",
-			uri:           "htestCasep://example.com",
+			uri:           "https://example.com",
 			payload:       map[string]string{"key": "value"},
 			options:       nil,
 			expectedError: nil,
@@ -61,7 +61,7 @@ func TestNewRequest(t *testing.T) {
 		{
 			name:          "Valid PATCH request with payload",
 			method:        "PATCH",
-			uri:           "htestCasep://example.com",
+			uri:           "https://example.com",
 			payload:       map[string]string{"key": "value"},
 			options:       nil,
 			expectedError: nil,
