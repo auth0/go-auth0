@@ -92,7 +92,6 @@ func TestNewRequest(t *testing.T) {
 			request, err := api.NewRequest(context.Background(), testCase.method, testCase.endpoint, testCase.payload, testCase.options...)
 
 			if testCase.expectedError != "" {
-				require.Error(t, err)
 				assert.EqualError(t, err, testCase.expectedError)
 				assert.Nil(t, request)
 				return
@@ -100,11 +99,12 @@ func TestNewRequest(t *testing.T) {
 
 			require.NoError(t, err)
 			require.NotNil(t, request)
-			assert.Equal(t, "application/json", request.Header.Get("Content-Type"))
 
 			requestBody, err := io.ReadAll(request.Body)
 			require.NoError(t, err)
+
 			assert.Equal(t, testCase.expectedBody, string(requestBody))
+			assert.Equal(t, "application/json", request.Header.Get("Content-Type"))
 		})
 	}
 }
