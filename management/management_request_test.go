@@ -2,12 +2,12 @@ package management
 
 import (
 	"context"
-	"fmt"
 	"io"
 	"net/http"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0"
 )
@@ -19,7 +19,7 @@ func TestNewRequest(t *testing.T) {
 		endpoint      string
 		payload       interface{}
 		options       []RequestOption
-		expectedError error
+		expectedError string
 		expectedBody  string
 	}{
 		{
@@ -28,7 +28,7 @@ func TestNewRequest(t *testing.T) {
 			endpoint:      api.URI("clients"),
 			payload:       &Client{Name: auth0.String("TestClient"), Description: auth0.String("Test description")},
 			options:       nil,
-			expectedError: nil,
+			expectedError: "",
 			expectedBody:  `{"name":"TestClient","description":"Test description"}` + "\n",
 		},
 		{
@@ -37,7 +37,7 @@ func TestNewRequest(t *testing.T) {
 			endpoint:      api.URI("clients", "c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX"),
 			payload:       nil,
 			options:       nil,
-			expectedError: nil,
+			expectedError: "",
 			expectedBody:  "",
 		},
 		{
@@ -46,7 +46,7 @@ func TestNewRequest(t *testing.T) {
 			endpoint:      api.URI("clients"),
 			payload:       nil,
 			options:       nil,
-			expectedError: nil,
+			expectedError: "",
 			expectedBody:  "",
 		},
 		{
@@ -55,7 +55,7 @@ func TestNewRequest(t *testing.T) {
 			endpoint:      api.URI("clients", "c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX"),
 			payload:       &Client{Name: auth0.String("UpdatedTestClient")},
 			options:       nil,
-			expectedError: nil,
+			expectedError: "",
 			expectedBody:  `{"name":"UpdatedTestClient"}` + "\n",
 		},
 		{
@@ -64,7 +64,7 @@ func TestNewRequest(t *testing.T) {
 			endpoint:      api.URI("clients", "c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX"),
 			payload:       nil,
 			options:       nil,
-			expectedError: nil,
+			expectedError: "",
 			expectedBody:  "",
 		},
 		{
@@ -73,7 +73,7 @@ func TestNewRequest(t *testing.T) {
 			endpoint:      api.URI("clients"),
 			payload:       make(chan int),
 			options:       nil,
-			expectedError: fmt.Errorf("encoding request payload failed: json: unsupported type: chan int"),
+			expectedError: "encoding request payload failed: json: unsupported type: chan int",
 			expectedBody:  "",
 		},
 		{
@@ -82,8 +82,8 @@ func TestNewRequest(t *testing.T) {
 			endpoint:      api.URI("clients"),
 			payload:       map[string]interface{}{},
 			options:       nil,
-			expectedError: nil,
-			expectedBody:  "{}\n",
+			expectedError: "",
+			expectedBody:  "{}" + "\n",
 		},
 	}
 
@@ -91,19 +91,20 @@ func TestNewRequest(t *testing.T) {
 		t.Run(testCase.name, func(t *testing.T) {
 			request, err := api.NewRequest(context.Background(), testCase.method, testCase.endpoint, testCase.payload, testCase.options...)
 
-			if testCase.expectedError != nil {
-				assert.Error(t, err)
-				assert.Equal(t, testCase.expectedError.Error(), err.Error())
+			if testCase.expectedError != "" {
+				require.Error(t, err)
+				assert.EqualError(t, err, testCase.expectedError)
 				assert.Nil(t, request)
 				return
 			}
 
-			assert.NoError(t, err)
-			assert.NotNil(t, request)
+			require.NoError(t, err)
+			require.NotNil(t, request)
 			assert.Equal(t, "application/json", request.Header.Get("Content-Type"))
 
-			requestBody, _ := io.ReadAll(request.Body)
-			assert.Equal(t, testCase.expectedBody, (string(requestBody)))
+			requestBody, err := io.ReadAll(request.Body)
+			require.NoError(t, err)
+			assert.Equal(t, testCase.expectedBody, string(requestBody))
 		})
 	}
 }
