@@ -45,11 +45,17 @@ func (m *Management) NewRequest(
 	payload interface{},
 	options ...RequestOption,
 ) (*http.Request, error) {
+	const nullBody = "null\n"
 	var body bytes.Buffer
+
 	if payload != nil {
 		if err := json.NewEncoder(&body).Encode(payload); err != nil {
 			return nil, fmt.Errorf("encoding request payload failed: %w", err)
 		}
+	}
+
+	if body.String() == nullBody {
+		body.Reset()
 	}
 
 	request, err := http.NewRequestWithContext(ctx, method, uri, &body)

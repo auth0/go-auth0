@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test Client (Jan 25 18:43:11.315)","description":"This is just a test client."}
+            {"name":"Test Client (Apr 18 00:05:11.716)","description":"This is just a test client."}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.4.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/clients
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"name":"Test Client (Jan 25 18:43:11.315)","description":"This is just a test client.","client_id":"1zNkIwtV9MiEjalFxNb40N93DzfsVUji","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"sso_disabled":false,"cross_origin_auth":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000}}'
+        body: '{"name":"Test Client (Apr 18 00:05:11.716)","description":"This is just a test client.","client_id":"u8vAYkSbYi9yHyIaB42yFTL8FKDUiY4D","client_secret":"[REDACTED]","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 299.144041ms
+        duration: 853.283916ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/1zNkIwtV9MiEjalFxNb40N93DzfsVUji
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/u8vAYkSbYi9yHyIaB42yFTL8FKDUiY4D
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -71,4 +71,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 177.123709ms
+        duration: 335.973125ms
