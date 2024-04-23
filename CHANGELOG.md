@@ -1,5 +1,16 @@
 # Change Log
 
+## [v1.5.0](https://github.com/auth0/go-auth0/tree/v1.5.0) (2024-04-23)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.4.1...v1.5.0)
+
+**Added**
+- Send extra parameters with client credentials request [\#354](https://github.com/auth0/go-auth0/pull/354) ([weirdian2k3](https://github.com/weirdian2k3))
+- Add support for `oidc_logout` parameters [\#384](https://github.com/auth0/go-auth0/pull/384) ([developerkunal](https://github.com/developerkunal))
+- Add `show_as_button` field to Organization Enabled Connection [\#386](https://github.com/auth0/go-auth0/pull/386) ([developerkunal](https://github.com/developerkunal))
+
+**Fixed**
+- Fix sending unnecessary `null` body in requests [\#387](https://github.com/auth0/go-auth0/pull/387) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.4.1](https://github.com/auth0/go-auth0/tree/v1.4.1) (2024-02-28)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.4.0...v1.4.1)
 
