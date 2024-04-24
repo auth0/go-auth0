@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Auth0-Connection-1674668511","strategy":"auth0"}
+            {"name":"Test-Auth0-Connection-1713861888","strategy":"auth0"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.4.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -28,15 +28,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 325
+        content_length: 520
         uncompressed: false
-        body: '{"id":"con_ZeToQ9nQBkT2miQm","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","strategy_version":2,"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-1674668511"]}'
+        body: '{"id":"con_HnOKLeMTlFUdTdOq","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","strategy_version":2,"authentication_methods":{"password":{"enabled":true},"passkey":{"enabled":false}},"passkey_options":{"challenge_ui":"both","progressive_enrollment_enabled":true,"local_enrollment_enabled":true},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-1713861888","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-1713861888"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 380.736875ms
+        duration: 852.792125ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,8 +55,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_ZeToQ9nQBkT2miQm
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_HnOKLeMTlFUdTdOq
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,33 +66,32 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_ZeToQ9nQBkT2miQm","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-1674668511"]}'
+        body: '{"id":"con_HnOKLeMTlFUdTdOq","options":{"passkey_options":{"challenge_ui":"both","local_enrollment_enabled":true,"progressive_enrollment_enabled":true},"upstream_params":{"screen_name":{"alias":"login_hint"}},"authentication_methods":{"passkey":{"enabled":false},"password":{"enabled":true}},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-1713861888","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-1713861888"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 125.994833ms
+        duration: 383.180667ms
     - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            null
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_ZeToQ9nQBkT2miQm
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_HnOKLeMTlFUdTdOq
         method: GET
       response:
         proto: HTTP/2.0
@@ -102,13 +101,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_ZeToQ9nQBkT2miQm","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-1674668511"]}'
+        body: '{"id":"con_HnOKLeMTlFUdTdOq","options":{"passkey_options":{"challenge_ui":"both","local_enrollment_enabled":true,"progressive_enrollment_enabled":true},"upstream_params":{"screen_name":{"alias":"login_hint"}},"authentication_methods":{"passkey":{"enabled":false},"password":{"enabled":true}},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-1713861888","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-1713861888"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 114.502125ms
+        duration: 352.559958ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -126,8 +125,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_ZeToQ9nQBkT2miQm
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_HnOKLeMTlFUdTdOq
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -137,10 +136,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2023-01-25T17:45:02.424Z"}'
+        body: '{"deleted_at":"2024-04-23T08:44:50.292Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 133.291208ms
+        duration: 355.521958ms

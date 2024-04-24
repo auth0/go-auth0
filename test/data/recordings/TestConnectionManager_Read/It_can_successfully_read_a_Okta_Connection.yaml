@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Okta-Connection-1674668511","strategy":"okta","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","client_secret":"mySecret","domain":"domain.okta.com","authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","userinfo_endpoint":null,"token_endpoint":null,"scope":"openid","upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-Okta-Connection-1713858608","strategy":"okta","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","client_secret":"mySecret","domain":"domain.okta.com","authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","userinfo_endpoint":null,"token_endpoint":null,"scope":"openid","upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.4.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -28,35 +28,34 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 687
+        content_length: -1
         uncompressed: false
-        body: '{"id":"con_Du1PgUMeKLurG0Gt","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","client_secret":"mySecret","domain":"domain.okta.com","authorization_endpoint":"https://domain.okta.com/oauth2/v1/authorize","issuer":"https://domain.okta.com","jwks_uri":"https://domain.okta.com/oauth2/v1/keys","userinfo_endpoint":"https://domain.okta.com/oauth2/v1/userinfo","token_endpoint":"https://domain.okta.com/oauth2/v1/token","scope":"openid profile","upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"okta","name":"Test-Okta-Connection-1674668511","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-Okta-Connection-1674668511"]}'
+        body: '{"id":"con_2SRvAOx5J2yWcFfx","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","client_secret":"mySecret","domain":"domain.okta.com","authorization_endpoint":"https://domain.okta.com/oauth2/v1/authorize","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","userinfo_endpoint":"https://domain.okta.com/oauth2/v1/userinfo","token_endpoint":"https://domain.okta.com/oauth2/v1/token","scope":"openid","upstream_params":{"screen_name":{"alias":"login_hint"}},"oidc_metadata":{"issuer":"https://domain.okta.com","authorization_endpoint":"https://domain.okta.com/oauth2/v1/authorize","token_endpoint":"https://domain.okta.com/oauth2/v1/token","userinfo_endpoint":"https://domain.okta.com/oauth2/v1/userinfo","registration_endpoint":"https://domain.okta.com/oauth2/v1/clients","jwks_uri":"https://domain.okta.com/oauth2/v1/keys","response_types_supported":["code","id_token","code id_token","code token","id_token token","code id_token token"],"response_modes_supported":["query","fragment","form_post","okta_post_message"],"grant_types_supported":["authorization_code","implicit","refresh_token","password","urn:ietf:params:oauth:grant-type:device_code"],"subject_types_supported":["public"],"id_token_signing_alg_values_supported":["RS256"],"scopes_supported":["openid","email","profile","address","phone","offline_access","groups"],"token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post","client_secret_jwt","private_key_jwt","none"],"claims_supported":["iss","ver","sub","aud","iat","exp","jti","auth_time","amr","idp","nonce","name","nickname","preferred_username","given_name","middle_name","family_name","email","email_verified","profile","zoneinfo","locale","address","phone_number","picture","website","gender","birthdate","updated_at","at_hash","c_hash"],"code_challenge_methods_supported":["S256"],"introspection_endpoint":"https://domain.okta.com/oauth2/v1/introspect","introspection_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post","client_secret_jwt","private_key_jwt","none"],"revocation_endpoint":"https://domain.okta.com/oauth2/v1/revoke","revocation_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post","client_secret_jwt","private_key_jwt","none"],"end_session_endpoint":"https://domain.okta.com/oauth2/v1/logout","request_parameter_supported":true,"request_object_signing_alg_values_supported":["HS256","HS384","HS512","RS256","RS384","RS512","ES256","ES384","ES512"],"device_authorization_endpoint":"https://domain.okta.com/oauth2/v1/device/authorize","dpop_signing_alg_values_supported":["RS256","RS384","RS512","ES256","ES384","ES512"]}},"strategy":"okta","name":"Test-Okta-Connection-1713858608","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-Okta-Connection-1713858608"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 725.921833ms
+        duration: 467.449167ms
     - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            null
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Du1PgUMeKLurG0Gt
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_2SRvAOx5J2yWcFfx
         method: GET
       response:
         proto: HTTP/2.0
@@ -66,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_Du1PgUMeKLurG0Gt","options":{"scope":"openid profile","domain":"domain.okta.com","issuer":"https://domain.okta.com","jwks_uri":"https://domain.okta.com/oauth2/v1/keys","client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","client_secret":"mySecret","token_endpoint":"https://domain.okta.com/oauth2/v1/token","upstream_params":{"screen_name":{"alias":"login_hint"}},"userinfo_endpoint":"https://domain.okta.com/oauth2/v1/userinfo","authorization_endpoint":"https://domain.okta.com/oauth2/v1/authorize"},"strategy":"okta","name":"Test-Okta-Connection-1674668511","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-Okta-Connection-1674668511"]}'
+        body: '{"id":"con_2SRvAOx5J2yWcFfx","options":{"scope":"openid","domain":"domain.okta.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","client_secret":"mySecret","oidc_metadata":{"issuer":"https://domain.okta.com","jwks_uri":"https://domain.okta.com/oauth2/v1/keys","token_endpoint":"https://domain.okta.com/oauth2/v1/token","claims_supported":["iss","ver","sub","aud","iat","exp","jti","auth_time","amr","idp","nonce","name","nickname","preferred_username","given_name","middle_name","family_name","email","email_verified","profile","zoneinfo","locale","address","phone_number","picture","website","gender","birthdate","updated_at","at_hash","c_hash"],"scopes_supported":["openid","email","profile","address","phone","offline_access","groups"],"userinfo_endpoint":"https://domain.okta.com/oauth2/v1/userinfo","revocation_endpoint":"https://domain.okta.com/oauth2/v1/revoke","end_session_endpoint":"https://domain.okta.com/oauth2/v1/logout","grant_types_supported":["authorization_code","implicit","refresh_token","password","urn:ietf:params:oauth:grant-type:device_code"],"registration_endpoint":"https://domain.okta.com/oauth2/v1/clients","authorization_endpoint":"https://domain.okta.com/oauth2/v1/authorize","introspection_endpoint":"https://domain.okta.com/oauth2/v1/introspect","subject_types_supported":["public"],"response_modes_supported":["query","fragment","form_post","okta_post_message"],"response_types_supported":["code","id_token","code id_token","code token","id_token token","code id_token token"],"request_parameter_supported":true,"device_authorization_endpoint":"https://domain.okta.com/oauth2/v1/device/authorize","code_challenge_methods_supported":["S256"],"dpop_signing_alg_values_supported":["RS256","RS384","RS512","ES256","ES384","ES512"],"id_token_signing_alg_values_supported":["RS256"],"token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post","client_secret_jwt","private_key_jwt","none"],"revocation_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post","client_secret_jwt","private_key_jwt","none"],"request_object_signing_alg_values_supported":["HS256","HS384","HS512","RS256","RS384","RS512","ES256","ES384","ES512"],"introspection_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post","client_secret_jwt","private_key_jwt","none"]},"token_endpoint":"https://domain.okta.com/oauth2/v1/token","upstream_params":{"screen_name":{"alias":"login_hint"}},"userinfo_endpoint":"https://domain.okta.com/oauth2/v1/userinfo","authorization_endpoint":"https://domain.okta.com/oauth2/v1/authorize"},"strategy":"okta","name":"Test-Okta-Connection-1713858608","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-Okta-Connection-1713858608"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 90.8885ms
+        duration: 346.633625ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,8 +89,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Du1PgUMeKLurG0Gt
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_2SRvAOx5J2yWcFfx
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -101,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2023-01-25T17:44:21.054Z"}'
+        body: '{"deleted_at":"2024-04-23T07:50:39.835Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 131.217291ms
+        duration: 326.3705ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,8 +124,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Du1PgUMeKLurG0Gt
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_2SRvAOx5J2yWcFfx
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -142,4 +141,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 95.265083ms
+        duration: 419.48225ms

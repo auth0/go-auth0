@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-AD-Connection-1674668511","strategy":"ad"}
+            {"name":"Test-AD-Connection-1713861888","strategy":"ad"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.4.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -28,15 +28,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 351
+        content_length: 350
         uncompressed: false
-        body: '{"id":"con_K5yV8wcNOae1TEtP","options":{"ips":null,"brute_force_protection":true},"strategy":"ad","name":"Test-AD-Connection-1674668511","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.eu.auth0.com/p/ad/KjSJXUxJmhHkEdnBrXOPNC0ZUQ8Duiuz","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-AD-Connection-1674668511"]}'
+        body: '{"id":"con_W4ueOvcW3faH3cp1","options":{"ips":null,"brute_force_protection":true},"strategy":"ad","name":"Test-AD-Connection-1713861888","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.us.auth0.com/p/ad/KWBNBlVn4sLizsg5izyA1T0M2ZnOD0yz","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-AD-Connection-1713861888"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 135.522666ms
+        duration: 382.260708ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,8 +55,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_K5yV8wcNOae1TEtP
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_W4ueOvcW3faH3cp1
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,33 +66,32 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_K5yV8wcNOae1TEtP","options":{"ips":null,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"ad","name":"Test-AD-Connection-1674668511","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.eu.auth0.com/p/ad/KjSJXUxJmhHkEdnBrXOPNC0ZUQ8Duiuz","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-AD-Connection-1674668511"]}'
+        body: '{"id":"con_W4ueOvcW3faH3cp1","options":{"ips":null,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"ad","name":"Test-AD-Connection-1713861888","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.us.auth0.com/p/ad/KWBNBlVn4sLizsg5izyA1T0M2ZnOD0yz","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-AD-Connection-1713861888"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 213.811666ms
+        duration: 359.775083ms
     - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            null
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_K5yV8wcNOae1TEtP
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_W4ueOvcW3faH3cp1
         method: GET
       response:
         proto: HTTP/2.0
@@ -102,13 +101,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_K5yV8wcNOae1TEtP","options":{"ips":null,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"ad","name":"Test-AD-Connection-1674668511","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.eu.auth0.com/p/ad/KjSJXUxJmhHkEdnBrXOPNC0ZUQ8Duiuz","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-AD-Connection-1674668511"]}'
+        body: '{"id":"con_W4ueOvcW3faH3cp1","options":{"ips":null,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"ad","name":"Test-AD-Connection-1713861888","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.us.auth0.com/p/ad/KWBNBlVn4sLizsg5izyA1T0M2ZnOD0yz","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-AD-Connection-1713861888"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 90.275292ms
+        duration: 351.11925ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -126,8 +125,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_K5yV8wcNOae1TEtP
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_W4ueOvcW3faH3cp1
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -137,10 +136,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2023-01-25T17:45:18.850Z"}'
+        body: '{"deleted_at":"2024-04-23T08:44:59.596Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 179.288042ms
+        duration: 359.272041ms

@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Email-Connection-1674668511","strategy":"email"}
+            {"name":"Test-Email-Connection-1713861888","strategy":"email"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.4.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 228
         uncompressed: false
-        body: '{"id":"con_K20zgQvmmHOurVPp","options":{"brute_force_protection":true},"strategy":"email","name":"Test-Email-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Email-Connection-1674668511"]}'
+        body: '{"id":"con_knP7duBzT8mvbyzG","options":{"brute_force_protection":true},"strategy":"email","name":"Test-Email-Connection-1713861888","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Email-Connection-1713861888"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 115.862542ms
+        duration: 364.704916ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,8 +55,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_K20zgQvmmHOurVPp
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_knP7duBzT8mvbyzG
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,33 +66,32 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_K20zgQvmmHOurVPp","options":{"name":"Test-Connection-Email","totp":{"length":4,"time_step":100},"email":{"body":"<html><body>email contents</body></html>","from":"{{application.name}} <test@example.com>","syntax":"liquid","subject":"Email Login - {{application.name}}"},"authParams":{"scope":"openid profile"},"disable_signup":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"brute_force_protection":true},"strategy":"email","name":"Test-Email-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Email-Connection-1674668511"]}'
+        body: '{"id":"con_knP7duBzT8mvbyzG","options":{"name":"Test-Connection-Email","totp":{"length":4,"time_step":100},"email":{"body":"<html><body>email contents</body></html>","from":"{{application.name}} <test@example.com>","syntax":"liquid","subject":"Email Login - {{application.name}}"},"authParams":{"scope":"openid profile"},"disable_signup":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"brute_force_protection":true},"strategy":"email","name":"Test-Email-Connection-1713861888","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Email-Connection-1713861888"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 146.594334ms
+        duration: 374.870167ms
     - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            null
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_K20zgQvmmHOurVPp
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_knP7duBzT8mvbyzG
         method: GET
       response:
         proto: HTTP/2.0
@@ -102,13 +101,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_K20zgQvmmHOurVPp","options":{"name":"Test-Connection-Email","totp":{"length":4,"time_step":100},"email":{"body":"<html><body>email contents</body></html>","from":"{{application.name}} <test@example.com>","syntax":"liquid","subject":"Email Login - {{application.name}}"},"authParams":{"scope":"openid profile"},"disable_signup":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"brute_force_protection":true},"strategy":"email","name":"Test-Email-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Email-Connection-1674668511"]}'
+        body: '{"id":"con_knP7duBzT8mvbyzG","options":{"name":"Test-Connection-Email","totp":{"length":4,"time_step":100},"email":{"body":"<html><body>email contents</body></html>","from":"{{application.name}} <test@example.com>","syntax":"liquid","subject":"Email Login - {{application.name}}"},"authParams":{"scope":"openid profile"},"disable_signup":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"brute_force_protection":true},"strategy":"email","name":"Test-Email-Connection-1713861888","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Email-Connection-1713861888"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 105.499708ms
+        duration: 316.467084ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -126,8 +125,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_K20zgQvmmHOurVPp
+                - Go-Auth0/1.4.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_knP7duBzT8mvbyzG
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -135,12 +134,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 0
+        content_length: 41
         uncompressed: false
-        body: ""
+        body: '{"deleted_at":"2024-04-23T08:44:54.911Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 204 No Content
-        code: 204
-        duration: 156.267375ms
+        status: 202 Accepted
+        code: 202
+        duration: 366.693916ms
