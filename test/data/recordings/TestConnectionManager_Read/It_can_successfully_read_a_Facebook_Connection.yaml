@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Facebook-Connection-1674668511","strategy":"facebook","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-Facebook-Connection-1714039119","strategy":"facebook","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.5.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,33 +30,32 @@ interactions:
         trailer: {}
         content_length: 275
         uncompressed: false
-        body: '{"id":"con_Rz8A0PsuLuNTS3wz","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":""},"strategy":"facebook","name":"Test-Facebook-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Facebook-Connection-1674668511"]}'
+        body: '{"id":"con_rEOcYHfO6hayZeVf","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":""},"strategy":"facebook","name":"Test-Facebook-Connection-1714039119","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Facebook-Connection-1714039119"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 136.696834ms
+        duration: 290.859541ms
     - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            null
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Rz8A0PsuLuNTS3wz
+                - Go-Auth0/1.5.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_rEOcYHfO6hayZeVf
         method: GET
       response:
         proto: HTTP/2.0
@@ -66,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_Rz8A0PsuLuNTS3wz","options":{"scope":"","upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"facebook","name":"Test-Facebook-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Facebook-Connection-1674668511"]}'
+        body: '{"id":"con_rEOcYHfO6hayZeVf","options":{"scope":"","upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"facebook","name":"Test-Facebook-Connection-1714039119","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Facebook-Connection-1714039119"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 93.340416ms
+        duration: 270.879958ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,8 +89,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Rz8A0PsuLuNTS3wz
+                - Go-Auth0/1.5.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_rEOcYHfO6hayZeVf
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -101,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2023-01-25T17:44:03.307Z"}'
+        body: '{"deleted_at":"2024-04-25T09:58:58.910Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 146.4925ms
+        duration: 538.240583ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,8 +124,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Rz8A0PsuLuNTS3wz
+                - Go-Auth0/1.5.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_rEOcYHfO6hayZeVf
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -142,4 +141,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 104.534792ms
+        duration: 277.320666ms
