@@ -26,7 +26,7 @@ func TestOrganizationManager_Create(t *testing.T) {
 		Branding: &OrganizationBranding{
 			LogoURL: auth0.String("https://example.com/logo.gif"),
 		},
-		OrganizationConnections: []*OrganizationConnection{orgConn, orgConn2},
+		EnabledConnections: []*OrganizationConnection{orgConn, orgConn2},
 	}
 
 	err := api.Organization.Create(context.Background(), org)

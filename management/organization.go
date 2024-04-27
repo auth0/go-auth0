@@ -27,7 +27,7 @@ type Organization struct {
 	// OrganizationConnections that will be enabled for this organization.
 	// See POST enabled_connections endpoint for the object format.
 	// (Max of 10 connections allowed)
-	OrganizationConnections []*OrganizationConnection `json:"enabled_connections,omitempty"`
+	EnabledConnections []*OrganizationConnection `json:"enabled_connections,omitempty"`
 }
 
 // OrganizationBranding holds branding information for an Organization.
