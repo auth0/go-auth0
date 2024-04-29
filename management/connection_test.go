@@ -50,6 +50,20 @@ var connectionTestCases = []connectionTestCase{
 		},
 	},
 	{
+		name: "Wordpress Connection",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Wordpress-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("wordpress"),
+		},
+		options: &ConnectionOptionsOAuth2{
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
+	},
+	{
 		name: "GoogleApps Connection",
 		connection: Connection{
 			Name:     auth0.Stringf("Test-GoogleApps-Connection-%d", time.Now().Unix()),

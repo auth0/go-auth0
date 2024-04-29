@@ -5249,7 +5249,7 @@ func TestConnectionOptionsOAuth2_GetPKCEEnabled(tt *testing.T) {
 }
 
 func TestConnectionOptionsOAuth2_GetScope(tt *testing.T) {
-	var zeroValue string
+	var zeroValue []string
 	c := &ConnectionOptionsOAuth2{Scope: &zeroValue}
 	c.GetScope()
 	c = &ConnectionOptionsOAuth2{}

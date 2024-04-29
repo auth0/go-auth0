@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-WindowsLive-Connection-1714039090","strategy":"windowslive","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-WindowsLive-Connection-1714380678","strategy":"windowslive","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 309
         uncompressed: false
-        body: '{"id":"con_OJEwRqLoDmRsrQwX","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"signin":true,"scope":["wl.signin"]},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1714039090","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1714039090"]}'
+        body: '{"id":"con_atcktcXwXUlySu78","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"signin":true,"scope":["wl.signin"]},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1714380678","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1714380678"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 996.973917ms
+        duration: 331.525583ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_OJEwRqLoDmRsrQwX
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_atcktcXwXUlySu78
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -65,10 +65,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-04-25T09:58:23.380Z"}'
+        body: '{"deleted_at":"2024-04-29T08:51:31.790Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 292.195167ms
+        duration: 335.597917ms

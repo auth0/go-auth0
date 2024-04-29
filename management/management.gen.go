@@ -4238,9 +4238,9 @@ func (c *ConnectionOptionsOAuth2) GetPKCEEnabled() bool {
 }
 
 // GetScope returns the Scope field if it's non-nil, zero value otherwise.
-func (c *ConnectionOptionsOAuth2) GetScope() string {
+func (c *ConnectionOptionsOAuth2) GetScope() []string {
 	if c == nil || c.Scope == nil {
-		return ""
+		return nil
 	}
 	return *c.Scope
 }

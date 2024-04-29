@@ -901,7 +901,7 @@ type ConnectionOptionsOAuth2 struct {
 	ClientSecret       *string   `json:"client_secret,omitempty"`
 	AuthorizationURL   *string   `json:"authorizationURL"`
 	TokenURL           *string   `json:"tokenURL"`
-	Scope              *string   `json:"scope,omitempty"`
+	Scope              *[]string `json:"scope,omitempty"`
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 	LogoURL            *string   `json:"icon_url,omitempty"`
@@ -915,7 +915,7 @@ type ConnectionOptionsOAuth2 struct {
 
 // Scopes returns the scopes for ConnectionOptionsOAuth2.
 func (c *ConnectionOptionsOAuth2) Scopes() []string {
-	return strings.Fields(c.GetScope())
+	return c.GetScope()
 }
 
 // SetScopes sets the scopes for ConnectionOptionsOAuth2.
@@ -927,15 +927,14 @@ func (c *ConnectionOptionsOAuth2) SetScopes(enable bool, scopes ...string) {
 	for _, scope := range scopes {
 		scopeMap[scope] = enable
 	}
-	scopeSlice := make([]string, 0, len(scopeMap))
+	var scopeSlice []string
 	for scope, enabled := range scopeMap {
 		if enabled {
 			scopeSlice = append(scopeSlice, scope)
 		}
 	}
 	sort.Strings(scopeSlice)
-	scope := strings.Join(scopeSlice, " ")
-	c.Scope = &scope
+	c.Scope = &scopeSlice
 }
 
 // ConnectionOptionsAD is used to configure an AD Connection.

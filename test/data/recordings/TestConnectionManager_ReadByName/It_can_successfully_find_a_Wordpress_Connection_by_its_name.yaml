@@ -6,14 +6,14 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 515
+        content_length: 180
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Email-Connection-1714380929","strategy":"email","options":{"name":"Test-Connection-Email","email":{"syntax":"liquid","from":"{{application.name}} \u003ctest@example.com\u003e","subject":"Email Login - {{application.name}}","body":"\u003chtml\u003e\u003cbody\u003eemail contents\u003c/body\u003e\u003c/html\u003e"},"totp":{"time_step":100,"length":4},"authParams":{"scope":"openid profile"},"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-Wordpress-Connection-1714380929","strategy":"wordpress","options":{"authorizationURL":null,"tokenURL":null,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
@@ -28,15 +28,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 588
+        content_length: 342
         uncompressed: false
-        body: '{"id":"con_Ib5IEJxIYA57HHHt","options":{"name":"Test-Connection-Email","email":{"syntax":"liquid","from":"{{application.name}} <test@example.com>","subject":"Email Login - {{application.name}}","body":"<html><body>email contents</body></html>"},"totp":{"time_step":100,"length":4},"authParams":{"scope":"openid profile"},"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"email","name":"Test-Email-Connection-1714380929","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Email-Connection-1714380929"]}'
+        body: '{"id":"con_ikCWJhC06mBIhdrO","options":{"authorizationURL":null,"tokenURL":null,"upstream_params":{"screen_name":{"alias":"login_hint"}},"profile":true,"scope":["profile"]},"strategy":"wordpress","name":"Test-Wordpress-Connection-1714380929","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Wordpress-Connection-1714380929"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 461.954208ms
+        duration: 427.174ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?include_totals=true&name=Test-Email-Connection-1714380929&per_page=50
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?include_totals=true&name=Test-Wordpress-Connection-1714380929&per_page=50
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"total":1,"start":0,"limit":50,"connections":[{"id":"con_Ib5IEJxIYA57HHHt","options":{"name":"Test-Connection-Email","totp":{"length":4,"time_step":100},"email":{"body":"<html><body>email contents</body></html>","from":"{{application.name}} <test@example.com>","syntax":"liquid","subject":"Email Login - {{application.name}}"},"authParams":{"scope":"openid profile"},"disable_signup":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"brute_force_protection":true},"strategy":"email","name":"Test-Email-Connection-1714380929","is_domain_connection":false,"realms":["Test-Email-Connection-1714380929"],"enabled_clients":[]}]}'
+        body: '{"total":1,"start":0,"limit":50,"connections":[{"id":"con_ikCWJhC06mBIhdrO","options":{"scope":["profile"],"profile":true,"tokenURL":null,"upstream_params":{"screen_name":{"alias":"login_hint"}},"authorizationURL":null},"strategy":"wordpress","name":"Test-Wordpress-Connection-1714380929","is_domain_connection":false,"realms":["Test-Wordpress-Connection-1714380929"],"enabled_clients":[]}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 316.327084ms
+        duration: 329.5315ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Ib5IEJxIYA57HHHt
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_ikCWJhC06mBIhdrO
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -100,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-04-29T08:55:37.740Z"}'
+        body: '{"deleted_at":"2024-04-29T08:55:34.597Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 344.906167ms
+        duration: 376.76375ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,7 +125,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Ib5IEJxIYA57HHHt
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_ikCWJhC06mBIhdrO
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -135,10 +135,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-04-29T08:55:37.740Z"}'
+        body: '{"deleted_at":"2024-04-29T08:55:34.597Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 309.617042ms
+        duration: 305.706708ms
