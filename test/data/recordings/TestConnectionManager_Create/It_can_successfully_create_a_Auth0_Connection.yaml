@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Auth0-Connection-1714039090","strategy":"auth0","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-Auth0-Connection-1714473052","strategy":"auth0","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 577
         uncompressed: false
-        body: '{"id":"con_pcnj6AYiMPfhD3Xj","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","upstream_params":{"screen_name":{"alias":"login_hint"}},"strategy_version":2,"authentication_methods":{"password":{"enabled":true},"passkey":{"enabled":false}},"passkey_options":{"challenge_ui":"both","progressive_enrollment_enabled":true,"local_enrollment_enabled":true},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-1714039090","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-1714039090"]}'
+        body: '{"id":"con_wrGwirVruBhK1ceq","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","upstream_params":{"screen_name":{"alias":"login_hint"}},"strategy_version":2,"authentication_methods":{"password":{"enabled":true},"passkey":{"enabled":false}},"passkey_options":{"challenge_ui":"both","progressive_enrollment_enabled":true,"local_enrollment_enabled":true},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-1714473052","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-1714473052"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 1.234447666s
+        duration: 1.161378458s
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_pcnj6AYiMPfhD3Xj
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_wrGwirVruBhK1ceq
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -65,10 +65,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-04-25T09:58:11.936Z"}'
+        body: '{"deleted_at":"2024-04-30T10:30:54.013Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 320.527083ms
+        duration: 372.204459ms
