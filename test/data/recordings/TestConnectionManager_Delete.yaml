@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Auth0-Connection-1714039361","strategy":"auth0"}
+            {"name":"Test-Auth0-Connection-1714473387","strategy":"auth0"}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 520
         uncompressed: false
-        body: '{"id":"con_eDAiZ1UPsIUzjZZD","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","strategy_version":2,"authentication_methods":{"password":{"enabled":true},"passkey":{"enabled":false}},"passkey_options":{"challenge_ui":"both","progressive_enrollment_enabled":true,"local_enrollment_enabled":true},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-1714039361","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-1714039361"]}'
+        body: '{"id":"con_LYWBkMBZrC6aelY5","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","strategy_version":2,"authentication_methods":{"password":{"enabled":true},"passkey":{"enabled":false}},"passkey_options":{"challenge_ui":"both","progressive_enrollment_enabled":true,"local_enrollment_enabled":true},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-1714473387","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-1714473387"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 719.911542ms
+        duration: 828.671875ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_eDAiZ1UPsIUzjZZD
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_LYWBkMBZrC6aelY5
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-04-25T10:02:42.108Z"}'
+        body: '{"deleted_at":"2024-04-30T10:36:28.127Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 307.303583ms
+        duration: 329.139917ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_eDAiZ1UPsIUzjZZD
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_LYWBkMBZrC6aelY5
         method: GET
       response:
         proto: HTTP/2.0
@@ -106,7 +106,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 404 Not Found
         code: 404
-        duration: 286.915125ms
+        duration: 339.533416ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,7 +125,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_eDAiZ1UPsIUzjZZD
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_LYWBkMBZrC6aelY5
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -141,4 +141,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 278.150167ms
+        duration: 353.659875ms

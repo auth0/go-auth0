@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-WindowsLive-Connection-1714039119","strategy":"windowslive","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-WindowsLive-Connection-1714473198","strategy":"windowslive","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 309
         uncompressed: false
-        body: '{"id":"con_s20VSSN0ch6UGDsH","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"signin":true,"scope":["wl.signin"]},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1714039119","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1714039119"]}'
+        body: '{"id":"con_YXdytpu4VSD0F7de","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"signin":true,"scope":["wl.signin"]},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1714473198","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1714473198"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 306.423875ms
+        duration: 369.866583ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_s20VSSN0ch6UGDsH
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_YXdytpu4VSD0F7de
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_s20VSSN0ch6UGDsH","options":{"scope":["wl.signin"],"signin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1714039119","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1714039119"]}'
+        body: '{"id":"con_YXdytpu4VSD0F7de","options":{"scope":["wl.signin"],"signin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1714473198","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1714473198"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 296.549583ms
+        duration: 407.859209ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_s20VSSN0ch6UGDsH
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_YXdytpu4VSD0F7de
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -100,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-04-25T09:59:12.363Z"}'
+        body: '{"deleted_at":"2024-04-30T10:33:47.325Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 291.101917ms
+        duration: 502.293667ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,7 +125,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_s20VSSN0ch6UGDsH
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_YXdytpu4VSD0F7de
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -141,4 +141,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 287.7265ms
+        duration: 316.352125ms
