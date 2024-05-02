@@ -898,11 +898,12 @@ func (c *ConnectionOptionsOIDC) SetScopes(enable bool, scopes ...string) {
 
 // ConnectionOptionsOAuth2 is used to configure an OAuth2 Connection.
 type ConnectionOptionsOAuth2 struct {
-	ClientID           *string   `json:"client_id,omitempty"`
-	ClientSecret       *string   `json:"client_secret,omitempty"`
-	AuthorizationURL   *string   `json:"authorizationURL"`
-	TokenURL           *string   `json:"tokenURL"`
-	Scope              *string   `json:"scope,omitempty"`
+	ClientID         *string `json:"client_id,omitempty"`
+	ClientSecret     *string `json:"client_secret,omitempty"`
+	AuthorizationURL *string `json:"authorizationURL"`
+	TokenURL         *string `json:"tokenURL"`
+	// Scope indicates the OAuth2 scopes for the connection. Use SetScopes and Scopes to manage scopes.
+	Scope              *string   `json:"-"`
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 	LogoURL            *string   `json:"icon_url,omitempty"`
