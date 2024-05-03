@@ -17,12 +17,16 @@ import (
 func TestOrganizationManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
+	orgConn := givenAnOrganizationConnectionWithoutOrgID(t)
+	orgConn2 := givenAnOrganizationConnectionWithoutOrgID(t)
+
 	org := &Organization{
 		Name:        auth0.String(fmt.Sprintf("test-organization%v", rand.Intn(999))),
 		DisplayName: auth0.String("Test Organization"),
 		Branding: &OrganizationBranding{
 			LogoURL: auth0.String("https://example.com/logo.gif"),
 		},
+		EnabledConnections: []*OrganizationConnection{orgConn, orgConn2},
 	}
 
 	err := api.Organization.Create(context.Background(), org)
@@ -120,7 +124,7 @@ func TestOrganizationManager_AddConnection(t *testing.T) {
 	conn := givenAConnection(t, connectionTestCase{connection: Connection{
 		Name:        auth0.String(fmt.Sprintf("test-conn%v", rand.Intn(999))),
 		DisplayName: auth0.String(fmt.Sprintf("Test Connection %v", rand.Intn(999))),
-		Strategy:    auth0.String(ConnectionStrategyAuth0),
+		Strategy:    auth0.String(ConnectionStrategyAD),
 		EnabledClients: &[]string{
 			os.Getenv("AUTH0_CLIENT_ID"),
 			client.GetClientID(),
@@ -129,6 +133,7 @@ func TestOrganizationManager_AddConnection(t *testing.T) {
 	orgConn := &OrganizationConnection{
 		ConnectionID:            conn.ID,
 		AssignMembershipOnLogin: auth0.Bool(true),
+		ShowAsButton:            auth0.Bool(true),
 	}
 
 	err := api.Organization.AddConnection(context.Background(), org.GetID(), orgConn)
@@ -159,6 +164,7 @@ func TestOrganizationManager_UpdateConnection(t *testing.T) {
 		orgConn.GetConnectionID(),
 		&OrganizationConnection{
 			AssignMembershipOnLogin: auth0.Bool(false),
+			ShowAsButton:            auth0.Bool(false),
 		},
 	)
 	assert.NoError(t, err)
@@ -166,6 +172,7 @@ func TestOrganizationManager_UpdateConnection(t *testing.T) {
 	actualOrgConn, err := api.Organization.Connection(context.Background(), org.GetID(), orgConn.GetConnectionID())
 	assert.NoError(t, err)
 	assert.Equal(t, false, actualOrgConn.GetAssignMembershipOnLogin())
+	assert.Equal(t, false, actualOrgConn.GetShowAsButton())
 }
 
 func TestOrganizationManager_DeleteConnection(t *testing.T) {
@@ -413,7 +420,7 @@ func givenAnOrganizationConnection(t *testing.T, orgID string) *OrganizationConn
 		connection: Connection{
 			Name:        auth0.String(fmt.Sprintf("test-conn%v", rand.Intn(999))),
 			DisplayName: auth0.String(fmt.Sprintf("Test Connection %v", rand.Intn(999))),
-			Strategy:    auth0.String(ConnectionStrategyAuth0),
+			Strategy:    auth0.String(ConnectionStrategyAD),
 			EnabledClients: &[]string{
 				os.Getenv("AUTH0_CLIENT_ID"),
 				client.GetClientID(),
@@ -423,10 +430,33 @@ func givenAnOrganizationConnection(t *testing.T, orgID string) *OrganizationConn
 	orgConn := &OrganizationConnection{
 		ConnectionID:            conn.ID,
 		AssignMembershipOnLogin: auth0.Bool(true),
+		ShowAsButton:            auth0.Bool(true),
 	}
 
 	err := api.Organization.AddConnection(context.Background(), orgID, orgConn)
 	require.NoError(t, err)
+
+	return orgConn
+}
+
+func givenAnOrganizationConnectionWithoutOrgID(t *testing.T) *OrganizationConnection {
+	client := givenAClient(t)
+	conn := givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:        auth0.String(fmt.Sprintf("test-conn%v", rand.Intn(999))),
+			DisplayName: auth0.String(fmt.Sprintf("Test Connection %v", rand.Intn(999))),
+			Strategy:    auth0.String(ConnectionStrategyAD),
+			EnabledClients: &[]string{
+				os.Getenv("AUTH0_CLIENT_ID"),
+				client.GetClientID(),
+			},
+		},
+	})
+	orgConn := &OrganizationConnection{
+		ConnectionID:            conn.ID,
+		AssignMembershipOnLogin: auth0.Bool(true),
+		ShowAsButton:            auth0.Bool(true),
+	}
 
 	return orgConn
 }

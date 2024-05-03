@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-WindowsLive-Connection-1674668511","strategy":"windowslive"}
+            {"name":"Test-WindowsLive-Connection-1714473349","strategy":"windowslive"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.5.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 252
         uncompressed: false
-        body: '{"id":"con_fWt33Y3lG4UqjFgf","options":{"signin":true,"scope":["wl.signin"]},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1674668511"]}'
+        body: '{"id":"con_nOGF5qjtHo2hxbMa","options":{"signin":true,"scope":["wl.signin"]},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1714473349","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1714473349"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 146.063209ms
+        duration: 323.031542ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,8 +55,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_fWt33Y3lG4UqjFgf
+                - Go-Auth0/1.5.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_nOGF5qjtHo2hxbMa
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,33 +66,32 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_fWt33Y3lG4UqjFgf","options":{"scope":["wl.signin"],"signin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1674668511"]}'
+        body: '{"id":"con_nOGF5qjtHo2hxbMa","options":{"scope":["wl.signin"],"signin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1714473349","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1714473349"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 168.734083ms
+        duration: 326.617625ms
     - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            null
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_fWt33Y3lG4UqjFgf
+                - Go-Auth0/1.5.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_nOGF5qjtHo2hxbMa
         method: GET
       response:
         proto: HTTP/2.0
@@ -102,13 +101,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_fWt33Y3lG4UqjFgf","options":{"scope":["wl.signin"],"signin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1674668511"]}'
+        body: '{"id":"con_nOGF5qjtHo2hxbMa","options":{"scope":["wl.signin"],"signin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1714473349","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1714473349"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 97.766416ms
+        duration: 400.32ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -126,8 +125,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_fWt33Y3lG4UqjFgf
+                - Go-Auth0/1.5.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_nOGF5qjtHo2hxbMa
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -137,10 +136,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2023-01-25T17:45:28.981Z"}'
+        body: '{"deleted_at":"2024-04-30T10:36:16.145Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 135.928875ms
+        duration: 324.35775ms

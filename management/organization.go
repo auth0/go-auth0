@@ -23,6 +23,11 @@ type Organization struct {
 	// Metadata associated with the organization, in the form of an object with
 	// string values (max 255 chars). Maximum of 10 metadata properties allowed.
 	Metadata *map[string]string `json:"metadata,omitempty"`
+
+	// OrganizationConnections that will be enabled for this organization.
+	// See POST enabled_connections endpoint for the object format.
+	// (Max of 10 connections allowed)
+	EnabledConnections []*OrganizationConnection `json:"enabled_connections,omitempty"`
 }
 
 // OrganizationBranding holds branding information for an Organization.
@@ -68,6 +73,10 @@ type OrganizationConnection struct {
 
 	// Connection details
 	Connection *OrganizationConnectionDetails `json:"connection,omitempty"`
+
+	// Determines whether a connection should be displayed on this organization’s login prompt.
+	// Only applicable for enterprise connections. Default: true.
+	ShowAsButton *bool `json:"show_as_button,omitempty"`
 }
 
 // OrganizationConnectionDetails holds connection details for an Organization.

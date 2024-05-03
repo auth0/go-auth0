@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Apple-Connection-1674668511","strategy":"apple","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-Apple-Connection-1714473198","strategy":"apple","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.5.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,33 +30,32 @@ interactions:
         trailer: {}
         content_length: 255
         uncompressed: false
-        body: '{"id":"con_XrDF8QYS8W7r8AHT","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"apple","name":"Test-Apple-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Apple-Connection-1674668511"]}'
+        body: '{"id":"con_SQk86k5mLVQWdVNx","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"apple","name":"Test-Apple-Connection-1714473198","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Apple-Connection-1714473198"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 120.009083ms
+        duration: 406.227875ms
     - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            null
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_XrDF8QYS8W7r8AHT
+                - Go-Auth0/1.5.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_SQk86k5mLVQWdVNx
         method: GET
       response:
         proto: HTTP/2.0
@@ -66,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_XrDF8QYS8W7r8AHT","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"apple","name":"Test-Apple-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Apple-Connection-1674668511"]}'
+        body: '{"id":"con_SQk86k5mLVQWdVNx","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"apple","name":"Test-Apple-Connection-1714473198","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Apple-Connection-1714473198"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 6.18877125s
+        duration: 332.068209ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,8 +89,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_XrDF8QYS8W7r8AHT
+                - Go-Auth0/1.5.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_SQk86k5mLVQWdVNx
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -101,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2023-01-25T17:44:09.871Z"}'
+        body: '{"deleted_at":"2024-04-30T10:33:42.269Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 552.3715ms
+        duration: 447.952375ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,8 +124,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_XrDF8QYS8W7r8AHT
+                - Go-Auth0/1.5.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_SQk86k5mLVQWdVNx
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -142,4 +141,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 108.66775ms
+        duration: 332.105666ms

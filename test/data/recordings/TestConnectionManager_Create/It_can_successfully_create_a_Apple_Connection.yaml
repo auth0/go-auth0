@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Apple-Connection-1674668511","strategy":"apple","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-Apple-Connection-1714473052","strategy":"apple","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.5.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 255
         uncompressed: false
-        body: '{"id":"con_UwqvaPZt42Z3r8Ch","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"apple","name":"Test-Apple-Connection-1674668511","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Apple-Connection-1674668511"]}'
+        body: '{"id":"con_vweVu7ZlaTbdM5C0","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"apple","name":"Test-Apple-Connection-1714473052","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Apple-Connection-1714473052"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 163.2495ms
+        duration: 363.491583ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_UwqvaPZt42Z3r8Ch
+                - Go-Auth0/1.5.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_vweVu7ZlaTbdM5C0
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -65,10 +65,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2023-01-25T17:43:36.504Z"}'
+        body: '{"deleted_at":"2024-04-30T10:31:02.076Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 141.128875ms
+        duration: 358.612958ms

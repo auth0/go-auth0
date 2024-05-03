@@ -113,7 +113,11 @@ type Client struct {
 
 	// URLs that are valid to call back from Auth0 for OIDC backchannel logout.
 	// This feature currently must be enabled for your tenant.
+	// Deprecated: use OIDCLogout instead of OIDCBackchannelLogout.
 	OIDCBackchannelLogout *OIDCBackchannelLogout `json:"oidc_backchannel_logout,omitempty"`
+
+	// URLs that are valid to call back from Auth0 for OIDC logout.
+	OIDCLogout *OIDCLogout `json:"oidc_logout,omitempty"`
 }
 
 // ClientJWTConfiguration is used to configure JWT settings for our Client.
@@ -224,8 +228,21 @@ type PrivateKeyJWT struct {
 }
 
 // OIDCBackchannelLogout defines the `oidc_backchannel_logout` settings for the client.
+// Deprecated: use OIDCLogout instead of OIDCBackchannelLogout.
 type OIDCBackchannelLogout struct {
 	BackChannelLogoutURLs *[]string `json:"backchannel_logout_urls,omitempty"`
+}
+
+// OIDCLogout defines the `oidc_logout` settings for the client.
+type OIDCLogout struct {
+	BackChannelLogoutURLs       *[]string                    `json:"backchannel_logout_urls,omitempty"`
+	BackChannelLogoutInitiators *BackChannelLogoutInitiators `json:"backchannel_logout_initiators,omitempty"`
+}
+
+// BackChannelLogoutInitiators defines the setting for OIDC logout initiators for a Client.
+type BackChannelLogoutInitiators struct {
+	Mode               *string   `json:"mode,omitempty"`
+	SelectedInitiators *[]string `json:"selected_initiators,omitempty"`
 }
 
 // ClientAddons defines the `addons` settings for a Client.

@@ -29,6 +29,21 @@ var connectionTestCases = []connectionTestCase{
 		},
 	},
 	{
+		name: "Wordpress Connection",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Wordpress-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("wordpress"),
+		},
+		options: &ConnectionOptionsOAuth2{
+			Scope: auth0.String("email profile openid"),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
+	},
+	{
 		name: "GoogleOAuth2 Connection",
 		connection: Connection{
 			Name:     auth0.Stringf("Test-GoogleOAuth2-Connection-%d", time.Now().Unix()),
@@ -367,6 +382,7 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			AuthorizationEndpoint: auth0.String("https://example.com"),
 			JWKSURI:               auth0.String("https://example.com/jwks"),
 			Type:                  auth0.String("front_channel"),
+			DiscoveryURL:          auth0.String("https://example.com//.well-known/openid-configuration"),
 			UpstreamParams: map[string]interface{}{
 				"screen_name": map[string]interface{}{
 					"alias": "login_hint",
@@ -609,6 +625,32 @@ func TestConnectionOptionsScopes(t *testing.T) {
 		options.SetScopes(false, "foo", "baz")
 		assert.Equal(t, []string{"bar"}, options.Scopes())
 	})
+}
+
+func TestOAuth2Connection_MarshalJSON(t *testing.T) {
+	for connection, expected := range map[*ConnectionOptionsOAuth2]string{
+		{Scope: auth0.String("foo bar baz")}: `{"authorizationURL":null,"tokenURL":null,"scope":["foo","bar","baz"]}`,
+		{Scope: auth0.String("")}:            `{"authorizationURL":null,"tokenURL":null,"scope":[]}`,
+		{Scope: nil}:                         `{"authorizationURL":null,"tokenURL":null}`,
+	} {
+		payload, err := json.Marshal(connection)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, string(payload))
+	}
+}
+
+func TestOAuth2Connection_UnmarshalJSON(t *testing.T) {
+	for expectedAsString, expected := range map[string]*ConnectionOptionsOAuth2{
+		`{"scope":["foo","bar","baz"]}`: {Scope: auth0.String("foo bar baz")},
+		`{"scope":null}`:                {Scope: nil},
+		`{}`:                            {},
+		`{"scope":[]}`:                  {Scope: auth0.String("")},
+	} {
+		var actual *ConnectionOptionsOAuth2
+		err := json.Unmarshal([]byte(expectedAsString), &actual)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, actual)
+	}
 }
 
 func TestGoogleOauth2Connection_MarshalJSON(t *testing.T) {

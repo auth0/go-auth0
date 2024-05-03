@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-GoogleApps-Connection-1674668511","strategy":"google-apps","options":{"domain":"example.com","tenant_domain":"example.com","basic_profile":true,"ext_profile":true,"ext_groups":true,"ext_is_admin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-GoogleApps-Connection-1714473052","strategy":"google-apps","options":{"domain":"example.com","tenant_domain":"example.com","basic_profile":true,"ext_profile":true,"ext_groups":true,"ext_is_admin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.5.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -28,15 +28,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 628
+        content_length: 627
         uncompressed: false
-        body: '{"id":"con_TcuZVn6PZjcIKeab","options":{"domain":"example.com","tenant_domain":"example.com","basic_profile":true,"ext_profile":true,"ext_groups":true,"ext_is_admin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"map_user_id_to_id":false,"email":true,"profile":true,"scope":["email","profile"],"handle_login_from_social":true},"strategy":"google-apps","name":"Test-GoogleApps-Connection-1674668511","provisioning_ticket_url":"https://login.eu.auth0.com/go-auth0-dev.eu.auth0.com/p/google-apps/0Gzf3l2h","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-GoogleApps-Connection-1674668511"]}'
+        body: '{"id":"con_MnSnzPgu18RtUzeO","options":{"domain":"example.com","tenant_domain":"example.com","basic_profile":true,"ext_profile":true,"ext_groups":true,"ext_is_admin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"map_user_id_to_id":false,"email":true,"profile":true,"scope":["email","profile"],"handle_login_from_social":true},"strategy":"google-apps","name":"Test-GoogleApps-Connection-1714473052","provisioning_ticket_url":"https://login.us.auth0.com/go-auth0-dev.eu.auth0.com/p/google-apps/4VrqkleQ","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-GoogleApps-Connection-1714473052"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 148.94875ms
+        duration: 494.386625ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_TcuZVn6PZjcIKeab
+                - Go-Auth0/1.5.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_MnSnzPgu18RtUzeO
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -65,10 +65,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2023-01-25T17:43:28.069Z"}'
+        body: '{"deleted_at":"2024-04-30T10:30:56.383Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 193.856042ms
+        duration: 367.900041ms

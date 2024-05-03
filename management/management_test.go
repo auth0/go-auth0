@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	_ "github.com/joho/godotenv/autoload"
+	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/auth0/go-auth0"
@@ -21,11 +21,11 @@ import (
 )
 
 var (
-	domain                = os.Getenv("AUTH0_DOMAIN")
-	clientID              = os.Getenv("AUTH0_CLIENT_ID")
-	clientSecret          = os.Getenv("AUTH0_CLIENT_SECRET")
-	debug                 = os.Getenv("AUTH0_DEBUG")
-	httpRecordings        = os.Getenv("AUTH0_HTTP_RECORDINGS")
+	domain                string
+	clientID              string
+	clientSecret          string
+	debug                 string
+	httpRecordings        string
 	httpRecordingsEnabled = false
 	api                   = &Management{}
 )
@@ -35,6 +35,14 @@ func envVarEnabled(envVar string) bool {
 }
 
 func TestMain(m *testing.M) {
+	_ = godotenv.Load("./../.env", ".env")
+
+	domain = os.Getenv("AUTH0_DOMAIN")
+	clientID = os.Getenv("AUTH0_CLIENT_ID")
+	clientSecret = os.Getenv("AUTH0_CLIENT_SECRET")
+	debug = os.Getenv("AUTH0_DEBUG")
+	httpRecordings = os.Getenv("AUTH0_HTTP_RECORDINGS")
+
 	httpRecordingsEnabled = envVarEnabled(httpRecordings)
 	initializeTestClient()
 
