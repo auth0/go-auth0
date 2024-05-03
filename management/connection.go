@@ -898,19 +898,39 @@ func (c *ConnectionOptionsOIDC) SetScopes(enable bool, scopes ...string) {
 
 // ConnectionOptionsOAuth2 is used to configure an OAuth2 Connection.
 type ConnectionOptionsOAuth2 struct {
-	ClientID           *string   `json:"client_id,omitempty"`
-	ClientSecret       *string   `json:"client_secret,omitempty"`
-	AuthorizationURL   *string   `json:"authorizationURL"`
-	TokenURL           *string   `json:"tokenURL"`
-	Scope              *string   `json:"scope,omitempty"`
-	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
+	// ClientID is the OAuth2 client ID.
+	ClientID *string `json:"client_id,omitempty"`
+
+	// ClientSecret is the OAuth2 client secret.
+	ClientSecret *string `json:"client_secret,omitempty"`
+
+	// AuthorizationURL is the URL used for obtaining authorization from the user.
+	AuthorizationURL *string `json:"authorizationURL"`
+
+	// TokenURL is the URL used for obtaining the access token.
+	TokenURL *string `json:"tokenURL"`
+
+	// Scope indicates the OAuth2 scopes for the connection.
+	// Use SetScopes and Scopes to manage scopes.
+	Scope *string `json:"-"`
+
+	// SetUserAttributes specifies user root attributes.
+	SetUserAttributes *string `json:"set_user_root_attributes,omitempty"`
+
+	// NonPersistentAttrs specifies non-persistent attributes.
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
-	LogoURL            *string   `json:"icon_url,omitempty"`
-	PKCEEnabled        *bool     `json:"pkce_enabled,omitempty"`
-	// Scripts for the connection
+
+	// LogoURL is the URL for the connection's icon.
+	LogoURL *string `json:"icon_url,omitempty"`
+
+	// PKCEEnabled specifies whether PKCE (Proof Key for Code Exchange) is enabled.
+	PKCEEnabled *bool `json:"pkce_enabled,omitempty"`
+
+	// Scripts contains scripts for the connection.
 	// Allowed keys are: "fetchUserProfile"
 	Scripts *map[string]string `json:"scripts,omitempty"`
 
+	// UpstreamParams specifies upstream parameters.
 	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 }
 
