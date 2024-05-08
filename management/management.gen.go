@@ -8227,6 +8227,101 @@ func (p *PromptPartials) String() string {
 	return Stringify(p)
 }
 
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (r *RefreshToken) GetClientID() string {
+	if r == nil || r.ClientID == nil {
+		return ""
+	}
+	return *r.ClientID
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (r *RefreshToken) GetCreatedAt() time.Time {
+	if r == nil || r.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *r.CreatedAt
+}
+
+// GetExpiresAt returns the ExpiresAt field if it's non-nil, zero value otherwise.
+func (r *RefreshToken) GetExpiresAt() time.Time {
+	if r == nil || r.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *r.ExpiresAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (r *RefreshToken) GetID() string {
+	if r == nil || r.ID == nil {
+		return ""
+	}
+	return *r.ID
+}
+
+// GetIdleExpiresAt returns the IdleExpiresAt field if it's non-nil, zero value otherwise.
+func (r *RefreshToken) GetIdleExpiresAt() time.Time {
+	if r == nil || r.IdleExpiresAt == nil {
+		return time.Time{}
+	}
+	return *r.IdleExpiresAt
+}
+
+// GetRotating returns the Rotating field if it's non-nil, zero value otherwise.
+func (r *RefreshToken) GetRotating() bool {
+	if r == nil || r.Rotating == nil {
+		return false
+	}
+	return *r.Rotating
+}
+
+// GetSessionID returns the SessionID field if it's non-nil, zero value otherwise.
+func (r *RefreshToken) GetSessionID() string {
+	if r == nil || r.SessionID == nil {
+		return ""
+	}
+	return *r.SessionID
+}
+
+// GetUserID returns the UserID field if it's non-nil, zero value otherwise.
+func (r *RefreshToken) GetUserID() string {
+	if r == nil || r.UserID == nil {
+		return ""
+	}
+	return *r.UserID
+}
+
+// String returns a string representation of RefreshToken.
+func (r *RefreshToken) String() string {
+	return Stringify(r)
+}
+
+// String returns a string representation of RefreshTokenList.
+func (r *RefreshTokenList) String() string {
+	return Stringify(r)
+}
+
+// GetAudience returns the Audience field if it's non-nil, zero value otherwise.
+func (r *RefreshTokenResourceServer) GetAudience() string {
+	if r == nil || r.Audience == nil {
+		return ""
+	}
+	return *r.Audience
+}
+
+// GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
+func (r *RefreshTokenResourceServer) GetScopes() string {
+	if r == nil || r.Scopes == nil {
+		return ""
+	}
+	return *r.Scopes
+}
+
+// String returns a string representation of RefreshTokenResourceServer.
+func (r *RefreshTokenResourceServer) String() string {
+	return Stringify(r)
+}
+
 // GetAllowOfflineAccess returns the AllowOfflineAccess field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetAllowOfflineAccess() bool {
 	if r == nil || r.AllowOfflineAccess == nil {

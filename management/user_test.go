@@ -444,6 +444,93 @@ func TestUserManager_Organizations(t *testing.T) {
 	assert.Equal(t, org.GetID(), orgs.Organizations[0].GetID())
 }
 
+// TestUserManager_GetRefreshTokens tests the GetRefreshTokens method of UserManager.
+// This E2E test is skipped because refresh tokens cannot be created without UI interaction.
+func TestUserManager_GetRefreshTokens(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	skipE2E(t)
+	user := &User{ID: auth0.String("UserID")}
+	expectedToken1 := RefreshToken{
+		ID:        auth0.String("RefreshTokenID"),
+		UserID:    auth0.String("UserID"),
+		CreatedAt: auth0.Time(time.Date(2024, 5, 1, 13, 0, 30, 38000000, time.UTC)),
+		ClientID:  auth0.String("CLIENTID"),
+		Rotating:  auth0.Bool(false),
+		ResourceServer: []*RefreshTokenResourceServer{
+			{
+				Audience: auth0.String("https://go-auth0-dev.eu.auth0.com.us.auth0.com/api/v2/"),
+				Scopes:   auth0.String("openid profile offline_access"),
+			},
+		},
+	}
+	expectedToken2 := RefreshToken{
+		ID:        auth0.String("RefreshTokenID"),
+		UserID:    auth0.String("UserID"),
+		CreatedAt: auth0.Time(time.Date(2024, 5, 3, 11, 58, 27, 35000000, time.UTC)),
+		ClientID:  auth0.String("CLIENTID"),
+		Rotating:  auth0.Bool(false),
+		ResourceServer: []*RefreshTokenResourceServer{
+			{
+				Audience: auth0.String("https://go-auth0-dev.eu.auth0.com.us.auth0.com/api/v2/"),
+				Scopes:   auth0.String("openid profile email address phone delete:current_user_device_credentials create:current_user_device_credentials offline_access"),
+			},
+		},
+	}
+
+	expectedTokens := []*RefreshToken{&expectedToken1, &expectedToken2}
+
+	tokens, err := api.User.GetRefreshTokens(context.Background(), user.GetID())
+	require.NoError(t, err)
+	assert.Equal(t, expectedTokens, tokens.Tokens)
+	assert.Equal(t, "RefreshTokenID", tokens.Next)
+}
+
+// TestUserManager_DeleteRefreshTokens tests the DeleteRefreshTokens method of UserManager.
+// This E2E test is skipped because refresh tokens cannot be created without UI interaction.
+func TestUserManager_DeleteRefreshTokens(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	skipE2E(t)
+
+	user := &User{ID: auth0.String("UserID")}
+	expectedToken1 := RefreshToken{
+		ID:        auth0.String("RefreshTokenID"),
+		UserID:    auth0.String("UserID"),
+		CreatedAt: auth0.Time(time.Date(2024, 5, 1, 13, 0, 30, 38000000, time.UTC)),
+		ClientID:  auth0.String("CLIENTID"),
+		Rotating:  auth0.Bool(false),
+		ResourceServer: []*RefreshTokenResourceServer{
+			{
+				Audience: auth0.String("https://go-auth0-dev.eu.auth0.com.us.auth0.com/api/v2/"),
+				Scopes:   auth0.String("openid profile offline_access"),
+			},
+		},
+	}
+	expectedToken2 := RefreshToken{
+		ID:        auth0.String("RefreshTokenID"),
+		UserID:    auth0.String("UserID"),
+		CreatedAt: auth0.Time(time.Date(2024, 5, 3, 11, 58, 27, 35000000, time.UTC)),
+		ClientID:  auth0.String("CLIENTID"),
+		Rotating:  auth0.Bool(false),
+		ResourceServer: []*RefreshTokenResourceServer{
+			{
+				Audience: auth0.String("https://go-auth0-dev.eu.auth0.com.us.auth0.com/api/v2/"),
+				Scopes:   auth0.String("openid profile email address phone delete:current_user_device_credentials create:current_user_device_credentials offline_access"),
+			},
+		},
+	}
+	expectedTokens := []*RefreshToken{&expectedToken1, &expectedToken2}
+
+	tokens := givenRefreshTokens(t)
+	assert.Equal(t, expectedTokens, tokens.Tokens)
+
+	err := api.User.DeleteRefreshTokens(context.Background(), user.GetID())
+	require.NoError(t, err)
+
+	tokensAfterDeletion := givenRefreshTokens(t)
+	assert.Empty(t, tokensAfterDeletion.Tokens)
+	assert.Empty(t, tokensAfterDeletion.Next)
+}
+
 func givenAUser(t *testing.T) *User {
 	t.Helper()
 
@@ -483,9 +570,26 @@ func givenAUser(t *testing.T) *User {
 	return user
 }
 
+func givenRefreshTokens(t *testing.T) *RefreshTokenList {
+	t.Helper()
+	user := &User{ID: auth0.String("UserID")}
+
+	tokens, err := api.User.GetRefreshTokens(context.Background(), user.GetID())
+	require.NoError(t, err)
+	return tokens
+}
+
 func cleanupUser(t *testing.T, userID string) {
 	t.Helper()
 
 	err := api.User.Delete(context.Background(), userID)
 	require.NoError(t, err)
+}
+
+func skipE2E(t *testing.T) {
+	t.Helper()
+
+	if !httpRecordingsEnabled {
+		t.Skip("Skipped as cannot be test in E2E scenario")
+	}
 }

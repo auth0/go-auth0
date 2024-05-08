@@ -10345,6 +10345,130 @@ func TestPromptPartials_String(t *testing.T) {
 	}
 }
 
+func TestRefreshToken_GetClientID(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshToken{ClientID: &zeroValue}
+	r.GetClientID()
+	r = &RefreshToken{}
+	r.GetClientID()
+	r = nil
+	r.GetClientID()
+}
+
+func TestRefreshToken_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	r := &RefreshToken{CreatedAt: &zeroValue}
+	r.GetCreatedAt()
+	r = &RefreshToken{}
+	r.GetCreatedAt()
+	r = nil
+	r.GetCreatedAt()
+}
+
+func TestRefreshToken_GetExpiresAt(tt *testing.T) {
+	var zeroValue time.Time
+	r := &RefreshToken{ExpiresAt: &zeroValue}
+	r.GetExpiresAt()
+	r = &RefreshToken{}
+	r.GetExpiresAt()
+	r = nil
+	r.GetExpiresAt()
+}
+
+func TestRefreshToken_GetID(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshToken{ID: &zeroValue}
+	r.GetID()
+	r = &RefreshToken{}
+	r.GetID()
+	r = nil
+	r.GetID()
+}
+
+func TestRefreshToken_GetIdleExpiresAt(tt *testing.T) {
+	var zeroValue time.Time
+	r := &RefreshToken{IdleExpiresAt: &zeroValue}
+	r.GetIdleExpiresAt()
+	r = &RefreshToken{}
+	r.GetIdleExpiresAt()
+	r = nil
+	r.GetIdleExpiresAt()
+}
+
+func TestRefreshToken_GetRotating(tt *testing.T) {
+	var zeroValue bool
+	r := &RefreshToken{Rotating: &zeroValue}
+	r.GetRotating()
+	r = &RefreshToken{}
+	r.GetRotating()
+	r = nil
+	r.GetRotating()
+}
+
+func TestRefreshToken_GetSessionID(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshToken{SessionID: &zeroValue}
+	r.GetSessionID()
+	r = &RefreshToken{}
+	r.GetSessionID()
+	r = nil
+	r.GetSessionID()
+}
+
+func TestRefreshToken_GetUserID(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshToken{UserID: &zeroValue}
+	r.GetUserID()
+	r = &RefreshToken{}
+	r.GetUserID()
+	r = nil
+	r.GetUserID()
+}
+
+func TestRefreshToken_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &RefreshToken{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestRefreshTokenList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &RefreshTokenList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestRefreshTokenResourceServer_GetAudience(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshTokenResourceServer{Audience: &zeroValue}
+	r.GetAudience()
+	r = &RefreshTokenResourceServer{}
+	r.GetAudience()
+	r = nil
+	r.GetAudience()
+}
+
+func TestRefreshTokenResourceServer_GetScopes(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshTokenResourceServer{Scopes: &zeroValue}
+	r.GetScopes()
+	r = &RefreshTokenResourceServer{}
+	r.GetScopes()
+	r = nil
+	r.GetScopes()
+}
+
+func TestRefreshTokenResourceServer_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &RefreshTokenResourceServer{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestResourceServer_GetAllowOfflineAccess(tt *testing.T) {
 	var zeroValue bool
 	r := &ResourceServer{AllowOfflineAccess: &zeroValue}
