@@ -444,11 +444,14 @@ func TestUserManager_Organizations(t *testing.T) {
 	assert.Equal(t, org.GetID(), orgs.Organizations[0].GetID())
 }
 
-// TestUserManager_GetRefreshTokens tests the GetRefreshTokens method of UserManager.
+// TestUserManager_ListRefreshTokens tests the ListRefreshTokens method of UserManager.
 // This E2E test is skipped because refresh tokens cannot be created without UI interaction.
-func TestUserManager_GetRefreshTokens(t *testing.T) {
+func TestUserManager_ListRefreshTokens(t *testing.T) {
+	skipTestIfRunningE2E(t)
 	configureHTTPTestRecordings(t)
-	skipE2E(t)
+
+	// RecordingNote: This test recording was manually generated to match these details.
+	// If any changes occur here, the test recording will need manual modification.
 	user := &User{ID: auth0.String("UserID")}
 	expectedToken1 := RefreshToken{
 		ID:        auth0.String("RefreshTokenID"),
@@ -479,7 +482,7 @@ func TestUserManager_GetRefreshTokens(t *testing.T) {
 
 	expectedTokens := []*RefreshToken{&expectedToken1, &expectedToken2}
 
-	tokens, err := api.User.GetRefreshTokens(context.Background(), user.GetID())
+	tokens, err := api.User.ListRefreshTokens(context.Background(), user.GetID())
 	require.NoError(t, err)
 	assert.Equal(t, expectedTokens, tokens.Tokens)
 	assert.Equal(t, "RefreshTokenID", tokens.Next)
@@ -488,9 +491,11 @@ func TestUserManager_GetRefreshTokens(t *testing.T) {
 // TestUserManager_DeleteRefreshTokens tests the DeleteRefreshTokens method of UserManager.
 // This E2E test is skipped because refresh tokens cannot be created without UI interaction.
 func TestUserManager_DeleteRefreshTokens(t *testing.T) {
+	skipTestIfRunningE2E(t)
 	configureHTTPTestRecordings(t)
-	skipE2E(t)
 
+	// RecordingNote: This test recording was manually generated to match these details.
+	// If any changes occur here, the test recording will need manual modification.
 	user := &User{ID: auth0.String("UserID")}
 	expectedToken1 := RefreshToken{
 		ID:        auth0.String("RefreshTokenID"),
@@ -520,13 +525,13 @@ func TestUserManager_DeleteRefreshTokens(t *testing.T) {
 	}
 	expectedTokens := []*RefreshToken{&expectedToken1, &expectedToken2}
 
-	tokens := givenRefreshTokens(t)
+	tokens := retrieveRefreshTokens(t)
 	assert.Equal(t, expectedTokens, tokens.Tokens)
 
 	err := api.User.DeleteRefreshTokens(context.Background(), user.GetID())
 	require.NoError(t, err)
 
-	tokensAfterDeletion := givenRefreshTokens(t)
+	tokensAfterDeletion := retrieveRefreshTokens(t)
 	assert.Empty(t, tokensAfterDeletion.Tokens)
 	assert.Empty(t, tokensAfterDeletion.Next)
 }
@@ -570,11 +575,15 @@ func givenAUser(t *testing.T) *User {
 	return user
 }
 
-func givenRefreshTokens(t *testing.T) *RefreshTokenList {
+// retrieveRefreshTokens retrieves refresh tokens associated with a user.
+//
+// This function is responsible for fetching refresh tokens from the user.
+// It does not create new refresh tokens but rather retrieves existing ones.
+func retrieveRefreshTokens(t *testing.T) *RefreshTokenList {
 	t.Helper()
 	user := &User{ID: auth0.String("UserID")}
 
-	tokens, err := api.User.GetRefreshTokens(context.Background(), user.GetID())
+	tokens, err := api.User.ListRefreshTokens(context.Background(), user.GetID())
 	require.NoError(t, err)
 	return tokens
 }
@@ -586,10 +595,14 @@ func cleanupUser(t *testing.T, userID string) {
 	require.NoError(t, err)
 }
 
-func skipE2E(t *testing.T) {
+// skipTestIfRunningE2E skips the test if running in an end-to-end (E2E) scenario.
+//
+// This function is used to skip a test if it's being executed in an end-to-end (E2E) scenario
+// where HTTP recordings are not enabled.
+func skipTestIfRunningE2E(t *testing.T) {
 	t.Helper()
 
 	if !httpRecordingsEnabled {
-		t.Skip("Skipped as cannot be test in E2E scenario")
+		t.Skip("Skipped due to inability of setting this up for an E2E scenario")
 	}
 }

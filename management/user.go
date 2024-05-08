@@ -750,13 +750,13 @@ func (m *UserManager) DeleteAllAuthenticationMethods(ctx context.Context, userID
 	return
 }
 
-// GetRefreshTokens retrieves details for a user's refresh tokens.
+// ListRefreshTokens retrieves details for a user's refresh tokens.
 //
 // It allows pagination using the provided options. For more information on pagination, refer to:
 // https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
 //
 // See: https://auth0.com/docs/api/management/v2#!/Users/get-refresh-tokens-for-user
-func (m *UserManager) GetRefreshTokens(ctx context.Context, userID string, opts ...RequestOption) (r *RefreshTokenList, err error) {
+func (m *UserManager) ListRefreshTokens(ctx context.Context, userID string, opts ...RequestOption) (r *RefreshTokenList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("users", userID, "refresh-tokens"), &r, applyListDefaults(opts))
 	return
 }
