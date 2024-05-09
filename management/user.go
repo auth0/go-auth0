@@ -388,6 +388,31 @@ type AuthenticationMethodList struct {
 	Authenticators []*AuthenticationMethod `json:"authenticators,omitempty"`
 }
 
+// RefreshTokenList represents a list of user refresh tokens.
+type RefreshTokenList struct {
+	List
+	Tokens []*RefreshToken `json:"tokens,omitempty"`
+}
+
+// RefreshToken represents a refresh token for a user.
+type RefreshToken struct {
+	ID             *string                       `json:"id,omitempty"`
+	UserID         *string                       `json:"user_id,omitempty"`
+	CreatedAt      *time.Time                    `json:"created_at,omitempty"`
+	IdleExpiresAt  *time.Time                    `json:"idle_expires_at,omitempty"`
+	ExpiresAt      *time.Time                    `json:"expires_at,omitempty"`
+	ClientID       *string                       `json:"client_id,omitempty"`
+	SessionID      *string                       `json:"session_id,omitempty"`
+	Rotating       *bool                         `json:"rotating,omitempty"`
+	ResourceServer []*RefreshTokenResourceServer `json:"resource_servers,omitempty"`
+}
+
+// RefreshTokenResourceServer represents the resource server associated with a refresh token.
+type RefreshTokenResourceServer struct {
+	Audience *string `json:"audience,omitempty"`
+	Scopes   *string `json:"scopes,omitempty"`
+}
+
 // UserManager manages Auth0 User resources.
 type UserManager manager
 
@@ -722,5 +747,24 @@ func (m *UserManager) DeleteAuthenticationMethod(ctx context.Context, userID str
 // See: https://auth0.com/docs/api/management/v2#!/Users/delete_authentication_methods
 func (m *UserManager) DeleteAllAuthenticationMethods(ctx context.Context, userID string, opts ...RequestOption) (err error) {
 	err = m.management.Request(ctx, "DELETE", m.management.URI("users", userID, "authentication-methods"), nil, opts...)
+	return
+}
+
+// ListRefreshTokens retrieves details for a user's refresh tokens.
+//
+// It allows pagination using the provided options. For more information on pagination, refer to:
+// https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
+//
+// See: https://auth0.com/docs/api/management/v2#!/Users/get-refresh-tokens-for-user
+func (m *UserManager) ListRefreshTokens(ctx context.Context, userID string, opts ...RequestOption) (r *RefreshTokenList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("users", userID, "refresh-tokens"), &r, applyListDefaults(opts))
+	return
+}
+
+// DeleteRefreshTokens deletes all refresh tokens for a user.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Users/delete-refresh-tokens-for-user
+func (m *UserManager) DeleteRefreshTokens(ctx context.Context, userID string, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "DELETE", m.management.URI("users", userID, "refresh-tokens"), nil, opts...)
 	return
 }

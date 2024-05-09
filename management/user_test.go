@@ -444,6 +444,98 @@ func TestUserManager_Organizations(t *testing.T) {
 	assert.Equal(t, org.GetID(), orgs.Organizations[0].GetID())
 }
 
+// TestUserManager_ListRefreshTokens tests the ListRefreshTokens method of UserManager.
+// This E2E test is skipped because refresh tokens cannot be created without UI interaction.
+func TestUserManager_ListRefreshTokens(t *testing.T) {
+	skipTestIfRunningE2E(t)
+	configureHTTPTestRecordings(t)
+
+	// RecordingNote: This test recording was manually generated to match these details.
+	// If any changes occur here, the test recording will need manual modification.
+	user := &User{ID: auth0.String("UserID")}
+	expectedToken1 := RefreshToken{
+		ID:        auth0.String("RefreshTokenID"),
+		UserID:    auth0.String("UserID"),
+		CreatedAt: auth0.Time(time.Date(2024, 5, 1, 13, 0, 30, 38000000, time.UTC)),
+		ClientID:  auth0.String("CLIENTID"),
+		Rotating:  auth0.Bool(false),
+		ResourceServer: []*RefreshTokenResourceServer{
+			{
+				Audience: auth0.String("https://go-auth0-dev.eu.auth0.com.us.auth0.com/api/v2/"),
+				Scopes:   auth0.String("openid profile offline_access"),
+			},
+		},
+	}
+	expectedToken2 := RefreshToken{
+		ID:        auth0.String("RefreshTokenID"),
+		UserID:    auth0.String("UserID"),
+		CreatedAt: auth0.Time(time.Date(2024, 5, 3, 11, 58, 27, 35000000, time.UTC)),
+		ClientID:  auth0.String("CLIENTID"),
+		Rotating:  auth0.Bool(false),
+		ResourceServer: []*RefreshTokenResourceServer{
+			{
+				Audience: auth0.String("https://go-auth0-dev.eu.auth0.com.us.auth0.com/api/v2/"),
+				Scopes:   auth0.String("openid profile email address phone delete:current_user_device_credentials create:current_user_device_credentials offline_access"),
+			},
+		},
+	}
+
+	expectedTokens := []*RefreshToken{&expectedToken1, &expectedToken2}
+
+	tokens, err := api.User.ListRefreshTokens(context.Background(), user.GetID())
+	require.NoError(t, err)
+	assert.Equal(t, expectedTokens, tokens.Tokens)
+	assert.Equal(t, "RefreshTokenID", tokens.Next)
+}
+
+// TestUserManager_DeleteRefreshTokens tests the DeleteRefreshTokens method of UserManager.
+// This E2E test is skipped because refresh tokens cannot be created without UI interaction.
+func TestUserManager_DeleteRefreshTokens(t *testing.T) {
+	skipTestIfRunningE2E(t)
+	configureHTTPTestRecordings(t)
+
+	// RecordingNote: This test recording was manually generated to match these details.
+	// If any changes occur here, the test recording will need manual modification.
+	user := &User{ID: auth0.String("UserID")}
+	expectedToken1 := RefreshToken{
+		ID:        auth0.String("RefreshTokenID"),
+		UserID:    auth0.String("UserID"),
+		CreatedAt: auth0.Time(time.Date(2024, 5, 1, 13, 0, 30, 38000000, time.UTC)),
+		ClientID:  auth0.String("CLIENTID"),
+		Rotating:  auth0.Bool(false),
+		ResourceServer: []*RefreshTokenResourceServer{
+			{
+				Audience: auth0.String("https://go-auth0-dev.eu.auth0.com.us.auth0.com/api/v2/"),
+				Scopes:   auth0.String("openid profile offline_access"),
+			},
+		},
+	}
+	expectedToken2 := RefreshToken{
+		ID:        auth0.String("RefreshTokenID"),
+		UserID:    auth0.String("UserID"),
+		CreatedAt: auth0.Time(time.Date(2024, 5, 3, 11, 58, 27, 35000000, time.UTC)),
+		ClientID:  auth0.String("CLIENTID"),
+		Rotating:  auth0.Bool(false),
+		ResourceServer: []*RefreshTokenResourceServer{
+			{
+				Audience: auth0.String("https://go-auth0-dev.eu.auth0.com.us.auth0.com/api/v2/"),
+				Scopes:   auth0.String("openid profile email address phone delete:current_user_device_credentials create:current_user_device_credentials offline_access"),
+			},
+		},
+	}
+	expectedTokens := []*RefreshToken{&expectedToken1, &expectedToken2}
+
+	tokens := retrieveRefreshTokens(t)
+	assert.Equal(t, expectedTokens, tokens.Tokens)
+
+	err := api.User.DeleteRefreshTokens(context.Background(), user.GetID())
+	require.NoError(t, err)
+
+	tokensAfterDeletion := retrieveRefreshTokens(t)
+	assert.Empty(t, tokensAfterDeletion.Tokens)
+	assert.Empty(t, tokensAfterDeletion.Next)
+}
+
 func givenAUser(t *testing.T) *User {
 	t.Helper()
 
@@ -483,9 +575,34 @@ func givenAUser(t *testing.T) *User {
 	return user
 }
 
+// retrieveRefreshTokens retrieves refresh tokens associated with a user.
+//
+// This function is responsible for fetching refresh tokens from the user.
+// It does not create new refresh tokens but rather retrieves existing ones.
+func retrieveRefreshTokens(t *testing.T) *RefreshTokenList {
+	t.Helper()
+	user := &User{ID: auth0.String("UserID")}
+
+	tokens, err := api.User.ListRefreshTokens(context.Background(), user.GetID())
+	require.NoError(t, err)
+	return tokens
+}
+
 func cleanupUser(t *testing.T, userID string) {
 	t.Helper()
 
 	err := api.User.Delete(context.Background(), userID)
 	require.NoError(t, err)
+}
+
+// skipTestIfRunningE2E skips the test if running in an end-to-end (E2E) scenario.
+//
+// This function is used to skip a test if it's being executed in an end-to-end (E2E) scenario
+// where HTTP recordings are not enabled.
+func skipTestIfRunningE2E(t *testing.T) {
+	t.Helper()
+
+	if !httpRecordingsEnabled {
+		t.Skip("Skipped due to inability of setting this up for an E2E scenario")
+	}
 }
