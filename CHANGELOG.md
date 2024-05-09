@@ -1,5 +1,16 @@
 # Change Log
 
+## [v1.6.0](https://github.com/auth0/go-auth0/tree/v1.6.0) (2024-05-09)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.5.0...v1.6.0)
+
+**Added**
+- [GH-380] - Add User Refresh Token Management Functionality to SDK [\#404](https://github.com/auth0/go-auth0/pull/404) ([developerkunal](https://github.com/developerkunal))
+- [GH-366] - Add support for enabled_connections field in CreateOrganizationConnections [\#394](https://github.com/auth0/go-auth0/pull/394) ([developerkunal](https://github.com/developerkunal))
+
+**Fixed**
+- [GH-372] Fix unmarshaling issue with Wordpress strategy connections [\#398](https://github.com/auth0/go-auth0/pull/398) ([developerkunal](https://github.com/developerkunal))
+- [GH-336] - Fix Unmarshal JSON error as string [\#393](https://github.com/auth0/go-auth0/pull/393) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.5.0](https://github.com/auth0/go-auth0/tree/v1.5.0) (2024-04-23)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.4.1...v1.5.0)
 
