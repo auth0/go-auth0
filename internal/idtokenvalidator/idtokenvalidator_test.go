@@ -134,13 +134,13 @@ func TestIDTokenValidation(t *testing.T) {
 		token, err := builder.Build()
 		assert.NoError(t, err)
 
-		jwt, err := jwt.Sign(token, jwt.WithKey(jwa.HS512, []byte(jwtClientSecret)))
+		jwtPayload, err := jwt.Sign(token, jwt.WithKey(jwa.HS512, []byte(jwtClientSecret)))
 		assert.NoError(t, err)
 
 		validator, err := New(context.Background(), jwtDomain, jwtClientSecret, jwtClientID, "HS256")
 		assert.NoError(t, err)
 
-		err = validator.Validate(string(jwt), ValidationOptions{})
+		err = validator.Validate(string(jwtPayload), ValidationOptions{})
 		assert.ErrorContains(t, err, "signature algorithm \"HS512\" is not supported")
 	})
 
@@ -650,7 +650,9 @@ func configureSigning(t *testing.T, args jwtArgs) (jwa.SignatureAlgorithm, jwk.K
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, `{"keys": [%s] }`, b)
+		if _, err := fmt.Fprintf(w, `{"keys": [%s] }`, b); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
 	})
 	s := httptest.NewTLSServer(h)
 
