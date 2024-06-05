@@ -514,7 +514,9 @@ func withIDToken(t *testing.T, extras map[string]interface{}) (*Authentication, 
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, string(b))
+		if _, err := fmt.Fprint(w, string(b)); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
 	})
 	s := httptest.NewTLSServer(h)
 	t.Cleanup(func() {
