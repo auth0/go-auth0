@@ -77,6 +77,11 @@ type OrganizationConnection struct {
 	// Determines whether a connection should be displayed on this organization’s login prompt.
 	// Only applicable for enterprise connections. Default: true.
 	ShowAsButton *bool `json:"show_as_button,omitempty"`
+
+	// Determines whether organization sign-up should be enabled for this organization connection.
+	// Only applicable for database connections. Default: false.
+	// Note: IsSignupEnabled can only be true if AssignMembershipOnLogin is true.
+	IsSignupEnabled *bool `json:"is_signup_enabled,omitempty"`
 }
 
 // OrganizationConnectionDetails holds connection details for an Organization.

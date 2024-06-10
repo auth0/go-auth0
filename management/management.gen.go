@@ -7747,6 +7747,14 @@ func (o *OrganizationConnection) GetConnectionID() string {
 	return *o.ConnectionID
 }
 
+// GetIsSignupEnabled returns the IsSignupEnabled field if it's non-nil, zero value otherwise.
+func (o *OrganizationConnection) GetIsSignupEnabled() bool {
+	if o == nil || o.IsSignupEnabled == nil {
+		return false
+	}
+	return *o.IsSignupEnabled
+}
+
 // GetShowAsButton returns the ShowAsButton field if it's non-nil, zero value otherwise.
 func (o *OrganizationConnection) GetShowAsButton() bool {
 	if o == nil || o.ShowAsButton == nil {

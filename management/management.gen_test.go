@@ -9709,6 +9709,16 @@ func TestOrganizationConnection_GetConnectionID(tt *testing.T) {
 	o.GetConnectionID()
 }
 
+func TestOrganizationConnection_GetIsSignupEnabled(tt *testing.T) {
+	var zeroValue bool
+	o := &OrganizationConnection{IsSignupEnabled: &zeroValue}
+	o.GetIsSignupEnabled()
+	o = &OrganizationConnection{}
+	o.GetIsSignupEnabled()
+	o = nil
+	o.GetIsSignupEnabled()
+}
+
 func TestOrganizationConnection_GetShowAsButton(tt *testing.T) {
 	var zeroValue bool
 	o := &OrganizationConnection{ShowAsButton: &zeroValue}

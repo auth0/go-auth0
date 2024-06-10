@@ -18,7 +18,7 @@ func TestOrganizationManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	orgConn := givenAnOrganizationConnectionWithoutOrgID(t)
-	orgConn2 := givenAnOrganizationConnectionWithoutOrgID(t)
+	orgConn2 := givenAnOrganizationDBConnectionWithoutOrgID(t)
 
 	org := &Organization{
 		Name:        auth0.String(fmt.Sprintf("test-organization%v", rand.Intn(999))),
@@ -152,6 +152,17 @@ func TestOrganizationManager_Connection(t *testing.T) {
 	assert.Equal(t, orgConn, actualOrgConn)
 }
 
+func TestOrganizationManager_DBConnection(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := givenAnOrganization(t)
+	orgConn := givenAnOrganizationDBConnection(t, org.GetID())
+
+	actualOrgConn, err := api.Organization.Connection(context.Background(), org.GetID(), orgConn.GetConnectionID())
+	assert.NoError(t, err)
+	assert.Equal(t, orgConn, actualOrgConn)
+}
+
 func TestOrganizationManager_UpdateConnection(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -173,6 +184,74 @@ func TestOrganizationManager_UpdateConnection(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, false, actualOrgConn.GetAssignMembershipOnLogin())
 	assert.Equal(t, false, actualOrgConn.GetShowAsButton())
+}
+
+// TestOrganizationManager_UpdateDBConnection tests the UpdateConnection method of OrganizationManager for Database Connection.
+func TestOrganizationManager_UpdateDBConnection(t *testing.T) {
+	// Test when IsSignupEnabled true with AssignMembershipOnLogin false should fail
+	t.Run("When_signup_enabled_with_assign_membership_false_should_fail", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+		org := givenAnOrganization(t)
+		orgConn := givenAnOrganizationDBConnection(t, org.GetID())
+
+		err := api.Organization.UpdateConnection(
+			context.Background(),
+			org.GetID(),
+			orgConn.GetConnectionID(),
+			&OrganizationConnection{
+				AssignMembershipOnLogin: auth0.Bool(false),
+				IsSignupEnabled:         auth0.Bool(true),
+			},
+		)
+		assert.Error(t, err, "Expected error when is_signup_enabled is true and assign_membership_on_login is false")
+		assert.Contains(t, err.Error(), "Only database connections with assign_membership_on_login = true support is_signup_enabled = true.")
+	})
+
+	// Test when IsSignupEnabled and AssignMembershipOnLogin are false, should succeed
+	t.Run("When_signup_and_assign_membership_are_false_should_succeed", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+		org := givenAnOrganization(t)
+		orgConn := givenAnOrganizationDBConnection(t, org.GetID())
+
+		err := api.Organization.UpdateConnection(
+			context.Background(),
+			org.GetID(),
+			orgConn.GetConnectionID(),
+			&OrganizationConnection{
+				AssignMembershipOnLogin: auth0.Bool(false),
+				IsSignupEnabled:         auth0.Bool(false),
+			},
+		)
+		assert.NoError(t, err)
+
+		actualOrgConn, err := api.Organization.Connection(context.Background(), org.GetID(), orgConn.GetConnectionID())
+		assert.NoError(t, err)
+		assert.Equal(t, false, actualOrgConn.GetAssignMembershipOnLogin())
+		assert.Equal(t, false, actualOrgConn.GetIsSignupEnabled())
+	})
+
+	// Test when IsSignupEnabled with AssignMembershipOnLogin true should succeed
+	t.Run("When_signup_enabled_with_assign_membership_true_should_succeed", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+		org := givenAnOrganization(t)
+		orgConn := givenAnOrganizationDBConnection(t, org.GetID())
+
+		err := api.Organization.UpdateConnection(
+			context.Background(),
+			org.GetID(),
+			orgConn.GetConnectionID(),
+			&OrganizationConnection{
+				AssignMembershipOnLogin: auth0.Bool(true),
+				IsSignupEnabled:         auth0.Bool(true),
+			},
+		)
+		assert.NoError(t, err)
+
+		actualOrgConn, err := api.Organization.Connection(context.Background(), org.GetID(), orgConn.GetConnectionID())
+		assert.NoError(t, err)
+		assert.Equal(t, true, actualOrgConn.GetAssignMembershipOnLogin())
+		assert.Equal(t, true, actualOrgConn.GetIsSignupEnabled())
+	})
 }
 
 func TestOrganizationManager_DeleteConnection(t *testing.T) {
@@ -439,6 +518,31 @@ func givenAnOrganizationConnection(t *testing.T, orgID string) *OrganizationConn
 	return orgConn
 }
 
+func givenAnOrganizationDBConnection(t *testing.T, orgID string) *OrganizationConnection {
+	client := givenAClient(t)
+	conn := givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:        auth0.String(fmt.Sprintf("test-conn%v", rand.Intn(999))),
+			DisplayName: auth0.String(fmt.Sprintf("Test Connection %v", rand.Intn(999))),
+			Strategy:    auth0.String(ConnectionStrategyAuth0),
+			EnabledClients: &[]string{
+				os.Getenv("AUTH0_CLIENT_ID"),
+				client.GetClientID(),
+			},
+		},
+	})
+	orgConn := &OrganizationConnection{
+		ConnectionID:            conn.ID,
+		AssignMembershipOnLogin: auth0.Bool(true),
+		IsSignupEnabled:         auth0.Bool(true),
+	}
+
+	err := api.Organization.AddConnection(context.Background(), orgID, orgConn)
+	require.NoError(t, err)
+
+	return orgConn
+}
+
 func givenAnOrganizationConnectionWithoutOrgID(t *testing.T) *OrganizationConnection {
 	client := givenAClient(t)
 	conn := givenAConnection(t, connectionTestCase{
@@ -456,6 +560,28 @@ func givenAnOrganizationConnectionWithoutOrgID(t *testing.T) *OrganizationConnec
 		ConnectionID:            conn.ID,
 		AssignMembershipOnLogin: auth0.Bool(true),
 		ShowAsButton:            auth0.Bool(true),
+	}
+
+	return orgConn
+}
+
+func givenAnOrganizationDBConnectionWithoutOrgID(t *testing.T) *OrganizationConnection {
+	client := givenAClient(t)
+	conn := givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:        auth0.String(fmt.Sprintf("test-conn%v", rand.Intn(999))),
+			DisplayName: auth0.String(fmt.Sprintf("Test Connection %v", rand.Intn(999))),
+			Strategy:    auth0.String(ConnectionStrategyAuth0),
+			EnabledClients: &[]string{
+				os.Getenv("AUTH0_CLIENT_ID"),
+				client.GetClientID(),
+			},
+		},
+	})
+	orgConn := &OrganizationConnection{
+		ConnectionID:            conn.ID,
+		AssignMembershipOnLogin: auth0.Bool(true),
+		IsSignupEnabled:         auth0.Bool(true),
 	}
 
 	return orgConn
