@@ -27,6 +27,8 @@ func TestResourceServer_Create(t *testing.T) {
 				Description: auth0.String("Create Resource"),
 			},
 		},
+		EnforcePolicies: auth0.Bool(true),
+		TokenDialect:    auth0.String("rfc9068_profile_authz"),
 	}
 
 	err := api.ResourceServer.Create(context.Background(), expectedResourceServer)
@@ -70,6 +72,8 @@ func TestResourceServer_Update(t *testing.T) {
 		Description: auth0.String("Update Resource"),
 	})
 	expectedResourceServer.Scopes = &scopes
+	expectedResourceServer.EnforcePolicies = auth0.Bool(true)
+	expectedResourceServer.TokenDialect = auth0.String("access_token_authz")
 
 	err := api.ResourceServer.Update(context.Background(), resourceServerID, expectedResourceServer)
 
@@ -80,6 +84,8 @@ func TestResourceServer_Update(t *testing.T) {
 	assert.Equal(t, expectedResourceServer.GetTokenLifetime(), 7200)
 	assert.Equal(t, expectedResourceServer.GetTokenLifetimeForWeb(), 5400)
 	assert.Equal(t, len(expectedResourceServer.GetScopes()), 2)
+	assert.Equal(t, expectedResourceServer.GetTokenDialect(), "access_token_authz")
+	assert.Equal(t, expectedResourceServer.GetEnforcePolicies(), true)
 }
 
 func TestResourceServer_Delete(t *testing.T) {
@@ -117,6 +123,8 @@ func givenAResourceServer(t *testing.T) *ResourceServer {
 		SigningAlgorithm:    auth0.String("HS256"),
 		TokenLifetime:       auth0.Int(7200),
 		TokenLifetimeForWeb: auth0.Int(3600),
+		TokenDialect:        auth0.String("access_token"),
+		EnforcePolicies:     auth0.Bool(false),
 		Scopes: &[]ResourceServerScope{
 			{
 				Value:       auth0.String("create:resource"),
