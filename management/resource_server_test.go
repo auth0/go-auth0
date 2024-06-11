@@ -88,6 +88,85 @@ func TestResourceServer_Update(t *testing.T) {
 	assert.Equal(t, expectedResourceServer.GetEnforcePolicies(), true)
 }
 
+func TestResourceServer_TokenDialect(t *testing.T) {
+
+	t.Run("When_TokenDialect_is_rfc9068_profile_should_succeed", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+		expectedResourceServer := givenAResourceServer(t)
+
+		resourceServerID := expectedResourceServer.GetID()
+
+		expectedResourceServer.ID = nil         // Read-Only: Additional properties not allowed.
+		expectedResourceServer.Identifier = nil // Read-Only: Additional properties not allowed.
+		expectedResourceServer.SigningSecret = nil
+
+		expectedResourceServer.TokenDialect = auth0.String("rfc9068_profile")
+		expectedResourceServer.EnforcePolicies = auth0.Bool(false)
+
+		err := api.ResourceServer.Update(context.Background(), resourceServerID, expectedResourceServer)
+		assert.NoError(t, err)
+		assert.Equal(t, expectedResourceServer.GetTokenDialect(), "rfc9068_profile")
+		assert.Equal(t, expectedResourceServer.GetEnforcePolicies(), false)
+	})
+
+	t.Run("When_TokenDialect_is_access_token_authz_and_RBAC_enabled_should_succeed", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+		expectedResourceServer := givenAResourceServer(t)
+
+		resourceServerID := expectedResourceServer.GetID()
+
+		expectedResourceServer.ID = nil         // Read-Only: Additional properties not allowed.
+		expectedResourceServer.Identifier = nil // Read-Only: Additional properties not allowed.
+		expectedResourceServer.SigningSecret = nil
+
+		expectedResourceServer.TokenDialect = auth0.String("access_token_authz")
+		expectedResourceServer.EnforcePolicies = auth0.Bool(true)
+
+		err := api.ResourceServer.Update(context.Background(), resourceServerID, expectedResourceServer)
+		assert.NoError(t, err)
+		assert.Equal(t, expectedResourceServer.GetTokenDialect(), "access_token_authz")
+		assert.Equal(t, expectedResourceServer.GetEnforcePolicies(), true)
+	})
+
+	t.Run("When_TokenDialect_is_rfc9068_profile_authz_and_RBAC_enabled_should_succeed", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+		expectedResourceServer := givenAResourceServer(t)
+
+		resourceServerID := expectedResourceServer.GetID()
+
+		expectedResourceServer.ID = nil         // Read-Only: Additional properties not allowed.
+		expectedResourceServer.Identifier = nil // Read-Only: Additional properties not allowed.
+		expectedResourceServer.SigningSecret = nil
+
+		expectedResourceServer.TokenDialect = auth0.String("rfc9068_profile_authz")
+		expectedResourceServer.EnforcePolicies = auth0.Bool(true)
+
+		err := api.ResourceServer.Update(context.Background(), resourceServerID, expectedResourceServer)
+		assert.NoError(t, err)
+		assert.Equal(t, expectedResourceServer.GetTokenDialect(), "rfc9068_profile_authz")
+		assert.Equal(t, expectedResourceServer.GetEnforcePolicies(), true)
+	})
+
+	t.Run("When_TokenDialect_is_access_token_should_succeed", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+		expectedResourceServer := givenAResourceServer(t)
+
+		resourceServerID := expectedResourceServer.GetID()
+
+		expectedResourceServer.ID = nil         // Read-Only: Additional properties not allowed.
+		expectedResourceServer.Identifier = nil // Read-Only: Additional properties not allowed.
+		expectedResourceServer.SigningSecret = nil
+
+		expectedResourceServer.TokenDialect = auth0.String("access_token")
+		expectedResourceServer.EnforcePolicies = auth0.Bool(false)
+
+		err := api.ResourceServer.Update(context.Background(), resourceServerID, expectedResourceServer)
+		assert.NoError(t, err)
+		assert.Equal(t, expectedResourceServer.GetTokenDialect(), "access_token")
+		assert.Equal(t, expectedResourceServer.GetEnforcePolicies(), false)
+	})
+}
+
 func TestResourceServer_Delete(t *testing.T) {
 	configureHTTPTestRecordings(t)
 

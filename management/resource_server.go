@@ -53,14 +53,11 @@ type ResourceServer struct {
 	// Available options:
 	//   - "access_token": A JWT containing standard Auth0 claims.
 	//   - "rfc9068_profile": A JWT conforming to the IETF JWT Access Token Profile.
-	//
-	// Note: "access_token_authz" and "rfc9068_profile_authz" options are only available if RBAC (EnforcePolicies) is enabled for this API.
-	//
 	//   - "access_token_authz": A JWT containing standard Auth0 claims, including RBAC permissions claims.
 	//   - "rfc9068_profile_authz": A JWT conforming to the IETF JWT Access Token Profile, including RBAC permissions claims.
 	//
-	//
-	// For more details, see the [Access Token Profiles documentation](https://auth0.com/docs/secure/tokens/access-tokens/access-token-profiles).
+	//  Note:  RBAC permissions claims are available if RBAC (enforce_policies) is enabled for this API."
+	//  For more details, see the [Access Token Profiles documentation](https://auth0.com/docs/secure/tokens/access-tokens/access-token-profiles).
 	TokenDialect *string `json:"token_dialect,omitempty"`
 }
 
