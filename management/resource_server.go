@@ -48,7 +48,16 @@ type ResourceServer struct {
 	// Enables the enforcement of the authorization policies.
 	EnforcePolicies *bool `json:"enforce_policies,omitempty"`
 
-	// The dialect for the access token ["access_token" or "access_token_authz"].
+	// TokenDialect specifies the dialect of access tokens that should be issued for this resource server.
+	//
+	// Available options:
+	//   - "access_token": A JWT containing standard Auth0 claims.
+	//   - "rfc9068_profile": A JWT conforming to the IETF JWT Access Token Profile.
+	//   - "access_token_authz": A JWT containing standard Auth0 claims, including RBAC permissions claims.
+	//   - "rfc9068_profile_authz": A JWT conforming to the IETF JWT Access Token Profile, including RBAC permissions claims.
+	//
+	//  Note:  RBAC permissions claims are available if RBAC (enforce_policies) is enabled for this API."
+	// For more details, see the Access Token Profiles documentation : https://auth0.com/docs/secure/tokens/access-tokens/access-token-profiles.
 	TokenDialect *string `json:"token_dialect,omitempty"`
 }
 
