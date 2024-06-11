@@ -57,7 +57,7 @@ type ResourceServer struct {
 	//   - "rfc9068_profile_authz": A JWT conforming to the IETF JWT Access Token Profile, including RBAC permissions claims.
 	//
 	//  Note:  RBAC permissions claims are available if RBAC (enforce_policies) is enabled for this API."
-	//  For more details, see the [Access Token Profiles documentation](https://auth0.com/docs/secure/tokens/access-tokens/access-token-profiles).
+	// For more details, see the Access Token Profiles documentation : https://auth0.com/docs/secure/tokens/access-tokens/access-token-profiles.
 	TokenDialect *string `json:"token_dialect,omitempty"`
 }
 

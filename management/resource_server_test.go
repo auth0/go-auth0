@@ -89,7 +89,6 @@ func TestResourceServer_Update(t *testing.T) {
 }
 
 func TestResourceServer_TokenDialect(t *testing.T) {
-
 	t.Run("When_TokenDialect_is_rfc9068_profile_should_succeed", func(t *testing.T) {
 		configureHTTPTestRecordings(t)
 		expectedResourceServer := givenAResourceServer(t)
