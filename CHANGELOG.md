@@ -1,5 +1,11 @@
 # Change Log
 
+## [v1.7.0](https://github.com/auth0/go-auth0/tree/v1.7.0) (2024-06-14)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.6.0...v1.7.0)
+
+**Added**
+- Add is_signup_enabled field to OrganizationConnection [\#413](https://github.com/auth0/go-auth0/pull/413) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.6.0](https://github.com/auth0/go-auth0/tree/v1.6.0) (2024-05-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.5.0...v1.6.0)
 
