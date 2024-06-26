@@ -8925,6 +8925,157 @@ func (s *SAPAPIClientAddon) String() string {
 	return Stringify(s)
 }
 
+// GetConnectionID returns the ConnectionID field if it's non-nil, zero value otherwise.
+func (s *ScimConfiguration) GetConnectionID() string {
+	if s == nil || s.ConnectionID == nil {
+		return ""
+	}
+	return *s.ConnectionID
+}
+
+// GetConnectionName returns the ConnectionName field if it's non-nil, zero value otherwise.
+func (s *ScimConfiguration) GetConnectionName() string {
+	if s == nil || s.ConnectionName == nil {
+		return ""
+	}
+	return *s.ConnectionName
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (s *ScimConfiguration) GetCreatedAt() string {
+	if s == nil || s.CreatedAt == nil {
+		return ""
+	}
+	return *s.CreatedAt
+}
+
+// GetMapping returns the Mapping field if it's non-nil, zero value otherwise.
+func (s *ScimConfiguration) GetMapping() []ScimConfigurationMapping {
+	if s == nil || s.Mapping == nil {
+		return nil
+	}
+	return *s.Mapping
+}
+
+// GetStrategy returns the Strategy field if it's non-nil, zero value otherwise.
+func (s *ScimConfiguration) GetStrategy() string {
+	if s == nil || s.Strategy == nil {
+		return ""
+	}
+	return *s.Strategy
+}
+
+// GetTenantName returns the TenantName field if it's non-nil, zero value otherwise.
+func (s *ScimConfiguration) GetTenantName() string {
+	if s == nil || s.TenantName == nil {
+		return ""
+	}
+	return *s.TenantName
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (s *ScimConfiguration) GetUpdatedAt() string {
+	if s == nil || s.UpdatedAt == nil {
+		return ""
+	}
+	return *s.UpdatedAt
+}
+
+// GetUserIDAttribute returns the UserIDAttribute field if it's non-nil, zero value otherwise.
+func (s *ScimConfiguration) GetUserIDAttribute() string {
+	if s == nil || s.UserIDAttribute == nil {
+		return ""
+	}
+	return *s.UserIDAttribute
+}
+
+// String returns a string representation of ScimConfiguration.
+func (s *ScimConfiguration) String() string {
+	return Stringify(s)
+}
+
+// GetAuth0 returns the Auth0 field if it's non-nil, zero value otherwise.
+func (s *ScimConfigurationMapping) GetAuth0() string {
+	if s == nil || s.Auth0 == nil {
+		return ""
+	}
+	return *s.Auth0
+}
+
+// GetScim returns the Scim field if it's non-nil, zero value otherwise.
+func (s *ScimConfigurationMapping) GetScim() string {
+	if s == nil || s.Scim == nil {
+		return ""
+	}
+	return *s.Scim
+}
+
+// String returns a string representation of ScimConfigurationMapping.
+func (s *ScimConfigurationMapping) String() string {
+	return Stringify(s)
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (s *ScimToken) GetCreatedAt() string {
+	if s == nil || s.CreatedAt == nil {
+		return ""
+	}
+	return *s.CreatedAt
+}
+
+// GetLastUsedAt returns the LastUsedAt field if it's non-nil, zero value otherwise.
+func (s *ScimToken) GetLastUsedAt() string {
+	if s == nil || s.LastUsedAt == nil {
+		return ""
+	}
+	return *s.LastUsedAt
+}
+
+// GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
+func (s *ScimToken) GetScopes() []string {
+	if s == nil || s.Scopes == nil {
+		return nil
+	}
+	return *s.Scopes
+}
+
+// GetToken returns the Token field if it's non-nil, zero value otherwise.
+func (s *ScimToken) GetToken() string {
+	if s == nil || s.Token == nil {
+		return ""
+	}
+	return *s.Token
+}
+
+// GetTokenID returns the TokenID field if it's non-nil, zero value otherwise.
+func (s *ScimToken) GetTokenID() string {
+	if s == nil || s.TokenID == nil {
+		return ""
+	}
+	return *s.TokenID
+}
+
+// GetTokenLifeTime returns the TokenLifeTime field if it's non-nil, zero value otherwise.
+func (s *ScimToken) GetTokenLifeTime() int {
+	if s == nil || s.TokenLifeTime == nil {
+		return 0
+	}
+	return *s.TokenLifeTime
+}
+
+// GetValidUntil returns the ValidUntil field if it's non-nil, zero value otherwise.
+func (s *ScimToken) GetValidUntil() string {
+	if s == nil || s.ValidUntil == nil {
+		return ""
+	}
+	return *s.ValidUntil
+}
+
+// String returns a string representation of ScimToken.
+func (s *ScimToken) String() string {
+	return Stringify(s)
+}
+
 // GetBaseURL returns the BaseURL field if it's non-nil, zero value otherwise.
 func (s *SentryClientAddon) GetBaseURL() string {
 	if s == nil || s.BaseURL == nil {

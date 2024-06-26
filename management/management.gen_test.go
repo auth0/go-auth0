@@ -11246,6 +11246,200 @@ func TestSAPAPIClientAddon_String(t *testing.T) {
 	}
 }
 
+func TestScimConfiguration_GetConnectionID(tt *testing.T) {
+	var zeroValue string
+	s := &ScimConfiguration{ConnectionID: &zeroValue}
+	s.GetConnectionID()
+	s = &ScimConfiguration{}
+	s.GetConnectionID()
+	s = nil
+	s.GetConnectionID()
+}
+
+func TestScimConfiguration_GetConnectionName(tt *testing.T) {
+	var zeroValue string
+	s := &ScimConfiguration{ConnectionName: &zeroValue}
+	s.GetConnectionName()
+	s = &ScimConfiguration{}
+	s.GetConnectionName()
+	s = nil
+	s.GetConnectionName()
+}
+
+func TestScimConfiguration_GetCreatedAt(tt *testing.T) {
+	var zeroValue string
+	s := &ScimConfiguration{CreatedAt: &zeroValue}
+	s.GetCreatedAt()
+	s = &ScimConfiguration{}
+	s.GetCreatedAt()
+	s = nil
+	s.GetCreatedAt()
+}
+
+func TestScimConfiguration_GetMapping(tt *testing.T) {
+	var zeroValue []ScimConfigurationMapping
+	s := &ScimConfiguration{Mapping: &zeroValue}
+	s.GetMapping()
+	s = &ScimConfiguration{}
+	s.GetMapping()
+	s = nil
+	s.GetMapping()
+}
+
+func TestScimConfiguration_GetStrategy(tt *testing.T) {
+	var zeroValue string
+	s := &ScimConfiguration{Strategy: &zeroValue}
+	s.GetStrategy()
+	s = &ScimConfiguration{}
+	s.GetStrategy()
+	s = nil
+	s.GetStrategy()
+}
+
+func TestScimConfiguration_GetTenantName(tt *testing.T) {
+	var zeroValue string
+	s := &ScimConfiguration{TenantName: &zeroValue}
+	s.GetTenantName()
+	s = &ScimConfiguration{}
+	s.GetTenantName()
+	s = nil
+	s.GetTenantName()
+}
+
+func TestScimConfiguration_GetUpdatedAt(tt *testing.T) {
+	var zeroValue string
+	s := &ScimConfiguration{UpdatedAt: &zeroValue}
+	s.GetUpdatedAt()
+	s = &ScimConfiguration{}
+	s.GetUpdatedAt()
+	s = nil
+	s.GetUpdatedAt()
+}
+
+func TestScimConfiguration_GetUserIDAttribute(tt *testing.T) {
+	var zeroValue string
+	s := &ScimConfiguration{UserIDAttribute: &zeroValue}
+	s.GetUserIDAttribute()
+	s = &ScimConfiguration{}
+	s.GetUserIDAttribute()
+	s = nil
+	s.GetUserIDAttribute()
+}
+
+func TestScimConfiguration_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ScimConfiguration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestScimConfigurationMapping_GetAuth0(tt *testing.T) {
+	var zeroValue string
+	s := &ScimConfigurationMapping{Auth0: &zeroValue}
+	s.GetAuth0()
+	s = &ScimConfigurationMapping{}
+	s.GetAuth0()
+	s = nil
+	s.GetAuth0()
+}
+
+func TestScimConfigurationMapping_GetScim(tt *testing.T) {
+	var zeroValue string
+	s := &ScimConfigurationMapping{Scim: &zeroValue}
+	s.GetScim()
+	s = &ScimConfigurationMapping{}
+	s.GetScim()
+	s = nil
+	s.GetScim()
+}
+
+func TestScimConfigurationMapping_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ScimConfigurationMapping{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestScimToken_GetCreatedAt(tt *testing.T) {
+	var zeroValue string
+	s := &ScimToken{CreatedAt: &zeroValue}
+	s.GetCreatedAt()
+	s = &ScimToken{}
+	s.GetCreatedAt()
+	s = nil
+	s.GetCreatedAt()
+}
+
+func TestScimToken_GetLastUsedAt(tt *testing.T) {
+	var zeroValue string
+	s := &ScimToken{LastUsedAt: &zeroValue}
+	s.GetLastUsedAt()
+	s = &ScimToken{}
+	s.GetLastUsedAt()
+	s = nil
+	s.GetLastUsedAt()
+}
+
+func TestScimToken_GetScopes(tt *testing.T) {
+	var zeroValue []string
+	s := &ScimToken{Scopes: &zeroValue}
+	s.GetScopes()
+	s = &ScimToken{}
+	s.GetScopes()
+	s = nil
+	s.GetScopes()
+}
+
+func TestScimToken_GetToken(tt *testing.T) {
+	var zeroValue string
+	s := &ScimToken{Token: &zeroValue}
+	s.GetToken()
+	s = &ScimToken{}
+	s.GetToken()
+	s = nil
+	s.GetToken()
+}
+
+func TestScimToken_GetTokenID(tt *testing.T) {
+	var zeroValue string
+	s := &ScimToken{TokenID: &zeroValue}
+	s.GetTokenID()
+	s = &ScimToken{}
+	s.GetTokenID()
+	s = nil
+	s.GetTokenID()
+}
+
+func TestScimToken_GetTokenLifeTime(tt *testing.T) {
+	var zeroValue int
+	s := &ScimToken{TokenLifeTime: &zeroValue}
+	s.GetTokenLifeTime()
+	s = &ScimToken{}
+	s.GetTokenLifeTime()
+	s = nil
+	s.GetTokenLifeTime()
+}
+
+func TestScimToken_GetValidUntil(tt *testing.T) {
+	var zeroValue string
+	s := &ScimToken{ValidUntil: &zeroValue}
+	s.GetValidUntil()
+	s = &ScimToken{}
+	s.GetValidUntil()
+	s = nil
+	s.GetValidUntil()
+}
+
+func TestScimToken_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ScimToken{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestSentryClientAddon_GetBaseURL(tt *testing.T) {
 	var zeroValue string
 	s := &SentryClientAddon{BaseURL: &zeroValue}

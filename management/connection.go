@@ -157,6 +157,118 @@ type Connection struct {
 	ShowAsButton *bool `json:"show_as_button,omitempty"`
 }
 
+// ScimConfiguration represents the SCIM configuration for a connection.
+// This struct is used primarily for enterprise connections.
+type ScimConfiguration struct {
+	// ConnectionID is the connection's identifier.
+	ConnectionID *string `json:"connection_id,omitempty"`
+
+	// ConnectionName is the connection's name.
+	ConnectionName *string `json:"connection_name,omitempty"`
+
+	// Strategy is the connection's strategy.
+	Strategy *string `json:"strategy,omitempty"`
+
+	// TenantName is the tenant's name.
+	TenantName *string `json:"tenant_name,omitempty"`
+
+	// UserIDAttribute is the user ID attribute for generating unique user IDs.
+	// Optional. Defaults depend on the connection type (SAML, OIDC).
+	UserIDAttribute *string `json:"user_id_attribute,omitempty"`
+
+	// CreatedAt is the date and time when the SCIM configuration was created.
+	CreatedAt *string `json:"created_at,omitempty"`
+
+	// UpdatedAt is the date and time when the SCIM configuration was last updated.
+	UpdatedAt *string `json:"updated_at,omitempty"`
+
+	// Mapping is the user-provided mapping between Auth0 and SCIM fields.
+	// Optional. If not provided, defaults based on connection type.
+	Mapping *[]ScimConfigurationMapping `json:"mapping,omitempty"`
+}
+
+// ScimConfigurationMapping represents the mapping between Auth0 and Scim fields.
+// This struct is used primarily for enterprise connections.
+type ScimConfigurationMapping struct {
+	// Auth0 is the field location in the Auth0 schema.
+	Auth0 *string `json:"auth0,omitempty"`
+
+	// Scim is the field location in the SCIM schema.
+	Scim *string `json:"scim,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaler interface.
+func (sc *ScimConfiguration) MarshalJSON() ([]byte, error) {
+	type ScimConfigurationSubset struct {
+		UserIDAttribute *string                     `json:"user_id_attribute,omitempty"`
+		Mapping         *[]ScimConfigurationMapping `json:"mapping,omitempty"`
+	}
+
+	return json.Marshal(&ScimConfigurationSubset{
+		UserIDAttribute: sc.UserIDAttribute,
+		Mapping:         sc.Mapping,
+	})
+}
+
+// ScimTokens represents the SCIM tokens for a connection.
+// This struct is used primarily for enterprise connections.
+type ScimTokens *[]ScimToken
+
+// ScimToken represents the SCIM token used by the client.
+// This struct is used primarily for enterprise connections.
+type ScimToken struct {
+	// TokenID is the identifier associated with the token.
+	TokenID *string `json:"token_id,omitempty"`
+
+	// Token is the actual token value used for authentication.
+	Token *string `json:"token,omitempty"`
+
+	// Scopes is an array of strings representing the scopes that the token provides.
+	Scopes *[]string `json:"scopes,omitempty"`
+
+	// CreatedAt is the ISO8601 standard date string indicating when the token was created.
+	CreatedAt *string `json:"created_at,omitempty"`
+
+	// ValidUntil is the ISO8601 standard date string indicating when the token will expire.
+	ValidUntil *string `json:"valid_until,omitempty"`
+
+	// TokenLifeTime is the lifetime of the token in seconds. It must be greater than 900.
+	TokenLifeTime *int `json:"token_lifetime,omitempty"`
+
+	// LastUsedAt is the ISO8601 standard date string that says when the token was used. If never used it won’t be returned.
+	LastUsedAt *string `json:"last_used_at,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaler interface.
+func (st *ScimToken) MarshalJSON() ([]byte, error) {
+	type ScimTokenSubset struct {
+		Scopes        *[]string `json:"scopes,omitempty"`
+		TokenLifeTime *int      `json:"token_lifetime,omitempty"`
+	}
+
+	return json.Marshal(&ScimTokenSubset{
+		Scopes:        st.Scopes,
+		TokenLifeTime: st.TokenLifeTime,
+	})
+}
+
+//// UnmarshalJSON implements the json.Unmarshaler interface.
+// func (st *ScimToken) UnmarshalJSON(data []byte) error {
+//	type scimToken ScimToken
+//	type scimTokenWrapper struct {
+//		*scimToken
+//	}
+//	w := &scimTokenWrapper{(*scimToken)(st)}
+//	if err := json.Unmarshal(data, &w); err != nil {
+//		return err
+//	}
+//
+//	// Set the Token field to nil explicitly
+//	st.Token = nil
+//
+//	return nil
+//}
+
 // MarshalJSON implements the json.Marshaler interface.
 func (c *Connection) MarshalJSON() ([]byte, error) {
 	type connection Connection
@@ -1345,4 +1457,82 @@ func (m *ConnectionManager) ReadByName(ctx context.Context, name string, opts ..
 		return c.Connections[0], nil
 	}
 	return nil, &managementError{404, "Not Found", "Connection not found"}
+}
+
+// CreateScimConfiguration Creates a scim configuration for a connection by its connectionId.
+//
+//   - This method only works with enterprise connections listed here - .
+//   - scimConfig: The SCIM configuration details. Only `mapping` and `user_id_attribute` fields are used.
+//
+// The `mapping` field allows users to specify a mapping between SCIM protocol user schema and Auth0 user schema.
+// If not provided, a default mapping based on the connection type (e.g., Okta, SAML) will be used.
+//
+// The `user_id_attribute` field specifies the SCIM attribute containing the unique user identifier
+// presented in the SAML assertion or ID token during user login. If not provided, it defaults to
+// `userName` for SAML connections and `externalId` for OIDC connections.
+//
+// See: https://auth0.com/docs/api/management/v2/connections/post-scim-configuration
+func (m *ConnectionManager) CreateScimConfiguration(ctx context.Context, id string, scimConfig *ScimConfiguration, opts ...RequestOption) error {
+	return m.management.Request(ctx, "POST", m.management.URI("connections", id, "scim-configuration"), scimConfig, opts...)
+}
+
+// ReadScimConfiguration retrieves the scim configuration for a connection by its connectionId.
+// This method only works with enterprise connections.
+//
+// See: https://auth0.com/docs/api/management/v2/connections/get-scim-configuration
+func (m *ConnectionManager) ReadScimConfiguration(ctx context.Context, id string, opts ...RequestOption) (scim *ScimConfiguration, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("connections", id, "scim-configuration"), &scim, opts...)
+	return
+}
+
+// UpdateScimConfiguration updates the scim configuration for a connection by its connectionId.
+// This method only works with enterprise connections.
+//
+// See: https://auth0.com/docs/api/management/v2/connections/patch-scim-configuration
+func (m *ConnectionManager) UpdateScimConfiguration(ctx context.Context, id string, scimConfig *ScimConfiguration, opts ...RequestOption) error {
+	return m.management.Request(ctx, "PATCH", m.management.URI("connections", id, "scim-configuration"), scimConfig, opts...)
+}
+
+// DeleteScimConfiguration deletes the scim configuration for a connection by its connectionId.
+// This method only works with enterprise connections.
+//
+// See: https://auth0.com/docs/api/management/v2/connections/delete-scim-configuration
+func (m *ConnectionManager) DeleteScimConfiguration(ctx context.Context, id string, opts ...RequestOption) error {
+	return m.management.Request(ctx, "DELETE", m.management.URI("connections", id, "scim-configuration"), nil, opts...)
+}
+
+// ReadScimDefaultConfiguration  Retrieves a scim configuration's default mapping by its connectionId.
+// This method only works with enterprise connections.
+//
+// https://auth0.com/docs/api/management/v2/connections/get-default-mapping
+func (m *ConnectionManager) ReadScimDefaultConfiguration(ctx context.Context, id string, opts ...RequestOption) (scim *ScimConfiguration, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("connections", id, "scim-configuration/default-mapping"), &scim, opts...)
+	return
+}
+
+// CreateScimToken Create a scim token for a scim client.
+// This method only works with enterprise connections.
+//
+// See: https://auth0.com/docs/api/management/v2/connections/post-scim-token
+func (m *ConnectionManager) CreateScimToken(ctx context.Context, id string, scimToken *ScimToken, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "POST", m.management.URI("connections", id, "scim-configuration", "tokens"), scimToken, opts...)
+	return
+}
+
+// ListScimToken Retrieves all scim tokens by its connection id.
+// This method only works with enterprise connections.
+//
+// See: https://auth0.com/docs/api/management/v2/connections/get-scim-tokens
+func (m *ConnectionManager) ListScimToken(ctx context.Context, id string, opts ...RequestOption) (scimTokens []*ScimToken, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("connections", id, "scim-configuration", "tokens"), &scimTokens, opts...)
+	return
+}
+
+// DeleteScimToken Deletes a scim token by its connection id and token id.
+// This method only works with enterprise connections.
+//
+// See: https://auth0.com/docs/api/management/v2/connections/delete-scim-token
+func (m *ConnectionManager) DeleteScimToken(ctx context.Context, id, tokenID string, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "DELETE", m.management.URI("connections", id, "scim-configuration", "tokens", tokenID), nil, opts...)
+	return
 }
