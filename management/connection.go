@@ -1442,19 +1442,26 @@ func (m *ConnectionManager) ReadByName(ctx context.Context, name string, opts ..
 	return nil, &managementError{404, "Not Found", "Connection not found"}
 }
 
-// CreateScimConfiguration Creates a scim configuration for a connection by its connectionId.
+// CreateScimConfiguration creates a SCIM configuration for a connection by its connectionId.
 //
-//   - This method only works with enterprise connections listed here - .
-//   - scimConfig: The SCIM configuration details. Only `mapping` and `user_id_attribute` fields are used.
+// Note: This method only works with the following enterprise connections:
+//   - Authentication > Enterprise > SAML
+//   - Authentication > Enterprise > OpenID Connect
+//   - Authentication > Enterprise > Okta Workforce
+//   - Authentication > Enterprise > Microsoft Azure AD
 //
-// The `mapping` field allows users to specify a mapping between SCIM protocol user schema and Auth0 user schema.
+// Parameters:
+//   - scimConfig (optional): The SCIM configuration details. Only `mapping` and `user_id_attribute` fields are used.
+//     This parameter can be passed as nil or empty.
+//
+// `mapping`: Specifies a mapping between SCIM protocol user schema and Auth0 user schema.
 // If not provided, a default mapping based on the connection type (e.g., Okta, SAML) will be used.
 //
-// The `user_id_attribute` field specifies the SCIM attribute containing the unique user identifier
+// `user_id_attribute`: Specifies the SCIM attribute containing the unique user identifier
 // presented in the SAML assertion or ID token during user login. If not provided, it defaults to
 // `userName` for SAML connections and `externalId` for OIDC connections.
 //
-// See: https://auth0.com/docs/api/management/v2/connections/post-scim-configuration
+// For more details, see: https://auth0.com/docs/api/management/v2/connections/post-scim-configuration
 func (m *ConnectionManager) CreateScimConfiguration(ctx context.Context, id string, scimConfig *ScimConfiguration, opts ...RequestOption) error {
 	return m.management.Request(ctx, "POST", m.management.URI("connections", id, "scim-configuration"), scimConfig, opts...)
 }
