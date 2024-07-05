@@ -11246,195 +11246,195 @@ func TestSAPAPIClientAddon_String(t *testing.T) {
 	}
 }
 
-func TestScimConfiguration_GetConnectionID(tt *testing.T) {
+func TestSCIMConfiguration_GetConnectionID(tt *testing.T) {
 	var zeroValue string
-	s := &ScimConfiguration{ConnectionID: &zeroValue}
+	s := &SCIMConfiguration{ConnectionID: &zeroValue}
 	s.GetConnectionID()
-	s = &ScimConfiguration{}
+	s = &SCIMConfiguration{}
 	s.GetConnectionID()
 	s = nil
 	s.GetConnectionID()
 }
 
-func TestScimConfiguration_GetConnectionName(tt *testing.T) {
+func TestSCIMConfiguration_GetConnectionName(tt *testing.T) {
 	var zeroValue string
-	s := &ScimConfiguration{ConnectionName: &zeroValue}
+	s := &SCIMConfiguration{ConnectionName: &zeroValue}
 	s.GetConnectionName()
-	s = &ScimConfiguration{}
+	s = &SCIMConfiguration{}
 	s.GetConnectionName()
 	s = nil
 	s.GetConnectionName()
 }
 
-func TestScimConfiguration_GetCreatedAt(tt *testing.T) {
+func TestSCIMConfiguration_GetCreatedAt(tt *testing.T) {
 	var zeroValue string
-	s := &ScimConfiguration{CreatedAt: &zeroValue}
+	s := &SCIMConfiguration{CreatedAt: &zeroValue}
 	s.GetCreatedAt()
-	s = &ScimConfiguration{}
+	s = &SCIMConfiguration{}
 	s.GetCreatedAt()
 	s = nil
 	s.GetCreatedAt()
 }
 
-func TestScimConfiguration_GetMapping(tt *testing.T) {
-	var zeroValue []ScimConfigurationMapping
-	s := &ScimConfiguration{Mapping: &zeroValue}
+func TestSCIMConfiguration_GetMapping(tt *testing.T) {
+	var zeroValue []SCIMConfigurationMapping
+	s := &SCIMConfiguration{Mapping: &zeroValue}
 	s.GetMapping()
-	s = &ScimConfiguration{}
+	s = &SCIMConfiguration{}
 	s.GetMapping()
 	s = nil
 	s.GetMapping()
 }
 
-func TestScimConfiguration_GetStrategy(tt *testing.T) {
+func TestSCIMConfiguration_GetStrategy(tt *testing.T) {
 	var zeroValue string
-	s := &ScimConfiguration{Strategy: &zeroValue}
+	s := &SCIMConfiguration{Strategy: &zeroValue}
 	s.GetStrategy()
-	s = &ScimConfiguration{}
+	s = &SCIMConfiguration{}
 	s.GetStrategy()
 	s = nil
 	s.GetStrategy()
 }
 
-func TestScimConfiguration_GetTenantName(tt *testing.T) {
+func TestSCIMConfiguration_GetTenantName(tt *testing.T) {
 	var zeroValue string
-	s := &ScimConfiguration{TenantName: &zeroValue}
+	s := &SCIMConfiguration{TenantName: &zeroValue}
 	s.GetTenantName()
-	s = &ScimConfiguration{}
+	s = &SCIMConfiguration{}
 	s.GetTenantName()
 	s = nil
 	s.GetTenantName()
 }
 
-func TestScimConfiguration_GetUpdatedAt(tt *testing.T) {
+func TestSCIMConfiguration_GetUpdatedAt(tt *testing.T) {
 	var zeroValue string
-	s := &ScimConfiguration{UpdatedAt: &zeroValue}
+	s := &SCIMConfiguration{UpdatedAt: &zeroValue}
 	s.GetUpdatedAt()
-	s = &ScimConfiguration{}
+	s = &SCIMConfiguration{}
 	s.GetUpdatedAt()
 	s = nil
 	s.GetUpdatedAt()
 }
 
-func TestScimConfiguration_GetUserIDAttribute(tt *testing.T) {
+func TestSCIMConfiguration_GetUserIDAttribute(tt *testing.T) {
 	var zeroValue string
-	s := &ScimConfiguration{UserIDAttribute: &zeroValue}
+	s := &SCIMConfiguration{UserIDAttribute: &zeroValue}
 	s.GetUserIDAttribute()
-	s = &ScimConfiguration{}
+	s = &SCIMConfiguration{}
 	s.GetUserIDAttribute()
 	s = nil
 	s.GetUserIDAttribute()
 }
 
-func TestScimConfiguration_String(t *testing.T) {
+func TestSCIMConfiguration_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &ScimConfiguration{}
+	v := &SCIMConfiguration{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
 }
 
-func TestScimConfigurationMapping_GetAuth0(tt *testing.T) {
+func TestSCIMConfigurationMapping_GetAuth0(tt *testing.T) {
 	var zeroValue string
-	s := &ScimConfigurationMapping{Auth0: &zeroValue}
+	s := &SCIMConfigurationMapping{Auth0: &zeroValue}
 	s.GetAuth0()
-	s = &ScimConfigurationMapping{}
+	s = &SCIMConfigurationMapping{}
 	s.GetAuth0()
 	s = nil
 	s.GetAuth0()
 }
 
-func TestScimConfigurationMapping_GetScim(tt *testing.T) {
+func TestSCIMConfigurationMapping_GetSCIM(tt *testing.T) {
 	var zeroValue string
-	s := &ScimConfigurationMapping{Scim: &zeroValue}
-	s.GetScim()
-	s = &ScimConfigurationMapping{}
-	s.GetScim()
+	s := &SCIMConfigurationMapping{SCIM: &zeroValue}
+	s.GetSCIM()
+	s = &SCIMConfigurationMapping{}
+	s.GetSCIM()
 	s = nil
-	s.GetScim()
+	s.GetSCIM()
 }
 
-func TestScimConfigurationMapping_String(t *testing.T) {
+func TestSCIMConfigurationMapping_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &ScimConfigurationMapping{}
+	v := &SCIMConfigurationMapping{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
 }
 
-func TestScimToken_GetCreatedAt(tt *testing.T) {
+func TestSCIMToken_GetCreatedAt(tt *testing.T) {
 	var zeroValue string
-	s := &ScimToken{CreatedAt: &zeroValue}
+	s := &SCIMToken{CreatedAt: &zeroValue}
 	s.GetCreatedAt()
-	s = &ScimToken{}
+	s = &SCIMToken{}
 	s.GetCreatedAt()
 	s = nil
 	s.GetCreatedAt()
 }
 
-func TestScimToken_GetLastUsedAt(tt *testing.T) {
+func TestSCIMToken_GetLastUsedAt(tt *testing.T) {
 	var zeroValue string
-	s := &ScimToken{LastUsedAt: &zeroValue}
+	s := &SCIMToken{LastUsedAt: &zeroValue}
 	s.GetLastUsedAt()
-	s = &ScimToken{}
+	s = &SCIMToken{}
 	s.GetLastUsedAt()
 	s = nil
 	s.GetLastUsedAt()
 }
 
-func TestScimToken_GetScopes(tt *testing.T) {
+func TestSCIMToken_GetScopes(tt *testing.T) {
 	var zeroValue []string
-	s := &ScimToken{Scopes: &zeroValue}
+	s := &SCIMToken{Scopes: &zeroValue}
 	s.GetScopes()
-	s = &ScimToken{}
+	s = &SCIMToken{}
 	s.GetScopes()
 	s = nil
 	s.GetScopes()
 }
 
-func TestScimToken_GetToken(tt *testing.T) {
+func TestSCIMToken_GetToken(tt *testing.T) {
 	var zeroValue string
-	s := &ScimToken{Token: &zeroValue}
+	s := &SCIMToken{Token: &zeroValue}
 	s.GetToken()
-	s = &ScimToken{}
+	s = &SCIMToken{}
 	s.GetToken()
 	s = nil
 	s.GetToken()
 }
 
-func TestScimToken_GetTokenID(tt *testing.T) {
+func TestSCIMToken_GetTokenID(tt *testing.T) {
 	var zeroValue string
-	s := &ScimToken{TokenID: &zeroValue}
+	s := &SCIMToken{TokenID: &zeroValue}
 	s.GetTokenID()
-	s = &ScimToken{}
+	s = &SCIMToken{}
 	s.GetTokenID()
 	s = nil
 	s.GetTokenID()
 }
 
-func TestScimToken_GetTokenLifeTime(tt *testing.T) {
+func TestSCIMToken_GetTokenLifeTime(tt *testing.T) {
 	var zeroValue int
-	s := &ScimToken{TokenLifeTime: &zeroValue}
+	s := &SCIMToken{TokenLifeTime: &zeroValue}
 	s.GetTokenLifeTime()
-	s = &ScimToken{}
+	s = &SCIMToken{}
 	s.GetTokenLifeTime()
 	s = nil
 	s.GetTokenLifeTime()
 }
 
-func TestScimToken_GetValidUntil(tt *testing.T) {
+func TestSCIMToken_GetValidUntil(tt *testing.T) {
 	var zeroValue string
-	s := &ScimToken{ValidUntil: &zeroValue}
+	s := &SCIMToken{ValidUntil: &zeroValue}
 	s.GetValidUntil()
-	s = &ScimToken{}
+	s = &SCIMToken{}
 	s.GetValidUntil()
 	s = nil
 	s.GetValidUntil()
 }
 
-func TestScimToken_String(t *testing.T) {
+func TestSCIMToken_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &ScimToken{}
+	v := &SCIMToken{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

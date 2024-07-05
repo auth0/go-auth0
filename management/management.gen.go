@@ -8926,7 +8926,7 @@ func (s *SAPAPIClientAddon) String() string {
 }
 
 // GetConnectionID returns the ConnectionID field if it's non-nil, zero value otherwise.
-func (s *ScimConfiguration) GetConnectionID() string {
+func (s *SCIMConfiguration) GetConnectionID() string {
 	if s == nil || s.ConnectionID == nil {
 		return ""
 	}
@@ -8934,7 +8934,7 @@ func (s *ScimConfiguration) GetConnectionID() string {
 }
 
 // GetConnectionName returns the ConnectionName field if it's non-nil, zero value otherwise.
-func (s *ScimConfiguration) GetConnectionName() string {
+func (s *SCIMConfiguration) GetConnectionName() string {
 	if s == nil || s.ConnectionName == nil {
 		return ""
 	}
@@ -8942,7 +8942,7 @@ func (s *ScimConfiguration) GetConnectionName() string {
 }
 
 // GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
-func (s *ScimConfiguration) GetCreatedAt() string {
+func (s *SCIMConfiguration) GetCreatedAt() string {
 	if s == nil || s.CreatedAt == nil {
 		return ""
 	}
@@ -8950,7 +8950,7 @@ func (s *ScimConfiguration) GetCreatedAt() string {
 }
 
 // GetMapping returns the Mapping field if it's non-nil, zero value otherwise.
-func (s *ScimConfiguration) GetMapping() []ScimConfigurationMapping {
+func (s *SCIMConfiguration) GetMapping() []SCIMConfigurationMapping {
 	if s == nil || s.Mapping == nil {
 		return nil
 	}
@@ -8958,7 +8958,7 @@ func (s *ScimConfiguration) GetMapping() []ScimConfigurationMapping {
 }
 
 // GetStrategy returns the Strategy field if it's non-nil, zero value otherwise.
-func (s *ScimConfiguration) GetStrategy() string {
+func (s *SCIMConfiguration) GetStrategy() string {
 	if s == nil || s.Strategy == nil {
 		return ""
 	}
@@ -8966,7 +8966,7 @@ func (s *ScimConfiguration) GetStrategy() string {
 }
 
 // GetTenantName returns the TenantName field if it's non-nil, zero value otherwise.
-func (s *ScimConfiguration) GetTenantName() string {
+func (s *SCIMConfiguration) GetTenantName() string {
 	if s == nil || s.TenantName == nil {
 		return ""
 	}
@@ -8974,7 +8974,7 @@ func (s *ScimConfiguration) GetTenantName() string {
 }
 
 // GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
-func (s *ScimConfiguration) GetUpdatedAt() string {
+func (s *SCIMConfiguration) GetUpdatedAt() string {
 	if s == nil || s.UpdatedAt == nil {
 		return ""
 	}
@@ -8982,41 +8982,41 @@ func (s *ScimConfiguration) GetUpdatedAt() string {
 }
 
 // GetUserIDAttribute returns the UserIDAttribute field if it's non-nil, zero value otherwise.
-func (s *ScimConfiguration) GetUserIDAttribute() string {
+func (s *SCIMConfiguration) GetUserIDAttribute() string {
 	if s == nil || s.UserIDAttribute == nil {
 		return ""
 	}
 	return *s.UserIDAttribute
 }
 
-// String returns a string representation of ScimConfiguration.
-func (s *ScimConfiguration) String() string {
+// String returns a string representation of SCIMConfiguration.
+func (s *SCIMConfiguration) String() string {
 	return Stringify(s)
 }
 
 // GetAuth0 returns the Auth0 field if it's non-nil, zero value otherwise.
-func (s *ScimConfigurationMapping) GetAuth0() string {
+func (s *SCIMConfigurationMapping) GetAuth0() string {
 	if s == nil || s.Auth0 == nil {
 		return ""
 	}
 	return *s.Auth0
 }
 
-// GetScim returns the Scim field if it's non-nil, zero value otherwise.
-func (s *ScimConfigurationMapping) GetScim() string {
-	if s == nil || s.Scim == nil {
+// GetSCIM returns the SCIM field if it's non-nil, zero value otherwise.
+func (s *SCIMConfigurationMapping) GetSCIM() string {
+	if s == nil || s.SCIM == nil {
 		return ""
 	}
-	return *s.Scim
+	return *s.SCIM
 }
 
-// String returns a string representation of ScimConfigurationMapping.
-func (s *ScimConfigurationMapping) String() string {
+// String returns a string representation of SCIMConfigurationMapping.
+func (s *SCIMConfigurationMapping) String() string {
 	return Stringify(s)
 }
 
 // GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
-func (s *ScimToken) GetCreatedAt() string {
+func (s *SCIMToken) GetCreatedAt() string {
 	if s == nil || s.CreatedAt == nil {
 		return ""
 	}
@@ -9024,7 +9024,7 @@ func (s *ScimToken) GetCreatedAt() string {
 }
 
 // GetLastUsedAt returns the LastUsedAt field if it's non-nil, zero value otherwise.
-func (s *ScimToken) GetLastUsedAt() string {
+func (s *SCIMToken) GetLastUsedAt() string {
 	if s == nil || s.LastUsedAt == nil {
 		return ""
 	}
@@ -9032,7 +9032,7 @@ func (s *ScimToken) GetLastUsedAt() string {
 }
 
 // GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
-func (s *ScimToken) GetScopes() []string {
+func (s *SCIMToken) GetScopes() []string {
 	if s == nil || s.Scopes == nil {
 		return nil
 	}
@@ -9040,7 +9040,7 @@ func (s *ScimToken) GetScopes() []string {
 }
 
 // GetToken returns the Token field if it's non-nil, zero value otherwise.
-func (s *ScimToken) GetToken() string {
+func (s *SCIMToken) GetToken() string {
 	if s == nil || s.Token == nil {
 		return ""
 	}
@@ -9048,7 +9048,7 @@ func (s *ScimToken) GetToken() string {
 }
 
 // GetTokenID returns the TokenID field if it's non-nil, zero value otherwise.
-func (s *ScimToken) GetTokenID() string {
+func (s *SCIMToken) GetTokenID() string {
 	if s == nil || s.TokenID == nil {
 		return ""
 	}
@@ -9056,7 +9056,7 @@ func (s *ScimToken) GetTokenID() string {
 }
 
 // GetTokenLifeTime returns the TokenLifeTime field if it's non-nil, zero value otherwise.
-func (s *ScimToken) GetTokenLifeTime() int {
+func (s *SCIMToken) GetTokenLifeTime() int {
 	if s == nil || s.TokenLifeTime == nil {
 		return 0
 	}
@@ -9064,15 +9064,15 @@ func (s *ScimToken) GetTokenLifeTime() int {
 }
 
 // GetValidUntil returns the ValidUntil field if it's non-nil, zero value otherwise.
-func (s *ScimToken) GetValidUntil() string {
+func (s *SCIMToken) GetValidUntil() string {
 	if s == nil || s.ValidUntil == nil {
 		return ""
 	}
 	return *s.ValidUntil
 }
 
-// String returns a string representation of ScimToken.
-func (s *ScimToken) String() string {
+// String returns a string representation of SCIMToken.
+func (s *SCIMToken) String() string {
 	return Stringify(s)
 }
 

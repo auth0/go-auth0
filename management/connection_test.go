@@ -627,206 +627,206 @@ func TestConnectionOptionsScopes(t *testing.T) {
 	})
 }
 
-func TestConnectionManager_CreateScimConfiguration(t *testing.T) {
+func TestConnectionManager_CreateSCIMConfiguration(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAOktaConnection(t)
-	expectedScimConfig := &ScimConfiguration{
-		Mapping: &[]ScimConfigurationMapping{
-			{Scim: auth0.String("userName"), Auth0: auth0.String("username")},
-			{Scim: auth0.String("email"), Auth0: auth0.String("email")},
+	expectedSCIMConfig := &SCIMConfiguration{
+		Mapping: &[]SCIMConfigurationMapping{
+			{SCIM: auth0.String("userName"), Auth0: auth0.String("username")},
+			{SCIM: auth0.String("email"), Auth0: auth0.String("email")},
 		},
 		UserIDAttribute: auth0.String("userName"),
 	}
-	err := api.Connection.CreateScimConfiguration(context.Background(), expectedConnection.GetID(), expectedScimConfig)
+	err := api.Connection.CreateSCIMConfiguration(context.Background(), expectedConnection.GetID(), expectedSCIMConfig)
 	assert.NoError(t, err)
 
-	actualScimConfiguration, err := api.Connection.ReadScimConfiguration(context.Background(), expectedConnection.GetID())
+	actualSCIMConfiguration, err := api.Connection.ReadSCIMConfiguration(context.Background(), expectedConnection.GetID())
 	assert.NoError(t, err)
-	assert.Equal(t, expectedConnection.GetID(), actualScimConfiguration.GetConnectionID())
-	assert.IsType(t, &ScimConfiguration{}, actualScimConfiguration)
+	assert.Equal(t, expectedConnection.GetID(), actualSCIMConfiguration.GetConnectionID())
+	assert.IsType(t, &SCIMConfiguration{}, actualSCIMConfiguration)
 	t.Cleanup(func() {
-		cleanupScimConfig(t, expectedConnection.GetID())
+		cleanupSCIMConfig(t, expectedConnection.GetID())
 	})
 }
 
-func TestConnectionManager_CreateScimConfigurationWithoutBody(t *testing.T) {
+func TestConnectionManager_CreateSCIMConfigurationWithoutBody(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAOktaConnection(t)
-	expectedScimConfig := &ScimConfiguration{}
-	err := api.Connection.CreateScimConfiguration(context.Background(), expectedConnection.GetID(), expectedScimConfig)
+	expectedSCIMConfig := &SCIMConfiguration{}
+	err := api.Connection.CreateSCIMConfiguration(context.Background(), expectedConnection.GetID(), expectedSCIMConfig)
 	assert.NoError(t, err)
 
-	actualScimConfiguration, err := api.Connection.ReadScimConfiguration(context.Background(), expectedConnection.GetID())
+	actualSCIMConfiguration, err := api.Connection.ReadSCIMConfiguration(context.Background(), expectedConnection.GetID())
 	assert.NoError(t, err)
-	assert.Equal(t, expectedConnection.GetID(), actualScimConfiguration.GetConnectionID())
-	assert.IsType(t, &ScimConfiguration{}, actualScimConfiguration)
+	assert.Equal(t, expectedConnection.GetID(), actualSCIMConfiguration.GetConnectionID())
+	assert.IsType(t, &SCIMConfiguration{}, actualSCIMConfiguration)
 	t.Cleanup(func() {
-		cleanupScimConfig(t, expectedConnection.GetID())
+		cleanupSCIMConfig(t, expectedConnection.GetID())
 	})
 }
 
-func TestConnectionManager_UpdateScimConfiguration(t *testing.T) {
+func TestConnectionManager_UpdateSCIMConfiguration(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAOktaConnection(t)
-	expectedScimConfig := givenAScimConfiguration(t, expectedConnection.GetID())
-	assert.Equal(t, expectedConnection.GetID(), expectedScimConfig.GetConnectionID())
-	expectedScimConfig = &ScimConfiguration{
-		Mapping: &[]ScimConfigurationMapping{
-			{Scim: auth0.String("userName"), Auth0: auth0.String("username")},
-			{Scim: auth0.String("email"), Auth0: auth0.String("email")},
+	expectedSCIMConfig := givenASCIMConfiguration(t, expectedConnection.GetID())
+	assert.Equal(t, expectedConnection.GetID(), expectedSCIMConfig.GetConnectionID())
+	expectedSCIMConfig = &SCIMConfiguration{
+		Mapping: &[]SCIMConfigurationMapping{
+			{SCIM: auth0.String("userName"), Auth0: auth0.String("username")},
+			{SCIM: auth0.String("email"), Auth0: auth0.String("email")},
 		},
 		UserIDAttribute: auth0.String("userName"),
 	}
 
-	err := api.Connection.UpdateScimConfiguration(context.Background(), expectedConnection.GetID(), expectedScimConfig)
+	err := api.Connection.UpdateSCIMConfiguration(context.Background(), expectedConnection.GetID(), expectedSCIMConfig)
 	assert.NoError(t, err)
 
-	actualScimConfiguration, err := api.Connection.ReadScimConfiguration(context.Background(), expectedConnection.GetID())
+	actualSCIMConfiguration, err := api.Connection.ReadSCIMConfiguration(context.Background(), expectedConnection.GetID())
 	assert.NoError(t, err)
-	assert.Equal(t, expectedScimConfig, actualScimConfiguration)
-	assert.Equal(t, expectedConnection.GetID(), actualScimConfiguration.GetConnectionID())
+	assert.Equal(t, expectedSCIMConfig, actualSCIMConfiguration)
+	assert.Equal(t, expectedConnection.GetID(), actualSCIMConfiguration.GetConnectionID())
 	t.Cleanup(func() {
-		cleanupScimConfig(t, expectedConnection.GetID())
+		cleanupSCIMConfig(t, expectedConnection.GetID())
 	})
 }
 
-func TestConnectionManager_DeleteScimConfiguration(t *testing.T) {
+func TestConnectionManager_DeleteSCIMConfiguration(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAOktaConnection(t)
 
-	expectedScimConfiguration := givenAScimConfiguration(t, expectedConnection.GetID())
+	expectedSCIMConfiguration := givenASCIMConfiguration(t, expectedConnection.GetID())
 
-	err := api.Connection.DeleteScimConfiguration(context.Background(), expectedScimConfiguration.GetConnectionID())
+	err := api.Connection.DeleteSCIMConfiguration(context.Background(), expectedSCIMConfiguration.GetConnectionID())
 	assert.NoError(t, err)
 
-	actualScimConfiguration, err := api.Connection.ReadScimConfiguration(context.Background(), expectedScimConfiguration.GetConnectionID())
-	assert.Nil(t, actualScimConfiguration)
+	actualSCIMConfiguration, err := api.Connection.ReadSCIMConfiguration(context.Background(), expectedSCIMConfiguration.GetConnectionID())
+	assert.Nil(t, actualSCIMConfiguration)
 	assert.Error(t, err)
 	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
 
-func TestConnectionManager_ReadScimConfiguration(t *testing.T) {
+func TestConnectionManager_ReadSCIMConfiguration(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAOktaConnection(t)
 
-	expectedScimConfig := &ScimConfiguration{
-		Mapping: &[]ScimConfigurationMapping{
-			{Scim: auth0.String("userName"), Auth0: auth0.String("username")},
-			{Scim: auth0.String("email"), Auth0: auth0.String("email")},
+	expectedSCIMConfig := &SCIMConfiguration{
+		Mapping: &[]SCIMConfigurationMapping{
+			{SCIM: auth0.String("userName"), Auth0: auth0.String("username")},
+			{SCIM: auth0.String("email"), Auth0: auth0.String("email")},
 		},
 		UserIDAttribute: auth0.String("userName"),
 	}
-	err := api.Connection.CreateScimConfiguration(context.Background(), expectedConnection.GetID(), expectedScimConfig)
+	err := api.Connection.CreateSCIMConfiguration(context.Background(), expectedConnection.GetID(), expectedSCIMConfig)
 	assert.NoError(t, err)
 
-	actualScimConfiguration, err := api.Connection.ReadScimConfiguration(context.Background(), expectedScimConfig.GetConnectionID())
+	actualSCIMConfiguration, err := api.Connection.ReadSCIMConfiguration(context.Background(), expectedSCIMConfig.GetConnectionID())
 	assert.NoError(t, err)
-	assert.Equal(t, expectedConnection.GetID(), actualScimConfiguration.GetConnectionID())
-	assert.Equal(t, expectedScimConfig, actualScimConfiguration)
+	assert.Equal(t, expectedConnection.GetID(), actualSCIMConfiguration.GetConnectionID())
+	assert.Equal(t, expectedSCIMConfig, actualSCIMConfiguration)
 
 	t.Cleanup(func() {
-		cleanupScimConfig(t, expectedConnection.GetID())
+		cleanupSCIMConfig(t, expectedConnection.GetID())
 	})
 }
 
-func TestConnectionManager_ReadScimDefaultConfiguration(t *testing.T) {
+func TestConnectionManager_ReadSCIMDefaultConfiguration(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAOktaConnection(t)
 
-	expectedScimConfig := &ScimConfiguration{}
-	err := api.Connection.CreateScimConfiguration(context.Background(), expectedConnection.GetID(), expectedScimConfig)
+	expectedSCIMConfig := &SCIMConfiguration{}
+	err := api.Connection.CreateSCIMConfiguration(context.Background(), expectedConnection.GetID(), expectedSCIMConfig)
 	assert.NoError(t, err)
 
-	actualScimConfiguration, err := api.Connection.ReadScimDefaultConfiguration(context.Background(), expectedScimConfig.GetConnectionID())
+	actualSCIMConfiguration, err := api.Connection.ReadSCIMDefaultConfiguration(context.Background(), expectedSCIMConfig.GetConnectionID())
 	assert.NoError(t, err)
-	assert.Equal(t, expectedScimConfig.GetMapping(), actualScimConfiguration.GetMapping())
+	assert.Equal(t, expectedSCIMConfig.GetMapping(), actualSCIMConfiguration.GetMapping())
 
 	t.Cleanup(func() {
-		cleanupScimConfig(t, expectedConnection.GetID())
+		cleanupSCIMConfig(t, expectedConnection.GetID())
 	})
 }
 
-func TestConnectionManager_CreateScimToken(t *testing.T) {
+func TestConnectionManager_CreateSCIMToken(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAOktaConnection(t)
-	expectedScimConfig := givenAScimConfiguration(t, expectedConnection.GetID())
+	expectedSCIMConfig := givenASCIMConfiguration(t, expectedConnection.GetID())
 
-	ScimTokenPayload := &ScimToken{
+	SCIMTokenPayload := &SCIMToken{
 		Scopes: &[]string{"get:users", "post:users", "put:users", "patch:users"},
 	}
 
-	err := api.Connection.CreateScimToken(context.Background(), expectedScimConfig.GetConnectionID(), ScimTokenPayload)
+	err := api.Connection.CreateSCIMToken(context.Background(), expectedSCIMConfig.GetConnectionID(), SCIMTokenPayload)
 	assert.NoError(t, err)
 
-	assert.NotEmpty(t, ScimTokenPayload.GetToken())
+	assert.NotEmpty(t, SCIMTokenPayload.GetToken())
 
 	t.Cleanup(func() {
-		cleanupScimConfig(t, expectedConnection.GetID())
+		cleanupSCIMConfig(t, expectedConnection.GetID())
 	})
 }
 
-func TestConnectionManager_ListScimTokens(t *testing.T) {
+func TestConnectionManager_ListSCIMTokens(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAOktaConnection(t)
 
-	expectedScimConfig := givenAScimConfiguration(t, expectedConnection.GetID())
+	expectedSCIMConfig := givenASCIMConfiguration(t, expectedConnection.GetID())
 
-	ScimTokenPayload := &ScimToken{
+	SCIMTokenPayload := &SCIMToken{
 		Scopes: &[]string{"get:users", "post:users", "put:users", "patch:users"},
 	}
 
-	err := api.Connection.CreateScimToken(context.Background(), expectedScimConfig.GetConnectionID(), ScimTokenPayload)
+	err := api.Connection.CreateSCIMToken(context.Background(), expectedSCIMConfig.GetConnectionID(), SCIMTokenPayload)
 	assert.NoError(t, err)
 
-	ScimTokenPayload.Token = nil
+	SCIMTokenPayload.Token = nil
 
-	actualScimTokens, err := api.Connection.ListScimToken(context.Background(), expectedConnection.GetID())
+	actualSCIMTokens, err := api.Connection.ListSCIMToken(context.Background(), expectedConnection.GetID())
 	assert.NoError(t, err)
 
-	assert.Contains(t, actualScimTokens, ScimTokenPayload)
+	assert.Contains(t, actualSCIMTokens, SCIMTokenPayload)
 
 	t.Cleanup(func() {
-		cleanupScimConfig(t, expectedConnection.GetID())
+		cleanupSCIMConfig(t, expectedConnection.GetID())
 	})
 }
 
-func TestConnectionManager_DeleteScimToken(t *testing.T) {
+func TestConnectionManager_DeleteSCIMToken(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedConnection := givenAOktaConnection(t)
-	expectedScimConfig := givenAScimConfiguration(t, expectedConnection.GetID())
+	expectedSCIMConfig := givenASCIMConfiguration(t, expectedConnection.GetID())
 
-	expectedScimToken := &ScimToken{
+	expectedSCIMToken := &SCIMToken{
 		Scopes: &[]string{"get:users", "post:users", "put:users", "patch:users"},
 	}
 
-	err := api.Connection.CreateScimToken(context.Background(), expectedScimConfig.GetConnectionID(), expectedScimToken)
+	err := api.Connection.CreateSCIMToken(context.Background(), expectedSCIMConfig.GetConnectionID(), expectedSCIMToken)
 	assert.NoError(t, err)
 
-	expectedScimToken.Token = nil
+	expectedSCIMToken.Token = nil
 
-	actualScimTokens, err := api.Connection.ListScimToken(context.Background(), expectedScimConfig.GetConnectionID())
+	actualSCIMTokens, err := api.Connection.ListSCIMToken(context.Background(), expectedSCIMConfig.GetConnectionID())
 	assert.NoError(t, err)
 
-	assert.Contains(t, actualScimTokens, expectedScimToken)
+	assert.Contains(t, actualSCIMTokens, expectedSCIMToken)
 
-	err = api.Connection.DeleteScimToken(context.Background(), expectedScimConfig.GetConnectionID(), expectedScimToken.GetTokenID())
+	err = api.Connection.DeleteSCIMToken(context.Background(), expectedSCIMConfig.GetConnectionID(), expectedSCIMToken.GetTokenID())
 	assert.NoError(t, err)
 
-	actualScimTokens, err = api.Connection.ListScimToken(context.Background(), expectedScimConfig.GetConnectionID())
+	actualSCIMTokens, err = api.Connection.ListSCIMToken(context.Background(), expectedSCIMConfig.GetConnectionID())
 	assert.NoError(t, err)
-	assert.Empty(t, actualScimTokens)
+	assert.Empty(t, actualSCIMTokens)
 
 	t.Cleanup(func() {
-		cleanupScimConfig(t, expectedConnection.GetID())
+		cleanupSCIMConfig(t, expectedConnection.GetID())
 	})
 }
 
@@ -899,10 +899,10 @@ func cleanupConnection(t *testing.T, connectionID string) {
 	require.NoError(t, err)
 }
 
-func cleanupScimConfig(t *testing.T, connectionID string) {
+func cleanupSCIMConfig(t *testing.T, connectionID string) {
 	t.Helper()
 
-	err := api.Connection.DeleteScimConfiguration(context.Background(), connectionID)
+	err := api.Connection.DeleteSCIMConfiguration(context.Background(), connectionID)
 	require.NoError(t, err)
 }
 
@@ -922,19 +922,19 @@ func givenAConnection(t *testing.T, testCase connectionTestCase) *Connection {
 	return &connection
 }
 
-func givenAScimConfiguration(t *testing.T, connectionID string) *ScimConfiguration {
+func givenASCIMConfiguration(t *testing.T, connectionID string) *SCIMConfiguration {
 	t.Helper()
 
-	expectedScimConfig := &ScimConfiguration{}
+	expectedSCIMConfig := &SCIMConfiguration{}
 
-	err := api.Connection.CreateScimConfiguration(context.Background(), connectionID, expectedScimConfig)
+	err := api.Connection.CreateSCIMConfiguration(context.Background(), connectionID, expectedSCIMConfig)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
-		cleanupScimConfig(t, connectionID)
+		cleanupSCIMConfig(t, connectionID)
 	})
 
-	return expectedScimConfig
+	return expectedSCIMConfig
 }
 
 func givenAOktaConnection(t *testing.T) *Connection {

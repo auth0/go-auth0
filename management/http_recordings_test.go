@@ -59,7 +59,8 @@ func removeSensitiveDataFromRecordings(t *testing.T, recorderTransport *recorder
 			redactSensitiveDataInClient(t, i)
 			redactSensitiveDataInResourceServer(t, i)
 			redactSensitiveDataInLogs(t, i)
-			redactSensitiveDataInConnectionScimToken(t, i)
+			redactSensitiveDataInConnectionSCIMToken(t, i)
+
 			// Redact domain should always be ran last
 			redactDomain(i, domain)
 
@@ -168,11 +169,11 @@ func redactSensitiveDataInSigningKey(t *testing.T, i *cassette.Interaction) {
 	}
 }
 
-func redactSensitiveDataInConnectionScimToken(t *testing.T, i *cassette.Interaction) {
+func redactSensitiveDataInConnectionSCIMToken(t *testing.T, i *cassette.Interaction) {
 	isTokenURL := strings.Contains(i.Request.URL, "https://"+domain+"/api/v2/connections") && strings.Contains(i.Request.URL, "scim-configuration/tokens")
 	create := isTokenURL && i.Request.Method == http.MethodPost
 	if create {
-		var token ScimToken
+		var token SCIMToken
 		err := json.Unmarshal([]byte(i.Response.Body), &token)
 		require.NoError(t, err)
 
