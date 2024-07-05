@@ -382,7 +382,7 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			AuthorizationEndpoint: auth0.String("https://example.com"),
 			JWKSURI:               auth0.String("https://example.com/jwks"),
 			Type:                  auth0.String("front_channel"),
-			DiscoveryURL:          auth0.String("https://example.com//.well-known/openid-configuration"),
+			DiscoveryURL:          auth0.String("https://www.paypalobjects.com/.well-known/openid-configuration"),
 			UpstreamParams: map[string]interface{}{
 				"screen_name": map[string]interface{}{
 					"alias": "login_hint",
@@ -627,6 +627,209 @@ func TestConnectionOptionsScopes(t *testing.T) {
 	})
 }
 
+func TestConnectionManager_CreateSCIMConfiguration(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedConnection := givenAOktaConnection(t)
+	expectedSCIMConfig := &SCIMConfiguration{
+		Mapping: &[]SCIMConfigurationMapping{
+			{SCIM: auth0.String("userName"), Auth0: auth0.String("username")},
+			{SCIM: auth0.String("email"), Auth0: auth0.String("email")},
+		},
+		UserIDAttribute: auth0.String("userName"),
+	}
+	err := api.Connection.CreateSCIMConfiguration(context.Background(), expectedConnection.GetID(), expectedSCIMConfig)
+	assert.NoError(t, err)
+
+	actualSCIMConfiguration, err := api.Connection.ReadSCIMConfiguration(context.Background(), expectedConnection.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedConnection.GetID(), actualSCIMConfiguration.GetConnectionID())
+	assert.IsType(t, &SCIMConfiguration{}, actualSCIMConfiguration)
+	t.Cleanup(func() {
+		cleanupSCIMConfig(t, expectedConnection.GetID())
+	})
+}
+
+func TestConnectionManager_CreateSCIMConfigurationWithoutBody(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedConnection := givenAOktaConnection(t)
+	expectedSCIMConfig := &SCIMConfiguration{}
+	err := api.Connection.CreateSCIMConfiguration(context.Background(), expectedConnection.GetID(), expectedSCIMConfig)
+	assert.NoError(t, err)
+
+	actualSCIMConfiguration, err := api.Connection.ReadSCIMConfiguration(context.Background(), expectedConnection.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedConnection.GetID(), actualSCIMConfiguration.GetConnectionID())
+	assert.IsType(t, &SCIMConfiguration{}, actualSCIMConfiguration)
+	t.Cleanup(func() {
+		cleanupSCIMConfig(t, expectedConnection.GetID())
+	})
+}
+
+func TestConnectionManager_UpdateSCIMConfiguration(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedConnection := givenAOktaConnection(t)
+	expectedSCIMConfig := givenASCIMConfiguration(t, expectedConnection.GetID())
+	assert.Equal(t, expectedConnection.GetID(), expectedSCIMConfig.GetConnectionID())
+	expectedSCIMConfig = &SCIMConfiguration{
+		Mapping: &[]SCIMConfigurationMapping{
+			{SCIM: auth0.String("userName"), Auth0: auth0.String("username")},
+			{SCIM: auth0.String("email"), Auth0: auth0.String("email")},
+		},
+		UserIDAttribute: auth0.String("userName"),
+	}
+
+	err := api.Connection.UpdateSCIMConfiguration(context.Background(), expectedConnection.GetID(), expectedSCIMConfig)
+	assert.NoError(t, err)
+
+	actualSCIMConfiguration, err := api.Connection.ReadSCIMConfiguration(context.Background(), expectedConnection.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedSCIMConfig, actualSCIMConfiguration)
+	assert.Equal(t, expectedConnection.GetID(), actualSCIMConfiguration.GetConnectionID())
+	t.Cleanup(func() {
+		cleanupSCIMConfig(t, expectedConnection.GetID())
+	})
+}
+
+func TestConnectionManager_DeleteSCIMConfiguration(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedConnection := givenAOktaConnection(t)
+
+	expectedSCIMConfiguration := givenASCIMConfiguration(t, expectedConnection.GetID())
+
+	err := api.Connection.DeleteSCIMConfiguration(context.Background(), expectedSCIMConfiguration.GetConnectionID())
+	assert.NoError(t, err)
+
+	actualSCIMConfiguration, err := api.Connection.ReadSCIMConfiguration(context.Background(), expectedSCIMConfiguration.GetConnectionID())
+	assert.Nil(t, actualSCIMConfiguration)
+	assert.Error(t, err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
+}
+
+func TestConnectionManager_ReadSCIMConfiguration(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedConnection := givenAOktaConnection(t)
+
+	expectedSCIMConfig := &SCIMConfiguration{
+		Mapping: &[]SCIMConfigurationMapping{
+			{SCIM: auth0.String("userName"), Auth0: auth0.String("username")},
+			{SCIM: auth0.String("email"), Auth0: auth0.String("email")},
+		},
+		UserIDAttribute: auth0.String("userName"),
+	}
+	err := api.Connection.CreateSCIMConfiguration(context.Background(), expectedConnection.GetID(), expectedSCIMConfig)
+	assert.NoError(t, err)
+
+	actualSCIMConfiguration, err := api.Connection.ReadSCIMConfiguration(context.Background(), expectedSCIMConfig.GetConnectionID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedConnection.GetID(), actualSCIMConfiguration.GetConnectionID())
+	assert.Equal(t, expectedSCIMConfig, actualSCIMConfiguration)
+
+	t.Cleanup(func() {
+		cleanupSCIMConfig(t, expectedConnection.GetID())
+	})
+}
+
+func TestConnectionManager_ReadSCIMDefaultConfiguration(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedConnection := givenAOktaConnection(t)
+
+	expectedSCIMConfig := &SCIMConfiguration{}
+	err := api.Connection.CreateSCIMConfiguration(context.Background(), expectedConnection.GetID(), expectedSCIMConfig)
+	assert.NoError(t, err)
+
+	actualSCIMConfiguration, err := api.Connection.ReadSCIMDefaultConfiguration(context.Background(), expectedSCIMConfig.GetConnectionID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedSCIMConfig.GetMapping(), actualSCIMConfiguration.GetMapping())
+
+	t.Cleanup(func() {
+		cleanupSCIMConfig(t, expectedConnection.GetID())
+	})
+}
+
+func TestConnectionManager_CreateSCIMToken(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedConnection := givenAOktaConnection(t)
+	expectedSCIMConfig := givenASCIMConfiguration(t, expectedConnection.GetID())
+
+	SCIMTokenPayload := &SCIMToken{
+		Scopes: &[]string{"get:users", "post:users", "put:users", "patch:users"},
+	}
+
+	err := api.Connection.CreateSCIMToken(context.Background(), expectedSCIMConfig.GetConnectionID(), SCIMTokenPayload)
+	assert.NoError(t, err)
+
+	assert.NotEmpty(t, SCIMTokenPayload.GetToken())
+
+	t.Cleanup(func() {
+		cleanupSCIMConfig(t, expectedConnection.GetID())
+	})
+}
+
+func TestConnectionManager_ListSCIMTokens(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedConnection := givenAOktaConnection(t)
+
+	expectedSCIMConfig := givenASCIMConfiguration(t, expectedConnection.GetID())
+
+	SCIMTokenPayload := &SCIMToken{
+		Scopes: &[]string{"get:users", "post:users", "put:users", "patch:users"},
+	}
+
+	err := api.Connection.CreateSCIMToken(context.Background(), expectedSCIMConfig.GetConnectionID(), SCIMTokenPayload)
+	assert.NoError(t, err)
+
+	SCIMTokenPayload.Token = nil
+
+	actualSCIMTokens, err := api.Connection.ListSCIMToken(context.Background(), expectedConnection.GetID())
+	assert.NoError(t, err)
+
+	assert.Contains(t, actualSCIMTokens, SCIMTokenPayload)
+
+	t.Cleanup(func() {
+		cleanupSCIMConfig(t, expectedConnection.GetID())
+	})
+}
+
+func TestConnectionManager_DeleteSCIMToken(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedConnection := givenAOktaConnection(t)
+	expectedSCIMConfig := givenASCIMConfiguration(t, expectedConnection.GetID())
+
+	expectedSCIMToken := &SCIMToken{
+		Scopes: &[]string{"get:users", "post:users", "put:users", "patch:users"},
+	}
+
+	err := api.Connection.CreateSCIMToken(context.Background(), expectedSCIMConfig.GetConnectionID(), expectedSCIMToken)
+	assert.NoError(t, err)
+
+	expectedSCIMToken.Token = nil
+
+	actualSCIMTokens, err := api.Connection.ListSCIMToken(context.Background(), expectedSCIMConfig.GetConnectionID())
+	assert.NoError(t, err)
+
+	assert.Contains(t, actualSCIMTokens, expectedSCIMToken)
+
+	err = api.Connection.DeleteSCIMToken(context.Background(), expectedSCIMConfig.GetConnectionID(), expectedSCIMToken.GetTokenID())
+	assert.NoError(t, err)
+
+	actualSCIMTokens, err = api.Connection.ListSCIMToken(context.Background(), expectedSCIMConfig.GetConnectionID())
+	assert.NoError(t, err)
+	assert.Empty(t, actualSCIMTokens)
+
+	t.Cleanup(func() {
+		cleanupSCIMConfig(t, expectedConnection.GetID())
+	})
+}
+
 func TestOAuth2Connection_MarshalJSON(t *testing.T) {
 	for connection, expected := range map[*ConnectionOptionsOAuth2]string{
 		{Scope: auth0.String("foo bar baz")}: `{"authorizationURL":null,"tokenURL":null,"scope":["foo","bar","baz"]}`,
@@ -696,6 +899,13 @@ func cleanupConnection(t *testing.T, connectionID string) {
 	require.NoError(t, err)
 }
 
+func cleanupSCIMConfig(t *testing.T, connectionID string) {
+	t.Helper()
+
+	err := api.Connection.DeleteSCIMConfiguration(context.Background(), connectionID)
+	require.NoError(t, err)
+}
+
 func givenAConnection(t *testing.T, testCase connectionTestCase) *Connection {
 	t.Helper()
 
@@ -710,4 +920,43 @@ func givenAConnection(t *testing.T, testCase connectionTestCase) *Connection {
 	})
 
 	return &connection
+}
+
+func givenASCIMConfiguration(t *testing.T, connectionID string) *SCIMConfiguration {
+	t.Helper()
+
+	expectedSCIMConfig := &SCIMConfiguration{}
+
+	err := api.Connection.CreateSCIMConfiguration(context.Background(), connectionID, expectedSCIMConfig)
+	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupSCIMConfig(t, connectionID)
+	})
+
+	return expectedSCIMConfig
+}
+
+func givenAOktaConnection(t *testing.T) *Connection {
+	t.Helper()
+	return givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Okta-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("okta"),
+		},
+		options: &ConnectionOptionsOkta{
+			ClientID:              auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+			ClientSecret:          auth0.String("mySecret"),
+			Scope:                 auth0.String("openid"),
+			Domain:                auth0.String("domain.okta.com"),
+			Issuer:                auth0.String("https://example.com"),
+			AuthorizationEndpoint: auth0.String("https://example.com"),
+			JWKSURI:               auth0.String("https://example.com/jwks"),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
+	})
 }
