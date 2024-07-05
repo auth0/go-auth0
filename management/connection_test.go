@@ -672,7 +672,7 @@ func TestConnectionManager_UpdateScimConfiguration(t *testing.T) {
 
 	expectedConnection := givenAOktaConnection(t)
 	expectedScimConfig := givenAScimConfiguration(t, expectedConnection.GetID())
-
+	assert.Equal(t, expectedConnection.GetID(), expectedScimConfig.GetConnectionID())
 	expectedScimConfig = &ScimConfiguration{
 		Mapping: &[]ScimConfigurationMapping{
 			{Scim: auth0.String("userName"), Auth0: auth0.String("username")},
