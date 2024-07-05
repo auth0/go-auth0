@@ -1518,7 +1518,7 @@ func (m *ConnectionManager) ListSCIMToken(ctx context.Context, id string, opts .
 	return
 }
 
-// DeleteSCIMToken Deletes a SCIM token by its connection ID and token id.
+// DeleteSCIMToken deletes a SCIM token by its connection ID and token id.
 // This method only works with enterprise connections.
 //
 // See: https://auth0.com/docs/api/management/v2/connections/delete-scim-token
