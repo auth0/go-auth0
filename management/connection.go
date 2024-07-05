@@ -1466,7 +1466,7 @@ func (m *ConnectionManager) CreateSCIMConfiguration(ctx context.Context, id stri
 	return m.management.Request(ctx, "POST", m.management.URI("connections", id, "scim-configuration"), scimConfig, opts...)
 }
 
-// ReadSCIMConfiguration retrieves the scim configuration for a connection by its connection ID.
+// ReadSCIMConfiguration retrieves the SCIM configuration for a connection by its connection ID.
 // This method only works with enterprise connections.
 //
 // See: https://auth0.com/docs/api/management/v2/connections/get-scim-configuration
@@ -1475,7 +1475,7 @@ func (m *ConnectionManager) ReadSCIMConfiguration(ctx context.Context, id string
 	return
 }
 
-// UpdateSCIMConfiguration updates the scim configuration for a connection by its connection ID.
+// UpdateSCIMConfiguration updates the SCIM configuration for a connection by its connection ID.
 // This method only works with enterprise connections.
 //
 // See: https://auth0.com/docs/api/management/v2/connections/patch-scim-configuration
@@ -1483,7 +1483,7 @@ func (m *ConnectionManager) UpdateSCIMConfiguration(ctx context.Context, id stri
 	return m.management.Request(ctx, "PATCH", m.management.URI("connections", id, "scim-configuration"), scimConfig, opts...)
 }
 
-// DeleteSCIMConfiguration deletes the scim configuration for a connection by its connection ID.
+// DeleteSCIMConfiguration deletes the SCIM configuration for a connection by its connection ID.
 // This method only works with enterprise connections.
 //
 // See: https://auth0.com/docs/api/management/v2/connections/delete-scim-configuration
@@ -1491,7 +1491,7 @@ func (m *ConnectionManager) DeleteSCIMConfiguration(ctx context.Context, id stri
 	return m.management.Request(ctx, "DELETE", m.management.URI("connections", id, "scim-configuration"), nil, opts...)
 }
 
-// ReadSCIMDefaultConfiguration  Retrieves a scim configuration's default mapping by its connection ID.
+// ReadSCIMDefaultConfiguration retrieves a SCIM configuration's default mapping by its connection ID.
 // This method only works with enterprise connections.
 //
 // https://auth0.com/docs/api/management/v2/connections/get-default-mapping
@@ -1500,7 +1500,7 @@ func (m *ConnectionManager) ReadSCIMDefaultConfiguration(ctx context.Context, id
 	return
 }
 
-// CreateSCIMToken Create a scim token for a scim client.
+// CreateSCIMToken create a SCIM token for a scim client.
 // This method only works with enterprise connections.
 //
 // See: https://auth0.com/docs/api/management/v2/connections/post-scim-token
@@ -1509,7 +1509,7 @@ func (m *ConnectionManager) CreateSCIMToken(ctx context.Context, id string, scim
 	return
 }
 
-// ListSCIMToken Retrieves all scim tokens by its connection ID.
+// ListSCIMToken retrieves all SCIM tokens by its connection ID.
 // This method only works with enterprise connections.
 //
 // See: https://auth0.com/docs/api/management/v2/connections/get-scim-tokens
@@ -1518,7 +1518,7 @@ func (m *ConnectionManager) ListSCIMToken(ctx context.Context, id string, opts .
 	return
 }
 
-// DeleteSCIMToken Deletes a scim token by its connection ID and token id.
+// DeleteSCIMToken Deletes a SCIM token by its connection ID and token id.
 // This method only works with enterprise connections.
 //
 // See: https://auth0.com/docs/api/management/v2/connections/delete-scim-token
