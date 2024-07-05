@@ -252,23 +252,6 @@ func (st *ScimToken) MarshalJSON() ([]byte, error) {
 	})
 }
 
-//// UnmarshalJSON implements the json.Unmarshaler interface.
-// func (st *ScimToken) UnmarshalJSON(data []byte) error {
-//	type scimToken ScimToken
-//	type scimTokenWrapper struct {
-//		*scimToken
-//	}
-//	w := &scimTokenWrapper{(*scimToken)(st)}
-//	if err := json.Unmarshal(data, &w); err != nil {
-//		return err
-//	}
-//
-//	// Set the Token field to nil explicitly
-//	st.Token = nil
-//
-//	return nil
-//}
-
 // MarshalJSON implements the json.Marshaler interface.
 func (c *Connection) MarshalJSON() ([]byte, error) {
 	type connection Connection
@@ -1506,7 +1489,7 @@ func (m *ConnectionManager) DeleteScimConfiguration(ctx context.Context, id stri
 //
 // https://auth0.com/docs/api/management/v2/connections/get-default-mapping
 func (m *ConnectionManager) ReadScimDefaultConfiguration(ctx context.Context, id string, opts ...RequestOption) (scim *ScimConfiguration, err error) {
-	err = m.management.Request(ctx, "GET", m.management.URI("connections", id, "scim-configuration/default-mapping"), &scim, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("connections", id, "scim-configuration", "default-mapping"), &scim, opts...)
 	return
 }
 
