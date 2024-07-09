@@ -4,7 +4,7 @@
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.7.0...v1.8.0)
 
 **Added**
-- Add support for new SCIM Server Management API endpoints [\#419](https://github.com/auth0/go-auth0/pull/419) ([developerkunal](https://github.com/developerkunal))
+- Add support for managing a connection's SCIM (System for Cross-domain Identity Management) configuration [\#419](https://github.com/auth0/go-auth0/pull/419) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.7.0](https://github.com/auth0/go-auth0/tree/v1.7.0) (2024-06-14)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.6.0...v1.7.0)
