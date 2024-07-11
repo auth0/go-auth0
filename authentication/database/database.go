@@ -18,6 +18,8 @@ type SignupRequest struct {
 	Connection string `json:"connection,omitempty"`
 	// The user's username. Only valid if the connection requires a username.
 	Username string `json:"username,omitempty"`
+	// The user's phone number.
+	PhoneNumber string `json:"phone_number,omitempty"`
 	// The user's given name(s).
 	GivenName string `json:"given_name,omitempty"`
 	// The user's family name(s).
@@ -43,6 +45,8 @@ type SignupResponse struct {
 	EmailVerified bool `json:"email_verified,omitempty"`
 	// The user's ID.
 	ID string `json:"_id,omitempty"`
+	// The user's phone number.
+	PhoneNumber string `json:"phone_number,omitempty"`
 	// The user's username. Only valid if the connection requires a username.
 	Username string `json:"username,omitempty"`
 	// The user's given name(s).

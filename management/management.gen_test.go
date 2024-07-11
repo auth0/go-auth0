@@ -2654,6 +2654,13 @@ func TestConnectionList_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptions_GetAttributes(tt *testing.T) {
+	c := &ConnectionOptions{}
+	c.GetAttributes()
+	c = nil
+	c.GetAttributes()
+}
+
 func TestConnectionOptions_GetAuthenticationMethods(tt *testing.T) {
 	c := &ConnectionOptions{}
 	c.GetAuthenticationMethods()
@@ -2816,6 +2823,16 @@ func TestConnectionOptions_GetPasswordPolicy(tt *testing.T) {
 	c.GetPasswordPolicy()
 	c = nil
 	c.GetPasswordPolicy()
+}
+
+func TestConnectionOptions_GetPrecedence(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptions{Precedence: &zeroValue}
+	c.GetPrecedence()
+	c = &ConnectionOptions{}
+	c.GetPrecedence()
+	c = nil
+	c.GetPrecedence()
 }
 
 func TestConnectionOptions_GetRequiresUsername(tt *testing.T) {
@@ -3320,6 +3337,159 @@ func TestConnectionOptionsApple_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptionsAttributeAllowedTypes_GetEmail(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsAttributeAllowedTypes{Email: &zeroValue}
+	c.GetEmail()
+	c = &ConnectionOptionsAttributeAllowedTypes{}
+	c.GetEmail()
+	c = nil
+	c.GetEmail()
+}
+
+func TestConnectionOptionsAttributeAllowedTypes_GetPhoneNumber(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsAttributeAllowedTypes{PhoneNumber: &zeroValue}
+	c.GetPhoneNumber()
+	c = &ConnectionOptionsAttributeAllowedTypes{}
+	c.GetPhoneNumber()
+	c = nil
+	c.GetPhoneNumber()
+}
+
+func TestConnectionOptionsAttributeAllowedTypes_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsAttributeAllowedTypes{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsAttributeIdentifier_GetActive(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsAttributeIdentifier{Active: &zeroValue}
+	c.GetActive()
+	c = &ConnectionOptionsAttributeIdentifier{}
+	c.GetActive()
+	c = nil
+	c.GetActive()
+}
+
+func TestConnectionOptionsAttributeIdentifier_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsAttributeIdentifier{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsAttributes_GetEmail(tt *testing.T) {
+	c := &ConnectionOptionsAttributes{}
+	c.GetEmail()
+	c = nil
+	c.GetEmail()
+}
+
+func TestConnectionOptionsAttributes_GetPhoneNumber(tt *testing.T) {
+	c := &ConnectionOptionsAttributes{}
+	c.GetPhoneNumber()
+	c = nil
+	c.GetPhoneNumber()
+}
+
+func TestConnectionOptionsAttributes_GetUsername(tt *testing.T) {
+	c := &ConnectionOptionsAttributes{}
+	c.GetUsername()
+	c = nil
+	c.GetUsername()
+}
+
+func TestConnectionOptionsAttributes_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsAttributes{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsAttributeSignup_GetStatus(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsAttributeSignup{Status: &zeroValue}
+	c.GetStatus()
+	c = &ConnectionOptionsAttributeSignup{}
+	c.GetStatus()
+	c = nil
+	c.GetStatus()
+}
+
+func TestConnectionOptionsAttributeSignup_GetVerification(tt *testing.T) {
+	c := &ConnectionOptionsAttributeSignup{}
+	c.GetVerification()
+	c = nil
+	c.GetVerification()
+}
+
+func TestConnectionOptionsAttributeSignup_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsAttributeSignup{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsAttributeValidation_GetAllowedTypes(tt *testing.T) {
+	c := &ConnectionOptionsAttributeValidation{}
+	c.GetAllowedTypes()
+	c = nil
+	c.GetAllowedTypes()
+}
+
+func TestConnectionOptionsAttributeValidation_GetMaxLength(tt *testing.T) {
+	var zeroValue int
+	c := &ConnectionOptionsAttributeValidation{MaxLength: &zeroValue}
+	c.GetMaxLength()
+	c = &ConnectionOptionsAttributeValidation{}
+	c.GetMaxLength()
+	c = nil
+	c.GetMaxLength()
+}
+
+func TestConnectionOptionsAttributeValidation_GetMinLength(tt *testing.T) {
+	var zeroValue int
+	c := &ConnectionOptionsAttributeValidation{MinLength: &zeroValue}
+	c.GetMinLength()
+	c = &ConnectionOptionsAttributeValidation{}
+	c.GetMinLength()
+	c = nil
+	c.GetMinLength()
+}
+
+func TestConnectionOptionsAttributeValidation_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsAttributeValidation{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsAttributeVerification_GetActive(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsAttributeVerification{Active: &zeroValue}
+	c.GetActive()
+	c = &ConnectionOptionsAttributeVerification{}
+	c.GetActive()
+	c = nil
+	c.GetActive()
+}
+
+func TestConnectionOptionsAttributeVerification_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsAttributeVerification{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestConnectionOptionsAzureAD_GetAdmin(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsAzureAD{Admin: &zeroValue}
@@ -3715,6 +3885,38 @@ func TestConnectionOptionsEmail_GetUpstreamParams(tt *testing.T) {
 func TestConnectionOptionsEmail_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsEmail{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsEmailAttribute_GetIdentifier(tt *testing.T) {
+	c := &ConnectionOptionsEmailAttribute{}
+	c.GetIdentifier()
+	c = nil
+	c.GetIdentifier()
+}
+
+func TestConnectionOptionsEmailAttribute_GetProfileRequired(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsEmailAttribute{ProfileRequired: &zeroValue}
+	c.GetProfileRequired()
+	c = &ConnectionOptionsEmailAttribute{}
+	c.GetProfileRequired()
+	c = nil
+	c.GetProfileRequired()
+}
+
+func TestConnectionOptionsEmailAttribute_GetSignup(tt *testing.T) {
+	c := &ConnectionOptionsEmailAttribute{}
+	c.GetSignup()
+	c = nil
+	c.GetSignup()
+}
+
+func TestConnectionOptionsEmailAttribute_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsEmailAttribute{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -5734,6 +5936,38 @@ func TestConnectionOptionsOTP_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptionsPhoneNumberAttribute_GetIdentifier(tt *testing.T) {
+	c := &ConnectionOptionsPhoneNumberAttribute{}
+	c.GetIdentifier()
+	c = nil
+	c.GetIdentifier()
+}
+
+func TestConnectionOptionsPhoneNumberAttribute_GetProfileRequired(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsPhoneNumberAttribute{ProfileRequired: &zeroValue}
+	c.GetProfileRequired()
+	c = &ConnectionOptionsPhoneNumberAttribute{}
+	c.GetProfileRequired()
+	c = nil
+	c.GetProfileRequired()
+}
+
+func TestConnectionOptionsPhoneNumberAttribute_GetSignup(tt *testing.T) {
+	c := &ConnectionOptionsPhoneNumberAttribute{}
+	c.GetSignup()
+	c = nil
+	c.GetSignup()
+}
+
+func TestConnectionOptionsPhoneNumberAttribute_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsPhoneNumberAttribute{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestConnectionOptionsPingFederate_GetAgentIP(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsPingFederate{AgentIP: &zeroValue}
@@ -6791,6 +7025,45 @@ func TestConnectionOptionsSMS_GetUpstreamParams(tt *testing.T) {
 func TestConnectionOptionsSMS_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsSMS{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsUsernameAttribute_GetIdentifier(tt *testing.T) {
+	c := &ConnectionOptionsUsernameAttribute{}
+	c.GetIdentifier()
+	c = nil
+	c.GetIdentifier()
+}
+
+func TestConnectionOptionsUsernameAttribute_GetProfileRequired(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsUsernameAttribute{ProfileRequired: &zeroValue}
+	c.GetProfileRequired()
+	c = &ConnectionOptionsUsernameAttribute{}
+	c.GetProfileRequired()
+	c = nil
+	c.GetProfileRequired()
+}
+
+func TestConnectionOptionsUsernameAttribute_GetSignup(tt *testing.T) {
+	c := &ConnectionOptionsUsernameAttribute{}
+	c.GetSignup()
+	c = nil
+	c.GetSignup()
+}
+
+func TestConnectionOptionsUsernameAttribute_GetValidation(tt *testing.T) {
+	c := &ConnectionOptionsUsernameAttribute{}
+	c.GetValidation()
+	c = nil
+	c.GetValidation()
+}
+
+func TestConnectionOptionsUsernameAttribute_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsUsernameAttribute{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

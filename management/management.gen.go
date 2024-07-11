@@ -2169,6 +2169,14 @@ func (c *ConnectionList) String() string {
 	return Stringify(c)
 }
 
+// GetAttributes returns the Attributes field.
+func (c *ConnectionOptions) GetAttributes() *ConnectionOptionsAttributes {
+	if c == nil {
+		return nil
+	}
+	return c.Attributes
+}
+
 // GetAuthenticationMethods returns the AuthenticationMethods field.
 func (c *ConnectionOptions) GetAuthenticationMethods() *AuthenticationMethods {
 	if c == nil {
@@ -2303,6 +2311,14 @@ func (c *ConnectionOptions) GetPasswordPolicy() string {
 		return ""
 	}
 	return *c.PasswordPolicy
+}
+
+// GetPrecedence returns the Precedence field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptions) GetPrecedence() []string {
+	if c == nil || c.Precedence == nil {
+		return nil
+	}
+	return *c.Precedence
 }
 
 // GetRequiresUsername returns the RequiresUsername field if it's non-nil, zero value otherwise.
@@ -2701,6 +2717,132 @@ func (c *ConnectionOptionsApple) String() string {
 	return Stringify(c)
 }
 
+// GetEmail returns the Email field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAttributeAllowedTypes) GetEmail() bool {
+	if c == nil || c.Email == nil {
+		return false
+	}
+	return *c.Email
+}
+
+// GetPhoneNumber returns the PhoneNumber field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAttributeAllowedTypes) GetPhoneNumber() bool {
+	if c == nil || c.PhoneNumber == nil {
+		return false
+	}
+	return *c.PhoneNumber
+}
+
+// String returns a string representation of ConnectionOptionsAttributeAllowedTypes.
+func (c *ConnectionOptionsAttributeAllowedTypes) String() string {
+	return Stringify(c)
+}
+
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAttributeIdentifier) GetActive() bool {
+	if c == nil || c.Active == nil {
+		return false
+	}
+	return *c.Active
+}
+
+// String returns a string representation of ConnectionOptionsAttributeIdentifier.
+func (c *ConnectionOptionsAttributeIdentifier) String() string {
+	return Stringify(c)
+}
+
+// GetEmail returns the Email field.
+func (c *ConnectionOptionsAttributes) GetEmail() *ConnectionOptionsEmailAttribute {
+	if c == nil {
+		return nil
+	}
+	return c.Email
+}
+
+// GetPhoneNumber returns the PhoneNumber field.
+func (c *ConnectionOptionsAttributes) GetPhoneNumber() *ConnectionOptionsPhoneNumberAttribute {
+	if c == nil {
+		return nil
+	}
+	return c.PhoneNumber
+}
+
+// GetUsername returns the Username field.
+func (c *ConnectionOptionsAttributes) GetUsername() *ConnectionOptionsUsernameAttribute {
+	if c == nil {
+		return nil
+	}
+	return c.Username
+}
+
+// String returns a string representation of ConnectionOptionsAttributes.
+func (c *ConnectionOptionsAttributes) String() string {
+	return Stringify(c)
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAttributeSignup) GetStatus() string {
+	if c == nil || c.Status == nil {
+		return ""
+	}
+	return *c.Status
+}
+
+// GetVerification returns the Verification field.
+func (c *ConnectionOptionsAttributeSignup) GetVerification() *ConnectionOptionsAttributeVerification {
+	if c == nil {
+		return nil
+	}
+	return c.Verification
+}
+
+// String returns a string representation of ConnectionOptionsAttributeSignup.
+func (c *ConnectionOptionsAttributeSignup) String() string {
+	return Stringify(c)
+}
+
+// GetAllowedTypes returns the AllowedTypes field.
+func (c *ConnectionOptionsAttributeValidation) GetAllowedTypes() *ConnectionOptionsAttributeAllowedTypes {
+	if c == nil {
+		return nil
+	}
+	return c.AllowedTypes
+}
+
+// GetMaxLength returns the MaxLength field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAttributeValidation) GetMaxLength() int {
+	if c == nil || c.MaxLength == nil {
+		return 0
+	}
+	return *c.MaxLength
+}
+
+// GetMinLength returns the MinLength field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAttributeValidation) GetMinLength() int {
+	if c == nil || c.MinLength == nil {
+		return 0
+	}
+	return *c.MinLength
+}
+
+// String returns a string representation of ConnectionOptionsAttributeValidation.
+func (c *ConnectionOptionsAttributeValidation) String() string {
+	return Stringify(c)
+}
+
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAttributeVerification) GetActive() bool {
+	if c == nil || c.Active == nil {
+		return false
+	}
+	return *c.Active
+}
+
+// String returns a string representation of ConnectionOptionsAttributeVerification.
+func (c *ConnectionOptionsAttributeVerification) String() string {
+	return Stringify(c)
+}
+
 // GetAdmin returns the Admin field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsAzureAD) GetAdmin() bool {
 	if c == nil || c.Admin == nil {
@@ -3020,6 +3162,35 @@ func (c *ConnectionOptionsEmail) GetUpstreamParams() map[string]interface{} {
 
 // String returns a string representation of ConnectionOptionsEmail.
 func (c *ConnectionOptionsEmail) String() string {
+	return Stringify(c)
+}
+
+// GetIdentifier returns the Identifier field.
+func (c *ConnectionOptionsEmailAttribute) GetIdentifier() *ConnectionOptionsAttributeIdentifier {
+	if c == nil {
+		return nil
+	}
+	return c.Identifier
+}
+
+// GetProfileRequired returns the ProfileRequired field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsEmailAttribute) GetProfileRequired() bool {
+	if c == nil || c.ProfileRequired == nil {
+		return false
+	}
+	return *c.ProfileRequired
+}
+
+// GetSignup returns the Signup field.
+func (c *ConnectionOptionsEmailAttribute) GetSignup() *ConnectionOptionsAttributeSignup {
+	if c == nil {
+		return nil
+	}
+	return c.Signup
+}
+
+// String returns a string representation of ConnectionOptionsEmailAttribute.
+func (c *ConnectionOptionsEmailAttribute) String() string {
 	return Stringify(c)
 }
 
@@ -4627,6 +4798,35 @@ func (c *ConnectionOptionsOTP) String() string {
 	return Stringify(c)
 }
 
+// GetIdentifier returns the Identifier field.
+func (c *ConnectionOptionsPhoneNumberAttribute) GetIdentifier() *ConnectionOptionsAttributeIdentifier {
+	if c == nil {
+		return nil
+	}
+	return c.Identifier
+}
+
+// GetProfileRequired returns the ProfileRequired field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsPhoneNumberAttribute) GetProfileRequired() bool {
+	if c == nil || c.ProfileRequired == nil {
+		return false
+	}
+	return *c.ProfileRequired
+}
+
+// GetSignup returns the Signup field.
+func (c *ConnectionOptionsPhoneNumberAttribute) GetSignup() *ConnectionOptionsAttributeSignup {
+	if c == nil {
+		return nil
+	}
+	return c.Signup
+}
+
+// String returns a string representation of ConnectionOptionsPhoneNumberAttribute.
+func (c *ConnectionOptionsPhoneNumberAttribute) String() string {
+	return Stringify(c)
+}
+
 // GetAgentIP returns the AgentIP field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsPingFederate) GetAgentIP() string {
 	if c == nil || c.AgentIP == nil {
@@ -5483,6 +5683,43 @@ func (c *ConnectionOptionsSMS) GetUpstreamParams() map[string]interface{} {
 
 // String returns a string representation of ConnectionOptionsSMS.
 func (c *ConnectionOptionsSMS) String() string {
+	return Stringify(c)
+}
+
+// GetIdentifier returns the Identifier field.
+func (c *ConnectionOptionsUsernameAttribute) GetIdentifier() *ConnectionOptionsAttributeIdentifier {
+	if c == nil {
+		return nil
+	}
+	return c.Identifier
+}
+
+// GetProfileRequired returns the ProfileRequired field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsUsernameAttribute) GetProfileRequired() bool {
+	if c == nil || c.ProfileRequired == nil {
+		return false
+	}
+	return *c.ProfileRequired
+}
+
+// GetSignup returns the Signup field.
+func (c *ConnectionOptionsUsernameAttribute) GetSignup() *ConnectionOptionsAttributeSignup {
+	if c == nil {
+		return nil
+	}
+	return c.Signup
+}
+
+// GetValidation returns the Validation field.
+func (c *ConnectionOptionsUsernameAttribute) GetValidation() *ConnectionOptionsAttributeValidation {
+	if c == nil {
+		return nil
+	}
+	return c.Validation
+}
+
+// String returns a string representation of ConnectionOptionsUsernameAttribute.
+func (c *ConnectionOptionsUsernameAttribute) String() string {
 	return Stringify(c)
 }
 
