@@ -922,13 +922,13 @@ type ConnectionOptionsOIDC struct {
 	DomainAliases *[]string `json:"domain_aliases,omitempty"`
 	LogoURL       *string   `json:"icon_url,omitempty"`
 
-	DiscoveryURL          *string `json:"discovery_url"`
-	AuthorizationEndpoint *string `json:"authorization_endpoint"`
-	Issuer                *string `json:"issuer"`
-	JWKSURI               *string `json:"jwks_uri"`
-	Type                  *string `json:"type"`
-	UserInfoEndpoint      *string `json:"userinfo_endpoint"`
-	TokenEndpoint         *string `json:"token_endpoint"`
+	DiscoveryURL          *string `json:"discovery_url,omitempty"`
+	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty"`
+	Issuer                *string `json:"issuer,omitempty"`
+	JWKSURI               *string `json:"jwks_uri,omitempty"`
+	Type                  *string `json:"type,omitempty"`
+	UserInfoEndpoint      *string `json:"userinfo_endpoint,omitempty"`
+	TokenEndpoint         *string `json:"token_endpoint,omitempty"`
 	Scope                 *string `json:"scope,omitempty"`
 
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
