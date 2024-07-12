@@ -424,7 +424,7 @@ type ConnectionOptions struct {
 
 	// Order of attributes for precedence in identification.
 	// Valid values: "email", "phone_number", "username"
-	// The order to lookup a user identity.
+	// If Precedence is set, it must contain all three values ("email", "phone_number", "username") specifying the order to look up a user identity.
 	Precedence *[]string `json:"precedence,omitempty"`
 
 	// Attributes configures identifiers and other options for user attributes.
