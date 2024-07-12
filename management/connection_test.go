@@ -503,8 +503,11 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 					},
 					ProfileRequired: auth0.Bool(true),
 					Signup: &ConnectionOptionsAttributeSignup{
-						Status:       auth0.String("required"),
-						Verification: &ConnectionOptionsAttributeVerification{Active: auth0.Bool(false)}},
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
 				},
 			},
 		},
@@ -524,8 +527,11 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 					},
 					ProfileRequired: auth0.Bool(true),
 					Signup: &ConnectionOptionsAttributeSignup{
-						Status:       auth0.String("required"),
-						Verification: &ConnectionOptionsAttributeVerification{Active: auth0.Bool(false)}},
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
 				},
 			},
 		},
@@ -567,8 +573,11 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 					},
 					ProfileRequired: auth0.Bool(true),
 					Signup: &ConnectionOptionsAttributeSignup{
-						Status:       auth0.String("required"),
-						Verification: &ConnectionOptionsAttributeVerification{Active: auth0.Bool(false)}},
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
 				},
 			},
 		},
@@ -588,8 +597,11 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 					},
 					ProfileRequired: auth0.Bool(true),
 					Signup: &ConnectionOptionsAttributeSignup{
-						Status:       auth0.String("required"),
-						Verification: &ConnectionOptionsAttributeVerification{Active: auth0.Bool(false)}},
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
 				},
 				Email: &ConnectionOptionsEmailAttribute{
 					Identifier: &ConnectionOptionsAttributeIdentifier{
@@ -597,8 +609,11 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 					},
 					ProfileRequired: auth0.Bool(true),
 					Signup: &ConnectionOptionsAttributeSignup{
-						Status:       auth0.String("required"),
-						Verification: &ConnectionOptionsAttributeVerification{Active: auth0.Bool(false)}},
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
 				},
 				Username: &ConnectionOptionsUsernameAttribute{
 					Identifier: &ConnectionOptionsAttributeIdentifier{
@@ -627,8 +642,11 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 					},
 					ProfileRequired: auth0.Bool(true),
 					Signup: &ConnectionOptionsAttributeSignup{
-						Status:       auth0.String("required"),
-						Verification: &ConnectionOptionsAttributeVerification{Active: auth0.Bool(false)}},
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
 				},
 				Username: &ConnectionOptionsUsernameAttribute{
 					Identifier: &ConnectionOptionsAttributeIdentifier{
@@ -663,8 +681,11 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 					},
 					ProfileRequired: auth0.Bool(true),
 					Signup: &ConnectionOptionsAttributeSignup{
-						Status:       auth0.String("inactive"),
-						Verification: &ConnectionOptionsAttributeVerification{Active: auth0.Bool(false)}},
+						Status: auth0.String("inactive"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
 				},
 			},
 		},
@@ -1061,6 +1082,37 @@ func TestConnectionManager_DeleteSCIMToken(t *testing.T) {
 	t.Cleanup(func() {
 		cleanupSCIMConfig(t, expectedConnection.GetID())
 	})
+}
+func TestConnectionOptionsUsernameAttribute_MarshalJSON(t *testing.T) {
+	for attribute, expected := range map[*ConnectionOptionsUsernameAttribute]string{
+		{
+			Identifier: &ConnectionOptionsAttributeIdentifier{
+				Active: auth0.Bool(true),
+			},
+			ProfileRequired: auth0.Bool(true),
+			Signup: &ConnectionOptionsAttributeSignup{
+				Status:       auth0.String("required"),
+				Verification: &ConnectionOptionsAttributeVerification{Active: auth0.Bool(false)},
+			},
+		}: `{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required"}}`,
+		{
+			ProfileRequired: auth0.Bool(true),
+			Signup: &ConnectionOptionsAttributeSignup{
+				Status: auth0.String("required"),
+			},
+		}: `{"profile_required":true,"signup":{"status":"required"}}`,
+
+		{
+			Identifier: &ConnectionOptionsAttributeIdentifier{
+				Active: auth0.Bool(true),
+			},
+			ProfileRequired: auth0.Bool(true),
+		}: `{"identifier":{"active":true},"profile_required":true}`,
+	} {
+		payload, err := json.Marshal(attribute)
+		assert.NoError(t, err)
+		assert.JSONEq(t, expected, string(payload))
+	}
 }
 
 func TestOAuth2Connection_MarshalJSON(t *testing.T) {

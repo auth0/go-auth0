@@ -464,6 +464,22 @@ type ConnectionOptionsAttributeSignup struct {
 	Verification *ConnectionOptionsAttributeVerification `json:"verification,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaler interface.
+func (c *ConnectionOptionsUsernameAttribute) MarshalJSON() ([]byte, error) {
+	type connectionOptionsUsernameAttribute ConnectionOptionsUsernameAttribute
+	alias := &struct {
+		*connectionOptionsUsernameAttribute
+	}{
+		connectionOptionsUsernameAttribute: (*connectionOptionsUsernameAttribute)(c),
+	}
+
+	if alias.Signup != nil {
+		alias.Signup.Verification = nil
+	}
+
+	return json.Marshal(alias)
+}
+
 // ConnectionOptionsAttributeVerification defines verification settings for an attribute.
 type ConnectionOptionsAttributeVerification struct {
 	Active *bool `json:"active"`
