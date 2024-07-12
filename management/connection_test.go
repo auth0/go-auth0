@@ -484,6 +484,7 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 			Strategy: auth0.String("auth0"),
 		},
 		options: &ConnectionOptions{
+			Precedence:       &[]string{"username", "email", "phone_number"},
 			RequiresUsername: auth0.Bool(true),
 		},
 	},
@@ -494,6 +495,7 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 			Strategy: auth0.String("auth0"),
 		},
 		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
 			Attributes: &ConnectionOptionsAttributes{
 				PhoneNumber: &ConnectionOptionsPhoneNumberAttribute{
 					Identifier: &ConnectionOptionsAttributeIdentifier{
@@ -514,6 +516,7 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 			Strategy: auth0.String("auth0"),
 		},
 		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
 			Attributes: &ConnectionOptionsAttributes{
 				Email: &ConnectionOptionsEmailAttribute{
 					Identifier: &ConnectionOptionsAttributeIdentifier{
@@ -534,6 +537,7 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 			Strategy: auth0.String("auth0"),
 		},
 		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
 			Attributes: &ConnectionOptionsAttributes{
 				Username: &ConnectionOptionsUsernameAttribute{
 					Identifier: &ConnectionOptionsAttributeIdentifier{
@@ -554,6 +558,7 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 			Strategy: auth0.String("auth0"),
 		},
 		options: &ConnectionOptions{
+			Precedence:       &[]string{"username", "email", "phone_number"},
 			RequiresUsername: auth0.Bool(true),
 			Attributes: &ConnectionOptionsAttributes{
 				Email: &ConnectionOptionsEmailAttribute{
@@ -575,6 +580,7 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 			Strategy: auth0.String("auth0"),
 		},
 		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
 			Attributes: &ConnectionOptionsAttributes{
 				PhoneNumber: &ConnectionOptionsPhoneNumberAttribute{
 					Identifier: &ConnectionOptionsAttributeIdentifier{
@@ -613,6 +619,7 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 			Strategy: auth0.String("auth0"),
 		},
 		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
 			Attributes: &ConnectionOptionsAttributes{
 				Email: &ConnectionOptionsEmailAttribute{
 					Identifier: &ConnectionOptionsAttributeIdentifier{
@@ -648,6 +655,7 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 			Strategy: auth0.String("auth0"),
 		},
 		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
 			Attributes: &ConnectionOptionsAttributes{
 				PhoneNumber: &ConnectionOptionsPhoneNumberAttribute{
 					Identifier: &ConnectionOptionsAttributeIdentifier{
