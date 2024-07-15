@@ -437,6 +437,7 @@ type ConnectionOptions struct {
 	//   3. `signup`: Configures the identifier for signup. `verification` is not supported for the username identifier. Example: {"status": "required" | "optional" | "inactive", "verification": {"active": bool}}.
 	//
 	// Notes:
+	//   - For ConnectionOptionsPhoneNumberAttribute identifiers, the configuration is only available when the "identifier first" Prompt is enabled.
 	//   - At least one identifier must be active in `attributes`.
 	//   - Combining `requires_username` and `attributes` in the same configuration is not allowed.
 	//   - Combining `attributes` and `validation` in the same configuration is not allowed.
@@ -514,6 +515,7 @@ type ConnectionOptionsUsernameAttribute struct {
 }
 
 // ConnectionOptionsPhoneNumberAttribute defines configuration settings for phone number attributes.
+// This attribute is available only when the Prompt 'identifier first' setting is enabled.
 type ConnectionOptionsPhoneNumberAttribute struct {
 	Identifier      *ConnectionOptionsAttributeIdentifier `json:"identifier,omitempty"`
 	ProfileRequired *bool                                 `json:"profile_required"`
