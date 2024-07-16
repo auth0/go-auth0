@@ -421,6 +421,105 @@ type ConnectionOptions struct {
 
 	// Options for the passkey authentication method.
 	PasskeyOptions *PasskeyOptions `json:"passkey_options,omitempty"`
+
+	// Order of attributes for precedence in identification.
+	// Valid values: "email", "phone_number", "username"
+	// If Precedence is set, it must contain all three values ("email", "phone_number", "username") specifying the order to look up a user identity.
+	Precedence *[]string `json:"precedence,omitempty"`
+
+	// Attributes configures identifiers and other options for user attributes.
+	//
+	// The `attributes` field is a map that holds configuration for various identifiers.
+	//
+	// Each identifier (e.g., "phone_number", "email", "username") can include the following keys:
+	//   1. `active`: Specifies if the identifier is active. Example: {"active": bool}.
+	//   2. `profile_required`: Specifies if the identifier is required in the user's profile. Example: {"profile_required": bool}.
+	//   3. `signup`: Configures the identifier for signup. `verification` is not supported for the username identifier. Example: {"status": "required" | "optional" | "inactive", "verification": {"active": bool}}.
+	//
+	// Notes:
+	//   - For ConnectionOptionsPhoneNumberAttribute identifiers, the configuration is only available when the "identifier first" Prompt is enabled.
+	//   - At least one identifier must be active in `attributes`.
+	//   - Combining `requires_username` and `attributes` in the same configuration is not allowed.
+	//   - Combining `attributes` and `validation` in the same configuration is not allowed.
+	//   - If any identifier is required in the profile, it must be active during signup.
+	Attributes *ConnectionOptionsAttributes `json:"attributes,omitempty"`
+}
+
+// ConnectionOptionsAttributes defines the structure for attribute configurations.
+type ConnectionOptionsAttributes struct {
+	Email       *ConnectionOptionsEmailAttribute       `json:"email,omitempty"`
+	Username    *ConnectionOptionsUsernameAttribute    `json:"username,omitempty"`
+	PhoneNumber *ConnectionOptionsPhoneNumberAttribute `json:"phone_number,omitempty"`
+}
+
+// ConnectionOptionsAttributeIdentifier defines whether an attribute is active as an identifier.
+type ConnectionOptionsAttributeIdentifier struct {
+	Active *bool `json:"active"`
+}
+
+// ConnectionOptionsAttributeSignup defines signup settings for an attribute.
+type ConnectionOptionsAttributeSignup struct {
+	Status *string `json:"status"`
+
+	// Verification settings for an attribute. Only applicable to email and phone_number attributes.
+	Verification *ConnectionOptionsAttributeVerification `json:"verification,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaler interface.
+func (c *ConnectionOptionsUsernameAttribute) MarshalJSON() ([]byte, error) {
+	type connectionOptionsUsernameAttribute ConnectionOptionsUsernameAttribute
+	alias := &struct {
+		*connectionOptionsUsernameAttribute
+	}{
+		connectionOptionsUsernameAttribute: (*connectionOptionsUsernameAttribute)(c),
+	}
+
+	if alias.Signup != nil {
+		alias.Signup.Verification = nil
+	}
+
+	return json.Marshal(alias)
+}
+
+// ConnectionOptionsAttributeVerification defines verification settings for an attribute.
+type ConnectionOptionsAttributeVerification struct {
+	Active *bool `json:"active"`
+}
+
+// ConnectionOptionsAttributeValidation defines validation settings for an attribute.
+type ConnectionOptionsAttributeValidation struct {
+	MinLength    *int                                    `json:"min_length,omitempty"`
+	MaxLength    *int                                    `json:"max_length,omitempty"`
+	AllowedTypes *ConnectionOptionsAttributeAllowedTypes `json:"allowed_types,omitempty"`
+}
+
+// ConnectionOptionsAttributeAllowedTypes defines allowed types for an attribute.
+type ConnectionOptionsAttributeAllowedTypes struct {
+	Email       *bool `json:"email"`
+	PhoneNumber *bool `json:"phone_number"`
+}
+
+// ConnectionOptionsEmailAttribute defines configuration settings for email attributes.
+type ConnectionOptionsEmailAttribute struct {
+	Identifier      *ConnectionOptionsAttributeIdentifier `json:"identifier,omitempty"`
+	ProfileRequired *bool                                 `json:"profile_required"`
+	Signup          *ConnectionOptionsAttributeSignup     `json:"signup,omitempty"`
+}
+
+// ConnectionOptionsUsernameAttribute defines configuration settings for username attributes.
+type ConnectionOptionsUsernameAttribute struct {
+	Identifier      *ConnectionOptionsAttributeIdentifier `json:"identifier,omitempty"`
+	ProfileRequired *bool                                 `json:"profile_required"`
+	Signup          *ConnectionOptionsAttributeSignup     `json:"signup,omitempty"`
+	Validation      *ConnectionOptionsAttributeValidation `json:"validation,omitempty"`
+}
+
+// ConnectionOptionsPhoneNumberAttribute defines configuration settings for phone number attributes.
+// This attribute is available only when the Prompt 'identifier first' setting is enabled.
+type ConnectionOptionsPhoneNumberAttribute struct {
+	Identifier      *ConnectionOptionsAttributeIdentifier `json:"identifier,omitempty"`
+	ProfileRequired *bool                                 `json:"profile_required"`
+	Signup          *ConnectionOptionsAttributeSignup     `json:"signup,omitempty"`
 }
 
 // AuthenticationMethods represents the options for enabling authentication methods for the connection.

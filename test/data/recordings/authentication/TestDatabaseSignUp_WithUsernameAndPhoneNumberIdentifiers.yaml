@@ -6,13 +6,13 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 184
+        content_length: 183
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: '{"client_id":"test-client_id","email":"mytestaccount@example.com","password":"mypassword","connection":"Username-Password-Authentication","username":"mytestaccount"}'
+        body: '{"client_id":"test-client_id","connection":"Username-Password-Authentication","password":"mypassword","phone_number":"+12345678900","username":"mytestaccount"}'
         form: {}
         headers:
             Content-Type:
@@ -25,12 +25,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
+        content_length: 109
         uncompressed: false
-        body: '{"_id":"6486fc52049355c8fda30e21","email_verified":false,"email":"mytestaccount@example.com","username":"mytestaccount","app_metadata":{},"user_metadata":{}}'
+        body: '{"_id":"668fbab0ca9ad18c8c5c4bf2","username":"mytestaccount","phone_number":"+12345678900","phone_verified":false}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 365.410542ms
+        duration: 468.674292ms
