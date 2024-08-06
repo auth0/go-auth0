@@ -454,12 +454,12 @@ type ConnectionOptionsAttributes struct {
 
 // ConnectionOptionsAttributeIdentifier defines whether an attribute is active as an identifier.
 type ConnectionOptionsAttributeIdentifier struct {
-	Active *bool `json:"active"`
+	Active *bool `json:"active,omitempty"`
 }
 
 // ConnectionOptionsAttributeSignup defines signup settings for an attribute.
 type ConnectionOptionsAttributeSignup struct {
-	Status *string `json:"status"`
+	Status *string `json:"status,omitempty"`
 
 	// Verification settings for an attribute. Only applicable to email and phone_number attributes.
 	Verification *ConnectionOptionsAttributeVerification `json:"verification,omitempty"`
@@ -483,7 +483,7 @@ func (c *ConnectionOptionsUsernameAttribute) MarshalJSON() ([]byte, error) {
 
 // ConnectionOptionsAttributeVerification defines verification settings for an attribute.
 type ConnectionOptionsAttributeVerification struct {
-	Active *bool `json:"active"`
+	Active *bool `json:"active,omitempty"`
 }
 
 // ConnectionOptionsAttributeValidation defines validation settings for an attribute.
@@ -495,21 +495,21 @@ type ConnectionOptionsAttributeValidation struct {
 
 // ConnectionOptionsAttributeAllowedTypes defines allowed types for an attribute.
 type ConnectionOptionsAttributeAllowedTypes struct {
-	Email       *bool `json:"email"`
-	PhoneNumber *bool `json:"phone_number"`
+	Email       *bool `json:"email,omitempty"`
+	PhoneNumber *bool `json:"phone_number,omitempty"`
 }
 
 // ConnectionOptionsEmailAttribute defines configuration settings for email attributes.
 type ConnectionOptionsEmailAttribute struct {
 	Identifier      *ConnectionOptionsAttributeIdentifier `json:"identifier,omitempty"`
-	ProfileRequired *bool                                 `json:"profile_required"`
+	ProfileRequired *bool                                 `json:"profile_required,omitempty"`
 	Signup          *ConnectionOptionsAttributeSignup     `json:"signup,omitempty"`
 }
 
 // ConnectionOptionsUsernameAttribute defines configuration settings for username attributes.
 type ConnectionOptionsUsernameAttribute struct {
 	Identifier      *ConnectionOptionsAttributeIdentifier `json:"identifier,omitempty"`
-	ProfileRequired *bool                                 `json:"profile_required"`
+	ProfileRequired *bool                                 `json:"profile_required,omitempty"`
 	Signup          *ConnectionOptionsAttributeSignup     `json:"signup,omitempty"`
 	Validation      *ConnectionOptionsAttributeValidation `json:"validation,omitempty"`
 }
@@ -518,7 +518,7 @@ type ConnectionOptionsUsernameAttribute struct {
 // This attribute is available only when the Prompt 'identifier first' setting is enabled.
 type ConnectionOptionsPhoneNumberAttribute struct {
 	Identifier      *ConnectionOptionsAttributeIdentifier `json:"identifier,omitempty"`
-	ProfileRequired *bool                                 `json:"profile_required"`
+	ProfileRequired *bool                                 `json:"profile_required,omitempty"`
 	Signup          *ConnectionOptionsAttributeSignup     `json:"signup,omitempty"`
 }
 

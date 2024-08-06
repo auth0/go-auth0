@@ -6,14 +6,14 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 473
+        content_length: 519
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Auth0-Connection-No-Active-Attributes-1720679132","strategy":"auth0","options":{"attributes":{"email":{"identifier":{"active":false},"profile_required":false,"signup":{"status":"required","verification":{"active":false}}},"phone_number":{"identifier":{"active":false},"profile_required":false,"signup":{"status":"required","verification":{"active":false}}},"username":{"identifier":{"active":false},"profile_required":false,"signup":{"status":"required"}}}}}
+            {"name":"Test-Auth0-Connection-No-Active-Attributes-1722944272","strategy":"auth0","options":{"precedence":["username","email","phone_number"],"attributes":{"email":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}},"username":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required"}},"phone_number":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}}}}}
         form: {}
         headers:
             Content-Type:
@@ -36,4 +36,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 400 Bad Request
         code: 400
-        duration: 357.934708ms
+        duration: 235.546625ms
