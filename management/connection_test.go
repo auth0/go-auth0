@@ -476,6 +476,260 @@ func TestConnectionManager_Create(t *testing.T) {
 	}
 }
 
+var Auth0ConnectionTestCase = []connectionTestCase{
+	{
+		name: "Auth0 Connection With RequireUsername",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-RequireUsername-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			Precedence:       &[]string{"username", "email", "phone_number"},
+			RequiresUsername: auth0.Bool(true),
+		},
+	},
+	{
+		name: "Auth0 Connection with PhoneNumber as Identifier",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-Phone-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
+			Attributes: &ConnectionOptionsAttributes{
+				PhoneNumber: &ConnectionOptionsPhoneNumberAttribute{
+					Identifier: &ConnectionOptionsAttributeIdentifier{
+						Active: auth0.Bool(true),
+					},
+					ProfileRequired: auth0.Bool(true),
+					Signup: &ConnectionOptionsAttributeSignup{
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
+				},
+			},
+		},
+	},
+	{
+		name: "Auth0 Connection with Email as Identifier",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-Email-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
+			Attributes: &ConnectionOptionsAttributes{
+				Email: &ConnectionOptionsEmailAttribute{
+					Identifier: &ConnectionOptionsAttributeIdentifier{
+						Active: auth0.Bool(true),
+					},
+					ProfileRequired: auth0.Bool(true),
+					Signup: &ConnectionOptionsAttributeSignup{
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
+				},
+			},
+		},
+	},
+	{
+		name: "Auth0 Connection with Username as Identifier",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-Username-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
+			Attributes: &ConnectionOptionsAttributes{
+				Username: &ConnectionOptionsUsernameAttribute{
+					Identifier: &ConnectionOptionsAttributeIdentifier{
+						Active: auth0.Bool(true),
+					},
+					ProfileRequired: auth0.Bool(true),
+					Signup: &ConnectionOptionsAttributeSignup{
+						Status: auth0.String("required"),
+					},
+				},
+			},
+		},
+	},
+	{
+		name: "Auth0 Connection Cannot set both requires_username and attributes together",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-Invalid-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			Precedence:       &[]string{"username", "email", "phone_number"},
+			RequiresUsername: auth0.Bool(true),
+			Attributes: &ConnectionOptionsAttributes{
+				Email: &ConnectionOptionsEmailAttribute{
+					Identifier: &ConnectionOptionsAttributeIdentifier{
+						Active: auth0.Bool(true),
+					},
+					ProfileRequired: auth0.Bool(true),
+					Signup: &ConnectionOptionsAttributeSignup{
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
+				},
+			},
+		},
+	},
+	{
+		name: "Auth0 Connection With No attribute is active",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-No-Active-Attributes-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
+			Attributes: &ConnectionOptionsAttributes{
+				PhoneNumber: &ConnectionOptionsPhoneNumberAttribute{
+					Identifier: &ConnectionOptionsAttributeIdentifier{
+						Active: auth0.Bool(false),
+					},
+					ProfileRequired: auth0.Bool(true),
+					Signup: &ConnectionOptionsAttributeSignup{
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
+				},
+				Email: &ConnectionOptionsEmailAttribute{
+					Identifier: &ConnectionOptionsAttributeIdentifier{
+						Active: auth0.Bool(false),
+					},
+					ProfileRequired: auth0.Bool(true),
+					Signup: &ConnectionOptionsAttributeSignup{
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
+				},
+				Username: &ConnectionOptionsUsernameAttribute{
+					Identifier: &ConnectionOptionsAttributeIdentifier{
+						Active: auth0.Bool(false),
+					},
+					ProfileRequired: auth0.Bool(true),
+					Signup: &ConnectionOptionsAttributeSignup{
+						Status: auth0.String("required"),
+					},
+				},
+			},
+		},
+	},
+	{
+		name: "Auth0 Connection Cannot set both validation and attributes together",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-Attributes-And-Validation-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
+			Attributes: &ConnectionOptionsAttributes{
+				Email: &ConnectionOptionsEmailAttribute{
+					Identifier: &ConnectionOptionsAttributeIdentifier{
+						Active: auth0.Bool(true),
+					},
+					ProfileRequired: auth0.Bool(true),
+					Signup: &ConnectionOptionsAttributeSignup{
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
+				},
+				Username: &ConnectionOptionsUsernameAttribute{
+					Identifier: &ConnectionOptionsAttributeIdentifier{
+						Active: auth0.Bool(true),
+					},
+					ProfileRequired: auth0.Bool(true),
+					Signup: &ConnectionOptionsAttributeSignup{
+						Status: auth0.String("required"),
+					},
+				},
+			},
+			Validation: map[string]interface{}{
+				"username": map[string]interface{}{
+					"min": 1,
+					"max": 5,
+				},
+			},
+		},
+	},
+	{
+		name: "Auth0 Connection Attribute required in profile but inactive on signup",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-Attribute-Inactive-On-Signup-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
+			Attributes: &ConnectionOptionsAttributes{
+				PhoneNumber: &ConnectionOptionsPhoneNumberAttribute{
+					Identifier: &ConnectionOptionsAttributeIdentifier{
+						Active: auth0.Bool(true),
+					},
+					ProfileRequired: auth0.Bool(true),
+					Signup: &ConnectionOptionsAttributeSignup{
+						Status: auth0.String("inactive"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
+				},
+			},
+		},
+	},
+}
+
+func TestConnectionManager_CreateDBConnectionWithDifferentOptions(t *testing.T) {
+	for _, testCase := range Auth0ConnectionTestCase {
+		t.Run("It handles "+testCase.name, func(t *testing.T) {
+			configureHTTPTestRecordings(t)
+
+			expectedConnection := testCase.connection
+			expectedConnection.Options = testCase.options
+
+			err := api.Connection.Create(context.Background(), &expectedConnection)
+
+			switch testCase.name {
+			case "Auth0 Connection Cannot set both requires_username and attributes together":
+				assert.Error(t, err)
+				assert.Contains(t, err.Error(), "Cannot set both options.attributes and options.requires_username")
+			case "Auth0 Connection With No attribute is active":
+				assert.Error(t, err)
+				assert.Contains(t, err.Error(), "attributes must contain one active identifier")
+			case "Auth0 Connection Cannot set both validation and attributes together":
+				assert.Error(t, err)
+				assert.Contains(t, err.Error(), "Cannot set both options.attributes and options.validation")
+			case "Auth0 Connection Attribute required in profile but inactive on signup":
+				assert.Error(t, err)
+				assert.Contains(t, err.Error(), "attribute phone_number must also be required on signup")
+			default:
+				assert.NoError(t, err)
+				assert.NotEmpty(t, expectedConnection.Name)
+				assert.NotEmpty(t, expectedConnection.Strategy)
+			}
+
+			if err == nil {
+				t.Cleanup(func() {
+					cleanupConnection(t, expectedConnection.GetID())
+				})
+			}
+		})
+	}
+}
+
 func TestConnectionManager_Read(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully read a "+testCase.name, func(t *testing.T) {
@@ -828,6 +1082,37 @@ func TestConnectionManager_DeleteSCIMToken(t *testing.T) {
 	t.Cleanup(func() {
 		cleanupSCIMConfig(t, expectedConnection.GetID())
 	})
+}
+func TestConnectionOptionsUsernameAttribute_MarshalJSON(t *testing.T) {
+	for attribute, expected := range map[*ConnectionOptionsUsernameAttribute]string{
+		{
+			Identifier: &ConnectionOptionsAttributeIdentifier{
+				Active: auth0.Bool(true),
+			},
+			ProfileRequired: auth0.Bool(true),
+			Signup: &ConnectionOptionsAttributeSignup{
+				Status:       auth0.String("required"),
+				Verification: &ConnectionOptionsAttributeVerification{Active: auth0.Bool(false)},
+			},
+		}: `{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required"}}`,
+		{
+			ProfileRequired: auth0.Bool(true),
+			Signup: &ConnectionOptionsAttributeSignup{
+				Status: auth0.String("required"),
+			},
+		}: `{"profile_required":true,"signup":{"status":"required"}}`,
+
+		{
+			Identifier: &ConnectionOptionsAttributeIdentifier{
+				Active: auth0.Bool(true),
+			},
+			ProfileRequired: auth0.Bool(true),
+		}: `{"identifier":{"active":true},"profile_required":true}`,
+	} {
+		payload, err := json.Marshal(attribute)
+		assert.NoError(t, err)
+		assert.JSONEq(t, expected, string(payload))
+	}
 }
 
 func TestOAuth2Connection_MarshalJSON(t *testing.T) {
