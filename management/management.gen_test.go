@@ -7664,6 +7664,34 @@ func TestDailyStat_String(t *testing.T) {
 	}
 }
 
+func TestDefaultMappings_GetOidc(tt *testing.T) {
+	var zeroValue string
+	d := &DefaultMappings{Oidc: &zeroValue}
+	d.GetOidc()
+	d = &DefaultMappings{}
+	d.GetOidc()
+	d = nil
+	d.GetOidc()
+}
+
+func TestDefaultMappings_GetSaml(tt *testing.T) {
+	var zeroValue string
+	d := &DefaultMappings{Saml: &zeroValue}
+	d.GetSaml()
+	d = &DefaultMappings{}
+	d.GetSaml()
+	d = nil
+	d.GetSaml()
+}
+
+func TestDefaultMappings_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &DefaultMappings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestDropboxClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &DropboxClientAddon{}
@@ -11451,6 +11479,44 @@ func TestSAML2ClientAddonLogout_String(t *testing.T) {
 	}
 }
 
+func TestSAMLMappings_GetDescription(tt *testing.T) {
+	var zeroValue string
+	s := &SAMLMappings{Description: &zeroValue}
+	s.GetDescription()
+	s = &SAMLMappings{}
+	s.GetDescription()
+	s = nil
+	s.GetDescription()
+}
+
+func TestSAMLMappings_GetIsOptional(tt *testing.T) {
+	var zeroValue bool
+	s := &SAMLMappings{IsOptional: &zeroValue}
+	s.GetIsOptional()
+	s = &SAMLMappings{}
+	s.GetIsOptional()
+	s = nil
+	s.GetIsOptional()
+}
+
+func TestSAMLMappings_GetName(tt *testing.T) {
+	var zeroValue string
+	s := &SAMLMappings{Name: &zeroValue}
+	s.GetName()
+	s = &SAMLMappings{}
+	s.GetName()
+	s = nil
+	s.GetName()
+}
+
+func TestSAMLMappings_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SAMLMappings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestSAPAPIClientAddon_GetClientID(tt *testing.T) {
 	var zeroValue string
 	s := &SAPAPIClientAddon{ClientID: &zeroValue}
@@ -11708,6 +11774,51 @@ func TestSCIMToken_GetValidUntil(tt *testing.T) {
 func TestSCIMToken_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SCIMToken{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfile_GetBranding(tt *testing.T) {
+	s := &SelfServiceProfile{}
+	s.GetBranding()
+	s = nil
+	s.GetBranding()
+}
+
+func TestSelfServiceProfile_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	s := &SelfServiceProfile{CreatedAt: &zeroValue}
+	s.GetCreatedAt()
+	s = &SelfServiceProfile{}
+	s.GetCreatedAt()
+	s = nil
+	s.GetCreatedAt()
+}
+
+func TestSelfServiceProfile_GetID(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfile{ID: &zeroValue}
+	s.GetID()
+	s = &SelfServiceProfile{}
+	s.GetID()
+	s = nil
+	s.GetID()
+}
+
+func TestSelfServiceProfile_GetUpdatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	s := &SelfServiceProfile{UpdatedAt: &zeroValue}
+	s.GetUpdatedAt()
+	s = &SelfServiceProfile{}
+	s.GetUpdatedAt()
+	s = nil
+	s.GetUpdatedAt()
+}
+
+func TestSelfServiceProfile_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfile{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -12798,6 +12909,16 @@ func TestTicket_GetResultURL(tt *testing.T) {
 	t.GetResultURL()
 }
 
+func TestTicket_GetSsoProfileID(tt *testing.T) {
+	var zeroValue string
+	t := &Ticket{SsoProfileID: &zeroValue}
+	t.GetSsoProfileID()
+	t = &Ticket{}
+	t.GetSsoProfileID()
+	t = nil
+	t.GetSsoProfileID()
+}
+
 func TestTicket_GetTicket(tt *testing.T) {
 	var zeroValue string
 	t := &Ticket{Ticket: &zeroValue}
@@ -13129,6 +13250,61 @@ func TestUser_GetVerifyEmail(tt *testing.T) {
 func TestUser_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &User{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributes_GetDefaultMappings(tt *testing.T) {
+	u := &UserAttributes{}
+	u.GetDefaultMappings()
+	u = nil
+	u.GetDefaultMappings()
+}
+
+func TestUserAttributes_GetDescription(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributes{Description: &zeroValue}
+	u.GetDescription()
+	u = &UserAttributes{}
+	u.GetDescription()
+	u = nil
+	u.GetDescription()
+}
+
+func TestUserAttributes_GetDisplayName(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributes{DisplayName: &zeroValue}
+	u.GetDisplayName()
+	u = &UserAttributes{}
+	u.GetDisplayName()
+	u = nil
+	u.GetDisplayName()
+}
+
+func TestUserAttributes_GetIsOptional(tt *testing.T) {
+	var zeroValue bool
+	u := &UserAttributes{IsOptional: &zeroValue}
+	u.GetIsOptional()
+	u = &UserAttributes{}
+	u.GetIsOptional()
+	u = nil
+	u.GetIsOptional()
+}
+
+func TestUserAttributes_GetName(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributes{Name: &zeroValue}
+	u.GetName()
+	u = &UserAttributes{}
+	u.GetName()
+	u = nil
+	u.GetName()
+}
+
+func TestUserAttributes_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributes{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

@@ -6193,6 +6193,27 @@ func (d *DailyStat) String() string {
 	return Stringify(d)
 }
 
+// GetOidc returns the Oidc field if it's non-nil, zero value otherwise.
+func (d *DefaultMappings) GetOidc() string {
+	if d == nil || d.Oidc == nil {
+		return ""
+	}
+	return *d.Oidc
+}
+
+// GetSaml returns the Saml field if it's non-nil, zero value otherwise.
+func (d *DefaultMappings) GetSaml() string {
+	if d == nil || d.Saml == nil {
+		return ""
+	}
+	return *d.Saml
+}
+
+// String returns a string representation of DefaultMappings.
+func (d *DefaultMappings) String() string {
+	return Stringify(d)
+}
+
 // String returns a string representation of DropboxClientAddon.
 func (d *DropboxClientAddon) String() string {
 	return Stringify(d)
@@ -9109,6 +9130,35 @@ func (s *SAML2ClientAddonLogout) String() string {
 	return Stringify(s)
 }
 
+// GetDescription returns the Description field if it's non-nil, zero value otherwise.
+func (s *SAMLMappings) GetDescription() string {
+	if s == nil || s.Description == nil {
+		return ""
+	}
+	return *s.Description
+}
+
+// GetIsOptional returns the IsOptional field if it's non-nil, zero value otherwise.
+func (s *SAMLMappings) GetIsOptional() bool {
+	if s == nil || s.IsOptional == nil {
+		return false
+	}
+	return *s.IsOptional
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (s *SAMLMappings) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+// String returns a string representation of SAMLMappings.
+func (s *SAMLMappings) String() string {
+	return Stringify(s)
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (s *SAPAPIClientAddon) GetClientID() string {
 	if s == nil || s.ClientID == nil {
@@ -9310,6 +9360,43 @@ func (s *SCIMToken) GetValidUntil() string {
 
 // String returns a string representation of SCIMToken.
 func (s *SCIMToken) String() string {
+	return Stringify(s)
+}
+
+// GetBranding returns the Branding field.
+func (s *SelfServiceProfile) GetBranding() *Branding {
+	if s == nil {
+		return nil
+	}
+	return s.Branding
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetCreatedAt() time.Time {
+	if s == nil || s.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *s.CreatedAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetID() string {
+	if s == nil || s.ID == nil {
+		return ""
+	}
+	return *s.ID
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetUpdatedAt() time.Time {
+	if s == nil || s.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *s.UpdatedAt
+}
+
+// String returns a string representation of SelfServiceProfile.
+func (s *SelfServiceProfile) String() string {
 	return Stringify(s)
 }
 
@@ -10187,6 +10274,14 @@ func (t *Ticket) GetResultURL() string {
 	return *t.ResultURL
 }
 
+// GetSsoProfileID returns the SsoProfileID field if it's non-nil, zero value otherwise.
+func (t *Ticket) GetSsoProfileID() string {
+	if t == nil || t.SsoProfileID == nil {
+		return ""
+	}
+	return *t.SsoProfileID
+}
+
 // GetTicket returns the Ticket field if it's non-nil, zero value otherwise.
 func (t *Ticket) GetTicket() string {
 	if t == nil || t.Ticket == nil {
@@ -10450,6 +10545,51 @@ func (u *User) GetVerifyEmail() bool {
 
 // String returns a string representation of User.
 func (u *User) String() string {
+	return Stringify(u)
+}
+
+// GetDefaultMappings returns the DefaultMappings field.
+func (u *UserAttributes) GetDefaultMappings() *DefaultMappings {
+	if u == nil {
+		return nil
+	}
+	return u.DefaultMappings
+}
+
+// GetDescription returns the Description field if it's non-nil, zero value otherwise.
+func (u *UserAttributes) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+// GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
+func (u *UserAttributes) GetDisplayName() string {
+	if u == nil || u.DisplayName == nil {
+		return ""
+	}
+	return *u.DisplayName
+}
+
+// GetIsOptional returns the IsOptional field if it's non-nil, zero value otherwise.
+func (u *UserAttributes) GetIsOptional() bool {
+	if u == nil || u.IsOptional == nil {
+		return false
+	}
+	return *u.IsOptional
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (u *UserAttributes) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+// String returns a string representation of UserAttributes.
+func (u *UserAttributes) String() string {
 	return Stringify(u)
 }
 
