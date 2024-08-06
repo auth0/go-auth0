@@ -87,6 +87,41 @@ type Tenant struct {
 
 	// If `true`, flexible factors will be enabled for MFA in the PostLogin action.
 	CustomizeMFAInPostLoginAction *bool `json:"customize_mfa_in_postlogin_action,omitempty"`
+
+	// AcrValuesSupported Supported ACR values
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/tenants/settings
+	// {
+	//   "acr_values_supported": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	AcrValuesSupported *[]string `json:"acr_values_supported,omitempty"`
+
+	// MTLS configuration for the tenant. Default is false.
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/tenants/settings
+	// {
+	//  "mtls": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	MTLS *MTLSConfiguration `json:"mtls,omitempty"`
+
+	// Enables the use of Pushed Authorization Requests
+	PushedAuthorizationRequestsSupported *bool `json:"pushed_authorization_requests_supported,omitempty"`
+}
+
+// MTLSConfiguration hold settings for mTLS. If true, enables mTLS endpoint aliases.
+type MTLSConfiguration struct {
+	// If true, enables mTLS endpoint aliases
+	EnableEndpointAliases *bool `json:"enable_endpoint_aliases,omitempty"`
 }
 
 // MarshalJSON is a custom serializer for the Tenant type.
@@ -253,6 +288,9 @@ type TenantFlags struct {
 	// If `true`, all Clients will be required to use Pushed Authorization Requests.
 	// This feature currently must be enabled for your tenant.
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty"`
+
+	// Removes alg property from jwks .well-known endpoint
+	RemoveAlgFromJWKS *bool `json:"remove_alg_from_jwks,omitempty"`
 }
 
 // TenantUniversalLogin holds universal login settings.
