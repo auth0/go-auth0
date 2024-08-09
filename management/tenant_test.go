@@ -41,6 +41,11 @@ func TestTenantManager(t *testing.T) {
 		Sessions: &TenantSessions{
 			OIDCLogoutPromptEnabled: auth0.Bool(false),
 		},
+		AcrValuesSupported:                   &[]string{"foo", "bar"},
+		PushedAuthorizationRequestsSupported: auth0.Bool(true),
+		MTLS: &MTLSConfiguration{
+			EnableEndpointAliases: auth0.Bool(true),
+		},
 	}
 	err = api.Tenant.Update(context.Background(), newTenantSettings)
 	assert.NoError(t, err)
@@ -58,6 +63,9 @@ func TestTenantManager(t *testing.T) {
 	assert.Equal(t, newTenantSettings.GetEnabledLocales(), actualTenantSettings.GetEnabledLocales())
 	assert.Equal(t, newTenantSettings.GetSandboxVersion(), actualTenantSettings.GetSandboxVersion())
 	assert.Equal(t, newTenantSettings.GetSessions().GetOIDCLogoutPromptEnabled(), actualTenantSettings.GetSessions().GetOIDCLogoutPromptEnabled())
+	assert.Equal(t, newTenantSettings.GetAcrValuesSupported(), actualTenantSettings.GetAcrValuesSupported())
+	assert.Equal(t, newTenantSettings.GetPushedAuthorizationRequestsSupported(), actualTenantSettings.GetPushedAuthorizationRequestsSupported())
+	assert.Equal(t, newTenantSettings.GetMTLS().GetEnableEndpointAliases(), actualTenantSettings.GetMTLS().GetEnableEndpointAliases())
 }
 
 func TestTenant_MarshalJSON(t *testing.T) {

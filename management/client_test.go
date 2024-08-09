@@ -30,6 +30,223 @@ func TestClient_Create(t *testing.T) {
 	})
 }
 
+func TestClientSignedRequestObject(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedClient := &Client{
+		Name:        auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
+		Description: auth0.String("This is just a test client."),
+		SignedRequestObject: &SignedRequestObject{
+			Required: auth0.Bool(true),
+			Credentials: &[]Credential{
+				{
+					Name:           auth0.Stringf("Test Credential (%s)", time.Now().Format(time.StampMilli)),
+					CredentialType: auth0.String("public_key"),
+					PEM: auth0.String(`-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAua6LXMfgDE/tDdkOL1Oe
+3oWUwg1r4dSTg9L7RCcI5hItUzmkVofHtWN0H4CH2lm2ANmaJUsnhzctYowYW2+R
+tHvU9afTmtbdhpy993972hUqZSYLsE3iGziphYkOKVsqq38+VRH3TNg93zSLoRao
+JnTTkMXseVqiyqYRmFN8+gQQoEclHSGPUWQG5XMZ+hhuXeFyo+Yw/qbZWca/6/2I
+3rsca9jXR1alhxhHrXrg8N4Dm3gBgGbmiht6YYYT2Tyl1OqB9+iOI/9D7dfoCF6X
+AWJXRE454cmC8k8oucpjZVpflA+ocKshwPDR6YTLQYbXYiaWxEoaz0QGUErNQBnG
+I+sr9jDY3ua/s6HF6h0qyi/HVZH4wx+m4CtOfJoYTjrGBbaRszzUxhtSN2/MhXDu
++a35q9/2zcu/3fjkkfVvGUt+NyyiYOKQ9vsJC1g/xxdUWtowjNwjfZE2zcG4usi8
+r38Bp0lmiipAsMLduZM/D5dFXkRdWCBNDfULmmg/4nv2wwjbjQuLemAMh7mmrztW
+i/85WMnjKQZT8NqS43pmgyIzg1gK1neMqdS90YmQ/PvJ36qALxCs245w1JpN9BAL
+JbwxCg/dbmKT7PalfWrksx9hGcJxtGqebldaOpw+5GVIPxxtC1C0gVr9BKeiDS3f
+aibASY5pIRiKENmbZELDtucCAwEAAQ==
+-----END PUBLIC KEY-----`),
+				},
+			},
+		},
+		JWTConfiguration:                   &ClientJWTConfiguration{Algorithm: auth0.String("PS256")},
+		RequirePushedAuthorizationRequests: auth0.Bool(true),
+		ComplianceLevel:                    auth0.String("fapi1_adv_pkj_par"),
+		RequireProofOfPossession:           auth0.Bool(true),
+	}
+
+	err := api.Client.Create(context.Background(), expectedClient)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedClient.GetClientID())
+	assert.Equal(t, true, expectedClient.GetSignedRequestObject().GetRequired())
+	assert.Equal(t, "fapi1_adv_pkj_par", expectedClient.GetComplianceLevel())
+	assert.Equal(t, "PS256", expectedClient.GetJWTConfiguration().GetAlgorithm())
+	assert.Equal(t, true, expectedClient.GetRequirePushedAuthorizationRequests())
+	assert.Equal(t, true, expectedClient.GetRequireProofOfPossession())
+
+	clientID := expectedClient.GetClientID()
+	expectedClient.ClientID = nil                       // Read-Only: Additional properties not allowed.
+	expectedClient.SigningKeys = nil                    // Read-Only: Additional properties not allowed.
+	expectedClient.JWTConfiguration.SecretEncoded = nil // Read-Only: Additional properties not allowed.
+
+	updatedClient := expectedClient
+	updatedClient.SignedRequestObject.Required = auth0.Bool(false)
+	updatedClient.ComplianceLevel = auth0.String("fapi1_adv_mtls_par")
+	updatedClient.RequirePushedAuthorizationRequests = auth0.Bool(false)
+	updatedClient.JWTConfiguration.Algorithm = auth0.String("RS256")
+	updatedClient.RequireProofOfPossession = auth0.Bool(false)
+
+	err = api.Client.Update(context.Background(), clientID, updatedClient)
+	assert.NoError(t, err)
+
+	assert.Equal(t, false, updatedClient.GetSignedRequestObject().GetRequired())
+	assert.Equal(t, "fapi1_adv_mtls_par", updatedClient.GetComplianceLevel())
+	assert.Equal(t, false, updatedClient.GetRequirePushedAuthorizationRequests())
+	assert.Equal(t, "RS256", updatedClient.GetJWTConfiguration().GetAlgorithm())
+	assert.Equal(t, false, updatedClient.GetRequireProofOfPossession())
+	t.Cleanup(func() {
+		cleanupClient(t, expectedClient.GetClientID())
+	})
+}
+
+func TestClientAuthenticationMethods(t *testing.T) {
+	updateAndVerifyClient := func(t *testing.T, clientID string, updatedClient *Client) {
+		err := api.Client.Update(context.Background(), clientID, updatedClient)
+		assert.NoError(t, err)
+		assert.Equal(t, "fapi1_adv_mtls_par", updatedClient.GetComplianceLevel())
+		assert.Equal(t, false, updatedClient.GetRequirePushedAuthorizationRequests())
+		assert.Equal(t, "RS256", updatedClient.GetJWTConfiguration().GetAlgorithm())
+	}
+
+	cleanupTestClient := func(t *testing.T, clientID string) {
+		t.Cleanup(func() {
+			cleanupClient(t, clientID)
+		})
+	}
+
+	t.Run("GetTLSClientAuth", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+		client := givenAClientAuthenticationMethodsClient(t, &TLSClientAuth{
+			Credentials: &[]Credential{
+				{
+					Name:           auth0.Stringf("Test Credential (%s)", time.Now().Format(time.StampMilli)),
+					CredentialType: auth0.String("cert_subject_dn"),
+					PEM: auth0.String(`-----BEGIN CERTIFICATE-----
+MIIDPDCCAiQCCQDWNMOIuzwDfzANBgkqhkiG9w0BAQUFADBgMQswCQYDVQQGEwJK
+UDEOMAwGA1UECAwFVG9reW8xEzARBgNVBAcMCkNoaXlvZGEta3UxDzANBgNVBAoM
+BkNsaWVudDEbMBkGA1UEAwwSY2xpZW50LmV4YW1wbGUub3JnMB4XDTE5MTAyODA3
+MjczMFoXDTIwMTAyNzA3MjczMFowYDELMAkGA1UEBhMCSlAxDjAMBgNVBAgMBVRv
+a3lvMRMwEQYDVQQHDApDaGl5b2RhLWt1MQ8wDQYDVQQKDAZDbGllbnQxGzAZBgNV
+BAMMEmNsaWVudC5leGFtcGxlLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCC
+AQoCggEBAK2Oyc+BV4N5pYcp47opUwsb2NaJq4X+d5Itq8whpFlZ9uCCHzF5TWSF
+XrpYscOp95veGPF42eT1grfxYyvjFotE76caHhBLCkIbBh6Vf222IGMwwBbSZfO9
+J3eURtEADBvsZ117HkPVdjYqvt3Pr4RxdR12zG1TcBAoTLGchyr8nBqRADFhUTCL
+msYaz1ADiQ/xbJN7VUNQpKhzRWHCdYS03HpbGjYCtAbl9dJnH2EepNF0emGiSPFq
+df6taToyCr7oZjM7ufmKPjiiEDbeSYTf6kbPNmmjtoPNNLeejHjP9p0IYx7l0Gkj
+mx4kSMLp4vSDftrFgGfcxzaMmKBsosMCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEA
+qzdDYbntFLPBlbwAQlpwIjvmvwzvkQt6qgZ9Y0oMAf7pxq3i9q7W1bDol0UF4pIM
+z3urEJCHO8w18JRlfOnOENkcLLLntrjOUXuNkaCDLrnv8pnp0yeTQHkSpsyMtJi9
+R6r6JT9V57EJ/pWQBgKlN6qMiBkIvX7U2hEMmhZ00h/E5xMmiKbySBiJV9fBzDRf
+mAy1p9YEgLsEMLnGjKHTok+hd0BLvcmXVejdUsKCg84F0zqtXEDXLCiKcpXCeeWv
+lmmXxC5PH/GEMkSPiGSR7+b1i0sSotsq+M3hbdwabpJ6nQLLbKkFSGcsQ87yL+gr
+So6zun26vAUJTu1o9CIjxw==
+-----END CERTIFICATE-----`),
+				},
+			},
+		})
+
+		clientID := client.GetClientID()
+		client.ClientID = nil
+		client.SigningKeys = nil
+		client.JWTConfiguration.SecretEncoded = nil
+
+		updatedClient := client
+		updatedClient.ComplianceLevel = auth0.String("fapi1_adv_mtls_par")
+		updatedClient.RequirePushedAuthorizationRequests = auth0.Bool(false)
+		updatedClient.JWTConfiguration.Algorithm = auth0.String("RS256")
+
+		updateAndVerifyClient(t, clientID, updatedClient)
+		cleanupTestClient(t, client.GetClientID())
+	})
+
+	t.Run("GetSelfSignedTLSClientAuth", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+		client := givenAClientAuthenticationMethodsClient(t, &SelfSignedTLSClientAuth{
+			Credentials: &[]Credential{
+				{
+					Name:           auth0.Stringf("Test Credential (%s)", time.Now().Format(time.StampMilli)),
+					CredentialType: auth0.String("x509_cert"),
+					PEM: auth0.String(`-----BEGIN CERTIFICATE-----
+MIIDwTCCAyqgAwIBAgICDh4wDQYJKoZIhvcNAQEFBQAwgZsxCzAJBgNVBAYTAkpQ
+MQ4wDAYDVQQIEwVUb2t5bzEQMA4GA1UEBxMHQ2h1by1rdTERMA8GA1UEChMIRnJh
+bms0REQxGDAWBgNVBAsTD1dlYkNlcnQgU3VwcG9ydDEYMBYGA1UEAxMPRnJhbms0
+REQgV2ViIENBMSMwIQYJKoZIhvcNAQkBFhRzdXBwb3J0QGZyYW5rNGRkLmNvbTAi
+GA8wMDAwMDEwMTAwMDAwMVoYDzk5OTkxMjMxMjM1OTU5WjCBgTELMAkGA1UEBhMC
+SlAxDjAMBgNVBAgTBVRva3lvMREwDwYDVQQKEwhGcmFuazRERDEQMA4GA1UECxMH
+U3VwcG9ydDEiMCAGCSqGSIb3DQEJARYTcHVibGljQGZyYW5rNGRkLmNvbTEZMBcG
+A1UEAxMQd3d3LmZyYW5rNGRkLmNvbTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkC
+gYEA4rkBL30FzR2ZHZ1vpF9kGBO0DMwhu2pcrkcLJ0SEuf52ggo+md0tPis8f1KN
+Tchxj6DtxWT3c7ECW0c1ALpu6mNVE+GaM94KsckSDehoPfbLjT9Apcc/F0mqvDsC
+N6fPdDixWrjx6xKT7xXi3lCy1yIKRMHA6Ha+T4qPyyCyMPECAwEAAaOCASYwggEi
+MAwGA1UdEwEB/wQCMAAwCwYDVR0PBAQDAgWgMB0GA1UdDgQWBBRWKE5tXPIyS0pC
+fE5taGO5Q84gyTCB0AYDVR0jBIHIMIHFgBRi83vtBtSx1Zx/SOXvxckVYf3ZEaGB
+oaSBnjCBmzELMAkGA1UEBhMCSlAxDjAMBgNVBAgTBVRva3lvMRAwDgYDVQQHEwdD
+aHVvLWt1MREwDwYDVQQKEwhGcmFuazRERDEYMBYGA1UECxMPV2ViQ2VydCBTdXBw
+b3J0MRgwFgYDVQQDEw9GcmFuazRERCBXZWIgQ0ExIzAhBgkqhkiG9w0BCQEWFHN1
+cHBvcnRAZnJhbms0ZGQuY29tggkAxscECbwiW6AwEwYDVR0lBAwwCgYIKwYBBQUH
+AwEwDQYJKoZIhvcNAQEFBQADgYEAfXCfXcePJwnMKc06qLa336cEPpXEsPed1bw4
+xiIXfgZ39duBnN+Nv4a49Yl2kbh4JO8tcr5h8WYAI/a/69w8qBFQBUAjTEY/+lcw
+9/6wU7UA3kh7yexeqDiNTRflnPUv3sfiVdLDTjqLWWAxGS8L26PjVaCUFfJLNiYJ
+jerREgM=
+-----END CERTIFICATE-----`),
+				},
+			},
+		})
+
+		clientID := client.GetClientID()
+		client.ClientID = nil
+		client.SigningKeys = nil
+		client.JWTConfiguration.SecretEncoded = nil
+
+		updatedClient := client
+		updatedClient.ComplianceLevel = auth0.String("fapi1_adv_mtls_par")
+		updatedClient.RequirePushedAuthorizationRequests = auth0.Bool(false)
+		updatedClient.JWTConfiguration.Algorithm = auth0.String("RS256")
+
+		updateAndVerifyClient(t, clientID, updatedClient)
+		cleanupTestClient(t, client.GetClientID())
+	})
+
+	t.Run("GetPrivateKeyJWT", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+		client := givenAClientAuthenticationMethodsClient(t, &PrivateKeyJWT{
+			Credentials: &[]Credential{
+				{
+					Name:           auth0.Stringf("Test Credential (%s)", time.Now().Format(time.StampMilli)),
+					CredentialType: auth0.String("public_key"),
+					PEM: auth0.String(`-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA3njxXJoHnuN4hByBhSUo
+0kIbXkJTA0wP0fig87MyVz5KgohPrPJgbRSZ7yz/MmXa4qRNHkWiClJybMS2a98M
+6ELOFG8pfDb6J7JaJqx0Kvqn6xsGInbpwsth3K582Cxrp+Y+GBNja++8wDY5IqAi
+TSKSZRNies0GO0grzQ7kj2p0+R7a0c86mdLO4JnGrHoBqEY1HcsfnJvkJkqETlGi
+yMzDQw8Wkux7P59N/3wuroAI83+HMYl1fV39ek3L/GrsLjECrNe5/CVFtblNltyb
+/va9+pAP7Ye5p6tTW2oj3fzUvdX3dYzENWEtRB7DBHXnfEHMjTaBiQeWb2yDHBCw
+++Uh1OCKw9ZLYzoE6gcDQspYf+fFU3F0kuU4c//gSoNuj/iEjaNmOEK6S3xGy8fE
+TjsC+0oF6YaokDZO9+NreL/sGxFfOAysybrKWrMoaYwa81RlpcmBGZM7H1M00zLH
+PPfCYVhGhFs5X3Qzzt6MQE+msgMt9zeGH7liJbOSW2NGSJwbmn7q35YYIfJEoXRF
+1iefT/9fJB9vhQhtYfCOe3AEpTQq6Yz5ViLhToBdsVDBbz2gmRLALs9/D91SE9T4
+XzvXjHGyxWVu0jdvS9hyhJzP4165k1cYDgx8mmg0VxR7j79LmCUDsFcvvSrAOf6y
+0zY7r4pmNyQQ0r4in/gs/wkCAwEAAQ==
+-----END PUBLIC KEY-----`),
+				},
+			},
+		})
+
+		clientID := client.GetClientID()
+		client.ClientID = nil
+		client.SigningKeys = nil
+		client.JWTConfiguration.SecretEncoded = nil
+
+		updatedClient := client
+		updatedClient.ComplianceLevel = auth0.String("fapi1_adv_mtls_par")
+		updatedClient.RequirePushedAuthorizationRequests = auth0.Bool(false)
+		updatedClient.JWTConfiguration.Algorithm = auth0.String("RS256")
+
+		updateAndVerifyClient(t, clientID, updatedClient)
+		cleanupTestClient(t, client.GetClientID())
+	})
+}
+
 func TestClient_Read(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -290,6 +507,119 @@ func TestClient_DeleteCredential(t *testing.T) {
 	assert.Implements(t, (*Error)(nil), err)
 	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
+func TestClient_CreateAllCredential(t *testing.T) {
+	t.Run("Should create PrivateJWT Credential", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		expectedClient := givenAClient(t)
+
+		credential := &Credential{
+			Name:           auth0.Stringf("Test Credential (%s)", time.Now().Format(time.StampMilli)),
+			CredentialType: auth0.String("public_key"),
+			PEM: auth0.String(`-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA3njxXJoHnuN4hByBhSUo
+0kIbXkJTA0wP0fig87MyVz5KgohPrPJgbRSZ7yz/MmXa4qRNHkWiClJybMS2a98M
+6ELOFG8pfDb6J7JaJqx0Kvqn6xsGInbpwsth3K582Cxrp+Y+GBNja++8wDY5IqAi
+TSKSZRNies0GO0grzQ7kj2p0+R7a0c86mdLO4JnGrHoBqEY1HcsfnJvkJkqETlGi
+yMzDQw8Wkux7P59N/3wuroAI83+HMYl1fV39ek3L/GrsLjECrNe5/CVFtblNltyb
+/va9+pAP7Ye5p6tTW2oj3fzUvdX3dYzENWEtRB7DBHXnfEHMjTaBiQeWb2yDHBCw
+++Uh1OCKw9ZLYzoE6gcDQspYf+fFU3F0kuU4c//gSoNuj/iEjaNmOEK6S3xGy8fE
+TjsC+0oF6YaokDZO9+NreL/sGxFfOAysybrKWrMoaYwa81RlpcmBGZM7H1M00zLH
+PPfCYVhGhFs5X3Qzzt6MQE+msgMt9zeGH7liJbOSW2NGSJwbmn7q35YYIfJEoXRF
+1iefT/9fJB9vhQhtYfCOe3AEpTQq6Yz5ViLhToBdsVDBbz2gmRLALs9/D91SE9T4
+XzvXjHGyxWVu0jdvS9hyhJzP4165k1cYDgx8mmg0VxR7j79LmCUDsFcvvSrAOf6y
+0zY7r4pmNyQQ0r4in/gs/wkCAwEAAQ==
+-----END PUBLIC KEY-----`),
+		}
+
+		err := api.Client.CreateCredential(context.Background(), expectedClient.GetClientID(), credential)
+		assert.NoError(t, err)
+		assert.NotEmpty(t, credential.GetID())
+
+		t.Cleanup(func() {
+			cleanupCredential(t, expectedClient.GetClientID(), credential.GetID())
+		})
+	})
+	t.Run("Should create TLSClientAuth Credential", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		expectedClient := givenAClient(t)
+
+		credential := &Credential{
+			Name:           auth0.Stringf("Test Credential (%s)", time.Now().Format(time.StampMilli)),
+			CredentialType: auth0.String("cert_subject_dn"),
+			PEM: auth0.String(`-----BEGIN CERTIFICATE-----
+MIIDPDCCAiQCCQDWNMOIuzwDfzANBgkqhkiG9w0BAQUFADBgMQswCQYDVQQGEwJK
+UDEOMAwGA1UECAwFVG9reW8xEzARBgNVBAcMCkNoaXlvZGEta3UxDzANBgNVBAoM
+BkNsaWVudDEbMBkGA1UEAwwSY2xpZW50LmV4YW1wbGUub3JnMB4XDTE5MTAyODA3
+MjczMFoXDTIwMTAyNzA3MjczMFowYDELMAkGA1UEBhMCSlAxDjAMBgNVBAgMBVRv
+a3lvMRMwEQYDVQQHDApDaGl5b2RhLWt1MQ8wDQYDVQQKDAZDbGllbnQxGzAZBgNV
+BAMMEmNsaWVudC5leGFtcGxlLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCC
+AQoCggEBAK2Oyc+BV4N5pYcp47opUwsb2NaJq4X+d5Itq8whpFlZ9uCCHzF5TWSF
+XrpYscOp95veGPF42eT1grfxYyvjFotE76caHhBLCkIbBh6Vf222IGMwwBbSZfO9
+J3eURtEADBvsZ117HkPVdjYqvt3Pr4RxdR12zG1TcBAoTLGchyr8nBqRADFhUTCL
+msYaz1ADiQ/xbJN7VUNQpKhzRWHCdYS03HpbGjYCtAbl9dJnH2EepNF0emGiSPFq
+df6taToyCr7oZjM7ufmKPjiiEDbeSYTf6kbPNmmjtoPNNLeejHjP9p0IYx7l0Gkj
+mx4kSMLp4vSDftrFgGfcxzaMmKBsosMCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEA
+qzdDYbntFLPBlbwAQlpwIjvmvwzvkQt6qgZ9Y0oMAf7pxq3i9q7W1bDol0UF4pIM
+z3urEJCHO8w18JRlfOnOENkcLLLntrjOUXuNkaCDLrnv8pnp0yeTQHkSpsyMtJi9
+R6r6JT9V57EJ/pWQBgKlN6qMiBkIvX7U2hEMmhZ00h/E5xMmiKbySBiJV9fBzDRf
+mAy1p9YEgLsEMLnGjKHTok+hd0BLvcmXVejdUsKCg84F0zqtXEDXLCiKcpXCeeWv
+lmmXxC5PH/GEMkSPiGSR7+b1i0sSotsq+M3hbdwabpJ6nQLLbKkFSGcsQ87yL+gr
+So6zun26vAUJTu1o9CIjxw==
+-----END CERTIFICATE-----`),
+		}
+
+		err := api.Client.CreateCredential(context.Background(), expectedClient.GetClientID(), credential)
+		assert.NoError(t, err)
+		assert.NotEmpty(t, credential.GetID())
+
+		t.Cleanup(func() {
+			cleanupCredential(t, expectedClient.GetClientID(), credential.GetID())
+		})
+	})
+	t.Run("Should create SelfSignedTLSClientAuth Credential", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		expectedClient := givenAClient(t)
+
+		credential := &Credential{
+			Name:           auth0.Stringf("Test Credential (%s)", time.Now().Format(time.StampMilli)),
+			CredentialType: auth0.String("x509_cert"),
+			PEM: auth0.String(`-----BEGIN CERTIFICATE-----
+MIIDwTCCAyqgAwIBAgICDh4wDQYJKoZIhvcNAQEFBQAwgZsxCzAJBgNVBAYTAkpQ
+MQ4wDAYDVQQIEwVUb2t5bzEQMA4GA1UEBxMHQ2h1by1rdTERMA8GA1UEChMIRnJh
+bms0REQxGDAWBgNVBAsTD1dlYkNlcnQgU3VwcG9ydDEYMBYGA1UEAxMPRnJhbms0
+REQgV2ViIENBMSMwIQYJKoZIhvcNAQkBFhRzdXBwb3J0QGZyYW5rNGRkLmNvbTAi
+GA8wMDAwMDEwMTAwMDAwMVoYDzk5OTkxMjMxMjM1OTU5WjCBgTELMAkGA1UEBhMC
+SlAxDjAMBgNVBAgTBVRva3lvMREwDwYDVQQKEwhGcmFuazRERDEQMA4GA1UECxMH
+U3VwcG9ydDEiMCAGCSqGSIb3DQEJARYTcHVibGljQGZyYW5rNGRkLmNvbTEZMBcG
+A1UEAxMQd3d3LmZyYW5rNGRkLmNvbTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkC
+gYEA4rkBL30FzR2ZHZ1vpF9kGBO0DMwhu2pcrkcLJ0SEuf52ggo+md0tPis8f1KN
+Tchxj6DtxWT3c7ECW0c1ALpu6mNVE+GaM94KsckSDehoPfbLjT9Apcc/F0mqvDsC
+N6fPdDixWrjx6xKT7xXi3lCy1yIKRMHA6Ha+T4qPyyCyMPECAwEAAaOCASYwggEi
+MAwGA1UdEwEB/wQCMAAwCwYDVR0PBAQDAgWgMB0GA1UdDgQWBBRWKE5tXPIyS0pC
+fE5taGO5Q84gyTCB0AYDVR0jBIHIMIHFgBRi83vtBtSx1Zx/SOXvxckVYf3ZEaGB
+oaSBnjCBmzELMAkGA1UEBhMCSlAxDjAMBgNVBAgTBVRva3lvMRAwDgYDVQQHEwdD
+aHVvLWt1MREwDwYDVQQKEwhGcmFuazRERDEYMBYGA1UECxMPV2ViQ2VydCBTdXBw
+b3J0MRgwFgYDVQQDEw9GcmFuazRERCBXZWIgQ0ExIzAhBgkqhkiG9w0BCQEWFHN1
+cHBvcnRAZnJhbms0ZGQuY29tggkAxscECbwiW6AwEwYDVR0lBAwwCgYIKwYBBQUH
+AwEwDQYJKoZIhvcNAQEFBQADgYEAfXCfXcePJwnMKc06qLa336cEPpXEsPed1bw4
+xiIXfgZ39duBnN+Nv4a49Yl2kbh4JO8tcr5h8WYAI/a/69w8qBFQBUAjTEY/+lcw
+9/6wU7UA3kh7yexeqDiNTRflnPUv3sfiVdLDTjqLWWAxGS8L26PjVaCUFfJLNiYJ
+jerREgM=
+-----END CERTIFICATE-----`),
+		}
+
+		err := api.Client.CreateCredential(context.Background(), expectedClient.GetClientID(), credential)
+		assert.NoError(t, err)
+		assert.NotEmpty(t, credential.GetID())
+
+		t.Cleanup(func() {
+			cleanupCredential(t, expectedClient.GetClientID(), credential.GetID())
+		})
+	})
+}
 
 func givenASimpleClient(t *testing.T) *Client {
 	t.Helper()
@@ -352,6 +682,41 @@ aibASY5pIRiKENmbZELDtucCAwEAAQ==
 	t.Cleanup(func() {
 		cleanupClient(t, client.GetClientID())
 	})
+
+	return client
+}
+
+func givenAClientAuthenticationMethodsClient(t *testing.T, authMethod interface{}) *Client {
+	client := &Client{
+		Name:        auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
+		Description: auth0.String("This is just a test client."),
+		ClientAuthenticationMethods: &ClientAuthenticationMethods{
+			TLSClientAuth:           nil,
+			SelfSignedTLSClientAuth: nil,
+			PrivateKeyJWT:           nil,
+		},
+		JWTConfiguration:                   &ClientJWTConfiguration{Algorithm: auth0.String("PS256")},
+		RequirePushedAuthorizationRequests: auth0.Bool(true),
+		ComplianceLevel:                    auth0.String("fapi1_adv_pkj_par"),
+	}
+
+	switch v := authMethod.(type) {
+	case *TLSClientAuth:
+		client.ClientAuthenticationMethods.TLSClientAuth = v
+	case *SelfSignedTLSClientAuth:
+		client.ClientAuthenticationMethods.SelfSignedTLSClientAuth = v
+	case *PrivateKeyJWT:
+		client.ClientAuthenticationMethods.PrivateKeyJWT = v
+	default:
+		t.Fatalf("Unsupported authentication method")
+	}
+
+	err := api.Client.Create(context.Background(), client)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, client.GetClientID())
+	assert.Equal(t, "fapi1_adv_pkj_par", client.GetComplianceLevel())
+	assert.Equal(t, "PS256", client.GetJWTConfiguration().GetAlgorithm())
+	assert.Equal(t, true, client.GetRequirePushedAuthorizationRequests())
 
 	return client
 }

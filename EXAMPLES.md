@@ -194,3 +194,26 @@ if err != nil {
 }
 log.Printf("User %s", user.GetOurCustomID())
 ```
+
+To handle nullable fields, create a custom struct without the omitempty tag and set it to null using a custom request.
+
+```go
+// Define a custom struct similar to the `Tenant` struct exposed by the SDK but without the `omitempty` tag.
+type Tenant struct {
+AcrValuesSupported *[]string         `json:"acr_values_supported"`
+MTLS               *management.MTLSConfiguration `json:"mtls"`
+}
+
+// Create a custom request to handle nullable fields.
+var tenant Tenant
+
+// Set AcrValuesSupported and MTLS to null
+tenant.AcrValuesSupported = nil
+tenant.MTLS = nil
+
+err := auth0API.Request(context.Background(), http.MethodPatch, auth0API.URI("tenants", "settings"), &tenant)
+if err != nil {
+log.Fatalf("error was %+v", err)
+}
+log.Printf("Tenant %+v", tenant)
+```

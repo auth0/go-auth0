@@ -118,6 +118,75 @@ type Client struct {
 
 	// URLs that are valid to call back from Auth0 for OIDC logout.
 	OIDCLogout *OIDCLogout `json:"oidc_logout,omitempty"`
+
+	// SignedRequestObject JWT-secured Authorization Requests (JAR) settings for the client.
+	SignedRequestObject *SignedRequestObject `json:"signed_request_object,omitempty"`
+
+	// ComplianceLevel Defines the compliance level for this client, which may restrict it's capabilities
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/clients/{id}
+	//
+	// {
+	//	 "compliance_level": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	ComplianceLevel *string `json:"compliance_level,omitempty"`
+
+	// RequireProofOfPossession Makes the use of Proof-of-Possession mandatory for this client (default: false).
+	RequireProofOfPossession *bool `json:"require_proof_of_possession,omitempty"`
+}
+
+// SignedRequestObject is used to configure JWT-secured Authorization Requests (JAR) settings for our Client.
+type SignedRequestObject struct {
+	// Indicates whether the JAR requests are mandatory
+	Required *bool `json:"required,omitempty"`
+
+	// Credentials used to sign the JAR requests
+	Credentials *[]Credential `json:"credentials,omitempty"`
+}
+
+// CleanForPatch removes unnecessary fields from the client object before patching.
+func (c *Client) CleanForPatch() {
+	if c.SignedRequestObject != nil && c.SignedRequestObject.Credentials != nil {
+		var credentials []Credential
+		for _, cred := range *c.SignedRequestObject.Credentials {
+			if cred.ID != nil && *cred.ID != "" {
+				credentials = append(credentials, Credential{ID: cred.ID})
+			}
+		}
+		c.SignedRequestObject.Credentials = &credentials
+	}
+	if c.ClientAuthenticationMethods != nil && c.ClientAuthenticationMethods.TLSClientAuth != nil && c.ClientAuthenticationMethods.TLSClientAuth.Credentials != nil {
+		var credentials []Credential
+		for _, cred := range *c.ClientAuthenticationMethods.TLSClientAuth.Credentials {
+			if cred.ID != nil && *cred.ID != "" {
+				credentials = append(credentials, Credential{ID: cred.ID})
+			}
+		}
+		c.ClientAuthenticationMethods.TLSClientAuth.Credentials = &credentials
+	}
+	if c.ClientAuthenticationMethods != nil && c.ClientAuthenticationMethods.SelfSignedTLSClientAuth != nil && c.ClientAuthenticationMethods.SelfSignedTLSClientAuth.Credentials != nil {
+		var credentials []Credential
+		for _, cred := range *c.ClientAuthenticationMethods.SelfSignedTLSClientAuth.Credentials {
+			if cred.ID != nil && *cred.ID != "" {
+				credentials = append(credentials, Credential{ID: cred.ID})
+			}
+		}
+		c.ClientAuthenticationMethods.SelfSignedTLSClientAuth.Credentials = &credentials
+	}
+	if c.ClientAuthenticationMethods != nil && c.ClientAuthenticationMethods.PrivateKeyJWT != nil && c.ClientAuthenticationMethods.PrivateKeyJWT.Credentials != nil {
+		var credentials []Credential
+		for _, cred := range *c.ClientAuthenticationMethods.PrivateKeyJWT.Credentials {
+			if cred.ID != nil && *cred.ID != "" {
+				credentials = append(credentials, Credential{ID: cred.ID})
+			}
+		}
+		c.ClientAuthenticationMethods.PrivateKeyJWT.Credentials = &credentials
+	}
 }
 
 // ClientJWTConfiguration is used to configure JWT settings for our Client.
@@ -131,7 +200,7 @@ type ClientJWTConfiguration struct {
 
 	Scopes *map[string]string `json:"scopes,omitempty"`
 
-	// Algorithm used to sign JWTs. Can be "HS256" or "RS256"
+	// Algorithm used to sign JWTs. Can be `HS256` or `RS256`. `PS256` available via addon"
 	Algorithm *string `json:"alg,omitempty"`
 }
 
@@ -215,11 +284,37 @@ type Credential struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// The time that this credential will expire.
 	ExpiresAt *time.Time `json:"expires_at,omitempty"`
+	// Subject Distinguished Name. Mutually exclusive with `pem` property.
+	SubjectDN *string `json:"subject_dn,omitempty"`
+	// The SHA256 thumbprint of the x509_cert certificate.
+	ThumbprintSHA256 *string `json:"thumbprint_sha256,omitempty"`
 }
 
 // ClientAuthenticationMethods defines client authentication method settings for the client.
 type ClientAuthenticationMethods struct {
 	PrivateKeyJWT *PrivateKeyJWT `json:"private_key_jwt,omitempty"`
+
+	// TLSClientAuth defines the `tls_client_auth` client authentication method settings for the client.
+	// If the property is defined, the client is configured to use CA-based mTLS authentication method
+	TLSClientAuth *TLSClientAuth `json:"tls_client_auth,omitempty"`
+
+	// SelfSignedTLSClientAuth defines the `self_signed_tls_client_auth` client authentication method settings for the client.
+	// If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate
+	SelfSignedTLSClientAuth *SelfSignedTLSClientAuth `json:"self_signed_tls_client_auth,omitempty"`
+}
+
+// TLSClientAuth defines the `tls_client_auth` client authentication method settings for the client.
+type TLSClientAuth struct {
+	// Fully defined credentials that will be enabled on the client for CA-based mTLS authentication.
+	// A list of unique and previously created credential IDs enabled on the client for CA-based mTLS authentication.
+	Credentials *[]Credential `json:"credentials,omitempty"`
+}
+
+// SelfSignedTLSClientAuth defines the `self_signed_tls_client_auth` client authentication method settings for the client.
+type SelfSignedTLSClientAuth struct {
+	// Fully defined credentials that will be enabled on the client for mTLS authentication utilizing self-signed certificate.
+	// A list of unique and previously created credential IDs enabled on the client for mTLS authentication utilizing self-signed certificate.
+	Credentials *[]Credential `json:"credentials,omitempty"`
 }
 
 // PrivateKeyJWT defines the `private_key_jwt` client authentication method settings for the client.
@@ -560,6 +655,7 @@ func (m *ClientManager) List(ctx context.Context, opts ...RequestOption) (c *Cli
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/patch_clients_by_id
 func (m *ClientManager) Update(ctx context.Context, id string, c *Client, opts ...RequestOption) (err error) {
+	c.CleanForPatch()
 	return m.management.Request(ctx, "PATCH", m.management.URI("clients", id), c, opts...)
 }
 

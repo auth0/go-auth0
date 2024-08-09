@@ -855,6 +855,24 @@ func TestAuthenticationMethods_String(t *testing.T) {
 	}
 }
 
+func TestAuthorizationDetails_GetType(tt *testing.T) {
+	var zeroValue string
+	a := &AuthorizationDetails{Type: &zeroValue}
+	a.GetType()
+	a = &AuthorizationDetails{}
+	a.GetType()
+	a = nil
+	a.GetType()
+}
+
+func TestAuthorizationDetails_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &AuthorizationDetails{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestAWSClientAddon_GetLifetimeInSeconds(tt *testing.T) {
 	var zeroValue int
 	a := &AWSClientAddon{LifetimeInSeconds: &zeroValue}
@@ -1640,6 +1658,16 @@ func TestClient_GetClientSecret(tt *testing.T) {
 	c.GetClientSecret()
 }
 
+func TestClient_GetComplianceLevel(tt *testing.T) {
+	var zeroValue string
+	c := &Client{ComplianceLevel: &zeroValue}
+	c.GetComplianceLevel()
+	c = &Client{}
+	c.GetComplianceLevel()
+	c = nil
+	c.GetComplianceLevel()
+}
+
 func TestClient_GetCrossOriginAuth(tt *testing.T) {
 	var zeroValue bool
 	c := &Client{CrossOriginAuth: &zeroValue}
@@ -1852,6 +1880,16 @@ func TestClient_GetRefreshToken(tt *testing.T) {
 	c.GetRefreshToken()
 }
 
+func TestClient_GetRequireProofOfPossession(tt *testing.T) {
+	var zeroValue bool
+	c := &Client{RequireProofOfPossession: &zeroValue}
+	c.GetRequireProofOfPossession()
+	c = &Client{}
+	c.GetRequireProofOfPossession()
+	c = nil
+	c.GetRequireProofOfPossession()
+}
+
 func TestClient_GetRequirePushedAuthorizationRequests(tt *testing.T) {
 	var zeroValue bool
 	c := &Client{RequirePushedAuthorizationRequests: &zeroValue}
@@ -1860,6 +1898,13 @@ func TestClient_GetRequirePushedAuthorizationRequests(tt *testing.T) {
 	c.GetRequirePushedAuthorizationRequests()
 	c = nil
 	c.GetRequirePushedAuthorizationRequests()
+}
+
+func TestClient_GetSignedRequestObject(tt *testing.T) {
+	c := &Client{}
+	c.GetSignedRequestObject()
+	c = nil
+	c.GetSignedRequestObject()
 }
 
 func TestClient_GetSSO(tt *testing.T) {
@@ -2126,6 +2171,20 @@ func TestClientAuthenticationMethods_GetPrivateKeyJWT(tt *testing.T) {
 	c.GetPrivateKeyJWT()
 	c = nil
 	c.GetPrivateKeyJWT()
+}
+
+func TestClientAuthenticationMethods_GetSelfSignedTLSClientAuth(tt *testing.T) {
+	c := &ClientAuthenticationMethods{}
+	c.GetSelfSignedTLSClientAuth()
+	c = nil
+	c.GetSelfSignedTLSClientAuth()
+}
+
+func TestClientAuthenticationMethods_GetTLSClientAuth(tt *testing.T) {
+	c := &ClientAuthenticationMethods{}
+	c.GetTLSClientAuth()
+	c = nil
+	c.GetTLSClientAuth()
 }
 
 func TestClientAuthenticationMethods_String(t *testing.T) {
@@ -7455,6 +7514,26 @@ func TestCredential_GetPEM(tt *testing.T) {
 	c.GetPEM()
 }
 
+func TestCredential_GetSubjectDN(tt *testing.T) {
+	var zeroValue string
+	c := &Credential{SubjectDN: &zeroValue}
+	c.GetSubjectDN()
+	c = &Credential{}
+	c.GetSubjectDN()
+	c = nil
+	c.GetSubjectDN()
+}
+
+func TestCredential_GetThumbprintSHA256(tt *testing.T) {
+	var zeroValue string
+	c := &Credential{ThumbprintSHA256: &zeroValue}
+	c.GetThumbprintSHA256()
+	c = &Credential{}
+	c.GetThumbprintSHA256()
+	c = nil
+	c.GetThumbprintSHA256()
+}
+
 func TestCredential_GetUpdatedAt(tt *testing.T) {
 	var zeroValue time.Time
 	c := &Credential{UpdatedAt: &zeroValue}
@@ -8192,6 +8271,54 @@ func TestEmailTemplate_GetURLLifetimeInSecoonds(tt *testing.T) {
 func TestEmailTemplate_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &EmailTemplate{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEncryptionKey_GetAlg(tt *testing.T) {
+	var zeroValue string
+	e := &EncryptionKey{Alg: &zeroValue}
+	e.GetAlg()
+	e = &EncryptionKey{}
+	e.GetAlg()
+	e = nil
+	e.GetAlg()
+}
+
+func TestEncryptionKey_GetKid(tt *testing.T) {
+	var zeroValue string
+	e := &EncryptionKey{Kid: &zeroValue}
+	e.GetKid()
+	e = &EncryptionKey{}
+	e.GetKid()
+	e = nil
+	e.GetKid()
+}
+
+func TestEncryptionKey_GetName(tt *testing.T) {
+	var zeroValue string
+	e := &EncryptionKey{Name: &zeroValue}
+	e.GetName()
+	e = &EncryptionKey{}
+	e.GetName()
+	e = nil
+	e.GetName()
+}
+
+func TestEncryptionKey_GetPem(tt *testing.T) {
+	var zeroValue string
+	e := &EncryptionKey{Pem: &zeroValue}
+	e.GetPem()
+	e = &EncryptionKey{}
+	e.GetPem()
+	e = nil
+	e.GetPem()
+}
+
+func TestEncryptionKey_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EncryptionKey{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -9413,6 +9540,24 @@ func TestMSCRMClientAddon_String(t *testing.T) {
 	}
 }
 
+func TestMTLSConfiguration_GetEnableEndpointAliases(tt *testing.T) {
+	var zeroValue bool
+	m := &MTLSConfiguration{EnableEndpointAliases: &zeroValue}
+	m.GetEnableEndpointAliases()
+	m = &MTLSConfiguration{}
+	m.GetEnableEndpointAliases()
+	m = nil
+	m.GetEnableEndpointAliases()
+}
+
+func TestMTLSConfiguration_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MTLSConfiguration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestMultiFactor_GetEnabled(tt *testing.T) {
 	var zeroValue bool
 	m := &MultiFactor{Enabled: &zeroValue}
@@ -10628,6 +10773,34 @@ func TestPromptPartials_String(t *testing.T) {
 	}
 }
 
+func TestProofOfPossession_GetMechanism(tt *testing.T) {
+	var zeroValue string
+	p := &ProofOfPossession{Mechanism: &zeroValue}
+	p.GetMechanism()
+	p = &ProofOfPossession{}
+	p.GetMechanism()
+	p = nil
+	p.GetMechanism()
+}
+
+func TestProofOfPossession_GetRequired(tt *testing.T) {
+	var zeroValue bool
+	p := &ProofOfPossession{Required: &zeroValue}
+	p.GetRequired()
+	p = &ProofOfPossession{}
+	p.GetRequired()
+	p = nil
+	p.GetRequired()
+}
+
+func TestProofOfPossession_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ProofOfPossession{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestRefreshToken_GetClientID(tt *testing.T) {
 	var zeroValue string
 	r := &RefreshToken{ClientID: &zeroValue}
@@ -10762,6 +10935,26 @@ func TestResourceServer_GetAllowOfflineAccess(tt *testing.T) {
 	r.GetAllowOfflineAccess()
 }
 
+func TestResourceServer_GetAuthorizationDetails(tt *testing.T) {
+	var zeroValue []AuthorizationDetails
+	r := &ResourceServer{AuthorizationDetails: &zeroValue}
+	r.GetAuthorizationDetails()
+	r = &ResourceServer{}
+	r.GetAuthorizationDetails()
+	r = nil
+	r.GetAuthorizationDetails()
+}
+
+func TestResourceServer_GetConsentPolicy(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServer{ConsentPolicy: &zeroValue}
+	r.GetConsentPolicy()
+	r = &ResourceServer{}
+	r.GetConsentPolicy()
+	r = nil
+	r.GetConsentPolicy()
+}
+
 func TestResourceServer_GetEnforcePolicies(tt *testing.T) {
 	var zeroValue bool
 	r := &ResourceServer{EnforcePolicies: &zeroValue}
@@ -10812,6 +11005,13 @@ func TestResourceServer_GetOptions(tt *testing.T) {
 	r.GetOptions()
 }
 
+func TestResourceServer_GetProofOfPossession(tt *testing.T) {
+	r := &ResourceServer{}
+	r.GetProofOfPossession()
+	r = nil
+	r.GetProofOfPossession()
+}
+
 func TestResourceServer_GetScopes(tt *testing.T) {
 	var zeroValue []ResourceServerScope
 	r := &ResourceServer{Scopes: &zeroValue}
@@ -10860,6 +11060,13 @@ func TestResourceServer_GetTokenDialect(tt *testing.T) {
 	r.GetTokenDialect()
 	r = nil
 	r.GetTokenDialect()
+}
+
+func TestResourceServer_GetTokenEncryption(tt *testing.T) {
+	r := &ResourceServer{}
+	r.GetTokenEncryption()
+	r = nil
+	r.GetTokenEncryption()
 }
 
 func TestResourceServer_GetTokenLifetime(tt *testing.T) {
@@ -11713,6 +11920,24 @@ func TestSCIMToken_String(t *testing.T) {
 	}
 }
 
+func TestSelfSignedTLSClientAuth_GetCredentials(tt *testing.T) {
+	var zeroValue []Credential
+	s := &SelfSignedTLSClientAuth{Credentials: &zeroValue}
+	s.GetCredentials()
+	s = &SelfSignedTLSClientAuth{}
+	s.GetCredentials()
+	s = nil
+	s.GetCredentials()
+}
+
+func TestSelfSignedTLSClientAuth_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfSignedTLSClientAuth{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestSentryClientAddon_GetBaseURL(tt *testing.T) {
 	var zeroValue string
 	s := &SentryClientAddon{BaseURL: &zeroValue}
@@ -11764,6 +11989,34 @@ func TestSharePointClientAddon_GetURL(tt *testing.T) {
 func TestSharePointClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SharePointClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSignedRequestObject_GetCredentials(tt *testing.T) {
+	var zeroValue []Credential
+	s := &SignedRequestObject{Credentials: &zeroValue}
+	s.GetCredentials()
+	s = &SignedRequestObject{}
+	s.GetCredentials()
+	s = nil
+	s.GetCredentials()
+}
+
+func TestSignedRequestObject_GetRequired(tt *testing.T) {
+	var zeroValue bool
+	s := &SignedRequestObject{Required: &zeroValue}
+	s.GetRequired()
+	s = &SignedRequestObject{}
+	s.GetRequired()
+	s = nil
+	s.GetRequired()
+}
+
+func TestSignedRequestObject_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SignedRequestObject{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -12028,6 +12281,16 @@ func TestSuspiciousIPThrottling_String(t *testing.T) {
 	}
 }
 
+func TestTenant_GetAcrValuesSupported(tt *testing.T) {
+	var zeroValue []string
+	t := &Tenant{AcrValuesSupported: &zeroValue}
+	t.GetAcrValuesSupported()
+	t = &Tenant{}
+	t.GetAcrValuesSupported()
+	t = nil
+	t.GetAcrValuesSupported()
+}
+
 func TestTenant_GetAllowedLogoutURLs(tt *testing.T) {
 	var zeroValue []string
 	t := &Tenant{AllowedLogoutURLs: &zeroValue}
@@ -12153,6 +12416,13 @@ func TestTenant_GetIdleSessionLifetime(tt *testing.T) {
 	t.GetIdleSessionLifetime()
 }
 
+func TestTenant_GetMTLS(tt *testing.T) {
+	t := &Tenant{}
+	t.GetMTLS()
+	t = nil
+	t.GetMTLS()
+}
+
 func TestTenant_GetPictureURL(tt *testing.T) {
 	var zeroValue string
 	t := &Tenant{PictureURL: &zeroValue}
@@ -12161,6 +12431,16 @@ func TestTenant_GetPictureURL(tt *testing.T) {
 	t.GetPictureURL()
 	t = nil
 	t.GetPictureURL()
+}
+
+func TestTenant_GetPushedAuthorizationRequestsSupported(tt *testing.T) {
+	var zeroValue bool
+	t := &Tenant{PushedAuthorizationRequestsSupported: &zeroValue}
+	t.GetPushedAuthorizationRequestsSupported()
+	t = &Tenant{}
+	t.GetPushedAuthorizationRequestsSupported()
+	t = nil
+	t.GetPushedAuthorizationRequestsSupported()
 }
 
 func TestTenant_GetSandboxVersion(tt *testing.T) {
@@ -12566,6 +12846,16 @@ func TestTenantFlags_GetNoDisclosureEnterpriseConnections(tt *testing.T) {
 	t.GetNoDisclosureEnterpriseConnections()
 }
 
+func TestTenantFlags_GetRemoveAlgFromJWKS(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{RemoveAlgFromJWKS: &zeroValue}
+	t.GetRemoveAlgFromJWKS()
+	t = &TenantFlags{}
+	t.GetRemoveAlgFromJWKS()
+	t = nil
+	t.GetRemoveAlgFromJWKS()
+}
+
 func TestTenantFlags_GetRequirePushedAuthorizationRequests(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{RequirePushedAuthorizationRequests: &zeroValue}
@@ -12831,6 +13121,49 @@ func TestTicket_GetUserID(tt *testing.T) {
 func TestTicket_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &Ticket{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTLSClientAuth_GetCredentials(tt *testing.T) {
+	var zeroValue []Credential
+	t := &TLSClientAuth{Credentials: &zeroValue}
+	t.GetCredentials()
+	t = &TLSClientAuth{}
+	t.GetCredentials()
+	t = nil
+	t.GetCredentials()
+}
+
+func TestTLSClientAuth_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TLSClientAuth{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTokenEncryption_GetEncryptionKey(tt *testing.T) {
+	t := &TokenEncryption{}
+	t.GetEncryptionKey()
+	t = nil
+	t.GetEncryptionKey()
+}
+
+func TestTokenEncryption_GetFormat(tt *testing.T) {
+	var zeroValue string
+	t := &TokenEncryption{Format: &zeroValue}
+	t.GetFormat()
+	t = &TokenEncryption{}
+	t.GetFormat()
+	t = nil
+	t.GetFormat()
+}
+
+func TestTokenEncryption_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TokenEncryption{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
