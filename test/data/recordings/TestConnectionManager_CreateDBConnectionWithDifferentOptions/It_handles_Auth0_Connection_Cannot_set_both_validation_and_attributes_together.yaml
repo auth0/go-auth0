@@ -6,14 +6,14 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 383
+        content_length: 432
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Auth0-Connection-Attributes-And-Validation-1720679132","strategy":"auth0","options":{"validation":{"username":{"max":5,"min":1}},"attributes":{"email":{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required","verification":{"active":true}}},"username":{"identifier":{"active":true},"profile_required":false,"signup":{"status":"required"}}}}}
+            {"name":"Test-Auth0-Connection-Attributes-And-Validation-1722944272","strategy":"auth0","options":{"validation":{"username":{"max":5,"min":1}},"precedence":["username","email","phone_number"],"attributes":{"email":{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}},"username":{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required"}}}}}
         form: {}
         headers:
             Content-Type:
@@ -36,4 +36,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 400 Bad Request
         code: 400
-        duration: 516.528375ms
+        duration: 278.591625ms
