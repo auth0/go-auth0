@@ -9566,6 +9566,14 @@ func (s *SSOTicket) GetConnectionID() string {
 	return *s.ConnectionID
 }
 
+// GetTicket returns the Ticket field if it's non-nil, zero value otherwise.
+func (s *SSOTicket) GetTicket() string {
+	if s == nil || s.Ticket == nil {
+		return ""
+	}
+	return *s.Ticket
+}
+
 // String returns a string representation of SSOTicket.
 func (s *SSOTicket) String() string {
 	return Stringify(s)
@@ -10253,14 +10261,6 @@ func (t *Ticket) GetResultURL() string {
 		return ""
 	}
 	return *t.ResultURL
-}
-
-// GetSsoProfileID returns the SsoProfileID field if it's non-nil, zero value otherwise.
-func (t *Ticket) GetSsoProfileID() string {
-	if t == nil || t.SsoProfileID == nil {
-		return ""
-	}
-	return *t.SsoProfileID
 }
 
 // GetTicket returns the Ticket field if it's non-nil, zero value otherwise.

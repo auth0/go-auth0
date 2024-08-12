@@ -12039,6 +12039,16 @@ func TestSSOTicket_GetConnectionID(tt *testing.T) {
 	s.GetConnectionID()
 }
 
+func TestSSOTicket_GetTicket(tt *testing.T) {
+	var zeroValue string
+	s := &SSOTicket{Ticket: &zeroValue}
+	s.GetTicket()
+	s = &SSOTicket{}
+	s.GetTicket()
+	s = nil
+	s.GetTicket()
+}
+
 func TestSSOTicket_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SSOTicket{}
@@ -12882,16 +12892,6 @@ func TestTicket_GetResultURL(tt *testing.T) {
 	t.GetResultURL()
 	t = nil
 	t.GetResultURL()
-}
-
-func TestTicket_GetSsoProfileID(tt *testing.T) {
-	var zeroValue string
-	t := &Ticket{SsoProfileID: &zeroValue}
-	t.GetSsoProfileID()
-	t = &Ticket{}
-	t.GetSsoProfileID()
-	t = nil
-	t.GetSsoProfileID()
 }
 
 func TestTicket_GetTicket(tt *testing.T) {
