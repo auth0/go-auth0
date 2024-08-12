@@ -199,21 +199,21 @@ To handle nullable fields, create a custom struct without the omitempty tag and 
 
 ```go
 // Define a custom struct similar to the `Tenant` struct exposed by the SDK but without the `omitempty` tag.
-type Tenant struct {
-AcrValuesSupported *[]string         `json:"acr_values_supported"`
+type CustomTenant struct {
+AcrValuesSupported *[]string          `json:"acr_values_supported"`
 MTLS               *management.MTLSConfiguration `json:"mtls"`
 }
 
-// Create a custom request to handle nullable fields.
-var tenant Tenant
+// Create a custom request to set the nullable fields to null.
+nullableTenantSettings := &CustomTenant{
+AcrValuesSupported: nil,
+MTLS:               nil,
+}
 
-// Set AcrValuesSupported and MTLS to null
-tenant.AcrValuesSupported = nil
-tenant.MTLS = nil
-
-err := auth0API.Request(context.Background(), http.MethodPatch, auth0API.URI("tenants", "settings"), &tenant)
+err := auth0API.Request(context.Background(), http.MethodPatch, auth0API.URI("tenants", "settings"), nullableTenantSettings)
 if err != nil {
 log.Fatalf("error was %+v", err)
 }
+
 log.Printf("Tenant %+v", tenant)
 ```

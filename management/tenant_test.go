@@ -3,6 +3,7 @@ package management
 import (
 	"context"
 	"encoding/json"
+	"net/http"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -66,6 +67,49 @@ func TestTenantManager(t *testing.T) {
 	assert.Equal(t, newTenantSettings.GetAcrValuesSupported(), actualTenantSettings.GetAcrValuesSupported())
 	assert.Equal(t, newTenantSettings.GetPushedAuthorizationRequestsSupported(), actualTenantSettings.GetPushedAuthorizationRequestsSupported())
 	assert.Equal(t, newTenantSettings.GetMTLS().GetEnableEndpointAliases(), actualTenantSettings.GetMTLS().GetEnableEndpointAliases())
+}
+
+func TestTenantManager_NullableFields(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	initialSettings, err := api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+
+	t.Cleanup(func() {
+		initialSettings.SandboxVersionAvailable = nil
+		initialSettings.UniversalLogin = nil
+		initialSettings.Flags = nil
+		err := api.Tenant.Update(context.Background(), initialSettings)
+		require.NoError(t, err)
+	})
+	newTenantSettings := &Tenant{
+		AcrValuesSupported: &[]string{"foo", "bar"},
+		MTLS: &MTLSConfiguration{
+			EnableEndpointAliases: auth0.Bool(true),
+		},
+	}
+	err = api.Tenant.Update(context.Background(), newTenantSettings)
+	assert.NoError(t, err)
+	actualTenantSettings, err := api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Equal(t, newTenantSettings.GetAcrValuesSupported(), actualTenantSettings.GetAcrValuesSupported())
+	assert.Equal(t, newTenantSettings.GetMTLS().GetEnableEndpointAliases(), actualTenantSettings.GetMTLS().GetEnableEndpointAliases())
+
+	// Set null values create a new Tenant Struct without omitting the fields
+	type CustomTenant struct {
+		AcrValuesSupported *[]string          `json:"acr_values_supported"`
+		MTLS               *MTLSConfiguration `json:"mtls"`
+	}
+	nullableTenantSettings := &CustomTenant{
+		AcrValuesSupported: nil,
+		MTLS:               nil,
+	}
+	err = api.Request(context.Background(), http.MethodPatch, api.URI("tenants", "settings"), nullableTenantSettings)
+	assert.NoError(t, err)
+	actualTenantSettings, err = api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Nil(t, actualTenantSettings.GetAcrValuesSupported())
+	assert.Nil(t, actualTenantSettings.GetMTLS())
 }
 
 func TestTenant_MarshalJSON(t *testing.T) {
