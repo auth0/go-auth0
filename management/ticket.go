@@ -26,7 +26,6 @@ type Ticket struct {
 	// The connection that provides the identity for which the password is to be
 	// changed. If sending this parameter, the email is also required and the
 	// UserID is invalid.
-	// Required if creating a ticket to edit an existing connection.
 	//
 	// Requires: Email
 	// Conflicts with: UserID
@@ -56,20 +55,6 @@ type Ticket struct {
 	//
 	// Conflicts with: ResultURL
 	OrganizationID *string `json:"organization_id,omitempty"`
-
-	// The ID of the SSO Profile created using api/v2/self-service-profiles.
-	SsoProfileID *string `json:"sso_profile_id,omitempty"`
-
-	ConnectionConfig *struct {
-		// Required when creating a ticket to create a new connection.
-		Name string `json:"name,omitempty"`
-	} `json:"connection_config,omitempty"`
-
-	// A list of clientIDs to enable on the connection (max length:5).
-	ClientsToEnable []*string `json:"clients_to_enable,omitempty"`
-
-	// A list of OrgIDs to enable on the connection (max length:5).
-	OrganizationsToEnable []*string `json:"organizations_to_enable,omitempty"`
 }
 
 // TicketManager manages Auth0 Ticket resources.
