@@ -23,20 +23,23 @@ type UserAttributes struct {
 	IsOptional  *bool   `json:"is_optional,omitempty"`
 }
 
+// SSOTicket is used to created self service ticket for a set of clients and organizations.
 type SSOTicket struct {
 	ConnectionID         *string                 `json:"connection_id,omitempty"`
 	ConnectionConfig     *ConnectionConfig       `json:"connection_config,omitempty"`
 	EnabledClients       []*string               `json:"enabled_clients,omitempty"`
 	EnabledOrganizations []*EnabledOrganizations `json:"enabled_organizations,omitempty"`
-	//Ticket               *string                 `json:"ticket,omitempty"`
+	Ticket               *string                 `json:"ticket,omitempty"`
 }
 
+// ConnectionConfig sets the configuration for SSOTicket.
 type ConnectionConfig struct {
 	Name string `json:"name,omitempty"`
 }
 
+// EnabledOrganizations is the list of Organizations associated with the SSO Ticket.
 type EnabledOrganizations struct {
-	OrganizationId string `json:"organization_id,omitempty"`
+	OrganizationID string `json:"organization_id,omitempty"`
 }
 
 // SelfServiceProfileManager manages Auth0 Self Service Profile resources.
@@ -71,6 +74,7 @@ func (m *SelfServiceProfileManager) Delete(ctx context.Context, id string, opts 
 }
 
 // CreateTicket creates a sso-access ticket to initiate the Self Service SSO Flow.
-func (m *SelfServiceProfileManager) CreateTicket(ctx context.Context, id string, t *SSOTicket, opts ...RequestOption) error {
-	return m.management.Request(ctx, "POST", m.management.URI("self-service-profiles", id, "sso-ticket"), t, opts...)
+func (m *SelfServiceProfileManager) CreateTicket(ctx context.Context, id string, t *SSOTicket, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "POST", m.management.URI("self-service-profiles", id, "sso-ticket"), t, opts...)
+	return
 }

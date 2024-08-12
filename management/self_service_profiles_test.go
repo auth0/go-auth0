@@ -92,14 +92,13 @@ func TestSelfServiceProfileManager_CreateTicket(t *testing.T) {
 		},
 		EnabledClients: []*string{auth0.String(client.GetClientID())},
 		EnabledOrganizations: []*EnabledOrganizations{
-			&EnabledOrganizations{
+			{
 				org.GetID(),
 			},
 		},
 	}
 	err := api.SelfServiceProfile.CreateTicket(context.Background(), ssop.GetID(), ticket)
 	assert.NoError(t, err)
-
 }
 
 func givenASelfServiceProfile(t *testing.T) *SelfServiceProfile {
