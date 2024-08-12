@@ -104,7 +104,7 @@ type Management struct {
 	EmailProvider *EmailProviderManager
 
 	// SelfServiceProfileManager manages Auth0 Self Service Profiles.
-	SelfServiceProfile *SSOManager
+	SelfServiceProfile *SelfServiceProfileManager
 
 	url             *url.URL
 	basePath        string
@@ -204,7 +204,7 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.Tenant = (*TenantManager)(&m.common)
 	m.Ticket = (*TicketManager)(&m.common)
 	m.User = (*UserManager)(&m.common)
-	m.SelfServiceProfile = (*SSOManager)(&m.common)
+	m.SelfServiceProfile = (*SelfServiceProfileManager)(&m.common)
 
 	return m, nil
 }

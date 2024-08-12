@@ -10,16 +10,8 @@ import (
 )
 
 func TestSelfServiceProfileManager_Create(t *testing.T) {
-	// configureHTTPTestRecordings(t)
+	configureHTTPTestRecordings(t)
 	ssop := &SelfServiceProfile{
-		//SAMLMappings: []*SAMLMappings{
-		//	{
-		//		Name:        auth0.String("mapping0-1719998496750"),
-		//		Description: auth0.String("This is a mapping"),
-		//		IsOptional:  auth0.Bool(true),
-		//	},
-		//},
-		//OIDCScopes: []*string{auth0.String("sub"), auth0.String("profile")},
 		Branding: &Branding{
 			LogoURL: auth0.String("https://example.com/logo.png"),
 			Colors: &BrandingColors{
@@ -29,13 +21,8 @@ func TestSelfServiceProfileManager_Create(t *testing.T) {
 		UserAttributes: []*UserAttributes{
 			{
 				Name:        auth0.String("some-name-here"),
-				DisplayName: auth0.String("some-display-name"),
 				Description: auth0.String("some-description"),
 				IsOptional:  auth0.Bool(true),
-				DefaultMappings: &DefaultMappings{
-					Saml: auth0.String("some-saml"),
-					Oidc: auth0.String("some-oidc"),
-				},
 			},
 		},
 	}
@@ -49,11 +36,8 @@ func TestSelfServiceProfileManager_Create(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, 1, len(ssops))
 	assert.Equal(t, ssops[0].UserAttributes[0].GetName(), ssop.UserAttributes[0].GetName())
-	assert.Equal(t, ssops[0].UserAttributes[0].GetDisplayName(), ssop.UserAttributes[0].GetDisplayName())
 	assert.Equal(t, ssops[0].UserAttributes[0].GetDescription(), ssop.UserAttributes[0].GetDescription())
 	assert.Equal(t, ssops[0].UserAttributes[0].GetIsOptional(), ssop.UserAttributes[0].GetIsOptional())
-	assert.Equal(t, ssops[0].UserAttributes[0].GetDefaultMappings().GetSaml(), ssop.UserAttributes[0].GetDefaultMappings().GetSaml())
-	assert.Equal(t, ssops[0].UserAttributes[0].GetDefaultMappings().GetOidc(), ssop.UserAttributes[0].GetDefaultMappings().GetOidc())
 	assert.Equal(t, ssops[0].GetBranding().GetColors().GetPrimary(), ssop.GetBranding().GetColors().GetPrimary())
 	assert.Equal(t, ssops[0].GetBranding().GetLogoURL(), ssop.GetBranding().GetLogoURL())
 
@@ -61,7 +45,7 @@ func TestSelfServiceProfileManager_Create(t *testing.T) {
 }
 
 func TestSelfServiceProfileManager_List(t *testing.T) {
-	// configureHTTPTestRecordings(t)
+	configureHTTPTestRecordings(t)
 	ssop := givenASelfServiceProfile(t)
 	ssopList, err := api.SelfServiceProfile.List(context.Background())
 	assert.NoError(t, err)
@@ -70,7 +54,7 @@ func TestSelfServiceProfileManager_List(t *testing.T) {
 }
 
 func TestSelfServiceProfileManager_Read(t *testing.T) {
-	// configureHTTPTestRecordings(t)
+	configureHTTPTestRecordings(t)
 	ssop := givenASelfServiceProfile(t)
 	ssop, err := api.SelfServiceProfile.Read(context.Background(), ssop.GetID())
 	assert.NoError(t, err)
@@ -78,7 +62,7 @@ func TestSelfServiceProfileManager_Read(t *testing.T) {
 }
 
 func TestSelfServiceProfileManager_Update(t *testing.T) {
-	// configureHTTPTestRecordings(t)
+	configureHTTPTestRecordings(t)
 	ssop := givenASelfServiceProfile(t)
 	oldName := ssop.UserAttributes[0].GetName()
 	ssop.UserAttributes[0].Name = auth0.String("some-new-name-here")
@@ -90,15 +74,36 @@ func TestSelfServiceProfileManager_Update(t *testing.T) {
 }
 
 func TestSelfServiceProfileManager_Delete(t *testing.T) {
-	// configureHTTPTestRecordings(t)
+	configureHTTPTestRecordings(t)
 	ssop := givenASelfServiceProfile(t)
 	err := api.SelfServiceProfile.Delete(context.Background(), ssop.GetID())
 	assert.NoError(t, err)
 }
 
+func TestSelfServiceProfileManager_CreateTicket(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	ssop := givenASelfServiceProfile(t)
+	client := givenAClient(t)
+	org := givenAnOrganization(t)
+
+	ticket := &SSOTicket{
+		ConnectionConfig: &ConnectionConfig{
+			Name: "sso-generated-ticket",
+		},
+		EnabledClients: []*string{auth0.String(client.GetClientID())},
+		EnabledOrganizations: []*EnabledOrganizations{
+			&EnabledOrganizations{
+				org.GetID(),
+			},
+		},
+	}
+	err := api.SelfServiceProfile.CreateTicket(context.Background(), ssop.GetID(), ticket)
+	assert.NoError(t, err)
+
+}
+
 func givenASelfServiceProfile(t *testing.T) *SelfServiceProfile {
 	t.Helper()
-
 	ssop := &SelfServiceProfile{
 		Branding: &Branding{
 			LogoURL: auth0.String("https://example.com/logo.png"),
@@ -109,26 +114,22 @@ func givenASelfServiceProfile(t *testing.T) *SelfServiceProfile {
 		UserAttributes: []*UserAttributes{
 			{
 				Name:        auth0.String("some-name-here"),
-				DisplayName: auth0.String("some-display-name"),
 				Description: auth0.String("some-description"),
 				IsOptional:  auth0.Bool(true),
-				DefaultMappings: &DefaultMappings{
-					Saml: auth0.String("string"),
-					Oidc: auth0.String("string"),
-				},
 			},
 		},
 	}
 
-	_ = api.SelfServiceProfile.Create(context.Background(), ssop)
+	err := api.SelfServiceProfile.Create(context.Background(), ssop)
+	assert.NoError(t, err)
 	t.Cleanup(func() {
 		cleanSelfServiceProfile(t, ssop.GetID())
 	})
-
 	return ssop
 }
 
 func cleanSelfServiceProfile(t *testing.T, id string) {
 	t.Helper()
-	_ = api.SelfServiceProfile.Delete(context.Background(), id)
+	err := api.SelfServiceProfile.Delete(context.Background(), id)
+	assert.NoError(t, err)
 }

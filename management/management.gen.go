@@ -2119,6 +2119,11 @@ func (c *Connection) String() string {
 	return Stringify(c)
 }
 
+// String returns a string representation of ConnectionConfig.
+func (c *ConnectionConfig) String() string {
+	return Stringify(c)
+}
+
 // GetAudience returns the Audience field if it's non-nil, zero value otherwise.
 func (c *ConnectionGatewayAuthentication) GetAudience() string {
 	if c == nil || c.Audience == nil {
@@ -6193,27 +6198,6 @@ func (d *DailyStat) String() string {
 	return Stringify(d)
 }
 
-// GetOidc returns the Oidc field if it's non-nil, zero value otherwise.
-func (d *DefaultMappings) GetOidc() string {
-	if d == nil || d.Oidc == nil {
-		return ""
-	}
-	return *d.Oidc
-}
-
-// GetSaml returns the Saml field if it's non-nil, zero value otherwise.
-func (d *DefaultMappings) GetSaml() string {
-	if d == nil || d.Saml == nil {
-		return ""
-	}
-	return *d.Saml
-}
-
-// String returns a string representation of DefaultMappings.
-func (d *DefaultMappings) String() string {
-	return Stringify(d)
-}
-
 // String returns a string representation of DropboxClientAddon.
 func (d *DropboxClientAddon) String() string {
 	return Stringify(d)
@@ -6618,6 +6602,11 @@ func (e *EmailTemplate) GetURLLifetimeInSecoonds() int {
 
 // String returns a string representation of EmailTemplate.
 func (e *EmailTemplate) String() string {
+	return Stringify(e)
+}
+
+// String returns a string representation of EnabledOrganizations.
+func (e *EnabledOrganizations) String() string {
 	return Stringify(e)
 }
 
@@ -9130,35 +9119,6 @@ func (s *SAML2ClientAddonLogout) String() string {
 	return Stringify(s)
 }
 
-// GetDescription returns the Description field if it's non-nil, zero value otherwise.
-func (s *SAMLMappings) GetDescription() string {
-	if s == nil || s.Description == nil {
-		return ""
-	}
-	return *s.Description
-}
-
-// GetIsOptional returns the IsOptional field if it's non-nil, zero value otherwise.
-func (s *SAMLMappings) GetIsOptional() bool {
-	if s == nil || s.IsOptional == nil {
-		return false
-	}
-	return *s.IsOptional
-}
-
-// GetName returns the Name field if it's non-nil, zero value otherwise.
-func (s *SAMLMappings) GetName() string {
-	if s == nil || s.Name == nil {
-		return ""
-	}
-	return *s.Name
-}
-
-// String returns a string representation of SAMLMappings.
-func (s *SAMLMappings) String() string {
-	return Stringify(s)
-}
-
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (s *SAPAPIClientAddon) GetClientID() string {
 	if s == nil || s.ClientID == nil {
@@ -9587,6 +9547,27 @@ func (s *SSOIntegrationClientAddon) GetVersion() string {
 
 // String returns a string representation of SSOIntegrationClientAddon.
 func (s *SSOIntegrationClientAddon) String() string {
+	return Stringify(s)
+}
+
+// GetConnectionConfig returns the ConnectionConfig field.
+func (s *SSOTicket) GetConnectionConfig() *ConnectionConfig {
+	if s == nil {
+		return nil
+	}
+	return s.ConnectionConfig
+}
+
+// GetConnectionID returns the ConnectionID field if it's non-nil, zero value otherwise.
+func (s *SSOTicket) GetConnectionID() string {
+	if s == nil || s.ConnectionID == nil {
+		return ""
+	}
+	return *s.ConnectionID
+}
+
+// String returns a string representation of SSOTicket.
+func (s *SSOTicket) String() string {
 	return Stringify(s)
 }
 
@@ -10548,28 +10529,12 @@ func (u *User) String() string {
 	return Stringify(u)
 }
 
-// GetDefaultMappings returns the DefaultMappings field.
-func (u *UserAttributes) GetDefaultMappings() *DefaultMappings {
-	if u == nil {
-		return nil
-	}
-	return u.DefaultMappings
-}
-
 // GetDescription returns the Description field if it's non-nil, zero value otherwise.
 func (u *UserAttributes) GetDescription() string {
 	if u == nil || u.Description == nil {
 		return ""
 	}
 	return *u.Description
-}
-
-// GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
-func (u *UserAttributes) GetDisplayName() string {
-	if u == nil || u.DisplayName == nil {
-		return ""
-	}
-	return *u.DisplayName
 }
 
 // GetIsOptional returns the IsOptional field if it's non-nil, zero value otherwise.

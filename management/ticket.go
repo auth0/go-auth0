@@ -88,8 +88,3 @@ func (m *TicketManager) VerifyEmail(ctx context.Context, t *Ticket, opts ...Requ
 func (m *TicketManager) ChangePassword(ctx context.Context, t *Ticket, opts ...RequestOption) error {
 	return m.management.Request(ctx, "POST", m.management.URI("tickets", "password-change"), t, opts...)
 }
-
-// CreateTicket creates a sso-access ticket to initiate the Self Service SSO Flow.
-func (m *TicketManager) CreateTicket(ctx context.Context, t *Ticket, opts ...RequestOption) error {
-	return m.management.Request(ctx, "POST", m.management.URI("tickets", "sso-access"), t, opts...)
-}

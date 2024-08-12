@@ -2588,6 +2588,14 @@ func TestConnection_String(t *testing.T) {
 	}
 }
 
+func TestConnectionConfig_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionConfig{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestConnectionGatewayAuthentication_GetAudience(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionGatewayAuthentication{Audience: &zeroValue}
@@ -7664,34 +7672,6 @@ func TestDailyStat_String(t *testing.T) {
 	}
 }
 
-func TestDefaultMappings_GetOidc(tt *testing.T) {
-	var zeroValue string
-	d := &DefaultMappings{Oidc: &zeroValue}
-	d.GetOidc()
-	d = &DefaultMappings{}
-	d.GetOidc()
-	d = nil
-	d.GetOidc()
-}
-
-func TestDefaultMappings_GetSaml(tt *testing.T) {
-	var zeroValue string
-	d := &DefaultMappings{Saml: &zeroValue}
-	d.GetSaml()
-	d = &DefaultMappings{}
-	d.GetSaml()
-	d = nil
-	d.GetSaml()
-}
-
-func TestDefaultMappings_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &DefaultMappings{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestDropboxClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &DropboxClientAddon{}
@@ -8220,6 +8200,14 @@ func TestEmailTemplate_GetURLLifetimeInSecoonds(tt *testing.T) {
 func TestEmailTemplate_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &EmailTemplate{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEnabledOrganizations_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EnabledOrganizations{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -11479,44 +11467,6 @@ func TestSAML2ClientAddonLogout_String(t *testing.T) {
 	}
 }
 
-func TestSAMLMappings_GetDescription(tt *testing.T) {
-	var zeroValue string
-	s := &SAMLMappings{Description: &zeroValue}
-	s.GetDescription()
-	s = &SAMLMappings{}
-	s.GetDescription()
-	s = nil
-	s.GetDescription()
-}
-
-func TestSAMLMappings_GetIsOptional(tt *testing.T) {
-	var zeroValue bool
-	s := &SAMLMappings{IsOptional: &zeroValue}
-	s.GetIsOptional()
-	s = &SAMLMappings{}
-	s.GetIsOptional()
-	s = nil
-	s.GetIsOptional()
-}
-
-func TestSAMLMappings_GetName(tt *testing.T) {
-	var zeroValue string
-	s := &SAMLMappings{Name: &zeroValue}
-	s.GetName()
-	s = &SAMLMappings{}
-	s.GetName()
-	s = nil
-	s.GetName()
-}
-
-func TestSAMLMappings_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &SAMLMappings{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestSAPAPIClientAddon_GetClientID(tt *testing.T) {
 	var zeroValue string
 	s := &SAPAPIClientAddon{ClientID: &zeroValue}
@@ -12067,6 +12017,31 @@ func TestSSOIntegrationClientAddon_GetVersion(tt *testing.T) {
 func TestSSOIntegrationClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SSOIntegrationClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSSOTicket_GetConnectionConfig(tt *testing.T) {
+	s := &SSOTicket{}
+	s.GetConnectionConfig()
+	s = nil
+	s.GetConnectionConfig()
+}
+
+func TestSSOTicket_GetConnectionID(tt *testing.T) {
+	var zeroValue string
+	s := &SSOTicket{ConnectionID: &zeroValue}
+	s.GetConnectionID()
+	s = &SSOTicket{}
+	s.GetConnectionID()
+	s = nil
+	s.GetConnectionID()
+}
+
+func TestSSOTicket_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SSOTicket{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -13255,13 +13230,6 @@ func TestUser_String(t *testing.T) {
 	}
 }
 
-func TestUserAttributes_GetDefaultMappings(tt *testing.T) {
-	u := &UserAttributes{}
-	u.GetDefaultMappings()
-	u = nil
-	u.GetDefaultMappings()
-}
-
 func TestUserAttributes_GetDescription(tt *testing.T) {
 	var zeroValue string
 	u := &UserAttributes{Description: &zeroValue}
@@ -13270,16 +13238,6 @@ func TestUserAttributes_GetDescription(tt *testing.T) {
 	u.GetDescription()
 	u = nil
 	u.GetDescription()
-}
-
-func TestUserAttributes_GetDisplayName(tt *testing.T) {
-	var zeroValue string
-	u := &UserAttributes{DisplayName: &zeroValue}
-	u.GetDisplayName()
-	u = &UserAttributes{}
-	u.GetDisplayName()
-	u = nil
-	u.GetDisplayName()
 }
 
 func TestUserAttributes_GetIsOptional(tt *testing.T) {
