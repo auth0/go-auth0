@@ -67,6 +67,32 @@ func TestTenantManager(t *testing.T) {
 	assert.Equal(t, newTenantSettings.GetAcrValuesSupported(), actualTenantSettings.GetAcrValuesSupported())
 	assert.Equal(t, newTenantSettings.GetPushedAuthorizationRequestsSupported(), actualTenantSettings.GetPushedAuthorizationRequestsSupported())
 	assert.Equal(t, newTenantSettings.GetMTLS().GetEnableEndpointAliases(), actualTenantSettings.GetMTLS().GetEnableEndpointAliases())
+
+	// If AcrValuesSupported and MTLS is not Passed Should not change the values.
+	updatedNewTenant := &Tenant{
+		MTLS:               nil,
+		AcrValuesSupported: nil,
+		FriendlyName:       auth0.String("My Example Tenant"),
+	}
+	err = api.Tenant.Update(context.Background(), updatedNewTenant)
+	assert.NoError(t, err)
+
+	newActualTenantSettings, err := api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Equal(t, newActualTenantSettings.GetFriendlyName(), actualTenantSettings.GetFriendlyName())
+	assert.Equal(t, newActualTenantSettings.GetIdleSessionLifetime(), actualTenantSettings.GetIdleSessionLifetime())
+	assert.Equal(t, newActualTenantSettings.GetIdleSessionLifetime(), 720.0) // it got rounded off
+	assert.Equal(t, newActualTenantSettings.GetSessionLifetime(), actualTenantSettings.GetSessionLifetime())
+	assert.Equal(t, newActualTenantSettings.GetSupportEmail(), actualTenantSettings.GetSupportEmail())
+	assert.Equal(t, newActualTenantSettings.GetSupportURL(), actualTenantSettings.GetSupportURL())
+	assert.Equal(t, newActualTenantSettings.GetSessionCookie().GetMode(), actualTenantSettings.GetSessionCookie().GetMode())
+	assert.Equal(t, newActualTenantSettings.GetAllowedLogoutURLs(), actualTenantSettings.GetAllowedLogoutURLs())
+	assert.Equal(t, newActualTenantSettings.GetEnabledLocales(), actualTenantSettings.GetEnabledLocales())
+	assert.Equal(t, newActualTenantSettings.GetSandboxVersion(), actualTenantSettings.GetSandboxVersion())
+	assert.Equal(t, newActualTenantSettings.GetSessions().GetOIDCLogoutPromptEnabled(), actualTenantSettings.GetSessions().GetOIDCLogoutPromptEnabled())
+	assert.Equal(t, newActualTenantSettings.GetAcrValuesSupported(), actualTenantSettings.GetAcrValuesSupported())
+	assert.Equal(t, newActualTenantSettings.GetPushedAuthorizationRequestsSupported(), actualTenantSettings.GetPushedAuthorizationRequestsSupported())
+	assert.Equal(t, newActualTenantSettings.GetMTLS().GetEnableEndpointAliases(), actualTenantSettings.GetMTLS().GetEnableEndpointAliases())
 }
 
 func TestTenantManager_NullableFields(t *testing.T) {
