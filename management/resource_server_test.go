@@ -243,11 +243,21 @@ func givenAResourceServer(t *testing.T) *ResourceServer {
 				Value:       auth0.String("create:resource"),
 				Description: auth0.String("Create Resource"),
 			},
+			{
+				Value:       auth0.String("create:organization_client_grants"),
+				Description: auth0.String("Create Org Client Grants"),
+			},
 		},
 	}
 
 	err := api.ResourceServer.Create(context.Background(), resourceServer)
 	require.NoError(t, err)
+
+	resourceServerList, err := api.ResourceServer.List(context.Background(), Parameter("identifiers", resourceServer.GetIdentifier()))
+	require.NoError(t, err)
+	assert.NotEqual(t, len(resourceServerList.ResourceServers), 0)
+
+	assert.Equal(t, resourceServerList.ResourceServers[0].GetIdentifier(), resourceServer.GetIdentifier())
 
 	t.Cleanup(func() {
 		cleanupResourceServer(t, resourceServer.GetID())

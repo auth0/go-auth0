@@ -138,6 +138,14 @@ type Client struct {
 
 	// RequireProofOfPossession Makes the use of Proof-of-Possession mandatory for this client (default: false).
 	RequireProofOfPossession *bool `json:"require_proof_of_possession,omitempty"`
+
+	DefaultOrganization *DefaultOrganization `json:"default_organization,omitempty"`
+}
+
+// DefaultOrganization allows the support for client credentials feature.
+type DefaultOrganization struct {
+	Flows          *[]string `json:"flows,omitempty"`
+	OrganizationID *string   `json:"organization_id,omitempty"`
 }
 
 // SignedRequestObject is used to configure JWT-secured Authorization Requests (JAR) settings for our Client.

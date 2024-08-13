@@ -474,6 +474,48 @@ func TestOrganizationManager_ClientGrants(t *testing.T) {
 	assert.Len(t, associatedGrants.ClientGrants, 0)
 }
 
+func TestOrganizationManager_ClientGrantsWithOrg(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := givenAnOrganization(t)
+	resourceServer := givenAResourceServer(t)
+
+	client := givenAClient(t)
+	client.DefaultOrganization = &DefaultOrganization{
+		&[]string{"client_credentials"},
+		auth0.String(org.GetID()),
+	}
+
+	clientGrant := &ClientGrant{
+		ClientID:             client.ClientID,
+		Audience:             resourceServer.Identifier,
+		Scope:                &[]string{"create:resource", "create:organization_client_grants"},
+		AllowAnyOrganization: auth0.Bool(true),
+		OrganizationUsage:    auth0.String("allow"),
+	}
+
+	err := api.ClientGrant.Create(context.Background(), clientGrant)
+	require.NoError(t, err)
+	t.Cleanup(func() {
+		cleanupClientGrant(t, clientGrant.GetID())
+	})
+
+	err = api.Organization.AssociateClientGrant(context.Background(), org.GetID(), clientGrant.GetID())
+	require.NoError(t, err)
+
+	associatedGrants, err := api.Organization.ClientGrants(context.Background(), org.GetID(), Parameter("grant_ids", clientGrant.GetID()))
+	require.NoError(t, err)
+	assert.Len(t, associatedGrants.ClientGrants, 1)
+	assert.Equal(t, clientGrant.GetID(), associatedGrants.ClientGrants[0].GetID())
+
+	err = api.Organization.RemoveClientGrant(context.Background(), org.GetID(), clientGrant.GetID())
+	require.NoError(t, err)
+
+	associatedGrants, err = api.Organization.ClientGrants(context.Background(), org.GetID())
+	require.NoError(t, err)
+	assert.Len(t, associatedGrants.ClientGrants, 0)
+}
+
 func givenAnOrganization(t *testing.T) *Organization {
 	org := &Organization{
 		Name:        auth0.String(fmt.Sprintf("test-organization%v", rand.Intn(999))),

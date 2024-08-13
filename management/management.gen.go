@@ -1348,6 +1348,14 @@ func (c *Client) GetCustomLoginPagePreview() string {
 	return *c.CustomLoginPagePreview
 }
 
+// GetDefaultOrganization returns the DefaultOrganization field.
+func (c *Client) GetDefaultOrganization() *DefaultOrganization {
+	if c == nil {
+		return nil
+	}
+	return c.DefaultOrganization
+}
+
 // GetDescription returns the Description field if it's non-nil, zero value otherwise.
 func (c *Client) GetDescription() string {
 	if c == nil || c.Description == nil {
@@ -6259,6 +6267,27 @@ func (d *DailyStat) GetUpdatedAt() time.Time {
 
 // String returns a string representation of DailyStat.
 func (d *DailyStat) String() string {
+	return Stringify(d)
+}
+
+// GetFlows returns the Flows field if it's non-nil, zero value otherwise.
+func (d *DefaultOrganization) GetFlows() []string {
+	if d == nil || d.Flows == nil {
+		return nil
+	}
+	return *d.Flows
+}
+
+// GetOrganizationID returns the OrganizationID field if it's non-nil, zero value otherwise.
+func (d *DefaultOrganization) GetOrganizationID() string {
+	if d == nil || d.OrganizationID == nil {
+		return ""
+	}
+	return *d.OrganizationID
+}
+
+// String returns a string representation of DefaultOrganization.
+func (d *DefaultOrganization) String() string {
 	return Stringify(d)
 }
 
