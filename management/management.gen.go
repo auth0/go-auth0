@@ -673,6 +673,19 @@ func (a *AuthenticationMethods) String() string {
 	return Stringify(a)
 }
 
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (a *AuthorizationDetails) GetType() string {
+	if a == nil || a.Type == nil {
+		return ""
+	}
+	return *a.Type
+}
+
+// String returns a string representation of AuthorizationDetails.
+func (a *AuthorizationDetails) String() string {
+	return Stringify(a)
+}
+
 // GetLifetimeInSeconds returns the LifetimeInSeconds field if it's non-nil, zero value otherwise.
 func (a *AWSClientAddon) GetLifetimeInSeconds() int {
 	if a == nil || a.LifetimeInSeconds == nil {
@@ -1287,6 +1300,14 @@ func (c *Client) GetClientSecret() string {
 	return *c.ClientSecret
 }
 
+// GetComplianceLevel returns the ComplianceLevel field if it's non-nil, zero value otherwise.
+func (c *Client) GetComplianceLevel() string {
+	if c == nil || c.ComplianceLevel == nil {
+		return ""
+	}
+	return *c.ComplianceLevel
+}
+
 // GetCrossOriginAuth returns the CrossOriginAuth field if it's non-nil, zero value otherwise.
 func (c *Client) GetCrossOriginAuth() bool {
 	if c == nil || c.CrossOriginAuth == nil {
@@ -1471,12 +1492,28 @@ func (c *Client) GetRefreshToken() *ClientRefreshToken {
 	return c.RefreshToken
 }
 
+// GetRequireProofOfPossession returns the RequireProofOfPossession field if it's non-nil, zero value otherwise.
+func (c *Client) GetRequireProofOfPossession() bool {
+	if c == nil || c.RequireProofOfPossession == nil {
+		return false
+	}
+	return *c.RequireProofOfPossession
+}
+
 // GetRequirePushedAuthorizationRequests returns the RequirePushedAuthorizationRequests field if it's non-nil, zero value otherwise.
 func (c *Client) GetRequirePushedAuthorizationRequests() bool {
 	if c == nil || c.RequirePushedAuthorizationRequests == nil {
 		return false
 	}
 	return *c.RequirePushedAuthorizationRequests
+}
+
+// GetSignedRequestObject returns the SignedRequestObject field.
+func (c *Client) GetSignedRequestObject() *SignedRequestObject {
+	if c == nil {
+		return nil
+	}
+	return c.SignedRequestObject
 }
 
 // GetSSO returns the SSO field if it's non-nil, zero value otherwise.
@@ -1759,6 +1796,22 @@ func (c *ClientAuthenticationMethods) GetPrivateKeyJWT() *PrivateKeyJWT {
 		return nil
 	}
 	return c.PrivateKeyJWT
+}
+
+// GetSelfSignedTLSClientAuth returns the SelfSignedTLSClientAuth field.
+func (c *ClientAuthenticationMethods) GetSelfSignedTLSClientAuth() *SelfSignedTLSClientAuth {
+	if c == nil {
+		return nil
+	}
+	return c.SelfSignedTLSClientAuth
+}
+
+// GetTLSClientAuth returns the TLSClientAuth field.
+func (c *ClientAuthenticationMethods) GetTLSClientAuth() *TLSClientAuth {
+	if c == nil {
+		return nil
+	}
+	return c.TLSClientAuth
 }
 
 // String returns a string representation of ClientAuthenticationMethods.
@@ -6029,6 +6082,22 @@ func (c *Credential) GetPEM() string {
 	return *c.PEM
 }
 
+// GetSubjectDN returns the SubjectDN field if it's non-nil, zero value otherwise.
+func (c *Credential) GetSubjectDN() string {
+	if c == nil || c.SubjectDN == nil {
+		return ""
+	}
+	return *c.SubjectDN
+}
+
+// GetThumbprintSHA256 returns the ThumbprintSHA256 field if it's non-nil, zero value otherwise.
+func (c *Credential) GetThumbprintSHA256() string {
+	if c == nil || c.ThumbprintSHA256 == nil {
+		return ""
+	}
+	return *c.ThumbprintSHA256
+}
+
 // GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
 func (c *Credential) GetUpdatedAt() time.Time {
 	if c == nil || c.UpdatedAt == nil {
@@ -6597,6 +6666,43 @@ func (e *EmailTemplate) GetURLLifetimeInSecoonds() int {
 
 // String returns a string representation of EmailTemplate.
 func (e *EmailTemplate) String() string {
+	return Stringify(e)
+}
+
+// GetAlg returns the Alg field if it's non-nil, zero value otherwise.
+func (e *EncryptionKey) GetAlg() string {
+	if e == nil || e.Alg == nil {
+		return ""
+	}
+	return *e.Alg
+}
+
+// GetKid returns the Kid field if it's non-nil, zero value otherwise.
+func (e *EncryptionKey) GetKid() string {
+	if e == nil || e.Kid == nil {
+		return ""
+	}
+	return *e.Kid
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (e *EncryptionKey) GetName() string {
+	if e == nil || e.Name == nil {
+		return ""
+	}
+	return *e.Name
+}
+
+// GetPem returns the Pem field if it's non-nil, zero value otherwise.
+func (e *EncryptionKey) GetPem() string {
+	if e == nil || e.Pem == nil {
+		return ""
+	}
+	return *e.Pem
+}
+
+// String returns a string representation of EncryptionKey.
+func (e *EncryptionKey) String() string {
 	return Stringify(e)
 }
 
@@ -7544,6 +7650,19 @@ func (m *MSCRMClientAddon) String() string {
 	return Stringify(m)
 }
 
+// GetEnableEndpointAliases returns the EnableEndpointAliases field if it's non-nil, zero value otherwise.
+func (m *MTLSConfiguration) GetEnableEndpointAliases() bool {
+	if m == nil || m.EnableEndpointAliases == nil {
+		return false
+	}
+	return *m.EnableEndpointAliases
+}
+
+// String returns a string representation of MTLSConfiguration.
+func (m *MTLSConfiguration) String() string {
+	return Stringify(m)
+}
+
 // GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
 func (m *MultiFactor) GetEnabled() bool {
 	if m == nil || m.Enabled == nil {
@@ -8472,6 +8591,27 @@ func (p *PromptPartials) String() string {
 	return Stringify(p)
 }
 
+// GetMechanism returns the Mechanism field if it's non-nil, zero value otherwise.
+func (p *ProofOfPossession) GetMechanism() string {
+	if p == nil || p.Mechanism == nil {
+		return ""
+	}
+	return *p.Mechanism
+}
+
+// GetRequired returns the Required field if it's non-nil, zero value otherwise.
+func (p *ProofOfPossession) GetRequired() bool {
+	if p == nil || p.Required == nil {
+		return false
+	}
+	return *p.Required
+}
+
+// String returns a string representation of ProofOfPossession.
+func (p *ProofOfPossession) String() string {
+	return Stringify(p)
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (r *RefreshToken) GetClientID() string {
 	if r == nil || r.ClientID == nil {
@@ -8575,6 +8715,22 @@ func (r *ResourceServer) GetAllowOfflineAccess() bool {
 	return *r.AllowOfflineAccess
 }
 
+// GetAuthorizationDetails returns the AuthorizationDetails field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetAuthorizationDetails() []AuthorizationDetails {
+	if r == nil || r.AuthorizationDetails == nil {
+		return nil
+	}
+	return *r.AuthorizationDetails
+}
+
+// GetConsentPolicy returns the ConsentPolicy field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetConsentPolicy() string {
+	if r == nil || r.ConsentPolicy == nil {
+		return ""
+	}
+	return *r.ConsentPolicy
+}
+
 // GetEnforcePolicies returns the EnforcePolicies field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetEnforcePolicies() bool {
 	if r == nil || r.EnforcePolicies == nil {
@@ -8615,6 +8771,14 @@ func (r *ResourceServer) GetOptions() map[string]string {
 	return *r.Options
 }
 
+// GetProofOfPossession returns the ProofOfPossession field.
+func (r *ResourceServer) GetProofOfPossession() *ProofOfPossession {
+	if r == nil {
+		return nil
+	}
+	return r.ProofOfPossession
+}
+
 // GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetScopes() []ResourceServerScope {
 	if r == nil || r.Scopes == nil {
@@ -8653,6 +8817,14 @@ func (r *ResourceServer) GetTokenDialect() string {
 		return ""
 	}
 	return *r.TokenDialect
+}
+
+// GetTokenEncryption returns the TokenEncryption field.
+func (r *ResourceServer) GetTokenEncryption() *TokenEncryption {
+	if r == nil {
+		return nil
+	}
+	return r.TokenEncryption
 }
 
 // GetTokenLifetime returns the TokenLifetime field if it's non-nil, zero value otherwise.
@@ -9313,6 +9485,19 @@ func (s *SCIMToken) String() string {
 	return Stringify(s)
 }
 
+// GetCredentials returns the Credentials field if it's non-nil, zero value otherwise.
+func (s *SelfSignedTLSClientAuth) GetCredentials() []Credential {
+	if s == nil || s.Credentials == nil {
+		return nil
+	}
+	return *s.Credentials
+}
+
+// String returns a string representation of SelfSignedTLSClientAuth.
+func (s *SelfSignedTLSClientAuth) String() string {
+	return Stringify(s)
+}
+
 // GetBaseURL returns the BaseURL field if it's non-nil, zero value otherwise.
 func (s *SentryClientAddon) GetBaseURL() string {
 	if s == nil || s.BaseURL == nil {
@@ -9352,6 +9537,27 @@ func (s *SharePointClientAddon) GetURL() string {
 
 // String returns a string representation of SharePointClientAddon.
 func (s *SharePointClientAddon) String() string {
+	return Stringify(s)
+}
+
+// GetCredentials returns the Credentials field if it's non-nil, zero value otherwise.
+func (s *SignedRequestObject) GetCredentials() []Credential {
+	if s == nil || s.Credentials == nil {
+		return nil
+	}
+	return *s.Credentials
+}
+
+// GetRequired returns the Required field if it's non-nil, zero value otherwise.
+func (s *SignedRequestObject) GetRequired() bool {
+	if s == nil || s.Required == nil {
+		return false
+	}
+	return *s.Required
+}
+
+// String returns a string representation of SignedRequestObject.
+func (s *SignedRequestObject) String() string {
 	return Stringify(s)
 }
 
@@ -9561,6 +9767,14 @@ func (s *SuspiciousIPThrottling) String() string {
 	return Stringify(s)
 }
 
+// GetAcrValuesSupported returns the AcrValuesSupported field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetAcrValuesSupported() []string {
+	if t == nil || t.AcrValuesSupported == nil {
+		return nil
+	}
+	return *t.AcrValuesSupported
+}
+
 // GetAllowedLogoutURLs returns the AllowedLogoutURLs field if it's non-nil, zero value otherwise.
 func (t *Tenant) GetAllowedLogoutURLs() []string {
 	if t == nil || t.AllowedLogoutURLs == nil {
@@ -9673,12 +9887,28 @@ func (t *Tenant) GetIdleSessionLifetime() float64 {
 	return *t.IdleSessionLifetime
 }
 
+// GetMTLS returns the MTLS field.
+func (t *Tenant) GetMTLS() *MTLSConfiguration {
+	if t == nil {
+		return nil
+	}
+	return t.MTLS
+}
+
 // GetPictureURL returns the PictureURL field if it's non-nil, zero value otherwise.
 func (t *Tenant) GetPictureURL() string {
 	if t == nil || t.PictureURL == nil {
 		return ""
 	}
 	return *t.PictureURL
+}
+
+// GetPushedAuthorizationRequestsSupported returns the PushedAuthorizationRequestsSupported field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetPushedAuthorizationRequestsSupported() bool {
+	if t == nil || t.PushedAuthorizationRequestsSupported == nil {
+		return false
+	}
+	return *t.PushedAuthorizationRequestsSupported
 }
 
 // GetSandboxVersion returns the SandboxVersion field if it's non-nil, zero value otherwise.
@@ -10005,6 +10235,14 @@ func (t *TenantFlags) GetNoDisclosureEnterpriseConnections() bool {
 	return *t.NoDisclosureEnterpriseConnections
 }
 
+// GetRemoveAlgFromJWKS returns the RemoveAlgFromJWKS field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetRemoveAlgFromJWKS() bool {
+	if t == nil || t.RemoveAlgFromJWKS == nil {
+		return false
+	}
+	return *t.RemoveAlgFromJWKS
+}
+
 // GetRequirePushedAuthorizationRequests returns the RequirePushedAuthorizationRequests field if it's non-nil, zero value otherwise.
 func (t *TenantFlags) GetRequirePushedAuthorizationRequests() bool {
 	if t == nil || t.RequirePushedAuthorizationRequests == nil {
@@ -10213,6 +10451,40 @@ func (t *Ticket) GetUserID() string {
 
 // String returns a string representation of Ticket.
 func (t *Ticket) String() string {
+	return Stringify(t)
+}
+
+// GetCredentials returns the Credentials field if it's non-nil, zero value otherwise.
+func (t *TLSClientAuth) GetCredentials() []Credential {
+	if t == nil || t.Credentials == nil {
+		return nil
+	}
+	return *t.Credentials
+}
+
+// String returns a string representation of TLSClientAuth.
+func (t *TLSClientAuth) String() string {
+	return Stringify(t)
+}
+
+// GetEncryptionKey returns the EncryptionKey field.
+func (t *TokenEncryption) GetEncryptionKey() *EncryptionKey {
+	if t == nil {
+		return nil
+	}
+	return t.EncryptionKey
+}
+
+// GetFormat returns the Format field if it's non-nil, zero value otherwise.
+func (t *TokenEncryption) GetFormat() string {
+	if t == nil || t.Format == nil {
+		return ""
+	}
+	return *t.Format
+}
+
+// String returns a string representation of TokenEncryption.
+func (t *TokenEncryption) String() string {
 	return Stringify(t)
 }
 

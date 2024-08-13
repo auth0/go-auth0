@@ -3,6 +3,7 @@ package management
 import (
 	"context"
 	"encoding/json"
+	"net/http"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -41,6 +42,11 @@ func TestTenantManager(t *testing.T) {
 		Sessions: &TenantSessions{
 			OIDCLogoutPromptEnabled: auth0.Bool(false),
 		},
+		AcrValuesSupported:                   &[]string{"foo", "bar"},
+		PushedAuthorizationRequestsSupported: auth0.Bool(true),
+		MTLS: &MTLSConfiguration{
+			EnableEndpointAliases: auth0.Bool(true),
+		},
 	}
 	err = api.Tenant.Update(context.Background(), newTenantSettings)
 	assert.NoError(t, err)
@@ -58,6 +64,88 @@ func TestTenantManager(t *testing.T) {
 	assert.Equal(t, newTenantSettings.GetEnabledLocales(), actualTenantSettings.GetEnabledLocales())
 	assert.Equal(t, newTenantSettings.GetSandboxVersion(), actualTenantSettings.GetSandboxVersion())
 	assert.Equal(t, newTenantSettings.GetSessions().GetOIDCLogoutPromptEnabled(), actualTenantSettings.GetSessions().GetOIDCLogoutPromptEnabled())
+	assert.Equal(t, newTenantSettings.GetAcrValuesSupported(), actualTenantSettings.GetAcrValuesSupported())
+	assert.Equal(t, newTenantSettings.GetPushedAuthorizationRequestsSupported(), actualTenantSettings.GetPushedAuthorizationRequestsSupported())
+	assert.Equal(t, newTenantSettings.GetMTLS().GetEnableEndpointAliases(), actualTenantSettings.GetMTLS().GetEnableEndpointAliases())
+
+	// If AcrValuesSupported and MTLS is not Passed Should not change the values.
+	updatedNewTenant := &Tenant{
+		MTLS:               nil,
+		AcrValuesSupported: nil,
+		FriendlyName:       auth0.String("My Example Tenant"),
+	}
+	err = api.Tenant.Update(context.Background(), updatedNewTenant)
+	assert.NoError(t, err)
+
+	newActualTenantSettings, err := api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Equal(t, newActualTenantSettings.GetFriendlyName(), actualTenantSettings.GetFriendlyName())
+	assert.Equal(t, newActualTenantSettings.GetIdleSessionLifetime(), actualTenantSettings.GetIdleSessionLifetime())
+	assert.Equal(t, newActualTenantSettings.GetIdleSessionLifetime(), 720.0) // it got rounded off
+	assert.Equal(t, newActualTenantSettings.GetSessionLifetime(), actualTenantSettings.GetSessionLifetime())
+	assert.Equal(t, newActualTenantSettings.GetSupportEmail(), actualTenantSettings.GetSupportEmail())
+	assert.Equal(t, newActualTenantSettings.GetSupportURL(), actualTenantSettings.GetSupportURL())
+	assert.Equal(t, newActualTenantSettings.GetSessionCookie().GetMode(), actualTenantSettings.GetSessionCookie().GetMode())
+	assert.Equal(t, newActualTenantSettings.GetAllowedLogoutURLs(), actualTenantSettings.GetAllowedLogoutURLs())
+	assert.Equal(t, newActualTenantSettings.GetEnabledLocales(), actualTenantSettings.GetEnabledLocales())
+	assert.Equal(t, newActualTenantSettings.GetSandboxVersion(), actualTenantSettings.GetSandboxVersion())
+	assert.Equal(t, newActualTenantSettings.GetSessions().GetOIDCLogoutPromptEnabled(), actualTenantSettings.GetSessions().GetOIDCLogoutPromptEnabled())
+	assert.Equal(t, newActualTenantSettings.GetAcrValuesSupported(), actualTenantSettings.GetAcrValuesSupported())
+	assert.Equal(t, newActualTenantSettings.GetPushedAuthorizationRequestsSupported(), actualTenantSettings.GetPushedAuthorizationRequestsSupported())
+	assert.Equal(t, newActualTenantSettings.GetMTLS().GetEnableEndpointAliases(), actualTenantSettings.GetMTLS().GetEnableEndpointAliases())
+}
+
+func TestTenantManager_NullableFields(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	initialSettings, err := api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+
+	t.Cleanup(func() {
+		initialSettings.SandboxVersionAvailable = nil
+		initialSettings.UniversalLogin = nil
+		initialSettings.Flags = nil
+		err := api.Tenant.Update(context.Background(), initialSettings)
+		require.NoError(t, err)
+	})
+	newTenantSettings := &Tenant{
+		AcrValuesSupported: &[]string{"foo", "bar"},
+		MTLS: &MTLSConfiguration{
+			EnableEndpointAliases: auth0.Bool(true),
+		},
+	}
+	err = api.Tenant.Update(context.Background(), newTenantSettings)
+	assert.NoError(t, err)
+	actualTenantSettings, err := api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Equal(t, newTenantSettings.GetAcrValuesSupported(), actualTenantSettings.GetAcrValuesSupported())
+	assert.Equal(t, newTenantSettings.GetMTLS().GetEnableEndpointAliases(), actualTenantSettings.GetMTLS().GetEnableEndpointAliases())
+
+	// Set empty array values for AcrValuesSupported
+	emptyAcrValuesSupported := &Tenant{
+		AcrValuesSupported: &[]string{},
+	}
+	err = api.Tenant.Update(context.Background(), emptyAcrValuesSupported)
+	assert.NoError(t, err)
+	actualTenantSettings, err = api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Equal(t, emptyAcrValuesSupported.GetAcrValuesSupported(), actualTenantSettings.GetAcrValuesSupported())
+
+	// Set null values create a new Tenant Struct without omitting the fields
+	type CustomTenant struct {
+		AcrValuesSupported *[]string          `json:"acr_values_supported"`
+		MTLS               *MTLSConfiguration `json:"mtls"`
+	}
+	nullableTenantSettings := &CustomTenant{
+		AcrValuesSupported: nil,
+		MTLS:               nil,
+	}
+	err = api.Request(context.Background(), http.MethodPatch, api.URI("tenants", "settings"), nullableTenantSettings)
+	assert.NoError(t, err)
+	actualTenantSettings, err = api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Nil(t, actualTenantSettings.GetAcrValuesSupported())
+	assert.Nil(t, actualTenantSettings.GetMTLS())
 }
 
 func TestTenant_MarshalJSON(t *testing.T) {
