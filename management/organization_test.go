@@ -508,6 +508,10 @@ func TestOrganizationManager_ClientGrantsWithOrg(t *testing.T) {
 	assert.Len(t, associatedGrants.ClientGrants, 1)
 	assert.Equal(t, clientGrant.GetID(), associatedGrants.ClientGrants[0].GetID())
 
+	clients, err := api.Client.List(context.Background(), Parameter("q", fmt.Sprintf("client_grant.organization_id:%s", org.GetID())))
+	require.NoError(t, err)
+	assert.Equal(t, clients.Clients[0].GetClientID(), client.GetClientID())
+
 	err = api.Organization.RemoveClientGrant(context.Background(), org.GetID(), clientGrant.GetID())
 	require.NoError(t, err)
 
