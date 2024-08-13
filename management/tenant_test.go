@@ -95,6 +95,16 @@ func TestTenantManager_NullableFields(t *testing.T) {
 	assert.Equal(t, newTenantSettings.GetAcrValuesSupported(), actualTenantSettings.GetAcrValuesSupported())
 	assert.Equal(t, newTenantSettings.GetMTLS().GetEnableEndpointAliases(), actualTenantSettings.GetMTLS().GetEnableEndpointAliases())
 
+	// Set empty array values for AcrValuesSupported
+	emptyAcrValuesSupported := &Tenant{
+		AcrValuesSupported: &[]string{},
+	}
+	err = api.Tenant.Update(context.Background(), emptyAcrValuesSupported)
+	assert.NoError(t, err)
+	actualTenantSettings, err = api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Equal(t, emptyAcrValuesSupported.GetAcrValuesSupported(), actualTenantSettings.GetAcrValuesSupported())
+
 	// Set null values create a new Tenant Struct without omitting the fields
 	type CustomTenant struct {
 		AcrValuesSupported *[]string          `json:"acr_values_supported"`
