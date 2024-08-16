@@ -88,7 +88,7 @@ type Tenant struct {
 	// If `true`, flexible factors will be enabled for MFA in the PostLogin action.
 	CustomizeMFAInPostLoginAction *bool `json:"customize_mfa_in_postlogin_action,omitempty"`
 
-	// AcrValuesSupported Supported ACR values
+	// ACRValuesSupported Supported ACR values
 	//
 	// To unset values (set to null), use a PATCH request like this:
 	//
@@ -99,7 +99,7 @@ type Tenant struct {
 	//
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
-	AcrValuesSupported *[]string `json:"acr_values_supported,omitempty"`
+	ACRValuesSupported *[]string `json:"acr_values_supported,omitempty"`
 
 	// MTLS configuration for the tenant. Default is false.
 	//
@@ -112,14 +112,14 @@ type Tenant struct {
 	//
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
-	MTLS *MTLSConfiguration `json:"mtls,omitempty"`
+	MTLS *TenantMTLSConfiguration `json:"mtls,omitempty"`
 
 	// Enables the use of Pushed Authorization Requests
 	PushedAuthorizationRequestsSupported *bool `json:"pushed_authorization_requests_supported,omitempty"`
 }
 
-// MTLSConfiguration hold settings for mTLS. If true, enables mTLS endpoint aliases.
-type MTLSConfiguration struct {
+// TenantMTLSConfiguration hold settings for mTLS. If true, enables mTLS endpoint aliases.
+type TenantMTLSConfiguration struct {
 	// If true, enables mTLS endpoint aliases
 	EnableEndpointAliases *bool `json:"enable_endpoint_aliases,omitempty"`
 }
