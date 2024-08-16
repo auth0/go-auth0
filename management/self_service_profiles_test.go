@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/stretchr/testify/assert"
+	"net/http"
 	"testing"
 
 	"github.com/auth0/go-auth0"
@@ -82,9 +83,11 @@ func TestSelfServiceProfileManager_Delete(t *testing.T) {
 	err := api.SelfServiceProfile.Delete(context.Background(), ssop.GetID())
 	assert.NoError(t, err)
 
-	_, err = api.SelfServiceProfile.Read(context.Background(), ssop.GetID())
-	assert.Errorf(t, err, "Profile with ID: %q not found", ssop.GetID())
-
+	retrievedProfile, err := api.SelfServiceProfile.Read(context.Background(), ssop.GetID())
+	assert.Nil(t, retrievedProfile)
+	assert.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
 
 func TestSelfServiceProfileManager_CreateTicket(t *testing.T) {
