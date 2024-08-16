@@ -518,7 +518,7 @@ func TestOrganizationManager_ClientGrantsWithOrg(t *testing.T) {
 	associatedGrants, err := api.Organization.ClientGrants(context.Background(), org.GetID(), Parameter("grant_ids", clientGrant.GetID()))
 	require.NoError(t, err)
 	assert.Greater(t, len(associatedGrants.ClientGrants), 0)
-	assert.Equal(t, clientGrant.GetID(), associatedGrants.ClientGrants[0].GetID())
+	assert.Contains(t, associatedGrants.ClientGrants, clientGrant)
 
 	clients, err := api.Client.List(context.Background(), Parameter("q", fmt.Sprintf("client_grant.organization_id:%s", org.GetID())))
 	require.NoError(t, err)
