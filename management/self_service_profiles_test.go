@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 
@@ -131,6 +132,11 @@ func TestSelfServiceProfileManager_MarshalJSON(t *testing.T) {
 				FaviconURL: auth0.String("some-favicon-url"),
 			},
 		}: `{"branding":{"favicon_url":"some-favicon-url","logo_url":"some-url"}}`,
+		{
+			ID:        auth0.String("some-id"),
+			CreatedAt: auth0.Time(time.Now()),
+			UpdatedAt: auth0.Time(time.Now()),
+		}: `{}`,
 	} {
 		payload, err := json.Marshal(selfServiceProfile)
 		assert.NoError(t, err)
