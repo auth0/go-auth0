@@ -3,9 +3,10 @@ package management
 import (
 	"context"
 	"encoding/json"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 
 	"github.com/auth0/go-auth0"
 )
@@ -110,7 +111,6 @@ func TestSelfServiceProfileManager_CreateTicket(t *testing.T) {
 	err := api.SelfServiceProfile.CreateTicket(context.Background(), ssop.GetID(), ticket)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, ticket.GetTicket())
-
 }
 
 func TestSelfServiceProfileManager_MarshalJSON(t *testing.T) {
