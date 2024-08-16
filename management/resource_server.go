@@ -90,14 +90,14 @@ type ResourceServer struct {
 	//
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
-	AuthorizationDetails *[]AuthorizationDetails `json:"authorization_details,omitempty"`
+	AuthorizationDetails *[]ResourceServerAuthorizationDetails `json:"authorization_details,omitempty"`
 
 	// TokenEncryption specifies the token encryption for the resource server.
 	//
 	// Available options:
 	//   - "compact-nested-jwe"
 	//   - null
-	TokenEncryption *TokenEncryption `json:"token_encryption,omitempty"`
+	TokenEncryption *ResourceServerTokenEncryption `json:"token_encryption,omitempty"`
 
 	// Proof-of-Possession configuration for access tokens.
 	//
@@ -111,17 +111,17 @@ type ResourceServer struct {
 	//
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
-	ProofOfPossession *ProofOfPossession `json:"proof_of_possession,omitempty"`
+	ProofOfPossession *ResourceServerProofOfPossession `json:"proof_of_possession,omitempty"`
 }
 
-// AuthorizationDetails specifies the authorization details for the resource server.
-type AuthorizationDetails struct {
+// ResourceServerAuthorizationDetails specifies the authorization details for the resource server.
+type ResourceServerAuthorizationDetails struct {
 	// The authorization_detail type identifier.
 	Type *string `json:"type,omitempty"`
 }
 
-// ProofOfPossession specifies the proof-of-possession configuration for access tokens.
-type ProofOfPossession struct {
+// ResourceServerProofOfPossession specifies the proof-of-possession configuration for access tokens.
+type ResourceServerProofOfPossession struct {
 	// Intended mechanism for Proof-of-Possession.
 	//
 	// Available options:
@@ -132,17 +132,17 @@ type ProofOfPossession struct {
 	Required *bool `json:"required,omitempty"`
 }
 
-// TokenEncryption specifies the token encryption for the resource server.
-type TokenEncryption struct {
+// ResourceServerTokenEncryption specifies the token encryption for the resource server.
+type ResourceServerTokenEncryption struct {
 	// Format of the encrypted JWT payload.
 	Format *string `json:"format,omitempty"`
 
 	// EncryptionKey specifies the encryption key for the token encryption.
-	EncryptionKey *EncryptionKey `json:"encryption_key,omitempty"`
+	EncryptionKey *ResourceServerTokenEncryptionKey `json:"encryption_key,omitempty"`
 }
 
-// EncryptionKey specifies the encryption key for the token encryption.
-type EncryptionKey struct {
+// ResourceServerTokenEncryptionKey specifies the encryption key for the token encryption.
+type ResourceServerTokenEncryptionKey struct {
 	// Name of the encryption key.
 	Name *string `json:"name,omitempty"`
 

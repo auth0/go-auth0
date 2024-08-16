@@ -36,7 +36,7 @@ func TestClientSignedRequestObject(t *testing.T) {
 	expectedClient := &Client{
 		Name:        auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
 		Description: auth0.String("This is just a test client."),
-		SignedRequestObject: &SignedRequestObject{
+		SignedRequestObject: &ClientSignedRequestObject{
 			Required: auth0.Bool(true),
 			Credentials: &[]Credential{
 				{

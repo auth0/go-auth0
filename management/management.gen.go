@@ -673,19 +673,6 @@ func (a *AuthenticationMethods) String() string {
 	return Stringify(a)
 }
 
-// GetType returns the Type field if it's non-nil, zero value otherwise.
-func (a *AuthorizationDetails) GetType() string {
-	if a == nil || a.Type == nil {
-		return ""
-	}
-	return *a.Type
-}
-
-// String returns a string representation of AuthorizationDetails.
-func (a *AuthorizationDetails) String() string {
-	return Stringify(a)
-}
-
 // GetLifetimeInSeconds returns the LifetimeInSeconds field if it's non-nil, zero value otherwise.
 func (a *AWSClientAddon) GetLifetimeInSeconds() int {
 	if a == nil || a.LifetimeInSeconds == nil {
@@ -1509,7 +1496,7 @@ func (c *Client) GetRequirePushedAuthorizationRequests() bool {
 }
 
 // GetSignedRequestObject returns the SignedRequestObject field.
-func (c *Client) GetSignedRequestObject() *SignedRequestObject {
+func (c *Client) GetSignedRequestObject() *ClientSignedRequestObject {
 	if c == nil {
 		return nil
 	}
@@ -2074,6 +2061,27 @@ func (c *ClientRefreshToken) GetTokenLifetime() int {
 
 // String returns a string representation of ClientRefreshToken.
 func (c *ClientRefreshToken) String() string {
+	return Stringify(c)
+}
+
+// GetCredentials returns the Credentials field if it's non-nil, zero value otherwise.
+func (c *ClientSignedRequestObject) GetCredentials() []Credential {
+	if c == nil || c.Credentials == nil {
+		return nil
+	}
+	return *c.Credentials
+}
+
+// GetRequired returns the Required field if it's non-nil, zero value otherwise.
+func (c *ClientSignedRequestObject) GetRequired() bool {
+	if c == nil || c.Required == nil {
+		return false
+	}
+	return *c.Required
+}
+
+// String returns a string representation of ClientSignedRequestObject.
+func (c *ClientSignedRequestObject) String() string {
 	return Stringify(c)
 }
 
@@ -6669,43 +6677,6 @@ func (e *EmailTemplate) String() string {
 	return Stringify(e)
 }
 
-// GetAlg returns the Alg field if it's non-nil, zero value otherwise.
-func (e *EncryptionKey) GetAlg() string {
-	if e == nil || e.Alg == nil {
-		return ""
-	}
-	return *e.Alg
-}
-
-// GetKid returns the Kid field if it's non-nil, zero value otherwise.
-func (e *EncryptionKey) GetKid() string {
-	if e == nil || e.Kid == nil {
-		return ""
-	}
-	return *e.Kid
-}
-
-// GetName returns the Name field if it's non-nil, zero value otherwise.
-func (e *EncryptionKey) GetName() string {
-	if e == nil || e.Name == nil {
-		return ""
-	}
-	return *e.Name
-}
-
-// GetPem returns the Pem field if it's non-nil, zero value otherwise.
-func (e *EncryptionKey) GetPem() string {
-	if e == nil || e.Pem == nil {
-		return ""
-	}
-	return *e.Pem
-}
-
-// String returns a string representation of EncryptionKey.
-func (e *EncryptionKey) String() string {
-	return Stringify(e)
-}
-
 // GetEnrolledAt returns the EnrolledAt field if it's non-nil, zero value otherwise.
 func (e *Enrollment) GetEnrolledAt() time.Time {
 	if e == nil || e.EnrolledAt == nil {
@@ -7650,19 +7621,6 @@ func (m *MSCRMClientAddon) String() string {
 	return Stringify(m)
 }
 
-// GetEnableEndpointAliases returns the EnableEndpointAliases field if it's non-nil, zero value otherwise.
-func (m *MTLSConfiguration) GetEnableEndpointAliases() bool {
-	if m == nil || m.EnableEndpointAliases == nil {
-		return false
-	}
-	return *m.EnableEndpointAliases
-}
-
-// String returns a string representation of MTLSConfiguration.
-func (m *MTLSConfiguration) String() string {
-	return Stringify(m)
-}
-
 // GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
 func (m *MultiFactor) GetEnabled() bool {
 	if m == nil || m.Enabled == nil {
@@ -8591,27 +8549,6 @@ func (p *PromptPartials) String() string {
 	return Stringify(p)
 }
 
-// GetMechanism returns the Mechanism field if it's non-nil, zero value otherwise.
-func (p *ProofOfPossession) GetMechanism() string {
-	if p == nil || p.Mechanism == nil {
-		return ""
-	}
-	return *p.Mechanism
-}
-
-// GetRequired returns the Required field if it's non-nil, zero value otherwise.
-func (p *ProofOfPossession) GetRequired() bool {
-	if p == nil || p.Required == nil {
-		return false
-	}
-	return *p.Required
-}
-
-// String returns a string representation of ProofOfPossession.
-func (p *ProofOfPossession) String() string {
-	return Stringify(p)
-}
-
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (r *RefreshToken) GetClientID() string {
 	if r == nil || r.ClientID == nil {
@@ -8716,7 +8653,7 @@ func (r *ResourceServer) GetAllowOfflineAccess() bool {
 }
 
 // GetAuthorizationDetails returns the AuthorizationDetails field if it's non-nil, zero value otherwise.
-func (r *ResourceServer) GetAuthorizationDetails() []AuthorizationDetails {
+func (r *ResourceServer) GetAuthorizationDetails() []ResourceServerAuthorizationDetails {
 	if r == nil || r.AuthorizationDetails == nil {
 		return nil
 	}
@@ -8772,7 +8709,7 @@ func (r *ResourceServer) GetOptions() map[string]string {
 }
 
 // GetProofOfPossession returns the ProofOfPossession field.
-func (r *ResourceServer) GetProofOfPossession() *ProofOfPossession {
+func (r *ResourceServer) GetProofOfPossession() *ResourceServerProofOfPossession {
 	if r == nil {
 		return nil
 	}
@@ -8820,7 +8757,7 @@ func (r *ResourceServer) GetTokenDialect() string {
 }
 
 // GetTokenEncryption returns the TokenEncryption field.
-func (r *ResourceServer) GetTokenEncryption() *TokenEncryption {
+func (r *ResourceServer) GetTokenEncryption() *ResourceServerTokenEncryption {
 	if r == nil {
 		return nil
 	}
@@ -8856,8 +8793,42 @@ func (r *ResourceServer) String() string {
 	return Stringify(r)
 }
 
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (r *ResourceServerAuthorizationDetails) GetType() string {
+	if r == nil || r.Type == nil {
+		return ""
+	}
+	return *r.Type
+}
+
+// String returns a string representation of ResourceServerAuthorizationDetails.
+func (r *ResourceServerAuthorizationDetails) String() string {
+	return Stringify(r)
+}
+
 // String returns a string representation of ResourceServerList.
 func (r *ResourceServerList) String() string {
+	return Stringify(r)
+}
+
+// GetMechanism returns the Mechanism field if it's non-nil, zero value otherwise.
+func (r *ResourceServerProofOfPossession) GetMechanism() string {
+	if r == nil || r.Mechanism == nil {
+		return ""
+	}
+	return *r.Mechanism
+}
+
+// GetRequired returns the Required field if it's non-nil, zero value otherwise.
+func (r *ResourceServerProofOfPossession) GetRequired() bool {
+	if r == nil || r.Required == nil {
+		return false
+	}
+	return *r.Required
+}
+
+// String returns a string representation of ResourceServerProofOfPossession.
+func (r *ResourceServerProofOfPossession) String() string {
 	return Stringify(r)
 }
 
@@ -8879,6 +8850,64 @@ func (r *ResourceServerScope) GetValue() string {
 
 // String returns a string representation of ResourceServerScope.
 func (r *ResourceServerScope) String() string {
+	return Stringify(r)
+}
+
+// GetEncryptionKey returns the EncryptionKey field.
+func (r *ResourceServerTokenEncryption) GetEncryptionKey() *ResourceServerTokenEncryptionKey {
+	if r == nil {
+		return nil
+	}
+	return r.EncryptionKey
+}
+
+// GetFormat returns the Format field if it's non-nil, zero value otherwise.
+func (r *ResourceServerTokenEncryption) GetFormat() string {
+	if r == nil || r.Format == nil {
+		return ""
+	}
+	return *r.Format
+}
+
+// String returns a string representation of ResourceServerTokenEncryption.
+func (r *ResourceServerTokenEncryption) String() string {
+	return Stringify(r)
+}
+
+// GetAlg returns the Alg field if it's non-nil, zero value otherwise.
+func (r *ResourceServerTokenEncryptionKey) GetAlg() string {
+	if r == nil || r.Alg == nil {
+		return ""
+	}
+	return *r.Alg
+}
+
+// GetKid returns the Kid field if it's non-nil, zero value otherwise.
+func (r *ResourceServerTokenEncryptionKey) GetKid() string {
+	if r == nil || r.Kid == nil {
+		return ""
+	}
+	return *r.Kid
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (r *ResourceServerTokenEncryptionKey) GetName() string {
+	if r == nil || r.Name == nil {
+		return ""
+	}
+	return *r.Name
+}
+
+// GetPem returns the Pem field if it's non-nil, zero value otherwise.
+func (r *ResourceServerTokenEncryptionKey) GetPem() string {
+	if r == nil || r.Pem == nil {
+		return ""
+	}
+	return *r.Pem
+}
+
+// String returns a string representation of ResourceServerTokenEncryptionKey.
+func (r *ResourceServerTokenEncryptionKey) String() string {
 	return Stringify(r)
 }
 
@@ -9645,27 +9674,6 @@ func (s *SharePointClientAddon) String() string {
 	return Stringify(s)
 }
 
-// GetCredentials returns the Credentials field if it's non-nil, zero value otherwise.
-func (s *SignedRequestObject) GetCredentials() []Credential {
-	if s == nil || s.Credentials == nil {
-		return nil
-	}
-	return *s.Credentials
-}
-
-// GetRequired returns the Required field if it's non-nil, zero value otherwise.
-func (s *SignedRequestObject) GetRequired() bool {
-	if s == nil || s.Required == nil {
-		return false
-	}
-	return *s.Required
-}
-
-// String returns a string representation of SignedRequestObject.
-func (s *SignedRequestObject) String() string {
-	return Stringify(s)
-}
-
 // GetCert returns the Cert field if it's non-nil, zero value otherwise.
 func (s *SigningKey) GetCert() string {
 	if s == nil || s.Cert == nil {
@@ -9872,12 +9880,12 @@ func (s *SuspiciousIPThrottling) String() string {
 	return Stringify(s)
 }
 
-// GetAcrValuesSupported returns the AcrValuesSupported field if it's non-nil, zero value otherwise.
-func (t *Tenant) GetAcrValuesSupported() []string {
-	if t == nil || t.AcrValuesSupported == nil {
+// GetACRValuesSupported returns the ACRValuesSupported field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetACRValuesSupported() []string {
+	if t == nil || t.ACRValuesSupported == nil {
 		return nil
 	}
-	return *t.AcrValuesSupported
+	return *t.ACRValuesSupported
 }
 
 // GetAllowedLogoutURLs returns the AllowedLogoutURLs field if it's non-nil, zero value otherwise.
@@ -9993,7 +10001,7 @@ func (t *Tenant) GetIdleSessionLifetime() float64 {
 }
 
 // GetMTLS returns the MTLS field.
-func (t *Tenant) GetMTLS() *MTLSConfiguration {
+func (t *Tenant) GetMTLS() *TenantMTLSConfiguration {
 	if t == nil {
 		return nil
 	}
@@ -10406,6 +10414,19 @@ func (t *TenantGuardianMFAPage) String() string {
 	return Stringify(t)
 }
 
+// GetEnableEndpointAliases returns the EnableEndpointAliases field if it's non-nil, zero value otherwise.
+func (t *TenantMTLSConfiguration) GetEnableEndpointAliases() bool {
+	if t == nil || t.EnableEndpointAliases == nil {
+		return false
+	}
+	return *t.EnableEndpointAliases
+}
+
+// String returns a string representation of TenantMTLSConfiguration.
+func (t *TenantMTLSConfiguration) String() string {
+	return Stringify(t)
+}
+
 // GetMode returns the Mode field if it's non-nil, zero value otherwise.
 func (t *TenantSessionCookie) GetMode() string {
 	if t == nil || t.Mode == nil {
@@ -10569,27 +10590,6 @@ func (t *TLSClientAuth) GetCredentials() []Credential {
 
 // String returns a string representation of TLSClientAuth.
 func (t *TLSClientAuth) String() string {
-	return Stringify(t)
-}
-
-// GetEncryptionKey returns the EncryptionKey field.
-func (t *TokenEncryption) GetEncryptionKey() *EncryptionKey {
-	if t == nil {
-		return nil
-	}
-	return t.EncryptionKey
-}
-
-// GetFormat returns the Format field if it's non-nil, zero value otherwise.
-func (t *TokenEncryption) GetFormat() string {
-	if t == nil || t.Format == nil {
-		return ""
-	}
-	return *t.Format
-}
-
-// String returns a string representation of TokenEncryption.
-func (t *TokenEncryption) String() string {
 	return Stringify(t)
 }
 
