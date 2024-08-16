@@ -18,7 +18,7 @@ type ResourceServer struct {
 	// Scopes supported by the resource server.
 	Scopes *[]ResourceServerScope `json:"scopes,omitempty"`
 
-	// The algorithm used to sign tokens ["HS256" or "RS256"].
+	// Algorithm used to sign JWTs. Can be `HS256` or `RS256`. `PS256` available via addon.
 	SigningAlgorithm *string `json:"signing_alg,omitempty"`
 
 	// The secret used to sign tokens when using symmetric algorithms.
@@ -59,6 +59,101 @@ type ResourceServer struct {
 	//  Note:  RBAC permissions claims are available if RBAC (enforce_policies) is enabled for this API."
 	// For more details, see the Access Token Profiles documentation : https://auth0.com/docs/secure/tokens/access-tokens/access-token-profiles.
 	TokenDialect *string `json:"token_dialect,omitempty"`
+
+	// ConsentPolicy specifies the consent policy for the resource server.
+	//
+	// Available options:
+	//   - "transactional-authorization-with-mfa"
+	//   - null
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/resource-servers/{id}
+	//
+	// {
+	//   "consent_policy": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	ConsentPolicy *string `json:"consent_policy,omitempty"`
+
+	// The list of authorization details for the resource server.
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/resource-servers/{id}
+	//
+	// {
+	//	 "authorization_details": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	AuthorizationDetails *[]AuthorizationDetails `json:"authorization_details,omitempty"`
+
+	// TokenEncryption specifies the token encryption for the resource server.
+	//
+	// Available options:
+	//   - "compact-nested-jwe"
+	//   - null
+	TokenEncryption *TokenEncryption `json:"token_encryption,omitempty"`
+
+	// Proof-of-Possession configuration for access tokens.
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/resource-servers/{id}
+	//
+	// {
+	//	 "proof_of_possession": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	ProofOfPossession *ProofOfPossession `json:"proof_of_possession,omitempty"`
+}
+
+// AuthorizationDetails specifies the authorization details for the resource server.
+type AuthorizationDetails struct {
+	// The authorization_detail type identifier.
+	Type *string `json:"type,omitempty"`
+}
+
+// ProofOfPossession specifies the proof-of-possession configuration for access tokens.
+type ProofOfPossession struct {
+	// Intended mechanism for Proof-of-Possession.
+	//
+	// Available options:
+	//   - "mtls"
+	Mechanism *string `json:"mechanism,omitempty"`
+
+	// Whether the use of Proof-of-Possession is required for the resource server.
+	Required *bool `json:"required,omitempty"`
+}
+
+// TokenEncryption specifies the token encryption for the resource server.
+type TokenEncryption struct {
+	// Format of the encrypted JWT payload.
+	Format *string `json:"format,omitempty"`
+
+	// EncryptionKey specifies the encryption key for the token encryption.
+	EncryptionKey *EncryptionKey `json:"encryption_key,omitempty"`
+}
+
+// EncryptionKey specifies the encryption key for the token encryption.
+type EncryptionKey struct {
+	// Name of the encryption key.
+	Name *string `json:"name,omitempty"`
+
+	// Algorithm used to encrypt the token.
+	Alg *string `json:"alg,omitempty"`
+
+	// Key ID.
+	Kid *string `json:"kid,omitempty"`
+
+	// PEM-formatted public key. Must be JSON escaped
+	Pem *string `json:"pem,omitempty"`
 }
 
 // ResourceServerScope defines the specific actions, resource servers can be allowed to do.

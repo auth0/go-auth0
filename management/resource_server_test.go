@@ -18,7 +18,7 @@ func TestResourceServer_Create(t *testing.T) {
 	expectedResourceServer := &ResourceServer{
 		Name:                auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
 		Identifier:          auth0.String("https://api.example.com/"),
-		SigningAlgorithm:    auth0.String("HS256"),
+		SigningAlgorithm:    auth0.String("PS256"),
 		TokenLifetime:       auth0.Int(7200),
 		TokenLifetimeForWeb: auth0.Int(3600),
 		Scopes: &[]ResourceServerScope{
@@ -29,6 +29,41 @@ func TestResourceServer_Create(t *testing.T) {
 		},
 		EnforcePolicies: auth0.Bool(true),
 		TokenDialect:    auth0.String("rfc9068_profile_authz"),
+		ConsentPolicy:   auth0.String("transactional-authorization-with-mfa"),
+		AuthorizationDetails: &[]AuthorizationDetails{
+			{
+				Type: auth0.String("payment"),
+			},
+			{
+				Type: auth0.String("my custom type"),
+			},
+		},
+		TokenEncryption: &TokenEncryption{
+			Format: auth0.String("compact-nested-jwe"),
+			EncryptionKey: &EncryptionKey{
+				Name: auth0.String("my JWE public key"),
+				Alg:  auth0.String("RSA-OAEP-256"),
+				Kid:  auth0.String("my-key-id"),
+				Pem: auth0.String(`-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAua6LXMfgDE/tDdkOL1Oe
+3oWUwg1r4dSTg9L7RCcI5hItUzmkVofHtWN0H4CH2lm2ANmaJUsnhzctYowYW2+R
+tHvU9afTmtbdhpy993972hUqZSYLsE3iGziphYkOKVsqq38+VRH3TNg93zSLoRao
+JnTTkMXseVqiyqYRmFN8+gQQoEclHSGPUWQG5XMZ+hhuXeFyo+Yw/qbZWca/6/2I
+3rsca9jXR1alhxhHrXrg8N4Dm3gBgGbmiht6YYYT2Tyl1OqB9+iOI/9D7dfoCF6X
+AWJXRE454cmC8k8oucpjZVpflA+ocKshwPDR6YTLQYbXYiaWxEoaz0QGUErNQBnG
+I+sr9jDY3ua/s6HF6h0qyi/HVZH4wx+m4CtOfJoYTjrGBbaRszzUxhtSN2/MhXDu
++a35q9/2zcu/3fjkkfVvGUt+NyyiYOKQ9vsJC1g/xxdUWtowjNwjfZE2zcG4usi8
+r38Bp0lmiipAsMLduZM/D5dFXkRdWCBNDfULmmg/4nv2wwjbjQuLemAMh7mmrztW
+i/85WMnjKQZT8NqS43pmgyIzg1gK1neMqdS90YmQ/PvJ36qALxCs245w1JpN9BAL
+JbwxCg/dbmKT7PalfWrksx9hGcJxtGqebldaOpw+5GVIPxxtC1C0gVr9BKeiDS3f
+aibASY5pIRiKENmbZELDtucCAwEAAQ==
+-----END PUBLIC KEY-----`),
+			},
+		},
+		ProofOfPossession: &ProofOfPossession{
+			Mechanism: auth0.String("mtls"),
+			Required:  auth0.Bool(true),
+		},
 	}
 
 	err := api.ResourceServer.Create(context.Background(), expectedResourceServer)

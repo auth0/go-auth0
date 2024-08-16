@@ -553,6 +553,14 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 					Signup: &ConnectionOptionsAttributeSignup{
 						Status: auth0.String("required"),
 					},
+					Validation: &ConnectionOptionsAttributeValidation{
+						MinLength: auth0.Int(1),
+						MaxLength: auth0.Int(5),
+						AllowedTypes: &ConnectionOptionsAttributeAllowedTypes{
+							Email:       auth0.Bool(true),
+							PhoneNumber: auth0.Bool(false),
+						},
+					},
 				},
 			},
 		},
