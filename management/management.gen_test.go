@@ -11955,6 +11955,140 @@ func TestSCIMToken_String(t *testing.T) {
 	}
 }
 
+func TestSelfServiceProfile_GetBranding(tt *testing.T) {
+	s := &SelfServiceProfile{}
+	s.GetBranding()
+	s = nil
+	s.GetBranding()
+}
+
+func TestSelfServiceProfile_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	s := &SelfServiceProfile{CreatedAt: &zeroValue}
+	s.GetCreatedAt()
+	s = &SelfServiceProfile{}
+	s.GetCreatedAt()
+	s = nil
+	s.GetCreatedAt()
+}
+
+func TestSelfServiceProfile_GetID(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfile{ID: &zeroValue}
+	s.GetID()
+	s = &SelfServiceProfile{}
+	s.GetID()
+	s = nil
+	s.GetID()
+}
+
+func TestSelfServiceProfile_GetUpdatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	s := &SelfServiceProfile{UpdatedAt: &zeroValue}
+	s.GetUpdatedAt()
+	s = &SelfServiceProfile{}
+	s.GetUpdatedAt()
+	s = nil
+	s.GetUpdatedAt()
+}
+
+func TestSelfServiceProfile_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfile{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileTicket_GetConnectionConfig(tt *testing.T) {
+	s := &SelfServiceProfileTicket{}
+	s.GetConnectionConfig()
+	s = nil
+	s.GetConnectionConfig()
+}
+
+func TestSelfServiceProfileTicket_GetConnectionID(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicket{ConnectionID: &zeroValue}
+	s.GetConnectionID()
+	s = &SelfServiceProfileTicket{}
+	s.GetConnectionID()
+	s = nil
+	s.GetConnectionID()
+}
+
+func TestSelfServiceProfileTicket_GetTicket(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicket{Ticket: &zeroValue}
+	s.GetTicket()
+	s = &SelfServiceProfileTicket{}
+	s.GetTicket()
+	s = nil
+	s.GetTicket()
+}
+
+func TestSelfServiceProfileTicket_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicket{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileTicketConnectionConfig_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicketConnectionConfig{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileTicketEnabledOrganizations_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicketEnabledOrganizations{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileUserAttributes_GetDescription(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileUserAttributes{Description: &zeroValue}
+	s.GetDescription()
+	s = &SelfServiceProfileUserAttributes{}
+	s.GetDescription()
+	s = nil
+	s.GetDescription()
+}
+
+func TestSelfServiceProfileUserAttributes_GetIsOptional(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileUserAttributes{IsOptional: &zeroValue}
+	s.GetIsOptional()
+	s = &SelfServiceProfileUserAttributes{}
+	s.GetIsOptional()
+	s = nil
+	s.GetIsOptional()
+}
+
+func TestSelfServiceProfileUserAttributes_GetName(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileUserAttributes{Name: &zeroValue}
+	s.GetName()
+	s = &SelfServiceProfileUserAttributes{}
+	s.GetName()
+	s = nil
+	s.GetName()
+}
+
+func TestSelfServiceProfileUserAttributes_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileUserAttributes{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestSelfSignedTLSClientAuth_GetCredentials(tt *testing.T) {
 	var zeroValue []Credential
 	s := &SelfSignedTLSClientAuth{Credentials: &zeroValue}
