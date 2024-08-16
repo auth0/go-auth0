@@ -2,6 +2,7 @@ package management
 
 import (
 	"context"
+	"encoding/json"
 	"time"
 )
 
@@ -9,37 +10,76 @@ import (
 // customers can independently set up
 // SSO and sign in to your application.
 type SelfServiceProfile struct {
-	ID             *string           `json:"id,omitempty"`
+	ID *string `json:"id,omitempty"`
+
+	// List of attributes to be mapped that
+	// will be shown to the user during the SS-SSO flow.
 	UserAttributes []*UserAttributes `json:"user_attributes,omitempty"`
 	CreatedAt      *time.Time        `json:"created_at,omitempty"`
 	UpdatedAt      *time.Time        `json:"updated_at,omitempty"`
-	Branding       *Branding         `json:"branding,omitempty"`
+
+	// Branding scheme for the profile.
+	Branding *Branding `json:"branding,omitempty"`
 }
 
 // UserAttributes is used to determine optional attributes.
 type UserAttributes struct {
-	Name        *string `json:"name,omitempty"`
-	Description *string `json:"description,omitempty"`
-	IsOptional  *bool   `json:"is_optional,omitempty"`
+	// Identifier of this attribute.
+	Name *string `json:"name"`
+
+	// Description of this attribute.
+	Description *string `json:"description"`
+
+	// Determines if this attribute is required.
+	IsOptional *bool `json:"is_optional"`
 }
 
-// SSOTicket is used to created self service ticket for a set of clients and organizations.
+// SSOTicket is used to created self-service ticket for a set of clients and organizations.
 type SSOTicket struct {
-	ConnectionID         *string                 `json:"connection_id,omitempty"`
-	ConnectionConfig     *ConnectionConfig       `json:"connection_config,omitempty"`
-	EnabledClients       []*string               `json:"enabled_clients,omitempty"`
+	// If provided, this will allow editing of the
+	// provided connection during the SSO Flow.
+	ConnectionID *string `json:"connection_id,omitempty"`
+
+	// If provided, this will create a new connection
+	// for the SSO flow with the given configuration.
+	ConnectionConfig *ConnectionConfig `json:"connection_config,omitempty"`
+
+	// List of client_ids that the
+	// connection will be enabled for.
+	EnabledClients []*string `json:"enabled_clients,omitempty"`
+
+	// List of organizations that the
+	// connection will be enabled for.
 	EnabledOrganizations []*EnabledOrganizations `json:"enabled_organizations,omitempty"`
-	Ticket               *string                 `json:"ticket,omitempty"`
+
+	// The ticket that is generated.
+	Ticket *string `json:"ticket,omitempty"`
 }
 
 // ConnectionConfig sets the configuration for SSOTicket.
 type ConnectionConfig struct {
+	// The name of the connection that will be
+	// created as a part of the SSO flow.
 	Name string `json:"name,omitempty"`
 }
 
 // EnabledOrganizations is the list of Organizations associated with the SSO Ticket.
 type EnabledOrganizations struct {
+	// Organization identifier.
 	OrganizationID string `json:"organization_id,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaller interface.
+func (ssp *SelfServiceProfile) MarshalJSON() ([]byte, error) {
+	type SelfServiceProfileSubset struct {
+		UserAttributes []*UserAttributes `json:"user_attributes,omitempty"`
+		Branding       *Branding         `json:"branding,omitempty"`
+	}
+
+	return json.Marshal(&SelfServiceProfileSubset{
+		UserAttributes: ssp.UserAttributes,
+		Branding:       ssp.Branding,
+	})
 }
 
 // SelfServiceProfileManager manages Auth0 Self Service Profile resources.

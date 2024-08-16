@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 299
         uncompressed: false
-        body: '{"id":"ssp_4miutJe7PRjA7vqZ4y2j9g","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"created_at":"2024-08-12T05:42:28.951Z","updated_at":"2024-08-12T05:42:28.951Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
+        body: '{"id":"ssp_ggDf3qSai4e9zYrXdQ7aJL","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"created_at":"2024-08-16T04:47:24.788Z","updated_at":"2024-08-16T04:47:24.788Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 837.272125ms
+        duration: 968.444541ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"ssp_4miutJe7PRjA7vqZ4y2j9g","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"created_at":"2024-08-12T05:42:28.951Z","updated_at":"2024-08-12T05:42:28.951Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}]'
+        body: '[{"id":"ssp_ggDf3qSai4e9zYrXdQ7aJL","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"created_at":"2024-08-16T04:47:24.788Z","updated_at":"2024-08-16T04:47:24.788Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}]'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 434.325875ms
+        duration: 484.845333ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.8.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_4miutJe7PRjA7vqZ4y2j9g
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_ggDf3qSai4e9zYrXdQ7aJL
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -106,4 +106,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 331.140958ms
+        duration: 401.3665ms

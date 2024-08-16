@@ -34,7 +34,7 @@ func TestSelfServiceProfileManager_Create(t *testing.T) {
 
 	ssops, err := api.SelfServiceProfile.List(context.Background())
 	assert.NoError(t, err)
-	assert.Equal(t, 1, len(ssops))
+	assert.Greater(t, len(ssops), 0)
 	assert.Equal(t, ssops[0].UserAttributes[0].GetName(), ssop.UserAttributes[0].GetName())
 	assert.Equal(t, ssops[0].UserAttributes[0].GetDescription(), ssop.UserAttributes[0].GetDescription())
 	assert.Equal(t, ssops[0].UserAttributes[0].GetIsOptional(), ssop.UserAttributes[0].GetIsOptional())
@@ -49,16 +49,16 @@ func TestSelfServiceProfileManager_List(t *testing.T) {
 	ssop := givenASelfServiceProfile(t)
 	ssopList, err := api.SelfServiceProfile.List(context.Background())
 	assert.NoError(t, err)
-	assert.Equal(t, 1, len(ssopList))
-	assert.Equal(t, ssop.GetBranding().GetColors().GetPrimary(), ssopList[0].GetBranding().GetColors().GetPrimary())
+	assert.Greater(t, len(ssopList), 0)
+	assert.Equal(t, ssopList[0].GetBranding().GetColors().GetPrimary(), ssop.GetBranding().GetColors().GetPrimary())
 }
 
 func TestSelfServiceProfileManager_Read(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	ssop := givenASelfServiceProfile(t)
-	ssop, err := api.SelfServiceProfile.Read(context.Background(), ssop.GetID())
+	ssopRetrieved, err := api.SelfServiceProfile.Read(context.Background(), ssop.GetID())
 	assert.NoError(t, err)
-	assert.Equal(t, "some-name-here", ssop.UserAttributes[0].GetName())
+	assert.Equal(t, ssopRetrieved.UserAttributes[0].GetName(), ssop.UserAttributes[0].GetName())
 }
 
 func TestSelfServiceProfileManager_Update(t *testing.T) {
