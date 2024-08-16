@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 299
         uncompressed: false
-        body: '{"id":"ssp_gBqhDoeKYBbVJHJb9CpbWV","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"created_at":"2024-08-16T04:47:29.160Z","updated_at":"2024-08-16T04:47:29.160Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
+        body: '{"id":"ssp_tWD85k5DzMc8BHMewmHy9N","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"created_at":"2024-08-16T11:28:49.235Z","updated_at":"2024-08-16T11:28:49.235Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 336.813125ms
+        duration: 781.983916ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.8.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_gBqhDoeKYBbVJHJb9CpbWV
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_tWD85k5DzMc8BHMewmHy9N
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -71,7 +71,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 343.457833ms
+        duration: 352.38425ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,42 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.8.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_gBqhDoeKYBbVJHJb9CpbWV
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_tWD85k5DzMc8BHMewmHy9N
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"statusCode":404,"error":"Not Found","message":"Profile with ID: ssp_tWD85k5DzMc8BHMewmHy9N not found"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 404 Not Found
+        code: 404
+        duration: 306.829333ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.8.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_tWD85k5DzMc8BHMewmHy9N
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -106,4 +141,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 333.3565ms
+        duration: 345.853542ms

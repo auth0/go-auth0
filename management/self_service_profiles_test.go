@@ -2,9 +2,9 @@ package management
 
 import (
 	"context"
-	"testing"
-
+	"encoding/json"
 	"github.com/stretchr/testify/assert"
+	"testing"
 
 	"github.com/auth0/go-auth0"
 )
@@ -60,7 +60,7 @@ func TestSelfServiceProfileManager_Update(t *testing.T) {
 	ssopUpdated := &SelfServiceProfile{
 		UserAttributes: []*SelfServiceProfileUserAttributes{
 			{
-				Name:        auth0.String("some-name-here"),
+				Name:        auth0.String("some-new-name-here"),
 				Description: auth0.String("some-description"),
 				IsOptional:  auth0.Bool(true),
 			},
@@ -81,6 +81,10 @@ func TestSelfServiceProfileManager_Delete(t *testing.T) {
 	ssop := givenASelfServiceProfile(t)
 	err := api.SelfServiceProfile.Delete(context.Background(), ssop.GetID())
 	assert.NoError(t, err)
+
+	_, err = api.SelfServiceProfile.Read(context.Background(), ssop.GetID())
+	assert.Errorf(t, err, "Profile with ID: %q not found", ssop.GetID())
+
 }
 
 func TestSelfServiceProfileManager_CreateTicket(t *testing.T) {
@@ -102,6 +106,33 @@ func TestSelfServiceProfileManager_CreateTicket(t *testing.T) {
 	}
 	err := api.SelfServiceProfile.CreateTicket(context.Background(), ssop.GetID(), ticket)
 	assert.NoError(t, err)
+	assert.NotEmpty(t, ticket.GetTicket())
+
+}
+
+func TestSelfServiceProfileManager_MarshalJSON(t *testing.T) {
+	for selfServiceProfile, expected := range map[*SelfServiceProfile]string{
+		{}: `{}`,
+		{
+			UserAttributes: []*SelfServiceProfileUserAttributes{
+				{
+					Name:        auth0.String("some-name"),
+					Description: auth0.String("some-desc"),
+					IsOptional:  auth0.Bool(true),
+				},
+			},
+		}: `{"user_attributes":[{"name":"some-name","description":"some-desc","is_optional":true}]}`,
+		{
+			Branding: &Branding{
+				LogoURL:    auth0.String("some-url"),
+				FaviconURL: auth0.String("some-favicon-url"),
+			},
+		}: `{"branding":{"favicon_url":"some-favicon-url","logo_url":"some-url"}}`,
+	} {
+		payload, err := json.Marshal(selfServiceProfile)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, string(payload))
+	}
 }
 
 func givenASelfServiceProfile(t *testing.T) *SelfServiceProfile {
