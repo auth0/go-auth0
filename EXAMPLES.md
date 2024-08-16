@@ -200,13 +200,13 @@ To handle nullable fields, create a custom struct without the omitempty tag and 
 ```go
 // Define a custom struct similar to the `Tenant` struct exposed by the SDK but without the `omitempty` tag.
 type CustomTenant struct {
-AcrValuesSupported *[]string          `json:"acr_values_supported"`
+ACRValuesSupported *[]string          `json:"acr_values_supported"`
 MTLS               *management.MTLSConfiguration `json:"mtls"`
 }
 
 // Create a custom request to set the nullable fields to null.
 nullableTenantSettings := &CustomTenant{
-AcrValuesSupported: nil,
+ACRValuesSupported: nil,
 MTLS:               nil,
 }
 
