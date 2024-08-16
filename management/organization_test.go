@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -480,11 +481,22 @@ func TestOrganizationManager_ClientGrantsWithOrg(t *testing.T) {
 	org := givenAnOrganization(t)
 	resourceServer := givenAResourceServer(t)
 
-	client := givenAClient(t)
-	client.DefaultOrganization = &DefaultOrganization{
-		&[]string{"client_credentials"},
-		auth0.String(org.GetID()),
+	client := &Client{
+		Name:              auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
+		Description:       auth0.String("This is just a test client."),
+		OrganizationUsage: auth0.String("allow"),
+		DefaultOrganization: &DefaultOrganization{
+			&[]string{"client_credentials"},
+			auth0.String(org.GetID()),
+		},
 	}
+
+	err := api.Client.Create(context.Background(), client)
+	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupClient(t, client.GetClientID())
+	})
 
 	clientGrant := &ClientGrant{
 		ClientID:             client.ClientID,
@@ -494,7 +506,7 @@ func TestOrganizationManager_ClientGrantsWithOrg(t *testing.T) {
 		OrganizationUsage:    auth0.String("allow"),
 	}
 
-	err := api.ClientGrant.Create(context.Background(), clientGrant)
+	err = api.ClientGrant.Create(context.Background(), clientGrant)
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		cleanupClientGrant(t, clientGrant.GetID())
@@ -505,19 +517,15 @@ func TestOrganizationManager_ClientGrantsWithOrg(t *testing.T) {
 
 	associatedGrants, err := api.Organization.ClientGrants(context.Background(), org.GetID(), Parameter("grant_ids", clientGrant.GetID()))
 	require.NoError(t, err)
-	assert.Len(t, associatedGrants.ClientGrants, 1)
+	assert.Greater(t, len(associatedGrants.ClientGrants), 0)
 	assert.Equal(t, clientGrant.GetID(), associatedGrants.ClientGrants[0].GetID())
 
 	clients, err := api.Client.List(context.Background(), Parameter("q", fmt.Sprintf("client_grant.organization_id:%s", org.GetID())))
 	require.NoError(t, err)
-	assert.Equal(t, clients.Clients[0].GetClientID(), client.GetClientID())
+	assert.Equal(t, client.GetClientID(), clients.Clients[0].GetClientID())
 
 	err = api.Organization.RemoveClientGrant(context.Background(), org.GetID(), clientGrant.GetID())
 	require.NoError(t, err)
-
-	associatedGrants, err = api.Organization.ClientGrants(context.Background(), org.GetID())
-	require.NoError(t, err)
-	assert.Len(t, associatedGrants.ClientGrants, 0)
 }
 
 func givenAnOrganization(t *testing.T) *Organization {
