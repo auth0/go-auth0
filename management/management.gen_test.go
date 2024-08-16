@@ -2588,14 +2588,6 @@ func TestConnection_String(t *testing.T) {
 	}
 }
 
-func TestConnectionConfig_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &ConnectionConfig{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestConnectionGatewayAuthentication_GetAudience(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionGatewayAuthentication{Audience: &zeroValue}
@@ -8205,14 +8197,6 @@ func TestEmailTemplate_String(t *testing.T) {
 	}
 }
 
-func TestEnabledOrganizations_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &EnabledOrganizations{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestEnrollment_GetEnrolledAt(tt *testing.T) {
 	var zeroValue time.Time
 	e := &Enrollment{EnrolledAt: &zeroValue}
@@ -11774,6 +11758,95 @@ func TestSelfServiceProfile_String(t *testing.T) {
 	}
 }
 
+func TestSelfServiceProfileTicket_GetConnectionConfig(tt *testing.T) {
+	s := &SelfServiceProfileTicket{}
+	s.GetConnectionConfig()
+	s = nil
+	s.GetConnectionConfig()
+}
+
+func TestSelfServiceProfileTicket_GetConnectionID(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicket{ConnectionID: &zeroValue}
+	s.GetConnectionID()
+	s = &SelfServiceProfileTicket{}
+	s.GetConnectionID()
+	s = nil
+	s.GetConnectionID()
+}
+
+func TestSelfServiceProfileTicket_GetTicket(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicket{Ticket: &zeroValue}
+	s.GetTicket()
+	s = &SelfServiceProfileTicket{}
+	s.GetTicket()
+	s = nil
+	s.GetTicket()
+}
+
+func TestSelfServiceProfileTicket_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicket{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileTicketConnectionConfig_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicketConnectionConfig{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileTicketEnabledOrganizations_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicketEnabledOrganizations{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileUserAttributes_GetDescription(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileUserAttributes{Description: &zeroValue}
+	s.GetDescription()
+	s = &SelfServiceProfileUserAttributes{}
+	s.GetDescription()
+	s = nil
+	s.GetDescription()
+}
+
+func TestSelfServiceProfileUserAttributes_GetIsOptional(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileUserAttributes{IsOptional: &zeroValue}
+	s.GetIsOptional()
+	s = &SelfServiceProfileUserAttributes{}
+	s.GetIsOptional()
+	s = nil
+	s.GetIsOptional()
+}
+
+func TestSelfServiceProfileUserAttributes_GetName(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileUserAttributes{Name: &zeroValue}
+	s.GetName()
+	s = &SelfServiceProfileUserAttributes{}
+	s.GetName()
+	s = nil
+	s.GetName()
+}
+
+func TestSelfServiceProfileUserAttributes_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileUserAttributes{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestSentryClientAddon_GetBaseURL(tt *testing.T) {
 	var zeroValue string
 	s := &SentryClientAddon{BaseURL: &zeroValue}
@@ -12017,41 +12090,6 @@ func TestSSOIntegrationClientAddon_GetVersion(tt *testing.T) {
 func TestSSOIntegrationClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SSOIntegrationClientAddon{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestSSOTicket_GetConnectionConfig(tt *testing.T) {
-	s := &SSOTicket{}
-	s.GetConnectionConfig()
-	s = nil
-	s.GetConnectionConfig()
-}
-
-func TestSSOTicket_GetConnectionID(tt *testing.T) {
-	var zeroValue string
-	s := &SSOTicket{ConnectionID: &zeroValue}
-	s.GetConnectionID()
-	s = &SSOTicket{}
-	s.GetConnectionID()
-	s = nil
-	s.GetConnectionID()
-}
-
-func TestSSOTicket_GetTicket(tt *testing.T) {
-	var zeroValue string
-	s := &SSOTicket{Ticket: &zeroValue}
-	s.GetTicket()
-	s = &SSOTicket{}
-	s.GetTicket()
-	s = nil
-	s.GetTicket()
-}
-
-func TestSSOTicket_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &SSOTicket{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -13225,44 +13263,6 @@ func TestUser_GetVerifyEmail(tt *testing.T) {
 func TestUser_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &User{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestUserAttributes_GetDescription(tt *testing.T) {
-	var zeroValue string
-	u := &UserAttributes{Description: &zeroValue}
-	u.GetDescription()
-	u = &UserAttributes{}
-	u.GetDescription()
-	u = nil
-	u.GetDescription()
-}
-
-func TestUserAttributes_GetIsOptional(tt *testing.T) {
-	var zeroValue bool
-	u := &UserAttributes{IsOptional: &zeroValue}
-	u.GetIsOptional()
-	u = &UserAttributes{}
-	u.GetIsOptional()
-	u = nil
-	u.GetIsOptional()
-}
-
-func TestUserAttributes_GetName(tt *testing.T) {
-	var zeroValue string
-	u := &UserAttributes{Name: &zeroValue}
-	u.GetName()
-	u = &UserAttributes{}
-	u.GetName()
-	u = nil
-	u.GetName()
-}
-
-func TestUserAttributes_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &UserAttributes{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

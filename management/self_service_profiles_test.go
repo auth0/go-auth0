@@ -18,7 +18,7 @@ func TestSelfServiceProfileManager_Create(t *testing.T) {
 				Primary: auth0.String("#334455"),
 			},
 		},
-		UserAttributes: []*UserAttributes{
+		UserAttributes: []*SelfServiceProfileUserAttributes{
 			{
 				Name:        auth0.String("some-name-here"),
 				Description: auth0.String("some-description"),
@@ -28,19 +28,12 @@ func TestSelfServiceProfileManager_Create(t *testing.T) {
 	}
 
 	err := api.SelfServiceProfile.Create(context.Background(), ssop)
-	assert.Equal(t, ssop.UserAttributes[0].GetName(), "some-name-here")
-	assert.NotEmpty(t, ssop.ID)
 	assert.NoError(t, err)
+	assert.NotEmpty(t, ssop.GetID())
 
-	ssops, err := api.SelfServiceProfile.List(context.Background())
+	ssopRetrieved, err := api.SelfServiceProfile.Read(context.Background(), ssop.GetID())
 	assert.NoError(t, err)
-	assert.Greater(t, len(ssops), 0)
-	assert.Equal(t, ssops[0].UserAttributes[0].GetName(), ssop.UserAttributes[0].GetName())
-	assert.Equal(t, ssops[0].UserAttributes[0].GetDescription(), ssop.UserAttributes[0].GetDescription())
-	assert.Equal(t, ssops[0].UserAttributes[0].GetIsOptional(), ssop.UserAttributes[0].GetIsOptional())
-	assert.Equal(t, ssops[0].GetBranding().GetColors().GetPrimary(), ssop.GetBranding().GetColors().GetPrimary())
-	assert.Equal(t, ssops[0].GetBranding().GetLogoURL(), ssop.GetBranding().GetLogoURL())
-
+	assert.Equal(t, ssopRetrieved, ssop)
 	cleanSelfServiceProfile(t, ssop.GetID())
 }
 
@@ -50,7 +43,7 @@ func TestSelfServiceProfileManager_List(t *testing.T) {
 	ssopList, err := api.SelfServiceProfile.List(context.Background())
 	assert.NoError(t, err)
 	assert.Greater(t, len(ssopList), 0)
-	assert.Equal(t, ssopList[0].GetBranding().GetColors().GetPrimary(), ssop.GetBranding().GetColors().GetPrimary())
+	assert.Contains(t, ssopList, ssop)
 }
 
 func TestSelfServiceProfileManager_Read(t *testing.T) {
@@ -58,19 +51,29 @@ func TestSelfServiceProfileManager_Read(t *testing.T) {
 	ssop := givenASelfServiceProfile(t)
 	ssopRetrieved, err := api.SelfServiceProfile.Read(context.Background(), ssop.GetID())
 	assert.NoError(t, err)
-	assert.Equal(t, ssopRetrieved.UserAttributes[0].GetName(), ssop.UserAttributes[0].GetName())
+	assert.Equal(t, ssopRetrieved, ssop)
 }
 
 func TestSelfServiceProfileManager_Update(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	ssop := givenASelfServiceProfile(t)
-	oldName := ssop.UserAttributes[0].GetName()
-	ssop.UserAttributes[0].Name = auth0.String("some-new-name-here")
-	id := ssop.GetID()
-	ssop.CreatedAt, ssop.UpdatedAt, ssop.ID = nil, nil, nil
-	err := api.SelfServiceProfile.Update(context.Background(), id, ssop)
+	ssopUpdated := &SelfServiceProfile{
+		UserAttributes: []*SelfServiceProfileUserAttributes{
+			{
+				Name:        auth0.String("some-name-here"),
+				Description: auth0.String("some-description"),
+				IsOptional:  auth0.Bool(true),
+			},
+		},
+	}
+
+	err := api.SelfServiceProfile.Update(context.Background(), ssop.GetID(), ssopUpdated)
 	assert.NoError(t, err)
-	assert.NotEqual(t, oldName, ssop.UserAttributes[0].GetName())
+	assert.NotEqual(t, ssop, ssopUpdated)
+	assert.Equal(t, ssop.GetID(), ssopUpdated.GetID())
+	assert.Equal(t, ssop.GetBranding(), ssopUpdated.GetBranding())
+	assert.Equal(t, ssop.UserAttributes[0].GetDescription(), ssopUpdated.UserAttributes[0].GetDescription())
+	assert.Equal(t, ssop.UserAttributes[0].GetIsOptional(), ssopUpdated.UserAttributes[0].GetIsOptional())
 }
 
 func TestSelfServiceProfileManager_Delete(t *testing.T) {
@@ -86,12 +89,12 @@ func TestSelfServiceProfileManager_CreateTicket(t *testing.T) {
 	client := givenAClient(t)
 	org := givenAnOrganization(t)
 
-	ticket := &SSOTicket{
-		ConnectionConfig: &ConnectionConfig{
+	ticket := &SelfServiceProfileTicket{
+		ConnectionConfig: &SelfServiceProfileTicketConnectionConfig{
 			Name: "sso-generated-ticket",
 		},
 		EnabledClients: []*string{auth0.String(client.GetClientID())},
-		EnabledOrganizations: []*EnabledOrganizations{
+		EnabledOrganizations: []*SelfServiceProfileTicketEnabledOrganizations{
 			{
 				org.GetID(),
 			},
@@ -110,7 +113,7 @@ func givenASelfServiceProfile(t *testing.T) *SelfServiceProfile {
 				Primary: auth0.String("#334455"),
 			},
 		},
-		UserAttributes: []*UserAttributes{
+		UserAttributes: []*SelfServiceProfileUserAttributes{
 			{
 				Name:        auth0.String("some-name-here"),
 				Description: auth0.String("some-description"),

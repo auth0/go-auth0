@@ -30,33 +30,33 @@ interactions:
         trailer: {}
         content_length: 299
         uncompressed: false
-        body: '{"id":"ssp_qw8TaY3GAcVVvqeEEgu7BT","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"created_at":"2024-08-16T04:47:28.110Z","updated_at":"2024-08-16T04:47:28.110Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
+        body: '{"id":"ssp_wyggLzbwx7TqxzKUJZwhtb","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"created_at":"2024-08-16T06:42:31.397Z","updated_at":"2024-08-16T06:42:31.397Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 345.247833ms
+        duration: 1.015316166s
     - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 190
+        content_length: 100
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"user_attributes":[{"name":"some-new-name-here","description":"some-description","is_optional":true}],"branding":{"colors":{"primary":"#334455"},"logo_url":"https://example.com/logo.png"}}
+            {"user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}]}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.8.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_qw8TaY3GAcVVvqeEEgu7BT
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_wyggLzbwx7TqxzKUJZwhtb
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"ssp_qw8TaY3GAcVVvqeEEgu7BT","user_attributes":[{"name":"some-new-name-here","description":"some-description","is_optional":true}],"created_at":"2024-08-16T04:47:28.110Z","updated_at":"2024-08-16T04:47:28.456Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
+        body: '{"id":"ssp_wyggLzbwx7TqxzKUJZwhtb","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"created_at":"2024-08-16T06:42:31.397Z","updated_at":"2024-08-16T06:42:31.835Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 349.43375ms
+        duration: 429.32375ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -91,7 +91,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.8.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_qw8TaY3GAcVVvqeEEgu7BT
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_wyggLzbwx7TqxzKUJZwhtb
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -107,4 +107,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 358.82375ms
+        duration: 409.200333ms

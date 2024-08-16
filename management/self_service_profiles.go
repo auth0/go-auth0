@@ -14,16 +14,16 @@ type SelfServiceProfile struct {
 
 	// List of attributes to be mapped that
 	// will be shown to the user during the SS-SSO flow.
-	UserAttributes []*UserAttributes `json:"user_attributes,omitempty"`
-	CreatedAt      *time.Time        `json:"created_at,omitempty"`
-	UpdatedAt      *time.Time        `json:"updated_at,omitempty"`
+	UserAttributes []*SelfServiceProfileUserAttributes `json:"user_attributes,omitempty"`
+	CreatedAt      *time.Time                          `json:"created_at,omitempty"`
+	UpdatedAt      *time.Time                          `json:"updated_at,omitempty"`
 
 	// Branding scheme for the profile.
 	Branding *Branding `json:"branding,omitempty"`
 }
 
-// UserAttributes is used to determine optional attributes.
-type UserAttributes struct {
+// SelfServiceProfileUserAttributes is used to determine optional attributes.
+type SelfServiceProfileUserAttributes struct {
 	// Identifier of this attribute.
 	Name *string `json:"name"`
 
@@ -34,15 +34,15 @@ type UserAttributes struct {
 	IsOptional *bool `json:"is_optional"`
 }
 
-// SSOTicket is used to created self-service ticket for a set of clients and organizations.
-type SSOTicket struct {
+// SelfServiceProfileTicket is used to created self-service ticket for a set of clients and organizations.
+type SelfServiceProfileTicket struct {
 	// If provided, this will allow editing of the
 	// provided connection during the SSO Flow.
 	ConnectionID *string `json:"connection_id,omitempty"`
 
 	// If provided, this will create a new connection
 	// for the SSO flow with the given configuration.
-	ConnectionConfig *ConnectionConfig `json:"connection_config,omitempty"`
+	ConnectionConfig *SelfServiceProfileTicketConnectionConfig `json:"connection_config,omitempty"`
 
 	// List of client_ids that the
 	// connection will be enabled for.
@@ -50,21 +50,21 @@ type SSOTicket struct {
 
 	// List of organizations that the
 	// connection will be enabled for.
-	EnabledOrganizations []*EnabledOrganizations `json:"enabled_organizations,omitempty"`
+	EnabledOrganizations []*SelfServiceProfileTicketEnabledOrganizations `json:"enabled_organizations,omitempty"`
 
 	// The ticket that is generated.
 	Ticket *string `json:"ticket,omitempty"`
 }
 
-// ConnectionConfig sets the configuration for SSOTicket.
-type ConnectionConfig struct {
+// SelfServiceProfileTicketConnectionConfig sets the configuration for SSOTicket.
+type SelfServiceProfileTicketConnectionConfig struct {
 	// The name of the connection that will be
 	// created as a part of the SSO flow.
 	Name string `json:"name,omitempty"`
 }
 
-// EnabledOrganizations is the list of Organizations associated with the SSO Ticket.
-type EnabledOrganizations struct {
+// SelfServiceProfileTicketEnabledOrganizations is the list of Organizations associated with the SSO Ticket.
+type SelfServiceProfileTicketEnabledOrganizations struct {
 	// Organization identifier.
 	OrganizationID string `json:"organization_id,omitempty"`
 }
@@ -72,8 +72,8 @@ type EnabledOrganizations struct {
 // MarshalJSON implements the json.Marshaller interface.
 func (ssp *SelfServiceProfile) MarshalJSON() ([]byte, error) {
 	type SelfServiceProfileSubset struct {
-		UserAttributes []*UserAttributes `json:"user_attributes,omitempty"`
-		Branding       *Branding         `json:"branding,omitempty"`
+		UserAttributes []*SelfServiceProfileUserAttributes `json:"user_attributes,omitempty"`
+		Branding       *Branding                           `json:"branding,omitempty"`
 	}
 
 	return json.Marshal(&SelfServiceProfileSubset{
@@ -114,7 +114,7 @@ func (m *SelfServiceProfileManager) Delete(ctx context.Context, id string, opts 
 }
 
 // CreateTicket creates a sso-access ticket to initiate the Self Service SSO Flow.
-func (m *SelfServiceProfileManager) CreateTicket(ctx context.Context, id string, t *SSOTicket, opts ...RequestOption) (err error) {
+func (m *SelfServiceProfileManager) CreateTicket(ctx context.Context, id string, t *SelfServiceProfileTicket, opts ...RequestOption) (err error) {
 	err = m.management.Request(ctx, "POST", m.management.URI("self-service-profiles", id, "sso-ticket"), t, opts...)
 	return
 }

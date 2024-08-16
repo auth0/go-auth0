@@ -2119,11 +2119,6 @@ func (c *Connection) String() string {
 	return Stringify(c)
 }
 
-// String returns a string representation of ConnectionConfig.
-func (c *ConnectionConfig) String() string {
-	return Stringify(c)
-}
-
 // GetAudience returns the Audience field if it's non-nil, zero value otherwise.
 func (c *ConnectionGatewayAuthentication) GetAudience() string {
 	if c == nil || c.Audience == nil {
@@ -6605,11 +6600,6 @@ func (e *EmailTemplate) String() string {
 	return Stringify(e)
 }
 
-// String returns a string representation of EnabledOrganizations.
-func (e *EnabledOrganizations) String() string {
-	return Stringify(e)
-}
-
 // GetEnrolledAt returns the EnrolledAt field if it's non-nil, zero value otherwise.
 func (e *Enrollment) GetEnrolledAt() time.Time {
 	if e == nil || e.EnrolledAt == nil {
@@ -9360,6 +9350,74 @@ func (s *SelfServiceProfile) String() string {
 	return Stringify(s)
 }
 
+// GetConnectionConfig returns the ConnectionConfig field.
+func (s *SelfServiceProfileTicket) GetConnectionConfig() *SelfServiceProfileTicketConnectionConfig {
+	if s == nil {
+		return nil
+	}
+	return s.ConnectionConfig
+}
+
+// GetConnectionID returns the ConnectionID field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicket) GetConnectionID() string {
+	if s == nil || s.ConnectionID == nil {
+		return ""
+	}
+	return *s.ConnectionID
+}
+
+// GetTicket returns the Ticket field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicket) GetTicket() string {
+	if s == nil || s.Ticket == nil {
+		return ""
+	}
+	return *s.Ticket
+}
+
+// String returns a string representation of SelfServiceProfileTicket.
+func (s *SelfServiceProfileTicket) String() string {
+	return Stringify(s)
+}
+
+// String returns a string representation of SelfServiceProfileTicketConnectionConfig.
+func (s *SelfServiceProfileTicketConnectionConfig) String() string {
+	return Stringify(s)
+}
+
+// String returns a string representation of SelfServiceProfileTicketEnabledOrganizations.
+func (s *SelfServiceProfileTicketEnabledOrganizations) String() string {
+	return Stringify(s)
+}
+
+// GetDescription returns the Description field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileUserAttributes) GetDescription() string {
+	if s == nil || s.Description == nil {
+		return ""
+	}
+	return *s.Description
+}
+
+// GetIsOptional returns the IsOptional field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileUserAttributes) GetIsOptional() bool {
+	if s == nil || s.IsOptional == nil {
+		return false
+	}
+	return *s.IsOptional
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileUserAttributes) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+// String returns a string representation of SelfServiceProfileUserAttributes.
+func (s *SelfServiceProfileUserAttributes) String() string {
+	return Stringify(s)
+}
+
 // GetBaseURL returns the BaseURL field if it's non-nil, zero value otherwise.
 func (s *SentryClientAddon) GetBaseURL() string {
 	if s == nil || s.BaseURL == nil {
@@ -9547,35 +9605,6 @@ func (s *SSOIntegrationClientAddon) GetVersion() string {
 
 // String returns a string representation of SSOIntegrationClientAddon.
 func (s *SSOIntegrationClientAddon) String() string {
-	return Stringify(s)
-}
-
-// GetConnectionConfig returns the ConnectionConfig field.
-func (s *SSOTicket) GetConnectionConfig() *ConnectionConfig {
-	if s == nil {
-		return nil
-	}
-	return s.ConnectionConfig
-}
-
-// GetConnectionID returns the ConnectionID field if it's non-nil, zero value otherwise.
-func (s *SSOTicket) GetConnectionID() string {
-	if s == nil || s.ConnectionID == nil {
-		return ""
-	}
-	return *s.ConnectionID
-}
-
-// GetTicket returns the Ticket field if it's non-nil, zero value otherwise.
-func (s *SSOTicket) GetTicket() string {
-	if s == nil || s.Ticket == nil {
-		return ""
-	}
-	return *s.Ticket
-}
-
-// String returns a string representation of SSOTicket.
-func (s *SSOTicket) String() string {
 	return Stringify(s)
 }
 
@@ -10526,35 +10555,6 @@ func (u *User) GetVerifyEmail() bool {
 
 // String returns a string representation of User.
 func (u *User) String() string {
-	return Stringify(u)
-}
-
-// GetDescription returns the Description field if it's non-nil, zero value otherwise.
-func (u *UserAttributes) GetDescription() string {
-	if u == nil || u.Description == nil {
-		return ""
-	}
-	return *u.Description
-}
-
-// GetIsOptional returns the IsOptional field if it's non-nil, zero value otherwise.
-func (u *UserAttributes) GetIsOptional() bool {
-	if u == nil || u.IsOptional == nil {
-		return false
-	}
-	return *u.IsOptional
-}
-
-// GetName returns the Name field if it's non-nil, zero value otherwise.
-func (u *UserAttributes) GetName() string {
-	if u == nil || u.Name == nil {
-		return ""
-	}
-	return *u.Name
-}
-
-// String returns a string representation of UserAttributes.
-func (u *UserAttributes) String() string {
 	return Stringify(u)
 }
 
