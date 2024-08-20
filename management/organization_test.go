@@ -490,7 +490,7 @@ func TestOrganizationManager_ClientGrantsWithOrg(t *testing.T) {
 			auth0.String(org.GetID()),
 		},
 	}
-
+	// Create a client that shall be used for testing.
 	err := api.Client.Create(context.Background(), client)
 	require.NoError(t, err)
 
@@ -506,26 +506,49 @@ func TestOrganizationManager_ClientGrantsWithOrg(t *testing.T) {
 		OrganizationUsage:    auth0.String("allow"),
 	}
 
+	// Create a clientGrant and associate with the client created above.
 	err = api.ClientGrant.Create(context.Background(), clientGrant)
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		cleanupClientGrant(t, clientGrant.GetID())
 	})
 
+	// Associates the grant with an organization.
 	err = api.Organization.AssociateClientGrant(context.Background(), org.GetID(), clientGrant.GetID())
 	require.NoError(t, err)
 
+	// List all clients associated with a ClientGrant given an organizationID as query param
+	clients, err := api.Client.List(context.Background(), Parameter("q", fmt.Sprintf("client_grant.organization_id:%s", org.GetID())))
+	require.NoError(t, err)
+	for _, c := range clients.Clients {
+		assert.Equal(t, org.GetID(), c.DefaultOrganization.GetOrganizationID())
+	}
+
+	// List all ClientGrants given a list of grant_ids as query param
 	associatedGrants, err := api.Organization.ClientGrants(context.Background(), org.GetID(), Parameter("grant_ids", clientGrant.GetID()))
 	require.NoError(t, err)
 	assert.Greater(t, len(associatedGrants.ClientGrants), 0)
 	assert.Contains(t, associatedGrants.ClientGrants, clientGrant)
 
-	clients, err := api.Client.List(context.Background(), Parameter("q", fmt.Sprintf("client_grant.organization_id:%s", org.GetID())))
-	require.NoError(t, err)
-	assert.Equal(t, client.GetClientID(), clients.Clients[0].GetClientID())
-
+	// Remove the associated ClientGrants
 	err = api.Organization.RemoveClientGrant(context.Background(), org.GetID(), clientGrant.GetID())
 	require.NoError(t, err)
+
+	// List all ClientGrants which should be an empty list since grant has been removed from the organization.
+	associatedGrants, err = api.Organization.ClientGrants(context.Background(), org.GetID(), Parameter("grant_ids", clientGrant.GetID()))
+	require.NoError(t, err)
+	assert.Len(t, associatedGrants.ClientGrants, 0)
+
+	// Delete the ClientGrant.
+	err = api.ClientGrant.Delete(context.Background(), clientGrant.GetID())
+	require.NoError(t, err)
+
+	// Retrieve the ClientGrant and ensure error is return since grant has been deleted.
+	retrievedGrant, err := api.ClientGrant.Read(context.Background(), clientGrant.GetID())
+	assert.Nil(t, retrievedGrant)
+	assert.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
 
 func givenAnOrganization(t *testing.T) *Organization {
