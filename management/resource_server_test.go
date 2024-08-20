@@ -30,7 +30,7 @@ func TestResourceServer_Create(t *testing.T) {
 		EnforcePolicies: auth0.Bool(true),
 		TokenDialect:    auth0.String("rfc9068_profile_authz"),
 		ConsentPolicy:   auth0.String("transactional-authorization-with-mfa"),
-		AuthorizationDetails: &[]AuthorizationDetails{
+		AuthorizationDetails: &[]ResourceServerAuthorizationDetails{
 			{
 				Type: auth0.String("payment"),
 			},
@@ -38,9 +38,9 @@ func TestResourceServer_Create(t *testing.T) {
 				Type: auth0.String("my custom type"),
 			},
 		},
-		TokenEncryption: &TokenEncryption{
+		TokenEncryption: &ResourceServerTokenEncryption{
 			Format: auth0.String("compact-nested-jwe"),
-			EncryptionKey: &EncryptionKey{
+			EncryptionKey: &ResourceServerTokenEncryptionKey{
 				Name: auth0.String("my JWE public key"),
 				Alg:  auth0.String("RSA-OAEP-256"),
 				Kid:  auth0.String("my-key-id"),
@@ -60,7 +60,7 @@ aibASY5pIRiKENmbZELDtucCAwEAAQ==
 -----END PUBLIC KEY-----`),
 			},
 		},
-		ProofOfPossession: &ProofOfPossession{
+		ProofOfPossession: &ResourceServerProofOfPossession{
 			Mechanism: auth0.String("mtls"),
 			Required:  auth0.Bool(true),
 		},

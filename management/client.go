@@ -120,7 +120,7 @@ type Client struct {
 	OIDCLogout *OIDCLogout `json:"oidc_logout,omitempty"`
 
 	// SignedRequestObject JWT-secured Authorization Requests (JAR) settings for the client.
-	SignedRequestObject *SignedRequestObject `json:"signed_request_object,omitempty"`
+	SignedRequestObject *ClientSignedRequestObject `json:"signed_request_object,omitempty"`
 
 	// ComplianceLevel Defines the compliance level for this client, which may restrict it's capabilities
 	//
@@ -148,8 +148,8 @@ type DefaultOrganization struct {
 	OrganizationID *string   `json:"organization_id,omitempty"`
 }
 
-// SignedRequestObject is used to configure JWT-secured Authorization Requests (JAR) settings for our Client.
-type SignedRequestObject struct {
+// ClientSignedRequestObject is used to configure JWT-secured Authorization Requests (JAR) settings for our Client.
+type ClientSignedRequestObject struct {
 	// Indicates whether the JAR requests are mandatory
 	Required *bool `json:"required,omitempty"`
 

@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.9.0](https://github.com/auth0/go-auth0/tree/v1.9.0) (2024-08-16)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.8.0...v1.9.0)
+
+**Added**
+- Add Support for Self Service Profiles [\#431](https://github.com/auth0/go-auth0/pull/431) ([duedares-rvj](https://github.com/duedares-rvj))
+- Add Support for HRI Features [\#429](https://github.com/auth0/go-auth0/pull/429) ([developerkunal](https://github.com/developerkunal))
+- Add Support for Flexible Identifiers on ConnectionOptions & `phone_number` to SignupRequest Struct [\#421](https://github.com/auth0/go-auth0/pull/421) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.8.0](https://github.com/auth0/go-auth0/tree/v1.8.0) (2024-07-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.7.0...v1.8.0)
 
