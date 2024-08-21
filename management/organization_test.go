@@ -485,9 +485,9 @@ func TestOrganizationManager_ClientGrantsWithOrg(t *testing.T) {
 		Name:              auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
 		Description:       auth0.String("This is just a test client."),
 		OrganizationUsage: auth0.String("allow"),
-		DefaultOrganization: &DefaultOrganization{
-			&[]string{"client_credentials"},
-			auth0.String(org.GetID()),
+		DefaultOrganization: &ClientDefaultOrganization{
+			Flows:          &[]string{"client_credentials"},
+			OrganizationID: auth0.String(org.GetID()),
 		},
 	}
 	// Create a client that shall be used for testing.

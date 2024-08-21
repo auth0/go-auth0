@@ -2184,6 +2184,34 @@ func TestClientAuthenticationMethods_String(t *testing.T) {
 	}
 }
 
+func TestClientDefaultOrganization_GetFlows(tt *testing.T) {
+	var zeroValue []string
+	c := &ClientDefaultOrganization{Flows: &zeroValue}
+	c.GetFlows()
+	c = &ClientDefaultOrganization{}
+	c.GetFlows()
+	c = nil
+	c.GetFlows()
+}
+
+func TestClientDefaultOrganization_GetOrganizationID(tt *testing.T) {
+	var zeroValue string
+	c := &ClientDefaultOrganization{OrganizationID: &zeroValue}
+	c.GetOrganizationID()
+	c = &ClientDefaultOrganization{}
+	c.GetOrganizationID()
+	c = nil
+	c.GetOrganizationID()
+}
+
+func TestClientDefaultOrganization_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientDefaultOrganization{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestClientGrant_GetAllowAnyOrganization(tt *testing.T) {
 	var zeroValue bool
 	c := &ClientGrant{AllowAnyOrganization: &zeroValue}
@@ -7755,34 +7783,6 @@ func TestDailyStat_GetUpdatedAt(tt *testing.T) {
 func TestDailyStat_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &DailyStat{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestDefaultOrganization_GetFlows(tt *testing.T) {
-	var zeroValue []string
-	d := &DefaultOrganization{Flows: &zeroValue}
-	d.GetFlows()
-	d = &DefaultOrganization{}
-	d.GetFlows()
-	d = nil
-	d.GetFlows()
-}
-
-func TestDefaultOrganization_GetOrganizationID(tt *testing.T) {
-	var zeroValue string
-	d := &DefaultOrganization{OrganizationID: &zeroValue}
-	d.GetOrganizationID()
-	d = &DefaultOrganization{}
-	d.GetOrganizationID()
-	d = nil
-	d.GetOrganizationID()
-}
-
-func TestDefaultOrganization_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &DefaultOrganization{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

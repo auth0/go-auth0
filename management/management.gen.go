@@ -1336,7 +1336,7 @@ func (c *Client) GetCustomLoginPagePreview() string {
 }
 
 // GetDefaultOrganization returns the DefaultOrganization field.
-func (c *Client) GetDefaultOrganization() *DefaultOrganization {
+func (c *Client) GetDefaultOrganization() *ClientDefaultOrganization {
 	if c == nil {
 		return nil
 	}
@@ -1811,6 +1811,27 @@ func (c *ClientAuthenticationMethods) GetTLSClientAuth() *TLSClientAuth {
 
 // String returns a string representation of ClientAuthenticationMethods.
 func (c *ClientAuthenticationMethods) String() string {
+	return Stringify(c)
+}
+
+// GetFlows returns the Flows field if it's non-nil, zero value otherwise.
+func (c *ClientDefaultOrganization) GetFlows() []string {
+	if c == nil || c.Flows == nil {
+		return nil
+	}
+	return *c.Flows
+}
+
+// GetOrganizationID returns the OrganizationID field if it's non-nil, zero value otherwise.
+func (c *ClientDefaultOrganization) GetOrganizationID() string {
+	if c == nil || c.OrganizationID == nil {
+		return ""
+	}
+	return *c.OrganizationID
+}
+
+// String returns a string representation of ClientDefaultOrganization.
+func (c *ClientDefaultOrganization) String() string {
 	return Stringify(c)
 }
 
@@ -6275,27 +6296,6 @@ func (d *DailyStat) GetUpdatedAt() time.Time {
 
 // String returns a string representation of DailyStat.
 func (d *DailyStat) String() string {
-	return Stringify(d)
-}
-
-// GetFlows returns the Flows field if it's non-nil, zero value otherwise.
-func (d *DefaultOrganization) GetFlows() []string {
-	if d == nil || d.Flows == nil {
-		return nil
-	}
-	return *d.Flows
-}
-
-// GetOrganizationID returns the OrganizationID field if it's non-nil, zero value otherwise.
-func (d *DefaultOrganization) GetOrganizationID() string {
-	if d == nil || d.OrganizationID == nil {
-		return ""
-	}
-	return *d.OrganizationID
-}
-
-// String returns a string representation of DefaultOrganization.
-func (d *DefaultOrganization) String() string {
 	return Stringify(d)
 }
 
