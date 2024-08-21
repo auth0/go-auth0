@@ -9580,6 +9580,111 @@ func (s *SCIMToken) String() string {
 	return Stringify(s)
 }
 
+// GetBranding returns the Branding field.
+func (s *SelfServiceProfile) GetBranding() *Branding {
+	if s == nil {
+		return nil
+	}
+	return s.Branding
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetCreatedAt() time.Time {
+	if s == nil || s.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *s.CreatedAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetID() string {
+	if s == nil || s.ID == nil {
+		return ""
+	}
+	return *s.ID
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetUpdatedAt() time.Time {
+	if s == nil || s.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *s.UpdatedAt
+}
+
+// String returns a string representation of SelfServiceProfile.
+func (s *SelfServiceProfile) String() string {
+	return Stringify(s)
+}
+
+// GetConnectionConfig returns the ConnectionConfig field.
+func (s *SelfServiceProfileTicket) GetConnectionConfig() *SelfServiceProfileTicketConnectionConfig {
+	if s == nil {
+		return nil
+	}
+	return s.ConnectionConfig
+}
+
+// GetConnectionID returns the ConnectionID field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicket) GetConnectionID() string {
+	if s == nil || s.ConnectionID == nil {
+		return ""
+	}
+	return *s.ConnectionID
+}
+
+// GetTicket returns the Ticket field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicket) GetTicket() string {
+	if s == nil || s.Ticket == nil {
+		return ""
+	}
+	return *s.Ticket
+}
+
+// String returns a string representation of SelfServiceProfileTicket.
+func (s *SelfServiceProfileTicket) String() string {
+	return Stringify(s)
+}
+
+// String returns a string representation of SelfServiceProfileTicketConnectionConfig.
+func (s *SelfServiceProfileTicketConnectionConfig) String() string {
+	return Stringify(s)
+}
+
+// String returns a string representation of SelfServiceProfileTicketEnabledOrganizations.
+func (s *SelfServiceProfileTicketEnabledOrganizations) String() string {
+	return Stringify(s)
+}
+
+// GetDescription returns the Description field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileUserAttributes) GetDescription() string {
+	if s == nil || s.Description == nil {
+		return ""
+	}
+	return *s.Description
+}
+
+// GetIsOptional returns the IsOptional field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileUserAttributes) GetIsOptional() bool {
+	if s == nil || s.IsOptional == nil {
+		return false
+	}
+	return *s.IsOptional
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileUserAttributes) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+// String returns a string representation of SelfServiceProfileUserAttributes.
+func (s *SelfServiceProfileUserAttributes) String() string {
+	return Stringify(s)
+}
+
 // GetCredentials returns the Credentials field if it's non-nil, zero value otherwise.
 func (s *SelfSignedTLSClientAuth) GetCredentials() []Credential {
 	if s == nil || s.Credentials == nil {

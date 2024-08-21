@@ -103,6 +103,9 @@ type Management struct {
 	// EmailProvider manages Auth0 Email Providers.
 	EmailProvider *EmailProviderManager
 
+	// SelfServiceProfileManager manages Auth0 Self Service Profiles.
+	SelfServiceProfile *SelfServiceProfileManager
+
 	// EncryptionKey manages Auth0 Encryption Keys.
 	EncryptionKey *EncryptionKeyManager
 
@@ -205,6 +208,7 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.Tenant = (*TenantManager)(&m.common)
 	m.Ticket = (*TicketManager)(&m.common)
 	m.User = (*UserManager)(&m.common)
+	m.SelfServiceProfile = (*SelfServiceProfileManager)(&m.common)
 
 	return m, nil
 }
