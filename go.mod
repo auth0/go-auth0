@@ -8,6 +8,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/lestrrat-go/jwx/v2 v2.1.1
 	github.com/stretchr/testify v1.9.0
+	github.com/tink-crypto/tink-go/v2 v2.2.0
 	go.devnw.com/structs v1.0.0
 	golang.org/x/oauth2 v0.21.0
 	gopkg.in/dnaeon/go-vcr.v3 v3.2.0

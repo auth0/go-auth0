@@ -103,6 +103,9 @@ type Management struct {
 	// EmailProvider manages Auth0 Email Providers.
 	EmailProvider *EmailProviderManager
 
+	// EncryptionKey manages Auth0 Encryption Keys.
+	EncryptionKey *EncryptionKeyManager
+
 	url             *url.URL
 	basePath        string
 	userAgent       string
@@ -197,6 +200,7 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.Rule = (*RuleManager)(&m.common)
 	m.RuleConfig = (*RuleConfigManager)(&m.common)
 	m.SigningKey = (*SigningKeyManager)(&m.common)
+	m.EncryptionKey = (*EncryptionKeyManager)(&m.common)
 	m.Stat = (*StatManager)(&m.common)
 	m.Tenant = (*TenantManager)(&m.common)
 	m.Ticket = (*TicketManager)(&m.common)

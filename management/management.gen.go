@@ -6677,6 +6677,72 @@ func (e *EmailTemplate) String() string {
 	return Stringify(e)
 }
 
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (e *EncryptionKey) GetCreatedAt() time.Time {
+	if e == nil || e.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *e.CreatedAt
+}
+
+// GetKID returns the KID field if it's non-nil, zero value otherwise.
+func (e *EncryptionKey) GetKID() string {
+	if e == nil || e.KID == nil {
+		return ""
+	}
+	return *e.KID
+}
+
+// GetParentKID returns the ParentKID field if it's non-nil, zero value otherwise.
+func (e *EncryptionKey) GetParentKID() string {
+	if e == nil || e.ParentKID == nil {
+		return ""
+	}
+	return *e.ParentKID
+}
+
+// GetState returns the State field if it's non-nil, zero value otherwise.
+func (e *EncryptionKey) GetState() string {
+	if e == nil || e.State == nil {
+		return ""
+	}
+	return *e.State
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (e *EncryptionKey) GetType() string {
+	if e == nil || e.Type == nil {
+		return ""
+	}
+	return *e.Type
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (e *EncryptionKey) GetUpdatedAt() time.Time {
+	if e == nil || e.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *e.UpdatedAt
+}
+
+// GetWrappedKey returns the WrappedKey field if it's non-nil, zero value otherwise.
+func (e *EncryptionKey) GetWrappedKey() string {
+	if e == nil || e.WrappedKey == nil {
+		return ""
+	}
+	return *e.WrappedKey
+}
+
+// String returns a string representation of EncryptionKey.
+func (e *EncryptionKey) String() string {
+	return Stringify(e)
+}
+
+// String returns a string representation of EncryptionKeyList.
+func (e *EncryptionKeyList) String() string {
+	return Stringify(e)
+}
+
 // GetEnrolledAt returns the EnrolledAt field if it's non-nil, zero value otherwise.
 func (e *Enrollment) GetEnrolledAt() time.Time {
 	if e == nil || e.EnrolledAt == nil {
@@ -10957,6 +11023,27 @@ func (w *WAMSClientAddon) GetMasterkey() string {
 
 // String returns a string representation of WAMSClientAddon.
 func (w *WAMSClientAddon) String() string {
+	return Stringify(w)
+}
+
+// GetAlgorithm returns the Algorithm field if it's non-nil, zero value otherwise.
+func (w *WrappingKey) GetAlgorithm() string {
+	if w == nil || w.Algorithm == nil {
+		return ""
+	}
+	return *w.Algorithm
+}
+
+// GetPublicKey returns the PublicKey field if it's non-nil, zero value otherwise.
+func (w *WrappingKey) GetPublicKey() string {
+	if w == nil || w.PublicKey == nil {
+		return ""
+	}
+	return *w.PublicKey
+}
+
+// String returns a string representation of WrappingKey.
+func (w *WrappingKey) String() string {
 	return Stringify(w)
 }
 
