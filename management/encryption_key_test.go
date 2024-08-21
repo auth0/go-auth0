@@ -2,20 +2,36 @@ package management
 
 import (
 	"context"
+	"crypto/aes"
+	"crypto/cipher"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha256"
 	"crypto/x509"
 	"encoding/base64"
+	"encoding/binary"
 	"encoding/pem"
 	"fmt"
+	"math"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/tink-crypto/tink-go/v2/kwp/subtle"
 
 	"github.com/auth0/go-auth0"
 )
+
+// Constants for wrapping sizes and parameters.
+const (
+	minWrapSize = 16
+	maxWrapSize = 8192
+	roundCount  = 6
+	ivPrefix    = uint32(0xA65959A6)
+)
+
+// kwpImpl is a Key Wrapping with Padding implementation.
+type kwpImpl struct {
+	block cipher.Block
+}
 
 func TestEncryptionKeyManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
@@ -25,7 +41,9 @@ func TestEncryptionKeyManager_Create(t *testing.T) {
 	err := api.EncryptionKey.Create(context.Background(), givenEncryptionKey)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, givenEncryptionKey.GetKID())
-	cleanUpEncryptionKey(t, givenEncryptionKey.GetKID())
+	t.Cleanup(func() {
+		cleanUpEncryptionKey(t, givenEncryptionKey.GetKID())
+	})
 }
 
 func TestEncryptionKeyManager_List(t *testing.T) {
@@ -49,22 +67,31 @@ func TestEncryptionKeyManager_Rekey(t *testing.T) {
 	oldKeyList, err := api.EncryptionKey.List(context.Background(), PerPage(50), Page(0))
 	assert.NoError(t, err)
 	assert.NotEmpty(t, oldKeyList.Keys)
+
 	var oldKey, newKey *EncryptionKey
 	for _, key := range oldKeyList.Keys {
 		if key.GetState() == "active" && key.GetType() == "tenant-master-key" {
 			oldKey = key
+			break
 		}
 	}
+	assert.NotNil(t, oldKey)
+
 	err = api.EncryptionKey.Rekey(context.Background())
 	assert.NoError(t, err)
+
 	keyList, err := api.EncryptionKey.List(context.Background(), PerPage(50), Page(0))
 	assert.NoError(t, err)
 	assert.NotEmpty(t, keyList.Keys)
+
 	for _, key := range keyList.Keys {
 		if key.GetState() == "active" && key.GetType() == "tenant-master-key" {
 			newKey = key
+			break
 		}
 	}
+	assert.NotNil(t, newKey)
+
 	assert.NotEqual(t, oldKey.GetKID(), newKey.GetKID())
 	assert.NotEqual(t, keyList.Keys, oldKeyList.Keys)
 }
@@ -93,11 +120,11 @@ func TestEncryptionKeyManager_ImportWrappedKey(t *testing.T) {
 	wrappingKey, err := api.EncryptionKey.CreatePublicWrappingKey(context.Background(), key.GetKID())
 	assert.NoError(t, err)
 	assert.NotEmpty(t, wrappingKey.GetPublicKey())
+
 	wrappedKeyStr, err := createAWSWrappedCiphertext(wrappingKey.GetPublicKey())
 	assert.NoError(t, err)
 
 	key.WrappedKey = &wrappedKeyStr
-
 	err = api.EncryptionKey.ImportWrappedKey(context.Background(), key)
 	assert.NoError(t, err)
 	assert.Equal(t, key.GetType(), "customer-provided-root-key")
@@ -130,51 +157,105 @@ func createAWSWrappedCiphertext(publicKeyPEM string) (string, error) {
 		return "", fmt.Errorf("failed to decode public key PEM")
 	}
 
-	// Parse the public key
 	pubKey, err := x509.ParsePKIXPublicKey(block.Bytes)
 	if err != nil {
 		return "", fmt.Errorf("failed to parse public key: %w", err)
 	}
 
-	// Ensure the public key is of type *rsa.PublicKey
 	publicRSAKey, ok := pubKey.(*rsa.PublicKey)
 	if !ok {
 		return "", fmt.Errorf("public key is not of type *rsa.PublicKey")
 	}
 
-	// Generate a 256-bit (32-byte) ephemeral key
 	ephemeralKey := make([]byte, 32)
 	if _, err := rand.Read(ephemeralKey); err != nil {
 		return "", fmt.Errorf("failed to generate ephemeral key: %w", err)
 	}
 
-	// Generate a 256-bit (32-byte) plaintext key
 	plaintextKey := make([]byte, 32)
 	if _, err := rand.Read(plaintextKey); err != nil {
 		return "", fmt.Errorf("failed to generate plaintext key: %w", err)
 	}
 
-	// Wrap the ephemeral key using RSA-OAEP with SHA-256
 	wrappedEphemeralKey, err := rsa.EncryptOAEP(sha256.New(), rand.Reader, publicRSAKey, ephemeralKey, nil)
 	if err != nil {
 		return "", fmt.Errorf("failed to wrap ephemeral key: %w", err)
 	}
 
-	// Create a KWP (Key Wrapping with Padding) instance using the ephemeral key
-	kwp, err := subtle.NewKWP(ephemeralKey)
+	kwp, err := newKWP(ephemeralKey)
 	if err != nil {
 		return "", fmt.Errorf("failed to create KWP instance: %w", err)
 	}
 
-	// Wrap the plaintext key using KWP
-	wrappedTargetKey, err := kwp.Wrap(plaintextKey)
+	wrappedTargetKey, err := kwp.wrap(plaintextKey)
 	if err != nil {
 		return "", fmt.Errorf("failed to wrap target key using KWP: %w", err)
 	}
 
-	// Return the concatenation of the wrapped ephemeral key and the wrapped plaintext key
 	wrappedEphemeralKey = append(wrappedEphemeralKey, wrappedTargetKey...)
-	cipherBytes := wrappedEphemeralKey
+	return base64.StdEncoding.EncodeToString(wrappedEphemeralKey), nil
+}
 
-	return base64.StdEncoding.EncodeToString(cipherBytes), nil
+func newKWP(wrappingKey []byte) (*kwpImpl, error) {
+	switch len(wrappingKey) {
+	default:
+		return nil, fmt.Errorf("kwp: invalid AES key size; want 16 or 32, got %d", len(wrappingKey))
+	case 16, 32:
+		block, err := aes.NewCipher(wrappingKey)
+		if err != nil {
+			return nil, fmt.Errorf("kwp: error building AES cipher: %v", err)
+		}
+		return &kwpImpl{block: block}, nil
+	}
+}
+
+func wrappingSize(inputSize int) int {
+	paddingSize := 7 - (inputSize+7)%8
+	return inputSize + paddingSize + 8
+}
+
+func (kwp *kwpImpl) computeW(iv, key []byte) ([]byte, error) {
+	if len(key) <= 8 || len(key) > math.MaxInt32-16 || len(iv) != 8 {
+		return nil, fmt.Errorf("kwp: computeW called with invalid parameters")
+	}
+
+	data := make([]byte, wrappingSize(len(key)))
+	copy(data, iv)
+	copy(data[8:], key)
+	blockCount := len(data)/8 - 1
+
+	buf := make([]byte, 16)
+	copy(buf, data[:8])
+
+	for i := 0; i < roundCount; i++ {
+		for j := 0; j < blockCount; j++ {
+			copy(buf[8:], data[8*(j+1):])
+			kwp.block.Encrypt(buf, buf)
+
+			roundConst := uint(i*blockCount + j + 1)
+			for b := 0; b < 4; b++ {
+				buf[7-b] ^= byte(roundConst & 0xFF)
+				roundConst >>= 8
+			}
+
+			copy(data[8*(j+1):], buf[8:])
+		}
+	}
+	copy(data[:8], buf)
+	return data, nil
+}
+
+func (kwp *kwpImpl) wrap(data []byte) ([]byte, error) {
+	if len(data) < minWrapSize {
+		return nil, fmt.Errorf("kwp: key size to wrap too small")
+	}
+	if len(data) > maxWrapSize {
+		return nil, fmt.Errorf("kwp: key size to wrap too large")
+	}
+
+	iv := make([]byte, 8)
+	binary.BigEndian.PutUint32(iv, ivPrefix)
+	binary.BigEndian.PutUint32(iv[4:], uint32(len(data)))
+
+	return kwp.computeW(iv, data)
 }

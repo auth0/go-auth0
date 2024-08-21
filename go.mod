@@ -8,7 +8,6 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/lestrrat-go/jwx/v2 v2.1.1
 	github.com/stretchr/testify v1.9.0
-	github.com/tink-crypto/tink-go/v2 v2.2.0
 	go.devnw.com/structs v1.0.0
 	golang.org/x/oauth2 v0.22.0
 	gopkg.in/dnaeon/go-vcr.v3 v3.2.0
@@ -18,6 +17,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.3.0 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
+	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/lestrrat-go/blackmagic v1.0.2 // indirect
 	github.com/lestrrat-go/httpcc v1.0.1 // indirect
 	github.com/lestrrat-go/httprc v1.0.6 // indirect
