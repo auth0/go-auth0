@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// EncryptionKeyList is a list of encryption keys.
 type EncryptionKeyList struct {
 	List
 	Keys []*EncryptionKey `json:"keys"`

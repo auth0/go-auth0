@@ -9,10 +9,12 @@ import (
 	"encoding/base64"
 	"encoding/pem"
 	"fmt"
-	"github.com/auth0/go-auth0"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/tink-crypto/tink-go/v2/kwp/subtle"
-	"testing"
+
+	"github.com/auth0/go-auth0"
 )
 
 func TestEncryptionKeyManager_Create(t *testing.T) {
@@ -171,7 +173,8 @@ func createAWSWrappedCiphertext(publicKeyPEM string) (string, error) {
 	}
 
 	// Return the concatenation of the wrapped ephemeral key and the wrapped plaintext key
-	cipherBytes := append(wrappedEphemeralKey, wrappedTargetKey...)
+	wrappedEphemeralKey = append(wrappedEphemeralKey, wrappedTargetKey...)
+	cipherBytes := wrappedEphemeralKey
 
 	return base64.StdEncoding.EncodeToString(cipherBytes), nil
 }
