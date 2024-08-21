@@ -198,14 +198,14 @@ func createAWSWrappedCiphertext(publicKeyPEM string) (string, error) {
 
 func newKWP(wrappingKey []byte) (*kwpImpl, error) {
 	switch len(wrappingKey) {
-	default:
-		return nil, fmt.Errorf("kwp: invalid AES key size; want 16 or 32, got %d", len(wrappingKey))
 	case 16, 32:
 		block, err := aes.NewCipher(wrappingKey)
 		if err != nil {
 			return nil, fmt.Errorf("kwp: error building AES cipher: %v", err)
 		}
 		return &kwpImpl{block: block}, nil
+	default:
+		return nil, fmt.Errorf("kwp: invalid AES key size; want 16 or 32, got %d", len(wrappingKey))
 	}
 }
 

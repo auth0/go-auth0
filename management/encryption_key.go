@@ -29,22 +29,21 @@ type EncryptionKey struct {
 	WrappedKey *string `json:"wrapped_key,omitempty"`
 }
 
-// Reset cleans up unnecessary fields based on the operation type.
-func (k *EncryptionKey) Reset(op string) {
+// reset cleans up unnecessary fields based on the operation type.
+func (k *EncryptionKey) reset(op string) {
+	k.KID = nil
+	k.CreatedAt = nil
+	k.UpdatedAt = nil
+	k.ParentKID = nil
+	k.State = nil
+
 	switch op {
 	case "import":
-		k.KID = nil
-		k.CreatedAt = nil
-		k.UpdatedAt = nil
-		k.ParentKID = nil
-		k.State = nil
 		k.Type = nil
 	case "create":
-		k.KID = nil
-		k.CreatedAt = nil
-		k.UpdatedAt = nil
-		k.ParentKID = nil
-		k.State = nil
+		k.WrappedKey = nil
+	default:
+		k.Type = nil
 		k.WrappedKey = nil
 	}
 }
@@ -64,7 +63,7 @@ type EncryptionKeyManager manager
 //
 // See: https://auth0.com/docs/api/management/v2/keys/post-encryption
 func (m *EncryptionKeyManager) Create(ctx context.Context, e *EncryptionKey, opts ...RequestOption) error {
-	e.Reset("create")
+	e.reset("create")
 	return m.management.Request(ctx, "POST", m.management.URI("keys", "encryption"), e, opts...)
 }
 
@@ -103,7 +102,7 @@ func (m *EncryptionKeyManager) Delete(ctx context.Context, kid string, opts ...R
 // See: https://auth0.com/docs/api/management/v2/keys/post-encryption-key
 func (m *EncryptionKeyManager) ImportWrappedKey(ctx context.Context, e *EncryptionKey, opts ...RequestOption) error {
 	id := *e.KID
-	e.Reset("import")
+	e.reset("import")
 	return m.management.Request(ctx, "POST", m.management.URI("keys", "encryption", id), e, opts...)
 }
 
