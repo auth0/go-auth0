@@ -8286,6 +8286,92 @@ func TestEmailTemplate_String(t *testing.T) {
 	}
 }
 
+func TestEncryptionKey_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	e := &EncryptionKey{CreatedAt: &zeroValue}
+	e.GetCreatedAt()
+	e = &EncryptionKey{}
+	e.GetCreatedAt()
+	e = nil
+	e.GetCreatedAt()
+}
+
+func TestEncryptionKey_GetKID(tt *testing.T) {
+	var zeroValue string
+	e := &EncryptionKey{KID: &zeroValue}
+	e.GetKID()
+	e = &EncryptionKey{}
+	e.GetKID()
+	e = nil
+	e.GetKID()
+}
+
+func TestEncryptionKey_GetParentKID(tt *testing.T) {
+	var zeroValue string
+	e := &EncryptionKey{ParentKID: &zeroValue}
+	e.GetParentKID()
+	e = &EncryptionKey{}
+	e.GetParentKID()
+	e = nil
+	e.GetParentKID()
+}
+
+func TestEncryptionKey_GetState(tt *testing.T) {
+	var zeroValue string
+	e := &EncryptionKey{State: &zeroValue}
+	e.GetState()
+	e = &EncryptionKey{}
+	e.GetState()
+	e = nil
+	e.GetState()
+}
+
+func TestEncryptionKey_GetType(tt *testing.T) {
+	var zeroValue string
+	e := &EncryptionKey{Type: &zeroValue}
+	e.GetType()
+	e = &EncryptionKey{}
+	e.GetType()
+	e = nil
+	e.GetType()
+}
+
+func TestEncryptionKey_GetUpdatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	e := &EncryptionKey{UpdatedAt: &zeroValue}
+	e.GetUpdatedAt()
+	e = &EncryptionKey{}
+	e.GetUpdatedAt()
+	e = nil
+	e.GetUpdatedAt()
+}
+
+func TestEncryptionKey_GetWrappedKey(tt *testing.T) {
+	var zeroValue string
+	e := &EncryptionKey{WrappedKey: &zeroValue}
+	e.GetWrappedKey()
+	e = &EncryptionKey{}
+	e.GetWrappedKey()
+	e = nil
+	e.GetWrappedKey()
+}
+
+func TestEncryptionKey_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EncryptionKey{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEncryptionKeyList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EncryptionKeyList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestEnrollment_GetEnrolledAt(tt *testing.T) {
 	var zeroValue time.Time
 	e := &Enrollment{EnrolledAt: &zeroValue}
@@ -13902,6 +13988,34 @@ func TestWAMSClientAddon_GetMasterkey(tt *testing.T) {
 func TestWAMSClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &WAMSClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestWrappingKey_GetAlgorithm(tt *testing.T) {
+	var zeroValue string
+	w := &WrappingKey{Algorithm: &zeroValue}
+	w.GetAlgorithm()
+	w = &WrappingKey{}
+	w.GetAlgorithm()
+	w = nil
+	w.GetAlgorithm()
+}
+
+func TestWrappingKey_GetPublicKey(tt *testing.T) {
+	var zeroValue string
+	w := &WrappingKey{PublicKey: &zeroValue}
+	w.GetPublicKey()
+	w = &WrappingKey{}
+	w.GetPublicKey()
+	w = nil
+	w.GetPublicKey()
+}
+
+func TestWrappingKey_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &WrappingKey{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
