@@ -79,6 +79,54 @@ func TestPromptCustomText(t *testing.T) {
 	assert.Equal(t, "Welcome", texts["login"].(map[string]interface{})["title"])
 }
 
+func TestPromptManager_GetPartials(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	_ = givenACustomDomain(t)
+	_ = givenAUniversalLoginTemplate(t)
+
+	prompt := PromptLogin
+
+	expected := givenAPartialPrompt(t, prompt)
+
+	actual, err := api.Prompt.GetPartials(context.Background(), prompt)
+
+	assert.NoError(t, err)
+	assert.Equal(t, expected, actual)
+}
+
+func TestPromptManager_SetPartials(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	_ = givenACustomDomain(t)
+	_ = givenAUniversalLoginTemplate(t)
+
+	prompt := PromptLoginPasswordLess
+
+	expected := &PromptScreenPartials{
+		ScreenLoginPasswordlessSMSOTP: {
+			InsertionPointFormContentStart: `<div>Form Content Start</div>`,
+			InsertionPointFormContentEnd:   `<div>Form Content Start</div>`,
+		},
+		ScreenLoginPasswordlessEmailCode: {
+			InsertionPointFormContentStart: `<div>Form Content Start</div>`,
+			InsertionPointFormContentEnd:   `<div>Form Content Start</div>`,
+		},
+	}
+
+	err := api.Prompt.SetPartials(context.Background(), prompt, expected)
+	assert.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupPromptPartials(t, prompt)
+	})
+
+	actual, err := api.Prompt.GetPartials(context.Background(), prompt)
+
+	assert.NoError(t, err)
+	assert.Equal(t, expected, actual)
+}
+
 func TestPromptManager_ReadPartials(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -200,5 +248,32 @@ func deleteUniversalLoginTemplate(t *testing.T) {
 	t.Helper()
 
 	err := api.Branding.DeleteUniversalLogin(context.Background())
+	assert.NoError(t, err)
+}
+
+func givenAPartialPrompt(t *testing.T, prompt PromptType) *PromptScreenPartials {
+	t.Helper()
+
+	partials := &PromptScreenPartials{
+		ScreenLogin: {
+			InsertionPointFormContentStart: `<div>Form Content Start</div>`,
+			InsertionPointFormContentEnd:   `<div>Form Content Start</div>`,
+		},
+	}
+
+	err := api.Prompt.SetPartials(context.Background(), prompt, partials)
+	assert.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupPromptPartials(t, prompt)
+	})
+
+	return partials
+}
+
+func cleanupPromptPartials(t *testing.T, prompt PromptType) {
+	t.Helper()
+
+	err := api.Prompt.SetPartials(context.Background(), prompt, &PromptScreenPartials{})
 	assert.NoError(t, err)
 }

@@ -24,6 +24,9 @@ const (
 
 	// PromptLoginPassword represents the login-password prompt.
 	PromptLoginPassword PromptType = "login-password"
+
+	// PromptLoginPasswordLess represents the login-passwordless prompt.
+	PromptLoginPasswordLess PromptType = "login-passwordless"
 )
 
 var allowedPromptsWithPartials = []PromptType{
@@ -33,10 +36,72 @@ var allowedPromptsWithPartials = []PromptType{
 	PromptLogin,
 	PromptLoginID,
 	PromptLoginPassword,
+	PromptLoginPasswordLess,
 }
 
 // PromptType defines the prompt that we are managing.
 type PromptType string
+
+// ScreenName is a type that represents the name of a screen.
+type ScreenName string
+
+// InsertionPoint is a type that represents the insertion point of a screen.
+type InsertionPoint string
+
+const (
+	// ScreenLogin represents the signup screen.
+	ScreenLogin ScreenName = "login"
+
+	// ScreenLoginID represents the login-id screen.
+	ScreenLoginID ScreenName = "login-id"
+
+	// ScreenLoginPassword represents the login-password screen.
+	ScreenLoginPassword ScreenName = "login-password"
+
+	// ScreenSignup represents the signup screen.
+	ScreenSignup ScreenName = "signup"
+
+	// ScreenSignupID represents the signup-id screen.
+	ScreenSignupID ScreenName = "signup-id"
+
+	// ScreenSignupPassword represents the signup-password screen.
+	ScreenSignupPassword ScreenName = "signup-password"
+
+	// ScreenLoginPasswordlessSMSOTP represents the login-passwordless screen.
+	ScreenLoginPasswordlessSMSOTP ScreenName = "login-passwordless-sms-otp"
+
+	// ScreenLoginPasswordlessEmailCode represents the login-passwordless screen.
+	ScreenLoginPasswordlessEmailCode ScreenName = "login-passwordless-email-code"
+)
+
+const (
+	// InsertionPointFormContentStart represents the form-content-start insertion point.
+	InsertionPointFormContentStart InsertionPoint = "form-content-start"
+
+	// InsertionPointFormContentEnd represents the form-content-end insertion point.
+	InsertionPointFormContentEnd InsertionPoint = "form-content-end"
+
+	// InsertionPointFormFooterStart represents the form-footer-start insertion point.
+	InsertionPointFormFooterStart InsertionPoint = "form-footer-start"
+
+	// InsertionPointFormFooterEnd represents the form-footer-end insertion point.
+	InsertionPointFormFooterEnd InsertionPoint = "form-footer-end"
+
+	// InsertionPointSecondaryActionsStart represents the primary-actions-start insertion point.
+	InsertionPointSecondaryActionsStart InsertionPoint = "secondary-actions-start"
+
+	// InsertionPointSecondaryActionsEnd represents the primary-actions-end insertion point.
+	InsertionPointSecondaryActionsEnd InsertionPoint = "secondary-actions-end"
+)
+
+// ScreenPartials is a map of insertion points to partials.
+type ScreenPartials struct {
+	// Define InsertionPoints for the screen partials here
+	Content map[InsertionPoint]string
+}
+
+// PromptScreenPartials is a map of screen names to insertion points.
+type PromptScreenPartials map[ScreenName]map[InsertionPoint]string
 
 // Prompt is used within the Login Page.
 //
@@ -53,6 +118,8 @@ type Prompt struct {
 }
 
 // PromptPartials to be used for Custom Prompt Partials.
+//
+// Deprecated: Use [PromptScreenPartials] instead.
 //
 // See: https://auth0.com/docs/sign-up-prompt-customizations
 type PromptPartials struct {
@@ -127,6 +194,10 @@ func (m *PromptManager) SetCustomText(ctx context.Context, p string, l string, b
 
 // CreatePartials creates new custom prompt partials for a given segment.
 //
+// Deprecated: Use [ SetPartials ] instead. The [ SetPartials ] method is preferred for setting prompt partials and provides a more consistent API.
+//
+// To create a partial with a different screen name and prompt name, use the [ SetPartials ] method with the [PromptScreenPartials] struct.
+//
 // See: https://auth0.com/docs/sign-up-prompt-customizations#use-the-api-to-edit-custom-prompts
 func (m *PromptManager) CreatePartials(ctx context.Context, c *PromptPartials, opts ...RequestOption) error {
 	if err := guardAgainstPromptTypesWithNoPartials(c.Prompt); err != nil {
@@ -138,6 +209,10 @@ func (m *PromptManager) CreatePartials(ctx context.Context, c *PromptPartials, o
 
 // UpdatePartials updates custom prompt partials for a given segment.
 //
+// Deprecated: Use [ SetPartials ] instead. The [ SetPartials ] method offers more flexibility and is the recommended approach for updating prompt partials.
+//
+// To update a partial with a different screen name and prompt name, use the [ SetPartials ] method with the [PromptScreenPartials] struct.
+//
 // See: https://auth0.com/docs/sign-up-prompt-customizations#use-the-api-to-edit-custom-prompts
 func (m *PromptManager) UpdatePartials(ctx context.Context, c *PromptPartials, opts ...RequestOption) error {
 	if err := guardAgainstPromptTypesWithNoPartials(c.Prompt); err != nil {
@@ -147,7 +222,35 @@ func (m *PromptManager) UpdatePartials(ctx context.Context, c *PromptPartials, o
 	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(c.Prompt), "partials"), c, opts...)
 }
 
+// GetPartials retrieves custom prompt partials for a given segment.
+//
+// See : https://auth0.com/docs/api/management/v2/prompts/get-partials
+func (m *PromptManager) GetPartials(ctx context.Context, prompt PromptType, opts ...RequestOption) (c *PromptScreenPartials, err error) {
+	if err := guardAgainstPromptTypesWithNoPartials(prompt); err != nil {
+		return nil, err
+	}
+
+	err = m.management.Request(ctx, "GET", m.management.URI("prompts", string(prompt), "partials"), &c, opts...)
+
+	return
+}
+
+// SetPartials sets custom prompt partials for a given segment.
+//
+// See : https://auth0.com/docs/api/management/v2/prompts/put-partials
+func (m *PromptManager) SetPartials(ctx context.Context, prompt PromptType, c *PromptScreenPartials, opts ...RequestOption) error {
+	if err := guardAgainstPromptTypesWithNoPartials(prompt); err != nil {
+		return err
+	}
+
+	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(prompt), "partials"), &c, opts...)
+}
+
 // ReadPartials reads custom prompt partials for a given segment.
+//
+// Deprecated: Use [ GetPartials ] instead. The [ GetPartials ] method provides the same functionality with improved support and additional features.
+//
+// If there are multiple screen partials for a prompt, this method will return only the first screen partial. To retrieve all screen partials for a prompt, use the [ GetPartials ] method.
 //
 // See: https://auth0.com/docs/sign-up-prompt-customizations#use-the-api-to-edit-custom-prompts
 func (m *PromptManager) ReadPartials(ctx context.Context, prompt PromptType, opts ...RequestOption) (c *PromptPartials, err error) {
@@ -167,6 +270,8 @@ func (m *PromptManager) ReadPartials(ctx context.Context, prompt PromptType, opt
 }
 
 // DeletePartials deletes custom prompt partials for a given segment.
+//
+// Deprecated: Use [ SetPartials ] with an empty [PromptScreenPartials] struct instead. The [ SetPartials ] method now handles deletion as well.
 //
 // See: https://auth0.com/docs/sign-up-prompt-customizations#use-the-api-to-edit-custom-prompts
 func (m *PromptManager) DeletePartials(ctx context.Context, prompt PromptType, opts ...RequestOption) error {

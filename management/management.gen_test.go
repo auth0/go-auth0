@@ -12041,6 +12041,24 @@ func TestSCIMToken_String(t *testing.T) {
 	}
 }
 
+func TestScreenPartials_GetContent(tt *testing.T) {
+	zeroValue := map[InsertionPoint]string{}
+	s := &ScreenPartials{Content: zeroValue}
+	s.GetContent()
+	s = &ScreenPartials{}
+	s.GetContent()
+	s = nil
+	s.GetContent()
+}
+
+func TestScreenPartials_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ScreenPartials{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestSelfServiceProfile_GetBranding(tt *testing.T) {
 	s := &SelfServiceProfile{}
 	s.GetBranding()
