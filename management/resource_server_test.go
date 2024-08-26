@@ -220,11 +220,11 @@ func TestResourceServer_List(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedResourceServer := givenAResourceServer(t)
-
-	resourceServerList, err := api.ResourceServer.List(context.Background(), IncludeFields("id"))
-
+	resourceServerList, err := api.ResourceServer.List(context.Background(), IncludeFields("id", "identifier"), Parameter("identifiers", expectedResourceServer.GetIdentifier()))
+	require.NoError(t, err)
+	assert.NotEqual(t, len(resourceServerList.ResourceServers), 0)
 	assert.NoError(t, err)
-	assert.Contains(t, resourceServerList.ResourceServers, &ResourceServer{ID: expectedResourceServer.ID})
+	assert.Contains(t, resourceServerList.ResourceServers, &ResourceServer{ID: expectedResourceServer.ID, Identifier: expectedResourceServer.Identifier})
 }
 
 func givenAResourceServer(t *testing.T) *ResourceServer {
@@ -242,6 +242,10 @@ func givenAResourceServer(t *testing.T) *ResourceServer {
 			{
 				Value:       auth0.String("create:resource"),
 				Description: auth0.String("Create Resource"),
+			},
+			{
+				Value:       auth0.String("create:organization_client_grants"),
+				Description: auth0.String("Create Org Client Grants"),
 			},
 		},
 	}

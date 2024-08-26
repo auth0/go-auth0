@@ -1700,6 +1700,13 @@ func TestClient_GetCustomLoginPagePreview(tt *testing.T) {
 	c.GetCustomLoginPagePreview()
 }
 
+func TestClient_GetDefaultOrganization(tt *testing.T) {
+	c := &Client{}
+	c.GetDefaultOrganization()
+	c = nil
+	c.GetDefaultOrganization()
+}
+
 func TestClient_GetDescription(tt *testing.T) {
 	var zeroValue string
 	c := &Client{Description: &zeroValue}
@@ -2172,6 +2179,34 @@ func TestClientAuthenticationMethods_GetTLSClientAuth(tt *testing.T) {
 func TestClientAuthenticationMethods_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientAuthenticationMethods{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientDefaultOrganization_GetFlows(tt *testing.T) {
+	var zeroValue []string
+	c := &ClientDefaultOrganization{Flows: &zeroValue}
+	c.GetFlows()
+	c = &ClientDefaultOrganization{}
+	c.GetFlows()
+	c = nil
+	c.GetFlows()
+}
+
+func TestClientDefaultOrganization_GetOrganizationID(tt *testing.T) {
+	var zeroValue string
+	c := &ClientDefaultOrganization{OrganizationID: &zeroValue}
+	c.GetOrganizationID()
+	c = &ClientDefaultOrganization{}
+	c.GetOrganizationID()
+	c = nil
+	c.GetOrganizationID()
+}
+
+func TestClientDefaultOrganization_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientDefaultOrganization{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

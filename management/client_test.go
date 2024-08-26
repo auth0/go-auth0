@@ -30,6 +30,35 @@ func TestClient_Create(t *testing.T) {
 	})
 }
 
+func TestClient_CreateWithDefaultOrg(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := givenAnOrganization(t)
+
+	expectedClient := &Client{
+		Name:              auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
+		Description:       auth0.String("This is just a test client."),
+		OrganizationUsage: auth0.String("allow"),
+		DefaultOrganization: &ClientDefaultOrganization{
+			Flows:          &[]string{"client_credentials"},
+			OrganizationID: auth0.String(org.GetID()),
+		},
+	}
+
+	err := api.Client.Create(context.Background(), expectedClient)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedClient.GetClientID())
+
+	retrievedClient, err := api.Client.Read(context.Background(), expectedClient.GetClientID())
+	assert.NoError(t, err)
+	assert.NotEmpty(t, retrievedClient.DefaultOrganization.GetOrganizationID())
+	assert.NotEmpty(t, retrievedClient.DefaultOrganization.GetFlows())
+
+	t.Cleanup(func() {
+		cleanupClient(t, expectedClient.GetClientID())
+	})
+}
+
 func TestClientSignedRequestObject(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
