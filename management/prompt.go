@@ -87,10 +87,10 @@ const (
 	// InsertionPointFormFooterEnd represents the form-footer-end insertion point.
 	InsertionPointFormFooterEnd InsertionPoint = "form-footer-end"
 
-	// InsertionPointSecondaryActionsStart represents the primary-actions-start insertion point.
+	// InsertionPointSecondaryActionsStart represents the secondary-actions-start insertion point.
 	InsertionPointSecondaryActionsStart InsertionPoint = "secondary-actions-start"
 
-	// InsertionPointSecondaryActionsEnd represents the primary-actions-end insertion point.
+	// InsertionPointSecondaryActionsEnd represents the secondary-actions-end insertion point.
 	InsertionPointSecondaryActionsEnd InsertionPoint = "secondary-actions-end"
 )
 
