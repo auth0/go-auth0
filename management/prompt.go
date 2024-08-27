@@ -49,7 +49,7 @@ type ScreenName string
 type InsertionPoint string
 
 const (
-	// ScreenLogin represents the signup screen.
+	// ScreenLogin represents the login screen.
 	ScreenLogin ScreenName = "login"
 
 	// ScreenLoginID represents the login-id screen.
