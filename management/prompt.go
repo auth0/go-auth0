@@ -67,10 +67,10 @@ const (
 	// ScreenSignupPassword represents the signup-password screen.
 	ScreenSignupPassword ScreenName = "signup-password"
 
-	// ScreenLoginPasswordlessSMSOTP represents the login-passwordless screen.
+	// ScreenLoginPasswordlessSMSOTP represents the login-passwordless-sms-otp screen.
 	ScreenLoginPasswordlessSMSOTP ScreenName = "login-passwordless-sms-otp"
 
-	// ScreenLoginPasswordlessEmailCode represents the login-passwordless screen.
+	// ScreenLoginPasswordlessEmailCode represents the login-passwordless-email-code screen.
 	ScreenLoginPasswordlessEmailCode ScreenName = "login-passwordless-email-code"
 )
 
