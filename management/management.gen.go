@@ -1335,6 +1335,14 @@ func (c *Client) GetCustomLoginPagePreview() string {
 	return *c.CustomLoginPagePreview
 }
 
+// GetDefaultOrganization returns the DefaultOrganization field.
+func (c *Client) GetDefaultOrganization() *ClientDefaultOrganization {
+	if c == nil {
+		return nil
+	}
+	return c.DefaultOrganization
+}
+
 // GetDescription returns the Description field if it's non-nil, zero value otherwise.
 func (c *Client) GetDescription() string {
 	if c == nil || c.Description == nil {
@@ -1803,6 +1811,27 @@ func (c *ClientAuthenticationMethods) GetTLSClientAuth() *TLSClientAuth {
 
 // String returns a string representation of ClientAuthenticationMethods.
 func (c *ClientAuthenticationMethods) String() string {
+	return Stringify(c)
+}
+
+// GetFlows returns the Flows field if it's non-nil, zero value otherwise.
+func (c *ClientDefaultOrganization) GetFlows() []string {
+	if c == nil || c.Flows == nil {
+		return nil
+	}
+	return *c.Flows
+}
+
+// GetOrganizationID returns the OrganizationID field if it's non-nil, zero value otherwise.
+func (c *ClientDefaultOrganization) GetOrganizationID() string {
+	if c == nil || c.OrganizationID == nil {
+		return ""
+	}
+	return *c.OrganizationID
+}
+
+// String returns a string representation of ClientDefaultOrganization.
+func (c *ClientDefaultOrganization) String() string {
 	return Stringify(c)
 }
 
