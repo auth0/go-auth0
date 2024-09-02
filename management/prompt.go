@@ -271,15 +271,13 @@ func (m *PromptManager) ReadPartials(ctx context.Context, prompt PromptType, opt
 
 // DeletePartials deletes custom prompt partials for a given segment.
 //
-// Deprecated: Use [ SetPartials ] with an empty [PromptScreenPartials] struct instead. The [ SetPartials ] method now handles deletion as well.
-//
 // See: https://auth0.com/docs/sign-up-prompt-customizations#use-the-api-to-edit-custom-prompts
 func (m *PromptManager) DeletePartials(ctx context.Context, prompt PromptType, opts ...RequestOption) error {
 	if err := guardAgainstPromptTypesWithNoPartials(prompt); err != nil {
 		return err
 	}
 
-	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(prompt), "partials"), &PromptPartials{Prompt: prompt}, opts...)
+	return m.management.Request(ctx, "PUT", m.management.URI("prompts", string(prompt), "partials"), &PromptScreenPartials{}, opts...)
 }
 
 func guardAgainstPromptTypesWithNoPartials(prompt PromptType) error {
