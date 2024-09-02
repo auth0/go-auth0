@@ -9609,6 +9609,19 @@ func (s *SCIMToken) String() string {
 	return Stringify(s)
 }
 
+// GetContent returns the Content map if it's non-nil, an empty map otherwise.
+func (s *ScreenPartials) GetContent() map[InsertionPoint]string {
+	if s == nil || s.Content == nil {
+		return map[InsertionPoint]string{}
+	}
+	return s.Content
+}
+
+// String returns a string representation of ScreenPartials.
+func (s *ScreenPartials) String() string {
+	return Stringify(s)
+}
+
 // GetBranding returns the Branding field.
 func (s *SelfServiceProfile) GetBranding() *Branding {
 	if s == nil {
