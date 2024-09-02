@@ -126,6 +126,7 @@ func TestPromptManager_SetPartials(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, expected, actual)
 }
+
 func TestPromptManager_GetPartialsGuardGuardError(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -135,6 +136,7 @@ func TestPromptManager_GetPartialsGuardGuardError(t *testing.T) {
 	assert.Error(t, err)
 	assert.ErrorContains(t, err, "cannot customize partials for prompt")
 }
+
 func TestPromptManager_SetPartialsGuardGuardError(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -294,6 +296,6 @@ func givenAPartialPrompt(t *testing.T, prompt PromptType) *PromptScreenPartials 
 func cleanupPromptPartials(t *testing.T, prompt PromptType) {
 	t.Helper()
 
-	err := api.Prompt.SetPartials(context.Background(), prompt, &PromptScreenPartials{})
+	err := api.Prompt.DeletePartials(context.Background(), prompt)
 	assert.NoError(t, err)
 }
