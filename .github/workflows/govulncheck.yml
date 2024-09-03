@@ -19,15 +19,10 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha || github.ref }}
 
-      - if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
-        name: Scan for Vulnerabilities in Code (Internal PR)
+      - name: Scan for Vulnerabilities in Code
         uses: golang/govulncheck-action@dd0578b371c987f96d1185abb54344b44352bd58 # pin@1.0.3
         with:
           go-version-file: go.mod
           go-package: ./...
           check-latest: true
           repo-checkout: false
-
-      - if: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
-        name: Skip Vulnerability Scan (External PR)
-        run: echo "Skipping vulnerability scan for external PRs"

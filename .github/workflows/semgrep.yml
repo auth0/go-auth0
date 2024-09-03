@@ -1,7 +1,6 @@
 name: Semgrep
 
 on:
-  merge_group:
   pull_request:
     types:
       - opened
@@ -28,19 +27,14 @@ jobs:
 
     steps:
       - if: github.actor == 'dependabot[bot]' || github.event_name == 'merge_group'
-        run: exit 0 # Skip unnecessary test runs for dependabot and merge queues. Artifically flag as successful, as this is a required check for branch protection.
+        run: exit 0 # Skip unnecessary test runs for dependabot and merge queues.
 
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha || github.ref }}
 
-      - if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
-        name: Run Semgrep for internal PRs
+      - name: Run Semgrep
         run: semgrep ci
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
-
-      - if: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
-        name: Skip Semgrep for external PRs
-        run: echo "Skipping Semgrep for external PRs as secrets are not available"
