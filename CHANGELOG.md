@@ -8,6 +8,9 @@
 - Add Organizations for Client Credentials [\#432](https://github.com/auth0/go-auth0/pull/432) ([duedares-rvj](https://github.com/duedares-rvj))
 - Add Support for Control Your Own Key (CYOK) and Bring Your Own Key (BYOK) Features with New `EncryptionKeyManager` [\#435](https://github.com/auth0/go-auth0/pull/435) ([developerkunal](https://github.com/developerkunal))
 
+> **Note**
+> The methods `ReadPartials`, `CreatePartials`, and `UpdatePartials` are deprecated. Please use `GetPartials` and `SetPartials` instead for managing Prompt Partials.
+
 ## [v1.9.0](https://github.com/auth0/go-auth0/tree/v1.9.0) (2024-08-16)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.8.0...v1.9.0)
 
