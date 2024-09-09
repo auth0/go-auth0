@@ -8551,6 +8551,239 @@ func TestFirebaseClientAddon_String(t *testing.T) {
 	}
 }
 
+func TestForm_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &Form{CreatedAt: &zeroValue}
+	f.GetCreatedAt()
+	f = &Form{}
+	f.GetCreatedAt()
+	f = nil
+	f.GetCreatedAt()
+}
+
+func TestForm_GetDescription(tt *testing.T) {
+	var zeroValue string
+	f := &Form{Description: &zeroValue}
+	f.GetDescription()
+	f = &Form{}
+	f.GetDescription()
+	f = nil
+	f.GetDescription()
+}
+
+func TestForm_GetEmbeddedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &Form{EmbeddedAt: &zeroValue}
+	f.GetEmbeddedAt()
+	f = &Form{}
+	f.GetEmbeddedAt()
+	f = nil
+	f.GetEmbeddedAt()
+}
+
+func TestForm_GetEnding(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	f := &Form{Ending: zeroValue}
+	f.GetEnding()
+	f = &Form{}
+	f.GetEnding()
+	f = nil
+	f.GetEnding()
+}
+
+func TestForm_GetFlowCount(tt *testing.T) {
+	var zeroValue int
+	f := &Form{FlowCount: &zeroValue}
+	f.GetFlowCount()
+	f = &Form{}
+	f.GetFlowCount()
+	f = nil
+	f.GetFlowCount()
+}
+
+func TestForm_GetID(tt *testing.T) {
+	var zeroValue string
+	f := &Form{ID: &zeroValue}
+	f.GetID()
+	f = &Form{}
+	f.GetID()
+	f = nil
+	f.GetID()
+}
+
+func TestForm_GetLanguages(tt *testing.T) {
+	f := &Form{}
+	f.GetLanguages()
+	f = nil
+	f.GetLanguages()
+}
+
+func TestForm_GetMessages(tt *testing.T) {
+	f := &Form{}
+	f.GetMessages()
+	f = nil
+	f.GetMessages()
+}
+
+func TestForm_GetName(tt *testing.T) {
+	var zeroValue string
+	f := &Form{Name: &zeroValue}
+	f.GetName()
+	f = &Form{}
+	f.GetName()
+	f = nil
+	f.GetName()
+}
+
+func TestForm_GetStart(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	f := &Form{Start: zeroValue}
+	f.GetStart()
+	f = &Form{}
+	f.GetStart()
+	f = nil
+	f.GetStart()
+}
+
+func TestForm_GetStyle(tt *testing.T) {
+	f := &Form{}
+	f.GetStyle()
+	f = nil
+	f.GetStyle()
+}
+
+func TestForm_GetSubmittedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &Form{SubmittedAt: &zeroValue}
+	f.GetSubmittedAt()
+	f = &Form{}
+	f.GetSubmittedAt()
+	f = nil
+	f.GetSubmittedAt()
+}
+
+func TestForm_GetTranslations(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	f := &Form{Translations: zeroValue}
+	f.GetTranslations()
+	f = &Form{}
+	f.GetTranslations()
+	f = nil
+	f.GetTranslations()
+}
+
+func TestForm_GetUpdatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &Form{UpdatedAt: &zeroValue}
+	f.GetUpdatedAt()
+	f = &Form{}
+	f.GetUpdatedAt()
+	f = nil
+	f.GetUpdatedAt()
+}
+
+func TestForm_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &Form{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestFormLanguages_GetDefault(tt *testing.T) {
+	var zeroValue string
+	f := &FormLanguages{Default: &zeroValue}
+	f.GetDefault()
+	f = &FormLanguages{}
+	f.GetDefault()
+	f = nil
+	f.GetDefault()
+}
+
+func TestFormLanguages_GetPrimary(tt *testing.T) {
+	var zeroValue string
+	f := &FormLanguages{Primary: &zeroValue}
+	f.GetPrimary()
+	f = &FormLanguages{}
+	f.GetPrimary()
+	f = nil
+	f.GetPrimary()
+}
+
+func TestFormLanguages_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &FormLanguages{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestFormMessages_GetCustom(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	f := &FormMessages{Custom: zeroValue}
+	f.GetCustom()
+	f = &FormMessages{}
+	f.GetCustom()
+	f = nil
+	f.GetCustom()
+}
+
+func TestFormMessages_GetErrors(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	f := &FormMessages{Errors: zeroValue}
+	f.GetErrors()
+	f = &FormMessages{}
+	f.GetErrors()
+	f = nil
+	f.GetErrors()
+}
+
+func TestFormMessages_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &FormMessages{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestFormStyle_GetCSS(tt *testing.T) {
+	var zeroValue string
+	f := &FormStyle{CSS: &zeroValue}
+	f.GetCSS()
+	f = &FormStyle{}
+	f.GetCSS()
+	f = nil
+	f.GetCSS()
+}
+
+func TestFormStyle_GetTheme(tt *testing.T) {
+	var zeroValue string
+	f := &FormStyle{Theme: &zeroValue}
+	f.GetTheme()
+	f = &FormStyle{}
+	f.GetTheme()
+	f = nil
+	f.GetTheme()
+}
+
+func TestFormStyle_GetVersion(tt *testing.T) {
+	var zeroValue string
+	f := &FormStyle{Version: &zeroValue}
+	f.GetVersion()
+	f = &FormStyle{}
+	f.GetVersion()
+	f = nil
+	f.GetVersion()
+}
+
+func TestFormStyle_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &FormStyle{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestGrant_GetAudience(tt *testing.T) {
 	var zeroValue string
 	g := &Grant{Audience: &zeroValue}

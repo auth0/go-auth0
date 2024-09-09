@@ -6883,6 +6883,194 @@ func (f *FirebaseClientAddon) String() string {
 	return Stringify(f)
 }
 
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (f *Form) GetCreatedAt() time.Time {
+	if f == nil || f.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *f.CreatedAt
+}
+
+// GetDescription returns the Description field if it's non-nil, zero value otherwise.
+func (f *Form) GetDescription() string {
+	if f == nil || f.Description == nil {
+		return ""
+	}
+	return *f.Description
+}
+
+// GetEmbeddedAt returns the EmbeddedAt field if it's non-nil, zero value otherwise.
+func (f *Form) GetEmbeddedAt() time.Time {
+	if f == nil || f.EmbeddedAt == nil {
+		return time.Time{}
+	}
+	return *f.EmbeddedAt
+}
+
+// GetEnding returns the Ending map if it's non-nil, an empty map otherwise.
+func (f *Form) GetEnding() map[string]interface{} {
+	if f == nil || f.Ending == nil {
+		return map[string]interface{}{}
+	}
+	return f.Ending
+}
+
+// GetFlowCount returns the FlowCount field if it's non-nil, zero value otherwise.
+func (f *Form) GetFlowCount() int {
+	if f == nil || f.FlowCount == nil {
+		return 0
+	}
+	return *f.FlowCount
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (f *Form) GetID() string {
+	if f == nil || f.ID == nil {
+		return ""
+	}
+	return *f.ID
+}
+
+// GetLanguages returns the Languages field.
+func (f *Form) GetLanguages() *FormLanguages {
+	if f == nil {
+		return nil
+	}
+	return f.Languages
+}
+
+// GetMessages returns the Messages field.
+func (f *Form) GetMessages() *FormMessages {
+	if f == nil {
+		return nil
+	}
+	return f.Messages
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (f *Form) GetName() string {
+	if f == nil || f.Name == nil {
+		return ""
+	}
+	return *f.Name
+}
+
+// GetStart returns the Start map if it's non-nil, an empty map otherwise.
+func (f *Form) GetStart() map[string]interface{} {
+	if f == nil || f.Start == nil {
+		return map[string]interface{}{}
+	}
+	return f.Start
+}
+
+// GetStyle returns the Style field.
+func (f *Form) GetStyle() *FormStyle {
+	if f == nil {
+		return nil
+	}
+	return f.Style
+}
+
+// GetSubmittedAt returns the SubmittedAt field if it's non-nil, zero value otherwise.
+func (f *Form) GetSubmittedAt() time.Time {
+	if f == nil || f.SubmittedAt == nil {
+		return time.Time{}
+	}
+	return *f.SubmittedAt
+}
+
+// GetTranslations returns the Translations map if it's non-nil, an empty map otherwise.
+func (f *Form) GetTranslations() map[string]interface{} {
+	if f == nil || f.Translations == nil {
+		return map[string]interface{}{}
+	}
+	return f.Translations
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (f *Form) GetUpdatedAt() time.Time {
+	if f == nil || f.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *f.UpdatedAt
+}
+
+// String returns a string representation of Form.
+func (f *Form) String() string {
+	return Stringify(f)
+}
+
+// GetDefault returns the Default field if it's non-nil, zero value otherwise.
+func (f *FormLanguages) GetDefault() string {
+	if f == nil || f.Default == nil {
+		return ""
+	}
+	return *f.Default
+}
+
+// GetPrimary returns the Primary field if it's non-nil, zero value otherwise.
+func (f *FormLanguages) GetPrimary() string {
+	if f == nil || f.Primary == nil {
+		return ""
+	}
+	return *f.Primary
+}
+
+// String returns a string representation of FormLanguages.
+func (f *FormLanguages) String() string {
+	return Stringify(f)
+}
+
+// GetCustom returns the Custom map if it's non-nil, an empty map otherwise.
+func (f *FormMessages) GetCustom() map[string]interface{} {
+	if f == nil || f.Custom == nil {
+		return map[string]interface{}{}
+	}
+	return f.Custom
+}
+
+// GetErrors returns the Errors map if it's non-nil, an empty map otherwise.
+func (f *FormMessages) GetErrors() map[string]interface{} {
+	if f == nil || f.Errors == nil {
+		return map[string]interface{}{}
+	}
+	return f.Errors
+}
+
+// String returns a string representation of FormMessages.
+func (f *FormMessages) String() string {
+	return Stringify(f)
+}
+
+// GetCSS returns the CSS field if it's non-nil, zero value otherwise.
+func (f *FormStyle) GetCSS() string {
+	if f == nil || f.CSS == nil {
+		return ""
+	}
+	return *f.CSS
+}
+
+// GetTheme returns the Theme field if it's non-nil, zero value otherwise.
+func (f *FormStyle) GetTheme() string {
+	if f == nil || f.Theme == nil {
+		return ""
+	}
+	return *f.Theme
+}
+
+// GetVersion returns the Version field if it's non-nil, zero value otherwise.
+func (f *FormStyle) GetVersion() string {
+	if f == nil || f.Version == nil {
+		return ""
+	}
+	return *f.Version
+}
+
+// String returns a string representation of FormStyle.
+func (f *FormStyle) String() string {
+	return Stringify(f)
+}
+
 // GetAudience returns the Audience field if it's non-nil, zero value otherwise.
 func (g *Grant) GetAudience() string {
 	if g == nil || g.Audience == nil {
