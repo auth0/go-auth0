@@ -13,6 +13,9 @@ import (
 	"github.com/auth0/go-auth0"
 )
 
+/*
+Flow tests
+*/
 func TestFlowManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	flow := &Flow{
@@ -92,14 +95,6 @@ func TestFlowManager_MarshalJSON(t *testing.T) {
 	}
 }
 
-func getFlowIDs(flows []*Flow) []string {
-	ids := make([]string, len(flows))
-	for i, f := range flows {
-		ids[i] = f.GetID()
-	}
-	return ids
-}
-
 func givenAFlow(t *testing.T) *Flow {
 	t.Helper()
 	flow := &Flow{
@@ -120,6 +115,147 @@ func cleanupFlow(t *testing.T, flowID string) {
 	t.Helper()
 
 	err := api.Flow.Delete(context.Background(), flowID)
+	if err != nil {
+		var managementErr Error
+		ok := errors.As(err, &managementErr)
+		// We don't want to fail the test if the resource is already deleted.
+		// clean up, therefore we only raise non-404 errors.
+		// If `err` doesn't cast to management.Error, we raise it immediately.
+		if !ok || managementErr.Status() != http.StatusNotFound {
+			t.Error(err)
+		}
+	}
+}
+
+/*
+Flow Vault Connection tests
+*/
+func TestFlowVaultConnectionManager_Create(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	flowVaultConnection := &FlowVaultConnection{
+		AppID: auth0.String("HTTP"),
+		Name:  auth0.String("test-vault-connection"),
+		Setup: &map[string]interface{}{
+			"token": "my-token",
+			"type":  "BEARER",
+		},
+	}
+
+	err := api.Flow.Vault.CreateConnection(context.Background(), flowVaultConnection)
+
+	assert.NoError(t, err)
+	assert.NotEmpty(t, flowVaultConnection.GetID())
+
+	t.Cleanup(func() {
+		cleanupFlowVaultConnection(t, flowVaultConnection.GetID())
+	})
+}
+
+func TestFlowVaultConnectionManager_Read(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedFlowVaultConnection := givenAFlowVaultConnection(t)
+
+	actualFlowVaultConnection, err := api.Flow.Vault.GetConnection(context.Background(), expectedFlowVaultConnection.GetID())
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedFlowVaultConnection, actualFlowVaultConnection)
+}
+
+func TestFlowVaultConnectionManager_Update(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedFlowVaultConnection := givenAFlowVaultConnection(t)
+	updatedFlowVaultConnection := &FlowVaultConnection{
+		Name: auth0.String("new-connection-name"),
+	}
+
+	err := api.Flow.Vault.UpdateConnection(context.Background(), expectedFlowVaultConnection.GetID(), updatedFlowVaultConnection)
+
+	assert.NoError(t, err)
+	assert.Equal(t, "new-connection-name", updatedFlowVaultConnection.GetName())
+}
+
+func TestFlowVaultConnectionManager_Delete(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedFlowVaultConnection := givenAFlowVaultConnection(t)
+
+	err := api.Flow.Vault.DeleteConnection(context.Background(), expectedFlowVaultConnection.GetID())
+	assert.NoError(t, err)
+}
+
+func TestFlowVaultConnectionManager_List(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	flowVaultConnection := givenAFlowVaultConnection(t)
+
+	flowVaultConnectionList, err := api.Flow.Vault.GetConnectionList(context.Background())
+	assert.NoError(t, err)
+	assert.Greater(t, len(flowVaultConnectionList.Connections), 0)
+	assert.Contains(t, getFlowVaultConnectionIDs(flowVaultConnectionList.Connections), flowVaultConnection.GetID())
+}
+
+func TestFlowVaultConnectionManager_MarshalJSON(t *testing.T) {
+	for connection, expected := range map[*FlowVaultConnection]string{
+		{}: `{}`,
+		{
+			AppID: auth0.String("HTTP"),
+			Name:  auth0.String("test-flow-vault-connection"),
+			Setup: &map[string]interface{}{
+				"key": "value",
+			},
+		}: `{"appId":"HTTP","name":"test-flow-vault-connection","setup":{"key":"value"}}`,
+		{
+			AppID: auth0.String("FTP"),
+			Name:  auth0.String("ftp-flow-vault-connection"),
+		}: `{"appId":"FTP","name":"ftp-flow-vault-connection"}`,
+		{
+			ID:        auth0.String("some-id"),
+			CreatedAt: auth0.Time(time.Now()),
+			UpdatedAt: auth0.Time(time.Now()),
+		}: `{}`,
+	} {
+		payload, err := json.Marshal(connection)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, string(payload))
+	}
+}
+
+func getFlowIDs(flows []*Flow) []string {
+	ids := make([]string, len(flows))
+	for i, f := range flows {
+		ids[i] = f.GetID()
+	}
+	return ids
+}
+
+func getFlowVaultConnectionIDs(connections []*FlowVaultConnection) []string {
+	ids := make([]string, len(connections))
+	for i, connection := range connections {
+		ids[i] = connection.GetID()
+	}
+	return ids
+}
+
+func givenAFlowVaultConnection(t *testing.T) *FlowVaultConnection {
+	flowVaultConnection := &FlowVaultConnection{
+		AppID: auth0.String("HTTP"),
+		Name:  auth0.String("test-vault-connection"),
+	}
+
+	err := api.Flow.Vault.CreateConnection(context.Background(), flowVaultConnection)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Cleanup(func() {
+		cleanupFlowVaultConnection(t, flowVaultConnection.GetID())
+	})
+
+	return flowVaultConnection
+}
+
+func cleanupFlowVaultConnection(t *testing.T, id string) {
+	t.Helper()
+
+	err := api.Flow.Vault.DeleteConnection(context.Background(), id)
 	if err != nil {
 		var managementErr Error
 		ok := errors.As(err, &managementErr)

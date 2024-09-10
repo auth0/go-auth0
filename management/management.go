@@ -216,7 +216,10 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.User = (*UserManager)(&m.common)
 	m.SelfServiceProfile = (*SelfServiceProfileManager)(&m.common)
 	m.Form = (*FormManager)(&m.common)
-	m.Flow = (*FlowManager)(&m.common)
+	m.Flow = &FlowManager{
+		management: m,
+		Vault:      (*flowVaultConnectionManager)(&m.common),
+	}
 
 	return m, nil
 }

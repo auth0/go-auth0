@@ -6,21 +6,21 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 68
+        content_length: 48
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"test-flow","description":"A test flow","synchronous":true}
+            {"appId":"HTTP","name":"test-vault-connection"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections
         method: POST
       response:
         proto: HTTP/2.0
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"af_rNLb3UMhWBqNnvvNxzTrnH","name":"test-flow","description":"A test flow","synchronous":true,"actions":[],"triggers":{"webhook":{"enabled":false,"secret":null}},"security":{"rateLimits":[]},"created_at":"2024-09-11T08:25:19.858Z","updated_at":"2024-09-11T08:25:19.858Z","executed_at":null}'
+        body: '{"id":"ac_iWFurRgbwci3ahcAmKEPQo","app_id":"HTTP","name":"test-vault-connection","ready":false,"created_at":"2024-09-11T08:25:48.866Z","updated_at":"2024-09-11T08:25:48.866Z","refreshed_at":null,"fingerprint":"3200a4f67605ae5c1a9ce15cdfbf44ca"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 261.064459ms
+        duration: 246.23ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_rNLb3UMhWBqNnvvNxzTrnH
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections/ac_iWFurRgbwci3ahcAmKEPQo
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"af_rNLb3UMhWBqNnvvNxzTrnH","name":"test-flow","description":"A test flow","synchronous":true,"actions":[],"triggers":{"webhook":{"secret":null,"enabled":false}},"security":{"rateLimits":[]},"created_at":"2024-09-11T08:25:19.858Z","updated_at":"2024-09-11T08:25:19.858Z","executed_at":null}'
+        body: '{"id":"ac_iWFurRgbwci3ahcAmKEPQo","app_id":"HTTP","name":"test-vault-connection","ready":false,"created_at":"2024-09-11T08:25:48.866Z","updated_at":"2024-09-11T08:25:48.866Z","fingerprint":"3200a4f67605ae5c1a9ce15cdfbf44ca"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 281.060625ms
+        duration: 267.440667ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_rNLb3UMhWBqNnvvNxzTrnH
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections/ac_iWFurRgbwci3ahcAmKEPQo
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -106,4 +106,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 276.3395ms
+        duration: 329.993166ms

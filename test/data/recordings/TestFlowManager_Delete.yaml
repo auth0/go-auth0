@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"af_ekhE2XqtGUcmhLLYLCeh2j","name":"test-flow","description":"A test flow","synchronous":true,"actions":[],"triggers":{"webhook":{"enabled":false,"secret":null}},"security":{"rateLimits":[]},"created_at":"2024-09-10T07:12:19.895Z","updated_at":"2024-09-10T07:12:19.895Z","executed_at":null}'
+        body: '{"id":"af_aDAy6V1KtVr2vAfLbY8dj9","name":"test-flow","description":"A test flow","synchronous":true,"actions":[],"triggers":{"webhook":{"enabled":false,"secret":null}},"security":{"rateLimits":[]},"created_at":"2024-09-11T08:25:21.466Z","updated_at":"2024-09-11T08:25:21.466Z","executed_at":null}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 790.970167ms
+        duration: 236.068042ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_ekhE2XqtGUcmhLLYLCeh2j
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_aDAy6V1KtVr2vAfLbY8dj9
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -71,7 +71,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 239.359ms
+        duration: 234.751167ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_ekhE2XqtGUcmhLLYLCeh2j
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_aDAy6V1KtVr2vAfLbY8dj9
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -106,4 +106,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 404 Not Found
         code: 404
-        duration: 231.523833ms
+        duration: 225.091583ms

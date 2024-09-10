@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"af_7pti9ktAAeVVXGndKU5Gqf","name":"test-flow","description":"A test flow","synchronous":true,"actions":[],"triggers":{"webhook":{"enabled":false,"secret":null}},"security":{"rateLimits":[]},"created_at":"2024-09-10T07:12:33.824Z","updated_at":"2024-09-10T07:12:33.824Z","executed_at":null}'
+        body: '{"id":"af_2P7B1xokW1pNuFFWizs9n8","name":"test-flow","description":"A test flow","synchronous":true,"actions":[],"triggers":{"webhook":{"enabled":false,"secret":null}},"security":{"rateLimits":[]},"created_at":"2024-09-11T08:25:22.157Z","updated_at":"2024-09-11T08:25:22.157Z","executed_at":null}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 585.082875ms
+        duration: 223.510959ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"limit":50,"start":0,"total":2,"flows":[{"id":"af_7pti9ktAAeVVXGndKU5Gqf","name":"test-flow","description":"A test flow","synchronous":true,"created_at":"2024-09-10T07:12:33.824Z","updated_at":"2024-09-10T07:12:33.824Z","executed_at":null},{"id":"af_sCzMbZkwNS4w6HZ79Ce2Ad","name":"Update user_metadata","description":null,"synchronous":true,"created_at":"2024-08-11T18:50:34.374Z","updated_at":"2024-08-12T12:48:29.106Z","executed_at":null}]}'
+        body: '{"limit":50,"start":0,"total":2,"flows":[{"id":"af_2P7B1xokW1pNuFFWizs9n8","name":"test-flow","description":"A test flow","synchronous":true,"created_at":"2024-09-11T08:25:22.157Z","updated_at":"2024-09-11T08:25:22.157Z","executed_at":null},{"id":"af_sCzMbZkwNS4w6HZ79Ce2Ad","name":"Update user_metadata","description":null,"synchronous":true,"created_at":"2024-08-11T18:50:34.374Z","updated_at":"2024-08-12T12:48:29.106Z","executed_at":null}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 266.426833ms
+        duration: 258.266708ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_7pti9ktAAeVVXGndKU5Gqf
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_2P7B1xokW1pNuFFWizs9n8
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -106,4 +106,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 245.263ms
+        duration: 227.483542ms

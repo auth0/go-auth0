@@ -6,21 +6,21 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 68
+        content_length: 93
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"test-flow","description":"A test flow","synchronous":true}
+            {"appId":"HTTP","name":"test-vault-connection","setup":{"token":"my-token","type":"BEARER"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections
         method: POST
       response:
         proto: HTTP/2.0
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"af_qurDTCky5bEyPc3TYoyg8K","name":"test-flow","description":"A test flow","synchronous":true,"actions":[],"triggers":{"webhook":{"enabled":false,"secret":null}},"security":{"rateLimits":[]},"created_at":"2024-09-11T08:25:19.313Z","updated_at":"2024-09-11T08:25:19.313Z","executed_at":null}'
+        body: '{"id":"ac_puuFJbSNUeBPZ9Yu3gVJnY","app_id":"HTTP","name":"test-vault-connection","account_name":"Bearer my-***ken","ready":true,"created_at":"2024-09-11T08:25:48.325Z","updated_at":"2024-09-11T08:25:48.325Z","fingerprint":"29d927aa13c635acd32b0013c7341857"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 809.627ms
+        duration: 628.159459ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_qurDTCky5bEyPc3TYoyg8K
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections/ac_puuFJbSNUeBPZ9Yu3gVJnY
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -71,4 +71,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 276.538292ms
+        duration: 284.984042ms

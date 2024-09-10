@@ -27,19 +27,19 @@ type Form struct {
 	// Messages contains custom and error messages for the form.
 	Messages *FormMessages `json:"messages,omitempty"`
 	// Translations holds the translations for the form.
-	Translations map[string]interface{} `json:"translations,omitempty"`
+	Translations *map[string]interface{} `json:"translations,omitempty"`
 
 	// Start defines the starting point of the form.
-	Start map[string]interface{} `json:"start,omitempty"`
+	Start *map[string]interface{} `json:"start,omitempty"`
 	// Nodes represents the nodes in the form.
 	Nodes []interface{} `json:"nodes,omitempty"`
 	// Ending defines the ending point of the form.
-	Ending map[string]interface{} `json:"ending,omitempty"`
+	Ending *map[string]interface{} `json:"ending,omitempty"`
 
 	// Social providers configuration social elements of the form.
 	Social []interface{} `json:"social,omitempty"`
 	// Tags are the tags associated with the form.
-	Tags []string `json:"tags,omitempty"`
+	Tags *[]string `json:"tags,omitempty"`
 
 	CreatedAt   *time.Time `json:"created_at,omitempty"`
 	UpdatedAt   *time.Time `json:"updated_at,omitempty"`
@@ -69,16 +69,16 @@ type FormStyle struct {
 // MarshalJSON implements the json.Marshaller interface.
 func (f *Form) MarshalJSON() ([]byte, error) {
 	type FormSubset struct {
-		Name         *string                `json:"name,omitempty"`
-		Description  *string                `json:"description,omitempty"`
-		Languages    *FormLanguages         `json:"languages,omitempty"`
-		Style        *FormStyle             `json:"style,omitempty"`
-		Messages     *FormMessages          `json:"messages,omitempty"`
-		Translations map[string]interface{} `json:"translations,omitempty"`
-		Start        map[string]interface{} `json:"start,omitempty"`
-		Nodes        []interface{}          `json:"nodes,omitempty"`
-		Ending       map[string]interface{} `json:"ending,omitempty"`
-		Social       []interface{}          `json:"social,omitempty"`
+		Name         *string                 `json:"name,omitempty"`
+		Description  *string                 `json:"description,omitempty"`
+		Languages    *FormLanguages          `json:"languages,omitempty"`
+		Style        *FormStyle              `json:"style,omitempty"`
+		Messages     *FormMessages           `json:"messages,omitempty"`
+		Translations *map[string]interface{} `json:"translations,omitempty"`
+		Start        *map[string]interface{} `json:"start,omitempty"`
+		Nodes        []interface{}           `json:"nodes,omitempty"`
+		Ending       *map[string]interface{} `json:"ending,omitempty"`
+		Social       []interface{}           `json:"social,omitempty"`
 	}
 
 	return json.Marshal(&FormSubset{
