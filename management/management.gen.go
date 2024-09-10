@@ -6884,6 +6884,88 @@ func (f *FirebaseClientAddon) String() string {
 }
 
 // GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (f *Flow) GetCreatedAt() time.Time {
+	if f == nil || f.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *f.CreatedAt
+}
+
+// GetDescription returns the Description field if it's non-nil, zero value otherwise.
+func (f *Flow) GetDescription() string {
+	if f == nil || f.Description == nil {
+		return ""
+	}
+	return *f.Description
+}
+
+// GetExecutedAt returns the ExecutedAt field if it's non-nil, zero value otherwise.
+func (f *Flow) GetExecutedAt() time.Time {
+	if f == nil || f.ExecutedAt == nil {
+		return time.Time{}
+	}
+	return *f.ExecutedAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (f *Flow) GetID() string {
+	if f == nil || f.ID == nil {
+		return ""
+	}
+	return *f.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (f *Flow) GetName() string {
+	if f == nil || f.Name == nil {
+		return ""
+	}
+	return *f.Name
+}
+
+// GetSecurity returns the Security field if it's non-nil, zero value otherwise.
+func (f *Flow) GetSecurity() map[string]interface{} {
+	if f == nil || f.Security == nil {
+		return map[string]interface{}{}
+	}
+	return *f.Security
+}
+
+// GetSynchronous returns the Synchronous field if it's non-nil, zero value otherwise.
+func (f *Flow) GetSynchronous() bool {
+	if f == nil || f.Synchronous == nil {
+		return false
+	}
+	return *f.Synchronous
+}
+
+// GetTriggers returns the Triggers field if it's non-nil, zero value otherwise.
+func (f *Flow) GetTriggers() map[string]interface{} {
+	if f == nil || f.Triggers == nil {
+		return map[string]interface{}{}
+	}
+	return *f.Triggers
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (f *Flow) GetUpdatedAt() time.Time {
+	if f == nil || f.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *f.UpdatedAt
+}
+
+// String returns a string representation of Flow.
+func (f *Flow) String() string {
+	return Stringify(f)
+}
+
+// String returns a string representation of FlowList.
+func (f *FlowList) String() string {
+	return Stringify(f)
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
 func (f *Form) GetCreatedAt() time.Time {
 	if f == nil || f.CreatedAt == nil {
 		return time.Time{}
@@ -7018,6 +7100,11 @@ func (f *FormLanguages) GetPrimary() string {
 
 // String returns a string representation of FormLanguages.
 func (f *FormLanguages) String() string {
+	return Stringify(f)
+}
+
+// String returns a string representation of FormList.
+func (f *FormList) String() string {
 	return Stringify(f)
 }
 

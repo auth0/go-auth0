@@ -1,0 +1,133 @@
+package management
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"net/http"
+	"testing"
+	"time"
+
+	"github.com/stretchr/testify/assert"
+
+	"github.com/auth0/go-auth0"
+)
+
+func TestFlowManager_Create(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	flow := &Flow{
+		Name:        auth0.String("test-flow"),
+		Description: auth0.String("A test flow"),
+		Synchronous: auth0.Bool(true),
+	}
+
+	err := api.Flow.Create(context.Background(), flow)
+
+	assert.NoError(t, err)
+	assert.NotEmpty(t, flow.GetID())
+
+	t.Cleanup(func() {
+		cleanupFlow(t, flow.GetID())
+	})
+}
+
+func TestFlowManager_Read(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedFlow := givenAFlow(t)
+
+	actualFlow, err := api.Flow.Read(context.Background(), expectedFlow.GetID())
+
+	assert.NoError(t, err)
+	assert.Equal(t, expectedFlow, actualFlow)
+}
+
+func TestFlowManager_Update(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedFlow := givenAFlow(t)
+	updatedFlow := &Flow{
+		Description: auth0.String("Updated flow description test"),
+	}
+	err := api.Flow.Update(context.Background(), expectedFlow.GetID(), updatedFlow)
+
+	assert.NoError(t, err)
+	assert.Equal(t, "Updated flow description test", updatedFlow.GetDescription())
+	assert.Equal(t, expectedFlow.GetName(), updatedFlow.GetName())
+}
+
+func TestFlowManager_Delete(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedFlow := givenAFlow(t)
+
+	err := api.Flow.Delete(context.Background(), expectedFlow.GetID())
+	assert.NoError(t, err)
+}
+
+func TestFlowManager_List(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	flow := givenAFlow(t)
+
+	flowList, err := api.Flow.List(context.Background())
+	assert.NoError(t, err)
+	assert.Greater(t, len(flowList.Flows), 0)
+	assert.Contains(t, getFlowIDs(flowList.Flows), flow.GetID())
+}
+
+func TestFlowManager_MarshalJSON(t *testing.T) {
+	for flow, expected := range map[*Flow]string{
+		{}: `{}`,
+		{
+			Name:        auth0.String("test-flow"),
+			Description: auth0.String("A test flow"),
+			Synchronous: auth0.Bool(true),
+		}: `{"name":"test-flow","description":"A test flow","synchronous":true}`,
+		{
+			ID:        auth0.String("some-id"),
+			CreatedAt: auth0.Time(time.Now()),
+			UpdatedAt: auth0.Time(time.Now()),
+		}: `{}`,
+	} {
+		payload, err := json.Marshal(flow)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, string(payload))
+	}
+}
+
+func getFlowIDs(flows []*Flow) []string {
+	ids := make([]string, len(flows))
+	for i, f := range flows {
+		ids[i] = f.GetID()
+	}
+	return ids
+}
+
+func givenAFlow(t *testing.T) *Flow {
+	t.Helper()
+	flow := &Flow{
+		Name:        auth0.String("test-flow"),
+		Description: auth0.String("A test flow"),
+		Synchronous: auth0.Bool(true),
+	}
+
+	err := api.Flow.Create(context.Background(), flow)
+	assert.NoError(t, err)
+	t.Cleanup(func() {
+		cleanupFlow(t, flow.GetID())
+	})
+	return flow
+}
+
+func cleanupFlow(t *testing.T, flowID string) {
+	t.Helper()
+
+	err := api.Flow.Delete(context.Background(), flowID)
+	if err != nil {
+		var managementErr Error
+		ok := errors.As(err, &managementErr)
+		// We don't want to fail the test if the resource is already deleted.
+		// clean up, therefore we only raise non-404 errors.
+		// If `err` doesn't cast to management.Error, we raise it immediately.
+		if !ok || managementErr.Status() != http.StatusNotFound {
+			t.Error(err)
+		}
+	}
+}
