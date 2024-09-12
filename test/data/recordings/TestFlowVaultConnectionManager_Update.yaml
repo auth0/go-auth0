@@ -6,14 +6,14 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 48
+        content_length: 49
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"appId":"HTTP","name":"test-vault-connection"}
+            {"app_id":"HTTP","name":"test-vault-connection"}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"ac_kxctJqTodoApL6MGB1ooy6","app_id":"HTTP","name":"test-vault-connection","ready":false,"created_at":"2024-09-11T08:25:49.699Z","updated_at":"2024-09-11T08:25:49.699Z","refreshed_at":null,"fingerprint":"3552d94e98c34d47d48c8666a72562e3"}'
+        body: '{"id":"ac_6t5kdaPvkcH3WQ6BnELSDa","app_id":"HTTP","name":"test-vault-connection","ready":false,"created_at":"2024-09-12T12:52:17.605Z","updated_at":"2024-09-12T12:52:17.605Z","refreshed_at":null,"fingerprint":"af9152e9fc291c0a4c364c8755753ad2"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 226.496125ms
+        duration: 409.098667ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -56,7 +56,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections/ac_kxctJqTodoApL6MGB1ooy6
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections/ac_6t5kdaPvkcH3WQ6BnELSDa
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"ac_kxctJqTodoApL6MGB1ooy6","app_id":"HTTP","name":"new-connection-name","ready":false,"created_at":"2024-09-11T08:25:49.699Z","updated_at":"2024-09-11T08:25:49.944Z","refreshed_at":null,"fingerprint":"8fd2a19f4c87d40c8d7e3ebd80f2ca4d"}'
+        body: '{"id":"ac_6t5kdaPvkcH3WQ6BnELSDa","app_id":"HTTP","name":"new-connection-name","ready":false,"created_at":"2024-09-12T12:52:17.605Z","updated_at":"2024-09-12T12:52:18.049Z","refreshed_at":null,"fingerprint":"6724a8a63ea2e97f62af6e378f93a0ba"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 254.676667ms
+        duration: 411.437125ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -91,7 +91,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections/ac_kxctJqTodoApL6MGB1ooy6
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections/ac_6t5kdaPvkcH3WQ6BnELSDa
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -107,4 +107,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 214.271916ms
+        duration: 355.213041ms

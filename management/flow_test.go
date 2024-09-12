@@ -201,11 +201,11 @@ func TestFlowVaultConnectionManager_MarshalJSON(t *testing.T) {
 			Setup: &map[string]interface{}{
 				"key": "value",
 			},
-		}: `{"appId":"HTTP","name":"test-flow-vault-connection","setup":{"key":"value"}}`,
+		}: `{"app_id":"HTTP","name":"test-flow-vault-connection","setup":{"key":"value"}}`,
 		{
-			AppID: auth0.String("FTP"),
-			Name:  auth0.String("ftp-flow-vault-connection"),
-		}: `{"appId":"FTP","name":"ftp-flow-vault-connection"}`,
+			AppID: auth0.String("AUTH0"),
+			Name:  auth0.String("auth0-flow-vault-connection"),
+		}: `{"app_id":"AUTH0","name":"auth0-flow-vault-connection"}`,
 		{
 			ID:        auth0.String("some-id"),
 			CreatedAt: auth0.Time(time.Now()),

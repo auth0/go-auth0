@@ -6,14 +6,14 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 48
+        content_length: 49
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"appId":"HTTP","name":"test-vault-connection"}
+            {"app_id":"HTTP","name":"test-vault-connection"}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"ac_2KU5xHwQ19BK39BtNRFoyt","app_id":"HTTP","name":"test-vault-connection","ready":false,"created_at":"2024-09-11T08:25:51.162Z","updated_at":"2024-09-11T08:25:51.162Z","refreshed_at":null,"fingerprint":"4fc6860667cadb9904961288e46ad225"}'
+        body: '{"id":"ac_t9JToPSSZ4deNc6qPXZ9B9","app_id":"HTTP","name":"test-vault-connection","ready":false,"created_at":"2024-09-12T12:52:19.790Z","updated_at":"2024-09-12T12:52:19.790Z","refreshed_at":null,"fingerprint":"525eccf582f7913f5383ff4b3332ca7c"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 265.499542ms
+        duration: 319.718375ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"limit":50,"start":0,"total":5,"connections":[{"id":"ac_bX9wyzE6DHumj2gJmc2vje","name":"Auth0 test","app_id":"AUTH0","ready":true,"account_name":"go-auth0-dev.eu.auth0.com.eu.auth0.com","created_at":"2024-08-12T12:42:36.419Z","updated_at":"2024-08-12T12:42:36.419Z","fingerprint":"798d8de90253962c2639c7037a3af087"},{"id":"ac_5Cy8N47rNvNixgNBShK8fT","name":"HTTP #1","app_id":"HTTP","ready":true,"account_name":"Bearer ***","created_at":"2024-09-02T06:53:06.758Z","updated_at":"2024-09-02T06:53:06.758Z","fingerprint":"fe77deec2f6cbdf38b7614266c6d83fe"},{"id":"ac_ayGXUNMVsECPVkfqnVZeAw","name":"HTTP new create","app_id":"HTTP","ready":true,"account_name":"Bearer ***","created_at":"2024-09-11T04:38:59.120Z","updated_at":"2024-09-11T04:38:59.120Z","fingerprint":"11b274dc3438f13b8b87fe346a56c9bd"},{"id":"ac_uBEatoBijKsmGKoxFBjrb5","name":"REPLACE_WITH_M2M_CONNECTION","app_id":"AUTH0","ready":false,"created_at":"2024-08-21T04:25:42.001Z","updated_at":"2024-08-21T04:25:42.001Z","fingerprint":"71ce79d94826d077646a45d209b4cb0b"},{"id":"ac_2KU5xHwQ19BK39BtNRFoyt","name":"test-vault-connection","app_id":"HTTP","ready":false,"created_at":"2024-09-11T08:25:51.162Z","updated_at":"2024-09-11T08:25:51.162Z","fingerprint":"4fc6860667cadb9904961288e46ad225"}]}'
+        body: '{"limit":50,"start":0,"total":1,"connections":[{"id":"ac_t9JToPSSZ4deNc6qPXZ9B9","name":"test-vault-connection","app_id":"HTTP","ready":false,"created_at":"2024-09-12T12:52:19.790Z","updated_at":"2024-09-12T12:52:19.790Z","fingerprint":"525eccf582f7913f5383ff4b3332ca7c"}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 220.356042ms
+        duration: 325.612458ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections/ac_2KU5xHwQ19BK39BtNRFoyt
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections/ac_t9JToPSSZ4deNc6qPXZ9B9
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -106,4 +106,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 232.499041ms
+        duration: 426.515459ms

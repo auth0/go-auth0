@@ -105,7 +105,7 @@ type FlowVaultConnectionList struct {
 // MarshalJSON implements the json.Marshaller interface.
 func (f *FlowVaultConnection) MarshalJSON() ([]byte, error) {
 	type FlowVaultConnectionSubset struct {
-		AppID *string                 `json:"appId,omitempty"`
+		AppID *string                 `json:"app_id,omitempty"`
 		Name  *string                 `json:"name,omitempty"`
 		Setup *map[string]interface{} `json:"setup,omitempty"`
 	}

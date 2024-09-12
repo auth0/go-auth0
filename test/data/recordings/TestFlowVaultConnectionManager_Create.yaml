@@ -6,14 +6,14 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 93
+        content_length: 94
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"appId":"HTTP","name":"test-vault-connection","setup":{"token":"my-token","type":"BEARER"}}
+            {"app_id":"HTTP","name":"test-vault-connection","setup":{"token":"my-token","type":"BEARER"}}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"ac_puuFJbSNUeBPZ9Yu3gVJnY","app_id":"HTTP","name":"test-vault-connection","account_name":"Bearer my-***ken","ready":true,"created_at":"2024-09-11T08:25:48.325Z","updated_at":"2024-09-11T08:25:48.325Z","fingerprint":"29d927aa13c635acd32b0013c7341857"}'
+        body: '{"id":"ac_ik8c7qvwKSSHsxdbfjoUN6","app_id":"HTTP","name":"test-vault-connection","account_name":"Bearer my-***ken","ready":true,"created_at":"2024-09-12T12:52:15.805Z","updated_at":"2024-09-12T12:52:15.805Z","fingerprint":"44078f05a47efb23da187165f5aada25"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 628.159459ms
+        duration: 918.945875ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections/ac_puuFJbSNUeBPZ9Yu3gVJnY
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/vault/connections/ac_ik8c7qvwKSSHsxdbfjoUN6
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -71,4 +71,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 284.984042ms
+        duration: 380.290334ms
