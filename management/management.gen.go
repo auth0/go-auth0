@@ -2568,6 +2568,14 @@ func (c *ConnectionOptionsAD) GetSetUserAttributes() string {
 	return *c.SetUserAttributes
 }
 
+// GetStrategyVersion returns the StrategyVersion field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAD) GetStrategyVersion() int {
+	if c == nil || c.StrategyVersion == nil {
+		return 0
+	}
+	return *c.StrategyVersion
+}
+
 // GetTenantDomain returns the TenantDomain field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsAD) GetTenantDomain() string {
 	if c == nil || c.TenantDomain == nil {
@@ -2683,6 +2691,14 @@ func (c *ConnectionOptionsADFS) GetSignInEndpoint() string {
 		return ""
 	}
 	return *c.SignInEndpoint
+}
+
+// GetStrategyVersion returns the StrategyVersion field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsADFS) GetStrategyVersion() int {
+	if c == nil || c.StrategyVersion == nil {
+		return 0
+	}
+	return *c.StrategyVersion
 }
 
 // GetTenantDomain returns the TenantDomain field if it's non-nil, zero value otherwise.
@@ -3107,6 +3123,14 @@ func (c *ConnectionOptionsAzureAD) GetSetUserAttributes() string {
 		return ""
 	}
 	return *c.SetUserAttributes
+}
+
+// GetStrategyVersion returns the StrategyVersion field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAzureAD) GetStrategyVersion() int {
+	if c == nil || c.StrategyVersion == nil {
+		return 0
+	}
+	return *c.StrategyVersion
 }
 
 // GetTenantDomain returns the TenantDomain field if it's non-nil, zero value otherwise.
@@ -4522,6 +4546,14 @@ func (c *ConnectionOptionsOAuth2) GetSetUserAttributes() string {
 	return *c.SetUserAttributes
 }
 
+// GetStrategyVersion returns the StrategyVersion field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth2) GetStrategyVersion() int {
+	if c == nil || c.StrategyVersion == nil {
+		return 0
+	}
+	return *c.StrategyVersion
+}
+
 // GetTokenURL returns the TokenURL field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOAuth2) GetTokenURL() string {
 	if c == nil || c.TokenURL == nil {
@@ -5517,6 +5549,14 @@ func (c *ConnectionOptionsSAML) GetSignSAMLRequest() bool {
 		return false
 	}
 	return *c.SignSAMLRequest
+}
+
+// GetStrategyVersion returns the StrategyVersion field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetStrategyVersion() int {
+	if c == nil || c.StrategyVersion == nil {
+		return 0
+	}
+	return *c.StrategyVersion
 }
 
 // GetSubject returns the Subject map if it's non-nil, an empty map otherwise.
