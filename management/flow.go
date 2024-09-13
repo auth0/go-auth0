@@ -8,7 +8,7 @@ import (
 
 // Flow represents an Auth0 flow for flow resource.
 //
-// See: https://auth0.com/docs/customize/flows/intro-to-flows
+// See: https://auth0.com/docs/customize/forms/intro-to-flows
 type Flow struct {
 	// Flow identifier
 	ID *string `json:"id,omitempty"`
