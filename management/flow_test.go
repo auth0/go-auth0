@@ -14,7 +14,7 @@ import (
 )
 
 /*
-Flow tests
+Flow tests.
 */
 func TestFlowManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
@@ -128,7 +128,7 @@ func cleanupFlow(t *testing.T, flowID string) {
 }
 
 /*
-Flow Vault Connection tests
+Flow Vault Connection tests.
 */
 func TestFlowVaultConnectionManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
