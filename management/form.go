@@ -55,8 +55,8 @@ type FormLanguages struct {
 
 // FormMessages represents custom and error messages of the form.
 type FormMessages struct {
-	Custom map[string]interface{} `json:"custom,omitempty"`
-	Errors map[string]interface{} `json:"errors,omitempty"`
+	Custom *map[string]interface{} `json:"custom,omitempty"`
+	Errors *map[string]interface{} `json:"errors,omitempty"`
 }
 
 // FormStyle represents the style of the form.

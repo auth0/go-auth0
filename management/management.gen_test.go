@@ -8969,8 +8969,8 @@ func TestFormList_String(t *testing.T) {
 }
 
 func TestFormMessages_GetCustom(tt *testing.T) {
-	zeroValue := map[string]interface{}{}
-	f := &FormMessages{Custom: zeroValue}
+	var zeroValue map[string]interface{}
+	f := &FormMessages{Custom: &zeroValue}
 	f.GetCustom()
 	f = &FormMessages{}
 	f.GetCustom()
@@ -8979,8 +8979,8 @@ func TestFormMessages_GetCustom(tt *testing.T) {
 }
 
 func TestFormMessages_GetErrors(tt *testing.T) {
-	zeroValue := map[string]interface{}{}
-	f := &FormMessages{Errors: zeroValue}
+	var zeroValue map[string]interface{}
+	f := &FormMessages{Errors: &zeroValue}
 	f.GetErrors()
 	f = &FormMessages{}
 	f.GetErrors()

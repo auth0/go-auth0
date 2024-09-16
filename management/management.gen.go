@@ -7214,20 +7214,20 @@ func (f *FormList) String() string {
 	return Stringify(f)
 }
 
-// GetCustom returns the Custom map if it's non-nil, an empty map otherwise.
+// GetCustom returns the Custom field if it's non-nil, zero value otherwise.
 func (f *FormMessages) GetCustom() map[string]interface{} {
 	if f == nil || f.Custom == nil {
 		return map[string]interface{}{}
 	}
-	return f.Custom
+	return *f.Custom
 }
 
-// GetErrors returns the Errors map if it's non-nil, an empty map otherwise.
+// GetErrors returns the Errors field if it's non-nil, zero value otherwise.
 func (f *FormMessages) GetErrors() map[string]interface{} {
 	if f == nil || f.Errors == nil {
 		return map[string]interface{}{}
 	}
-	return f.Errors
+	return *f.Errors
 }
 
 // String returns a string representation of FormMessages.

@@ -93,10 +93,10 @@ func TestFormManager_MarshalJSON(t *testing.T) {
 		}: `{"name":"test-form","description":"A test form","languages":{"primary":"en"},"style":{"theme":"SOFT"}}`,
 		{
 			Messages: &FormMessages{
-				Custom: map[string]interface{}{
+				Custom: &map[string]interface{}{
 					"welcome": "Welcome to the form",
 				},
-				Errors: map[string]interface{}{
+				Errors: &map[string]interface{}{
 					"required": "This field is required",
 				},
 			},
