@@ -191,7 +191,7 @@ func TestFlowVaultConnectionManager_List(t *testing.T) {
 	flowVaultConnectionList, err := api.Flow.Vault.GetConnectionList(context.Background())
 	assert.NoError(t, err)
 	assert.Greater(t, len(flowVaultConnectionList.Connections), 0)
-	assert.Contains(t, getFlowVaultConnectionIDs(flowVaultConnectionList.Connections), flowVaultConnection.GetID())
+	assert.Contains(t, flowVaultConnectionList.Connections, flowVaultConnection)
 }
 
 func TestFlowVaultConnectionManager_MarshalJSON(t *testing.T) {
@@ -224,14 +224,6 @@ func getFlowIDs(flows []*Flow) []string {
 	ids := make([]string, len(flows))
 	for i, f := range flows {
 		ids[i] = f.GetID()
-	}
-	return ids
-}
-
-func getFlowVaultConnectionIDs(connections []*FlowVaultConnection) []string {
-	ids := make([]string, len(connections))
-	for i, connection := range connections {
-		ids[i] = connection.GetID()
 	}
 	return ids
 }
