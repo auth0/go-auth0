@@ -73,11 +73,12 @@ func TestFormManager_Delete(t *testing.T) {
 func TestFormManager_List(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	form := givenAForm(t)
+	clearFormFields(form)
 
 	formList, err := api.Form.List(context.Background())
 	assert.NoError(t, err)
 	assert.Greater(t, len(formList.Forms), 0)
-	assert.Contains(t, getFormIDs(formList.Forms), form.GetID())
+	assert.Contains(t, formList.Forms, form)
 }
 
 func TestFormManager_MarshalJSON(t *testing.T) {
@@ -117,12 +118,17 @@ func TestFormManager_MarshalJSON(t *testing.T) {
 	}
 }
 
-func getFormIDs(forms []*Form) []string {
-	ids := make([]string, len(forms))
-	for i, f := range forms {
-		ids[i] = f.GetID()
-	}
-	return ids
+func clearFormFields(form *Form) {
+	form.Ending = nil
+	form.Messages = nil
+	form.Languages = nil
+	form.Nodes = nil
+	form.Style = nil
+	form.Start = nil
+	form.Tags = nil
+	form.Translations = nil
+	form.Social = nil
+	form.FlowCount = auth0.Int(0)
 }
 
 func givenAForm(t *testing.T) *Form {
