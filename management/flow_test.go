@@ -69,11 +69,14 @@ func TestFlowManager_Delete(t *testing.T) {
 func TestFlowManager_List(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	flow := givenAFlow(t)
+	flow.Actions = nil
+	flow.Triggers = nil
+	flow.Security = nil
 
 	flowList, err := api.Flow.List(context.Background())
 	assert.NoError(t, err)
 	assert.Greater(t, len(flowList.Flows), 0)
-	assert.Contains(t, getFlowIDs(flowList.Flows), flow.GetID())
+	assert.Contains(t, flowList.Flows, flow)
 }
 
 func TestFlowManager_MarshalJSON(t *testing.T) {
@@ -218,14 +221,6 @@ func TestFlowVaultConnectionManager_MarshalJSON(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected, string(payload))
 	}
-}
-
-func getFlowIDs(flows []*Flow) []string {
-	ids := make([]string, len(flows))
-	for i, f := range flows {
-		ids[i] = f.GetID()
-	}
-	return ids
 }
 
 func givenAFlowVaultConnection(t *testing.T) *FlowVaultConnection {
