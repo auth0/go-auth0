@@ -55,6 +55,7 @@ func TestFlowManager_Update(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "Updated flow description test", updatedFlow.GetDescription())
 	assert.Equal(t, expectedFlow.GetName(), updatedFlow.GetName())
+	assert.Equal(t, expectedFlow.GetSynchronous(), updatedFlow.GetSynchronous())
 }
 
 func TestFlowManager_Delete(t *testing.T) {
@@ -172,6 +173,7 @@ func TestFlowVaultConnectionManager_Update(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Equal(t, "new-connection-name", updatedFlowVaultConnection.GetName())
+	assert.Equal(t, expectedFlowVaultConnection.GetAppID(), updatedFlowVaultConnection.GetAppID())
 }
 
 func TestFlowVaultConnectionManager_Delete(t *testing.T) {

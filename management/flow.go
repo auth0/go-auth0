@@ -31,8 +31,8 @@ type Flow struct {
 	// Security configuration for flow executions
 	Security *map[string]interface{} `json:"security,omitempty"`
 
-	// Number of flows linked to this flow
-	FlowCount *int `json:"flow_count,omitempty"`
+	// Number of forms linked to this flow
+	FormCount *int `json:"form_count,omitempty"`
 
 	CreatedAt  *time.Time `json:"created_at,omitempty"`
 	UpdatedAt  *time.Time `json:"updated_at,omitempty"`

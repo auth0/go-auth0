@@ -21,9 +21,9 @@ func TestFormManager_Create(t *testing.T) {
 		Languages: &FormLanguages{
 			Primary: auth0.String("en"),
 		},
-		Style: &FormStyle{
-			Theme:   auth0.String("SOFT"),
-			Version: auth0.String("MODERN"),
+		Style: &map[string]interface{}{
+			"theme":   auth0.String("SOFT"),
+			"version": auth0.String("MODERN"),
 		},
 	}
 
@@ -58,6 +58,8 @@ func TestFormManager_Update(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "Updated Description test", updatedForm.GetDescription())
 	assert.Equal(t, expectedForm.GetName(), updatedForm.GetName())
+	assert.Equal(t, expectedForm.GetLanguages(), updatedForm.GetLanguages())
+	assert.Equal(t, expectedForm.GetStyle(), updatedForm.GetStyle())
 }
 
 func TestFormManager_Delete(t *testing.T) {
@@ -87,10 +89,11 @@ func TestFormManager_MarshalJSON(t *testing.T) {
 			Languages: &FormLanguages{
 				Primary: auth0.String("en"),
 			},
-			Style: &FormStyle{
-				Theme: auth0.String("SOFT"),
+			Style: &map[string]interface{}{
+				"theme":   auth0.String("SOFT"),
+				"version": auth0.String("MODERN"),
 			},
-		}: `{"name":"test-form","description":"A test form","languages":{"primary":"en"},"style":{"theme":"SOFT"}}`,
+		}: `{"name":"test-form","description":"A test form","languages":{"primary":"en"},"style":{"theme":"SOFT","version":"MODERN"}}`,
 		{
 			Messages: &FormMessages{
 				Custom: &map[string]interface{}{
@@ -130,9 +133,9 @@ func givenAForm(t *testing.T) *Form {
 		Languages: &FormLanguages{
 			Primary: auth0.String("en"),
 		},
-		Style: &FormStyle{
-			Theme:   auth0.String("SOFT"),
-			Version: auth0.String("MODERN"),
+		Style: &map[string]interface{}{
+			"theme":   auth0.String("SOFT"),
+			"version": auth0.String("MODERN"),
 		},
 	}
 

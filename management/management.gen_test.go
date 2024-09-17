@@ -8581,14 +8581,14 @@ func TestFlow_GetExecutedAt(tt *testing.T) {
 	f.GetExecutedAt()
 }
 
-func TestFlow_GetFlowCount(tt *testing.T) {
+func TestFlow_GetFormCount(tt *testing.T) {
 	var zeroValue int
-	f := &Flow{FlowCount: &zeroValue}
-	f.GetFlowCount()
+	f := &Flow{FormCount: &zeroValue}
+	f.GetFormCount()
 	f = &Flow{}
-	f.GetFlowCount()
+	f.GetFormCount()
 	f = nil
-	f.GetFlowCount()
+	f.GetFormCount()
 }
 
 func TestFlow_GetID(tt *testing.T) {
@@ -8850,6 +8850,16 @@ func TestForm_GetLanguages(tt *testing.T) {
 	f.GetLanguages()
 }
 
+func TestForm_GetLinks(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	f := &Form{Links: &zeroValue}
+	f.GetLinks()
+	f = &Form{}
+	f.GetLinks()
+	f = nil
+	f.GetLinks()
+}
+
 func TestForm_GetMessages(tt *testing.T) {
 	f := &Form{}
 	f.GetMessages()
@@ -8878,7 +8888,10 @@ func TestForm_GetStart(tt *testing.T) {
 }
 
 func TestForm_GetStyle(tt *testing.T) {
-	f := &Form{}
+	var zeroValue map[string]interface{}
+	f := &Form{Style: &zeroValue}
+	f.GetStyle()
+	f = &Form{}
 	f.GetStyle()
 	f = nil
 	f.GetStyle()
@@ -8991,44 +9004,6 @@ func TestFormMessages_GetErrors(tt *testing.T) {
 func TestFormMessages_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &FormMessages{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestFormStyle_GetCSS(tt *testing.T) {
-	var zeroValue string
-	f := &FormStyle{CSS: &zeroValue}
-	f.GetCSS()
-	f = &FormStyle{}
-	f.GetCSS()
-	f = nil
-	f.GetCSS()
-}
-
-func TestFormStyle_GetTheme(tt *testing.T) {
-	var zeroValue string
-	f := &FormStyle{Theme: &zeroValue}
-	f.GetTheme()
-	f = &FormStyle{}
-	f.GetTheme()
-	f = nil
-	f.GetTheme()
-}
-
-func TestFormStyle_GetVersion(tt *testing.T) {
-	var zeroValue string
-	f := &FormStyle{Version: &zeroValue}
-	f.GetVersion()
-	f = &FormStyle{}
-	f.GetVersion()
-	f = nil
-	f.GetVersion()
-}
-
-func TestFormStyle_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &FormStyle{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

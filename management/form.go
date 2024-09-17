@@ -20,7 +20,7 @@ type Form struct {
 	// Languages contains the languages of the form.
 	Languages *FormLanguages `json:"languages,omitempty"`
 	// Style contains the style of the form.
-	Style *FormStyle `json:"style,omitempty"`
+	Style *map[string]interface{} `json:"style,omitempty"`
 
 	// FlowCount is the count of flows in the form.
 	FlowCount *int `json:"flow_count,omitempty"`
@@ -41,6 +41,9 @@ type Form struct {
 	// Tags are the tags associated with the form.
 	Tags *[]string `json:"tags,omitempty"`
 
+	// Form related links
+	Links *map[string]interface{} `json:"links,omitempty"`
+
 	CreatedAt   *time.Time `json:"created_at,omitempty"`
 	UpdatedAt   *time.Time `json:"updated_at,omitempty"`
 	EmbeddedAt  *time.Time `json:"embedded_at,omitempty"`
@@ -59,20 +62,13 @@ type FormMessages struct {
 	Errors *map[string]interface{} `json:"errors,omitempty"`
 }
 
-// FormStyle represents the style of the form.
-type FormStyle struct {
-	CSS     *string `json:"css,omitempty"`
-	Version *string `json:"version,omitempty"`
-	Theme   *string `json:"theme,omitempty"`
-}
-
 // MarshalJSON implements the json.Marshaller interface.
 func (f *Form) MarshalJSON() ([]byte, error) {
 	type FormSubset struct {
 		Name         *string                 `json:"name,omitempty"`
 		Description  *string                 `json:"description,omitempty"`
 		Languages    *FormLanguages          `json:"languages,omitempty"`
-		Style        *FormStyle              `json:"style,omitempty"`
+		Style        *map[string]interface{} `json:"style,omitempty"`
 		Messages     *FormMessages           `json:"messages,omitempty"`
 		Translations *map[string]interface{} `json:"translations,omitempty"`
 		Start        *map[string]interface{} `json:"start,omitempty"`

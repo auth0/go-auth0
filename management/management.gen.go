@@ -6907,12 +6907,12 @@ func (f *Flow) GetExecutedAt() time.Time {
 	return *f.ExecutedAt
 }
 
-// GetFlowCount returns the FlowCount field if it's non-nil, zero value otherwise.
-func (f *Flow) GetFlowCount() int {
-	if f == nil || f.FlowCount == nil {
+// GetFormCount returns the FormCount field if it's non-nil, zero value otherwise.
+func (f *Flow) GetFormCount() int {
+	if f == nil || f.FormCount == nil {
 		return 0
 	}
-	return *f.FlowCount
+	return *f.FormCount
 }
 
 // GetID returns the ID field if it's non-nil, zero value otherwise.
@@ -7119,6 +7119,14 @@ func (f *Form) GetLanguages() *FormLanguages {
 	return f.Languages
 }
 
+// GetLinks returns the Links field if it's non-nil, zero value otherwise.
+func (f *Form) GetLinks() map[string]interface{} {
+	if f == nil || f.Links == nil {
+		return map[string]interface{}{}
+	}
+	return *f.Links
+}
+
 // GetMessages returns the Messages field.
 func (f *Form) GetMessages() *FormMessages {
 	if f == nil {
@@ -7143,12 +7151,12 @@ func (f *Form) GetStart() map[string]interface{} {
 	return *f.Start
 }
 
-// GetStyle returns the Style field.
-func (f *Form) GetStyle() *FormStyle {
-	if f == nil {
-		return nil
+// GetStyle returns the Style field if it's non-nil, zero value otherwise.
+func (f *Form) GetStyle() map[string]interface{} {
+	if f == nil || f.Style == nil {
+		return map[string]interface{}{}
 	}
-	return f.Style
+	return *f.Style
 }
 
 // GetSubmittedAt returns the SubmittedAt field if it's non-nil, zero value otherwise.
@@ -7232,35 +7240,6 @@ func (f *FormMessages) GetErrors() map[string]interface{} {
 
 // String returns a string representation of FormMessages.
 func (f *FormMessages) String() string {
-	return Stringify(f)
-}
-
-// GetCSS returns the CSS field if it's non-nil, zero value otherwise.
-func (f *FormStyle) GetCSS() string {
-	if f == nil || f.CSS == nil {
-		return ""
-	}
-	return *f.CSS
-}
-
-// GetTheme returns the Theme field if it's non-nil, zero value otherwise.
-func (f *FormStyle) GetTheme() string {
-	if f == nil || f.Theme == nil {
-		return ""
-	}
-	return *f.Theme
-}
-
-// GetVersion returns the Version field if it's non-nil, zero value otherwise.
-func (f *FormStyle) GetVersion() string {
-	if f == nil || f.Version == nil {
-		return ""
-	}
-	return *f.Version
-}
-
-// String returns a string representation of FormStyle.
-func (f *FormStyle) String() string {
 	return Stringify(f)
 }
 
