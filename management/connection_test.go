@@ -778,11 +778,36 @@ func TestConnectionManager_Read(t *testing.T) {
 			assert.Equal(t, expectedConnection.GetName(), actualConnection.GetName())
 			assert.Equal(t, expectedConnection.GetStrategy(), actualConnection.GetStrategy())
 			assert.IsType(t, testCase.options, actualConnection.Options)
+			switch testCase.connection.GetStrategy() {
+			case "ad", "adfs", "auth0", "samlp", "waad", "windowslive", "wordpress":
+				assert.ObjectsAreEqualValues(getStrategyVersion(testCase.connection.GetStrategy(), testCase.options), getStrategyVersion(actualConnection.GetStrategy(), actualConnection.Options))
+			}
 
 			t.Cleanup(func() {
 				cleanupConnection(t, expectedConnection.GetID())
 			})
 		})
+	}
+}
+
+func getStrategyVersion(strategy string, options interface{}) int {
+	switch strategy {
+	case "ad":
+		return options.(*ConnectionOptionsAD).GetStrategyVersion()
+	case "adfs":
+		return options.(*ConnectionOptionsADFS).GetStrategyVersion()
+	case "auth0":
+		return options.(*ConnectionOptions).GetStrategyVersion()
+	case "samlp":
+		return options.(*ConnectionOptionsSAML).GetStrategyVersion()
+	case "waad":
+		return options.(*ConnectionOptionsAzureAD).GetStrategyVersion()
+	case "windowslive":
+		return options.(*ConnectionOptionsWindowsLive).GetStrategyVersion()
+	case "wordpress":
+		return options.(*ConnectionOptionsOAuth2).GetStrategyVersion()
+	default:
+		return -1
 	}
 }
 
@@ -813,46 +838,6 @@ func TestConnectionManager_ReadByName(t *testing.T) {
 		assert.EqualError(t, err, "400 Bad Request: Name cannot be empty")
 		assert.Empty(t, actualConnection)
 	})
-}
-
-func TestConnectionManager_ReadStrategyVersion(t *testing.T) {
-	for _, testCase := range connectionTestCases {
-		t.Run("It can successfully read the strategy_version for a "+testCase.name, func(t *testing.T) {
-			switch testCase.connection.GetStrategy() {
-			case "ad", "adfs", "auth0", "samlp", "waad", "windowslive", "wordpress":
-				configureHTTPTestRecordings(t)
-
-				connection := givenAConnection(t, testCase)
-
-				actualConnection, err := api.Connection.Read(context.Background(), connection.GetID())
-				assert.NoError(t, err)
-				assert.ObjectsAreEqualValues(getStrategyVersion(testCase.connection.GetStrategy(), testCase.options), getStrategyVersion(actualConnection.GetStrategy(), actualConnection.Options))
-			default:
-				t.Skip("Skipping for connections which don't support strategy_version")
-			}
-		})
-	}
-}
-
-func getStrategyVersion(strategy string, options interface{}) int {
-	switch strategy {
-	case "ad":
-		return options.(*ConnectionOptionsAD).GetStrategyVersion()
-	case "adfs":
-		return options.(*ConnectionOptionsADFS).GetStrategyVersion()
-	case "auth0":
-		return options.(*ConnectionOptions).GetStrategyVersion()
-	case "samlp":
-		return options.(*ConnectionOptionsSAML).GetStrategyVersion()
-	case "waad":
-		return options.(*ConnectionOptionsAzureAD).GetStrategyVersion()
-	case "windowslive":
-		return options.(*ConnectionOptionsWindowsLive).GetStrategyVersion()
-	case "wordpress":
-		return options.(*ConnectionOptionsOAuth2).GetStrategyVersion()
-	default:
-		return -1
-	}
 }
 
 func TestConnectionManager_Update(t *testing.T) {

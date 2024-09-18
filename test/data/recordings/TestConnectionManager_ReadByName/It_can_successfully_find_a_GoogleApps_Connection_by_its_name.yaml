@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-GoogleApps-Connection-1726595088","strategy":"google-apps","options":{"domain":"example.com","tenant_domain":"example.com","basic_profile":true,"ext_profile":true,"ext_groups":true,"ext_is_admin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-GoogleApps-Connection-1726668924","strategy":"google-apps","options":{"domain":"example.com","tenant_domain":"example.com","basic_profile":true,"ext_profile":true,"ext_groups":true,"ext_is_admin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 627
         uncompressed: false
-        body: '{"id":"con_UG06mjdZI4wplGOc","options":{"domain":"example.com","tenant_domain":"example.com","basic_profile":true,"ext_profile":true,"ext_groups":true,"ext_is_admin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"map_user_id_to_id":false,"email":true,"profile":true,"scope":["email","profile"],"handle_login_from_social":true},"strategy":"google-apps","name":"Test-GoogleApps-Connection-1726595088","provisioning_ticket_url":"https://login.eu.auth0.com/go-auth0-dev.eu.auth0.com/p/google-apps/QuZUBWkA","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-GoogleApps-Connection-1726595088"]}'
+        body: '{"id":"con_386so3Baaaz2wBCD","options":{"domain":"example.com","tenant_domain":"example.com","basic_profile":true,"ext_profile":true,"ext_groups":true,"ext_is_admin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"map_user_id_to_id":false,"email":true,"profile":true,"scope":["email","profile"],"handle_login_from_social":true},"strategy":"google-apps","name":"Test-GoogleApps-Connection-1726668924","provisioning_ticket_url":"https://login.eu.auth0.com/go-auth0-dev.eu.auth0.com/p/google-apps/FdGPre5Y","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-GoogleApps-Connection-1726668924"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 201.185042ms
+        duration: 199.716875ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?include_totals=true&name=Test-GoogleApps-Connection-1726595088&per_page=50
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?include_totals=true&name=Test-GoogleApps-Connection-1726668924&per_page=50
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"total":1,"start":0,"limit":50,"connections":[{"id":"con_UG06mjdZI4wplGOc","options":{"email":true,"scope":["email","profile"],"domain":"example.com","profile":true,"ext_groups":true,"ext_profile":true,"ext_is_admin":true,"basic_profile":true,"tenant_domain":"example.com","upstream_params":{"screen_name":{"alias":"login_hint"}},"map_user_id_to_id":false,"handle_login_from_social":true},"strategy":"google-apps","name":"Test-GoogleApps-Connection-1726595088","provisioning_ticket_url":"https://login.eu.auth0.com/go-auth0-dev.eu.auth0.com/p/google-apps/QuZUBWkA","is_domain_connection":false,"show_as_button":false,"realms":["Test-GoogleApps-Connection-1726595088"],"enabled_clients":[]}]}'
+        body: '{"total":1,"start":0,"limit":50,"connections":[{"id":"con_386so3Baaaz2wBCD","options":{"email":true,"scope":["email","profile"],"domain":"example.com","profile":true,"ext_groups":true,"ext_profile":true,"ext_is_admin":true,"basic_profile":true,"tenant_domain":"example.com","upstream_params":{"screen_name":{"alias":"login_hint"}},"map_user_id_to_id":false,"handle_login_from_social":true},"strategy":"google-apps","name":"Test-GoogleApps-Connection-1726668924","provisioning_ticket_url":"https://login.eu.auth0.com/go-auth0-dev.eu.auth0.com/p/google-apps/FdGPre5Y","is_domain_connection":false,"show_as_button":false,"realms":["Test-GoogleApps-Connection-1726668924"],"enabled_clients":[]}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 6.292589083s
+        duration: 160.716667ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_UG06mjdZI4wplGOc
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_386so3Baaaz2wBCD
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -100,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-09-17T17:46:14.603Z"}'
+        body: '{"deleted_at":"2024-09-18T14:16:17.421Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 161.24575ms
+        duration: 148.246042ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,7 +125,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_UG06mjdZI4wplGOc
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_386so3Baaaz2wBCD
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -133,12 +133,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 41
+        content_length: 0
         uncompressed: false
-        body: '{"deleted_at":"2024-09-17T17:46:14.603Z"}'
+        body: ""
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 202 Accepted
-        code: 202
-        duration: 133.115334ms
+        status: 204 No Content
+        code: 204
+        duration: 155.948084ms
