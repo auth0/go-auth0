@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-WindowsLive-Connection-1726668924","strategy":"windowslive","options":{"strategy_version":2,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-WindowsLive-Connection-1726765770","strategy":"windowslive","options":{"strategy_version":2,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 319
         uncompressed: false
-        body: '{"id":"con_Zmhux7qaZxz4vUq6","options":{"strategy_version":2,"upstream_params":{"screen_name":{"alias":"login_hint"}},"signin":true,"scope":[]},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1726668924","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1726668924"]}'
+        body: '{"id":"con_GxViWYhYZf09K9E5","options":{"strategy_version":2,"upstream_params":{"screen_name":{"alias":"login_hint"}},"signin":true,"scope":[]},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1726765770"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 182.592542ms
+        duration: 177.635125ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Zmhux7qaZxz4vUq6
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_GxViWYhYZf09K9E5
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_Zmhux7qaZxz4vUq6","options":{"scope":[],"signin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"strategy_version":2},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1726668924","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1726668924"]}'
+        body: '{"id":"con_GxViWYhYZf09K9E5","options":{"scope":[],"signin":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"strategy_version":2},"strategy":"windowslive","name":"Test-WindowsLive-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-WindowsLive-Connection-1726765770"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 150.564542ms
+        duration: 149.418875ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Zmhux7qaZxz4vUq6
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_GxViWYhYZf09K9E5
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -100,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-09-18T14:15:59.402Z"}'
+        body: '{"deleted_at":"2024-09-19T17:10:30.420Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 178.805292ms
+        duration: 168.159208ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,7 +125,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Zmhux7qaZxz4vUq6
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_GxViWYhYZf09K9E5
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -135,10 +135,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-09-18T14:15:59.402Z"}'
+        body: '{"deleted_at":"2024-09-19T17:10:30.420Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 151.124959ms
+        duration: 141.7885ms

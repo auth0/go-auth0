@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Email-Connection-1726595088","strategy":"email","options":{"name":"Test-Connection-Email","email":{"syntax":"liquid","from":"{{application.name}} \u003ctest@example.com\u003e","subject":"Email Login - {{application.name}}","body":"\u003chtml\u003e\u003cbody\u003eemail contents\u003c/body\u003e\u003c/html\u003e"},"totp":{"time_step":100,"length":4},"authParams":{"scope":"openid profile"},"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-Email-Connection-1726765770","strategy":"email","options":{"name":"Test-Connection-Email","email":{"syntax":"liquid","from":"{{application.name}} \u003ctest@example.com\u003e","subject":"Email Login - {{application.name}}","body":"\u003chtml\u003e\u003cbody\u003eemail contents\u003c/body\u003e\u003c/html\u003e"},"totp":{"time_step":100,"length":4},"authParams":{"scope":"openid profile"},"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 588
         uncompressed: false
-        body: '{"id":"con_VImJSgSc2frvh9Jb","options":{"name":"Test-Connection-Email","email":{"syntax":"liquid","from":"{{application.name}} <test@example.com>","subject":"Email Login - {{application.name}}","body":"<html><body>email contents</body></html>"},"totp":{"time_step":100,"length":4},"authParams":{"scope":"openid profile"},"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"email","name":"Test-Email-Connection-1726595088","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Email-Connection-1726595088"]}'
+        body: '{"id":"con_nHsPBwCIIonDBNvA","options":{"name":"Test-Connection-Email","email":{"syntax":"liquid","from":"{{application.name}} <test@example.com>","subject":"Email Login - {{application.name}}","body":"<html><body>email contents</body></html>"},"totp":{"time_step":100,"length":4},"authParams":{"scope":"openid profile"},"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"email","name":"Test-Email-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Email-Connection-1726765770"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 168.428708ms
+        duration: 198.888625ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_VImJSgSc2frvh9Jb
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_nHsPBwCIIonDBNvA
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -65,10 +65,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-09-17T17:44:50.694Z"}'
+        body: '{"deleted_at":"2024-09-19T17:09:33.061Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 198.246125ms
+        duration: 206.226833ms

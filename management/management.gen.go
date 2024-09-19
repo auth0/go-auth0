@@ -3181,6 +3181,14 @@ func (c *ConnectionOptionsAzureAD) GetUseCommonEndpoint() bool {
 	return *c.UseCommonEndpoint
 }
 
+// GetUserIDAttribute returns the UserIDAttribute field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAzureAD) GetUserIDAttribute() string {
+	if c == nil || c.UserIDAttribute == nil {
+		return ""
+	}
+	return *c.UserIDAttribute
+}
+
 // GetUseWSFederation returns the UseWSFederation field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsAzureAD) GetUseWSFederation() bool {
 	if c == nil || c.UseWSFederation == nil {

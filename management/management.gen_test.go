@@ -3904,6 +3904,16 @@ func TestConnectionOptionsAzureAD_GetUseCommonEndpoint(tt *testing.T) {
 	c.GetUseCommonEndpoint()
 }
 
+func TestConnectionOptionsAzureAD_GetUserIDAttribute(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsAzureAD{UserIDAttribute: &zeroValue}
+	c.GetUserIDAttribute()
+	c = &ConnectionOptionsAzureAD{}
+	c.GetUserIDAttribute()
+	c = nil
+	c.GetUserIDAttribute()
+}
+
 func TestConnectionOptionsAzureAD_GetUseWSFederation(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsAzureAD{UseWSFederation: &zeroValue}

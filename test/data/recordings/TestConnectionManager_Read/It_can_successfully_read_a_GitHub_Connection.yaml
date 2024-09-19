@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-GitHub-Connection-1726668924","strategy":"github","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-GitHub-Connection-1726765770","strategy":"github","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 269
         uncompressed: false
-        body: '{"id":"con_MGJmTeEcEUyrBnPc","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":[]},"strategy":"github","name":"Test-GitHub-Connection-1726668924","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GitHub-Connection-1726668924"]}'
+        body: '{"id":"con_3UXr5Df3PI8X3YYt","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":[]},"strategy":"github","name":"Test-GitHub-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GitHub-Connection-1726765770"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 174.055875ms
+        duration: 166.2705ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_MGJmTeEcEUyrBnPc
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_3UXr5Df3PI8X3YYt
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_MGJmTeEcEUyrBnPc","options":{"scope":[],"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"github","name":"Test-GitHub-Connection-1726668924","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GitHub-Connection-1726668924"]}'
+        body: '{"id":"con_3UXr5Df3PI8X3YYt","options":{"scope":[],"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"github","name":"Test-GitHub-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GitHub-Connection-1726765770"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 6.316825459s
+        duration: 164.925333ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_MGJmTeEcEUyrBnPc
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_3UXr5Df3PI8X3YYt
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -100,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-09-18T14:15:58.758Z"}'
+        body: '{"deleted_at":"2024-09-19T17:10:29.780Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 153.937958ms
+        duration: 195.325583ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,7 +125,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_MGJmTeEcEUyrBnPc
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_3UXr5Df3PI8X3YYt
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -133,12 +133,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 0
+        content_length: 41
         uncompressed: false
-        body: ""
+        body: '{"deleted_at":"2024-09-19T17:10:29.780Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 204 No Content
-        code: 204
-        duration: 143.506416ms
+        status: 202 Accepted
+        code: 202
+        duration: 135.034042ms
