@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Custom-SMS-Connection-1714473198","strategy":"sms","options":{"name":"Test-Connection-Custom-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"messaging_service_sid":null,"provider":"sms_gateway","gateway_url":"https://test.com/sms-gateway","gateway_authentication":{"method":"bearer","subject":"test.us.auth0.com:sms","audience":"test.com/sms-gateway","secret":"my-secret","secret_base64_encoded":false},"forward_req_info":true,"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-Custom-SMS-Connection-1726668924","strategy":"sms","options":{"name":"Test-Connection-Custom-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"messaging_service_sid":null,"provider":"sms_gateway","gateway_url":"https://test.com/sms-gateway","gateway_authentication":{"method":"bearer","subject":"test.us.auth0.com:sms","audience":"test.com/sms-gateway","secret":"my-secret","secret_base64_encoded":false},"forward_req_info":true,"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.5.0
+                - Go-Auth0/1.10.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 763
         uncompressed: false
-        body: '{"id":"con_sJn2mdHVsF09i1yK","options":{"name":"Test-Connection-Custom-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"messaging_service_sid":null,"provider":"sms_gateway","gateway_url":"https://test.com/sms-gateway","gateway_authentication":{"method":"bearer","subject":"test.us.auth0.com:sms","audience":"test.com/sms-gateway","secret":"my-secret","secret_base64_encoded":false},"forward_req_info":true,"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"sms","name":"Test-Custom-SMS-Connection-1714473198","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Custom-SMS-Connection-1714473198"]}'
+        body: '{"id":"con_2eRZMqr3pecWOxjU","options":{"name":"Test-Connection-Custom-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"messaging_service_sid":null,"provider":"sms_gateway","gateway_url":"https://test.com/sms-gateway","gateway_authentication":{"method":"bearer","subject":"test.us.auth0.com:sms","audience":"test.com/sms-gateway","secret":"my-secret","secret_base64_encoded":false},"forward_req_info":true,"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"sms","name":"Test-Custom-SMS-Connection-1726668924","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Custom-SMS-Connection-1726668924"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 399.502083ms
+        duration: 177.598709ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_sJn2mdHVsF09i1yK
+                - Go-Auth0/1.10.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_2eRZMqr3pecWOxjU
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_sJn2mdHVsF09i1yK","options":{"from":"+17777777777","name":"Test-Connection-Custom-SMS","totp":{"length":5,"time_step":110},"syntax":"liquid","provider":"sms_gateway","template":"Your verification code is { code }}","gateway_url":"https://test.com/sms-gateway","disable_signup":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"forward_req_info":true,"messaging_service_sid":null,"brute_force_protection":true,"gateway_authentication":{"method":"bearer","secret":"my-secret","subject":"test.us.auth0.com:sms","audience":"test.com/sms-gateway","secret_base64_encoded":false}},"strategy":"sms","name":"Test-Custom-SMS-Connection-1714473198","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Custom-SMS-Connection-1714473198"]}'
+        body: '{"id":"con_2eRZMqr3pecWOxjU","options":{"from":"+17777777777","name":"Test-Connection-Custom-SMS","totp":{"length":5,"time_step":110},"syntax":"liquid","provider":"sms_gateway","template":"Your verification code is { code }}","gateway_url":"https://test.com/sms-gateway","disable_signup":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"forward_req_info":true,"messaging_service_sid":null,"brute_force_protection":true,"gateway_authentication":{"method":"bearer","secret":"my-secret","subject":"test.us.auth0.com:sms","audience":"test.com/sms-gateway","secret_base64_encoded":false}},"strategy":"sms","name":"Test-Custom-SMS-Connection-1726668924","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Custom-SMS-Connection-1726668924"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 331.206959ms
+        duration: 174.499667ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -89,8 +89,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_sJn2mdHVsF09i1yK
+                - Go-Auth0/1.10.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_2eRZMqr3pecWOxjU
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -100,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-04-30T10:33:28.551Z"}'
+        body: '{"deleted_at":"2024-09-18T14:15:35.844Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 478.443875ms
+        duration: 169.837917ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -124,8 +124,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_sJn2mdHVsF09i1yK
+                - Go-Auth0/1.10.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_2eRZMqr3pecWOxjU
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -133,12 +133,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 0
+        content_length: 41
         uncompressed: false
-        body: ""
+        body: '{"deleted_at":"2024-09-18T14:15:35.844Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 204 No Content
-        code: 204
-        duration: 353.65575ms
+        status: 202 Accepted
+        code: 202
+        duration: 136.507584ms
