@@ -790,27 +790,6 @@ func TestConnectionManager_Read(t *testing.T) {
 	}
 }
 
-func getStrategyVersion(strategy string, options interface{}) int {
-	switch strategy {
-	case "ad":
-		return options.(*ConnectionOptionsAD).GetStrategyVersion()
-	case "adfs":
-		return options.(*ConnectionOptionsADFS).GetStrategyVersion()
-	case "auth0":
-		return options.(*ConnectionOptions).GetStrategyVersion()
-	case "samlp":
-		return options.(*ConnectionOptionsSAML).GetStrategyVersion()
-	case "waad":
-		return options.(*ConnectionOptionsAzureAD).GetStrategyVersion()
-	case "windowslive":
-		return options.(*ConnectionOptionsWindowsLive).GetStrategyVersion()
-	case "wordpress":
-		return options.(*ConnectionOptionsOAuth2).GetStrategyVersion()
-	default:
-		return -1
-	}
-}
-
 func TestConnectionManager_ReadByName(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully find a "+testCase.name+" by its name", func(t *testing.T) {
@@ -1304,4 +1283,25 @@ func givenAOktaConnection(t *testing.T) *Connection {
 			},
 		},
 	})
+}
+
+func getStrategyVersion(strategy string, options interface{}) int {
+	switch strategy {
+	case "ad":
+		return options.(*ConnectionOptionsAD).GetStrategyVersion()
+	case "adfs":
+		return options.(*ConnectionOptionsADFS).GetStrategyVersion()
+	case "auth0":
+		return options.(*ConnectionOptions).GetStrategyVersion()
+	case "samlp":
+		return options.(*ConnectionOptionsSAML).GetStrategyVersion()
+	case "waad":
+		return options.(*ConnectionOptionsAzureAD).GetStrategyVersion()
+	case "windowslive":
+		return options.(*ConnectionOptionsWindowsLive).GetStrategyVersion()
+	case "wordpress":
+		return options.(*ConnectionOptionsOAuth2).GetStrategyVersion()
+	default:
+		return -1
+	}
 }
