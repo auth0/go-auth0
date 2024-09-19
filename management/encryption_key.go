@@ -5,12 +5,6 @@ import (
 	"time"
 )
 
-// EncryptionKeyList is a list of encryption keys.
-type EncryptionKeyList struct {
-	List
-	Keys []*EncryptionKey `json:"keys"`
-}
-
 // EncryptionKey is used for encrypting data.
 type EncryptionKey struct {
 	// Key ID
@@ -70,8 +64,8 @@ func (m *EncryptionKeyManager) Create(ctx context.Context, e *EncryptionKey, opt
 // List all encryption keys.
 //
 // See: https://auth0.com/docs/api/management/v2/keys/get-encryption-keys
-func (m *EncryptionKeyManager) List(ctx context.Context, opts ...RequestOption) (ekl *EncryptionKeyList, err error) {
-	err = m.management.Request(ctx, "GET", m.management.URI("keys", "encryption"), &ekl, applyListDefaults(opts))
+func (m *EncryptionKeyManager) List(ctx context.Context, opts ...RequestOption) (keys []*EncryptionKey, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("keys", "encryption"), &keys, opts...)
 	return
 }
 

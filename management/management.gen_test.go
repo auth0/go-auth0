@@ -8449,14 +8449,6 @@ func TestEncryptionKey_String(t *testing.T) {
 	}
 }
 
-func TestEncryptionKeyList_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &EncryptionKeyList{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestEnrollment_GetEnrolledAt(tt *testing.T) {
 	var zeroValue time.Time
 	e := &Enrollment{EnrolledAt: &zeroValue}

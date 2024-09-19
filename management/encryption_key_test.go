@@ -49,9 +49,9 @@ func TestEncryptionKeyManager_Create(t *testing.T) {
 func TestEncryptionKeyManager_List(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	key := givenEncryptionKey(t)
-	keyList, err := api.EncryptionKey.List(context.Background(), PerPage(50), Page(0))
+	keys, err := api.EncryptionKey.List(context.Background(), PerPage(50), Page(0))
 	assert.NoError(t, err)
-	assert.Contains(t, keyList.Keys, key)
+	assert.Contains(t, keys, key)
 }
 
 func TestEncryptionKeyManager_Read(t *testing.T) {
@@ -64,12 +64,12 @@ func TestEncryptionKeyManager_Read(t *testing.T) {
 
 func TestEncryptionKeyManager_Rekey(t *testing.T) {
 	configureHTTPTestRecordings(t)
-	oldKeyList, err := api.EncryptionKey.List(context.Background(), PerPage(50), Page(0))
+	oldKeys, err := api.EncryptionKey.List(context.Background(), PerPage(50), Page(0))
 	assert.NoError(t, err)
-	assert.NotEmpty(t, oldKeyList.Keys)
+	assert.NotEmpty(t, oldKeys)
 
 	var oldKey, newKey *EncryptionKey
-	for _, key := range oldKeyList.Keys {
+	for _, key := range oldKeys {
 		if key.GetState() == "active" && key.GetType() == "tenant-master-key" {
 			oldKey = key
 			break
@@ -80,11 +80,11 @@ func TestEncryptionKeyManager_Rekey(t *testing.T) {
 	err = api.EncryptionKey.Rekey(context.Background())
 	assert.NoError(t, err)
 
-	keyList, err := api.EncryptionKey.List(context.Background(), PerPage(50), Page(0))
+	keys, err := api.EncryptionKey.List(context.Background(), PerPage(50), Page(0))
 	assert.NoError(t, err)
-	assert.NotEmpty(t, keyList.Keys)
+	assert.NotEmpty(t, keys)
 
-	for _, key := range keyList.Keys {
+	for _, key := range keys {
 		if key.GetState() == "active" && key.GetType() == "tenant-master-key" {
 			newKey = key
 			break
@@ -93,7 +93,7 @@ func TestEncryptionKeyManager_Rekey(t *testing.T) {
 	assert.NotNil(t, newKey)
 
 	assert.NotEqual(t, oldKey.GetKID(), newKey.GetKID())
-	assert.NotEqual(t, keyList.Keys, oldKeyList.Keys)
+	assert.NotEqual(t, keys, oldKeys)
 }
 
 func TestEncryptionKeyManager_Delete(t *testing.T) {

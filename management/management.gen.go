@@ -6807,11 +6807,6 @@ func (e *EncryptionKey) String() string {
 	return Stringify(e)
 }
 
-// String returns a string representation of EncryptionKeyList.
-func (e *EncryptionKeyList) String() string {
-	return Stringify(e)
-}
-
 // GetEnrolledAt returns the EnrolledAt field if it's non-nil, zero value otherwise.
 func (e *Enrollment) GetEnrolledAt() time.Time {
 	if e == nil || e.EnrolledAt == nil {
