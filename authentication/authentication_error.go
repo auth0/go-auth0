@@ -43,7 +43,11 @@ func (a *Error) Error() string {
 	return fmt.Sprintf("%d %s: %s", a.StatusCode, a.Err, a.Message)
 }
 
+// GetMFAToken returns the MFA token associated with the error, if any.
 func (a *Error) GetMFAToken() string {
+	if a == nil || a.MFAToken == "" {
+		return ""
+	}
 	return a.MFAToken
 }
 
