@@ -6,14 +6,14 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 277
+        content_length: 308
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-AzureAD-Connection-1726668924","strategy":"waad","options":{"client_id":"123456","client_secret":"123456","strategy_version":2,"tenant_domain":"example.onmicrosoft.com","domain":"example.onmicrosoft.com","upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-AzureAD-Connection-1726765770","strategy":"waad","options":{"client_id":"123456","client_secret":"123456","strategy_version":2,"tenant_domain":"example.onmicrosoft.com","domain":"example.onmicrosoft.com","upstream_params":{"screen_name":{"alias":"login_hint"}},"user_id_attribute":"userName"}}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"id":"con_D4ETguSKpmG0dLcP","options":{"client_id":"123456","client_secret":"123456","strategy_version":2,"tenant_domain":"example.onmicrosoft.com","domain":"example.onmicrosoft.com","upstream_params":{"screen_name":{"alias":"login_hint"}},"thumbprints":["1fd9e3e40392b30329860d52171ee3695fa507dc","8a48f046b8d93d1e7c6bfc10c54ce9cc6b94378b","31cee5dc8cfdde0eeec2035e1269b0fd66063e4a","2743ae2dd284d5280f768e2f77eb145f1bb6751b","824f47a0658299810b52ad51110d0290783e46c6"],"app_domain":"go-auth0-dev.eu.auth0.com.eu.auth0.com","identity_api":"microsoft-identity-platform-v2.0","useCommonEndpoint":false,"should_trust_email_verified_connection":"never_set_emails_as_verified","waad_common_endpoint":false,"use_wsfed":false,"waad_protocol":"openid-connect","userid_attribute":"oid"},"strategy":"waad","name":"Test-AzureAD-Connection-1726668924","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.eu.auth0.com/go-auth0-dev.eu.auth0.com/p/waad/1fXc36cU","is_domain_connection":false,"show_as_button":false,"display_name":"Test-AzureAD-Connection-1726668924","enabled_clients":[],"realms":["Test-AzureAD-Connection-1726668924"]}'
+        body: '{"id":"con_bvxwwyeCkZfqwWci","options":{"client_id":"123456","client_secret":"123456","strategy_version":2,"tenant_domain":"example.onmicrosoft.com","domain":"example.onmicrosoft.com","upstream_params":{"screen_name":{"alias":"login_hint"}},"user_id_attribute":"userName","thumbprints":["1fd9e3e40392b30329860d52171ee3695fa507dc","8a48f046b8d93d1e7c6bfc10c54ce9cc6b94378b","31cee5dc8cfdde0eeec2035e1269b0fd66063e4a","824f47a0658299810b52ad51110d0290783e46c6"],"app_domain":"go-auth0-dev.eu.auth0.com.eu.auth0.com","identity_api":"microsoft-identity-platform-v2.0","useCommonEndpoint":false,"should_trust_email_verified_connection":"never_set_emails_as_verified","waad_common_endpoint":false,"use_wsfed":false,"waad_protocol":"openid-connect","userid_attribute":"oid"},"strategy":"waad","name":"Test-AzureAD-Connection-1726765770","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.eu.auth0.com/go-auth0-dev.eu.auth0.com/p/waad/EDZL2DcZ","is_domain_connection":false,"show_as_button":false,"display_name":"Test-AzureAD-Connection-1726765770","enabled_clients":[],"realms":["Test-AzureAD-Connection-1726765770"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 345.565083ms
+        duration: 438.843542ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_D4ETguSKpmG0dLcP
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_bvxwwyeCkZfqwWci
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_D4ETguSKpmG0dLcP","options":{"domain":"example.onmicrosoft.com","client_id":"123456","use_wsfed":false,"app_domain":"go-auth0-dev.eu.auth0.com.eu.auth0.com","thumbprints":["1fd9e3e40392b30329860d52171ee3695fa507dc","8a48f046b8d93d1e7c6bfc10c54ce9cc6b94378b","31cee5dc8cfdde0eeec2035e1269b0fd66063e4a","2743ae2dd284d5280f768e2f77eb145f1bb6751b","824f47a0658299810b52ad51110d0290783e46c6"],"identity_api":"microsoft-identity-platform-v2.0","client_secret":"123456","tenant_domain":"example.onmicrosoft.com","waad_protocol":"openid-connect","upstream_params":{"screen_name":{"alias":"login_hint"}},"strategy_version":2,"userid_attribute":"oid","useCommonEndpoint":false,"waad_common_endpoint":false,"should_trust_email_verified_connection":"never_set_emails_as_verified"},"strategy":"waad","name":"Test-AzureAD-Connection-1726668924","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.eu.auth0.com/go-auth0-dev.eu.auth0.com/p/waad/1fXc36cU","is_domain_connection":false,"show_as_button":false,"display_name":"Test-AzureAD-Connection-1726668924","enabled_clients":[],"realms":["Test-AzureAD-Connection-1726668924"]}'
+        body: '{"id":"con_bvxwwyeCkZfqwWci","options":{"domain":"example.onmicrosoft.com","client_id":"123456","use_wsfed":false,"app_domain":"go-auth0-dev.eu.auth0.com.eu.auth0.com","thumbprints":["1fd9e3e40392b30329860d52171ee3695fa507dc","8a48f046b8d93d1e7c6bfc10c54ce9cc6b94378b","31cee5dc8cfdde0eeec2035e1269b0fd66063e4a","824f47a0658299810b52ad51110d0290783e46c6"],"identity_api":"microsoft-identity-platform-v2.0","client_secret":"123456","tenant_domain":"example.onmicrosoft.com","waad_protocol":"openid-connect","upstream_params":{"screen_name":{"alias":"login_hint"}},"strategy_version":2,"userid_attribute":"oid","useCommonEndpoint":false,"user_id_attribute":"userName","waad_common_endpoint":false,"should_trust_email_verified_connection":"never_set_emails_as_verified"},"strategy":"waad","name":"Test-AzureAD-Connection-1726765770","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.eu.auth0.com/go-auth0-dev.eu.auth0.com/p/waad/EDZL2DcZ","is_domain_connection":false,"show_as_button":false,"display_name":"Test-AzureAD-Connection-1726765770","enabled_clients":[],"realms":["Test-AzureAD-Connection-1726765770"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 153.714041ms
+        duration: 387.835417ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,7 +90,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_D4ETguSKpmG0dLcP
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_bvxwwyeCkZfqwWci
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -100,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-09-18T14:15:42.587Z"}'
+        body: '{"deleted_at":"2024-09-19T17:10:14.521Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 162.590334ms
+        duration: 171.644958ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,7 +125,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_D4ETguSKpmG0dLcP
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_bvxwwyeCkZfqwWci
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -141,4 +141,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 137.986541ms
+        duration: 131.480875ms

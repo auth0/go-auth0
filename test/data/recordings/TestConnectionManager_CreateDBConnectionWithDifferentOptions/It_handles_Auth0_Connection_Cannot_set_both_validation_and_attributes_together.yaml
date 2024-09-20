@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Auth0-Connection-Attributes-And-Validation-1726595088","strategy":"auth0","options":{"validation":{"username":{"max":5,"min":1}},"precedence":["username","email","phone_number"],"attributes":{"email":{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}},"username":{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required"}}}}}
+            {"name":"Test-Auth0-Connection-Attributes-And-Validation-1726765770","strategy":"auth0","options":{"validation":{"username":{"max":5,"min":1}},"precedence":["username","email","phone_number"],"attributes":{"email":{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}},"username":{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required"}}}}}
         form: {}
         headers:
             Content-Type:
@@ -36,4 +36,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 400 Bad Request
         code: 400
-        duration: 135.562875ms
+        duration: 160.728458ms

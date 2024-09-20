@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Custom-SMS-Connection-1726595088","strategy":"sms","options":{"name":"Test-Connection-Custom-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"messaging_service_sid":null,"provider":"sms_gateway","gateway_url":"https://test.com/sms-gateway","gateway_authentication":{"method":"bearer","subject":"test.us.auth0.com:sms","audience":"test.com/sms-gateway","secret":"my-secret","secret_base64_encoded":false},"forward_req_info":true,"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-Custom-SMS-Connection-1726765770","strategy":"sms","options":{"name":"Test-Connection-Custom-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"messaging_service_sid":null,"provider":"sms_gateway","gateway_url":"https://test.com/sms-gateway","gateway_authentication":{"method":"bearer","subject":"test.us.auth0.com:sms","audience":"test.com/sms-gateway","secret":"my-secret","secret_base64_encoded":false},"forward_req_info":true,"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 763
         uncompressed: false
-        body: '{"id":"con_Ix5kLOOwZJqm4czv","options":{"name":"Test-Connection-Custom-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"messaging_service_sid":null,"provider":"sms_gateway","gateway_url":"https://test.com/sms-gateway","gateway_authentication":{"method":"bearer","subject":"test.us.auth0.com:sms","audience":"test.com/sms-gateway","secret":"my-secret","secret_base64_encoded":false},"forward_req_info":true,"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"sms","name":"Test-Custom-SMS-Connection-1726595088","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Custom-SMS-Connection-1726595088"]}'
+        body: '{"id":"con_WeCg7AKOhhCJAIcC","options":{"name":"Test-Connection-Custom-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"messaging_service_sid":null,"provider":"sms_gateway","gateway_url":"https://test.com/sms-gateway","gateway_authentication":{"method":"bearer","subject":"test.us.auth0.com:sms","audience":"test.com/sms-gateway","secret":"my-secret","secret_base64_encoded":false},"forward_req_info":true,"disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"sms","name":"Test-Custom-SMS-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Custom-SMS-Connection-1726765770"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 159.543209ms
+        duration: 177.051959ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Ix5kLOOwZJqm4czv
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_WeCg7AKOhhCJAIcC
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -65,10 +65,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-09-17T17:44:51.344Z"}'
+        body: '{"deleted_at":"2024-09-19T17:09:33.747Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 155.425833ms
+        duration: 153.3435ms
