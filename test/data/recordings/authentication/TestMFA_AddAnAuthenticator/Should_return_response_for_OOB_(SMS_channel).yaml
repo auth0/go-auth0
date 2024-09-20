@@ -1,0 +1,36 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 216
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: '{"authenticator_types":["oob"],"client_id":"test-client_id","client_secret":"test-client_secret","oob_channels":["sms"],"phone_number":"+91123456789"}'
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+        url: https://go-auth0-dev.eu.auth0.com/mfa/associate
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"authenticator_type":"oob","binding_method":"prompt","recovery_codes":["MZCRK3YX5V3AKNNYY6JEBQCL"],"oob_channel":"sms","oob_code":"Fe26.2*SERVER_1726721698*68ae34ffe0f5892e37a04a28d22affdfd162db318a54e7782baa861d3c4d82fd*m5UkQdNFz_T0FgNARMjsDg*s2IYxd72tpwCVmol-n4Uv3qH7F69sdZOXEZNIo1ytuNRtyTOX5bmzUFbr85QP4qjUjSDhSOwHiT3GmhFqAqi3Qp0QBMlucMwjytIYy2cQZGY3wGrnu6clRomH2pOeg7WUaiaCiji6pgrQbaVTVjw2RTQ1elvMwtYIPpI-s9mRVHY1dXYCchlXsC2iMnpONyYlw1_JKczeJA-Zwctam6lGNOz9au1x2Ng1fWmT4iM5GYMTfVDKzqEDcePdoewzPIup8y0p7_rrT6SUkvSOiP0825MiIsIGVP5VwHQxXXwt0MPcU0Zg4ZH2G48zXftna-YiujmXtAsHyPuQ-tvn1RIOw*1726830032592*6881d78b0217ebd7c659b60dd2e7e730d45a48735d17d3681431af9d0a9b8ad2*BM7ztZhWUIbgVK5jX1NUFcPrL5FShD4udVkHjjvqCA0"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 755.116375ms

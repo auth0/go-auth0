@@ -12,6 +12,7 @@ type Error struct {
 	StatusCode int    `json:"statusCode"`
 	Err        string `json:"error"`
 	Message    string `json:"error_description"`
+	MFAToken   string `json:"mfa_token,omitempty"`
 }
 
 func newError(response *http.Response) error {
@@ -40,6 +41,10 @@ func newError(response *http.Response) error {
 // Error formats the error into a string representation.
 func (a *Error) Error() string {
 	return fmt.Sprintf("%d %s: %s", a.StatusCode, a.Err, a.Message)
+}
+
+func (a *Error) GetMFAToken() string {
+	return a.MFAToken
 }
 
 // Status returns the status code of the error.
