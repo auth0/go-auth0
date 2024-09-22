@@ -15,17 +15,11 @@ type Form struct {
 
 	// Name is the name of the form.
 	Name *string `json:"name,omitempty"`
-	// Description provides details about the form.
-	Description *string `json:"description,omitempty"`
-	// Languages contains the languages of the form.
-	Languages *FormLanguages `json:"languages,omitempty"`
-	// Style contains the style of the form.
-	Style *map[string]interface{} `json:"style,omitempty"`
 
-	// FlowCount is the count of flows in the form.
-	FlowCount *int `json:"flow_count,omitempty"`
 	// Messages contains custom and error messages for the form.
 	Messages *FormMessages `json:"messages,omitempty"`
+	// Languages contains the languages of the form.
+	Languages *FormLanguages `json:"languages,omitempty"`
 	// Translations holds the translations for the form.
 	Translations *map[string]interface{} `json:"translations,omitempty"`
 
@@ -36,13 +30,8 @@ type Form struct {
 	// Ending defines the ending point of the form.
 	Ending *map[string]interface{} `json:"ending,omitempty"`
 
-	// Social providers configuration social elements of the form.
-	Social []interface{} `json:"social,omitempty"`
-	// Tags are the tags associated with the form.
-	Tags *[]string `json:"tags,omitempty"`
-
-	// Form related links
-	Links *map[string]interface{} `json:"links,omitempty"`
+	// Style contains the style of the form.
+	Style *map[string]interface{} `json:"style,omitempty"`
 
 	CreatedAt   *time.Time `json:"created_at,omitempty"`
 	UpdatedAt   *time.Time `json:"updated_at,omitempty"`
@@ -66,7 +55,6 @@ type FormMessages struct {
 func (f *Form) MarshalJSON() ([]byte, error) {
 	type FormSubset struct {
 		Name         *string                 `json:"name,omitempty"`
-		Description  *string                 `json:"description,omitempty"`
 		Languages    *FormLanguages          `json:"languages,omitempty"`
 		Style        *map[string]interface{} `json:"style,omitempty"`
 		Messages     *FormMessages           `json:"messages,omitempty"`
@@ -74,12 +62,10 @@ func (f *Form) MarshalJSON() ([]byte, error) {
 		Start        *map[string]interface{} `json:"start,omitempty"`
 		Nodes        []interface{}           `json:"nodes,omitempty"`
 		Ending       *map[string]interface{} `json:"ending,omitempty"`
-		Social       []interface{}           `json:"social,omitempty"`
 	}
 
 	return json.Marshal(&FormSubset{
 		Name:         f.Name,
-		Description:  f.Description,
 		Languages:    f.Languages,
 		Style:        f.Style,
 		Messages:     f.Messages,
@@ -87,7 +73,6 @@ func (f *Form) MarshalJSON() ([]byte, error) {
 		Start:        f.Start,
 		Nodes:        f.Nodes,
 		Ending:       f.Ending,
-		Social:       f.Social,
 	})
 }
 

@@ -16,14 +16,9 @@ import (
 func TestFormManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	form := &Form{
-		Name:        auth0.String("test-form"),
-		Description: auth0.String("A test form"),
+		Name: auth0.String("test-form"),
 		Languages: &FormLanguages{
 			Primary: auth0.String("en"),
-		},
-		Style: &map[string]interface{}{
-			"theme":   auth0.String("SOFT"),
-			"version": auth0.String("MODERN"),
 		},
 	}
 
@@ -51,13 +46,12 @@ func TestFormManager_Update(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	expectedForm := givenAForm(t)
 	updatedForm := &Form{
-		Description: auth0.String("Updated Description test"),
+		Name: auth0.String("updated-test-form"),
 	}
 	err := api.Form.Update(context.Background(), expectedForm.GetID(), updatedForm)
 
 	assert.NoError(t, err)
-	assert.Equal(t, "Updated Description test", updatedForm.GetDescription())
-	assert.Equal(t, expectedForm.GetName(), updatedForm.GetName())
+	assert.Equal(t, "updated-test-form", updatedForm.GetName())
 	assert.Equal(t, expectedForm.GetLanguages(), updatedForm.GetLanguages())
 	assert.Equal(t, expectedForm.GetStyle(), updatedForm.GetStyle())
 }
@@ -73,7 +67,13 @@ func TestFormManager_Delete(t *testing.T) {
 func TestFormManager_List(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	form := givenAForm(t)
-	clearFormFields(form)
+	form.Ending = nil
+	form.Messages = nil
+	form.Languages = nil
+	form.Nodes = nil
+	form.Style = nil
+	form.Start = nil
+	form.Translations = nil
 
 	formList, err := api.Form.List(context.Background())
 	assert.NoError(t, err)
@@ -85,16 +85,11 @@ func TestFormManager_MarshalJSON(t *testing.T) {
 	for form, expected := range map[*Form]string{
 		{}: `{}`,
 		{
-			Name:        auth0.String("test-form"),
-			Description: auth0.String("A test form"),
+			Name: auth0.String("test-form"),
 			Languages: &FormLanguages{
 				Primary: auth0.String("en"),
 			},
-			Style: &map[string]interface{}{
-				"theme":   auth0.String("SOFT"),
-				"version": auth0.String("MODERN"),
-			},
-		}: `{"name":"test-form","description":"A test form","languages":{"primary":"en"},"style":{"theme":"SOFT","version":"MODERN"}}`,
+		}: `{"name":"test-form","languages":{"primary":"en"}}`,
 		{
 			Messages: &FormMessages{
 				Custom: &map[string]interface{}{
@@ -107,7 +102,6 @@ func TestFormManager_MarshalJSON(t *testing.T) {
 		}: `{"messages":{"custom":{"welcome":"Welcome to the form"},"errors":{"required":"This field is required"}}}`,
 		{
 			ID:        auth0.String("some-id"),
-			FlowCount: auth0.Int(1),
 			CreatedAt: auth0.Time(time.Now()),
 			UpdatedAt: auth0.Time(time.Now()),
 		}: `{}`,
@@ -118,30 +112,12 @@ func TestFormManager_MarshalJSON(t *testing.T) {
 	}
 }
 
-func clearFormFields(form *Form) {
-	form.Ending = nil
-	form.Messages = nil
-	form.Languages = nil
-	form.Nodes = nil
-	form.Style = nil
-	form.Start = nil
-	form.Tags = nil
-	form.Translations = nil
-	form.Social = nil
-	form.FlowCount = auth0.Int(0)
-}
-
 func givenAForm(t *testing.T) *Form {
 	t.Helper()
 	form := &Form{
-		Name:        auth0.String("test-form"),
-		Description: auth0.String("A test form"),
+		Name: auth0.String("test-form"),
 		Languages: &FormLanguages{
 			Primary: auth0.String("en"),
-		},
-		Style: &map[string]interface{}{
-			"theme":   auth0.String("SOFT"),
-			"version": auth0.String("MODERN"),
 		},
 	}
 

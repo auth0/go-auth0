@@ -8561,16 +8561,6 @@ func TestFlow_GetCreatedAt(tt *testing.T) {
 	f.GetCreatedAt()
 }
 
-func TestFlow_GetDescription(tt *testing.T) {
-	var zeroValue string
-	f := &Flow{Description: &zeroValue}
-	f.GetDescription()
-	f = &Flow{}
-	f.GetDescription()
-	f = nil
-	f.GetDescription()
-}
-
 func TestFlow_GetExecutedAt(tt *testing.T) {
 	var zeroValue time.Time
 	f := &Flow{ExecutedAt: &zeroValue}
@@ -8579,16 +8569,6 @@ func TestFlow_GetExecutedAt(tt *testing.T) {
 	f.GetExecutedAt()
 	f = nil
 	f.GetExecutedAt()
-}
-
-func TestFlow_GetFormCount(tt *testing.T) {
-	var zeroValue int
-	f := &Flow{FormCount: &zeroValue}
-	f.GetFormCount()
-	f = &Flow{}
-	f.GetFormCount()
-	f = nil
-	f.GetFormCount()
 }
 
 func TestFlow_GetID(tt *testing.T) {
@@ -8609,36 +8589,6 @@ func TestFlow_GetName(tt *testing.T) {
 	f.GetName()
 	f = nil
 	f.GetName()
-}
-
-func TestFlow_GetSecurity(tt *testing.T) {
-	var zeroValue map[string]interface{}
-	f := &Flow{Security: &zeroValue}
-	f.GetSecurity()
-	f = &Flow{}
-	f.GetSecurity()
-	f = nil
-	f.GetSecurity()
-}
-
-func TestFlow_GetSynchronous(tt *testing.T) {
-	var zeroValue bool
-	f := &Flow{Synchronous: &zeroValue}
-	f.GetSynchronous()
-	f = &Flow{}
-	f.GetSynchronous()
-	f = nil
-	f.GetSynchronous()
-}
-
-func TestFlow_GetTriggers(tt *testing.T) {
-	var zeroValue map[string]interface{}
-	f := &Flow{Triggers: &zeroValue}
-	f.GetTriggers()
-	f = &Flow{}
-	f.GetTriggers()
-	f = nil
-	f.GetTriggers()
 }
 
 func TestFlow_GetUpdatedAt(tt *testing.T) {
@@ -8793,16 +8743,6 @@ func TestForm_GetCreatedAt(tt *testing.T) {
 	f.GetCreatedAt()
 }
 
-func TestForm_GetDescription(tt *testing.T) {
-	var zeroValue string
-	f := &Form{Description: &zeroValue}
-	f.GetDescription()
-	f = &Form{}
-	f.GetDescription()
-	f = nil
-	f.GetDescription()
-}
-
 func TestForm_GetEmbeddedAt(tt *testing.T) {
 	var zeroValue time.Time
 	f := &Form{EmbeddedAt: &zeroValue}
@@ -8823,16 +8763,6 @@ func TestForm_GetEnding(tt *testing.T) {
 	f.GetEnding()
 }
 
-func TestForm_GetFlowCount(tt *testing.T) {
-	var zeroValue int
-	f := &Form{FlowCount: &zeroValue}
-	f.GetFlowCount()
-	f = &Form{}
-	f.GetFlowCount()
-	f = nil
-	f.GetFlowCount()
-}
-
 func TestForm_GetID(tt *testing.T) {
 	var zeroValue string
 	f := &Form{ID: &zeroValue}
@@ -8848,16 +8778,6 @@ func TestForm_GetLanguages(tt *testing.T) {
 	f.GetLanguages()
 	f = nil
 	f.GetLanguages()
-}
-
-func TestForm_GetLinks(tt *testing.T) {
-	var zeroValue map[string]interface{}
-	f := &Form{Links: &zeroValue}
-	f.GetLinks()
-	f = &Form{}
-	f.GetLinks()
-	f = nil
-	f.GetLinks()
 }
 
 func TestForm_GetMessages(tt *testing.T) {
@@ -8905,16 +8825,6 @@ func TestForm_GetSubmittedAt(tt *testing.T) {
 	f.GetSubmittedAt()
 	f = nil
 	f.GetSubmittedAt()
-}
-
-func TestForm_GetTags(tt *testing.T) {
-	var zeroValue []string
-	f := &Form{Tags: &zeroValue}
-	f.GetTags()
-	f = &Form{}
-	f.GetTags()
-	f = nil
-	f.GetTags()
 }
 
 func TestForm_GetTranslations(tt *testing.T) {

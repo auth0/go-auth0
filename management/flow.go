@@ -15,24 +15,8 @@ type Flow struct {
 
 	// Flow name
 	Name *string `json:"name,omitempty"`
-
-	// Flow description
-	Description *string `json:"description,omitempty"`
-
-	// Sync or Async flow type
-	Synchronous *bool `json:"synchronous,omitempty"`
-
 	// Flow actions
 	Actions []interface{} `json:"actions,omitempty"`
-
-	// Flow triggers to execute flows
-	Triggers *map[string]interface{} `json:"triggers,omitempty"`
-
-	// Security configuration for flow executions
-	Security *map[string]interface{} `json:"security,omitempty"`
-
-	// Number of forms linked to this flow
-	FormCount *int `json:"form_count,omitempty"`
 
 	CreatedAt  *time.Time `json:"created_at,omitempty"`
 	UpdatedAt  *time.Time `json:"updated_at,omitempty"`
@@ -48,21 +32,13 @@ type FlowList struct {
 // MarshalJSON implements the json.Marshaller interface.
 func (f *Flow) MarshalJSON() ([]byte, error) {
 	type FlowSubset struct {
-		Name        *string                 `json:"name,omitempty"`
-		Description *string                 `json:"description,omitempty"`
-		Synchronous *bool                   `json:"synchronous,omitempty"`
-		Actions     []interface{}           `json:"actions,omitempty"`
-		Triggers    *map[string]interface{} `json:"triggers,omitempty"`
-		Security    *map[string]interface{} `json:"security,omitempty"`
+		Name    *string       `json:"name,omitempty"`
+		Actions []interface{} `json:"actions,omitempty"`
 	}
 
 	return json.Marshal(&FlowSubset{
-		Name:        f.Name,
-		Description: f.Description,
-		Synchronous: f.Synchronous,
-		Actions:     f.Actions,
-		Triggers:    f.Triggers,
-		Security:    f.Security,
+		Name:    f.Name,
+		Actions: f.Actions,
 	})
 }
 

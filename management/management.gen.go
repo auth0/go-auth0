@@ -6891,28 +6891,12 @@ func (f *Flow) GetCreatedAt() time.Time {
 	return *f.CreatedAt
 }
 
-// GetDescription returns the Description field if it's non-nil, zero value otherwise.
-func (f *Flow) GetDescription() string {
-	if f == nil || f.Description == nil {
-		return ""
-	}
-	return *f.Description
-}
-
 // GetExecutedAt returns the ExecutedAt field if it's non-nil, zero value otherwise.
 func (f *Flow) GetExecutedAt() time.Time {
 	if f == nil || f.ExecutedAt == nil {
 		return time.Time{}
 	}
 	return *f.ExecutedAt
-}
-
-// GetFormCount returns the FormCount field if it's non-nil, zero value otherwise.
-func (f *Flow) GetFormCount() int {
-	if f == nil || f.FormCount == nil {
-		return 0
-	}
-	return *f.FormCount
 }
 
 // GetID returns the ID field if it's non-nil, zero value otherwise.
@@ -6929,30 +6913,6 @@ func (f *Flow) GetName() string {
 		return ""
 	}
 	return *f.Name
-}
-
-// GetSecurity returns the Security field if it's non-nil, zero value otherwise.
-func (f *Flow) GetSecurity() map[string]interface{} {
-	if f == nil || f.Security == nil {
-		return map[string]interface{}{}
-	}
-	return *f.Security
-}
-
-// GetSynchronous returns the Synchronous field if it's non-nil, zero value otherwise.
-func (f *Flow) GetSynchronous() bool {
-	if f == nil || f.Synchronous == nil {
-		return false
-	}
-	return *f.Synchronous
-}
-
-// GetTriggers returns the Triggers field if it's non-nil, zero value otherwise.
-func (f *Flow) GetTriggers() map[string]interface{} {
-	if f == nil || f.Triggers == nil {
-		return map[string]interface{}{}
-	}
-	return *f.Triggers
 }
 
 // GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
@@ -7071,14 +7031,6 @@ func (f *Form) GetCreatedAt() time.Time {
 	return *f.CreatedAt
 }
 
-// GetDescription returns the Description field if it's non-nil, zero value otherwise.
-func (f *Form) GetDescription() string {
-	if f == nil || f.Description == nil {
-		return ""
-	}
-	return *f.Description
-}
-
 // GetEmbeddedAt returns the EmbeddedAt field if it's non-nil, zero value otherwise.
 func (f *Form) GetEmbeddedAt() time.Time {
 	if f == nil || f.EmbeddedAt == nil {
@@ -7095,14 +7047,6 @@ func (f *Form) GetEnding() map[string]interface{} {
 	return *f.Ending
 }
 
-// GetFlowCount returns the FlowCount field if it's non-nil, zero value otherwise.
-func (f *Form) GetFlowCount() int {
-	if f == nil || f.FlowCount == nil {
-		return 0
-	}
-	return *f.FlowCount
-}
-
 // GetID returns the ID field if it's non-nil, zero value otherwise.
 func (f *Form) GetID() string {
 	if f == nil || f.ID == nil {
@@ -7117,14 +7061,6 @@ func (f *Form) GetLanguages() *FormLanguages {
 		return nil
 	}
 	return f.Languages
-}
-
-// GetLinks returns the Links field if it's non-nil, zero value otherwise.
-func (f *Form) GetLinks() map[string]interface{} {
-	if f == nil || f.Links == nil {
-		return map[string]interface{}{}
-	}
-	return *f.Links
 }
 
 // GetMessages returns the Messages field.
@@ -7165,14 +7101,6 @@ func (f *Form) GetSubmittedAt() time.Time {
 		return time.Time{}
 	}
 	return *f.SubmittedAt
-}
-
-// GetTags returns the Tags field if it's non-nil, zero value otherwise.
-func (f *Form) GetTags() []string {
-	if f == nil || f.Tags == nil {
-		return nil
-	}
-	return *f.Tags
 }
 
 // GetTranslations returns the Translations field if it's non-nil, zero value otherwise.

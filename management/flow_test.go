@@ -19,9 +19,7 @@ Flow tests.
 func TestFlowManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	flow := &Flow{
-		Name:        auth0.String("test-flow"),
-		Description: auth0.String("A test flow"),
-		Synchronous: auth0.Bool(true),
+		Name: auth0.String("test-flow"),
 	}
 
 	err := api.Flow.Create(context.Background(), flow)
@@ -48,14 +46,12 @@ func TestFlowManager_Update(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	expectedFlow := givenAFlow(t)
 	updatedFlow := &Flow{
-		Description: auth0.String("Updated flow description test"),
+		Name: auth0.String("update-test-flow"),
 	}
 	err := api.Flow.Update(context.Background(), expectedFlow.GetID(), updatedFlow)
 
 	assert.NoError(t, err)
-	assert.Equal(t, "Updated flow description test", updatedFlow.GetDescription())
-	assert.Equal(t, expectedFlow.GetName(), updatedFlow.GetName())
-	assert.Equal(t, expectedFlow.GetSynchronous(), updatedFlow.GetSynchronous())
+	assert.Equal(t, "update-test-flow", updatedFlow.GetName())
 }
 
 func TestFlowManager_Delete(t *testing.T) {
@@ -70,8 +66,6 @@ func TestFlowManager_List(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	flow := givenAFlow(t)
 	flow.Actions = nil
-	flow.Triggers = nil
-	flow.Security = nil
 
 	flowList, err := api.Flow.List(context.Background())
 	assert.NoError(t, err)
@@ -83,10 +77,8 @@ func TestFlowManager_MarshalJSON(t *testing.T) {
 	for flow, expected := range map[*Flow]string{
 		{}: `{}`,
 		{
-			Name:        auth0.String("test-flow"),
-			Description: auth0.String("A test flow"),
-			Synchronous: auth0.Bool(true),
-		}: `{"name":"test-flow","description":"A test flow","synchronous":true}`,
+			Name: auth0.String("test-flow"),
+		}: `{"name":"test-flow"}`,
 		{
 			ID:        auth0.String("some-id"),
 			CreatedAt: auth0.Time(time.Now()),
@@ -102,9 +94,7 @@ func TestFlowManager_MarshalJSON(t *testing.T) {
 func givenAFlow(t *testing.T) *Flow {
 	t.Helper()
 	flow := &Flow{
-		Name:        auth0.String("test-flow"),
-		Description: auth0.String("A test flow"),
-		Synchronous: auth0.Bool(true),
+		Name: auth0.String("test-flow"),
 	}
 
 	err := api.Flow.Create(context.Background(), flow)
