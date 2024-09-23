@@ -6931,6 +6931,302 @@ func (f *FirebaseClientAddon) String() string {
 	return Stringify(f)
 }
 
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (f *Flow) GetCreatedAt() time.Time {
+	if f == nil || f.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *f.CreatedAt
+}
+
+// GetExecutedAt returns the ExecutedAt field if it's non-nil, zero value otherwise.
+func (f *Flow) GetExecutedAt() time.Time {
+	if f == nil || f.ExecutedAt == nil {
+		return time.Time{}
+	}
+	return *f.ExecutedAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (f *Flow) GetID() string {
+	if f == nil || f.ID == nil {
+		return ""
+	}
+	return *f.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (f *Flow) GetName() string {
+	if f == nil || f.Name == nil {
+		return ""
+	}
+	return *f.Name
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (f *Flow) GetUpdatedAt() time.Time {
+	if f == nil || f.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *f.UpdatedAt
+}
+
+// String returns a string representation of Flow.
+func (f *Flow) String() string {
+	return Stringify(f)
+}
+
+// String returns a string representation of FlowList.
+func (f *FlowList) String() string {
+	return Stringify(f)
+}
+
+// GetAccountName returns the AccountName field if it's non-nil, zero value otherwise.
+func (f *FlowVaultConnection) GetAccountName() string {
+	if f == nil || f.AccountName == nil {
+		return ""
+	}
+	return *f.AccountName
+}
+
+// GetAppID returns the AppID field if it's non-nil, zero value otherwise.
+func (f *FlowVaultConnection) GetAppID() string {
+	if f == nil || f.AppID == nil {
+		return ""
+	}
+	return *f.AppID
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (f *FlowVaultConnection) GetCreatedAt() time.Time {
+	if f == nil || f.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *f.CreatedAt
+}
+
+// GetEnvironment returns the Environment field if it's non-nil, zero value otherwise.
+func (f *FlowVaultConnection) GetEnvironment() string {
+	if f == nil || f.Environment == nil {
+		return ""
+	}
+	return *f.Environment
+}
+
+// GetFingerprint returns the Fingerprint field if it's non-nil, zero value otherwise.
+func (f *FlowVaultConnection) GetFingerprint() string {
+	if f == nil || f.Fingerprint == nil {
+		return ""
+	}
+	return *f.Fingerprint
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (f *FlowVaultConnection) GetID() string {
+	if f == nil || f.ID == nil {
+		return ""
+	}
+	return *f.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (f *FlowVaultConnection) GetName() string {
+	if f == nil || f.Name == nil {
+		return ""
+	}
+	return *f.Name
+}
+
+// GetReady returns the Ready field if it's non-nil, zero value otherwise.
+func (f *FlowVaultConnection) GetReady() bool {
+	if f == nil || f.Ready == nil {
+		return false
+	}
+	return *f.Ready
+}
+
+// GetRefreshedAt returns the RefreshedAt field if it's non-nil, zero value otherwise.
+func (f *FlowVaultConnection) GetRefreshedAt() time.Time {
+	if f == nil || f.RefreshedAt == nil {
+		return time.Time{}
+	}
+	return *f.RefreshedAt
+}
+
+// GetSetup returns the Setup field if it's non-nil, zero value otherwise.
+func (f *FlowVaultConnection) GetSetup() map[string]interface{} {
+	if f == nil || f.Setup == nil {
+		return map[string]interface{}{}
+	}
+	return *f.Setup
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (f *FlowVaultConnection) GetUpdatedAt() time.Time {
+	if f == nil || f.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *f.UpdatedAt
+}
+
+// String returns a string representation of FlowVaultConnection.
+func (f *FlowVaultConnection) String() string {
+	return Stringify(f)
+}
+
+// String returns a string representation of FlowVaultConnectionList.
+func (f *FlowVaultConnectionList) String() string {
+	return Stringify(f)
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (f *Form) GetCreatedAt() time.Time {
+	if f == nil || f.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *f.CreatedAt
+}
+
+// GetEmbeddedAt returns the EmbeddedAt field if it's non-nil, zero value otherwise.
+func (f *Form) GetEmbeddedAt() time.Time {
+	if f == nil || f.EmbeddedAt == nil {
+		return time.Time{}
+	}
+	return *f.EmbeddedAt
+}
+
+// GetEnding returns the Ending field if it's non-nil, zero value otherwise.
+func (f *Form) GetEnding() map[string]interface{} {
+	if f == nil || f.Ending == nil {
+		return map[string]interface{}{}
+	}
+	return *f.Ending
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (f *Form) GetID() string {
+	if f == nil || f.ID == nil {
+		return ""
+	}
+	return *f.ID
+}
+
+// GetLanguages returns the Languages field.
+func (f *Form) GetLanguages() *FormLanguages {
+	if f == nil {
+		return nil
+	}
+	return f.Languages
+}
+
+// GetMessages returns the Messages field.
+func (f *Form) GetMessages() *FormMessages {
+	if f == nil {
+		return nil
+	}
+	return f.Messages
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (f *Form) GetName() string {
+	if f == nil || f.Name == nil {
+		return ""
+	}
+	return *f.Name
+}
+
+// GetStart returns the Start field if it's non-nil, zero value otherwise.
+func (f *Form) GetStart() map[string]interface{} {
+	if f == nil || f.Start == nil {
+		return map[string]interface{}{}
+	}
+	return *f.Start
+}
+
+// GetStyle returns the Style field if it's non-nil, zero value otherwise.
+func (f *Form) GetStyle() map[string]interface{} {
+	if f == nil || f.Style == nil {
+		return map[string]interface{}{}
+	}
+	return *f.Style
+}
+
+// GetSubmittedAt returns the SubmittedAt field if it's non-nil, zero value otherwise.
+func (f *Form) GetSubmittedAt() time.Time {
+	if f == nil || f.SubmittedAt == nil {
+		return time.Time{}
+	}
+	return *f.SubmittedAt
+}
+
+// GetTranslations returns the Translations field if it's non-nil, zero value otherwise.
+func (f *Form) GetTranslations() map[string]interface{} {
+	if f == nil || f.Translations == nil {
+		return map[string]interface{}{}
+	}
+	return *f.Translations
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (f *Form) GetUpdatedAt() time.Time {
+	if f == nil || f.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *f.UpdatedAt
+}
+
+// String returns a string representation of Form.
+func (f *Form) String() string {
+	return Stringify(f)
+}
+
+// GetDefault returns the Default field if it's non-nil, zero value otherwise.
+func (f *FormLanguages) GetDefault() string {
+	if f == nil || f.Default == nil {
+		return ""
+	}
+	return *f.Default
+}
+
+// GetPrimary returns the Primary field if it's non-nil, zero value otherwise.
+func (f *FormLanguages) GetPrimary() string {
+	if f == nil || f.Primary == nil {
+		return ""
+	}
+	return *f.Primary
+}
+
+// String returns a string representation of FormLanguages.
+func (f *FormLanguages) String() string {
+	return Stringify(f)
+}
+
+// String returns a string representation of FormList.
+func (f *FormList) String() string {
+	return Stringify(f)
+}
+
+// GetCustom returns the Custom field if it's non-nil, zero value otherwise.
+func (f *FormMessages) GetCustom() map[string]interface{} {
+	if f == nil || f.Custom == nil {
+		return map[string]interface{}{}
+	}
+	return *f.Custom
+}
+
+// GetErrors returns the Errors field if it's non-nil, zero value otherwise.
+func (f *FormMessages) GetErrors() map[string]interface{} {
+	if f == nil || f.Errors == nil {
+		return map[string]interface{}{}
+	}
+	return *f.Errors
+}
+
+// String returns a string representation of FormMessages.
+func (f *FormMessages) String() string {
+	return Stringify(f)
+}
+
 // GetAudience returns the Audience field if it's non-nil, zero value otherwise.
 func (g *Grant) GetAudience() string {
 	if g == nil || g.Audience == nil {

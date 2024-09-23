@@ -8611,6 +8611,384 @@ func TestFirebaseClientAddon_String(t *testing.T) {
 	}
 }
 
+func TestFlow_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &Flow{CreatedAt: &zeroValue}
+	f.GetCreatedAt()
+	f = &Flow{}
+	f.GetCreatedAt()
+	f = nil
+	f.GetCreatedAt()
+}
+
+func TestFlow_GetExecutedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &Flow{ExecutedAt: &zeroValue}
+	f.GetExecutedAt()
+	f = &Flow{}
+	f.GetExecutedAt()
+	f = nil
+	f.GetExecutedAt()
+}
+
+func TestFlow_GetID(tt *testing.T) {
+	var zeroValue string
+	f := &Flow{ID: &zeroValue}
+	f.GetID()
+	f = &Flow{}
+	f.GetID()
+	f = nil
+	f.GetID()
+}
+
+func TestFlow_GetName(tt *testing.T) {
+	var zeroValue string
+	f := &Flow{Name: &zeroValue}
+	f.GetName()
+	f = &Flow{}
+	f.GetName()
+	f = nil
+	f.GetName()
+}
+
+func TestFlow_GetUpdatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &Flow{UpdatedAt: &zeroValue}
+	f.GetUpdatedAt()
+	f = &Flow{}
+	f.GetUpdatedAt()
+	f = nil
+	f.GetUpdatedAt()
+}
+
+func TestFlow_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &Flow{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestFlowList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &FlowList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestFlowVaultConnection_GetAccountName(tt *testing.T) {
+	var zeroValue string
+	f := &FlowVaultConnection{AccountName: &zeroValue}
+	f.GetAccountName()
+	f = &FlowVaultConnection{}
+	f.GetAccountName()
+	f = nil
+	f.GetAccountName()
+}
+
+func TestFlowVaultConnection_GetAppID(tt *testing.T) {
+	var zeroValue string
+	f := &FlowVaultConnection{AppID: &zeroValue}
+	f.GetAppID()
+	f = &FlowVaultConnection{}
+	f.GetAppID()
+	f = nil
+	f.GetAppID()
+}
+
+func TestFlowVaultConnection_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &FlowVaultConnection{CreatedAt: &zeroValue}
+	f.GetCreatedAt()
+	f = &FlowVaultConnection{}
+	f.GetCreatedAt()
+	f = nil
+	f.GetCreatedAt()
+}
+
+func TestFlowVaultConnection_GetEnvironment(tt *testing.T) {
+	var zeroValue string
+	f := &FlowVaultConnection{Environment: &zeroValue}
+	f.GetEnvironment()
+	f = &FlowVaultConnection{}
+	f.GetEnvironment()
+	f = nil
+	f.GetEnvironment()
+}
+
+func TestFlowVaultConnection_GetFingerprint(tt *testing.T) {
+	var zeroValue string
+	f := &FlowVaultConnection{Fingerprint: &zeroValue}
+	f.GetFingerprint()
+	f = &FlowVaultConnection{}
+	f.GetFingerprint()
+	f = nil
+	f.GetFingerprint()
+}
+
+func TestFlowVaultConnection_GetID(tt *testing.T) {
+	var zeroValue string
+	f := &FlowVaultConnection{ID: &zeroValue}
+	f.GetID()
+	f = &FlowVaultConnection{}
+	f.GetID()
+	f = nil
+	f.GetID()
+}
+
+func TestFlowVaultConnection_GetName(tt *testing.T) {
+	var zeroValue string
+	f := &FlowVaultConnection{Name: &zeroValue}
+	f.GetName()
+	f = &FlowVaultConnection{}
+	f.GetName()
+	f = nil
+	f.GetName()
+}
+
+func TestFlowVaultConnection_GetReady(tt *testing.T) {
+	var zeroValue bool
+	f := &FlowVaultConnection{Ready: &zeroValue}
+	f.GetReady()
+	f = &FlowVaultConnection{}
+	f.GetReady()
+	f = nil
+	f.GetReady()
+}
+
+func TestFlowVaultConnection_GetRefreshedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &FlowVaultConnection{RefreshedAt: &zeroValue}
+	f.GetRefreshedAt()
+	f = &FlowVaultConnection{}
+	f.GetRefreshedAt()
+	f = nil
+	f.GetRefreshedAt()
+}
+
+func TestFlowVaultConnection_GetSetup(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	f := &FlowVaultConnection{Setup: &zeroValue}
+	f.GetSetup()
+	f = &FlowVaultConnection{}
+	f.GetSetup()
+	f = nil
+	f.GetSetup()
+}
+
+func TestFlowVaultConnection_GetUpdatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &FlowVaultConnection{UpdatedAt: &zeroValue}
+	f.GetUpdatedAt()
+	f = &FlowVaultConnection{}
+	f.GetUpdatedAt()
+	f = nil
+	f.GetUpdatedAt()
+}
+
+func TestFlowVaultConnection_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &FlowVaultConnection{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestFlowVaultConnectionList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &FlowVaultConnectionList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestForm_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &Form{CreatedAt: &zeroValue}
+	f.GetCreatedAt()
+	f = &Form{}
+	f.GetCreatedAt()
+	f = nil
+	f.GetCreatedAt()
+}
+
+func TestForm_GetEmbeddedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &Form{EmbeddedAt: &zeroValue}
+	f.GetEmbeddedAt()
+	f = &Form{}
+	f.GetEmbeddedAt()
+	f = nil
+	f.GetEmbeddedAt()
+}
+
+func TestForm_GetEnding(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	f := &Form{Ending: &zeroValue}
+	f.GetEnding()
+	f = &Form{}
+	f.GetEnding()
+	f = nil
+	f.GetEnding()
+}
+
+func TestForm_GetID(tt *testing.T) {
+	var zeroValue string
+	f := &Form{ID: &zeroValue}
+	f.GetID()
+	f = &Form{}
+	f.GetID()
+	f = nil
+	f.GetID()
+}
+
+func TestForm_GetLanguages(tt *testing.T) {
+	f := &Form{}
+	f.GetLanguages()
+	f = nil
+	f.GetLanguages()
+}
+
+func TestForm_GetMessages(tt *testing.T) {
+	f := &Form{}
+	f.GetMessages()
+	f = nil
+	f.GetMessages()
+}
+
+func TestForm_GetName(tt *testing.T) {
+	var zeroValue string
+	f := &Form{Name: &zeroValue}
+	f.GetName()
+	f = &Form{}
+	f.GetName()
+	f = nil
+	f.GetName()
+}
+
+func TestForm_GetStart(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	f := &Form{Start: &zeroValue}
+	f.GetStart()
+	f = &Form{}
+	f.GetStart()
+	f = nil
+	f.GetStart()
+}
+
+func TestForm_GetStyle(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	f := &Form{Style: &zeroValue}
+	f.GetStyle()
+	f = &Form{}
+	f.GetStyle()
+	f = nil
+	f.GetStyle()
+}
+
+func TestForm_GetSubmittedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &Form{SubmittedAt: &zeroValue}
+	f.GetSubmittedAt()
+	f = &Form{}
+	f.GetSubmittedAt()
+	f = nil
+	f.GetSubmittedAt()
+}
+
+func TestForm_GetTranslations(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	f := &Form{Translations: &zeroValue}
+	f.GetTranslations()
+	f = &Form{}
+	f.GetTranslations()
+	f = nil
+	f.GetTranslations()
+}
+
+func TestForm_GetUpdatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	f := &Form{UpdatedAt: &zeroValue}
+	f.GetUpdatedAt()
+	f = &Form{}
+	f.GetUpdatedAt()
+	f = nil
+	f.GetUpdatedAt()
+}
+
+func TestForm_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &Form{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestFormLanguages_GetDefault(tt *testing.T) {
+	var zeroValue string
+	f := &FormLanguages{Default: &zeroValue}
+	f.GetDefault()
+	f = &FormLanguages{}
+	f.GetDefault()
+	f = nil
+	f.GetDefault()
+}
+
+func TestFormLanguages_GetPrimary(tt *testing.T) {
+	var zeroValue string
+	f := &FormLanguages{Primary: &zeroValue}
+	f.GetPrimary()
+	f = &FormLanguages{}
+	f.GetPrimary()
+	f = nil
+	f.GetPrimary()
+}
+
+func TestFormLanguages_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &FormLanguages{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestFormList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &FormList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestFormMessages_GetCustom(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	f := &FormMessages{Custom: &zeroValue}
+	f.GetCustom()
+	f = &FormMessages{}
+	f.GetCustom()
+	f = nil
+	f.GetCustom()
+}
+
+func TestFormMessages_GetErrors(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	f := &FormMessages{Errors: &zeroValue}
+	f.GetErrors()
+	f = &FormMessages{}
+	f.GetErrors()
+	f = nil
+	f.GetErrors()
+}
+
+func TestFormMessages_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &FormMessages{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestGrant_GetAudience(tt *testing.T) {
 	var zeroValue string
 	g := &Grant{Audience: &zeroValue}

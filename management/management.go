@@ -106,6 +106,12 @@ type Management struct {
 	// SelfServiceProfileManager manages Auth0 Self Service Profiles.
 	SelfServiceProfile *SelfServiceProfileManager
 
+	// FormManger manages Auth0 Form.
+	Form *FormManager
+
+	// FlowManger manages Auth0 Flow.
+	Flow *FlowManager
+
 	// EncryptionKey manages Auth0 Encryption Keys.
 	EncryptionKey *EncryptionKeyManager
 
@@ -209,6 +215,11 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.Ticket = (*TicketManager)(&m.common)
 	m.User = (*UserManager)(&m.common)
 	m.SelfServiceProfile = (*SelfServiceProfileManager)(&m.common)
+	m.Form = (*FormManager)(&m.common)
+	m.Flow = &FlowManager{
+		management: m,
+		Vault:      (*flowVaultConnectionManager)(&m.common),
+	}
 
 	return m, nil
 }
