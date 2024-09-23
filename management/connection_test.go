@@ -241,6 +241,7 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			TenantDomain:    auth0.String("example.onmicrosoft.com"),
 			ClientID:        auth0.String("123456"),
 			ClientSecret:    auth0.String("123456"),
+			UserIDAttribute: auth0.String("userName"),
 			UpstreamParams: map[string]interface{}{
 				"screen_name": map[string]interface{}{
 					"alias": "login_hint",

@@ -1277,6 +1277,7 @@ type ConnectionOptionsAzureAD struct {
 	CertRolloverNotification *string   `json:"cert_rollover_notification,omitempty"`
 	Granted                  *bool     `json:"granted,omitempty"`
 	TenantID                 *string   `json:"tenantId,omitempty"`
+	UserIDAttribute          *string   `json:"user_id_attribute,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsAzureAD.
