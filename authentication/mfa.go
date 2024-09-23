@@ -135,3 +135,41 @@ func (m *MFA) VerifyWithRecoveryCode(ctx context.Context, body mfa.VerifyWithRec
 
 	return
 }
+
+// AddAuthenticator Associates or adds a new authenticator for multi-factor authentication (MFA).
+//
+// See: https://auth0.com/docs/api/authentication#add-an-authenticator
+func (m *MFA) AddAuthenticator(ctx context.Context, accessOrMfaToken string, body mfa.AddAuthenticatorRequest, opts ...RequestOption) (a *mfa.AddAuthenticatorResponse, err error) {
+	opts = append(opts, Header("Authorization", "Bearer "+accessOrMfaToken))
+	missing := []string{}
+	check(&missing, "ClientID", (body.ClientID != "" || m.authentication.clientID != ""))
+	check(&missing, "AuthenticatorTypes", body.AuthenticatorTypes != nil && len(body.AuthenticatorTypes) > 0)
+	if len(missing) > 0 {
+		return nil, fmt.Errorf("Missing required fields: %s", strings.Join(missing, ", "))
+	}
+
+	if err = m.authentication.addClientAuthenticationToClientAuthStruct(&body.ClientAuthentication, true); err != nil {
+		return
+	}
+
+	err = m.authentication.Request(ctx, "POST", m.authentication.URI("mfa", "associate"), body, &a, opts...)
+	return
+}
+
+// ListAuthenticators Returns a list of authenticators associated with your application.
+//
+// See: https://auth0.com/docs/api/authentication#list-authenticators
+func (m *MFA) ListAuthenticators(ctx context.Context, accessOrMfaToken string, opts ...RequestOption) (a []mfa.ListAuthenticatorsResponse, err error) {
+	opts = append(opts, Header("Authorization", "Bearer "+accessOrMfaToken))
+	err = m.authentication.Request(ctx, "GET", m.authentication.URI("mfa", "authenticators"), nil, &a, opts...)
+	return
+}
+
+// DeleteAuthenticator Deletes an associated authenticator using its ID.
+//
+// See: https://auth0.com/docs/api/authentication#delete-an-authenticator
+func (m *MFA) DeleteAuthenticator(ctx context.Context, accessToken string, authenticatorID string, opts ...RequestOption) (err error) {
+	opts = append(opts, Header("Authorization", "Bearer "+accessToken))
+	err = m.authentication.Request(ctx, "DELETE", m.authentication.URI("mfa", "authenticators", authenticatorID), nil, nil, opts...)
+	return
+}

@@ -69,12 +69,12 @@ func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 		bodyMatches := false
 		switch r.Header.Get("Content-Type") {
 		case "application/json":
-			v := map[string]string{}
+			v := map[string]interface{}{}
 			err := json.Unmarshal([]byte(rb), &v)
 			require.NoError(t, err)
 
-			if v["client_assertion"] != "" {
-				verifyClientAssertion(t, v["client_assertion"])
+			if assertion, ok := v["client_assertion"].(string); ok && assertion != "" {
+				verifyClientAssertion(t, assertion)
 				v["client_assertion"] = "test-client_assertion"
 			}
 
@@ -167,6 +167,10 @@ func redactClientAuth(t *testing.T, i *cassette.Interaction) {
 		i.Request.Body = i.Request.Form.Encode()
 	} else if contentType == "application/json" {
 		jsonBody := map[string]interface{}{}
+
+		if len(i.Request.Body) == 0 {
+			return
+		}
 
 		err := json.Unmarshal([]byte(i.Request.Body), &jsonBody)
 		require.NoError(t, err)

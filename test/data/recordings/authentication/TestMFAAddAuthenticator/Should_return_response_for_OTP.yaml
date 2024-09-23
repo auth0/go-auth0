@@ -1,0 +1,36 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 162
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: '{"authenticator_types":["otp"],"client_id":"test-client_id","client_secret":"test-client_secret"}'
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+        url: https://go-auth0-dev.eu.auth0.com/mfa/associate
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 241
+        uncompressed: false
+        body: '{"authenticator_type":"otp","secret":"HJ6XM2DNERXDAVCUONGWKRTCMNTU6VDF","barcode_uri":"otpauth://totp/My%20Test%20Tenant:user%40example.com?secret=HJ6XM2DNERXDAVCUONGWKRTCMNTU6VDF&issuer=My%20Test%20Tenant&algorithm=SHA1&digits=6&period=30"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 502.489417ms

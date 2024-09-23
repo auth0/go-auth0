@@ -175,3 +175,100 @@ func TestMFAVerifyWithRecoveryCode(t *testing.T) {
 		assert.NotEmpty(t, tokenset.RecoveryCode)
 	})
 }
+
+func TestMFAAddAuthenticator(t *testing.T) {
+	t.Run("Should require ClientID, AuthenticatorTypes", func(t *testing.T) {
+		auth, err := New(
+			context.Background(),
+			domain,
+		)
+		require.NoError(t, err)
+
+		_, err = auth.MFA.AddAuthenticator(context.Background(),
+			"mfa-token",
+			mfa.AddAuthenticatorRequest{})
+		assert.ErrorContains(t, err, "Missing required fields: ClientID, AuthenticatorTypes")
+	})
+
+	t.Run("Should return response for OOB (SMS channel)", func(t *testing.T) {
+		skipE2E(t)
+		configureHTTPTestRecordings(t, authAPI)
+
+		response, err := authAPI.MFA.AddAuthenticator(context.Background(),
+			"mfa-token",
+			mfa.AddAuthenticatorRequest{
+				ClientAuthentication: oauth.ClientAuthentication{
+					ClientSecret: clientSecret,
+				},
+				AuthenticatorTypes: []string{"oob"},
+				OOBChannels:        []string{"sms"},
+				PhoneNumber:        "+91123456789",
+			})
+
+		require.NoError(t, err)
+		assert.NotEmpty(t, response.OOBCode)
+		assert.NotEmpty(t, response.RecoveryCodes)
+		assert.NotEmpty(t, response.BindingMethod)
+		assert.Equal(t, "oob", response.AuthenticatorType)
+	})
+
+	t.Run("Should return response for OOB (Auth0 channel)", func(t *testing.T) {
+		skipE2E(t)
+		configureHTTPTestRecordings(t, authAPI)
+
+		response, err := authAPI.MFA.AddAuthenticator(context.Background(),
+			"mfa-token",
+			mfa.AddAuthenticatorRequest{
+				ClientAuthentication: oauth.ClientAuthentication{
+					ClientSecret: clientSecret,
+				},
+				AuthenticatorTypes: []string{"oob"},
+				OOBChannels:        []string{"auth0"},
+			})
+
+		require.NoError(t, err)
+		assert.NotEmpty(t, response.OOBCode)
+		assert.NotEmpty(t, response.BarcodeURI)
+		assert.Equal(t, "oob", response.AuthenticatorType)
+	})
+
+	t.Run("Should return response for OTP", func(t *testing.T) {
+		skipE2E(t)
+		configureHTTPTestRecordings(t, authAPI)
+
+		response, err := authAPI.MFA.AddAuthenticator(context.Background(),
+			"mfa-token",
+			mfa.AddAuthenticatorRequest{
+				ClientAuthentication: oauth.ClientAuthentication{
+					ClientSecret: clientSecret,
+				},
+				AuthenticatorTypes: []string{"otp"},
+			})
+
+		require.NoError(t, err)
+		assert.NotEmpty(t, response.Secret)
+		assert.NotEmpty(t, response.BarcodeURI)
+		assert.Equal(t, "otp", response.AuthenticatorType)
+	})
+}
+
+func TestMFAListAuthenticators(t *testing.T) {
+	skipE2E(t)
+	configureHTTPTestRecordings(t, authAPI)
+
+	authenticators, err := authAPI.MFA.ListAuthenticators(context.Background(),
+		"mfa-token",
+	)
+	require.NoError(t, err)
+	assert.NotEmpty(t, authenticators)
+}
+
+func TestMFADeleteAuthenticator(t *testing.T) {
+	skipE2E(t)
+	configureHTTPTestRecordings(t, authAPI)
+
+	err := authAPI.MFA.DeleteAuthenticator(context.Background(),
+		"mfa-token",
+		"push|dev_BBTKYpxKHOXVBnql")
+	require.NoError(t, err)
+}
