@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 217
+        content_length: 238
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Wordpress-Connection-1714473052","strategy":"wordpress","options":{"authorizationURL":null,"tokenURL":null,"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":["email","profile","openid"]}}
+            {"name":"Test-Wordpress-Connection-1726765770","strategy":"wordpress","options":{"strategy_version":2,"authorizationURL":null,"tokenURL":null,"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":["email","profile","openid"]}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.5.0
+                - Go-Auth0/1.10.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -28,15 +28,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 342
+        content_length: 363
         uncompressed: false
-        body: '{"id":"con_1LIdptTAFtTOkREW","options":{"authorizationURL":null,"tokenURL":null,"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":["profile"],"profile":true},"strategy":"wordpress","name":"Test-Wordpress-Connection-1714473052","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Wordpress-Connection-1714473052"]}'
+        body: '{"id":"con_tsRmXpZ3kEpt6m0g","options":{"strategy_version":2,"authorizationURL":null,"tokenURL":null,"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":["profile"],"profile":true},"strategy":"wordpress","name":"Test-Wordpress-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Wordpress-Connection-1726765770"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 389.720583ms
+        duration: 175.2535ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_1LIdptTAFtTOkREW
+                - Go-Auth0/1.10.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_tsRmXpZ3kEpt6m0g
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -65,10 +65,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-04-30T10:30:54.765Z"}'
+        body: '{"deleted_at":"2024-09-19T17:09:31.855Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 376.670125ms
+        duration: 181.236208ms

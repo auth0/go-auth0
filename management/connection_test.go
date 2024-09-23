@@ -21,6 +21,7 @@ var connectionTestCases = []connectionTestCase{
 			Strategy: auth0.String("auth0"),
 		},
 		options: &ConnectionOptions{
+			StrategyVersion: auth0.Int(2),
 			UpstreamParams: map[string]interface{}{
 				"screen_name": map[string]interface{}{
 					"alias": "login_hint",
@@ -35,7 +36,8 @@ var connectionTestCases = []connectionTestCase{
 			Strategy: auth0.String("wordpress"),
 		},
 		options: &ConnectionOptionsOAuth2{
-			Scope: auth0.String("email profile openid"),
+			StrategyVersion: auth0.Int(2),
+			Scope:           auth0.String("email profile openid"),
 			UpstreamParams: map[string]interface{}{
 				"screen_name": map[string]interface{}{
 					"alias": "login_hint",
@@ -185,7 +187,8 @@ var connectionTestCases = []connectionTestCase{
 			Strategy: auth0.String("samlp"),
 		},
 		options: &ConnectionOptionsSAML{
-			SignInEndpoint: auth0.String("https://saml.identity/provider"),
+			StrategyVersion: auth0.Int(2),
+			SignInEndpoint:  auth0.String("https://saml.identity/provider"),
 			SigningCert: auth0.String(`-----BEGIN CERTIFICATE-----
 MIID6TCCA1ICAQEwDQYJKoZIhvcNAQEFBQAwgYsxCzAJBgNVBAYTAlVTMRMwEQYD
 VQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMRQwEgYDVQQK
@@ -227,12 +230,33 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 		},
 	},
 	{
+		name: "Azure-AD Connection",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-AzureAD-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("waad"),
+		},
+		options: &ConnectionOptionsAzureAD{
+			StrategyVersion: auth0.Int(2),
+			Domain:          auth0.String("example.onmicrosoft.com"),
+			TenantDomain:    auth0.String("example.onmicrosoft.com"),
+			ClientID:        auth0.String("123456"),
+			ClientSecret:    auth0.String("123456"),
+			UserIDAttribute: auth0.String("userName"),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+		},
+	},
+	{
 		name: "AD Connection",
 		connection: Connection{
 			Name:     auth0.Stringf("Test-AD-Connection-%d", time.Now().Unix()),
 			Strategy: auth0.String("ad"),
 		},
 		options: &ConnectionOptionsAD{
+			StrategyVersion: auth0.Int(2),
 			UpstreamParams: map[string]interface{}{
 				"screen_name": map[string]interface{}{
 					"alias": "login_hint",
@@ -247,6 +271,7 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			Strategy: auth0.String("adfs"),
 		},
 		options: &ConnectionOptionsADFS{
+			StrategyVersion: auth0.Int(2),
 			FedMetadataXML: auth0.String(`<?xml version="1.0" encoding="utf-8"?>
 <EntityDescriptor entityID="https://example.com"
                   xmlns="urn:oasis:names:tc:SAML:2.0:metadata">
@@ -320,6 +345,7 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			Strategy: auth0.String("linkedin"),
 		},
 		options: &ConnectionOptionsLinkedin{
+			StrategyVersion: auth0.Int(2),
 			UpstreamParams: map[string]interface{}{
 				"screen_name": map[string]interface{}{
 					"alias": "login_hint",
@@ -348,6 +374,7 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			Strategy: auth0.String("windowslive"),
 		},
 		options: &ConnectionOptionsWindowsLive{
+			StrategyVersion: auth0.Int(2),
 			UpstreamParams: map[string]interface{}{
 				"screen_name": map[string]interface{}{
 					"alias": "login_hint",
@@ -752,6 +779,10 @@ func TestConnectionManager_Read(t *testing.T) {
 			assert.Equal(t, expectedConnection.GetName(), actualConnection.GetName())
 			assert.Equal(t, expectedConnection.GetStrategy(), actualConnection.GetStrategy())
 			assert.IsType(t, testCase.options, actualConnection.Options)
+			switch testCase.connection.GetStrategy() {
+			case "ad", "adfs", "auth0", "samlp", "waad", "windowslive", "wordpress":
+				assert.ObjectsAreEqualValues(getStrategyVersion(testCase.connection.GetStrategy(), testCase.options), getStrategyVersion(actualConnection.GetStrategy(), actualConnection.Options))
+			}
 
 			t.Cleanup(func() {
 				cleanupConnection(t, expectedConnection.GetID())
@@ -796,8 +827,9 @@ func TestConnectionManager_Update(t *testing.T) {
 				testCase.connection.GetStrategy() == "samlp" ||
 				testCase.connection.GetStrategy() == "okta" ||
 				testCase.connection.GetStrategy() == "adfs" ||
+				testCase.connection.GetStrategy() == "waad" ||
 				testCase.connection.GetStrategy() == "pingfederate" {
-				t.Skip("Skipping because we can't create an oidc, okta, samlp, adfs, or pingfederate connection with no options")
+				t.Skip("Skipping because we can't create an oidc, okta, samlp, adfs, waad, or pingfederate connection with no options")
 			}
 
 			configureHTTPTestRecordings(t)
@@ -1252,4 +1284,25 @@ func givenAOktaConnection(t *testing.T) *Connection {
 			},
 		},
 	})
+}
+
+func getStrategyVersion(strategy string, options interface{}) int {
+	switch strategy {
+	case "ad":
+		return options.(*ConnectionOptionsAD).GetStrategyVersion()
+	case "adfs":
+		return options.(*ConnectionOptionsADFS).GetStrategyVersion()
+	case "auth0":
+		return options.(*ConnectionOptions).GetStrategyVersion()
+	case "samlp":
+		return options.(*ConnectionOptionsSAML).GetStrategyVersion()
+	case "waad":
+		return options.(*ConnectionOptionsAzureAD).GetStrategyVersion()
+	case "windowslive":
+		return options.(*ConnectionOptionsWindowsLive).GetStrategyVersion()
+	case "wordpress":
+		return options.(*ConnectionOptionsOAuth2).GetStrategyVersion()
+	default:
+		return -1
+	}
 }

@@ -3137,6 +3137,16 @@ func TestConnectionOptionsAD_GetSetUserAttributes(tt *testing.T) {
 	c.GetSetUserAttributes()
 }
 
+func TestConnectionOptionsAD_GetStrategyVersion(tt *testing.T) {
+	var zeroValue int
+	c := &ConnectionOptionsAD{StrategyVersion: &zeroValue}
+	c.GetStrategyVersion()
+	c = &ConnectionOptionsAD{}
+	c.GetStrategyVersion()
+	c = nil
+	c.GetStrategyVersion()
+}
+
 func TestConnectionOptionsAD_GetTenantDomain(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsAD{TenantDomain: &zeroValue}
@@ -3283,6 +3293,16 @@ func TestConnectionOptionsADFS_GetSignInEndpoint(tt *testing.T) {
 	c.GetSignInEndpoint()
 	c = nil
 	c.GetSignInEndpoint()
+}
+
+func TestConnectionOptionsADFS_GetStrategyVersion(tt *testing.T) {
+	var zeroValue int
+	c := &ConnectionOptionsADFS{StrategyVersion: &zeroValue}
+	c.GetStrategyVersion()
+	c = &ConnectionOptionsADFS{}
+	c.GetStrategyVersion()
+	c = nil
+	c.GetStrategyVersion()
 }
 
 func TestConnectionOptionsADFS_GetTenantDomain(tt *testing.T) {
@@ -3814,6 +3834,16 @@ func TestConnectionOptionsAzureAD_GetSetUserAttributes(tt *testing.T) {
 	c.GetSetUserAttributes()
 }
 
+func TestConnectionOptionsAzureAD_GetStrategyVersion(tt *testing.T) {
+	var zeroValue int
+	c := &ConnectionOptionsAzureAD{StrategyVersion: &zeroValue}
+	c.GetStrategyVersion()
+	c = &ConnectionOptionsAzureAD{}
+	c.GetStrategyVersion()
+	c = nil
+	c.GetStrategyVersion()
+}
+
 func TestConnectionOptionsAzureAD_GetTenantDomain(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsAzureAD{TenantDomain: &zeroValue}
@@ -3872,6 +3902,16 @@ func TestConnectionOptionsAzureAD_GetUseCommonEndpoint(tt *testing.T) {
 	c.GetUseCommonEndpoint()
 	c = nil
 	c.GetUseCommonEndpoint()
+}
+
+func TestConnectionOptionsAzureAD_GetUserIDAttribute(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsAzureAD{UserIDAttribute: &zeroValue}
+	c.GetUserIDAttribute()
+	c = &ConnectionOptionsAzureAD{}
+	c.GetUserIDAttribute()
+	c = nil
+	c.GetUserIDAttribute()
 }
 
 func TestConnectionOptionsAzureAD_GetUseWSFederation(tt *testing.T) {
@@ -5584,6 +5624,16 @@ func TestConnectionOptionsOAuth2_GetSetUserAttributes(tt *testing.T) {
 	c.GetSetUserAttributes()
 }
 
+func TestConnectionOptionsOAuth2_GetStrategyVersion(tt *testing.T) {
+	var zeroValue int
+	c := &ConnectionOptionsOAuth2{StrategyVersion: &zeroValue}
+	c.GetStrategyVersion()
+	c = &ConnectionOptionsOAuth2{}
+	c.GetStrategyVersion()
+	c = nil
+	c.GetStrategyVersion()
+}
+
 func TestConnectionOptionsOAuth2_GetTokenURL(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOAuth2{TokenURL: &zeroValue}
@@ -6808,6 +6858,16 @@ func TestConnectionOptionsSAML_GetSignSAMLRequest(tt *testing.T) {
 	c.GetSignSAMLRequest()
 	c = nil
 	c.GetSignSAMLRequest()
+}
+
+func TestConnectionOptionsSAML_GetStrategyVersion(tt *testing.T) {
+	var zeroValue int
+	c := &ConnectionOptionsSAML{StrategyVersion: &zeroValue}
+	c.GetStrategyVersion()
+	c = &ConnectionOptionsSAML{}
+	c.GetStrategyVersion()
+	c = nil
+	c.GetStrategyVersion()
 }
 
 func TestConnectionOptionsSAML_GetSubject(tt *testing.T) {

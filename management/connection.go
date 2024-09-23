@@ -1098,6 +1098,10 @@ type ConnectionOptionsOAuth2 struct {
 	// ClientSecret is the OAuth2 client secret.
 	ClientSecret *string `json:"client_secret,omitempty"`
 
+	// StrategyVersion is used when there are different versions of the strategy
+	// that may be used. Paypal mey require it, for example.
+	StrategyVersion *int `json:"strategy_version,omitempty"`
+
 	// AuthorizationURL is the URL used for obtaining authorization from the user.
 	AuthorizationURL *string `json:"authorizationURL"`
 
@@ -1207,6 +1211,8 @@ func (c *ConnectionOptionsOAuth2) SetScopes(enable bool, scopes ...string) {
 
 // ConnectionOptionsAD is used to configure an AD Connection.
 type ConnectionOptionsAD struct {
+	StrategyVersion *int `json:"strategy_version,omitempty"`
+
 	TenantDomain         *string                `json:"tenant_domain,omitempty"`
 	DomainAliases        *[]string              `json:"domain_aliases,omitempty"`
 	LogoURL              *string                `json:"icon_url,omitempty"`
@@ -1232,6 +1238,8 @@ type ConnectionOptionsAD struct {
 type ConnectionOptionsAzureAD struct {
 	ClientID     *string `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
+
+	StrategyVersion *int `json:"strategy_version,omitempty"`
 
 	AppID         *string   `json:"app_id,omitempty"`
 	TenantDomain  *string   `json:"tenant_domain,omitempty"`
@@ -1269,6 +1277,7 @@ type ConnectionOptionsAzureAD struct {
 	CertRolloverNotification *string   `json:"cert_rollover_notification,omitempty"`
 	Granted                  *bool     `json:"granted,omitempty"`
 	TenantID                 *string   `json:"tenantId,omitempty"`
+	UserIDAttribute          *string   `json:"user_id_attribute,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsAzureAD.
@@ -1283,6 +1292,8 @@ func (c *ConnectionOptionsAzureAD) SetScopes(enable bool, scopes ...string) {
 
 // ConnectionOptionsADFS is used to configure an ADFS Connection.
 type ConnectionOptionsADFS struct {
+	StrategyVersion *int `json:"strategy_version,omitempty"`
+
 	TenantDomain       *string                `json:"tenant_domain,omitempty"`
 	DomainAliases      *[]string              `json:"domain_aliases,omitempty"`
 	LogoURL            *string                `json:"icon_url,omitempty"`
@@ -1363,6 +1374,8 @@ func (c *ConnectionOptionsPingFederate) SetScopes(enable bool, scopes ...string)
 
 // ConnectionOptionsSAML is used to configure a SAML Connection.
 type ConnectionOptionsSAML struct {
+	StrategyVersion *int `json:"strategy_version,omitempty"`
+
 	Cert               *string                             `json:"cert,omitempty"`
 	Debug              *bool                               `json:"debug,omitempty"`
 	Expires            *string                             `json:"expires,omitempty"`

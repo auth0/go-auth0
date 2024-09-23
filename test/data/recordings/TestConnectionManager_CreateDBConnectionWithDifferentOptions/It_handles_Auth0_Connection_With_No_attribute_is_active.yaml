@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Auth0-Connection-No-Active-Attributes-1722944272","strategy":"auth0","options":{"precedence":["username","email","phone_number"],"attributes":{"email":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}},"username":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required"}},"phone_number":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}}}}}
+            {"name":"Test-Auth0-Connection-No-Active-Attributes-1726765770","strategy":"auth0","options":{"precedence":["username","email","phone_number"],"attributes":{"email":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}},"username":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required"}},"phone_number":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}}}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.8.0
+                - Go-Auth0/1.10.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -36,4 +36,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 400 Bad Request
         code: 400
-        duration: 235.546625ms
+        duration: 163.301209ms

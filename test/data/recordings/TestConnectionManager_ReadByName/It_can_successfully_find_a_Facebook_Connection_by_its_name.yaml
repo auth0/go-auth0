@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Facebook-Connection-1714473302","strategy":"facebook","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-Facebook-Connection-1726765770","strategy":"facebook","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.5.0
+                - Go-Auth0/1.10.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 275
         uncompressed: false
-        body: '{"id":"con_SQmJVLGTsYZ2ighN","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":""},"strategy":"facebook","name":"Test-Facebook-Connection-1714473302","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Facebook-Connection-1714473302"]}'
+        body: '{"id":"con_aaNeOTBMZ9Xedyuv","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":""},"strategy":"facebook","name":"Test-Facebook-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Facebook-Connection-1726765770"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 346.242291ms
+        duration: 163.435292ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?include_totals=true&name=Test-Facebook-Connection-1714473302&per_page=50
+                - Go-Auth0/1.10.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?include_totals=true&name=Test-Facebook-Connection-1726765770&per_page=50
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"total":1,"start":0,"limit":50,"connections":[{"id":"con_SQmJVLGTsYZ2ighN","options":{"scope":"","upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"facebook","name":"Test-Facebook-Connection-1714473302","is_domain_connection":false,"realms":["Test-Facebook-Connection-1714473302"],"enabled_clients":[]}]}'
+        body: '{"total":1,"start":0,"limit":50,"connections":[{"id":"con_aaNeOTBMZ9Xedyuv","options":{"scope":"","upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"facebook","name":"Test-Facebook-Connection-1726765770","is_domain_connection":false,"realms":["Test-Facebook-Connection-1726765770"],"enabled_clients":[]}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 320.32525ms
+        duration: 6.364271166s
     - id: 2
       request:
         proto: HTTP/1.1
@@ -89,8 +89,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_SQmJVLGTsYZ2ighN
+                - Go-Auth0/1.10.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_aaNeOTBMZ9Xedyuv
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -100,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-04-30T10:35:24.876Z"}'
+        body: '{"deleted_at":"2024-09-19T17:11:10.736Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 325.861667ms
+        duration: 166.838666ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -124,8 +124,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.5.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_SQmJVLGTsYZ2ighN
+                - Go-Auth0/1.10.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_aaNeOTBMZ9Xedyuv
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -133,12 +133,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 41
+        content_length: 0
         uncompressed: false
-        body: '{"deleted_at":"2024-04-30T10:35:24.876Z"}'
+        body: ""
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 202 Accepted
-        code: 202
-        duration: 304.703291ms
+        status: 204 No Content
+        code: 204
+        duration: 167.03825ms
