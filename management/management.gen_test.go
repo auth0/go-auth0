@@ -8657,6 +8657,16 @@ func TestFlowVaultConnection_GetEnvironment(tt *testing.T) {
 	f.GetEnvironment()
 }
 
+func TestFlowVaultConnection_GetFingerprint(tt *testing.T) {
+	var zeroValue string
+	f := &FlowVaultConnection{Fingerprint: &zeroValue}
+	f.GetFingerprint()
+	f = &FlowVaultConnection{}
+	f.GetFingerprint()
+	f = nil
+	f.GetFingerprint()
+}
+
 func TestFlowVaultConnection_GetID(tt *testing.T) {
 	var zeroValue string
 	f := &FlowVaultConnection{ID: &zeroValue}

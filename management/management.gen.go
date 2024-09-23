@@ -6965,6 +6965,14 @@ func (f *FlowVaultConnection) GetEnvironment() string {
 	return *f.Environment
 }
 
+// GetFingerprint returns the Fingerprint field if it's non-nil, zero value otherwise.
+func (f *FlowVaultConnection) GetFingerprint() string {
+	if f == nil || f.Fingerprint == nil {
+		return ""
+	}
+	return *f.Fingerprint
+}
+
 // GetID returns the ID field if it's non-nil, zero value otherwise.
 func (f *FlowVaultConnection) GetID() string {
 	if f == nil || f.ID == nil {
