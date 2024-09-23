@@ -18,8 +18,23 @@ Flow tests.
 */
 func TestFlowManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
+
+	action := httpAction{
+		ID:     "http_request_Id_123",
+		Type:   "HTTP",
+		Action: "SEND_REQUEST",
+		Params: struct {
+			URL    string `json:"url"`
+			Method string `json:"method"`
+		}{
+			URL:    "https://api-endpoint.com/api/v1/resource",
+			Method: "GET",
+		},
+	}
+
 	flow := &Flow{
-		Name: auth0.String("test-flow"),
+		Name:    auth0.String("test-flow"),
+		Actions: []interface{}{action},
 	}
 
 	err := api.Flow.Create(context.Background(), flow)
@@ -89,6 +104,16 @@ func TestFlowManager_MarshalJSON(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected, string(payload))
 	}
+}
+
+type httpAction struct {
+	ID     string `json:"id"`
+	Type   string `json:"type"`
+	Action string `json:"action"`
+	Params struct {
+		URL    string `json:"url"`
+		Method string `json:"method"`
+	} `json:"params"`
 }
 
 func givenAFlow(t *testing.T) *Flow {

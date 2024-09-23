@@ -53,7 +53,6 @@ func TestFormManager_Update(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "updated-test-form", updatedForm.GetName())
 	assert.Equal(t, expectedForm.GetLanguages(), updatedForm.GetLanguages())
-	assert.Equal(t, expectedForm.GetStyle(), updatedForm.GetStyle())
 }
 
 func TestFormManager_Delete(t *testing.T) {

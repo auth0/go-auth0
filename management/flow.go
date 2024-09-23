@@ -67,6 +67,8 @@ type FlowVaultConnection struct {
 	// When Flow vault connection is configured
 	Ready *bool `json:"ready,omitempty"`
 
+	Fingerprint *string `json:"fingerprint,omitempty"`
+
 	CreatedAt   *time.Time `json:"created_at,omitempty"`
 	UpdatedAt   *time.Time `json:"updated_at,omitempty"`
 	RefreshedAt *time.Time `json:"refreshed_at,omitempty"`

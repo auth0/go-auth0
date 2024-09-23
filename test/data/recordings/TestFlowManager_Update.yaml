@@ -6,14 +6,14 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 68
+        content_length: 21
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"test-flow","description":"A test flow","synchronous":true}
+            {"name":"test-flow"}
         form: {}
         headers:
             Content-Type:
@@ -28,35 +28,35 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
-        body: '{"id":"af_n31RZTvrURthW7c2aykugW","name":"test-flow","description":"A test flow","synchronous":true,"actions":[],"triggers":{"webhook":{"enabled":false,"secret":null}},"security":{"rateLimits":[]},"created_at":"2024-09-11T08:25:20.656Z","updated_at":"2024-09-11T08:25:20.656Z","executed_at":null}'
+        content_length: 133
+        uncompressed: false
+        body: '{"id":"af_nMs6ocaGGsd31WFnestY6j","name":"test-flow","created_at":"2024-09-23T11:02:56.086Z","updated_at":"2024-09-23T11:02:56.086Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 200 OK
-        code: 200
-        duration: 251.681ms
+        status: 201 Created
+        code: 201
+        duration: 2.012815792s
     - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 48
+        content_length: 28
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"description":"Updated flow description test"}
+            {"name":"update-test-flow"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_n31RZTvrURthW7c2aykugW
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_nMs6ocaGGsd31WFnestY6j
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"af_n31RZTvrURthW7c2aykugW","name":"test-flow","description":"Updated flow description test","synchronous":true,"actions":[],"triggers":{"webhook":{"secret":null,"enabled":false}},"security":{"rateLimits":[]},"created_at":"2024-09-11T08:25:20.656Z","updated_at":"2024-09-11T08:25:20.961Z","executed_at":null}'
+        body: '{"id":"af_nMs6ocaGGsd31WFnestY6j","name":"update-test-flow","created_at":"2024-09-23T11:02:56.086Z","updated_at":"2024-09-23T11:02:57.071Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 292.765958ms
+        duration: 969.210541ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -91,7 +91,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_n31RZTvrURthW7c2aykugW
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/flows/af_nMs6ocaGGsd31WFnestY6j
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -107,4 +107,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 254.659208ms
+        duration: 433.38175ms
