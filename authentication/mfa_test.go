@@ -176,7 +176,7 @@ func TestMFAVerifyWithRecoveryCode(t *testing.T) {
 	})
 }
 
-func TestMFA_AddAnAuthenticator(t *testing.T) {
+func TestMFAAddAuthenticator(t *testing.T) {
 	t.Run("Should require ClientID, AuthenticatorTypes", func(t *testing.T) {
 		auth, err := New(
 			context.Background(),
@@ -184,9 +184,9 @@ func TestMFA_AddAnAuthenticator(t *testing.T) {
 		)
 		require.NoError(t, err)
 
-		_, err = auth.MFA.AddAnAuthenticator(context.Background(),
+		_, err = auth.MFA.AddAuthenticator(context.Background(),
 			"mfa-token",
-			mfa.AddAnAuthenticatorRequest{})
+			mfa.AddAuthenticatorRequest{})
 		assert.ErrorContains(t, err, "Missing required fields: ClientID, AuthenticatorTypes")
 	})
 
@@ -194,9 +194,9 @@ func TestMFA_AddAnAuthenticator(t *testing.T) {
 		skipE2E(t)
 		configureHTTPTestRecordings(t, authAPI)
 
-		response, err := authAPI.MFA.AddAnAuthenticator(context.Background(),
+		response, err := authAPI.MFA.AddAuthenticator(context.Background(),
 			"mfa-token",
-			mfa.AddAnAuthenticatorRequest{
+			mfa.AddAuthenticatorRequest{
 				ClientAuthentication: oauth.ClientAuthentication{
 					ClientSecret: clientSecret,
 				},
@@ -216,9 +216,9 @@ func TestMFA_AddAnAuthenticator(t *testing.T) {
 		skipE2E(t)
 		configureHTTPTestRecordings(t, authAPI)
 
-		response, err := authAPI.MFA.AddAnAuthenticator(context.Background(),
+		response, err := authAPI.MFA.AddAuthenticator(context.Background(),
 			"mfa-token",
-			mfa.AddAnAuthenticatorRequest{
+			mfa.AddAuthenticatorRequest{
 				ClientAuthentication: oauth.ClientAuthentication{
 					ClientSecret: clientSecret,
 				},
@@ -236,9 +236,9 @@ func TestMFA_AddAnAuthenticator(t *testing.T) {
 		skipE2E(t)
 		configureHTTPTestRecordings(t, authAPI)
 
-		response, err := authAPI.MFA.AddAnAuthenticator(context.Background(),
+		response, err := authAPI.MFA.AddAuthenticator(context.Background(),
 			"mfa-token",
-			mfa.AddAnAuthenticatorRequest{
+			mfa.AddAuthenticatorRequest{
 				ClientAuthentication: oauth.ClientAuthentication{
 					ClientSecret: clientSecret,
 				},
@@ -252,7 +252,7 @@ func TestMFA_AddAnAuthenticator(t *testing.T) {
 	})
 }
 
-func TestMFA_ListAuthenticators(t *testing.T) {
+func TestMFAListAuthenticators(t *testing.T) {
 	skipE2E(t)
 	configureHTTPTestRecordings(t, authAPI)
 
@@ -263,17 +263,12 @@ func TestMFA_ListAuthenticators(t *testing.T) {
 	assert.NotEmpty(t, authenticators)
 }
 
-/*func TestMFA_DeleteAnAuthenticator(t *testing.T) {
+func TestMFADeleteAuthenticator(t *testing.T) {
+	skipE2E(t)
+	configureHTTPTestRecordings(t, authAPI)
 
-	t.Run("Should return no error for a valid request", func(t *testing.T) {
-		skipE2E(t)
-		configureHTTPTestRecordings(t, authAPI)
-
-		err := authAPI.MFA.DeleteAnAuthenticator(context.Background(),
-			"access-token",
-			"push|dev_BBTKYpxKHOXVBnql")
-
-		require.NoError(t, err)
-	})
+	err := authAPI.MFA.DeleteAuthenticator(context.Background(),
+		"mfa-token",
+		"push|dev_BBTKYpxKHOXVBnql")
+	require.NoError(t, err)
 }
-*/

@@ -61,8 +61,8 @@ type VerifyWithRecoveryCodeResponse struct {
 	RecoveryCode string `json:"recovery_code,omitempty"`
 }
 
-// AddAnAuthenticatorRequest defines the request body for adding an authenticator.
-type AddAnAuthenticatorRequest struct {
+// AddAuthenticatorRequest defines the request body for adding an authenticator.
+type AddAuthenticatorRequest struct {
 	oauth.ClientAuthentication
 	// The type of authenticators supported by the client.
 	// An array with values "otp" or "oob".
@@ -76,8 +76,8 @@ type AddAnAuthenticatorRequest struct {
 	PhoneNumber string `json:"phone_number,omitempty"`
 }
 
-// AddAnAuthenticatorResponse defines the response when adding an authenticator.
-type AddAnAuthenticatorResponse struct {
+// AddAuthenticatorResponse defines the response when adding an authenticator.
+type AddAuthenticatorResponse struct {
 	// If present, the OOB code that should be presented to the user to verify the authenticator.
 	OOBCode string `json:"oob_code,omitempty"`
 	// If present, a new recovery code that should be presented to the user to store.

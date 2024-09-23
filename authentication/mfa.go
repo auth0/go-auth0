@@ -136,10 +136,10 @@ func (m *MFA) VerifyWithRecoveryCode(ctx context.Context, body mfa.VerifyWithRec
 	return
 }
 
-// AddAnAuthenticator Associates or adds a new authenticator for multi-factor authentication (MFA).
+// AddAuthenticator Associates or adds a new authenticator for multi-factor authentication (MFA).
 //
 // See: https://auth0.com/docs/api/authentication#add-an-authenticator
-func (m *MFA) AddAnAuthenticator(ctx context.Context, accessOrMfaToken string, body mfa.AddAnAuthenticatorRequest, opts ...RequestOption) (a *mfa.AddAnAuthenticatorResponse, err error) {
+func (m *MFA) AddAuthenticator(ctx context.Context, accessOrMfaToken string, body mfa.AddAuthenticatorRequest, opts ...RequestOption) (a *mfa.AddAuthenticatorResponse, err error) {
 	opts = append(opts, Header("Authorization", "Bearer "+accessOrMfaToken))
 	missing := []string{}
 	check(&missing, "ClientID", (body.ClientID != "" || m.authentication.clientID != ""))
@@ -159,16 +159,16 @@ func (m *MFA) AddAnAuthenticator(ctx context.Context, accessOrMfaToken string, b
 // ListAuthenticators Returns a list of authenticators associated with your application.
 //
 // See: https://auth0.com/docs/api/authentication#list-authenticators
-func (m *MFA) ListAuthenticators(ctx context.Context, accessToken string, opts ...RequestOption) (a []mfa.ListAuthenticatorsResponse, err error) {
-	opts = append(opts, Header("Authorization", "Bearer "+accessToken))
+func (m *MFA) ListAuthenticators(ctx context.Context, accessOrMfaToken string, opts ...RequestOption) (a []mfa.ListAuthenticatorsResponse, err error) {
+	opts = append(opts, Header("Authorization", "Bearer "+accessOrMfaToken))
 	err = m.authentication.Request(ctx, "GET", m.authentication.URI("mfa", "authenticators"), nil, &a, opts...)
 	return
 }
 
-// DeleteAnAuthenticator Deletes an associated authenticator using its ID.
+// DeleteAuthenticator Deletes an associated authenticator using its ID.
 //
 // See: https://auth0.com/docs/api/authentication#delete-an-authenticator
-func (m *MFA) DeleteAnAuthenticator(ctx context.Context, accessToken string, authenticatorID string, opts ...RequestOption) (err error) {
+func (m *MFA) DeleteAuthenticator(ctx context.Context, accessToken string, authenticatorID string, opts ...RequestOption) (err error) {
 	opts = append(opts, Header("Authorization", "Bearer "+accessToken))
 	err = m.authentication.Request(ctx, "DELETE", m.authentication.URI("mfa", "authenticators", authenticatorID), nil, nil, opts...)
 	return
