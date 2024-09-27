@@ -1,5 +1,14 @@
 # Change Log
 
+## [v1.11.0](https://github.com/auth0/go-auth0/tree/v1.11.0) (2024-09-27)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.10.0...v1.11.0)
+
+**Added**
+- Add support for `Form`, `Flow`, and `Flow Vault Connection` Managers [\#444](https://github.com/auth0/go-auth0/pull/444) ([kushalshit27](https://github.com/kushalshit27))
+- Add support for MFA Authentication Endpoints: Add, List, and Delete Authenticators [\#447](https://github.com/auth0/go-auth0/pull/447) ([developerkunal](https://github.com/developerkunal))
+- Add `user_id_attribute` support to AzureAD connection options in Connection Manager [\#445](https://github.com/auth0/go-auth0/pull/445) ([acwest](https://github.com/acwest))
+- Add `strategy_version` support to required connections in Connection Manager [\#443](https://github.com/auth0/go-auth0/pull/443) ([acwest](https://github.com/acwest))
+
 ## [v1.10.0](https://github.com/auth0/go-auth0/tree/v1.10.0) (2024-09-03)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.9.0...v1.10.0)
 
