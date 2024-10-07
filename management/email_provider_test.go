@@ -146,6 +146,16 @@ func TestEmailProviderJSON(t *testing.T) {
 			},
 			json: `{"name":"ms365","enabled":true,"default_from_address":"accounts@example.com","credentials":{"tenantId":"ms365_tenant_id","clientId":"ms365_client_id","clientSecret":"ms365_client_secret"}}`,
 		},
+		{
+			name: "it can %s a custom email provider",
+			emailProvider: &EmailProvider{
+				Name:               auth0.String("custom"),
+				Enabled:            auth0.Bool(true),
+				DefaultFromAddress: auth0.String("accounts@example.com"),
+				Credentials:        &EmailProviderCredentialsCustom{},
+			},
+			json: `{"name":"custom","enabled":true,"default_from_address":"accounts@example.com","credentials":{}}`,
+		},
 	}
 
 	for _, testCase := range jsonTestCases {

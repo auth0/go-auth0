@@ -6420,6 +6420,11 @@ func (e *EmailProviderCredentialsAzureCS) String() string {
 	return Stringify(e)
 }
 
+// String returns a string representation of EmailProviderCredentialsCustom.
+func (e *EmailProviderCredentialsCustom) String() string {
+	return Stringify(e)
+}
+
 // GetAPIKey returns the APIKey field if it's non-nil, zero value otherwise.
 func (e *EmailProviderCredentialsMailgun) GetAPIKey() string {
 	if e == nil || e.APIKey == nil {
