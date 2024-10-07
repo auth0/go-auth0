@@ -237,6 +237,7 @@ func (ep *EmailProvider) UnmarshalJSON(b []byte) error {
 	case EmailProviderCustom:
 		credentials = &EmailProviderCredentialsCustom{}
 		// No settings for custom.
+		settings = nil
 	case "":
 		credentials = nil
 		settings = nil
