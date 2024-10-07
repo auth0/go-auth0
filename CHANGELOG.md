@@ -1,5 +1,11 @@
 # Change Log
 
+## [v1.11.1](https://github.com/auth0/go-auth0/tree/v1.11.1) (2024-10-07)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.11.0...v1.11.1)
+
+**Added**
+- Add missing support for `Custom` email provider in EmailProviderManager [\#452](https://github.com/auth0/go-auth0/pull/452) ([duedares-rvj](https://github.com/duedares-rvj))
+
 ## [v1.11.0](https://github.com/auth0/go-auth0/tree/v1.11.0) (2024-09-27)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.10.0...v1.11.0)
 
