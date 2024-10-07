@@ -30,6 +30,9 @@ const (
 
 	// EmailProviderMS365 constant.
 	EmailProviderMS365 = "ms365"
+
+	// EmailProviderCustom constant.
+	EmailProviderCustom = "custom"
 )
 
 // EmailProvider is used to configure Email Providers.
@@ -116,6 +119,11 @@ type EmailProviderCredentialsMS365 struct {
 
 	// Microsoft 365 Client Secret.
 	ClientSecret *string `json:"clientSecret,omitempty"`
+}
+
+// EmailProviderCredentialsCustom represent the
+// credentials required to use the custom provider.
+type EmailProviderCredentialsCustom struct {
 }
 
 // EmailProviderSettingsMandrill are the provider
@@ -225,6 +233,10 @@ func (ep *EmailProvider) UnmarshalJSON(b []byte) error {
 	case EmailProviderMS365:
 		credentials = &EmailProviderCredentialsMS365{}
 		// No settings for ms365.
+		settings = nil
+	case EmailProviderCustom:
+		credentials = &EmailProviderCredentialsCustom{}
+		// No settings for custom.
 		settings = nil
 	case "":
 		credentials = nil

@@ -7948,6 +7948,14 @@ func TestEmailProviderCredentialsAzureCS_String(t *testing.T) {
 	}
 }
 
+func TestEmailProviderCredentialsCustom_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderCredentialsCustom{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestEmailProviderCredentialsMailgun_GetAPIKey(tt *testing.T) {
 	var zeroValue string
 	e := &EmailProviderCredentialsMailgun{APIKey: &zeroValue}
