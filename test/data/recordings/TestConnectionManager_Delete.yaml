@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Auth0-Connection-1726765922","strategy":"auth0"}
+            {"name":"Test-Auth0-Connection-1728906777","strategy":"auth0"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
+                - Go-Auth0/1.11.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 520
         uncompressed: false
-        body: '{"id":"con_BigyJHWrJt11Jaf9","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","strategy_version":2,"authentication_methods":{"password":{"enabled":true},"passkey":{"enabled":false}},"passkey_options":{"challenge_ui":"both","progressive_enrollment_enabled":true,"local_enrollment_enabled":true},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-1726765922","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-1726765922"]}'
+        body: '{"id":"con_MunKCJ1vUpWISUez","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","strategy_version":2,"authentication_methods":{"password":{"enabled":true},"passkey":{"enabled":false}},"passkey_options":{"challenge_ui":"both","progressive_enrollment_enabled":true,"local_enrollment_enabled":true},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-1728906777","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Auth0-Connection-1728906777"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 163.174958ms
+        duration: 320.468333ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_BigyJHWrJt11Jaf9
+                - Go-Auth0/1.11.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_MunKCJ1vUpWISUez
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-09-19T17:12:03.156Z"}'
+        body: '{"deleted_at":"2024-10-14T11:52:57.635Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 158.991208ms
+        duration: 346.953875ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -89,8 +89,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_BigyJHWrJt11Jaf9
+                - Go-Auth0/1.11.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_MunKCJ1vUpWISUez
         method: GET
       response:
         proto: HTTP/2.0
@@ -106,7 +106,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 404 Not Found
         code: 404
-        duration: 152.655334ms
+        duration: 331.751333ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -124,8 +124,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_BigyJHWrJt11Jaf9
+                - Go-Auth0/1.11.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_MunKCJ1vUpWISUez
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -133,12 +133,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 41
+        content_length: 0
         uncompressed: false
-        body: '{"deleted_at":"2024-09-19T17:12:03.156Z"}'
+        body: ""
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 202 Accepted
-        code: 202
-        duration: 144.429125ms
+        status: 204 No Content
+        code: 204
+        duration: 307.440459ms

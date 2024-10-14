@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Apple-Connection-1726765770","strategy":"apple"}
+            {"name":"Test-Apple-Connection-1728906681","strategy":"apple"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
+                - Go-Auth0/1.11.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 199
         uncompressed: false
-        body: '{"id":"con_HWmxQkKkv3Oetb8p","options":{},"strategy":"apple","name":"Test-Apple-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Apple-Connection-1726765770"]}'
+        body: '{"id":"con_Q2RHCaItjJ4PhwKI","options":{},"strategy":"apple","name":"Test-Apple-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Apple-Connection-1728906681"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 181.269667ms
+        duration: 354.739167ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,8 +55,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_HWmxQkKkv3Oetb8p
+                - Go-Auth0/1.11.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Q2RHCaItjJ4PhwKI
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_HWmxQkKkv3Oetb8p","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"apple","name":"Test-Apple-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Apple-Connection-1726765770"]}'
+        body: '{"id":"con_Q2RHCaItjJ4PhwKI","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"apple","name":"Test-Apple-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Apple-Connection-1728906681"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 182.764625ms
+        duration: 397.444167ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,8 +90,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_HWmxQkKkv3Oetb8p
+                - Go-Auth0/1.11.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Q2RHCaItjJ4PhwKI
         method: GET
       response:
         proto: HTTP/2.0
@@ -101,13 +101,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_HWmxQkKkv3Oetb8p","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"apple","name":"Test-Apple-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Apple-Connection-1726765770"]}'
+        body: '{"id":"con_Q2RHCaItjJ4PhwKI","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"apple","name":"Test-Apple-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Apple-Connection-1728906681"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 180.568542ms
+        duration: 338.240375ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,8 +125,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_HWmxQkKkv3Oetb8p
+                - Go-Auth0/1.11.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_Q2RHCaItjJ4PhwKI
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -136,10 +136,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-09-19T17:11:48.922Z"}'
+        body: '{"deleted_at":"2024-10-14T11:52:51.659Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 236.229584ms
+        duration: 313.543459ms

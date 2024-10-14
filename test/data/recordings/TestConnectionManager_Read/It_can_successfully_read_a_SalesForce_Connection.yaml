@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-SalesForce-Connection-1726765770","strategy":"salesforce","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-SalesForce-Connection-1728906681","strategy":"salesforce","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
+                - Go-Auth0/1.11.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 281
         uncompressed: false
-        body: '{"id":"con_CJZlWt8hGp30PNvz","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":[]},"strategy":"salesforce","name":"Test-SalesForce-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-SalesForce-Connection-1726765770"]}'
+        body: '{"id":"con_WBLXqJOB0AWLBHNQ","options":{"upstream_params":{"screen_name":{"alias":"login_hint"}},"scope":[]},"strategy":"salesforce","name":"Test-SalesForce-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-SalesForce-Connection-1728906681"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 214.822375ms
+        duration: 350.526334ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_CJZlWt8hGp30PNvz
+                - Go-Auth0/1.11.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_WBLXqJOB0AWLBHNQ
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_CJZlWt8hGp30PNvz","options":{"scope":[],"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"salesforce","name":"Test-SalesForce-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-SalesForce-Connection-1726765770"]}'
+        body: '{"id":"con_WBLXqJOB0AWLBHNQ","options":{"scope":[],"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"salesforce","name":"Test-SalesForce-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-SalesForce-Connection-1728906681"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 153.316875ms
+        duration: 344.218958ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -89,8 +89,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_CJZlWt8hGp30PNvz
+                - Go-Auth0/1.11.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_WBLXqJOB0AWLBHNQ
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -100,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-09-19T17:10:36.285Z"}'
+        body: '{"deleted_at":"2024-10-14T11:52:04.851Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 5.3511535s
+        duration: 340.058917ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -124,8 +124,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_CJZlWt8hGp30PNvz
+                - Go-Auth0/1.11.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_WBLXqJOB0AWLBHNQ
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -133,12 +133,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 0
+        content_length: 41
         uncompressed: false
-        body: ""
+        body: '{"deleted_at":"2024-10-14T11:52:04.851Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 204 No Content
-        code: 204
-        duration: 165.995917ms
+        status: 202 Accepted
+        code: 202
+        duration: 324.000292ms
