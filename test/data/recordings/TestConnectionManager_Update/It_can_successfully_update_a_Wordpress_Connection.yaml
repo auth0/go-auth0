@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Wordpress-Connection-1726765770","strategy":"wordpress"}
+            {"name":"Test-Wordpress-Connection-1728906681","strategy":"wordpress"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
+                - Go-Auth0/1.11.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 245
         uncompressed: false
-        body: '{"id":"con_cPRZCuO6ad6Y3rEZ","options":{"profile":true,"scope":["profile"]},"strategy":"wordpress","name":"Test-Wordpress-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Wordpress-Connection-1726765770"]}'
+        body: '{"id":"con_WUAda9WALMKO7VWq","options":{"profile":true,"scope":["profile"]},"strategy":"wordpress","name":"Test-Wordpress-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Wordpress-Connection-1728906681"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 151.118542ms
+        duration: 359.22275ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,8 +55,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_cPRZCuO6ad6Y3rEZ
+                - Go-Auth0/1.11.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_WUAda9WALMKO7VWq
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_cPRZCuO6ad6Y3rEZ","options":{"scope":["profile"],"profile":true,"tokenURL":null,"upstream_params":{"screen_name":{"alias":"login_hint"}},"authorizationURL":null,"strategy_version":2},"strategy":"wordpress","name":"Test-Wordpress-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Wordpress-Connection-1726765770"]}'
+        body: '{"id":"con_WUAda9WALMKO7VWq","options":{"scope":["profile"],"profile":true,"tokenURL":null,"upstream_params":{"screen_name":{"alias":"login_hint"}},"authorizationURL":null,"strategy_version":2},"strategy":"wordpress","name":"Test-Wordpress-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Wordpress-Connection-1728906681"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 343.468583ms
+        duration: 332.54325ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,8 +90,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_cPRZCuO6ad6Y3rEZ
+                - Go-Auth0/1.11.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_WUAda9WALMKO7VWq
         method: GET
       response:
         proto: HTTP/2.0
@@ -101,13 +101,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_cPRZCuO6ad6Y3rEZ","options":{"scope":["profile"],"profile":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"strategy_version":2},"strategy":"wordpress","name":"Test-Wordpress-Connection-1726765770","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Wordpress-Connection-1726765770"]}'
+        body: '{"id":"con_WUAda9WALMKO7VWq","options":{"scope":["profile"],"profile":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"strategy_version":2},"strategy":"wordpress","name":"Test-Wordpress-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-Wordpress-Connection-1728906681"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 169.773208ms
+        duration: 332.277416ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,8 +125,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.10.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_cPRZCuO6ad6Y3rEZ
+                - Go-Auth0/1.11.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_WUAda9WALMKO7VWq
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -136,10 +136,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-09-19T17:11:31.094Z"}'
+        body: '{"deleted_at":"2024-10-14T11:52:40.709Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 174.969625ms
+        duration: 310.453666ms
