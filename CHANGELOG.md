@@ -1,5 +1,11 @@
 # Change Log
 
+## [v1.11.2](https://github.com/auth0/go-auth0/tree/v1.11.2) (2024-10-14)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.11.1...v1.11.2)
+
+**Fixed**
+- PATCH: Rename `user_id_attribute` to `userid_attribute` in Azure Connection Options [\#454](https://github.com/auth0/go-auth0/pull/454) ([duedares-rvj](https://github.com/duedares-rvj))
+
 ## [v1.11.1](https://github.com/auth0/go-auth0/tree/v1.11.1) (2024-10-07)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.11.0...v1.11.1)
 
