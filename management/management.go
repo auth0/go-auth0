@@ -31,6 +31,9 @@ type Management struct {
 	// CustomDomain manages Auth0 Custom Domains.
 	CustomDomain *CustomDomainManager
 
+	// DeviceCredentials manages Auth0 device credentials.
+	DeviceCredentials *DeviceCredentialsManager
+
 	// Grant manages Auth0 Grants.
 	Grant *GrantManager
 
@@ -180,6 +183,7 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.ClientGrant = (*ClientGrantManager)(&m.common)
 	m.Connection = (*ConnectionManager)(&m.common)
 	m.CustomDomain = (*CustomDomainManager)(&m.common)
+	m.DeviceCredentials = (*DeviceCredentialsManager)(&m.common)
 	m.EmailProvider = (*EmailProviderManager)(&m.common)
 	m.EmailTemplate = (*EmailTemplateManager)(&m.common)
 	m.Grant = (*GrantManager)(&m.common)

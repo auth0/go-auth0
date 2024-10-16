@@ -6347,6 +6347,72 @@ func (d *DailyStat) String() string {
 	return Stringify(d)
 }
 
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (d *DeviceCredential) GetClientID() string {
+	if d == nil || d.ClientID == nil {
+		return ""
+	}
+	return *d.ClientID
+}
+
+// GetDeviceID returns the DeviceID field if it's non-nil, zero value otherwise.
+func (d *DeviceCredential) GetDeviceID() string {
+	if d == nil || d.DeviceID == nil {
+		return ""
+	}
+	return *d.DeviceID
+}
+
+// GetDeviceName returns the DeviceName field if it's non-nil, zero value otherwise.
+func (d *DeviceCredential) GetDeviceName() string {
+	if d == nil || d.DeviceName == nil {
+		return ""
+	}
+	return *d.DeviceName
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (d *DeviceCredential) GetID() string {
+	if d == nil || d.ID == nil {
+		return ""
+	}
+	return *d.ID
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (d *DeviceCredential) GetType() string {
+	if d == nil || d.Type == nil {
+		return ""
+	}
+	return *d.Type
+}
+
+// GetUserID returns the UserID field if it's non-nil, zero value otherwise.
+func (d *DeviceCredential) GetUserID() string {
+	if d == nil || d.UserID == nil {
+		return ""
+	}
+	return *d.UserID
+}
+
+// GetValue returns the Value field if it's non-nil, zero value otherwise.
+func (d *DeviceCredential) GetValue() string {
+	if d == nil || d.Value == nil {
+		return ""
+	}
+	return *d.Value
+}
+
+// String returns a string representation of DeviceCredential.
+func (d *DeviceCredential) String() string {
+	return Stringify(d)
+}
+
+// String returns a string representation of DeviceCredentialList.
+func (d *DeviceCredentialList) String() string {
+	return Stringify(d)
+}
+
 // String returns a string representation of DropboxClientAddon.
 func (d *DropboxClientAddon) String() string {
 	return Stringify(d)

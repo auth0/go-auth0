@@ -7848,6 +7848,92 @@ func TestDailyStat_String(t *testing.T) {
 	}
 }
 
+func TestDeviceCredential_GetClientID(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{ClientID: &zeroValue}
+	d.GetClientID()
+	d = &DeviceCredential{}
+	d.GetClientID()
+	d = nil
+	d.GetClientID()
+}
+
+func TestDeviceCredential_GetDeviceID(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{DeviceID: &zeroValue}
+	d.GetDeviceID()
+	d = &DeviceCredential{}
+	d.GetDeviceID()
+	d = nil
+	d.GetDeviceID()
+}
+
+func TestDeviceCredential_GetDeviceName(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{DeviceName: &zeroValue}
+	d.GetDeviceName()
+	d = &DeviceCredential{}
+	d.GetDeviceName()
+	d = nil
+	d.GetDeviceName()
+}
+
+func TestDeviceCredential_GetID(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{ID: &zeroValue}
+	d.GetID()
+	d = &DeviceCredential{}
+	d.GetID()
+	d = nil
+	d.GetID()
+}
+
+func TestDeviceCredential_GetType(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{Type: &zeroValue}
+	d.GetType()
+	d = &DeviceCredential{}
+	d.GetType()
+	d = nil
+	d.GetType()
+}
+
+func TestDeviceCredential_GetUserID(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{UserID: &zeroValue}
+	d.GetUserID()
+	d = &DeviceCredential{}
+	d.GetUserID()
+	d = nil
+	d.GetUserID()
+}
+
+func TestDeviceCredential_GetValue(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{Value: &zeroValue}
+	d.GetValue()
+	d = &DeviceCredential{}
+	d.GetValue()
+	d = nil
+	d.GetValue()
+}
+
+func TestDeviceCredential_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &DeviceCredential{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestDeviceCredentialList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &DeviceCredentialList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestDropboxClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &DropboxClientAddon{}
