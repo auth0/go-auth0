@@ -9987,12 +9987,28 @@ func (s *SelfServiceProfile) GetCreatedAt() time.Time {
 	return *s.CreatedAt
 }
 
+// GetDescription returns the Description field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetDescription() string {
+	if s == nil || s.Description == nil {
+		return ""
+	}
+	return *s.Description
+}
+
 // GetID returns the ID field if it's non-nil, zero value otherwise.
 func (s *SelfServiceProfile) GetID() string {
 	if s == nil || s.ID == nil {
 		return ""
 	}
 	return *s.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
 }
 
 // GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
@@ -10005,6 +10021,11 @@ func (s *SelfServiceProfile) GetUpdatedAt() time.Time {
 
 // String returns a string representation of SelfServiceProfile.
 func (s *SelfServiceProfile) String() string {
+	return Stringify(s)
+}
+
+// String returns a string representation of SelfServiceProfileList.
+func (s *SelfServiceProfileList) String() string {
 	return Stringify(s)
 }
 

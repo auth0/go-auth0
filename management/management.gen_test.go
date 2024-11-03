@@ -12557,6 +12557,16 @@ func TestSelfServiceProfile_GetCreatedAt(tt *testing.T) {
 	s.GetCreatedAt()
 }
 
+func TestSelfServiceProfile_GetDescription(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfile{Description: &zeroValue}
+	s.GetDescription()
+	s = &SelfServiceProfile{}
+	s.GetDescription()
+	s = nil
+	s.GetDescription()
+}
+
 func TestSelfServiceProfile_GetID(tt *testing.T) {
 	var zeroValue string
 	s := &SelfServiceProfile{ID: &zeroValue}
@@ -12565,6 +12575,16 @@ func TestSelfServiceProfile_GetID(tt *testing.T) {
 	s.GetID()
 	s = nil
 	s.GetID()
+}
+
+func TestSelfServiceProfile_GetName(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfile{Name: &zeroValue}
+	s.GetName()
+	s = &SelfServiceProfile{}
+	s.GetName()
+	s = nil
+	s.GetName()
 }
 
 func TestSelfServiceProfile_GetUpdatedAt(tt *testing.T) {
@@ -12580,6 +12600,14 @@ func TestSelfServiceProfile_GetUpdatedAt(tt *testing.T) {
 func TestSelfServiceProfile_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SelfServiceProfile{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileList{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
