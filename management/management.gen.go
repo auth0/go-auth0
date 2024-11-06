@@ -8988,8 +8988,13 @@ func (p *Prompt) String() string {
 	return Stringify(p)
 }
 
+// String returns a string representation of PromptPartials.
+func (p *PromptPartials) String() string {
+	return Stringify(p)
+}
+
 // GetContextConfiguration returns the ContextConfiguration field if it's non-nil, zero value otherwise.
-func (p *PromptACULSettings) GetContextConfiguration() []string {
+func (p *PromptRendering) GetContextConfiguration() []string {
 	if p == nil || p.ContextConfiguration == nil {
 		return nil
 	}
@@ -8997,7 +9002,7 @@ func (p *PromptACULSettings) GetContextConfiguration() []string {
 }
 
 // GetDefaultHeadTagsDisabled returns the DefaultHeadTagsDisabled field if it's non-nil, zero value otherwise.
-func (p *PromptACULSettings) GetDefaultHeadTagsDisabled() bool {
+func (p *PromptRendering) GetDefaultHeadTagsDisabled() bool {
 	if p == nil || p.DefaultHeadTagsDisabled == nil {
 		return false
 	}
@@ -9005,7 +9010,7 @@ func (p *PromptACULSettings) GetDefaultHeadTagsDisabled() bool {
 }
 
 // GetPrompt returns the Prompt field.
-func (p *PromptACULSettings) GetPrompt() *PromptType {
+func (p *PromptRendering) GetPrompt() *PromptType {
 	if p == nil {
 		return nil
 	}
@@ -9013,7 +9018,7 @@ func (p *PromptACULSettings) GetPrompt() *PromptType {
 }
 
 // GetRenderingMode returns the RenderingMode field if it's non-nil, zero value otherwise.
-func (p *PromptACULSettings) GetRenderingMode() string {
+func (p *PromptRendering) GetRenderingMode() string {
 	if p == nil || p.RenderingMode == nil {
 		return ""
 	}
@@ -9021,7 +9026,7 @@ func (p *PromptACULSettings) GetRenderingMode() string {
 }
 
 // GetScreen returns the Screen field.
-func (p *PromptACULSettings) GetScreen() *ScreenName {
+func (p *PromptRendering) GetScreen() *ScreenName {
 	if p == nil {
 		return nil
 	}
@@ -9029,20 +9034,15 @@ func (p *PromptACULSettings) GetScreen() *ScreenName {
 }
 
 // GetTenant returns the Tenant field if it's non-nil, zero value otherwise.
-func (p *PromptACULSettings) GetTenant() string {
+func (p *PromptRendering) GetTenant() string {
 	if p == nil || p.Tenant == nil {
 		return ""
 	}
 	return *p.Tenant
 }
 
-// String returns a string representation of PromptACULSettings.
-func (p *PromptACULSettings) String() string {
-	return Stringify(p)
-}
-
-// String returns a string representation of PromptPartials.
-func (p *PromptPartials) String() string {
+// String returns a string representation of PromptRendering.
+func (p *PromptRendering) String() string {
 	return Stringify(p)
 }
 

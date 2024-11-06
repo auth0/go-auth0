@@ -280,8 +280,8 @@ type PromptPartials struct {
 	Prompt PromptType `json:"-"`
 }
 
-// PromptACULSettings is used to retrieve and set the settings for the ACUL.
-type PromptACULSettings struct {
+// PromptRendering is used to retrieve and set the settings for the ACUL.
+type PromptRendering struct {
 	Tenant                  *string       `json:"tenant,omitempty"`
 	Prompt                  *PromptType   `json:"prompt,omitempty"`
 	Screen                  *ScreenName   `json:"screen,omitempty"`
@@ -292,14 +292,14 @@ type PromptACULSettings struct {
 }
 
 // MarshalJSON implements a custom [json.Marshaler].
-func (c *PromptACULSettings) MarshalJSON() ([]byte, error) {
-	type ACULSettingsSubSet struct {
+func (c *PromptRendering) MarshalJSON() ([]byte, error) {
+	type RenderingSubSet struct {
 		RenderMode              *string       `json:"rendering_mode,omitempty"`
 		ContextConfiguration    *[]string     `json:"context_configuration,omitempty"`
 		DefaultHeadTagsDisabled *bool         `json:"default_head_tags_disabled,omitempty"`
 		HeadTags                []interface{} `json:"head_tags,omitempty"`
 	}
-	return json.Marshal(&ACULSettingsSubSet{
+	return json.Marshal(&RenderingSubSet{
 		RenderMode:              c.RenderingMode,
 		ContextConfiguration:    c.ContextConfiguration,
 		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
@@ -464,17 +464,17 @@ func guardAgainstPromptTypesWithNoPartials(prompt PromptType) error {
 	return fmt.Errorf("cannot customize partials for prompt: %q", prompt)
 }
 
-// ReadACULSettings retrieves the settings for the ACUL.
+// ReadRendering retrieves the settings for the ACUL.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Prompts/get_acul
-func (m *PromptManager) ReadACULSettings(ctx context.Context, prompt PromptType, screen ScreenName, opts ...RequestOption) (c *PromptACULSettings, err error) {
+func (m *PromptManager) ReadRendering(ctx context.Context, prompt PromptType, screen ScreenName, opts ...RequestOption) (c *PromptRendering, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), &c, opts...)
 	return
 }
 
-// UpdateACULSettings updates the settings for the ACUL.
+// UpdateRendering updates the settings for the ACUL.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Prompts/patch_acul
-func (m *PromptManager) UpdateACULSettings(ctx context.Context, prompt PromptType, screen ScreenName, c *PromptACULSettings, opts ...RequestOption) error {
+func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, screen ScreenName, c *PromptRendering, opts ...RequestOption) error {
 	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), c, opts...)
 }

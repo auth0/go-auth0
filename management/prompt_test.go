@@ -127,13 +127,13 @@ func TestPromptManager_SetPartials(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestPromptManager_ReadACULSettings(t *testing.T) {
+func TestPromptManager_ReadRendering(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	_ = givenACustomDomain(t)
 	_ = givenAUniversalLoginTemplate(t)
-	expected := givenAACULSettings(t)
-	actual, err := api.Prompt.ReadACULSettings(context.Background(), PromptSignup, ScreenSignup)
+	expected := givenAPromptRendering(t)
+	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
 	assert.NoError(t, err)
 	assert.Equal(t, expected.GetRenderingMode(), actual.GetRenderingMode())
 	assert.Equal(t, expected.GetContextConfiguration(), actual.GetContextConfiguration())
@@ -143,20 +143,20 @@ func TestPromptManager_ReadACULSettings(t *testing.T) {
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
-func TestPromptManager_UpdateACULSettings(t *testing.T) {
+func TestPromptManager_UpdateRendering(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	_ = givenACustomDomain(t)
 	_ = givenAUniversalLoginTemplate(t)
-	expected := givenAACULSettings(t)
+	expected := givenAPromptRendering(t)
 	expected.RenderingMode = auth0.String("standard")
 	expected.ContextConfiguration = &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"}
 	expected.DefaultHeadTagsDisabled = auth0.Bool(true)
 
-	err := api.Prompt.UpdateACULSettings(context.Background(), PromptSignup, ScreenSignup, expected)
+	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, expected)
 	assert.NoError(t, err)
 
-	actual, err := api.Prompt.ReadACULSettings(context.Background(), PromptSignup, ScreenSignup)
+	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
 	assert.NoError(t, err)
 	assert.Equal(t, expected.GetRenderingMode(), actual.GetRenderingMode())
 	assert.Equal(t, expected.GetContextConfiguration(), actual.GetContextConfiguration())
@@ -332,10 +332,10 @@ func givenAPartialPrompt(t *testing.T, prompt PromptType) *PromptScreenPartials 
 	return partials
 }
 
-func givenAACULSettings(t *testing.T) *PromptACULSettings {
+func givenAPromptRendering(t *testing.T) *PromptRendering {
 	t.Helper()
 
-	settings := &PromptACULSettings{
+	settings := &PromptRendering{
 		RenderingMode:           auth0.String("advanced"),
 		ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default"},
 		DefaultHeadTagsDisabled: auth0.Bool(false),
@@ -355,7 +355,7 @@ func givenAACULSettings(t *testing.T) *PromptACULSettings {
 		},
 	}
 
-	err := api.Prompt.UpdateACULSettings(context.Background(), PromptSignup, ScreenSignup, settings)
+	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, settings)
 	assert.NoError(t, err)
 
 	return settings
