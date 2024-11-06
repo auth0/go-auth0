@@ -27,6 +27,87 @@ const (
 
 	// PromptLoginPasswordLess represents the login-passwordless prompt.
 	PromptLoginPasswordLess PromptType = "login-passwordless"
+
+	// PromptLoginEmailVerification represents the login-email-verification prompt.
+	PromptLoginEmailVerification PromptType = "login-email-verification"
+
+	// PromptPhoneIdentifierEnrollment represents the phone-identifier-enrollment prompt.
+	PromptPhoneIdentifierEnrollment PromptType = "phone-identifier-enrollment"
+
+	// PromptPhoneIdentifierChallenge represents the phone-identifier-challenge prompt.
+	PromptPhoneIdentifierChallenge PromptType = "phone-identifier-challenge"
+
+	// PromptEmailIdentifierChallenge represents the email-identifier-challenge prompt.
+	PromptEmailIdentifierChallenge PromptType = "email-identifier-challenge"
+
+	// PromptResetPassword represents the reset-password prompt.
+	PromptResetPassword PromptType = "reset-password"
+
+	// PromptCustomForm represents the custom-form prompt.
+	PromptCustomForm PromptType = "custom-form"
+
+	// PromptConsent represents the consent prompt.
+	PromptConsent PromptType = "consent"
+
+	// PromptCustomizedConsent represents the customized-consent prompt.
+	PromptCustomizedConsent PromptType = "customized-consent"
+
+	// PromptLogout represents the logout prompt.
+	PromptLogout PromptType = "logout"
+
+	// PromptMFAPush represents the mfa-push prompt.
+	PromptMFAPush PromptType = "mfa-push"
+
+	// PromptMFAOTP represents the mfa-otp prompt.
+	PromptMFAOTP PromptType = "mfa-otp"
+
+	// PromptMFAVoice represents the mfa-voice prompt.
+	PromptMFAVoice PromptType = "mfa-voice"
+
+	// PromptMFAPhone represents the mfa-phone prompt.
+	PromptMFAPhone PromptType = "mfa-phone"
+
+	// PromptMFAWebAuthn represents the mfa-webauthn prompt.
+	PromptMFAWebAuthn PromptType = "mfa-webauthn"
+
+	// PromptMFASMS represents the mfa-sms prompt.
+	PromptMFASMS PromptType = "mfa-sms"
+
+	// PromptMFAEmail represents the mfa-email prompt.
+	PromptMFAEmail PromptType = "mfa-email"
+
+	// PromptMFARecoveryCode represents the mfa-recovery-code prompt.
+	PromptMFARecoveryCode PromptType = "mfa-recovery-code"
+
+	// PromptMFA represents the mfa prompt.
+	PromptMFA PromptType = "mfa"
+
+	// PromptStatus represents the status prompt.
+	PromptStatus PromptType = "status"
+
+	// PromptDeviceFlow represents the device-flow prompt.
+	PromptDeviceFlow PromptType = "device-flow"
+
+	// PromptEmailVerification represents the email-verification prompt.
+	PromptEmailVerification PromptType = "email-verification"
+
+	// PromptEmailOTPChallenge represents the email-otp-challenge prompt.
+	PromptEmailOTPChallenge PromptType = "email-otp-challenge"
+
+	// PromptOrganizations represents the organizations prompt.
+	PromptOrganizations PromptType = "organizations"
+
+	// PromptInvitation represents the invitation prompt.
+	PromptInvitation PromptType = "invitation"
+
+	// PromptCommon represents the common prompt.
+	PromptCommon PromptType = "common"
+
+	// PromptPasskeys represents the passkeys prompt.
+	PromptPasskeys PromptType = "passkeys"
+
+	// PromptCaptcha represents the captcha prompt.
+	PromptCaptcha PromptType = "captcha"
 )
 
 var allowedPromptsWithPartials = []PromptType{
@@ -72,6 +153,72 @@ const (
 
 	// ScreenLoginPasswordlessEmailCode represents the login-passwordless-email-code screen.
 	ScreenLoginPasswordlessEmailCode ScreenName = "login-passwordless-email-code"
+
+	// ScreenLoginPasswordlessEmailLink represents the login-passwordless-email-link screen.
+	ScreenLoginPasswordlessEmailLink ScreenName = "login-passwordless-email-link"
+
+	// ScreenLoginEmailVerification represents the login-email-verification screen.
+	ScreenLoginEmailVerification ScreenName = "login-email-verification"
+
+	// ScreenPhoneIdentifierEnrollment represents the phone-identifier-enrollment screen.
+	ScreenPhoneIdentifierEnrollment ScreenName = "phone-identifier-enrollment"
+
+	// ScreenPhoneIdentifierChallenge represents the phone-identifier-challenge screen.
+	ScreenPhoneIdentifierChallenge ScreenName = "phone-identifier-challenge"
+
+	// ScreenEmailIdentifierChallenge represents the email-identifier-challenge screen.
+	ScreenEmailIdentifierChallenge ScreenName = "email-identifier-challenge"
+
+	// ScreenResetPasswordRequest represents the reset-password-request screen.
+	ScreenResetPasswordRequest ScreenName = "reset-password-request"
+
+	// ScreenResetPasswordEmail represents the reset-password-email screen.
+	ScreenResetPasswordEmail ScreenName = "reset-password-email"
+
+	// ScreenResetPassword represents the reset-password screen.
+	ScreenResetPassword ScreenName = "reset-password"
+
+	// ScreenResetPasswordSuccess represents the reset-password-success screen.
+	ScreenResetPasswordSuccess ScreenName = "reset-password-success"
+
+	// ScreenResetPasswordError represents the reset-password-error screen.
+	ScreenResetPasswordError ScreenName = "reset-password-error"
+
+	// ScreenCustomForm represents the custom-form screen.
+	ScreenCustomForm ScreenName = "custom-form"
+
+	// ScreenConsent represents the consent screen.
+	ScreenConsent ScreenName = "consent"
+
+	// ScreenCustomizedConsent represents the customized-consent screen.
+	ScreenCustomizedConsent ScreenName = "customized-consent"
+
+	// ScreenLogout represents the logout screen.
+	ScreenLogout ScreenName = "logout"
+
+	// ScreenMFAPushWelcome represents the mfa-push-welcome screen.
+	ScreenMFAPushWelcome ScreenName = "mfa-push-welcome"
+
+	// ScreenMFAPushEnrollmentQR represents the mfa-push-enrollment-qr screen.
+	ScreenMFAPushEnrollmentQR ScreenName = "mfa-push-enrollment-qr"
+
+	// ScreenMFAPushEnrollmentCode represents the mfa-push-enrollment-code screen.
+	ScreenMFAPushEnrollmentCode ScreenName = "mfa-push-enrollment-code"
+
+	// ScreenMFAPushSuccess represents the mfa-push-success screen.
+	ScreenMFAPushSuccess ScreenName = "mfa-push-success"
+
+	// ScreenMFAPushChallengePush represents the mfa-push-challenge-push screen.
+	ScreenMFAPushChallengePush ScreenName = "mfa-push-challenge-push"
+
+	// ScreenMFAOTPChallenge represents the mfa-otp-challenge screen.
+	ScreenMFAOTPChallenge ScreenName = "mfa-otp-challenge"
+
+	// ScreenDeviceCodeActivation represents the device-code-activation screen.
+	ScreenDeviceCodeActivation ScreenName = "device-code-activation"
+
+	// ScreenPasskeyEnrollment represents the passkey-enrollment screen.
+	ScreenPasskeyEnrollment ScreenName = "passkey-enrollment"
 )
 
 const (
@@ -131,6 +278,33 @@ type PromptPartials struct {
 	SecondaryActionsEnd   string `json:"secondary-actions-end,omitempty"`
 
 	Prompt PromptType `json:"-"`
+}
+
+// PromptACULSettings is used to retrieve and set the settings for the ACUL.
+type PromptACULSettings struct {
+	Tenant                  *string       `json:"tenant,omitempty"`
+	Prompt                  *string       `json:"prompt,omitempty"`
+	Screen                  *string       `json:"screen,omitempty"`
+	RenderingMode           *string       `json:"rendering_mode,omitempty"`
+	ContextConfiguration    *[]string     `json:"context_configuration,omitempty"`
+	DefaultHeadTagsDisabled *bool         `json:"default_head_tags_disabled,omitempty"`
+	HeadTags                []interface{} `json:"head_tags,omitempty"`
+}
+
+// MarshalJSON implements a custom [json.Marshaler].
+func (c *PromptACULSettings) MarshalJSON() ([]byte, error) {
+	type ACULSettingsSubSet struct {
+		RenderMode              *string       `json:"rendering_mode,omitempty"`
+		ContextConfiguration    *[]string     `json:"context_configuration,omitempty"`
+		DefaultHeadTagsDisabled *bool         `json:"default_head_tags_disabled,omitempty"`
+		HeadTags                []interface{} `json:"head_tags,omitempty"`
+	}
+	return json.Marshal(&ACULSettingsSubSet{
+		RenderMode:              c.RenderingMode,
+		ContextConfiguration:    c.ContextConfiguration,
+		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
+		HeadTags:                c.HeadTags,
+	})
 }
 
 // MarshalJSON implements a custom [json.Marshaler].
@@ -288,4 +462,19 @@ func guardAgainstPromptTypesWithNoPartials(prompt PromptType) error {
 	}
 
 	return fmt.Errorf("cannot customize partials for prompt: %q", prompt)
+}
+
+// ReadACULSettings retrieves the settings for the ACUL.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Prompts/get_acul
+func (m *PromptManager) ReadACULSettings(ctx context.Context, prompt PromptType, screen ScreenName, opts ...RequestOption) (c *PromptACULSettings, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), &c, opts...)
+	return
+}
+
+// UpdateACULSettings updates the settings for the ACUL.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Prompts/patch_acul
+func (m *PromptManager) UpdateACULSettings(ctx context.Context, prompt PromptType, screen ScreenName, c *PromptACULSettings, opts ...RequestOption) error {
+	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), c, opts...)
 }

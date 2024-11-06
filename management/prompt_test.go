@@ -127,6 +127,45 @@ func TestPromptManager_SetPartials(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
+func TestPromptManager_ReadACULSettings(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	_ = givenACustomDomain(t)
+	_ = givenAUniversalLoginTemplate(t)
+	expected := givenAACULSettings(t)
+	actual, err := api.Prompt.ReadACULSettings(context.Background(), PromptSignup, ScreenSignup)
+	assert.NoError(t, err)
+	assert.Equal(t, expected.RenderingMode, actual.RenderingMode)
+	assert.Equal(t, expected.ContextConfiguration, actual.ContextConfiguration)
+	assert.Equal(t, expected.DefaultHeadTagsDisabled, actual.DefaultHeadTagsDisabled)
+	assert.Equal(t, expected.HeadTags, actual.HeadTags)
+	assert.Equal(t, string(PromptSignup), *actual.Prompt)
+	assert.Equal(t, string(ScreenSignup), *actual.Screen)
+}
+
+func TestPromptManager_UpdateACULSettings(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	_ = givenACustomDomain(t)
+	_ = givenAUniversalLoginTemplate(t)
+	expected := givenAACULSettings(t)
+	expected.RenderingMode = auth0.String("standard")
+	expected.ContextConfiguration = &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"}
+	expected.DefaultHeadTagsDisabled = auth0.Bool(true)
+
+	err := api.Prompt.UpdateACULSettings(context.Background(), PromptSignup, ScreenSignup, expected)
+	assert.NoError(t, err)
+
+	actual, err := api.Prompt.ReadACULSettings(context.Background(), PromptSignup, ScreenSignup)
+	assert.NoError(t, err)
+	assert.Equal(t, expected.RenderingMode, actual.RenderingMode)
+	assert.Equal(t, expected.ContextConfiguration, actual.ContextConfiguration)
+	assert.Equal(t, expected.DefaultHeadTagsDisabled, actual.DefaultHeadTagsDisabled)
+	assert.Equal(t, expected.HeadTags, actual.HeadTags)
+	assert.Equal(t, string(PromptSignup), *actual.Prompt)
+	assert.Equal(t, string(ScreenSignup), *actual.Screen)
+}
+
 func TestPromptManager_GetPartialsGuardGuardError(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -291,6 +330,35 @@ func givenAPartialPrompt(t *testing.T, prompt PromptType) *PromptScreenPartials 
 	})
 
 	return partials
+}
+
+func givenAACULSettings(t *testing.T) *PromptACULSettings {
+	t.Helper()
+
+	settings := &PromptACULSettings{
+		RenderingMode:           auth0.String("advanced"),
+		ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default"},
+		DefaultHeadTagsDisabled: auth0.Bool(false),
+		HeadTags: []interface{}{
+			map[string]interface{}{
+				"tag":     "script",
+				"content": "",
+				"attributes": map[string]interface{}{
+					"defer": true,
+					"src":   "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js",
+					"async": true,
+					"integrity": []string{
+						"sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==",
+					},
+				},
+			},
+		},
+	}
+
+	err := api.Prompt.UpdateACULSettings(context.Background(), PromptSignup, ScreenSignup, settings)
+	assert.NoError(t, err)
+
+	return settings
 }
 
 func cleanupPromptPartials(t *testing.T, prompt PromptType) {
