@@ -67,6 +67,8 @@ type SelfServiceProfileTicket struct {
 	// connection will be enabled for.
 	EnabledOrganizations []*SelfServiceProfileTicketEnabledOrganizations `json:"enabled_organizations,omitempty"`
 
+	TTLSec int `json:"ttl_sec"`
+
 	// The ticket that is generated.
 	Ticket *string `json:"ticket,omitempty"`
 }
@@ -75,13 +77,30 @@ type SelfServiceProfileTicket struct {
 type SelfServiceProfileTicketConnectionConfig struct {
 	// The name of the connection that will be
 	// created as a part of the SSO flow.
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
+
+	// The display name of the connection that will be
+	// created as a part of the SSO flow.
+	DisplayName *string `json:"display_name,omitempty"`
+
+	IsDomainConnection *bool                                           `json:"is_domain_connection,omitempty"`
+	ShowAsButton       *bool                                           `json:"show_as_button,omitempty"`
+	Metadata           *map[string]interface{}                         `json:"metadata,omitempty"`
+	Options            SelfServiceProfileTicketConnectionConfigOptions `json:"options,omitempty"`
+}
+
+// SelfServiceProfileTicketConnectionConfigOptions is the list of Options for SSO Ticket.
+type SelfServiceProfileTicketConnectionConfigOptions struct {
+	IconURL       *string   `json:"icon_url,omitempty"`
+	DomainAliases []*string `json:"domain_aliases,omitempty"`
 }
 
 // SelfServiceProfileTicketEnabledOrganizations is the list of Organizations associated with the SSO Ticket.
 type SelfServiceProfileTicketEnabledOrganizations struct {
 	// Organization identifier.
-	OrganizationID string `json:"organization_id,omitempty"`
+	OrganizationID          *string `json:"organization_id,omitempty"`
+	AssignMembershipOnLogin *bool   `json:"assign_membership_on_login,omitempty"`
+	ShowAsButton            *bool   `json:"show_as_button,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface.
@@ -149,5 +168,11 @@ func (m *SelfServiceProfileManager) SetCustomText(ctx context.Context, id string
 // CreateTicket creates a sso-access ticket to initiate the Self Service SSO Flow.
 func (m *SelfServiceProfileManager) CreateTicket(ctx context.Context, id string, t *SelfServiceProfileTicket, opts ...RequestOption) (err error) {
 	err = m.management.Request(ctx, "POST", m.management.URI("self-service-profiles", id, "sso-ticket"), t, opts...)
+	return
+}
+
+// RevokeTicket revokes the sso-access ticket against a specific SSO Profile.
+func (m *SelfServiceProfileManager) RevokeTicket(ctx context.Context, id string, ticketID string, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "POST", m.management.URI("self-service-profiles", id, "sso-ticket", ticketID, "revoke"), nil, opts...)
 	return
 }

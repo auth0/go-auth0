@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"strings"
 	"testing"
 	"time"
 
@@ -108,7 +109,7 @@ func TestSelfServiceProfileManager_SetGetCustomText(t *testing.T) {
 	assert.Equal(t, payload, retrievedCustomText)
 }
 
-func TestSelfServiceProfileManager_CreateTicket(t *testing.T) {
+func TestSelfServiceProfileManager_CreateAndRevokeTicket(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	ssop := givenASelfServiceProfile(t)
 	client := givenAClient(t)
@@ -116,18 +117,37 @@ func TestSelfServiceProfileManager_CreateTicket(t *testing.T) {
 
 	ticket := &SelfServiceProfileTicket{
 		ConnectionConfig: &SelfServiceProfileTicketConnectionConfig{
-			Name: "sso-generated-ticket",
+			Name:               auth0.String("sso-generated-ticket"),
+			DisplayName:        auth0.String("sso-generated-ticket-display-name"),
+			IsDomainConnection: auth0.Bool(true),
+			ShowAsButton:       auth0.Bool(true),
+			Metadata: &map[string]interface{}{
+				"key1": "value1",
+				"key2": "value2",
+			},
+			Options: SelfServiceProfileTicketConnectionConfigOptions{
+				IconURL:       auth0.String("https://metabox.com/my_icon.jpeg"),
+				DomainAliases: []*string{auth0.String("okta.com")},
+			},
 		},
 		EnabledClients: []*string{auth0.String(client.GetClientID())},
 		EnabledOrganizations: []*SelfServiceProfileTicketEnabledOrganizations{
 			{
-				org.GetID(),
+				AssignMembershipOnLogin: auth0.Bool(true),
+				ShowAsButton:            auth0.Bool(true),
+				OrganizationID:          auth0.String(org.GetID()),
 			},
 		},
 	}
 	err := api.SelfServiceProfile.CreateTicket(context.Background(), ssop.GetID(), ticket)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, ticket.GetTicket())
+
+	ticketURL := ticket.GetTicket()
+	ticketID := ticketURL[strings.LastIndex(ticketURL, "=")+1:]
+
+	err = api.SelfServiceProfile.RevokeTicket(context.Background(), ssop.GetID(), ticketID)
+	assert.NoError(t, err)
 }
 
 func TestSelfServiceProfileManager_MarshalJSON(t *testing.T) {

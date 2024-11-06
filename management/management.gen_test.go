@@ -12648,12 +12648,110 @@ func TestSelfServiceProfileTicket_String(t *testing.T) {
 	}
 }
 
+func TestSelfServiceProfileTicketConnectionConfig_GetDisplayName(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicketConnectionConfig{DisplayName: &zeroValue}
+	s.GetDisplayName()
+	s = &SelfServiceProfileTicketConnectionConfig{}
+	s.GetDisplayName()
+	s = nil
+	s.GetDisplayName()
+}
+
+func TestSelfServiceProfileTicketConnectionConfig_GetIsDomainConnection(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileTicketConnectionConfig{IsDomainConnection: &zeroValue}
+	s.GetIsDomainConnection()
+	s = &SelfServiceProfileTicketConnectionConfig{}
+	s.GetIsDomainConnection()
+	s = nil
+	s.GetIsDomainConnection()
+}
+
+func TestSelfServiceProfileTicketConnectionConfig_GetMetadata(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	s := &SelfServiceProfileTicketConnectionConfig{Metadata: &zeroValue}
+	s.GetMetadata()
+	s = &SelfServiceProfileTicketConnectionConfig{}
+	s.GetMetadata()
+	s = nil
+	s.GetMetadata()
+}
+
+func TestSelfServiceProfileTicketConnectionConfig_GetName(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicketConnectionConfig{Name: &zeroValue}
+	s.GetName()
+	s = &SelfServiceProfileTicketConnectionConfig{}
+	s.GetName()
+	s = nil
+	s.GetName()
+}
+
+func TestSelfServiceProfileTicketConnectionConfig_GetShowAsButton(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileTicketConnectionConfig{ShowAsButton: &zeroValue}
+	s.GetShowAsButton()
+	s = &SelfServiceProfileTicketConnectionConfig{}
+	s.GetShowAsButton()
+	s = nil
+	s.GetShowAsButton()
+}
+
 func TestSelfServiceProfileTicketConnectionConfig_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SelfServiceProfileTicketConnectionConfig{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
+}
+
+func TestSelfServiceProfileTicketConnectionConfigOptions_GetIconURL(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicketConnectionConfigOptions{IconURL: &zeroValue}
+	s.GetIconURL()
+	s = &SelfServiceProfileTicketConnectionConfigOptions{}
+	s.GetIconURL()
+	s = nil
+	s.GetIconURL()
+}
+
+func TestSelfServiceProfileTicketConnectionConfigOptions_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicketConnectionConfigOptions{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileTicketEnabledOrganizations_GetAssignMembershipOnLogin(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileTicketEnabledOrganizations{AssignMembershipOnLogin: &zeroValue}
+	s.GetAssignMembershipOnLogin()
+	s = &SelfServiceProfileTicketEnabledOrganizations{}
+	s.GetAssignMembershipOnLogin()
+	s = nil
+	s.GetAssignMembershipOnLogin()
+}
+
+func TestSelfServiceProfileTicketEnabledOrganizations_GetOrganizationID(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicketEnabledOrganizations{OrganizationID: &zeroValue}
+	s.GetOrganizationID()
+	s = &SelfServiceProfileTicketEnabledOrganizations{}
+	s.GetOrganizationID()
+	s = nil
+	s.GetOrganizationID()
+}
+
+func TestSelfServiceProfileTicketEnabledOrganizations_GetShowAsButton(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileTicketEnabledOrganizations{ShowAsButton: &zeroValue}
+	s.GetShowAsButton()
+	s = &SelfServiceProfileTicketEnabledOrganizations{}
+	s.GetShowAsButton()
+	s = nil
+	s.GetShowAsButton()
 }
 
 func TestSelfServiceProfileTicketEnabledOrganizations_String(t *testing.T) {

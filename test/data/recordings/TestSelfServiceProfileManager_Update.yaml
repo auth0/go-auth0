@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 394
         uncompressed: false
-        body: '{"id":"ssp_6ZpGku5zb9rtSK5yeuNHgH","name":"Sample Self Service Profile","description":"Sample Desc","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"allowed_strategies":["oidc"],"created_at":"2024-11-03T11:22:39.024Z","updated_at":"2024-11-03T11:22:39.024Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
+        body: '{"id":"ssp_pXsK5yP6h2XmXwiAoXYvdi","name":"Sample Self Service Profile","description":"Sample Desc","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"allowed_strategies":["oidc"],"created_at":"2024-11-06T19:41:35.806Z","updated_at":"2024-11-06T19:41:35.806Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 689.450959ms
+        duration: 1.063988375s
     - id: 1
       request:
         proto: HTTP/1.1
@@ -56,7 +56,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.11.2
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_6ZpGku5zb9rtSK5yeuNHgH
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_pXsK5yP6h2XmXwiAoXYvdi
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"ssp_6ZpGku5zb9rtSK5yeuNHgH","name":"Sample Self Service Profile","description":"Sample Desc","user_attributes":[{"name":"some-new-name-here","description":"some-description","is_optional":true}],"allowed_strategies":["oidc"],"created_at":"2024-11-03T11:22:39.024Z","updated_at":"2024-11-03T11:22:40.247Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
+        body: '{"id":"ssp_pXsK5yP6h2XmXwiAoXYvdi","name":"Sample Self Service Profile","description":"Sample Desc","user_attributes":[{"name":"some-new-name-here","description":"some-description","is_optional":true}],"allowed_strategies":["oidc"],"created_at":"2024-11-06T19:41:35.806Z","updated_at":"2024-11-06T19:41:38.728Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 1.216916s
+        duration: 2.925993334s
     - id: 2
       request:
         proto: HTTP/1.1
@@ -91,7 +91,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.11.2
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_6ZpGku5zb9rtSK5yeuNHgH
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_pXsK5yP6h2XmXwiAoXYvdi
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -107,4 +107,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 1.450706666s
+        duration: 3.13637775s
