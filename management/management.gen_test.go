@@ -11276,6 +11276,68 @@ func TestPrompt_String(t *testing.T) {
 	}
 }
 
+func TestPromptACULSettings_GetContextConfiguration(tt *testing.T) {
+	var zeroValue []string
+	p := &PromptACULSettings{ContextConfiguration: &zeroValue}
+	p.GetContextConfiguration()
+	p = &PromptACULSettings{}
+	p.GetContextConfiguration()
+	p = nil
+	p.GetContextConfiguration()
+}
+
+func TestPromptACULSettings_GetDefaultHeadTagsDisabled(tt *testing.T) {
+	var zeroValue bool
+	p := &PromptACULSettings{DefaultHeadTagsDisabled: &zeroValue}
+	p.GetDefaultHeadTagsDisabled()
+	p = &PromptACULSettings{}
+	p.GetDefaultHeadTagsDisabled()
+	p = nil
+	p.GetDefaultHeadTagsDisabled()
+}
+
+func TestPromptACULSettings_GetPrompt(tt *testing.T) {
+	p := &PromptACULSettings{}
+	p.GetPrompt()
+	p = nil
+	p.GetPrompt()
+}
+
+func TestPromptACULSettings_GetRenderingMode(tt *testing.T) {
+	var zeroValue string
+	p := &PromptACULSettings{RenderingMode: &zeroValue}
+	p.GetRenderingMode()
+	p = &PromptACULSettings{}
+	p.GetRenderingMode()
+	p = nil
+	p.GetRenderingMode()
+}
+
+func TestPromptACULSettings_GetScreen(tt *testing.T) {
+	p := &PromptACULSettings{}
+	p.GetScreen()
+	p = nil
+	p.GetScreen()
+}
+
+func TestPromptACULSettings_GetTenant(tt *testing.T) {
+	var zeroValue string
+	p := &PromptACULSettings{Tenant: &zeroValue}
+	p.GetTenant()
+	p = &PromptACULSettings{}
+	p.GetTenant()
+	p = nil
+	p.GetTenant()
+}
+
+func TestPromptACULSettings_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PromptACULSettings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestPromptPartials_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &PromptPartials{}

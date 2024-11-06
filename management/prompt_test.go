@@ -135,12 +135,12 @@ func TestPromptManager_ReadACULSettings(t *testing.T) {
 	expected := givenAACULSettings(t)
 	actual, err := api.Prompt.ReadACULSettings(context.Background(), PromptSignup, ScreenSignup)
 	assert.NoError(t, err)
-	assert.Equal(t, expected.RenderingMode, actual.RenderingMode)
-	assert.Equal(t, expected.ContextConfiguration, actual.ContextConfiguration)
-	assert.Equal(t, expected.DefaultHeadTagsDisabled, actual.DefaultHeadTagsDisabled)
+	assert.Equal(t, expected.GetRenderingMode(), actual.GetRenderingMode())
+	assert.Equal(t, expected.GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, expected.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
 	assert.Equal(t, expected.HeadTags, actual.HeadTags)
-	assert.Equal(t, string(PromptSignup), *actual.Prompt)
-	assert.Equal(t, string(ScreenSignup), *actual.Screen)
+	assert.Equal(t, PromptSignup, *actual.GetPrompt())
+	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
 func TestPromptManager_UpdateACULSettings(t *testing.T) {
@@ -158,12 +158,12 @@ func TestPromptManager_UpdateACULSettings(t *testing.T) {
 
 	actual, err := api.Prompt.ReadACULSettings(context.Background(), PromptSignup, ScreenSignup)
 	assert.NoError(t, err)
-	assert.Equal(t, expected.RenderingMode, actual.RenderingMode)
-	assert.Equal(t, expected.ContextConfiguration, actual.ContextConfiguration)
-	assert.Equal(t, expected.DefaultHeadTagsDisabled, actual.DefaultHeadTagsDisabled)
+	assert.Equal(t, expected.GetRenderingMode(), actual.GetRenderingMode())
+	assert.Equal(t, expected.GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, expected.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
 	assert.Equal(t, expected.HeadTags, actual.HeadTags)
-	assert.Equal(t, string(PromptSignup), *actual.Prompt)
-	assert.Equal(t, string(ScreenSignup), *actual.Screen)
+	assert.Equal(t, PromptSignup, *actual.GetPrompt())
+	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
 func TestPromptManager_GetPartialsGuardGuardError(t *testing.T) {

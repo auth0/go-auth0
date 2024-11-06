@@ -283,8 +283,8 @@ type PromptPartials struct {
 // PromptACULSettings is used to retrieve and set the settings for the ACUL.
 type PromptACULSettings struct {
 	Tenant                  *string       `json:"tenant,omitempty"`
-	Prompt                  *string       `json:"prompt,omitempty"`
-	Screen                  *string       `json:"screen,omitempty"`
+	Prompt                  *PromptType   `json:"prompt,omitempty"`
+	Screen                  *ScreenName   `json:"screen,omitempty"`
 	RenderingMode           *string       `json:"rendering_mode,omitempty"`
 	ContextConfiguration    *[]string     `json:"context_configuration,omitempty"`
 	DefaultHeadTagsDisabled *bool         `json:"default_head_tags_disabled,omitempty"`

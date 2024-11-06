@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"domain":"1730879337.auth.uat.auth0.com","type":"auth0_managed_certs","tls_policy":"recommended"}
+            {"domain":"1730881029.auth.uat.auth0.com","type":"auth0_managed_certs","tls_policy":"recommended"}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 328
         uncompressed: false
-        body: '{"custom_domain_id":"cd_DeGXfsUqhbchzKf5","domain":"1730879337.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-degxfsuqhbchzkf5.edge.tenants.us.auth0.com","domain":"1730879337.auth.uat.auth0.com"}]},"tls_policy":"recommended"}'
+        body: '{"custom_domain_id":"cd_7SgKHnrmHQNuTXEs","domain":"1730881029.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-7sgkhnrmhqnutxes.edge.tenants.us.auth0.com","domain":"1730881029.auth.uat.auth0.com"}]},"tls_policy":"recommended"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 974.35075ms
+        duration: 923.825708ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -72,7 +72,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 2.793827583s
+        duration: 2.783568542s
     - id: 2
       request:
         proto: HTTP/1.1
@@ -108,7 +108,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 353.726833ms
+        duration: 345.701625ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -143,7 +143,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 348.886583ms
+        duration: 348.5575ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -178,7 +178,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 760.373ms
+        duration: 433.247666ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -197,7 +197,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.11.2
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_DeGXfsUqhbchzKf5
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_7SgKHnrmHQNuTXEs
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -213,4 +213,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 370.957958ms
+        duration: 383.460542ms
