@@ -139,6 +139,18 @@ const (
 	// ScreenLoginPassword represents the login-password screen.
 	ScreenLoginPassword ScreenName = "login-password"
 
+	// ScreenLoginPasswordlessEmailCode represents the login-passwordless-email-code screen.
+	ScreenLoginPasswordlessEmailCode ScreenName = "login-passwordless-email-code"
+
+	// ScreenLoginPasswordlessEmailLink represents the login-passwordless-email-link screen.
+	ScreenLoginPasswordlessEmailLink ScreenName = "login-passwordless-email-link"
+
+	// ScreenLoginPasswordlessSMSOTP represents the login-passwordless-sms-otp screen.
+	ScreenLoginPasswordlessSMSOTP ScreenName = "login-passwordless-sms-otp"
+
+	// ScreenLoginEmailVerification represents the login-email-verification screen.
+	ScreenLoginEmailVerification ScreenName = "login-email-verification"
+
 	// ScreenSignup represents the signup screen.
 	ScreenSignup ScreenName = "signup"
 
@@ -147,18 +159,6 @@ const (
 
 	// ScreenSignupPassword represents the signup-password screen.
 	ScreenSignupPassword ScreenName = "signup-password"
-
-	// ScreenLoginPasswordlessSMSOTP represents the login-passwordless-sms-otp screen.
-	ScreenLoginPasswordlessSMSOTP ScreenName = "login-passwordless-sms-otp"
-
-	// ScreenLoginPasswordlessEmailCode represents the login-passwordless-email-code screen.
-	ScreenLoginPasswordlessEmailCode ScreenName = "login-passwordless-email-code"
-
-	// ScreenLoginPasswordlessEmailLink represents the login-passwordless-email-link screen.
-	ScreenLoginPasswordlessEmailLink ScreenName = "login-passwordless-email-link"
-
-	// ScreenLoginEmailVerification represents the login-email-verification screen.
-	ScreenLoginEmailVerification ScreenName = "login-email-verification"
 
 	// ScreenPhoneIdentifierEnrollment represents the phone-identifier-enrollment screen.
 	ScreenPhoneIdentifierEnrollment ScreenName = "phone-identifier-enrollment"
@@ -184,6 +184,33 @@ const (
 	// ScreenResetPasswordError represents the reset-password-error screen.
 	ScreenResetPasswordError ScreenName = "reset-password-error"
 
+	// ScreenResetPasswordMFAEmailChallenge represents the reset-password-mfa-email-challenge screen.
+	ScreenResetPasswordMFAEmailChallenge ScreenName = "reset-password-mfa-email-challenge"
+
+	// ScreenResetPasswordMFAOTPChallenge represents the reset-password-mfa-otp-challenge screen.
+	ScreenResetPasswordMFAOTPChallenge ScreenName = "reset-password-mfa-otp-challenge"
+
+	// ScreenResetPasswordMFAPhoneChallenge represents the reset-password-mfa-phone-challenge screen.
+	ScreenResetPasswordMFAPhoneChallenge ScreenName = "reset-password-mfa-phone-challenge"
+
+	// ScreenResetPasswordMFAPushChallenge represents the reset-password-mfa-push-challenge screen.
+	ScreenResetPasswordMFAPushChallenge ScreenName = "reset-password-mfa-push-challenge"
+
+	// ScreenResetPasswordMFARecoveryCodeChallenge represents the reset-password-mfa-recovery-code-challenge screen.
+	ScreenResetPasswordMFARecoveryCodeChallenge ScreenName = "reset-password-mfa-recovery-code-challenge"
+
+	// ScreenResetPasswordMFASMSChallenge represents the reset-password-mfa-sms-challenge screen.
+	ScreenResetPasswordMFASMSChallenge ScreenName = "reset-password-mfa-sms-challenge"
+
+	// ScreenResetPasswordMFAVoiceChallenge represents the reset-password-mfa-voice-challenge screen.
+	ScreenResetPasswordMFAVoiceChallenge ScreenName = "reset-password-mfa-voice-challenge"
+
+	// ScreenResetPasswordMFAWebAuthnPlatformChallenge represents the reset-password-mfa-webauthn-platform-challenge screen.
+	ScreenResetPasswordMFAWebAuthnPlatformChallenge ScreenName = "reset-password-mfa-webauthn-platform-challenge"
+
+	// ScreenResetPasswordMFAWebAuthnRoamingChallenge represents the reset-password-mfa-webauthn-roaming-challenge screen.
+	ScreenResetPasswordMFAWebAuthnRoamingChallenge ScreenName = "reset-password-mfa-webauthn-roaming-challenge"
+
 	// ScreenCustomForm represents the custom-form screen.
 	ScreenCustomForm ScreenName = "custom-form"
 
@@ -195,6 +222,12 @@ const (
 
 	// ScreenLogout represents the logout screen.
 	ScreenLogout ScreenName = "logout"
+
+	// ScreenLogoutComplete represents the logout-complete screen.
+	ScreenLogoutComplete ScreenName = "logout-complete"
+
+	// ScreenLogoutAborted represents the logout-aborted screen.
+	ScreenLogoutAborted ScreenName = "logout-aborted"
 
 	// ScreenMFAPushWelcome represents the mfa-push-welcome screen.
 	ScreenMFAPushWelcome ScreenName = "mfa-push-welcome"
@@ -211,14 +244,131 @@ const (
 	// ScreenMFAPushChallengePush represents the mfa-push-challenge-push screen.
 	ScreenMFAPushChallengePush ScreenName = "mfa-push-challenge-push"
 
+	// ScreenMFAPushList represents the mfa-push-list screen.
+	ScreenMFAPushList ScreenName = "mfa-push-list"
+
+	// ScreenMFAOTPEnrollmentQR represents the mfa-otp-enrollment-qr screen.
+	ScreenMFAOTPEnrollmentQR ScreenName = "mfa-otp-enrollment-qr"
+
+	// ScreenMFAOTPEnrollmentCode represents the mfa-otp-enrollment-code screen.
+	ScreenMFAOTPEnrollmentCode ScreenName = "mfa-otp-enrollment-code"
+
 	// ScreenMFAOTPChallenge represents the mfa-otp-challenge screen.
 	ScreenMFAOTPChallenge ScreenName = "mfa-otp-challenge"
+
+	// ScreenMFAVoiceEnrollment represents the mfa-voice-enrollment screen.
+	ScreenMFAVoiceEnrollment ScreenName = "mfa-voice-enrollment"
+
+	// ScreenMFAVoiceChallenge represents the mfa-voice-challenge screen.
+	ScreenMFAVoiceChallenge ScreenName = "mfa-voice-challenge"
+
+	// ScreenMFAPhoneChallenge represents the mfa-phone-challenge screen.
+	ScreenMFAPhoneChallenge ScreenName = "mfa-phone-challenge"
+
+	// ScreenMFAPhoneEnrollment represents the mfa-phone-enrollment screen.
+	ScreenMFAPhoneEnrollment ScreenName = "mfa-phone-enrollment"
+
+	// ScreenMFAWebAuthnPlatformEnrollment represents the mfa-webauthn-platform-enrollment screen.
+	ScreenMFAWebAuthnPlatformEnrollment ScreenName = "mfa-webauthn-platform-enrollment"
+
+	// ScreenMFAWebAuthnRoamingEnrollment represents the mfa-webauthn-roaming-enrollment screen.
+	ScreenMFAWebAuthnRoamingEnrollment ScreenName = "mfa-webauthn-roaming-enrollment"
+
+	// ScreenMFAWebAuthnPlatformChallenge represents the mfa-webauthn-platform-challenge screen.
+	ScreenMFAWebAuthnPlatformChallenge ScreenName = "mfa-webauthn-platform-challenge"
+
+	// ScreenMFAWebAuthnRoamingChallenge represents the mfa-webauthn-roaming-challenge screen.
+	ScreenMFAWebAuthnRoamingChallenge ScreenName = "mfa-webauthn-roaming-challenge"
+
+	// ScreenMFAWebAuthnChangeKeyNickname represents the mfa-webauthn-change-key-nickname screen.
+	ScreenMFAWebAuthnChangeKeyNickname ScreenName = "mfa-webauthn-change-key-nickname"
+
+	// ScreenMFAWebAuthnEnrollmentSuccess represents the mfa-webauthn-enrollment-success screen.
+	ScreenMFAWebAuthnEnrollmentSuccess ScreenName = "mfa-webauthn-enrollment-success"
+
+	// ScreenMFAWebAuthnError represents the mfa-webauthn-error screen.
+	ScreenMFAWebAuthnError ScreenName = "mfa-webauthn-error"
+
+	// ScreenMFAWebAuthnNotAvailableError represents the mfa-webauthn-not-available-error screen.
+	ScreenMFAWebAuthnNotAvailableError ScreenName = "mfa-webauthn-not-available-error"
+
+	// ScreenMFACountryCodes represents the mfa-country-codes screen.
+	ScreenMFACountryCodes ScreenName = "mfa-country-codes"
+
+	// ScreenMFASMSEnrollment represents the mfa-sms-enrollment screen.
+	ScreenMFASMSEnrollment ScreenName = "mfa-sms-enrollment"
+
+	// ScreenMFASMSChallenge represents the mfa-sms-challenge screen.
+	ScreenMFASMSChallenge ScreenName = "mfa-sms-challenge"
+
+	// ScreenMFASMSList represents the mfa-sms-list screen.
+	ScreenMFASMSList ScreenName = "mfa-sms-list"
+
+	// ScreenMFAEmailChallenge represents the mfa-email-challenge screen.
+	ScreenMFAEmailChallenge ScreenName = "mfa-email-challenge"
+
+	// ScreenMFAEmailList represents the mfa-email-list screen.
+	ScreenMFAEmailList ScreenName = "mfa-email-list"
+
+	// ScreenMFARecoveryCodeEnrollment represents the mfa-recovery-code-enrollment screen.
+	ScreenMFARecoveryCodeEnrollment ScreenName = "mfa-recovery-code-enrollment"
+
+	// ScreenMFARecoveryCodeChallenge represents the mfa-recovery-code-challenge screen.
+	ScreenMFARecoveryCodeChallenge ScreenName = "mfa-recovery-code-challenge"
+
+	// ScreenMFADetectBrowserCapabilities represents the mfa-detect-browser-capabilities screen.
+	ScreenMFADetectBrowserCapabilities ScreenName = "mfa-detect-browser-capabilities"
+
+	// ScreenMFAEnrollResult represents the mfa-enroll-result screen.
+	ScreenMFAEnrollResult ScreenName = "mfa-enroll-result"
+
+	// ScreenMFALoginOptions represents the mfa-login-options screen.
+	ScreenMFALoginOptions ScreenName = "mfa-login-options"
+
+	// ScreenMFABeginEnrollOptions represents the mfa-begin-enroll-options screen.
+	ScreenMFABeginEnrollOptions ScreenName = "mfa-begin-enroll-options"
+
+	// ScreenStatus represents the status screen.
+	ScreenStatus ScreenName = "status"
 
 	// ScreenDeviceCodeActivation represents the device-code-activation screen.
 	ScreenDeviceCodeActivation ScreenName = "device-code-activation"
 
+	// ScreenDeviceCodeActivationAllowed represents the device-code-activation-allowed screen.
+	ScreenDeviceCodeActivationAllowed ScreenName = "device-code-activation-allowed"
+
+	// ScreenDeviceCodeActivationDenied represents the device-code-activation-denied screen.
+	ScreenDeviceCodeActivationDenied ScreenName = "device-code-activation-denied"
+
+	// ScreenDeviceCodeConfirmation represents the device-code-confirmation screen.
+	ScreenDeviceCodeConfirmation ScreenName = "device-code-confirmation"
+
+	// ScreenEmailVerificationResult represents the email-verification-result screen.
+	ScreenEmailVerificationResult ScreenName = "email-verification-result"
+
+	// ScreenEmailOTPChallenge represents the email-otp-challenge screen.
+	ScreenEmailOTPChallenge ScreenName = "email-otp-challenge"
+
+	// ScreenOrganizationSelection represents the organization-selection screen.
+	ScreenOrganizationSelection ScreenName = "organization-selection"
+
+	// ScreenOrganizationPicker represents the organization-picker screen.
+	ScreenOrganizationPicker ScreenName = "organization-picker"
+
+	// ScreenAcceptInvitation represents the accept-invitation screen.
+	ScreenAcceptInvitation ScreenName = "accept-invitation"
+
+	// ScreenRedeemTicket represents the redeem-ticket screen.
+	ScreenRedeemTicket ScreenName = "redeem-ticket"
+
 	// ScreenPasskeyEnrollment represents the passkey-enrollment screen.
 	ScreenPasskeyEnrollment ScreenName = "passkey-enrollment"
+
+	// ScreenPasskeyEnrollmentLocal represents the passkey-enrollment-local screen.
+	ScreenPasskeyEnrollmentLocal ScreenName = "passkey-enrollment-local"
+
+	// ScreenInterstitialCaptcha represents the interstitial-captcha screen.
+	ScreenInterstitialCaptcha ScreenName = "interstitial-captcha"
 )
 
 const (
