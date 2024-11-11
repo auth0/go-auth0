@@ -83,10 +83,10 @@ type SelfServiceProfileTicketConnectionConfig struct {
 	// created as a part of the SSO flow.
 	DisplayName *string `json:"display_name,omitempty"`
 
-	IsDomainConnection *bool                                           `json:"is_domain_connection,omitempty"`
-	ShowAsButton       *bool                                           `json:"show_as_button,omitempty"`
-	Metadata           *map[string]interface{}                         `json:"metadata,omitempty"`
-	Options            SelfServiceProfileTicketConnectionConfigOptions `json:"options,omitempty"`
+	IsDomainConnection *bool                                            `json:"is_domain_connection,omitempty"`
+	ShowAsButton       *bool                                            `json:"show_as_button,omitempty"`
+	Metadata           *map[string]interface{}                          `json:"metadata,omitempty"`
+	Options            *SelfServiceProfileTicketConnectionConfigOptions `json:"options,omitempty"`
 }
 
 // SelfServiceProfileTicketConnectionConfigOptions is the list of Options for SSO Ticket.

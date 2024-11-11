@@ -125,7 +125,7 @@ func TestSelfServiceProfileManager_CreateAndRevokeTicket(t *testing.T) {
 				"key1": "value1",
 				"key2": "value2",
 			},
-			Options: SelfServiceProfileTicketConnectionConfigOptions{
+			Options: &SelfServiceProfileTicketConnectionConfigOptions{
 				IconURL:       auth0.String("https://metabox.com/my_icon.jpeg"),
 				DomainAliases: []*string{auth0.String("okta.com")},
 			},
