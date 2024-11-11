@@ -10156,6 +10156,14 @@ func (s *SelfServiceProfileTicketConnectionConfig) GetName() string {
 	return *s.Name
 }
 
+// GetOptions returns the Options field.
+func (s *SelfServiceProfileTicketConnectionConfig) GetOptions() *SelfServiceProfileTicketConnectionConfigOptions {
+	if s == nil {
+		return nil
+	}
+	return s.Options
+}
+
 // GetShowAsButton returns the ShowAsButton field if it's non-nil, zero value otherwise.
 func (s *SelfServiceProfileTicketConnectionConfig) GetShowAsButton() bool {
 	if s == nil || s.ShowAsButton == nil {

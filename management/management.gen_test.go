@@ -12774,6 +12774,13 @@ func TestSelfServiceProfileTicketConnectionConfig_GetName(tt *testing.T) {
 	s.GetName()
 }
 
+func TestSelfServiceProfileTicketConnectionConfig_GetOptions(tt *testing.T) {
+	s := &SelfServiceProfileTicketConnectionConfig{}
+	s.GetOptions()
+	s = nil
+	s.GetOptions()
+}
+
 func TestSelfServiceProfileTicketConnectionConfig_GetShowAsButton(tt *testing.T) {
 	var zeroValue bool
 	s := &SelfServiceProfileTicketConnectionConfig{ShowAsButton: &zeroValue}
