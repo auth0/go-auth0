@@ -18,7 +18,7 @@ func TestSelfServiceProfileManager_Create(t *testing.T) {
 	ssop := &SelfServiceProfile{
 		Name:              auth0.String("Sample Self Service Profile"),
 		Description:       auth0.String("Sample Desc"),
-		AllowedStrategies: []*string{auth0.String("oidc")},
+		AllowedStrategies: &[]string{"oidc"},
 		Branding: &Branding{
 			LogoURL: auth0.String("https://example.com/logo.png"),
 			Colors: &BrandingColors{
@@ -127,10 +127,10 @@ func TestSelfServiceProfileManager_CreateAndRevokeTicket(t *testing.T) {
 			},
 			Options: &SelfServiceProfileTicketConnectionConfigOptions{
 				IconURL:       auth0.String("https://metabox.com/my_icon.jpeg"),
-				DomainAliases: []*string{auth0.String("okta.com")},
+				DomainAliases: &[]string{"okta.com"},
 			},
 		},
-		EnabledClients: []*string{auth0.String(client.GetClientID())},
+		EnabledClients: &[]string{client.GetClientID()},
 		EnabledOrganizations: []*SelfServiceProfileTicketEnabledOrganizations{
 			{
 				AssignMembershipOnLogin: auth0.Bool(true),
@@ -185,7 +185,7 @@ func givenASelfServiceProfile(t *testing.T) *SelfServiceProfile {
 	ssop := &SelfServiceProfile{
 		Name:              auth0.String("Sample Self Service Profile"),
 		Description:       auth0.String("Sample Desc"),
-		AllowedStrategies: []*string{auth0.String("oidc")},
+		AllowedStrategies: &[]string{"oidc"},
 		Branding: &Branding{
 			LogoURL: auth0.String("https://example.com/logo.png"),
 			Colors: &BrandingColors{

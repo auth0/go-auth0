@@ -19,7 +19,7 @@ type SelfServiceProfile struct {
 
 	// List of IdP strategies that will be shown to users during the Self-Service SSO flow.
 	// Possible values: [oidc, samlp, waad, google-apps, adfs, okta, keycloak-samlp]
-	AllowedStrategies []*string `json:"allowed_strategies,omitempty"`
+	AllowedStrategies *[]string `json:"allowed_strategies,omitempty"`
 
 	// List of attributes to be mapped that
 	// will be shown to the user during the SS-SSO flow.
@@ -61,7 +61,7 @@ type SelfServiceProfileTicket struct {
 
 	// List of client_ids that the
 	// connection will be enabled for.
-	EnabledClients []*string `json:"enabled_clients,omitempty"`
+	EnabledClients *[]string `json:"enabled_clients,omitempty"`
 
 	// List of organizations that the
 	// connection will be enabled for.
@@ -92,7 +92,7 @@ type SelfServiceProfileTicketConnectionConfig struct {
 // SelfServiceProfileTicketConnectionConfigOptions is the list of Options for SSO Ticket.
 type SelfServiceProfileTicketConnectionConfigOptions struct {
 	IconURL       *string   `json:"icon_url,omitempty"`
-	DomainAliases []*string `json:"domain_aliases,omitempty"`
+	DomainAliases *[]string `json:"domain_aliases,omitempty"`
 }
 
 // SelfServiceProfileTicketEnabledOrganizations is the list of Organizations associated with the SSO Ticket.
@@ -108,7 +108,7 @@ func (ssp *SelfServiceProfile) MarshalJSON() ([]byte, error) {
 	type SelfServiceProfileSubset struct {
 		Name              *string                             `json:"name,omitempty"`
 		Description       *string                             `json:"description,omitempty"`
-		AllowedStrategies []*string                           `json:"allowed_strategies,omitempty"`
+		AllowedStrategies *[]string                           `json:"allowed_strategies,omitempty"`
 		UserAttributes    []*SelfServiceProfileUserAttributes `json:"user_attributes,omitempty"`
 		Branding          *Branding                           `json:"branding,omitempty"`
 	}
