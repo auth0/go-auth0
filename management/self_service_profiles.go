@@ -67,7 +67,7 @@ type SelfServiceProfileTicket struct {
 	// connection will be enabled for.
 	EnabledOrganizations []*SelfServiceProfileTicketEnabledOrganizations `json:"enabled_organizations,omitempty"`
 
-	TTLSec int `json:"ttl_sec"`
+	TTLSec int `json:"ttl_sec,omitempty"`
 
 	// The ticket that is generated.
 	Ticket *string `json:"ticket,omitempty"`

@@ -12626,6 +12626,16 @@ func TestScreenPartials_String(t *testing.T) {
 	}
 }
 
+func TestSelfServiceProfile_GetAllowedStrategies(tt *testing.T) {
+	var zeroValue []string
+	s := &SelfServiceProfile{AllowedStrategies: &zeroValue}
+	s.GetAllowedStrategies()
+	s = &SelfServiceProfile{}
+	s.GetAllowedStrategies()
+	s = nil
+	s.GetAllowedStrategies()
+}
+
 func TestSelfServiceProfile_GetBranding(tt *testing.T) {
 	s := &SelfServiceProfile{}
 	s.GetBranding()
@@ -12716,6 +12726,16 @@ func TestSelfServiceProfileTicket_GetConnectionID(tt *testing.T) {
 	s.GetConnectionID()
 }
 
+func TestSelfServiceProfileTicket_GetEnabledClients(tt *testing.T) {
+	var zeroValue []string
+	s := &SelfServiceProfileTicket{EnabledClients: &zeroValue}
+	s.GetEnabledClients()
+	s = &SelfServiceProfileTicket{}
+	s.GetEnabledClients()
+	s = nil
+	s.GetEnabledClients()
+}
+
 func TestSelfServiceProfileTicket_GetTicket(tt *testing.T) {
 	var zeroValue string
 	s := &SelfServiceProfileTicket{Ticket: &zeroValue}
@@ -12797,6 +12817,16 @@ func TestSelfServiceProfileTicketConnectionConfig_String(t *testing.T) {
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
+}
+
+func TestSelfServiceProfileTicketConnectionConfigOptions_GetDomainAliases(tt *testing.T) {
+	var zeroValue []string
+	s := &SelfServiceProfileTicketConnectionConfigOptions{DomainAliases: &zeroValue}
+	s.GetDomainAliases()
+	s = &SelfServiceProfileTicketConnectionConfigOptions{}
+	s.GetDomainAliases()
+	s = nil
+	s.GetDomainAliases()
 }
 
 func TestSelfServiceProfileTicketConnectionConfigOptions_GetIconURL(tt *testing.T) {

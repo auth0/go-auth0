@@ -10037,6 +10037,14 @@ func (s *ScreenPartials) String() string {
 	return Stringify(s)
 }
 
+// GetAllowedStrategies returns the AllowedStrategies field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetAllowedStrategies() []string {
+	if s == nil || s.AllowedStrategies == nil {
+		return nil
+	}
+	return *s.AllowedStrategies
+}
+
 // GetBranding returns the Branding field.
 func (s *SelfServiceProfile) GetBranding() *Branding {
 	if s == nil {
@@ -10111,6 +10119,14 @@ func (s *SelfServiceProfileTicket) GetConnectionID() string {
 	return *s.ConnectionID
 }
 
+// GetEnabledClients returns the EnabledClients field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicket) GetEnabledClients() []string {
+	if s == nil || s.EnabledClients == nil {
+		return nil
+	}
+	return *s.EnabledClients
+}
+
 // GetTicket returns the Ticket field if it's non-nil, zero value otherwise.
 func (s *SelfServiceProfileTicket) GetTicket() string {
 	if s == nil || s.Ticket == nil {
@@ -10175,6 +10191,14 @@ func (s *SelfServiceProfileTicketConnectionConfig) GetShowAsButton() bool {
 // String returns a string representation of SelfServiceProfileTicketConnectionConfig.
 func (s *SelfServiceProfileTicketConnectionConfig) String() string {
 	return Stringify(s)
+}
+
+// GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfigOptions) GetDomainAliases() []string {
+	if s == nil || s.DomainAliases == nil {
+		return nil
+	}
+	return *s.DomainAliases
 }
 
 // GetIconURL returns the IconURL field if it's non-nil, zero value otherwise.
