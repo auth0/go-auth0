@@ -150,7 +150,6 @@ func TestSelfServiceProfileManager_CreateAndRevokeTicket(t *testing.T) {
 		err = api.SelfServiceProfile.RevokeTicket(context.Background(), ssop.GetID(), ticketID)
 	}
 	assert.NoError(t, err)
-
 }
 
 func TestSelfServiceProfileManager_MarshalJSON(t *testing.T) {
