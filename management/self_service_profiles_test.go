@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"net/url"
 	"testing"
 	"time"
 
@@ -15,6 +16,9 @@ import (
 func TestSelfServiceProfileManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	ssop := &SelfServiceProfile{
+		Name:              auth0.String("Sample Self Service Profile"),
+		Description:       auth0.String("Sample Desc"),
+		AllowedStrategies: &[]string{"oidc"},
 		Branding: &Branding{
 			LogoURL: auth0.String("https://example.com/logo.png"),
 			Colors: &BrandingColors{
@@ -45,8 +49,8 @@ func TestSelfServiceProfileManager_List(t *testing.T) {
 	ssop := givenASelfServiceProfile(t)
 	ssopList, err := api.SelfServiceProfile.List(context.Background())
 	assert.NoError(t, err)
-	assert.Greater(t, len(ssopList), 0)
-	assert.Contains(t, ssopList, ssop)
+	assert.Greater(t, len(ssopList.SelfServiceProfile), 0)
+	assert.Contains(t, ssopList.SelfServiceProfile, ssop)
 }
 
 func TestSelfServiceProfileManager_Read(t *testing.T) {
@@ -92,7 +96,20 @@ func TestSelfServiceProfileManager_Delete(t *testing.T) {
 	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
 }
 
-func TestSelfServiceProfileManager_CreateTicket(t *testing.T) {
+func TestSelfServiceProfileManager_SetGetCustomText(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	ssop := givenASelfServiceProfile(t)
+	payload := map[string]interface{}{
+		"introduction": "\"Welcome! With only a few steps you'll be able to setup your new connection.\"\n",
+	}
+	err := api.SelfServiceProfile.SetCustomText(context.Background(), ssop.GetID(), "en", "get-started", payload)
+	assert.Equal(t, err, nil)
+	retrievedCustomText, err := api.SelfServiceProfile.GetCustomText(context.Background(), ssop.GetID(), "en", "get-started")
+	assert.Equal(t, err, nil)
+	assert.Equal(t, payload, retrievedCustomText)
+}
+
+func TestSelfServiceProfileManager_CreateAndRevokeTicket(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	ssop := givenASelfServiceProfile(t)
 	client := givenAClient(t)
@@ -100,18 +117,39 @@ func TestSelfServiceProfileManager_CreateTicket(t *testing.T) {
 
 	ticket := &SelfServiceProfileTicket{
 		ConnectionConfig: &SelfServiceProfileTicketConnectionConfig{
-			Name: "sso-generated-ticket",
+			Name:               auth0.String("sso-generated-ticket"),
+			DisplayName:        auth0.String("sso-generated-ticket-display-name"),
+			IsDomainConnection: auth0.Bool(true),
+			ShowAsButton:       auth0.Bool(true),
+			Metadata: &map[string]interface{}{
+				"key1": "value1",
+				"key2": "value2",
+			},
+			Options: &SelfServiceProfileTicketConnectionConfigOptions{
+				IconURL:       auth0.String("https://metabox.com/my_icon.jpeg"),
+				DomainAliases: &[]string{"okta.com"},
+			},
 		},
-		EnabledClients: []*string{auth0.String(client.GetClientID())},
+		EnabledClients: &[]string{client.GetClientID()},
 		EnabledOrganizations: []*SelfServiceProfileTicketEnabledOrganizations{
 			{
-				org.GetID(),
+				AssignMembershipOnLogin: auth0.Bool(true),
+				ShowAsButton:            auth0.Bool(true),
+				OrganizationID:          auth0.String(org.GetID()),
 			},
 		},
 	}
 	err := api.SelfServiceProfile.CreateTicket(context.Background(), ssop.GetID(), ticket)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, ticket.GetTicket())
+
+	ticketURL := ticket.GetTicket()
+	ticketIDMap, err := url.ParseQuery(ticketURL)
+	if err != nil {
+		ticketID := ticketIDMap["ticketId"][0]
+		err = api.SelfServiceProfile.RevokeTicket(context.Background(), ssop.GetID(), ticketID)
+	}
+	assert.NoError(t, err)
 }
 
 func TestSelfServiceProfileManager_MarshalJSON(t *testing.T) {
@@ -147,6 +185,9 @@ func TestSelfServiceProfileManager_MarshalJSON(t *testing.T) {
 func givenASelfServiceProfile(t *testing.T) *SelfServiceProfile {
 	t.Helper()
 	ssop := &SelfServiceProfile{
+		Name:              auth0.String("Sample Self Service Profile"),
+		Description:       auth0.String("Sample Desc"),
+		AllowedStrategies: &[]string{"oidc"},
 		Branding: &Branding{
 			LogoURL: auth0.String("https://example.com/logo.png"),
 			Colors: &BrandingColors{

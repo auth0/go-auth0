@@ -10037,6 +10037,14 @@ func (s *ScreenPartials) String() string {
 	return Stringify(s)
 }
 
+// GetAllowedStrategies returns the AllowedStrategies field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetAllowedStrategies() []string {
+	if s == nil || s.AllowedStrategies == nil {
+		return nil
+	}
+	return *s.AllowedStrategies
+}
+
 // GetBranding returns the Branding field.
 func (s *SelfServiceProfile) GetBranding() *Branding {
 	if s == nil {
@@ -10053,12 +10061,28 @@ func (s *SelfServiceProfile) GetCreatedAt() time.Time {
 	return *s.CreatedAt
 }
 
+// GetDescription returns the Description field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetDescription() string {
+	if s == nil || s.Description == nil {
+		return ""
+	}
+	return *s.Description
+}
+
 // GetID returns the ID field if it's non-nil, zero value otherwise.
 func (s *SelfServiceProfile) GetID() string {
 	if s == nil || s.ID == nil {
 		return ""
 	}
 	return *s.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
 }
 
 // GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
@@ -10071,6 +10095,11 @@ func (s *SelfServiceProfile) GetUpdatedAt() time.Time {
 
 // String returns a string representation of SelfServiceProfile.
 func (s *SelfServiceProfile) String() string {
+	return Stringify(s)
+}
+
+// String returns a string representation of SelfServiceProfileList.
+func (s *SelfServiceProfileList) String() string {
 	return Stringify(s)
 }
 
@@ -10090,6 +10119,14 @@ func (s *SelfServiceProfileTicket) GetConnectionID() string {
 	return *s.ConnectionID
 }
 
+// GetEnabledClients returns the EnabledClients field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicket) GetEnabledClients() []string {
+	if s == nil || s.EnabledClients == nil {
+		return nil
+	}
+	return *s.EnabledClients
+}
+
 // GetTicket returns the Ticket field if it's non-nil, zero value otherwise.
 func (s *SelfServiceProfileTicket) GetTicket() string {
 	if s == nil || s.Ticket == nil {
@@ -10103,9 +10140,102 @@ func (s *SelfServiceProfileTicket) String() string {
 	return Stringify(s)
 }
 
+// GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfig) GetDisplayName() string {
+	if s == nil || s.DisplayName == nil {
+		return ""
+	}
+	return *s.DisplayName
+}
+
+// GetIsDomainConnection returns the IsDomainConnection field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfig) GetIsDomainConnection() bool {
+	if s == nil || s.IsDomainConnection == nil {
+		return false
+	}
+	return *s.IsDomainConnection
+}
+
+// GetMetadata returns the Metadata field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfig) GetMetadata() map[string]interface{} {
+	if s == nil || s.Metadata == nil {
+		return map[string]interface{}{}
+	}
+	return *s.Metadata
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfig) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+// GetOptions returns the Options field.
+func (s *SelfServiceProfileTicketConnectionConfig) GetOptions() *SelfServiceProfileTicketConnectionConfigOptions {
+	if s == nil {
+		return nil
+	}
+	return s.Options
+}
+
+// GetShowAsButton returns the ShowAsButton field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfig) GetShowAsButton() bool {
+	if s == nil || s.ShowAsButton == nil {
+		return false
+	}
+	return *s.ShowAsButton
+}
+
 // String returns a string representation of SelfServiceProfileTicketConnectionConfig.
 func (s *SelfServiceProfileTicketConnectionConfig) String() string {
 	return Stringify(s)
+}
+
+// GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfigOptions) GetDomainAliases() []string {
+	if s == nil || s.DomainAliases == nil {
+		return nil
+	}
+	return *s.DomainAliases
+}
+
+// GetIconURL returns the IconURL field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfigOptions) GetIconURL() string {
+	if s == nil || s.IconURL == nil {
+		return ""
+	}
+	return *s.IconURL
+}
+
+// String returns a string representation of SelfServiceProfileTicketConnectionConfigOptions.
+func (s *SelfServiceProfileTicketConnectionConfigOptions) String() string {
+	return Stringify(s)
+}
+
+// GetAssignMembershipOnLogin returns the AssignMembershipOnLogin field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketEnabledOrganizations) GetAssignMembershipOnLogin() bool {
+	if s == nil || s.AssignMembershipOnLogin == nil {
+		return false
+	}
+	return *s.AssignMembershipOnLogin
+}
+
+// GetOrganizationID returns the OrganizationID field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketEnabledOrganizations) GetOrganizationID() string {
+	if s == nil || s.OrganizationID == nil {
+		return ""
+	}
+	return *s.OrganizationID
+}
+
+// GetShowAsButton returns the ShowAsButton field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketEnabledOrganizations) GetShowAsButton() bool {
+	if s == nil || s.ShowAsButton == nil {
+		return false
+	}
+	return *s.ShowAsButton
 }
 
 // String returns a string representation of SelfServiceProfileTicketEnabledOrganizations.

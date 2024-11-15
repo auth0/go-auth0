@@ -161,9 +161,9 @@ func backoffDelay() rehttp.DelayFn {
 
 	return func(attempt rehttp.Attempt) time.Duration {
 		wait := baseDelay * math.Pow(2, float64(attempt.Index))
-		min := wait + 1
-		max := wait + baseDelay
-		wait = PRNG.Float64()*(max-min) + min
+		minValue := wait + 1
+		maxValue := wait + baseDelay
+		wait = PRNG.Float64()*(maxValue-minValue) + minValue
 
 		wait = math.Min(wait, maxDelay)
 		wait = math.Max(wait, minDelay)
