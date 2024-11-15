@@ -144,7 +144,8 @@ func TestSelfServiceProfileManager_CreateAndRevokeTicket(t *testing.T) {
 	assert.NotEmpty(t, ticket.GetTicket())
 
 	ticketURL := ticket.GetTicket()
-	ticketID := ticketURL[strings.LastIndex(ticketURL, "=")+1:]
+	ticketURLSliced := strings.Split(ticketURL, "=")
+	ticketID := ticketURLSliced[len(ticketURLSliced)-1]
 
 	err = api.SelfServiceProfile.RevokeTicket(context.Background(), ssop.GetID(), ticketID)
 	assert.NoError(t, err)
