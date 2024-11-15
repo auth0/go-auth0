@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"strings"
+	"net/url"
 	"testing"
 	"time"
 
@@ -144,11 +144,13 @@ func TestSelfServiceProfileManager_CreateAndRevokeTicket(t *testing.T) {
 	assert.NotEmpty(t, ticket.GetTicket())
 
 	ticketURL := ticket.GetTicket()
-	ticketURLSliced := strings.Split(ticketURL, "=")
-	ticketID := ticketURLSliced[len(ticketURLSliced)-1]
-
-	err = api.SelfServiceProfile.RevokeTicket(context.Background(), ssop.GetID(), ticketID)
+	ticketIDMap, err := url.ParseQuery(ticketURL)
+	if err != nil {
+		ticketID := ticketIDMap["ticketId"][0]
+		err = api.SelfServiceProfile.RevokeTicket(context.Background(), ssop.GetID(), ticketID)
+	}
 	assert.NoError(t, err)
+
 }
 
 func TestSelfServiceProfileManager_MarshalJSON(t *testing.T) {
