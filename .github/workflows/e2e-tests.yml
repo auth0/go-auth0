@@ -28,7 +28,7 @@ jobs:
           AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
 
       - name: Update codecov report
-        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # pin@4.6.0
+        uses: codecov/codecov-action@015f24e6818733317a2da2edd6290ab26238649a # pin@5.0.7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage.out
