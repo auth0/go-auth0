@@ -193,8 +193,8 @@ const (
 	// ScreenResetPasswordMFAPhoneChallenge represents the reset-password-mfa-phone-challenge screen.
 	ScreenResetPasswordMFAPhoneChallenge ScreenName = "reset-password-mfa-phone-challenge"
 
-	// ScreenResetPasswordMFAPushChallenge represents the reset-password-mfa-push-challenge screen.
-	ScreenResetPasswordMFAPushChallenge ScreenName = "reset-password-mfa-push-challenge"
+	// ScreenResetPasswordMFAPushChallengePush represents the reset-password-mfa-push-challenge-push screen.
+	ScreenResetPasswordMFAPushChallengePush ScreenName = "reset-password-mfa-push-challenge-push"
 
 	// ScreenResetPasswordMFARecoveryCodeChallenge represents the reset-password-mfa-recovery-code-challenge screen.
 	ScreenResetPasswordMFARecoveryCodeChallenge ScreenName = "reset-password-mfa-recovery-code-challenge"
