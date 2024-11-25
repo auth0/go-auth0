@@ -7848,6 +7848,92 @@ func TestDailyStat_String(t *testing.T) {
 	}
 }
 
+func TestDeviceCredential_GetClientID(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{ClientID: &zeroValue}
+	d.GetClientID()
+	d = &DeviceCredential{}
+	d.GetClientID()
+	d = nil
+	d.GetClientID()
+}
+
+func TestDeviceCredential_GetDeviceID(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{DeviceID: &zeroValue}
+	d.GetDeviceID()
+	d = &DeviceCredential{}
+	d.GetDeviceID()
+	d = nil
+	d.GetDeviceID()
+}
+
+func TestDeviceCredential_GetDeviceName(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{DeviceName: &zeroValue}
+	d.GetDeviceName()
+	d = &DeviceCredential{}
+	d.GetDeviceName()
+	d = nil
+	d.GetDeviceName()
+}
+
+func TestDeviceCredential_GetID(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{ID: &zeroValue}
+	d.GetID()
+	d = &DeviceCredential{}
+	d.GetID()
+	d = nil
+	d.GetID()
+}
+
+func TestDeviceCredential_GetType(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{Type: &zeroValue}
+	d.GetType()
+	d = &DeviceCredential{}
+	d.GetType()
+	d = nil
+	d.GetType()
+}
+
+func TestDeviceCredential_GetUserID(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{UserID: &zeroValue}
+	d.GetUserID()
+	d = &DeviceCredential{}
+	d.GetUserID()
+	d = nil
+	d.GetUserID()
+}
+
+func TestDeviceCredential_GetValue(tt *testing.T) {
+	var zeroValue string
+	d := &DeviceCredential{Value: &zeroValue}
+	d.GetValue()
+	d = &DeviceCredential{}
+	d.GetValue()
+	d = nil
+	d.GetValue()
+}
+
+func TestDeviceCredential_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &DeviceCredential{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestDeviceCredentialList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &DeviceCredentialList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestDropboxClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &DropboxClientAddon{}
@@ -12602,6 +12688,16 @@ func TestScreenPartials_String(t *testing.T) {
 	}
 }
 
+func TestSelfServiceProfile_GetAllowedStrategies(tt *testing.T) {
+	var zeroValue []string
+	s := &SelfServiceProfile{AllowedStrategies: &zeroValue}
+	s.GetAllowedStrategies()
+	s = &SelfServiceProfile{}
+	s.GetAllowedStrategies()
+	s = nil
+	s.GetAllowedStrategies()
+}
+
 func TestSelfServiceProfile_GetBranding(tt *testing.T) {
 	s := &SelfServiceProfile{}
 	s.GetBranding()
@@ -12619,6 +12715,16 @@ func TestSelfServiceProfile_GetCreatedAt(tt *testing.T) {
 	s.GetCreatedAt()
 }
 
+func TestSelfServiceProfile_GetDescription(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfile{Description: &zeroValue}
+	s.GetDescription()
+	s = &SelfServiceProfile{}
+	s.GetDescription()
+	s = nil
+	s.GetDescription()
+}
+
 func TestSelfServiceProfile_GetID(tt *testing.T) {
 	var zeroValue string
 	s := &SelfServiceProfile{ID: &zeroValue}
@@ -12627,6 +12733,16 @@ func TestSelfServiceProfile_GetID(tt *testing.T) {
 	s.GetID()
 	s = nil
 	s.GetID()
+}
+
+func TestSelfServiceProfile_GetName(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfile{Name: &zeroValue}
+	s.GetName()
+	s = &SelfServiceProfile{}
+	s.GetName()
+	s = nil
+	s.GetName()
 }
 
 func TestSelfServiceProfile_GetUpdatedAt(tt *testing.T) {
@@ -12642,6 +12758,14 @@ func TestSelfServiceProfile_GetUpdatedAt(tt *testing.T) {
 func TestSelfServiceProfile_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SelfServiceProfile{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileList{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -12664,6 +12788,16 @@ func TestSelfServiceProfileTicket_GetConnectionID(tt *testing.T) {
 	s.GetConnectionID()
 }
 
+func TestSelfServiceProfileTicket_GetEnabledClients(tt *testing.T) {
+	var zeroValue []string
+	s := &SelfServiceProfileTicket{EnabledClients: &zeroValue}
+	s.GetEnabledClients()
+	s = &SelfServiceProfileTicket{}
+	s.GetEnabledClients()
+	s = nil
+	s.GetEnabledClients()
+}
+
 func TestSelfServiceProfileTicket_GetTicket(tt *testing.T) {
 	var zeroValue string
 	s := &SelfServiceProfileTicket{Ticket: &zeroValue}
@@ -12682,12 +12816,127 @@ func TestSelfServiceProfileTicket_String(t *testing.T) {
 	}
 }
 
+func TestSelfServiceProfileTicketConnectionConfig_GetDisplayName(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicketConnectionConfig{DisplayName: &zeroValue}
+	s.GetDisplayName()
+	s = &SelfServiceProfileTicketConnectionConfig{}
+	s.GetDisplayName()
+	s = nil
+	s.GetDisplayName()
+}
+
+func TestSelfServiceProfileTicketConnectionConfig_GetIsDomainConnection(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileTicketConnectionConfig{IsDomainConnection: &zeroValue}
+	s.GetIsDomainConnection()
+	s = &SelfServiceProfileTicketConnectionConfig{}
+	s.GetIsDomainConnection()
+	s = nil
+	s.GetIsDomainConnection()
+}
+
+func TestSelfServiceProfileTicketConnectionConfig_GetMetadata(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	s := &SelfServiceProfileTicketConnectionConfig{Metadata: &zeroValue}
+	s.GetMetadata()
+	s = &SelfServiceProfileTicketConnectionConfig{}
+	s.GetMetadata()
+	s = nil
+	s.GetMetadata()
+}
+
+func TestSelfServiceProfileTicketConnectionConfig_GetName(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicketConnectionConfig{Name: &zeroValue}
+	s.GetName()
+	s = &SelfServiceProfileTicketConnectionConfig{}
+	s.GetName()
+	s = nil
+	s.GetName()
+}
+
+func TestSelfServiceProfileTicketConnectionConfig_GetOptions(tt *testing.T) {
+	s := &SelfServiceProfileTicketConnectionConfig{}
+	s.GetOptions()
+	s = nil
+	s.GetOptions()
+}
+
+func TestSelfServiceProfileTicketConnectionConfig_GetShowAsButton(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileTicketConnectionConfig{ShowAsButton: &zeroValue}
+	s.GetShowAsButton()
+	s = &SelfServiceProfileTicketConnectionConfig{}
+	s.GetShowAsButton()
+	s = nil
+	s.GetShowAsButton()
+}
+
 func TestSelfServiceProfileTicketConnectionConfig_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SelfServiceProfileTicketConnectionConfig{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
+}
+
+func TestSelfServiceProfileTicketConnectionConfigOptions_GetDomainAliases(tt *testing.T) {
+	var zeroValue []string
+	s := &SelfServiceProfileTicketConnectionConfigOptions{DomainAliases: &zeroValue}
+	s.GetDomainAliases()
+	s = &SelfServiceProfileTicketConnectionConfigOptions{}
+	s.GetDomainAliases()
+	s = nil
+	s.GetDomainAliases()
+}
+
+func TestSelfServiceProfileTicketConnectionConfigOptions_GetIconURL(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicketConnectionConfigOptions{IconURL: &zeroValue}
+	s.GetIconURL()
+	s = &SelfServiceProfileTicketConnectionConfigOptions{}
+	s.GetIconURL()
+	s = nil
+	s.GetIconURL()
+}
+
+func TestSelfServiceProfileTicketConnectionConfigOptions_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicketConnectionConfigOptions{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileTicketEnabledOrganizations_GetAssignMembershipOnLogin(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileTicketEnabledOrganizations{AssignMembershipOnLogin: &zeroValue}
+	s.GetAssignMembershipOnLogin()
+	s = &SelfServiceProfileTicketEnabledOrganizations{}
+	s.GetAssignMembershipOnLogin()
+	s = nil
+	s.GetAssignMembershipOnLogin()
+}
+
+func TestSelfServiceProfileTicketEnabledOrganizations_GetOrganizationID(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicketEnabledOrganizations{OrganizationID: &zeroValue}
+	s.GetOrganizationID()
+	s = &SelfServiceProfileTicketEnabledOrganizations{}
+	s.GetOrganizationID()
+	s = nil
+	s.GetOrganizationID()
+}
+
+func TestSelfServiceProfileTicketEnabledOrganizations_GetShowAsButton(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileTicketEnabledOrganizations{ShowAsButton: &zeroValue}
+	s.GetShowAsButton()
+	s = &SelfServiceProfileTicketEnabledOrganizations{}
+	s.GetShowAsButton()
+	s = nil
+	s.GetShowAsButton()
 }
 
 func TestSelfServiceProfileTicketEnabledOrganizations_String(t *testing.T) {
