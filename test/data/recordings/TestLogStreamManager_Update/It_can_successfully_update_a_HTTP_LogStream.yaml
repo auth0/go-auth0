@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 233
+        content_length: 252
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-LogStream-1674668511","type":"http","sink":{"httpContentFormat":"JSONLINES","httpContentType":"application/json","httpEndpoint":"https://example.com/logs","httpAuthorization":"Bearer f2368bbe77074527a37be2fdd5b92bad"}}
+            {"name":"Test-LogStream-1732609495","type":"http","isPriority":false,"sink":{"httpContentFormat":"JSONLINES","httpContentType":"application/json","httpEndpoint":"https://example.com/logs","httpAuthorization":"Bearer f2368bbe77074527a37be2fdd5b92bad"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.11.2
         url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000011635","name":"Test-LogStream-1674668511","type":"http","status":"active","sink":{"httpAuthorization":"Bearer f2368bbe77074527a37be2fdd5b92bad","httpContentFormat":"JSONLINES","httpContentType":"application/json","httpEndpoint":"https://example.com/logs"}}'
+        body: '{"id":"lst_0000000000002074","name":"Test-LogStream-1732609495","type":"http","status":"active","sink":{"httpAuthorization":"Bearer f2368bbe77074527a37be2fdd5b92bad","httpContentFormat":"JSONLINES","httpContentType":"application/json","httpEndpoint":"https://example.com/logs"},"isPriority":false}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 122.912042ms
+        duration: 351.00525ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,8 +55,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011635
+                - Go-Auth0/1.11.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002074
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,33 +66,32 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000011635","name":"Test-LogStream-1674668511","type":"http","status":"active","sink":{"httpAuthorization":"Bearer f2368bbe77074527a37be2fdd5b92bad","httpContentFormat":"JSONLINES","httpContentType":"application/json","httpEndpoint":"https://example.com/logs"},"filters":[{"name":"auth.login.fail","type":"category"}]}'
+        body: '{"id":"lst_0000000000002074","name":"Test-LogStream-1732609495","type":"http","status":"active","sink":{"httpAuthorization":"Bearer f2368bbe77074527a37be2fdd5b92bad","httpContentFormat":"JSONLINES","httpContentType":"application/json","httpEndpoint":"https://example.com/logs"},"filters":[{"name":"auth.login.fail","type":"category"}],"isPriority":false}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 112.412041ms
+        duration: 333.3535ms
     - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            null
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011635
+                - Go-Auth0/1.11.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002074
         method: GET
       response:
         proto: HTTP/2.0
@@ -102,13 +101,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000011635","name":"Test-LogStream-1674668511","type":"http","status":"active","sink":{"httpAuthorization":"Bearer f2368bbe77074527a37be2fdd5b92bad","httpContentFormat":"JSONLINES","httpContentType":"application/json","httpEndpoint":"https://example.com/logs"},"filters":[{"name":"auth.login.fail","type":"category"}]}'
+        body: '{"id":"lst_0000000000002074","name":"Test-LogStream-1732609495","type":"http","status":"active","sink":{"httpAuthorization":"Bearer f2368bbe77074527a37be2fdd5b92bad","httpContentFormat":"JSONLINES","httpContentType":"application/json","httpEndpoint":"https://example.com/logs"},"filters":[{"name":"auth.login.fail","type":"category"}],"isPriority":false}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 124.404334ms
+        duration: 362.754041ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -126,8 +125,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011635
+                - Go-Auth0/1.11.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002074
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -143,4 +142,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 118.382916ms
+        duration: 350.862584ms
