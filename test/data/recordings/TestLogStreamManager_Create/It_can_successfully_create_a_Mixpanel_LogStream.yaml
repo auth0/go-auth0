@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 260
+        content_length: 279
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-LogStream-1674668511","type":"mixpanel","sink":{"mixpanelRegion":"us","mixpanelProjectId":"123456789","mixpanelServiceAccountUsername":"fake-account.123abc.mp-service-account","mixpanelServiceAccountPassword":"8iwyKSzwV2brfakepassGGKhsZ3INozo"}}
+            {"name":"Test-LogStream-1732609495","type":"mixpanel","isPriority":false,"sink":{"mixpanelRegion":"us","mixpanelProjectId":"123456789","mixpanelServiceAccountUsername":"fake-account.123abc.mp-service-account","mixpanelServiceAccountPassword":"8iwyKSzwV2brfakepassGGKhsZ3INozo"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.11.2
         url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000011626","name":"Test-LogStream-1674668511","type":"mixpanel","status":"active","sink":{"mixpanelRegion":"us","mixpanelProjectId":"123456789","mixpanelServiceAccountUsername":"fake-account.123abc.mp-service-account","mixpanelServiceAccountPassword":"********"}}'
+        body: '{"id":"lst_0000000000002065","name":"Test-LogStream-1732609495","type":"mixpanel","status":"active","sink":{"mixpanelRegion":"us","mixpanelProjectId":"123456789","mixpanelServiceAccountUsername":"fake-account.123abc.mp-service-account","mixpanelServiceAccountPassword":"********"},"isPriority":false}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 130.8185ms
+        duration: 378.886167ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011626
+                - Go-Auth0/1.11.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002065
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -71,4 +71,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 116.658791ms
+        duration: 328.02275ms

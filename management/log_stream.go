@@ -40,6 +40,9 @@ type LogStream struct {
 	// "eventgrid", "datadog", "splunk", "sumo", "mixpanel", "segment.
 	Type *string `json:"type,omitempty"`
 
+	// True for priority log streams, false for non-priority
+	IsPriority *bool `json:"isPriority,omitempty"`
+
 	// The status of the log-stream. Can be one of "active", "paused", or "suspended".
 	Status *string `json:"status,omitempty"`
 

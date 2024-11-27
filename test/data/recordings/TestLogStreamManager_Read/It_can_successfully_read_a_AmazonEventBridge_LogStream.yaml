@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 121
+        content_length: 139
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-LogStream-1674668511","type":"eventbridge","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2"}}
+            {"name":"Test-LogStream-1732609495","type":"eventbridge","isPriority":true,"sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.11.2
         url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
         method: POST
       response:
@@ -30,33 +30,32 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000011627","name":"Test-LogStream-1674668511","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-bcb34250-023f-4e80-bc8f-0d084b31d094/auth0.logs"}}'
+        body: '{"id":"lst_0000000000002066","name":"Test-LogStream-1732609495","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-e15f958a-fc65-492a-ad8c-e094ff013b07/auth0.logs"},"filters":[{"type":"category","name":"security"}],"isPriority":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 769.070584ms
+        duration: 486.307458ms
     - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            null
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011627
+                - Go-Auth0/1.11.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002066
         method: GET
       response:
         proto: HTTP/2.0
@@ -66,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000011627","name":"Test-LogStream-1674668511","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-bcb34250-023f-4e80-bc8f-0d084b31d094/auth0.logs"}}'
+        body: '{"id":"lst_0000000000002066","name":"Test-LogStream-1732609495","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-e15f958a-fc65-492a-ad8c-e094ff013b07/auth0.logs"},"filters":[{"type":"category","name":"security"}],"isPriority":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 97.543125ms
+        duration: 377.186041ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,8 +89,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011627
+                - Go-Auth0/1.11.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002066
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -107,4 +106,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 773.098125ms
+        duration: 426.736875ms

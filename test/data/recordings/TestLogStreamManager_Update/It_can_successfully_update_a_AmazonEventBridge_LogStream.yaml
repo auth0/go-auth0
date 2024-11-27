@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 121
+        content_length: 139
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-LogStream-1674668511","type":"eventbridge","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2"}}
+            {"name":"Test-LogStream-1732609495","type":"eventbridge","isPriority":true,"sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.11.2
         url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000011634","name":"Test-LogStream-1674668511","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-387bb0d8-81ce-44d1-bd4f-531586933bab/auth0.logs"}}'
+        body: '{"id":"lst_0000000000002073","name":"Test-LogStream-1732609495","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-9a52b706-9cf7-4c9c-ac8b-fb90387e1fc1/auth0.logs"},"filters":[{"type":"category","name":"security"}],"isPriority":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 838.468584ms
+        duration: 494.158875ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,8 +55,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011634
+                - Go-Auth0/1.11.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002073
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,33 +66,32 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000011634","name":"Test-LogStream-1674668511","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-387bb0d8-81ce-44d1-bd4f-531586933bab/auth0.logs"},"filters":[{"name":"auth.login.fail","type":"category"}]}'
+        body: '{"id":"lst_0000000000002073","name":"Test-LogStream-1732609495","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-9a52b706-9cf7-4c9c-ac8b-fb90387e1fc1/auth0.logs"},"filters":[{"type":"category","name":"security"}],"isPriority":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 109.920333ms
+        duration: 373.344875ms
     - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            null
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011634
+                - Go-Auth0/1.11.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002073
         method: GET
       response:
         proto: HTTP/2.0
@@ -102,13 +101,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000011634","name":"Test-LogStream-1674668511","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-387bb0d8-81ce-44d1-bd4f-531586933bab/auth0.logs"},"filters":[{"name":"auth.login.fail","type":"category"}]}'
+        body: '{"id":"lst_0000000000002073","name":"Test-LogStream-1732609495","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-9a52b706-9cf7-4c9c-ac8b-fb90387e1fc1/auth0.logs"},"filters":[{"type":"category","name":"security"}],"isPriority":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 111.770416ms
+        duration: 365.214708ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -126,8 +125,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011634
+                - Go-Auth0/1.11.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002073
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -143,4 +142,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 788.865792ms
+        duration: 362.702375ms

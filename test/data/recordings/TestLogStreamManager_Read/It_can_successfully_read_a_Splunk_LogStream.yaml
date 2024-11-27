@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 188
+        content_length: 206
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-LogStream-1674668511","type":"splunk","sink":{"splunkDomain":"demo.splunk.com","splunkToken":"12a34ab5-c6d7-8901-23ef-456b7c89d0c1","splunkPort":"8080","splunkSecure":true}}
+            {"name":"Test-LogStream-1732609495","type":"splunk","isPriority":true,"sink":{"splunkDomain":"demo.splunk.com","splunkToken":"12a34ab5-c6d7-8901-23ef-456b7c89d0c1","splunkPort":"8080","splunkSecure":true}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.11.2
         url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
         method: POST
       response:
@@ -30,33 +30,32 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000011631","name":"Test-LogStream-1674668511","type":"splunk","status":"active","sink":{"splunkDomain":"demo.splunk.com","splunkPort":"8080","splunkToken":"12a34ab5-c6d7-8901-23ef-456b7c89d0c1","splunkSecure":true}}'
+        body: '{"id":"lst_0000000000002070","name":"Test-LogStream-1732609495","type":"splunk","status":"active","sink":{"splunkDomain":"demo.splunk.com","splunkPort":"8080","splunkToken":"12a34ab5-c6d7-8901-23ef-456b7c89d0c1","splunkSecure":true},"filters":[{"type":"category","name":"security"}],"isPriority":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 142.8195ms
+        duration: 386.556042ms
     - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            null
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011631
+                - Go-Auth0/1.11.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002070
         method: GET
       response:
         proto: HTTP/2.0
@@ -66,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000011631","name":"Test-LogStream-1674668511","type":"splunk","status":"active","sink":{"splunkDomain":"demo.splunk.com","splunkPort":"8080","splunkToken":"12a34ab5-c6d7-8901-23ef-456b7c89d0c1","splunkSecure":true}}'
+        body: '{"id":"lst_0000000000002070","name":"Test-LogStream-1732609495","type":"splunk","status":"active","sink":{"splunkDomain":"demo.splunk.com","splunkPort":"8080","splunkToken":"12a34ab5-c6d7-8901-23ef-456b7c89d0c1","splunkSecure":true},"filters":[{"type":"category","name":"security"}],"isPriority":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 6.30183025s
+        duration: 346.698667ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,8 +89,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000011631
+                - Go-Auth0/1.11.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002070
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -107,4 +106,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 118.265708ms
+        duration: 357.352625ms
