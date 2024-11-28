@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.12.0](https://github.com/auth0/go-auth0/tree/v1.12.0) (2024-11-28)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.11.2...v1.12.0)
+
+**Added**
+- Add isPriority parameter to Log Streams [\#467](https://github.com/auth0/go-auth0/pull/467) ([duedares-rvj](https://github.com/duedares-rvj))
+- SSO v2 updates [\#457](https://github.com/auth0/go-auth0/pull/457) ([duedares-rvj](https://github.com/duedares-rvj))
+- Add `DeviceCredentialsManager` to manage device credentials [\#369](https://github.com/auth0/go-auth0/pull/369) ([Zarux](https://github.com/Zarux))
+
 ## [v1.11.2](https://github.com/auth0/go-auth0/tree/v1.11.2) (2024-10-14)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.11.1...v1.11.2)
 
