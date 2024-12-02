@@ -16,8 +16,9 @@ var logStreamTestCases = []logStreamTestCase{
 	{
 		name: "AmazonEventBridge LogStream",
 		logStream: LogStream{
-			Name: auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
-			Type: auth0.String(LogStreamTypeAmazonEventBridge),
+			Name:       auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
+			Type:       auth0.String(LogStreamTypeAmazonEventBridge),
+			IsPriority: auth0.Bool(true),
 			Sink: &LogStreamSinkAmazonEventBridge{
 				AccountID: auth0.String("999999999999"),
 				Region:    auth0.String("us-west-2"),
@@ -39,8 +40,9 @@ var logStreamTestCases = []logStreamTestCase{
 	{
 		name: "HTTP LogStream",
 		logStream: LogStream{
-			Name: auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
-			Type: auth0.String(LogStreamTypeHTTP),
+			Name:       auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
+			Type:       auth0.String(LogStreamTypeHTTP),
+			IsPriority: auth0.Bool(false),
 			Sink: &LogStreamSinkHTTP{
 				Endpoint:      auth0.String("https://example.com/logs"),
 				Authorization: auth0.String("Bearer f2368bbe77074527a37be2fdd5b92bad"),
@@ -52,8 +54,9 @@ var logStreamTestCases = []logStreamTestCase{
 	{
 		name: "DataDog LogStream",
 		logStream: LogStream{
-			Name: auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
-			Type: auth0.String(LogStreamTypeDatadog),
+			Name:       auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
+			Type:       auth0.String(LogStreamTypeDatadog),
+			IsPriority: auth0.Bool(true),
 			Sink: &LogStreamSinkDatadog{
 				APIKey: auth0.String("121233123455"),
 				Region: auth0.String("us"),
@@ -63,8 +66,9 @@ var logStreamTestCases = []logStreamTestCase{
 	{
 		name: "Segment LogStream",
 		logStream: LogStream{
-			Name: auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
-			Type: auth0.String(LogStreamTypeSegment),
+			Name:       auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
+			Type:       auth0.String(LogStreamTypeSegment),
+			IsPriority: auth0.Bool(true),
 			Sink: &LogStreamSinkSegment{
 				WriteKey: auth0.String("121233123455"),
 			},
@@ -73,8 +77,9 @@ var logStreamTestCases = []logStreamTestCase{
 	{
 		name: "Splunk LogStream",
 		logStream: LogStream{
-			Name: auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
-			Type: auth0.String(LogStreamTypeSplunk),
+			Name:       auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
+			Type:       auth0.String(LogStreamTypeSplunk),
+			IsPriority: auth0.Bool(true),
 			Sink: &LogStreamSinkSplunk{
 				Domain: auth0.String("demo.splunk.com"),
 				Port:   auth0.String("8080"),
@@ -86,8 +91,9 @@ var logStreamTestCases = []logStreamTestCase{
 	{
 		name: "Sumo LogStream",
 		logStream: LogStream{
-			Name: auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
-			Type: auth0.String(LogStreamTypeSumo),
+			Name:       auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
+			Type:       auth0.String(LogStreamTypeSumo),
+			IsPriority: auth0.Bool(true),
 			Sink: &LogStreamSinkSumo{
 				SourceAddress: auth0.String("https://example.com"),
 			},
@@ -96,8 +102,9 @@ var logStreamTestCases = []logStreamTestCase{
 	{
 		name: "Mixpanel LogStream",
 		logStream: LogStream{
-			Name: auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
-			Type: auth0.String(LogStreamTypeMixpanel),
+			Name:       auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
+			Type:       auth0.String(LogStreamTypeMixpanel),
+			IsPriority: auth0.Bool(false),
 			Sink: &LogStreamSinkMixpanel{
 				Region:                 auth0.String("us"),
 				ProjectID:              auth0.String("123456789"),

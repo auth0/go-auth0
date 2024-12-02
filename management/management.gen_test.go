@@ -9795,6 +9795,16 @@ func TestLogStream_GetID(tt *testing.T) {
 	l.GetID()
 }
 
+func TestLogStream_GetIsPriority(tt *testing.T) {
+	var zeroValue bool
+	l := &LogStream{IsPriority: &zeroValue}
+	l.GetIsPriority()
+	l = &LogStream{}
+	l.GetIsPriority()
+	l = nil
+	l.GetIsPriority()
+}
+
 func TestLogStream_GetName(tt *testing.T) {
 	var zeroValue string
 	l := &LogStream{Name: &zeroValue}

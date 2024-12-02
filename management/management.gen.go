@@ -7857,6 +7857,14 @@ func (l *LogStream) GetID() string {
 	return *l.ID
 }
 
+// GetIsPriority returns the IsPriority field if it's non-nil, zero value otherwise.
+func (l *LogStream) GetIsPriority() bool {
+	if l == nil || l.IsPriority == nil {
+		return false
+	}
+	return *l.IsPriority
+}
+
 // GetName returns the Name field if it's non-nil, zero value otherwise.
 func (l *LogStream) GetName() string {
 	if l == nil || l.Name == nil {
