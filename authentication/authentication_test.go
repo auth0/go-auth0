@@ -527,7 +527,7 @@ func usingRecordingResponses(t *testing.T) bool {
 	return httpRecordingsEnabled && domain == "go-auth0-dev.eu.auth0.com"
 }
 
-func givenAUser(t *testing.T) userDetails {
+func givenAUser(t *testing.T) *management.User {
 	t.Helper()
 
 	if !usingRecordingResponses(t) {
@@ -547,12 +547,14 @@ func givenAUser(t *testing.T) userDetails {
 			err := mgmtAPI.User.Delete(context.Background(), user.GetID())
 			require.NoError(t, err)
 		})
+
+		return user
 	}
 
-	return userDetails{
-		connection: "Username-Password-Authentication",
-		email:      "chuck@example.com",
-		password:   "Testpassword123!",
-		username:   "test-user",
+	return &management.User{
+		Connection: auth0.String("Username-Password-Authentication"),
+		Email:      auth0.String("chuck@example.com"),
+		Password:   auth0.String("Testpassword123!"),
+		Username:   auth0.String("test-user"),
 	}
 }

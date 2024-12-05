@@ -30,8 +30,8 @@ func TestOAuthLoginWithPassword(t *testing.T) {
 		user := givenAUser(t)
 
 		tokenSet, err := auth.OAuth.LoginWithPassword(context.Background(), oauth.LoginWithPasswordRequest{
-			Username: user.username,
-			Password: user.password,
+			Username: user.GetUsername(),
+			Password: user.GetPassword(),
 		}, oauth.IDTokenValidationOptions{})
 		require.NoError(t, err)
 		assert.NotEmpty(t, tokenSet.AccessToken)
@@ -43,8 +43,8 @@ func TestOAuthLoginWithPassword(t *testing.T) {
 		user := givenAUser(t)
 
 		tokenSet, err := auth.OAuth.LoginWithPassword(context.Background(), oauth.LoginWithPasswordRequest{
-			Username: user.username,
-			Password: user.password,
+			Username: user.GetUsername(),
+			Password: user.GetPassword(),
 			Scope:    "extra-scope",
 			ExtraParameters: map[string]string{
 				"extra": "value",
