@@ -449,6 +449,13 @@ func (c *PromptRendering) MarshalJSON() ([]byte, error) {
 		DefaultHeadTagsDisabled *bool         `json:"default_head_tags_disabled,omitempty"`
 		HeadTags                []interface{} `json:"head_tags,omitempty"`
 	}
+
+	if c.RenderingMode != nil && *c.RenderingMode == "standard" {
+		return json.Marshal(&RenderingSubSet{
+			RenderMode: c.RenderingMode,
+		})
+	}
+
 	return json.Marshal(&RenderingSubSet{
 		RenderMode:              c.RenderingMode,
 		ContextConfiguration:    c.ContextConfiguration,

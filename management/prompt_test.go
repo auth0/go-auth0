@@ -148,6 +148,27 @@ func TestPromptManager_UpdateRendering(t *testing.T) {
 
 	_ = givenACustomDomain(t)
 	_ = givenAUniversalLoginTemplate(t)
+	_ = givenAPromptRendering(t)
+	updateData := &PromptRendering{}
+	updateData.ContextConfiguration = &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"}
+	updateData.DefaultHeadTagsDisabled = auth0.Bool(true)
+
+	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, updateData)
+	assert.NoError(t, err)
+
+	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
+	assert.NoError(t, err)
+	assert.Equal(t, updateData.GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, updateData.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
+	assert.Equal(t, PromptSignup, *actual.GetPrompt())
+	assert.Equal(t, ScreenSignup, *actual.GetScreen())
+}
+
+func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	_ = givenACustomDomain(t)
+	_ = givenAUniversalLoginTemplate(t)
 	expected := givenAPromptRendering(t)
 	expected.RenderingMode = auth0.String("standard")
 	expected.ContextConfiguration = &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"}
@@ -159,8 +180,8 @@ func TestPromptManager_UpdateRendering(t *testing.T) {
 	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
 	assert.NoError(t, err)
 	assert.Equal(t, expected.GetRenderingMode(), actual.GetRenderingMode())
-	assert.Equal(t, expected.GetContextConfiguration(), actual.GetContextConfiguration())
-	assert.Equal(t, expected.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
+	assert.NotEqual(t, expected.GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.NotEqual(t, expected.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
 	assert.Equal(t, expected.HeadTags, actual.HeadTags)
 	assert.Equal(t, PromptSignup, *actual.GetPrompt())
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
