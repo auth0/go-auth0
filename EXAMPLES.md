@@ -36,13 +36,46 @@ management.From()
 management.Sort()
 ```
 
+## Request Correlation
+A Correlation ID is a unique identifier (up to 64 characters) of a single Management API operation and allows for tracking such operations in tenant logs. You can find more details [here](https://auth0.com/docs/api/management/v2#request-correlation).
+
+```go
+type AddHeaderTransport struct {
+	T             http.RoundTripper
+	CorrelationID string
+}
+
+func (adt *AddHeaderTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	req = req.Clone(req.Context())
+	req.Header.Add("X-Correlation-ID", adt.CorrelationID)
+	return adt.T.RoundTrip(req)
+}
+
+func NewManagementAPI(correlationID string) management.Management
+    httpClient := &http.Client{}
+	if ok {
+		if httpClient.Transport == nil {
+			httpClient.Transport = http.DefaultTransport
+		}
+		httpClient.Transport = &AddHeaderTransport{T: httpClient.Transport, CorrelationID: correlationID}
+	}
+
+	options := []management.Option{
+		management.WithClient(httpClient),
+	}
+
+    // ...
+}
+
+```
+
 ## Pagination
 
 This SDK supports both offset and checkpoint pagination.
 
 ### Page based pagination
 
-When retrieving lists of resources, if no query parameters are set using the `management.PerPage` and `Management.IncludeTotals` helper funcs, then the SDK will default to sending `per_page=50` and `include_totals=true`. 
+When retrieving lists of resources, if no query parameters are set using the `management.PerPage` and `Management.IncludeTotals` helper funcs, then the SDK will default to sending `per_page=50` and `include_totals=true`.
 
 > **Note**
 > The maximum value of the `per_page` query parameter is 100.
@@ -109,11 +142,11 @@ for {
     if err != nil {
         log.Fatalf("err :%+v", err)
     }
-    
+
     for _, org := range orgList.Organizations {
         log.Printf("org %s", org.GetID())
     }
-    
+
     // The `HasNext` helper func checks whether
     // the API has informed us that there is
     // more data to retrieve or not.
