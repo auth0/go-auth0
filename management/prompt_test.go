@@ -170,7 +170,7 @@ func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
 	_ = givenACustomDomain(t)
 	_ = givenAUniversalLoginTemplate(t)
 	expected := givenAPromptRendering(t)
-	expected.RenderingMode = auth0.String("standard")
+	expected.RenderingMode = &RenderingModeStandard
 	expected.ContextConfiguration = &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"}
 	expected.DefaultHeadTagsDisabled = auth0.Bool(true)
 
@@ -357,7 +357,7 @@ func givenAPromptRendering(t *testing.T) *PromptRendering {
 	t.Helper()
 
 	settings := &PromptRendering{
-		RenderingMode:           auth0.String("advanced"),
+		RenderingMode:           &RenderingModeStandard,
 		ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default"},
 		DefaultHeadTagsDisabled: auth0.Bool(false),
 		HeadTags: []interface{}{

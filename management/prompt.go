@@ -6,6 +6,17 @@ import (
 	"fmt"
 )
 
+// RenderingMode is a type that represents the rendering mode.
+type RenderingMode string
+
+var (
+	// RenderingModeStandard represents the standard rendering mode.
+	RenderingModeStandard RenderingMode = "standard"
+
+	// RenderingModeAdvanced represents the advanced rendering mode.
+	RenderingModeAdvanced RenderingMode = "advanced"
+)
+
 const (
 	// PromptSignup represents the signup prompt.
 	PromptSignup PromptType = "signup"
@@ -432,32 +443,32 @@ type PromptPartials struct {
 
 // PromptRendering is used to retrieve and set the settings for the ACUL.
 type PromptRendering struct {
-	Tenant                  *string       `json:"tenant,omitempty"`
-	Prompt                  *PromptType   `json:"prompt,omitempty"`
-	Screen                  *ScreenName   `json:"screen,omitempty"`
-	RenderingMode           *string       `json:"rendering_mode,omitempty"`
-	ContextConfiguration    *[]string     `json:"context_configuration,omitempty"`
-	DefaultHeadTagsDisabled *bool         `json:"default_head_tags_disabled,omitempty"`
-	HeadTags                []interface{} `json:"head_tags,omitempty"`
+	Tenant                  *string        `json:"tenant,omitempty"`
+	Prompt                  *PromptType    `json:"prompt,omitempty"`
+	Screen                  *ScreenName    `json:"screen,omitempty"`
+	RenderingMode           *RenderingMode `json:"rendering_mode,omitempty"`
+	ContextConfiguration    *[]string      `json:"context_configuration,omitempty"`
+	DefaultHeadTagsDisabled *bool          `json:"default_head_tags_disabled,omitempty"`
+	HeadTags                []interface{}  `json:"head_tags,omitempty"`
 }
 
 // MarshalJSON implements a custom [json.Marshaler].
 func (c *PromptRendering) MarshalJSON() ([]byte, error) {
 	type RenderingSubSet struct {
-		RenderMode              *string       `json:"rendering_mode,omitempty"`
-		ContextConfiguration    *[]string     `json:"context_configuration,omitempty"`
-		DefaultHeadTagsDisabled *bool         `json:"default_head_tags_disabled,omitempty"`
-		HeadTags                []interface{} `json:"head_tags,omitempty"`
+		RenderingMode           *RenderingMode `json:"rendering_mode,omitempty"`
+		ContextConfiguration    *[]string      `json:"context_configuration,omitempty"`
+		DefaultHeadTagsDisabled *bool          `json:"default_head_tags_disabled,omitempty"`
+		HeadTags                []interface{}  `json:"head_tags,omitempty"`
 	}
 
-	if c.RenderingMode != nil && *c.RenderingMode == "standard" {
+	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
 		return json.Marshal(&RenderingSubSet{
-			RenderMode: c.RenderingMode,
+			RenderingMode: c.RenderingMode,
 		})
 	}
 
 	return json.Marshal(&RenderingSubSet{
-		RenderMode:              c.RenderingMode,
+		RenderingMode:           c.RenderingMode,
 		ContextConfiguration:    c.ContextConfiguration,
 		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
 		HeadTags:                c.HeadTags,

@@ -9091,12 +9091,12 @@ func (p *PromptRendering) GetPrompt() *PromptType {
 	return p.Prompt
 }
 
-// GetRenderingMode returns the RenderingMode field if it's non-nil, zero value otherwise.
-func (p *PromptRendering) GetRenderingMode() string {
-	if p == nil || p.RenderingMode == nil {
-		return ""
+// GetRenderingMode returns the RenderingMode field.
+func (p *PromptRendering) GetRenderingMode() *RenderingMode {
+	if p == nil {
+		return nil
 	}
-	return *p.RenderingMode
+	return p.RenderingMode
 }
 
 // GetScreen returns the Screen field.

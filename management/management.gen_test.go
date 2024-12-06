@@ -11408,10 +11408,7 @@ func TestPromptRendering_GetPrompt(tt *testing.T) {
 }
 
 func TestPromptRendering_GetRenderingMode(tt *testing.T) {
-	var zeroValue string
-	p := &PromptRendering{RenderingMode: &zeroValue}
-	p.GetRenderingMode()
-	p = &PromptRendering{}
+	p := &PromptRendering{}
 	p.GetRenderingMode()
 	p = nil
 	p.GetRenderingMode()
