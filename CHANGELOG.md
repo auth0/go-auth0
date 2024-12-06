@@ -1,5 +1,11 @@
 # Change Log
 
+## [v1.13.0](https://github.com/auth0/go-auth0/tree/v1.13.0) (2024-12-06)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.12.0...v1.13.0)
+
+**Added**
+- Add support for ACUL Endpoints in `PromptManager` [\#458](https://github.com/auth0/go-auth0/pull/458) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.12.0](https://github.com/auth0/go-auth0/tree/v1.12.0) (2024-11-28)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.11.2...v1.12.0)
 
