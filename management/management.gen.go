@@ -9067,6 +9067,59 @@ func (p *PromptPartials) String() string {
 	return Stringify(p)
 }
 
+// GetContextConfiguration returns the ContextConfiguration field if it's non-nil, zero value otherwise.
+func (p *PromptRendering) GetContextConfiguration() []string {
+	if p == nil || p.ContextConfiguration == nil {
+		return nil
+	}
+	return *p.ContextConfiguration
+}
+
+// GetDefaultHeadTagsDisabled returns the DefaultHeadTagsDisabled field if it's non-nil, zero value otherwise.
+func (p *PromptRendering) GetDefaultHeadTagsDisabled() bool {
+	if p == nil || p.DefaultHeadTagsDisabled == nil {
+		return false
+	}
+	return *p.DefaultHeadTagsDisabled
+}
+
+// GetPrompt returns the Prompt field.
+func (p *PromptRendering) GetPrompt() *PromptType {
+	if p == nil {
+		return nil
+	}
+	return p.Prompt
+}
+
+// GetRenderingMode returns the RenderingMode field.
+func (p *PromptRendering) GetRenderingMode() *RenderingMode {
+	if p == nil {
+		return nil
+	}
+	return p.RenderingMode
+}
+
+// GetScreen returns the Screen field.
+func (p *PromptRendering) GetScreen() *ScreenName {
+	if p == nil {
+		return nil
+	}
+	return p.Screen
+}
+
+// GetTenant returns the Tenant field if it's non-nil, zero value otherwise.
+func (p *PromptRendering) GetTenant() string {
+	if p == nil || p.Tenant == nil {
+		return ""
+	}
+	return *p.Tenant
+}
+
+// String returns a string representation of PromptRendering.
+func (p *PromptRendering) String() string {
+	return Stringify(p)
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (r *RefreshToken) GetClientID() string {
 	if r == nil || r.ClientID == nil {
