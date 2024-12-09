@@ -2,6 +2,7 @@ package authentication
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/auth0/go-auth0/authentication/ciba"
 	"net/url"
@@ -26,7 +27,7 @@ func (c *CIBA) Initiate(ctx context.Context, body ciba.Request, opts ...RequestO
 	var missing []string
 	check(&missing, "ClientID", body.ClientID != "" || c.authentication.clientID != "")
 	check(&missing, "ClientSecret", body.ClientSecret != "" || c.authentication.clientSecret != "")
-	check(&missing, "LoginHint", body.LoginHint != "")
+	check(&missing, "LoginHint", len(body.LoginHint) != 0)
 	check(&missing, "Scope", body.Scope != "")
 	check(&missing, "BindingMessage", body.BindingMessage != "")
 
@@ -37,10 +38,17 @@ func (c *CIBA) Initiate(ctx context.Context, body ciba.Request, opts ...RequestO
 	data := url.Values{
 		"client_id":       []string{body.ClientID},
 		"client_secret":   []string{body.ClientSecret},
-		"login_hint":      []string{body.LoginHint},
 		"scope":           []string{body.Scope},
 		"binding_message": []string{body.BindingMessage},
 	}
+
+	jsonBytes, err := json.Marshal(body.LoginHint)
+	if err != nil {
+		fmt.Println("Error marshaling map to JSON:", err)
+		return
+	}
+
+	data.Set("login_hint", string(jsonBytes))
 
 	// Perform the request
 	err = c.authentication.Request(ctx, "POST", c.authentication.URI("bc-authorize"), data, &r, opts...)

@@ -12,7 +12,7 @@ interactions:
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: binding_message=TEST-BINDING-MESSAGE&client_id=test-client_id&client_secret=test-client_secret&login_hint=%7B%22format%22%3A%22iss_sub%22%2C%22iss%22%3A%22https%3A%2F%2Fgo-auth0-dev.eu.auth0.com.sus.auth0.com%2F%22%2C%22sub%22%3A%22auth0%7C6707939cad3d8bec47ecfa2e%22%7D&scope=openid
+        body: binding_message=TEST-BINDING-MESSAGE&client_id=test-client_id&client_secret=test-client_secret&login_hint=%7B%22format%22%3A%22iss_sub%22%2C%22iss%22%3A%22https%3A%2F%2Fgo-auth0-dev.eu.auth0.com.sus.auth0.com%2F%22%2C%22sub%22%3A%22auth0%7C6707939cad3d8bec47ecfa2e%22%7D&scope=tempID
         form:
             binding_message:
                 - TEST-BINDING-MESSAGE
@@ -23,7 +23,7 @@ interactions:
             login_hint:
                 - '{"format":"iss_sub","iss":"https://witty-silver-sailfish-sus1-staging-20240704.sus.auth0.com/","sub":"auth0|6707939cad3d8bec47ecfa2e"}'
             scope:
-                - openid
+                - tempID
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -35,12 +35,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
-        body: '{"auth_req_id":"WQJQFbnCpBr8qHEDxQT4jFBq5ceTei2t9Kfas1CFAEe19odPJYOUCJvZcFy4A2Ki","expires_in":300,"interval":5}'
+        content_length: 80
+        uncompressed: false
+        body: '{"error":"invalid_request","error_description":"openid scope must be requested"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 200 OK
-        code: 200
-        duration: 798.216458ms
+        status: 400 Bad Request
+        code: 400
+        duration: 340.789875ms
