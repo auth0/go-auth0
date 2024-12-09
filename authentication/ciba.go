@@ -4,9 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/auth0/go-auth0/authentication/ciba"
 	"net/url"
 	"strings"
+
+	"github.com/auth0/go-auth0/authentication/ciba"
 )
 
 // CIBA manager.

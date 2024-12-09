@@ -2,10 +2,12 @@ package authentication
 
 import (
 	"context"
-	"github.com/auth0/go-auth0/authentication/ciba"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
+
+	"github.com/auth0/go-auth0/authentication/ciba"
 )
 
 func TestCIBA_Initiate(t *testing.T) {

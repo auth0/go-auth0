@@ -1,6 +1,6 @@
 package ciba
 
-// Request defines the request body for calling the bc-authorize endpoint
+// Request defines the request body for calling the bc-authorize endpoint.
 type Request struct {
 	// The client_id of your client.
 	ClientID string `json:"client_id,omitempty"`
@@ -14,7 +14,7 @@ type Request struct {
 	BindingMessage string `json:"binding_message,omitempty"`
 }
 
-// Response defines the response of the CIBA request
+// Response defines the response of the CIBA request.
 type Response struct {
 	AuthReqID string `json:"auth_req_id,omitempty"`
 	ExpiresIn int64  `json:"expires_in,omitempty"`
