@@ -15,8 +15,8 @@ func TestCIBA_Initiate(t *testing.T) {
 
 	// Call the Initiate method of the CIBA manager
 	resp, err := authAPI.CIBA.Initiate(context.Background(), ciba.Request{
-		ClientID:     mgmtClientID,
-		ClientSecret: mgmtClientSecret,
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
 		Scope:        "openid",
 		LoginHint: map[string]string{
 			"format": "iss_sub",
@@ -39,8 +39,8 @@ func TestCIBANegative_Initiate(t *testing.T) {
 		configureHTTPTestRecordings(t, authAPI)
 
 		_, err := authAPI.CIBA.Initiate(context.Background(), ciba.Request{
-			ClientID:     mgmtClientID,
-			ClientSecret: mgmtClientSecret,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
 			Scope:        "openid",
 		})
 
@@ -51,8 +51,8 @@ func TestCIBANegative_Initiate(t *testing.T) {
 		configureHTTPTestRecordings(t, authAPI)
 
 		_, err := authAPI.CIBA.Initiate(context.Background(), ciba.Request{
-			ClientID:     mgmtClientID,
-			ClientSecret: mgmtClientSecret,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
 			Scope:        "openid",
 			LoginHint: map[string]string{
 				"format": "iss_sub",
@@ -69,8 +69,8 @@ func TestCIBANegative_Initiate(t *testing.T) {
 		configureHTTPTestRecordings(t, authAPI)
 
 		_, err := authAPI.CIBA.Initiate(context.Background(), ciba.Request{
-			ClientID:     mgmtClientID,
-			ClientSecret: mgmtClientSecret,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
 			Scope:        "tempID",
 			LoginHint: map[string]string{
 				"format": "iss_sub",

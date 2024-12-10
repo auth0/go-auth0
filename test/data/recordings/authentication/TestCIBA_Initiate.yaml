@@ -37,10 +37,10 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"auth_req_id":"WQJQFbnCpBr8qHEDxQT4jFBq5ceTei2t9Kfas1CFAEe19odPJYOUCJvZcFy4A2Ki","expires_in":300,"interval":5}'
+        body: '{"auth_req_id":"XyVW8Z3HHmSXMGYUOhNRK6x7Smti6w_Jb4NEXWeR6FNXl-c6OEMp3n5qPrvqGm6M","expires_in":300,"interval":5}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 798.216458ms
+        duration: 650.248083ms
