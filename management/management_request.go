@@ -36,8 +36,7 @@ func (m *Management) URI(path ...string) string {
 	return baseURL.String() + strings.Join(escapedPath, "/")
 }
 
-// NewRequest returns a new HTTP request. If the payload is not nil it will be
-// encoded as JSON.
+// NewRequest returns a new HTTP request with the payload encoded as JSON.
 func (m *Management) NewRequest(
 	ctx context.Context,
 	method,
@@ -45,26 +44,31 @@ func (m *Management) NewRequest(
 	payload interface{},
 	options ...RequestOption,
 ) (*http.Request, error) {
-	const nullBody = "null\n"
-	var body bytes.Buffer
+	var body io.Reader
 
+	// Handle payload encoding
 	if payload != nil {
-		if err := json.NewEncoder(&body).Encode(payload); err != nil {
-			return nil, fmt.Errorf("encoding request payload failed: %w", err)
+		buf := new(bytes.Buffer)
+		if err := json.NewEncoder(buf).Encode(payload); err != nil {
+			return nil, fmt.Errorf("failed to encode request payload: %w", err)
+		}
+
+		// Only use the buffer as a reader if it's not empty or "null"
+		if buf.Len() > 0 && buf.String() != "null\n" {
+			body = buf
 		}
 	}
 
-	if body.String() == nullBody {
-		body.Reset()
-	}
-
-	request, err := http.NewRequestWithContext(ctx, method, uri, &body)
+	// Create request with context
+	request, err := http.NewRequestWithContext(ctx, method, uri, body)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to create HTTP request: %w", err)
 	}
 
-	request.Header.Add("Content-Type", "application/json")
+	// Set default content type
+	request.Header.Set("Content-Type", "application/json")
 
+	// Apply any additional request options
 	for _, option := range options {
 		option.apply(request)
 	}
@@ -90,31 +94,42 @@ func (m *Management) Do(req *http.Request) (*http.Response, error) {
 	return response, nil
 }
 
-// Request combines NewRequest and Do, while also handling decoding of response payload.
-func (m *Management) Request(ctx context.Context, method, uri string, payload interface{}, options ...RequestOption) error {
+// Request combines request creation, execution, and response handling.
+func (m *Management) Request(
+	ctx context.Context,
+	method,
+	uri string,
+	payload interface{},
+	responsePayload interface{},
+	options ...RequestOption,
+) error {
+	// Create the request
 	request, err := m.NewRequest(ctx, method, uri, payload, options...)
 	if err != nil {
 		return fmt.Errorf("failed to create a new request: %w", err)
 	}
 
+	// Execute the request
 	response, err := m.Do(request)
 	if err != nil {
 		return fmt.Errorf("failed to send the request: %w", err)
 	}
 	defer response.Body.Close()
 
-	// If the response contains a client or a server error then return the error.
+	// Handle error responses
 	if response.StatusCode >= http.StatusBadRequest {
 		return newError(response)
 	}
 
+	// Read response body
 	responseBody, err := io.ReadAll(response.Body)
 	if err != nil {
 		return fmt.Errorf("failed to read the response body: %w", err)
 	}
 
-	if len(responseBody) > 0 && string(responseBody) != "{}" {
-		if err = json.Unmarshal(responseBody, &payload); err != nil {
+	// Unmarshal response if applicable
+	if responsePayload != nil && len(responseBody) > 0 && string(responseBody) != "{}" {
+		if err = json.Unmarshal(responseBody, &responsePayload); err != nil {
 			return fmt.Errorf("failed to unmarshal response payload: %w", err)
 		}
 	}
