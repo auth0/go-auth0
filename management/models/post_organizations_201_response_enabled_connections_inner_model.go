@@ -12,7 +12,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // PostOrganizations201ResponseEnabledConnectionsInner struct for PostOrganizations201ResponseEnabledConnectionsInner
@@ -175,31 +174,6 @@ func (o PostOrganizations201ResponseEnabledConnectionsInner) ToMap() (map[string
 }
 
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"connection_id",
-		"assign_membership_on_login",
-		"show_as_button",
-		"is_signup_enabled",
-		"connection",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varPostOrganizations201ResponseEnabledConnectionsInner := _PostOrganizations201ResponseEnabledConnectionsInner{}
 
 	err = json.Unmarshal(data, &varPostOrganizations201ResponseEnabledConnectionsInner)

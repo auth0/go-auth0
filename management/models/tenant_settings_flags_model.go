@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // TenantSettingsFlags Flags used to change the behavior of this tenant.
@@ -657,49 +656,6 @@ func (o TenantSettingsFlags) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *TenantSettingsFlags) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"change_pwd_flow_v1",
-		"enable_apis_section",
-		"disable_impersonation",
-		"enable_client_connections",
-		"enable_pipeline2",
-		"allow_legacy_delegation_grant_types",
-		"allow_legacy_ro_grant_types",
-		"allow_legacy_tokeninfo_endpoint",
-		"enable_legacy_profile",
-		"enable_idtoken_api2",
-		"enable_public_signup_user_exists_error",
-		"enable_sso",
-		"allow_changing_enable_sso",
-		"disable_clickjack_protection_headers",
-		"no_disclose_enterprise_connections",
-		"enforce_client_authentication_on_passwordless_start",
-		"enable_adfs_waad_email_verification",
-		"revoke_refresh_token_grant",
-		"dashboard_log_streams_next",
-		"dashboard_insights_view",
-		"disable_fields_map_fix",
-		"mfa_show_factor_list_on_enrollment",
-		"remove_alg_from_jwks",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varTenantSettingsFlags := _TenantSettingsFlags{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

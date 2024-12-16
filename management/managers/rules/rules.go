@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/Rules/delete_rules_by_id
 func (m *Manager) DeleteRulesById(ctx context.Context, id string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("rules", management.SafeString(id)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("rules", string(id)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func (m *Manager) GetRules(ctx context.Context, opts ...management.RequestOption
 // https://auth0.com/docs/api/management/v2/#!/Rules/get_rules_by_id
 func (m *Manager) GetRulesById(ctx context.Context, id string, opts ...management.RequestOption) (*models.Rule, error) {
 	var localVarReturnValue *models.Rule
-	err := m.management.Request(ctx, "GET", m.management.URI("rules", management.SafeString(id)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("rules", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (m *Manager) GetRulesById(ctx context.Context, id string, opts ...managemen
 // https://auth0.com/docs/api/management/v2/#!/Rules/patch_rules_by_id
 func (m *Manager) PatchRulesById(ctx context.Context, id string, ruleUpdate *models.RuleUpdate, opts ...management.RequestOption) (*models.Rule, error) {
 	var localVarReturnValue *models.Rule
-	err := m.management.Request(ctx, "PATCH", m.management.URI("rules", management.SafeString(id)), ruleUpdate, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PATCH", m.management.URI("rules", string(id)), ruleUpdate, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}

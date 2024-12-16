@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/LogStreams/delete_log_streams_by_id
 func (m *Manager) DeleteLogStreamsById(ctx context.Context, id string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("log-streams", management.SafeString(id)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("log-streams", string(id)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func (m *Manager) GetLogStreams(ctx context.Context, opts ...management.RequestO
 // https://auth0.com/docs/api/management/v2/#!/LogStreams/get_log_streams_by_id
 func (m *Manager) GetLogStreamsById(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetLogStreams200ResponseInner, error) {
 	var localVarReturnValue *models.GetLogStreams200ResponseInner
-	err := m.management.Request(ctx, "GET", m.management.URI("log-streams", management.SafeString(id)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("log-streams", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (m *Manager) GetLogStreamsById(ctx context.Context, id string, opts ...mana
 // https://auth0.com/docs/api/management/v2/#!/LogStreams/patch_log_streams_by_id
 func (m *Manager) PatchLogStreamsById(ctx context.Context, id string, patchLogStreamsByIdRequest *models.PatchLogStreamsByIdRequest, opts ...management.RequestOption) (*models.GetLogStreams200ResponseInner, error) {
 	var localVarReturnValue *models.GetLogStreams200ResponseInner
-	err := m.management.Request(ctx, "PATCH", m.management.URI("log-streams", management.SafeString(id)), patchLogStreamsByIdRequest, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PATCH", m.management.URI("log-streams", string(id)), patchLogStreamsByIdRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}

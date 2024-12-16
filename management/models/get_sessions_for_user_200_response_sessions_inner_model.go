@@ -12,7 +12,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // GetSessionsForUser200ResponseSessionsInner struct for GetSessionsForUser200ResponseSessionsInner
@@ -304,36 +303,6 @@ func (o GetSessionsForUser200ResponseSessionsInner) ToMap() (map[string]interfac
 }
 
 func (o *GetSessionsForUser200ResponseSessionsInner) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"id",
-		"user_id",
-		"created_at",
-		"updated_at",
-		"authenticated_at",
-		"idle_expires_at",
-		"expires_at",
-		"device",
-		"clients",
-		"authentication",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetSessionsForUser200ResponseSessionsInner := _GetSessionsForUser200ResponseSessionsInner{}
 
 	err = json.Unmarshal(data, &varGetSessionsForUser200ResponseSessionsInner)

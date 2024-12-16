@@ -12,7 +12,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // ClientJwtConfiguration Configuration related to JWTs for the client.
@@ -148,30 +147,6 @@ func (o ClientJwtConfiguration) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *ClientJwtConfiguration) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"lifetime_in_seconds",
-		"secret_encoded",
-		"scopes",
-		"alg",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varClientJwtConfiguration := _ClientJwtConfiguration{}
 
 	err = json.Unmarshal(data, &varClientJwtConfiguration)

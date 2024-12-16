@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // EmailProviderCredentials Credentials required to use the provider.
@@ -171,31 +170,6 @@ func (o EmailProviderCredentials) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *EmailProviderCredentials) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"api_user",
-		"region",
-		"smtp_host",
-		"smtp_port",
-		"smtp_user",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varEmailProviderCredentials := _EmailProviderCredentials{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

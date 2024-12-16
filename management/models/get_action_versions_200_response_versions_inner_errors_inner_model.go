@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // GetActionVersions200ResponseVersionsInnerErrorsInner Error is a generic error with a human readable id which should be easily referenced in support tickets.
@@ -114,29 +113,6 @@ func (o GetActionVersions200ResponseVersionsInnerErrorsInner) ToMap() (map[strin
 }
 
 func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"id",
-		"msg",
-		"url",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetActionVersions200ResponseVersionsInnerErrorsInner := _GetActionVersions200ResponseVersionsInnerErrorsInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

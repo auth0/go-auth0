@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // ResourceServer struct for ResourceServer
@@ -521,44 +520,6 @@ func (o ResourceServer) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *ResourceServer) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"id",
-		"name",
-		"is_system",
-		"identifier",
-		"scopes",
-		"signing_alg",
-		"signing_secret",
-		"allow_offline_access",
-		"skip_consent_for_verifiable_first_party_clients",
-		"token_lifetime",
-		"token_lifetime_for_web",
-		"enforce_policies",
-		"token_dialect",
-		"client",
-		"token_encryption",
-		"consent_policy",
-		"authorization_details",
-		"proof_of_possession",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varResourceServer := _ResourceServer{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

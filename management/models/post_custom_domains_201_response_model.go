@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // PostCustomDomains201Response struct for PostCustomDomains201Response
@@ -280,32 +279,6 @@ func (o PostCustomDomains201Response) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *PostCustomDomains201Response) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"custom_domain_id",
-		"domain",
-		"primary",
-		"status",
-		"type",
-		"verification",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varPostCustomDomains201Response := _PostCustomDomains201Response{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

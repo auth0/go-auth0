@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/Guardian/delete_enrollments_by_id
 func (m *Manager) DeleteEnrollmentsById(ctx context.Context, id string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("guardian", "enrollments", management.SafeString(id)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("guardian", "enrollments", string(id)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func (m *Manager) GetApns(ctx context.Context, opts ...management.RequestOption)
 // https://auth0.com/docs/api/management/v2/#!/Guardian/get_enrollments_by_id
 func (m *Manager) GetEnrollmentsById(ctx context.Context, id string, opts ...management.RequestOption) (*models.Enrollment, error) {
 	var localVarReturnValue *models.Enrollment
-	err := m.management.Request(ctx, "GET", m.management.URI("guardian", "enrollments", management.SafeString(id)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("guardian", "enrollments", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -274,9 +274,9 @@ func (m *Manager) PutFactorSmsTemplates(ctx context.Context, templateMessages *m
 // PutFactorsByName Update a Multi-factor Authentication Factor
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_factors_by_name
-func (m *Manager) PutFactorsByName(ctx context.Context, name *models.PutFactorsByNameNameParameter, putFactorsByNameRequest *models.PutFactorsByNameRequest, opts ...management.RequestOption) (*models.PutFactorsByName200Response, error) {
+func (m *Manager) PutFactorsByName(ctx context.Context, name models.PutFactorsByNameNameParameter, putFactorsByNameRequest *models.PutFactorsByNameRequest, opts ...management.RequestOption) (*models.PutFactorsByName200Response, error) {
 	var localVarReturnValue *models.PutFactorsByName200Response
-	err := m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", management.SafeString(name)), putFactorsByNameRequest, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", string(name)), putFactorsByNameRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}

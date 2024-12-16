@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/RulesConfigs/delete_rules_configs_by_key
 func (m *Manager) DeleteRulesConfigsByKey(ctx context.Context, key string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("rules-configs", management.SafeString(key)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("rules-configs", string(key)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func (m *Manager) GetRulesConfigs(ctx context.Context, opts ...management.Reques
 // https://auth0.com/docs/api/management/v2/#!/RulesConfigs/put_rules_configs_by_key
 func (m *Manager) PutRulesConfigsByKey(ctx context.Context, key string, putRulesConfigsByKeyRequest *models.PutRulesConfigsByKeyRequest, opts ...management.RequestOption) (*models.PutRulesConfigsByKey200Response, error) {
 	var localVarReturnValue *models.PutRulesConfigsByKey200Response
-	err := m.management.Request(ctx, "PUT", m.management.URI("rules-configs", management.SafeString(key)), putRulesConfigsByKeyRequest, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PUT", m.management.URI("rules-configs", string(key)), putRulesConfigsByKeyRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}

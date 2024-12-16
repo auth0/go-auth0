@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // ClientAddons Addons enabled for this client and their associated configurations.
@@ -826,56 +825,6 @@ func (o ClientAddons) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *ClientAddons) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"aws",
-		"azure_blob",
-		"azure_sb",
-		"rms",
-		"mscrm",
-		"slack",
-		"sentry",
-		"box",
-		"cloudbees",
-		"concur",
-		"dropbox",
-		"echosign",
-		"egnyte",
-		"firebase",
-		"newrelic",
-		"office365",
-		"salesforce",
-		"salesforce_api",
-		"salesforce_sandbox_api",
-		"samlp",
-		"layer",
-		"sap_api",
-		"sharepoint",
-		"springcm",
-		"wams",
-		"wsfed",
-		"zendesk",
-		"zoom",
-		"sso_integration",
-		"oag",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varClientAddons := _ClientAddons{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

@@ -12,7 +12,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // GetSession200ResponseDevice Metadata related to the device used in the session
@@ -180,31 +179,6 @@ func (o GetSession200ResponseDevice) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *GetSession200ResponseDevice) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"initial_ip",
-		"initial_asn",
-		"last_user_agent",
-		"last_ip",
-		"last_asn",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetSession200ResponseDevice := _GetSession200ResponseDevice{}
 
 	err = json.Unmarshal(data, &varGetSession200ResponseDevice)

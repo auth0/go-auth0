@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // GetSigningKeys200ResponseInner struct for GetSigningKeys200ResponseInner
@@ -219,10 +218,11 @@ func (o *GetSigningKeys200ResponseInner) SetPrevious(v bool) {
 	o.Previous = &v
 }
 
-// GetCurrentSince returns the CurrentSince field value if set, or a zero value otherwise.
+// GetCurrentSince returns the CurrentSince field value if set, zero value otherwise.
 func (o *GetSigningKeys200ResponseInner) GetCurrentSince() GetSigningKeys200ResponseInnerCurrentSince {
-	if o == nil || o.CurrentSince == nil {
-		return GetSigningKeys200ResponseInnerCurrentSince{} // Return the zero value directly
+	if o == nil || IsNil(o.CurrentSince) {
+		var ret GetSigningKeys200ResponseInnerCurrentSince
+		return ret
 	}
 	return *o.CurrentSince
 }
@@ -435,64 +435,20 @@ func (o GetSigningKeys200ResponseInner) ToMap() (map[string]interface{}, error) 
 	return toSerialize, nil
 }
 
-func (o *GetSigningKeys200ResponseInner) UnmarshalJSON(data []byte) error {
-	// Validate required properties
-	requiredProperties := []string{
-		"kid",
-		"cert",
-		"fingerprint",
-		"thumbprint",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err := json.Unmarshal(data, &allProperties)
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	var tempStruct struct {
-		Kid           string                                     `json:"kid"`
-		Cert          string                                     `json:"cert"`
-		Pkcs7         *string                                    `json:"pkcs7,omitempty"`
-		Current       *bool                                      `json:"current,omitempty"`
-		Next          *bool                                      `json:"next,omitempty"`
-		Previous      *bool                                      `json:"previous,omitempty"`
-		CurrentSince  *GetSigningKeys200ResponseInnerCurrentSince  `json:"current_since,omitempty"`
-		CurrentUntil  *GetSigningKeys200ResponseInnerCurrentUntil  `json:"current_until,omitempty"`
-		Fingerprint   string                                     `json:"fingerprint"`
-		Thumbprint    string                                     `json:"thumbprint"`
-		Revoked       *bool                                      `json:"revoked,omitempty"`
-		RevokedAt     *GetSigningKeys200ResponseInnerRevokedAt     `json:"revoked_at,omitempty"`
-	}
+func (o *GetSigningKeys200ResponseInner) UnmarshalJSON(data []byte) (err error) {
+	varGetSigningKeys200ResponseInner := _GetSigningKeys200ResponseInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&tempStruct)
+	err = decoder.Decode(&varGetSigningKeys200ResponseInner)
+
 	if err != nil {
 		return err
 	}
 
-	o.Kid = tempStruct.Kid
-	o.Cert = tempStruct.Cert
-	o.Pkcs7 = tempStruct.Pkcs7
-	o.Current = tempStruct.Current
-	o.Next = tempStruct.Next
-	o.Previous = tempStruct.Previous
-	o.CurrentSince = tempStruct.CurrentSince
-	o.CurrentUntil = tempStruct.CurrentUntil
-	o.Fingerprint = tempStruct.Fingerprint
-	o.Thumbprint = tempStruct.Thumbprint
-	o.Revoked = tempStruct.Revoked
-	o.RevokedAt = tempStruct.RevokedAt
+	*o = GetSigningKeys200ResponseInner(varGetSigningKeys200ResponseInner)
 
-	return nil
+	return err
 }
 
 type NullableGetSigningKeys200ResponseInner struct {

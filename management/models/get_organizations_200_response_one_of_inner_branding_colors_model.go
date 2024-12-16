@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // GetOrganizations200ResponseOneOfInnerBrandingColors Color scheme used to customize the login pages
@@ -90,28 +89,6 @@ func (o GetOrganizations200ResponseOneOfInnerBrandingColors) ToMap() (map[string
 }
 
 func (o *GetOrganizations200ResponseOneOfInnerBrandingColors) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"primary",
-		"page_background",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetOrganizations200ResponseOneOfInnerBrandingColors := _GetOrganizations200ResponseOneOfInnerBrandingColors{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

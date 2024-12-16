@@ -12,7 +12,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // Client struct for Client
@@ -1199,69 +1198,6 @@ func (o Client) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *Client) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"client_id",
-		"tenant",
-		"name",
-		"description",
-		"global",
-		"client_secret",
-		"app_type",
-		"logo_uri",
-		"is_first_party",
-		"oidc_conformant",
-		"callbacks",
-		"allowed_origins",
-		"web_origins",
-		"client_aliases",
-		"allowed_clients",
-		"allowed_logout_urls",
-		"oidc_logout",
-		"grant_types",
-		"jwt_configuration",
-		"signing_keys",
-		"encryption_key",
-		"sso",
-		"sso_disabled",
-		"cross_origin_authentication",
-		"cross_origin_loc",
-		"custom_login_page_on",
-		"custom_login_page",
-		"custom_login_page_preview",
-		"form_template",
-		"addons",
-		"token_endpoint_auth_method",
-		"client_metadata",
-		"mobile",
-		"initiate_login_uri",
-		"native_social_login",
-		"refresh_token",
-		"organization_usage",
-		"organization_require_behavior",
-		"client_authentication_methods",
-		"require_pushed_authorization_requests",
-		"signed_request_object",
-		"require_proof_of_possession",
-		"compliance_level",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varClient := _Client{}
 
 	err = json.Unmarshal(data, &varClient)

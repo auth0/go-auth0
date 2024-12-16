@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // ClientClientAuthenticationMethods Defines client authentication methods.
@@ -114,29 +113,6 @@ func (o ClientClientAuthenticationMethods) ToMap() (map[string]interface{}, erro
 }
 
 func (o *ClientClientAuthenticationMethods) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"private_key_jwt",
-		"tls_client_auth",
-		"self_signed_tls_client_auth",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varClientClientAuthenticationMethods := _ClientClientAuthenticationMethods{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

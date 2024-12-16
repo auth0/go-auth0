@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/Sessions/delete_session
 func (m *Manager) DeleteSession(ctx context.Context, id string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("sessions", management.SafeString(id)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("sessions", string(id)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -36,7 +36,7 @@ func (m *Manager) DeleteSession(ctx context.Context, id string, opts ...manageme
 // https://auth0.com/docs/api/management/v2/#!/Sessions/get_session
 func (m *Manager) GetSession(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetSession200Response, error) {
 	var localVarReturnValue *models.GetSession200Response
-	err := m.management.Request(ctx, "GET", m.management.URI("sessions", management.SafeString(id)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("sessions", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}

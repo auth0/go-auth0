@@ -22,9 +22,9 @@ func NewManager(mgmt *management.Management) *Manager {
 // GetCustomTextByLanguage Get custom text for a prompt
 //
 // https://auth0.com/docs/api/management/v2/#!/Prompts/get_custom_text_by_language
-func (m *Manager) GetCustomTextByLanguage(ctx context.Context, prompt *models.GetCustomTextByLanguagePromptParameter, language *models.GetCustomTextByLanguageLanguageParameter, opts ...management.RequestOption) (*map[string]interface{}, error) {
+func (m *Manager) GetCustomTextByLanguage(ctx context.Context, prompt models.GetCustomTextByLanguagePromptParameter, language models.GetCustomTextByLanguageLanguageParameter, opts ...management.RequestOption) (*map[string]interface{}, error) {
 	var localVarReturnValue *map[string]interface{}
-	err := m.management.Request(ctx, "GET", m.management.URI("prompts", management.SafeString(prompt), "custom-text", management.SafeString(language)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("prompts", string(prompt), "custom-text", string(language)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return localVarReturnValue, err
 	}
@@ -34,9 +34,9 @@ func (m *Manager) GetCustomTextByLanguage(ctx context.Context, prompt *models.Ge
 // GetPartials Get partials for a prompt
 //
 // https://auth0.com/docs/api/management/v2/#!/Prompts/get_partials
-func (m *Manager) GetPartials(ctx context.Context, prompt *models.GetPartialsPromptParameter, opts ...management.RequestOption) (*map[string]interface{}, error) {
+func (m *Manager) GetPartials(ctx context.Context, prompt models.GetPartialsPromptParameter, opts ...management.RequestOption) (*map[string]interface{}, error) {
 	var localVarReturnValue *map[string]interface{}
-	err := m.management.Request(ctx, "GET", m.management.URI("prompts", management.SafeString(prompt), "partials"), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("prompts", string(prompt), "partials"), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return localVarReturnValue, err
 	}
@@ -70,9 +70,9 @@ func (m *Manager) PatchPrompts(ctx context.Context, promptsSettingsUpdate *model
 // PutCustomTextByLanguage Set custom text for a specific prompt
 //
 // https://auth0.com/docs/api/management/v2/#!/Prompts/put_custom_text_by_language
-func (m *Manager) PutCustomTextByLanguage(ctx context.Context, prompt *models.GetCustomTextByLanguagePromptParameter, language *models.GetCustomTextByLanguageLanguageParameter, requestBody map[string]interface{}, opts ...management.RequestOption) error {
+func (m *Manager) PutCustomTextByLanguage(ctx context.Context, prompt models.GetCustomTextByLanguagePromptParameter, language models.GetCustomTextByLanguageLanguageParameter, requestBody map[string]interface{}, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "PUT", m.management.URI("prompts", management.SafeString(prompt), "custom-text", management.SafeString(language)), requestBody, nil, opts...)
+	err := m.management.Request(ctx, "PUT", m.management.URI("prompts", string(prompt), "custom-text", string(language)), requestBody, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -82,9 +82,9 @@ func (m *Manager) PutCustomTextByLanguage(ctx context.Context, prompt *models.Ge
 // PutPartials Set partials for a prompt
 //
 // https://auth0.com/docs/api/management/v2/#!/Prompts/put_partials
-func (m *Manager) PutPartials(ctx context.Context, prompt *models.GetPartialsPromptParameter, requestBody map[string]interface{}, opts ...management.RequestOption) error {
+func (m *Manager) PutPartials(ctx context.Context, prompt models.GetPartialsPromptParameter, requestBody map[string]interface{}, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "PUT", m.management.URI("prompts", management.SafeString(prompt), "partials"), requestBody, nil, opts...)
+	err := m.management.Request(ctx, "PUT", m.management.URI("prompts", string(prompt), "partials"), requestBody, nil, opts...)
 	if err != nil {
 		return err
 	}

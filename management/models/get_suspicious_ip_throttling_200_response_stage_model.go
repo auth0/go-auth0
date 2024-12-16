@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // GetSuspiciousIpThrottling200ResponseStage Holds per-stage configuration options (max_attempts and rate).
@@ -88,28 +87,6 @@ func (o GetSuspiciousIpThrottling200ResponseStage) ToMap() (map[string]interface
 }
 
 func (o *GetSuspiciousIpThrottling200ResponseStage) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"pre-login",
-		"pre-user-registration",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetSuspiciousIpThrottling200ResponseStage := _GetSuspiciousIpThrottling200ResponseStage{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

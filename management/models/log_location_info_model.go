@@ -12,7 +12,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // LogLocationInfo Information about the location that triggered this event based on the `ip`.
@@ -257,34 +256,6 @@ func (o LogLocationInfo) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *LogLocationInfo) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"country_code",
-		"country_code3",
-		"country_name",
-		"city_name",
-		"latitude",
-		"longitude",
-		"time_zone",
-		"continent_code",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varLogLocationInfo := _LogLocationInfo{}
 
 	err = json.Unmarshal(data, &varLogLocationInfo)

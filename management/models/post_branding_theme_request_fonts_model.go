@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // PostBrandingThemeRequestFonts struct for PostBrandingThemeRequestFonts
@@ -272,35 +271,6 @@ func (o PostBrandingThemeRequestFonts) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *PostBrandingThemeRequestFonts) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"body_text",
-		"buttons_text",
-		"font_url",
-		"input_labels",
-		"links",
-		"links_style",
-		"reference_text_size",
-		"subtitle",
-		"title",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varPostBrandingThemeRequestFonts := _PostBrandingThemeRequestFonts{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

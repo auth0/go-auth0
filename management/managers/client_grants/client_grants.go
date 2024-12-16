@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/ClientGrants/delete_client_grants_by_id
 func (m *Manager) DeleteClientGrantsById(ctx context.Context, id string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("client-grants", management.SafeString(id)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("client-grants", string(id)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func (m *Manager) GetClientGrants(ctx context.Context, opts ...management.Reques
 // https://auth0.com/docs/api/management/v2/#!/ClientGrants/patch_client_grants_by_id
 func (m *Manager) PatchClientGrantsById(ctx context.Context, id string, patchClientGrantsByIdRequest *models.PatchClientGrantsByIdRequest, opts ...management.RequestOption) (*models.ClientGrant, error) {
 	var localVarReturnValue *models.ClientGrant
-	err := m.management.Request(ctx, "PATCH", m.management.URI("client-grants", management.SafeString(id)), patchClientGrantsByIdRequest, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PATCH", m.management.URI("client-grants", string(id)), patchClientGrantsByIdRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}

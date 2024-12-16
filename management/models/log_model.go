@@ -12,7 +12,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // Log struct for Log
@@ -581,46 +580,6 @@ func (o Log) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *Log) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"date",
-		"type",
-		"description",
-		"connection",
-		"connection_id",
-		"client_id",
-		"client_name",
-		"ip",
-		"hostname",
-		"user_id",
-		"user_name",
-		"audience",
-		"scope",
-		"strategy",
-		"strategy_type",
-		"log_id",
-		"isMobile",
-		"details",
-		"user_agent",
-		"location_info",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varLog := _Log{}
 
 	err = json.Unmarshal(data, &varLog)

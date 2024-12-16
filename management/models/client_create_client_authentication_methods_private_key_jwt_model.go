@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // ClientCreateClientAuthenticationMethodsPrivateKeyJwt Defines `private_key_jwt` client authentication method. If this property is defined, the client is enabled to use the Private Key JWT authentication method.
@@ -63,27 +62,6 @@ func (o ClientCreateClientAuthenticationMethodsPrivateKeyJwt) ToMap() (map[strin
 }
 
 func (o *ClientCreateClientAuthenticationMethodsPrivateKeyJwt) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"credentials",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varClientCreateClientAuthenticationMethodsPrivateKeyJwt := _ClientCreateClientAuthenticationMethodsPrivateKeyJwt{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

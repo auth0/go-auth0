@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/DeviceCredentials/delete_device_credentials_by_id
 func (m *Manager) DeleteDeviceCredentialsById(ctx context.Context, id string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("device-credentials", management.SafeString(id)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("device-credentials", string(id)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}

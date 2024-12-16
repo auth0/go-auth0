@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/Roles/delete_role_permission_assignment
 func (m *Manager) DeleteRolePermissionAssignment(ctx context.Context, id string, postRolePermissionAssignmentRequest *models.PostRolePermissionAssignmentRequest, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("roles", management.SafeString(id), "permissions"), postRolePermissionAssignmentRequest, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("roles", string(id), "permissions"), postRolePermissionAssignmentRequest, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -36,7 +36,7 @@ func (m *Manager) DeleteRolePermissionAssignment(ctx context.Context, id string,
 // https://auth0.com/docs/api/management/v2/#!/Roles/delete_roles_by_id
 func (m *Manager) DeleteRolesById(ctx context.Context, id string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("roles", management.SafeString(id)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("roles", string(id)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func (m *Manager) DeleteRolesById(ctx context.Context, id string, opts ...manage
 // https://auth0.com/docs/api/management/v2/#!/Roles/get_role_permission
 func (m *Manager) GetRolePermission(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetRolePermission200Response, error) {
 	var localVarReturnValue *models.GetRolePermission200Response
-	err := m.management.Request(ctx, "GET", m.management.URI("roles", management.SafeString(id), "permissions"), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("roles", string(id), "permissions"), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (m *Manager) GetRolePermission(ctx context.Context, id string, opts ...mana
 // https://auth0.com/docs/api/management/v2/#!/Roles/get_role_user
 func (m *Manager) GetRoleUser(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetRoleUser200Response, error) {
 	var localVarReturnValue *models.GetRoleUser200Response
-	err := m.management.Request(ctx, "GET", m.management.URI("roles", management.SafeString(id), "users"), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("roles", string(id), "users"), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (m *Manager) GetRoles(ctx context.Context, opts ...management.RequestOption
 // https://auth0.com/docs/api/management/v2/#!/Roles/get_roles_by_id
 func (m *Manager) GetRolesById(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetOrganizationMemberRoles200ResponseOneOfInner
-	err := m.management.Request(ctx, "GET", m.management.URI("roles", management.SafeString(id)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("roles", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (m *Manager) GetRolesById(ctx context.Context, id string, opts ...managemen
 // https://auth0.com/docs/api/management/v2/#!/Roles/patch_roles_by_id
 func (m *Manager) PatchRolesById(ctx context.Context, id string, roleUpdate *models.RoleUpdate, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetOrganizationMemberRoles200ResponseOneOfInner
-	err := m.management.Request(ctx, "PATCH", m.management.URI("roles", management.SafeString(id)), roleUpdate, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PATCH", m.management.URI("roles", string(id)), roleUpdate, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func (m *Manager) PatchRolesById(ctx context.Context, id string, roleUpdate *mod
 // https://auth0.com/docs/api/management/v2/#!/Roles/post_role_permission_assignment
 func (m *Manager) PostRolePermissionAssignment(ctx context.Context, id string, postRolePermissionAssignmentRequest *models.PostRolePermissionAssignmentRequest, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "POST", m.management.URI("roles", management.SafeString(id), "permissions"), postRolePermissionAssignmentRequest, nil, opts...)
+	err := m.management.Request(ctx, "POST", m.management.URI("roles", string(id), "permissions"), postRolePermissionAssignmentRequest, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -120,7 +120,7 @@ func (m *Manager) PostRolePermissionAssignment(ctx context.Context, id string, p
 // https://auth0.com/docs/api/management/v2/#!/Roles/post_role_users
 func (m *Manager) PostRoleUsers(ctx context.Context, id string, postRoleUsersRequest *models.PostRoleUsersRequest, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "POST", m.management.URI("roles", management.SafeString(id), "users"), postRoleUsersRequest, nil, opts...)
+	err := m.management.Request(ctx, "POST", m.management.URI("roles", string(id), "users"), postRoleUsersRequest, nil, opts...)
 	if err != nil {
 		return err
 	}

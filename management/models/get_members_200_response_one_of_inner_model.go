@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // GetMembers200ResponseOneOfInner struct for GetMembers200ResponseOneOfInner
@@ -170,31 +169,6 @@ func (o GetMembers200ResponseOneOfInner) ToMap() (map[string]interface{}, error)
 }
 
 func (o *GetMembers200ResponseOneOfInner) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"user_id",
-		"picture",
-		"name",
-		"email",
-		"roles",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetMembers200ResponseOneOfInner := _GetMembers200ResponseOneOfInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

@@ -12,7 +12,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // GetScimTokens200ResponseInner struct for GetScimTokens200ResponseInner
@@ -176,31 +175,6 @@ func (o GetScimTokens200ResponseInner) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *GetScimTokens200ResponseInner) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"token_id",
-		"scopes",
-		"created_at",
-		"valid_until",
-		"last_used_at",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetScimTokens200ResponseInner := _GetScimTokens200ResponseInner{}
 
 	err = json.Unmarshal(data, &varGetScimTokens200ResponseInner)

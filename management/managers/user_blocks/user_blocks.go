@@ -36,7 +36,7 @@ func (m *Manager) DeleteUserBlocks(ctx context.Context, opts ...management.Reque
 // https://auth0.com/docs/api/management/v2/#!/UserBlocks/delete_user_blocks_by_id
 func (m *Manager) DeleteUserBlocksById(ctx context.Context, id string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("user-blocks", management.SafeString(id)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("user-blocks", string(id)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func (m *Manager) GetUserBlocks(ctx context.Context, opts ...management.RequestO
 // https://auth0.com/docs/api/management/v2/#!/UserBlocks/get_user_blocks_by_id
 func (m *Manager) GetUserBlocksById(ctx context.Context, id string, opts ...management.RequestOption) (*models.UserBlock, error) {
 	var localVarReturnValue *models.UserBlock
-	err := m.management.Request(ctx, "GET", m.management.URI("user-blocks", management.SafeString(id)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("user-blocks", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}

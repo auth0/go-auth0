@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // GetActions200ResponseActionsInnerIntegration Integration defines a self contained functioning unit which partners publish. A partner may create one or many of these integrations.
@@ -433,41 +432,6 @@ func (o GetActions200ResponseActionsInnerIntegration) ToMap() (map[string]interf
 }
 
 func (o *GetActions200ResponseActionsInnerIntegration) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"id",
-		"catalog_id",
-		"url_slug",
-		"partner_id",
-		"name",
-		"description",
-		"short_description",
-		"logo",
-		"feature_type",
-		"terms_of_use_url",
-		"privacy_policy_url",
-		"public_support_link",
-		"current_release",
-		"created_at",
-		"updated_at",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetActions200ResponseActionsInnerIntegration := _GetActions200ResponseActionsInnerIntegration{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

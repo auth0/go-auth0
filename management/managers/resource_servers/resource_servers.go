@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/ResourceServers/delete_resource_servers_by_id
 func (m *Manager) DeleteResourceServersById(ctx context.Context, id string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("resource-servers", management.SafeString(id)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("resource-servers", string(id)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func (m *Manager) GetResourceServers(ctx context.Context, opts ...management.Req
 // https://auth0.com/docs/api/management/v2/#!/ResourceServers/get_resource_servers_by_id
 func (m *Manager) GetResourceServersById(ctx context.Context, id string, opts ...management.RequestOption) (*models.ResourceServer, error) {
 	var localVarReturnValue *models.ResourceServer
-	err := m.management.Request(ctx, "GET", m.management.URI("resource-servers", management.SafeString(id)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("resource-servers", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (m *Manager) GetResourceServersById(ctx context.Context, id string, opts ..
 // https://auth0.com/docs/api/management/v2/#!/ResourceServers/patch_resource_servers_by_id
 func (m *Manager) PatchResourceServersById(ctx context.Context, id string, resourceServerUpdate *models.ResourceServerUpdate, opts ...management.RequestOption) (*models.ResourceServer, error) {
 	var localVarReturnValue *models.ResourceServer
-	err := m.management.Request(ctx, "PATCH", m.management.URI("resource-servers", management.SafeString(id)), resourceServerUpdate, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PATCH", m.management.URI("resource-servers", string(id)), resourceServerUpdate, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}

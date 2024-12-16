@@ -12,7 +12,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // GetRefreshToken200Response struct for GetRefreshToken200Response
@@ -289,35 +288,6 @@ func (o GetRefreshToken200Response) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *GetRefreshToken200Response) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"id",
-		"user_id",
-		"created_at",
-		"idle_expires_at",
-		"expires_at",
-		"client_id",
-		"session_id",
-		"rotating",
-		"resource_servers",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetRefreshToken200Response := _GetRefreshToken200Response{}
 
 	err = json.Unmarshal(data, &varGetRefreshToken200Response)

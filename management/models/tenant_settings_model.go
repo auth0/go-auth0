@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // TenantSettings struct for TenantSettings
@@ -717,51 +716,6 @@ func (o TenantSettings) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *TenantSettings) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"change_password",
-		"guardian_mfa_page",
-		"default_audience",
-		"default_directory",
-		"error_page",
-		"device_flow",
-		"flags",
-		"friendly_name",
-		"picture_url",
-		"support_email",
-		"support_url",
-		"allowed_logout_urls",
-		"session_lifetime",
-		"idle_session_lifetime",
-		"sandbox_version",
-		"sandbox_versions_available",
-		"default_redirection_uri",
-		"enabled_locales",
-		"session_cookie",
-		"sessions",
-		"allow_organization_name_in_authentication_api",
-		"customize_mfa_in_postlogin_action",
-		"acr_values_supported",
-		"mtls",
-		"pushed_authorization_requests_supported",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varTenantSettings := _TenantSettings{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

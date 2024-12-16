@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/Keys/get_signing_key
 func (m *Manager) GetSigningKey(ctx context.Context, kid string, opts ...management.RequestOption) (*models.GetSigningKeys200ResponseInner, error) {
 	var localVarReturnValue *models.GetSigningKeys200ResponseInner
-	err := m.management.Request(ctx, "GET", m.management.URI("keys", "signing", management.SafeString(kid)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("keys", "signing", string(kid)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (m *Manager) PostSigningKeys(ctx context.Context, opts ...management.Reques
 // https://auth0.com/docs/api/management/v2/#!/Keys/put_signing_keys
 func (m *Manager) PutSigningKeys(ctx context.Context, kid string, opts ...management.RequestOption) (*models.PutSigningKeys200Response, error) {
 	var localVarReturnValue *models.PutSigningKeys200Response
-	err := m.management.Request(ctx, "PUT", m.management.URI("keys", "signing", management.SafeString(kid), "revoke"), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PUT", m.management.URI("keys", "signing", string(kid), "revoke"), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}

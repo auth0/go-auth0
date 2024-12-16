@@ -12,7 +12,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // GetLogStreams200ResponseInnerOneOf5 struct for GetLogStreams200ResponseInnerOneOf5
@@ -200,32 +199,6 @@ func (o GetLogStreams200ResponseInnerOneOf5) ToMap() (map[string]interface{}, er
 }
 
 func (o *GetLogStreams200ResponseInnerOneOf5) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"id",
-		"name",
-		"status",
-		"type",
-		"filters",
-		"sink",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetLogStreams200ResponseInnerOneOf5 := _GetLogStreams200ResponseInnerOneOf5{}
 
 	err = json.Unmarshal(data, &varGetLogStreams200ResponseInnerOneOf5)

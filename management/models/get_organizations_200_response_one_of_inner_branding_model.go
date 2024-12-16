@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // GetOrganizations200ResponseOneOfInnerBranding Theme defines how to style the login pages
@@ -89,28 +88,6 @@ func (o GetOrganizations200ResponseOneOfInnerBranding) ToMap() (map[string]inter
 }
 
 func (o *GetOrganizations200ResponseOneOfInnerBranding) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"logo_url",
-		"colors",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetOrganizations200ResponseOneOfInnerBranding := _GetOrganizations200ResponseOneOfInnerBranding{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

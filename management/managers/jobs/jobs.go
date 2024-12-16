@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/Jobs/get_errors
 func (m *Manager) GetErrors(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetErrors200Response, error) {
 	var localVarReturnValue *models.GetErrors200Response
-	err := m.management.Request(ctx, "GET", m.management.URI("jobs", management.SafeString(id), "errors"), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("jobs", string(id), "errors"), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +36,7 @@ func (m *Manager) GetErrors(ctx context.Context, id string, opts ...management.R
 // https://auth0.com/docs/api/management/v2/#!/Jobs/get_jobs_by_id
 func (m *Manager) GetJobsById(ctx context.Context, id string, opts ...management.RequestOption) (*models.Job, error) {
 	var localVarReturnValue *models.Job
-	err := m.management.Request(ctx, "GET", m.management.URI("jobs", management.SafeString(id)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("jobs", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}

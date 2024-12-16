@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // GetActions200ResponseActionsInner struct for GetActions200ResponseActionsInner
@@ -439,41 +438,6 @@ func (o GetActions200ResponseActionsInner) ToMap() (map[string]interface{}, erro
 }
 
 func (o *GetActions200ResponseActionsInner) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"id",
-		"name",
-		"supported_triggers",
-		"code",
-		"dependencies",
-		"runtime",
-		"secrets",
-		"deployed_version",
-		"installed_integration_id",
-		"integration",
-		"status",
-		"all_changes_deployed",
-		"built_at",
-		"created_at",
-		"updated_at",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetActions200ResponseActionsInner := _GetActions200ResponseActionsInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

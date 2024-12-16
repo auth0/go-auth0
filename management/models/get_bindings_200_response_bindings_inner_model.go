@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // GetBindings200ResponseBindingsInner Binding is the associative entity joining a trigger, and an action together.
@@ -196,32 +195,6 @@ func (o GetBindings200ResponseBindingsInner) ToMap() (map[string]interface{}, er
 }
 
 func (o *GetBindings200ResponseBindingsInner) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"id",
-		"trigger_id",
-		"display_name",
-		"action",
-		"created_at",
-		"updated_at",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetBindings200ResponseBindingsInner := _GetBindings200ResponseBindingsInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

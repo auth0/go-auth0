@@ -13,7 +13,6 @@ package models
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // GetScimConfiguration200Response struct for GetScimConfiguration200Response
@@ -252,34 +251,6 @@ func (o GetScimConfiguration200Response) ToMap() (map[string]interface{}, error)
 }
 
 func (o *GetScimConfiguration200Response) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"connection_id",
-		"connection_name",
-		"strategy",
-		"tenant_name",
-		"user_id_attribute",
-		"mapping",
-		"created_at",
-		"updated_on",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetScimConfiguration200Response := _GetScimConfiguration200Response{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

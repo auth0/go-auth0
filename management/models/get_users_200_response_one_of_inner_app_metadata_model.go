@@ -12,7 +12,6 @@ package models
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // GetUsers200ResponseOneOfInnerAppMetadata User metadata to which this user has read-only access.
@@ -521,42 +520,6 @@ func (o GetUsers200ResponseOneOfInnerAppMetadata) ToMap() (map[string]interface{
 }
 
 func (o *GetUsers200ResponseOneOfInnerAppMetadata) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"clientID",
-		"globalClientID",
-		"global_client_id",
-		"email_verified",
-		"user_id",
-		"identities",
-		"lastIP",
-		"lastLogin",
-		"metadata",
-		"created_at",
-		"loginsCount",
-		"_id",
-		"email",
-		"blocked",
-		"__tenant",
-		"updated_at",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
 	varGetUsers200ResponseOneOfInnerAppMetadata := _GetUsers200ResponseOneOfInnerAppMetadata{}
 
 	err = json.Unmarshal(data, &varGetUsers200ResponseOneOfInnerAppMetadata)

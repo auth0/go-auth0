@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/Organizations/delete_enabled_connections_by_connection_id
 func (m *Manager) DeleteEnabledConnectionsByConnectionId(ctx context.Context, id string, connectionId string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("organizations", management.SafeString(id), "enabled_connections", management.SafeString(connectionId)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("organizations", string(id), "enabled_connections", string(connectionId)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -36,7 +36,7 @@ func (m *Manager) DeleteEnabledConnectionsByConnectionId(ctx context.Context, id
 // https://auth0.com/docs/api/management/v2/#!/Organizations/delete_invitations_by_invitation_id
 func (m *Manager) DeleteInvitationsByInvitationId(ctx context.Context, id string, invitationId string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("organizations", management.SafeString(id), "invitations", management.SafeString(invitationId)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("organizations", string(id), "invitations", string(invitationId)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func (m *Manager) DeleteInvitationsByInvitationId(ctx context.Context, id string
 // https://auth0.com/docs/api/management/v2/#!/Organizations/delete_members
 func (m *Manager) DeleteMembers(ctx context.Context, id string, deleteMembersRequest *models.DeleteMembersRequest, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("organizations", management.SafeString(id), "members"), deleteMembersRequest, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("organizations", string(id), "members"), deleteMembersRequest, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func (m *Manager) DeleteMembers(ctx context.Context, id string, deleteMembersReq
 // https://auth0.com/docs/api/management/v2/#!/Organizations/delete_organization_member_roles
 func (m *Manager) DeleteOrganizationMemberRoles(ctx context.Context, id string, userId string, deleteOrganizationMemberRolesRequest *models.DeleteOrganizationMemberRolesRequest, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("organizations", management.SafeString(id), "members", management.SafeString(userId), "roles"), deleteOrganizationMemberRolesRequest, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("organizations", string(id), "members", string(userId), "roles"), deleteOrganizationMemberRolesRequest, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -72,7 +72,7 @@ func (m *Manager) DeleteOrganizationMemberRoles(ctx context.Context, id string, 
 // https://auth0.com/docs/api/management/v2/#!/Organizations/delete_organizations_by_id
 func (m *Manager) DeleteOrganizationsById(ctx context.Context, id string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("organizations", management.SafeString(id)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("organizations", string(id)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -84,7 +84,7 @@ func (m *Manager) DeleteOrganizationsById(ctx context.Context, id string, opts .
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_enabled_connections
 func (m *Manager) GetEnabledConnections(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetEnabledConnections200Response, error) {
 	var localVarReturnValue *models.GetEnabledConnections200Response
-	err := m.management.Request(ctx, "GET", m.management.URI("organizations", management.SafeString(id), "enabled_connections"), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("organizations", string(id), "enabled_connections"), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (m *Manager) GetEnabledConnections(ctx context.Context, id string, opts ...
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_enabled_connections_by_connection_id
 func (m *Manager) GetEnabledConnectionsByConnectionId(ctx context.Context, id string, connectionId string, opts ...management.RequestOption) (*models.GetEnabledConnections200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetEnabledConnections200ResponseOneOfInner
-	err := m.management.Request(ctx, "GET", m.management.URI("organizations", management.SafeString(id), "enabled_connections", management.SafeString(connectionId)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("organizations", string(id), "enabled_connections", string(connectionId)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func (m *Manager) GetEnabledConnectionsByConnectionId(ctx context.Context, id st
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_invitations
 func (m *Manager) GetInvitations(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetInvitations200Response, error) {
 	var localVarReturnValue *models.GetInvitations200Response
-	err := m.management.Request(ctx, "GET", m.management.URI("organizations", management.SafeString(id), "invitations"), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("organizations", string(id), "invitations"), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -120,7 +120,7 @@ func (m *Manager) GetInvitations(ctx context.Context, id string, opts ...managem
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_invitations_by_invitation_id
 func (m *Manager) GetInvitationsByInvitationId(ctx context.Context, id string, invitationId string, opts ...management.RequestOption) (*models.GetInvitations200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetInvitations200ResponseOneOfInner
-	err := m.management.Request(ctx, "GET", m.management.URI("organizations", management.SafeString(id), "invitations", management.SafeString(invitationId)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("organizations", string(id), "invitations", string(invitationId)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +132,7 @@ func (m *Manager) GetInvitationsByInvitationId(ctx context.Context, id string, i
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_members
 func (m *Manager) GetMembers(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetMembers200Response, error) {
 	var localVarReturnValue *models.GetMembers200Response
-	err := m.management.Request(ctx, "GET", m.management.URI("organizations", management.SafeString(id), "members"), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("organizations", string(id), "members"), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +144,7 @@ func (m *Manager) GetMembers(ctx context.Context, id string, opts ...management.
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_name_by_name
 func (m *Manager) GetNameByName(ctx context.Context, name string, opts ...management.RequestOption) (*models.GetOrganizations200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetOrganizations200ResponseOneOfInner
-	err := m.management.Request(ctx, "GET", m.management.URI("organizations", "name", management.SafeString(name)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("organizations", "name", string(name)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func (m *Manager) GetNameByName(ctx context.Context, name string, opts ...manage
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_organization_member_roles
 func (m *Manager) GetOrganizationMemberRoles(ctx context.Context, id string, userId string, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200Response, error) {
 	var localVarReturnValue *models.GetOrganizationMemberRoles200Response
-	err := m.management.Request(ctx, "GET", m.management.URI("organizations", management.SafeString(id), "members", management.SafeString(userId), "roles"), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("organizations", string(id), "members", string(userId), "roles"), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -180,7 +180,7 @@ func (m *Manager) GetOrganizations(ctx context.Context, opts ...management.Reque
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_organizations_by_id
 func (m *Manager) GetOrganizationsById(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetOrganizations200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetOrganizations200ResponseOneOfInner
-	err := m.management.Request(ctx, "GET", m.management.URI("organizations", management.SafeString(id)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("organizations", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +192,7 @@ func (m *Manager) GetOrganizationsById(ctx context.Context, id string, opts ...m
 // https://auth0.com/docs/api/management/v2/#!/Organizations/patch_enabled_connections_by_connection_id
 func (m *Manager) PatchEnabledConnectionsByConnectionId(ctx context.Context, id string, connectionId string, patchEnabledConnectionsByConnectionIdRequest *models.PatchEnabledConnectionsByConnectionIdRequest, opts ...management.RequestOption) (*models.GetEnabledConnections200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetEnabledConnections200ResponseOneOfInner
-	err := m.management.Request(ctx, "PATCH", m.management.URI("organizations", management.SafeString(id), "enabled_connections", management.SafeString(connectionId)), patchEnabledConnectionsByConnectionIdRequest, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PATCH", m.management.URI("organizations", string(id), "enabled_connections", string(connectionId)), patchEnabledConnectionsByConnectionIdRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -204,7 +204,7 @@ func (m *Manager) PatchEnabledConnectionsByConnectionId(ctx context.Context, id 
 // https://auth0.com/docs/api/management/v2/#!/Organizations/patch_organizations_by_id
 func (m *Manager) PatchOrganizationsById(ctx context.Context, id string, patchOrganizationsByIdRequest *models.PatchOrganizationsByIdRequest, opts ...management.RequestOption) (*models.GetOrganizations200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetOrganizations200ResponseOneOfInner
-	err := m.management.Request(ctx, "PATCH", m.management.URI("organizations", management.SafeString(id)), patchOrganizationsByIdRequest, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PATCH", m.management.URI("organizations", string(id)), patchOrganizationsByIdRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func (m *Manager) PatchOrganizationsById(ctx context.Context, id string, patchOr
 // https://auth0.com/docs/api/management/v2/#!/Organizations/post_enabled_connections
 func (m *Manager) PostEnabledConnections(ctx context.Context, id string, postEnabledConnectionsRequest *models.PostEnabledConnectionsRequest, opts ...management.RequestOption) (*models.GetEnabledConnections200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetEnabledConnections200ResponseOneOfInner
-	err := m.management.Request(ctx, "POST", m.management.URI("organizations", management.SafeString(id), "enabled_connections"), postEnabledConnectionsRequest, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "POST", m.management.URI("organizations", string(id), "enabled_connections"), postEnabledConnectionsRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -228,7 +228,7 @@ func (m *Manager) PostEnabledConnections(ctx context.Context, id string, postEna
 // https://auth0.com/docs/api/management/v2/#!/Organizations/post_invitations
 func (m *Manager) PostInvitations(ctx context.Context, id string, postInvitationsRequest *models.PostInvitationsRequest, opts ...management.RequestOption) (*models.GetInvitations200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetInvitations200ResponseOneOfInner
-	err := m.management.Request(ctx, "POST", m.management.URI("organizations", management.SafeString(id), "invitations"), postInvitationsRequest, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "POST", m.management.URI("organizations", string(id), "invitations"), postInvitationsRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -240,7 +240,7 @@ func (m *Manager) PostInvitations(ctx context.Context, id string, postInvitation
 // https://auth0.com/docs/api/management/v2/#!/Organizations/post_members
 func (m *Manager) PostMembers(ctx context.Context, id string, postMembersRequest *models.PostMembersRequest, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "POST", m.management.URI("organizations", management.SafeString(id), "members"), postMembersRequest, nil, opts...)
+	err := m.management.Request(ctx, "POST", m.management.URI("organizations", string(id), "members"), postMembersRequest, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -252,7 +252,7 @@ func (m *Manager) PostMembers(ctx context.Context, id string, postMembersRequest
 // https://auth0.com/docs/api/management/v2/#!/Organizations/post_organization_member_roles
 func (m *Manager) PostOrganizationMemberRoles(ctx context.Context, id string, userId string, postOrganizationMemberRolesRequest *models.PostOrganizationMemberRolesRequest, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "POST", m.management.URI("organizations", management.SafeString(id), "members", management.SafeString(userId), "roles"), postOrganizationMemberRolesRequest, nil, opts...)
+	err := m.management.Request(ctx, "POST", m.management.URI("organizations", string(id), "members", string(userId), "roles"), postOrganizationMemberRolesRequest, nil, opts...)
 	if err != nil {
 		return err
 	}

@@ -24,7 +24,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // https://auth0.com/docs/api/management/v2/#!/Branding/delete_branding_theme
 func (m *Manager) DeleteBrandingTheme(ctx context.Context, themeId string, opts ...management.RequestOption) error {
 
-	err := m.management.Request(ctx, "DELETE", m.management.URI("branding", "themes", management.SafeString(themeId)), nil, nil, opts...)
+	err := m.management.Request(ctx, "DELETE", m.management.URI("branding", "themes", string(themeId)), nil, nil, opts...)
 	if err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func (m *Manager) GetBranding(ctx context.Context, opts ...management.RequestOpt
 // https://auth0.com/docs/api/management/v2/#!/Branding/get_branding_theme
 func (m *Manager) GetBrandingTheme(ctx context.Context, themeId string, opts ...management.RequestOption) (*models.PostBrandingTheme200Response, error) {
 	var localVarReturnValue *models.PostBrandingTheme200Response
-	err := m.management.Request(ctx, "GET", m.management.URI("branding", "themes", management.SafeString(themeId)), nil, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "GET", m.management.URI("branding", "themes", string(themeId)), nil, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func (m *Manager) PatchBranding(ctx context.Context, patchBrandingRequest *model
 // https://auth0.com/docs/api/management/v2/#!/Branding/patch_branding_theme
 func (m *Manager) PatchBrandingTheme(ctx context.Context, themeId string, postBrandingThemeRequest *models.PostBrandingThemeRequest, opts ...management.RequestOption) (*models.PostBrandingTheme200Response, error) {
 	var localVarReturnValue *models.PostBrandingTheme200Response
-	err := m.management.Request(ctx, "PATCH", m.management.URI("branding", "themes", management.SafeString(themeId)), postBrandingThemeRequest, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PATCH", m.management.URI("branding", "themes", string(themeId)), postBrandingThemeRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
