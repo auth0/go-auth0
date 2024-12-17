@@ -11,38 +11,43 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetMessageTypes200Response struct for GetMessageTypes200Response
 type GetMessageTypes200Response struct {
 	// The list of phone factors to enable on the tenant. Can include `sms` and `voice`.
-	MessageTypes []GetMessageTypes200ResponseMessageTypesInner `json:"message_types"`
+	MessageTypes []GetMessageTypes200ResponseMessageTypesInner `json:"message_types,omitempty"`
 }
 
-type _GetMessageTypes200Response GetMessageTypes200Response
-
-// GetMessageTypes returns the MessageTypes field value
+// GetMessageTypes returns the MessageTypes field value if set, zero value otherwise.
 func (o *GetMessageTypes200Response) GetMessageTypes() []GetMessageTypes200ResponseMessageTypesInner {
-	if o == nil {
+	if o == nil || IsNil(o.MessageTypes) {
 		var ret []GetMessageTypes200ResponseMessageTypesInner
 		return ret
 	}
-
 	return o.MessageTypes
 }
 
-// GetMessageTypesOk returns a tuple with the MessageTypes field value
+// GetMessageTypesOk returns a tuple with the MessageTypes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetMessageTypes200Response) GetMessageTypesOk() ([]GetMessageTypes200ResponseMessageTypesInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.MessageTypes) {
 		return nil, false
 	}
 	return o.MessageTypes, true
 }
 
-// SetMessageTypes sets field value
+// HasMessageTypes returns a boolean if a field has been set.
+func (o *GetMessageTypes200Response) HasMessageTypes() bool {
+	if o != nil && !IsNil(o.MessageTypes) {
+		return true
+	}
+
+	return false
+}
+
+// SetMessageTypes gets a reference to the given []GetMessageTypes200ResponseMessageTypesInner and assigns it to the MessageTypes field.
 func (o *GetMessageTypes200Response) SetMessageTypes(v []GetMessageTypes200ResponseMessageTypesInner) {
 	o.MessageTypes = v
 }
@@ -57,24 +62,10 @@ func (o GetMessageTypes200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetMessageTypes200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["message_types"] = o.MessageTypes
-	return toSerialize, nil
-}
-
-func (o *GetMessageTypes200Response) UnmarshalJSON(data []byte) (err error) {
-	varGetMessageTypes200Response := _GetMessageTypes200Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetMessageTypes200Response)
-
-	if err != nil {
-		return err
+	if !IsNil(o.MessageTypes) {
+		toSerialize["message_types"] = o.MessageTypes
 	}
-
-	*o = GetMessageTypes200Response(varGetMessageTypes200Response)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableGetMessageTypes200Response struct {

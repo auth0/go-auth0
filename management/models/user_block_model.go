@@ -11,38 +11,43 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // UserBlock struct for UserBlock
 type UserBlock struct {
 	// Array of identifier + IP address pairs.  IP address is optional, and may be omitted in certain circumstances (such as Account Lockout mode).
-	BlockedFor []UserBlockBlockedForInner `json:"blocked_for"`
+	BlockedFor []UserBlockBlockedForInner `json:"blocked_for,omitempty"`
 }
 
-type _UserBlock UserBlock
-
-// GetBlockedFor returns the BlockedFor field value
+// GetBlockedFor returns the BlockedFor field value if set, zero value otherwise.
 func (o *UserBlock) GetBlockedFor() []UserBlockBlockedForInner {
-	if o == nil {
+	if o == nil || IsNil(o.BlockedFor) {
 		var ret []UserBlockBlockedForInner
 		return ret
 	}
-
 	return o.BlockedFor
 }
 
-// GetBlockedForOk returns a tuple with the BlockedFor field value
+// GetBlockedForOk returns a tuple with the BlockedFor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserBlock) GetBlockedForOk() ([]UserBlockBlockedForInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.BlockedFor) {
 		return nil, false
 	}
 	return o.BlockedFor, true
 }
 
-// SetBlockedFor sets field value
+// HasBlockedFor returns a boolean if a field has been set.
+func (o *UserBlock) HasBlockedFor() bool {
+	if o != nil && !IsNil(o.BlockedFor) {
+		return true
+	}
+
+	return false
+}
+
+// SetBlockedFor gets a reference to the given []UserBlockBlockedForInner and assigns it to the BlockedFor field.
 func (o *UserBlock) SetBlockedFor(v []UserBlockBlockedForInner) {
 	o.BlockedFor = v
 }
@@ -57,24 +62,10 @@ func (o UserBlock) MarshalJSON() ([]byte, error) {
 
 func (o UserBlock) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["blocked_for"] = o.BlockedFor
-	return toSerialize, nil
-}
-
-func (o *UserBlock) UnmarshalJSON(data []byte) (err error) {
-	varUserBlock := _UserBlock{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varUserBlock)
-
-	if err != nil {
-		return err
+	if !IsNil(o.BlockedFor) {
+		toSerialize["blocked_for"] = o.BlockedFor
 	}
-
-	*o = UserBlock(varUserBlock)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableUserBlock struct {

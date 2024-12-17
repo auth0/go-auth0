@@ -11,64 +11,77 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetSuspiciousIpThrottling200ResponseStage Holds per-stage configuration options (max_attempts and rate).
 type GetSuspiciousIpThrottling200ResponseStage struct {
-	PreLogin            GetSuspiciousIpThrottling200ResponseStagePreLogin            `json:"pre-login"`
-	PreUserRegistration GetSuspiciousIpThrottling200ResponseStagePreUserRegistration `json:"pre-user-registration"`
+	PreLogin            *GetSuspiciousIpThrottling200ResponseStagePreLogin            `json:"pre-login,omitempty"`
+	PreUserRegistration *GetSuspiciousIpThrottling200ResponseStagePreUserRegistration `json:"pre-user-registration,omitempty"`
 }
 
-type _GetSuspiciousIpThrottling200ResponseStage GetSuspiciousIpThrottling200ResponseStage
-
-// GetPreLogin returns the PreLogin field value
+// GetPreLogin returns the PreLogin field value if set, zero value otherwise.
 func (o *GetSuspiciousIpThrottling200ResponseStage) GetPreLogin() GetSuspiciousIpThrottling200ResponseStagePreLogin {
-	if o == nil {
+	if o == nil || IsNil(o.PreLogin) {
 		var ret GetSuspiciousIpThrottling200ResponseStagePreLogin
 		return ret
 	}
-
-	return o.PreLogin
+	return *o.PreLogin
 }
 
-// GetPreLoginOk returns a tuple with the PreLogin field value
+// GetPreLoginOk returns a tuple with the PreLogin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSuspiciousIpThrottling200ResponseStage) GetPreLoginOk() (*GetSuspiciousIpThrottling200ResponseStagePreLogin, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PreLogin) {
 		return nil, false
 	}
-	return &o.PreLogin, true
+	return o.PreLogin, true
 }
 
-// SetPreLogin sets field value
+// HasPreLogin returns a boolean if a field has been set.
+func (o *GetSuspiciousIpThrottling200ResponseStage) HasPreLogin() bool {
+	if o != nil && !IsNil(o.PreLogin) {
+		return true
+	}
+
+	return false
+}
+
+// SetPreLogin gets a reference to the given GetSuspiciousIpThrottling200ResponseStagePreLogin and assigns it to the PreLogin field.
 func (o *GetSuspiciousIpThrottling200ResponseStage) SetPreLogin(v GetSuspiciousIpThrottling200ResponseStagePreLogin) {
-	o.PreLogin = v
+	o.PreLogin = &v
 }
 
-// GetPreUserRegistration returns the PreUserRegistration field value
+// GetPreUserRegistration returns the PreUserRegistration field value if set, zero value otherwise.
 func (o *GetSuspiciousIpThrottling200ResponseStage) GetPreUserRegistration() GetSuspiciousIpThrottling200ResponseStagePreUserRegistration {
-	if o == nil {
+	if o == nil || IsNil(o.PreUserRegistration) {
 		var ret GetSuspiciousIpThrottling200ResponseStagePreUserRegistration
 		return ret
 	}
-
-	return o.PreUserRegistration
+	return *o.PreUserRegistration
 }
 
-// GetPreUserRegistrationOk returns a tuple with the PreUserRegistration field value
+// GetPreUserRegistrationOk returns a tuple with the PreUserRegistration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSuspiciousIpThrottling200ResponseStage) GetPreUserRegistrationOk() (*GetSuspiciousIpThrottling200ResponseStagePreUserRegistration, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PreUserRegistration) {
 		return nil, false
 	}
-	return &o.PreUserRegistration, true
+	return o.PreUserRegistration, true
 }
 
-// SetPreUserRegistration sets field value
+// HasPreUserRegistration returns a boolean if a field has been set.
+func (o *GetSuspiciousIpThrottling200ResponseStage) HasPreUserRegistration() bool {
+	if o != nil && !IsNil(o.PreUserRegistration) {
+		return true
+	}
+
+	return false
+}
+
+// SetPreUserRegistration gets a reference to the given GetSuspiciousIpThrottling200ResponseStagePreUserRegistration and assigns it to the PreUserRegistration field.
 func (o *GetSuspiciousIpThrottling200ResponseStage) SetPreUserRegistration(v GetSuspiciousIpThrottling200ResponseStagePreUserRegistration) {
-	o.PreUserRegistration = v
+	o.PreUserRegistration = &v
 }
 
 func (o GetSuspiciousIpThrottling200ResponseStage) MarshalJSON() ([]byte, error) {
@@ -81,25 +94,13 @@ func (o GetSuspiciousIpThrottling200ResponseStage) MarshalJSON() ([]byte, error)
 
 func (o GetSuspiciousIpThrottling200ResponseStage) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["pre-login"] = o.PreLogin
-	toSerialize["pre-user-registration"] = o.PreUserRegistration
-	return toSerialize, nil
-}
-
-func (o *GetSuspiciousIpThrottling200ResponseStage) UnmarshalJSON(data []byte) (err error) {
-	varGetSuspiciousIpThrottling200ResponseStage := _GetSuspiciousIpThrottling200ResponseStage{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetSuspiciousIpThrottling200ResponseStage)
-
-	if err != nil {
-		return err
+	if !IsNil(o.PreLogin) {
+		toSerialize["pre-login"] = o.PreLogin
 	}
-
-	*o = GetSuspiciousIpThrottling200ResponseStage(varGetSuspiciousIpThrottling200ResponseStage)
-
-	return err
+	if !IsNil(o.PreUserRegistration) {
+		toSerialize["pre-user-registration"] = o.PreUserRegistration
+	}
+	return toSerialize, nil
 }
 
 type NullableGetSuspiciousIpThrottling200ResponseStage struct {

@@ -67,12 +67,12 @@ type ClientUpdate struct {
 	ClientMetadata map[string]interface{}     `json:"client_metadata,omitempty"`
 	Mobile         NullableClientUpdateMobile `json:"mobile,omitempty"`
 	// Initiate login uri, must be https
-	InitiateLoginUri            *string                                         `json:"initiate_login_uri,omitempty"`
-	NativeSocialLogin           NullableClientCreateNativeSocialLogin           `json:"native_social_login,omitempty"`
-	RefreshToken                NullableClientRefreshToken                      `json:"refresh_token,omitempty"`
-	OrganizationUsage           *ClientOrganizationUsage                        `json:"organization_usage,omitempty"`
-	OrganizationRequireBehavior *ClientOrganizationRequireBehavior              `json:"organization_require_behavior,omitempty"`
-	ClientAuthenticationMethods NullableClientUpdateClientAuthenticationMethods `json:"client_authentication_methods,omitempty"`
+	InitiateLoginUri            *string                                   `json:"initiate_login_uri,omitempty"`
+	NativeSocialLogin           NullableClientNativeSocialLogin           `json:"native_social_login,omitempty"`
+	RefreshToken                NullableClientRefreshToken                `json:"refresh_token,omitempty"`
+	OrganizationUsage           *ClientOrganizationUsage                  `json:"organization_usage,omitempty"`
+	OrganizationRequireBehavior *ClientOrganizationRequireBehavior        `json:"organization_require_behavior,omitempty"`
+	ClientAuthenticationMethods NullableClientClientAuthenticationMethods `json:"client_authentication_methods,omitempty"`
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool                                   `json:"require_pushed_authorization_requests,omitempty"`
 	SignedRequestObject                NullableClientUpdateSignedRequestObject `json:"signed_request_object,omitempty"`
@@ -1119,9 +1119,9 @@ func (o *ClientUpdate) SetInitiateLoginUri(v string) {
 }
 
 // GetNativeSocialLogin returns the NativeSocialLogin field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ClientUpdate) GetNativeSocialLogin() ClientCreateNativeSocialLogin {
+func (o *ClientUpdate) GetNativeSocialLogin() ClientNativeSocialLogin {
 	if o == nil || IsNil(o.NativeSocialLogin.Get()) {
-		var ret ClientCreateNativeSocialLogin
+		var ret ClientNativeSocialLogin
 		return ret
 	}
 	return *o.NativeSocialLogin.Get()
@@ -1130,7 +1130,7 @@ func (o *ClientUpdate) GetNativeSocialLogin() ClientCreateNativeSocialLogin {
 // GetNativeSocialLoginOk returns a tuple with the NativeSocialLogin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ClientUpdate) GetNativeSocialLoginOk() (*ClientCreateNativeSocialLogin, bool) {
+func (o *ClientUpdate) GetNativeSocialLoginOk() (*ClientNativeSocialLogin, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1146,8 +1146,8 @@ func (o *ClientUpdate) HasNativeSocialLogin() bool {
 	return false
 }
 
-// SetNativeSocialLogin gets a reference to the given NullableClientCreateNativeSocialLogin and assigns it to the NativeSocialLogin field.
-func (o *ClientUpdate) SetNativeSocialLogin(v ClientCreateNativeSocialLogin) {
+// SetNativeSocialLogin gets a reference to the given NullableClientNativeSocialLogin and assigns it to the NativeSocialLogin field.
+func (o *ClientUpdate) SetNativeSocialLogin(v ClientNativeSocialLogin) {
 	o.NativeSocialLogin.Set(&v)
 }
 
@@ -1269,9 +1269,9 @@ func (o *ClientUpdate) SetOrganizationRequireBehavior(v ClientOrganizationRequir
 }
 
 // GetClientAuthenticationMethods returns the ClientAuthenticationMethods field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ClientUpdate) GetClientAuthenticationMethods() ClientUpdateClientAuthenticationMethods {
+func (o *ClientUpdate) GetClientAuthenticationMethods() ClientClientAuthenticationMethods {
 	if o == nil || IsNil(o.ClientAuthenticationMethods.Get()) {
-		var ret ClientUpdateClientAuthenticationMethods
+		var ret ClientClientAuthenticationMethods
 		return ret
 	}
 	return *o.ClientAuthenticationMethods.Get()
@@ -1280,7 +1280,7 @@ func (o *ClientUpdate) GetClientAuthenticationMethods() ClientUpdateClientAuthen
 // GetClientAuthenticationMethodsOk returns a tuple with the ClientAuthenticationMethods field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ClientUpdate) GetClientAuthenticationMethodsOk() (*ClientUpdateClientAuthenticationMethods, bool) {
+func (o *ClientUpdate) GetClientAuthenticationMethodsOk() (*ClientClientAuthenticationMethods, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1296,8 +1296,8 @@ func (o *ClientUpdate) HasClientAuthenticationMethods() bool {
 	return false
 }
 
-// SetClientAuthenticationMethods gets a reference to the given NullableClientUpdateClientAuthenticationMethods and assigns it to the ClientAuthenticationMethods field.
-func (o *ClientUpdate) SetClientAuthenticationMethods(v ClientUpdateClientAuthenticationMethods) {
+// SetClientAuthenticationMethods gets a reference to the given NullableClientClientAuthenticationMethods and assigns it to the ClientAuthenticationMethods field.
+func (o *ClientUpdate) SetClientAuthenticationMethods(v ClientClientAuthenticationMethods) {
 	o.ClientAuthenticationMethods.Set(&v)
 }
 

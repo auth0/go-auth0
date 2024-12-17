@@ -11,40 +11,45 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // ClientNativeSocialLoginApple Native Social Login support for the Apple connection
 type ClientNativeSocialLoginApple struct {
 	// Determine whether or not to allow signing in natively using an Apple authorization code
-	Enabled bool `json:"enabled"`
+	Enabled *bool `json:"enabled,omitempty"`
 }
 
-type _ClientNativeSocialLoginApple ClientNativeSocialLoginApple
-
-// GetEnabled returns the Enabled field value
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ClientNativeSocialLoginApple) GetEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.Enabled
+	return *o.Enabled
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientNativeSocialLoginApple) GetEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
-	return &o.Enabled, true
+	return o.Enabled, true
 }
 
-// SetEnabled sets field value
+// HasEnabled returns a boolean if a field has been set.
+func (o *ClientNativeSocialLoginApple) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
 func (o *ClientNativeSocialLoginApple) SetEnabled(v bool) {
-	o.Enabled = v
+	o.Enabled = &v
 }
 
 func (o ClientNativeSocialLoginApple) MarshalJSON() ([]byte, error) {
@@ -57,24 +62,10 @@ func (o ClientNativeSocialLoginApple) MarshalJSON() ([]byte, error) {
 
 func (o ClientNativeSocialLoginApple) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["enabled"] = o.Enabled
-	return toSerialize, nil
-}
-
-func (o *ClientNativeSocialLoginApple) UnmarshalJSON(data []byte) (err error) {
-	varClientNativeSocialLoginApple := _ClientNativeSocialLoginApple{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varClientNativeSocialLoginApple)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
 	}
-
-	*o = ClientNativeSocialLoginApple(varClientNativeSocialLoginApple)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableClientNativeSocialLoginApple struct {

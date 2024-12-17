@@ -11,612 +11,793 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // TenantSettingsFlags Flags used to change the behavior of this tenant.
 type TenantSettingsFlags struct {
 	// Whether to use the older v1 change password flow (true, not recommended except for backward compatibility) or the newer safer flow (false, recommended).
-	ChangePwdFlowV1 bool `json:"change_pwd_flow_v1"`
+	ChangePwdFlowV1 *bool `json:"change_pwd_flow_v1,omitempty"`
 	// Whether the APIs section is enabled (true) or disabled (false).
-	EnableApisSection bool `json:"enable_apis_section"`
+	EnableApisSection *bool `json:"enable_apis_section,omitempty"`
 	// Whether the impersonation functionality has been disabled (true) or not (false). Read-only.
-	DisableImpersonation bool `json:"disable_impersonation"`
+	DisableImpersonation *bool `json:"disable_impersonation,omitempty"`
 	// Whether all current connections should be enabled when a new client (application) is created (true, default) or not (false).
-	EnableClientConnections bool `json:"enable_client_connections"`
+	EnableClientConnections *bool `json:"enable_client_connections,omitempty"`
 	// Whether advanced API Authorization scenarios are enabled (true) or disabled (false).
-	EnablePipeline2 bool `json:"enable_pipeline2"`
+	EnablePipeline2 *bool `json:"enable_pipeline2,omitempty"`
 	// If enabled, clients are able to add legacy delegation grants.
-	AllowLegacyDelegationGrantTypes bool `json:"allow_legacy_delegation_grant_types"`
+	AllowLegacyDelegationGrantTypes *bool `json:"allow_legacy_delegation_grant_types,omitempty"`
 	// If enabled, clients are able to add legacy RO grants.
-	AllowLegacyRoGrantTypes bool `json:"allow_legacy_ro_grant_types"`
+	AllowLegacyRoGrantTypes *bool `json:"allow_legacy_ro_grant_types,omitempty"`
 	// Whether the legacy `/tokeninfo` endpoint is enabled for your account (true) or unavailable (false).
-	AllowLegacyTokeninfoEndpoint bool `json:"allow_legacy_tokeninfo_endpoint"`
+	AllowLegacyTokeninfoEndpoint *bool `json:"allow_legacy_tokeninfo_endpoint,omitempty"`
 	// Whether ID tokens and the userinfo endpoint includes a complete user profile (true) or only OpenID Connect claims (false).
-	EnableLegacyProfile bool `json:"enable_legacy_profile"`
+	EnableLegacyProfile *bool `json:"enable_legacy_profile,omitempty"`
 	// Whether ID tokens can be used to authorize some types of requests to API v2 (true) not not (false).
-	EnableIdtokenApi2 bool `json:"enable_idtoken_api2"`
+	EnableIdtokenApi2 *bool `json:"enable_idtoken_api2,omitempty"`
 	// Whether the public sign up process shows a user_exists error (true) or a generic error (false) if the user already exists.
-	EnablePublicSignupUserExistsError bool `json:"enable_public_signup_user_exists_error"`
+	EnablePublicSignupUserExistsError *bool `json:"enable_public_signup_user_exists_error,omitempty"`
 	// Whether users are prompted to confirm log in before SSO redirection (false) or are not prompted (true).
-	EnableSso bool `json:"enable_sso"`
+	EnableSso *bool `json:"enable_sso,omitempty"`
 	// Whether the `enable_sso` setting can be changed (true) or not (false).
-	AllowChangingEnableSso bool `json:"allow_changing_enable_sso"`
+	AllowChangingEnableSso *bool `json:"allow_changing_enable_sso,omitempty"`
 	// Whether classic Universal Login prompts include additional security headers to prevent clickjacking (true) or no safeguard (false).
-	DisableClickjackProtectionHeaders bool `json:"disable_clickjack_protection_headers"`
+	DisableClickjackProtectionHeaders *bool `json:"disable_clickjack_protection_headers,omitempty"`
 	// Do not Publish Enterprise Connections Information with IdP domains on the lock configuration file.
-	NoDiscloseEnterpriseConnections bool `json:"no_disclose_enterprise_connections"`
+	NoDiscloseEnterpriseConnections *bool `json:"no_disclose_enterprise_connections,omitempty"`
 	// Enforce client authentication for passwordless start.
-	EnforceClientAuthenticationOnPasswordlessStart bool `json:"enforce_client_authentication_on_passwordless_start"`
+	EnforceClientAuthenticationOnPasswordlessStart *bool `json:"enforce_client_authentication_on_passwordless_start,omitempty"`
 	// Enables the email verification flow during login for Azure AD and ADFS connections
-	EnableAdfsWaadEmailVerification bool `json:"enable_adfs_waad_email_verification"`
+	EnableAdfsWaadEmailVerification *bool `json:"enable_adfs_waad_email_verification,omitempty"`
 	// Delete underlying grant when a Refresh Token is revoked via the Authentication API.
-	RevokeRefreshTokenGrant bool `json:"revoke_refresh_token_grant"`
+	RevokeRefreshTokenGrant *bool `json:"revoke_refresh_token_grant,omitempty"`
 	// Enables beta access to log streaming changes
-	DashboardLogStreamsNext bool `json:"dashboard_log_streams_next"`
+	DashboardLogStreamsNext *bool `json:"dashboard_log_streams_next,omitempty"`
 	// Enables new insights activity page view
-	DashboardInsightsView bool `json:"dashboard_insights_view"`
+	DashboardInsightsView *bool `json:"dashboard_insights_view,omitempty"`
 	// Disables SAML fields map fix for bad mappings with repeated attributes
-	DisableFieldsMapFix bool `json:"disable_fields_map_fix"`
+	DisableFieldsMapFix *bool `json:"disable_fields_map_fix,omitempty"`
 	// Used to allow users to pick what factor to enroll of the available MFA factors.
-	MfaShowFactorListOnEnrollment bool `json:"mfa_show_factor_list_on_enrollment"`
+	MfaShowFactorListOnEnrollment *bool `json:"mfa_show_factor_list_on_enrollment,omitempty"`
 	// Removes alg property from jwks .well-known endpoint
-	RemoveAlgFromJwks bool `json:"remove_alg_from_jwks"`
+	RemoveAlgFromJwks *bool `json:"remove_alg_from_jwks,omitempty"`
 }
 
-type _TenantSettingsFlags TenantSettingsFlags
-
-// GetChangePwdFlowV1 returns the ChangePwdFlowV1 field value
+// GetChangePwdFlowV1 returns the ChangePwdFlowV1 field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetChangePwdFlowV1() bool {
-	if o == nil {
+	if o == nil || IsNil(o.ChangePwdFlowV1) {
 		var ret bool
 		return ret
 	}
-
-	return o.ChangePwdFlowV1
+	return *o.ChangePwdFlowV1
 }
 
-// GetChangePwdFlowV1Ok returns a tuple with the ChangePwdFlowV1 field value
+// GetChangePwdFlowV1Ok returns a tuple with the ChangePwdFlowV1 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetChangePwdFlowV1Ok() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ChangePwdFlowV1) {
 		return nil, false
 	}
-	return &o.ChangePwdFlowV1, true
+	return o.ChangePwdFlowV1, true
 }
 
-// SetChangePwdFlowV1 sets field value
+// HasChangePwdFlowV1 returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasChangePwdFlowV1() bool {
+	if o != nil && !IsNil(o.ChangePwdFlowV1) {
+		return true
+	}
+
+	return false
+}
+
+// SetChangePwdFlowV1 gets a reference to the given bool and assigns it to the ChangePwdFlowV1 field.
 func (o *TenantSettingsFlags) SetChangePwdFlowV1(v bool) {
-	o.ChangePwdFlowV1 = v
+	o.ChangePwdFlowV1 = &v
 }
 
-// GetEnableApisSection returns the EnableApisSection field value
+// GetEnableApisSection returns the EnableApisSection field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetEnableApisSection() bool {
-	if o == nil {
+	if o == nil || IsNil(o.EnableApisSection) {
 		var ret bool
 		return ret
 	}
-
-	return o.EnableApisSection
+	return *o.EnableApisSection
 }
 
-// GetEnableApisSectionOk returns a tuple with the EnableApisSection field value
+// GetEnableApisSectionOk returns a tuple with the EnableApisSection field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetEnableApisSectionOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnableApisSection) {
 		return nil, false
 	}
-	return &o.EnableApisSection, true
+	return o.EnableApisSection, true
 }
 
-// SetEnableApisSection sets field value
+// HasEnableApisSection returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasEnableApisSection() bool {
+	if o != nil && !IsNil(o.EnableApisSection) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableApisSection gets a reference to the given bool and assigns it to the EnableApisSection field.
 func (o *TenantSettingsFlags) SetEnableApisSection(v bool) {
-	o.EnableApisSection = v
+	o.EnableApisSection = &v
 }
 
-// GetDisableImpersonation returns the DisableImpersonation field value
+// GetDisableImpersonation returns the DisableImpersonation field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetDisableImpersonation() bool {
-	if o == nil {
+	if o == nil || IsNil(o.DisableImpersonation) {
 		var ret bool
 		return ret
 	}
-
-	return o.DisableImpersonation
+	return *o.DisableImpersonation
 }
 
-// GetDisableImpersonationOk returns a tuple with the DisableImpersonation field value
+// GetDisableImpersonationOk returns a tuple with the DisableImpersonation field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetDisableImpersonationOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DisableImpersonation) {
 		return nil, false
 	}
-	return &o.DisableImpersonation, true
+	return o.DisableImpersonation, true
 }
 
-// SetDisableImpersonation sets field value
+// HasDisableImpersonation returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasDisableImpersonation() bool {
+	if o != nil && !IsNil(o.DisableImpersonation) {
+		return true
+	}
+
+	return false
+}
+
+// SetDisableImpersonation gets a reference to the given bool and assigns it to the DisableImpersonation field.
 func (o *TenantSettingsFlags) SetDisableImpersonation(v bool) {
-	o.DisableImpersonation = v
+	o.DisableImpersonation = &v
 }
 
-// GetEnableClientConnections returns the EnableClientConnections field value
+// GetEnableClientConnections returns the EnableClientConnections field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetEnableClientConnections() bool {
-	if o == nil {
+	if o == nil || IsNil(o.EnableClientConnections) {
 		var ret bool
 		return ret
 	}
-
-	return o.EnableClientConnections
+	return *o.EnableClientConnections
 }
 
-// GetEnableClientConnectionsOk returns a tuple with the EnableClientConnections field value
+// GetEnableClientConnectionsOk returns a tuple with the EnableClientConnections field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetEnableClientConnectionsOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnableClientConnections) {
 		return nil, false
 	}
-	return &o.EnableClientConnections, true
+	return o.EnableClientConnections, true
 }
 
-// SetEnableClientConnections sets field value
+// HasEnableClientConnections returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasEnableClientConnections() bool {
+	if o != nil && !IsNil(o.EnableClientConnections) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableClientConnections gets a reference to the given bool and assigns it to the EnableClientConnections field.
 func (o *TenantSettingsFlags) SetEnableClientConnections(v bool) {
-	o.EnableClientConnections = v
+	o.EnableClientConnections = &v
 }
 
-// GetEnablePipeline2 returns the EnablePipeline2 field value
+// GetEnablePipeline2 returns the EnablePipeline2 field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetEnablePipeline2() bool {
-	if o == nil {
+	if o == nil || IsNil(o.EnablePipeline2) {
 		var ret bool
 		return ret
 	}
-
-	return o.EnablePipeline2
+	return *o.EnablePipeline2
 }
 
-// GetEnablePipeline2Ok returns a tuple with the EnablePipeline2 field value
+// GetEnablePipeline2Ok returns a tuple with the EnablePipeline2 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetEnablePipeline2Ok() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnablePipeline2) {
 		return nil, false
 	}
-	return &o.EnablePipeline2, true
+	return o.EnablePipeline2, true
 }
 
-// SetEnablePipeline2 sets field value
+// HasEnablePipeline2 returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasEnablePipeline2() bool {
+	if o != nil && !IsNil(o.EnablePipeline2) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnablePipeline2 gets a reference to the given bool and assigns it to the EnablePipeline2 field.
 func (o *TenantSettingsFlags) SetEnablePipeline2(v bool) {
-	o.EnablePipeline2 = v
+	o.EnablePipeline2 = &v
 }
 
-// GetAllowLegacyDelegationGrantTypes returns the AllowLegacyDelegationGrantTypes field value
+// GetAllowLegacyDelegationGrantTypes returns the AllowLegacyDelegationGrantTypes field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetAllowLegacyDelegationGrantTypes() bool {
-	if o == nil {
+	if o == nil || IsNil(o.AllowLegacyDelegationGrantTypes) {
 		var ret bool
 		return ret
 	}
-
-	return o.AllowLegacyDelegationGrantTypes
+	return *o.AllowLegacyDelegationGrantTypes
 }
 
-// GetAllowLegacyDelegationGrantTypesOk returns a tuple with the AllowLegacyDelegationGrantTypes field value
+// GetAllowLegacyDelegationGrantTypesOk returns a tuple with the AllowLegacyDelegationGrantTypes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetAllowLegacyDelegationGrantTypesOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AllowLegacyDelegationGrantTypes) {
 		return nil, false
 	}
-	return &o.AllowLegacyDelegationGrantTypes, true
+	return o.AllowLegacyDelegationGrantTypes, true
 }
 
-// SetAllowLegacyDelegationGrantTypes sets field value
+// HasAllowLegacyDelegationGrantTypes returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasAllowLegacyDelegationGrantTypes() bool {
+	if o != nil && !IsNil(o.AllowLegacyDelegationGrantTypes) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowLegacyDelegationGrantTypes gets a reference to the given bool and assigns it to the AllowLegacyDelegationGrantTypes field.
 func (o *TenantSettingsFlags) SetAllowLegacyDelegationGrantTypes(v bool) {
-	o.AllowLegacyDelegationGrantTypes = v
+	o.AllowLegacyDelegationGrantTypes = &v
 }
 
-// GetAllowLegacyRoGrantTypes returns the AllowLegacyRoGrantTypes field value
+// GetAllowLegacyRoGrantTypes returns the AllowLegacyRoGrantTypes field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetAllowLegacyRoGrantTypes() bool {
-	if o == nil {
+	if o == nil || IsNil(o.AllowLegacyRoGrantTypes) {
 		var ret bool
 		return ret
 	}
-
-	return o.AllowLegacyRoGrantTypes
+	return *o.AllowLegacyRoGrantTypes
 }
 
-// GetAllowLegacyRoGrantTypesOk returns a tuple with the AllowLegacyRoGrantTypes field value
+// GetAllowLegacyRoGrantTypesOk returns a tuple with the AllowLegacyRoGrantTypes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetAllowLegacyRoGrantTypesOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AllowLegacyRoGrantTypes) {
 		return nil, false
 	}
-	return &o.AllowLegacyRoGrantTypes, true
+	return o.AllowLegacyRoGrantTypes, true
 }
 
-// SetAllowLegacyRoGrantTypes sets field value
+// HasAllowLegacyRoGrantTypes returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasAllowLegacyRoGrantTypes() bool {
+	if o != nil && !IsNil(o.AllowLegacyRoGrantTypes) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowLegacyRoGrantTypes gets a reference to the given bool and assigns it to the AllowLegacyRoGrantTypes field.
 func (o *TenantSettingsFlags) SetAllowLegacyRoGrantTypes(v bool) {
-	o.AllowLegacyRoGrantTypes = v
+	o.AllowLegacyRoGrantTypes = &v
 }
 
-// GetAllowLegacyTokeninfoEndpoint returns the AllowLegacyTokeninfoEndpoint field value
+// GetAllowLegacyTokeninfoEndpoint returns the AllowLegacyTokeninfoEndpoint field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetAllowLegacyTokeninfoEndpoint() bool {
-	if o == nil {
+	if o == nil || IsNil(o.AllowLegacyTokeninfoEndpoint) {
 		var ret bool
 		return ret
 	}
-
-	return o.AllowLegacyTokeninfoEndpoint
+	return *o.AllowLegacyTokeninfoEndpoint
 }
 
-// GetAllowLegacyTokeninfoEndpointOk returns a tuple with the AllowLegacyTokeninfoEndpoint field value
+// GetAllowLegacyTokeninfoEndpointOk returns a tuple with the AllowLegacyTokeninfoEndpoint field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetAllowLegacyTokeninfoEndpointOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AllowLegacyTokeninfoEndpoint) {
 		return nil, false
 	}
-	return &o.AllowLegacyTokeninfoEndpoint, true
+	return o.AllowLegacyTokeninfoEndpoint, true
 }
 
-// SetAllowLegacyTokeninfoEndpoint sets field value
+// HasAllowLegacyTokeninfoEndpoint returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasAllowLegacyTokeninfoEndpoint() bool {
+	if o != nil && !IsNil(o.AllowLegacyTokeninfoEndpoint) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowLegacyTokeninfoEndpoint gets a reference to the given bool and assigns it to the AllowLegacyTokeninfoEndpoint field.
 func (o *TenantSettingsFlags) SetAllowLegacyTokeninfoEndpoint(v bool) {
-	o.AllowLegacyTokeninfoEndpoint = v
+	o.AllowLegacyTokeninfoEndpoint = &v
 }
 
-// GetEnableLegacyProfile returns the EnableLegacyProfile field value
+// GetEnableLegacyProfile returns the EnableLegacyProfile field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetEnableLegacyProfile() bool {
-	if o == nil {
+	if o == nil || IsNil(o.EnableLegacyProfile) {
 		var ret bool
 		return ret
 	}
-
-	return o.EnableLegacyProfile
+	return *o.EnableLegacyProfile
 }
 
-// GetEnableLegacyProfileOk returns a tuple with the EnableLegacyProfile field value
+// GetEnableLegacyProfileOk returns a tuple with the EnableLegacyProfile field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetEnableLegacyProfileOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnableLegacyProfile) {
 		return nil, false
 	}
-	return &o.EnableLegacyProfile, true
+	return o.EnableLegacyProfile, true
 }
 
-// SetEnableLegacyProfile sets field value
+// HasEnableLegacyProfile returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasEnableLegacyProfile() bool {
+	if o != nil && !IsNil(o.EnableLegacyProfile) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableLegacyProfile gets a reference to the given bool and assigns it to the EnableLegacyProfile field.
 func (o *TenantSettingsFlags) SetEnableLegacyProfile(v bool) {
-	o.EnableLegacyProfile = v
+	o.EnableLegacyProfile = &v
 }
 
-// GetEnableIdtokenApi2 returns the EnableIdtokenApi2 field value
+// GetEnableIdtokenApi2 returns the EnableIdtokenApi2 field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetEnableIdtokenApi2() bool {
-	if o == nil {
+	if o == nil || IsNil(o.EnableIdtokenApi2) {
 		var ret bool
 		return ret
 	}
-
-	return o.EnableIdtokenApi2
+	return *o.EnableIdtokenApi2
 }
 
-// GetEnableIdtokenApi2Ok returns a tuple with the EnableIdtokenApi2 field value
+// GetEnableIdtokenApi2Ok returns a tuple with the EnableIdtokenApi2 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetEnableIdtokenApi2Ok() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnableIdtokenApi2) {
 		return nil, false
 	}
-	return &o.EnableIdtokenApi2, true
+	return o.EnableIdtokenApi2, true
 }
 
-// SetEnableIdtokenApi2 sets field value
+// HasEnableIdtokenApi2 returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasEnableIdtokenApi2() bool {
+	if o != nil && !IsNil(o.EnableIdtokenApi2) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableIdtokenApi2 gets a reference to the given bool and assigns it to the EnableIdtokenApi2 field.
 func (o *TenantSettingsFlags) SetEnableIdtokenApi2(v bool) {
-	o.EnableIdtokenApi2 = v
+	o.EnableIdtokenApi2 = &v
 }
 
-// GetEnablePublicSignupUserExistsError returns the EnablePublicSignupUserExistsError field value
+// GetEnablePublicSignupUserExistsError returns the EnablePublicSignupUserExistsError field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetEnablePublicSignupUserExistsError() bool {
-	if o == nil {
+	if o == nil || IsNil(o.EnablePublicSignupUserExistsError) {
 		var ret bool
 		return ret
 	}
-
-	return o.EnablePublicSignupUserExistsError
+	return *o.EnablePublicSignupUserExistsError
 }
 
-// GetEnablePublicSignupUserExistsErrorOk returns a tuple with the EnablePublicSignupUserExistsError field value
+// GetEnablePublicSignupUserExistsErrorOk returns a tuple with the EnablePublicSignupUserExistsError field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetEnablePublicSignupUserExistsErrorOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnablePublicSignupUserExistsError) {
 		return nil, false
 	}
-	return &o.EnablePublicSignupUserExistsError, true
+	return o.EnablePublicSignupUserExistsError, true
 }
 
-// SetEnablePublicSignupUserExistsError sets field value
+// HasEnablePublicSignupUserExistsError returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasEnablePublicSignupUserExistsError() bool {
+	if o != nil && !IsNil(o.EnablePublicSignupUserExistsError) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnablePublicSignupUserExistsError gets a reference to the given bool and assigns it to the EnablePublicSignupUserExistsError field.
 func (o *TenantSettingsFlags) SetEnablePublicSignupUserExistsError(v bool) {
-	o.EnablePublicSignupUserExistsError = v
+	o.EnablePublicSignupUserExistsError = &v
 }
 
-// GetEnableSso returns the EnableSso field value
+// GetEnableSso returns the EnableSso field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetEnableSso() bool {
-	if o == nil {
+	if o == nil || IsNil(o.EnableSso) {
 		var ret bool
 		return ret
 	}
-
-	return o.EnableSso
+	return *o.EnableSso
 }
 
-// GetEnableSsoOk returns a tuple with the EnableSso field value
+// GetEnableSsoOk returns a tuple with the EnableSso field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetEnableSsoOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnableSso) {
 		return nil, false
 	}
-	return &o.EnableSso, true
+	return o.EnableSso, true
 }
 
-// SetEnableSso sets field value
+// HasEnableSso returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasEnableSso() bool {
+	if o != nil && !IsNil(o.EnableSso) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableSso gets a reference to the given bool and assigns it to the EnableSso field.
 func (o *TenantSettingsFlags) SetEnableSso(v bool) {
-	o.EnableSso = v
+	o.EnableSso = &v
 }
 
-// GetAllowChangingEnableSso returns the AllowChangingEnableSso field value
+// GetAllowChangingEnableSso returns the AllowChangingEnableSso field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetAllowChangingEnableSso() bool {
-	if o == nil {
+	if o == nil || IsNil(o.AllowChangingEnableSso) {
 		var ret bool
 		return ret
 	}
-
-	return o.AllowChangingEnableSso
+	return *o.AllowChangingEnableSso
 }
 
-// GetAllowChangingEnableSsoOk returns a tuple with the AllowChangingEnableSso field value
+// GetAllowChangingEnableSsoOk returns a tuple with the AllowChangingEnableSso field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetAllowChangingEnableSsoOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AllowChangingEnableSso) {
 		return nil, false
 	}
-	return &o.AllowChangingEnableSso, true
+	return o.AllowChangingEnableSso, true
 }
 
-// SetAllowChangingEnableSso sets field value
+// HasAllowChangingEnableSso returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasAllowChangingEnableSso() bool {
+	if o != nil && !IsNil(o.AllowChangingEnableSso) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowChangingEnableSso gets a reference to the given bool and assigns it to the AllowChangingEnableSso field.
 func (o *TenantSettingsFlags) SetAllowChangingEnableSso(v bool) {
-	o.AllowChangingEnableSso = v
+	o.AllowChangingEnableSso = &v
 }
 
-// GetDisableClickjackProtectionHeaders returns the DisableClickjackProtectionHeaders field value
+// GetDisableClickjackProtectionHeaders returns the DisableClickjackProtectionHeaders field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetDisableClickjackProtectionHeaders() bool {
-	if o == nil {
+	if o == nil || IsNil(o.DisableClickjackProtectionHeaders) {
 		var ret bool
 		return ret
 	}
-
-	return o.DisableClickjackProtectionHeaders
+	return *o.DisableClickjackProtectionHeaders
 }
 
-// GetDisableClickjackProtectionHeadersOk returns a tuple with the DisableClickjackProtectionHeaders field value
+// GetDisableClickjackProtectionHeadersOk returns a tuple with the DisableClickjackProtectionHeaders field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetDisableClickjackProtectionHeadersOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DisableClickjackProtectionHeaders) {
 		return nil, false
 	}
-	return &o.DisableClickjackProtectionHeaders, true
+	return o.DisableClickjackProtectionHeaders, true
 }
 
-// SetDisableClickjackProtectionHeaders sets field value
+// HasDisableClickjackProtectionHeaders returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasDisableClickjackProtectionHeaders() bool {
+	if o != nil && !IsNil(o.DisableClickjackProtectionHeaders) {
+		return true
+	}
+
+	return false
+}
+
+// SetDisableClickjackProtectionHeaders gets a reference to the given bool and assigns it to the DisableClickjackProtectionHeaders field.
 func (o *TenantSettingsFlags) SetDisableClickjackProtectionHeaders(v bool) {
-	o.DisableClickjackProtectionHeaders = v
+	o.DisableClickjackProtectionHeaders = &v
 }
 
-// GetNoDiscloseEnterpriseConnections returns the NoDiscloseEnterpriseConnections field value
+// GetNoDiscloseEnterpriseConnections returns the NoDiscloseEnterpriseConnections field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetNoDiscloseEnterpriseConnections() bool {
-	if o == nil {
+	if o == nil || IsNil(o.NoDiscloseEnterpriseConnections) {
 		var ret bool
 		return ret
 	}
-
-	return o.NoDiscloseEnterpriseConnections
+	return *o.NoDiscloseEnterpriseConnections
 }
 
-// GetNoDiscloseEnterpriseConnectionsOk returns a tuple with the NoDiscloseEnterpriseConnections field value
+// GetNoDiscloseEnterpriseConnectionsOk returns a tuple with the NoDiscloseEnterpriseConnections field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetNoDiscloseEnterpriseConnectionsOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.NoDiscloseEnterpriseConnections) {
 		return nil, false
 	}
-	return &o.NoDiscloseEnterpriseConnections, true
+	return o.NoDiscloseEnterpriseConnections, true
 }
 
-// SetNoDiscloseEnterpriseConnections sets field value
+// HasNoDiscloseEnterpriseConnections returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasNoDiscloseEnterpriseConnections() bool {
+	if o != nil && !IsNil(o.NoDiscloseEnterpriseConnections) {
+		return true
+	}
+
+	return false
+}
+
+// SetNoDiscloseEnterpriseConnections gets a reference to the given bool and assigns it to the NoDiscloseEnterpriseConnections field.
 func (o *TenantSettingsFlags) SetNoDiscloseEnterpriseConnections(v bool) {
-	o.NoDiscloseEnterpriseConnections = v
+	o.NoDiscloseEnterpriseConnections = &v
 }
 
-// GetEnforceClientAuthenticationOnPasswordlessStart returns the EnforceClientAuthenticationOnPasswordlessStart field value
+// GetEnforceClientAuthenticationOnPasswordlessStart returns the EnforceClientAuthenticationOnPasswordlessStart field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetEnforceClientAuthenticationOnPasswordlessStart() bool {
-	if o == nil {
+	if o == nil || IsNil(o.EnforceClientAuthenticationOnPasswordlessStart) {
 		var ret bool
 		return ret
 	}
-
-	return o.EnforceClientAuthenticationOnPasswordlessStart
+	return *o.EnforceClientAuthenticationOnPasswordlessStart
 }
 
-// GetEnforceClientAuthenticationOnPasswordlessStartOk returns a tuple with the EnforceClientAuthenticationOnPasswordlessStart field value
+// GetEnforceClientAuthenticationOnPasswordlessStartOk returns a tuple with the EnforceClientAuthenticationOnPasswordlessStart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetEnforceClientAuthenticationOnPasswordlessStartOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnforceClientAuthenticationOnPasswordlessStart) {
 		return nil, false
 	}
-	return &o.EnforceClientAuthenticationOnPasswordlessStart, true
+	return o.EnforceClientAuthenticationOnPasswordlessStart, true
 }
 
-// SetEnforceClientAuthenticationOnPasswordlessStart sets field value
+// HasEnforceClientAuthenticationOnPasswordlessStart returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasEnforceClientAuthenticationOnPasswordlessStart() bool {
+	if o != nil && !IsNil(o.EnforceClientAuthenticationOnPasswordlessStart) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnforceClientAuthenticationOnPasswordlessStart gets a reference to the given bool and assigns it to the EnforceClientAuthenticationOnPasswordlessStart field.
 func (o *TenantSettingsFlags) SetEnforceClientAuthenticationOnPasswordlessStart(v bool) {
-	o.EnforceClientAuthenticationOnPasswordlessStart = v
+	o.EnforceClientAuthenticationOnPasswordlessStart = &v
 }
 
-// GetEnableAdfsWaadEmailVerification returns the EnableAdfsWaadEmailVerification field value
+// GetEnableAdfsWaadEmailVerification returns the EnableAdfsWaadEmailVerification field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetEnableAdfsWaadEmailVerification() bool {
-	if o == nil {
+	if o == nil || IsNil(o.EnableAdfsWaadEmailVerification) {
 		var ret bool
 		return ret
 	}
-
-	return o.EnableAdfsWaadEmailVerification
+	return *o.EnableAdfsWaadEmailVerification
 }
 
-// GetEnableAdfsWaadEmailVerificationOk returns a tuple with the EnableAdfsWaadEmailVerification field value
+// GetEnableAdfsWaadEmailVerificationOk returns a tuple with the EnableAdfsWaadEmailVerification field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetEnableAdfsWaadEmailVerificationOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnableAdfsWaadEmailVerification) {
 		return nil, false
 	}
-	return &o.EnableAdfsWaadEmailVerification, true
+	return o.EnableAdfsWaadEmailVerification, true
 }
 
-// SetEnableAdfsWaadEmailVerification sets field value
+// HasEnableAdfsWaadEmailVerification returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasEnableAdfsWaadEmailVerification() bool {
+	if o != nil && !IsNil(o.EnableAdfsWaadEmailVerification) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableAdfsWaadEmailVerification gets a reference to the given bool and assigns it to the EnableAdfsWaadEmailVerification field.
 func (o *TenantSettingsFlags) SetEnableAdfsWaadEmailVerification(v bool) {
-	o.EnableAdfsWaadEmailVerification = v
+	o.EnableAdfsWaadEmailVerification = &v
 }
 
-// GetRevokeRefreshTokenGrant returns the RevokeRefreshTokenGrant field value
+// GetRevokeRefreshTokenGrant returns the RevokeRefreshTokenGrant field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetRevokeRefreshTokenGrant() bool {
-	if o == nil {
+	if o == nil || IsNil(o.RevokeRefreshTokenGrant) {
 		var ret bool
 		return ret
 	}
-
-	return o.RevokeRefreshTokenGrant
+	return *o.RevokeRefreshTokenGrant
 }
 
-// GetRevokeRefreshTokenGrantOk returns a tuple with the RevokeRefreshTokenGrant field value
+// GetRevokeRefreshTokenGrantOk returns a tuple with the RevokeRefreshTokenGrant field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetRevokeRefreshTokenGrantOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RevokeRefreshTokenGrant) {
 		return nil, false
 	}
-	return &o.RevokeRefreshTokenGrant, true
+	return o.RevokeRefreshTokenGrant, true
 }
 
-// SetRevokeRefreshTokenGrant sets field value
+// HasRevokeRefreshTokenGrant returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasRevokeRefreshTokenGrant() bool {
+	if o != nil && !IsNil(o.RevokeRefreshTokenGrant) {
+		return true
+	}
+
+	return false
+}
+
+// SetRevokeRefreshTokenGrant gets a reference to the given bool and assigns it to the RevokeRefreshTokenGrant field.
 func (o *TenantSettingsFlags) SetRevokeRefreshTokenGrant(v bool) {
-	o.RevokeRefreshTokenGrant = v
+	o.RevokeRefreshTokenGrant = &v
 }
 
-// GetDashboardLogStreamsNext returns the DashboardLogStreamsNext field value
+// GetDashboardLogStreamsNext returns the DashboardLogStreamsNext field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetDashboardLogStreamsNext() bool {
-	if o == nil {
+	if o == nil || IsNil(o.DashboardLogStreamsNext) {
 		var ret bool
 		return ret
 	}
-
-	return o.DashboardLogStreamsNext
+	return *o.DashboardLogStreamsNext
 }
 
-// GetDashboardLogStreamsNextOk returns a tuple with the DashboardLogStreamsNext field value
+// GetDashboardLogStreamsNextOk returns a tuple with the DashboardLogStreamsNext field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetDashboardLogStreamsNextOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DashboardLogStreamsNext) {
 		return nil, false
 	}
-	return &o.DashboardLogStreamsNext, true
+	return o.DashboardLogStreamsNext, true
 }
 
-// SetDashboardLogStreamsNext sets field value
+// HasDashboardLogStreamsNext returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasDashboardLogStreamsNext() bool {
+	if o != nil && !IsNil(o.DashboardLogStreamsNext) {
+		return true
+	}
+
+	return false
+}
+
+// SetDashboardLogStreamsNext gets a reference to the given bool and assigns it to the DashboardLogStreamsNext field.
 func (o *TenantSettingsFlags) SetDashboardLogStreamsNext(v bool) {
-	o.DashboardLogStreamsNext = v
+	o.DashboardLogStreamsNext = &v
 }
 
-// GetDashboardInsightsView returns the DashboardInsightsView field value
+// GetDashboardInsightsView returns the DashboardInsightsView field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetDashboardInsightsView() bool {
-	if o == nil {
+	if o == nil || IsNil(o.DashboardInsightsView) {
 		var ret bool
 		return ret
 	}
-
-	return o.DashboardInsightsView
+	return *o.DashboardInsightsView
 }
 
-// GetDashboardInsightsViewOk returns a tuple with the DashboardInsightsView field value
+// GetDashboardInsightsViewOk returns a tuple with the DashboardInsightsView field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetDashboardInsightsViewOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DashboardInsightsView) {
 		return nil, false
 	}
-	return &o.DashboardInsightsView, true
+	return o.DashboardInsightsView, true
 }
 
-// SetDashboardInsightsView sets field value
+// HasDashboardInsightsView returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasDashboardInsightsView() bool {
+	if o != nil && !IsNil(o.DashboardInsightsView) {
+		return true
+	}
+
+	return false
+}
+
+// SetDashboardInsightsView gets a reference to the given bool and assigns it to the DashboardInsightsView field.
 func (o *TenantSettingsFlags) SetDashboardInsightsView(v bool) {
-	o.DashboardInsightsView = v
+	o.DashboardInsightsView = &v
 }
 
-// GetDisableFieldsMapFix returns the DisableFieldsMapFix field value
+// GetDisableFieldsMapFix returns the DisableFieldsMapFix field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetDisableFieldsMapFix() bool {
-	if o == nil {
+	if o == nil || IsNil(o.DisableFieldsMapFix) {
 		var ret bool
 		return ret
 	}
-
-	return o.DisableFieldsMapFix
+	return *o.DisableFieldsMapFix
 }
 
-// GetDisableFieldsMapFixOk returns a tuple with the DisableFieldsMapFix field value
+// GetDisableFieldsMapFixOk returns a tuple with the DisableFieldsMapFix field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetDisableFieldsMapFixOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DisableFieldsMapFix) {
 		return nil, false
 	}
-	return &o.DisableFieldsMapFix, true
+	return o.DisableFieldsMapFix, true
 }
 
-// SetDisableFieldsMapFix sets field value
+// HasDisableFieldsMapFix returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasDisableFieldsMapFix() bool {
+	if o != nil && !IsNil(o.DisableFieldsMapFix) {
+		return true
+	}
+
+	return false
+}
+
+// SetDisableFieldsMapFix gets a reference to the given bool and assigns it to the DisableFieldsMapFix field.
 func (o *TenantSettingsFlags) SetDisableFieldsMapFix(v bool) {
-	o.DisableFieldsMapFix = v
+	o.DisableFieldsMapFix = &v
 }
 
-// GetMfaShowFactorListOnEnrollment returns the MfaShowFactorListOnEnrollment field value
+// GetMfaShowFactorListOnEnrollment returns the MfaShowFactorListOnEnrollment field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetMfaShowFactorListOnEnrollment() bool {
-	if o == nil {
+	if o == nil || IsNil(o.MfaShowFactorListOnEnrollment) {
 		var ret bool
 		return ret
 	}
-
-	return o.MfaShowFactorListOnEnrollment
+	return *o.MfaShowFactorListOnEnrollment
 }
 
-// GetMfaShowFactorListOnEnrollmentOk returns a tuple with the MfaShowFactorListOnEnrollment field value
+// GetMfaShowFactorListOnEnrollmentOk returns a tuple with the MfaShowFactorListOnEnrollment field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetMfaShowFactorListOnEnrollmentOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.MfaShowFactorListOnEnrollment) {
 		return nil, false
 	}
-	return &o.MfaShowFactorListOnEnrollment, true
+	return o.MfaShowFactorListOnEnrollment, true
 }
 
-// SetMfaShowFactorListOnEnrollment sets field value
+// HasMfaShowFactorListOnEnrollment returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasMfaShowFactorListOnEnrollment() bool {
+	if o != nil && !IsNil(o.MfaShowFactorListOnEnrollment) {
+		return true
+	}
+
+	return false
+}
+
+// SetMfaShowFactorListOnEnrollment gets a reference to the given bool and assigns it to the MfaShowFactorListOnEnrollment field.
 func (o *TenantSettingsFlags) SetMfaShowFactorListOnEnrollment(v bool) {
-	o.MfaShowFactorListOnEnrollment = v
+	o.MfaShowFactorListOnEnrollment = &v
 }
 
-// GetRemoveAlgFromJwks returns the RemoveAlgFromJwks field value
+// GetRemoveAlgFromJwks returns the RemoveAlgFromJwks field value if set, zero value otherwise.
 func (o *TenantSettingsFlags) GetRemoveAlgFromJwks() bool {
-	if o == nil {
+	if o == nil || IsNil(o.RemoveAlgFromJwks) {
 		var ret bool
 		return ret
 	}
-
-	return o.RemoveAlgFromJwks
+	return *o.RemoveAlgFromJwks
 }
 
-// GetRemoveAlgFromJwksOk returns a tuple with the RemoveAlgFromJwks field value
+// GetRemoveAlgFromJwksOk returns a tuple with the RemoveAlgFromJwks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsFlags) GetRemoveAlgFromJwksOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RemoveAlgFromJwks) {
 		return nil, false
 	}
-	return &o.RemoveAlgFromJwks, true
+	return o.RemoveAlgFromJwks, true
 }
 
-// SetRemoveAlgFromJwks sets field value
+// HasRemoveAlgFromJwks returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasRemoveAlgFromJwks() bool {
+	if o != nil && !IsNil(o.RemoveAlgFromJwks) {
+		return true
+	}
+
+	return false
+}
+
+// SetRemoveAlgFromJwks gets a reference to the given bool and assigns it to the RemoveAlgFromJwks field.
 func (o *TenantSettingsFlags) SetRemoveAlgFromJwks(v bool) {
-	o.RemoveAlgFromJwks = v
+	o.RemoveAlgFromJwks = &v
 }
 
 func (o TenantSettingsFlags) MarshalJSON() ([]byte, error) {
@@ -629,46 +810,76 @@ func (o TenantSettingsFlags) MarshalJSON() ([]byte, error) {
 
 func (o TenantSettingsFlags) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["change_pwd_flow_v1"] = o.ChangePwdFlowV1
-	toSerialize["enable_apis_section"] = o.EnableApisSection
-	toSerialize["disable_impersonation"] = o.DisableImpersonation
-	toSerialize["enable_client_connections"] = o.EnableClientConnections
-	toSerialize["enable_pipeline2"] = o.EnablePipeline2
-	toSerialize["allow_legacy_delegation_grant_types"] = o.AllowLegacyDelegationGrantTypes
-	toSerialize["allow_legacy_ro_grant_types"] = o.AllowLegacyRoGrantTypes
-	toSerialize["allow_legacy_tokeninfo_endpoint"] = o.AllowLegacyTokeninfoEndpoint
-	toSerialize["enable_legacy_profile"] = o.EnableLegacyProfile
-	toSerialize["enable_idtoken_api2"] = o.EnableIdtokenApi2
-	toSerialize["enable_public_signup_user_exists_error"] = o.EnablePublicSignupUserExistsError
-	toSerialize["enable_sso"] = o.EnableSso
-	toSerialize["allow_changing_enable_sso"] = o.AllowChangingEnableSso
-	toSerialize["disable_clickjack_protection_headers"] = o.DisableClickjackProtectionHeaders
-	toSerialize["no_disclose_enterprise_connections"] = o.NoDiscloseEnterpriseConnections
-	toSerialize["enforce_client_authentication_on_passwordless_start"] = o.EnforceClientAuthenticationOnPasswordlessStart
-	toSerialize["enable_adfs_waad_email_verification"] = o.EnableAdfsWaadEmailVerification
-	toSerialize["revoke_refresh_token_grant"] = o.RevokeRefreshTokenGrant
-	toSerialize["dashboard_log_streams_next"] = o.DashboardLogStreamsNext
-	toSerialize["dashboard_insights_view"] = o.DashboardInsightsView
-	toSerialize["disable_fields_map_fix"] = o.DisableFieldsMapFix
-	toSerialize["mfa_show_factor_list_on_enrollment"] = o.MfaShowFactorListOnEnrollment
-	toSerialize["remove_alg_from_jwks"] = o.RemoveAlgFromJwks
-	return toSerialize, nil
-}
-
-func (o *TenantSettingsFlags) UnmarshalJSON(data []byte) (err error) {
-	varTenantSettingsFlags := _TenantSettingsFlags{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTenantSettingsFlags)
-
-	if err != nil {
-		return err
+	if !IsNil(o.ChangePwdFlowV1) {
+		toSerialize["change_pwd_flow_v1"] = o.ChangePwdFlowV1
 	}
-
-	*o = TenantSettingsFlags(varTenantSettingsFlags)
-
-	return err
+	if !IsNil(o.EnableApisSection) {
+		toSerialize["enable_apis_section"] = o.EnableApisSection
+	}
+	if !IsNil(o.DisableImpersonation) {
+		toSerialize["disable_impersonation"] = o.DisableImpersonation
+	}
+	if !IsNil(o.EnableClientConnections) {
+		toSerialize["enable_client_connections"] = o.EnableClientConnections
+	}
+	if !IsNil(o.EnablePipeline2) {
+		toSerialize["enable_pipeline2"] = o.EnablePipeline2
+	}
+	if !IsNil(o.AllowLegacyDelegationGrantTypes) {
+		toSerialize["allow_legacy_delegation_grant_types"] = o.AllowLegacyDelegationGrantTypes
+	}
+	if !IsNil(o.AllowLegacyRoGrantTypes) {
+		toSerialize["allow_legacy_ro_grant_types"] = o.AllowLegacyRoGrantTypes
+	}
+	if !IsNil(o.AllowLegacyTokeninfoEndpoint) {
+		toSerialize["allow_legacy_tokeninfo_endpoint"] = o.AllowLegacyTokeninfoEndpoint
+	}
+	if !IsNil(o.EnableLegacyProfile) {
+		toSerialize["enable_legacy_profile"] = o.EnableLegacyProfile
+	}
+	if !IsNil(o.EnableIdtokenApi2) {
+		toSerialize["enable_idtoken_api2"] = o.EnableIdtokenApi2
+	}
+	if !IsNil(o.EnablePublicSignupUserExistsError) {
+		toSerialize["enable_public_signup_user_exists_error"] = o.EnablePublicSignupUserExistsError
+	}
+	if !IsNil(o.EnableSso) {
+		toSerialize["enable_sso"] = o.EnableSso
+	}
+	if !IsNil(o.AllowChangingEnableSso) {
+		toSerialize["allow_changing_enable_sso"] = o.AllowChangingEnableSso
+	}
+	if !IsNil(o.DisableClickjackProtectionHeaders) {
+		toSerialize["disable_clickjack_protection_headers"] = o.DisableClickjackProtectionHeaders
+	}
+	if !IsNil(o.NoDiscloseEnterpriseConnections) {
+		toSerialize["no_disclose_enterprise_connections"] = o.NoDiscloseEnterpriseConnections
+	}
+	if !IsNil(o.EnforceClientAuthenticationOnPasswordlessStart) {
+		toSerialize["enforce_client_authentication_on_passwordless_start"] = o.EnforceClientAuthenticationOnPasswordlessStart
+	}
+	if !IsNil(o.EnableAdfsWaadEmailVerification) {
+		toSerialize["enable_adfs_waad_email_verification"] = o.EnableAdfsWaadEmailVerification
+	}
+	if !IsNil(o.RevokeRefreshTokenGrant) {
+		toSerialize["revoke_refresh_token_grant"] = o.RevokeRefreshTokenGrant
+	}
+	if !IsNil(o.DashboardLogStreamsNext) {
+		toSerialize["dashboard_log_streams_next"] = o.DashboardLogStreamsNext
+	}
+	if !IsNil(o.DashboardInsightsView) {
+		toSerialize["dashboard_insights_view"] = o.DashboardInsightsView
+	}
+	if !IsNil(o.DisableFieldsMapFix) {
+		toSerialize["disable_fields_map_fix"] = o.DisableFieldsMapFix
+	}
+	if !IsNil(o.MfaShowFactorListOnEnrollment) {
+		toSerialize["mfa_show_factor_list_on_enrollment"] = o.MfaShowFactorListOnEnrollment
+	}
+	if !IsNil(o.RemoveAlgFromJwks) {
+		toSerialize["remove_alg_from_jwks"] = o.RemoveAlgFromJwks
+	}
+	return toSerialize, nil
 }
 
 type NullableTenantSettingsFlags struct {

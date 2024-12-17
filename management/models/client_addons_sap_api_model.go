@@ -17,164 +17,212 @@ import (
 // ClientAddonsSapApi SAP API addon configuration.
 type ClientAddonsSapApi struct {
 	// If activated in the OAuth 2.0 client configuration (transaction SOAUTH2) the SAML attribute client_id must be set and equal the client_id form parameter of the access token request.
-	Clientid string `json:"clientid"`
+	Clientid *string `json:"clientid,omitempty"`
 	// Name of the property in the user object that maps to a SAP username. e.g. `email`.
-	UsernameAttribute string `json:"usernameAttribute"`
+	UsernameAttribute *string `json:"usernameAttribute,omitempty"`
 	// Your SAP OData server OAuth2 token endpoint URL.
-	TokenEndpointUrl string `json:"tokenEndpointUrl"`
+	TokenEndpointUrl *string `json:"tokenEndpointUrl,omitempty"`
 	// Requested scope for SAP APIs.
-	Scope string `json:"scope"`
+	Scope *string `json:"scope,omitempty"`
 	// Service account password to use to authenticate API calls to the token endpoint.
-	ServicePassword string `json:"servicePassword"`
+	ServicePassword *string `json:"servicePassword,omitempty"`
 	// NameID element of the Subject which can be used to express the user's identity. Defaults to `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified`.
-	NameIdentifierFormat string `json:"nameIdentifierFormat"`
+	NameIdentifierFormat *string `json:"nameIdentifierFormat,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsSapApi ClientAddonsSapApi
 
-// GetClientid returns the Clientid field value
+// GetClientid returns the Clientid field value if set, zero value otherwise.
 func (o *ClientAddonsSapApi) GetClientid() string {
-	if o == nil {
+	if o == nil || IsNil(o.Clientid) {
 		var ret string
 		return ret
 	}
-
-	return o.Clientid
+	return *o.Clientid
 }
 
-// GetClientidOk returns a tuple with the Clientid field value
+// GetClientidOk returns a tuple with the Clientid field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSapApi) GetClientidOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Clientid) {
 		return nil, false
 	}
-	return &o.Clientid, true
+	return o.Clientid, true
 }
 
-// SetClientid sets field value
+// HasClientid returns a boolean if a field has been set.
+func (o *ClientAddonsSapApi) HasClientid() bool {
+	if o != nil && !IsNil(o.Clientid) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientid gets a reference to the given string and assigns it to the Clientid field.
 func (o *ClientAddonsSapApi) SetClientid(v string) {
-	o.Clientid = v
+	o.Clientid = &v
 }
 
-// GetUsernameAttribute returns the UsernameAttribute field value
+// GetUsernameAttribute returns the UsernameAttribute field value if set, zero value otherwise.
 func (o *ClientAddonsSapApi) GetUsernameAttribute() string {
-	if o == nil {
+	if o == nil || IsNil(o.UsernameAttribute) {
 		var ret string
 		return ret
 	}
-
-	return o.UsernameAttribute
+	return *o.UsernameAttribute
 }
 
-// GetUsernameAttributeOk returns a tuple with the UsernameAttribute field value
+// GetUsernameAttributeOk returns a tuple with the UsernameAttribute field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSapApi) GetUsernameAttributeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UsernameAttribute) {
 		return nil, false
 	}
-	return &o.UsernameAttribute, true
+	return o.UsernameAttribute, true
 }
 
-// SetUsernameAttribute sets field value
+// HasUsernameAttribute returns a boolean if a field has been set.
+func (o *ClientAddonsSapApi) HasUsernameAttribute() bool {
+	if o != nil && !IsNil(o.UsernameAttribute) {
+		return true
+	}
+
+	return false
+}
+
+// SetUsernameAttribute gets a reference to the given string and assigns it to the UsernameAttribute field.
 func (o *ClientAddonsSapApi) SetUsernameAttribute(v string) {
-	o.UsernameAttribute = v
+	o.UsernameAttribute = &v
 }
 
-// GetTokenEndpointUrl returns the TokenEndpointUrl field value
+// GetTokenEndpointUrl returns the TokenEndpointUrl field value if set, zero value otherwise.
 func (o *ClientAddonsSapApi) GetTokenEndpointUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.TokenEndpointUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.TokenEndpointUrl
+	return *o.TokenEndpointUrl
 }
 
-// GetTokenEndpointUrlOk returns a tuple with the TokenEndpointUrl field value
+// GetTokenEndpointUrlOk returns a tuple with the TokenEndpointUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSapApi) GetTokenEndpointUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TokenEndpointUrl) {
 		return nil, false
 	}
-	return &o.TokenEndpointUrl, true
+	return o.TokenEndpointUrl, true
 }
 
-// SetTokenEndpointUrl sets field value
+// HasTokenEndpointUrl returns a boolean if a field has been set.
+func (o *ClientAddonsSapApi) HasTokenEndpointUrl() bool {
+	if o != nil && !IsNil(o.TokenEndpointUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenEndpointUrl gets a reference to the given string and assigns it to the TokenEndpointUrl field.
 func (o *ClientAddonsSapApi) SetTokenEndpointUrl(v string) {
-	o.TokenEndpointUrl = v
+	o.TokenEndpointUrl = &v
 }
 
-// GetScope returns the Scope field value
+// GetScope returns the Scope field value if set, zero value otherwise.
 func (o *ClientAddonsSapApi) GetScope() string {
-	if o == nil {
+	if o == nil || IsNil(o.Scope) {
 		var ret string
 		return ret
 	}
-
-	return o.Scope
+	return *o.Scope
 }
 
-// GetScopeOk returns a tuple with the Scope field value
+// GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSapApi) GetScopeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Scope) {
 		return nil, false
 	}
-	return &o.Scope, true
+	return o.Scope, true
 }
 
-// SetScope sets field value
+// HasScope returns a boolean if a field has been set.
+func (o *ClientAddonsSapApi) HasScope() bool {
+	if o != nil && !IsNil(o.Scope) {
+		return true
+	}
+
+	return false
+}
+
+// SetScope gets a reference to the given string and assigns it to the Scope field.
 func (o *ClientAddonsSapApi) SetScope(v string) {
-	o.Scope = v
+	o.Scope = &v
 }
 
-// GetServicePassword returns the ServicePassword field value
+// GetServicePassword returns the ServicePassword field value if set, zero value otherwise.
 func (o *ClientAddonsSapApi) GetServicePassword() string {
-	if o == nil {
+	if o == nil || IsNil(o.ServicePassword) {
 		var ret string
 		return ret
 	}
-
-	return o.ServicePassword
+	return *o.ServicePassword
 }
 
-// GetServicePasswordOk returns a tuple with the ServicePassword field value
+// GetServicePasswordOk returns a tuple with the ServicePassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSapApi) GetServicePasswordOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ServicePassword) {
 		return nil, false
 	}
-	return &o.ServicePassword, true
+	return o.ServicePassword, true
 }
 
-// SetServicePassword sets field value
+// HasServicePassword returns a boolean if a field has been set.
+func (o *ClientAddonsSapApi) HasServicePassword() bool {
+	if o != nil && !IsNil(o.ServicePassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetServicePassword gets a reference to the given string and assigns it to the ServicePassword field.
 func (o *ClientAddonsSapApi) SetServicePassword(v string) {
-	o.ServicePassword = v
+	o.ServicePassword = &v
 }
 
-// GetNameIdentifierFormat returns the NameIdentifierFormat field value
+// GetNameIdentifierFormat returns the NameIdentifierFormat field value if set, zero value otherwise.
 func (o *ClientAddonsSapApi) GetNameIdentifierFormat() string {
-	if o == nil {
+	if o == nil || IsNil(o.NameIdentifierFormat) {
 		var ret string
 		return ret
 	}
-
-	return o.NameIdentifierFormat
+	return *o.NameIdentifierFormat
 }
 
-// GetNameIdentifierFormatOk returns a tuple with the NameIdentifierFormat field value
+// GetNameIdentifierFormatOk returns a tuple with the NameIdentifierFormat field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSapApi) GetNameIdentifierFormatOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.NameIdentifierFormat) {
 		return nil, false
 	}
-	return &o.NameIdentifierFormat, true
+	return o.NameIdentifierFormat, true
 }
 
-// SetNameIdentifierFormat sets field value
+// HasNameIdentifierFormat returns a boolean if a field has been set.
+func (o *ClientAddonsSapApi) HasNameIdentifierFormat() bool {
+	if o != nil && !IsNil(o.NameIdentifierFormat) {
+		return true
+	}
+
+	return false
+}
+
+// SetNameIdentifierFormat gets a reference to the given string and assigns it to the NameIdentifierFormat field.
 func (o *ClientAddonsSapApi) SetNameIdentifierFormat(v string) {
-	o.NameIdentifierFormat = v
+	o.NameIdentifierFormat = &v
 }
 
 func (o ClientAddonsSapApi) MarshalJSON() ([]byte, error) {
@@ -187,12 +235,24 @@ func (o ClientAddonsSapApi) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsSapApi) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["clientid"] = o.Clientid
-	toSerialize["usernameAttribute"] = o.UsernameAttribute
-	toSerialize["tokenEndpointUrl"] = o.TokenEndpointUrl
-	toSerialize["scope"] = o.Scope
-	toSerialize["servicePassword"] = o.ServicePassword
-	toSerialize["nameIdentifierFormat"] = o.NameIdentifierFormat
+	if !IsNil(o.Clientid) {
+		toSerialize["clientid"] = o.Clientid
+	}
+	if !IsNil(o.UsernameAttribute) {
+		toSerialize["usernameAttribute"] = o.UsernameAttribute
+	}
+	if !IsNil(o.TokenEndpointUrl) {
+		toSerialize["tokenEndpointUrl"] = o.TokenEndpointUrl
+	}
+	if !IsNil(o.Scope) {
+		toSerialize["scope"] = o.Scope
+	}
+	if !IsNil(o.ServicePassword) {
+		toSerialize["servicePassword"] = o.ServicePassword
+	}
+	if !IsNil(o.NameIdentifierFormat) {
+		toSerialize["nameIdentifierFormat"] = o.NameIdentifierFormat
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

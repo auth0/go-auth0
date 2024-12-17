@@ -20,8 +20,8 @@ type PatchLogStreamsByIdRequest struct {
 	Name   *string                                   `json:"name,omitempty"`
 	Status *GetLogStreams200ResponseInnerOneOfStatus `json:"status,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
-	Filters []PostLogStreamsRequestOneOfFiltersInner `json:"filters,omitempty"`
-	Sink    *PatchLogStreamsByIdRequestSink          `json:"sink,omitempty"`
+	Filters []GetLogStreams200ResponseInnerOneOfFiltersInner `json:"filters,omitempty"`
+	Sink    *PatchLogStreamsByIdRequestSink                  `json:"sink,omitempty"`
 }
 
 // GetName returns the Name field value if set, zero value otherwise.
@@ -89,9 +89,9 @@ func (o *PatchLogStreamsByIdRequest) SetStatus(v GetLogStreams200ResponseInnerOn
 }
 
 // GetFilters returns the Filters field value if set, zero value otherwise.
-func (o *PatchLogStreamsByIdRequest) GetFilters() []PostLogStreamsRequestOneOfFiltersInner {
+func (o *PatchLogStreamsByIdRequest) GetFilters() []GetLogStreams200ResponseInnerOneOfFiltersInner {
 	if o == nil || IsNil(o.Filters) {
-		var ret []PostLogStreamsRequestOneOfFiltersInner
+		var ret []GetLogStreams200ResponseInnerOneOfFiltersInner
 		return ret
 	}
 	return o.Filters
@@ -99,7 +99,7 @@ func (o *PatchLogStreamsByIdRequest) GetFilters() []PostLogStreamsRequestOneOfFi
 
 // GetFiltersOk returns a tuple with the Filters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchLogStreamsByIdRequest) GetFiltersOk() ([]PostLogStreamsRequestOneOfFiltersInner, bool) {
+func (o *PatchLogStreamsByIdRequest) GetFiltersOk() ([]GetLogStreams200ResponseInnerOneOfFiltersInner, bool) {
 	if o == nil || IsNil(o.Filters) {
 		return nil, false
 	}
@@ -115,8 +115,8 @@ func (o *PatchLogStreamsByIdRequest) HasFilters() bool {
 	return false
 }
 
-// SetFilters gets a reference to the given []PostLogStreamsRequestOneOfFiltersInner and assigns it to the Filters field.
-func (o *PatchLogStreamsByIdRequest) SetFilters(v []PostLogStreamsRequestOneOfFiltersInner) {
+// SetFilters gets a reference to the given []GetLogStreams200ResponseInnerOneOfFiltersInner and assigns it to the Filters field.
+func (o *PatchLogStreamsByIdRequest) SetFilters(v []GetLogStreams200ResponseInnerOneOfFiltersInner) {
 	o.Filters = v
 }
 

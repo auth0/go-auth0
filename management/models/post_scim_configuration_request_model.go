@@ -19,7 +19,7 @@ type PostScimConfigurationRequest struct {
 	// User ID attribute for generating unique user ids
 	UserIdAttribute *string `json:"user_id_attribute,omitempty"`
 	// The mapping between auth0 and SCIM
-	Mapping []PostScimConfigurationRequestMappingInner `json:"mapping,omitempty"`
+	Mapping []GetScimConfiguration200ResponseMappingInner `json:"mapping,omitempty"`
 }
 
 // GetUserIdAttribute returns the UserIdAttribute field value if set, zero value otherwise.
@@ -55,9 +55,9 @@ func (o *PostScimConfigurationRequest) SetUserIdAttribute(v string) {
 }
 
 // GetMapping returns the Mapping field value if set, zero value otherwise.
-func (o *PostScimConfigurationRequest) GetMapping() []PostScimConfigurationRequestMappingInner {
+func (o *PostScimConfigurationRequest) GetMapping() []GetScimConfiguration200ResponseMappingInner {
 	if o == nil || IsNil(o.Mapping) {
-		var ret []PostScimConfigurationRequestMappingInner
+		var ret []GetScimConfiguration200ResponseMappingInner
 		return ret
 	}
 	return o.Mapping
@@ -65,7 +65,7 @@ func (o *PostScimConfigurationRequest) GetMapping() []PostScimConfigurationReque
 
 // GetMappingOk returns a tuple with the Mapping field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PostScimConfigurationRequest) GetMappingOk() ([]PostScimConfigurationRequestMappingInner, bool) {
+func (o *PostScimConfigurationRequest) GetMappingOk() ([]GetScimConfiguration200ResponseMappingInner, bool) {
 	if o == nil || IsNil(o.Mapping) {
 		return nil, false
 	}
@@ -81,8 +81,8 @@ func (o *PostScimConfigurationRequest) HasMapping() bool {
 	return false
 }
 
-// SetMapping gets a reference to the given []PostScimConfigurationRequestMappingInner and assigns it to the Mapping field.
-func (o *PostScimConfigurationRequest) SetMapping(v []PostScimConfigurationRequestMappingInner) {
+// SetMapping gets a reference to the given []GetScimConfiguration200ResponseMappingInner and assigns it to the Mapping field.
+func (o *PostScimConfigurationRequest) SetMapping(v []GetScimConfiguration200ResponseMappingInner) {
 	o.Mapping = v
 }
 

@@ -11,118 +11,147 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetRoleUser200ResponseOneOfInner struct for GetRoleUser200ResponseOneOfInner
 type GetRoleUser200ResponseOneOfInner struct {
 	// ID of this user.
-	UserId string `json:"user_id"`
+	UserId *string `json:"user_id,omitempty"`
 	// URL to a picture for this user.
-	Picture string `json:"picture"`
+	Picture *string `json:"picture,omitempty"`
 	// Name of this user.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// Email address of this user.
-	Email string `json:"email"`
+	Email *string `json:"email,omitempty"`
 }
 
-type _GetRoleUser200ResponseOneOfInner GetRoleUser200ResponseOneOfInner
-
-// GetUserId returns the UserId field value
+// GetUserId returns the UserId field value if set, zero value otherwise.
 func (o *GetRoleUser200ResponseOneOfInner) GetUserId() string {
-	if o == nil {
+	if o == nil || IsNil(o.UserId) {
 		var ret string
 		return ret
 	}
-
-	return o.UserId
+	return *o.UserId
 }
 
-// GetUserIdOk returns a tuple with the UserId field value
+// GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRoleUser200ResponseOneOfInner) GetUserIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UserId) {
 		return nil, false
 	}
-	return &o.UserId, true
+	return o.UserId, true
 }
 
-// SetUserId sets field value
+// HasUserId returns a boolean if a field has been set.
+func (o *GetRoleUser200ResponseOneOfInner) HasUserId() bool {
+	if o != nil && !IsNil(o.UserId) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserId gets a reference to the given string and assigns it to the UserId field.
 func (o *GetRoleUser200ResponseOneOfInner) SetUserId(v string) {
-	o.UserId = v
+	o.UserId = &v
 }
 
-// GetPicture returns the Picture field value
+// GetPicture returns the Picture field value if set, zero value otherwise.
 func (o *GetRoleUser200ResponseOneOfInner) GetPicture() string {
-	if o == nil {
+	if o == nil || IsNil(o.Picture) {
 		var ret string
 		return ret
 	}
-
-	return o.Picture
+	return *o.Picture
 }
 
-// GetPictureOk returns a tuple with the Picture field value
+// GetPictureOk returns a tuple with the Picture field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRoleUser200ResponseOneOfInner) GetPictureOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Picture) {
 		return nil, false
 	}
-	return &o.Picture, true
+	return o.Picture, true
 }
 
-// SetPicture sets field value
+// HasPicture returns a boolean if a field has been set.
+func (o *GetRoleUser200ResponseOneOfInner) HasPicture() bool {
+	if o != nil && !IsNil(o.Picture) {
+		return true
+	}
+
+	return false
+}
+
+// SetPicture gets a reference to the given string and assigns it to the Picture field.
 func (o *GetRoleUser200ResponseOneOfInner) SetPicture(v string) {
-	o.Picture = v
+	o.Picture = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetRoleUser200ResponseOneOfInner) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRoleUser200ResponseOneOfInner) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetRoleUser200ResponseOneOfInner) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *GetRoleUser200ResponseOneOfInner) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetEmail returns the Email field value
+// GetEmail returns the Email field value if set, zero value otherwise.
 func (o *GetRoleUser200ResponseOneOfInner) GetEmail() string {
-	if o == nil {
+	if o == nil || IsNil(o.Email) {
 		var ret string
 		return ret
 	}
-
-	return o.Email
+	return *o.Email
 }
 
-// GetEmailOk returns a tuple with the Email field value
+// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRoleUser200ResponseOneOfInner) GetEmailOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Email) {
 		return nil, false
 	}
-	return &o.Email, true
+	return o.Email, true
 }
 
-// SetEmail sets field value
+// HasEmail returns a boolean if a field has been set.
+func (o *GetRoleUser200ResponseOneOfInner) HasEmail() bool {
+	if o != nil && !IsNil(o.Email) {
+		return true
+	}
+
+	return false
+}
+
+// SetEmail gets a reference to the given string and assigns it to the Email field.
 func (o *GetRoleUser200ResponseOneOfInner) SetEmail(v string) {
-	o.Email = v
+	o.Email = &v
 }
 
 func (o GetRoleUser200ResponseOneOfInner) MarshalJSON() ([]byte, error) {
@@ -135,27 +164,19 @@ func (o GetRoleUser200ResponseOneOfInner) MarshalJSON() ([]byte, error) {
 
 func (o GetRoleUser200ResponseOneOfInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["user_id"] = o.UserId
-	toSerialize["picture"] = o.Picture
-	toSerialize["name"] = o.Name
-	toSerialize["email"] = o.Email
-	return toSerialize, nil
-}
-
-func (o *GetRoleUser200ResponseOneOfInner) UnmarshalJSON(data []byte) (err error) {
-	varGetRoleUser200ResponseOneOfInner := _GetRoleUser200ResponseOneOfInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetRoleUser200ResponseOneOfInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.UserId) {
+		toSerialize["user_id"] = o.UserId
 	}
-
-	*o = GetRoleUser200ResponseOneOfInner(varGetRoleUser200ResponseOneOfInner)
-
-	return err
+	if !IsNil(o.Picture) {
+		toSerialize["picture"] = o.Picture
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Email) {
+		toSerialize["email"] = o.Email
+	}
+	return toSerialize, nil
 }
 
 type NullableGetRoleUser200ResponseOneOfInner struct {

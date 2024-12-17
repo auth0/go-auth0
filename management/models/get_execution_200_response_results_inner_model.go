@@ -11,117 +11,146 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetExecution200ResponseResultsInner Captures the results of a single action being executed.
 type GetExecution200ResponseResultsInner struct {
 	// The name of the action that was executed.
-	ActionName string                                               `json:"action_name"`
-	Error      GetActionVersions200ResponseVersionsInnerErrorsInner `json:"error"`
+	ActionName *string                                               `json:"action_name,omitempty"`
+	Error      *GetActionVersions200ResponseVersionsInnerErrorsInner `json:"error,omitempty"`
 	// The time when the action was started.
-	StartedAt string `json:"started_at"`
+	StartedAt *string `json:"started_at,omitempty"`
 	// The time when the action finished executing.
-	EndedAt string `json:"ended_at"`
+	EndedAt *string `json:"ended_at,omitempty"`
 }
 
-type _GetExecution200ResponseResultsInner GetExecution200ResponseResultsInner
-
-// GetActionName returns the ActionName field value
+// GetActionName returns the ActionName field value if set, zero value otherwise.
 func (o *GetExecution200ResponseResultsInner) GetActionName() string {
-	if o == nil {
+	if o == nil || IsNil(o.ActionName) {
 		var ret string
 		return ret
 	}
-
-	return o.ActionName
+	return *o.ActionName
 }
 
-// GetActionNameOk returns a tuple with the ActionName field value
+// GetActionNameOk returns a tuple with the ActionName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetExecution200ResponseResultsInner) GetActionNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ActionName) {
 		return nil, false
 	}
-	return &o.ActionName, true
+	return o.ActionName, true
 }
 
-// SetActionName sets field value
+// HasActionName returns a boolean if a field has been set.
+func (o *GetExecution200ResponseResultsInner) HasActionName() bool {
+	if o != nil && !IsNil(o.ActionName) {
+		return true
+	}
+
+	return false
+}
+
+// SetActionName gets a reference to the given string and assigns it to the ActionName field.
 func (o *GetExecution200ResponseResultsInner) SetActionName(v string) {
-	o.ActionName = v
+	o.ActionName = &v
 }
 
-// GetError returns the Error field value
+// GetError returns the Error field value if set, zero value otherwise.
 func (o *GetExecution200ResponseResultsInner) GetError() GetActionVersions200ResponseVersionsInnerErrorsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Error) {
 		var ret GetActionVersions200ResponseVersionsInnerErrorsInner
 		return ret
 	}
-
-	return o.Error
+	return *o.Error
 }
 
-// GetErrorOk returns a tuple with the Error field value
+// GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetExecution200ResponseResultsInner) GetErrorOk() (*GetActionVersions200ResponseVersionsInnerErrorsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Error) {
 		return nil, false
 	}
-	return &o.Error, true
+	return o.Error, true
 }
 
-// SetError sets field value
+// HasError returns a boolean if a field has been set.
+func (o *GetExecution200ResponseResultsInner) HasError() bool {
+	if o != nil && !IsNil(o.Error) {
+		return true
+	}
+
+	return false
+}
+
+// SetError gets a reference to the given GetActionVersions200ResponseVersionsInnerErrorsInner and assigns it to the Error field.
 func (o *GetExecution200ResponseResultsInner) SetError(v GetActionVersions200ResponseVersionsInnerErrorsInner) {
-	o.Error = v
+	o.Error = &v
 }
 
-// GetStartedAt returns the StartedAt field value
+// GetStartedAt returns the StartedAt field value if set, zero value otherwise.
 func (o *GetExecution200ResponseResultsInner) GetStartedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.StartedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.StartedAt
+	return *o.StartedAt
 }
 
-// GetStartedAtOk returns a tuple with the StartedAt field value
+// GetStartedAtOk returns a tuple with the StartedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetExecution200ResponseResultsInner) GetStartedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.StartedAt) {
 		return nil, false
 	}
-	return &o.StartedAt, true
+	return o.StartedAt, true
 }
 
-// SetStartedAt sets field value
+// HasStartedAt returns a boolean if a field has been set.
+func (o *GetExecution200ResponseResultsInner) HasStartedAt() bool {
+	if o != nil && !IsNil(o.StartedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetStartedAt gets a reference to the given string and assigns it to the StartedAt field.
 func (o *GetExecution200ResponseResultsInner) SetStartedAt(v string) {
-	o.StartedAt = v
+	o.StartedAt = &v
 }
 
-// GetEndedAt returns the EndedAt field value
+// GetEndedAt returns the EndedAt field value if set, zero value otherwise.
 func (o *GetExecution200ResponseResultsInner) GetEndedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.EndedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.EndedAt
+	return *o.EndedAt
 }
 
-// GetEndedAtOk returns a tuple with the EndedAt field value
+// GetEndedAtOk returns a tuple with the EndedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetExecution200ResponseResultsInner) GetEndedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EndedAt) {
 		return nil, false
 	}
-	return &o.EndedAt, true
+	return o.EndedAt, true
 }
 
-// SetEndedAt sets field value
+// HasEndedAt returns a boolean if a field has been set.
+func (o *GetExecution200ResponseResultsInner) HasEndedAt() bool {
+	if o != nil && !IsNil(o.EndedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetEndedAt gets a reference to the given string and assigns it to the EndedAt field.
 func (o *GetExecution200ResponseResultsInner) SetEndedAt(v string) {
-	o.EndedAt = v
+	o.EndedAt = &v
 }
 
 func (o GetExecution200ResponseResultsInner) MarshalJSON() ([]byte, error) {
@@ -134,27 +163,19 @@ func (o GetExecution200ResponseResultsInner) MarshalJSON() ([]byte, error) {
 
 func (o GetExecution200ResponseResultsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["action_name"] = o.ActionName
-	toSerialize["error"] = o.Error
-	toSerialize["started_at"] = o.StartedAt
-	toSerialize["ended_at"] = o.EndedAt
-	return toSerialize, nil
-}
-
-func (o *GetExecution200ResponseResultsInner) UnmarshalJSON(data []byte) (err error) {
-	varGetExecution200ResponseResultsInner := _GetExecution200ResponseResultsInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetExecution200ResponseResultsInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.ActionName) {
+		toSerialize["action_name"] = o.ActionName
 	}
-
-	*o = GetExecution200ResponseResultsInner(varGetExecution200ResponseResultsInner)
-
-	return err
+	if !IsNil(o.Error) {
+		toSerialize["error"] = o.Error
+	}
+	if !IsNil(o.StartedAt) {
+		toSerialize["started_at"] = o.StartedAt
+	}
+	if !IsNil(o.EndedAt) {
+		toSerialize["ended_at"] = o.EndedAt
+	}
+	return toSerialize, nil
 }
 
 type NullableGetExecution200ResponseResultsInner struct {

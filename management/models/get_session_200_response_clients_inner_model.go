@@ -17,34 +17,42 @@ import (
 // GetSession200ResponseClientsInner Client details
 type GetSession200ResponseClientsInner struct {
 	// ID of client for the session
-	ClientId             string `json:"client_id"`
+	ClientId             *string `json:"client_id,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetSession200ResponseClientsInner GetSession200ResponseClientsInner
 
-// GetClientId returns the ClientId field value
+// GetClientId returns the ClientId field value if set, zero value otherwise.
 func (o *GetSession200ResponseClientsInner) GetClientId() string {
-	if o == nil {
+	if o == nil || IsNil(o.ClientId) {
 		var ret string
 		return ret
 	}
-
-	return o.ClientId
+	return *o.ClientId
 }
 
-// GetClientIdOk returns a tuple with the ClientId field value
+// GetClientIdOk returns a tuple with the ClientId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSession200ResponseClientsInner) GetClientIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ClientId) {
 		return nil, false
 	}
-	return &o.ClientId, true
+	return o.ClientId, true
 }
 
-// SetClientId sets field value
+// HasClientId returns a boolean if a field has been set.
+func (o *GetSession200ResponseClientsInner) HasClientId() bool {
+	if o != nil && !IsNil(o.ClientId) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientId gets a reference to the given string and assigns it to the ClientId field.
 func (o *GetSession200ResponseClientsInner) SetClientId(v string) {
-	o.ClientId = v
+	o.ClientId = &v
 }
 
 func (o GetSession200ResponseClientsInner) MarshalJSON() ([]byte, error) {
@@ -57,7 +65,9 @@ func (o GetSession200ResponseClientsInner) MarshalJSON() ([]byte, error) {
 
 func (o GetSession200ResponseClientsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["client_id"] = o.ClientId
+	if !IsNil(o.ClientId) {
+		toSerialize["client_id"] = o.ClientId
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

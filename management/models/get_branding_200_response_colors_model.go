@@ -11,65 +11,78 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetBranding200ResponseColors Custom color settings.
 type GetBranding200ResponseColors struct {
 	// Accent color.
-	Primary        string                                     `json:"primary"`
-	PageBackground GetBranding200ResponseColorsPageBackground `json:"page_background"`
+	Primary        *string                                     `json:"primary,omitempty"`
+	PageBackground *GetBranding200ResponseColorsPageBackground `json:"page_background,omitempty"`
 }
 
-type _GetBranding200ResponseColors GetBranding200ResponseColors
-
-// GetPrimary returns the Primary field value
+// GetPrimary returns the Primary field value if set, zero value otherwise.
 func (o *GetBranding200ResponseColors) GetPrimary() string {
-	if o == nil {
+	if o == nil || IsNil(o.Primary) {
 		var ret string
 		return ret
 	}
-
-	return o.Primary
+	return *o.Primary
 }
 
-// GetPrimaryOk returns a tuple with the Primary field value
+// GetPrimaryOk returns a tuple with the Primary field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBranding200ResponseColors) GetPrimaryOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Primary) {
 		return nil, false
 	}
-	return &o.Primary, true
+	return o.Primary, true
 }
 
-// SetPrimary sets field value
+// HasPrimary returns a boolean if a field has been set.
+func (o *GetBranding200ResponseColors) HasPrimary() bool {
+	if o != nil && !IsNil(o.Primary) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimary gets a reference to the given string and assigns it to the Primary field.
 func (o *GetBranding200ResponseColors) SetPrimary(v string) {
-	o.Primary = v
+	o.Primary = &v
 }
 
-// GetPageBackground returns the PageBackground field value
+// GetPageBackground returns the PageBackground field value if set, zero value otherwise.
 func (o *GetBranding200ResponseColors) GetPageBackground() GetBranding200ResponseColorsPageBackground {
-	if o == nil {
+	if o == nil || IsNil(o.PageBackground) {
 		var ret GetBranding200ResponseColorsPageBackground
 		return ret
 	}
-
-	return o.PageBackground
+	return *o.PageBackground
 }
 
-// GetPageBackgroundOk returns a tuple with the PageBackground field value
+// GetPageBackgroundOk returns a tuple with the PageBackground field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBranding200ResponseColors) GetPageBackgroundOk() (*GetBranding200ResponseColorsPageBackground, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PageBackground) {
 		return nil, false
 	}
-	return &o.PageBackground, true
+	return o.PageBackground, true
 }
 
-// SetPageBackground sets field value
+// HasPageBackground returns a boolean if a field has been set.
+func (o *GetBranding200ResponseColors) HasPageBackground() bool {
+	if o != nil && !IsNil(o.PageBackground) {
+		return true
+	}
+
+	return false
+}
+
+// SetPageBackground gets a reference to the given GetBranding200ResponseColorsPageBackground and assigns it to the PageBackground field.
 func (o *GetBranding200ResponseColors) SetPageBackground(v GetBranding200ResponseColorsPageBackground) {
-	o.PageBackground = v
+	o.PageBackground = &v
 }
 
 func (o GetBranding200ResponseColors) MarshalJSON() ([]byte, error) {
@@ -82,25 +95,13 @@ func (o GetBranding200ResponseColors) MarshalJSON() ([]byte, error) {
 
 func (o GetBranding200ResponseColors) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["primary"] = o.Primary
-	toSerialize["page_background"] = o.PageBackground
-	return toSerialize, nil
-}
-
-func (o *GetBranding200ResponseColors) UnmarshalJSON(data []byte) (err error) {
-	varGetBranding200ResponseColors := _GetBranding200ResponseColors{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetBranding200ResponseColors)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Primary) {
+		toSerialize["primary"] = o.Primary
 	}
-
-	*o = GetBranding200ResponseColors(varGetBranding200ResponseColors)
-
-	return err
+	if !IsNil(o.PageBackground) {
+		toSerialize["page_background"] = o.PageBackground
+	}
+	return toSerialize, nil
 }
 
 type NullableGetBranding200ResponseColors struct {

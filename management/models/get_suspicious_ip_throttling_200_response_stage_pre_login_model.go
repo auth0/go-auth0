@@ -11,66 +11,79 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetSuspiciousIpThrottling200ResponseStagePreLogin Configuration options that apply before every login attempt.
 type GetSuspiciousIpThrottling200ResponseStagePreLogin struct {
 	// Total number of attempts allowed per day.
-	MaxAttempts int32 `json:"max_attempts"`
+	MaxAttempts *int32 `json:"max_attempts,omitempty"`
 	// Interval of time, given in milliseconds, at which new attempts are granted.
-	Rate int32 `json:"rate"`
+	Rate *int32 `json:"rate,omitempty"`
 }
 
-type _GetSuspiciousIpThrottling200ResponseStagePreLogin GetSuspiciousIpThrottling200ResponseStagePreLogin
-
-// GetMaxAttempts returns the MaxAttempts field value
+// GetMaxAttempts returns the MaxAttempts field value if set, zero value otherwise.
 func (o *GetSuspiciousIpThrottling200ResponseStagePreLogin) GetMaxAttempts() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.MaxAttempts) {
 		var ret int32
 		return ret
 	}
-
-	return o.MaxAttempts
+	return *o.MaxAttempts
 }
 
-// GetMaxAttemptsOk returns a tuple with the MaxAttempts field value
+// GetMaxAttemptsOk returns a tuple with the MaxAttempts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSuspiciousIpThrottling200ResponseStagePreLogin) GetMaxAttemptsOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.MaxAttempts) {
 		return nil, false
 	}
-	return &o.MaxAttempts, true
+	return o.MaxAttempts, true
 }
 
-// SetMaxAttempts sets field value
+// HasMaxAttempts returns a boolean if a field has been set.
+func (o *GetSuspiciousIpThrottling200ResponseStagePreLogin) HasMaxAttempts() bool {
+	if o != nil && !IsNil(o.MaxAttempts) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaxAttempts gets a reference to the given int32 and assigns it to the MaxAttempts field.
 func (o *GetSuspiciousIpThrottling200ResponseStagePreLogin) SetMaxAttempts(v int32) {
-	o.MaxAttempts = v
+	o.MaxAttempts = &v
 }
 
-// GetRate returns the Rate field value
+// GetRate returns the Rate field value if set, zero value otherwise.
 func (o *GetSuspiciousIpThrottling200ResponseStagePreLogin) GetRate() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.Rate) {
 		var ret int32
 		return ret
 	}
-
-	return o.Rate
+	return *o.Rate
 }
 
-// GetRateOk returns a tuple with the Rate field value
+// GetRateOk returns a tuple with the Rate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSuspiciousIpThrottling200ResponseStagePreLogin) GetRateOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Rate) {
 		return nil, false
 	}
-	return &o.Rate, true
+	return o.Rate, true
 }
 
-// SetRate sets field value
+// HasRate returns a boolean if a field has been set.
+func (o *GetSuspiciousIpThrottling200ResponseStagePreLogin) HasRate() bool {
+	if o != nil && !IsNil(o.Rate) {
+		return true
+	}
+
+	return false
+}
+
+// SetRate gets a reference to the given int32 and assigns it to the Rate field.
 func (o *GetSuspiciousIpThrottling200ResponseStagePreLogin) SetRate(v int32) {
-	o.Rate = v
+	o.Rate = &v
 }
 
 func (o GetSuspiciousIpThrottling200ResponseStagePreLogin) MarshalJSON() ([]byte, error) {
@@ -83,25 +96,13 @@ func (o GetSuspiciousIpThrottling200ResponseStagePreLogin) MarshalJSON() ([]byte
 
 func (o GetSuspiciousIpThrottling200ResponseStagePreLogin) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["max_attempts"] = o.MaxAttempts
-	toSerialize["rate"] = o.Rate
-	return toSerialize, nil
-}
-
-func (o *GetSuspiciousIpThrottling200ResponseStagePreLogin) UnmarshalJSON(data []byte) (err error) {
-	varGetSuspiciousIpThrottling200ResponseStagePreLogin := _GetSuspiciousIpThrottling200ResponseStagePreLogin{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetSuspiciousIpThrottling200ResponseStagePreLogin)
-
-	if err != nil {
-		return err
+	if !IsNil(o.MaxAttempts) {
+		toSerialize["max_attempts"] = o.MaxAttempts
 	}
-
-	*o = GetSuspiciousIpThrottling200ResponseStagePreLogin(varGetSuspiciousIpThrottling200ResponseStagePreLogin)
-
-	return err
+	if !IsNil(o.Rate) {
+		toSerialize["rate"] = o.Rate
+	}
+	return toSerialize, nil
 }
 
 type NullableGetSuspiciousIpThrottling200ResponseStagePreLogin struct {

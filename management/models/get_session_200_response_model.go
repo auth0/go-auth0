@@ -17,83 +17,97 @@ import (
 // GetSession200Response struct for GetSession200Response
 type GetSession200Response struct {
 	// The ID of the session
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// ID of the user which can be used when interacting with other APIs.
-	UserId          string                                       `json:"user_id"`
-	CreatedAt       NullableGetSession200ResponseCreatedAt       `json:"created_at"`
-	UpdatedAt       NullableGetSession200ResponseUpdatedAt       `json:"updated_at"`
-	AuthenticatedAt NullableGetSession200ResponseAuthenticatedAt `json:"authenticated_at"`
-	IdleExpiresAt   NullableGetSession200ResponseIdleExpiresAt   `json:"idle_expires_at"`
-	ExpiresAt       NullableGetSession200ResponseExpiresAt       `json:"expires_at"`
-	Device          GetSession200ResponseDevice                  `json:"device"`
+	UserId          *string                                      `json:"user_id,omitempty"`
+	CreatedAt       NullableGetSession200ResponseCreatedAt       `json:"created_at,omitempty"`
+	UpdatedAt       NullableGetSession200ResponseUpdatedAt       `json:"updated_at,omitempty"`
+	AuthenticatedAt NullableGetSession200ResponseAuthenticatedAt `json:"authenticated_at,omitempty"`
+	IdleExpiresAt   NullableGetSession200ResponseIdleExpiresAt   `json:"idle_expires_at,omitempty"`
+	ExpiresAt       NullableGetSession200ResponseExpiresAt       `json:"expires_at,omitempty"`
+	Device          *GetSession200ResponseDevice                 `json:"device,omitempty"`
 	// List of client details for the session
-	Clients              []GetSession200ResponseClientsInner `json:"clients"`
-	Authentication       GetSession200ResponseAuthentication `json:"authentication"`
+	Clients              []GetSession200ResponseClientsInner  `json:"clients,omitempty"`
+	Authentication       *GetSession200ResponseAuthentication `json:"authentication,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetSession200Response GetSession200Response
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetSession200Response) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSession200Response) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetSession200Response) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetSession200Response) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetUserId returns the UserId field value
+// GetUserId returns the UserId field value if set, zero value otherwise.
 func (o *GetSession200Response) GetUserId() string {
-	if o == nil {
+	if o == nil || IsNil(o.UserId) {
 		var ret string
 		return ret
 	}
-
-	return o.UserId
+	return *o.UserId
 }
 
-// GetUserIdOk returns a tuple with the UserId field value
+// GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSession200Response) GetUserIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UserId) {
 		return nil, false
 	}
-	return &o.UserId, true
+	return o.UserId, true
 }
 
-// SetUserId sets field value
+// HasUserId returns a boolean if a field has been set.
+func (o *GetSession200Response) HasUserId() bool {
+	if o != nil && !IsNil(o.UserId) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserId gets a reference to the given string and assigns it to the UserId field.
 func (o *GetSession200Response) SetUserId(v string) {
-	o.UserId = v
+	o.UserId = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value
-// If the value is explicit nil, the zero value for GetSession200ResponseCreatedAt will be returned
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetSession200Response) GetCreatedAt() GetSession200ResponseCreatedAt {
-	if o == nil || o.CreatedAt.Get() == nil {
+	if o == nil || IsNil(o.CreatedAt.Get()) {
 		var ret GetSession200ResponseCreatedAt
 		return ret
 	}
-
 	return *o.CreatedAt.Get()
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetSession200Response) GetCreatedAtOk() (*GetSession200ResponseCreatedAt, bool) {
@@ -103,23 +117,40 @@ func (o *GetSession200Response) GetCreatedAtOk() (*GetSession200ResponseCreatedA
 	return o.CreatedAt.Get(), o.CreatedAt.IsSet()
 }
 
-// SetCreatedAt sets field value
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetSession200Response) HasCreatedAt() bool {
+	if o != nil && o.CreatedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given NullableGetSession200ResponseCreatedAt and assigns it to the CreatedAt field.
 func (o *GetSession200Response) SetCreatedAt(v GetSession200ResponseCreatedAt) {
 	o.CreatedAt.Set(&v)
 }
 
-// GetUpdatedAt returns the UpdatedAt field value
-// If the value is explicit nil, the zero value for GetSession200ResponseUpdatedAt will be returned
+// SetCreatedAtNil sets the value for CreatedAt to be an explicit nil
+func (o *GetSession200Response) SetCreatedAtNil() {
+	o.CreatedAt.Set(nil)
+}
+
+// UnsetCreatedAt ensures that no value is present for CreatedAt, not even an explicit nil
+func (o *GetSession200Response) UnsetCreatedAt() {
+	o.CreatedAt.Unset()
+}
+
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetSession200Response) GetUpdatedAt() GetSession200ResponseUpdatedAt {
-	if o == nil || o.UpdatedAt.Get() == nil {
+	if o == nil || IsNil(o.UpdatedAt.Get()) {
 		var ret GetSession200ResponseUpdatedAt
 		return ret
 	}
-
 	return *o.UpdatedAt.Get()
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetSession200Response) GetUpdatedAtOk() (*GetSession200ResponseUpdatedAt, bool) {
@@ -129,23 +160,40 @@ func (o *GetSession200Response) GetUpdatedAtOk() (*GetSession200ResponseUpdatedA
 	return o.UpdatedAt.Get(), o.UpdatedAt.IsSet()
 }
 
-// SetUpdatedAt sets field value
+// HasUpdatedAt returns a boolean if a field has been set.
+func (o *GetSession200Response) HasUpdatedAt() bool {
+	if o != nil && o.UpdatedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedAt gets a reference to the given NullableGetSession200ResponseUpdatedAt and assigns it to the UpdatedAt field.
 func (o *GetSession200Response) SetUpdatedAt(v GetSession200ResponseUpdatedAt) {
 	o.UpdatedAt.Set(&v)
 }
 
-// GetAuthenticatedAt returns the AuthenticatedAt field value
-// If the value is explicit nil, the zero value for GetSession200ResponseAuthenticatedAt will be returned
+// SetUpdatedAtNil sets the value for UpdatedAt to be an explicit nil
+func (o *GetSession200Response) SetUpdatedAtNil() {
+	o.UpdatedAt.Set(nil)
+}
+
+// UnsetUpdatedAt ensures that no value is present for UpdatedAt, not even an explicit nil
+func (o *GetSession200Response) UnsetUpdatedAt() {
+	o.UpdatedAt.Unset()
+}
+
+// GetAuthenticatedAt returns the AuthenticatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetSession200Response) GetAuthenticatedAt() GetSession200ResponseAuthenticatedAt {
-	if o == nil || o.AuthenticatedAt.Get() == nil {
+	if o == nil || IsNil(o.AuthenticatedAt.Get()) {
 		var ret GetSession200ResponseAuthenticatedAt
 		return ret
 	}
-
 	return *o.AuthenticatedAt.Get()
 }
 
-// GetAuthenticatedAtOk returns a tuple with the AuthenticatedAt field value
+// GetAuthenticatedAtOk returns a tuple with the AuthenticatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetSession200Response) GetAuthenticatedAtOk() (*GetSession200ResponseAuthenticatedAt, bool) {
@@ -155,23 +203,40 @@ func (o *GetSession200Response) GetAuthenticatedAtOk() (*GetSession200ResponseAu
 	return o.AuthenticatedAt.Get(), o.AuthenticatedAt.IsSet()
 }
 
-// SetAuthenticatedAt sets field value
+// HasAuthenticatedAt returns a boolean if a field has been set.
+func (o *GetSession200Response) HasAuthenticatedAt() bool {
+	if o != nil && o.AuthenticatedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAuthenticatedAt gets a reference to the given NullableGetSession200ResponseAuthenticatedAt and assigns it to the AuthenticatedAt field.
 func (o *GetSession200Response) SetAuthenticatedAt(v GetSession200ResponseAuthenticatedAt) {
 	o.AuthenticatedAt.Set(&v)
 }
 
-// GetIdleExpiresAt returns the IdleExpiresAt field value
-// If the value is explicit nil, the zero value for GetSession200ResponseIdleExpiresAt will be returned
+// SetAuthenticatedAtNil sets the value for AuthenticatedAt to be an explicit nil
+func (o *GetSession200Response) SetAuthenticatedAtNil() {
+	o.AuthenticatedAt.Set(nil)
+}
+
+// UnsetAuthenticatedAt ensures that no value is present for AuthenticatedAt, not even an explicit nil
+func (o *GetSession200Response) UnsetAuthenticatedAt() {
+	o.AuthenticatedAt.Unset()
+}
+
+// GetIdleExpiresAt returns the IdleExpiresAt field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetSession200Response) GetIdleExpiresAt() GetSession200ResponseIdleExpiresAt {
-	if o == nil || o.IdleExpiresAt.Get() == nil {
+	if o == nil || IsNil(o.IdleExpiresAt.Get()) {
 		var ret GetSession200ResponseIdleExpiresAt
 		return ret
 	}
-
 	return *o.IdleExpiresAt.Get()
 }
 
-// GetIdleExpiresAtOk returns a tuple with the IdleExpiresAt field value
+// GetIdleExpiresAtOk returns a tuple with the IdleExpiresAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetSession200Response) GetIdleExpiresAtOk() (*GetSession200ResponseIdleExpiresAt, bool) {
@@ -181,23 +246,40 @@ func (o *GetSession200Response) GetIdleExpiresAtOk() (*GetSession200ResponseIdle
 	return o.IdleExpiresAt.Get(), o.IdleExpiresAt.IsSet()
 }
 
-// SetIdleExpiresAt sets field value
+// HasIdleExpiresAt returns a boolean if a field has been set.
+func (o *GetSession200Response) HasIdleExpiresAt() bool {
+	if o != nil && o.IdleExpiresAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIdleExpiresAt gets a reference to the given NullableGetSession200ResponseIdleExpiresAt and assigns it to the IdleExpiresAt field.
 func (o *GetSession200Response) SetIdleExpiresAt(v GetSession200ResponseIdleExpiresAt) {
 	o.IdleExpiresAt.Set(&v)
 }
 
-// GetExpiresAt returns the ExpiresAt field value
-// If the value is explicit nil, the zero value for GetSession200ResponseExpiresAt will be returned
+// SetIdleExpiresAtNil sets the value for IdleExpiresAt to be an explicit nil
+func (o *GetSession200Response) SetIdleExpiresAtNil() {
+	o.IdleExpiresAt.Set(nil)
+}
+
+// UnsetIdleExpiresAt ensures that no value is present for IdleExpiresAt, not even an explicit nil
+func (o *GetSession200Response) UnsetIdleExpiresAt() {
+	o.IdleExpiresAt.Unset()
+}
+
+// GetExpiresAt returns the ExpiresAt field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetSession200Response) GetExpiresAt() GetSession200ResponseExpiresAt {
-	if o == nil || o.ExpiresAt.Get() == nil {
+	if o == nil || IsNil(o.ExpiresAt.Get()) {
 		var ret GetSession200ResponseExpiresAt
 		return ret
 	}
-
 	return *o.ExpiresAt.Get()
 }
 
-// GetExpiresAtOk returns a tuple with the ExpiresAt field value
+// GetExpiresAtOk returns a tuple with the ExpiresAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetSession200Response) GetExpiresAtOk() (*GetSession200ResponseExpiresAt, bool) {
@@ -207,81 +289,124 @@ func (o *GetSession200Response) GetExpiresAtOk() (*GetSession200ResponseExpiresA
 	return o.ExpiresAt.Get(), o.ExpiresAt.IsSet()
 }
 
-// SetExpiresAt sets field value
+// HasExpiresAt returns a boolean if a field has been set.
+func (o *GetSession200Response) HasExpiresAt() bool {
+	if o != nil && o.ExpiresAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetExpiresAt gets a reference to the given NullableGetSession200ResponseExpiresAt and assigns it to the ExpiresAt field.
 func (o *GetSession200Response) SetExpiresAt(v GetSession200ResponseExpiresAt) {
 	o.ExpiresAt.Set(&v)
 }
 
-// GetDevice returns the Device field value
+// SetExpiresAtNil sets the value for ExpiresAt to be an explicit nil
+func (o *GetSession200Response) SetExpiresAtNil() {
+	o.ExpiresAt.Set(nil)
+}
+
+// UnsetExpiresAt ensures that no value is present for ExpiresAt, not even an explicit nil
+func (o *GetSession200Response) UnsetExpiresAt() {
+	o.ExpiresAt.Unset()
+}
+
+// GetDevice returns the Device field value if set, zero value otherwise.
 func (o *GetSession200Response) GetDevice() GetSession200ResponseDevice {
-	if o == nil {
+	if o == nil || IsNil(o.Device) {
 		var ret GetSession200ResponseDevice
 		return ret
 	}
-
-	return o.Device
+	return *o.Device
 }
 
-// GetDeviceOk returns a tuple with the Device field value
+// GetDeviceOk returns a tuple with the Device field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSession200Response) GetDeviceOk() (*GetSession200ResponseDevice, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Device) {
 		return nil, false
 	}
-	return &o.Device, true
+	return o.Device, true
 }
 
-// SetDevice sets field value
+// HasDevice returns a boolean if a field has been set.
+func (o *GetSession200Response) HasDevice() bool {
+	if o != nil && !IsNil(o.Device) {
+		return true
+	}
+
+	return false
+}
+
+// SetDevice gets a reference to the given GetSession200ResponseDevice and assigns it to the Device field.
 func (o *GetSession200Response) SetDevice(v GetSession200ResponseDevice) {
-	o.Device = v
+	o.Device = &v
 }
 
-// GetClients returns the Clients field value
+// GetClients returns the Clients field value if set, zero value otherwise.
 func (o *GetSession200Response) GetClients() []GetSession200ResponseClientsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Clients) {
 		var ret []GetSession200ResponseClientsInner
 		return ret
 	}
-
 	return o.Clients
 }
 
-// GetClientsOk returns a tuple with the Clients field value
+// GetClientsOk returns a tuple with the Clients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSession200Response) GetClientsOk() ([]GetSession200ResponseClientsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Clients) {
 		return nil, false
 	}
 	return o.Clients, true
 }
 
-// SetClients sets field value
+// HasClients returns a boolean if a field has been set.
+func (o *GetSession200Response) HasClients() bool {
+	if o != nil && !IsNil(o.Clients) {
+		return true
+	}
+
+	return false
+}
+
+// SetClients gets a reference to the given []GetSession200ResponseClientsInner and assigns it to the Clients field.
 func (o *GetSession200Response) SetClients(v []GetSession200ResponseClientsInner) {
 	o.Clients = v
 }
 
-// GetAuthentication returns the Authentication field value
+// GetAuthentication returns the Authentication field value if set, zero value otherwise.
 func (o *GetSession200Response) GetAuthentication() GetSession200ResponseAuthentication {
-	if o == nil {
+	if o == nil || IsNil(o.Authentication) {
 		var ret GetSession200ResponseAuthentication
 		return ret
 	}
-
-	return o.Authentication
+	return *o.Authentication
 }
 
-// GetAuthenticationOk returns a tuple with the Authentication field value
+// GetAuthenticationOk returns a tuple with the Authentication field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSession200Response) GetAuthenticationOk() (*GetSession200ResponseAuthentication, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Authentication) {
 		return nil, false
 	}
-	return &o.Authentication, true
+	return o.Authentication, true
 }
 
-// SetAuthentication sets field value
+// HasAuthentication returns a boolean if a field has been set.
+func (o *GetSession200Response) HasAuthentication() bool {
+	if o != nil && !IsNil(o.Authentication) {
+		return true
+	}
+
+	return false
+}
+
+// SetAuthentication gets a reference to the given GetSession200ResponseAuthentication and assigns it to the Authentication field.
 func (o *GetSession200Response) SetAuthentication(v GetSession200ResponseAuthentication) {
-	o.Authentication = v
+	o.Authentication = &v
 }
 
 func (o GetSession200Response) MarshalJSON() ([]byte, error) {
@@ -294,16 +419,36 @@ func (o GetSession200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetSession200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["user_id"] = o.UserId
-	toSerialize["created_at"] = o.CreatedAt.Get()
-	toSerialize["updated_at"] = o.UpdatedAt.Get()
-	toSerialize["authenticated_at"] = o.AuthenticatedAt.Get()
-	toSerialize["idle_expires_at"] = o.IdleExpiresAt.Get()
-	toSerialize["expires_at"] = o.ExpiresAt.Get()
-	toSerialize["device"] = o.Device
-	toSerialize["clients"] = o.Clients
-	toSerialize["authentication"] = o.Authentication
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.UserId) {
+		toSerialize["user_id"] = o.UserId
+	}
+	if o.CreatedAt.IsSet() {
+		toSerialize["created_at"] = o.CreatedAt.Get()
+	}
+	if o.UpdatedAt.IsSet() {
+		toSerialize["updated_at"] = o.UpdatedAt.Get()
+	}
+	if o.AuthenticatedAt.IsSet() {
+		toSerialize["authenticated_at"] = o.AuthenticatedAt.Get()
+	}
+	if o.IdleExpiresAt.IsSet() {
+		toSerialize["idle_expires_at"] = o.IdleExpiresAt.Get()
+	}
+	if o.ExpiresAt.IsSet() {
+		toSerialize["expires_at"] = o.ExpiresAt.Get()
+	}
+	if !IsNil(o.Device) {
+		toSerialize["device"] = o.Device
+	}
+	if !IsNil(o.Clients) {
+		toSerialize["clients"] = o.Clients
+	}
+	if !IsNil(o.Authentication) {
+		toSerialize["authentication"] = o.Authentication
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -17,60 +17,76 @@ import (
 // PostTicket200Response struct for PostTicket200Response
 type PostTicket200Response struct {
 	// The ticket_id used to identify the enrollment
-	TicketId string `json:"ticket_id"`
+	TicketId *string `json:"ticket_id,omitempty"`
 	// The url you can use to start enrollment
-	TicketUrl            string `json:"ticket_url"`
+	TicketUrl            *string `json:"ticket_url,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _PostTicket200Response PostTicket200Response
 
-// GetTicketId returns the TicketId field value
+// GetTicketId returns the TicketId field value if set, zero value otherwise.
 func (o *PostTicket200Response) GetTicketId() string {
-	if o == nil {
+	if o == nil || IsNil(o.TicketId) {
 		var ret string
 		return ret
 	}
-
-	return o.TicketId
+	return *o.TicketId
 }
 
-// GetTicketIdOk returns a tuple with the TicketId field value
+// GetTicketIdOk returns a tuple with the TicketId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostTicket200Response) GetTicketIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TicketId) {
 		return nil, false
 	}
-	return &o.TicketId, true
+	return o.TicketId, true
 }
 
-// SetTicketId sets field value
+// HasTicketId returns a boolean if a field has been set.
+func (o *PostTicket200Response) HasTicketId() bool {
+	if o != nil && !IsNil(o.TicketId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTicketId gets a reference to the given string and assigns it to the TicketId field.
 func (o *PostTicket200Response) SetTicketId(v string) {
-	o.TicketId = v
+	o.TicketId = &v
 }
 
-// GetTicketUrl returns the TicketUrl field value
+// GetTicketUrl returns the TicketUrl field value if set, zero value otherwise.
 func (o *PostTicket200Response) GetTicketUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.TicketUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.TicketUrl
+	return *o.TicketUrl
 }
 
-// GetTicketUrlOk returns a tuple with the TicketUrl field value
+// GetTicketUrlOk returns a tuple with the TicketUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostTicket200Response) GetTicketUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TicketUrl) {
 		return nil, false
 	}
-	return &o.TicketUrl, true
+	return o.TicketUrl, true
 }
 
-// SetTicketUrl sets field value
+// HasTicketUrl returns a boolean if a field has been set.
+func (o *PostTicket200Response) HasTicketUrl() bool {
+	if o != nil && !IsNil(o.TicketUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetTicketUrl gets a reference to the given string and assigns it to the TicketUrl field.
 func (o *PostTicket200Response) SetTicketUrl(v string) {
-	o.TicketUrl = v
+	o.TicketUrl = &v
 }
 
 func (o PostTicket200Response) MarshalJSON() ([]byte, error) {
@@ -83,8 +99,12 @@ func (o PostTicket200Response) MarshalJSON() ([]byte, error) {
 
 func (o PostTicket200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["ticket_id"] = o.TicketId
-	toSerialize["ticket_url"] = o.TicketUrl
+	if !IsNil(o.TicketId) {
+		toSerialize["ticket_id"] = o.TicketId
+	}
+	if !IsNil(o.TicketUrl) {
+		toSerialize["ticket_url"] = o.TicketUrl
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

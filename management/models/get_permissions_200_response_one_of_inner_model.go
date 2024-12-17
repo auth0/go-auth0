@@ -11,37 +11,32 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetPermissions200ResponseOneOfInner struct for GetPermissions200ResponseOneOfInner
 type GetPermissions200ResponseOneOfInner struct {
-	Sources interface{} `json:"sources"`
+	Sources interface{} `json:"sources,omitempty"`
 	// Resource server (API) identifier that this permission is for.
-	ResourceServerIdentifier string `json:"resource_server_identifier"`
+	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty"`
 	// Name of this permission.
-	PermissionName string `json:"permission_name"`
+	PermissionName *string `json:"permission_name,omitempty"`
 	// Resource server (API) name this permission is for.
-	ResourceServerName string `json:"resource_server_name"`
+	ResourceServerName *string `json:"resource_server_name,omitempty"`
 	// Description of this permission.
-	Description string `json:"description"`
+	Description *string `json:"description,omitempty"`
 }
 
-type _GetPermissions200ResponseOneOfInner GetPermissions200ResponseOneOfInner
-
-// GetSources returns the Sources field value
-// If the value is explicit nil, the zero value for interface{} will be returned
+// GetSources returns the Sources field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetPermissions200ResponseOneOfInner) GetSources() interface{} {
 	if o == nil {
 		var ret interface{}
 		return ret
 	}
-
 	return o.Sources
 }
 
-// GetSourcesOk returns a tuple with the Sources field value
+// GetSourcesOk returns a tuple with the Sources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetPermissions200ResponseOneOfInner) GetSourcesOk() (*interface{}, bool) {
@@ -51,105 +46,146 @@ func (o *GetPermissions200ResponseOneOfInner) GetSourcesOk() (*interface{}, bool
 	return &o.Sources, true
 }
 
-// SetSources sets field value
+// HasSources returns a boolean if a field has been set.
+func (o *GetPermissions200ResponseOneOfInner) HasSources() bool {
+	if o != nil && !IsNil(o.Sources) {
+		return true
+	}
+
+	return false
+}
+
+// SetSources gets a reference to the given interface{} and assigns it to the Sources field.
 func (o *GetPermissions200ResponseOneOfInner) SetSources(v interface{}) {
 	o.Sources = v
 }
 
-// GetResourceServerIdentifier returns the ResourceServerIdentifier field value
+// GetResourceServerIdentifier returns the ResourceServerIdentifier field value if set, zero value otherwise.
 func (o *GetPermissions200ResponseOneOfInner) GetResourceServerIdentifier() string {
-	if o == nil {
+	if o == nil || IsNil(o.ResourceServerIdentifier) {
 		var ret string
 		return ret
 	}
-
-	return o.ResourceServerIdentifier
+	return *o.ResourceServerIdentifier
 }
 
-// GetResourceServerIdentifierOk returns a tuple with the ResourceServerIdentifier field value
+// GetResourceServerIdentifierOk returns a tuple with the ResourceServerIdentifier field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetPermissions200ResponseOneOfInner) GetResourceServerIdentifierOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ResourceServerIdentifier) {
 		return nil, false
 	}
-	return &o.ResourceServerIdentifier, true
+	return o.ResourceServerIdentifier, true
 }
 
-// SetResourceServerIdentifier sets field value
+// HasResourceServerIdentifier returns a boolean if a field has been set.
+func (o *GetPermissions200ResponseOneOfInner) HasResourceServerIdentifier() bool {
+	if o != nil && !IsNil(o.ResourceServerIdentifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetResourceServerIdentifier gets a reference to the given string and assigns it to the ResourceServerIdentifier field.
 func (o *GetPermissions200ResponseOneOfInner) SetResourceServerIdentifier(v string) {
-	o.ResourceServerIdentifier = v
+	o.ResourceServerIdentifier = &v
 }
 
-// GetPermissionName returns the PermissionName field value
+// GetPermissionName returns the PermissionName field value if set, zero value otherwise.
 func (o *GetPermissions200ResponseOneOfInner) GetPermissionName() string {
-	if o == nil {
+	if o == nil || IsNil(o.PermissionName) {
 		var ret string
 		return ret
 	}
-
-	return o.PermissionName
+	return *o.PermissionName
 }
 
-// GetPermissionNameOk returns a tuple with the PermissionName field value
+// GetPermissionNameOk returns a tuple with the PermissionName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetPermissions200ResponseOneOfInner) GetPermissionNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PermissionName) {
 		return nil, false
 	}
-	return &o.PermissionName, true
+	return o.PermissionName, true
 }
 
-// SetPermissionName sets field value
+// HasPermissionName returns a boolean if a field has been set.
+func (o *GetPermissions200ResponseOneOfInner) HasPermissionName() bool {
+	if o != nil && !IsNil(o.PermissionName) {
+		return true
+	}
+
+	return false
+}
+
+// SetPermissionName gets a reference to the given string and assigns it to the PermissionName field.
 func (o *GetPermissions200ResponseOneOfInner) SetPermissionName(v string) {
-	o.PermissionName = v
+	o.PermissionName = &v
 }
 
-// GetResourceServerName returns the ResourceServerName field value
+// GetResourceServerName returns the ResourceServerName field value if set, zero value otherwise.
 func (o *GetPermissions200ResponseOneOfInner) GetResourceServerName() string {
-	if o == nil {
+	if o == nil || IsNil(o.ResourceServerName) {
 		var ret string
 		return ret
 	}
-
-	return o.ResourceServerName
+	return *o.ResourceServerName
 }
 
-// GetResourceServerNameOk returns a tuple with the ResourceServerName field value
+// GetResourceServerNameOk returns a tuple with the ResourceServerName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetPermissions200ResponseOneOfInner) GetResourceServerNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ResourceServerName) {
 		return nil, false
 	}
-	return &o.ResourceServerName, true
+	return o.ResourceServerName, true
 }
 
-// SetResourceServerName sets field value
+// HasResourceServerName returns a boolean if a field has been set.
+func (o *GetPermissions200ResponseOneOfInner) HasResourceServerName() bool {
+	if o != nil && !IsNil(o.ResourceServerName) {
+		return true
+	}
+
+	return false
+}
+
+// SetResourceServerName gets a reference to the given string and assigns it to the ResourceServerName field.
 func (o *GetPermissions200ResponseOneOfInner) SetResourceServerName(v string) {
-	o.ResourceServerName = v
+	o.ResourceServerName = &v
 }
 
-// GetDescription returns the Description field value
+// GetDescription returns the Description field value if set, zero value otherwise.
 func (o *GetPermissions200ResponseOneOfInner) GetDescription() string {
-	if o == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
-
-	return o.Description
+	return *o.Description
 }
 
-// GetDescriptionOk returns a tuple with the Description field value
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetPermissions200ResponseOneOfInner) GetDescriptionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
-	return &o.Description, true
+	return o.Description, true
 }
 
-// SetDescription sets field value
+// HasDescription returns a boolean if a field has been set.
+func (o *GetPermissions200ResponseOneOfInner) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
 func (o *GetPermissions200ResponseOneOfInner) SetDescription(v string) {
-	o.Description = v
+	o.Description = &v
 }
 
 func (o GetPermissions200ResponseOneOfInner) MarshalJSON() ([]byte, error) {
@@ -165,27 +201,19 @@ func (o GetPermissions200ResponseOneOfInner) ToMap() (map[string]interface{}, er
 	if o.Sources != nil {
 		toSerialize["sources"] = o.Sources
 	}
-	toSerialize["resource_server_identifier"] = o.ResourceServerIdentifier
-	toSerialize["permission_name"] = o.PermissionName
-	toSerialize["resource_server_name"] = o.ResourceServerName
-	toSerialize["description"] = o.Description
-	return toSerialize, nil
-}
-
-func (o *GetPermissions200ResponseOneOfInner) UnmarshalJSON(data []byte) (err error) {
-	varGetPermissions200ResponseOneOfInner := _GetPermissions200ResponseOneOfInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetPermissions200ResponseOneOfInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.ResourceServerIdentifier) {
+		toSerialize["resource_server_identifier"] = o.ResourceServerIdentifier
 	}
-
-	*o = GetPermissions200ResponseOneOfInner(varGetPermissions200ResponseOneOfInner)
-
-	return err
+	if !IsNil(o.PermissionName) {
+		toSerialize["permission_name"] = o.PermissionName
+	}
+	if !IsNil(o.ResourceServerName) {
+		toSerialize["resource_server_name"] = o.ResourceServerName
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	return toSerialize, nil
 }
 
 type NullableGetPermissions200ResponseOneOfInner struct {

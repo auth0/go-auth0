@@ -13,6 +13,7 @@ package models
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // GetLogStreams200ResponseInnerOneOf1Sink struct for GetLogStreams200ResponseInnerOneOf1Sink
@@ -125,6 +126,28 @@ func (o GetLogStreams200ResponseInnerOneOf1Sink) ToMap() (map[string]interface{}
 }
 
 func (o *GetLogStreams200ResponseInnerOneOf1Sink) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"awsAccountId",
+		"awsRegion",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
 	varGetLogStreams200ResponseInnerOneOf1Sink := _GetLogStreams200ResponseInnerOneOf1Sink{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

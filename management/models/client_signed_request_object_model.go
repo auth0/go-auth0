@@ -11,63 +11,76 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // ClientSignedRequestObject JWT-secured Authorization Requests (JAR) settings.
 type ClientSignedRequestObject struct {
 	// Indicates whether the JAR requests are mandatory
-	Required    bool                                                             `json:"required"`
-	Credentials []ClientClientAuthenticationMethodsPrivateKeyJwtCredentialsInner `json:"credentials"`
+	Required    *bool                                                            `json:"required,omitempty"`
+	Credentials []ClientClientAuthenticationMethodsPrivateKeyJwtCredentialsInner `json:"credentials,omitempty"`
 }
 
-type _ClientSignedRequestObject ClientSignedRequestObject
-
-// GetRequired returns the Required field value
+// GetRequired returns the Required field value if set, zero value otherwise.
 func (o *ClientSignedRequestObject) GetRequired() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Required) {
 		var ret bool
 		return ret
 	}
-
-	return o.Required
+	return *o.Required
 }
 
-// GetRequiredOk returns a tuple with the Required field value
+// GetRequiredOk returns a tuple with the Required field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientSignedRequestObject) GetRequiredOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Required) {
 		return nil, false
 	}
-	return &o.Required, true
+	return o.Required, true
 }
 
-// SetRequired sets field value
+// HasRequired returns a boolean if a field has been set.
+func (o *ClientSignedRequestObject) HasRequired() bool {
+	if o != nil && !IsNil(o.Required) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequired gets a reference to the given bool and assigns it to the Required field.
 func (o *ClientSignedRequestObject) SetRequired(v bool) {
-	o.Required = v
+	o.Required = &v
 }
 
-// GetCredentials returns the Credentials field value
+// GetCredentials returns the Credentials field value if set, zero value otherwise.
 func (o *ClientSignedRequestObject) GetCredentials() []ClientClientAuthenticationMethodsPrivateKeyJwtCredentialsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Credentials) {
 		var ret []ClientClientAuthenticationMethodsPrivateKeyJwtCredentialsInner
 		return ret
 	}
-
 	return o.Credentials
 }
 
-// GetCredentialsOk returns a tuple with the Credentials field value
+// GetCredentialsOk returns a tuple with the Credentials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientSignedRequestObject) GetCredentialsOk() ([]ClientClientAuthenticationMethodsPrivateKeyJwtCredentialsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Credentials) {
 		return nil, false
 	}
 	return o.Credentials, true
 }
 
-// SetCredentials sets field value
+// HasCredentials returns a boolean if a field has been set.
+func (o *ClientSignedRequestObject) HasCredentials() bool {
+	if o != nil && !IsNil(o.Credentials) {
+		return true
+	}
+
+	return false
+}
+
+// SetCredentials gets a reference to the given []ClientClientAuthenticationMethodsPrivateKeyJwtCredentialsInner and assigns it to the Credentials field.
 func (o *ClientSignedRequestObject) SetCredentials(v []ClientClientAuthenticationMethodsPrivateKeyJwtCredentialsInner) {
 	o.Credentials = v
 }
@@ -82,25 +95,13 @@ func (o ClientSignedRequestObject) MarshalJSON() ([]byte, error) {
 
 func (o ClientSignedRequestObject) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["required"] = o.Required
-	toSerialize["credentials"] = o.Credentials
-	return toSerialize, nil
-}
-
-func (o *ClientSignedRequestObject) UnmarshalJSON(data []byte) (err error) {
-	varClientSignedRequestObject := _ClientSignedRequestObject{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varClientSignedRequestObject)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Required) {
+		toSerialize["required"] = o.Required
 	}
-
-	*o = ClientSignedRequestObject(varClientSignedRequestObject)
-
-	return err
+	if !IsNil(o.Credentials) {
+		toSerialize["credentials"] = o.Credentials
+	}
+	return toSerialize, nil
 }
 
 type NullableClientSignedRequestObject struct {

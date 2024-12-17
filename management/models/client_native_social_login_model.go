@@ -11,30 +11,25 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // ClientNativeSocialLogin Configure native social settings
 type ClientNativeSocialLogin struct {
-	Apple    NullableClientNativeSocialLoginApple    `json:"apple"`
-	Facebook NullableClientNativeSocialLoginFacebook `json:"facebook"`
+	Apple    NullableClientNativeSocialLoginApple    `json:"apple,omitempty"`
+	Facebook NullableClientNativeSocialLoginFacebook `json:"facebook,omitempty"`
 }
 
-type _ClientNativeSocialLogin ClientNativeSocialLogin
-
-// GetApple returns the Apple field value
-// If the value is explicit nil, the zero value for ClientNativeSocialLoginApple will be returned
+// GetApple returns the Apple field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ClientNativeSocialLogin) GetApple() ClientNativeSocialLoginApple {
-	if o == nil || o.Apple.Get() == nil {
+	if o == nil || IsNil(o.Apple.Get()) {
 		var ret ClientNativeSocialLoginApple
 		return ret
 	}
-
 	return *o.Apple.Get()
 }
 
-// GetAppleOk returns a tuple with the Apple field value
+// GetAppleOk returns a tuple with the Apple field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ClientNativeSocialLogin) GetAppleOk() (*ClientNativeSocialLoginApple, bool) {
@@ -44,23 +39,40 @@ func (o *ClientNativeSocialLogin) GetAppleOk() (*ClientNativeSocialLoginApple, b
 	return o.Apple.Get(), o.Apple.IsSet()
 }
 
-// SetApple sets field value
+// HasApple returns a boolean if a field has been set.
+func (o *ClientNativeSocialLogin) HasApple() bool {
+	if o != nil && o.Apple.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetApple gets a reference to the given NullableClientNativeSocialLoginApple and assigns it to the Apple field.
 func (o *ClientNativeSocialLogin) SetApple(v ClientNativeSocialLoginApple) {
 	o.Apple.Set(&v)
 }
 
-// GetFacebook returns the Facebook field value
-// If the value is explicit nil, the zero value for ClientNativeSocialLoginFacebook will be returned
+// SetAppleNil sets the value for Apple to be an explicit nil
+func (o *ClientNativeSocialLogin) SetAppleNil() {
+	o.Apple.Set(nil)
+}
+
+// UnsetApple ensures that no value is present for Apple, not even an explicit nil
+func (o *ClientNativeSocialLogin) UnsetApple() {
+	o.Apple.Unset()
+}
+
+// GetFacebook returns the Facebook field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ClientNativeSocialLogin) GetFacebook() ClientNativeSocialLoginFacebook {
-	if o == nil || o.Facebook.Get() == nil {
+	if o == nil || IsNil(o.Facebook.Get()) {
 		var ret ClientNativeSocialLoginFacebook
 		return ret
 	}
-
 	return *o.Facebook.Get()
 }
 
-// GetFacebookOk returns a tuple with the Facebook field value
+// GetFacebookOk returns a tuple with the Facebook field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ClientNativeSocialLogin) GetFacebookOk() (*ClientNativeSocialLoginFacebook, bool) {
@@ -70,9 +82,28 @@ func (o *ClientNativeSocialLogin) GetFacebookOk() (*ClientNativeSocialLoginFaceb
 	return o.Facebook.Get(), o.Facebook.IsSet()
 }
 
-// SetFacebook sets field value
+// HasFacebook returns a boolean if a field has been set.
+func (o *ClientNativeSocialLogin) HasFacebook() bool {
+	if o != nil && o.Facebook.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetFacebook gets a reference to the given NullableClientNativeSocialLoginFacebook and assigns it to the Facebook field.
 func (o *ClientNativeSocialLogin) SetFacebook(v ClientNativeSocialLoginFacebook) {
 	o.Facebook.Set(&v)
+}
+
+// SetFacebookNil sets the value for Facebook to be an explicit nil
+func (o *ClientNativeSocialLogin) SetFacebookNil() {
+	o.Facebook.Set(nil)
+}
+
+// UnsetFacebook ensures that no value is present for Facebook, not even an explicit nil
+func (o *ClientNativeSocialLogin) UnsetFacebook() {
+	o.Facebook.Unset()
 }
 
 func (o ClientNativeSocialLogin) MarshalJSON() ([]byte, error) {
@@ -85,25 +116,13 @@ func (o ClientNativeSocialLogin) MarshalJSON() ([]byte, error) {
 
 func (o ClientNativeSocialLogin) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["apple"] = o.Apple.Get()
-	toSerialize["facebook"] = o.Facebook.Get()
-	return toSerialize, nil
-}
-
-func (o *ClientNativeSocialLogin) UnmarshalJSON(data []byte) (err error) {
-	varClientNativeSocialLogin := _ClientNativeSocialLogin{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varClientNativeSocialLogin)
-
-	if err != nil {
-		return err
+	if o.Apple.IsSet() {
+		toSerialize["apple"] = o.Apple.Get()
 	}
-
-	*o = ClientNativeSocialLogin(varClientNativeSocialLogin)
-
-	return err
+	if o.Facebook.IsSet() {
+		toSerialize["facebook"] = o.Facebook.Get()
+	}
+	return toSerialize, nil
 }
 
 type NullableClientNativeSocialLogin struct {

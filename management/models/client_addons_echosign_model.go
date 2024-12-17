@@ -17,34 +17,42 @@ import (
 // ClientAddonsEchosign Adobe EchoSign SSO configuration.
 type ClientAddonsEchosign struct {
 	// Your custom domain found in your EchoSign URL. e.g. `https://acme-org.echosign.com` would be `acme-org`.
-	Domain               string `json:"domain"`
+	Domain               *string `json:"domain,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsEchosign ClientAddonsEchosign
 
-// GetDomain returns the Domain field value
+// GetDomain returns the Domain field value if set, zero value otherwise.
 func (o *ClientAddonsEchosign) GetDomain() string {
-	if o == nil {
+	if o == nil || IsNil(o.Domain) {
 		var ret string
 		return ret
 	}
-
-	return o.Domain
+	return *o.Domain
 }
 
-// GetDomainOk returns a tuple with the Domain field value
+// GetDomainOk returns a tuple with the Domain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsEchosign) GetDomainOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Domain) {
 		return nil, false
 	}
-	return &o.Domain, true
+	return o.Domain, true
 }
 
-// SetDomain sets field value
+// HasDomain returns a boolean if a field has been set.
+func (o *ClientAddonsEchosign) HasDomain() bool {
+	if o != nil && !IsNil(o.Domain) {
+		return true
+	}
+
+	return false
+}
+
+// SetDomain gets a reference to the given string and assigns it to the Domain field.
 func (o *ClientAddonsEchosign) SetDomain(v string) {
-	o.Domain = v
+	o.Domain = &v
 }
 
 func (o ClientAddonsEchosign) MarshalJSON() ([]byte, error) {
@@ -57,7 +65,9 @@ func (o ClientAddonsEchosign) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsEchosign) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["domain"] = o.Domain
+	if !IsNil(o.Domain) {
+		toSerialize["domain"] = o.Domain
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

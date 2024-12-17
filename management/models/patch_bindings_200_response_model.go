@@ -11,37 +11,42 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // PatchBindings200Response struct for PatchBindings200Response
 type PatchBindings200Response struct {
-	Bindings []GetBindings200ResponseBindingsInner `json:"bindings"`
+	Bindings []GetBindings200ResponseBindingsInner `json:"bindings,omitempty"`
 }
 
-type _PatchBindings200Response PatchBindings200Response
-
-// GetBindings returns the Bindings field value
+// GetBindings returns the Bindings field value if set, zero value otherwise.
 func (o *PatchBindings200Response) GetBindings() []GetBindings200ResponseBindingsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Bindings) {
 		var ret []GetBindings200ResponseBindingsInner
 		return ret
 	}
-
 	return o.Bindings
 }
 
-// GetBindingsOk returns a tuple with the Bindings field value
+// GetBindingsOk returns a tuple with the Bindings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PatchBindings200Response) GetBindingsOk() ([]GetBindings200ResponseBindingsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Bindings) {
 		return nil, false
 	}
 	return o.Bindings, true
 }
 
-// SetBindings sets field value
+// HasBindings returns a boolean if a field has been set.
+func (o *PatchBindings200Response) HasBindings() bool {
+	if o != nil && !IsNil(o.Bindings) {
+		return true
+	}
+
+	return false
+}
+
+// SetBindings gets a reference to the given []GetBindings200ResponseBindingsInner and assigns it to the Bindings field.
 func (o *PatchBindings200Response) SetBindings(v []GetBindings200ResponseBindingsInner) {
 	o.Bindings = v
 }
@@ -56,24 +61,10 @@ func (o PatchBindings200Response) MarshalJSON() ([]byte, error) {
 
 func (o PatchBindings200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["bindings"] = o.Bindings
-	return toSerialize, nil
-}
-
-func (o *PatchBindings200Response) UnmarshalJSON(data []byte) (err error) {
-	varPatchBindings200Response := _PatchBindings200Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varPatchBindings200Response)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Bindings) {
+		toSerialize["bindings"] = o.Bindings
 	}
-
-	*o = PatchBindings200Response(varPatchBindings200Response)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullablePatchBindings200Response struct {

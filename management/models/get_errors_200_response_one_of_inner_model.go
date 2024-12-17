@@ -11,64 +11,77 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetErrors200ResponseOneOfInner struct for GetErrors200ResponseOneOfInner
 type GetErrors200ResponseOneOfInner struct {
 	// User, as provided in the import file
-	User map[string]interface{} `json:"user"`
+	User map[string]interface{} `json:"user,omitempty"`
 	// Errors importing the user.
-	Errors []GetErrors200ResponseOneOfInnerErrorsInner `json:"errors"`
+	Errors []GetErrors200ResponseOneOfInnerErrorsInner `json:"errors,omitempty"`
 }
 
-type _GetErrors200ResponseOneOfInner GetErrors200ResponseOneOfInner
-
-// GetUser returns the User field value
+// GetUser returns the User field value if set, zero value otherwise.
 func (o *GetErrors200ResponseOneOfInner) GetUser() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.User) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.User
 }
 
-// GetUserOk returns a tuple with the User field value
+// GetUserOk returns a tuple with the User field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetErrors200ResponseOneOfInner) GetUserOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.User) {
 		return map[string]interface{}{}, false
 	}
 	return o.User, true
 }
 
-// SetUser sets field value
+// HasUser returns a boolean if a field has been set.
+func (o *GetErrors200ResponseOneOfInner) HasUser() bool {
+	if o != nil && !IsNil(o.User) {
+		return true
+	}
+
+	return false
+}
+
+// SetUser gets a reference to the given map[string]interface{} and assigns it to the User field.
 func (o *GetErrors200ResponseOneOfInner) SetUser(v map[string]interface{}) {
 	o.User = v
 }
 
-// GetErrors returns the Errors field value
+// GetErrors returns the Errors field value if set, zero value otherwise.
 func (o *GetErrors200ResponseOneOfInner) GetErrors() []GetErrors200ResponseOneOfInnerErrorsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Errors) {
 		var ret []GetErrors200ResponseOneOfInnerErrorsInner
 		return ret
 	}
-
 	return o.Errors
 }
 
-// GetErrorsOk returns a tuple with the Errors field value
+// GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetErrors200ResponseOneOfInner) GetErrorsOk() ([]GetErrors200ResponseOneOfInnerErrorsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Errors) {
 		return nil, false
 	}
 	return o.Errors, true
 }
 
-// SetErrors sets field value
+// HasErrors returns a boolean if a field has been set.
+func (o *GetErrors200ResponseOneOfInner) HasErrors() bool {
+	if o != nil && !IsNil(o.Errors) {
+		return true
+	}
+
+	return false
+}
+
+// SetErrors gets a reference to the given []GetErrors200ResponseOneOfInnerErrorsInner and assigns it to the Errors field.
 func (o *GetErrors200ResponseOneOfInner) SetErrors(v []GetErrors200ResponseOneOfInnerErrorsInner) {
 	o.Errors = v
 }
@@ -83,25 +96,13 @@ func (o GetErrors200ResponseOneOfInner) MarshalJSON() ([]byte, error) {
 
 func (o GetErrors200ResponseOneOfInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["user"] = o.User
-	toSerialize["errors"] = o.Errors
-	return toSerialize, nil
-}
-
-func (o *GetErrors200ResponseOneOfInner) UnmarshalJSON(data []byte) (err error) {
-	varGetErrors200ResponseOneOfInner := _GetErrors200ResponseOneOfInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetErrors200ResponseOneOfInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.User) {
+		toSerialize["user"] = o.User
 	}
-
-	*o = GetErrors200ResponseOneOfInner(varGetErrors200ResponseOneOfInner)
-
-	return err
+	if !IsNil(o.Errors) {
+		toSerialize["errors"] = o.Errors
+	}
+	return toSerialize, nil
 }
 
 type NullableGetErrors200ResponseOneOfInner struct {

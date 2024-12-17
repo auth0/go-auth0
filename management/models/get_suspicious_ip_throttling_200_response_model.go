@@ -17,111 +17,143 @@ import (
 // GetSuspiciousIpThrottling200Response struct for GetSuspiciousIpThrottling200Response
 type GetSuspiciousIpThrottling200Response struct {
 	// Whether or not suspicious IP throttling attack protections are active.
-	Enabled bool `json:"enabled"`
+	Enabled *bool `json:"enabled,omitempty"`
 	// Action to take when a suspicious IP throttling threshold is violated.           Possible values: <code>block</code>, <code>admin_notification</code>.
-	Shields []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner `json:"shields"`
+	Shields []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner `json:"shields,omitempty"`
 	// List of trusted IP addresses that will not have attack protection enforced against them.
-	Allowlist            []GetBruteForceProtection200ResponseAllowlistInner `json:"allowlist"`
-	Stage                GetSuspiciousIpThrottling200ResponseStage          `json:"stage"`
+	Allowlist            []GetBruteForceProtection200ResponseAllowlistInner `json:"allowlist,omitempty"`
+	Stage                *GetSuspiciousIpThrottling200ResponseStage         `json:"stage,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetSuspiciousIpThrottling200Response GetSuspiciousIpThrottling200Response
 
-// GetEnabled returns the Enabled field value
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *GetSuspiciousIpThrottling200Response) GetEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.Enabled
+	return *o.Enabled
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSuspiciousIpThrottling200Response) GetEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
-	return &o.Enabled, true
+	return o.Enabled, true
 }
 
-// SetEnabled sets field value
+// HasEnabled returns a boolean if a field has been set.
+func (o *GetSuspiciousIpThrottling200Response) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
 func (o *GetSuspiciousIpThrottling200Response) SetEnabled(v bool) {
-	o.Enabled = v
+	o.Enabled = &v
 }
 
-// GetShields returns the Shields field value
+// GetShields returns the Shields field value if set, zero value otherwise.
 func (o *GetSuspiciousIpThrottling200Response) GetShields() []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Shields) {
 		var ret []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner
 		return ret
 	}
-
 	return o.Shields
 }
 
-// GetShieldsOk returns a tuple with the Shields field value
+// GetShieldsOk returns a tuple with the Shields field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSuspiciousIpThrottling200Response) GetShieldsOk() ([]GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Shields) {
 		return nil, false
 	}
 	return o.Shields, true
 }
 
-// SetShields sets field value
+// HasShields returns a boolean if a field has been set.
+func (o *GetSuspiciousIpThrottling200Response) HasShields() bool {
+	if o != nil && !IsNil(o.Shields) {
+		return true
+	}
+
+	return false
+}
+
+// SetShields gets a reference to the given []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner and assigns it to the Shields field.
 func (o *GetSuspiciousIpThrottling200Response) SetShields(v []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner) {
 	o.Shields = v
 }
 
-// GetAllowlist returns the Allowlist field value
+// GetAllowlist returns the Allowlist field value if set, zero value otherwise.
 func (o *GetSuspiciousIpThrottling200Response) GetAllowlist() []GetBruteForceProtection200ResponseAllowlistInner {
-	if o == nil {
+	if o == nil || IsNil(o.Allowlist) {
 		var ret []GetBruteForceProtection200ResponseAllowlistInner
 		return ret
 	}
-
 	return o.Allowlist
 }
 
-// GetAllowlistOk returns a tuple with the Allowlist field value
+// GetAllowlistOk returns a tuple with the Allowlist field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSuspiciousIpThrottling200Response) GetAllowlistOk() ([]GetBruteForceProtection200ResponseAllowlistInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Allowlist) {
 		return nil, false
 	}
 	return o.Allowlist, true
 }
 
-// SetAllowlist sets field value
+// HasAllowlist returns a boolean if a field has been set.
+func (o *GetSuspiciousIpThrottling200Response) HasAllowlist() bool {
+	if o != nil && !IsNil(o.Allowlist) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowlist gets a reference to the given []GetBruteForceProtection200ResponseAllowlistInner and assigns it to the Allowlist field.
 func (o *GetSuspiciousIpThrottling200Response) SetAllowlist(v []GetBruteForceProtection200ResponseAllowlistInner) {
 	o.Allowlist = v
 }
 
-// GetStage returns the Stage field value
+// GetStage returns the Stage field value if set, zero value otherwise.
 func (o *GetSuspiciousIpThrottling200Response) GetStage() GetSuspiciousIpThrottling200ResponseStage {
-	if o == nil {
+	if o == nil || IsNil(o.Stage) {
 		var ret GetSuspiciousIpThrottling200ResponseStage
 		return ret
 	}
-
-	return o.Stage
+	return *o.Stage
 }
 
-// GetStageOk returns a tuple with the Stage field value
+// GetStageOk returns a tuple with the Stage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSuspiciousIpThrottling200Response) GetStageOk() (*GetSuspiciousIpThrottling200ResponseStage, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Stage) {
 		return nil, false
 	}
-	return &o.Stage, true
+	return o.Stage, true
 }
 
-// SetStage sets field value
+// HasStage returns a boolean if a field has been set.
+func (o *GetSuspiciousIpThrottling200Response) HasStage() bool {
+	if o != nil && !IsNil(o.Stage) {
+		return true
+	}
+
+	return false
+}
+
+// SetStage gets a reference to the given GetSuspiciousIpThrottling200ResponseStage and assigns it to the Stage field.
 func (o *GetSuspiciousIpThrottling200Response) SetStage(v GetSuspiciousIpThrottling200ResponseStage) {
-	o.Stage = v
+	o.Stage = &v
 }
 
 func (o GetSuspiciousIpThrottling200Response) MarshalJSON() ([]byte, error) {
@@ -134,10 +166,18 @@ func (o GetSuspiciousIpThrottling200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetSuspiciousIpThrottling200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["enabled"] = o.Enabled
-	toSerialize["shields"] = o.Shields
-	toSerialize["allowlist"] = o.Allowlist
-	toSerialize["stage"] = o.Stage
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Shields) {
+		toSerialize["shields"] = o.Shields
+	}
+	if !IsNil(o.Allowlist) {
+		toSerialize["allowlist"] = o.Allowlist
+	}
+	if !IsNil(o.Stage) {
+		toSerialize["stage"] = o.Stage
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

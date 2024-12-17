@@ -11,66 +11,79 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // TenantSettingsChangePassword Change Password page customization.
 type TenantSettingsChangePassword struct {
 	// Whether to use the custom change password HTML (true) or the default Auth0 page (false). Default is to use the Auth0 page.
-	Enabled bool `json:"enabled"`
+	Enabled *bool `json:"enabled,omitempty"`
 	// Custom change password HTML (<a href='https://github.com/Shopify/liquid/wiki/Liquid-for-Designers'>Liquid syntax</a> supported).
-	Html string `json:"html"`
+	Html *string `json:"html,omitempty"`
 }
 
-type _TenantSettingsChangePassword TenantSettingsChangePassword
-
-// GetEnabled returns the Enabled field value
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *TenantSettingsChangePassword) GetEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.Enabled
+	return *o.Enabled
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsChangePassword) GetEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
-	return &o.Enabled, true
+	return o.Enabled, true
 }
 
-// SetEnabled sets field value
+// HasEnabled returns a boolean if a field has been set.
+func (o *TenantSettingsChangePassword) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
 func (o *TenantSettingsChangePassword) SetEnabled(v bool) {
-	o.Enabled = v
+	o.Enabled = &v
 }
 
-// GetHtml returns the Html field value
+// GetHtml returns the Html field value if set, zero value otherwise.
 func (o *TenantSettingsChangePassword) GetHtml() string {
-	if o == nil {
+	if o == nil || IsNil(o.Html) {
 		var ret string
 		return ret
 	}
-
-	return o.Html
+	return *o.Html
 }
 
-// GetHtmlOk returns a tuple with the Html field value
+// GetHtmlOk returns a tuple with the Html field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsChangePassword) GetHtmlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Html) {
 		return nil, false
 	}
-	return &o.Html, true
+	return o.Html, true
 }
 
-// SetHtml sets field value
+// HasHtml returns a boolean if a field has been set.
+func (o *TenantSettingsChangePassword) HasHtml() bool {
+	if o != nil && !IsNil(o.Html) {
+		return true
+	}
+
+	return false
+}
+
+// SetHtml gets a reference to the given string and assigns it to the Html field.
 func (o *TenantSettingsChangePassword) SetHtml(v string) {
-	o.Html = v
+	o.Html = &v
 }
 
 func (o TenantSettingsChangePassword) MarshalJSON() ([]byte, error) {
@@ -83,25 +96,13 @@ func (o TenantSettingsChangePassword) MarshalJSON() ([]byte, error) {
 
 func (o TenantSettingsChangePassword) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["enabled"] = o.Enabled
-	toSerialize["html"] = o.Html
-	return toSerialize, nil
-}
-
-func (o *TenantSettingsChangePassword) UnmarshalJSON(data []byte) (err error) {
-	varTenantSettingsChangePassword := _TenantSettingsChangePassword{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTenantSettingsChangePassword)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
 	}
-
-	*o = TenantSettingsChangePassword(varTenantSettingsChangePassword)
-
-	return err
+	if !IsNil(o.Html) {
+		toSerialize["html"] = o.Html
+	}
+	return toSerialize, nil
 }
 
 type NullableTenantSettingsChangePassword struct {

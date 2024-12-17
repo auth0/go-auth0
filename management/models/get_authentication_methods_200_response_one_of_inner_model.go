@@ -13,6 +13,7 @@ package models
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // GetAuthenticationMethods200ResponseOneOfInner struct for GetAuthenticationMethods200ResponseOneOfInner
@@ -668,6 +669,29 @@ func (o GetAuthenticationMethods200ResponseOneOfInner) ToMap() (map[string]inter
 }
 
 func (o *GetAuthenticationMethods200ResponseOneOfInner) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"type",
+		"created_at",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
 	varGetAuthenticationMethods200ResponseOneOfInner := _GetAuthenticationMethods200ResponseOneOfInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

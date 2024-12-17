@@ -17,60 +17,76 @@ import (
 // GetScimConfiguration200ResponseMappingInner struct for GetScimConfiguration200ResponseMappingInner
 type GetScimConfiguration200ResponseMappingInner struct {
 	// The field location in the auth0 schema
-	Auth0 string `json:"auth0"`
+	Auth0 *string `json:"auth0,omitempty"`
 	// The field location in the SCIM schema
-	Scim                 string `json:"scim"`
+	Scim                 *string `json:"scim,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetScimConfiguration200ResponseMappingInner GetScimConfiguration200ResponseMappingInner
 
-// GetAuth0 returns the Auth0 field value
+// GetAuth0 returns the Auth0 field value if set, zero value otherwise.
 func (o *GetScimConfiguration200ResponseMappingInner) GetAuth0() string {
-	if o == nil {
+	if o == nil || IsNil(o.Auth0) {
 		var ret string
 		return ret
 	}
-
-	return o.Auth0
+	return *o.Auth0
 }
 
-// GetAuth0Ok returns a tuple with the Auth0 field value
+// GetAuth0Ok returns a tuple with the Auth0 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetScimConfiguration200ResponseMappingInner) GetAuth0Ok() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Auth0) {
 		return nil, false
 	}
-	return &o.Auth0, true
+	return o.Auth0, true
 }
 
-// SetAuth0 sets field value
+// HasAuth0 returns a boolean if a field has been set.
+func (o *GetScimConfiguration200ResponseMappingInner) HasAuth0() bool {
+	if o != nil && !IsNil(o.Auth0) {
+		return true
+	}
+
+	return false
+}
+
+// SetAuth0 gets a reference to the given string and assigns it to the Auth0 field.
 func (o *GetScimConfiguration200ResponseMappingInner) SetAuth0(v string) {
-	o.Auth0 = v
+	o.Auth0 = &v
 }
 
-// GetScim returns the Scim field value
+// GetScim returns the Scim field value if set, zero value otherwise.
 func (o *GetScimConfiguration200ResponseMappingInner) GetScim() string {
-	if o == nil {
+	if o == nil || IsNil(o.Scim) {
 		var ret string
 		return ret
 	}
-
-	return o.Scim
+	return *o.Scim
 }
 
-// GetScimOk returns a tuple with the Scim field value
+// GetScimOk returns a tuple with the Scim field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetScimConfiguration200ResponseMappingInner) GetScimOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Scim) {
 		return nil, false
 	}
-	return &o.Scim, true
+	return o.Scim, true
 }
 
-// SetScim sets field value
+// HasScim returns a boolean if a field has been set.
+func (o *GetScimConfiguration200ResponseMappingInner) HasScim() bool {
+	if o != nil && !IsNil(o.Scim) {
+		return true
+	}
+
+	return false
+}
+
+// SetScim gets a reference to the given string and assigns it to the Scim field.
 func (o *GetScimConfiguration200ResponseMappingInner) SetScim(v string) {
-	o.Scim = v
+	o.Scim = &v
 }
 
 func (o GetScimConfiguration200ResponseMappingInner) MarshalJSON() ([]byte, error) {
@@ -83,8 +99,12 @@ func (o GetScimConfiguration200ResponseMappingInner) MarshalJSON() ([]byte, erro
 
 func (o GetScimConfiguration200ResponseMappingInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["auth0"] = o.Auth0
-	toSerialize["scim"] = o.Scim
+	if !IsNil(o.Auth0) {
+		toSerialize["auth0"] = o.Auth0
+	}
+	if !IsNil(o.Scim) {
+		toSerialize["scim"] = o.Scim
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

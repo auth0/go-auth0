@@ -3473,10 +3473,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/patch_email_templates_by_templateName_request'
+              $ref: '#/components/schemas/get_email_templates_by_templateName_200_response'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/patch_email_templates_by_templateName_request'
+              $ref: '#/components/schemas/get_email_templates_by_templateName_200_response'
       responses:
         "200":
           content:
@@ -4014,10 +4014,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/get_message_types_200_response'
+              $ref: '#/components/schemas/put_message_types_request'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/get_message_types_200_response'
+              $ref: '#/components/schemas/put_message_types_request'
       responses:
         "200":
           content:
@@ -4130,10 +4130,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/get_phone_providers_200_response'
+              $ref: '#/components/schemas/put_phone_providers_request'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/get_phone_providers_200_response'
+              $ref: '#/components/schemas/put_phone_providers_request'
       responses:
         "200":
           content:
@@ -4414,7 +4414,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/put_sns_200_response'
+                $ref: '#/components/schemas/put_sns_request'
           description: AWS SNS configuration successfully updated.
         "400":
           description: Invalid input based on schemas.
@@ -4447,7 +4447,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/put_sns_200_response'
+                $ref: '#/components/schemas/put_sns_request'
           description: AWS SNS configuration successfully updated.
         "400":
           description: Invalid input based on schemas.
@@ -4493,10 +4493,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/get_pn_providers_200_response'
+              $ref: '#/components/schemas/put_pn_providers_request'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/get_pn_providers_200_response'
+              $ref: '#/components/schemas/put_pn_providers_request'
       responses:
         "200":
           content:
@@ -4619,10 +4619,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/get_phone_providers_200_response'
+              $ref: '#/components/schemas/put_phone_providers_request'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/get_phone_providers_200_response'
+              $ref: '#/components/schemas/put_phone_providers_request'
       responses:
         "200":
           content:
@@ -11825,11 +11825,6 @@ components:
             minLength: 1
             type: string
           type: array
-      required:
-      - audience
-      - client_id
-      - id
-      - scope
       type: object
     clientGrantCreate:
       additionalProperties: false
@@ -12270,50 +12265,6 @@ components:
           type: boolean
         compliance_level:
           $ref: '#/components/schemas/client_compliance_level'
-      required:
-      - addons
-      - allowed_clients
-      - allowed_logout_urls
-      - allowed_origins
-      - app_type
-      - callbacks
-      - client_aliases
-      - client_authentication_methods
-      - client_id
-      - client_metadata
-      - client_secret
-      - compliance_level
-      - cross_origin_authentication
-      - cross_origin_loc
-      - custom_login_page
-      - custom_login_page_on
-      - custom_login_page_preview
-      - description
-      - encryption_key
-      - form_template
-      - global
-      - grant_types
-      - initiate_login_uri
-      - is_first_party
-      - jwt_configuration
-      - logo_uri
-      - mobile
-      - name
-      - native_social_login
-      - oidc_conformant
-      - oidc_logout
-      - organization_require_behavior
-      - organization_usage
-      - refresh_token
-      - require_proof_of_possession
-      - require_pushed_authorization_requests
-      - signed_request_object
-      - signing_keys
-      - sso
-      - sso_disabled
-      - tenant
-      - token_endpoint_auth_method
-      - web_origins
       type: object
     clientCreate:
       additionalProperties: false
@@ -12438,7 +12389,7 @@ components:
           minLength: 1
           type: string
         addons:
-          $ref: '#/components/schemas/clientCreate_addons'
+          $ref: '#/components/schemas/client_addons'
         client_metadata:
           additionalProperties: true
           description: "Metadata associated with the client, in the form of an object\
@@ -12453,7 +12404,7 @@ components:
           description: "Initiate login uri, must be https"
           type: string
         native_social_login:
-          $ref: '#/components/schemas/clientCreate_native_social_login'
+          $ref: '#/components/schemas/client_native_social_login'
         refresh_token:
           $ref: '#/components/schemas/client_refresh_token'
         organization_usage:
@@ -12605,7 +12556,7 @@ components:
           description: "Initiate login uri, must be https"
           type: string
         native_social_login:
-          $ref: '#/components/schemas/clientCreate_native_social_login'
+          $ref: '#/components/schemas/client_native_social_login'
         refresh_token:
           $ref: '#/components/schemas/client_refresh_token'
         organization_usage:
@@ -12613,7 +12564,7 @@ components:
         organization_require_behavior:
           $ref: '#/components/schemas/client_organization_require_behavior'
         client_authentication_methods:
-          $ref: '#/components/schemas/clientUpdate_client_authentication_methods'
+          $ref: '#/components/schemas/client_client_authentication_methods'
         require_pushed_authorization_requests:
           default: false
           description: Makes the use of Pushed Authorization Requests mandatory for
@@ -12689,16 +12640,6 @@ components:
             with string values (max 255 chars).  Maximum of 10 metadata properties
             allowed.
           type: object
-      required:
-      - display_name
-      - enabled_clients
-      - id
-      - is_domain_connection
-      - metadata
-      - name
-      - options
-      - realms
-      - strategy
       type: object
     connectionCreate:
       additionalProperties: false
@@ -12984,12 +12925,6 @@ components:
           additionalProperties: true
           description: Specific provider setting
           type: object
-      required:
-      - credentials
-      - default_from_address
-      - enabled
-      - name
-      - settings
       type: object
     emailProviderUpdate:
       additionalProperties: false
@@ -13174,11 +13109,6 @@ components:
           minLength: 1
           nullable: true
           type: string
-      required:
-      - auth_token
-      - from
-      - messaging_service_sid
-      - sid
       type: object
     templateMessages:
       additionalProperties: false
@@ -13240,12 +13170,6 @@ components:
           minLength: 1
           nullable: true
           type: string
-      required:
-      - aws_access_key_id
-      - aws_region
-      - aws_secret_access_key
-      - sns_apns_platform_application_arn
-      - sns_gcm_platform_application_arn
       type: object
     smsTwilioFactorProvider:
       additionalProperties: false
@@ -13283,11 +13207,6 @@ components:
           minLength: 1
           nullable: true
           type: string
-      required:
-      - auth_token
-      - from
-      - messaging_service_sid
-      - sid
       type: object
     hook:
       additionalProperties: false
@@ -13325,13 +13244,6 @@ components:
           additionalProperties: true
           description: Dependencies of this hook used by webtask server.
           type: object
-      required:
-      - dependencies
-      - enabled
-      - id
-      - name
-      - script
-      - triggerId
       type: object
     hookCreate:
       additionalProperties: false
@@ -13538,27 +13450,6 @@ components:
           type: string
         location_info:
           $ref: '#/components/schemas/log_location_info'
-      required:
-      - audience
-      - client_id
-      - client_name
-      - connection
-      - connection_id
-      - date
-      - description
-      - details
-      - hostname
-      - ip
-      - isMobile
-      - location_info
-      - log_id
-      - scope
-      - strategy
-      - strategy_type
-      - type
-      - user_agent
-      - user_id
-      - user_name
       type: object
     promptsSettings:
       additionalProperties: true
@@ -13576,10 +13467,6 @@ components:
           description: Use WebAuthn with Device Biometrics as the first authentication
             factor
           type: boolean
-      required:
-      - identifier_first
-      - universal_login_experience
-      - webauthn_platform_first_factor
       type: object
     promptsSettingsUpdate:
       additionalProperties: false
@@ -13715,25 +13602,6 @@ components:
           type: array
         proof_of_possession:
           $ref: '#/components/schemas/resourceServer_proof_of_possession'
-      required:
-      - allow_offline_access
-      - authorization_details
-      - client
-      - consent_policy
-      - enforce_policies
-      - id
-      - identifier
-      - is_system
-      - name
-      - proof_of_possession
-      - scopes
-      - signing_alg
-      - signing_secret
-      - skip_consent_for_verifiable_first_party_clients
-      - token_dialect
-      - token_encryption
-      - token_lifetime
-      - token_lifetime_for_web
       type: object
     resourceServerCreate:
       additionalProperties: false
@@ -13932,13 +13800,6 @@ components:
           description: "Execution stage of this rule. Can be `login_success`, `login_failure`,\
             \ or `pre_authorize`."
           type: string
-      required:
-      - enabled
-      - id
-      - name
-      - order
-      - script
-      - stage
       type: object
     ruleCreate:
       additionalProperties: false
@@ -14197,42 +14058,16 @@ components:
           default: false
           description: Enables the use of Pushed Authorization Requests
           type: boolean
-      required:
-      - acr_values_supported
-      - allow_organization_name_in_authentication_api
-      - allowed_logout_urls
-      - change_password
-      - customize_mfa_in_postlogin_action
-      - default_audience
-      - default_directory
-      - default_redirection_uri
-      - device_flow
-      - enabled_locales
-      - error_page
-      - flags
-      - friendly_name
-      - guardian_mfa_page
-      - idle_session_lifetime
-      - mtls
-      - picture_url
-      - pushed_authorization_requests_supported
-      - sandbox_version
-      - sandbox_versions_available
-      - session_cookie
-      - session_lifetime
-      - sessions
-      - support_email
-      - support_url
       type: object
     tenantSettingsUpdate:
       additionalProperties: false
       properties:
         change_password:
-          $ref: '#/components/schemas/tenantSettingsUpdate_change_password'
+          $ref: '#/components/schemas/tenantSettings_change_password'
         device_flow:
           $ref: '#/components/schemas/tenantSettingsUpdate_device_flow'
         guardian_mfa_page:
-          $ref: '#/components/schemas/tenantSettingsUpdate_guardian_mfa_page'
+          $ref: '#/components/schemas/tenantSettings_guardian_mfa_page'
         default_audience:
           default: ""
           description: Default audience for API Authorization.
@@ -14244,7 +14079,7 @@ components:
             \ Connections, Passwordless, Windows Azure Active Directory, ADFS."
           type: string
         error_page:
-          $ref: '#/components/schemas/tenantSettingsUpdate_error_page'
+          $ref: '#/components/schemas/tenantSettings_error_page'
         flags:
           $ref: '#/components/schemas/tenantSettingsUpdate_flags'
         friendly_name:
@@ -14294,7 +14129,7 @@ components:
         session_cookie:
           $ref: '#/components/schemas/tenantSettings_session_cookie'
         sessions:
-          $ref: '#/components/schemas/tenantSettingsUpdate_sessions'
+          $ref: '#/components/schemas/tenantSettings_sessions'
         customize_mfa_in_postlogin_action:
           default: false
           description: Whether to enable flexible factors for MFA in the PostLogin
@@ -14314,7 +14149,7 @@ components:
             type: string
           type: array
         mtls:
-          $ref: '#/components/schemas/tenantSettingsUpdate_mtls'
+          $ref: '#/components/schemas/tenantSettings_mtls'
         pushed_authorization_requests_supported:
           default: false
           description: Enables the use of Pushed Authorization Requests
@@ -14339,8 +14174,6 @@ components:
           items:
             $ref: '#/components/schemas/userBlock_blocked_for_inner'
           type: array
-      required:
-      - blocked_for
       type: object
     userProfile:
       additionalProperties: true
@@ -14415,7 +14248,7 @@ components:
           description: Whether this phone number has been verified (true) or not (false).
           type: boolean
         app_metadata:
-          $ref: '#/components/schemas/post_invitations_request_app_metadata'
+          $ref: '#/components/schemas/get_invitations_200_response_oneOf_inner_app_metadata'
         given_name:
           default: John
           description: The user's given name(s).
@@ -14759,10 +14592,6 @@ components:
           description: registry_url is an optional value used primarily for private
             npm registries.
           type: string
-      required:
-      - name
-      - registry_url
-      - version
       type: object
     get_actions_200_response_actions_inner_secrets_inner:
       additionalProperties: true
@@ -14778,9 +14607,6 @@ components:
           default: 2021-01-01T00:00:00.000Z
           description: The time when the secret was last updated.
           type: string
-      required:
-      - name
-      - updated_at
       type: object
     get_actions_200_response_actions_inner_integration_feature_type:
       default: action
@@ -14808,9 +14634,6 @@ components:
           default: 1
           description: Minior is the minior number of a semver
           type: integer
-      required:
-      - major
-      - minor
       type: object
     get_actions_200_response_actions_inner_integration_current_release_required_secrets_inner_type:
       enum:
@@ -14830,9 +14653,6 @@ components:
           description: The display value of an option suitable for displaying in a
             UI.
           type: string
-      required:
-      - label
-      - value
       type: object
     get_actions_200_response_actions_inner_integration_current_release_required_secrets_inner:
       additionalProperties: false
@@ -14887,16 +14707,6 @@ components:
           items:
             $ref: '#/components/schemas/get_actions_200_response_actions_inner_integration_current_release_required_secrets_inner_options_inner'
           type: array
-      required:
-      - default_value
-      - description
-      - label
-      - name
-      - optional
-      - options
-      - placeholder
-      - required
-      - type
       type: object
     get_actions_200_response_actions_inner_integration_current_release:
       additionalProperties: true
@@ -14993,12 +14803,6 @@ components:
           items:
             $ref: '#/components/schemas/get_actions_200_response_actions_inner_integration_current_release_required_secrets_inner'
           type: array
-      required:
-      - id
-      - required_configuration
-      - required_secrets
-      - semver
-      - trigger
       type: object
     get_actions_200_response_actions_inner_integration:
       additionalProperties: false
@@ -15151,22 +14955,6 @@ components:
         updated_at:
           default: 2021-06-21T15:47:29.072Z
           type: string
-      required:
-      - catalog_id
-      - created_at
-      - current_release
-      - description
-      - feature_type
-      - id
-      - logo
-      - name
-      - partner_id
-      - privacy_policy_url
-      - public_support_link
-      - short_description
-      - terms_of_use_url
-      - updated_at
-      - url_slug
       type: object
     get_actions_200_response_actions_inner_status:
       default: built
@@ -15382,22 +15170,6 @@ components:
           default: 2021-01-01T00:00:00.000Z
           description: The time when this action was updated.
           type: string
-      required:
-      - all_changes_deployed
-      - built_at
-      - code
-      - created_at
-      - dependencies
-      - deployed_version
-      - id
-      - installed_integration_id
-      - integration
-      - name
-      - runtime
-      - secrets
-      - status
-      - supported_triggers
-      - updated_at
       type: object
     get_actions_200_response:
       additionalProperties: false
@@ -15696,27 +15468,6 @@ components:
           items:
             $ref: '#/components/schemas/get_actions_200_response_actions_inner'
           type: array
-      required:
-      - actions
-      - page
-      - per_page
-      - total
-      type: object
-    post_action_request_dependencies_inner:
-      additionalProperties: false
-      description: "Dependency is an npm module. These values are used to produce\
-        \ an immutable artifact, which manifests as a layer_id."
-      properties:
-        name:
-          description: "name is the name of the npm module, e.g. lodash"
-          type: string
-        version:
-          description: "description is the version of the npm module, e.g. 4.17.1"
-          type: string
-        registry_url:
-          description: registry_url is an optional value used primarily for private
-            npm registries.
-          type: string
       type: object
     post_action_request_secrets_inner:
       additionalProperties: true
@@ -15753,7 +15504,7 @@ components:
           description: "The list of third party npm modules, and their versions, that\
             \ this action depends on."
           items:
-            $ref: '#/components/schemas/post_action_request_dependencies_inner'
+            $ref: '#/components/schemas/get_actions_200_response_actions_inner_dependencies_inner'
           type: array
         runtime:
           default: node12
@@ -15795,10 +15546,6 @@ components:
           type: string
         url:
           type: string
-      required:
-      - id
-      - msg
-      - url
       type: object
     get_action_versions_200_response_versions_inner:
       additionalProperties: false
@@ -15923,22 +15670,6 @@ components:
           items:
             $ref: '#/components/schemas/get_actions_200_response_actions_inner_supported_triggers_inner'
           type: array
-      required:
-      - action
-      - action_id
-      - built_at
-      - code
-      - created_at
-      - dependencies
-      - deployed
-      - errors
-      - id
-      - number
-      - runtime
-      - secrets
-      - status
-      - supported_triggers
-      - updated_at
       type: object
     get_action_versions_200_response:
       additionalProperties: false
@@ -16075,11 +15806,6 @@ components:
           items:
             $ref: '#/components/schemas/get_action_versions_200_response_versions_inner'
           type: array
-      required:
-      - page
-      - per_page
-      - total
-      - versions
       type: object
     post_deploy_draft_version_request:
       nullable: true
@@ -16106,7 +15832,7 @@ components:
           description: "The list of third party npm modules, and their versions, that\
             \ this action depends on."
           items:
-            $ref: '#/components/schemas/post_action_request_dependencies_inner'
+            $ref: '#/components/schemas/get_actions_200_response_actions_inner_dependencies_inner'
           type: array
         runtime:
           default: node12
@@ -16139,8 +15865,6 @@ components:
           additionalProperties: true
           description: The resulting payload after an action was executed.
           type: object
-      required:
-      - payload
       type: object
     get_execution_200_response_status:
       default: final
@@ -16179,11 +15903,6 @@ components:
           default: 2021-01-01T00:00:00.000Z
           description: The time when the action finished executing.
           type: string
-      required:
-      - action_name
-      - ended_at
-      - error
-      - started_at
       type: object
     get_execution_200_response:
       additionalProperties: false
@@ -16231,13 +15950,6 @@ components:
           default: 2021-01-01T00:00:00.000Z
           description: The time that the exeution finished executing.
           type: string
-      required:
-      - created_at
-      - id
-      - results
-      - status
-      - trigger_id
-      - updated_at
       type: object
     get_triggers_200_response:
       additionalProperties: false
@@ -16272,8 +15984,6 @@ components:
           items:
             $ref: '#/components/schemas/get_actions_200_response_actions_inner_supported_triggers_inner'
           type: array
-      required:
-      - triggers
       type: object
     get_bindings_200_response_bindings_inner:
       additionalProperties: false
@@ -16443,13 +16153,6 @@ components:
           default: 2021-01-01T00:00:00.000Z
           description: The time when the binding was updated.
           type: string
-      required:
-      - action
-      - created_at
-      - display_name
-      - id
-      - trigger_id
-      - updated_at
       type: object
     get_bindings_200_response:
       additionalProperties: false
@@ -16761,11 +16464,6 @@ components:
           items:
             $ref: '#/components/schemas/get_bindings_200_response_bindings_inner'
           type: array
-      required:
-      - bindings
-      - page
-      - per_page
-      - total
       type: object
     patch_bindings_request_bindings_inner_oneOf_ref_type:
       default: action_name
@@ -17111,8 +16809,6 @@ components:
           items:
             $ref: '#/components/schemas/get_bindings_200_response_bindings_inner'
           type: array
-      required:
-      - bindings
       type: object
     get_breached_password_detection_200_response_shields_inner:
       enum:
@@ -17155,8 +16851,6 @@ components:
           items:
             $ref: '#/components/schemas/get_breached_password_detection_200_response_stage_pre_user_registration_shields_inner'
           type: array
-      required:
-      - shields
       type: object
     get_breached_password_detection_200_response_stage:
       additionalProperties: false
@@ -17168,8 +16862,6 @@ components:
       properties:
         pre-user-registration:
           $ref: '#/components/schemas/get_breached_password_detection_200_response_stage_pre_user_registration'
-      required:
-      - pre-user-registration
       type: object
     get_breached_password_detection_200_response:
       additionalProperties: {}
@@ -17210,29 +16902,6 @@ components:
           $ref: '#/components/schemas/get_breached_password_detection_200_response_method'
         stage:
           $ref: '#/components/schemas/get_breached_password_detection_200_response_stage'
-      required:
-      - admin_notification_frequency
-      - enabled
-      - method
-      - shields
-      - stage
-      type: object
-    patch_breached_password_detection_request_stage_pre_user_registration:
-      additionalProperties: false
-      properties:
-        shields:
-          description: |-
-            Action to take when a breached password is detected during a signup.
-                          Possible values: <code>block</code>, <code>admin_notification</code>.
-          items:
-            $ref: '#/components/schemas/get_breached_password_detection_200_response_stage_pre_user_registration_shields_inner'
-          type: array
-      type: object
-    patch_breached_password_detection_request_stage:
-      additionalProperties: false
-      properties:
-        pre-user-registration:
-          $ref: '#/components/schemas/patch_breached_password_detection_request_stage_pre_user_registration'
       type: object
     patch_breached_password_detection_request:
       additionalProperties: false
@@ -17258,7 +16927,7 @@ components:
         method:
           $ref: '#/components/schemas/get_breached_password_detection_200_response_method'
         stage:
-          $ref: '#/components/schemas/patch_breached_password_detection_request_stage'
+          $ref: '#/components/schemas/get_breached_password_detection_200_response_stage'
       type: object
     get_brute_force_protection_200_response_shields_inner:
       enum:
@@ -17320,12 +16989,6 @@ components:
           default: 10
           description: Maximum number of unsuccessful attempts.
           type: integer
-      required:
-      - allowlist
-      - enabled
-      - max_attempts
-      - mode
-      - shields
       type: object
     patch_brute_force_protection_request:
       additionalProperties: false
@@ -17369,9 +17032,6 @@ components:
           description: "Interval of time, given in milliseconds, at which new attempts\
             \ are granted."
           type: integer
-      required:
-      - max_attempts
-      - rate
       type: object
     get_suspicious_ip_throttling_200_response_stage_pre_user_registration:
       additionalProperties: false
@@ -17390,9 +17050,6 @@ components:
           description: "Interval of time, given in milliseconds, at which new attempts\
             \ are granted."
           type: integer
-      required:
-      - max_attempts
-      - rate
       type: object
     get_suspicious_ip_throttling_200_response_stage:
       additionalProperties: false
@@ -17409,9 +17066,6 @@ components:
           $ref: '#/components/schemas/get_suspicious_ip_throttling_200_response_stage_pre_login'
         pre-user-registration:
           $ref: '#/components/schemas/get_suspicious_ip_throttling_200_response_stage_pre_user_registration'
-      required:
-      - pre-login
-      - pre-user-registration
       type: object
     get_suspicious_ip_throttling_200_response:
       additionalProperties: {}
@@ -17450,49 +17104,6 @@ components:
           type: array
         stage:
           $ref: '#/components/schemas/get_suspicious_ip_throttling_200_response_stage'
-      required:
-      - allowlist
-      - enabled
-      - shields
-      - stage
-      type: object
-    patch_suspicious_ip_throttling_request_stage_pre_login:
-      additionalProperties: false
-      description: Configuration options that apply before every login attempt.
-      properties:
-        max_attempts:
-          default: 100
-          description: Total number of attempts allowed per day.
-          type: integer
-        rate:
-          default: 864000
-          description: "Interval of time, given in milliseconds, at which new attempts\
-            \ are granted."
-          type: integer
-      type: object
-    patch_suspicious_ip_throttling_request_stage_pre_user_registration:
-      additionalProperties: false
-      description: Configuration options that apply before every user registration
-        attempt.
-      properties:
-        max_attempts:
-          default: 50
-          description: Total number of attempts allowed.
-          type: integer
-        rate:
-          default: 1728000
-          description: "Interval of time, given in milliseconds, at which new attempts\
-            \ are granted."
-          type: integer
-      type: object
-    patch_suspicious_ip_throttling_request_stage:
-      additionalProperties: false
-      description: Holds per-stage configuration options (max_attempts and rate).
-      properties:
-        pre-login:
-          $ref: '#/components/schemas/patch_suspicious_ip_throttling_request_stage_pre_login'
-        pre-user-registration:
-          $ref: '#/components/schemas/patch_suspicious_ip_throttling_request_stage_pre_user_registration'
       type: object
     patch_suspicious_ip_throttling_request:
       additionalProperties: false
@@ -17515,7 +17126,7 @@ components:
             $ref: '#/components/schemas/get_brute_force_protection_200_response_allowlist_inner'
           type: array
         stage:
-          $ref: '#/components/schemas/patch_suspicious_ip_throttling_request_stage'
+          $ref: '#/components/schemas/get_suspicious_ip_throttling_200_response_stage'
       type: object
     get_branding_200_response_colors_page_background:
       description: |
@@ -17548,9 +17159,6 @@ components:
           type: string
         page_background:
           $ref: '#/components/schemas/get_branding_200_response_colors_page_background'
-      required:
-      - page_background
-      - primary
       type: object
     get_branding_200_response_font:
       additionalProperties: false
@@ -17562,8 +17170,6 @@ components:
           description: URL for the custom font. The URL must point to a font file
             and not a stylesheet. Must use HTTPS.
           type: string
-      required:
-      - url
       type: object
     get_branding_200_response:
       additionalProperties: true
@@ -17586,11 +17192,6 @@ components:
           type: string
         font:
           $ref: '#/components/schemas/get_branding_200_response_font'
-      required:
-      - colors
-      - favicon_url
-      - font
-      - logo_url
       type: object
     patch_branding_request_colors:
       additionalProperties: false
@@ -17640,8 +17241,6 @@ components:
         body:
           description: The custom page template for the New Universal Login Experience
           type: string
-      required:
-      - body
       type: object
     get_universal_login_200_response:
       oneOf:
@@ -18191,11 +17790,6 @@ components:
           items:
             $ref: '#/components/schemas/clientGrant'
           type: array
-      required:
-      - client_grants
-      - limit
-      - start
-      - total
       type: object
     get_client_grants_200_response:
       oneOf:
@@ -18227,11 +17821,6 @@ components:
           items:
             $ref: '#/components/schemas/client'
           type: array
-      required:
-      - clients
-      - limit
-      - start
-      - total
       type: object
     get_clients_200_response:
       oneOf:
@@ -18299,17 +17888,6 @@ components:
             the credential.
           format: date-time
           type: string
-      required:
-      - alg
-      - created_at
-      - credential_type
-      - expires_at
-      - id
-      - kid
-      - name
-      - subject_dn
-      - thumbprint_sha256
-      - updated_at
       type: object
     post_credentials_request_credential_type:
       description: "Credential type. Supported types: public_key, cert_subject_dn\
@@ -18421,11 +17999,6 @@ components:
           items:
             $ref: '#/components/schemas/connection'
           type: array
-      required:
-      - connections
-      - limit
-      - start
-      - total
       type: object
     get_connections_200_response:
       oneOf:
@@ -18445,9 +18018,6 @@ components:
         scim:
           description: The field location in the SCIM schema
           type: string
-      required:
-      - auth0
-      - scim
       type: object
     get_scim_configuration_200_response:
       additionalProperties: false
@@ -18491,25 +18061,6 @@ components:
         updated_on:
           description: The Date Time Scim Configuration was last updated
           type: string
-      required:
-      - connection_id
-      - connection_name
-      - created_at
-      - mapping
-      - strategy
-      - tenant_name
-      - updated_on
-      - user_id_attribute
-      type: object
-    post_scim_configuration_request_mapping_inner:
-      additionalProperties: true
-      properties:
-        auth0:
-          description: The field location in the auth0 schema
-          type: string
-        scim:
-          description: The field location in the SCIM schema
-          type: string
       type: object
     post_scim_configuration_request:
       additionalProperties: false
@@ -18521,7 +18072,7 @@ components:
         mapping:
           description: The mapping between auth0 and SCIM
           items:
-            $ref: '#/components/schemas/post_scim_configuration_request_mapping_inner'
+            $ref: '#/components/schemas/get_scim_configuration_200_response_mapping_inner'
           type: array
       type: object
     patch_scim_configuration_request:
@@ -18533,7 +18084,7 @@ components:
         mapping:
           description: The mapping between auth0 and SCIM
           items:
-            $ref: '#/components/schemas/post_scim_configuration_request_mapping_inner'
+            $ref: '#/components/schemas/get_scim_configuration_200_response_mapping_inner'
           type: array
       required:
       - mapping
@@ -18553,8 +18104,6 @@ components:
           items:
             $ref: '#/components/schemas/get_scim_configuration_200_response_mapping_inner'
           type: array
-      required:
-      - mapping
       type: object
     get_scim_tokens_200_response_inner:
       additionalProperties: true
@@ -18585,12 +18134,6 @@ components:
         last_used_at:
           description: The token's last used at timestamp
           type: string
-      required:
-      - created_at
-      - last_used_at
-      - scopes
-      - token_id
-      - valid_until
       type: object
     post_scim_token_request:
       additionalProperties: false
@@ -18636,12 +18179,6 @@ components:
         valid_until:
           description: The token's valid until at timestamp
           type: string
-      required:
-      - created_at
-      - scopes
-      - token
-      - token_id
-      - valid_until
       type: object
     post_custom_domains_request_type:
       description: Custom domain provisioning type. Must be `auth0_managed_certs`
@@ -18909,11 +18446,6 @@ components:
           items:
             $ref: '#/components/schemas/deviceCredential'
           type: array
-      required:
-      - device_credentials
-      - limit
-      - start
-      - total
       type: object
     get_device_credentials_200_response:
       oneOf:
@@ -19078,59 +18610,6 @@ components:
           description: Whether the template is enabled (true) or disabled (false).
           nullable: true
           type: boolean
-      required:
-      - body
-      - enabled
-      - from
-      - includeEmailInRedirect
-      - resultUrl
-      - subject
-      - syntax
-      - template
-      - urlLifetimeInSeconds
-      type: object
-    patch_email_templates_by_templateName_request:
-      additionalProperties: false
-      properties:
-        template:
-          $ref: '#/components/schemas/post_email_templates_request_template'
-        body:
-          description: Body of the email template.
-          nullable: true
-          type: string
-        from:
-          default: sender@auth0.com
-          description: Senders `from` email address.
-          nullable: true
-          type: string
-        resultUrl:
-          description: URL to redirect the user to after a successful action.
-          nullable: true
-          type: string
-        subject:
-          description: Subject line of the email.
-          nullable: true
-          type: string
-        syntax:
-          default: liquid
-          description: Syntax of the template body.
-          nullable: true
-          type: string
-        urlLifetimeInSeconds:
-          description: Lifetime in seconds that the link within the email will be
-            valid for.
-          nullable: true
-          type: number
-        includeEmailInRedirect:
-          description: Whether the `reset_email` and `verify_email` templates should
-            include the user's email address as the `email` parameter in the returnUrl
-            (true) or whether no email address should be included in the redirect
-            (false). Defaults to true.
-          type: boolean
-        enabled:
-          description: Whether the template is enabled (true) or disabled (false).
-          nullable: true
-          type: boolean
       type: object
     get_grants_200_response_oneOf:
       additionalProperties: false
@@ -19145,11 +18624,6 @@ components:
           items:
             $ref: '#/components/schemas/userGrant'
           type: array
-      required:
-      - grants
-      - limit
-      - start
-      - total
       type: object
     get_grants_200_response:
       oneOf:
@@ -19171,9 +18645,6 @@ components:
           default: "https://{tenant}.guardian.auth0.com/enrollment?ticket_id={ticket_id}"
           description: The url you can use to start enrollment
           type: string
-      required:
-      - ticket_id
-      - ticket_url
       type: object
     get_message_types_200_response_message_types_inner:
       enum:
@@ -19186,6 +18657,16 @@ components:
         message_types:
         - sms
         - sms
+      properties:
+        message_types:
+          description: The list of phone factors to enable on the tenant. Can include
+            `sms` and `voice`.
+          items:
+            $ref: '#/components/schemas/get_message_types_200_response_message_types_inner'
+          type: array
+      type: object
+    put_message_types_request:
+      additionalProperties: false
       properties:
         message_types:
           description: The list of phone factors to enable on the tenant. Can include
@@ -19241,6 +18722,12 @@ components:
       properties:
         provider:
           $ref: '#/components/schemas/get_phone_providers_200_response_provider'
+      type: object
+    put_phone_providers_request:
+      additionalProperties: false
+      properties:
+        provider:
+          $ref: '#/components/schemas/get_phone_providers_200_response_provider'
       required:
       - provider
       type: object
@@ -19260,10 +18747,6 @@ components:
           type: boolean
         enabled:
           type: boolean
-      required:
-      - bundle_id
-      - enabled
-      - sandbox
       type: object
     put_apns_request:
       additionalProperties: false
@@ -19294,9 +18777,6 @@ components:
           minLength: 1
           nullable: true
           type: string
-      required:
-      - bundle_id
-      - sandbox
       type: object
     put_fcm_request:
       additionalProperties: false
@@ -19308,39 +18788,6 @@ components:
           type: string
       type: object
     put_sns_request:
-      additionalProperties: false
-      properties:
-        aws_access_key_id:
-          default: wywA2BH4VqTpfywiDuyDAYZL3xQjoO40
-          maxLength: 1000
-          minLength: 1
-          nullable: true
-          type: string
-        aws_secret_access_key:
-          default: B1ER5JHDGJL3C4sVAKK7SBsq806R3IpL
-          maxLength: 1000
-          minLength: 1
-          nullable: true
-          type: string
-        aws_region:
-          default: us-west-1
-          maxLength: 1000
-          minLength: 1
-          nullable: true
-          type: string
-        sns_apns_platform_application_arn:
-          maxLength: 1000
-          minLength: 1
-          nullable: true
-          type: string
-        sns_gcm_platform_application_arn:
-          default: urn://yRMeBxgcCXh8MeTXPBAxhQnm6gP6f5nP
-          maxLength: 1000
-          minLength: 1
-          nullable: true
-          type: string
-      type: object
-    put_sns_200_response:
       additionalProperties: false
       example:
         aws_access_key_id: wywA2BH4VqTpfywiDuyDAYZL3xQjoO40
@@ -19378,12 +18825,6 @@ components:
           minLength: 1
           nullable: true
           type: string
-      required:
-      - aws_access_key_id
-      - aws_region
-      - aws_secret_access_key
-      - sns_apns_platform_application_arn
-      - sns_gcm_platform_application_arn
       type: object
     get_pn_providers_200_response_provider:
       enum:
@@ -19395,6 +18836,12 @@ components:
       additionalProperties: false
       example:
         provider: guardian
+      properties:
+        provider:
+          $ref: '#/components/schemas/get_pn_providers_200_response_provider'
+      type: object
+    put_pn_providers_request:
+      additionalProperties: false
       properties:
         provider:
           $ref: '#/components/schemas/get_pn_providers_200_response_provider'
@@ -19460,11 +18907,6 @@ components:
           items:
             $ref: '#/components/schemas/hook'
           type: array
-      required:
-      - hooks
-      - limit
-      - start
-      - total
       type: object
     get_hooks_200_response:
       oneOf:
@@ -19664,10 +19106,6 @@ components:
         path:
           description: Error field.
           type: string
-      required:
-      - code
-      - message
-      - path
       type: object
     get_errors_200_response_oneOf_inner:
       additionalProperties: false
@@ -19691,9 +19129,6 @@ components:
           items:
             $ref: '#/components/schemas/get_errors_200_response_oneOf_inner_errors_inner'
           type: array
-      required:
-      - errors
-      - user
       type: object
     get_errors_200_response:
       oneOf:
@@ -19876,9 +19311,6 @@ components:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner_type'
         name:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner_name'
-      required:
-      - name
-      - type
       type: object
     get_log_streams_200_response_inner_oneOf_sink_httpContentFormat:
       description: HTTP JSON format
@@ -19973,13 +19405,6 @@ components:
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_sink'
-      required:
-      - filters
-      - id
-      - name
-      - sink
-      - status
-      - type
       type: object
     get_log_streams_200_response_inner_oneOf_1_type:
       enum:
@@ -20048,13 +19473,6 @@ components:
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_1_sink'
-      required:
-      - filters
-      - id
-      - name
-      - sink
-      - status
-      - type
       type: object
     get_log_streams_200_response_inner_oneOf_2_type:
       enum:
@@ -20137,13 +19555,6 @@ components:
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_2_sink'
-      required:
-      - filters
-      - id
-      - name
-      - sink
-      - status
-      - type
       type: object
     get_log_streams_200_response_inner_oneOf_3_type:
       enum:
@@ -20190,13 +19601,6 @@ components:
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_3_sink'
-      required:
-      - filters
-      - id
-      - name
-      - sink
-      - status
-      - type
       type: object
     get_log_streams_200_response_inner_oneOf_4_type:
       enum:
@@ -20244,13 +19648,6 @@ components:
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_4_sink'
-      required:
-      - filters
-      - id
-      - name
-      - sink
-      - status
-      - type
       type: object
     get_log_streams_200_response_inner_oneOf_5_type:
       enum:
@@ -20286,13 +19683,6 @@ components:
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_5_sink'
-      required:
-      - filters
-      - id
-      - name
-      - sink
-      - status
-      - type
       type: object
     get_log_streams_200_response_inner_oneOf_6_type:
       enum:
@@ -20328,13 +19718,6 @@ components:
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_6_sink'
-      required:
-      - filters
-      - id
-      - name
-      - sink
-      - status
-      - type
       type: object
     get_log_streams_200_response_inner_oneOf_7_type:
       enum:
@@ -20387,13 +19770,6 @@ components:
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_7_sink'
-      required:
-      - filters
-      - id
-      - name
-      - sink
-      - status
-      - type
       type: object
     get_log_streams_200_response_inner:
       oneOf:
@@ -20405,14 +19781,6 @@ components:
       - $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_5'
       - $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_6'
       - $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_7'
-    post_log_streams_request_oneOf_filters_inner:
-      additionalProperties: true
-      properties:
-        type:
-          $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner_type'
-        name:
-          $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner_name'
-      type: object
     post_log_streams_request_oneOf:
       additionalProperties: false
       properties:
@@ -20425,7 +19793,7 @@ components:
           description: "Only logs events matching these filters will be delivered\
             \ by the stream. If omitted or empty, all events will be delivered."
           items:
-            $ref: '#/components/schemas/post_log_streams_request_oneOf_filters_inner'
+            $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner'
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_sink'
@@ -20461,7 +19829,7 @@ components:
           description: "Only logs events matching these filters will be delivered\
             \ by the stream. If omitted or empty, all events will be delivered."
           items:
-            $ref: '#/components/schemas/post_log_streams_request_oneOf_filters_inner'
+            $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner'
           type: array
         sink:
           $ref: '#/components/schemas/post_log_streams_request_oneOf_1_sink'
@@ -20501,7 +19869,7 @@ components:
           description: "Only logs events matching these filters will be delivered\
             \ by the stream. If omitted or empty, all events will be delivered."
           items:
-            $ref: '#/components/schemas/post_log_streams_request_oneOf_filters_inner'
+            $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner'
           type: array
         sink:
           $ref: '#/components/schemas/post_log_streams_request_oneOf_2_sink'
@@ -20525,7 +19893,7 @@ components:
           description: "Only logs events matching these filters will be delivered\
             \ by the stream. If omitted or empty, all events will be delivered."
           items:
-            $ref: '#/components/schemas/post_log_streams_request_oneOf_filters_inner'
+            $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner'
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_3_sink'
@@ -20549,7 +19917,7 @@ components:
           description: "Only logs events matching these filters will be delivered\
             \ by the stream. If omitted or empty, all events will be delivered."
           items:
-            $ref: '#/components/schemas/post_log_streams_request_oneOf_filters_inner'
+            $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner'
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_4_sink'
@@ -20573,7 +19941,7 @@ components:
           description: "Only logs events matching these filters will be delivered\
             \ by the stream. If omitted or empty, all events will be delivered."
           items:
-            $ref: '#/components/schemas/post_log_streams_request_oneOf_filters_inner'
+            $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner'
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_5_sink'
@@ -20597,7 +19965,7 @@ components:
           description: "Only logs events matching these filters will be delivered\
             \ by the stream. If omitted or empty, all events will be delivered."
           items:
-            $ref: '#/components/schemas/post_log_streams_request_oneOf_filters_inner'
+            $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner'
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_6_sink'
@@ -20621,7 +19989,7 @@ components:
           description: "Only logs events matching these filters will be delivered\
             \ by the stream. If omitted or empty, all events will be delivered."
           items:
-            $ref: '#/components/schemas/post_log_streams_request_oneOf_filters_inner'
+            $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner'
           type: array
         sink:
           $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_7_sink'
@@ -20720,7 +20088,7 @@ components:
           description: "Only logs events matching these filters will be delivered\
             \ by the stream. If omitted or empty, all events will be delivered."
           items:
-            $ref: '#/components/schemas/post_log_streams_request_oneOf_filters_inner'
+            $ref: '#/components/schemas/get_log_streams_200_response_inner_oneOf_filters_inner'
           type: array
         sink:
           $ref: '#/components/schemas/patch_log_streams_by_id_request_sink'
@@ -20740,12 +20108,6 @@ components:
           items:
             $ref: '#/components/schemas/log'
           type: array
-      required:
-      - length
-      - limit
-      - logs
-      - start
-      - total
       type: object
     get_logs_200_response:
       oneOf:
@@ -20784,9 +20146,6 @@ components:
           type: string
         colors:
           $ref: '#/components/schemas/get_organizations_200_response_oneOf_inner_branding_colors'
-      required:
-      - colors
-      - logo_url
       type: object
     get_organizations_200_response_oneOf_inner:
       additionalProperties: true
@@ -20825,12 +20184,6 @@ components:
             \ an object with string values (max 255 chars).  Maximum of 10 metadata\
             \ properties allowed."
           type: object
-      required:
-      - branding
-      - display_name
-      - id
-      - metadata
-      - name
       type: object
     get_organizations_200_response_oneOf:
       additionalProperties: false
@@ -20845,11 +20198,6 @@ components:
           items:
             $ref: '#/components/schemas/get_organizations_200_response_oneOf_inner'
           type: array
-      required:
-      - limit
-      - organizations
-      - start
-      - total
       type: object
     get_organizations_200_response_oneOf_1:
       additionalProperties: false
@@ -20860,9 +20208,6 @@ components:
           items:
             $ref: '#/components/schemas/get_organizations_200_response_oneOf_inner'
           type: array
-      required:
-      - next
-      - organizations
       type: object
     get_organizations_200_response:
       oneOf:
@@ -20871,16 +20216,6 @@ components:
         type: array
       - $ref: '#/components/schemas/get_organizations_200_response_oneOf'
       - $ref: '#/components/schemas/get_organizations_200_response_oneOf_1'
-    post_organizations_request_branding:
-      additionalProperties: false
-      description: Theme defines how to style the login pages
-      properties:
-        logo_url:
-          description: URL of logo to display on login page
-          type: string
-        colors:
-          $ref: '#/components/schemas/get_organizations_200_response_oneOf_inner_branding_colors'
-      type: object
     post_organizations_request_enabled_connections_inner:
       additionalProperties: false
       description: Connection to be added to the organization.
@@ -20923,7 +20258,7 @@ components:
           minLength: 3
           type: string
         branding:
-          $ref: '#/components/schemas/post_organizations_request_branding'
+          $ref: '#/components/schemas/get_organizations_200_response_oneOf_inner_branding'
         metadata:
           additionalProperties: true
           description: "Metadata associated with the organization, in the form of\
@@ -20952,9 +20287,6 @@ components:
         strategy:
           description: The strategy of the enabled connection.
           type: string
-      required:
-      - name
-      - strategy
       type: object
     post_organizations_201_response_enabled_connections_inner:
       additionalProperties: true
@@ -20988,12 +20320,6 @@ components:
           type: boolean
         connection:
           $ref: '#/components/schemas/post_organizations_201_response_enabled_connections_inner_connection'
-      required:
-      - assign_membership_on_login
-      - connection
-      - connection_id
-      - is_signup_enabled
-      - show_as_button
       type: object
     post_organizations_201_response:
       additionalProperties: true
@@ -21051,13 +20377,6 @@ components:
           items:
             $ref: '#/components/schemas/post_organizations_201_response_enabled_connections_inner'
           type: array
-      required:
-      - branding
-      - display_name
-      - enabled_connections
-      - id
-      - metadata
-      - name
       type: object
     patch_organizations_by_id_request_branding:
       additionalProperties: false
@@ -21127,12 +20446,6 @@ components:
           type: boolean
         connection:
           $ref: '#/components/schemas/post_organizations_201_response_enabled_connections_inner_connection'
-      required:
-      - assign_membership_on_login
-      - connection
-      - connection_id
-      - is_signup_enabled
-      - show_as_button
       type: object
     get_enabled_connections_200_response_oneOf:
       additionalProperties: false
@@ -21147,11 +20460,6 @@ components:
           items:
             $ref: '#/components/schemas/get_enabled_connections_200_response_oneOf_inner'
           type: array
-      required:
-      - enabled_connections
-      - limit
-      - start
-      - total
       type: object
     get_enabled_connections_200_response:
       oneOf:
@@ -21268,23 +20576,6 @@ components:
         blocked: {}
         __tenant: {}
         updated_at: {}
-      required:
-      - __tenant
-      - _id
-      - blocked
-      - clientID
-      - created_at
-      - email
-      - email_verified
-      - globalClientID
-      - global_client_id
-      - identities
-      - lastIP
-      - lastLogin
-      - loginsCount
-      - metadata
-      - updated_at
-      - user_id
       type: object
     get_invitations_200_response_oneOf_inner:
       additionalProperties: false
@@ -21373,20 +20664,6 @@ components:
         ticket_id:
           description: The id of the invitation ticket
           type: string
-      required:
-      - app_metadata
-      - client_id
-      - connection_id
-      - created_at
-      - expires_at
-      - id
-      - invitation_url
-      - invitee
-      - inviter
-      - organization_id
-      - roles
-      - ticket_id
-      - user_metadata
       type: object
     get_invitations_200_response_oneOf:
       additionalProperties: false
@@ -21399,10 +20676,6 @@ components:
           items:
             $ref: '#/components/schemas/get_invitations_200_response_oneOf_inner'
           type: array
-      required:
-      - invitations
-      - limit
-      - start
       type: object
     get_invitations_200_response:
       oneOf:
@@ -21410,28 +20683,6 @@ components:
           $ref: '#/components/schemas/get_invitations_200_response_oneOf_inner'
         type: array
       - $ref: '#/components/schemas/get_invitations_200_response_oneOf'
-    post_invitations_request_app_metadata:
-      additionalProperties: true
-      description: Data related to the user that does affect the application's core
-        functionality.
-      properties:
-        clientID: {}
-        globalClientID: {}
-        global_client_id: {}
-        email_verified: {}
-        user_id: {}
-        identities: {}
-        lastIP: {}
-        lastLogin: {}
-        metadata: {}
-        created_at: {}
-        loginsCount: {}
-        _id: {}
-        email: {}
-        blocked: {}
-        __tenant: {}
-        updated_at: {}
-      type: object
     post_invitations_request:
       additionalProperties: false
       properties:
@@ -21449,7 +20700,7 @@ components:
           description: The id of the connection to force invitee to authenticate with.
           type: string
         app_metadata:
-          $ref: '#/components/schemas/post_invitations_request_app_metadata'
+          $ref: '#/components/schemas/get_invitations_200_response_oneOf_inner_app_metadata'
         user_metadata:
           additionalProperties: true
           description: Data related to the user that does not affect the application's
@@ -21487,9 +20738,6 @@ components:
         name:
           description: Name of this role.
           type: string
-      required:
-      - id
-      - name
       type: object
     get_members_200_response_oneOf_inner:
       additionalProperties: false
@@ -21521,12 +20769,6 @@ components:
           items:
             $ref: '#/components/schemas/get_members_200_response_oneOf_inner_roles_inner'
           type: array
-      required:
-      - email
-      - name
-      - picture
-      - roles
-      - user_id
       type: object
     get_members_200_response_oneOf:
       additionalProperties: false
@@ -21541,11 +20783,6 @@ components:
           items:
             $ref: '#/components/schemas/get_members_200_response_oneOf_inner'
           type: array
-      required:
-      - limit
-      - members
-      - start
-      - total
       type: object
     get_members_200_response_oneOf_1:
       additionalProperties: true
@@ -21556,9 +20793,6 @@ components:
           items:
             $ref: '#/components/schemas/get_members_200_response_oneOf_inner'
           type: array
-      required:
-      - members
-      - next
       type: object
     get_members_200_response:
       oneOf:
@@ -21605,10 +20839,6 @@ components:
         description:
           description: Description of this role.
           type: string
-      required:
-      - description
-      - id
-      - name
       type: object
     get_organization_member_roles_200_response_oneOf:
       additionalProperties: false
@@ -21623,11 +20853,6 @@ components:
           items:
             $ref: '#/components/schemas/get_organization_member_roles_200_response_oneOf_inner'
           type: array
-      required:
-      - limit
-      - roles
-      - start
-      - total
       type: object
     get_organization_member_roles_200_response:
       oneOf:
@@ -21756,11 +20981,6 @@ components:
           items:
             $ref: '#/components/schemas/resourceServer'
           type: array
-      required:
-      - limit
-      - resource_servers
-      - start
-      - total
       type: object
     get_resource_servers_200_response:
       oneOf:
@@ -21817,9 +21037,6 @@ components:
         scopes:
           description: List of scopes for the refresh token
           type: string
-      required:
-      - audience
-      - scopes
       type: object
     get_refresh_token_200_response:
       additionalProperties: true
@@ -21868,16 +21085,6 @@ components:
           items:
             $ref: '#/components/schemas/get_refresh_token_200_response_resource_servers_inner'
           type: array
-      required:
-      - client_id
-      - created_at
-      - expires_at
-      - id
-      - idle_expires_at
-      - resource_servers
-      - rotating
-      - session_id
-      - user_id
       type: object
     get_role_permission_200_response_oneOf:
       additionalProperties: false
@@ -21892,11 +21099,6 @@ components:
           items:
             $ref: '#/components/schemas/permission'
           type: array
-      required:
-      - limit
-      - permissions
-      - start
-      - total
       type: object
     get_role_permission_200_response:
       oneOf:
@@ -21949,11 +21151,6 @@ components:
           default: john.doe@gmail.com
           description: Email address of this user.
           type: string
-      required:
-      - email
-      - name
-      - picture
-      - user_id
       type: object
     get_role_user_200_response_oneOf:
       additionalProperties: false
@@ -21968,11 +21165,6 @@ components:
           items:
             $ref: '#/components/schemas/get_role_user_200_response_oneOf_inner'
           type: array
-      required:
-      - limit
-      - start
-      - total
-      - users
       type: object
     get_role_user_200_response_oneOf_1:
       additionalProperties: false
@@ -21983,9 +21175,6 @@ components:
           items:
             $ref: '#/components/schemas/get_role_user_200_response_oneOf_inner'
           type: array
-      required:
-      - next
-      - users
       type: object
     get_role_user_200_response:
       oneOf:
@@ -22018,11 +21207,6 @@ components:
           items:
             $ref: '#/components/schemas/rule'
           type: array
-      required:
-      - limit
-      - rules
-      - start
-      - total
       type: object
     get_rules_200_response:
       oneOf:
@@ -22041,8 +21225,6 @@ components:
           maxLength: 127
           minLength: 1
           type: string
-      required:
-      - key
       type: object
     put_rules_configs_by_key_request:
       additionalProperties: false
@@ -22146,12 +21328,6 @@ components:
         last_asn:
           description: Last autonomous system number from which this user logged in
           type: string
-      required:
-      - initial_asn
-      - initial_ip
-      - last_asn
-      - last_ip
-      - last_user_agent
       type: object
     get_session_200_response_clients_inner:
       additionalProperties: true
@@ -22162,8 +21338,6 @@ components:
         client_id:
           description: ID of client for the session
           type: string
-      required:
-      - client_id
       type: object
     get_session_200_response_authentication_methods_inner_timestamp:
       nullable: true
@@ -22191,10 +21365,6 @@ components:
         ^type$:
           description: A specific MFA factor. Only present when "name" is set to "mfa"
           type: string
-      required:
-      - ^type$
-      - name
-      - timestamp
       type: object
     get_session_200_response_authentication:
       additionalProperties: true
@@ -22215,8 +21385,6 @@ components:
           items:
             $ref: '#/components/schemas/get_session_200_response_authentication_methods_inner'
           type: array
-      required:
-      - methods
       type: object
     get_session_200_response:
       additionalProperties: true
@@ -22272,17 +21440,6 @@ components:
           type: array
         authentication:
           $ref: '#/components/schemas/get_session_200_response_authentication'
-      required:
-      - authenticated_at
-      - authentication
-      - clients
-      - created_at
-      - device
-      - expires_at
-      - id
-      - idle_expires_at
-      - updated_at
-      - user_id
       type: object
     post_email_verification_request:
       additionalProperties: false
@@ -22471,15 +21628,6 @@ components:
           type: string
         profileData:
           $ref: '#/components/schemas/userProfile'
-      required:
-      - access_token
-      - access_token_secret
-      - connection
-      - isSocial
-      - profileData
-      - provider
-      - refresh_token
-      - user_id
       type: object
     get_users_200_response_oneOf_inner_app_metadata:
       additionalProperties: true
@@ -22518,23 +21666,6 @@ components:
         blocked: {}
         __tenant: {}
         updated_at: {}
-      required:
-      - __tenant
-      - _id
-      - blocked
-      - clientID
-      - created_at
-      - email
-      - email_verified
-      - globalClientID
-      - global_client_id
-      - identities
-      - lastIP
-      - lastLogin
-      - loginsCount
-      - metadata
-      - updated_at
-      - user_id
       type: object
     get_users_200_response_oneOf_inner_last_login:
       oneOf:
@@ -22694,28 +21825,6 @@ components:
         family_name:
           description: Family name/last name/surname of this user.
           type: string
-      required:
-      - app_metadata
-      - blocked
-      - created_at
-      - email
-      - email_verified
-      - family_name
-      - given_name
-      - identities
-      - last_ip
-      - last_login
-      - logins_count
-      - multifactor
-      - name
-      - nickname
-      - phone_number
-      - phone_verified
-      - picture
-      - updated_at
-      - user_id
-      - user_metadata
-      - username
       type: object
     get_users_200_response_oneOf:
       additionalProperties: false
@@ -22732,12 +21841,6 @@ components:
           items:
             $ref: '#/components/schemas/get_users_200_response_oneOf_inner'
           type: array
-      required:
-      - length
-      - limit
-      - start
-      - total
-      - users
       type: object
     get_users_200_response:
       oneOf:
@@ -22897,11 +22000,6 @@ components:
           items:
             $ref: '#/components/schemas/get_authentication_methods_200_response_oneOf_inner'
           type: array
-      required:
-      - authenticators
-      - limit
-      - start
-      - total
       type: object
     get_authentication_methods_200_response:
       oneOf:
@@ -23403,12 +22501,6 @@ components:
         description:
           description: Description of this permission.
           type: string
-      required:
-      - description
-      - permission_name
-      - resource_server_identifier
-      - resource_server_name
-      - sources
       type: object
     get_permissions_200_response_oneOf:
       additionalProperties: false
@@ -23423,11 +22515,6 @@ components:
           items:
             $ref: '#/components/schemas/get_permissions_200_response_oneOf_inner'
           type: array
-      required:
-      - limit
-      - permissions
-      - start
-      - total
       type: object
     get_permissions_200_response:
       oneOf:
@@ -23465,8 +22552,6 @@ components:
         recovery_code:
           description: New account recovery code.
           type: string
-      required:
-      - recovery_code
       type: object
     post_user_roles_request:
       additionalProperties: false
@@ -23562,16 +22647,6 @@ components:
           items:
             $ref: '#/components/schemas/get_refresh_token_200_response_resource_servers_inner'
           type: array
-      required:
-      - client_id
-      - created_at
-      - expires_at
-      - id
-      - idle_expires_at
-      - resource_servers
-      - rotating
-      - session_id
-      - user_id
       type: object
     get_refresh_tokens_for_user_200_response:
       additionalProperties: true
@@ -23608,8 +22683,6 @@ components:
           items:
             $ref: '#/components/schemas/get_refresh_tokens_for_user_200_response_sessions_inner'
           type: array
-      required:
-      - sessions
       type: object
     get_sessions_for_user_200_response_sessions_inner_created_at:
       oneOf:
@@ -23676,12 +22749,6 @@ components:
         last_asn:
           description: Last autonomous system number from which this user logged in
           type: string
-      required:
-      - initial_asn
-      - initial_ip
-      - last_asn
-      - last_ip
-      - last_user_agent
       type: object
     get_sessions_for_user_200_response_sessions_inner_authentication_methods_inner_timestamp:
       oneOf:
@@ -23708,10 +22775,6 @@ components:
         ^type$:
           description: A specific MFA factor. Only present when "name" is set to "mfa"
           type: string
-      required:
-      - ^type$
-      - name
-      - timestamp
       type: object
     get_sessions_for_user_200_response_sessions_inner_authentication:
       additionalProperties: true
@@ -23732,8 +22795,6 @@ components:
           items:
             $ref: '#/components/schemas/get_sessions_for_user_200_response_sessions_inner_authentication_methods_inner'
           type: array
-      required:
-      - methods
       type: object
     get_sessions_for_user_200_response_sessions_inner:
       additionalProperties: true
@@ -23789,17 +22850,6 @@ components:
           type: array
         authentication:
           $ref: '#/components/schemas/get_sessions_for_user_200_response_sessions_inner_authentication'
-      required:
-      - authenticated_at
-      - authentication
-      - clients
-      - created_at
-      - device
-      - expires_at
-      - id
-      - idle_expires_at
-      - updated_at
-      - user_id
       type: object
     get_sessions_for_user_200_response:
       additionalProperties: true
@@ -23858,8 +22908,6 @@ components:
           items:
             $ref: '#/components/schemas/get_sessions_for_user_200_response_sessions_inner'
           type: array
-      required:
-      - sessions
       type: object
     client_oidc_logout:
       additionalProperties: true
@@ -23875,8 +22923,6 @@ components:
           items:
             type: string
           type: array
-      required:
-      - backchannel_logout_urls
       type: object
     client_jwt_configuration_alg:
       default: HS256
@@ -23913,11 +22959,6 @@ components:
           type: object
         alg:
           $ref: '#/components/schemas/client_jwt_configuration_alg'
-      required:
-      - alg
-      - lifetime_in_seconds
-      - scopes
-      - secret_encoded
       type: object
     client_signing_keys_inner:
       additionalProperties: true
@@ -23938,10 +22979,6 @@ components:
           default: ""
           description: "Subject name for this certificate in the format `/CN={domain}`."
           type: string
-      required:
-      - cert
-      - pkcs7
-      - subject
       type: object
     client_encryption_key:
       additionalProperties: true
@@ -23962,10 +22999,6 @@ components:
           description: "Encryption certificate name for this certificate in the format\
             \ `/CN={domain}`."
           type: string
-      required:
-      - cert
-      - pub
-      - subject
       type: object
     client_addons_aws:
       additionalProperties: true
@@ -23984,10 +23017,6 @@ components:
         lifetime_in_seconds:
           description: AWS token lifetime in seconds
           type: integer
-      required:
-      - lifetime_in_seconds
-      - principal
-      - role
       type: object
     client_addons_azure_blob:
       additionalProperties: true
@@ -24065,20 +23094,6 @@ components:
           description: Indicates if the issued token has permission to list blobs
             in the container.
           type: boolean
-      required:
-      - accountName
-      - blobName
-      - blob_delete
-      - blob_read
-      - blob_write
-      - containerName
-      - container_delete
-      - container_list
-      - container_read
-      - container_write
-      - expiration
-      - signedIdentifier
-      - storageAccessKey
       type: object
     client_addons_azure_sb:
       additionalProperties: true
@@ -24109,12 +23124,6 @@ components:
           description: Optional expiration in minutes for the generated token. Defaults
             to 5 minutes.
           type: integer
-      required:
-      - entityPath
-      - expiration
-      - namespace
-      - sasKey
-      - sasKeyName
       type: object
     client_addons_rms:
       additionalProperties: true
@@ -24169,9 +23178,6 @@ components:
           description: "URL prefix only if running Sentry Community Edition, otherwise\
             \ leave should be blank."
           type: string
-      required:
-      - base_url
-      - org_slug
       type: object
     client_addons_echosign:
       additionalProperties: true
@@ -24183,8 +23189,6 @@ components:
           description: Your custom domain found in your EchoSign URL. e.g. `https://acme-org.echosign.com`
             would be `acme-org`.
           type: string
-      required:
-      - domain
       type: object
     client_addons_egnyte:
       additionalProperties: true
@@ -24196,8 +23200,6 @@ components:
           description: Your custom domain found in your Egnyte URL. e.g. `https://acme-org.egnyte.com`
             would be `acme-org`.
           type: string
-      required:
-      - domain
       type: object
     client_addons_firebase:
       additionalProperties: true
@@ -24227,12 +23229,6 @@ components:
           description: Optional expiration in seconds for the generated token. Defaults
             to 3600 seconds (SDK v3+ tokens only).
           type: integer
-      required:
-      - client_email
-      - lifetime_in_seconds
-      - private_key
-      - private_key_id
-      - secret
       type: object
     client_addons_newrelic:
       additionalProperties: true
@@ -24245,8 +23241,6 @@ components:
             the `/accounts/` path. e.g. `https://rpm.newrelic.com/accounts/123456/query`
             would be `123456`.
           type: string
-      required:
-      - account
       type: object
     client_addons_office365:
       additionalProperties: true
@@ -24262,9 +23256,6 @@ components:
           description: Optional Auth0 database connection for testing an already-configured
             Office 365 tenant.
           type: string
-      required:
-      - connection
-      - domain
       type: object
     client_addons_salesforce:
       additionalProperties: true
@@ -24276,8 +23267,6 @@ components:
           description: Arbitrary logical URL that identifies the Saleforce resource.
             e.g. `https://acme-org.com`.
           type: string
-      required:
-      - entity_id
       type: object
     client_addons_salesforce_api:
       additionalProperties: true
@@ -24301,11 +23290,6 @@ components:
         community_url_section:
           description: Community url section.
           type: string
-      required:
-      - clientid
-      - communityName
-      - community_url_section
-      - principal
       type: object
     client_addons_salesforce_sandbox_api:
       additionalProperties: true
@@ -24329,11 +23313,6 @@ components:
         community_url_section:
           description: Community url section.
           type: string
-      required:
-      - clientid
-      - communityName
-      - community_url_section
-      - principal
       type: object
     client_addons_samlp:
       additionalProperties: true
@@ -24396,23 +23375,6 @@ components:
           type: array
         authnContextClassRef:
           type: string
-      required:
-      - audience
-      - authnContextClassRef
-      - createUpnClaim
-      - destination
-      - digestAlgorithm
-      - issuer
-      - lifetimeInSeconds
-      - mapIdentities
-      - mapUnknownClaimsAsIs
-      - mappings
-      - nameIdentifierFormat
-      - nameIdentifierProbes
-      - passthroughClaimsWithNoMapping
-      - recipient
-      - signResponse
-      - signatureAlgorithm
       type: object
     client_addons_layer:
       additionalProperties: true
@@ -24480,13 +23442,6 @@ components:
           description: NameID element of the Subject which can be used to express
             the user's identity. Defaults to `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified`.
           type: string
-      required:
-      - clientid
-      - nameIdentifierFormat
-      - scope
-      - servicePassword
-      - tokenEndpointUrl
-      - usernameAttribute
       type: object
     client_addons_sharepoint_external_url:
       description: External SharePoint application URLs if exposed to the Internet.
@@ -24509,9 +23464,6 @@ components:
           type: string
         external_url:
           $ref: '#/components/schemas/client_addons_sharepoint_external_url'
-      required:
-      - external_url
-      - url
       type: object
     client_addons_springcm:
       additionalProperties: true
@@ -24522,8 +23474,6 @@ components:
         acsurl:
           description: "SpringCM ACS URL, e.g. `https://na11.springcm.com/atlas/sso/SSOEndpoint.ashx`."
           type: string
-      required:
-      - acsurl
       type: object
     client_addons_wams:
       additionalProperties: true
@@ -24534,8 +23484,6 @@ components:
         masterkey:
           description: Your master key for Windows Azure Mobile Services.
           type: string
-      required:
-      - masterkey
       type: object
     client_addons_zendesk:
       additionalProperties: true
@@ -24547,8 +23495,6 @@ components:
           description: Zendesk account name usually first segment in your Zendesk
             URL. e.g. `https://acme-org.zendesk.com` would be `acme-org`.
           type: string
-      required:
-      - accountName
       type: object
     client_addons_zoom:
       additionalProperties: true
@@ -24560,8 +23506,6 @@ components:
           description: "Zoom account name usually first segment of your Zoom URL,\
             \ e.g. `https://acme-org.zoom.us` would be `acme-org`."
           type: string
-      required:
-      - account
       type: object
     client_addons_sso_integration:
       additionalProperties: true
@@ -24575,9 +23519,6 @@ components:
         version:
           description: SSO integration version installed
           type: string
-      required:
-      - name
-      - version
       type: object
     client_addons:
       additionalProperties: false
@@ -24783,37 +23724,6 @@ components:
           nullable: true
           properties: {}
           type: object
-      required:
-      - aws
-      - azure_blob
-      - azure_sb
-      - box
-      - cloudbees
-      - concur
-      - dropbox
-      - echosign
-      - egnyte
-      - firebase
-      - layer
-      - mscrm
-      - newrelic
-      - oag
-      - office365
-      - rms
-      - salesforce
-      - salesforce_api
-      - salesforce_sandbox_api
-      - samlp
-      - sap_api
-      - sentry
-      - sharepoint
-      - slack
-      - springcm
-      - sso_integration
-      - wams
-      - wsfed
-      - zendesk
-      - zoom
       type: object
     client_token_endpoint_auth_method:
       default: none
@@ -24847,9 +23757,6 @@ components:
             minLength: 1
             type: string
           type: array
-      required:
-      - app_package_name
-      - sha256_cert_fingerprints
       type: object
     client_mobile_ios:
       additionalProperties: true
@@ -24869,9 +23776,6 @@ components:
             \ inside the store. Usually this is a reverse domain plus the app name,\
             \ e.g. `com.you.MyApp`."
           type: string
-      required:
-      - app_bundle_identifier
-      - team_id
       type: object
     client_mobile:
       additionalProperties: true
@@ -24890,9 +23794,6 @@ components:
           $ref: '#/components/schemas/client_mobile_android'
         ios:
           $ref: '#/components/schemas/client_mobile_ios'
-      required:
-      - android
-      - ios
       type: object
     client_native_social_login_apple:
       additionalProperties: false
@@ -24906,8 +23807,6 @@ components:
           description: Determine whether or not to allow signing in natively using
             an Apple authorization code
           type: boolean
-      required:
-      - enabled
       type: object
     client_native_social_login_facebook:
       additionalProperties: false
@@ -24921,8 +23820,6 @@ components:
           description: Determine whether or not to allow signing in natively using
             Facebook
           type: boolean
-      required:
-      - enabled
       type: object
     client_native_social_login:
       additionalProperties: false
@@ -24938,9 +23835,6 @@ components:
           $ref: '#/components/schemas/client_native_social_login_apple'
         facebook:
           $ref: '#/components/schemas/client_native_social_login_facebook'
-      required:
-      - apple
-      - facebook
       type: object
     client_refresh_token_rotation_type:
       default: non-rotating
@@ -25110,10 +24004,6 @@ components:
           $ref: '#/components/schemas/client_client_authentication_methods_tls_client_auth'
         self_signed_tls_client_auth:
           $ref: '#/components/schemas/client_client_authentication_methods_self_signed_tls_client_auth'
-      required:
-      - private_key_jwt
-      - self_signed_tls_client_auth
-      - tls_client_auth
       type: object
     client_signed_request_object:
       additionalProperties: false
@@ -25132,9 +24022,6 @@ components:
           items:
             $ref: '#/components/schemas/client_client_authentication_methods_private_key_jwt_credentials_inner'
           type: array
-      required:
-      - credentials
-      - required
       type: object
     client_compliance_level:
       description: "Defines the compliance level for this client, which may restrict\
@@ -25230,436 +24117,6 @@ components:
           minLength: 1
           type: string
       type: object
-    clientCreate_addons_aws:
-      additionalProperties: true
-      description: AWS addon configuration.
-      properties:
-        principal:
-          description: "AWS principal ARN, e.g. `arn:aws:iam::010616021751:saml-provider/idpname`"
-          type: string
-        role:
-          description: "AWS role ARN, e.g. `arn:aws:iam::010616021751:role/foo`"
-          type: string
-        lifetime_in_seconds:
-          description: AWS token lifetime in seconds
-          type: integer
-      type: object
-    clientCreate_addons_azure_blob:
-      additionalProperties: true
-      description: Azure Blob Storage addon configuration.
-      properties:
-        accountName:
-          description: Your Azure storage account name. Usually first segment in your
-            Azure storage URL. e.g. `https://acme-org.blob.core.windows.net` would
-            be the account name `acme-org`.
-          type: string
-        storageAccessKey:
-          description: Access key associated with this storage account.
-          type: string
-        containerName:
-          description: Container to request a token for. e.g. `my-container`.
-          type: string
-        blobName:
-          description: Entity to request a token for. e.g. `my-blob`. If blank the
-            computed SAS will apply to the entire storage container.
-          type: string
-        expiration:
-          description: Expiration in minutes for the generated token (default of 5
-            minutes).
-          type: integer
-        signedIdentifier:
-          description: Shared access policy identifier defined in your storage account
-            resource.
-          type: string
-        blob_read:
-          description: "Indicates if the issued token has permission to read the content,\
-            \ properties, metadata and block list. Use the blob as the source of a\
-            \ copy operation."
-          type: boolean
-        blob_write:
-          description: "Indicates if the issued token has permission to create or\
-            \ write content, properties, metadata, or block list. Snapshot or lease\
-            \ the blob. Resize the blob (page blob only). Use the blob as the destination\
-            \ of a copy operation within the same account."
-          type: boolean
-        blob_delete:
-          description: Indicates if the issued token has permission to delete the
-            blob.
-          type: boolean
-        container_read:
-          description: "Indicates if the issued token has permission to read the content,\
-            \ properties, metadata or block list of any blob in the container. Use\
-            \ any blob in the container as the source of a copy operation"
-          type: boolean
-        container_write:
-          description: "Indicates that for any blob in the container if the issued\
-            \ token has permission to create or write content, properties, metadata,\
-            \ or block list. Snapshot or lease the blob. Resize the blob (page blob\
-            \ only). Use the blob as the destination of a copy operation within the\
-            \ same account."
-          type: boolean
-        container_delete:
-          description: Indicates if issued token has permission to delete any blob
-            in the container.
-          type: boolean
-        container_list:
-          description: Indicates if the issued token has permission to list blobs
-            in the container.
-          type: boolean
-      type: object
-    clientCreate_addons_azure_sb:
-      additionalProperties: true
-      description: Azure Storage Bus addon configuration.
-      properties:
-        namespace:
-          description: Your Azure Service Bus namespace. Usually the first segment
-            of your Service Bus URL (e.g. `https://acme-org.servicebus.windows.net`
-            would be `acme-org`).
-          type: string
-        sasKeyName:
-          description: Your shared access policy name defined in your Service Bus
-            entity.
-          type: string
-        sasKey:
-          description: Primary Key associated with your shared access policy.
-          type: string
-        entityPath:
-          description: Entity you want to request a token for. e.g. `my-queue`.'
-          type: string
-        expiration:
-          description: Optional expiration in minutes for the generated token. Defaults
-            to 5 minutes.
-          type: integer
-      type: object
-    clientCreate_addons_sentry:
-      additionalProperties: true
-      description: Sentry SSO configuration.
-      properties:
-        org_slug:
-          description: Generated slug for your Sentry organization. Found in your
-            Sentry URL. e.g. `https://sentry.acme.com/acme-org/` would be `acme-org`.
-          type: string
-        base_url:
-          description: "URL prefix only if running Sentry Community Edition, otherwise\
-            \ leave should be blank."
-          type: string
-      type: object
-    clientCreate_addons_echosign:
-      additionalProperties: true
-      description: Adobe EchoSign SSO configuration.
-      properties:
-        domain:
-          description: Your custom domain found in your EchoSign URL. e.g. `https://acme-org.echosign.com`
-            would be `acme-org`.
-          type: string
-      type: object
-    clientCreate_addons_egnyte:
-      additionalProperties: true
-      description: Egnyte SSO configuration.
-      properties:
-        domain:
-          description: Your custom domain found in your Egnyte URL. e.g. `https://acme-org.egnyte.com`
-            would be `acme-org`.
-          type: string
-      type: object
-    clientCreate_addons_firebase:
-      additionalProperties: true
-      description: Google Firebase addon configuration.
-      properties:
-        secret:
-          description: Google Firebase Secret. (SDK 2 only).
-          type: string
-        private_key_id:
-          description: Optional ID of the private key to obtain kid header in the
-            issued token (SDK v3+ tokens only).
-          type: string
-        private_key:
-          description: Private Key for signing the token (SDK v3+ tokens only).
-          type: string
-        client_email:
-          description: "ID of the Service Account you have created (shown as `client_email`\
-            \ in the generated JSON file, SDK v3+ tokens only)."
-          type: string
-        lifetime_in_seconds:
-          description: Optional expiration in seconds for the generated token. Defaults
-            to 3600 seconds (SDK v3+ tokens only).
-          type: integer
-      type: object
-    clientCreate_addons_newrelic:
-      additionalProperties: true
-      description: New Relic SSO configuration.
-      properties:
-        account:
-          description: Your New Relic Account ID found in your New Relic URL after
-            the `/accounts/` path. e.g. `https://rpm.newrelic.com/accounts/123456/query`
-            would be `123456`.
-          type: string
-      type: object
-    clientCreate_addons_office365:
-      additionalProperties: true
-      description: Microsoft Office 365 SSO configuration.
-      properties:
-        domain:
-          description: Your Office 365 domain name. e.g. `acme-org.com`.
-          type: string
-        connection:
-          description: Optional Auth0 database connection for testing an already-configured
-            Office 365 tenant.
-          type: string
-      type: object
-    clientCreate_addons_salesforce:
-      additionalProperties: true
-      description: Salesforce SSO configuration.
-      properties:
-        entity_id:
-          description: Arbitrary logical URL that identifies the Saleforce resource.
-            e.g. `https://acme-org.com`.
-          type: string
-      type: object
-    clientCreate_addons_salesforce_api:
-      additionalProperties: true
-      description: Salesforce API addon configuration.
-      properties:
-        clientid:
-          description: Consumer Key assigned by Salesforce to the Connected App.
-          type: string
-        principal:
-          description: Name of the property in the user object that maps to a Salesforce
-            username. e.g. `email`.
-          type: string
-        communityName:
-          description: Community name.
-          type: string
-        community_url_section:
-          description: Community url section.
-          type: string
-      type: object
-    clientCreate_addons_salesforce_sandbox_api:
-      additionalProperties: true
-      description: Salesforce Sandbox addon configuration.
-      properties:
-        clientid:
-          description: Consumer Key assigned by Salesforce to the Connected App.
-          type: string
-        principal:
-          description: Name of the property in the user object that maps to a Salesforce
-            username. e.g. `email`.
-          type: string
-        communityName:
-          description: Community name.
-          type: string
-        community_url_section:
-          description: Community url section.
-          type: string
-      type: object
-    clientCreate_addons_samlp:
-      additionalProperties: true
-      description: SAML2 addon indicator (no configuration settings needed for SAML2
-        addon).
-      properties:
-        mappings:
-          additionalProperties: true
-          type: object
-        audience:
-          type: string
-        recipient:
-          type: string
-        createUpnClaim:
-          type: boolean
-        mapUnknownClaimsAsIs:
-          type: boolean
-        passthroughClaimsWithNoMapping:
-          type: boolean
-        mapIdentities:
-          type: boolean
-        signatureAlgorithm:
-          type: string
-        digestAlgorithm:
-          type: string
-        issuer:
-          type: string
-        destination:
-          type: string
-        lifetimeInSeconds:
-          type: integer
-        signResponse:
-          type: boolean
-        nameIdentifierFormat:
-          type: string
-        nameIdentifierProbes:
-          items:
-            minLength: 1
-            type: string
-          type: array
-        authnContextClassRef:
-          type: string
-      type: object
-    clientCreate_addons_sap_api:
-      additionalProperties: true
-      description: SAP API addon configuration.
-      properties:
-        clientid:
-          description: If activated in the OAuth 2.0 client configuration (transaction
-            SOAUTH2) the SAML attribute client_id must be set and equal the client_id
-            form parameter of the access token request.
-          type: string
-        usernameAttribute:
-          description: Name of the property in the user object that maps to a SAP
-            username. e.g. `email`.
-          type: string
-        tokenEndpointUrl:
-          description: Your SAP OData server OAuth2 token endpoint URL.
-          type: string
-        scope:
-          description: Requested scope for SAP APIs.
-          type: string
-        servicePassword:
-          description: Service account password to use to authenticate API calls to
-            the token endpoint.
-          type: string
-        nameIdentifierFormat:
-          description: NameID element of the Subject which can be used to express
-            the user's identity. Defaults to `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified`.
-          type: string
-      type: object
-    clientCreate_addons_sharepoint:
-      additionalProperties: true
-      description: SharePoint SSO configuration.
-      properties:
-        url:
-          description: Internal SharePoint application URL.
-          type: string
-        external_url:
-          $ref: '#/components/schemas/client_addons_sharepoint_external_url'
-      type: object
-    clientCreate_addons_springcm:
-      additionalProperties: true
-      description: SpringCM SSO configuration.
-      properties:
-        acsurl:
-          description: "SpringCM ACS URL, e.g. `https://na11.springcm.com/atlas/sso/SSOEndpoint.ashx`."
-          type: string
-      type: object
-    clientCreate_addons_wams:
-      additionalProperties: true
-      description: Windows Azure Mobile Services addon configuration.
-      properties:
-        masterkey:
-          description: Your master key for Windows Azure Mobile Services.
-          type: string
-      type: object
-    clientCreate_addons_zendesk:
-      additionalProperties: true
-      description: Zendesk SSO configuration.
-      properties:
-        accountName:
-          description: Zendesk account name usually first segment in your Zendesk
-            URL. e.g. `https://acme-org.zendesk.com` would be `acme-org`.
-          type: string
-      type: object
-    clientCreate_addons_zoom:
-      additionalProperties: true
-      description: Zoom SSO configuration.
-      properties:
-        account:
-          description: "Zoom account name usually first segment of your Zoom URL,\
-            \ e.g. `https://acme-org.zoom.us` would be `acme-org`."
-          type: string
-      type: object
-    clientCreate_addons_sso_integration:
-      additionalProperties: true
-      properties:
-        name:
-          description: SSO integration name
-          type: string
-        version:
-          description: SSO integration version installed
-          type: string
-      type: object
-    clientCreate_addons:
-      additionalProperties: false
-      description: Addons enabled for this client and their associated configurations.
-      properties:
-        aws:
-          $ref: '#/components/schemas/clientCreate_addons_aws'
-        azure_blob:
-          $ref: '#/components/schemas/clientCreate_addons_azure_blob'
-        azure_sb:
-          $ref: '#/components/schemas/clientCreate_addons_azure_sb'
-        rms:
-          $ref: '#/components/schemas/client_addons_rms'
-        mscrm:
-          $ref: '#/components/schemas/client_addons_mscrm'
-        slack:
-          $ref: '#/components/schemas/client_addons_slack'
-        sentry:
-          $ref: '#/components/schemas/clientCreate_addons_sentry'
-        box:
-          additionalProperties: true
-          description: Box SSO indicator (no configuration settings needed for Box
-            SSO).
-          type: object
-        cloudbees:
-          additionalProperties: true
-          description: CloudBees SSO indicator (no configuration settings needed for
-            CloudBees SSO).
-          type: object
-        concur:
-          additionalProperties: true
-          description: Concur SSO indicator (no configuration settings needed for
-            Concur SSO).
-          type: object
-        dropbox:
-          additionalProperties: true
-          description: Dropbox SSO indicator (no configuration settings needed for
-            Dropbox SSO).
-          type: object
-        echosign:
-          $ref: '#/components/schemas/clientCreate_addons_echosign'
-        egnyte:
-          $ref: '#/components/schemas/clientCreate_addons_egnyte'
-        firebase:
-          $ref: '#/components/schemas/clientCreate_addons_firebase'
-        newrelic:
-          $ref: '#/components/schemas/clientCreate_addons_newrelic'
-        office365:
-          $ref: '#/components/schemas/clientCreate_addons_office365'
-        salesforce:
-          $ref: '#/components/schemas/clientCreate_addons_salesforce'
-        salesforce_api:
-          $ref: '#/components/schemas/clientCreate_addons_salesforce_api'
-        salesforce_sandbox_api:
-          $ref: '#/components/schemas/clientCreate_addons_salesforce_sandbox_api'
-        samlp:
-          $ref: '#/components/schemas/clientCreate_addons_samlp'
-        layer:
-          $ref: '#/components/schemas/client_addons_layer'
-        sap_api:
-          $ref: '#/components/schemas/clientCreate_addons_sap_api'
-        sharepoint:
-          $ref: '#/components/schemas/clientCreate_addons_sharepoint'
-        springcm:
-          $ref: '#/components/schemas/clientCreate_addons_springcm'
-        wams:
-          $ref: '#/components/schemas/clientCreate_addons_wams'
-        wsfed:
-          additionalProperties: true
-          description: WS-Fed (WIF) addon indicator. Actual configuration is stored
-            in `callback` and `client_aliases` properties on the client.
-          type: object
-        zendesk:
-          $ref: '#/components/schemas/clientCreate_addons_zendesk'
-        zoom:
-          $ref: '#/components/schemas/clientCreate_addons_zoom'
-        sso_integration:
-          $ref: '#/components/schemas/clientCreate_addons_sso_integration'
-        oag:
-          additionalProperties: false
-          description: Okta Access Gateway SSO configuration
-          nullable: true
-          properties: {}
-          type: object
-      type: object
     clientCreate_mobile_android:
       additionalProperties: false
       description: Android native app configuration.
@@ -25703,38 +24160,6 @@ components:
           $ref: '#/components/schemas/clientCreate_mobile_android'
         ios:
           $ref: '#/components/schemas/clientCreate_mobile_ios'
-      type: object
-    clientCreate_native_social_login_apple:
-      additionalProperties: false
-      description: Native Social Login support for the Apple connection
-      nullable: true
-      properties:
-        enabled:
-          default: false
-          description: Determine whether or not to allow signing in natively using
-            an Apple authorization code
-          type: boolean
-      type: object
-    clientCreate_native_social_login_facebook:
-      additionalProperties: false
-      description: Native Social Login support for the Facebook connection
-      nullable: true
-      properties:
-        enabled:
-          default: false
-          description: Determine whether or not to allow signing in natively using
-            Facebook
-          type: boolean
-      type: object
-    clientCreate_native_social_login:
-      additionalProperties: false
-      description: Configure native social settings
-      nullable: true
-      properties:
-        apple:
-          $ref: '#/components/schemas/clientCreate_native_social_login_apple'
-        facebook:
-          $ref: '#/components/schemas/clientCreate_native_social_login_facebook'
       type: object
     clientCreate_client_authentication_methods_private_key_jwt_credentials_inner_credential_type:
       default: public_key
@@ -25991,11 +24416,11 @@ components:
       nullable: true
       properties:
         aws:
-          $ref: '#/components/schemas/clientCreate_addons_aws'
+          $ref: '#/components/schemas/client_addons_aws'
         azure_blob:
-          $ref: '#/components/schemas/clientCreate_addons_azure_blob'
+          $ref: '#/components/schemas/client_addons_azure_blob'
         azure_sb:
-          $ref: '#/components/schemas/clientCreate_addons_azure_sb'
+          $ref: '#/components/schemas/client_addons_azure_sb'
         rms:
           $ref: '#/components/schemas/client_addons_rms'
         mscrm:
@@ -26003,7 +24428,7 @@ components:
         slack:
           $ref: '#/components/schemas/client_addons_slack'
         sentry:
-          $ref: '#/components/schemas/clientCreate_addons_sentry'
+          $ref: '#/components/schemas/client_addons_sentry'
         box:
           additionalProperties: true
           description: Box SSO indicator (no configuration settings needed for Box
@@ -26025,44 +24450,44 @@ components:
             Dropbox SSO).
           type: object
         echosign:
-          $ref: '#/components/schemas/clientCreate_addons_echosign'
+          $ref: '#/components/schemas/client_addons_echosign'
         egnyte:
-          $ref: '#/components/schemas/clientCreate_addons_egnyte'
+          $ref: '#/components/schemas/client_addons_egnyte'
         firebase:
-          $ref: '#/components/schemas/clientCreate_addons_firebase'
+          $ref: '#/components/schemas/client_addons_firebase'
         newrelic:
-          $ref: '#/components/schemas/clientCreate_addons_newrelic'
+          $ref: '#/components/schemas/client_addons_newrelic'
         office365:
-          $ref: '#/components/schemas/clientCreate_addons_office365'
+          $ref: '#/components/schemas/client_addons_office365'
         salesforce:
-          $ref: '#/components/schemas/clientCreate_addons_salesforce'
+          $ref: '#/components/schemas/client_addons_salesforce'
         salesforce_api:
-          $ref: '#/components/schemas/clientCreate_addons_salesforce_api'
+          $ref: '#/components/schemas/client_addons_salesforce_api'
         salesforce_sandbox_api:
-          $ref: '#/components/schemas/clientCreate_addons_salesforce_sandbox_api'
+          $ref: '#/components/schemas/client_addons_salesforce_sandbox_api'
         samlp:
-          $ref: '#/components/schemas/clientCreate_addons_samlp'
+          $ref: '#/components/schemas/client_addons_samlp'
         layer:
           $ref: '#/components/schemas/client_addons_layer'
         sap_api:
-          $ref: '#/components/schemas/clientCreate_addons_sap_api'
+          $ref: '#/components/schemas/client_addons_sap_api'
         sharepoint:
-          $ref: '#/components/schemas/clientCreate_addons_sharepoint'
+          $ref: '#/components/schemas/client_addons_sharepoint'
         springcm:
-          $ref: '#/components/schemas/clientCreate_addons_springcm'
+          $ref: '#/components/schemas/client_addons_springcm'
         wams:
-          $ref: '#/components/schemas/clientCreate_addons_wams'
+          $ref: '#/components/schemas/client_addons_wams'
         wsfed:
           additionalProperties: true
           description: WS-Fed (WIF) addon indicator. Actual configuration is stored
             in `callback` and `client_aliases` properties on the client.
           type: object
         zendesk:
-          $ref: '#/components/schemas/clientCreate_addons_zendesk'
+          $ref: '#/components/schemas/client_addons_zendesk'
         zoom:
-          $ref: '#/components/schemas/clientCreate_addons_zoom'
+          $ref: '#/components/schemas/client_addons_zoom'
         sso_integration:
-          $ref: '#/components/schemas/clientCreate_addons_sso_integration'
+          $ref: '#/components/schemas/client_addons_sso_integration'
         oag:
           additionalProperties: false
           description: Okta Access Gateway SSO configuration
@@ -26116,18 +24541,6 @@ components:
           $ref: '#/components/schemas/clientUpdate_mobile_android'
         ios:
           $ref: '#/components/schemas/clientUpdate_mobile_ios'
-      type: object
-    clientUpdate_client_authentication_methods:
-      additionalProperties: false
-      description: Defines client authentication methods.
-      nullable: true
-      properties:
-        private_key_jwt:
-          $ref: '#/components/schemas/client_client_authentication_methods_private_key_jwt'
-        tls_client_auth:
-          $ref: '#/components/schemas/client_client_authentication_methods_tls_client_auth'
-        self_signed_tls_client_auth:
-          $ref: '#/components/schemas/client_client_authentication_methods_self_signed_tls_client_auth'
       type: object
     clientUpdate_signed_request_object:
       additionalProperties: false
@@ -26570,12 +24983,6 @@ components:
         smtp_user:
           description: SMTP username.
           type: string
-      required:
-      - api_user
-      - region
-      - smtp_host
-      - smtp_port
-      - smtp_user
       type: object
     emailProviderUpdate_name:
       description: "Name of the email provider. Can be `mailgun`, `mandrill`, `sendgrid`,\
@@ -26948,15 +25355,6 @@ components:
             \ `AN` (Antarctica), `AS` (Asia), `EU` (Europe), `NA` (North America),\
             \ `OC` (Oceania) or `SA` (South America)."
           type: string
-      required:
-      - city_name
-      - continent_code
-      - country_code
-      - country_code3
-      - country_name
-      - latitude
-      - longitude
-      - time_zone
       type: object
     promptsSettings_universal_login_experience:
       description: Which login experience to use. Can be `new` or `classic`.
@@ -27097,9 +25495,6 @@ components:
           description: Custom change password HTML (<a href='https://github.com/Shopify/liquid/wiki/Liquid-for-Designers'>Liquid
             syntax</a> supported).
           type: string
-      required:
-      - enabled
-      - html
       type: object
     tenantSettings_guardian_mfa_page:
       additionalProperties: false
@@ -27119,9 +25514,6 @@ components:
           description: ' Custom Guardian HTML (<a href=''https://github.com/Shopify/liquid/wiki/Liquid-for-Designers''>Liquid
             syntax</a> is supported).'
           type: string
-      required:
-      - enabled
-      - html
       type: object
     tenantSettings_error_page:
       additionalProperties: false
@@ -27147,10 +25539,6 @@ components:
           description: URL to redirect to when an error occurs instead of showing
             the default error page.
           type: string
-      required:
-      - html
-      - show_log_link
-      - url
       type: object
     tenantSettings_device_flow_charset:
       default: base20
@@ -27176,9 +25564,6 @@ components:
             \ readable format."
           maxLength: 20
           type: string
-      required:
-      - charset
-      - mask
       type: object
     tenantSettings_flags:
       additionalProperties: false
@@ -27299,30 +25684,6 @@ components:
         remove_alg_from_jwks:
           description: Removes alg property from jwks .well-known endpoint
           type: boolean
-      required:
-      - allow_changing_enable_sso
-      - allow_legacy_delegation_grant_types
-      - allow_legacy_ro_grant_types
-      - allow_legacy_tokeninfo_endpoint
-      - change_pwd_flow_v1
-      - dashboard_insights_view
-      - dashboard_log_streams_next
-      - disable_clickjack_protection_headers
-      - disable_fields_map_fix
-      - disable_impersonation
-      - enable_adfs_waad_email_verification
-      - enable_apis_section
-      - enable_client_connections
-      - enable_idtoken_api2
-      - enable_legacy_profile
-      - enable_pipeline2
-      - enable_public_signup_user_exists_error
-      - enable_sso
-      - enforce_client_authentication_on_passwordless_start
-      - mfa_show_factor_list_on_enrollment
-      - no_disclose_enterprise_connections
-      - remove_alg_from_jwks
-      - revoke_refresh_token_grant
       type: object
     tenantSettings_session_cookie_mode:
       default: persistent
@@ -27355,8 +25716,6 @@ components:
           description: Whether to bypass prompting logic (false) when performing OIDC
             Logout
           type: boolean
-      required:
-      - oidc_logout_prompt_enabled
       type: object
     tenantSettings_mtls:
       additionalProperties: false
@@ -27369,24 +25728,6 @@ components:
           default: false
           description: "If true, enables mTLS endpoint aliases"
           type: boolean
-      required:
-      - enable_endpoint_aliases
-      type: object
-    tenantSettingsUpdate_change_password:
-      additionalProperties: false
-      description: Change Password page customization.
-      nullable: true
-      properties:
-        enabled:
-          default: false
-          description: Whether to use the custom change password HTML (true) or the
-            default Auth0 page (false). Default is to use the Auth0 page.
-          type: boolean
-        html:
-          default: ""
-          description: Custom change password HTML (<a href='https://github.com/Shopify/liquid/wiki/Liquid-for-Designers'>Liquid
-            syntax</a> supported).
-          type: string
       type: object
     tenantSettingsUpdate_device_flow:
       additionalProperties: false
@@ -27399,43 +25740,6 @@ components:
           default: '****-****'
           description: "Mask used to format a generated User Code into a friendly,\
             \ readable format."
-          type: string
-      type: object
-    tenantSettingsUpdate_guardian_mfa_page:
-      additionalProperties: false
-      description: Guardian page customization.
-      nullable: true
-      properties:
-        enabled:
-          default: false
-          description: "Whether to use the custom Guardian HTML (true) or the default\
-            \ Auth0 page (false, default)"
-          type: boolean
-        html:
-          default: ""
-          description: ' Custom Guardian HTML (<a href=''https://github.com/Shopify/liquid/wiki/Liquid-for-Designers''>Liquid
-            syntax</a> is supported).'
-          type: string
-      type: object
-    tenantSettingsUpdate_error_page:
-      additionalProperties: false
-      description: Error page customization.
-      nullable: true
-      properties:
-        html:
-          default: ""
-          description: Custom Error HTML (<a href='https://github.com/Shopify/liquid/wiki/Liquid-for-Designers'>Liquid
-            syntax</a> is supported).
-          type: string
-        show_log_link:
-          default: false
-          description: "Whether to show the link to log as part of the default error\
-            \ page (true, default) or not to show the link (false)."
-          type: boolean
-        url:
-          default: https://mycompany.org/error
-          description: URL to redirect to when an error occurs instead of showing
-            the default error page.
           type: string
       type: object
     tenantSettingsUpdate_flags:
@@ -27543,27 +25847,6 @@ components:
           description: Removes alg property from jwks .well-known endpoint
           type: boolean
       type: object
-    tenantSettingsUpdate_sessions:
-      additionalProperties: false
-      description: Sessions related settings for tenant
-      nullable: true
-      properties:
-        oidc_logout_prompt_enabled:
-          default: true
-          description: Whether to bypass prompting logic (false) when performing OIDC
-            Logout
-          type: boolean
-      type: object
-    tenantSettingsUpdate_mtls:
-      additionalProperties: false
-      description: mTLS configuration.
-      nullable: true
-      properties:
-        enable_endpoint_aliases:
-          default: false
-          description: "If true, enables mTLS endpoint aliases"
-          type: boolean
-      type: object
     userBlock_blocked_for_inner:
       additionalProperties: true
       example:
@@ -27582,10 +25865,6 @@ components:
         connection:
           description: Connection identifier
           type: string
-      required:
-      - connection
-      - identifier
-      - ip
       type: object
     userUpdate_app_metadata:
       additionalProperties: true

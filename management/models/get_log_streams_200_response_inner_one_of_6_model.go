@@ -17,161 +17,209 @@ import (
 // GetLogStreams200ResponseInnerOneOf6 struct for GetLogStreams200ResponseInnerOneOf6
 type GetLogStreams200ResponseInnerOneOf6 struct {
 	// The id of the log stream
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// log stream name
-	Name   string                                   `json:"name"`
-	Status GetLogStreams200ResponseInnerOneOfStatus `json:"status"`
-	Type   GetLogStreams200ResponseInnerOneOf6Type  `json:"type"`
+	Name   *string                                   `json:"name,omitempty"`
+	Status *GetLogStreams200ResponseInnerOneOfStatus `json:"status,omitempty"`
+	Type   *GetLogStreams200ResponseInnerOneOf6Type  `json:"type,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
-	Filters              []GetLogStreams200ResponseInnerOneOfFiltersInner `json:"filters"`
-	Sink                 GetLogStreams200ResponseInnerOneOf6Sink          `json:"sink"`
+	Filters              []GetLogStreams200ResponseInnerOneOfFiltersInner `json:"filters,omitempty"`
+	Sink                 *GetLogStreams200ResponseInnerOneOf6Sink         `json:"sink,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetLogStreams200ResponseInnerOneOf6 GetLogStreams200ResponseInnerOneOf6
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetLogStreams200ResponseInnerOneOf6) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetLogStreams200ResponseInnerOneOf6) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetLogStreams200ResponseInnerOneOf6) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetLogStreams200ResponseInnerOneOf6) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetLogStreams200ResponseInnerOneOf6) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetLogStreams200ResponseInnerOneOf6) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetLogStreams200ResponseInnerOneOf6) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *GetLogStreams200ResponseInnerOneOf6) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetStatus returns the Status field value
+// GetStatus returns the Status field value if set, zero value otherwise.
 func (o *GetLogStreams200ResponseInnerOneOf6) GetStatus() GetLogStreams200ResponseInnerOneOfStatus {
-	if o == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret GetLogStreams200ResponseInnerOneOfStatus
 		return ret
 	}
-
-	return o.Status
+	return *o.Status
 }
 
-// GetStatusOk returns a tuple with the Status field value
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetLogStreams200ResponseInnerOneOf6) GetStatusOk() (*GetLogStreams200ResponseInnerOneOfStatus, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
-	return &o.Status, true
+	return o.Status, true
 }
 
-// SetStatus sets field value
+// HasStatus returns a boolean if a field has been set.
+func (o *GetLogStreams200ResponseInnerOneOf6) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given GetLogStreams200ResponseInnerOneOfStatus and assigns it to the Status field.
 func (o *GetLogStreams200ResponseInnerOneOf6) SetStatus(v GetLogStreams200ResponseInnerOneOfStatus) {
-	o.Status = v
+	o.Status = &v
 }
 
-// GetType returns the Type field value
+// GetType returns the Type field value if set, zero value otherwise.
 func (o *GetLogStreams200ResponseInnerOneOf6) GetType() GetLogStreams200ResponseInnerOneOf6Type {
-	if o == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret GetLogStreams200ResponseInnerOneOf6Type
 		return ret
 	}
-
-	return o.Type
+	return *o.Type
 }
 
-// GetTypeOk returns a tuple with the Type field value
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetLogStreams200ResponseInnerOneOf6) GetTypeOk() (*GetLogStreams200ResponseInnerOneOf6Type, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
-	return &o.Type, true
+	return o.Type, true
 }
 
-// SetType sets field value
+// HasType returns a boolean if a field has been set.
+func (o *GetLogStreams200ResponseInnerOneOf6) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given GetLogStreams200ResponseInnerOneOf6Type and assigns it to the Type field.
 func (o *GetLogStreams200ResponseInnerOneOf6) SetType(v GetLogStreams200ResponseInnerOneOf6Type) {
-	o.Type = v
+	o.Type = &v
 }
 
-// GetFilters returns the Filters field value
+// GetFilters returns the Filters field value if set, zero value otherwise.
 func (o *GetLogStreams200ResponseInnerOneOf6) GetFilters() []GetLogStreams200ResponseInnerOneOfFiltersInner {
-	if o == nil {
+	if o == nil || IsNil(o.Filters) {
 		var ret []GetLogStreams200ResponseInnerOneOfFiltersInner
 		return ret
 	}
-
 	return o.Filters
 }
 
-// GetFiltersOk returns a tuple with the Filters field value
+// GetFiltersOk returns a tuple with the Filters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetLogStreams200ResponseInnerOneOf6) GetFiltersOk() ([]GetLogStreams200ResponseInnerOneOfFiltersInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Filters) {
 		return nil, false
 	}
 	return o.Filters, true
 }
 
-// SetFilters sets field value
+// HasFilters returns a boolean if a field has been set.
+func (o *GetLogStreams200ResponseInnerOneOf6) HasFilters() bool {
+	if o != nil && !IsNil(o.Filters) {
+		return true
+	}
+
+	return false
+}
+
+// SetFilters gets a reference to the given []GetLogStreams200ResponseInnerOneOfFiltersInner and assigns it to the Filters field.
 func (o *GetLogStreams200ResponseInnerOneOf6) SetFilters(v []GetLogStreams200ResponseInnerOneOfFiltersInner) {
 	o.Filters = v
 }
 
-// GetSink returns the Sink field value
+// GetSink returns the Sink field value if set, zero value otherwise.
 func (o *GetLogStreams200ResponseInnerOneOf6) GetSink() GetLogStreams200ResponseInnerOneOf6Sink {
-	if o == nil {
+	if o == nil || IsNil(o.Sink) {
 		var ret GetLogStreams200ResponseInnerOneOf6Sink
 		return ret
 	}
-
-	return o.Sink
+	return *o.Sink
 }
 
-// GetSinkOk returns a tuple with the Sink field value
+// GetSinkOk returns a tuple with the Sink field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetLogStreams200ResponseInnerOneOf6) GetSinkOk() (*GetLogStreams200ResponseInnerOneOf6Sink, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Sink) {
 		return nil, false
 	}
-	return &o.Sink, true
+	return o.Sink, true
 }
 
-// SetSink sets field value
+// HasSink returns a boolean if a field has been set.
+func (o *GetLogStreams200ResponseInnerOneOf6) HasSink() bool {
+	if o != nil && !IsNil(o.Sink) {
+		return true
+	}
+
+	return false
+}
+
+// SetSink gets a reference to the given GetLogStreams200ResponseInnerOneOf6Sink and assigns it to the Sink field.
 func (o *GetLogStreams200ResponseInnerOneOf6) SetSink(v GetLogStreams200ResponseInnerOneOf6Sink) {
-	o.Sink = v
+	o.Sink = &v
 }
 
 func (o GetLogStreams200ResponseInnerOneOf6) MarshalJSON() ([]byte, error) {
@@ -184,12 +232,24 @@ func (o GetLogStreams200ResponseInnerOneOf6) MarshalJSON() ([]byte, error) {
 
 func (o GetLogStreams200ResponseInnerOneOf6) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["name"] = o.Name
-	toSerialize["status"] = o.Status
-	toSerialize["type"] = o.Type
-	toSerialize["filters"] = o.Filters
-	toSerialize["sink"] = o.Sink
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Filters) {
+		toSerialize["filters"] = o.Filters
+	}
+	if !IsNil(o.Sink) {
+		toSerialize["sink"] = o.Sink
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

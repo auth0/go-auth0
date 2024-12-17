@@ -13,6 +13,7 @@ package models
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // PostLogStreamsRequestOneOf6 struct for PostLogStreamsRequestOneOf6
@@ -21,8 +22,8 @@ type PostLogStreamsRequestOneOf6 struct {
 	Name *string                                 `json:"name,omitempty"`
 	Type GetLogStreams200ResponseInnerOneOf6Type `json:"type"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
-	Filters []PostLogStreamsRequestOneOfFiltersInner `json:"filters,omitempty"`
-	Sink    GetLogStreams200ResponseInnerOneOf6Sink  `json:"sink"`
+	Filters []GetLogStreams200ResponseInnerOneOfFiltersInner `json:"filters,omitempty"`
+	Sink    GetLogStreams200ResponseInnerOneOf6Sink          `json:"sink"`
 	// The optional datetime (ISO 8601) to start streaming logs from
 	StartFrom *string `json:"startFrom,omitempty"`
 }
@@ -86,9 +87,9 @@ func (o *PostLogStreamsRequestOneOf6) SetType(v GetLogStreams200ResponseInnerOne
 }
 
 // GetFilters returns the Filters field value if set, zero value otherwise.
-func (o *PostLogStreamsRequestOneOf6) GetFilters() []PostLogStreamsRequestOneOfFiltersInner {
+func (o *PostLogStreamsRequestOneOf6) GetFilters() []GetLogStreams200ResponseInnerOneOfFiltersInner {
 	if o == nil || IsNil(o.Filters) {
-		var ret []PostLogStreamsRequestOneOfFiltersInner
+		var ret []GetLogStreams200ResponseInnerOneOfFiltersInner
 		return ret
 	}
 	return o.Filters
@@ -96,7 +97,7 @@ func (o *PostLogStreamsRequestOneOf6) GetFilters() []PostLogStreamsRequestOneOfF
 
 // GetFiltersOk returns a tuple with the Filters field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PostLogStreamsRequestOneOf6) GetFiltersOk() ([]PostLogStreamsRequestOneOfFiltersInner, bool) {
+func (o *PostLogStreamsRequestOneOf6) GetFiltersOk() ([]GetLogStreams200ResponseInnerOneOfFiltersInner, bool) {
 	if o == nil || IsNil(o.Filters) {
 		return nil, false
 	}
@@ -112,8 +113,8 @@ func (o *PostLogStreamsRequestOneOf6) HasFilters() bool {
 	return false
 }
 
-// SetFilters gets a reference to the given []PostLogStreamsRequestOneOfFiltersInner and assigns it to the Filters field.
-func (o *PostLogStreamsRequestOneOf6) SetFilters(v []PostLogStreamsRequestOneOfFiltersInner) {
+// SetFilters gets a reference to the given []GetLogStreams200ResponseInnerOneOfFiltersInner and assigns it to the Filters field.
+func (o *PostLogStreamsRequestOneOf6) SetFilters(v []GetLogStreams200ResponseInnerOneOfFiltersInner) {
 	o.Filters = v
 }
 
@@ -198,6 +199,28 @@ func (o PostLogStreamsRequestOneOf6) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *PostLogStreamsRequestOneOf6) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"type",
+		"sink",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
 	varPostLogStreamsRequestOneOf6 := _PostLogStreamsRequestOneOf6{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

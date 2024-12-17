@@ -23,7 +23,7 @@ type PatchBreachedPasswordDetectionRequest struct {
 	// When \"admin_notification\" is enabled, determines how often email notifications are sent.         Possible values: <code>immediately</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>.
 	AdminNotificationFrequency []GetBreachedPasswordDetection200ResponseAdminNotificationFrequencyInner `json:"admin_notification_frequency,omitempty"`
 	Method                     *GetBreachedPasswordDetection200ResponseMethod                           `json:"method,omitempty"`
-	Stage                      *PatchBreachedPasswordDetectionRequestStage                              `json:"stage,omitempty"`
+	Stage                      *GetBreachedPasswordDetection200ResponseStage                            `json:"stage,omitempty"`
 }
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
@@ -155,9 +155,9 @@ func (o *PatchBreachedPasswordDetectionRequest) SetMethod(v GetBreachedPasswordD
 }
 
 // GetStage returns the Stage field value if set, zero value otherwise.
-func (o *PatchBreachedPasswordDetectionRequest) GetStage() PatchBreachedPasswordDetectionRequestStage {
+func (o *PatchBreachedPasswordDetectionRequest) GetStage() GetBreachedPasswordDetection200ResponseStage {
 	if o == nil || IsNil(o.Stage) {
-		var ret PatchBreachedPasswordDetectionRequestStage
+		var ret GetBreachedPasswordDetection200ResponseStage
 		return ret
 	}
 	return *o.Stage
@@ -165,7 +165,7 @@ func (o *PatchBreachedPasswordDetectionRequest) GetStage() PatchBreachedPassword
 
 // GetStageOk returns a tuple with the Stage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchBreachedPasswordDetectionRequest) GetStageOk() (*PatchBreachedPasswordDetectionRequestStage, bool) {
+func (o *PatchBreachedPasswordDetectionRequest) GetStageOk() (*GetBreachedPasswordDetection200ResponseStage, bool) {
 	if o == nil || IsNil(o.Stage) {
 		return nil, false
 	}
@@ -181,8 +181,8 @@ func (o *PatchBreachedPasswordDetectionRequest) HasStage() bool {
 	return false
 }
 
-// SetStage gets a reference to the given PatchBreachedPasswordDetectionRequestStage and assigns it to the Stage field.
-func (o *PatchBreachedPasswordDetectionRequest) SetStage(v PatchBreachedPasswordDetectionRequestStage) {
+// SetStage gets a reference to the given GetBreachedPasswordDetection200ResponseStage and assigns it to the Stage field.
+func (o *PatchBreachedPasswordDetectionRequest) SetStage(v GetBreachedPasswordDetection200ResponseStage) {
 	o.Stage = &v
 }
 

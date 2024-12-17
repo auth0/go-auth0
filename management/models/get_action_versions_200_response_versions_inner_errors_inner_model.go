@@ -11,89 +11,110 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetActionVersions200ResponseVersionsInnerErrorsInner Error is a generic error with a human readable id which should be easily referenced in support tickets.
 type GetActionVersions200ResponseVersionsInnerErrorsInner struct {
-	Id  string `json:"id"`
-	Msg string `json:"msg"`
-	Url string `json:"url"`
+	Id  *string `json:"id,omitempty"`
+	Msg *string `json:"msg,omitempty"`
+	Url *string `json:"url,omitempty"`
 }
 
-type _GetActionVersions200ResponseVersionsInnerErrorsInner GetActionVersions200ResponseVersionsInnerErrorsInner
-
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetMsg returns the Msg field value
+// GetMsg returns the Msg field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) GetMsg() string {
-	if o == nil {
+	if o == nil || IsNil(o.Msg) {
 		var ret string
 		return ret
 	}
-
-	return o.Msg
+	return *o.Msg
 }
 
-// GetMsgOk returns a tuple with the Msg field value
+// GetMsgOk returns a tuple with the Msg field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) GetMsgOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Msg) {
 		return nil, false
 	}
-	return &o.Msg, true
+	return o.Msg, true
 }
 
-// SetMsg sets field value
+// HasMsg returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) HasMsg() bool {
+	if o != nil && !IsNil(o.Msg) {
+		return true
+	}
+
+	return false
+}
+
+// SetMsg gets a reference to the given string and assigns it to the Msg field.
 func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) SetMsg(v string) {
-	o.Msg = v
+	o.Msg = &v
 }
 
-// GetUrl returns the Url field value
+// GetUrl returns the Url field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) GetUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.Url) {
 		var ret string
 		return ret
 	}
-
-	return o.Url
+	return *o.Url
 }
 
-// GetUrlOk returns a tuple with the Url field value
+// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) GetUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Url) {
 		return nil, false
 	}
-	return &o.Url, true
+	return o.Url, true
 }
 
-// SetUrl sets field value
+// HasUrl returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) HasUrl() bool {
+	if o != nil && !IsNil(o.Url) {
+		return true
+	}
+
+	return false
+}
+
+// SetUrl gets a reference to the given string and assigns it to the Url field.
 func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) SetUrl(v string) {
-	o.Url = v
+	o.Url = &v
 }
 
 func (o GetActionVersions200ResponseVersionsInnerErrorsInner) MarshalJSON() ([]byte, error) {
@@ -106,26 +127,16 @@ func (o GetActionVersions200ResponseVersionsInnerErrorsInner) MarshalJSON() ([]b
 
 func (o GetActionVersions200ResponseVersionsInnerErrorsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["msg"] = o.Msg
-	toSerialize["url"] = o.Url
-	return toSerialize, nil
-}
-
-func (o *GetActionVersions200ResponseVersionsInnerErrorsInner) UnmarshalJSON(data []byte) (err error) {
-	varGetActionVersions200ResponseVersionsInnerErrorsInner := _GetActionVersions200ResponseVersionsInnerErrorsInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetActionVersions200ResponseVersionsInnerErrorsInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
 	}
-
-	*o = GetActionVersions200ResponseVersionsInnerErrorsInner(varGetActionVersions200ResponseVersionsInnerErrorsInner)
-
-	return err
+	if !IsNil(o.Msg) {
+		toSerialize["msg"] = o.Msg
+	}
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
+	}
+	return toSerialize, nil
 }
 
 type NullableGetActionVersions200ResponseVersionsInnerErrorsInner struct {

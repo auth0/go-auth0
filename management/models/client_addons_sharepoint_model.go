@@ -17,59 +17,75 @@ import (
 // ClientAddonsSharepoint SharePoint SSO configuration.
 type ClientAddonsSharepoint struct {
 	// Internal SharePoint application URL.
-	Url                  string                            `json:"url"`
-	ExternalUrl          ClientAddonsSharepointExternalUrl `json:"external_url"`
+	Url                  *string                            `json:"url,omitempty"`
+	ExternalUrl          *ClientAddonsSharepointExternalUrl `json:"external_url,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsSharepoint ClientAddonsSharepoint
 
-// GetUrl returns the Url field value
+// GetUrl returns the Url field value if set, zero value otherwise.
 func (o *ClientAddonsSharepoint) GetUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.Url) {
 		var ret string
 		return ret
 	}
-
-	return o.Url
+	return *o.Url
 }
 
-// GetUrlOk returns a tuple with the Url field value
+// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSharepoint) GetUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Url) {
 		return nil, false
 	}
-	return &o.Url, true
+	return o.Url, true
 }
 
-// SetUrl sets field value
+// HasUrl returns a boolean if a field has been set.
+func (o *ClientAddonsSharepoint) HasUrl() bool {
+	if o != nil && !IsNil(o.Url) {
+		return true
+	}
+
+	return false
+}
+
+// SetUrl gets a reference to the given string and assigns it to the Url field.
 func (o *ClientAddonsSharepoint) SetUrl(v string) {
-	o.Url = v
+	o.Url = &v
 }
 
-// GetExternalUrl returns the ExternalUrl field value
+// GetExternalUrl returns the ExternalUrl field value if set, zero value otherwise.
 func (o *ClientAddonsSharepoint) GetExternalUrl() ClientAddonsSharepointExternalUrl {
-	if o == nil {
+	if o == nil || IsNil(o.ExternalUrl) {
 		var ret ClientAddonsSharepointExternalUrl
 		return ret
 	}
-
-	return o.ExternalUrl
+	return *o.ExternalUrl
 }
 
-// GetExternalUrlOk returns a tuple with the ExternalUrl field value
+// GetExternalUrlOk returns a tuple with the ExternalUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSharepoint) GetExternalUrlOk() (*ClientAddonsSharepointExternalUrl, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ExternalUrl) {
 		return nil, false
 	}
-	return &o.ExternalUrl, true
+	return o.ExternalUrl, true
 }
 
-// SetExternalUrl sets field value
+// HasExternalUrl returns a boolean if a field has been set.
+func (o *ClientAddonsSharepoint) HasExternalUrl() bool {
+	if o != nil && !IsNil(o.ExternalUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalUrl gets a reference to the given ClientAddonsSharepointExternalUrl and assigns it to the ExternalUrl field.
 func (o *ClientAddonsSharepoint) SetExternalUrl(v ClientAddonsSharepointExternalUrl) {
-	o.ExternalUrl = v
+	o.ExternalUrl = &v
 }
 
 func (o ClientAddonsSharepoint) MarshalJSON() ([]byte, error) {
@@ -82,8 +98,12 @@ func (o ClientAddonsSharepoint) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsSharepoint) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["url"] = o.Url
-	toSerialize["external_url"] = o.ExternalUrl
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
+	}
+	if !IsNil(o.ExternalUrl) {
+		toSerialize["external_url"] = o.ExternalUrl
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

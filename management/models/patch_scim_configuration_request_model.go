@@ -13,6 +13,7 @@ package models
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // PatchScimConfigurationRequest struct for PatchScimConfigurationRequest
@@ -20,7 +21,7 @@ type PatchScimConfigurationRequest struct {
 	// User ID attribute for generating unique user ids
 	UserIdAttribute string `json:"user_id_attribute"`
 	// The mapping between auth0 and SCIM
-	Mapping []PostScimConfigurationRequestMappingInner `json:"mapping"`
+	Mapping []GetScimConfiguration200ResponseMappingInner `json:"mapping"`
 }
 
 type _PatchScimConfigurationRequest PatchScimConfigurationRequest
@@ -50,9 +51,9 @@ func (o *PatchScimConfigurationRequest) SetUserIdAttribute(v string) {
 }
 
 // GetMapping returns the Mapping field value
-func (o *PatchScimConfigurationRequest) GetMapping() []PostScimConfigurationRequestMappingInner {
+func (o *PatchScimConfigurationRequest) GetMapping() []GetScimConfiguration200ResponseMappingInner {
 	if o == nil {
-		var ret []PostScimConfigurationRequestMappingInner
+		var ret []GetScimConfiguration200ResponseMappingInner
 		return ret
 	}
 
@@ -61,7 +62,7 @@ func (o *PatchScimConfigurationRequest) GetMapping() []PostScimConfigurationRequ
 
 // GetMappingOk returns a tuple with the Mapping field value
 // and a boolean to check if the value has been set.
-func (o *PatchScimConfigurationRequest) GetMappingOk() ([]PostScimConfigurationRequestMappingInner, bool) {
+func (o *PatchScimConfigurationRequest) GetMappingOk() ([]GetScimConfiguration200ResponseMappingInner, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -69,7 +70,7 @@ func (o *PatchScimConfigurationRequest) GetMappingOk() ([]PostScimConfigurationR
 }
 
 // SetMapping sets field value
-func (o *PatchScimConfigurationRequest) SetMapping(v []PostScimConfigurationRequestMappingInner) {
+func (o *PatchScimConfigurationRequest) SetMapping(v []GetScimConfiguration200ResponseMappingInner) {
 	o.Mapping = v
 }
 
@@ -89,6 +90,28 @@ func (o PatchScimConfigurationRequest) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *PatchScimConfigurationRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"user_id_attribute",
+		"mapping",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
 	varPatchScimConfigurationRequest := _PatchScimConfigurationRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

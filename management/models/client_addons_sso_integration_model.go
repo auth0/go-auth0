@@ -17,60 +17,76 @@ import (
 // ClientAddonsSsoIntegration struct for ClientAddonsSsoIntegration
 type ClientAddonsSsoIntegration struct {
 	// SSO integration name
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// SSO integration version installed
-	Version              string `json:"version"`
+	Version              *string `json:"version,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsSsoIntegration ClientAddonsSsoIntegration
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *ClientAddonsSsoIntegration) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSsoIntegration) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *ClientAddonsSsoIntegration) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *ClientAddonsSsoIntegration) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetVersion returns the Version field value
+// GetVersion returns the Version field value if set, zero value otherwise.
 func (o *ClientAddonsSsoIntegration) GetVersion() string {
-	if o == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret string
 		return ret
 	}
-
-	return o.Version
+	return *o.Version
 }
 
-// GetVersionOk returns a tuple with the Version field value
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSsoIntegration) GetVersionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
-	return &o.Version, true
+	return o.Version, true
 }
 
-// SetVersion sets field value
+// HasVersion returns a boolean if a field has been set.
+func (o *ClientAddonsSsoIntegration) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given string and assigns it to the Version field.
 func (o *ClientAddonsSsoIntegration) SetVersion(v string) {
-	o.Version = v
+	o.Version = &v
 }
 
 func (o ClientAddonsSsoIntegration) MarshalJSON() ([]byte, error) {
@@ -83,8 +99,12 @@ func (o ClientAddonsSsoIntegration) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsSsoIntegration) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["name"] = o.Name
-	toSerialize["version"] = o.Version
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

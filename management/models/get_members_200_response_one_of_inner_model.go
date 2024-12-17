@@ -11,141 +11,178 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetMembers200ResponseOneOfInner struct for GetMembers200ResponseOneOfInner
 type GetMembers200ResponseOneOfInner struct {
 	// ID of this user.
-	UserId string `json:"user_id"`
+	UserId *string `json:"user_id,omitempty"`
 	// URL to a picture for this user.
-	Picture string `json:"picture"`
+	Picture *string `json:"picture,omitempty"`
 	// Name of this user.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// Email address of this user.
-	Email string                                      `json:"email"`
-	Roles []GetMembers200ResponseOneOfInnerRolesInner `json:"roles"`
+	Email *string                                     `json:"email,omitempty"`
+	Roles []GetMembers200ResponseOneOfInnerRolesInner `json:"roles,omitempty"`
 }
 
-type _GetMembers200ResponseOneOfInner GetMembers200ResponseOneOfInner
-
-// GetUserId returns the UserId field value
+// GetUserId returns the UserId field value if set, zero value otherwise.
 func (o *GetMembers200ResponseOneOfInner) GetUserId() string {
-	if o == nil {
+	if o == nil || IsNil(o.UserId) {
 		var ret string
 		return ret
 	}
-
-	return o.UserId
+	return *o.UserId
 }
 
-// GetUserIdOk returns a tuple with the UserId field value
+// GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetMembers200ResponseOneOfInner) GetUserIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UserId) {
 		return nil, false
 	}
-	return &o.UserId, true
+	return o.UserId, true
 }
 
-// SetUserId sets field value
+// HasUserId returns a boolean if a field has been set.
+func (o *GetMembers200ResponseOneOfInner) HasUserId() bool {
+	if o != nil && !IsNil(o.UserId) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserId gets a reference to the given string and assigns it to the UserId field.
 func (o *GetMembers200ResponseOneOfInner) SetUserId(v string) {
-	o.UserId = v
+	o.UserId = &v
 }
 
-// GetPicture returns the Picture field value
+// GetPicture returns the Picture field value if set, zero value otherwise.
 func (o *GetMembers200ResponseOneOfInner) GetPicture() string {
-	if o == nil {
+	if o == nil || IsNil(o.Picture) {
 		var ret string
 		return ret
 	}
-
-	return o.Picture
+	return *o.Picture
 }
 
-// GetPictureOk returns a tuple with the Picture field value
+// GetPictureOk returns a tuple with the Picture field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetMembers200ResponseOneOfInner) GetPictureOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Picture) {
 		return nil, false
 	}
-	return &o.Picture, true
+	return o.Picture, true
 }
 
-// SetPicture sets field value
+// HasPicture returns a boolean if a field has been set.
+func (o *GetMembers200ResponseOneOfInner) HasPicture() bool {
+	if o != nil && !IsNil(o.Picture) {
+		return true
+	}
+
+	return false
+}
+
+// SetPicture gets a reference to the given string and assigns it to the Picture field.
 func (o *GetMembers200ResponseOneOfInner) SetPicture(v string) {
-	o.Picture = v
+	o.Picture = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetMembers200ResponseOneOfInner) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetMembers200ResponseOneOfInner) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetMembers200ResponseOneOfInner) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *GetMembers200ResponseOneOfInner) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetEmail returns the Email field value
+// GetEmail returns the Email field value if set, zero value otherwise.
 func (o *GetMembers200ResponseOneOfInner) GetEmail() string {
-	if o == nil {
+	if o == nil || IsNil(o.Email) {
 		var ret string
 		return ret
 	}
-
-	return o.Email
+	return *o.Email
 }
 
-// GetEmailOk returns a tuple with the Email field value
+// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetMembers200ResponseOneOfInner) GetEmailOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Email) {
 		return nil, false
 	}
-	return &o.Email, true
+	return o.Email, true
 }
 
-// SetEmail sets field value
+// HasEmail returns a boolean if a field has been set.
+func (o *GetMembers200ResponseOneOfInner) HasEmail() bool {
+	if o != nil && !IsNil(o.Email) {
+		return true
+	}
+
+	return false
+}
+
+// SetEmail gets a reference to the given string and assigns it to the Email field.
 func (o *GetMembers200ResponseOneOfInner) SetEmail(v string) {
-	o.Email = v
+	o.Email = &v
 }
 
-// GetRoles returns the Roles field value
+// GetRoles returns the Roles field value if set, zero value otherwise.
 func (o *GetMembers200ResponseOneOfInner) GetRoles() []GetMembers200ResponseOneOfInnerRolesInner {
-	if o == nil {
+	if o == nil || IsNil(o.Roles) {
 		var ret []GetMembers200ResponseOneOfInnerRolesInner
 		return ret
 	}
-
 	return o.Roles
 }
 
-// GetRolesOk returns a tuple with the Roles field value
+// GetRolesOk returns a tuple with the Roles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetMembers200ResponseOneOfInner) GetRolesOk() ([]GetMembers200ResponseOneOfInnerRolesInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Roles) {
 		return nil, false
 	}
 	return o.Roles, true
 }
 
-// SetRoles sets field value
+// HasRoles returns a boolean if a field has been set.
+func (o *GetMembers200ResponseOneOfInner) HasRoles() bool {
+	if o != nil && !IsNil(o.Roles) {
+		return true
+	}
+
+	return false
+}
+
+// SetRoles gets a reference to the given []GetMembers200ResponseOneOfInnerRolesInner and assigns it to the Roles field.
 func (o *GetMembers200ResponseOneOfInner) SetRoles(v []GetMembers200ResponseOneOfInnerRolesInner) {
 	o.Roles = v
 }
@@ -160,28 +197,22 @@ func (o GetMembers200ResponseOneOfInner) MarshalJSON() ([]byte, error) {
 
 func (o GetMembers200ResponseOneOfInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["user_id"] = o.UserId
-	toSerialize["picture"] = o.Picture
-	toSerialize["name"] = o.Name
-	toSerialize["email"] = o.Email
-	toSerialize["roles"] = o.Roles
-	return toSerialize, nil
-}
-
-func (o *GetMembers200ResponseOneOfInner) UnmarshalJSON(data []byte) (err error) {
-	varGetMembers200ResponseOneOfInner := _GetMembers200ResponseOneOfInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetMembers200ResponseOneOfInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.UserId) {
+		toSerialize["user_id"] = o.UserId
 	}
-
-	*o = GetMembers200ResponseOneOfInner(varGetMembers200ResponseOneOfInner)
-
-	return err
+	if !IsNil(o.Picture) {
+		toSerialize["picture"] = o.Picture
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Email) {
+		toSerialize["email"] = o.Email
+	}
+	if !IsNil(o.Roles) {
+		toSerialize["roles"] = o.Roles
+	}
+	return toSerialize, nil
 }
 
 type NullableGetMembers200ResponseOneOfInner struct {

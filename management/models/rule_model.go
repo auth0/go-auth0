@@ -11,170 +11,215 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // Rule struct for Rule
 type Rule struct {
 	// Name of this rule.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// ID of this rule.
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// Whether the rule is enabled (true), or disabled (false).
-	Enabled bool `json:"enabled"`
+	Enabled *bool `json:"enabled,omitempty"`
 	// Code to be executed when this rule runs.
-	Script string `json:"script"`
+	Script *string `json:"script,omitempty"`
 	// Order that this rule should execute in relative to other rules. Lower-valued rules execute first.
-	Order float32 `json:"order"`
+	Order *float32 `json:"order,omitempty"`
 	// Execution stage of this rule. Can be `login_success`, `login_failure`, or `pre_authorize`.
-	Stage string `json:"stage"`
+	Stage *string `json:"stage,omitempty"`
 }
 
-type _Rule Rule
-
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *Rule) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Rule) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *Rule) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *Rule) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *Rule) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Rule) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *Rule) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *Rule) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetEnabled returns the Enabled field value
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *Rule) GetEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.Enabled
+	return *o.Enabled
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Rule) GetEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
-	return &o.Enabled, true
+	return o.Enabled, true
 }
 
-// SetEnabled sets field value
+// HasEnabled returns a boolean if a field has been set.
+func (o *Rule) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
 func (o *Rule) SetEnabled(v bool) {
-	o.Enabled = v
+	o.Enabled = &v
 }
 
-// GetScript returns the Script field value
+// GetScript returns the Script field value if set, zero value otherwise.
 func (o *Rule) GetScript() string {
-	if o == nil {
+	if o == nil || IsNil(o.Script) {
 		var ret string
 		return ret
 	}
-
-	return o.Script
+	return *o.Script
 }
 
-// GetScriptOk returns a tuple with the Script field value
+// GetScriptOk returns a tuple with the Script field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Rule) GetScriptOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Script) {
 		return nil, false
 	}
-	return &o.Script, true
+	return o.Script, true
 }
 
-// SetScript sets field value
+// HasScript returns a boolean if a field has been set.
+func (o *Rule) HasScript() bool {
+	if o != nil && !IsNil(o.Script) {
+		return true
+	}
+
+	return false
+}
+
+// SetScript gets a reference to the given string and assigns it to the Script field.
 func (o *Rule) SetScript(v string) {
-	o.Script = v
+	o.Script = &v
 }
 
-// GetOrder returns the Order field value
+// GetOrder returns the Order field value if set, zero value otherwise.
 func (o *Rule) GetOrder() float32 {
-	if o == nil {
+	if o == nil || IsNil(o.Order) {
 		var ret float32
 		return ret
 	}
-
-	return o.Order
+	return *o.Order
 }
 
-// GetOrderOk returns a tuple with the Order field value
+// GetOrderOk returns a tuple with the Order field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Rule) GetOrderOk() (*float32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Order) {
 		return nil, false
 	}
-	return &o.Order, true
+	return o.Order, true
 }
 
-// SetOrder sets field value
+// HasOrder returns a boolean if a field has been set.
+func (o *Rule) HasOrder() bool {
+	if o != nil && !IsNil(o.Order) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrder gets a reference to the given float32 and assigns it to the Order field.
 func (o *Rule) SetOrder(v float32) {
-	o.Order = v
+	o.Order = &v
 }
 
-// GetStage returns the Stage field value
+// GetStage returns the Stage field value if set, zero value otherwise.
 func (o *Rule) GetStage() string {
-	if o == nil {
+	if o == nil || IsNil(o.Stage) {
 		var ret string
 		return ret
 	}
-
-	return o.Stage
+	return *o.Stage
 }
 
-// GetStageOk returns a tuple with the Stage field value
+// GetStageOk returns a tuple with the Stage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Rule) GetStageOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Stage) {
 		return nil, false
 	}
-	return &o.Stage, true
+	return o.Stage, true
 }
 
-// SetStage sets field value
+// HasStage returns a boolean if a field has been set.
+func (o *Rule) HasStage() bool {
+	if o != nil && !IsNil(o.Stage) {
+		return true
+	}
+
+	return false
+}
+
+// SetStage gets a reference to the given string and assigns it to the Stage field.
 func (o *Rule) SetStage(v string) {
-	o.Stage = v
+	o.Stage = &v
 }
 
 func (o Rule) MarshalJSON() ([]byte, error) {
@@ -187,29 +232,25 @@ func (o Rule) MarshalJSON() ([]byte, error) {
 
 func (o Rule) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["name"] = o.Name
-	toSerialize["id"] = o.Id
-	toSerialize["enabled"] = o.Enabled
-	toSerialize["script"] = o.Script
-	toSerialize["order"] = o.Order
-	toSerialize["stage"] = o.Stage
-	return toSerialize, nil
-}
-
-func (o *Rule) UnmarshalJSON(data []byte) (err error) {
-	varRule := _Rule{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varRule)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
 	}
-
-	*o = Rule(varRule)
-
-	return err
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Script) {
+		toSerialize["script"] = o.Script
+	}
+	if !IsNil(o.Order) {
+		toSerialize["order"] = o.Order
+	}
+	if !IsNil(o.Stage) {
+		toSerialize["stage"] = o.Stage
+	}
+	return toSerialize, nil
 }
 
 type NullableRule struct {

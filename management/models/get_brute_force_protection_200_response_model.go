@@ -17,137 +17,177 @@ import (
 // GetBruteForceProtection200Response struct for GetBruteForceProtection200Response
 type GetBruteForceProtection200Response struct {
 	// Whether or not brute force attack protections are active.
-	Enabled bool `json:"enabled"`
+	Enabled *bool `json:"enabled,omitempty"`
 	// Action to take when a brute force protection threshold is violated.         Possible values: <code>block</code>, <code>user_notification</code>.
-	Shields []GetBruteForceProtection200ResponseShieldsInner `json:"shields"`
+	Shields []GetBruteForceProtection200ResponseShieldsInner `json:"shields,omitempty"`
 	// List of trusted IP addresses that will not have attack protection enforced against them.
-	Allowlist []GetBruteForceProtection200ResponseAllowlistInner `json:"allowlist"`
-	Mode      GetBruteForceProtection200ResponseMode             `json:"mode"`
+	Allowlist []GetBruteForceProtection200ResponseAllowlistInner `json:"allowlist,omitempty"`
+	Mode      *GetBruteForceProtection200ResponseMode            `json:"mode,omitempty"`
 	// Maximum number of unsuccessful attempts.
-	MaxAttempts          int32 `json:"max_attempts"`
+	MaxAttempts          *int32 `json:"max_attempts,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetBruteForceProtection200Response GetBruteForceProtection200Response
 
-// GetEnabled returns the Enabled field value
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *GetBruteForceProtection200Response) GetEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.Enabled
+	return *o.Enabled
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBruteForceProtection200Response) GetEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
-	return &o.Enabled, true
+	return o.Enabled, true
 }
 
-// SetEnabled sets field value
+// HasEnabled returns a boolean if a field has been set.
+func (o *GetBruteForceProtection200Response) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
 func (o *GetBruteForceProtection200Response) SetEnabled(v bool) {
-	o.Enabled = v
+	o.Enabled = &v
 }
 
-// GetShields returns the Shields field value
+// GetShields returns the Shields field value if set, zero value otherwise.
 func (o *GetBruteForceProtection200Response) GetShields() []GetBruteForceProtection200ResponseShieldsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Shields) {
 		var ret []GetBruteForceProtection200ResponseShieldsInner
 		return ret
 	}
-
 	return o.Shields
 }
 
-// GetShieldsOk returns a tuple with the Shields field value
+// GetShieldsOk returns a tuple with the Shields field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBruteForceProtection200Response) GetShieldsOk() ([]GetBruteForceProtection200ResponseShieldsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Shields) {
 		return nil, false
 	}
 	return o.Shields, true
 }
 
-// SetShields sets field value
+// HasShields returns a boolean if a field has been set.
+func (o *GetBruteForceProtection200Response) HasShields() bool {
+	if o != nil && !IsNil(o.Shields) {
+		return true
+	}
+
+	return false
+}
+
+// SetShields gets a reference to the given []GetBruteForceProtection200ResponseShieldsInner and assigns it to the Shields field.
 func (o *GetBruteForceProtection200Response) SetShields(v []GetBruteForceProtection200ResponseShieldsInner) {
 	o.Shields = v
 }
 
-// GetAllowlist returns the Allowlist field value
+// GetAllowlist returns the Allowlist field value if set, zero value otherwise.
 func (o *GetBruteForceProtection200Response) GetAllowlist() []GetBruteForceProtection200ResponseAllowlistInner {
-	if o == nil {
+	if o == nil || IsNil(o.Allowlist) {
 		var ret []GetBruteForceProtection200ResponseAllowlistInner
 		return ret
 	}
-
 	return o.Allowlist
 }
 
-// GetAllowlistOk returns a tuple with the Allowlist field value
+// GetAllowlistOk returns a tuple with the Allowlist field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBruteForceProtection200Response) GetAllowlistOk() ([]GetBruteForceProtection200ResponseAllowlistInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Allowlist) {
 		return nil, false
 	}
 	return o.Allowlist, true
 }
 
-// SetAllowlist sets field value
+// HasAllowlist returns a boolean if a field has been set.
+func (o *GetBruteForceProtection200Response) HasAllowlist() bool {
+	if o != nil && !IsNil(o.Allowlist) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowlist gets a reference to the given []GetBruteForceProtection200ResponseAllowlistInner and assigns it to the Allowlist field.
 func (o *GetBruteForceProtection200Response) SetAllowlist(v []GetBruteForceProtection200ResponseAllowlistInner) {
 	o.Allowlist = v
 }
 
-// GetMode returns the Mode field value
+// GetMode returns the Mode field value if set, zero value otherwise.
 func (o *GetBruteForceProtection200Response) GetMode() GetBruteForceProtection200ResponseMode {
-	if o == nil {
+	if o == nil || IsNil(o.Mode) {
 		var ret GetBruteForceProtection200ResponseMode
 		return ret
 	}
-
-	return o.Mode
+	return *o.Mode
 }
 
-// GetModeOk returns a tuple with the Mode field value
+// GetModeOk returns a tuple with the Mode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBruteForceProtection200Response) GetModeOk() (*GetBruteForceProtection200ResponseMode, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Mode) {
 		return nil, false
 	}
-	return &o.Mode, true
+	return o.Mode, true
 }
 
-// SetMode sets field value
+// HasMode returns a boolean if a field has been set.
+func (o *GetBruteForceProtection200Response) HasMode() bool {
+	if o != nil && !IsNil(o.Mode) {
+		return true
+	}
+
+	return false
+}
+
+// SetMode gets a reference to the given GetBruteForceProtection200ResponseMode and assigns it to the Mode field.
 func (o *GetBruteForceProtection200Response) SetMode(v GetBruteForceProtection200ResponseMode) {
-	o.Mode = v
+	o.Mode = &v
 }
 
-// GetMaxAttempts returns the MaxAttempts field value
+// GetMaxAttempts returns the MaxAttempts field value if set, zero value otherwise.
 func (o *GetBruteForceProtection200Response) GetMaxAttempts() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.MaxAttempts) {
 		var ret int32
 		return ret
 	}
-
-	return o.MaxAttempts
+	return *o.MaxAttempts
 }
 
-// GetMaxAttemptsOk returns a tuple with the MaxAttempts field value
+// GetMaxAttemptsOk returns a tuple with the MaxAttempts field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBruteForceProtection200Response) GetMaxAttemptsOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.MaxAttempts) {
 		return nil, false
 	}
-	return &o.MaxAttempts, true
+	return o.MaxAttempts, true
 }
 
-// SetMaxAttempts sets field value
+// HasMaxAttempts returns a boolean if a field has been set.
+func (o *GetBruteForceProtection200Response) HasMaxAttempts() bool {
+	if o != nil && !IsNil(o.MaxAttempts) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaxAttempts gets a reference to the given int32 and assigns it to the MaxAttempts field.
 func (o *GetBruteForceProtection200Response) SetMaxAttempts(v int32) {
-	o.MaxAttempts = v
+	o.MaxAttempts = &v
 }
 
 func (o GetBruteForceProtection200Response) MarshalJSON() ([]byte, error) {
@@ -160,11 +200,21 @@ func (o GetBruteForceProtection200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetBruteForceProtection200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["enabled"] = o.Enabled
-	toSerialize["shields"] = o.Shields
-	toSerialize["allowlist"] = o.Allowlist
-	toSerialize["mode"] = o.Mode
-	toSerialize["max_attempts"] = o.MaxAttempts
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Shields) {
+		toSerialize["shields"] = o.Shields
+	}
+	if !IsNil(o.Allowlist) {
+		toSerialize["allowlist"] = o.Allowlist
+	}
+	if !IsNil(o.Mode) {
+		toSerialize["mode"] = o.Mode
+	}
+	if !IsNil(o.MaxAttempts) {
+		toSerialize["max_attempts"] = o.MaxAttempts
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

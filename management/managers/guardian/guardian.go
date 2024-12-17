@@ -214,8 +214,8 @@ func (m *Manager) PatchFcm(ctx context.Context, putFcmRequest *models.PutFcmRequ
 // PatchSns Update SNS configuration for push notifications
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/patch_sns
-func (m *Manager) PatchSns(ctx context.Context, putSnsRequest *models.PutSnsRequest, opts ...management.RequestOption) (*models.PutSns200Response, error) {
-	var localVarReturnValue *models.PutSns200Response
+func (m *Manager) PatchSns(ctx context.Context, putSnsRequest *models.PutSnsRequest, opts ...management.RequestOption) (*models.PutSnsRequest, error) {
+	var localVarReturnValue *models.PutSnsRequest
 	err := m.management.Request(ctx, "PATCH", m.management.URI("guardian", "factors", "push-notification", "providers", "sns"), putSnsRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
@@ -298,9 +298,9 @@ func (m *Manager) PutFcm(ctx context.Context, putFcmRequest *models.PutFcmReques
 // PutMessageTypes Update the Enabled Phone Factors
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_message_types
-func (m *Manager) PutMessageTypes(ctx context.Context, getMessageTypes200Response *models.GetMessageTypes200Response, opts ...management.RequestOption) (*models.GetMessageTypes200Response, error) {
+func (m *Manager) PutMessageTypes(ctx context.Context, putMessageTypesRequest *models.PutMessageTypesRequest, opts ...management.RequestOption) (*models.GetMessageTypes200Response, error) {
 	var localVarReturnValue *models.GetMessageTypes200Response
-	err := m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", "phone", "message-types"), getMessageTypes200Response, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", "phone", "message-types"), putMessageTypesRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -310,9 +310,9 @@ func (m *Manager) PutMessageTypes(ctx context.Context, getMessageTypes200Respons
 // PutPhoneProviders Update phone configuration (one of auth0|twilio|phone-message-hook)
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_phone_providers
-func (m *Manager) PutPhoneProviders(ctx context.Context, getPhoneProviders200Response *models.GetPhoneProviders200Response, opts ...management.RequestOption) (*models.GetPhoneProviders200Response, error) {
+func (m *Manager) PutPhoneProviders(ctx context.Context, putPhoneProvidersRequest *models.PutPhoneProvidersRequest, opts ...management.RequestOption) (*models.GetPhoneProviders200Response, error) {
 	var localVarReturnValue *models.GetPhoneProviders200Response
-	err := m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", "phone", "selected-provider"), getPhoneProviders200Response, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", "phone", "selected-provider"), putPhoneProvidersRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -322,9 +322,9 @@ func (m *Manager) PutPhoneProviders(ctx context.Context, getPhoneProviders200Res
 // PutPnProviders Update Push Notification configuration (one of direct|sns|guardian)
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_pn_providers
-func (m *Manager) PutPnProviders(ctx context.Context, getPnProviders200Response *models.GetPnProviders200Response, opts ...management.RequestOption) (*models.GetPnProviders200Response, error) {
+func (m *Manager) PutPnProviders(ctx context.Context, putPnProvidersRequest *models.PutPnProvidersRequest, opts ...management.RequestOption) (*models.GetPnProviders200Response, error) {
 	var localVarReturnValue *models.GetPnProviders200Response
-	err := m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", "push-notification", "selected-provider"), getPnProviders200Response, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", "push-notification", "selected-provider"), putPnProvidersRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -346,9 +346,9 @@ func (m *Manager) PutPolicies(ctx context.Context, getPolicies200ResponseInner [
 // PutSmsProviders Update SMS configuration (one of auth0|twilio|phone-message-hook)
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_sms_providers
-func (m *Manager) PutSmsProviders(ctx context.Context, getPhoneProviders200Response *models.GetPhoneProviders200Response, opts ...management.RequestOption) (*models.GetPhoneProviders200Response, error) {
+func (m *Manager) PutSmsProviders(ctx context.Context, putPhoneProvidersRequest *models.PutPhoneProvidersRequest, opts ...management.RequestOption) (*models.GetPhoneProviders200Response, error) {
 	var localVarReturnValue *models.GetPhoneProviders200Response
-	err := m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", "sms", "selected-provider"), getPhoneProviders200Response, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", "sms", "selected-provider"), putPhoneProvidersRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -370,8 +370,8 @@ func (m *Manager) PutSmsTwilioFactorProvider(ctx context.Context, putTwilioReque
 // PutSns Update AWS SNS push notification configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_sns
-func (m *Manager) PutSns(ctx context.Context, putSnsRequest *models.PutSnsRequest, opts ...management.RequestOption) (*models.PutSns200Response, error) {
-	var localVarReturnValue *models.PutSns200Response
+func (m *Manager) PutSns(ctx context.Context, putSnsRequest *models.PutSnsRequest, opts ...management.RequestOption) (*models.PutSnsRequest, error) {
+	var localVarReturnValue *models.PutSnsRequest
 	err := m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", "push-notification", "providers", "sns"), putSnsRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err

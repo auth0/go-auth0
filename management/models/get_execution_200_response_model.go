@@ -11,167 +11,212 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetExecution200Response The result of a specific execution of a trigger.
 type GetExecution200Response struct {
 	// ID identifies this specific execution simulation. These IDs would resemble real executions in production.
-	Id        string                                                    `json:"id"`
-	TriggerId GetActions200ResponseActionsInnerSupportedTriggersInnerId `json:"trigger_id"`
-	Status    GetExecution200ResponseStatus                             `json:"status"`
-	Results   []GetExecution200ResponseResultsInner                     `json:"results"`
+	Id        *string                                                    `json:"id,omitempty"`
+	TriggerId *GetActions200ResponseActionsInnerSupportedTriggersInnerId `json:"trigger_id,omitempty"`
+	Status    *GetExecution200ResponseStatus                             `json:"status,omitempty"`
+	Results   []GetExecution200ResponseResultsInner                      `json:"results,omitempty"`
 	// The time that the execution was started.
-	CreatedAt string `json:"created_at"`
+	CreatedAt *string `json:"created_at,omitempty"`
 	// The time that the exeution finished executing.
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
 }
 
-type _GetExecution200Response GetExecution200Response
-
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetExecution200Response) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetExecution200Response) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetExecution200Response) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetExecution200Response) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetTriggerId returns the TriggerId field value
+// GetTriggerId returns the TriggerId field value if set, zero value otherwise.
 func (o *GetExecution200Response) GetTriggerId() GetActions200ResponseActionsInnerSupportedTriggersInnerId {
-	if o == nil {
+	if o == nil || IsNil(o.TriggerId) {
 		var ret GetActions200ResponseActionsInnerSupportedTriggersInnerId
 		return ret
 	}
-
-	return o.TriggerId
+	return *o.TriggerId
 }
 
-// GetTriggerIdOk returns a tuple with the TriggerId field value
+// GetTriggerIdOk returns a tuple with the TriggerId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetExecution200Response) GetTriggerIdOk() (*GetActions200ResponseActionsInnerSupportedTriggersInnerId, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TriggerId) {
 		return nil, false
 	}
-	return &o.TriggerId, true
+	return o.TriggerId, true
 }
 
-// SetTriggerId sets field value
+// HasTriggerId returns a boolean if a field has been set.
+func (o *GetExecution200Response) HasTriggerId() bool {
+	if o != nil && !IsNil(o.TriggerId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTriggerId gets a reference to the given GetActions200ResponseActionsInnerSupportedTriggersInnerId and assigns it to the TriggerId field.
 func (o *GetExecution200Response) SetTriggerId(v GetActions200ResponseActionsInnerSupportedTriggersInnerId) {
-	o.TriggerId = v
+	o.TriggerId = &v
 }
 
-// GetStatus returns the Status field value
+// GetStatus returns the Status field value if set, zero value otherwise.
 func (o *GetExecution200Response) GetStatus() GetExecution200ResponseStatus {
-	if o == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret GetExecution200ResponseStatus
 		return ret
 	}
-
-	return o.Status
+	return *o.Status
 }
 
-// GetStatusOk returns a tuple with the Status field value
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetExecution200Response) GetStatusOk() (*GetExecution200ResponseStatus, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
-	return &o.Status, true
+	return o.Status, true
 }
 
-// SetStatus sets field value
+// HasStatus returns a boolean if a field has been set.
+func (o *GetExecution200Response) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given GetExecution200ResponseStatus and assigns it to the Status field.
 func (o *GetExecution200Response) SetStatus(v GetExecution200ResponseStatus) {
-	o.Status = v
+	o.Status = &v
 }
 
-// GetResults returns the Results field value
+// GetResults returns the Results field value if set, zero value otherwise.
 func (o *GetExecution200Response) GetResults() []GetExecution200ResponseResultsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Results) {
 		var ret []GetExecution200ResponseResultsInner
 		return ret
 	}
-
 	return o.Results
 }
 
-// GetResultsOk returns a tuple with the Results field value
+// GetResultsOk returns a tuple with the Results field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetExecution200Response) GetResultsOk() ([]GetExecution200ResponseResultsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Results) {
 		return nil, false
 	}
 	return o.Results, true
 }
 
-// SetResults sets field value
+// HasResults returns a boolean if a field has been set.
+func (o *GetExecution200Response) HasResults() bool {
+	if o != nil && !IsNil(o.Results) {
+		return true
+	}
+
+	return false
+}
+
+// SetResults gets a reference to the given []GetExecution200ResponseResultsInner and assigns it to the Results field.
 func (o *GetExecution200Response) SetResults(v []GetExecution200ResponseResultsInner) {
 	o.Results = v
 }
 
-// GetCreatedAt returns the CreatedAt field value
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *GetExecution200Response) GetCreatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetExecution200Response) GetCreatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
-// SetCreatedAt sets field value
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetExecution200Response) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
 func (o *GetExecution200Response) SetCreatedAt(v string) {
-	o.CreatedAt = v
+	o.CreatedAt = &v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *GetExecution200Response) GetUpdatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.UpdatedAt
+	return *o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetExecution200Response) GetUpdatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
-	return &o.UpdatedAt, true
+	return o.UpdatedAt, true
 }
 
-// SetUpdatedAt sets field value
+// HasUpdatedAt returns a boolean if a field has been set.
+func (o *GetExecution200Response) HasUpdatedAt() bool {
+	if o != nil && !IsNil(o.UpdatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
 func (o *GetExecution200Response) SetUpdatedAt(v string) {
-	o.UpdatedAt = v
+	o.UpdatedAt = &v
 }
 
 func (o GetExecution200Response) MarshalJSON() ([]byte, error) {
@@ -184,29 +229,25 @@ func (o GetExecution200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetExecution200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["trigger_id"] = o.TriggerId
-	toSerialize["status"] = o.Status
-	toSerialize["results"] = o.Results
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["updated_at"] = o.UpdatedAt
-	return toSerialize, nil
-}
-
-func (o *GetExecution200Response) UnmarshalJSON(data []byte) (err error) {
-	varGetExecution200Response := _GetExecution200Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetExecution200Response)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
 	}
-
-	*o = GetExecution200Response(varGetExecution200Response)
-
-	return err
+	if !IsNil(o.TriggerId) {
+		toSerialize["trigger_id"] = o.TriggerId
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Results) {
+		toSerialize["results"] = o.Results
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	return toSerialize, nil
 }
 
 type NullableGetExecution200Response struct {

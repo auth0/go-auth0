@@ -60,6 +60,7 @@ func (dst *GetConnections200Response) UnmarshalJSON(data []byte) error {
 
 	// try to unmarshal data into ArrayOfConnection
 	err = newStrictDecoder(data).Decode(&dst.ArrayOfConnection)
+	fmt.Printf("err: %v\n", err)
 	if err == nil {
 		jsonArrayOfConnection, _ := json.Marshal(dst.ArrayOfConnection)
 		if string(jsonArrayOfConnection) == "{}" { // empty struct

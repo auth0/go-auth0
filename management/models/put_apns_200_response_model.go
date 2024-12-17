@@ -11,54 +11,57 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // PutApns200Response struct for PutApns200Response
 type PutApns200Response struct {
-	Sandbox  bool           `json:"sandbox"`
-	BundleId NullableString `json:"bundle_id"`
+	Sandbox  *bool          `json:"sandbox,omitempty"`
+	BundleId NullableString `json:"bundle_id,omitempty"`
 }
 
-type _PutApns200Response PutApns200Response
-
-// GetSandbox returns the Sandbox field value
+// GetSandbox returns the Sandbox field value if set, zero value otherwise.
 func (o *PutApns200Response) GetSandbox() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Sandbox) {
 		var ret bool
 		return ret
 	}
-
-	return o.Sandbox
+	return *o.Sandbox
 }
 
-// GetSandboxOk returns a tuple with the Sandbox field value
+// GetSandboxOk returns a tuple with the Sandbox field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PutApns200Response) GetSandboxOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Sandbox) {
 		return nil, false
 	}
-	return &o.Sandbox, true
+	return o.Sandbox, true
 }
 
-// SetSandbox sets field value
+// HasSandbox returns a boolean if a field has been set.
+func (o *PutApns200Response) HasSandbox() bool {
+	if o != nil && !IsNil(o.Sandbox) {
+		return true
+	}
+
+	return false
+}
+
+// SetSandbox gets a reference to the given bool and assigns it to the Sandbox field.
 func (o *PutApns200Response) SetSandbox(v bool) {
-	o.Sandbox = v
+	o.Sandbox = &v
 }
 
-// GetBundleId returns the BundleId field value
-// If the value is explicit nil, the zero value for string will be returned
+// GetBundleId returns the BundleId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *PutApns200Response) GetBundleId() string {
-	if o == nil || o.BundleId.Get() == nil {
+	if o == nil || IsNil(o.BundleId.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.BundleId.Get()
 }
 
-// GetBundleIdOk returns a tuple with the BundleId field value
+// GetBundleIdOk returns a tuple with the BundleId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *PutApns200Response) GetBundleIdOk() (*string, bool) {
@@ -68,9 +71,28 @@ func (o *PutApns200Response) GetBundleIdOk() (*string, bool) {
 	return o.BundleId.Get(), o.BundleId.IsSet()
 }
 
-// SetBundleId sets field value
+// HasBundleId returns a boolean if a field has been set.
+func (o *PutApns200Response) HasBundleId() bool {
+	if o != nil && o.BundleId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBundleId gets a reference to the given NullableString and assigns it to the BundleId field.
 func (o *PutApns200Response) SetBundleId(v string) {
 	o.BundleId.Set(&v)
+}
+
+// SetBundleIdNil sets the value for BundleId to be an explicit nil
+func (o *PutApns200Response) SetBundleIdNil() {
+	o.BundleId.Set(nil)
+}
+
+// UnsetBundleId ensures that no value is present for BundleId, not even an explicit nil
+func (o *PutApns200Response) UnsetBundleId() {
+	o.BundleId.Unset()
 }
 
 func (o PutApns200Response) MarshalJSON() ([]byte, error) {
@@ -83,25 +105,13 @@ func (o PutApns200Response) MarshalJSON() ([]byte, error) {
 
 func (o PutApns200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["sandbox"] = o.Sandbox
-	toSerialize["bundle_id"] = o.BundleId.Get()
-	return toSerialize, nil
-}
-
-func (o *PutApns200Response) UnmarshalJSON(data []byte) (err error) {
-	varPutApns200Response := _PutApns200Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varPutApns200Response)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Sandbox) {
+		toSerialize["sandbox"] = o.Sandbox
 	}
-
-	*o = PutApns200Response(varPutApns200Response)
-
-	return err
+	if o.BundleId.IsSet() {
+		toSerialize["bundle_id"] = o.BundleId.Get()
+	}
+	return toSerialize, nil
 }
 
 type NullablePutApns200Response struct {

@@ -11,33 +11,28 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // SnsFactorProvider struct for SnsFactorProvider
 type SnsFactorProvider struct {
-	AwsAccessKeyId                NullableString `json:"aws_access_key_id"`
-	AwsSecretAccessKey            NullableString `json:"aws_secret_access_key"`
-	AwsRegion                     NullableString `json:"aws_region"`
-	SnsApnsPlatformApplicationArn NullableString `json:"sns_apns_platform_application_arn"`
-	SnsGcmPlatformApplicationArn  NullableString `json:"sns_gcm_platform_application_arn"`
+	AwsAccessKeyId                NullableString `json:"aws_access_key_id,omitempty"`
+	AwsSecretAccessKey            NullableString `json:"aws_secret_access_key,omitempty"`
+	AwsRegion                     NullableString `json:"aws_region,omitempty"`
+	SnsApnsPlatformApplicationArn NullableString `json:"sns_apns_platform_application_arn,omitempty"`
+	SnsGcmPlatformApplicationArn  NullableString `json:"sns_gcm_platform_application_arn,omitempty"`
 }
 
-type _SnsFactorProvider SnsFactorProvider
-
-// GetAwsAccessKeyId returns the AwsAccessKeyId field value
-// If the value is explicit nil, the zero value for string will be returned
+// GetAwsAccessKeyId returns the AwsAccessKeyId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SnsFactorProvider) GetAwsAccessKeyId() string {
-	if o == nil || o.AwsAccessKeyId.Get() == nil {
+	if o == nil || IsNil(o.AwsAccessKeyId.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.AwsAccessKeyId.Get()
 }
 
-// GetAwsAccessKeyIdOk returns a tuple with the AwsAccessKeyId field value
+// GetAwsAccessKeyIdOk returns a tuple with the AwsAccessKeyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SnsFactorProvider) GetAwsAccessKeyIdOk() (*string, bool) {
@@ -47,23 +42,40 @@ func (o *SnsFactorProvider) GetAwsAccessKeyIdOk() (*string, bool) {
 	return o.AwsAccessKeyId.Get(), o.AwsAccessKeyId.IsSet()
 }
 
-// SetAwsAccessKeyId sets field value
+// HasAwsAccessKeyId returns a boolean if a field has been set.
+func (o *SnsFactorProvider) HasAwsAccessKeyId() bool {
+	if o != nil && o.AwsAccessKeyId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAwsAccessKeyId gets a reference to the given NullableString and assigns it to the AwsAccessKeyId field.
 func (o *SnsFactorProvider) SetAwsAccessKeyId(v string) {
 	o.AwsAccessKeyId.Set(&v)
 }
 
-// GetAwsSecretAccessKey returns the AwsSecretAccessKey field value
-// If the value is explicit nil, the zero value for string will be returned
+// SetAwsAccessKeyIdNil sets the value for AwsAccessKeyId to be an explicit nil
+func (o *SnsFactorProvider) SetAwsAccessKeyIdNil() {
+	o.AwsAccessKeyId.Set(nil)
+}
+
+// UnsetAwsAccessKeyId ensures that no value is present for AwsAccessKeyId, not even an explicit nil
+func (o *SnsFactorProvider) UnsetAwsAccessKeyId() {
+	o.AwsAccessKeyId.Unset()
+}
+
+// GetAwsSecretAccessKey returns the AwsSecretAccessKey field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SnsFactorProvider) GetAwsSecretAccessKey() string {
-	if o == nil || o.AwsSecretAccessKey.Get() == nil {
+	if o == nil || IsNil(o.AwsSecretAccessKey.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.AwsSecretAccessKey.Get()
 }
 
-// GetAwsSecretAccessKeyOk returns a tuple with the AwsSecretAccessKey field value
+// GetAwsSecretAccessKeyOk returns a tuple with the AwsSecretAccessKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SnsFactorProvider) GetAwsSecretAccessKeyOk() (*string, bool) {
@@ -73,23 +85,40 @@ func (o *SnsFactorProvider) GetAwsSecretAccessKeyOk() (*string, bool) {
 	return o.AwsSecretAccessKey.Get(), o.AwsSecretAccessKey.IsSet()
 }
 
-// SetAwsSecretAccessKey sets field value
+// HasAwsSecretAccessKey returns a boolean if a field has been set.
+func (o *SnsFactorProvider) HasAwsSecretAccessKey() bool {
+	if o != nil && o.AwsSecretAccessKey.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAwsSecretAccessKey gets a reference to the given NullableString and assigns it to the AwsSecretAccessKey field.
 func (o *SnsFactorProvider) SetAwsSecretAccessKey(v string) {
 	o.AwsSecretAccessKey.Set(&v)
 }
 
-// GetAwsRegion returns the AwsRegion field value
-// If the value is explicit nil, the zero value for string will be returned
+// SetAwsSecretAccessKeyNil sets the value for AwsSecretAccessKey to be an explicit nil
+func (o *SnsFactorProvider) SetAwsSecretAccessKeyNil() {
+	o.AwsSecretAccessKey.Set(nil)
+}
+
+// UnsetAwsSecretAccessKey ensures that no value is present for AwsSecretAccessKey, not even an explicit nil
+func (o *SnsFactorProvider) UnsetAwsSecretAccessKey() {
+	o.AwsSecretAccessKey.Unset()
+}
+
+// GetAwsRegion returns the AwsRegion field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SnsFactorProvider) GetAwsRegion() string {
-	if o == nil || o.AwsRegion.Get() == nil {
+	if o == nil || IsNil(o.AwsRegion.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.AwsRegion.Get()
 }
 
-// GetAwsRegionOk returns a tuple with the AwsRegion field value
+// GetAwsRegionOk returns a tuple with the AwsRegion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SnsFactorProvider) GetAwsRegionOk() (*string, bool) {
@@ -99,23 +128,40 @@ func (o *SnsFactorProvider) GetAwsRegionOk() (*string, bool) {
 	return o.AwsRegion.Get(), o.AwsRegion.IsSet()
 }
 
-// SetAwsRegion sets field value
+// HasAwsRegion returns a boolean if a field has been set.
+func (o *SnsFactorProvider) HasAwsRegion() bool {
+	if o != nil && o.AwsRegion.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAwsRegion gets a reference to the given NullableString and assigns it to the AwsRegion field.
 func (o *SnsFactorProvider) SetAwsRegion(v string) {
 	o.AwsRegion.Set(&v)
 }
 
-// GetSnsApnsPlatformApplicationArn returns the SnsApnsPlatformApplicationArn field value
-// If the value is explicit nil, the zero value for string will be returned
+// SetAwsRegionNil sets the value for AwsRegion to be an explicit nil
+func (o *SnsFactorProvider) SetAwsRegionNil() {
+	o.AwsRegion.Set(nil)
+}
+
+// UnsetAwsRegion ensures that no value is present for AwsRegion, not even an explicit nil
+func (o *SnsFactorProvider) UnsetAwsRegion() {
+	o.AwsRegion.Unset()
+}
+
+// GetSnsApnsPlatformApplicationArn returns the SnsApnsPlatformApplicationArn field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SnsFactorProvider) GetSnsApnsPlatformApplicationArn() string {
-	if o == nil || o.SnsApnsPlatformApplicationArn.Get() == nil {
+	if o == nil || IsNil(o.SnsApnsPlatformApplicationArn.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.SnsApnsPlatformApplicationArn.Get()
 }
 
-// GetSnsApnsPlatformApplicationArnOk returns a tuple with the SnsApnsPlatformApplicationArn field value
+// GetSnsApnsPlatformApplicationArnOk returns a tuple with the SnsApnsPlatformApplicationArn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SnsFactorProvider) GetSnsApnsPlatformApplicationArnOk() (*string, bool) {
@@ -125,23 +171,40 @@ func (o *SnsFactorProvider) GetSnsApnsPlatformApplicationArnOk() (*string, bool)
 	return o.SnsApnsPlatformApplicationArn.Get(), o.SnsApnsPlatformApplicationArn.IsSet()
 }
 
-// SetSnsApnsPlatformApplicationArn sets field value
+// HasSnsApnsPlatformApplicationArn returns a boolean if a field has been set.
+func (o *SnsFactorProvider) HasSnsApnsPlatformApplicationArn() bool {
+	if o != nil && o.SnsApnsPlatformApplicationArn.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSnsApnsPlatformApplicationArn gets a reference to the given NullableString and assigns it to the SnsApnsPlatformApplicationArn field.
 func (o *SnsFactorProvider) SetSnsApnsPlatformApplicationArn(v string) {
 	o.SnsApnsPlatformApplicationArn.Set(&v)
 }
 
-// GetSnsGcmPlatformApplicationArn returns the SnsGcmPlatformApplicationArn field value
-// If the value is explicit nil, the zero value for string will be returned
+// SetSnsApnsPlatformApplicationArnNil sets the value for SnsApnsPlatformApplicationArn to be an explicit nil
+func (o *SnsFactorProvider) SetSnsApnsPlatformApplicationArnNil() {
+	o.SnsApnsPlatformApplicationArn.Set(nil)
+}
+
+// UnsetSnsApnsPlatformApplicationArn ensures that no value is present for SnsApnsPlatformApplicationArn, not even an explicit nil
+func (o *SnsFactorProvider) UnsetSnsApnsPlatformApplicationArn() {
+	o.SnsApnsPlatformApplicationArn.Unset()
+}
+
+// GetSnsGcmPlatformApplicationArn returns the SnsGcmPlatformApplicationArn field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SnsFactorProvider) GetSnsGcmPlatformApplicationArn() string {
-	if o == nil || o.SnsGcmPlatformApplicationArn.Get() == nil {
+	if o == nil || IsNil(o.SnsGcmPlatformApplicationArn.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.SnsGcmPlatformApplicationArn.Get()
 }
 
-// GetSnsGcmPlatformApplicationArnOk returns a tuple with the SnsGcmPlatformApplicationArn field value
+// GetSnsGcmPlatformApplicationArnOk returns a tuple with the SnsGcmPlatformApplicationArn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *SnsFactorProvider) GetSnsGcmPlatformApplicationArnOk() (*string, bool) {
@@ -151,9 +214,28 @@ func (o *SnsFactorProvider) GetSnsGcmPlatformApplicationArnOk() (*string, bool) 
 	return o.SnsGcmPlatformApplicationArn.Get(), o.SnsGcmPlatformApplicationArn.IsSet()
 }
 
-// SetSnsGcmPlatformApplicationArn sets field value
+// HasSnsGcmPlatformApplicationArn returns a boolean if a field has been set.
+func (o *SnsFactorProvider) HasSnsGcmPlatformApplicationArn() bool {
+	if o != nil && o.SnsGcmPlatformApplicationArn.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSnsGcmPlatformApplicationArn gets a reference to the given NullableString and assigns it to the SnsGcmPlatformApplicationArn field.
 func (o *SnsFactorProvider) SetSnsGcmPlatformApplicationArn(v string) {
 	o.SnsGcmPlatformApplicationArn.Set(&v)
+}
+
+// SetSnsGcmPlatformApplicationArnNil sets the value for SnsGcmPlatformApplicationArn to be an explicit nil
+func (o *SnsFactorProvider) SetSnsGcmPlatformApplicationArnNil() {
+	o.SnsGcmPlatformApplicationArn.Set(nil)
+}
+
+// UnsetSnsGcmPlatformApplicationArn ensures that no value is present for SnsGcmPlatformApplicationArn, not even an explicit nil
+func (o *SnsFactorProvider) UnsetSnsGcmPlatformApplicationArn() {
+	o.SnsGcmPlatformApplicationArn.Unset()
 }
 
 func (o SnsFactorProvider) MarshalJSON() ([]byte, error) {
@@ -166,28 +248,22 @@ func (o SnsFactorProvider) MarshalJSON() ([]byte, error) {
 
 func (o SnsFactorProvider) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["aws_access_key_id"] = o.AwsAccessKeyId.Get()
-	toSerialize["aws_secret_access_key"] = o.AwsSecretAccessKey.Get()
-	toSerialize["aws_region"] = o.AwsRegion.Get()
-	toSerialize["sns_apns_platform_application_arn"] = o.SnsApnsPlatformApplicationArn.Get()
-	toSerialize["sns_gcm_platform_application_arn"] = o.SnsGcmPlatformApplicationArn.Get()
-	return toSerialize, nil
-}
-
-func (o *SnsFactorProvider) UnmarshalJSON(data []byte) (err error) {
-	varSnsFactorProvider := _SnsFactorProvider{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSnsFactorProvider)
-
-	if err != nil {
-		return err
+	if o.AwsAccessKeyId.IsSet() {
+		toSerialize["aws_access_key_id"] = o.AwsAccessKeyId.Get()
 	}
-
-	*o = SnsFactorProvider(varSnsFactorProvider)
-
-	return err
+	if o.AwsSecretAccessKey.IsSet() {
+		toSerialize["aws_secret_access_key"] = o.AwsSecretAccessKey.Get()
+	}
+	if o.AwsRegion.IsSet() {
+		toSerialize["aws_region"] = o.AwsRegion.Get()
+	}
+	if o.SnsApnsPlatformApplicationArn.IsSet() {
+		toSerialize["sns_apns_platform_application_arn"] = o.SnsApnsPlatformApplicationArn.Get()
+	}
+	if o.SnsGcmPlatformApplicationArn.IsSet() {
+		toSerialize["sns_gcm_platform_application_arn"] = o.SnsGcmPlatformApplicationArn.Get()
+	}
+	return toSerialize, nil
 }
 
 type NullableSnsFactorProvider struct {

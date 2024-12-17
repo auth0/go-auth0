@@ -16,57 +16,73 @@ import (
 
 // GetMembers200ResponseOneOf1 struct for GetMembers200ResponseOneOf1
 type GetMembers200ResponseOneOf1 struct {
-	Next                 string                            `json:"next"`
-	Members              []GetMembers200ResponseOneOfInner `json:"members"`
+	Next                 *string                           `json:"next,omitempty"`
+	Members              []GetMembers200ResponseOneOfInner `json:"members,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetMembers200ResponseOneOf1 GetMembers200ResponseOneOf1
 
-// GetNext returns the Next field value
+// GetNext returns the Next field value if set, zero value otherwise.
 func (o *GetMembers200ResponseOneOf1) GetNext() string {
-	if o == nil {
+	if o == nil || IsNil(o.Next) {
 		var ret string
 		return ret
 	}
-
-	return o.Next
+	return *o.Next
 }
 
-// GetNextOk returns a tuple with the Next field value
+// GetNextOk returns a tuple with the Next field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetMembers200ResponseOneOf1) GetNextOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Next) {
 		return nil, false
 	}
-	return &o.Next, true
+	return o.Next, true
 }
 
-// SetNext sets field value
+// HasNext returns a boolean if a field has been set.
+func (o *GetMembers200ResponseOneOf1) HasNext() bool {
+	if o != nil && !IsNil(o.Next) {
+		return true
+	}
+
+	return false
+}
+
+// SetNext gets a reference to the given string and assigns it to the Next field.
 func (o *GetMembers200ResponseOneOf1) SetNext(v string) {
-	o.Next = v
+	o.Next = &v
 }
 
-// GetMembers returns the Members field value
+// GetMembers returns the Members field value if set, zero value otherwise.
 func (o *GetMembers200ResponseOneOf1) GetMembers() []GetMembers200ResponseOneOfInner {
-	if o == nil {
+	if o == nil || IsNil(o.Members) {
 		var ret []GetMembers200ResponseOneOfInner
 		return ret
 	}
-
 	return o.Members
 }
 
-// GetMembersOk returns a tuple with the Members field value
+// GetMembersOk returns a tuple with the Members field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetMembers200ResponseOneOf1) GetMembersOk() ([]GetMembers200ResponseOneOfInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Members) {
 		return nil, false
 	}
 	return o.Members, true
 }
 
-// SetMembers sets field value
+// HasMembers returns a boolean if a field has been set.
+func (o *GetMembers200ResponseOneOf1) HasMembers() bool {
+	if o != nil && !IsNil(o.Members) {
+		return true
+	}
+
+	return false
+}
+
+// SetMembers gets a reference to the given []GetMembers200ResponseOneOfInner and assigns it to the Members field.
 func (o *GetMembers200ResponseOneOf1) SetMembers(v []GetMembers200ResponseOneOfInner) {
 	o.Members = v
 }
@@ -81,8 +97,12 @@ func (o GetMembers200ResponseOneOf1) MarshalJSON() ([]byte, error) {
 
 func (o GetMembers200ResponseOneOf1) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["next"] = o.Next
-	toSerialize["members"] = o.Members
+	if !IsNil(o.Next) {
+		toSerialize["next"] = o.Next
+	}
+	if !IsNil(o.Members) {
+		toSerialize["members"] = o.Members
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

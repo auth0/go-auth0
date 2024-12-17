@@ -17,34 +17,42 @@ import (
 // ClientAddonsSpringcm SpringCM SSO configuration.
 type ClientAddonsSpringcm struct {
 	// SpringCM ACS URL, e.g. `https://na11.springcm.com/atlas/sso/SSOEndpoint.ashx`.
-	Acsurl               string `json:"acsurl"`
+	Acsurl               *string `json:"acsurl,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsSpringcm ClientAddonsSpringcm
 
-// GetAcsurl returns the Acsurl field value
+// GetAcsurl returns the Acsurl field value if set, zero value otherwise.
 func (o *ClientAddonsSpringcm) GetAcsurl() string {
-	if o == nil {
+	if o == nil || IsNil(o.Acsurl) {
 		var ret string
 		return ret
 	}
-
-	return o.Acsurl
+	return *o.Acsurl
 }
 
-// GetAcsurlOk returns a tuple with the Acsurl field value
+// GetAcsurlOk returns a tuple with the Acsurl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSpringcm) GetAcsurlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Acsurl) {
 		return nil, false
 	}
-	return &o.Acsurl, true
+	return o.Acsurl, true
 }
 
-// SetAcsurl sets field value
+// HasAcsurl returns a boolean if a field has been set.
+func (o *ClientAddonsSpringcm) HasAcsurl() bool {
+	if o != nil && !IsNil(o.Acsurl) {
+		return true
+	}
+
+	return false
+}
+
+// SetAcsurl gets a reference to the given string and assigns it to the Acsurl field.
 func (o *ClientAddonsSpringcm) SetAcsurl(v string) {
-	o.Acsurl = v
+	o.Acsurl = &v
 }
 
 func (o ClientAddonsSpringcm) MarshalJSON() ([]byte, error) {
@@ -57,7 +65,9 @@ func (o ClientAddonsSpringcm) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsSpringcm) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["acsurl"] = o.Acsurl
+	if !IsNil(o.Acsurl) {
+		toSerialize["acsurl"] = o.Acsurl
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

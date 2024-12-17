@@ -17,575 +17,733 @@ import (
 // Client struct for Client
 type Client struct {
 	// ID of this client.
-	ClientId string `json:"client_id"`
+	ClientId *string `json:"client_id,omitempty"`
 	// Name of the tenant this client belongs to.
-	Tenant string `json:"tenant"`
+	Tenant *string `json:"tenant,omitempty"`
 	// Name of this client (min length: 1 character, does not allow `<` or `>`).
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// Free text description of this client (max length: 140 characters).
-	Description string `json:"description"`
+	Description *string `json:"description,omitempty"`
 	// Whether this is your global 'All Applications' client representing legacy tenant settings (true) or a regular client (false).
-	Global bool `json:"global"`
+	Global *bool `json:"global,omitempty"`
 	// Client secret (which you must not make public).
-	ClientSecret string `json:"client_secret"`
+	ClientSecret *string `json:"client_secret,omitempty"`
 	// Type of client used to determine which settings are applicable. Can be `spa`, `native`, `non_interactive`, or `regular_web`.
-	AppType string `json:"app_type"`
+	AppType *string `json:"app_type,omitempty"`
 	// URL of the logo to display for this client. Recommended size is 150x150 pixels.
-	LogoUri string `json:"logo_uri"`
+	LogoUri *string `json:"logo_uri,omitempty"`
 	// Whether this client a first party client (true) or not (false).
-	IsFirstParty bool `json:"is_first_party"`
+	IsFirstParty *bool `json:"is_first_party,omitempty"`
 	// Whether this client conforms to <a href='https://auth0.com/docs/api-auth/tutorials/adoption'>strict OIDC specifications</a> (true) or uses legacy features (false).
-	OidcConformant bool `json:"oidc_conformant"`
+	OidcConformant *bool `json:"oidc_conformant,omitempty"`
 	// Comma-separated list of URLs whitelisted for Auth0 to use as a callback to the client after authentication.
-	Callbacks []string `json:"callbacks"`
+	Callbacks []string `json:"callbacks,omitempty"`
 	// Comma-separated list of URLs allowed to make requests from JavaScript to Auth0 API (typically used with CORS). By default, all your callback URLs will be allowed. This field allows you to enter other origins if necessary. You can also use wildcards at the subdomain level (e.g., https://_*.contoso.com). Query strings and hash information are not taken into account when validating these URLs.
-	AllowedOrigins []string `json:"allowed_origins"`
+	AllowedOrigins []string `json:"allowed_origins,omitempty"`
 	// Comma-separated list of allowed origins for use with <a href='https://auth0.com/docs/cross-origin-authentication'>Cross-Origin Authentication</a>, <a href='https://auth0.com/docs/flows/concepts/device-auth'>Device Flow</a>, and <a href='https://auth0.com/docs/protocols/oauth2#how-response-mode-works'>web message response mode</a>.
-	WebOrigins []string `json:"web_origins"`
+	WebOrigins []string `json:"web_origins,omitempty"`
 	// List of audiences/realms for SAML protocol. Used by the wsfed addon.
-	ClientAliases []string `json:"client_aliases"`
+	ClientAliases []string `json:"client_aliases,omitempty"`
 	// List of allow clients and API ids that are allowed to make delegation requests. Empty means all all your clients are allowed.
-	AllowedClients []string `json:"allowed_clients"`
+	AllowedClients []string `json:"allowed_clients,omitempty"`
 	// Comma-separated list of URLs that are valid to redirect to after logout from Auth0. Wildcards are allowed for subdomains.
-	AllowedLogoutUrls []string         `json:"allowed_logout_urls"`
-	OidcLogout        ClientOidcLogout `json:"oidc_logout"`
+	AllowedLogoutUrls []string          `json:"allowed_logout_urls,omitempty"`
+	OidcLogout        *ClientOidcLogout `json:"oidc_logout,omitempty"`
 	// List of grant types supported for this application. Can include `authorization_code`, `implicit`, `refresh_token`, `client_credentials`, `password`, `http://auth0.com/oauth/grant-type/password-realm`, `http://auth0.com/oauth/grant-type/mfa-oob`, `http://auth0.com/oauth/grant-type/mfa-otp`, `http://auth0.com/oauth/grant-type/mfa-recovery-code`, and `urn:ietf:params:oauth:grant-type:device_code`.
-	GrantTypes       []string               `json:"grant_types"`
-	JwtConfiguration ClientJwtConfiguration `json:"jwt_configuration"`
+	GrantTypes       []string                `json:"grant_types,omitempty"`
+	JwtConfiguration *ClientJwtConfiguration `json:"jwt_configuration,omitempty"`
 	// Signing certificates associated with this client.
-	SigningKeys   []ClientSigningKeysInner    `json:"signing_keys"`
-	EncryptionKey NullableClientEncryptionKey `json:"encryption_key"`
+	SigningKeys   []ClientSigningKeysInner    `json:"signing_keys,omitempty"`
+	EncryptionKey NullableClientEncryptionKey `json:"encryption_key,omitempty"`
 	// Applies only to SSO clients and determines whether Auth0 will handle Single Sign On (true) or whether the Identity Provider will (false).
-	Sso bool `json:"sso"`
+	Sso *bool `json:"sso,omitempty"`
 	// Whether Single Sign On is disabled (true) or enabled (true). Defaults to true.
-	SsoDisabled bool `json:"sso_disabled"`
+	SsoDisabled *bool `json:"sso_disabled,omitempty"`
 	// Whether this client can be used to make cross-origin authentication requests (true) or it is not allowed to make such requests (false).
-	CrossOriginAuthentication bool `json:"cross_origin_authentication"`
+	CrossOriginAuthentication *bool `json:"cross_origin_authentication,omitempty"`
 	// URL of the location in your site where the cross origin verification takes place for the cross-origin auth flow when performing Auth in your own domain instead of Auth0 hosted login page.
-	CrossOriginLoc string `json:"cross_origin_loc"`
+	CrossOriginLoc *string `json:"cross_origin_loc,omitempty"`
 	// Whether a custom login page is to be used (true) or the default provided login page (false).
-	CustomLoginPageOn bool `json:"custom_login_page_on"`
+	CustomLoginPageOn *bool `json:"custom_login_page_on,omitempty"`
 	// The content (HTML, CSS, JS) of the custom login page.
-	CustomLoginPage string `json:"custom_login_page"`
+	CustomLoginPage *string `json:"custom_login_page,omitempty"`
 	// The content (HTML, CSS, JS) of the custom login page. (Used on Previews)
-	CustomLoginPagePreview string `json:"custom_login_page_preview"`
+	CustomLoginPagePreview *string `json:"custom_login_page_preview,omitempty"`
 	// HTML form template to be used for WS-Federation.
-	FormTemplate            string                        `json:"form_template"`
-	Addons                  ClientAddons                  `json:"addons"`
-	TokenEndpointAuthMethod ClientTokenEndpointAuthMethod `json:"token_endpoint_auth_method"`
+	FormTemplate            *string                        `json:"form_template,omitempty"`
+	Addons                  *ClientAddons                  `json:"addons,omitempty"`
+	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethod `json:"token_endpoint_auth_method,omitempty"`
 	// Metadata associated with the client, in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.  Field names (max 255 chars) are alphanumeric and may only include the following special characters:  :,-+=_*?\"/\\()<>@ [Tab] [Space]
-	ClientMetadata map[string]interface{} `json:"client_metadata"`
-	Mobile         ClientMobile           `json:"mobile"`
+	ClientMetadata map[string]interface{} `json:"client_metadata,omitempty"`
+	Mobile         *ClientMobile          `json:"mobile,omitempty"`
 	// Initiate login uri, must be https
-	InitiateLoginUri            string                                    `json:"initiate_login_uri"`
-	NativeSocialLogin           NullableClientNativeSocialLogin           `json:"native_social_login"`
-	RefreshToken                NullableClientRefreshToken                `json:"refresh_token"`
-	OrganizationUsage           ClientOrganizationUsage                   `json:"organization_usage"`
-	OrganizationRequireBehavior ClientOrganizationRequireBehavior         `json:"organization_require_behavior"`
-	ClientAuthenticationMethods NullableClientClientAuthenticationMethods `json:"client_authentication_methods"`
+	InitiateLoginUri            *string                                   `json:"initiate_login_uri,omitempty"`
+	NativeSocialLogin           NullableClientNativeSocialLogin           `json:"native_social_login,omitempty"`
+	RefreshToken                NullableClientRefreshToken                `json:"refresh_token,omitempty"`
+	OrganizationUsage           *ClientOrganizationUsage                  `json:"organization_usage,omitempty"`
+	OrganizationRequireBehavior *ClientOrganizationRequireBehavior        `json:"organization_require_behavior,omitempty"`
+	ClientAuthenticationMethods NullableClientClientAuthenticationMethods `json:"client_authentication_methods,omitempty"`
 	// Makes the use of Pushed Authorization Requests mandatory for this client
-	RequirePushedAuthorizationRequests bool                      `json:"require_pushed_authorization_requests"`
-	SignedRequestObject                ClientSignedRequestObject `json:"signed_request_object"`
+	RequirePushedAuthorizationRequests *bool                      `json:"require_pushed_authorization_requests,omitempty"`
+	SignedRequestObject                *ClientSignedRequestObject `json:"signed_request_object,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession bool                          `json:"require_proof_of_possession"`
-	ComplianceLevel          NullableClientComplianceLevel `json:"compliance_level"`
+	RequireProofOfPossession *bool                         `json:"require_proof_of_possession,omitempty"`
+	ComplianceLevel          NullableClientComplianceLevel `json:"compliance_level,omitempty"`
 	AdditionalProperties     map[string]interface{}
 }
 
 type _Client Client
 
-// GetClientId returns the ClientId field value
+// GetClientId returns the ClientId field value if set, zero value otherwise.
 func (o *Client) GetClientId() string {
-	if o == nil {
+	if o == nil || IsNil(o.ClientId) {
 		var ret string
 		return ret
 	}
-
-	return o.ClientId
+	return *o.ClientId
 }
 
-// GetClientIdOk returns a tuple with the ClientId field value
+// GetClientIdOk returns a tuple with the ClientId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetClientIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ClientId) {
 		return nil, false
 	}
-	return &o.ClientId, true
+	return o.ClientId, true
 }
 
-// SetClientId sets field value
+// HasClientId returns a boolean if a field has been set.
+func (o *Client) HasClientId() bool {
+	if o != nil && !IsNil(o.ClientId) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientId gets a reference to the given string and assigns it to the ClientId field.
 func (o *Client) SetClientId(v string) {
-	o.ClientId = v
+	o.ClientId = &v
 }
 
-// GetTenant returns the Tenant field value
+// GetTenant returns the Tenant field value if set, zero value otherwise.
 func (o *Client) GetTenant() string {
-	if o == nil {
+	if o == nil || IsNil(o.Tenant) {
 		var ret string
 		return ret
 	}
-
-	return o.Tenant
+	return *o.Tenant
 }
 
-// GetTenantOk returns a tuple with the Tenant field value
+// GetTenantOk returns a tuple with the Tenant field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetTenantOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Tenant) {
 		return nil, false
 	}
-	return &o.Tenant, true
+	return o.Tenant, true
 }
 
-// SetTenant sets field value
+// HasTenant returns a boolean if a field has been set.
+func (o *Client) HasTenant() bool {
+	if o != nil && !IsNil(o.Tenant) {
+		return true
+	}
+
+	return false
+}
+
+// SetTenant gets a reference to the given string and assigns it to the Tenant field.
 func (o *Client) SetTenant(v string) {
-	o.Tenant = v
+	o.Tenant = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *Client) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *Client) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *Client) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetDescription returns the Description field value
+// GetDescription returns the Description field value if set, zero value otherwise.
 func (o *Client) GetDescription() string {
-	if o == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
-
-	return o.Description
+	return *o.Description
 }
 
-// GetDescriptionOk returns a tuple with the Description field value
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetDescriptionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
-	return &o.Description, true
+	return o.Description, true
 }
 
-// SetDescription sets field value
+// HasDescription returns a boolean if a field has been set.
+func (o *Client) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
 func (o *Client) SetDescription(v string) {
-	o.Description = v
+	o.Description = &v
 }
 
-// GetGlobal returns the Global field value
+// GetGlobal returns the Global field value if set, zero value otherwise.
 func (o *Client) GetGlobal() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Global) {
 		var ret bool
 		return ret
 	}
-
-	return o.Global
+	return *o.Global
 }
 
-// GetGlobalOk returns a tuple with the Global field value
+// GetGlobalOk returns a tuple with the Global field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetGlobalOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Global) {
 		return nil, false
 	}
-	return &o.Global, true
+	return o.Global, true
 }
 
-// SetGlobal sets field value
+// HasGlobal returns a boolean if a field has been set.
+func (o *Client) HasGlobal() bool {
+	if o != nil && !IsNil(o.Global) {
+		return true
+	}
+
+	return false
+}
+
+// SetGlobal gets a reference to the given bool and assigns it to the Global field.
 func (o *Client) SetGlobal(v bool) {
-	o.Global = v
+	o.Global = &v
 }
 
-// GetClientSecret returns the ClientSecret field value
+// GetClientSecret returns the ClientSecret field value if set, zero value otherwise.
 func (o *Client) GetClientSecret() string {
-	if o == nil {
+	if o == nil || IsNil(o.ClientSecret) {
 		var ret string
 		return ret
 	}
-
-	return o.ClientSecret
+	return *o.ClientSecret
 }
 
-// GetClientSecretOk returns a tuple with the ClientSecret field value
+// GetClientSecretOk returns a tuple with the ClientSecret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetClientSecretOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ClientSecret) {
 		return nil, false
 	}
-	return &o.ClientSecret, true
+	return o.ClientSecret, true
 }
 
-// SetClientSecret sets field value
+// HasClientSecret returns a boolean if a field has been set.
+func (o *Client) HasClientSecret() bool {
+	if o != nil && !IsNil(o.ClientSecret) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientSecret gets a reference to the given string and assigns it to the ClientSecret field.
 func (o *Client) SetClientSecret(v string) {
-	o.ClientSecret = v
+	o.ClientSecret = &v
 }
 
-// GetAppType returns the AppType field value
+// GetAppType returns the AppType field value if set, zero value otherwise.
 func (o *Client) GetAppType() string {
-	if o == nil {
+	if o == nil || IsNil(o.AppType) {
 		var ret string
 		return ret
 	}
-
-	return o.AppType
+	return *o.AppType
 }
 
-// GetAppTypeOk returns a tuple with the AppType field value
+// GetAppTypeOk returns a tuple with the AppType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetAppTypeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AppType) {
 		return nil, false
 	}
-	return &o.AppType, true
+	return o.AppType, true
 }
 
-// SetAppType sets field value
+// HasAppType returns a boolean if a field has been set.
+func (o *Client) HasAppType() bool {
+	if o != nil && !IsNil(o.AppType) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppType gets a reference to the given string and assigns it to the AppType field.
 func (o *Client) SetAppType(v string) {
-	o.AppType = v
+	o.AppType = &v
 }
 
-// GetLogoUri returns the LogoUri field value
+// GetLogoUri returns the LogoUri field value if set, zero value otherwise.
 func (o *Client) GetLogoUri() string {
-	if o == nil {
+	if o == nil || IsNil(o.LogoUri) {
 		var ret string
 		return ret
 	}
-
-	return o.LogoUri
+	return *o.LogoUri
 }
 
-// GetLogoUriOk returns a tuple with the LogoUri field value
+// GetLogoUriOk returns a tuple with the LogoUri field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetLogoUriOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LogoUri) {
 		return nil, false
 	}
-	return &o.LogoUri, true
+	return o.LogoUri, true
 }
 
-// SetLogoUri sets field value
+// HasLogoUri returns a boolean if a field has been set.
+func (o *Client) HasLogoUri() bool {
+	if o != nil && !IsNil(o.LogoUri) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogoUri gets a reference to the given string and assigns it to the LogoUri field.
 func (o *Client) SetLogoUri(v string) {
-	o.LogoUri = v
+	o.LogoUri = &v
 }
 
-// GetIsFirstParty returns the IsFirstParty field value
+// GetIsFirstParty returns the IsFirstParty field value if set, zero value otherwise.
 func (o *Client) GetIsFirstParty() bool {
-	if o == nil {
+	if o == nil || IsNil(o.IsFirstParty) {
 		var ret bool
 		return ret
 	}
-
-	return o.IsFirstParty
+	return *o.IsFirstParty
 }
 
-// GetIsFirstPartyOk returns a tuple with the IsFirstParty field value
+// GetIsFirstPartyOk returns a tuple with the IsFirstParty field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetIsFirstPartyOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IsFirstParty) {
 		return nil, false
 	}
-	return &o.IsFirstParty, true
+	return o.IsFirstParty, true
 }
 
-// SetIsFirstParty sets field value
+// HasIsFirstParty returns a boolean if a field has been set.
+func (o *Client) HasIsFirstParty() bool {
+	if o != nil && !IsNil(o.IsFirstParty) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsFirstParty gets a reference to the given bool and assigns it to the IsFirstParty field.
 func (o *Client) SetIsFirstParty(v bool) {
-	o.IsFirstParty = v
+	o.IsFirstParty = &v
 }
 
-// GetOidcConformant returns the OidcConformant field value
+// GetOidcConformant returns the OidcConformant field value if set, zero value otherwise.
 func (o *Client) GetOidcConformant() bool {
-	if o == nil {
+	if o == nil || IsNil(o.OidcConformant) {
 		var ret bool
 		return ret
 	}
-
-	return o.OidcConformant
+	return *o.OidcConformant
 }
 
-// GetOidcConformantOk returns a tuple with the OidcConformant field value
+// GetOidcConformantOk returns a tuple with the OidcConformant field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetOidcConformantOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OidcConformant) {
 		return nil, false
 	}
-	return &o.OidcConformant, true
+	return o.OidcConformant, true
 }
 
-// SetOidcConformant sets field value
+// HasOidcConformant returns a boolean if a field has been set.
+func (o *Client) HasOidcConformant() bool {
+	if o != nil && !IsNil(o.OidcConformant) {
+		return true
+	}
+
+	return false
+}
+
+// SetOidcConformant gets a reference to the given bool and assigns it to the OidcConformant field.
 func (o *Client) SetOidcConformant(v bool) {
-	o.OidcConformant = v
+	o.OidcConformant = &v
 }
 
-// GetCallbacks returns the Callbacks field value
+// GetCallbacks returns the Callbacks field value if set, zero value otherwise.
 func (o *Client) GetCallbacks() []string {
-	if o == nil {
+	if o == nil || IsNil(o.Callbacks) {
 		var ret []string
 		return ret
 	}
-
 	return o.Callbacks
 }
 
-// GetCallbacksOk returns a tuple with the Callbacks field value
+// GetCallbacksOk returns a tuple with the Callbacks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetCallbacksOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Callbacks) {
 		return nil, false
 	}
 	return o.Callbacks, true
 }
 
-// SetCallbacks sets field value
+// HasCallbacks returns a boolean if a field has been set.
+func (o *Client) HasCallbacks() bool {
+	if o != nil && !IsNil(o.Callbacks) {
+		return true
+	}
+
+	return false
+}
+
+// SetCallbacks gets a reference to the given []string and assigns it to the Callbacks field.
 func (o *Client) SetCallbacks(v []string) {
 	o.Callbacks = v
 }
 
-// GetAllowedOrigins returns the AllowedOrigins field value
+// GetAllowedOrigins returns the AllowedOrigins field value if set, zero value otherwise.
 func (o *Client) GetAllowedOrigins() []string {
-	if o == nil {
+	if o == nil || IsNil(o.AllowedOrigins) {
 		var ret []string
 		return ret
 	}
-
 	return o.AllowedOrigins
 }
 
-// GetAllowedOriginsOk returns a tuple with the AllowedOrigins field value
+// GetAllowedOriginsOk returns a tuple with the AllowedOrigins field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetAllowedOriginsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AllowedOrigins) {
 		return nil, false
 	}
 	return o.AllowedOrigins, true
 }
 
-// SetAllowedOrigins sets field value
+// HasAllowedOrigins returns a boolean if a field has been set.
+func (o *Client) HasAllowedOrigins() bool {
+	if o != nil && !IsNil(o.AllowedOrigins) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowedOrigins gets a reference to the given []string and assigns it to the AllowedOrigins field.
 func (o *Client) SetAllowedOrigins(v []string) {
 	o.AllowedOrigins = v
 }
 
-// GetWebOrigins returns the WebOrigins field value
+// GetWebOrigins returns the WebOrigins field value if set, zero value otherwise.
 func (o *Client) GetWebOrigins() []string {
-	if o == nil {
+	if o == nil || IsNil(o.WebOrigins) {
 		var ret []string
 		return ret
 	}
-
 	return o.WebOrigins
 }
 
-// GetWebOriginsOk returns a tuple with the WebOrigins field value
+// GetWebOriginsOk returns a tuple with the WebOrigins field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetWebOriginsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.WebOrigins) {
 		return nil, false
 	}
 	return o.WebOrigins, true
 }
 
-// SetWebOrigins sets field value
+// HasWebOrigins returns a boolean if a field has been set.
+func (o *Client) HasWebOrigins() bool {
+	if o != nil && !IsNil(o.WebOrigins) {
+		return true
+	}
+
+	return false
+}
+
+// SetWebOrigins gets a reference to the given []string and assigns it to the WebOrigins field.
 func (o *Client) SetWebOrigins(v []string) {
 	o.WebOrigins = v
 }
 
-// GetClientAliases returns the ClientAliases field value
+// GetClientAliases returns the ClientAliases field value if set, zero value otherwise.
 func (o *Client) GetClientAliases() []string {
-	if o == nil {
+	if o == nil || IsNil(o.ClientAliases) {
 		var ret []string
 		return ret
 	}
-
 	return o.ClientAliases
 }
 
-// GetClientAliasesOk returns a tuple with the ClientAliases field value
+// GetClientAliasesOk returns a tuple with the ClientAliases field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetClientAliasesOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ClientAliases) {
 		return nil, false
 	}
 	return o.ClientAliases, true
 }
 
-// SetClientAliases sets field value
+// HasClientAliases returns a boolean if a field has been set.
+func (o *Client) HasClientAliases() bool {
+	if o != nil && !IsNil(o.ClientAliases) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientAliases gets a reference to the given []string and assigns it to the ClientAliases field.
 func (o *Client) SetClientAliases(v []string) {
 	o.ClientAliases = v
 }
 
-// GetAllowedClients returns the AllowedClients field value
+// GetAllowedClients returns the AllowedClients field value if set, zero value otherwise.
 func (o *Client) GetAllowedClients() []string {
-	if o == nil {
+	if o == nil || IsNil(o.AllowedClients) {
 		var ret []string
 		return ret
 	}
-
 	return o.AllowedClients
 }
 
-// GetAllowedClientsOk returns a tuple with the AllowedClients field value
+// GetAllowedClientsOk returns a tuple with the AllowedClients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetAllowedClientsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AllowedClients) {
 		return nil, false
 	}
 	return o.AllowedClients, true
 }
 
-// SetAllowedClients sets field value
+// HasAllowedClients returns a boolean if a field has been set.
+func (o *Client) HasAllowedClients() bool {
+	if o != nil && !IsNil(o.AllowedClients) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowedClients gets a reference to the given []string and assigns it to the AllowedClients field.
 func (o *Client) SetAllowedClients(v []string) {
 	o.AllowedClients = v
 }
 
-// GetAllowedLogoutUrls returns the AllowedLogoutUrls field value
+// GetAllowedLogoutUrls returns the AllowedLogoutUrls field value if set, zero value otherwise.
 func (o *Client) GetAllowedLogoutUrls() []string {
-	if o == nil {
+	if o == nil || IsNil(o.AllowedLogoutUrls) {
 		var ret []string
 		return ret
 	}
-
 	return o.AllowedLogoutUrls
 }
 
-// GetAllowedLogoutUrlsOk returns a tuple with the AllowedLogoutUrls field value
+// GetAllowedLogoutUrlsOk returns a tuple with the AllowedLogoutUrls field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetAllowedLogoutUrlsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AllowedLogoutUrls) {
 		return nil, false
 	}
 	return o.AllowedLogoutUrls, true
 }
 
-// SetAllowedLogoutUrls sets field value
+// HasAllowedLogoutUrls returns a boolean if a field has been set.
+func (o *Client) HasAllowedLogoutUrls() bool {
+	if o != nil && !IsNil(o.AllowedLogoutUrls) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowedLogoutUrls gets a reference to the given []string and assigns it to the AllowedLogoutUrls field.
 func (o *Client) SetAllowedLogoutUrls(v []string) {
 	o.AllowedLogoutUrls = v
 }
 
-// GetOidcLogout returns the OidcLogout field value
+// GetOidcLogout returns the OidcLogout field value if set, zero value otherwise.
 func (o *Client) GetOidcLogout() ClientOidcLogout {
-	if o == nil {
+	if o == nil || IsNil(o.OidcLogout) {
 		var ret ClientOidcLogout
 		return ret
 	}
-
-	return o.OidcLogout
+	return *o.OidcLogout
 }
 
-// GetOidcLogoutOk returns a tuple with the OidcLogout field value
+// GetOidcLogoutOk returns a tuple with the OidcLogout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetOidcLogoutOk() (*ClientOidcLogout, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OidcLogout) {
 		return nil, false
 	}
-	return &o.OidcLogout, true
+	return o.OidcLogout, true
 }
 
-// SetOidcLogout sets field value
+// HasOidcLogout returns a boolean if a field has been set.
+func (o *Client) HasOidcLogout() bool {
+	if o != nil && !IsNil(o.OidcLogout) {
+		return true
+	}
+
+	return false
+}
+
+// SetOidcLogout gets a reference to the given ClientOidcLogout and assigns it to the OidcLogout field.
 func (o *Client) SetOidcLogout(v ClientOidcLogout) {
-	o.OidcLogout = v
+	o.OidcLogout = &v
 }
 
-// GetGrantTypes returns the GrantTypes field value
+// GetGrantTypes returns the GrantTypes field value if set, zero value otherwise.
 func (o *Client) GetGrantTypes() []string {
-	if o == nil {
+	if o == nil || IsNil(o.GrantTypes) {
 		var ret []string
 		return ret
 	}
-
 	return o.GrantTypes
 }
 
-// GetGrantTypesOk returns a tuple with the GrantTypes field value
+// GetGrantTypesOk returns a tuple with the GrantTypes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetGrantTypesOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.GrantTypes) {
 		return nil, false
 	}
 	return o.GrantTypes, true
 }
 
-// SetGrantTypes sets field value
+// HasGrantTypes returns a boolean if a field has been set.
+func (o *Client) HasGrantTypes() bool {
+	if o != nil && !IsNil(o.GrantTypes) {
+		return true
+	}
+
+	return false
+}
+
+// SetGrantTypes gets a reference to the given []string and assigns it to the GrantTypes field.
 func (o *Client) SetGrantTypes(v []string) {
 	o.GrantTypes = v
 }
 
-// GetJwtConfiguration returns the JwtConfiguration field value
+// GetJwtConfiguration returns the JwtConfiguration field value if set, zero value otherwise.
 func (o *Client) GetJwtConfiguration() ClientJwtConfiguration {
-	if o == nil {
+	if o == nil || IsNil(o.JwtConfiguration) {
 		var ret ClientJwtConfiguration
 		return ret
 	}
-
-	return o.JwtConfiguration
+	return *o.JwtConfiguration
 }
 
-// GetJwtConfigurationOk returns a tuple with the JwtConfiguration field value
+// GetJwtConfigurationOk returns a tuple with the JwtConfiguration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetJwtConfigurationOk() (*ClientJwtConfiguration, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.JwtConfiguration) {
 		return nil, false
 	}
-	return &o.JwtConfiguration, true
+	return o.JwtConfiguration, true
 }
 
-// SetJwtConfiguration sets field value
+// HasJwtConfiguration returns a boolean if a field has been set.
+func (o *Client) HasJwtConfiguration() bool {
+	if o != nil && !IsNil(o.JwtConfiguration) {
+		return true
+	}
+
+	return false
+}
+
+// SetJwtConfiguration gets a reference to the given ClientJwtConfiguration and assigns it to the JwtConfiguration field.
 func (o *Client) SetJwtConfiguration(v ClientJwtConfiguration) {
-	o.JwtConfiguration = v
+	o.JwtConfiguration = &v
 }
 
-// GetSigningKeys returns the SigningKeys field value
+// GetSigningKeys returns the SigningKeys field value if set, zero value otherwise.
 func (o *Client) GetSigningKeys() []ClientSigningKeysInner {
-	if o == nil {
+	if o == nil || IsNil(o.SigningKeys) {
 		var ret []ClientSigningKeysInner
 		return ret
 	}
-
 	return o.SigningKeys
 }
 
-// GetSigningKeysOk returns a tuple with the SigningKeys field value
+// GetSigningKeysOk returns a tuple with the SigningKeys field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetSigningKeysOk() ([]ClientSigningKeysInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SigningKeys) {
 		return nil, false
 	}
 	return o.SigningKeys, true
 }
 
-// SetSigningKeys sets field value
+// HasSigningKeys returns a boolean if a field has been set.
+func (o *Client) HasSigningKeys() bool {
+	if o != nil && !IsNil(o.SigningKeys) {
+		return true
+	}
+
+	return false
+}
+
+// SetSigningKeys gets a reference to the given []ClientSigningKeysInner and assigns it to the SigningKeys field.
 func (o *Client) SetSigningKeys(v []ClientSigningKeysInner) {
 	o.SigningKeys = v
 }
 
-// GetEncryptionKey returns the EncryptionKey field value
-// If the value is explicit nil, the zero value for ClientEncryptionKey will be returned
+// GetEncryptionKey returns the EncryptionKey field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Client) GetEncryptionKey() ClientEncryptionKey {
-	if o == nil || o.EncryptionKey.Get() == nil {
+	if o == nil || IsNil(o.EncryptionKey.Get()) {
 		var ret ClientEncryptionKey
 		return ret
 	}
-
 	return *o.EncryptionKey.Get()
 }
 
-// GetEncryptionKeyOk returns a tuple with the EncryptionKey field value
+// GetEncryptionKeyOk returns a tuple with the EncryptionKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Client) GetEncryptionKeyOk() (*ClientEncryptionKey, bool) {
@@ -595,335 +753,456 @@ func (o *Client) GetEncryptionKeyOk() (*ClientEncryptionKey, bool) {
 	return o.EncryptionKey.Get(), o.EncryptionKey.IsSet()
 }
 
-// SetEncryptionKey sets field value
+// HasEncryptionKey returns a boolean if a field has been set.
+func (o *Client) HasEncryptionKey() bool {
+	if o != nil && o.EncryptionKey.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEncryptionKey gets a reference to the given NullableClientEncryptionKey and assigns it to the EncryptionKey field.
 func (o *Client) SetEncryptionKey(v ClientEncryptionKey) {
 	o.EncryptionKey.Set(&v)
 }
 
-// GetSso returns the Sso field value
+// SetEncryptionKeyNil sets the value for EncryptionKey to be an explicit nil
+func (o *Client) SetEncryptionKeyNil() {
+	o.EncryptionKey.Set(nil)
+}
+
+// UnsetEncryptionKey ensures that no value is present for EncryptionKey, not even an explicit nil
+func (o *Client) UnsetEncryptionKey() {
+	o.EncryptionKey.Unset()
+}
+
+// GetSso returns the Sso field value if set, zero value otherwise.
 func (o *Client) GetSso() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Sso) {
 		var ret bool
 		return ret
 	}
-
-	return o.Sso
+	return *o.Sso
 }
 
-// GetSsoOk returns a tuple with the Sso field value
+// GetSsoOk returns a tuple with the Sso field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetSsoOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Sso) {
 		return nil, false
 	}
-	return &o.Sso, true
+	return o.Sso, true
 }
 
-// SetSso sets field value
+// HasSso returns a boolean if a field has been set.
+func (o *Client) HasSso() bool {
+	if o != nil && !IsNil(o.Sso) {
+		return true
+	}
+
+	return false
+}
+
+// SetSso gets a reference to the given bool and assigns it to the Sso field.
 func (o *Client) SetSso(v bool) {
-	o.Sso = v
+	o.Sso = &v
 }
 
-// GetSsoDisabled returns the SsoDisabled field value
+// GetSsoDisabled returns the SsoDisabled field value if set, zero value otherwise.
 func (o *Client) GetSsoDisabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.SsoDisabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.SsoDisabled
+	return *o.SsoDisabled
 }
 
-// GetSsoDisabledOk returns a tuple with the SsoDisabled field value
+// GetSsoDisabledOk returns a tuple with the SsoDisabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetSsoDisabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SsoDisabled) {
 		return nil, false
 	}
-	return &o.SsoDisabled, true
+	return o.SsoDisabled, true
 }
 
-// SetSsoDisabled sets field value
+// HasSsoDisabled returns a boolean if a field has been set.
+func (o *Client) HasSsoDisabled() bool {
+	if o != nil && !IsNil(o.SsoDisabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetSsoDisabled gets a reference to the given bool and assigns it to the SsoDisabled field.
 func (o *Client) SetSsoDisabled(v bool) {
-	o.SsoDisabled = v
+	o.SsoDisabled = &v
 }
 
-// GetCrossOriginAuthentication returns the CrossOriginAuthentication field value
+// GetCrossOriginAuthentication returns the CrossOriginAuthentication field value if set, zero value otherwise.
 func (o *Client) GetCrossOriginAuthentication() bool {
-	if o == nil {
+	if o == nil || IsNil(o.CrossOriginAuthentication) {
 		var ret bool
 		return ret
 	}
-
-	return o.CrossOriginAuthentication
+	return *o.CrossOriginAuthentication
 }
 
-// GetCrossOriginAuthenticationOk returns a tuple with the CrossOriginAuthentication field value
+// GetCrossOriginAuthenticationOk returns a tuple with the CrossOriginAuthentication field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetCrossOriginAuthenticationOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CrossOriginAuthentication) {
 		return nil, false
 	}
-	return &o.CrossOriginAuthentication, true
+	return o.CrossOriginAuthentication, true
 }
 
-// SetCrossOriginAuthentication sets field value
+// HasCrossOriginAuthentication returns a boolean if a field has been set.
+func (o *Client) HasCrossOriginAuthentication() bool {
+	if o != nil && !IsNil(o.CrossOriginAuthentication) {
+		return true
+	}
+
+	return false
+}
+
+// SetCrossOriginAuthentication gets a reference to the given bool and assigns it to the CrossOriginAuthentication field.
 func (o *Client) SetCrossOriginAuthentication(v bool) {
-	o.CrossOriginAuthentication = v
+	o.CrossOriginAuthentication = &v
 }
 
-// GetCrossOriginLoc returns the CrossOriginLoc field value
+// GetCrossOriginLoc returns the CrossOriginLoc field value if set, zero value otherwise.
 func (o *Client) GetCrossOriginLoc() string {
-	if o == nil {
+	if o == nil || IsNil(o.CrossOriginLoc) {
 		var ret string
 		return ret
 	}
-
-	return o.CrossOriginLoc
+	return *o.CrossOriginLoc
 }
 
-// GetCrossOriginLocOk returns a tuple with the CrossOriginLoc field value
+// GetCrossOriginLocOk returns a tuple with the CrossOriginLoc field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetCrossOriginLocOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CrossOriginLoc) {
 		return nil, false
 	}
-	return &o.CrossOriginLoc, true
+	return o.CrossOriginLoc, true
 }
 
-// SetCrossOriginLoc sets field value
+// HasCrossOriginLoc returns a boolean if a field has been set.
+func (o *Client) HasCrossOriginLoc() bool {
+	if o != nil && !IsNil(o.CrossOriginLoc) {
+		return true
+	}
+
+	return false
+}
+
+// SetCrossOriginLoc gets a reference to the given string and assigns it to the CrossOriginLoc field.
 func (o *Client) SetCrossOriginLoc(v string) {
-	o.CrossOriginLoc = v
+	o.CrossOriginLoc = &v
 }
 
-// GetCustomLoginPageOn returns the CustomLoginPageOn field value
+// GetCustomLoginPageOn returns the CustomLoginPageOn field value if set, zero value otherwise.
 func (o *Client) GetCustomLoginPageOn() bool {
-	if o == nil {
+	if o == nil || IsNil(o.CustomLoginPageOn) {
 		var ret bool
 		return ret
 	}
-
-	return o.CustomLoginPageOn
+	return *o.CustomLoginPageOn
 }
 
-// GetCustomLoginPageOnOk returns a tuple with the CustomLoginPageOn field value
+// GetCustomLoginPageOnOk returns a tuple with the CustomLoginPageOn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetCustomLoginPageOnOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CustomLoginPageOn) {
 		return nil, false
 	}
-	return &o.CustomLoginPageOn, true
+	return o.CustomLoginPageOn, true
 }
 
-// SetCustomLoginPageOn sets field value
+// HasCustomLoginPageOn returns a boolean if a field has been set.
+func (o *Client) HasCustomLoginPageOn() bool {
+	if o != nil && !IsNil(o.CustomLoginPageOn) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomLoginPageOn gets a reference to the given bool and assigns it to the CustomLoginPageOn field.
 func (o *Client) SetCustomLoginPageOn(v bool) {
-	o.CustomLoginPageOn = v
+	o.CustomLoginPageOn = &v
 }
 
-// GetCustomLoginPage returns the CustomLoginPage field value
+// GetCustomLoginPage returns the CustomLoginPage field value if set, zero value otherwise.
 func (o *Client) GetCustomLoginPage() string {
-	if o == nil {
+	if o == nil || IsNil(o.CustomLoginPage) {
 		var ret string
 		return ret
 	}
-
-	return o.CustomLoginPage
+	return *o.CustomLoginPage
 }
 
-// GetCustomLoginPageOk returns a tuple with the CustomLoginPage field value
+// GetCustomLoginPageOk returns a tuple with the CustomLoginPage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetCustomLoginPageOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CustomLoginPage) {
 		return nil, false
 	}
-	return &o.CustomLoginPage, true
+	return o.CustomLoginPage, true
 }
 
-// SetCustomLoginPage sets field value
+// HasCustomLoginPage returns a boolean if a field has been set.
+func (o *Client) HasCustomLoginPage() bool {
+	if o != nil && !IsNil(o.CustomLoginPage) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomLoginPage gets a reference to the given string and assigns it to the CustomLoginPage field.
 func (o *Client) SetCustomLoginPage(v string) {
-	o.CustomLoginPage = v
+	o.CustomLoginPage = &v
 }
 
-// GetCustomLoginPagePreview returns the CustomLoginPagePreview field value
+// GetCustomLoginPagePreview returns the CustomLoginPagePreview field value if set, zero value otherwise.
 func (o *Client) GetCustomLoginPagePreview() string {
-	if o == nil {
+	if o == nil || IsNil(o.CustomLoginPagePreview) {
 		var ret string
 		return ret
 	}
-
-	return o.CustomLoginPagePreview
+	return *o.CustomLoginPagePreview
 }
 
-// GetCustomLoginPagePreviewOk returns a tuple with the CustomLoginPagePreview field value
+// GetCustomLoginPagePreviewOk returns a tuple with the CustomLoginPagePreview field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetCustomLoginPagePreviewOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CustomLoginPagePreview) {
 		return nil, false
 	}
-	return &o.CustomLoginPagePreview, true
+	return o.CustomLoginPagePreview, true
 }
 
-// SetCustomLoginPagePreview sets field value
+// HasCustomLoginPagePreview returns a boolean if a field has been set.
+func (o *Client) HasCustomLoginPagePreview() bool {
+	if o != nil && !IsNil(o.CustomLoginPagePreview) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomLoginPagePreview gets a reference to the given string and assigns it to the CustomLoginPagePreview field.
 func (o *Client) SetCustomLoginPagePreview(v string) {
-	o.CustomLoginPagePreview = v
+	o.CustomLoginPagePreview = &v
 }
 
-// GetFormTemplate returns the FormTemplate field value
+// GetFormTemplate returns the FormTemplate field value if set, zero value otherwise.
 func (o *Client) GetFormTemplate() string {
-	if o == nil {
+	if o == nil || IsNil(o.FormTemplate) {
 		var ret string
 		return ret
 	}
-
-	return o.FormTemplate
+	return *o.FormTemplate
 }
 
-// GetFormTemplateOk returns a tuple with the FormTemplate field value
+// GetFormTemplateOk returns a tuple with the FormTemplate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetFormTemplateOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.FormTemplate) {
 		return nil, false
 	}
-	return &o.FormTemplate, true
+	return o.FormTemplate, true
 }
 
-// SetFormTemplate sets field value
+// HasFormTemplate returns a boolean if a field has been set.
+func (o *Client) HasFormTemplate() bool {
+	if o != nil && !IsNil(o.FormTemplate) {
+		return true
+	}
+
+	return false
+}
+
+// SetFormTemplate gets a reference to the given string and assigns it to the FormTemplate field.
 func (o *Client) SetFormTemplate(v string) {
-	o.FormTemplate = v
+	o.FormTemplate = &v
 }
 
-// GetAddons returns the Addons field value
+// GetAddons returns the Addons field value if set, zero value otherwise.
 func (o *Client) GetAddons() ClientAddons {
-	if o == nil {
+	if o == nil || IsNil(o.Addons) {
 		var ret ClientAddons
 		return ret
 	}
-
-	return o.Addons
+	return *o.Addons
 }
 
-// GetAddonsOk returns a tuple with the Addons field value
+// GetAddonsOk returns a tuple with the Addons field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetAddonsOk() (*ClientAddons, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Addons) {
 		return nil, false
 	}
-	return &o.Addons, true
+	return o.Addons, true
 }
 
-// SetAddons sets field value
+// HasAddons returns a boolean if a field has been set.
+func (o *Client) HasAddons() bool {
+	if o != nil && !IsNil(o.Addons) {
+		return true
+	}
+
+	return false
+}
+
+// SetAddons gets a reference to the given ClientAddons and assigns it to the Addons field.
 func (o *Client) SetAddons(v ClientAddons) {
-	o.Addons = v
+	o.Addons = &v
 }
 
-// GetTokenEndpointAuthMethod returns the TokenEndpointAuthMethod field value
+// GetTokenEndpointAuthMethod returns the TokenEndpointAuthMethod field value if set, zero value otherwise.
 func (o *Client) GetTokenEndpointAuthMethod() ClientTokenEndpointAuthMethod {
-	if o == nil {
+	if o == nil || IsNil(o.TokenEndpointAuthMethod) {
 		var ret ClientTokenEndpointAuthMethod
 		return ret
 	}
-
-	return o.TokenEndpointAuthMethod
+	return *o.TokenEndpointAuthMethod
 }
 
-// GetTokenEndpointAuthMethodOk returns a tuple with the TokenEndpointAuthMethod field value
+// GetTokenEndpointAuthMethodOk returns a tuple with the TokenEndpointAuthMethod field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetTokenEndpointAuthMethodOk() (*ClientTokenEndpointAuthMethod, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TokenEndpointAuthMethod) {
 		return nil, false
 	}
-	return &o.TokenEndpointAuthMethod, true
+	return o.TokenEndpointAuthMethod, true
 }
 
-// SetTokenEndpointAuthMethod sets field value
+// HasTokenEndpointAuthMethod returns a boolean if a field has been set.
+func (o *Client) HasTokenEndpointAuthMethod() bool {
+	if o != nil && !IsNil(o.TokenEndpointAuthMethod) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenEndpointAuthMethod gets a reference to the given ClientTokenEndpointAuthMethod and assigns it to the TokenEndpointAuthMethod field.
 func (o *Client) SetTokenEndpointAuthMethod(v ClientTokenEndpointAuthMethod) {
-	o.TokenEndpointAuthMethod = v
+	o.TokenEndpointAuthMethod = &v
 }
 
-// GetClientMetadata returns the ClientMetadata field value
+// GetClientMetadata returns the ClientMetadata field value if set, zero value otherwise.
 func (o *Client) GetClientMetadata() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.ClientMetadata) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.ClientMetadata
 }
 
-// GetClientMetadataOk returns a tuple with the ClientMetadata field value
+// GetClientMetadataOk returns a tuple with the ClientMetadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetClientMetadataOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ClientMetadata) {
 		return map[string]interface{}{}, false
 	}
 	return o.ClientMetadata, true
 }
 
-// SetClientMetadata sets field value
+// HasClientMetadata returns a boolean if a field has been set.
+func (o *Client) HasClientMetadata() bool {
+	if o != nil && !IsNil(o.ClientMetadata) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientMetadata gets a reference to the given map[string]interface{} and assigns it to the ClientMetadata field.
 func (o *Client) SetClientMetadata(v map[string]interface{}) {
 	o.ClientMetadata = v
 }
 
-// GetMobile returns the Mobile field value
+// GetMobile returns the Mobile field value if set, zero value otherwise.
 func (o *Client) GetMobile() ClientMobile {
-	if o == nil {
+	if o == nil || IsNil(o.Mobile) {
 		var ret ClientMobile
 		return ret
 	}
-
-	return o.Mobile
+	return *o.Mobile
 }
 
-// GetMobileOk returns a tuple with the Mobile field value
+// GetMobileOk returns a tuple with the Mobile field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetMobileOk() (*ClientMobile, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Mobile) {
 		return nil, false
 	}
-	return &o.Mobile, true
+	return o.Mobile, true
 }
 
-// SetMobile sets field value
+// HasMobile returns a boolean if a field has been set.
+func (o *Client) HasMobile() bool {
+	if o != nil && !IsNil(o.Mobile) {
+		return true
+	}
+
+	return false
+}
+
+// SetMobile gets a reference to the given ClientMobile and assigns it to the Mobile field.
 func (o *Client) SetMobile(v ClientMobile) {
-	o.Mobile = v
+	o.Mobile = &v
 }
 
-// GetInitiateLoginUri returns the InitiateLoginUri field value
+// GetInitiateLoginUri returns the InitiateLoginUri field value if set, zero value otherwise.
 func (o *Client) GetInitiateLoginUri() string {
-	if o == nil {
+	if o == nil || IsNil(o.InitiateLoginUri) {
 		var ret string
 		return ret
 	}
-
-	return o.InitiateLoginUri
+	return *o.InitiateLoginUri
 }
 
-// GetInitiateLoginUriOk returns a tuple with the InitiateLoginUri field value
+// GetInitiateLoginUriOk returns a tuple with the InitiateLoginUri field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetInitiateLoginUriOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.InitiateLoginUri) {
 		return nil, false
 	}
-	return &o.InitiateLoginUri, true
+	return o.InitiateLoginUri, true
 }
 
-// SetInitiateLoginUri sets field value
+// HasInitiateLoginUri returns a boolean if a field has been set.
+func (o *Client) HasInitiateLoginUri() bool {
+	if o != nil && !IsNil(o.InitiateLoginUri) {
+		return true
+	}
+
+	return false
+}
+
+// SetInitiateLoginUri gets a reference to the given string and assigns it to the InitiateLoginUri field.
 func (o *Client) SetInitiateLoginUri(v string) {
-	o.InitiateLoginUri = v
+	o.InitiateLoginUri = &v
 }
 
-// GetNativeSocialLogin returns the NativeSocialLogin field value
-// If the value is explicit nil, the zero value for ClientNativeSocialLogin will be returned
+// GetNativeSocialLogin returns the NativeSocialLogin field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Client) GetNativeSocialLogin() ClientNativeSocialLogin {
-	if o == nil || o.NativeSocialLogin.Get() == nil {
+	if o == nil || IsNil(o.NativeSocialLogin.Get()) {
 		var ret ClientNativeSocialLogin
 		return ret
 	}
-
 	return *o.NativeSocialLogin.Get()
 }
 
-// GetNativeSocialLoginOk returns a tuple with the NativeSocialLogin field value
+// GetNativeSocialLoginOk returns a tuple with the NativeSocialLogin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Client) GetNativeSocialLoginOk() (*ClientNativeSocialLogin, bool) {
@@ -933,23 +1212,40 @@ func (o *Client) GetNativeSocialLoginOk() (*ClientNativeSocialLogin, bool) {
 	return o.NativeSocialLogin.Get(), o.NativeSocialLogin.IsSet()
 }
 
-// SetNativeSocialLogin sets field value
+// HasNativeSocialLogin returns a boolean if a field has been set.
+func (o *Client) HasNativeSocialLogin() bool {
+	if o != nil && o.NativeSocialLogin.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNativeSocialLogin gets a reference to the given NullableClientNativeSocialLogin and assigns it to the NativeSocialLogin field.
 func (o *Client) SetNativeSocialLogin(v ClientNativeSocialLogin) {
 	o.NativeSocialLogin.Set(&v)
 }
 
-// GetRefreshToken returns the RefreshToken field value
-// If the value is explicit nil, the zero value for ClientRefreshToken will be returned
+// SetNativeSocialLoginNil sets the value for NativeSocialLogin to be an explicit nil
+func (o *Client) SetNativeSocialLoginNil() {
+	o.NativeSocialLogin.Set(nil)
+}
+
+// UnsetNativeSocialLogin ensures that no value is present for NativeSocialLogin, not even an explicit nil
+func (o *Client) UnsetNativeSocialLogin() {
+	o.NativeSocialLogin.Unset()
+}
+
+// GetRefreshToken returns the RefreshToken field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Client) GetRefreshToken() ClientRefreshToken {
-	if o == nil || o.RefreshToken.Get() == nil {
+	if o == nil || IsNil(o.RefreshToken.Get()) {
 		var ret ClientRefreshToken
 		return ret
 	}
-
 	return *o.RefreshToken.Get()
 }
 
-// GetRefreshTokenOk returns a tuple with the RefreshToken field value
+// GetRefreshTokenOk returns a tuple with the RefreshToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Client) GetRefreshTokenOk() (*ClientRefreshToken, bool) {
@@ -959,71 +1255,104 @@ func (o *Client) GetRefreshTokenOk() (*ClientRefreshToken, bool) {
 	return o.RefreshToken.Get(), o.RefreshToken.IsSet()
 }
 
-// SetRefreshToken sets field value
+// HasRefreshToken returns a boolean if a field has been set.
+func (o *Client) HasRefreshToken() bool {
+	if o != nil && o.RefreshToken.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRefreshToken gets a reference to the given NullableClientRefreshToken and assigns it to the RefreshToken field.
 func (o *Client) SetRefreshToken(v ClientRefreshToken) {
 	o.RefreshToken.Set(&v)
 }
 
-// GetOrganizationUsage returns the OrganizationUsage field value
+// SetRefreshTokenNil sets the value for RefreshToken to be an explicit nil
+func (o *Client) SetRefreshTokenNil() {
+	o.RefreshToken.Set(nil)
+}
+
+// UnsetRefreshToken ensures that no value is present for RefreshToken, not even an explicit nil
+func (o *Client) UnsetRefreshToken() {
+	o.RefreshToken.Unset()
+}
+
+// GetOrganizationUsage returns the OrganizationUsage field value if set, zero value otherwise.
 func (o *Client) GetOrganizationUsage() ClientOrganizationUsage {
-	if o == nil {
+	if o == nil || IsNil(o.OrganizationUsage) {
 		var ret ClientOrganizationUsage
 		return ret
 	}
-
-	return o.OrganizationUsage
+	return *o.OrganizationUsage
 }
 
-// GetOrganizationUsageOk returns a tuple with the OrganizationUsage field value
+// GetOrganizationUsageOk returns a tuple with the OrganizationUsage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetOrganizationUsageOk() (*ClientOrganizationUsage, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OrganizationUsage) {
 		return nil, false
 	}
-	return &o.OrganizationUsage, true
+	return o.OrganizationUsage, true
 }
 
-// SetOrganizationUsage sets field value
+// HasOrganizationUsage returns a boolean if a field has been set.
+func (o *Client) HasOrganizationUsage() bool {
+	if o != nil && !IsNil(o.OrganizationUsage) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrganizationUsage gets a reference to the given ClientOrganizationUsage and assigns it to the OrganizationUsage field.
 func (o *Client) SetOrganizationUsage(v ClientOrganizationUsage) {
-	o.OrganizationUsage = v
+	o.OrganizationUsage = &v
 }
 
-// GetOrganizationRequireBehavior returns the OrganizationRequireBehavior field value
+// GetOrganizationRequireBehavior returns the OrganizationRequireBehavior field value if set, zero value otherwise.
 func (o *Client) GetOrganizationRequireBehavior() ClientOrganizationRequireBehavior {
-	if o == nil {
+	if o == nil || IsNil(o.OrganizationRequireBehavior) {
 		var ret ClientOrganizationRequireBehavior
 		return ret
 	}
-
-	return o.OrganizationRequireBehavior
+	return *o.OrganizationRequireBehavior
 }
 
-// GetOrganizationRequireBehaviorOk returns a tuple with the OrganizationRequireBehavior field value
+// GetOrganizationRequireBehaviorOk returns a tuple with the OrganizationRequireBehavior field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetOrganizationRequireBehaviorOk() (*ClientOrganizationRequireBehavior, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OrganizationRequireBehavior) {
 		return nil, false
 	}
-	return &o.OrganizationRequireBehavior, true
+	return o.OrganizationRequireBehavior, true
 }
 
-// SetOrganizationRequireBehavior sets field value
+// HasOrganizationRequireBehavior returns a boolean if a field has been set.
+func (o *Client) HasOrganizationRequireBehavior() bool {
+	if o != nil && !IsNil(o.OrganizationRequireBehavior) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrganizationRequireBehavior gets a reference to the given ClientOrganizationRequireBehavior and assigns it to the OrganizationRequireBehavior field.
 func (o *Client) SetOrganizationRequireBehavior(v ClientOrganizationRequireBehavior) {
-	o.OrganizationRequireBehavior = v
+	o.OrganizationRequireBehavior = &v
 }
 
-// GetClientAuthenticationMethods returns the ClientAuthenticationMethods field value
-// If the value is explicit nil, the zero value for ClientClientAuthenticationMethods will be returned
+// GetClientAuthenticationMethods returns the ClientAuthenticationMethods field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Client) GetClientAuthenticationMethods() ClientClientAuthenticationMethods {
-	if o == nil || o.ClientAuthenticationMethods.Get() == nil {
+	if o == nil || IsNil(o.ClientAuthenticationMethods.Get()) {
 		var ret ClientClientAuthenticationMethods
 		return ret
 	}
-
 	return *o.ClientAuthenticationMethods.Get()
 }
 
-// GetClientAuthenticationMethodsOk returns a tuple with the ClientAuthenticationMethods field value
+// GetClientAuthenticationMethodsOk returns a tuple with the ClientAuthenticationMethods field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Client) GetClientAuthenticationMethodsOk() (*ClientClientAuthenticationMethods, bool) {
@@ -1033,95 +1362,136 @@ func (o *Client) GetClientAuthenticationMethodsOk() (*ClientClientAuthentication
 	return o.ClientAuthenticationMethods.Get(), o.ClientAuthenticationMethods.IsSet()
 }
 
-// SetClientAuthenticationMethods sets field value
+// HasClientAuthenticationMethods returns a boolean if a field has been set.
+func (o *Client) HasClientAuthenticationMethods() bool {
+	if o != nil && o.ClientAuthenticationMethods.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetClientAuthenticationMethods gets a reference to the given NullableClientClientAuthenticationMethods and assigns it to the ClientAuthenticationMethods field.
 func (o *Client) SetClientAuthenticationMethods(v ClientClientAuthenticationMethods) {
 	o.ClientAuthenticationMethods.Set(&v)
 }
 
-// GetRequirePushedAuthorizationRequests returns the RequirePushedAuthorizationRequests field value
+// SetClientAuthenticationMethodsNil sets the value for ClientAuthenticationMethods to be an explicit nil
+func (o *Client) SetClientAuthenticationMethodsNil() {
+	o.ClientAuthenticationMethods.Set(nil)
+}
+
+// UnsetClientAuthenticationMethods ensures that no value is present for ClientAuthenticationMethods, not even an explicit nil
+func (o *Client) UnsetClientAuthenticationMethods() {
+	o.ClientAuthenticationMethods.Unset()
+}
+
+// GetRequirePushedAuthorizationRequests returns the RequirePushedAuthorizationRequests field value if set, zero value otherwise.
 func (o *Client) GetRequirePushedAuthorizationRequests() bool {
-	if o == nil {
+	if o == nil || IsNil(o.RequirePushedAuthorizationRequests) {
 		var ret bool
 		return ret
 	}
-
-	return o.RequirePushedAuthorizationRequests
+	return *o.RequirePushedAuthorizationRequests
 }
 
-// GetRequirePushedAuthorizationRequestsOk returns a tuple with the RequirePushedAuthorizationRequests field value
+// GetRequirePushedAuthorizationRequestsOk returns a tuple with the RequirePushedAuthorizationRequests field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetRequirePushedAuthorizationRequestsOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RequirePushedAuthorizationRequests) {
 		return nil, false
 	}
-	return &o.RequirePushedAuthorizationRequests, true
+	return o.RequirePushedAuthorizationRequests, true
 }
 
-// SetRequirePushedAuthorizationRequests sets field value
+// HasRequirePushedAuthorizationRequests returns a boolean if a field has been set.
+func (o *Client) HasRequirePushedAuthorizationRequests() bool {
+	if o != nil && !IsNil(o.RequirePushedAuthorizationRequests) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequirePushedAuthorizationRequests gets a reference to the given bool and assigns it to the RequirePushedAuthorizationRequests field.
 func (o *Client) SetRequirePushedAuthorizationRequests(v bool) {
-	o.RequirePushedAuthorizationRequests = v
+	o.RequirePushedAuthorizationRequests = &v
 }
 
-// GetSignedRequestObject returns the SignedRequestObject field value
+// GetSignedRequestObject returns the SignedRequestObject field value if set, zero value otherwise.
 func (o *Client) GetSignedRequestObject() ClientSignedRequestObject {
-	if o == nil {
+	if o == nil || IsNil(o.SignedRequestObject) {
 		var ret ClientSignedRequestObject
 		return ret
 	}
-
-	return o.SignedRequestObject
+	return *o.SignedRequestObject
 }
 
-// GetSignedRequestObjectOk returns a tuple with the SignedRequestObject field value
+// GetSignedRequestObjectOk returns a tuple with the SignedRequestObject field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetSignedRequestObjectOk() (*ClientSignedRequestObject, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SignedRequestObject) {
 		return nil, false
 	}
-	return &o.SignedRequestObject, true
+	return o.SignedRequestObject, true
 }
 
-// SetSignedRequestObject sets field value
+// HasSignedRequestObject returns a boolean if a field has been set.
+func (o *Client) HasSignedRequestObject() bool {
+	if o != nil && !IsNil(o.SignedRequestObject) {
+		return true
+	}
+
+	return false
+}
+
+// SetSignedRequestObject gets a reference to the given ClientSignedRequestObject and assigns it to the SignedRequestObject field.
 func (o *Client) SetSignedRequestObject(v ClientSignedRequestObject) {
-	o.SignedRequestObject = v
+	o.SignedRequestObject = &v
 }
 
-// GetRequireProofOfPossession returns the RequireProofOfPossession field value
+// GetRequireProofOfPossession returns the RequireProofOfPossession field value if set, zero value otherwise.
 func (o *Client) GetRequireProofOfPossession() bool {
-	if o == nil {
+	if o == nil || IsNil(o.RequireProofOfPossession) {
 		var ret bool
 		return ret
 	}
-
-	return o.RequireProofOfPossession
+	return *o.RequireProofOfPossession
 }
 
-// GetRequireProofOfPossessionOk returns a tuple with the RequireProofOfPossession field value
+// GetRequireProofOfPossessionOk returns a tuple with the RequireProofOfPossession field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Client) GetRequireProofOfPossessionOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RequireProofOfPossession) {
 		return nil, false
 	}
-	return &o.RequireProofOfPossession, true
+	return o.RequireProofOfPossession, true
 }
 
-// SetRequireProofOfPossession sets field value
+// HasRequireProofOfPossession returns a boolean if a field has been set.
+func (o *Client) HasRequireProofOfPossession() bool {
+	if o != nil && !IsNil(o.RequireProofOfPossession) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequireProofOfPossession gets a reference to the given bool and assigns it to the RequireProofOfPossession field.
 func (o *Client) SetRequireProofOfPossession(v bool) {
-	o.RequireProofOfPossession = v
+	o.RequireProofOfPossession = &v
 }
 
-// GetComplianceLevel returns the ComplianceLevel field value
-// If the value is explicit nil, the zero value for ClientComplianceLevel will be returned
+// GetComplianceLevel returns the ComplianceLevel field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Client) GetComplianceLevel() ClientComplianceLevel {
-	if o == nil || o.ComplianceLevel.Get() == nil {
+	if o == nil || IsNil(o.ComplianceLevel.Get()) {
 		var ret ClientComplianceLevel
 		return ret
 	}
-
 	return *o.ComplianceLevel.Get()
 }
 
-// GetComplianceLevelOk returns a tuple with the ComplianceLevel field value
+// GetComplianceLevelOk returns a tuple with the ComplianceLevel field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Client) GetComplianceLevelOk() (*ClientComplianceLevel, bool) {
@@ -1131,9 +1501,28 @@ func (o *Client) GetComplianceLevelOk() (*ClientComplianceLevel, bool) {
 	return o.ComplianceLevel.Get(), o.ComplianceLevel.IsSet()
 }
 
-// SetComplianceLevel sets field value
+// HasComplianceLevel returns a boolean if a field has been set.
+func (o *Client) HasComplianceLevel() bool {
+	if o != nil && o.ComplianceLevel.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetComplianceLevel gets a reference to the given NullableClientComplianceLevel and assigns it to the ComplianceLevel field.
 func (o *Client) SetComplianceLevel(v ClientComplianceLevel) {
 	o.ComplianceLevel.Set(&v)
+}
+
+// SetComplianceLevelNil sets the value for ComplianceLevel to be an explicit nil
+func (o *Client) SetComplianceLevelNil() {
+	o.ComplianceLevel.Set(nil)
+}
+
+// UnsetComplianceLevel ensures that no value is present for ComplianceLevel, not even an explicit nil
+func (o *Client) UnsetComplianceLevel() {
+	o.ComplianceLevel.Unset()
 }
 
 func (o Client) MarshalJSON() ([]byte, error) {
@@ -1146,49 +1535,135 @@ func (o Client) MarshalJSON() ([]byte, error) {
 
 func (o Client) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["client_id"] = o.ClientId
-	toSerialize["tenant"] = o.Tenant
-	toSerialize["name"] = o.Name
-	toSerialize["description"] = o.Description
-	toSerialize["global"] = o.Global
-	toSerialize["client_secret"] = o.ClientSecret
-	toSerialize["app_type"] = o.AppType
-	toSerialize["logo_uri"] = o.LogoUri
-	toSerialize["is_first_party"] = o.IsFirstParty
-	toSerialize["oidc_conformant"] = o.OidcConformant
-	toSerialize["callbacks"] = o.Callbacks
-	toSerialize["allowed_origins"] = o.AllowedOrigins
-	toSerialize["web_origins"] = o.WebOrigins
-	toSerialize["client_aliases"] = o.ClientAliases
-	toSerialize["allowed_clients"] = o.AllowedClients
-	toSerialize["allowed_logout_urls"] = o.AllowedLogoutUrls
-	toSerialize["oidc_logout"] = o.OidcLogout
-	toSerialize["grant_types"] = o.GrantTypes
-	toSerialize["jwt_configuration"] = o.JwtConfiguration
-	toSerialize["signing_keys"] = o.SigningKeys
-	toSerialize["encryption_key"] = o.EncryptionKey.Get()
-	toSerialize["sso"] = o.Sso
-	toSerialize["sso_disabled"] = o.SsoDisabled
-	toSerialize["cross_origin_authentication"] = o.CrossOriginAuthentication
-	toSerialize["cross_origin_loc"] = o.CrossOriginLoc
-	toSerialize["custom_login_page_on"] = o.CustomLoginPageOn
-	toSerialize["custom_login_page"] = o.CustomLoginPage
-	toSerialize["custom_login_page_preview"] = o.CustomLoginPagePreview
-	toSerialize["form_template"] = o.FormTemplate
-	toSerialize["addons"] = o.Addons
-	toSerialize["token_endpoint_auth_method"] = o.TokenEndpointAuthMethod
-	toSerialize["client_metadata"] = o.ClientMetadata
-	toSerialize["mobile"] = o.Mobile
-	toSerialize["initiate_login_uri"] = o.InitiateLoginUri
-	toSerialize["native_social_login"] = o.NativeSocialLogin.Get()
-	toSerialize["refresh_token"] = o.RefreshToken.Get()
-	toSerialize["organization_usage"] = o.OrganizationUsage
-	toSerialize["organization_require_behavior"] = o.OrganizationRequireBehavior
-	toSerialize["client_authentication_methods"] = o.ClientAuthenticationMethods.Get()
-	toSerialize["require_pushed_authorization_requests"] = o.RequirePushedAuthorizationRequests
-	toSerialize["signed_request_object"] = o.SignedRequestObject
-	toSerialize["require_proof_of_possession"] = o.RequireProofOfPossession
-	toSerialize["compliance_level"] = o.ComplianceLevel.Get()
+	if !IsNil(o.ClientId) {
+		toSerialize["client_id"] = o.ClientId
+	}
+	if !IsNil(o.Tenant) {
+		toSerialize["tenant"] = o.Tenant
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.Global) {
+		toSerialize["global"] = o.Global
+	}
+	if !IsNil(o.ClientSecret) {
+		toSerialize["client_secret"] = o.ClientSecret
+	}
+	if !IsNil(o.AppType) {
+		toSerialize["app_type"] = o.AppType
+	}
+	if !IsNil(o.LogoUri) {
+		toSerialize["logo_uri"] = o.LogoUri
+	}
+	if !IsNil(o.IsFirstParty) {
+		toSerialize["is_first_party"] = o.IsFirstParty
+	}
+	if !IsNil(o.OidcConformant) {
+		toSerialize["oidc_conformant"] = o.OidcConformant
+	}
+	if !IsNil(o.Callbacks) {
+		toSerialize["callbacks"] = o.Callbacks
+	}
+	if !IsNil(o.AllowedOrigins) {
+		toSerialize["allowed_origins"] = o.AllowedOrigins
+	}
+	if !IsNil(o.WebOrigins) {
+		toSerialize["web_origins"] = o.WebOrigins
+	}
+	if !IsNil(o.ClientAliases) {
+		toSerialize["client_aliases"] = o.ClientAliases
+	}
+	if !IsNil(o.AllowedClients) {
+		toSerialize["allowed_clients"] = o.AllowedClients
+	}
+	if !IsNil(o.AllowedLogoutUrls) {
+		toSerialize["allowed_logout_urls"] = o.AllowedLogoutUrls
+	}
+	if !IsNil(o.OidcLogout) {
+		toSerialize["oidc_logout"] = o.OidcLogout
+	}
+	if !IsNil(o.GrantTypes) {
+		toSerialize["grant_types"] = o.GrantTypes
+	}
+	if !IsNil(o.JwtConfiguration) {
+		toSerialize["jwt_configuration"] = o.JwtConfiguration
+	}
+	if !IsNil(o.SigningKeys) {
+		toSerialize["signing_keys"] = o.SigningKeys
+	}
+	if o.EncryptionKey.IsSet() {
+		toSerialize["encryption_key"] = o.EncryptionKey.Get()
+	}
+	if !IsNil(o.Sso) {
+		toSerialize["sso"] = o.Sso
+	}
+	if !IsNil(o.SsoDisabled) {
+		toSerialize["sso_disabled"] = o.SsoDisabled
+	}
+	if !IsNil(o.CrossOriginAuthentication) {
+		toSerialize["cross_origin_authentication"] = o.CrossOriginAuthentication
+	}
+	if !IsNil(o.CrossOriginLoc) {
+		toSerialize["cross_origin_loc"] = o.CrossOriginLoc
+	}
+	if !IsNil(o.CustomLoginPageOn) {
+		toSerialize["custom_login_page_on"] = o.CustomLoginPageOn
+	}
+	if !IsNil(o.CustomLoginPage) {
+		toSerialize["custom_login_page"] = o.CustomLoginPage
+	}
+	if !IsNil(o.CustomLoginPagePreview) {
+		toSerialize["custom_login_page_preview"] = o.CustomLoginPagePreview
+	}
+	if !IsNil(o.FormTemplate) {
+		toSerialize["form_template"] = o.FormTemplate
+	}
+	if !IsNil(o.Addons) {
+		toSerialize["addons"] = o.Addons
+	}
+	if !IsNil(o.TokenEndpointAuthMethod) {
+		toSerialize["token_endpoint_auth_method"] = o.TokenEndpointAuthMethod
+	}
+	if !IsNil(o.ClientMetadata) {
+		toSerialize["client_metadata"] = o.ClientMetadata
+	}
+	if !IsNil(o.Mobile) {
+		toSerialize["mobile"] = o.Mobile
+	}
+	if !IsNil(o.InitiateLoginUri) {
+		toSerialize["initiate_login_uri"] = o.InitiateLoginUri
+	}
+	if o.NativeSocialLogin.IsSet() {
+		toSerialize["native_social_login"] = o.NativeSocialLogin.Get()
+	}
+	if o.RefreshToken.IsSet() {
+		toSerialize["refresh_token"] = o.RefreshToken.Get()
+	}
+	if !IsNil(o.OrganizationUsage) {
+		toSerialize["organization_usage"] = o.OrganizationUsage
+	}
+	if !IsNil(o.OrganizationRequireBehavior) {
+		toSerialize["organization_require_behavior"] = o.OrganizationRequireBehavior
+	}
+	if o.ClientAuthenticationMethods.IsSet() {
+		toSerialize["client_authentication_methods"] = o.ClientAuthenticationMethods.Get()
+	}
+	if !IsNil(o.RequirePushedAuthorizationRequests) {
+		toSerialize["require_pushed_authorization_requests"] = o.RequirePushedAuthorizationRequests
+	}
+	if !IsNil(o.SignedRequestObject) {
+		toSerialize["signed_request_object"] = o.SignedRequestObject
+	}
+	if !IsNil(o.RequireProofOfPossession) {
+		toSerialize["require_proof_of_possession"] = o.RequireProofOfPossession
+	}
+	if o.ComplianceLevel.IsSet() {
+		toSerialize["compliance_level"] = o.ComplianceLevel.Get()
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

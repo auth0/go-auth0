@@ -11,221 +11,282 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetUsers200ResponseOneOfInnerIdentitiesInner struct for GetUsers200ResponseOneOfInnerIdentitiesInner
 type GetUsers200ResponseOneOfInnerIdentitiesInner struct {
 	// Name of the connection containing this identity.
-	Connection string `json:"connection"`
+	Connection *string `json:"connection,omitempty"`
 	// Unique identifier of the user user for this identity.
-	UserId string `json:"user_id"`
+	UserId *string `json:"user_id,omitempty"`
 	// The type of identity provider
-	Provider string `json:"provider"`
+	Provider *string `json:"provider,omitempty"`
 	// Whether this identity is from a social provider (true) or not (false).
-	IsSocial bool `json:"isSocial"`
+	IsSocial *bool `json:"isSocial,omitempty"`
 	// IDP access token returned only if scope read:user_idp_tokens is defined.
-	AccessToken string `json:"access_token"`
+	AccessToken *string `json:"access_token,omitempty"`
 	// IDP access token secret returned only if scope read:user_idp_tokens is defined.
-	AccessTokenSecret string `json:"access_token_secret"`
+	AccessTokenSecret *string `json:"access_token_secret,omitempty"`
 	// IDP refresh token returned only if scope read:user_idp_tokens is defined.
-	RefreshToken string      `json:"refresh_token"`
-	ProfileData  UserProfile `json:"profileData"`
+	RefreshToken *string      `json:"refresh_token,omitempty"`
+	ProfileData  *UserProfile `json:"profileData,omitempty"`
 }
 
-type _GetUsers200ResponseOneOfInnerIdentitiesInner GetUsers200ResponseOneOfInnerIdentitiesInner
-
-// GetConnection returns the Connection field value
+// GetConnection returns the Connection field value if set, zero value otherwise.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetConnection() string {
-	if o == nil {
+	if o == nil || IsNil(o.Connection) {
 		var ret string
 		return ret
 	}
-
-	return o.Connection
+	return *o.Connection
 }
 
-// GetConnectionOk returns a tuple with the Connection field value
+// GetConnectionOk returns a tuple with the Connection field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetConnectionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Connection) {
 		return nil, false
 	}
-	return &o.Connection, true
+	return o.Connection, true
 }
 
-// SetConnection sets field value
+// HasConnection returns a boolean if a field has been set.
+func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) HasConnection() bool {
+	if o != nil && !IsNil(o.Connection) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnection gets a reference to the given string and assigns it to the Connection field.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) SetConnection(v string) {
-	o.Connection = v
+	o.Connection = &v
 }
 
-// GetUserId returns the UserId field value
+// GetUserId returns the UserId field value if set, zero value otherwise.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetUserId() string {
-	if o == nil {
+	if o == nil || IsNil(o.UserId) {
 		var ret string
 		return ret
 	}
-
-	return o.UserId
+	return *o.UserId
 }
 
-// GetUserIdOk returns a tuple with the UserId field value
+// GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetUserIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UserId) {
 		return nil, false
 	}
-	return &o.UserId, true
+	return o.UserId, true
 }
 
-// SetUserId sets field value
+// HasUserId returns a boolean if a field has been set.
+func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) HasUserId() bool {
+	if o != nil && !IsNil(o.UserId) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserId gets a reference to the given string and assigns it to the UserId field.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) SetUserId(v string) {
-	o.UserId = v
+	o.UserId = &v
 }
 
-// GetProvider returns the Provider field value
+// GetProvider returns the Provider field value if set, zero value otherwise.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetProvider() string {
-	if o == nil {
+	if o == nil || IsNil(o.Provider) {
 		var ret string
 		return ret
 	}
-
-	return o.Provider
+	return *o.Provider
 }
 
-// GetProviderOk returns a tuple with the Provider field value
+// GetProviderOk returns a tuple with the Provider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetProviderOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Provider) {
 		return nil, false
 	}
-	return &o.Provider, true
+	return o.Provider, true
 }
 
-// SetProvider sets field value
+// HasProvider returns a boolean if a field has been set.
+func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) HasProvider() bool {
+	if o != nil && !IsNil(o.Provider) {
+		return true
+	}
+
+	return false
+}
+
+// SetProvider gets a reference to the given string and assigns it to the Provider field.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) SetProvider(v string) {
-	o.Provider = v
+	o.Provider = &v
 }
 
-// GetIsSocial returns the IsSocial field value
+// GetIsSocial returns the IsSocial field value if set, zero value otherwise.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetIsSocial() bool {
-	if o == nil {
+	if o == nil || IsNil(o.IsSocial) {
 		var ret bool
 		return ret
 	}
-
-	return o.IsSocial
+	return *o.IsSocial
 }
 
-// GetIsSocialOk returns a tuple with the IsSocial field value
+// GetIsSocialOk returns a tuple with the IsSocial field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetIsSocialOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IsSocial) {
 		return nil, false
 	}
-	return &o.IsSocial, true
+	return o.IsSocial, true
 }
 
-// SetIsSocial sets field value
+// HasIsSocial returns a boolean if a field has been set.
+func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) HasIsSocial() bool {
+	if o != nil && !IsNil(o.IsSocial) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsSocial gets a reference to the given bool and assigns it to the IsSocial field.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) SetIsSocial(v bool) {
-	o.IsSocial = v
+	o.IsSocial = &v
 }
 
-// GetAccessToken returns the AccessToken field value
+// GetAccessToken returns the AccessToken field value if set, zero value otherwise.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetAccessToken() string {
-	if o == nil {
+	if o == nil || IsNil(o.AccessToken) {
 		var ret string
 		return ret
 	}
-
-	return o.AccessToken
+	return *o.AccessToken
 }
 
-// GetAccessTokenOk returns a tuple with the AccessToken field value
+// GetAccessTokenOk returns a tuple with the AccessToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetAccessTokenOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AccessToken) {
 		return nil, false
 	}
-	return &o.AccessToken, true
+	return o.AccessToken, true
 }
 
-// SetAccessToken sets field value
+// HasAccessToken returns a boolean if a field has been set.
+func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) HasAccessToken() bool {
+	if o != nil && !IsNil(o.AccessToken) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccessToken gets a reference to the given string and assigns it to the AccessToken field.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) SetAccessToken(v string) {
-	o.AccessToken = v
+	o.AccessToken = &v
 }
 
-// GetAccessTokenSecret returns the AccessTokenSecret field value
+// GetAccessTokenSecret returns the AccessTokenSecret field value if set, zero value otherwise.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetAccessTokenSecret() string {
-	if o == nil {
+	if o == nil || IsNil(o.AccessTokenSecret) {
 		var ret string
 		return ret
 	}
-
-	return o.AccessTokenSecret
+	return *o.AccessTokenSecret
 }
 
-// GetAccessTokenSecretOk returns a tuple with the AccessTokenSecret field value
+// GetAccessTokenSecretOk returns a tuple with the AccessTokenSecret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetAccessTokenSecretOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AccessTokenSecret) {
 		return nil, false
 	}
-	return &o.AccessTokenSecret, true
+	return o.AccessTokenSecret, true
 }
 
-// SetAccessTokenSecret sets field value
+// HasAccessTokenSecret returns a boolean if a field has been set.
+func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) HasAccessTokenSecret() bool {
+	if o != nil && !IsNil(o.AccessTokenSecret) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccessTokenSecret gets a reference to the given string and assigns it to the AccessTokenSecret field.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) SetAccessTokenSecret(v string) {
-	o.AccessTokenSecret = v
+	o.AccessTokenSecret = &v
 }
 
-// GetRefreshToken returns the RefreshToken field value
+// GetRefreshToken returns the RefreshToken field value if set, zero value otherwise.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetRefreshToken() string {
-	if o == nil {
+	if o == nil || IsNil(o.RefreshToken) {
 		var ret string
 		return ret
 	}
-
-	return o.RefreshToken
+	return *o.RefreshToken
 }
 
-// GetRefreshTokenOk returns a tuple with the RefreshToken field value
+// GetRefreshTokenOk returns a tuple with the RefreshToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetRefreshTokenOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RefreshToken) {
 		return nil, false
 	}
-	return &o.RefreshToken, true
+	return o.RefreshToken, true
 }
 
-// SetRefreshToken sets field value
+// HasRefreshToken returns a boolean if a field has been set.
+func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) HasRefreshToken() bool {
+	if o != nil && !IsNil(o.RefreshToken) {
+		return true
+	}
+
+	return false
+}
+
+// SetRefreshToken gets a reference to the given string and assigns it to the RefreshToken field.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) SetRefreshToken(v string) {
-	o.RefreshToken = v
+	o.RefreshToken = &v
 }
 
-// GetProfileData returns the ProfileData field value
+// GetProfileData returns the ProfileData field value if set, zero value otherwise.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetProfileData() UserProfile {
-	if o == nil {
+	if o == nil || IsNil(o.ProfileData) {
 		var ret UserProfile
 		return ret
 	}
-
-	return o.ProfileData
+	return *o.ProfileData
 }
 
-// GetProfileDataOk returns a tuple with the ProfileData field value
+// GetProfileDataOk returns a tuple with the ProfileData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetProfileDataOk() (*UserProfile, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ProfileData) {
 		return nil, false
 	}
-	return &o.ProfileData, true
+	return o.ProfileData, true
 }
 
-// SetProfileData sets field value
+// HasProfileData returns a boolean if a field has been set.
+func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) HasProfileData() bool {
+	if o != nil && !IsNil(o.ProfileData) {
+		return true
+	}
+
+	return false
+}
+
+// SetProfileData gets a reference to the given UserProfile and assigns it to the ProfileData field.
 func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) SetProfileData(v UserProfile) {
-	o.ProfileData = v
+	o.ProfileData = &v
 }
 
 func (o GetUsers200ResponseOneOfInnerIdentitiesInner) MarshalJSON() ([]byte, error) {
@@ -238,31 +299,31 @@ func (o GetUsers200ResponseOneOfInnerIdentitiesInner) MarshalJSON() ([]byte, err
 
 func (o GetUsers200ResponseOneOfInnerIdentitiesInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["connection"] = o.Connection
-	toSerialize["user_id"] = o.UserId
-	toSerialize["provider"] = o.Provider
-	toSerialize["isSocial"] = o.IsSocial
-	toSerialize["access_token"] = o.AccessToken
-	toSerialize["access_token_secret"] = o.AccessTokenSecret
-	toSerialize["refresh_token"] = o.RefreshToken
-	toSerialize["profileData"] = o.ProfileData
-	return toSerialize, nil
-}
-
-func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) UnmarshalJSON(data []byte) (err error) {
-	varGetUsers200ResponseOneOfInnerIdentitiesInner := _GetUsers200ResponseOneOfInnerIdentitiesInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetUsers200ResponseOneOfInnerIdentitiesInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Connection) {
+		toSerialize["connection"] = o.Connection
 	}
-
-	*o = GetUsers200ResponseOneOfInnerIdentitiesInner(varGetUsers200ResponseOneOfInnerIdentitiesInner)
-
-	return err
+	if !IsNil(o.UserId) {
+		toSerialize["user_id"] = o.UserId
+	}
+	if !IsNil(o.Provider) {
+		toSerialize["provider"] = o.Provider
+	}
+	if !IsNil(o.IsSocial) {
+		toSerialize["isSocial"] = o.IsSocial
+	}
+	if !IsNil(o.AccessToken) {
+		toSerialize["access_token"] = o.AccessToken
+	}
+	if !IsNil(o.AccessTokenSecret) {
+		toSerialize["access_token_secret"] = o.AccessTokenSecret
+	}
+	if !IsNil(o.RefreshToken) {
+		toSerialize["refresh_token"] = o.RefreshToken
+	}
+	if !IsNil(o.ProfileData) {
+		toSerialize["profileData"] = o.ProfileData
+	}
+	return toSerialize, nil
 }
 
 type NullableGetUsers200ResponseOneOfInnerIdentitiesInner struct {

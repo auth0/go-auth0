@@ -11,40 +11,45 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // TenantSettingsSessions Sessions related settings for tenant
 type TenantSettingsSessions struct {
 	// Whether to bypass prompting logic (false) when performing OIDC Logout
-	OidcLogoutPromptEnabled bool `json:"oidc_logout_prompt_enabled"`
+	OidcLogoutPromptEnabled *bool `json:"oidc_logout_prompt_enabled,omitempty"`
 }
 
-type _TenantSettingsSessions TenantSettingsSessions
-
-// GetOidcLogoutPromptEnabled returns the OidcLogoutPromptEnabled field value
+// GetOidcLogoutPromptEnabled returns the OidcLogoutPromptEnabled field value if set, zero value otherwise.
 func (o *TenantSettingsSessions) GetOidcLogoutPromptEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.OidcLogoutPromptEnabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.OidcLogoutPromptEnabled
+	return *o.OidcLogoutPromptEnabled
 }
 
-// GetOidcLogoutPromptEnabledOk returns a tuple with the OidcLogoutPromptEnabled field value
+// GetOidcLogoutPromptEnabledOk returns a tuple with the OidcLogoutPromptEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsSessions) GetOidcLogoutPromptEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OidcLogoutPromptEnabled) {
 		return nil, false
 	}
-	return &o.OidcLogoutPromptEnabled, true
+	return o.OidcLogoutPromptEnabled, true
 }
 
-// SetOidcLogoutPromptEnabled sets field value
+// HasOidcLogoutPromptEnabled returns a boolean if a field has been set.
+func (o *TenantSettingsSessions) HasOidcLogoutPromptEnabled() bool {
+	if o != nil && !IsNil(o.OidcLogoutPromptEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetOidcLogoutPromptEnabled gets a reference to the given bool and assigns it to the OidcLogoutPromptEnabled field.
 func (o *TenantSettingsSessions) SetOidcLogoutPromptEnabled(v bool) {
-	o.OidcLogoutPromptEnabled = v
+	o.OidcLogoutPromptEnabled = &v
 }
 
 func (o TenantSettingsSessions) MarshalJSON() ([]byte, error) {
@@ -57,24 +62,10 @@ func (o TenantSettingsSessions) MarshalJSON() ([]byte, error) {
 
 func (o TenantSettingsSessions) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["oidc_logout_prompt_enabled"] = o.OidcLogoutPromptEnabled
-	return toSerialize, nil
-}
-
-func (o *TenantSettingsSessions) UnmarshalJSON(data []byte) (err error) {
-	varTenantSettingsSessions := _TenantSettingsSessions{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTenantSettingsSessions)
-
-	if err != nil {
-		return err
+	if !IsNil(o.OidcLogoutPromptEnabled) {
+		toSerialize["oidc_logout_prompt_enabled"] = o.OidcLogoutPromptEnabled
 	}
-
-	*o = TenantSettingsSessions(varTenantSettingsSessions)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableTenantSettingsSessions struct {

@@ -17,60 +17,76 @@ import (
 // ClientMobileIos iOS native app configuration.
 type ClientMobileIos struct {
 	// Identifier assigned to the Apple account that signs and uploads the app to the store.
-	TeamId string `json:"team_id"`
+	TeamId *string `json:"team_id,omitempty"`
 	// Assigned by developer to the app as its unique identifier inside the store. Usually this is a reverse domain plus the app name, e.g. `com.you.MyApp`.
-	AppBundleIdentifier  string `json:"app_bundle_identifier"`
+	AppBundleIdentifier  *string `json:"app_bundle_identifier,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientMobileIos ClientMobileIos
 
-// GetTeamId returns the TeamId field value
+// GetTeamId returns the TeamId field value if set, zero value otherwise.
 func (o *ClientMobileIos) GetTeamId() string {
-	if o == nil {
+	if o == nil || IsNil(o.TeamId) {
 		var ret string
 		return ret
 	}
-
-	return o.TeamId
+	return *o.TeamId
 }
 
-// GetTeamIdOk returns a tuple with the TeamId field value
+// GetTeamIdOk returns a tuple with the TeamId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientMobileIos) GetTeamIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TeamId) {
 		return nil, false
 	}
-	return &o.TeamId, true
+	return o.TeamId, true
 }
 
-// SetTeamId sets field value
+// HasTeamId returns a boolean if a field has been set.
+func (o *ClientMobileIos) HasTeamId() bool {
+	if o != nil && !IsNil(o.TeamId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTeamId gets a reference to the given string and assigns it to the TeamId field.
 func (o *ClientMobileIos) SetTeamId(v string) {
-	o.TeamId = v
+	o.TeamId = &v
 }
 
-// GetAppBundleIdentifier returns the AppBundleIdentifier field value
+// GetAppBundleIdentifier returns the AppBundleIdentifier field value if set, zero value otherwise.
 func (o *ClientMobileIos) GetAppBundleIdentifier() string {
-	if o == nil {
+	if o == nil || IsNil(o.AppBundleIdentifier) {
 		var ret string
 		return ret
 	}
-
-	return o.AppBundleIdentifier
+	return *o.AppBundleIdentifier
 }
 
-// GetAppBundleIdentifierOk returns a tuple with the AppBundleIdentifier field value
+// GetAppBundleIdentifierOk returns a tuple with the AppBundleIdentifier field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientMobileIos) GetAppBundleIdentifierOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AppBundleIdentifier) {
 		return nil, false
 	}
-	return &o.AppBundleIdentifier, true
+	return o.AppBundleIdentifier, true
 }
 
-// SetAppBundleIdentifier sets field value
+// HasAppBundleIdentifier returns a boolean if a field has been set.
+func (o *ClientMobileIos) HasAppBundleIdentifier() bool {
+	if o != nil && !IsNil(o.AppBundleIdentifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppBundleIdentifier gets a reference to the given string and assigns it to the AppBundleIdentifier field.
 func (o *ClientMobileIos) SetAppBundleIdentifier(v string) {
-	o.AppBundleIdentifier = v
+	o.AppBundleIdentifier = &v
 }
 
 func (o ClientMobileIos) MarshalJSON() ([]byte, error) {
@@ -83,8 +99,12 @@ func (o ClientMobileIos) MarshalJSON() ([]byte, error) {
 
 func (o ClientMobileIos) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["team_id"] = o.TeamId
-	toSerialize["app_bundle_identifier"] = o.AppBundleIdentifier
+	if !IsNil(o.TeamId) {
+		toSerialize["team_id"] = o.TeamId
+	}
+	if !IsNil(o.AppBundleIdentifier) {
+		toSerialize["app_bundle_identifier"] = o.AppBundleIdentifier
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -11,66 +11,79 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetMembers200ResponseOneOfInnerRolesInner struct for GetMembers200ResponseOneOfInnerRolesInner
 type GetMembers200ResponseOneOfInnerRolesInner struct {
 	// ID for this role.
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// Name of this role.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 }
 
-type _GetMembers200ResponseOneOfInnerRolesInner GetMembers200ResponseOneOfInnerRolesInner
-
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetMembers200ResponseOneOfInnerRolesInner) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetMembers200ResponseOneOfInnerRolesInner) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetMembers200ResponseOneOfInnerRolesInner) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetMembers200ResponseOneOfInnerRolesInner) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetMembers200ResponseOneOfInnerRolesInner) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetMembers200ResponseOneOfInnerRolesInner) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetMembers200ResponseOneOfInnerRolesInner) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *GetMembers200ResponseOneOfInnerRolesInner) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
 func (o GetMembers200ResponseOneOfInnerRolesInner) MarshalJSON() ([]byte, error) {
@@ -83,25 +96,13 @@ func (o GetMembers200ResponseOneOfInnerRolesInner) MarshalJSON() ([]byte, error)
 
 func (o GetMembers200ResponseOneOfInnerRolesInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["name"] = o.Name
-	return toSerialize, nil
-}
-
-func (o *GetMembers200ResponseOneOfInnerRolesInner) UnmarshalJSON(data []byte) (err error) {
-	varGetMembers200ResponseOneOfInnerRolesInner := _GetMembers200ResponseOneOfInnerRolesInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetMembers200ResponseOneOfInnerRolesInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
 	}
-
-	*o = GetMembers200ResponseOneOfInnerRolesInner(varGetMembers200ResponseOneOfInnerRolesInner)
-
-	return err
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	return toSerialize, nil
 }
 
 type NullableGetMembers200ResponseOneOfInnerRolesInner struct {

@@ -17,112 +17,144 @@ import (
 // ClientAddonsSalesforceSandboxApi Salesforce Sandbox addon configuration.
 type ClientAddonsSalesforceSandboxApi struct {
 	// Consumer Key assigned by Salesforce to the Connected App.
-	Clientid string `json:"clientid"`
+	Clientid *string `json:"clientid,omitempty"`
 	// Name of the property in the user object that maps to a Salesforce username. e.g. `email`.
-	Principal string `json:"principal"`
+	Principal *string `json:"principal,omitempty"`
 	// Community name.
-	CommunityName string `json:"communityName"`
+	CommunityName *string `json:"communityName,omitempty"`
 	// Community url section.
-	CommunityUrlSection  string `json:"community_url_section"`
+	CommunityUrlSection  *string `json:"community_url_section,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsSalesforceSandboxApi ClientAddonsSalesforceSandboxApi
 
-// GetClientid returns the Clientid field value
+// GetClientid returns the Clientid field value if set, zero value otherwise.
 func (o *ClientAddonsSalesforceSandboxApi) GetClientid() string {
-	if o == nil {
+	if o == nil || IsNil(o.Clientid) {
 		var ret string
 		return ret
 	}
-
-	return o.Clientid
+	return *o.Clientid
 }
 
-// GetClientidOk returns a tuple with the Clientid field value
+// GetClientidOk returns a tuple with the Clientid field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSalesforceSandboxApi) GetClientidOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Clientid) {
 		return nil, false
 	}
-	return &o.Clientid, true
+	return o.Clientid, true
 }
 
-// SetClientid sets field value
+// HasClientid returns a boolean if a field has been set.
+func (o *ClientAddonsSalesforceSandboxApi) HasClientid() bool {
+	if o != nil && !IsNil(o.Clientid) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientid gets a reference to the given string and assigns it to the Clientid field.
 func (o *ClientAddonsSalesforceSandboxApi) SetClientid(v string) {
-	o.Clientid = v
+	o.Clientid = &v
 }
 
-// GetPrincipal returns the Principal field value
+// GetPrincipal returns the Principal field value if set, zero value otherwise.
 func (o *ClientAddonsSalesforceSandboxApi) GetPrincipal() string {
-	if o == nil {
+	if o == nil || IsNil(o.Principal) {
 		var ret string
 		return ret
 	}
-
-	return o.Principal
+	return *o.Principal
 }
 
-// GetPrincipalOk returns a tuple with the Principal field value
+// GetPrincipalOk returns a tuple with the Principal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSalesforceSandboxApi) GetPrincipalOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Principal) {
 		return nil, false
 	}
-	return &o.Principal, true
+	return o.Principal, true
 }
 
-// SetPrincipal sets field value
+// HasPrincipal returns a boolean if a field has been set.
+func (o *ClientAddonsSalesforceSandboxApi) HasPrincipal() bool {
+	if o != nil && !IsNil(o.Principal) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrincipal gets a reference to the given string and assigns it to the Principal field.
 func (o *ClientAddonsSalesforceSandboxApi) SetPrincipal(v string) {
-	o.Principal = v
+	o.Principal = &v
 }
 
-// GetCommunityName returns the CommunityName field value
+// GetCommunityName returns the CommunityName field value if set, zero value otherwise.
 func (o *ClientAddonsSalesforceSandboxApi) GetCommunityName() string {
-	if o == nil {
+	if o == nil || IsNil(o.CommunityName) {
 		var ret string
 		return ret
 	}
-
-	return o.CommunityName
+	return *o.CommunityName
 }
 
-// GetCommunityNameOk returns a tuple with the CommunityName field value
+// GetCommunityNameOk returns a tuple with the CommunityName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSalesforceSandboxApi) GetCommunityNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CommunityName) {
 		return nil, false
 	}
-	return &o.CommunityName, true
+	return o.CommunityName, true
 }
 
-// SetCommunityName sets field value
+// HasCommunityName returns a boolean if a field has been set.
+func (o *ClientAddonsSalesforceSandboxApi) HasCommunityName() bool {
+	if o != nil && !IsNil(o.CommunityName) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommunityName gets a reference to the given string and assigns it to the CommunityName field.
 func (o *ClientAddonsSalesforceSandboxApi) SetCommunityName(v string) {
-	o.CommunityName = v
+	o.CommunityName = &v
 }
 
-// GetCommunityUrlSection returns the CommunityUrlSection field value
+// GetCommunityUrlSection returns the CommunityUrlSection field value if set, zero value otherwise.
 func (o *ClientAddonsSalesforceSandboxApi) GetCommunityUrlSection() string {
-	if o == nil {
+	if o == nil || IsNil(o.CommunityUrlSection) {
 		var ret string
 		return ret
 	}
-
-	return o.CommunityUrlSection
+	return *o.CommunityUrlSection
 }
 
-// GetCommunityUrlSectionOk returns a tuple with the CommunityUrlSection field value
+// GetCommunityUrlSectionOk returns a tuple with the CommunityUrlSection field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSalesforceSandboxApi) GetCommunityUrlSectionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CommunityUrlSection) {
 		return nil, false
 	}
-	return &o.CommunityUrlSection, true
+	return o.CommunityUrlSection, true
 }
 
-// SetCommunityUrlSection sets field value
+// HasCommunityUrlSection returns a boolean if a field has been set.
+func (o *ClientAddonsSalesforceSandboxApi) HasCommunityUrlSection() bool {
+	if o != nil && !IsNil(o.CommunityUrlSection) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommunityUrlSection gets a reference to the given string and assigns it to the CommunityUrlSection field.
 func (o *ClientAddonsSalesforceSandboxApi) SetCommunityUrlSection(v string) {
-	o.CommunityUrlSection = v
+	o.CommunityUrlSection = &v
 }
 
 func (o ClientAddonsSalesforceSandboxApi) MarshalJSON() ([]byte, error) {
@@ -135,10 +167,18 @@ func (o ClientAddonsSalesforceSandboxApi) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsSalesforceSandboxApi) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["clientid"] = o.Clientid
-	toSerialize["principal"] = o.Principal
-	toSerialize["communityName"] = o.CommunityName
-	toSerialize["community_url_section"] = o.CommunityUrlSection
+	if !IsNil(o.Clientid) {
+		toSerialize["clientid"] = o.Clientid
+	}
+	if !IsNil(o.Principal) {
+		toSerialize["principal"] = o.Principal
+	}
+	if !IsNil(o.CommunityName) {
+		toSerialize["communityName"] = o.CommunityName
+	}
+	if !IsNil(o.CommunityUrlSection) {
+		toSerialize["community_url_section"] = o.CommunityUrlSection
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

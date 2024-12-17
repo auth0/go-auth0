@@ -17,60 +17,76 @@ import (
 // ClientAddonsOffice365 Microsoft Office 365 SSO configuration.
 type ClientAddonsOffice365 struct {
 	// Your Office 365 domain name. e.g. `acme-org.com`.
-	Domain string `json:"domain"`
+	Domain *string `json:"domain,omitempty"`
 	// Optional Auth0 database connection for testing an already-configured Office 365 tenant.
-	Connection           string `json:"connection"`
+	Connection           *string `json:"connection,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsOffice365 ClientAddonsOffice365
 
-// GetDomain returns the Domain field value
+// GetDomain returns the Domain field value if set, zero value otherwise.
 func (o *ClientAddonsOffice365) GetDomain() string {
-	if o == nil {
+	if o == nil || IsNil(o.Domain) {
 		var ret string
 		return ret
 	}
-
-	return o.Domain
+	return *o.Domain
 }
 
-// GetDomainOk returns a tuple with the Domain field value
+// GetDomainOk returns a tuple with the Domain field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsOffice365) GetDomainOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Domain) {
 		return nil, false
 	}
-	return &o.Domain, true
+	return o.Domain, true
 }
 
-// SetDomain sets field value
+// HasDomain returns a boolean if a field has been set.
+func (o *ClientAddonsOffice365) HasDomain() bool {
+	if o != nil && !IsNil(o.Domain) {
+		return true
+	}
+
+	return false
+}
+
+// SetDomain gets a reference to the given string and assigns it to the Domain field.
 func (o *ClientAddonsOffice365) SetDomain(v string) {
-	o.Domain = v
+	o.Domain = &v
 }
 
-// GetConnection returns the Connection field value
+// GetConnection returns the Connection field value if set, zero value otherwise.
 func (o *ClientAddonsOffice365) GetConnection() string {
-	if o == nil {
+	if o == nil || IsNil(o.Connection) {
 		var ret string
 		return ret
 	}
-
-	return o.Connection
+	return *o.Connection
 }
 
-// GetConnectionOk returns a tuple with the Connection field value
+// GetConnectionOk returns a tuple with the Connection field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsOffice365) GetConnectionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Connection) {
 		return nil, false
 	}
-	return &o.Connection, true
+	return o.Connection, true
 }
 
-// SetConnection sets field value
+// HasConnection returns a boolean if a field has been set.
+func (o *ClientAddonsOffice365) HasConnection() bool {
+	if o != nil && !IsNil(o.Connection) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnection gets a reference to the given string and assigns it to the Connection field.
 func (o *ClientAddonsOffice365) SetConnection(v string) {
-	o.Connection = v
+	o.Connection = &v
 }
 
 func (o ClientAddonsOffice365) MarshalJSON() ([]byte, error) {
@@ -83,8 +99,12 @@ func (o ClientAddonsOffice365) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsOffice365) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["domain"] = o.Domain
-	toSerialize["connection"] = o.Connection
+	if !IsNil(o.Domain) {
+		toSerialize["domain"] = o.Domain
+	}
+	if !IsNil(o.Connection) {
+		toSerialize["connection"] = o.Connection
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

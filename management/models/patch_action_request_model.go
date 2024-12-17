@@ -23,7 +23,7 @@ type PatchActionRequest struct {
 	// The source code of the action.
 	Code *string `json:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this action depends on.
-	Dependencies []PostActionRequestDependenciesInner `json:"dependencies,omitempty"`
+	Dependencies []GetActions200ResponseActionsInnerDependenciesInner `json:"dependencies,omitempty"`
 	// The Node runtime. For example: `node12`, defaults to `node12`
 	Runtime *string `json:"runtime,omitempty"`
 	// The list of secrets that are included in an action or a version of an action.
@@ -127,9 +127,9 @@ func (o *PatchActionRequest) SetCode(v string) {
 }
 
 // GetDependencies returns the Dependencies field value if set, zero value otherwise.
-func (o *PatchActionRequest) GetDependencies() []PostActionRequestDependenciesInner {
+func (o *PatchActionRequest) GetDependencies() []GetActions200ResponseActionsInnerDependenciesInner {
 	if o == nil || IsNil(o.Dependencies) {
-		var ret []PostActionRequestDependenciesInner
+		var ret []GetActions200ResponseActionsInnerDependenciesInner
 		return ret
 	}
 	return o.Dependencies
@@ -137,7 +137,7 @@ func (o *PatchActionRequest) GetDependencies() []PostActionRequestDependenciesIn
 
 // GetDependenciesOk returns a tuple with the Dependencies field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchActionRequest) GetDependenciesOk() ([]PostActionRequestDependenciesInner, bool) {
+func (o *PatchActionRequest) GetDependenciesOk() ([]GetActions200ResponseActionsInnerDependenciesInner, bool) {
 	if o == nil || IsNil(o.Dependencies) {
 		return nil, false
 	}
@@ -153,8 +153,8 @@ func (o *PatchActionRequest) HasDependencies() bool {
 	return false
 }
 
-// SetDependencies gets a reference to the given []PostActionRequestDependenciesInner and assigns it to the Dependencies field.
-func (o *PatchActionRequest) SetDependencies(v []PostActionRequestDependenciesInner) {
+// SetDependencies gets a reference to the given []GetActions200ResponseActionsInnerDependenciesInner and assigns it to the Dependencies field.
+func (o *PatchActionRequest) SetDependencies(v []GetActions200ResponseActionsInnerDependenciesInner) {
 	o.Dependencies = v
 }
 

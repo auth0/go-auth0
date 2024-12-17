@@ -17,51 +17,57 @@ import (
 // GetSession200ResponseAuthenticationMethodsInner Authentication signal details
 type GetSession200ResponseAuthenticationMethodsInner struct {
 	// One of: \"federated\", \"passkey\", \"pwd\", \"sms\", \"email\", \"mfa\", \"mock\" or a custom method denoted by a URL
-	Name      string                                                           `json:"name"`
-	Timestamp NullableGetSession200ResponseAuthenticationMethodsInnerTimestamp `json:"timestamp"`
+	Name      *string                                                          `json:"name,omitempty"`
+	Timestamp NullableGetSession200ResponseAuthenticationMethodsInnerTimestamp `json:"timestamp,omitempty"`
 	// A specific MFA factor. Only present when \"name\" is set to \"mfa\"
-	Type                 string `json:"^type$"`
+	Type                 *string `json:"^type$,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetSession200ResponseAuthenticationMethodsInner GetSession200ResponseAuthenticationMethodsInner
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetSession200ResponseAuthenticationMethodsInner) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSession200ResponseAuthenticationMethodsInner) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetSession200ResponseAuthenticationMethodsInner) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *GetSession200ResponseAuthenticationMethodsInner) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetTimestamp returns the Timestamp field value
-// If the value is explicit nil, the zero value for GetSession200ResponseAuthenticationMethodsInnerTimestamp will be returned
+// GetTimestamp returns the Timestamp field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetSession200ResponseAuthenticationMethodsInner) GetTimestamp() GetSession200ResponseAuthenticationMethodsInnerTimestamp {
-	if o == nil || o.Timestamp.Get() == nil {
+	if o == nil || IsNil(o.Timestamp.Get()) {
 		var ret GetSession200ResponseAuthenticationMethodsInnerTimestamp
 		return ret
 	}
-
 	return *o.Timestamp.Get()
 }
 
-// GetTimestampOk returns a tuple with the Timestamp field value
+// GetTimestampOk returns a tuple with the Timestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetSession200ResponseAuthenticationMethodsInner) GetTimestampOk() (*GetSession200ResponseAuthenticationMethodsInnerTimestamp, bool) {
@@ -71,33 +77,60 @@ func (o *GetSession200ResponseAuthenticationMethodsInner) GetTimestampOk() (*Get
 	return o.Timestamp.Get(), o.Timestamp.IsSet()
 }
 
-// SetTimestamp sets field value
+// HasTimestamp returns a boolean if a field has been set.
+func (o *GetSession200ResponseAuthenticationMethodsInner) HasTimestamp() bool {
+	if o != nil && o.Timestamp.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTimestamp gets a reference to the given NullableGetSession200ResponseAuthenticationMethodsInnerTimestamp and assigns it to the Timestamp field.
 func (o *GetSession200ResponseAuthenticationMethodsInner) SetTimestamp(v GetSession200ResponseAuthenticationMethodsInnerTimestamp) {
 	o.Timestamp.Set(&v)
 }
 
-// GetType returns the Type field value
+// SetTimestampNil sets the value for Timestamp to be an explicit nil
+func (o *GetSession200ResponseAuthenticationMethodsInner) SetTimestampNil() {
+	o.Timestamp.Set(nil)
+}
+
+// UnsetTimestamp ensures that no value is present for Timestamp, not even an explicit nil
+func (o *GetSession200ResponseAuthenticationMethodsInner) UnsetTimestamp() {
+	o.Timestamp.Unset()
+}
+
+// GetType returns the Type field value if set, zero value otherwise.
 func (o *GetSession200ResponseAuthenticationMethodsInner) GetType() string {
-	if o == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
-
-	return o.Type
+	return *o.Type
 }
 
-// GetTypeOk returns a tuple with the Type field value
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSession200ResponseAuthenticationMethodsInner) GetTypeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
-	return &o.Type, true
+	return o.Type, true
 }
 
-// SetType sets field value
+// HasType returns a boolean if a field has been set.
+func (o *GetSession200ResponseAuthenticationMethodsInner) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given string and assigns it to the Type field.
 func (o *GetSession200ResponseAuthenticationMethodsInner) SetType(v string) {
-	o.Type = v
+	o.Type = &v
 }
 
 func (o GetSession200ResponseAuthenticationMethodsInner) MarshalJSON() ([]byte, error) {
@@ -110,9 +143,15 @@ func (o GetSession200ResponseAuthenticationMethodsInner) MarshalJSON() ([]byte, 
 
 func (o GetSession200ResponseAuthenticationMethodsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["name"] = o.Name
-	toSerialize["timestamp"] = o.Timestamp.Get()
-	toSerialize["^type$"] = o.Type
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if o.Timestamp.IsSet() {
+		toSerialize["timestamp"] = o.Timestamp.Get()
+	}
+	if !IsNil(o.Type) {
+		toSerialize["^type$"] = o.Type
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -11,38 +11,43 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetBreachedPasswordDetection200ResponseStagePreUserRegistration struct for GetBreachedPasswordDetection200ResponseStagePreUserRegistration
 type GetBreachedPasswordDetection200ResponseStagePreUserRegistration struct {
 	// Action to take when a breached password is detected during a signup.               Possible values: <code>block</code>, <code>admin_notification</code>.
-	Shields []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner `json:"shields"`
+	Shields []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner `json:"shields,omitempty"`
 }
 
-type _GetBreachedPasswordDetection200ResponseStagePreUserRegistration GetBreachedPasswordDetection200ResponseStagePreUserRegistration
-
-// GetShields returns the Shields field value
+// GetShields returns the Shields field value if set, zero value otherwise.
 func (o *GetBreachedPasswordDetection200ResponseStagePreUserRegistration) GetShields() []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Shields) {
 		var ret []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner
 		return ret
 	}
-
 	return o.Shields
 }
 
-// GetShieldsOk returns a tuple with the Shields field value
+// GetShieldsOk returns a tuple with the Shields field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBreachedPasswordDetection200ResponseStagePreUserRegistration) GetShieldsOk() ([]GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Shields) {
 		return nil, false
 	}
 	return o.Shields, true
 }
 
-// SetShields sets field value
+// HasShields returns a boolean if a field has been set.
+func (o *GetBreachedPasswordDetection200ResponseStagePreUserRegistration) HasShields() bool {
+	if o != nil && !IsNil(o.Shields) {
+		return true
+	}
+
+	return false
+}
+
+// SetShields gets a reference to the given []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner and assigns it to the Shields field.
 func (o *GetBreachedPasswordDetection200ResponseStagePreUserRegistration) SetShields(v []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner) {
 	o.Shields = v
 }
@@ -57,24 +62,10 @@ func (o GetBreachedPasswordDetection200ResponseStagePreUserRegistration) Marshal
 
 func (o GetBreachedPasswordDetection200ResponseStagePreUserRegistration) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["shields"] = o.Shields
-	return toSerialize, nil
-}
-
-func (o *GetBreachedPasswordDetection200ResponseStagePreUserRegistration) UnmarshalJSON(data []byte) (err error) {
-	varGetBreachedPasswordDetection200ResponseStagePreUserRegistration := _GetBreachedPasswordDetection200ResponseStagePreUserRegistration{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetBreachedPasswordDetection200ResponseStagePreUserRegistration)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Shields) {
+		toSerialize["shields"] = o.Shields
 	}
-
-	*o = GetBreachedPasswordDetection200ResponseStagePreUserRegistration(varGetBreachedPasswordDetection200ResponseStagePreUserRegistration)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableGetBreachedPasswordDetection200ResponseStagePreUserRegistration struct {

@@ -11,62 +11,75 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetOrganizations200ResponseOneOf1 struct for GetOrganizations200ResponseOneOf1
 type GetOrganizations200ResponseOneOf1 struct {
-	Next          string                                  `json:"next"`
-	Organizations []GetOrganizations200ResponseOneOfInner `json:"organizations"`
+	Next          *string                                 `json:"next,omitempty"`
+	Organizations []GetOrganizations200ResponseOneOfInner `json:"organizations,omitempty"`
 }
 
-type _GetOrganizations200ResponseOneOf1 GetOrganizations200ResponseOneOf1
-
-// GetNext returns the Next field value
+// GetNext returns the Next field value if set, zero value otherwise.
 func (o *GetOrganizations200ResponseOneOf1) GetNext() string {
-	if o == nil {
+	if o == nil || IsNil(o.Next) {
 		var ret string
 		return ret
 	}
-
-	return o.Next
+	return *o.Next
 }
 
-// GetNextOk returns a tuple with the Next field value
+// GetNextOk returns a tuple with the Next field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetOrganizations200ResponseOneOf1) GetNextOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Next) {
 		return nil, false
 	}
-	return &o.Next, true
+	return o.Next, true
 }
 
-// SetNext sets field value
+// HasNext returns a boolean if a field has been set.
+func (o *GetOrganizations200ResponseOneOf1) HasNext() bool {
+	if o != nil && !IsNil(o.Next) {
+		return true
+	}
+
+	return false
+}
+
+// SetNext gets a reference to the given string and assigns it to the Next field.
 func (o *GetOrganizations200ResponseOneOf1) SetNext(v string) {
-	o.Next = v
+	o.Next = &v
 }
 
-// GetOrganizations returns the Organizations field value
+// GetOrganizations returns the Organizations field value if set, zero value otherwise.
 func (o *GetOrganizations200ResponseOneOf1) GetOrganizations() []GetOrganizations200ResponseOneOfInner {
-	if o == nil {
+	if o == nil || IsNil(o.Organizations) {
 		var ret []GetOrganizations200ResponseOneOfInner
 		return ret
 	}
-
 	return o.Organizations
 }
 
-// GetOrganizationsOk returns a tuple with the Organizations field value
+// GetOrganizationsOk returns a tuple with the Organizations field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetOrganizations200ResponseOneOf1) GetOrganizationsOk() ([]GetOrganizations200ResponseOneOfInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Organizations) {
 		return nil, false
 	}
 	return o.Organizations, true
 }
 
-// SetOrganizations sets field value
+// HasOrganizations returns a boolean if a field has been set.
+func (o *GetOrganizations200ResponseOneOf1) HasOrganizations() bool {
+	if o != nil && !IsNil(o.Organizations) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrganizations gets a reference to the given []GetOrganizations200ResponseOneOfInner and assigns it to the Organizations field.
 func (o *GetOrganizations200ResponseOneOf1) SetOrganizations(v []GetOrganizations200ResponseOneOfInner) {
 	o.Organizations = v
 }
@@ -81,25 +94,13 @@ func (o GetOrganizations200ResponseOneOf1) MarshalJSON() ([]byte, error) {
 
 func (o GetOrganizations200ResponseOneOf1) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["next"] = o.Next
-	toSerialize["organizations"] = o.Organizations
-	return toSerialize, nil
-}
-
-func (o *GetOrganizations200ResponseOneOf1) UnmarshalJSON(data []byte) (err error) {
-	varGetOrganizations200ResponseOneOf1 := _GetOrganizations200ResponseOneOf1{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetOrganizations200ResponseOneOf1)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Next) {
+		toSerialize["next"] = o.Next
 	}
-
-	*o = GetOrganizations200ResponseOneOf1(varGetOrganizations200ResponseOneOf1)
-
-	return err
+	if !IsNil(o.Organizations) {
+		toSerialize["organizations"] = o.Organizations
+	}
+	return toSerialize, nil
 }
 
 type NullableGetOrganizations200ResponseOneOf1 struct {

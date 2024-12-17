@@ -11,89 +11,110 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // ClientClientAuthenticationMethods Defines client authentication methods.
 type ClientClientAuthenticationMethods struct {
-	PrivateKeyJwt           ClientClientAuthenticationMethodsPrivateKeyJwt           `json:"private_key_jwt"`
-	TlsClientAuth           ClientClientAuthenticationMethodsTlsClientAuth           `json:"tls_client_auth"`
-	SelfSignedTlsClientAuth ClientClientAuthenticationMethodsSelfSignedTlsClientAuth `json:"self_signed_tls_client_auth"`
+	PrivateKeyJwt           *ClientClientAuthenticationMethodsPrivateKeyJwt           `json:"private_key_jwt,omitempty"`
+	TlsClientAuth           *ClientClientAuthenticationMethodsTlsClientAuth           `json:"tls_client_auth,omitempty"`
+	SelfSignedTlsClientAuth *ClientClientAuthenticationMethodsSelfSignedTlsClientAuth `json:"self_signed_tls_client_auth,omitempty"`
 }
 
-type _ClientClientAuthenticationMethods ClientClientAuthenticationMethods
-
-// GetPrivateKeyJwt returns the PrivateKeyJwt field value
+// GetPrivateKeyJwt returns the PrivateKeyJwt field value if set, zero value otherwise.
 func (o *ClientClientAuthenticationMethods) GetPrivateKeyJwt() ClientClientAuthenticationMethodsPrivateKeyJwt {
-	if o == nil {
+	if o == nil || IsNil(o.PrivateKeyJwt) {
 		var ret ClientClientAuthenticationMethodsPrivateKeyJwt
 		return ret
 	}
-
-	return o.PrivateKeyJwt
+	return *o.PrivateKeyJwt
 }
 
-// GetPrivateKeyJwtOk returns a tuple with the PrivateKeyJwt field value
+// GetPrivateKeyJwtOk returns a tuple with the PrivateKeyJwt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientClientAuthenticationMethods) GetPrivateKeyJwtOk() (*ClientClientAuthenticationMethodsPrivateKeyJwt, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PrivateKeyJwt) {
 		return nil, false
 	}
-	return &o.PrivateKeyJwt, true
+	return o.PrivateKeyJwt, true
 }
 
-// SetPrivateKeyJwt sets field value
+// HasPrivateKeyJwt returns a boolean if a field has been set.
+func (o *ClientClientAuthenticationMethods) HasPrivateKeyJwt() bool {
+	if o != nil && !IsNil(o.PrivateKeyJwt) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrivateKeyJwt gets a reference to the given ClientClientAuthenticationMethodsPrivateKeyJwt and assigns it to the PrivateKeyJwt field.
 func (o *ClientClientAuthenticationMethods) SetPrivateKeyJwt(v ClientClientAuthenticationMethodsPrivateKeyJwt) {
-	o.PrivateKeyJwt = v
+	o.PrivateKeyJwt = &v
 }
 
-// GetTlsClientAuth returns the TlsClientAuth field value
+// GetTlsClientAuth returns the TlsClientAuth field value if set, zero value otherwise.
 func (o *ClientClientAuthenticationMethods) GetTlsClientAuth() ClientClientAuthenticationMethodsTlsClientAuth {
-	if o == nil {
+	if o == nil || IsNil(o.TlsClientAuth) {
 		var ret ClientClientAuthenticationMethodsTlsClientAuth
 		return ret
 	}
-
-	return o.TlsClientAuth
+	return *o.TlsClientAuth
 }
 
-// GetTlsClientAuthOk returns a tuple with the TlsClientAuth field value
+// GetTlsClientAuthOk returns a tuple with the TlsClientAuth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientClientAuthenticationMethods) GetTlsClientAuthOk() (*ClientClientAuthenticationMethodsTlsClientAuth, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TlsClientAuth) {
 		return nil, false
 	}
-	return &o.TlsClientAuth, true
+	return o.TlsClientAuth, true
 }
 
-// SetTlsClientAuth sets field value
+// HasTlsClientAuth returns a boolean if a field has been set.
+func (o *ClientClientAuthenticationMethods) HasTlsClientAuth() bool {
+	if o != nil && !IsNil(o.TlsClientAuth) {
+		return true
+	}
+
+	return false
+}
+
+// SetTlsClientAuth gets a reference to the given ClientClientAuthenticationMethodsTlsClientAuth and assigns it to the TlsClientAuth field.
 func (o *ClientClientAuthenticationMethods) SetTlsClientAuth(v ClientClientAuthenticationMethodsTlsClientAuth) {
-	o.TlsClientAuth = v
+	o.TlsClientAuth = &v
 }
 
-// GetSelfSignedTlsClientAuth returns the SelfSignedTlsClientAuth field value
+// GetSelfSignedTlsClientAuth returns the SelfSignedTlsClientAuth field value if set, zero value otherwise.
 func (o *ClientClientAuthenticationMethods) GetSelfSignedTlsClientAuth() ClientClientAuthenticationMethodsSelfSignedTlsClientAuth {
-	if o == nil {
+	if o == nil || IsNil(o.SelfSignedTlsClientAuth) {
 		var ret ClientClientAuthenticationMethodsSelfSignedTlsClientAuth
 		return ret
 	}
-
-	return o.SelfSignedTlsClientAuth
+	return *o.SelfSignedTlsClientAuth
 }
 
-// GetSelfSignedTlsClientAuthOk returns a tuple with the SelfSignedTlsClientAuth field value
+// GetSelfSignedTlsClientAuthOk returns a tuple with the SelfSignedTlsClientAuth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientClientAuthenticationMethods) GetSelfSignedTlsClientAuthOk() (*ClientClientAuthenticationMethodsSelfSignedTlsClientAuth, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SelfSignedTlsClientAuth) {
 		return nil, false
 	}
-	return &o.SelfSignedTlsClientAuth, true
+	return o.SelfSignedTlsClientAuth, true
 }
 
-// SetSelfSignedTlsClientAuth sets field value
+// HasSelfSignedTlsClientAuth returns a boolean if a field has been set.
+func (o *ClientClientAuthenticationMethods) HasSelfSignedTlsClientAuth() bool {
+	if o != nil && !IsNil(o.SelfSignedTlsClientAuth) {
+		return true
+	}
+
+	return false
+}
+
+// SetSelfSignedTlsClientAuth gets a reference to the given ClientClientAuthenticationMethodsSelfSignedTlsClientAuth and assigns it to the SelfSignedTlsClientAuth field.
 func (o *ClientClientAuthenticationMethods) SetSelfSignedTlsClientAuth(v ClientClientAuthenticationMethodsSelfSignedTlsClientAuth) {
-	o.SelfSignedTlsClientAuth = v
+	o.SelfSignedTlsClientAuth = &v
 }
 
 func (o ClientClientAuthenticationMethods) MarshalJSON() ([]byte, error) {
@@ -106,26 +127,16 @@ func (o ClientClientAuthenticationMethods) MarshalJSON() ([]byte, error) {
 
 func (o ClientClientAuthenticationMethods) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["private_key_jwt"] = o.PrivateKeyJwt
-	toSerialize["tls_client_auth"] = o.TlsClientAuth
-	toSerialize["self_signed_tls_client_auth"] = o.SelfSignedTlsClientAuth
-	return toSerialize, nil
-}
-
-func (o *ClientClientAuthenticationMethods) UnmarshalJSON(data []byte) (err error) {
-	varClientClientAuthenticationMethods := _ClientClientAuthenticationMethods{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varClientClientAuthenticationMethods)
-
-	if err != nil {
-		return err
+	if !IsNil(o.PrivateKeyJwt) {
+		toSerialize["private_key_jwt"] = o.PrivateKeyJwt
 	}
-
-	*o = ClientClientAuthenticationMethods(varClientClientAuthenticationMethods)
-
-	return err
+	if !IsNil(o.TlsClientAuth) {
+		toSerialize["tls_client_auth"] = o.TlsClientAuth
+	}
+	if !IsNil(o.SelfSignedTlsClientAuth) {
+		toSerialize["self_signed_tls_client_auth"] = o.SelfSignedTlsClientAuth
+	}
+	return toSerialize, nil
 }
 
 type NullableClientClientAuthenticationMethods struct {

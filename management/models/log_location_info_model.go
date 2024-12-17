@@ -17,216 +17,280 @@ import (
 // LogLocationInfo Information about the location that triggered this event based on the `ip`.
 type LogLocationInfo struct {
 	// Two-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\">Alpha-2 ISO 3166-1</a> country code.
-	CountryCode string `json:"country_code"`
+	CountryCode *string `json:"country_code,omitempty"`
 	// Three-letter <a href=\"https://www.iso.org/iso-3166-country-codes.html\">Alpha-3 ISO 3166-1</a> country code.
-	CountryCode3 string `json:"country_code3"`
+	CountryCode3 *string `json:"country_code3,omitempty"`
 	// Full country name in English.
-	CountryName string `json:"country_name"`
+	CountryName *string `json:"country_name,omitempty"`
 	// Full city name in English.
-	CityName string `json:"city_name"`
+	CityName *string `json:"city_name,omitempty"`
 	// Global latitude (horizontal) position.
-	Latitude string `json:"latitude"`
+	Latitude *string `json:"latitude,omitempty"`
 	// Global longitude (vertical) position.
-	Longitude string `json:"longitude"`
+	Longitude *string `json:"longitude,omitempty"`
 	// Time zone name as found in the <a href=\"https://www.iana.org/time-zones\">tz database</a>.
-	TimeZone string `json:"time_zone"`
+	TimeZone *string `json:"time_zone,omitempty"`
 	// Continent the country is located within. Can be `AF` (Africa), `AN` (Antarctica), `AS` (Asia), `EU` (Europe), `NA` (North America), `OC` (Oceania) or `SA` (South America).
-	ContinentCode        string `json:"continent_code"`
+	ContinentCode        *string `json:"continent_code,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _LogLocationInfo LogLocationInfo
 
-// GetCountryCode returns the CountryCode field value
+// GetCountryCode returns the CountryCode field value if set, zero value otherwise.
 func (o *LogLocationInfo) GetCountryCode() string {
-	if o == nil {
+	if o == nil || IsNil(o.CountryCode) {
 		var ret string
 		return ret
 	}
-
-	return o.CountryCode
+	return *o.CountryCode
 }
 
-// GetCountryCodeOk returns a tuple with the CountryCode field value
+// GetCountryCodeOk returns a tuple with the CountryCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LogLocationInfo) GetCountryCodeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CountryCode) {
 		return nil, false
 	}
-	return &o.CountryCode, true
+	return o.CountryCode, true
 }
 
-// SetCountryCode sets field value
+// HasCountryCode returns a boolean if a field has been set.
+func (o *LogLocationInfo) HasCountryCode() bool {
+	if o != nil && !IsNil(o.CountryCode) {
+		return true
+	}
+
+	return false
+}
+
+// SetCountryCode gets a reference to the given string and assigns it to the CountryCode field.
 func (o *LogLocationInfo) SetCountryCode(v string) {
-	o.CountryCode = v
+	o.CountryCode = &v
 }
 
-// GetCountryCode3 returns the CountryCode3 field value
+// GetCountryCode3 returns the CountryCode3 field value if set, zero value otherwise.
 func (o *LogLocationInfo) GetCountryCode3() string {
-	if o == nil {
+	if o == nil || IsNil(o.CountryCode3) {
 		var ret string
 		return ret
 	}
-
-	return o.CountryCode3
+	return *o.CountryCode3
 }
 
-// GetCountryCode3Ok returns a tuple with the CountryCode3 field value
+// GetCountryCode3Ok returns a tuple with the CountryCode3 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LogLocationInfo) GetCountryCode3Ok() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CountryCode3) {
 		return nil, false
 	}
-	return &o.CountryCode3, true
+	return o.CountryCode3, true
 }
 
-// SetCountryCode3 sets field value
+// HasCountryCode3 returns a boolean if a field has been set.
+func (o *LogLocationInfo) HasCountryCode3() bool {
+	if o != nil && !IsNil(o.CountryCode3) {
+		return true
+	}
+
+	return false
+}
+
+// SetCountryCode3 gets a reference to the given string and assigns it to the CountryCode3 field.
 func (o *LogLocationInfo) SetCountryCode3(v string) {
-	o.CountryCode3 = v
+	o.CountryCode3 = &v
 }
 
-// GetCountryName returns the CountryName field value
+// GetCountryName returns the CountryName field value if set, zero value otherwise.
 func (o *LogLocationInfo) GetCountryName() string {
-	if o == nil {
+	if o == nil || IsNil(o.CountryName) {
 		var ret string
 		return ret
 	}
-
-	return o.CountryName
+	return *o.CountryName
 }
 
-// GetCountryNameOk returns a tuple with the CountryName field value
+// GetCountryNameOk returns a tuple with the CountryName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LogLocationInfo) GetCountryNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CountryName) {
 		return nil, false
 	}
-	return &o.CountryName, true
+	return o.CountryName, true
 }
 
-// SetCountryName sets field value
+// HasCountryName returns a boolean if a field has been set.
+func (o *LogLocationInfo) HasCountryName() bool {
+	if o != nil && !IsNil(o.CountryName) {
+		return true
+	}
+
+	return false
+}
+
+// SetCountryName gets a reference to the given string and assigns it to the CountryName field.
 func (o *LogLocationInfo) SetCountryName(v string) {
-	o.CountryName = v
+	o.CountryName = &v
 }
 
-// GetCityName returns the CityName field value
+// GetCityName returns the CityName field value if set, zero value otherwise.
 func (o *LogLocationInfo) GetCityName() string {
-	if o == nil {
+	if o == nil || IsNil(o.CityName) {
 		var ret string
 		return ret
 	}
-
-	return o.CityName
+	return *o.CityName
 }
 
-// GetCityNameOk returns a tuple with the CityName field value
+// GetCityNameOk returns a tuple with the CityName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LogLocationInfo) GetCityNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CityName) {
 		return nil, false
 	}
-	return &o.CityName, true
+	return o.CityName, true
 }
 
-// SetCityName sets field value
+// HasCityName returns a boolean if a field has been set.
+func (o *LogLocationInfo) HasCityName() bool {
+	if o != nil && !IsNil(o.CityName) {
+		return true
+	}
+
+	return false
+}
+
+// SetCityName gets a reference to the given string and assigns it to the CityName field.
 func (o *LogLocationInfo) SetCityName(v string) {
-	o.CityName = v
+	o.CityName = &v
 }
 
-// GetLatitude returns the Latitude field value
+// GetLatitude returns the Latitude field value if set, zero value otherwise.
 func (o *LogLocationInfo) GetLatitude() string {
-	if o == nil {
+	if o == nil || IsNil(o.Latitude) {
 		var ret string
 		return ret
 	}
-
-	return o.Latitude
+	return *o.Latitude
 }
 
-// GetLatitudeOk returns a tuple with the Latitude field value
+// GetLatitudeOk returns a tuple with the Latitude field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LogLocationInfo) GetLatitudeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Latitude) {
 		return nil, false
 	}
-	return &o.Latitude, true
+	return o.Latitude, true
 }
 
-// SetLatitude sets field value
+// HasLatitude returns a boolean if a field has been set.
+func (o *LogLocationInfo) HasLatitude() bool {
+	if o != nil && !IsNil(o.Latitude) {
+		return true
+	}
+
+	return false
+}
+
+// SetLatitude gets a reference to the given string and assigns it to the Latitude field.
 func (o *LogLocationInfo) SetLatitude(v string) {
-	o.Latitude = v
+	o.Latitude = &v
 }
 
-// GetLongitude returns the Longitude field value
+// GetLongitude returns the Longitude field value if set, zero value otherwise.
 func (o *LogLocationInfo) GetLongitude() string {
-	if o == nil {
+	if o == nil || IsNil(o.Longitude) {
 		var ret string
 		return ret
 	}
-
-	return o.Longitude
+	return *o.Longitude
 }
 
-// GetLongitudeOk returns a tuple with the Longitude field value
+// GetLongitudeOk returns a tuple with the Longitude field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LogLocationInfo) GetLongitudeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Longitude) {
 		return nil, false
 	}
-	return &o.Longitude, true
+	return o.Longitude, true
 }
 
-// SetLongitude sets field value
+// HasLongitude returns a boolean if a field has been set.
+func (o *LogLocationInfo) HasLongitude() bool {
+	if o != nil && !IsNil(o.Longitude) {
+		return true
+	}
+
+	return false
+}
+
+// SetLongitude gets a reference to the given string and assigns it to the Longitude field.
 func (o *LogLocationInfo) SetLongitude(v string) {
-	o.Longitude = v
+	o.Longitude = &v
 }
 
-// GetTimeZone returns the TimeZone field value
+// GetTimeZone returns the TimeZone field value if set, zero value otherwise.
 func (o *LogLocationInfo) GetTimeZone() string {
-	if o == nil {
+	if o == nil || IsNil(o.TimeZone) {
 		var ret string
 		return ret
 	}
-
-	return o.TimeZone
+	return *o.TimeZone
 }
 
-// GetTimeZoneOk returns a tuple with the TimeZone field value
+// GetTimeZoneOk returns a tuple with the TimeZone field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LogLocationInfo) GetTimeZoneOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TimeZone) {
 		return nil, false
 	}
-	return &o.TimeZone, true
+	return o.TimeZone, true
 }
 
-// SetTimeZone sets field value
+// HasTimeZone returns a boolean if a field has been set.
+func (o *LogLocationInfo) HasTimeZone() bool {
+	if o != nil && !IsNil(o.TimeZone) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeZone gets a reference to the given string and assigns it to the TimeZone field.
 func (o *LogLocationInfo) SetTimeZone(v string) {
-	o.TimeZone = v
+	o.TimeZone = &v
 }
 
-// GetContinentCode returns the ContinentCode field value
+// GetContinentCode returns the ContinentCode field value if set, zero value otherwise.
 func (o *LogLocationInfo) GetContinentCode() string {
-	if o == nil {
+	if o == nil || IsNil(o.ContinentCode) {
 		var ret string
 		return ret
 	}
-
-	return o.ContinentCode
+	return *o.ContinentCode
 }
 
-// GetContinentCodeOk returns a tuple with the ContinentCode field value
+// GetContinentCodeOk returns a tuple with the ContinentCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *LogLocationInfo) GetContinentCodeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ContinentCode) {
 		return nil, false
 	}
-	return &o.ContinentCode, true
+	return o.ContinentCode, true
 }
 
-// SetContinentCode sets field value
+// HasContinentCode returns a boolean if a field has been set.
+func (o *LogLocationInfo) HasContinentCode() bool {
+	if o != nil && !IsNil(o.ContinentCode) {
+		return true
+	}
+
+	return false
+}
+
+// SetContinentCode gets a reference to the given string and assigns it to the ContinentCode field.
 func (o *LogLocationInfo) SetContinentCode(v string) {
-	o.ContinentCode = v
+	o.ContinentCode = &v
 }
 
 func (o LogLocationInfo) MarshalJSON() ([]byte, error) {
@@ -239,14 +303,30 @@ func (o LogLocationInfo) MarshalJSON() ([]byte, error) {
 
 func (o LogLocationInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["country_code"] = o.CountryCode
-	toSerialize["country_code3"] = o.CountryCode3
-	toSerialize["country_name"] = o.CountryName
-	toSerialize["city_name"] = o.CityName
-	toSerialize["latitude"] = o.Latitude
-	toSerialize["longitude"] = o.Longitude
-	toSerialize["time_zone"] = o.TimeZone
-	toSerialize["continent_code"] = o.ContinentCode
+	if !IsNil(o.CountryCode) {
+		toSerialize["country_code"] = o.CountryCode
+	}
+	if !IsNil(o.CountryCode3) {
+		toSerialize["country_code3"] = o.CountryCode3
+	}
+	if !IsNil(o.CountryName) {
+		toSerialize["country_name"] = o.CountryName
+	}
+	if !IsNil(o.CityName) {
+		toSerialize["city_name"] = o.CityName
+	}
+	if !IsNil(o.Latitude) {
+		toSerialize["latitude"] = o.Latitude
+	}
+	if !IsNil(o.Longitude) {
+		toSerialize["longitude"] = o.Longitude
+	}
+	if !IsNil(o.TimeZone) {
+		toSerialize["time_zone"] = o.TimeZone
+	}
+	if !IsNil(o.ContinentCode) {
+		toSerialize["continent_code"] = o.ContinentCode
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

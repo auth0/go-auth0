@@ -17,60 +17,76 @@ import (
 // PostOrganizations201ResponseEnabledConnectionsInnerConnection struct for PostOrganizations201ResponseEnabledConnectionsInnerConnection
 type PostOrganizations201ResponseEnabledConnectionsInnerConnection struct {
 	// The name of the enabled connection.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// The strategy of the enabled connection.
-	Strategy             string `json:"strategy"`
+	Strategy             *string `json:"strategy,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _PostOrganizations201ResponseEnabledConnectionsInnerConnection PostOrganizations201ResponseEnabledConnectionsInnerConnection
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *PostOrganizations201ResponseEnabledConnectionsInnerConnection) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201ResponseEnabledConnectionsInnerConnection) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *PostOrganizations201ResponseEnabledConnectionsInnerConnection) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *PostOrganizations201ResponseEnabledConnectionsInnerConnection) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetStrategy returns the Strategy field value
+// GetStrategy returns the Strategy field value if set, zero value otherwise.
 func (o *PostOrganizations201ResponseEnabledConnectionsInnerConnection) GetStrategy() string {
-	if o == nil {
+	if o == nil || IsNil(o.Strategy) {
 		var ret string
 		return ret
 	}
-
-	return o.Strategy
+	return *o.Strategy
 }
 
-// GetStrategyOk returns a tuple with the Strategy field value
+// GetStrategyOk returns a tuple with the Strategy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201ResponseEnabledConnectionsInnerConnection) GetStrategyOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Strategy) {
 		return nil, false
 	}
-	return &o.Strategy, true
+	return o.Strategy, true
 }
 
-// SetStrategy sets field value
+// HasStrategy returns a boolean if a field has been set.
+func (o *PostOrganizations201ResponseEnabledConnectionsInnerConnection) HasStrategy() bool {
+	if o != nil && !IsNil(o.Strategy) {
+		return true
+	}
+
+	return false
+}
+
+// SetStrategy gets a reference to the given string and assigns it to the Strategy field.
 func (o *PostOrganizations201ResponseEnabledConnectionsInnerConnection) SetStrategy(v string) {
-	o.Strategy = v
+	o.Strategy = &v
 }
 
 func (o PostOrganizations201ResponseEnabledConnectionsInnerConnection) MarshalJSON() ([]byte, error) {
@@ -83,8 +99,12 @@ func (o PostOrganizations201ResponseEnabledConnectionsInnerConnection) MarshalJS
 
 func (o PostOrganizations201ResponseEnabledConnectionsInnerConnection) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["name"] = o.Name
-	toSerialize["strategy"] = o.Strategy
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Strategy) {
+		toSerialize["strategy"] = o.Strategy
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

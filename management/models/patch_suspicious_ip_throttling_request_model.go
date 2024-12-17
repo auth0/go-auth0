@@ -22,7 +22,7 @@ type PatchSuspiciousIpThrottlingRequest struct {
 	Shields []GetBreachedPasswordDetection200ResponseStagePreUserRegistrationShieldsInner `json:"shields,omitempty"`
 	// List of trusted IP addresses that will not have attack protection enforced against them.
 	Allowlist []GetBruteForceProtection200ResponseAllowlistInner `json:"allowlist,omitempty"`
-	Stage     *PatchSuspiciousIpThrottlingRequestStage           `json:"stage,omitempty"`
+	Stage     *GetSuspiciousIpThrottling200ResponseStage         `json:"stage,omitempty"`
 }
 
 // GetEnabled returns the Enabled field value if set, zero value otherwise.
@@ -122,9 +122,9 @@ func (o *PatchSuspiciousIpThrottlingRequest) SetAllowlist(v []GetBruteForceProte
 }
 
 // GetStage returns the Stage field value if set, zero value otherwise.
-func (o *PatchSuspiciousIpThrottlingRequest) GetStage() PatchSuspiciousIpThrottlingRequestStage {
+func (o *PatchSuspiciousIpThrottlingRequest) GetStage() GetSuspiciousIpThrottling200ResponseStage {
 	if o == nil || IsNil(o.Stage) {
-		var ret PatchSuspiciousIpThrottlingRequestStage
+		var ret GetSuspiciousIpThrottling200ResponseStage
 		return ret
 	}
 	return *o.Stage
@@ -132,7 +132,7 @@ func (o *PatchSuspiciousIpThrottlingRequest) GetStage() PatchSuspiciousIpThrottl
 
 // GetStageOk returns a tuple with the Stage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchSuspiciousIpThrottlingRequest) GetStageOk() (*PatchSuspiciousIpThrottlingRequestStage, bool) {
+func (o *PatchSuspiciousIpThrottlingRequest) GetStageOk() (*GetSuspiciousIpThrottling200ResponseStage, bool) {
 	if o == nil || IsNil(o.Stage) {
 		return nil, false
 	}
@@ -148,8 +148,8 @@ func (o *PatchSuspiciousIpThrottlingRequest) HasStage() bool {
 	return false
 }
 
-// SetStage gets a reference to the given PatchSuspiciousIpThrottlingRequestStage and assigns it to the Stage field.
-func (o *PatchSuspiciousIpThrottlingRequest) SetStage(v PatchSuspiciousIpThrottlingRequestStage) {
+// SetStage gets a reference to the given GetSuspiciousIpThrottling200ResponseStage and assigns it to the Stage field.
+func (o *PatchSuspiciousIpThrottlingRequest) SetStage(v GetSuspiciousIpThrottling200ResponseStage) {
 	o.Stage = &v
 }
 

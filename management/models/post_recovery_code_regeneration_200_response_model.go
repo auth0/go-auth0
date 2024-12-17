@@ -17,34 +17,42 @@ import (
 // PostRecoveryCodeRegeneration200Response struct for PostRecoveryCodeRegeneration200Response
 type PostRecoveryCodeRegeneration200Response struct {
 	// New account recovery code.
-	RecoveryCode         string `json:"recovery_code"`
+	RecoveryCode         *string `json:"recovery_code,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _PostRecoveryCodeRegeneration200Response PostRecoveryCodeRegeneration200Response
 
-// GetRecoveryCode returns the RecoveryCode field value
+// GetRecoveryCode returns the RecoveryCode field value if set, zero value otherwise.
 func (o *PostRecoveryCodeRegeneration200Response) GetRecoveryCode() string {
-	if o == nil {
+	if o == nil || IsNil(o.RecoveryCode) {
 		var ret string
 		return ret
 	}
-
-	return o.RecoveryCode
+	return *o.RecoveryCode
 }
 
-// GetRecoveryCodeOk returns a tuple with the RecoveryCode field value
+// GetRecoveryCodeOk returns a tuple with the RecoveryCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostRecoveryCodeRegeneration200Response) GetRecoveryCodeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RecoveryCode) {
 		return nil, false
 	}
-	return &o.RecoveryCode, true
+	return o.RecoveryCode, true
 }
 
-// SetRecoveryCode sets field value
+// HasRecoveryCode returns a boolean if a field has been set.
+func (o *PostRecoveryCodeRegeneration200Response) HasRecoveryCode() bool {
+	if o != nil && !IsNil(o.RecoveryCode) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecoveryCode gets a reference to the given string and assigns it to the RecoveryCode field.
 func (o *PostRecoveryCodeRegeneration200Response) SetRecoveryCode(v string) {
-	o.RecoveryCode = v
+	o.RecoveryCode = &v
 }
 
 func (o PostRecoveryCodeRegeneration200Response) MarshalJSON() ([]byte, error) {
@@ -57,7 +65,9 @@ func (o PostRecoveryCodeRegeneration200Response) MarshalJSON() ([]byte, error) {
 
 func (o PostRecoveryCodeRegeneration200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["recovery_code"] = o.RecoveryCode
+	if !IsNil(o.RecoveryCode) {
+		toSerialize["recovery_code"] = o.RecoveryCode
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

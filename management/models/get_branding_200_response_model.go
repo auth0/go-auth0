@@ -16,111 +16,143 @@ import (
 
 // GetBranding200Response struct for GetBranding200Response
 type GetBranding200Response struct {
-	Colors GetBranding200ResponseColors `json:"colors"`
+	Colors *GetBranding200ResponseColors `json:"colors,omitempty"`
 	// URL for the favicon. Must use HTTPS.
-	FaviconUrl string `json:"favicon_url"`
+	FaviconUrl *string `json:"favicon_url,omitempty"`
 	// URL for the logo. Must use HTTPS.
-	LogoUrl              string                     `json:"logo_url"`
-	Font                 GetBranding200ResponseFont `json:"font"`
+	LogoUrl              *string                     `json:"logo_url,omitempty"`
+	Font                 *GetBranding200ResponseFont `json:"font,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetBranding200Response GetBranding200Response
 
-// GetColors returns the Colors field value
+// GetColors returns the Colors field value if set, zero value otherwise.
 func (o *GetBranding200Response) GetColors() GetBranding200ResponseColors {
-	if o == nil {
+	if o == nil || IsNil(o.Colors) {
 		var ret GetBranding200ResponseColors
 		return ret
 	}
-
-	return o.Colors
+	return *o.Colors
 }
 
-// GetColorsOk returns a tuple with the Colors field value
+// GetColorsOk returns a tuple with the Colors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBranding200Response) GetColorsOk() (*GetBranding200ResponseColors, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Colors) {
 		return nil, false
 	}
-	return &o.Colors, true
+	return o.Colors, true
 }
 
-// SetColors sets field value
+// HasColors returns a boolean if a field has been set.
+func (o *GetBranding200Response) HasColors() bool {
+	if o != nil && !IsNil(o.Colors) {
+		return true
+	}
+
+	return false
+}
+
+// SetColors gets a reference to the given GetBranding200ResponseColors and assigns it to the Colors field.
 func (o *GetBranding200Response) SetColors(v GetBranding200ResponseColors) {
-	o.Colors = v
+	o.Colors = &v
 }
 
-// GetFaviconUrl returns the FaviconUrl field value
+// GetFaviconUrl returns the FaviconUrl field value if set, zero value otherwise.
 func (o *GetBranding200Response) GetFaviconUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.FaviconUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.FaviconUrl
+	return *o.FaviconUrl
 }
 
-// GetFaviconUrlOk returns a tuple with the FaviconUrl field value
+// GetFaviconUrlOk returns a tuple with the FaviconUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBranding200Response) GetFaviconUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.FaviconUrl) {
 		return nil, false
 	}
-	return &o.FaviconUrl, true
+	return o.FaviconUrl, true
 }
 
-// SetFaviconUrl sets field value
+// HasFaviconUrl returns a boolean if a field has been set.
+func (o *GetBranding200Response) HasFaviconUrl() bool {
+	if o != nil && !IsNil(o.FaviconUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetFaviconUrl gets a reference to the given string and assigns it to the FaviconUrl field.
 func (o *GetBranding200Response) SetFaviconUrl(v string) {
-	o.FaviconUrl = v
+	o.FaviconUrl = &v
 }
 
-// GetLogoUrl returns the LogoUrl field value
+// GetLogoUrl returns the LogoUrl field value if set, zero value otherwise.
 func (o *GetBranding200Response) GetLogoUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.LogoUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.LogoUrl
+	return *o.LogoUrl
 }
 
-// GetLogoUrlOk returns a tuple with the LogoUrl field value
+// GetLogoUrlOk returns a tuple with the LogoUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBranding200Response) GetLogoUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LogoUrl) {
 		return nil, false
 	}
-	return &o.LogoUrl, true
+	return o.LogoUrl, true
 }
 
-// SetLogoUrl sets field value
+// HasLogoUrl returns a boolean if a field has been set.
+func (o *GetBranding200Response) HasLogoUrl() bool {
+	if o != nil && !IsNil(o.LogoUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogoUrl gets a reference to the given string and assigns it to the LogoUrl field.
 func (o *GetBranding200Response) SetLogoUrl(v string) {
-	o.LogoUrl = v
+	o.LogoUrl = &v
 }
 
-// GetFont returns the Font field value
+// GetFont returns the Font field value if set, zero value otherwise.
 func (o *GetBranding200Response) GetFont() GetBranding200ResponseFont {
-	if o == nil {
+	if o == nil || IsNil(o.Font) {
 		var ret GetBranding200ResponseFont
 		return ret
 	}
-
-	return o.Font
+	return *o.Font
 }
 
-// GetFontOk returns a tuple with the Font field value
+// GetFontOk returns a tuple with the Font field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBranding200Response) GetFontOk() (*GetBranding200ResponseFont, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Font) {
 		return nil, false
 	}
-	return &o.Font, true
+	return o.Font, true
 }
 
-// SetFont sets field value
+// HasFont returns a boolean if a field has been set.
+func (o *GetBranding200Response) HasFont() bool {
+	if o != nil && !IsNil(o.Font) {
+		return true
+	}
+
+	return false
+}
+
+// SetFont gets a reference to the given GetBranding200ResponseFont and assigns it to the Font field.
 func (o *GetBranding200Response) SetFont(v GetBranding200ResponseFont) {
-	o.Font = v
+	o.Font = &v
 }
 
 func (o GetBranding200Response) MarshalJSON() ([]byte, error) {
@@ -133,10 +165,18 @@ func (o GetBranding200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetBranding200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["colors"] = o.Colors
-	toSerialize["favicon_url"] = o.FaviconUrl
-	toSerialize["logo_url"] = o.LogoUrl
-	toSerialize["font"] = o.Font
+	if !IsNil(o.Colors) {
+		toSerialize["colors"] = o.Colors
+	}
+	if !IsNil(o.FaviconUrl) {
+		toSerialize["favicon_url"] = o.FaviconUrl
+	}
+	if !IsNil(o.LogoUrl) {
+		toSerialize["logo_url"] = o.LogoUrl
+	}
+	if !IsNil(o.Font) {
+		toSerialize["font"] = o.Font
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

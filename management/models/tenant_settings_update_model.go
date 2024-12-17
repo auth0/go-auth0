@@ -16,15 +16,15 @@ import (
 
 // TenantSettingsUpdate struct for TenantSettingsUpdate
 type TenantSettingsUpdate struct {
-	ChangePassword  NullableTenantSettingsUpdateChangePassword  `json:"change_password,omitempty"`
-	DeviceFlow      NullableTenantSettingsUpdateDeviceFlow      `json:"device_flow,omitempty"`
-	GuardianMfaPage NullableTenantSettingsUpdateGuardianMfaPage `json:"guardian_mfa_page,omitempty"`
+	ChangePassword  NullableTenantSettingsChangePassword   `json:"change_password,omitempty"`
+	DeviceFlow      NullableTenantSettingsUpdateDeviceFlow `json:"device_flow,omitempty"`
+	GuardianMfaPage NullableTenantSettingsGuardianMfaPage  `json:"guardian_mfa_page,omitempty"`
 	// Default audience for API Authorization.
 	DefaultAudience *string `json:"default_audience,omitempty"`
 	// Name of connection used for password grants at the `/token` endpoint. The following connection types are supported: LDAP, AD, Database Connections, Passwordless, Windows Azure Active Directory, ADFS.
-	DefaultDirectory *string                               `json:"default_directory,omitempty"`
-	ErrorPage        NullableTenantSettingsUpdateErrorPage `json:"error_page,omitempty"`
-	Flags            *TenantSettingsUpdateFlags            `json:"flags,omitempty"`
+	DefaultDirectory *string                         `json:"default_directory,omitempty"`
+	ErrorPage        NullableTenantSettingsErrorPage `json:"error_page,omitempty"`
+	Flags            *TenantSettingsUpdateFlags      `json:"flags,omitempty"`
 	// Friendly name for this tenant.
 	FriendlyName *string `json:"friendly_name,omitempty"`
 	// URL of logo to be shown for this tenant (recommended size: 150x150)
@@ -46,22 +46,22 @@ type TenantSettingsUpdate struct {
 	// Supported locales for the user interface
 	EnabledLocales []GetCustomTextByLanguageLanguageParameter `json:"enabled_locales,omitempty"`
 	SessionCookie  NullableTenantSettingsSessionCookie        `json:"session_cookie,omitempty"`
-	Sessions       NullableTenantSettingsUpdateSessions       `json:"sessions,omitempty"`
+	Sessions       NullableTenantSettingsSessions             `json:"sessions,omitempty"`
 	// Whether to enable flexible factors for MFA in the PostLogin action
 	CustomizeMfaInPostloginAction NullableBool `json:"customize_mfa_in_postlogin_action,omitempty"`
 	// Whether to accept an organization name instead of an ID on auth endpoints
 	AllowOrganizationNameInAuthenticationApi NullableBool `json:"allow_organization_name_in_authentication_api,omitempty"`
 	// Supported ACR values
-	AcrValuesSupported []string                         `json:"acr_values_supported,omitempty"`
-	Mtls               NullableTenantSettingsUpdateMtls `json:"mtls,omitempty"`
+	AcrValuesSupported []string                   `json:"acr_values_supported,omitempty"`
+	Mtls               NullableTenantSettingsMtls `json:"mtls,omitempty"`
 	// Enables the use of Pushed Authorization Requests
 	PushedAuthorizationRequestsSupported NullableBool `json:"pushed_authorization_requests_supported,omitempty"`
 }
 
 // GetChangePassword returns the ChangePassword field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TenantSettingsUpdate) GetChangePassword() TenantSettingsUpdateChangePassword {
+func (o *TenantSettingsUpdate) GetChangePassword() TenantSettingsChangePassword {
 	if o == nil || IsNil(o.ChangePassword.Get()) {
-		var ret TenantSettingsUpdateChangePassword
+		var ret TenantSettingsChangePassword
 		return ret
 	}
 	return *o.ChangePassword.Get()
@@ -70,7 +70,7 @@ func (o *TenantSettingsUpdate) GetChangePassword() TenantSettingsUpdateChangePas
 // GetChangePasswordOk returns a tuple with the ChangePassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TenantSettingsUpdate) GetChangePasswordOk() (*TenantSettingsUpdateChangePassword, bool) {
+func (o *TenantSettingsUpdate) GetChangePasswordOk() (*TenantSettingsChangePassword, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -86,8 +86,8 @@ func (o *TenantSettingsUpdate) HasChangePassword() bool {
 	return false
 }
 
-// SetChangePassword gets a reference to the given NullableTenantSettingsUpdateChangePassword and assigns it to the ChangePassword field.
-func (o *TenantSettingsUpdate) SetChangePassword(v TenantSettingsUpdateChangePassword) {
+// SetChangePassword gets a reference to the given NullableTenantSettingsChangePassword and assigns it to the ChangePassword field.
+func (o *TenantSettingsUpdate) SetChangePassword(v TenantSettingsChangePassword) {
 	o.ChangePassword.Set(&v)
 }
 
@@ -145,9 +145,9 @@ func (o *TenantSettingsUpdate) UnsetDeviceFlow() {
 }
 
 // GetGuardianMfaPage returns the GuardianMfaPage field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TenantSettingsUpdate) GetGuardianMfaPage() TenantSettingsUpdateGuardianMfaPage {
+func (o *TenantSettingsUpdate) GetGuardianMfaPage() TenantSettingsGuardianMfaPage {
 	if o == nil || IsNil(o.GuardianMfaPage.Get()) {
-		var ret TenantSettingsUpdateGuardianMfaPage
+		var ret TenantSettingsGuardianMfaPage
 		return ret
 	}
 	return *o.GuardianMfaPage.Get()
@@ -156,7 +156,7 @@ func (o *TenantSettingsUpdate) GetGuardianMfaPage() TenantSettingsUpdateGuardian
 // GetGuardianMfaPageOk returns a tuple with the GuardianMfaPage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TenantSettingsUpdate) GetGuardianMfaPageOk() (*TenantSettingsUpdateGuardianMfaPage, bool) {
+func (o *TenantSettingsUpdate) GetGuardianMfaPageOk() (*TenantSettingsGuardianMfaPage, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -172,8 +172,8 @@ func (o *TenantSettingsUpdate) HasGuardianMfaPage() bool {
 	return false
 }
 
-// SetGuardianMfaPage gets a reference to the given NullableTenantSettingsUpdateGuardianMfaPage and assigns it to the GuardianMfaPage field.
-func (o *TenantSettingsUpdate) SetGuardianMfaPage(v TenantSettingsUpdateGuardianMfaPage) {
+// SetGuardianMfaPage gets a reference to the given NullableTenantSettingsGuardianMfaPage and assigns it to the GuardianMfaPage field.
+func (o *TenantSettingsUpdate) SetGuardianMfaPage(v TenantSettingsGuardianMfaPage) {
 	o.GuardianMfaPage.Set(&v)
 }
 
@@ -252,9 +252,9 @@ func (o *TenantSettingsUpdate) SetDefaultDirectory(v string) {
 }
 
 // GetErrorPage returns the ErrorPage field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TenantSettingsUpdate) GetErrorPage() TenantSettingsUpdateErrorPage {
+func (o *TenantSettingsUpdate) GetErrorPage() TenantSettingsErrorPage {
 	if o == nil || IsNil(o.ErrorPage.Get()) {
-		var ret TenantSettingsUpdateErrorPage
+		var ret TenantSettingsErrorPage
 		return ret
 	}
 	return *o.ErrorPage.Get()
@@ -263,7 +263,7 @@ func (o *TenantSettingsUpdate) GetErrorPage() TenantSettingsUpdateErrorPage {
 // GetErrorPageOk returns a tuple with the ErrorPage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TenantSettingsUpdate) GetErrorPageOk() (*TenantSettingsUpdateErrorPage, bool) {
+func (o *TenantSettingsUpdate) GetErrorPageOk() (*TenantSettingsErrorPage, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -279,8 +279,8 @@ func (o *TenantSettingsUpdate) HasErrorPage() bool {
 	return false
 }
 
-// SetErrorPage gets a reference to the given NullableTenantSettingsUpdateErrorPage and assigns it to the ErrorPage field.
-func (o *TenantSettingsUpdate) SetErrorPage(v TenantSettingsUpdateErrorPage) {
+// SetErrorPage gets a reference to the given NullableTenantSettingsErrorPage and assigns it to the ErrorPage field.
+func (o *TenantSettingsUpdate) SetErrorPage(v TenantSettingsErrorPage) {
 	o.ErrorPage.Set(&v)
 }
 
@@ -690,9 +690,9 @@ func (o *TenantSettingsUpdate) UnsetSessionCookie() {
 }
 
 // GetSessions returns the Sessions field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TenantSettingsUpdate) GetSessions() TenantSettingsUpdateSessions {
+func (o *TenantSettingsUpdate) GetSessions() TenantSettingsSessions {
 	if o == nil || IsNil(o.Sessions.Get()) {
-		var ret TenantSettingsUpdateSessions
+		var ret TenantSettingsSessions
 		return ret
 	}
 	return *o.Sessions.Get()
@@ -701,7 +701,7 @@ func (o *TenantSettingsUpdate) GetSessions() TenantSettingsUpdateSessions {
 // GetSessionsOk returns a tuple with the Sessions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TenantSettingsUpdate) GetSessionsOk() (*TenantSettingsUpdateSessions, bool) {
+func (o *TenantSettingsUpdate) GetSessionsOk() (*TenantSettingsSessions, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -717,8 +717,8 @@ func (o *TenantSettingsUpdate) HasSessions() bool {
 	return false
 }
 
-// SetSessions gets a reference to the given NullableTenantSettingsUpdateSessions and assigns it to the Sessions field.
-func (o *TenantSettingsUpdate) SetSessions(v TenantSettingsUpdateSessions) {
+// SetSessions gets a reference to the given NullableTenantSettingsSessions and assigns it to the Sessions field.
+func (o *TenantSettingsUpdate) SetSessions(v TenantSettingsSessions) {
 	o.Sessions.Set(&v)
 }
 
@@ -851,9 +851,9 @@ func (o *TenantSettingsUpdate) SetAcrValuesSupported(v []string) {
 }
 
 // GetMtls returns the Mtls field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *TenantSettingsUpdate) GetMtls() TenantSettingsUpdateMtls {
+func (o *TenantSettingsUpdate) GetMtls() TenantSettingsMtls {
 	if o == nil || IsNil(o.Mtls.Get()) {
-		var ret TenantSettingsUpdateMtls
+		var ret TenantSettingsMtls
 		return ret
 	}
 	return *o.Mtls.Get()
@@ -862,7 +862,7 @@ func (o *TenantSettingsUpdate) GetMtls() TenantSettingsUpdateMtls {
 // GetMtlsOk returns a tuple with the Mtls field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *TenantSettingsUpdate) GetMtlsOk() (*TenantSettingsUpdateMtls, bool) {
+func (o *TenantSettingsUpdate) GetMtlsOk() (*TenantSettingsMtls, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -878,8 +878,8 @@ func (o *TenantSettingsUpdate) HasMtls() bool {
 	return false
 }
 
-// SetMtls gets a reference to the given NullableTenantSettingsUpdateMtls and assigns it to the Mtls field.
-func (o *TenantSettingsUpdate) SetMtls(v TenantSettingsUpdateMtls) {
+// SetMtls gets a reference to the given NullableTenantSettingsMtls and assigns it to the Mtls field.
+func (o *TenantSettingsUpdate) SetMtls(v TenantSettingsMtls) {
 	o.Mtls.Set(&v)
 }
 

@@ -11,40 +11,45 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // TenantSettingsMtls mTLS configuration.
 type TenantSettingsMtls struct {
 	// If true, enables mTLS endpoint aliases
-	EnableEndpointAliases bool `json:"enable_endpoint_aliases"`
+	EnableEndpointAliases *bool `json:"enable_endpoint_aliases,omitempty"`
 }
 
-type _TenantSettingsMtls TenantSettingsMtls
-
-// GetEnableEndpointAliases returns the EnableEndpointAliases field value
+// GetEnableEndpointAliases returns the EnableEndpointAliases field value if set, zero value otherwise.
 func (o *TenantSettingsMtls) GetEnableEndpointAliases() bool {
-	if o == nil {
+	if o == nil || IsNil(o.EnableEndpointAliases) {
 		var ret bool
 		return ret
 	}
-
-	return o.EnableEndpointAliases
+	return *o.EnableEndpointAliases
 }
 
-// GetEnableEndpointAliasesOk returns a tuple with the EnableEndpointAliases field value
+// GetEnableEndpointAliasesOk returns a tuple with the EnableEndpointAliases field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsMtls) GetEnableEndpointAliasesOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnableEndpointAliases) {
 		return nil, false
 	}
-	return &o.EnableEndpointAliases, true
+	return o.EnableEndpointAliases, true
 }
 
-// SetEnableEndpointAliases sets field value
+// HasEnableEndpointAliases returns a boolean if a field has been set.
+func (o *TenantSettingsMtls) HasEnableEndpointAliases() bool {
+	if o != nil && !IsNil(o.EnableEndpointAliases) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnableEndpointAliases gets a reference to the given bool and assigns it to the EnableEndpointAliases field.
 func (o *TenantSettingsMtls) SetEnableEndpointAliases(v bool) {
-	o.EnableEndpointAliases = v
+	o.EnableEndpointAliases = &v
 }
 
 func (o TenantSettingsMtls) MarshalJSON() ([]byte, error) {
@@ -57,24 +62,10 @@ func (o TenantSettingsMtls) MarshalJSON() ([]byte, error) {
 
 func (o TenantSettingsMtls) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["enable_endpoint_aliases"] = o.EnableEndpointAliases
-	return toSerialize, nil
-}
-
-func (o *TenantSettingsMtls) UnmarshalJSON(data []byte) (err error) {
-	varTenantSettingsMtls := _TenantSettingsMtls{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTenantSettingsMtls)
-
-	if err != nil {
-		return err
+	if !IsNil(o.EnableEndpointAliases) {
+		toSerialize["enable_endpoint_aliases"] = o.EnableEndpointAliases
 	}
-
-	*o = TenantSettingsMtls(varTenantSettingsMtls)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableTenantSettingsMtls struct {

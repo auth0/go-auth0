@@ -11,31 +11,26 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetApns200Response struct for GetApns200Response
 type GetApns200Response struct {
-	BundleId NullableString `json:"bundle_id"`
-	Sandbox  bool           `json:"sandbox"`
-	Enabled  bool           `json:"enabled"`
+	BundleId NullableString `json:"bundle_id,omitempty"`
+	Sandbox  *bool          `json:"sandbox,omitempty"`
+	Enabled  *bool          `json:"enabled,omitempty"`
 }
 
-type _GetApns200Response GetApns200Response
-
-// GetBundleId returns the BundleId field value
-// If the value is explicit nil, the zero value for string will be returned
+// GetBundleId returns the BundleId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetApns200Response) GetBundleId() string {
-	if o == nil || o.BundleId.Get() == nil {
+	if o == nil || IsNil(o.BundleId.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.BundleId.Get()
 }
 
-// GetBundleIdOk returns a tuple with the BundleId field value
+// GetBundleIdOk returns a tuple with the BundleId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetApns200Response) GetBundleIdOk() (*string, bool) {
@@ -45,57 +40,92 @@ func (o *GetApns200Response) GetBundleIdOk() (*string, bool) {
 	return o.BundleId.Get(), o.BundleId.IsSet()
 }
 
-// SetBundleId sets field value
+// HasBundleId returns a boolean if a field has been set.
+func (o *GetApns200Response) HasBundleId() bool {
+	if o != nil && o.BundleId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBundleId gets a reference to the given NullableString and assigns it to the BundleId field.
 func (o *GetApns200Response) SetBundleId(v string) {
 	o.BundleId.Set(&v)
 }
 
-// GetSandbox returns the Sandbox field value
+// SetBundleIdNil sets the value for BundleId to be an explicit nil
+func (o *GetApns200Response) SetBundleIdNil() {
+	o.BundleId.Set(nil)
+}
+
+// UnsetBundleId ensures that no value is present for BundleId, not even an explicit nil
+func (o *GetApns200Response) UnsetBundleId() {
+	o.BundleId.Unset()
+}
+
+// GetSandbox returns the Sandbox field value if set, zero value otherwise.
 func (o *GetApns200Response) GetSandbox() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Sandbox) {
 		var ret bool
 		return ret
 	}
-
-	return o.Sandbox
+	return *o.Sandbox
 }
 
-// GetSandboxOk returns a tuple with the Sandbox field value
+// GetSandboxOk returns a tuple with the Sandbox field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetApns200Response) GetSandboxOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Sandbox) {
 		return nil, false
 	}
-	return &o.Sandbox, true
+	return o.Sandbox, true
 }
 
-// SetSandbox sets field value
+// HasSandbox returns a boolean if a field has been set.
+func (o *GetApns200Response) HasSandbox() bool {
+	if o != nil && !IsNil(o.Sandbox) {
+		return true
+	}
+
+	return false
+}
+
+// SetSandbox gets a reference to the given bool and assigns it to the Sandbox field.
 func (o *GetApns200Response) SetSandbox(v bool) {
-	o.Sandbox = v
+	o.Sandbox = &v
 }
 
-// GetEnabled returns the Enabled field value
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *GetApns200Response) GetEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.Enabled
+	return *o.Enabled
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetApns200Response) GetEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
-	return &o.Enabled, true
+	return o.Enabled, true
 }
 
-// SetEnabled sets field value
+// HasEnabled returns a boolean if a field has been set.
+func (o *GetApns200Response) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
 func (o *GetApns200Response) SetEnabled(v bool) {
-	o.Enabled = v
+	o.Enabled = &v
 }
 
 func (o GetApns200Response) MarshalJSON() ([]byte, error) {
@@ -108,26 +138,16 @@ func (o GetApns200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetApns200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["bundle_id"] = o.BundleId.Get()
-	toSerialize["sandbox"] = o.Sandbox
-	toSerialize["enabled"] = o.Enabled
-	return toSerialize, nil
-}
-
-func (o *GetApns200Response) UnmarshalJSON(data []byte) (err error) {
-	varGetApns200Response := _GetApns200Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetApns200Response)
-
-	if err != nil {
-		return err
+	if o.BundleId.IsSet() {
+		toSerialize["bundle_id"] = o.BundleId.Get()
 	}
-
-	*o = GetApns200Response(varGetApns200Response)
-
-	return err
+	if !IsNil(o.Sandbox) {
+		toSerialize["sandbox"] = o.Sandbox
+	}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	return toSerialize, nil
 }
 
 type NullableGetApns200Response struct {

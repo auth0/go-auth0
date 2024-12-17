@@ -11,144 +11,181 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // EmailProviderCredentials Credentials required to use the provider.
 type EmailProviderCredentials struct {
 	// API User.
-	ApiUser string `json:"api_user"`
+	ApiUser *string `json:"api_user,omitempty"`
 	// AWS or SparkPost region.
-	Region string `json:"region"`
+	Region *string `json:"region,omitempty"`
 	// SMTP host.
-	SmtpHost string `json:"smtp_host"`
+	SmtpHost *string `json:"smtp_host,omitempty"`
 	// SMTP port.
-	SmtpPort int32 `json:"smtp_port"`
+	SmtpPort *int32 `json:"smtp_port,omitempty"`
 	// SMTP username.
-	SmtpUser string `json:"smtp_user"`
+	SmtpUser *string `json:"smtp_user,omitempty"`
 }
 
-type _EmailProviderCredentials EmailProviderCredentials
-
-// GetApiUser returns the ApiUser field value
+// GetApiUser returns the ApiUser field value if set, zero value otherwise.
 func (o *EmailProviderCredentials) GetApiUser() string {
-	if o == nil {
+	if o == nil || IsNil(o.ApiUser) {
 		var ret string
 		return ret
 	}
-
-	return o.ApiUser
+	return *o.ApiUser
 }
 
-// GetApiUserOk returns a tuple with the ApiUser field value
+// GetApiUserOk returns a tuple with the ApiUser field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EmailProviderCredentials) GetApiUserOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ApiUser) {
 		return nil, false
 	}
-	return &o.ApiUser, true
+	return o.ApiUser, true
 }
 
-// SetApiUser sets field value
+// HasApiUser returns a boolean if a field has been set.
+func (o *EmailProviderCredentials) HasApiUser() bool {
+	if o != nil && !IsNil(o.ApiUser) {
+		return true
+	}
+
+	return false
+}
+
+// SetApiUser gets a reference to the given string and assigns it to the ApiUser field.
 func (o *EmailProviderCredentials) SetApiUser(v string) {
-	o.ApiUser = v
+	o.ApiUser = &v
 }
 
-// GetRegion returns the Region field value
+// GetRegion returns the Region field value if set, zero value otherwise.
 func (o *EmailProviderCredentials) GetRegion() string {
-	if o == nil {
+	if o == nil || IsNil(o.Region) {
 		var ret string
 		return ret
 	}
-
-	return o.Region
+	return *o.Region
 }
 
-// GetRegionOk returns a tuple with the Region field value
+// GetRegionOk returns a tuple with the Region field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EmailProviderCredentials) GetRegionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Region) {
 		return nil, false
 	}
-	return &o.Region, true
+	return o.Region, true
 }
 
-// SetRegion sets field value
+// HasRegion returns a boolean if a field has been set.
+func (o *EmailProviderCredentials) HasRegion() bool {
+	if o != nil && !IsNil(o.Region) {
+		return true
+	}
+
+	return false
+}
+
+// SetRegion gets a reference to the given string and assigns it to the Region field.
 func (o *EmailProviderCredentials) SetRegion(v string) {
-	o.Region = v
+	o.Region = &v
 }
 
-// GetSmtpHost returns the SmtpHost field value
+// GetSmtpHost returns the SmtpHost field value if set, zero value otherwise.
 func (o *EmailProviderCredentials) GetSmtpHost() string {
-	if o == nil {
+	if o == nil || IsNil(o.SmtpHost) {
 		var ret string
 		return ret
 	}
-
-	return o.SmtpHost
+	return *o.SmtpHost
 }
 
-// GetSmtpHostOk returns a tuple with the SmtpHost field value
+// GetSmtpHostOk returns a tuple with the SmtpHost field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EmailProviderCredentials) GetSmtpHostOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SmtpHost) {
 		return nil, false
 	}
-	return &o.SmtpHost, true
+	return o.SmtpHost, true
 }
 
-// SetSmtpHost sets field value
+// HasSmtpHost returns a boolean if a field has been set.
+func (o *EmailProviderCredentials) HasSmtpHost() bool {
+	if o != nil && !IsNil(o.SmtpHost) {
+		return true
+	}
+
+	return false
+}
+
+// SetSmtpHost gets a reference to the given string and assigns it to the SmtpHost field.
 func (o *EmailProviderCredentials) SetSmtpHost(v string) {
-	o.SmtpHost = v
+	o.SmtpHost = &v
 }
 
-// GetSmtpPort returns the SmtpPort field value
+// GetSmtpPort returns the SmtpPort field value if set, zero value otherwise.
 func (o *EmailProviderCredentials) GetSmtpPort() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.SmtpPort) {
 		var ret int32
 		return ret
 	}
-
-	return o.SmtpPort
+	return *o.SmtpPort
 }
 
-// GetSmtpPortOk returns a tuple with the SmtpPort field value
+// GetSmtpPortOk returns a tuple with the SmtpPort field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EmailProviderCredentials) GetSmtpPortOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SmtpPort) {
 		return nil, false
 	}
-	return &o.SmtpPort, true
+	return o.SmtpPort, true
 }
 
-// SetSmtpPort sets field value
+// HasSmtpPort returns a boolean if a field has been set.
+func (o *EmailProviderCredentials) HasSmtpPort() bool {
+	if o != nil && !IsNil(o.SmtpPort) {
+		return true
+	}
+
+	return false
+}
+
+// SetSmtpPort gets a reference to the given int32 and assigns it to the SmtpPort field.
 func (o *EmailProviderCredentials) SetSmtpPort(v int32) {
-	o.SmtpPort = v
+	o.SmtpPort = &v
 }
 
-// GetSmtpUser returns the SmtpUser field value
+// GetSmtpUser returns the SmtpUser field value if set, zero value otherwise.
 func (o *EmailProviderCredentials) GetSmtpUser() string {
-	if o == nil {
+	if o == nil || IsNil(o.SmtpUser) {
 		var ret string
 		return ret
 	}
-
-	return o.SmtpUser
+	return *o.SmtpUser
 }
 
-// GetSmtpUserOk returns a tuple with the SmtpUser field value
+// GetSmtpUserOk returns a tuple with the SmtpUser field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EmailProviderCredentials) GetSmtpUserOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SmtpUser) {
 		return nil, false
 	}
-	return &o.SmtpUser, true
+	return o.SmtpUser, true
 }
 
-// SetSmtpUser sets field value
+// HasSmtpUser returns a boolean if a field has been set.
+func (o *EmailProviderCredentials) HasSmtpUser() bool {
+	if o != nil && !IsNil(o.SmtpUser) {
+		return true
+	}
+
+	return false
+}
+
+// SetSmtpUser gets a reference to the given string and assigns it to the SmtpUser field.
 func (o *EmailProviderCredentials) SetSmtpUser(v string) {
-	o.SmtpUser = v
+	o.SmtpUser = &v
 }
 
 func (o EmailProviderCredentials) MarshalJSON() ([]byte, error) {
@@ -161,28 +198,22 @@ func (o EmailProviderCredentials) MarshalJSON() ([]byte, error) {
 
 func (o EmailProviderCredentials) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["api_user"] = o.ApiUser
-	toSerialize["region"] = o.Region
-	toSerialize["smtp_host"] = o.SmtpHost
-	toSerialize["smtp_port"] = o.SmtpPort
-	toSerialize["smtp_user"] = o.SmtpUser
-	return toSerialize, nil
-}
-
-func (o *EmailProviderCredentials) UnmarshalJSON(data []byte) (err error) {
-	varEmailProviderCredentials := _EmailProviderCredentials{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varEmailProviderCredentials)
-
-	if err != nil {
-		return err
+	if !IsNil(o.ApiUser) {
+		toSerialize["api_user"] = o.ApiUser
 	}
-
-	*o = EmailProviderCredentials(varEmailProviderCredentials)
-
-	return err
+	if !IsNil(o.Region) {
+		toSerialize["region"] = o.Region
+	}
+	if !IsNil(o.SmtpHost) {
+		toSerialize["smtp_host"] = o.SmtpHost
+	}
+	if !IsNil(o.SmtpPort) {
+		toSerialize["smtp_port"] = o.SmtpPort
+	}
+	if !IsNil(o.SmtpUser) {
+		toSerialize["smtp_user"] = o.SmtpUser
+	}
+	return toSerialize, nil
 }
 
 type NullableEmailProviderCredentials struct {

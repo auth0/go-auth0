@@ -11,40 +11,45 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetUniversalLogin200ResponseOneOf struct for GetUniversalLogin200ResponseOneOf
 type GetUniversalLogin200ResponseOneOf struct {
 	// The custom page template for the New Universal Login Experience
-	Body string `json:"body"`
+	Body *string `json:"body,omitempty"`
 }
 
-type _GetUniversalLogin200ResponseOneOf GetUniversalLogin200ResponseOneOf
-
-// GetBody returns the Body field value
+// GetBody returns the Body field value if set, zero value otherwise.
 func (o *GetUniversalLogin200ResponseOneOf) GetBody() string {
-	if o == nil {
+	if o == nil || IsNil(o.Body) {
 		var ret string
 		return ret
 	}
-
-	return o.Body
+	return *o.Body
 }
 
-// GetBodyOk returns a tuple with the Body field value
+// GetBodyOk returns a tuple with the Body field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetUniversalLogin200ResponseOneOf) GetBodyOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Body) {
 		return nil, false
 	}
-	return &o.Body, true
+	return o.Body, true
 }
 
-// SetBody sets field value
+// HasBody returns a boolean if a field has been set.
+func (o *GetUniversalLogin200ResponseOneOf) HasBody() bool {
+	if o != nil && !IsNil(o.Body) {
+		return true
+	}
+
+	return false
+}
+
+// SetBody gets a reference to the given string and assigns it to the Body field.
 func (o *GetUniversalLogin200ResponseOneOf) SetBody(v string) {
-	o.Body = v
+	o.Body = &v
 }
 
 func (o GetUniversalLogin200ResponseOneOf) MarshalJSON() ([]byte, error) {
@@ -57,24 +62,10 @@ func (o GetUniversalLogin200ResponseOneOf) MarshalJSON() ([]byte, error) {
 
 func (o GetUniversalLogin200ResponseOneOf) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["body"] = o.Body
-	return toSerialize, nil
-}
-
-func (o *GetUniversalLogin200ResponseOneOf) UnmarshalJSON(data []byte) (err error) {
-	varGetUniversalLogin200ResponseOneOf := _GetUniversalLogin200ResponseOneOf{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetUniversalLogin200ResponseOneOf)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Body) {
+		toSerialize["body"] = o.Body
 	}
-
-	*o = GetUniversalLogin200ResponseOneOf(varGetUniversalLogin200ResponseOneOf)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableGetUniversalLogin200ResponseOneOf struct {

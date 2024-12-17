@@ -17,86 +17,110 @@ import (
 // UserBlockBlockedForInner struct for UserBlockBlockedForInner
 type UserBlockBlockedForInner struct {
 	// Identifier (should be any of an `email`, `username`, or `phone_number`)
-	Identifier string `json:"identifier"`
+	Identifier *string `json:"identifier,omitempty"`
 	// IP Address
-	Ip string `json:"ip"`
+	Ip *string `json:"ip,omitempty"`
 	// Connection identifier
-	Connection           string `json:"connection"`
+	Connection           *string `json:"connection,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _UserBlockBlockedForInner UserBlockBlockedForInner
 
-// GetIdentifier returns the Identifier field value
+// GetIdentifier returns the Identifier field value if set, zero value otherwise.
 func (o *UserBlockBlockedForInner) GetIdentifier() string {
-	if o == nil {
+	if o == nil || IsNil(o.Identifier) {
 		var ret string
 		return ret
 	}
-
-	return o.Identifier
+	return *o.Identifier
 }
 
-// GetIdentifierOk returns a tuple with the Identifier field value
+// GetIdentifierOk returns a tuple with the Identifier field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserBlockBlockedForInner) GetIdentifierOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Identifier) {
 		return nil, false
 	}
-	return &o.Identifier, true
+	return o.Identifier, true
 }
 
-// SetIdentifier sets field value
+// HasIdentifier returns a boolean if a field has been set.
+func (o *UserBlockBlockedForInner) HasIdentifier() bool {
+	if o != nil && !IsNil(o.Identifier) {
+		return true
+	}
+
+	return false
+}
+
+// SetIdentifier gets a reference to the given string and assigns it to the Identifier field.
 func (o *UserBlockBlockedForInner) SetIdentifier(v string) {
-	o.Identifier = v
+	o.Identifier = &v
 }
 
-// GetIp returns the Ip field value
+// GetIp returns the Ip field value if set, zero value otherwise.
 func (o *UserBlockBlockedForInner) GetIp() string {
-	if o == nil {
+	if o == nil || IsNil(o.Ip) {
 		var ret string
 		return ret
 	}
-
-	return o.Ip
+	return *o.Ip
 }
 
-// GetIpOk returns a tuple with the Ip field value
+// GetIpOk returns a tuple with the Ip field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserBlockBlockedForInner) GetIpOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Ip) {
 		return nil, false
 	}
-	return &o.Ip, true
+	return o.Ip, true
 }
 
-// SetIp sets field value
+// HasIp returns a boolean if a field has been set.
+func (o *UserBlockBlockedForInner) HasIp() bool {
+	if o != nil && !IsNil(o.Ip) {
+		return true
+	}
+
+	return false
+}
+
+// SetIp gets a reference to the given string and assigns it to the Ip field.
 func (o *UserBlockBlockedForInner) SetIp(v string) {
-	o.Ip = v
+	o.Ip = &v
 }
 
-// GetConnection returns the Connection field value
+// GetConnection returns the Connection field value if set, zero value otherwise.
 func (o *UserBlockBlockedForInner) GetConnection() string {
-	if o == nil {
+	if o == nil || IsNil(o.Connection) {
 		var ret string
 		return ret
 	}
-
-	return o.Connection
+	return *o.Connection
 }
 
-// GetConnectionOk returns a tuple with the Connection field value
+// GetConnectionOk returns a tuple with the Connection field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *UserBlockBlockedForInner) GetConnectionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Connection) {
 		return nil, false
 	}
-	return &o.Connection, true
+	return o.Connection, true
 }
 
-// SetConnection sets field value
+// HasConnection returns a boolean if a field has been set.
+func (o *UserBlockBlockedForInner) HasConnection() bool {
+	if o != nil && !IsNil(o.Connection) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnection gets a reference to the given string and assigns it to the Connection field.
 func (o *UserBlockBlockedForInner) SetConnection(v string) {
-	o.Connection = v
+	o.Connection = &v
 }
 
 func (o UserBlockBlockedForInner) MarshalJSON() ([]byte, error) {
@@ -109,9 +133,15 @@ func (o UserBlockBlockedForInner) MarshalJSON() ([]byte, error) {
 
 func (o UserBlockBlockedForInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["identifier"] = o.Identifier
-	toSerialize["ip"] = o.Ip
-	toSerialize["connection"] = o.Connection
+	if !IsNil(o.Identifier) {
+		toSerialize["identifier"] = o.Identifier
+	}
+	if !IsNil(o.Ip) {
+		toSerialize["ip"] = o.Ip
+	}
+	if !IsNil(o.Connection) {
+		toSerialize["connection"] = o.Connection
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

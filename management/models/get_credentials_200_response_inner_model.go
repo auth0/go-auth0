@@ -18,267 +18,347 @@ import (
 // GetCredentials200ResponseInner struct for GetCredentials200ResponseInner
 type GetCredentials200ResponseInner struct {
 	// ID of the credential. Generated on creation.
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// The name given to the credential by the user.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// The key identifier of the credential, generated on creation.
-	Kid string                            `json:"kid"`
-	Alg GetCredentials200ResponseInnerAlg `json:"alg"`
+	Kid *string                            `json:"kid,omitempty"`
+	Alg *GetCredentials200ResponseInnerAlg `json:"alg,omitempty"`
 	// The type of credential. Supported types: public_key.
-	CredentialType string `json:"credential_type"`
+	CredentialType *string `json:"credential_type,omitempty"`
 	// The X509 certificate's Subject Distinguished Name
-	SubjectDn string `json:"subject_dn"`
+	SubjectDn *string `json:"subject_dn,omitempty"`
 	// The X509 certificate's SHA256 thumbprint
-	ThumbprintSha256 string `json:"thumbprint_sha256"`
+	ThumbprintSha256 *string `json:"thumbprint_sha256,omitempty"`
 	// The ISO 8601 formatted date the credential was created.
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// The ISO 8601 formatted date the credential was updated.
-	UpdatedAt time.Time `json:"updated_at"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// The ISO 8601 formatted date representing the expiration of the credential.
-	ExpiresAt            time.Time `json:"expires_at"`
+	ExpiresAt            *time.Time `json:"expires_at,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetCredentials200ResponseInner GetCredentials200ResponseInner
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetCredentials200ResponseInner) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetCredentials200ResponseInner) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetCredentials200ResponseInner) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetCredentials200ResponseInner) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetCredentials200ResponseInner) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetCredentials200ResponseInner) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetCredentials200ResponseInner) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *GetCredentials200ResponseInner) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetKid returns the Kid field value
+// GetKid returns the Kid field value if set, zero value otherwise.
 func (o *GetCredentials200ResponseInner) GetKid() string {
-	if o == nil {
+	if o == nil || IsNil(o.Kid) {
 		var ret string
 		return ret
 	}
-
-	return o.Kid
+	return *o.Kid
 }
 
-// GetKidOk returns a tuple with the Kid field value
+// GetKidOk returns a tuple with the Kid field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetCredentials200ResponseInner) GetKidOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Kid) {
 		return nil, false
 	}
-	return &o.Kid, true
+	return o.Kid, true
 }
 
-// SetKid sets field value
+// HasKid returns a boolean if a field has been set.
+func (o *GetCredentials200ResponseInner) HasKid() bool {
+	if o != nil && !IsNil(o.Kid) {
+		return true
+	}
+
+	return false
+}
+
+// SetKid gets a reference to the given string and assigns it to the Kid field.
 func (o *GetCredentials200ResponseInner) SetKid(v string) {
-	o.Kid = v
+	o.Kid = &v
 }
 
-// GetAlg returns the Alg field value
+// GetAlg returns the Alg field value if set, zero value otherwise.
 func (o *GetCredentials200ResponseInner) GetAlg() GetCredentials200ResponseInnerAlg {
-	if o == nil {
+	if o == nil || IsNil(o.Alg) {
 		var ret GetCredentials200ResponseInnerAlg
 		return ret
 	}
-
-	return o.Alg
+	return *o.Alg
 }
 
-// GetAlgOk returns a tuple with the Alg field value
+// GetAlgOk returns a tuple with the Alg field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetCredentials200ResponseInner) GetAlgOk() (*GetCredentials200ResponseInnerAlg, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Alg) {
 		return nil, false
 	}
-	return &o.Alg, true
+	return o.Alg, true
 }
 
-// SetAlg sets field value
+// HasAlg returns a boolean if a field has been set.
+func (o *GetCredentials200ResponseInner) HasAlg() bool {
+	if o != nil && !IsNil(o.Alg) {
+		return true
+	}
+
+	return false
+}
+
+// SetAlg gets a reference to the given GetCredentials200ResponseInnerAlg and assigns it to the Alg field.
 func (o *GetCredentials200ResponseInner) SetAlg(v GetCredentials200ResponseInnerAlg) {
-	o.Alg = v
+	o.Alg = &v
 }
 
-// GetCredentialType returns the CredentialType field value
+// GetCredentialType returns the CredentialType field value if set, zero value otherwise.
 func (o *GetCredentials200ResponseInner) GetCredentialType() string {
-	if o == nil {
+	if o == nil || IsNil(o.CredentialType) {
 		var ret string
 		return ret
 	}
-
-	return o.CredentialType
+	return *o.CredentialType
 }
 
-// GetCredentialTypeOk returns a tuple with the CredentialType field value
+// GetCredentialTypeOk returns a tuple with the CredentialType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetCredentials200ResponseInner) GetCredentialTypeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CredentialType) {
 		return nil, false
 	}
-	return &o.CredentialType, true
+	return o.CredentialType, true
 }
 
-// SetCredentialType sets field value
+// HasCredentialType returns a boolean if a field has been set.
+func (o *GetCredentials200ResponseInner) HasCredentialType() bool {
+	if o != nil && !IsNil(o.CredentialType) {
+		return true
+	}
+
+	return false
+}
+
+// SetCredentialType gets a reference to the given string and assigns it to the CredentialType field.
 func (o *GetCredentials200ResponseInner) SetCredentialType(v string) {
-	o.CredentialType = v
+	o.CredentialType = &v
 }
 
-// GetSubjectDn returns the SubjectDn field value
+// GetSubjectDn returns the SubjectDn field value if set, zero value otherwise.
 func (o *GetCredentials200ResponseInner) GetSubjectDn() string {
-	if o == nil {
+	if o == nil || IsNil(o.SubjectDn) {
 		var ret string
 		return ret
 	}
-
-	return o.SubjectDn
+	return *o.SubjectDn
 }
 
-// GetSubjectDnOk returns a tuple with the SubjectDn field value
+// GetSubjectDnOk returns a tuple with the SubjectDn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetCredentials200ResponseInner) GetSubjectDnOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SubjectDn) {
 		return nil, false
 	}
-	return &o.SubjectDn, true
+	return o.SubjectDn, true
 }
 
-// SetSubjectDn sets field value
+// HasSubjectDn returns a boolean if a field has been set.
+func (o *GetCredentials200ResponseInner) HasSubjectDn() bool {
+	if o != nil && !IsNil(o.SubjectDn) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubjectDn gets a reference to the given string and assigns it to the SubjectDn field.
 func (o *GetCredentials200ResponseInner) SetSubjectDn(v string) {
-	o.SubjectDn = v
+	o.SubjectDn = &v
 }
 
-// GetThumbprintSha256 returns the ThumbprintSha256 field value
+// GetThumbprintSha256 returns the ThumbprintSha256 field value if set, zero value otherwise.
 func (o *GetCredentials200ResponseInner) GetThumbprintSha256() string {
-	if o == nil {
+	if o == nil || IsNil(o.ThumbprintSha256) {
 		var ret string
 		return ret
 	}
-
-	return o.ThumbprintSha256
+	return *o.ThumbprintSha256
 }
 
-// GetThumbprintSha256Ok returns a tuple with the ThumbprintSha256 field value
+// GetThumbprintSha256Ok returns a tuple with the ThumbprintSha256 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetCredentials200ResponseInner) GetThumbprintSha256Ok() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ThumbprintSha256) {
 		return nil, false
 	}
-	return &o.ThumbprintSha256, true
+	return o.ThumbprintSha256, true
 }
 
-// SetThumbprintSha256 sets field value
+// HasThumbprintSha256 returns a boolean if a field has been set.
+func (o *GetCredentials200ResponseInner) HasThumbprintSha256() bool {
+	if o != nil && !IsNil(o.ThumbprintSha256) {
+		return true
+	}
+
+	return false
+}
+
+// SetThumbprintSha256 gets a reference to the given string and assigns it to the ThumbprintSha256 field.
 func (o *GetCredentials200ResponseInner) SetThumbprintSha256(v string) {
-	o.ThumbprintSha256 = v
+	o.ThumbprintSha256 = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *GetCredentials200ResponseInner) GetCreatedAt() time.Time {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret time.Time
 		return ret
 	}
-
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetCredentials200ResponseInner) GetCreatedAtOk() (*time.Time, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
-// SetCreatedAt sets field value
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetCredentials200ResponseInner) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
 func (o *GetCredentials200ResponseInner) SetCreatedAt(v time.Time) {
-	o.CreatedAt = v
+	o.CreatedAt = &v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *GetCredentials200ResponseInner) GetUpdatedAt() time.Time {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret time.Time
 		return ret
 	}
-
-	return o.UpdatedAt
+	return *o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetCredentials200ResponseInner) GetUpdatedAtOk() (*time.Time, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
-	return &o.UpdatedAt, true
+	return o.UpdatedAt, true
 }
 
-// SetUpdatedAt sets field value
+// HasUpdatedAt returns a boolean if a field has been set.
+func (o *GetCredentials200ResponseInner) HasUpdatedAt() bool {
+	if o != nil && !IsNil(o.UpdatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
 func (o *GetCredentials200ResponseInner) SetUpdatedAt(v time.Time) {
-	o.UpdatedAt = v
+	o.UpdatedAt = &v
 }
 
-// GetExpiresAt returns the ExpiresAt field value
+// GetExpiresAt returns the ExpiresAt field value if set, zero value otherwise.
 func (o *GetCredentials200ResponseInner) GetExpiresAt() time.Time {
-	if o == nil {
+	if o == nil || IsNil(o.ExpiresAt) {
 		var ret time.Time
 		return ret
 	}
-
-	return o.ExpiresAt
+	return *o.ExpiresAt
 }
 
-// GetExpiresAtOk returns a tuple with the ExpiresAt field value
+// GetExpiresAtOk returns a tuple with the ExpiresAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetCredentials200ResponseInner) GetExpiresAtOk() (*time.Time, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ExpiresAt) {
 		return nil, false
 	}
-	return &o.ExpiresAt, true
+	return o.ExpiresAt, true
 }
 
-// SetExpiresAt sets field value
+// HasExpiresAt returns a boolean if a field has been set.
+func (o *GetCredentials200ResponseInner) HasExpiresAt() bool {
+	if o != nil && !IsNil(o.ExpiresAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetExpiresAt gets a reference to the given time.Time and assigns it to the ExpiresAt field.
 func (o *GetCredentials200ResponseInner) SetExpiresAt(v time.Time) {
-	o.ExpiresAt = v
+	o.ExpiresAt = &v
 }
 
 func (o GetCredentials200ResponseInner) MarshalJSON() ([]byte, error) {
@@ -291,16 +371,36 @@ func (o GetCredentials200ResponseInner) MarshalJSON() ([]byte, error) {
 
 func (o GetCredentials200ResponseInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["name"] = o.Name
-	toSerialize["kid"] = o.Kid
-	toSerialize["alg"] = o.Alg
-	toSerialize["credential_type"] = o.CredentialType
-	toSerialize["subject_dn"] = o.SubjectDn
-	toSerialize["thumbprint_sha256"] = o.ThumbprintSha256
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["updated_at"] = o.UpdatedAt
-	toSerialize["expires_at"] = o.ExpiresAt
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Kid) {
+		toSerialize["kid"] = o.Kid
+	}
+	if !IsNil(o.Alg) {
+		toSerialize["alg"] = o.Alg
+	}
+	if !IsNil(o.CredentialType) {
+		toSerialize["credential_type"] = o.CredentialType
+	}
+	if !IsNil(o.SubjectDn) {
+		toSerialize["subject_dn"] = o.SubjectDn
+	}
+	if !IsNil(o.ThumbprintSha256) {
+		toSerialize["thumbprint_sha256"] = o.ThumbprintSha256
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.ExpiresAt) {
+		toSerialize["expires_at"] = o.ExpiresAt
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

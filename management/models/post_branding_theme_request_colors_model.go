@@ -13,6 +13,7 @@ package models
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // PostBrandingThemeRequestColors struct for PostBrandingThemeRequestColors
@@ -541,6 +542,42 @@ func (o PostBrandingThemeRequestColors) ToMap() (map[string]interface{}, error) 
 }
 
 func (o *PostBrandingThemeRequestColors) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"body_text",
+		"error",
+		"header",
+		"icons",
+		"input_background",
+		"input_border",
+		"input_filled_text",
+		"input_labels_placeholders",
+		"links_focused_components",
+		"primary_button",
+		"primary_button_label",
+		"secondary_button_border",
+		"secondary_button_label",
+		"success",
+		"widget_background",
+		"widget_border",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
 	varPostBrandingThemeRequestColors := _PostBrandingThemeRequestColors{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

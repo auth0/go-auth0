@@ -11,39 +11,44 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetPnProviders200Response struct for GetPnProviders200Response
 type GetPnProviders200Response struct {
-	Provider GetPnProviders200ResponseProvider `json:"provider"`
+	Provider *GetPnProviders200ResponseProvider `json:"provider,omitempty"`
 }
 
-type _GetPnProviders200Response GetPnProviders200Response
-
-// GetProvider returns the Provider field value
+// GetProvider returns the Provider field value if set, zero value otherwise.
 func (o *GetPnProviders200Response) GetProvider() GetPnProviders200ResponseProvider {
-	if o == nil {
+	if o == nil || IsNil(o.Provider) {
 		var ret GetPnProviders200ResponseProvider
 		return ret
 	}
-
-	return o.Provider
+	return *o.Provider
 }
 
-// GetProviderOk returns a tuple with the Provider field value
+// GetProviderOk returns a tuple with the Provider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetPnProviders200Response) GetProviderOk() (*GetPnProviders200ResponseProvider, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Provider) {
 		return nil, false
 	}
-	return &o.Provider, true
+	return o.Provider, true
 }
 
-// SetProvider sets field value
+// HasProvider returns a boolean if a field has been set.
+func (o *GetPnProviders200Response) HasProvider() bool {
+	if o != nil && !IsNil(o.Provider) {
+		return true
+	}
+
+	return false
+}
+
+// SetProvider gets a reference to the given GetPnProviders200ResponseProvider and assigns it to the Provider field.
 func (o *GetPnProviders200Response) SetProvider(v GetPnProviders200ResponseProvider) {
-	o.Provider = v
+	o.Provider = &v
 }
 
 func (o GetPnProviders200Response) MarshalJSON() ([]byte, error) {
@@ -56,24 +61,10 @@ func (o GetPnProviders200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetPnProviders200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["provider"] = o.Provider
-	return toSerialize, nil
-}
-
-func (o *GetPnProviders200Response) UnmarshalJSON(data []byte) (err error) {
-	varGetPnProviders200Response := _GetPnProviders200Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetPnProviders200Response)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Provider) {
+		toSerialize["provider"] = o.Provider
 	}
-
-	*o = GetPnProviders200Response(varGetPnProviders200Response)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableGetPnProviders200Response struct {

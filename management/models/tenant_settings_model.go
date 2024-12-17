@@ -11,70 +11,65 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // TenantSettings struct for TenantSettings
 type TenantSettings struct {
-	ChangePassword  NullableTenantSettingsChangePassword  `json:"change_password"`
-	GuardianMfaPage NullableTenantSettingsGuardianMfaPage `json:"guardian_mfa_page"`
+	ChangePassword  NullableTenantSettingsChangePassword  `json:"change_password,omitempty"`
+	GuardianMfaPage NullableTenantSettingsGuardianMfaPage `json:"guardian_mfa_page,omitempty"`
 	// Default audience for API authorization.
-	DefaultAudience string `json:"default_audience"`
+	DefaultAudience *string `json:"default_audience,omitempty"`
 	// Name of connection used for password grants at the `/token`endpoint. The following connection types are supported: LDAP, AD, Database Connections, Passwordless, Windows Azure Active Directory, ADFS.
-	DefaultDirectory string                           `json:"default_directory"`
-	ErrorPage        NullableTenantSettingsErrorPage  `json:"error_page"`
-	DeviceFlow       NullableTenantSettingsDeviceFlow `json:"device_flow"`
-	Flags            TenantSettingsFlags              `json:"flags"`
+	DefaultDirectory *string                          `json:"default_directory,omitempty"`
+	ErrorPage        NullableTenantSettingsErrorPage  `json:"error_page,omitempty"`
+	DeviceFlow       NullableTenantSettingsDeviceFlow `json:"device_flow,omitempty"`
+	Flags            *TenantSettingsFlags             `json:"flags,omitempty"`
 	// Friendly name for this tenant.
-	FriendlyName string `json:"friendly_name"`
+	FriendlyName *string `json:"friendly_name,omitempty"`
 	// URL of logo to be shown for this tenant (recommended size: 150x150)
-	PictureUrl string `json:"picture_url"`
+	PictureUrl *string `json:"picture_url,omitempty"`
 	// End-user support email address.
-	SupportEmail string `json:"support_email"`
+	SupportEmail *string `json:"support_email,omitempty"`
 	// End-user support URL.
-	SupportUrl string `json:"support_url"`
+	SupportUrl *string `json:"support_url,omitempty"`
 	// URLs that are valid to redirect to after logout from Auth0.
-	AllowedLogoutUrls []string `json:"allowed_logout_urls"`
+	AllowedLogoutUrls []string `json:"allowed_logout_urls,omitempty"`
 	// Number of hours a session will stay valid.
-	SessionLifetime float32 `json:"session_lifetime"`
+	SessionLifetime *float32 `json:"session_lifetime,omitempty"`
 	// Number of hours for which a session can be inactive before the user must log in again.
-	IdleSessionLifetime float32 `json:"idle_session_lifetime"`
+	IdleSessionLifetime *float32 `json:"idle_session_lifetime,omitempty"`
 	// Selected sandbox version for the extensibility environment.
-	SandboxVersion string `json:"sandbox_version"`
+	SandboxVersion *string `json:"sandbox_version,omitempty"`
 	// Available sandbox versions for the extensibility environment.
-	SandboxVersionsAvailable []string `json:"sandbox_versions_available"`
+	SandboxVersionsAvailable []string `json:"sandbox_versions_available,omitempty"`
 	// The default absolute redirection uri, must be https
-	DefaultRedirectionUri string `json:"default_redirection_uri"`
+	DefaultRedirectionUri *string `json:"default_redirection_uri,omitempty"`
 	// Supported locales for the user interface.
-	EnabledLocales []GetCustomTextByLanguageLanguageParameter `json:"enabled_locales"`
-	SessionCookie  NullableTenantSettingsSessionCookie        `json:"session_cookie"`
-	Sessions       NullableTenantSettingsSessions             `json:"sessions"`
+	EnabledLocales []GetCustomTextByLanguageLanguageParameter `json:"enabled_locales,omitempty"`
+	SessionCookie  NullableTenantSettingsSessionCookie        `json:"session_cookie,omitempty"`
+	Sessions       NullableTenantSettingsSessions             `json:"sessions,omitempty"`
 	// Whether to accept an organization name instead of an ID on auth endpoints
-	AllowOrganizationNameInAuthenticationApi bool `json:"allow_organization_name_in_authentication_api"`
+	AllowOrganizationNameInAuthenticationApi *bool `json:"allow_organization_name_in_authentication_api,omitempty"`
 	// Whether to enable flexible factors for MFA in the PostLogin action
-	CustomizeMfaInPostloginAction bool `json:"customize_mfa_in_postlogin_action"`
+	CustomizeMfaInPostloginAction *bool `json:"customize_mfa_in_postlogin_action,omitempty"`
 	// Supported ACR values
-	AcrValuesSupported []string                   `json:"acr_values_supported"`
-	Mtls               NullableTenantSettingsMtls `json:"mtls"`
+	AcrValuesSupported []string                   `json:"acr_values_supported,omitempty"`
+	Mtls               NullableTenantSettingsMtls `json:"mtls,omitempty"`
 	// Enables the use of Pushed Authorization Requests
-	PushedAuthorizationRequestsSupported bool `json:"pushed_authorization_requests_supported"`
+	PushedAuthorizationRequestsSupported *bool `json:"pushed_authorization_requests_supported,omitempty"`
 }
 
-type _TenantSettings TenantSettings
-
-// GetChangePassword returns the ChangePassword field value
-// If the value is explicit nil, the zero value for TenantSettingsChangePassword will be returned
+// GetChangePassword returns the ChangePassword field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TenantSettings) GetChangePassword() TenantSettingsChangePassword {
-	if o == nil || o.ChangePassword.Get() == nil {
+	if o == nil || IsNil(o.ChangePassword.Get()) {
 		var ret TenantSettingsChangePassword
 		return ret
 	}
-
 	return *o.ChangePassword.Get()
 }
 
-// GetChangePasswordOk returns a tuple with the ChangePassword field value
+// GetChangePasswordOk returns a tuple with the ChangePassword field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TenantSettings) GetChangePasswordOk() (*TenantSettingsChangePassword, bool) {
@@ -84,23 +79,40 @@ func (o *TenantSettings) GetChangePasswordOk() (*TenantSettingsChangePassword, b
 	return o.ChangePassword.Get(), o.ChangePassword.IsSet()
 }
 
-// SetChangePassword sets field value
+// HasChangePassword returns a boolean if a field has been set.
+func (o *TenantSettings) HasChangePassword() bool {
+	if o != nil && o.ChangePassword.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetChangePassword gets a reference to the given NullableTenantSettingsChangePassword and assigns it to the ChangePassword field.
 func (o *TenantSettings) SetChangePassword(v TenantSettingsChangePassword) {
 	o.ChangePassword.Set(&v)
 }
 
-// GetGuardianMfaPage returns the GuardianMfaPage field value
-// If the value is explicit nil, the zero value for TenantSettingsGuardianMfaPage will be returned
+// SetChangePasswordNil sets the value for ChangePassword to be an explicit nil
+func (o *TenantSettings) SetChangePasswordNil() {
+	o.ChangePassword.Set(nil)
+}
+
+// UnsetChangePassword ensures that no value is present for ChangePassword, not even an explicit nil
+func (o *TenantSettings) UnsetChangePassword() {
+	o.ChangePassword.Unset()
+}
+
+// GetGuardianMfaPage returns the GuardianMfaPage field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TenantSettings) GetGuardianMfaPage() TenantSettingsGuardianMfaPage {
-	if o == nil || o.GuardianMfaPage.Get() == nil {
+	if o == nil || IsNil(o.GuardianMfaPage.Get()) {
 		var ret TenantSettingsGuardianMfaPage
 		return ret
 	}
-
 	return *o.GuardianMfaPage.Get()
 }
 
-// GetGuardianMfaPageOk returns a tuple with the GuardianMfaPage field value
+// GetGuardianMfaPageOk returns a tuple with the GuardianMfaPage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TenantSettings) GetGuardianMfaPageOk() (*TenantSettingsGuardianMfaPage, bool) {
@@ -110,71 +122,104 @@ func (o *TenantSettings) GetGuardianMfaPageOk() (*TenantSettingsGuardianMfaPage,
 	return o.GuardianMfaPage.Get(), o.GuardianMfaPage.IsSet()
 }
 
-// SetGuardianMfaPage sets field value
+// HasGuardianMfaPage returns a boolean if a field has been set.
+func (o *TenantSettings) HasGuardianMfaPage() bool {
+	if o != nil && o.GuardianMfaPage.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGuardianMfaPage gets a reference to the given NullableTenantSettingsGuardianMfaPage and assigns it to the GuardianMfaPage field.
 func (o *TenantSettings) SetGuardianMfaPage(v TenantSettingsGuardianMfaPage) {
 	o.GuardianMfaPage.Set(&v)
 }
 
-// GetDefaultAudience returns the DefaultAudience field value
+// SetGuardianMfaPageNil sets the value for GuardianMfaPage to be an explicit nil
+func (o *TenantSettings) SetGuardianMfaPageNil() {
+	o.GuardianMfaPage.Set(nil)
+}
+
+// UnsetGuardianMfaPage ensures that no value is present for GuardianMfaPage, not even an explicit nil
+func (o *TenantSettings) UnsetGuardianMfaPage() {
+	o.GuardianMfaPage.Unset()
+}
+
+// GetDefaultAudience returns the DefaultAudience field value if set, zero value otherwise.
 func (o *TenantSettings) GetDefaultAudience() string {
-	if o == nil {
+	if o == nil || IsNil(o.DefaultAudience) {
 		var ret string
 		return ret
 	}
-
-	return o.DefaultAudience
+	return *o.DefaultAudience
 }
 
-// GetDefaultAudienceOk returns a tuple with the DefaultAudience field value
+// GetDefaultAudienceOk returns a tuple with the DefaultAudience field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetDefaultAudienceOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DefaultAudience) {
 		return nil, false
 	}
-	return &o.DefaultAudience, true
+	return o.DefaultAudience, true
 }
 
-// SetDefaultAudience sets field value
+// HasDefaultAudience returns a boolean if a field has been set.
+func (o *TenantSettings) HasDefaultAudience() bool {
+	if o != nil && !IsNil(o.DefaultAudience) {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultAudience gets a reference to the given string and assigns it to the DefaultAudience field.
 func (o *TenantSettings) SetDefaultAudience(v string) {
-	o.DefaultAudience = v
+	o.DefaultAudience = &v
 }
 
-// GetDefaultDirectory returns the DefaultDirectory field value
+// GetDefaultDirectory returns the DefaultDirectory field value if set, zero value otherwise.
 func (o *TenantSettings) GetDefaultDirectory() string {
-	if o == nil {
+	if o == nil || IsNil(o.DefaultDirectory) {
 		var ret string
 		return ret
 	}
-
-	return o.DefaultDirectory
+	return *o.DefaultDirectory
 }
 
-// GetDefaultDirectoryOk returns a tuple with the DefaultDirectory field value
+// GetDefaultDirectoryOk returns a tuple with the DefaultDirectory field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetDefaultDirectoryOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DefaultDirectory) {
 		return nil, false
 	}
-	return &o.DefaultDirectory, true
+	return o.DefaultDirectory, true
 }
 
-// SetDefaultDirectory sets field value
+// HasDefaultDirectory returns a boolean if a field has been set.
+func (o *TenantSettings) HasDefaultDirectory() bool {
+	if o != nil && !IsNil(o.DefaultDirectory) {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultDirectory gets a reference to the given string and assigns it to the DefaultDirectory field.
 func (o *TenantSettings) SetDefaultDirectory(v string) {
-	o.DefaultDirectory = v
+	o.DefaultDirectory = &v
 }
 
-// GetErrorPage returns the ErrorPage field value
-// If the value is explicit nil, the zero value for TenantSettingsErrorPage will be returned
+// GetErrorPage returns the ErrorPage field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TenantSettings) GetErrorPage() TenantSettingsErrorPage {
-	if o == nil || o.ErrorPage.Get() == nil {
+	if o == nil || IsNil(o.ErrorPage.Get()) {
 		var ret TenantSettingsErrorPage
 		return ret
 	}
-
 	return *o.ErrorPage.Get()
 }
 
-// GetErrorPageOk returns a tuple with the ErrorPage field value
+// GetErrorPageOk returns a tuple with the ErrorPage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TenantSettings) GetErrorPageOk() (*TenantSettingsErrorPage, bool) {
@@ -184,23 +229,40 @@ func (o *TenantSettings) GetErrorPageOk() (*TenantSettingsErrorPage, bool) {
 	return o.ErrorPage.Get(), o.ErrorPage.IsSet()
 }
 
-// SetErrorPage sets field value
+// HasErrorPage returns a boolean if a field has been set.
+func (o *TenantSettings) HasErrorPage() bool {
+	if o != nil && o.ErrorPage.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetErrorPage gets a reference to the given NullableTenantSettingsErrorPage and assigns it to the ErrorPage field.
 func (o *TenantSettings) SetErrorPage(v TenantSettingsErrorPage) {
 	o.ErrorPage.Set(&v)
 }
 
-// GetDeviceFlow returns the DeviceFlow field value
-// If the value is explicit nil, the zero value for TenantSettingsDeviceFlow will be returned
+// SetErrorPageNil sets the value for ErrorPage to be an explicit nil
+func (o *TenantSettings) SetErrorPageNil() {
+	o.ErrorPage.Set(nil)
+}
+
+// UnsetErrorPage ensures that no value is present for ErrorPage, not even an explicit nil
+func (o *TenantSettings) UnsetErrorPage() {
+	o.ErrorPage.Unset()
+}
+
+// GetDeviceFlow returns the DeviceFlow field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TenantSettings) GetDeviceFlow() TenantSettingsDeviceFlow {
-	if o == nil || o.DeviceFlow.Get() == nil {
+	if o == nil || IsNil(o.DeviceFlow.Get()) {
 		var ret TenantSettingsDeviceFlow
 		return ret
 	}
-
 	return *o.DeviceFlow.Get()
 }
 
-// GetDeviceFlowOk returns a tuple with the DeviceFlow field value
+// GetDeviceFlowOk returns a tuple with the DeviceFlow field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TenantSettings) GetDeviceFlowOk() (*TenantSettingsDeviceFlow, bool) {
@@ -210,311 +272,424 @@ func (o *TenantSettings) GetDeviceFlowOk() (*TenantSettingsDeviceFlow, bool) {
 	return o.DeviceFlow.Get(), o.DeviceFlow.IsSet()
 }
 
-// SetDeviceFlow sets field value
+// HasDeviceFlow returns a boolean if a field has been set.
+func (o *TenantSettings) HasDeviceFlow() bool {
+	if o != nil && o.DeviceFlow.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDeviceFlow gets a reference to the given NullableTenantSettingsDeviceFlow and assigns it to the DeviceFlow field.
 func (o *TenantSettings) SetDeviceFlow(v TenantSettingsDeviceFlow) {
 	o.DeviceFlow.Set(&v)
 }
 
-// GetFlags returns the Flags field value
+// SetDeviceFlowNil sets the value for DeviceFlow to be an explicit nil
+func (o *TenantSettings) SetDeviceFlowNil() {
+	o.DeviceFlow.Set(nil)
+}
+
+// UnsetDeviceFlow ensures that no value is present for DeviceFlow, not even an explicit nil
+func (o *TenantSettings) UnsetDeviceFlow() {
+	o.DeviceFlow.Unset()
+}
+
+// GetFlags returns the Flags field value if set, zero value otherwise.
 func (o *TenantSettings) GetFlags() TenantSettingsFlags {
-	if o == nil {
+	if o == nil || IsNil(o.Flags) {
 		var ret TenantSettingsFlags
 		return ret
 	}
-
-	return o.Flags
+	return *o.Flags
 }
 
-// GetFlagsOk returns a tuple with the Flags field value
+// GetFlagsOk returns a tuple with the Flags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetFlagsOk() (*TenantSettingsFlags, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Flags) {
 		return nil, false
 	}
-	return &o.Flags, true
+	return o.Flags, true
 }
 
-// SetFlags sets field value
+// HasFlags returns a boolean if a field has been set.
+func (o *TenantSettings) HasFlags() bool {
+	if o != nil && !IsNil(o.Flags) {
+		return true
+	}
+
+	return false
+}
+
+// SetFlags gets a reference to the given TenantSettingsFlags and assigns it to the Flags field.
 func (o *TenantSettings) SetFlags(v TenantSettingsFlags) {
-	o.Flags = v
+	o.Flags = &v
 }
 
-// GetFriendlyName returns the FriendlyName field value
+// GetFriendlyName returns the FriendlyName field value if set, zero value otherwise.
 func (o *TenantSettings) GetFriendlyName() string {
-	if o == nil {
+	if o == nil || IsNil(o.FriendlyName) {
 		var ret string
 		return ret
 	}
-
-	return o.FriendlyName
+	return *o.FriendlyName
 }
 
-// GetFriendlyNameOk returns a tuple with the FriendlyName field value
+// GetFriendlyNameOk returns a tuple with the FriendlyName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetFriendlyNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.FriendlyName) {
 		return nil, false
 	}
-	return &o.FriendlyName, true
+	return o.FriendlyName, true
 }
 
-// SetFriendlyName sets field value
+// HasFriendlyName returns a boolean if a field has been set.
+func (o *TenantSettings) HasFriendlyName() bool {
+	if o != nil && !IsNil(o.FriendlyName) {
+		return true
+	}
+
+	return false
+}
+
+// SetFriendlyName gets a reference to the given string and assigns it to the FriendlyName field.
 func (o *TenantSettings) SetFriendlyName(v string) {
-	o.FriendlyName = v
+	o.FriendlyName = &v
 }
 
-// GetPictureUrl returns the PictureUrl field value
+// GetPictureUrl returns the PictureUrl field value if set, zero value otherwise.
 func (o *TenantSettings) GetPictureUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.PictureUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.PictureUrl
+	return *o.PictureUrl
 }
 
-// GetPictureUrlOk returns a tuple with the PictureUrl field value
+// GetPictureUrlOk returns a tuple with the PictureUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetPictureUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PictureUrl) {
 		return nil, false
 	}
-	return &o.PictureUrl, true
+	return o.PictureUrl, true
 }
 
-// SetPictureUrl sets field value
+// HasPictureUrl returns a boolean if a field has been set.
+func (o *TenantSettings) HasPictureUrl() bool {
+	if o != nil && !IsNil(o.PictureUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetPictureUrl gets a reference to the given string and assigns it to the PictureUrl field.
 func (o *TenantSettings) SetPictureUrl(v string) {
-	o.PictureUrl = v
+	o.PictureUrl = &v
 }
 
-// GetSupportEmail returns the SupportEmail field value
+// GetSupportEmail returns the SupportEmail field value if set, zero value otherwise.
 func (o *TenantSettings) GetSupportEmail() string {
-	if o == nil {
+	if o == nil || IsNil(o.SupportEmail) {
 		var ret string
 		return ret
 	}
-
-	return o.SupportEmail
+	return *o.SupportEmail
 }
 
-// GetSupportEmailOk returns a tuple with the SupportEmail field value
+// GetSupportEmailOk returns a tuple with the SupportEmail field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetSupportEmailOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SupportEmail) {
 		return nil, false
 	}
-	return &o.SupportEmail, true
+	return o.SupportEmail, true
 }
 
-// SetSupportEmail sets field value
+// HasSupportEmail returns a boolean if a field has been set.
+func (o *TenantSettings) HasSupportEmail() bool {
+	if o != nil && !IsNil(o.SupportEmail) {
+		return true
+	}
+
+	return false
+}
+
+// SetSupportEmail gets a reference to the given string and assigns it to the SupportEmail field.
 func (o *TenantSettings) SetSupportEmail(v string) {
-	o.SupportEmail = v
+	o.SupportEmail = &v
 }
 
-// GetSupportUrl returns the SupportUrl field value
+// GetSupportUrl returns the SupportUrl field value if set, zero value otherwise.
 func (o *TenantSettings) GetSupportUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.SupportUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.SupportUrl
+	return *o.SupportUrl
 }
 
-// GetSupportUrlOk returns a tuple with the SupportUrl field value
+// GetSupportUrlOk returns a tuple with the SupportUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetSupportUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SupportUrl) {
 		return nil, false
 	}
-	return &o.SupportUrl, true
+	return o.SupportUrl, true
 }
 
-// SetSupportUrl sets field value
+// HasSupportUrl returns a boolean if a field has been set.
+func (o *TenantSettings) HasSupportUrl() bool {
+	if o != nil && !IsNil(o.SupportUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetSupportUrl gets a reference to the given string and assigns it to the SupportUrl field.
 func (o *TenantSettings) SetSupportUrl(v string) {
-	o.SupportUrl = v
+	o.SupportUrl = &v
 }
 
-// GetAllowedLogoutUrls returns the AllowedLogoutUrls field value
+// GetAllowedLogoutUrls returns the AllowedLogoutUrls field value if set, zero value otherwise.
 func (o *TenantSettings) GetAllowedLogoutUrls() []string {
-	if o == nil {
+	if o == nil || IsNil(o.AllowedLogoutUrls) {
 		var ret []string
 		return ret
 	}
-
 	return o.AllowedLogoutUrls
 }
 
-// GetAllowedLogoutUrlsOk returns a tuple with the AllowedLogoutUrls field value
+// GetAllowedLogoutUrlsOk returns a tuple with the AllowedLogoutUrls field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetAllowedLogoutUrlsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AllowedLogoutUrls) {
 		return nil, false
 	}
 	return o.AllowedLogoutUrls, true
 }
 
-// SetAllowedLogoutUrls sets field value
+// HasAllowedLogoutUrls returns a boolean if a field has been set.
+func (o *TenantSettings) HasAllowedLogoutUrls() bool {
+	if o != nil && !IsNil(o.AllowedLogoutUrls) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowedLogoutUrls gets a reference to the given []string and assigns it to the AllowedLogoutUrls field.
 func (o *TenantSettings) SetAllowedLogoutUrls(v []string) {
 	o.AllowedLogoutUrls = v
 }
 
-// GetSessionLifetime returns the SessionLifetime field value
+// GetSessionLifetime returns the SessionLifetime field value if set, zero value otherwise.
 func (o *TenantSettings) GetSessionLifetime() float32 {
-	if o == nil {
+	if o == nil || IsNil(o.SessionLifetime) {
 		var ret float32
 		return ret
 	}
-
-	return o.SessionLifetime
+	return *o.SessionLifetime
 }
 
-// GetSessionLifetimeOk returns a tuple with the SessionLifetime field value
+// GetSessionLifetimeOk returns a tuple with the SessionLifetime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetSessionLifetimeOk() (*float32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SessionLifetime) {
 		return nil, false
 	}
-	return &o.SessionLifetime, true
+	return o.SessionLifetime, true
 }
 
-// SetSessionLifetime sets field value
+// HasSessionLifetime returns a boolean if a field has been set.
+func (o *TenantSettings) HasSessionLifetime() bool {
+	if o != nil && !IsNil(o.SessionLifetime) {
+		return true
+	}
+
+	return false
+}
+
+// SetSessionLifetime gets a reference to the given float32 and assigns it to the SessionLifetime field.
 func (o *TenantSettings) SetSessionLifetime(v float32) {
-	o.SessionLifetime = v
+	o.SessionLifetime = &v
 }
 
-// GetIdleSessionLifetime returns the IdleSessionLifetime field value
+// GetIdleSessionLifetime returns the IdleSessionLifetime field value if set, zero value otherwise.
 func (o *TenantSettings) GetIdleSessionLifetime() float32 {
-	if o == nil {
+	if o == nil || IsNil(o.IdleSessionLifetime) {
 		var ret float32
 		return ret
 	}
-
-	return o.IdleSessionLifetime
+	return *o.IdleSessionLifetime
 }
 
-// GetIdleSessionLifetimeOk returns a tuple with the IdleSessionLifetime field value
+// GetIdleSessionLifetimeOk returns a tuple with the IdleSessionLifetime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetIdleSessionLifetimeOk() (*float32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IdleSessionLifetime) {
 		return nil, false
 	}
-	return &o.IdleSessionLifetime, true
+	return o.IdleSessionLifetime, true
 }
 
-// SetIdleSessionLifetime sets field value
+// HasIdleSessionLifetime returns a boolean if a field has been set.
+func (o *TenantSettings) HasIdleSessionLifetime() bool {
+	if o != nil && !IsNil(o.IdleSessionLifetime) {
+		return true
+	}
+
+	return false
+}
+
+// SetIdleSessionLifetime gets a reference to the given float32 and assigns it to the IdleSessionLifetime field.
 func (o *TenantSettings) SetIdleSessionLifetime(v float32) {
-	o.IdleSessionLifetime = v
+	o.IdleSessionLifetime = &v
 }
 
-// GetSandboxVersion returns the SandboxVersion field value
+// GetSandboxVersion returns the SandboxVersion field value if set, zero value otherwise.
 func (o *TenantSettings) GetSandboxVersion() string {
-	if o == nil {
+	if o == nil || IsNil(o.SandboxVersion) {
 		var ret string
 		return ret
 	}
-
-	return o.SandboxVersion
+	return *o.SandboxVersion
 }
 
-// GetSandboxVersionOk returns a tuple with the SandboxVersion field value
+// GetSandboxVersionOk returns a tuple with the SandboxVersion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetSandboxVersionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SandboxVersion) {
 		return nil, false
 	}
-	return &o.SandboxVersion, true
+	return o.SandboxVersion, true
 }
 
-// SetSandboxVersion sets field value
+// HasSandboxVersion returns a boolean if a field has been set.
+func (o *TenantSettings) HasSandboxVersion() bool {
+	if o != nil && !IsNil(o.SandboxVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetSandboxVersion gets a reference to the given string and assigns it to the SandboxVersion field.
 func (o *TenantSettings) SetSandboxVersion(v string) {
-	o.SandboxVersion = v
+	o.SandboxVersion = &v
 }
 
-// GetSandboxVersionsAvailable returns the SandboxVersionsAvailable field value
+// GetSandboxVersionsAvailable returns the SandboxVersionsAvailable field value if set, zero value otherwise.
 func (o *TenantSettings) GetSandboxVersionsAvailable() []string {
-	if o == nil {
+	if o == nil || IsNil(o.SandboxVersionsAvailable) {
 		var ret []string
 		return ret
 	}
-
 	return o.SandboxVersionsAvailable
 }
 
-// GetSandboxVersionsAvailableOk returns a tuple with the SandboxVersionsAvailable field value
+// GetSandboxVersionsAvailableOk returns a tuple with the SandboxVersionsAvailable field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetSandboxVersionsAvailableOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SandboxVersionsAvailable) {
 		return nil, false
 	}
 	return o.SandboxVersionsAvailable, true
 }
 
-// SetSandboxVersionsAvailable sets field value
+// HasSandboxVersionsAvailable returns a boolean if a field has been set.
+func (o *TenantSettings) HasSandboxVersionsAvailable() bool {
+	if o != nil && !IsNil(o.SandboxVersionsAvailable) {
+		return true
+	}
+
+	return false
+}
+
+// SetSandboxVersionsAvailable gets a reference to the given []string and assigns it to the SandboxVersionsAvailable field.
 func (o *TenantSettings) SetSandboxVersionsAvailable(v []string) {
 	o.SandboxVersionsAvailable = v
 }
 
-// GetDefaultRedirectionUri returns the DefaultRedirectionUri field value
+// GetDefaultRedirectionUri returns the DefaultRedirectionUri field value if set, zero value otherwise.
 func (o *TenantSettings) GetDefaultRedirectionUri() string {
-	if o == nil {
+	if o == nil || IsNil(o.DefaultRedirectionUri) {
 		var ret string
 		return ret
 	}
-
-	return o.DefaultRedirectionUri
+	return *o.DefaultRedirectionUri
 }
 
-// GetDefaultRedirectionUriOk returns a tuple with the DefaultRedirectionUri field value
+// GetDefaultRedirectionUriOk returns a tuple with the DefaultRedirectionUri field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetDefaultRedirectionUriOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DefaultRedirectionUri) {
 		return nil, false
 	}
-	return &o.DefaultRedirectionUri, true
+	return o.DefaultRedirectionUri, true
 }
 
-// SetDefaultRedirectionUri sets field value
+// HasDefaultRedirectionUri returns a boolean if a field has been set.
+func (o *TenantSettings) HasDefaultRedirectionUri() bool {
+	if o != nil && !IsNil(o.DefaultRedirectionUri) {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultRedirectionUri gets a reference to the given string and assigns it to the DefaultRedirectionUri field.
 func (o *TenantSettings) SetDefaultRedirectionUri(v string) {
-	o.DefaultRedirectionUri = v
+	o.DefaultRedirectionUri = &v
 }
 
-// GetEnabledLocales returns the EnabledLocales field value
+// GetEnabledLocales returns the EnabledLocales field value if set, zero value otherwise.
 func (o *TenantSettings) GetEnabledLocales() []GetCustomTextByLanguageLanguageParameter {
-	if o == nil {
+	if o == nil || IsNil(o.EnabledLocales) {
 		var ret []GetCustomTextByLanguageLanguageParameter
 		return ret
 	}
-
 	return o.EnabledLocales
 }
 
-// GetEnabledLocalesOk returns a tuple with the EnabledLocales field value
+// GetEnabledLocalesOk returns a tuple with the EnabledLocales field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetEnabledLocalesOk() ([]GetCustomTextByLanguageLanguageParameter, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnabledLocales) {
 		return nil, false
 	}
 	return o.EnabledLocales, true
 }
 
-// SetEnabledLocales sets field value
+// HasEnabledLocales returns a boolean if a field has been set.
+func (o *TenantSettings) HasEnabledLocales() bool {
+	if o != nil && !IsNil(o.EnabledLocales) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabledLocales gets a reference to the given []GetCustomTextByLanguageLanguageParameter and assigns it to the EnabledLocales field.
 func (o *TenantSettings) SetEnabledLocales(v []GetCustomTextByLanguageLanguageParameter) {
 	o.EnabledLocales = v
 }
 
-// GetSessionCookie returns the SessionCookie field value
-// If the value is explicit nil, the zero value for TenantSettingsSessionCookie will be returned
+// GetSessionCookie returns the SessionCookie field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TenantSettings) GetSessionCookie() TenantSettingsSessionCookie {
-	if o == nil || o.SessionCookie.Get() == nil {
+	if o == nil || IsNil(o.SessionCookie.Get()) {
 		var ret TenantSettingsSessionCookie
 		return ret
 	}
-
 	return *o.SessionCookie.Get()
 }
 
-// GetSessionCookieOk returns a tuple with the SessionCookie field value
+// GetSessionCookieOk returns a tuple with the SessionCookie field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TenantSettings) GetSessionCookieOk() (*TenantSettingsSessionCookie, bool) {
@@ -524,23 +699,40 @@ func (o *TenantSettings) GetSessionCookieOk() (*TenantSettingsSessionCookie, boo
 	return o.SessionCookie.Get(), o.SessionCookie.IsSet()
 }
 
-// SetSessionCookie sets field value
+// HasSessionCookie returns a boolean if a field has been set.
+func (o *TenantSettings) HasSessionCookie() bool {
+	if o != nil && o.SessionCookie.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSessionCookie gets a reference to the given NullableTenantSettingsSessionCookie and assigns it to the SessionCookie field.
 func (o *TenantSettings) SetSessionCookie(v TenantSettingsSessionCookie) {
 	o.SessionCookie.Set(&v)
 }
 
-// GetSessions returns the Sessions field value
-// If the value is explicit nil, the zero value for TenantSettingsSessions will be returned
+// SetSessionCookieNil sets the value for SessionCookie to be an explicit nil
+func (o *TenantSettings) SetSessionCookieNil() {
+	o.SessionCookie.Set(nil)
+}
+
+// UnsetSessionCookie ensures that no value is present for SessionCookie, not even an explicit nil
+func (o *TenantSettings) UnsetSessionCookie() {
+	o.SessionCookie.Unset()
+}
+
+// GetSessions returns the Sessions field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TenantSettings) GetSessions() TenantSettingsSessions {
-	if o == nil || o.Sessions.Get() == nil {
+	if o == nil || IsNil(o.Sessions.Get()) {
 		var ret TenantSettingsSessions
 		return ret
 	}
-
 	return *o.Sessions.Get()
 }
 
-// GetSessionsOk returns a tuple with the Sessions field value
+// GetSessionsOk returns a tuple with the Sessions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TenantSettings) GetSessionsOk() (*TenantSettingsSessions, bool) {
@@ -550,95 +742,136 @@ func (o *TenantSettings) GetSessionsOk() (*TenantSettingsSessions, bool) {
 	return o.Sessions.Get(), o.Sessions.IsSet()
 }
 
-// SetSessions sets field value
+// HasSessions returns a boolean if a field has been set.
+func (o *TenantSettings) HasSessions() bool {
+	if o != nil && o.Sessions.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSessions gets a reference to the given NullableTenantSettingsSessions and assigns it to the Sessions field.
 func (o *TenantSettings) SetSessions(v TenantSettingsSessions) {
 	o.Sessions.Set(&v)
 }
 
-// GetAllowOrganizationNameInAuthenticationApi returns the AllowOrganizationNameInAuthenticationApi field value
+// SetSessionsNil sets the value for Sessions to be an explicit nil
+func (o *TenantSettings) SetSessionsNil() {
+	o.Sessions.Set(nil)
+}
+
+// UnsetSessions ensures that no value is present for Sessions, not even an explicit nil
+func (o *TenantSettings) UnsetSessions() {
+	o.Sessions.Unset()
+}
+
+// GetAllowOrganizationNameInAuthenticationApi returns the AllowOrganizationNameInAuthenticationApi field value if set, zero value otherwise.
 func (o *TenantSettings) GetAllowOrganizationNameInAuthenticationApi() bool {
-	if o == nil {
+	if o == nil || IsNil(o.AllowOrganizationNameInAuthenticationApi) {
 		var ret bool
 		return ret
 	}
-
-	return o.AllowOrganizationNameInAuthenticationApi
+	return *o.AllowOrganizationNameInAuthenticationApi
 }
 
-// GetAllowOrganizationNameInAuthenticationApiOk returns a tuple with the AllowOrganizationNameInAuthenticationApi field value
+// GetAllowOrganizationNameInAuthenticationApiOk returns a tuple with the AllowOrganizationNameInAuthenticationApi field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetAllowOrganizationNameInAuthenticationApiOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AllowOrganizationNameInAuthenticationApi) {
 		return nil, false
 	}
-	return &o.AllowOrganizationNameInAuthenticationApi, true
+	return o.AllowOrganizationNameInAuthenticationApi, true
 }
 
-// SetAllowOrganizationNameInAuthenticationApi sets field value
+// HasAllowOrganizationNameInAuthenticationApi returns a boolean if a field has been set.
+func (o *TenantSettings) HasAllowOrganizationNameInAuthenticationApi() bool {
+	if o != nil && !IsNil(o.AllowOrganizationNameInAuthenticationApi) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowOrganizationNameInAuthenticationApi gets a reference to the given bool and assigns it to the AllowOrganizationNameInAuthenticationApi field.
 func (o *TenantSettings) SetAllowOrganizationNameInAuthenticationApi(v bool) {
-	o.AllowOrganizationNameInAuthenticationApi = v
+	o.AllowOrganizationNameInAuthenticationApi = &v
 }
 
-// GetCustomizeMfaInPostloginAction returns the CustomizeMfaInPostloginAction field value
+// GetCustomizeMfaInPostloginAction returns the CustomizeMfaInPostloginAction field value if set, zero value otherwise.
 func (o *TenantSettings) GetCustomizeMfaInPostloginAction() bool {
-	if o == nil {
+	if o == nil || IsNil(o.CustomizeMfaInPostloginAction) {
 		var ret bool
 		return ret
 	}
-
-	return o.CustomizeMfaInPostloginAction
+	return *o.CustomizeMfaInPostloginAction
 }
 
-// GetCustomizeMfaInPostloginActionOk returns a tuple with the CustomizeMfaInPostloginAction field value
+// GetCustomizeMfaInPostloginActionOk returns a tuple with the CustomizeMfaInPostloginAction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetCustomizeMfaInPostloginActionOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CustomizeMfaInPostloginAction) {
 		return nil, false
 	}
-	return &o.CustomizeMfaInPostloginAction, true
+	return o.CustomizeMfaInPostloginAction, true
 }
 
-// SetCustomizeMfaInPostloginAction sets field value
+// HasCustomizeMfaInPostloginAction returns a boolean if a field has been set.
+func (o *TenantSettings) HasCustomizeMfaInPostloginAction() bool {
+	if o != nil && !IsNil(o.CustomizeMfaInPostloginAction) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomizeMfaInPostloginAction gets a reference to the given bool and assigns it to the CustomizeMfaInPostloginAction field.
 func (o *TenantSettings) SetCustomizeMfaInPostloginAction(v bool) {
-	o.CustomizeMfaInPostloginAction = v
+	o.CustomizeMfaInPostloginAction = &v
 }
 
-// GetAcrValuesSupported returns the AcrValuesSupported field value
+// GetAcrValuesSupported returns the AcrValuesSupported field value if set, zero value otherwise.
 func (o *TenantSettings) GetAcrValuesSupported() []string {
-	if o == nil {
+	if o == nil || IsNil(o.AcrValuesSupported) {
 		var ret []string
 		return ret
 	}
-
 	return o.AcrValuesSupported
 }
 
-// GetAcrValuesSupportedOk returns a tuple with the AcrValuesSupported field value
+// GetAcrValuesSupportedOk returns a tuple with the AcrValuesSupported field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetAcrValuesSupportedOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AcrValuesSupported) {
 		return nil, false
 	}
 	return o.AcrValuesSupported, true
 }
 
-// SetAcrValuesSupported sets field value
+// HasAcrValuesSupported returns a boolean if a field has been set.
+func (o *TenantSettings) HasAcrValuesSupported() bool {
+	if o != nil && !IsNil(o.AcrValuesSupported) {
+		return true
+	}
+
+	return false
+}
+
+// SetAcrValuesSupported gets a reference to the given []string and assigns it to the AcrValuesSupported field.
 func (o *TenantSettings) SetAcrValuesSupported(v []string) {
 	o.AcrValuesSupported = v
 }
 
-// GetMtls returns the Mtls field value
-// If the value is explicit nil, the zero value for TenantSettingsMtls will be returned
+// GetMtls returns the Mtls field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *TenantSettings) GetMtls() TenantSettingsMtls {
-	if o == nil || o.Mtls.Get() == nil {
+	if o == nil || IsNil(o.Mtls.Get()) {
 		var ret TenantSettingsMtls
 		return ret
 	}
-
 	return *o.Mtls.Get()
 }
 
-// GetMtlsOk returns a tuple with the Mtls field value
+// GetMtlsOk returns a tuple with the Mtls field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *TenantSettings) GetMtlsOk() (*TenantSettingsMtls, bool) {
@@ -648,33 +881,60 @@ func (o *TenantSettings) GetMtlsOk() (*TenantSettingsMtls, bool) {
 	return o.Mtls.Get(), o.Mtls.IsSet()
 }
 
-// SetMtls sets field value
+// HasMtls returns a boolean if a field has been set.
+func (o *TenantSettings) HasMtls() bool {
+	if o != nil && o.Mtls.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMtls gets a reference to the given NullableTenantSettingsMtls and assigns it to the Mtls field.
 func (o *TenantSettings) SetMtls(v TenantSettingsMtls) {
 	o.Mtls.Set(&v)
 }
 
-// GetPushedAuthorizationRequestsSupported returns the PushedAuthorizationRequestsSupported field value
+// SetMtlsNil sets the value for Mtls to be an explicit nil
+func (o *TenantSettings) SetMtlsNil() {
+	o.Mtls.Set(nil)
+}
+
+// UnsetMtls ensures that no value is present for Mtls, not even an explicit nil
+func (o *TenantSettings) UnsetMtls() {
+	o.Mtls.Unset()
+}
+
+// GetPushedAuthorizationRequestsSupported returns the PushedAuthorizationRequestsSupported field value if set, zero value otherwise.
 func (o *TenantSettings) GetPushedAuthorizationRequestsSupported() bool {
-	if o == nil {
+	if o == nil || IsNil(o.PushedAuthorizationRequestsSupported) {
 		var ret bool
 		return ret
 	}
-
-	return o.PushedAuthorizationRequestsSupported
+	return *o.PushedAuthorizationRequestsSupported
 }
 
-// GetPushedAuthorizationRequestsSupportedOk returns a tuple with the PushedAuthorizationRequestsSupported field value
+// GetPushedAuthorizationRequestsSupportedOk returns a tuple with the PushedAuthorizationRequestsSupported field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettings) GetPushedAuthorizationRequestsSupportedOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PushedAuthorizationRequestsSupported) {
 		return nil, false
 	}
-	return &o.PushedAuthorizationRequestsSupported, true
+	return o.PushedAuthorizationRequestsSupported, true
 }
 
-// SetPushedAuthorizationRequestsSupported sets field value
+// HasPushedAuthorizationRequestsSupported returns a boolean if a field has been set.
+func (o *TenantSettings) HasPushedAuthorizationRequestsSupported() bool {
+	if o != nil && !IsNil(o.PushedAuthorizationRequestsSupported) {
+		return true
+	}
+
+	return false
+}
+
+// SetPushedAuthorizationRequestsSupported gets a reference to the given bool and assigns it to the PushedAuthorizationRequestsSupported field.
 func (o *TenantSettings) SetPushedAuthorizationRequestsSupported(v bool) {
-	o.PushedAuthorizationRequestsSupported = v
+	o.PushedAuthorizationRequestsSupported = &v
 }
 
 func (o TenantSettings) MarshalJSON() ([]byte, error) {
@@ -687,48 +947,82 @@ func (o TenantSettings) MarshalJSON() ([]byte, error) {
 
 func (o TenantSettings) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["change_password"] = o.ChangePassword.Get()
-	toSerialize["guardian_mfa_page"] = o.GuardianMfaPage.Get()
-	toSerialize["default_audience"] = o.DefaultAudience
-	toSerialize["default_directory"] = o.DefaultDirectory
-	toSerialize["error_page"] = o.ErrorPage.Get()
-	toSerialize["device_flow"] = o.DeviceFlow.Get()
-	toSerialize["flags"] = o.Flags
-	toSerialize["friendly_name"] = o.FriendlyName
-	toSerialize["picture_url"] = o.PictureUrl
-	toSerialize["support_email"] = o.SupportEmail
-	toSerialize["support_url"] = o.SupportUrl
-	toSerialize["allowed_logout_urls"] = o.AllowedLogoutUrls
-	toSerialize["session_lifetime"] = o.SessionLifetime
-	toSerialize["idle_session_lifetime"] = o.IdleSessionLifetime
-	toSerialize["sandbox_version"] = o.SandboxVersion
-	toSerialize["sandbox_versions_available"] = o.SandboxVersionsAvailable
-	toSerialize["default_redirection_uri"] = o.DefaultRedirectionUri
-	toSerialize["enabled_locales"] = o.EnabledLocales
-	toSerialize["session_cookie"] = o.SessionCookie.Get()
-	toSerialize["sessions"] = o.Sessions.Get()
-	toSerialize["allow_organization_name_in_authentication_api"] = o.AllowOrganizationNameInAuthenticationApi
-	toSerialize["customize_mfa_in_postlogin_action"] = o.CustomizeMfaInPostloginAction
-	toSerialize["acr_values_supported"] = o.AcrValuesSupported
-	toSerialize["mtls"] = o.Mtls.Get()
-	toSerialize["pushed_authorization_requests_supported"] = o.PushedAuthorizationRequestsSupported
-	return toSerialize, nil
-}
-
-func (o *TenantSettings) UnmarshalJSON(data []byte) (err error) {
-	varTenantSettings := _TenantSettings{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTenantSettings)
-
-	if err != nil {
-		return err
+	if o.ChangePassword.IsSet() {
+		toSerialize["change_password"] = o.ChangePassword.Get()
 	}
-
-	*o = TenantSettings(varTenantSettings)
-
-	return err
+	if o.GuardianMfaPage.IsSet() {
+		toSerialize["guardian_mfa_page"] = o.GuardianMfaPage.Get()
+	}
+	if !IsNil(o.DefaultAudience) {
+		toSerialize["default_audience"] = o.DefaultAudience
+	}
+	if !IsNil(o.DefaultDirectory) {
+		toSerialize["default_directory"] = o.DefaultDirectory
+	}
+	if o.ErrorPage.IsSet() {
+		toSerialize["error_page"] = o.ErrorPage.Get()
+	}
+	if o.DeviceFlow.IsSet() {
+		toSerialize["device_flow"] = o.DeviceFlow.Get()
+	}
+	if !IsNil(o.Flags) {
+		toSerialize["flags"] = o.Flags
+	}
+	if !IsNil(o.FriendlyName) {
+		toSerialize["friendly_name"] = o.FriendlyName
+	}
+	if !IsNil(o.PictureUrl) {
+		toSerialize["picture_url"] = o.PictureUrl
+	}
+	if !IsNil(o.SupportEmail) {
+		toSerialize["support_email"] = o.SupportEmail
+	}
+	if !IsNil(o.SupportUrl) {
+		toSerialize["support_url"] = o.SupportUrl
+	}
+	if !IsNil(o.AllowedLogoutUrls) {
+		toSerialize["allowed_logout_urls"] = o.AllowedLogoutUrls
+	}
+	if !IsNil(o.SessionLifetime) {
+		toSerialize["session_lifetime"] = o.SessionLifetime
+	}
+	if !IsNil(o.IdleSessionLifetime) {
+		toSerialize["idle_session_lifetime"] = o.IdleSessionLifetime
+	}
+	if !IsNil(o.SandboxVersion) {
+		toSerialize["sandbox_version"] = o.SandboxVersion
+	}
+	if !IsNil(o.SandboxVersionsAvailable) {
+		toSerialize["sandbox_versions_available"] = o.SandboxVersionsAvailable
+	}
+	if !IsNil(o.DefaultRedirectionUri) {
+		toSerialize["default_redirection_uri"] = o.DefaultRedirectionUri
+	}
+	if !IsNil(o.EnabledLocales) {
+		toSerialize["enabled_locales"] = o.EnabledLocales
+	}
+	if o.SessionCookie.IsSet() {
+		toSerialize["session_cookie"] = o.SessionCookie.Get()
+	}
+	if o.Sessions.IsSet() {
+		toSerialize["sessions"] = o.Sessions.Get()
+	}
+	if !IsNil(o.AllowOrganizationNameInAuthenticationApi) {
+		toSerialize["allow_organization_name_in_authentication_api"] = o.AllowOrganizationNameInAuthenticationApi
+	}
+	if !IsNil(o.CustomizeMfaInPostloginAction) {
+		toSerialize["customize_mfa_in_postlogin_action"] = o.CustomizeMfaInPostloginAction
+	}
+	if !IsNil(o.AcrValuesSupported) {
+		toSerialize["acr_values_supported"] = o.AcrValuesSupported
+	}
+	if o.Mtls.IsSet() {
+		toSerialize["mtls"] = o.Mtls.Get()
+	}
+	if !IsNil(o.PushedAuthorizationRequestsSupported) {
+		toSerialize["pushed_authorization_requests_supported"] = o.PushedAuthorizationRequestsSupported
+	}
+	return toSerialize, nil
 }
 
 type NullableTenantSettings struct {

@@ -17,60 +17,76 @@ import (
 // ClientAddonsSentry Sentry SSO configuration.
 type ClientAddonsSentry struct {
 	// Generated slug for your Sentry organization. Found in your Sentry URL. e.g. `https://sentry.acme.com/acme-org/` would be `acme-org`.
-	OrgSlug string `json:"org_slug"`
+	OrgSlug *string `json:"org_slug,omitempty"`
 	// URL prefix only if running Sentry Community Edition, otherwise leave should be blank.
-	BaseUrl              string `json:"base_url"`
+	BaseUrl              *string `json:"base_url,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsSentry ClientAddonsSentry
 
-// GetOrgSlug returns the OrgSlug field value
+// GetOrgSlug returns the OrgSlug field value if set, zero value otherwise.
 func (o *ClientAddonsSentry) GetOrgSlug() string {
-	if o == nil {
+	if o == nil || IsNil(o.OrgSlug) {
 		var ret string
 		return ret
 	}
-
-	return o.OrgSlug
+	return *o.OrgSlug
 }
 
-// GetOrgSlugOk returns a tuple with the OrgSlug field value
+// GetOrgSlugOk returns a tuple with the OrgSlug field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSentry) GetOrgSlugOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OrgSlug) {
 		return nil, false
 	}
-	return &o.OrgSlug, true
+	return o.OrgSlug, true
 }
 
-// SetOrgSlug sets field value
+// HasOrgSlug returns a boolean if a field has been set.
+func (o *ClientAddonsSentry) HasOrgSlug() bool {
+	if o != nil && !IsNil(o.OrgSlug) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrgSlug gets a reference to the given string and assigns it to the OrgSlug field.
 func (o *ClientAddonsSentry) SetOrgSlug(v string) {
-	o.OrgSlug = v
+	o.OrgSlug = &v
 }
 
-// GetBaseUrl returns the BaseUrl field value
+// GetBaseUrl returns the BaseUrl field value if set, zero value otherwise.
 func (o *ClientAddonsSentry) GetBaseUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.BaseUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.BaseUrl
+	return *o.BaseUrl
 }
 
-// GetBaseUrlOk returns a tuple with the BaseUrl field value
+// GetBaseUrlOk returns a tuple with the BaseUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSentry) GetBaseUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.BaseUrl) {
 		return nil, false
 	}
-	return &o.BaseUrl, true
+	return o.BaseUrl, true
 }
 
-// SetBaseUrl sets field value
+// HasBaseUrl returns a boolean if a field has been set.
+func (o *ClientAddonsSentry) HasBaseUrl() bool {
+	if o != nil && !IsNil(o.BaseUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetBaseUrl gets a reference to the given string and assigns it to the BaseUrl field.
 func (o *ClientAddonsSentry) SetBaseUrl(v string) {
-	o.BaseUrl = v
+	o.BaseUrl = &v
 }
 
 func (o ClientAddonsSentry) MarshalJSON() ([]byte, error) {
@@ -83,8 +99,12 @@ func (o ClientAddonsSentry) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsSentry) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["org_slug"] = o.OrgSlug
-	toSerialize["base_url"] = o.BaseUrl
+	if !IsNil(o.OrgSlug) {
+		toSerialize["org_slug"] = o.OrgSlug
+	}
+	if !IsNil(o.BaseUrl) {
+		toSerialize["base_url"] = o.BaseUrl
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

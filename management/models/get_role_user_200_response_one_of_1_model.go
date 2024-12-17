@@ -11,62 +11,75 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetRoleUser200ResponseOneOf1 struct for GetRoleUser200ResponseOneOf1
 type GetRoleUser200ResponseOneOf1 struct {
-	Next  string                             `json:"next"`
-	Users []GetRoleUser200ResponseOneOfInner `json:"users"`
+	Next  *string                            `json:"next,omitempty"`
+	Users []GetRoleUser200ResponseOneOfInner `json:"users,omitempty"`
 }
 
-type _GetRoleUser200ResponseOneOf1 GetRoleUser200ResponseOneOf1
-
-// GetNext returns the Next field value
+// GetNext returns the Next field value if set, zero value otherwise.
 func (o *GetRoleUser200ResponseOneOf1) GetNext() string {
-	if o == nil {
+	if o == nil || IsNil(o.Next) {
 		var ret string
 		return ret
 	}
-
-	return o.Next
+	return *o.Next
 }
 
-// GetNextOk returns a tuple with the Next field value
+// GetNextOk returns a tuple with the Next field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRoleUser200ResponseOneOf1) GetNextOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Next) {
 		return nil, false
 	}
-	return &o.Next, true
+	return o.Next, true
 }
 
-// SetNext sets field value
+// HasNext returns a boolean if a field has been set.
+func (o *GetRoleUser200ResponseOneOf1) HasNext() bool {
+	if o != nil && !IsNil(o.Next) {
+		return true
+	}
+
+	return false
+}
+
+// SetNext gets a reference to the given string and assigns it to the Next field.
 func (o *GetRoleUser200ResponseOneOf1) SetNext(v string) {
-	o.Next = v
+	o.Next = &v
 }
 
-// GetUsers returns the Users field value
+// GetUsers returns the Users field value if set, zero value otherwise.
 func (o *GetRoleUser200ResponseOneOf1) GetUsers() []GetRoleUser200ResponseOneOfInner {
-	if o == nil {
+	if o == nil || IsNil(o.Users) {
 		var ret []GetRoleUser200ResponseOneOfInner
 		return ret
 	}
-
 	return o.Users
 }
 
-// GetUsersOk returns a tuple with the Users field value
+// GetUsersOk returns a tuple with the Users field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRoleUser200ResponseOneOf1) GetUsersOk() ([]GetRoleUser200ResponseOneOfInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Users) {
 		return nil, false
 	}
 	return o.Users, true
 }
 
-// SetUsers sets field value
+// HasUsers returns a boolean if a field has been set.
+func (o *GetRoleUser200ResponseOneOf1) HasUsers() bool {
+	if o != nil && !IsNil(o.Users) {
+		return true
+	}
+
+	return false
+}
+
+// SetUsers gets a reference to the given []GetRoleUser200ResponseOneOfInner and assigns it to the Users field.
 func (o *GetRoleUser200ResponseOneOf1) SetUsers(v []GetRoleUser200ResponseOneOfInner) {
 	o.Users = v
 }
@@ -81,25 +94,13 @@ func (o GetRoleUser200ResponseOneOf1) MarshalJSON() ([]byte, error) {
 
 func (o GetRoleUser200ResponseOneOf1) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["next"] = o.Next
-	toSerialize["users"] = o.Users
-	return toSerialize, nil
-}
-
-func (o *GetRoleUser200ResponseOneOf1) UnmarshalJSON(data []byte) (err error) {
-	varGetRoleUser200ResponseOneOf1 := _GetRoleUser200ResponseOneOf1{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetRoleUser200ResponseOneOf1)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Next) {
+		toSerialize["next"] = o.Next
 	}
-
-	*o = GetRoleUser200ResponseOneOf1(varGetRoleUser200ResponseOneOf1)
-
-	return err
+	if !IsNil(o.Users) {
+		toSerialize["users"] = o.Users
+	}
+	return toSerialize, nil
 }
 
 type NullableGetRoleUser200ResponseOneOf1 struct {

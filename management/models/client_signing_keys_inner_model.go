@@ -17,86 +17,110 @@ import (
 // ClientSigningKeysInner struct for ClientSigningKeysInner
 type ClientSigningKeysInner struct {
 	// Signing certificate public key and chain in PKCS#7 (.P7B) format.
-	Pkcs7 string `json:"pkcs7"`
+	Pkcs7 *string `json:"pkcs7,omitempty"`
 	// Signing certificate public key in X.590 (.CER) format.
-	Cert string `json:"cert"`
+	Cert *string `json:"cert,omitempty"`
 	// Subject name for this certificate in the format `/CN={domain}`.
-	Subject              string `json:"subject"`
+	Subject              *string `json:"subject,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientSigningKeysInner ClientSigningKeysInner
 
-// GetPkcs7 returns the Pkcs7 field value
+// GetPkcs7 returns the Pkcs7 field value if set, zero value otherwise.
 func (o *ClientSigningKeysInner) GetPkcs7() string {
-	if o == nil {
+	if o == nil || IsNil(o.Pkcs7) {
 		var ret string
 		return ret
 	}
-
-	return o.Pkcs7
+	return *o.Pkcs7
 }
 
-// GetPkcs7Ok returns a tuple with the Pkcs7 field value
+// GetPkcs7Ok returns a tuple with the Pkcs7 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientSigningKeysInner) GetPkcs7Ok() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Pkcs7) {
 		return nil, false
 	}
-	return &o.Pkcs7, true
+	return o.Pkcs7, true
 }
 
-// SetPkcs7 sets field value
+// HasPkcs7 returns a boolean if a field has been set.
+func (o *ClientSigningKeysInner) HasPkcs7() bool {
+	if o != nil && !IsNil(o.Pkcs7) {
+		return true
+	}
+
+	return false
+}
+
+// SetPkcs7 gets a reference to the given string and assigns it to the Pkcs7 field.
 func (o *ClientSigningKeysInner) SetPkcs7(v string) {
-	o.Pkcs7 = v
+	o.Pkcs7 = &v
 }
 
-// GetCert returns the Cert field value
+// GetCert returns the Cert field value if set, zero value otherwise.
 func (o *ClientSigningKeysInner) GetCert() string {
-	if o == nil {
+	if o == nil || IsNil(o.Cert) {
 		var ret string
 		return ret
 	}
-
-	return o.Cert
+	return *o.Cert
 }
 
-// GetCertOk returns a tuple with the Cert field value
+// GetCertOk returns a tuple with the Cert field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientSigningKeysInner) GetCertOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Cert) {
 		return nil, false
 	}
-	return &o.Cert, true
+	return o.Cert, true
 }
 
-// SetCert sets field value
+// HasCert returns a boolean if a field has been set.
+func (o *ClientSigningKeysInner) HasCert() bool {
+	if o != nil && !IsNil(o.Cert) {
+		return true
+	}
+
+	return false
+}
+
+// SetCert gets a reference to the given string and assigns it to the Cert field.
 func (o *ClientSigningKeysInner) SetCert(v string) {
-	o.Cert = v
+	o.Cert = &v
 }
 
-// GetSubject returns the Subject field value
+// GetSubject returns the Subject field value if set, zero value otherwise.
 func (o *ClientSigningKeysInner) GetSubject() string {
-	if o == nil {
+	if o == nil || IsNil(o.Subject) {
 		var ret string
 		return ret
 	}
-
-	return o.Subject
+	return *o.Subject
 }
 
-// GetSubjectOk returns a tuple with the Subject field value
+// GetSubjectOk returns a tuple with the Subject field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientSigningKeysInner) GetSubjectOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Subject) {
 		return nil, false
 	}
-	return &o.Subject, true
+	return o.Subject, true
 }
 
-// SetSubject sets field value
+// HasSubject returns a boolean if a field has been set.
+func (o *ClientSigningKeysInner) HasSubject() bool {
+	if o != nil && !IsNil(o.Subject) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubject gets a reference to the given string and assigns it to the Subject field.
 func (o *ClientSigningKeysInner) SetSubject(v string) {
-	o.Subject = v
+	o.Subject = &v
 }
 
 func (o ClientSigningKeysInner) MarshalJSON() ([]byte, error) {
@@ -109,9 +133,15 @@ func (o ClientSigningKeysInner) MarshalJSON() ([]byte, error) {
 
 func (o ClientSigningKeysInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["pkcs7"] = o.Pkcs7
-	toSerialize["cert"] = o.Cert
-	toSerialize["subject"] = o.Subject
+	if !IsNil(o.Pkcs7) {
+		toSerialize["pkcs7"] = o.Pkcs7
+	}
+	if !IsNil(o.Cert) {
+		toSerialize["cert"] = o.Cert
+	}
+	if !IsNil(o.Subject) {
+		toSerialize["subject"] = o.Subject
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

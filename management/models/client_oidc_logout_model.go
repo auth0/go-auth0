@@ -17,32 +17,40 @@ import (
 // ClientOidcLogout Configuration for OIDC backchannel logout
 type ClientOidcLogout struct {
 	// Comma-separated list of URLs that are valid to call back from Auth0 for OIDC backchannel logout. Currently only one URL is allowed.
-	BackchannelLogoutUrls []string `json:"backchannel_logout_urls"`
+	BackchannelLogoutUrls []string `json:"backchannel_logout_urls,omitempty"`
 	AdditionalProperties  map[string]interface{}
 }
 
 type _ClientOidcLogout ClientOidcLogout
 
-// GetBackchannelLogoutUrls returns the BackchannelLogoutUrls field value
+// GetBackchannelLogoutUrls returns the BackchannelLogoutUrls field value if set, zero value otherwise.
 func (o *ClientOidcLogout) GetBackchannelLogoutUrls() []string {
-	if o == nil {
+	if o == nil || IsNil(o.BackchannelLogoutUrls) {
 		var ret []string
 		return ret
 	}
-
 	return o.BackchannelLogoutUrls
 }
 
-// GetBackchannelLogoutUrlsOk returns a tuple with the BackchannelLogoutUrls field value
+// GetBackchannelLogoutUrlsOk returns a tuple with the BackchannelLogoutUrls field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientOidcLogout) GetBackchannelLogoutUrlsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.BackchannelLogoutUrls) {
 		return nil, false
 	}
 	return o.BackchannelLogoutUrls, true
 }
 
-// SetBackchannelLogoutUrls sets field value
+// HasBackchannelLogoutUrls returns a boolean if a field has been set.
+func (o *ClientOidcLogout) HasBackchannelLogoutUrls() bool {
+	if o != nil && !IsNil(o.BackchannelLogoutUrls) {
+		return true
+	}
+
+	return false
+}
+
+// SetBackchannelLogoutUrls gets a reference to the given []string and assigns it to the BackchannelLogoutUrls field.
 func (o *ClientOidcLogout) SetBackchannelLogoutUrls(v []string) {
 	o.BackchannelLogoutUrls = v
 }
@@ -57,7 +65,9 @@ func (o ClientOidcLogout) MarshalJSON() ([]byte, error) {
 
 func (o ClientOidcLogout) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["backchannel_logout_urls"] = o.BackchannelLogoutUrls
+	if !IsNil(o.BackchannelLogoutUrls) {
+		toSerialize["backchannel_logout_urls"] = o.BackchannelLogoutUrls
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

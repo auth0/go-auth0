@@ -17,160 +17,208 @@ import (
 // PostOrganizations201Response struct for PostOrganizations201Response
 type PostOrganizations201Response struct {
 	// Organization identifier
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// The name of this organization.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// Friendly name of this organization.
-	DisplayName string                                        `json:"display_name"`
-	Branding    GetOrganizations200ResponseOneOfInnerBranding `json:"branding"`
+	DisplayName *string                                        `json:"display_name,omitempty"`
+	Branding    *GetOrganizations200ResponseOneOfInnerBranding `json:"branding,omitempty"`
 	// Metadata associated with the organization, in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.
-	Metadata             map[string]interface{}                                `json:"metadata"`
-	EnabledConnections   []PostOrganizations201ResponseEnabledConnectionsInner `json:"enabled_connections"`
+	Metadata             map[string]interface{}                                `json:"metadata,omitempty"`
+	EnabledConnections   []PostOrganizations201ResponseEnabledConnectionsInner `json:"enabled_connections,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _PostOrganizations201Response PostOrganizations201Response
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *PostOrganizations201Response) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201Response) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *PostOrganizations201Response) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *PostOrganizations201Response) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *PostOrganizations201Response) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201Response) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *PostOrganizations201Response) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *PostOrganizations201Response) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetDisplayName returns the DisplayName field value
+// GetDisplayName returns the DisplayName field value if set, zero value otherwise.
 func (o *PostOrganizations201Response) GetDisplayName() string {
-	if o == nil {
+	if o == nil || IsNil(o.DisplayName) {
 		var ret string
 		return ret
 	}
-
-	return o.DisplayName
+	return *o.DisplayName
 }
 
-// GetDisplayNameOk returns a tuple with the DisplayName field value
+// GetDisplayNameOk returns a tuple with the DisplayName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201Response) GetDisplayNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DisplayName) {
 		return nil, false
 	}
-	return &o.DisplayName, true
+	return o.DisplayName, true
 }
 
-// SetDisplayName sets field value
+// HasDisplayName returns a boolean if a field has been set.
+func (o *PostOrganizations201Response) HasDisplayName() bool {
+	if o != nil && !IsNil(o.DisplayName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDisplayName gets a reference to the given string and assigns it to the DisplayName field.
 func (o *PostOrganizations201Response) SetDisplayName(v string) {
-	o.DisplayName = v
+	o.DisplayName = &v
 }
 
-// GetBranding returns the Branding field value
+// GetBranding returns the Branding field value if set, zero value otherwise.
 func (o *PostOrganizations201Response) GetBranding() GetOrganizations200ResponseOneOfInnerBranding {
-	if o == nil {
+	if o == nil || IsNil(o.Branding) {
 		var ret GetOrganizations200ResponseOneOfInnerBranding
 		return ret
 	}
-
-	return o.Branding
+	return *o.Branding
 }
 
-// GetBrandingOk returns a tuple with the Branding field value
+// GetBrandingOk returns a tuple with the Branding field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201Response) GetBrandingOk() (*GetOrganizations200ResponseOneOfInnerBranding, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Branding) {
 		return nil, false
 	}
-	return &o.Branding, true
+	return o.Branding, true
 }
 
-// SetBranding sets field value
+// HasBranding returns a boolean if a field has been set.
+func (o *PostOrganizations201Response) HasBranding() bool {
+	if o != nil && !IsNil(o.Branding) {
+		return true
+	}
+
+	return false
+}
+
+// SetBranding gets a reference to the given GetOrganizations200ResponseOneOfInnerBranding and assigns it to the Branding field.
 func (o *PostOrganizations201Response) SetBranding(v GetOrganizations200ResponseOneOfInnerBranding) {
-	o.Branding = v
+	o.Branding = &v
 }
 
-// GetMetadata returns the Metadata field value
+// GetMetadata returns the Metadata field value if set, zero value otherwise.
 func (o *PostOrganizations201Response) GetMetadata() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Metadata) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Metadata
 }
 
-// GetMetadataOk returns a tuple with the Metadata field value
+// GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201Response) GetMetadataOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Metadata) {
 		return map[string]interface{}{}, false
 	}
 	return o.Metadata, true
 }
 
-// SetMetadata sets field value
+// HasMetadata returns a boolean if a field has been set.
+func (o *PostOrganizations201Response) HasMetadata() bool {
+	if o != nil && !IsNil(o.Metadata) {
+		return true
+	}
+
+	return false
+}
+
+// SetMetadata gets a reference to the given map[string]interface{} and assigns it to the Metadata field.
 func (o *PostOrganizations201Response) SetMetadata(v map[string]interface{}) {
 	o.Metadata = v
 }
 
-// GetEnabledConnections returns the EnabledConnections field value
+// GetEnabledConnections returns the EnabledConnections field value if set, zero value otherwise.
 func (o *PostOrganizations201Response) GetEnabledConnections() []PostOrganizations201ResponseEnabledConnectionsInner {
-	if o == nil {
+	if o == nil || IsNil(o.EnabledConnections) {
 		var ret []PostOrganizations201ResponseEnabledConnectionsInner
 		return ret
 	}
-
 	return o.EnabledConnections
 }
 
-// GetEnabledConnectionsOk returns a tuple with the EnabledConnections field value
+// GetEnabledConnectionsOk returns a tuple with the EnabledConnections field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201Response) GetEnabledConnectionsOk() ([]PostOrganizations201ResponseEnabledConnectionsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnabledConnections) {
 		return nil, false
 	}
 	return o.EnabledConnections, true
 }
 
-// SetEnabledConnections sets field value
+// HasEnabledConnections returns a boolean if a field has been set.
+func (o *PostOrganizations201Response) HasEnabledConnections() bool {
+	if o != nil && !IsNil(o.EnabledConnections) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabledConnections gets a reference to the given []PostOrganizations201ResponseEnabledConnectionsInner and assigns it to the EnabledConnections field.
 func (o *PostOrganizations201Response) SetEnabledConnections(v []PostOrganizations201ResponseEnabledConnectionsInner) {
 	o.EnabledConnections = v
 }
@@ -185,12 +233,24 @@ func (o PostOrganizations201Response) MarshalJSON() ([]byte, error) {
 
 func (o PostOrganizations201Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["name"] = o.Name
-	toSerialize["display_name"] = o.DisplayName
-	toSerialize["branding"] = o.Branding
-	toSerialize["metadata"] = o.Metadata
-	toSerialize["enabled_connections"] = o.EnabledConnections
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.DisplayName) {
+		toSerialize["display_name"] = o.DisplayName
+	}
+	if !IsNil(o.Branding) {
+		toSerialize["branding"] = o.Branding
+	}
+	if !IsNil(o.Metadata) {
+		toSerialize["metadata"] = o.Metadata
+	}
+	if !IsNil(o.EnabledConnections) {
+		toSerialize["enabled_connections"] = o.EnabledConnections
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -17,85 +17,99 @@ import (
 // GetRefreshToken200Response struct for GetRefreshToken200Response
 type GetRefreshToken200Response struct {
 	// The ID of the refresh token
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// ID of the user which can be used when interacting with other APIs.
-	UserId        string                                          `json:"user_id"`
-	CreatedAt     NullableGetRefreshToken200ResponseCreatedAt     `json:"created_at"`
-	IdleExpiresAt NullableGetRefreshToken200ResponseIdleExpiresAt `json:"idle_expires_at"`
-	ExpiresAt     NullableGetRefreshToken200ResponseExpiresAt     `json:"expires_at"`
+	UserId        *string                                         `json:"user_id,omitempty"`
+	CreatedAt     NullableGetRefreshToken200ResponseCreatedAt     `json:"created_at,omitempty"`
+	IdleExpiresAt NullableGetRefreshToken200ResponseIdleExpiresAt `json:"idle_expires_at,omitempty"`
+	ExpiresAt     NullableGetRefreshToken200ResponseExpiresAt     `json:"expires_at,omitempty"`
 	// ID of the client application granted with this refresh token
-	ClientId string `json:"client_id"`
+	ClientId *string `json:"client_id,omitempty"`
 	// ID of the authenticated session used to obtain this refresh-token
-	SessionId NullableString `json:"session_id"`
+	SessionId NullableString `json:"session_id,omitempty"`
 	// True if the token is a rotating refresh token
-	Rotating bool `json:"rotating"`
+	Rotating *bool `json:"rotating,omitempty"`
 	// A list of the resource server IDs associated to this refresh-token and their granted scopes
-	ResourceServers      []GetRefreshToken200ResponseResourceServersInner `json:"resource_servers"`
+	ResourceServers      []GetRefreshToken200ResponseResourceServersInner `json:"resource_servers,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetRefreshToken200Response GetRefreshToken200Response
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetRefreshToken200Response) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRefreshToken200Response) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetRefreshToken200Response) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetRefreshToken200Response) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetUserId returns the UserId field value
+// GetUserId returns the UserId field value if set, zero value otherwise.
 func (o *GetRefreshToken200Response) GetUserId() string {
-	if o == nil {
+	if o == nil || IsNil(o.UserId) {
 		var ret string
 		return ret
 	}
-
-	return o.UserId
+	return *o.UserId
 }
 
-// GetUserIdOk returns a tuple with the UserId field value
+// GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRefreshToken200Response) GetUserIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UserId) {
 		return nil, false
 	}
-	return &o.UserId, true
+	return o.UserId, true
 }
 
-// SetUserId sets field value
+// HasUserId returns a boolean if a field has been set.
+func (o *GetRefreshToken200Response) HasUserId() bool {
+	if o != nil && !IsNil(o.UserId) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserId gets a reference to the given string and assigns it to the UserId field.
 func (o *GetRefreshToken200Response) SetUserId(v string) {
-	o.UserId = v
+	o.UserId = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value
-// If the value is explicit nil, the zero value for GetRefreshToken200ResponseCreatedAt will be returned
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetRefreshToken200Response) GetCreatedAt() GetRefreshToken200ResponseCreatedAt {
-	if o == nil || o.CreatedAt.Get() == nil {
+	if o == nil || IsNil(o.CreatedAt.Get()) {
 		var ret GetRefreshToken200ResponseCreatedAt
 		return ret
 	}
-
 	return *o.CreatedAt.Get()
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetRefreshToken200Response) GetCreatedAtOk() (*GetRefreshToken200ResponseCreatedAt, bool) {
@@ -105,23 +119,40 @@ func (o *GetRefreshToken200Response) GetCreatedAtOk() (*GetRefreshToken200Respon
 	return o.CreatedAt.Get(), o.CreatedAt.IsSet()
 }
 
-// SetCreatedAt sets field value
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetRefreshToken200Response) HasCreatedAt() bool {
+	if o != nil && o.CreatedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given NullableGetRefreshToken200ResponseCreatedAt and assigns it to the CreatedAt field.
 func (o *GetRefreshToken200Response) SetCreatedAt(v GetRefreshToken200ResponseCreatedAt) {
 	o.CreatedAt.Set(&v)
 }
 
-// GetIdleExpiresAt returns the IdleExpiresAt field value
-// If the value is explicit nil, the zero value for GetRefreshToken200ResponseIdleExpiresAt will be returned
+// SetCreatedAtNil sets the value for CreatedAt to be an explicit nil
+func (o *GetRefreshToken200Response) SetCreatedAtNil() {
+	o.CreatedAt.Set(nil)
+}
+
+// UnsetCreatedAt ensures that no value is present for CreatedAt, not even an explicit nil
+func (o *GetRefreshToken200Response) UnsetCreatedAt() {
+	o.CreatedAt.Unset()
+}
+
+// GetIdleExpiresAt returns the IdleExpiresAt field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetRefreshToken200Response) GetIdleExpiresAt() GetRefreshToken200ResponseIdleExpiresAt {
-	if o == nil || o.IdleExpiresAt.Get() == nil {
+	if o == nil || IsNil(o.IdleExpiresAt.Get()) {
 		var ret GetRefreshToken200ResponseIdleExpiresAt
 		return ret
 	}
-
 	return *o.IdleExpiresAt.Get()
 }
 
-// GetIdleExpiresAtOk returns a tuple with the IdleExpiresAt field value
+// GetIdleExpiresAtOk returns a tuple with the IdleExpiresAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetRefreshToken200Response) GetIdleExpiresAtOk() (*GetRefreshToken200ResponseIdleExpiresAt, bool) {
@@ -131,23 +162,40 @@ func (o *GetRefreshToken200Response) GetIdleExpiresAtOk() (*GetRefreshToken200Re
 	return o.IdleExpiresAt.Get(), o.IdleExpiresAt.IsSet()
 }
 
-// SetIdleExpiresAt sets field value
+// HasIdleExpiresAt returns a boolean if a field has been set.
+func (o *GetRefreshToken200Response) HasIdleExpiresAt() bool {
+	if o != nil && o.IdleExpiresAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIdleExpiresAt gets a reference to the given NullableGetRefreshToken200ResponseIdleExpiresAt and assigns it to the IdleExpiresAt field.
 func (o *GetRefreshToken200Response) SetIdleExpiresAt(v GetRefreshToken200ResponseIdleExpiresAt) {
 	o.IdleExpiresAt.Set(&v)
 }
 
-// GetExpiresAt returns the ExpiresAt field value
-// If the value is explicit nil, the zero value for GetRefreshToken200ResponseExpiresAt will be returned
+// SetIdleExpiresAtNil sets the value for IdleExpiresAt to be an explicit nil
+func (o *GetRefreshToken200Response) SetIdleExpiresAtNil() {
+	o.IdleExpiresAt.Set(nil)
+}
+
+// UnsetIdleExpiresAt ensures that no value is present for IdleExpiresAt, not even an explicit nil
+func (o *GetRefreshToken200Response) UnsetIdleExpiresAt() {
+	o.IdleExpiresAt.Unset()
+}
+
+// GetExpiresAt returns the ExpiresAt field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetRefreshToken200Response) GetExpiresAt() GetRefreshToken200ResponseExpiresAt {
-	if o == nil || o.ExpiresAt.Get() == nil {
+	if o == nil || IsNil(o.ExpiresAt.Get()) {
 		var ret GetRefreshToken200ResponseExpiresAt
 		return ret
 	}
-
 	return *o.ExpiresAt.Get()
 }
 
-// GetExpiresAtOk returns a tuple with the ExpiresAt field value
+// GetExpiresAtOk returns a tuple with the ExpiresAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetRefreshToken200Response) GetExpiresAtOk() (*GetRefreshToken200ResponseExpiresAt, bool) {
@@ -157,47 +205,72 @@ func (o *GetRefreshToken200Response) GetExpiresAtOk() (*GetRefreshToken200Respon
 	return o.ExpiresAt.Get(), o.ExpiresAt.IsSet()
 }
 
-// SetExpiresAt sets field value
+// HasExpiresAt returns a boolean if a field has been set.
+func (o *GetRefreshToken200Response) HasExpiresAt() bool {
+	if o != nil && o.ExpiresAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetExpiresAt gets a reference to the given NullableGetRefreshToken200ResponseExpiresAt and assigns it to the ExpiresAt field.
 func (o *GetRefreshToken200Response) SetExpiresAt(v GetRefreshToken200ResponseExpiresAt) {
 	o.ExpiresAt.Set(&v)
 }
 
-// GetClientId returns the ClientId field value
+// SetExpiresAtNil sets the value for ExpiresAt to be an explicit nil
+func (o *GetRefreshToken200Response) SetExpiresAtNil() {
+	o.ExpiresAt.Set(nil)
+}
+
+// UnsetExpiresAt ensures that no value is present for ExpiresAt, not even an explicit nil
+func (o *GetRefreshToken200Response) UnsetExpiresAt() {
+	o.ExpiresAt.Unset()
+}
+
+// GetClientId returns the ClientId field value if set, zero value otherwise.
 func (o *GetRefreshToken200Response) GetClientId() string {
-	if o == nil {
+	if o == nil || IsNil(o.ClientId) {
 		var ret string
 		return ret
 	}
-
-	return o.ClientId
+	return *o.ClientId
 }
 
-// GetClientIdOk returns a tuple with the ClientId field value
+// GetClientIdOk returns a tuple with the ClientId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRefreshToken200Response) GetClientIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ClientId) {
 		return nil, false
 	}
-	return &o.ClientId, true
+	return o.ClientId, true
 }
 
-// SetClientId sets field value
+// HasClientId returns a boolean if a field has been set.
+func (o *GetRefreshToken200Response) HasClientId() bool {
+	if o != nil && !IsNil(o.ClientId) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientId gets a reference to the given string and assigns it to the ClientId field.
 func (o *GetRefreshToken200Response) SetClientId(v string) {
-	o.ClientId = v
+	o.ClientId = &v
 }
 
-// GetSessionId returns the SessionId field value
-// If the value is explicit nil, the zero value for string will be returned
+// GetSessionId returns the SessionId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetRefreshToken200Response) GetSessionId() string {
-	if o == nil || o.SessionId.Get() == nil {
+	if o == nil || IsNil(o.SessionId.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.SessionId.Get()
 }
 
-// GetSessionIdOk returns a tuple with the SessionId field value
+// GetSessionIdOk returns a tuple with the SessionId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetRefreshToken200Response) GetSessionIdOk() (*string, bool) {
@@ -207,55 +280,90 @@ func (o *GetRefreshToken200Response) GetSessionIdOk() (*string, bool) {
 	return o.SessionId.Get(), o.SessionId.IsSet()
 }
 
-// SetSessionId sets field value
+// HasSessionId returns a boolean if a field has been set.
+func (o *GetRefreshToken200Response) HasSessionId() bool {
+	if o != nil && o.SessionId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSessionId gets a reference to the given NullableString and assigns it to the SessionId field.
 func (o *GetRefreshToken200Response) SetSessionId(v string) {
 	o.SessionId.Set(&v)
 }
 
-// GetRotating returns the Rotating field value
+// SetSessionIdNil sets the value for SessionId to be an explicit nil
+func (o *GetRefreshToken200Response) SetSessionIdNil() {
+	o.SessionId.Set(nil)
+}
+
+// UnsetSessionId ensures that no value is present for SessionId, not even an explicit nil
+func (o *GetRefreshToken200Response) UnsetSessionId() {
+	o.SessionId.Unset()
+}
+
+// GetRotating returns the Rotating field value if set, zero value otherwise.
 func (o *GetRefreshToken200Response) GetRotating() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Rotating) {
 		var ret bool
 		return ret
 	}
-
-	return o.Rotating
+	return *o.Rotating
 }
 
-// GetRotatingOk returns a tuple with the Rotating field value
+// GetRotatingOk returns a tuple with the Rotating field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRefreshToken200Response) GetRotatingOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Rotating) {
 		return nil, false
 	}
-	return &o.Rotating, true
+	return o.Rotating, true
 }
 
-// SetRotating sets field value
+// HasRotating returns a boolean if a field has been set.
+func (o *GetRefreshToken200Response) HasRotating() bool {
+	if o != nil && !IsNil(o.Rotating) {
+		return true
+	}
+
+	return false
+}
+
+// SetRotating gets a reference to the given bool and assigns it to the Rotating field.
 func (o *GetRefreshToken200Response) SetRotating(v bool) {
-	o.Rotating = v
+	o.Rotating = &v
 }
 
-// GetResourceServers returns the ResourceServers field value
+// GetResourceServers returns the ResourceServers field value if set, zero value otherwise.
 func (o *GetRefreshToken200Response) GetResourceServers() []GetRefreshToken200ResponseResourceServersInner {
-	if o == nil {
+	if o == nil || IsNil(o.ResourceServers) {
 		var ret []GetRefreshToken200ResponseResourceServersInner
 		return ret
 	}
-
 	return o.ResourceServers
 }
 
-// GetResourceServersOk returns a tuple with the ResourceServers field value
+// GetResourceServersOk returns a tuple with the ResourceServers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRefreshToken200Response) GetResourceServersOk() ([]GetRefreshToken200ResponseResourceServersInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ResourceServers) {
 		return nil, false
 	}
 	return o.ResourceServers, true
 }
 
-// SetResourceServers sets field value
+// HasResourceServers returns a boolean if a field has been set.
+func (o *GetRefreshToken200Response) HasResourceServers() bool {
+	if o != nil && !IsNil(o.ResourceServers) {
+		return true
+	}
+
+	return false
+}
+
+// SetResourceServers gets a reference to the given []GetRefreshToken200ResponseResourceServersInner and assigns it to the ResourceServers field.
 func (o *GetRefreshToken200Response) SetResourceServers(v []GetRefreshToken200ResponseResourceServersInner) {
 	o.ResourceServers = v
 }
@@ -270,15 +378,33 @@ func (o GetRefreshToken200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetRefreshToken200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["user_id"] = o.UserId
-	toSerialize["created_at"] = o.CreatedAt.Get()
-	toSerialize["idle_expires_at"] = o.IdleExpiresAt.Get()
-	toSerialize["expires_at"] = o.ExpiresAt.Get()
-	toSerialize["client_id"] = o.ClientId
-	toSerialize["session_id"] = o.SessionId.Get()
-	toSerialize["rotating"] = o.Rotating
-	toSerialize["resource_servers"] = o.ResourceServers
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.UserId) {
+		toSerialize["user_id"] = o.UserId
+	}
+	if o.CreatedAt.IsSet() {
+		toSerialize["created_at"] = o.CreatedAt.Get()
+	}
+	if o.IdleExpiresAt.IsSet() {
+		toSerialize["idle_expires_at"] = o.IdleExpiresAt.Get()
+	}
+	if o.ExpiresAt.IsSet() {
+		toSerialize["expires_at"] = o.ExpiresAt.Get()
+	}
+	if !IsNil(o.ClientId) {
+		toSerialize["client_id"] = o.ClientId
+	}
+	if o.SessionId.IsSet() {
+		toSerialize["session_id"] = o.SessionId.Get()
+	}
+	if !IsNil(o.Rotating) {
+		toSerialize["rotating"] = o.Rotating
+	}
+	if !IsNil(o.ResourceServers) {
+		toSerialize["resource_servers"] = o.ResourceServers
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

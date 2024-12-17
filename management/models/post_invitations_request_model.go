@@ -13,6 +13,7 @@ package models
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // PostInvitationsRequest struct for PostInvitationsRequest
@@ -22,8 +23,8 @@ type PostInvitationsRequest struct {
 	// Auth0 client ID. Used to resolve the application's login initiation endpoint.
 	ClientId string `json:"client_id"`
 	// The id of the connection to force invitee to authenticate with.
-	ConnectionId *string                            `json:"connection_id,omitempty"`
-	AppMetadata  *PostInvitationsRequestAppMetadata `json:"app_metadata,omitempty"`
+	ConnectionId *string                                         `json:"connection_id,omitempty"`
+	AppMetadata  *GetInvitations200ResponseOneOfInnerAppMetadata `json:"app_metadata,omitempty"`
 	// Data related to the user that does not affect the application's core functionality.
 	UserMetadata map[string]interface{} `json:"user_metadata,omitempty"`
 	// Number of seconds for which the invitation is valid before expiration. If unspecified or set to 0, this value defaults to 604800 seconds (7 days). Max value: 2592000 seconds (30 days).
@@ -141,9 +142,9 @@ func (o *PostInvitationsRequest) SetConnectionId(v string) {
 }
 
 // GetAppMetadata returns the AppMetadata field value if set, zero value otherwise.
-func (o *PostInvitationsRequest) GetAppMetadata() PostInvitationsRequestAppMetadata {
+func (o *PostInvitationsRequest) GetAppMetadata() GetInvitations200ResponseOneOfInnerAppMetadata {
 	if o == nil || IsNil(o.AppMetadata) {
-		var ret PostInvitationsRequestAppMetadata
+		var ret GetInvitations200ResponseOneOfInnerAppMetadata
 		return ret
 	}
 	return *o.AppMetadata
@@ -151,7 +152,7 @@ func (o *PostInvitationsRequest) GetAppMetadata() PostInvitationsRequestAppMetad
 
 // GetAppMetadataOk returns a tuple with the AppMetadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PostInvitationsRequest) GetAppMetadataOk() (*PostInvitationsRequestAppMetadata, bool) {
+func (o *PostInvitationsRequest) GetAppMetadataOk() (*GetInvitations200ResponseOneOfInnerAppMetadata, bool) {
 	if o == nil || IsNil(o.AppMetadata) {
 		return nil, false
 	}
@@ -167,8 +168,8 @@ func (o *PostInvitationsRequest) HasAppMetadata() bool {
 	return false
 }
 
-// SetAppMetadata gets a reference to the given PostInvitationsRequestAppMetadata and assigns it to the AppMetadata field.
-func (o *PostInvitationsRequest) SetAppMetadata(v PostInvitationsRequestAppMetadata) {
+// SetAppMetadata gets a reference to the given GetInvitations200ResponseOneOfInnerAppMetadata and assigns it to the AppMetadata field.
+func (o *PostInvitationsRequest) SetAppMetadata(v GetInvitations200ResponseOneOfInnerAppMetadata) {
 	o.AppMetadata = &v
 }
 
@@ -335,6 +336,29 @@ func (o PostInvitationsRequest) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *PostInvitationsRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"inviter",
+		"invitee",
+		"client_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
 	varPostInvitationsRequest := _PostInvitationsRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

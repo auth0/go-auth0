@@ -17,34 +17,42 @@ import (
 // ClientAddonsSalesforce Salesforce SSO configuration.
 type ClientAddonsSalesforce struct {
 	// Arbitrary logical URL that identifies the Saleforce resource. e.g. `https://acme-org.com`.
-	EntityId             string `json:"entity_id"`
+	EntityId             *string `json:"entity_id,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsSalesforce ClientAddonsSalesforce
 
-// GetEntityId returns the EntityId field value
+// GetEntityId returns the EntityId field value if set, zero value otherwise.
 func (o *ClientAddonsSalesforce) GetEntityId() string {
-	if o == nil {
+	if o == nil || IsNil(o.EntityId) {
 		var ret string
 		return ret
 	}
-
-	return o.EntityId
+	return *o.EntityId
 }
 
-// GetEntityIdOk returns a tuple with the EntityId field value
+// GetEntityIdOk returns a tuple with the EntityId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSalesforce) GetEntityIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EntityId) {
 		return nil, false
 	}
-	return &o.EntityId, true
+	return o.EntityId, true
 }
 
-// SetEntityId sets field value
+// HasEntityId returns a boolean if a field has been set.
+func (o *ClientAddonsSalesforce) HasEntityId() bool {
+	if o != nil && !IsNil(o.EntityId) {
+		return true
+	}
+
+	return false
+}
+
+// SetEntityId gets a reference to the given string and assigns it to the EntityId field.
 func (o *ClientAddonsSalesforce) SetEntityId(v string) {
-	o.EntityId = v
+	o.EntityId = &v
 }
 
 func (o ClientAddonsSalesforce) MarshalJSON() ([]byte, error) {
@@ -57,7 +65,9 @@ func (o ClientAddonsSalesforce) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsSalesforce) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["entity_id"] = o.EntityId
+	if !IsNil(o.EntityId) {
+		toSerialize["entity_id"] = o.EntityId
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

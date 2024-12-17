@@ -11,116 +11,145 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // ClientGrant struct for ClientGrant
 type ClientGrant struct {
 	// ID of the client grant.
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// ID of the client.
-	ClientId string `json:"client_id"`
+	ClientId *string `json:"client_id,omitempty"`
 	// The audience (API identifier) of this client grant.
-	Audience string `json:"audience"`
+	Audience *string `json:"audience,omitempty"`
 	// Scopes allowed for this client grant.
-	Scope []string `json:"scope"`
+	Scope []string `json:"scope,omitempty"`
 }
 
-type _ClientGrant ClientGrant
-
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *ClientGrant) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientGrant) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *ClientGrant) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *ClientGrant) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetClientId returns the ClientId field value
+// GetClientId returns the ClientId field value if set, zero value otherwise.
 func (o *ClientGrant) GetClientId() string {
-	if o == nil {
+	if o == nil || IsNil(o.ClientId) {
 		var ret string
 		return ret
 	}
-
-	return o.ClientId
+	return *o.ClientId
 }
 
-// GetClientIdOk returns a tuple with the ClientId field value
+// GetClientIdOk returns a tuple with the ClientId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientGrant) GetClientIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ClientId) {
 		return nil, false
 	}
-	return &o.ClientId, true
+	return o.ClientId, true
 }
 
-// SetClientId sets field value
+// HasClientId returns a boolean if a field has been set.
+func (o *ClientGrant) HasClientId() bool {
+	if o != nil && !IsNil(o.ClientId) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientId gets a reference to the given string and assigns it to the ClientId field.
 func (o *ClientGrant) SetClientId(v string) {
-	o.ClientId = v
+	o.ClientId = &v
 }
 
-// GetAudience returns the Audience field value
+// GetAudience returns the Audience field value if set, zero value otherwise.
 func (o *ClientGrant) GetAudience() string {
-	if o == nil {
+	if o == nil || IsNil(o.Audience) {
 		var ret string
 		return ret
 	}
-
-	return o.Audience
+	return *o.Audience
 }
 
-// GetAudienceOk returns a tuple with the Audience field value
+// GetAudienceOk returns a tuple with the Audience field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientGrant) GetAudienceOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Audience) {
 		return nil, false
 	}
-	return &o.Audience, true
+	return o.Audience, true
 }
 
-// SetAudience sets field value
+// HasAudience returns a boolean if a field has been set.
+func (o *ClientGrant) HasAudience() bool {
+	if o != nil && !IsNil(o.Audience) {
+		return true
+	}
+
+	return false
+}
+
+// SetAudience gets a reference to the given string and assigns it to the Audience field.
 func (o *ClientGrant) SetAudience(v string) {
-	o.Audience = v
+	o.Audience = &v
 }
 
-// GetScope returns the Scope field value
+// GetScope returns the Scope field value if set, zero value otherwise.
 func (o *ClientGrant) GetScope() []string {
-	if o == nil {
+	if o == nil || IsNil(o.Scope) {
 		var ret []string
 		return ret
 	}
-
 	return o.Scope
 }
 
-// GetScopeOk returns a tuple with the Scope field value
+// GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientGrant) GetScopeOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Scope) {
 		return nil, false
 	}
 	return o.Scope, true
 }
 
-// SetScope sets field value
+// HasScope returns a boolean if a field has been set.
+func (o *ClientGrant) HasScope() bool {
+	if o != nil && !IsNil(o.Scope) {
+		return true
+	}
+
+	return false
+}
+
+// SetScope gets a reference to the given []string and assigns it to the Scope field.
 func (o *ClientGrant) SetScope(v []string) {
 	o.Scope = v
 }
@@ -135,27 +164,19 @@ func (o ClientGrant) MarshalJSON() ([]byte, error) {
 
 func (o ClientGrant) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["client_id"] = o.ClientId
-	toSerialize["audience"] = o.Audience
-	toSerialize["scope"] = o.Scope
-	return toSerialize, nil
-}
-
-func (o *ClientGrant) UnmarshalJSON(data []byte) (err error) {
-	varClientGrant := _ClientGrant{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varClientGrant)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
 	}
-
-	*o = ClientGrant(varClientGrant)
-
-	return err
+	if !IsNil(o.ClientId) {
+		toSerialize["client_id"] = o.ClientId
+	}
+	if !IsNil(o.Audience) {
+		toSerialize["audience"] = o.Audience
+	}
+	if !IsNil(o.Scope) {
+		toSerialize["scope"] = o.Scope
+	}
+	return toSerialize, nil
 }
 
 type NullableClientGrant struct {

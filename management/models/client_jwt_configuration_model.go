@@ -17,111 +17,143 @@ import (
 // ClientJwtConfiguration Configuration related to JWTs for the client.
 type ClientJwtConfiguration struct {
 	// Number of seconds the JWT will be valid for (affects `exp` claim).
-	LifetimeInSeconds int32 `json:"lifetime_in_seconds"`
+	LifetimeInSeconds *int32 `json:"lifetime_in_seconds,omitempty"`
 	// Whether the client secret is base64 encoded (true) or unencoded (false).
-	SecretEncoded bool `json:"secret_encoded"`
+	SecretEncoded *bool `json:"secret_encoded,omitempty"`
 	// Configuration related to id token claims for the client.
-	Scopes               map[string]interface{}    `json:"scopes"`
-	Alg                  ClientJwtConfigurationAlg `json:"alg"`
+	Scopes               map[string]interface{}     `json:"scopes,omitempty"`
+	Alg                  *ClientJwtConfigurationAlg `json:"alg,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientJwtConfiguration ClientJwtConfiguration
 
-// GetLifetimeInSeconds returns the LifetimeInSeconds field value
+// GetLifetimeInSeconds returns the LifetimeInSeconds field value if set, zero value otherwise.
 func (o *ClientJwtConfiguration) GetLifetimeInSeconds() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.LifetimeInSeconds) {
 		var ret int32
 		return ret
 	}
-
-	return o.LifetimeInSeconds
+	return *o.LifetimeInSeconds
 }
 
-// GetLifetimeInSecondsOk returns a tuple with the LifetimeInSeconds field value
+// GetLifetimeInSecondsOk returns a tuple with the LifetimeInSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientJwtConfiguration) GetLifetimeInSecondsOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LifetimeInSeconds) {
 		return nil, false
 	}
-	return &o.LifetimeInSeconds, true
+	return o.LifetimeInSeconds, true
 }
 
-// SetLifetimeInSeconds sets field value
+// HasLifetimeInSeconds returns a boolean if a field has been set.
+func (o *ClientJwtConfiguration) HasLifetimeInSeconds() bool {
+	if o != nil && !IsNil(o.LifetimeInSeconds) {
+		return true
+	}
+
+	return false
+}
+
+// SetLifetimeInSeconds gets a reference to the given int32 and assigns it to the LifetimeInSeconds field.
 func (o *ClientJwtConfiguration) SetLifetimeInSeconds(v int32) {
-	o.LifetimeInSeconds = v
+	o.LifetimeInSeconds = &v
 }
 
-// GetSecretEncoded returns the SecretEncoded field value
+// GetSecretEncoded returns the SecretEncoded field value if set, zero value otherwise.
 func (o *ClientJwtConfiguration) GetSecretEncoded() bool {
-	if o == nil {
+	if o == nil || IsNil(o.SecretEncoded) {
 		var ret bool
 		return ret
 	}
-
-	return o.SecretEncoded
+	return *o.SecretEncoded
 }
 
-// GetSecretEncodedOk returns a tuple with the SecretEncoded field value
+// GetSecretEncodedOk returns a tuple with the SecretEncoded field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientJwtConfiguration) GetSecretEncodedOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SecretEncoded) {
 		return nil, false
 	}
-	return &o.SecretEncoded, true
+	return o.SecretEncoded, true
 }
 
-// SetSecretEncoded sets field value
+// HasSecretEncoded returns a boolean if a field has been set.
+func (o *ClientJwtConfiguration) HasSecretEncoded() bool {
+	if o != nil && !IsNil(o.SecretEncoded) {
+		return true
+	}
+
+	return false
+}
+
+// SetSecretEncoded gets a reference to the given bool and assigns it to the SecretEncoded field.
 func (o *ClientJwtConfiguration) SetSecretEncoded(v bool) {
-	o.SecretEncoded = v
+	o.SecretEncoded = &v
 }
 
-// GetScopes returns the Scopes field value
+// GetScopes returns the Scopes field value if set, zero value otherwise.
 func (o *ClientJwtConfiguration) GetScopes() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Scopes) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Scopes
 }
 
-// GetScopesOk returns a tuple with the Scopes field value
+// GetScopesOk returns a tuple with the Scopes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientJwtConfiguration) GetScopesOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Scopes) {
 		return map[string]interface{}{}, false
 	}
 	return o.Scopes, true
 }
 
-// SetScopes sets field value
+// HasScopes returns a boolean if a field has been set.
+func (o *ClientJwtConfiguration) HasScopes() bool {
+	if o != nil && !IsNil(o.Scopes) {
+		return true
+	}
+
+	return false
+}
+
+// SetScopes gets a reference to the given map[string]interface{} and assigns it to the Scopes field.
 func (o *ClientJwtConfiguration) SetScopes(v map[string]interface{}) {
 	o.Scopes = v
 }
 
-// GetAlg returns the Alg field value
+// GetAlg returns the Alg field value if set, zero value otherwise.
 func (o *ClientJwtConfiguration) GetAlg() ClientJwtConfigurationAlg {
-	if o == nil {
+	if o == nil || IsNil(o.Alg) {
 		var ret ClientJwtConfigurationAlg
 		return ret
 	}
-
-	return o.Alg
+	return *o.Alg
 }
 
-// GetAlgOk returns a tuple with the Alg field value
+// GetAlgOk returns a tuple with the Alg field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientJwtConfiguration) GetAlgOk() (*ClientJwtConfigurationAlg, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Alg) {
 		return nil, false
 	}
-	return &o.Alg, true
+	return o.Alg, true
 }
 
-// SetAlg sets field value
+// HasAlg returns a boolean if a field has been set.
+func (o *ClientJwtConfiguration) HasAlg() bool {
+	if o != nil && !IsNil(o.Alg) {
+		return true
+	}
+
+	return false
+}
+
+// SetAlg gets a reference to the given ClientJwtConfigurationAlg and assigns it to the Alg field.
 func (o *ClientJwtConfiguration) SetAlg(v ClientJwtConfigurationAlg) {
-	o.Alg = v
+	o.Alg = &v
 }
 
 func (o ClientJwtConfiguration) MarshalJSON() ([]byte, error) {
@@ -134,10 +166,18 @@ func (o ClientJwtConfiguration) MarshalJSON() ([]byte, error) {
 
 func (o ClientJwtConfiguration) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["lifetime_in_seconds"] = o.LifetimeInSeconds
-	toSerialize["secret_encoded"] = o.SecretEncoded
-	toSerialize["scopes"] = o.Scopes
-	toSerialize["alg"] = o.Alg
+	if !IsNil(o.LifetimeInSeconds) {
+		toSerialize["lifetime_in_seconds"] = o.LifetimeInSeconds
+	}
+	if !IsNil(o.SecretEncoded) {
+		toSerialize["secret_encoded"] = o.SecretEncoded
+	}
+	if !IsNil(o.Scopes) {
+		toSerialize["scopes"] = o.Scopes
+	}
+	if !IsNil(o.Alg) {
+		toSerialize["alg"] = o.Alg
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

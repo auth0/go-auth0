@@ -16,409 +16,537 @@ import (
 
 // ClientAddonsSamlp SAML2 addon indicator (no configuration settings needed for SAML2 addon).
 type ClientAddonsSamlp struct {
-	Mappings                       map[string]interface{} `json:"mappings"`
-	Audience                       string                 `json:"audience"`
-	Recipient                      string                 `json:"recipient"`
-	CreateUpnClaim                 bool                   `json:"createUpnClaim"`
-	MapUnknownClaimsAsIs           bool                   `json:"mapUnknownClaimsAsIs"`
-	PassthroughClaimsWithNoMapping bool                   `json:"passthroughClaimsWithNoMapping"`
-	MapIdentities                  bool                   `json:"mapIdentities"`
-	SignatureAlgorithm             string                 `json:"signatureAlgorithm"`
-	DigestAlgorithm                string                 `json:"digestAlgorithm"`
-	Issuer                         string                 `json:"issuer"`
-	Destination                    string                 `json:"destination"`
-	LifetimeInSeconds              int32                  `json:"lifetimeInSeconds"`
-	SignResponse                   bool                   `json:"signResponse"`
-	NameIdentifierFormat           string                 `json:"nameIdentifierFormat"`
-	NameIdentifierProbes           []string               `json:"nameIdentifierProbes"`
-	AuthnContextClassRef           string                 `json:"authnContextClassRef"`
+	Mappings                       map[string]interface{} `json:"mappings,omitempty"`
+	Audience                       *string                `json:"audience,omitempty"`
+	Recipient                      *string                `json:"recipient,omitempty"`
+	CreateUpnClaim                 *bool                  `json:"createUpnClaim,omitempty"`
+	MapUnknownClaimsAsIs           *bool                  `json:"mapUnknownClaimsAsIs,omitempty"`
+	PassthroughClaimsWithNoMapping *bool                  `json:"passthroughClaimsWithNoMapping,omitempty"`
+	MapIdentities                  *bool                  `json:"mapIdentities,omitempty"`
+	SignatureAlgorithm             *string                `json:"signatureAlgorithm,omitempty"`
+	DigestAlgorithm                *string                `json:"digestAlgorithm,omitempty"`
+	Issuer                         *string                `json:"issuer,omitempty"`
+	Destination                    *string                `json:"destination,omitempty"`
+	LifetimeInSeconds              *int32                 `json:"lifetimeInSeconds,omitempty"`
+	SignResponse                   *bool                  `json:"signResponse,omitempty"`
+	NameIdentifierFormat           *string                `json:"nameIdentifierFormat,omitempty"`
+	NameIdentifierProbes           []string               `json:"nameIdentifierProbes,omitempty"`
+	AuthnContextClassRef           *string                `json:"authnContextClassRef,omitempty"`
 	AdditionalProperties           map[string]interface{}
 }
 
 type _ClientAddonsSamlp ClientAddonsSamlp
 
-// GetMappings returns the Mappings field value
+// GetMappings returns the Mappings field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetMappings() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Mappings) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Mappings
 }
 
-// GetMappingsOk returns a tuple with the Mappings field value
+// GetMappingsOk returns a tuple with the Mappings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetMappingsOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Mappings) {
 		return map[string]interface{}{}, false
 	}
 	return o.Mappings, true
 }
 
-// SetMappings sets field value
+// HasMappings returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasMappings() bool {
+	if o != nil && !IsNil(o.Mappings) {
+		return true
+	}
+
+	return false
+}
+
+// SetMappings gets a reference to the given map[string]interface{} and assigns it to the Mappings field.
 func (o *ClientAddonsSamlp) SetMappings(v map[string]interface{}) {
 	o.Mappings = v
 }
 
-// GetAudience returns the Audience field value
+// GetAudience returns the Audience field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetAudience() string {
-	if o == nil {
+	if o == nil || IsNil(o.Audience) {
 		var ret string
 		return ret
 	}
-
-	return o.Audience
+	return *o.Audience
 }
 
-// GetAudienceOk returns a tuple with the Audience field value
+// GetAudienceOk returns a tuple with the Audience field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetAudienceOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Audience) {
 		return nil, false
 	}
-	return &o.Audience, true
+	return o.Audience, true
 }
 
-// SetAudience sets field value
+// HasAudience returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasAudience() bool {
+	if o != nil && !IsNil(o.Audience) {
+		return true
+	}
+
+	return false
+}
+
+// SetAudience gets a reference to the given string and assigns it to the Audience field.
 func (o *ClientAddonsSamlp) SetAudience(v string) {
-	o.Audience = v
+	o.Audience = &v
 }
 
-// GetRecipient returns the Recipient field value
+// GetRecipient returns the Recipient field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetRecipient() string {
-	if o == nil {
+	if o == nil || IsNil(o.Recipient) {
 		var ret string
 		return ret
 	}
-
-	return o.Recipient
+	return *o.Recipient
 }
 
-// GetRecipientOk returns a tuple with the Recipient field value
+// GetRecipientOk returns a tuple with the Recipient field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetRecipientOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Recipient) {
 		return nil, false
 	}
-	return &o.Recipient, true
+	return o.Recipient, true
 }
 
-// SetRecipient sets field value
+// HasRecipient returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasRecipient() bool {
+	if o != nil && !IsNil(o.Recipient) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecipient gets a reference to the given string and assigns it to the Recipient field.
 func (o *ClientAddonsSamlp) SetRecipient(v string) {
-	o.Recipient = v
+	o.Recipient = &v
 }
 
-// GetCreateUpnClaim returns the CreateUpnClaim field value
+// GetCreateUpnClaim returns the CreateUpnClaim field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetCreateUpnClaim() bool {
-	if o == nil {
+	if o == nil || IsNil(o.CreateUpnClaim) {
 		var ret bool
 		return ret
 	}
-
-	return o.CreateUpnClaim
+	return *o.CreateUpnClaim
 }
 
-// GetCreateUpnClaimOk returns a tuple with the CreateUpnClaim field value
+// GetCreateUpnClaimOk returns a tuple with the CreateUpnClaim field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetCreateUpnClaimOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreateUpnClaim) {
 		return nil, false
 	}
-	return &o.CreateUpnClaim, true
+	return o.CreateUpnClaim, true
 }
 
-// SetCreateUpnClaim sets field value
+// HasCreateUpnClaim returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasCreateUpnClaim() bool {
+	if o != nil && !IsNil(o.CreateUpnClaim) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreateUpnClaim gets a reference to the given bool and assigns it to the CreateUpnClaim field.
 func (o *ClientAddonsSamlp) SetCreateUpnClaim(v bool) {
-	o.CreateUpnClaim = v
+	o.CreateUpnClaim = &v
 }
 
-// GetMapUnknownClaimsAsIs returns the MapUnknownClaimsAsIs field value
+// GetMapUnknownClaimsAsIs returns the MapUnknownClaimsAsIs field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetMapUnknownClaimsAsIs() bool {
-	if o == nil {
+	if o == nil || IsNil(o.MapUnknownClaimsAsIs) {
 		var ret bool
 		return ret
 	}
-
-	return o.MapUnknownClaimsAsIs
+	return *o.MapUnknownClaimsAsIs
 }
 
-// GetMapUnknownClaimsAsIsOk returns a tuple with the MapUnknownClaimsAsIs field value
+// GetMapUnknownClaimsAsIsOk returns a tuple with the MapUnknownClaimsAsIs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetMapUnknownClaimsAsIsOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.MapUnknownClaimsAsIs) {
 		return nil, false
 	}
-	return &o.MapUnknownClaimsAsIs, true
+	return o.MapUnknownClaimsAsIs, true
 }
 
-// SetMapUnknownClaimsAsIs sets field value
+// HasMapUnknownClaimsAsIs returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasMapUnknownClaimsAsIs() bool {
+	if o != nil && !IsNil(o.MapUnknownClaimsAsIs) {
+		return true
+	}
+
+	return false
+}
+
+// SetMapUnknownClaimsAsIs gets a reference to the given bool and assigns it to the MapUnknownClaimsAsIs field.
 func (o *ClientAddonsSamlp) SetMapUnknownClaimsAsIs(v bool) {
-	o.MapUnknownClaimsAsIs = v
+	o.MapUnknownClaimsAsIs = &v
 }
 
-// GetPassthroughClaimsWithNoMapping returns the PassthroughClaimsWithNoMapping field value
+// GetPassthroughClaimsWithNoMapping returns the PassthroughClaimsWithNoMapping field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetPassthroughClaimsWithNoMapping() bool {
-	if o == nil {
+	if o == nil || IsNil(o.PassthroughClaimsWithNoMapping) {
 		var ret bool
 		return ret
 	}
-
-	return o.PassthroughClaimsWithNoMapping
+	return *o.PassthroughClaimsWithNoMapping
 }
 
-// GetPassthroughClaimsWithNoMappingOk returns a tuple with the PassthroughClaimsWithNoMapping field value
+// GetPassthroughClaimsWithNoMappingOk returns a tuple with the PassthroughClaimsWithNoMapping field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetPassthroughClaimsWithNoMappingOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PassthroughClaimsWithNoMapping) {
 		return nil, false
 	}
-	return &o.PassthroughClaimsWithNoMapping, true
+	return o.PassthroughClaimsWithNoMapping, true
 }
 
-// SetPassthroughClaimsWithNoMapping sets field value
+// HasPassthroughClaimsWithNoMapping returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasPassthroughClaimsWithNoMapping() bool {
+	if o != nil && !IsNil(o.PassthroughClaimsWithNoMapping) {
+		return true
+	}
+
+	return false
+}
+
+// SetPassthroughClaimsWithNoMapping gets a reference to the given bool and assigns it to the PassthroughClaimsWithNoMapping field.
 func (o *ClientAddonsSamlp) SetPassthroughClaimsWithNoMapping(v bool) {
-	o.PassthroughClaimsWithNoMapping = v
+	o.PassthroughClaimsWithNoMapping = &v
 }
 
-// GetMapIdentities returns the MapIdentities field value
+// GetMapIdentities returns the MapIdentities field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetMapIdentities() bool {
-	if o == nil {
+	if o == nil || IsNil(o.MapIdentities) {
 		var ret bool
 		return ret
 	}
-
-	return o.MapIdentities
+	return *o.MapIdentities
 }
 
-// GetMapIdentitiesOk returns a tuple with the MapIdentities field value
+// GetMapIdentitiesOk returns a tuple with the MapIdentities field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetMapIdentitiesOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.MapIdentities) {
 		return nil, false
 	}
-	return &o.MapIdentities, true
+	return o.MapIdentities, true
 }
 
-// SetMapIdentities sets field value
+// HasMapIdentities returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasMapIdentities() bool {
+	if o != nil && !IsNil(o.MapIdentities) {
+		return true
+	}
+
+	return false
+}
+
+// SetMapIdentities gets a reference to the given bool and assigns it to the MapIdentities field.
 func (o *ClientAddonsSamlp) SetMapIdentities(v bool) {
-	o.MapIdentities = v
+	o.MapIdentities = &v
 }
 
-// GetSignatureAlgorithm returns the SignatureAlgorithm field value
+// GetSignatureAlgorithm returns the SignatureAlgorithm field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetSignatureAlgorithm() string {
-	if o == nil {
+	if o == nil || IsNil(o.SignatureAlgorithm) {
 		var ret string
 		return ret
 	}
-
-	return o.SignatureAlgorithm
+	return *o.SignatureAlgorithm
 }
 
-// GetSignatureAlgorithmOk returns a tuple with the SignatureAlgorithm field value
+// GetSignatureAlgorithmOk returns a tuple with the SignatureAlgorithm field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetSignatureAlgorithmOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SignatureAlgorithm) {
 		return nil, false
 	}
-	return &o.SignatureAlgorithm, true
+	return o.SignatureAlgorithm, true
 }
 
-// SetSignatureAlgorithm sets field value
+// HasSignatureAlgorithm returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasSignatureAlgorithm() bool {
+	if o != nil && !IsNil(o.SignatureAlgorithm) {
+		return true
+	}
+
+	return false
+}
+
+// SetSignatureAlgorithm gets a reference to the given string and assigns it to the SignatureAlgorithm field.
 func (o *ClientAddonsSamlp) SetSignatureAlgorithm(v string) {
-	o.SignatureAlgorithm = v
+	o.SignatureAlgorithm = &v
 }
 
-// GetDigestAlgorithm returns the DigestAlgorithm field value
+// GetDigestAlgorithm returns the DigestAlgorithm field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetDigestAlgorithm() string {
-	if o == nil {
+	if o == nil || IsNil(o.DigestAlgorithm) {
 		var ret string
 		return ret
 	}
-
-	return o.DigestAlgorithm
+	return *o.DigestAlgorithm
 }
 
-// GetDigestAlgorithmOk returns a tuple with the DigestAlgorithm field value
+// GetDigestAlgorithmOk returns a tuple with the DigestAlgorithm field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetDigestAlgorithmOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DigestAlgorithm) {
 		return nil, false
 	}
-	return &o.DigestAlgorithm, true
+	return o.DigestAlgorithm, true
 }
 
-// SetDigestAlgorithm sets field value
+// HasDigestAlgorithm returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasDigestAlgorithm() bool {
+	if o != nil && !IsNil(o.DigestAlgorithm) {
+		return true
+	}
+
+	return false
+}
+
+// SetDigestAlgorithm gets a reference to the given string and assigns it to the DigestAlgorithm field.
 func (o *ClientAddonsSamlp) SetDigestAlgorithm(v string) {
-	o.DigestAlgorithm = v
+	o.DigestAlgorithm = &v
 }
 
-// GetIssuer returns the Issuer field value
+// GetIssuer returns the Issuer field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetIssuer() string {
-	if o == nil {
+	if o == nil || IsNil(o.Issuer) {
 		var ret string
 		return ret
 	}
-
-	return o.Issuer
+	return *o.Issuer
 }
 
-// GetIssuerOk returns a tuple with the Issuer field value
+// GetIssuerOk returns a tuple with the Issuer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetIssuerOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Issuer) {
 		return nil, false
 	}
-	return &o.Issuer, true
+	return o.Issuer, true
 }
 
-// SetIssuer sets field value
+// HasIssuer returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasIssuer() bool {
+	if o != nil && !IsNil(o.Issuer) {
+		return true
+	}
+
+	return false
+}
+
+// SetIssuer gets a reference to the given string and assigns it to the Issuer field.
 func (o *ClientAddonsSamlp) SetIssuer(v string) {
-	o.Issuer = v
+	o.Issuer = &v
 }
 
-// GetDestination returns the Destination field value
+// GetDestination returns the Destination field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetDestination() string {
-	if o == nil {
+	if o == nil || IsNil(o.Destination) {
 		var ret string
 		return ret
 	}
-
-	return o.Destination
+	return *o.Destination
 }
 
-// GetDestinationOk returns a tuple with the Destination field value
+// GetDestinationOk returns a tuple with the Destination field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetDestinationOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Destination) {
 		return nil, false
 	}
-	return &o.Destination, true
+	return o.Destination, true
 }
 
-// SetDestination sets field value
+// HasDestination returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasDestination() bool {
+	if o != nil && !IsNil(o.Destination) {
+		return true
+	}
+
+	return false
+}
+
+// SetDestination gets a reference to the given string and assigns it to the Destination field.
 func (o *ClientAddonsSamlp) SetDestination(v string) {
-	o.Destination = v
+	o.Destination = &v
 }
 
-// GetLifetimeInSeconds returns the LifetimeInSeconds field value
+// GetLifetimeInSeconds returns the LifetimeInSeconds field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetLifetimeInSeconds() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.LifetimeInSeconds) {
 		var ret int32
 		return ret
 	}
-
-	return o.LifetimeInSeconds
+	return *o.LifetimeInSeconds
 }
 
-// GetLifetimeInSecondsOk returns a tuple with the LifetimeInSeconds field value
+// GetLifetimeInSecondsOk returns a tuple with the LifetimeInSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetLifetimeInSecondsOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LifetimeInSeconds) {
 		return nil, false
 	}
-	return &o.LifetimeInSeconds, true
+	return o.LifetimeInSeconds, true
 }
 
-// SetLifetimeInSeconds sets field value
+// HasLifetimeInSeconds returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasLifetimeInSeconds() bool {
+	if o != nil && !IsNil(o.LifetimeInSeconds) {
+		return true
+	}
+
+	return false
+}
+
+// SetLifetimeInSeconds gets a reference to the given int32 and assigns it to the LifetimeInSeconds field.
 func (o *ClientAddonsSamlp) SetLifetimeInSeconds(v int32) {
-	o.LifetimeInSeconds = v
+	o.LifetimeInSeconds = &v
 }
 
-// GetSignResponse returns the SignResponse field value
+// GetSignResponse returns the SignResponse field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetSignResponse() bool {
-	if o == nil {
+	if o == nil || IsNil(o.SignResponse) {
 		var ret bool
 		return ret
 	}
-
-	return o.SignResponse
+	return *o.SignResponse
 }
 
-// GetSignResponseOk returns a tuple with the SignResponse field value
+// GetSignResponseOk returns a tuple with the SignResponse field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetSignResponseOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SignResponse) {
 		return nil, false
 	}
-	return &o.SignResponse, true
+	return o.SignResponse, true
 }
 
-// SetSignResponse sets field value
+// HasSignResponse returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasSignResponse() bool {
+	if o != nil && !IsNil(o.SignResponse) {
+		return true
+	}
+
+	return false
+}
+
+// SetSignResponse gets a reference to the given bool and assigns it to the SignResponse field.
 func (o *ClientAddonsSamlp) SetSignResponse(v bool) {
-	o.SignResponse = v
+	o.SignResponse = &v
 }
 
-// GetNameIdentifierFormat returns the NameIdentifierFormat field value
+// GetNameIdentifierFormat returns the NameIdentifierFormat field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetNameIdentifierFormat() string {
-	if o == nil {
+	if o == nil || IsNil(o.NameIdentifierFormat) {
 		var ret string
 		return ret
 	}
-
-	return o.NameIdentifierFormat
+	return *o.NameIdentifierFormat
 }
 
-// GetNameIdentifierFormatOk returns a tuple with the NameIdentifierFormat field value
+// GetNameIdentifierFormatOk returns a tuple with the NameIdentifierFormat field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetNameIdentifierFormatOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.NameIdentifierFormat) {
 		return nil, false
 	}
-	return &o.NameIdentifierFormat, true
+	return o.NameIdentifierFormat, true
 }
 
-// SetNameIdentifierFormat sets field value
+// HasNameIdentifierFormat returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasNameIdentifierFormat() bool {
+	if o != nil && !IsNil(o.NameIdentifierFormat) {
+		return true
+	}
+
+	return false
+}
+
+// SetNameIdentifierFormat gets a reference to the given string and assigns it to the NameIdentifierFormat field.
 func (o *ClientAddonsSamlp) SetNameIdentifierFormat(v string) {
-	o.NameIdentifierFormat = v
+	o.NameIdentifierFormat = &v
 }
 
-// GetNameIdentifierProbes returns the NameIdentifierProbes field value
+// GetNameIdentifierProbes returns the NameIdentifierProbes field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetNameIdentifierProbes() []string {
-	if o == nil {
+	if o == nil || IsNil(o.NameIdentifierProbes) {
 		var ret []string
 		return ret
 	}
-
 	return o.NameIdentifierProbes
 }
 
-// GetNameIdentifierProbesOk returns a tuple with the NameIdentifierProbes field value
+// GetNameIdentifierProbesOk returns a tuple with the NameIdentifierProbes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetNameIdentifierProbesOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.NameIdentifierProbes) {
 		return nil, false
 	}
 	return o.NameIdentifierProbes, true
 }
 
-// SetNameIdentifierProbes sets field value
+// HasNameIdentifierProbes returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasNameIdentifierProbes() bool {
+	if o != nil && !IsNil(o.NameIdentifierProbes) {
+		return true
+	}
+
+	return false
+}
+
+// SetNameIdentifierProbes gets a reference to the given []string and assigns it to the NameIdentifierProbes field.
 func (o *ClientAddonsSamlp) SetNameIdentifierProbes(v []string) {
 	o.NameIdentifierProbes = v
 }
 
-// GetAuthnContextClassRef returns the AuthnContextClassRef field value
+// GetAuthnContextClassRef returns the AuthnContextClassRef field value if set, zero value otherwise.
 func (o *ClientAddonsSamlp) GetAuthnContextClassRef() string {
-	if o == nil {
+	if o == nil || IsNil(o.AuthnContextClassRef) {
 		var ret string
 		return ret
 	}
-
-	return o.AuthnContextClassRef
+	return *o.AuthnContextClassRef
 }
 
-// GetAuthnContextClassRefOk returns a tuple with the AuthnContextClassRef field value
+// GetAuthnContextClassRefOk returns a tuple with the AuthnContextClassRef field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsSamlp) GetAuthnContextClassRefOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AuthnContextClassRef) {
 		return nil, false
 	}
-	return &o.AuthnContextClassRef, true
+	return o.AuthnContextClassRef, true
 }
 
-// SetAuthnContextClassRef sets field value
+// HasAuthnContextClassRef returns a boolean if a field has been set.
+func (o *ClientAddonsSamlp) HasAuthnContextClassRef() bool {
+	if o != nil && !IsNil(o.AuthnContextClassRef) {
+		return true
+	}
+
+	return false
+}
+
+// SetAuthnContextClassRef gets a reference to the given string and assigns it to the AuthnContextClassRef field.
 func (o *ClientAddonsSamlp) SetAuthnContextClassRef(v string) {
-	o.AuthnContextClassRef = v
+	o.AuthnContextClassRef = &v
 }
 
 func (o ClientAddonsSamlp) MarshalJSON() ([]byte, error) {
@@ -431,22 +559,54 @@ func (o ClientAddonsSamlp) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsSamlp) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["mappings"] = o.Mappings
-	toSerialize["audience"] = o.Audience
-	toSerialize["recipient"] = o.Recipient
-	toSerialize["createUpnClaim"] = o.CreateUpnClaim
-	toSerialize["mapUnknownClaimsAsIs"] = o.MapUnknownClaimsAsIs
-	toSerialize["passthroughClaimsWithNoMapping"] = o.PassthroughClaimsWithNoMapping
-	toSerialize["mapIdentities"] = o.MapIdentities
-	toSerialize["signatureAlgorithm"] = o.SignatureAlgorithm
-	toSerialize["digestAlgorithm"] = o.DigestAlgorithm
-	toSerialize["issuer"] = o.Issuer
-	toSerialize["destination"] = o.Destination
-	toSerialize["lifetimeInSeconds"] = o.LifetimeInSeconds
-	toSerialize["signResponse"] = o.SignResponse
-	toSerialize["nameIdentifierFormat"] = o.NameIdentifierFormat
-	toSerialize["nameIdentifierProbes"] = o.NameIdentifierProbes
-	toSerialize["authnContextClassRef"] = o.AuthnContextClassRef
+	if !IsNil(o.Mappings) {
+		toSerialize["mappings"] = o.Mappings
+	}
+	if !IsNil(o.Audience) {
+		toSerialize["audience"] = o.Audience
+	}
+	if !IsNil(o.Recipient) {
+		toSerialize["recipient"] = o.Recipient
+	}
+	if !IsNil(o.CreateUpnClaim) {
+		toSerialize["createUpnClaim"] = o.CreateUpnClaim
+	}
+	if !IsNil(o.MapUnknownClaimsAsIs) {
+		toSerialize["mapUnknownClaimsAsIs"] = o.MapUnknownClaimsAsIs
+	}
+	if !IsNil(o.PassthroughClaimsWithNoMapping) {
+		toSerialize["passthroughClaimsWithNoMapping"] = o.PassthroughClaimsWithNoMapping
+	}
+	if !IsNil(o.MapIdentities) {
+		toSerialize["mapIdentities"] = o.MapIdentities
+	}
+	if !IsNil(o.SignatureAlgorithm) {
+		toSerialize["signatureAlgorithm"] = o.SignatureAlgorithm
+	}
+	if !IsNil(o.DigestAlgorithm) {
+		toSerialize["digestAlgorithm"] = o.DigestAlgorithm
+	}
+	if !IsNil(o.Issuer) {
+		toSerialize["issuer"] = o.Issuer
+	}
+	if !IsNil(o.Destination) {
+		toSerialize["destination"] = o.Destination
+	}
+	if !IsNil(o.LifetimeInSeconds) {
+		toSerialize["lifetimeInSeconds"] = o.LifetimeInSeconds
+	}
+	if !IsNil(o.SignResponse) {
+		toSerialize["signResponse"] = o.SignResponse
+	}
+	if !IsNil(o.NameIdentifierFormat) {
+		toSerialize["nameIdentifierFormat"] = o.NameIdentifierFormat
+	}
+	if !IsNil(o.NameIdentifierProbes) {
+		toSerialize["nameIdentifierProbes"] = o.NameIdentifierProbes
+	}
+	if !IsNil(o.AuthnContextClassRef) {
+		toSerialize["authnContextClassRef"] = o.AuthnContextClassRef
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

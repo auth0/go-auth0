@@ -13,6 +13,7 @@ package models
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // PostActionRequest struct for PostActionRequest
@@ -24,7 +25,7 @@ type PostActionRequest struct {
 	// The source code of the action.
 	Code *string `json:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this action depends on.
-	Dependencies []PostActionRequestDependenciesInner `json:"dependencies,omitempty"`
+	Dependencies []GetActions200ResponseActionsInnerDependenciesInner `json:"dependencies,omitempty"`
 	// The Node runtime. For example: `node12`, defaults to `node12`
 	Runtime *string `json:"runtime,omitempty"`
 	// The list of secrets that are included in an action or a version of an action.
@@ -114,9 +115,9 @@ func (o *PostActionRequest) SetCode(v string) {
 }
 
 // GetDependencies returns the Dependencies field value if set, zero value otherwise.
-func (o *PostActionRequest) GetDependencies() []PostActionRequestDependenciesInner {
+func (o *PostActionRequest) GetDependencies() []GetActions200ResponseActionsInnerDependenciesInner {
 	if o == nil || IsNil(o.Dependencies) {
-		var ret []PostActionRequestDependenciesInner
+		var ret []GetActions200ResponseActionsInnerDependenciesInner
 		return ret
 	}
 	return o.Dependencies
@@ -124,7 +125,7 @@ func (o *PostActionRequest) GetDependencies() []PostActionRequestDependenciesInn
 
 // GetDependenciesOk returns a tuple with the Dependencies field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PostActionRequest) GetDependenciesOk() ([]PostActionRequestDependenciesInner, bool) {
+func (o *PostActionRequest) GetDependenciesOk() ([]GetActions200ResponseActionsInnerDependenciesInner, bool) {
 	if o == nil || IsNil(o.Dependencies) {
 		return nil, false
 	}
@@ -140,8 +141,8 @@ func (o *PostActionRequest) HasDependencies() bool {
 	return false
 }
 
-// SetDependencies gets a reference to the given []PostActionRequestDependenciesInner and assigns it to the Dependencies field.
-func (o *PostActionRequest) SetDependencies(v []PostActionRequestDependenciesInner) {
+// SetDependencies gets a reference to the given []GetActions200ResponseActionsInnerDependenciesInner and assigns it to the Dependencies field.
+func (o *PostActionRequest) SetDependencies(v []GetActions200ResponseActionsInnerDependenciesInner) {
 	o.Dependencies = v
 }
 
@@ -237,6 +238,28 @@ func (o PostActionRequest) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *PostActionRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"supported_triggers",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
 	varPostActionRequest := _PostActionRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

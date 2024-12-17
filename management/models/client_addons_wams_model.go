@@ -17,34 +17,42 @@ import (
 // ClientAddonsWams Windows Azure Mobile Services addon configuration.
 type ClientAddonsWams struct {
 	// Your master key for Windows Azure Mobile Services.
-	Masterkey            string `json:"masterkey"`
+	Masterkey            *string `json:"masterkey,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsWams ClientAddonsWams
 
-// GetMasterkey returns the Masterkey field value
+// GetMasterkey returns the Masterkey field value if set, zero value otherwise.
 func (o *ClientAddonsWams) GetMasterkey() string {
-	if o == nil {
+	if o == nil || IsNil(o.Masterkey) {
 		var ret string
 		return ret
 	}
-
-	return o.Masterkey
+	return *o.Masterkey
 }
 
-// GetMasterkeyOk returns a tuple with the Masterkey field value
+// GetMasterkeyOk returns a tuple with the Masterkey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsWams) GetMasterkeyOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Masterkey) {
 		return nil, false
 	}
-	return &o.Masterkey, true
+	return o.Masterkey, true
 }
 
-// SetMasterkey sets field value
+// HasMasterkey returns a boolean if a field has been set.
+func (o *ClientAddonsWams) HasMasterkey() bool {
+	if o != nil && !IsNil(o.Masterkey) {
+		return true
+	}
+
+	return false
+}
+
+// SetMasterkey gets a reference to the given string and assigns it to the Masterkey field.
 func (o *ClientAddonsWams) SetMasterkey(v string) {
-	o.Masterkey = v
+	o.Masterkey = &v
 }
 
 func (o ClientAddonsWams) MarshalJSON() ([]byte, error) {
@@ -57,7 +65,9 @@ func (o ClientAddonsWams) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsWams) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["masterkey"] = o.Masterkey
+	if !IsNil(o.Masterkey) {
+		toSerialize["masterkey"] = o.Masterkey
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

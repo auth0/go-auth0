@@ -17,135 +17,175 @@ import (
 // GetOrganizations200ResponseOneOfInner struct for GetOrganizations200ResponseOneOfInner
 type GetOrganizations200ResponseOneOfInner struct {
 	// Organization identifier
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// The name of this organization.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// Friendly name of this organization.
-	DisplayName string                                        `json:"display_name"`
-	Branding    GetOrganizations200ResponseOneOfInnerBranding `json:"branding"`
+	DisplayName *string                                        `json:"display_name,omitempty"`
+	Branding    *GetOrganizations200ResponseOneOfInnerBranding `json:"branding,omitempty"`
 	// Metadata associated with the organization, in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.
-	Metadata             map[string]interface{} `json:"metadata"`
+	Metadata             map[string]interface{} `json:"metadata,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetOrganizations200ResponseOneOfInner GetOrganizations200ResponseOneOfInner
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetOrganizations200ResponseOneOfInner) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetOrganizations200ResponseOneOfInner) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetOrganizations200ResponseOneOfInner) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetOrganizations200ResponseOneOfInner) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetOrganizations200ResponseOneOfInner) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetOrganizations200ResponseOneOfInner) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetOrganizations200ResponseOneOfInner) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *GetOrganizations200ResponseOneOfInner) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetDisplayName returns the DisplayName field value
+// GetDisplayName returns the DisplayName field value if set, zero value otherwise.
 func (o *GetOrganizations200ResponseOneOfInner) GetDisplayName() string {
-	if o == nil {
+	if o == nil || IsNil(o.DisplayName) {
 		var ret string
 		return ret
 	}
-
-	return o.DisplayName
+	return *o.DisplayName
 }
 
-// GetDisplayNameOk returns a tuple with the DisplayName field value
+// GetDisplayNameOk returns a tuple with the DisplayName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetOrganizations200ResponseOneOfInner) GetDisplayNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DisplayName) {
 		return nil, false
 	}
-	return &o.DisplayName, true
+	return o.DisplayName, true
 }
 
-// SetDisplayName sets field value
+// HasDisplayName returns a boolean if a field has been set.
+func (o *GetOrganizations200ResponseOneOfInner) HasDisplayName() bool {
+	if o != nil && !IsNil(o.DisplayName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDisplayName gets a reference to the given string and assigns it to the DisplayName field.
 func (o *GetOrganizations200ResponseOneOfInner) SetDisplayName(v string) {
-	o.DisplayName = v
+	o.DisplayName = &v
 }
 
-// GetBranding returns the Branding field value
+// GetBranding returns the Branding field value if set, zero value otherwise.
 func (o *GetOrganizations200ResponseOneOfInner) GetBranding() GetOrganizations200ResponseOneOfInnerBranding {
-	if o == nil {
+	if o == nil || IsNil(o.Branding) {
 		var ret GetOrganizations200ResponseOneOfInnerBranding
 		return ret
 	}
-
-	return o.Branding
+	return *o.Branding
 }
 
-// GetBrandingOk returns a tuple with the Branding field value
+// GetBrandingOk returns a tuple with the Branding field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetOrganizations200ResponseOneOfInner) GetBrandingOk() (*GetOrganizations200ResponseOneOfInnerBranding, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Branding) {
 		return nil, false
 	}
-	return &o.Branding, true
+	return o.Branding, true
 }
 
-// SetBranding sets field value
+// HasBranding returns a boolean if a field has been set.
+func (o *GetOrganizations200ResponseOneOfInner) HasBranding() bool {
+	if o != nil && !IsNil(o.Branding) {
+		return true
+	}
+
+	return false
+}
+
+// SetBranding gets a reference to the given GetOrganizations200ResponseOneOfInnerBranding and assigns it to the Branding field.
 func (o *GetOrganizations200ResponseOneOfInner) SetBranding(v GetOrganizations200ResponseOneOfInnerBranding) {
-	o.Branding = v
+	o.Branding = &v
 }
 
-// GetMetadata returns the Metadata field value
+// GetMetadata returns the Metadata field value if set, zero value otherwise.
 func (o *GetOrganizations200ResponseOneOfInner) GetMetadata() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Metadata) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Metadata
 }
 
-// GetMetadataOk returns a tuple with the Metadata field value
+// GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetOrganizations200ResponseOneOfInner) GetMetadataOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Metadata) {
 		return map[string]interface{}{}, false
 	}
 	return o.Metadata, true
 }
 
-// SetMetadata sets field value
+// HasMetadata returns a boolean if a field has been set.
+func (o *GetOrganizations200ResponseOneOfInner) HasMetadata() bool {
+	if o != nil && !IsNil(o.Metadata) {
+		return true
+	}
+
+	return false
+}
+
+// SetMetadata gets a reference to the given map[string]interface{} and assigns it to the Metadata field.
 func (o *GetOrganizations200ResponseOneOfInner) SetMetadata(v map[string]interface{}) {
 	o.Metadata = v
 }
@@ -160,11 +200,21 @@ func (o GetOrganizations200ResponseOneOfInner) MarshalJSON() ([]byte, error) {
 
 func (o GetOrganizations200ResponseOneOfInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["name"] = o.Name
-	toSerialize["display_name"] = o.DisplayName
-	toSerialize["branding"] = o.Branding
-	toSerialize["metadata"] = o.Metadata
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.DisplayName) {
+		toSerialize["display_name"] = o.DisplayName
+	}
+	if !IsNil(o.Branding) {
+		toSerialize["branding"] = o.Branding
+	}
+	if !IsNil(o.Metadata) {
+		toSerialize["metadata"] = o.Metadata
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

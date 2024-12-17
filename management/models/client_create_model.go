@@ -13,6 +13,7 @@ package models
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // ClientCreate struct for ClientCreate
@@ -61,14 +62,14 @@ type ClientCreate struct {
 	// The content (HTML, CSS, JS) of the custom login page. (Used on Previews)
 	CustomLoginPagePreview *string `json:"custom_login_page_preview,omitempty"`
 	// HTML form template to be used for WS-Federation.
-	FormTemplate *string             `json:"form_template,omitempty"`
-	Addons       *ClientCreateAddons `json:"addons,omitempty"`
+	FormTemplate *string       `json:"form_template,omitempty"`
+	Addons       *ClientAddons `json:"addons,omitempty"`
 	// Metadata associated with the client, in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.  Field names (max 255 chars) are alphanumeric and may only include the following special characters:  :,-+=_*?\"/\\()<>@ [Tab] [Space]
 	ClientMetadata map[string]interface{} `json:"client_metadata,omitempty"`
 	Mobile         *ClientCreateMobile    `json:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginUri            *string                                  `json:"initiate_login_uri,omitempty"`
-	NativeSocialLogin           NullableClientCreateNativeSocialLogin    `json:"native_social_login,omitempty"`
+	NativeSocialLogin           NullableClientNativeSocialLogin          `json:"native_social_login,omitempty"`
 	RefreshToken                NullableClientRefreshToken               `json:"refresh_token,omitempty"`
 	OrganizationUsage           *ClientOrganizationUsage                 `json:"organization_usage,omitempty"`
 	OrganizationRequireBehavior *ClientOrganizationRequireBehavior       `json:"organization_require_behavior,omitempty"`
@@ -876,9 +877,9 @@ func (o *ClientCreate) SetFormTemplate(v string) {
 }
 
 // GetAddons returns the Addons field value if set, zero value otherwise.
-func (o *ClientCreate) GetAddons() ClientCreateAddons {
+func (o *ClientCreate) GetAddons() ClientAddons {
 	if o == nil || IsNil(o.Addons) {
-		var ret ClientCreateAddons
+		var ret ClientAddons
 		return ret
 	}
 	return *o.Addons
@@ -886,7 +887,7 @@ func (o *ClientCreate) GetAddons() ClientCreateAddons {
 
 // GetAddonsOk returns a tuple with the Addons field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ClientCreate) GetAddonsOk() (*ClientCreateAddons, bool) {
+func (o *ClientCreate) GetAddonsOk() (*ClientAddons, bool) {
 	if o == nil || IsNil(o.Addons) {
 		return nil, false
 	}
@@ -902,8 +903,8 @@ func (o *ClientCreate) HasAddons() bool {
 	return false
 }
 
-// SetAddons gets a reference to the given ClientCreateAddons and assigns it to the Addons field.
-func (o *ClientCreate) SetAddons(v ClientCreateAddons) {
+// SetAddons gets a reference to the given ClientAddons and assigns it to the Addons field.
+func (o *ClientCreate) SetAddons(v ClientAddons) {
 	o.Addons = &v
 }
 
@@ -1004,9 +1005,9 @@ func (o *ClientCreate) SetInitiateLoginUri(v string) {
 }
 
 // GetNativeSocialLogin returns the NativeSocialLogin field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ClientCreate) GetNativeSocialLogin() ClientCreateNativeSocialLogin {
+func (o *ClientCreate) GetNativeSocialLogin() ClientNativeSocialLogin {
 	if o == nil || IsNil(o.NativeSocialLogin.Get()) {
-		var ret ClientCreateNativeSocialLogin
+		var ret ClientNativeSocialLogin
 		return ret
 	}
 	return *o.NativeSocialLogin.Get()
@@ -1015,7 +1016,7 @@ func (o *ClientCreate) GetNativeSocialLogin() ClientCreateNativeSocialLogin {
 // GetNativeSocialLoginOk returns a tuple with the NativeSocialLogin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ClientCreate) GetNativeSocialLoginOk() (*ClientCreateNativeSocialLogin, bool) {
+func (o *ClientCreate) GetNativeSocialLoginOk() (*ClientNativeSocialLogin, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1031,8 +1032,8 @@ func (o *ClientCreate) HasNativeSocialLogin() bool {
 	return false
 }
 
-// SetNativeSocialLogin gets a reference to the given NullableClientCreateNativeSocialLogin and assigns it to the NativeSocialLogin field.
-func (o *ClientCreate) SetNativeSocialLogin(v ClientCreateNativeSocialLogin) {
+// SetNativeSocialLogin gets a reference to the given NullableClientNativeSocialLogin and assigns it to the NativeSocialLogin field.
+func (o *ClientCreate) SetNativeSocialLogin(v ClientNativeSocialLogin) {
 	o.NativeSocialLogin.Set(&v)
 }
 
@@ -1450,6 +1451,27 @@ func (o ClientCreate) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *ClientCreate) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
 	varClientCreate := _ClientCreate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

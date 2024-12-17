@@ -11,112 +11,141 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetClientGrants200ResponseOneOf struct for GetClientGrants200ResponseOneOf
 type GetClientGrants200ResponseOneOf struct {
-	Start        float32       `json:"start"`
-	Limit        float32       `json:"limit"`
-	Total        float32       `json:"total"`
-	ClientGrants []ClientGrant `json:"client_grants"`
+	Start        *float32      `json:"start,omitempty"`
+	Limit        *float32      `json:"limit,omitempty"`
+	Total        *float32      `json:"total,omitempty"`
+	ClientGrants []ClientGrant `json:"client_grants,omitempty"`
 }
 
-type _GetClientGrants200ResponseOneOf GetClientGrants200ResponseOneOf
-
-// GetStart returns the Start field value
+// GetStart returns the Start field value if set, zero value otherwise.
 func (o *GetClientGrants200ResponseOneOf) GetStart() float32 {
-	if o == nil {
+	if o == nil || IsNil(o.Start) {
 		var ret float32
 		return ret
 	}
-
-	return o.Start
+	return *o.Start
 }
 
-// GetStartOk returns a tuple with the Start field value
+// GetStartOk returns a tuple with the Start field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetClientGrants200ResponseOneOf) GetStartOk() (*float32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Start) {
 		return nil, false
 	}
-	return &o.Start, true
+	return o.Start, true
 }
 
-// SetStart sets field value
+// HasStart returns a boolean if a field has been set.
+func (o *GetClientGrants200ResponseOneOf) HasStart() bool {
+	if o != nil && !IsNil(o.Start) {
+		return true
+	}
+
+	return false
+}
+
+// SetStart gets a reference to the given float32 and assigns it to the Start field.
 func (o *GetClientGrants200ResponseOneOf) SetStart(v float32) {
-	o.Start = v
+	o.Start = &v
 }
 
-// GetLimit returns the Limit field value
+// GetLimit returns the Limit field value if set, zero value otherwise.
 func (o *GetClientGrants200ResponseOneOf) GetLimit() float32 {
-	if o == nil {
+	if o == nil || IsNil(o.Limit) {
 		var ret float32
 		return ret
 	}
-
-	return o.Limit
+	return *o.Limit
 }
 
-// GetLimitOk returns a tuple with the Limit field value
+// GetLimitOk returns a tuple with the Limit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetClientGrants200ResponseOneOf) GetLimitOk() (*float32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Limit) {
 		return nil, false
 	}
-	return &o.Limit, true
+	return o.Limit, true
 }
 
-// SetLimit sets field value
+// HasLimit returns a boolean if a field has been set.
+func (o *GetClientGrants200ResponseOneOf) HasLimit() bool {
+	if o != nil && !IsNil(o.Limit) {
+		return true
+	}
+
+	return false
+}
+
+// SetLimit gets a reference to the given float32 and assigns it to the Limit field.
 func (o *GetClientGrants200ResponseOneOf) SetLimit(v float32) {
-	o.Limit = v
+	o.Limit = &v
 }
 
-// GetTotal returns the Total field value
+// GetTotal returns the Total field value if set, zero value otherwise.
 func (o *GetClientGrants200ResponseOneOf) GetTotal() float32 {
-	if o == nil {
+	if o == nil || IsNil(o.Total) {
 		var ret float32
 		return ret
 	}
-
-	return o.Total
+	return *o.Total
 }
 
-// GetTotalOk returns a tuple with the Total field value
+// GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetClientGrants200ResponseOneOf) GetTotalOk() (*float32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Total) {
 		return nil, false
 	}
-	return &o.Total, true
+	return o.Total, true
 }
 
-// SetTotal sets field value
+// HasTotal returns a boolean if a field has been set.
+func (o *GetClientGrants200ResponseOneOf) HasTotal() bool {
+	if o != nil && !IsNil(o.Total) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotal gets a reference to the given float32 and assigns it to the Total field.
 func (o *GetClientGrants200ResponseOneOf) SetTotal(v float32) {
-	o.Total = v
+	o.Total = &v
 }
 
-// GetClientGrants returns the ClientGrants field value
+// GetClientGrants returns the ClientGrants field value if set, zero value otherwise.
 func (o *GetClientGrants200ResponseOneOf) GetClientGrants() []ClientGrant {
-	if o == nil {
+	if o == nil || IsNil(o.ClientGrants) {
 		var ret []ClientGrant
 		return ret
 	}
-
 	return o.ClientGrants
 }
 
-// GetClientGrantsOk returns a tuple with the ClientGrants field value
+// GetClientGrantsOk returns a tuple with the ClientGrants field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetClientGrants200ResponseOneOf) GetClientGrantsOk() ([]ClientGrant, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ClientGrants) {
 		return nil, false
 	}
 	return o.ClientGrants, true
 }
 
-// SetClientGrants sets field value
+// HasClientGrants returns a boolean if a field has been set.
+func (o *GetClientGrants200ResponseOneOf) HasClientGrants() bool {
+	if o != nil && !IsNil(o.ClientGrants) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientGrants gets a reference to the given []ClientGrant and assigns it to the ClientGrants field.
 func (o *GetClientGrants200ResponseOneOf) SetClientGrants(v []ClientGrant) {
 	o.ClientGrants = v
 }
@@ -131,27 +160,19 @@ func (o GetClientGrants200ResponseOneOf) MarshalJSON() ([]byte, error) {
 
 func (o GetClientGrants200ResponseOneOf) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["start"] = o.Start
-	toSerialize["limit"] = o.Limit
-	toSerialize["total"] = o.Total
-	toSerialize["client_grants"] = o.ClientGrants
-	return toSerialize, nil
-}
-
-func (o *GetClientGrants200ResponseOneOf) UnmarshalJSON(data []byte) (err error) {
-	varGetClientGrants200ResponseOneOf := _GetClientGrants200ResponseOneOf{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetClientGrants200ResponseOneOf)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Start) {
+		toSerialize["start"] = o.Start
 	}
-
-	*o = GetClientGrants200ResponseOneOf(varGetClientGrants200ResponseOneOf)
-
-	return err
+	if !IsNil(o.Limit) {
+		toSerialize["limit"] = o.Limit
+	}
+	if !IsNil(o.Total) {
+		toSerialize["total"] = o.Total
+	}
+	if !IsNil(o.ClientGrants) {
+		toSerialize["client_grants"] = o.ClientGrants
+	}
+	return toSerialize, nil
 }
 
 type NullableGetClientGrants200ResponseOneOf struct {

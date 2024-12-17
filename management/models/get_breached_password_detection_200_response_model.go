@@ -17,136 +17,176 @@ import (
 // GetBreachedPasswordDetection200Response struct for GetBreachedPasswordDetection200Response
 type GetBreachedPasswordDetection200Response struct {
 	// Whether or not breached password detection is active.
-	Enabled bool `json:"enabled"`
+	Enabled *bool `json:"enabled,omitempty"`
 	// Action to take when a breached password is detected during a login.       Possible values: <code>block</code>, <code>user_notification</code>, <code>admin_notification</code>.
-	Shields []GetBreachedPasswordDetection200ResponseShieldsInner `json:"shields"`
+	Shields []GetBreachedPasswordDetection200ResponseShieldsInner `json:"shields,omitempty"`
 	// When \"admin_notification\" is enabled, determines how often email notifications are sent.         Possible values: <code>immediately</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>.
-	AdminNotificationFrequency []GetBreachedPasswordDetection200ResponseAdminNotificationFrequencyInner `json:"admin_notification_frequency"`
-	Method                     GetBreachedPasswordDetection200ResponseMethod                            `json:"method"`
-	Stage                      GetBreachedPasswordDetection200ResponseStage                             `json:"stage"`
+	AdminNotificationFrequency []GetBreachedPasswordDetection200ResponseAdminNotificationFrequencyInner `json:"admin_notification_frequency,omitempty"`
+	Method                     *GetBreachedPasswordDetection200ResponseMethod                           `json:"method,omitempty"`
+	Stage                      *GetBreachedPasswordDetection200ResponseStage                            `json:"stage,omitempty"`
 	AdditionalProperties       map[string]interface{}
 }
 
 type _GetBreachedPasswordDetection200Response GetBreachedPasswordDetection200Response
 
-// GetEnabled returns the Enabled field value
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *GetBreachedPasswordDetection200Response) GetEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.Enabled
+	return *o.Enabled
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBreachedPasswordDetection200Response) GetEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
-	return &o.Enabled, true
+	return o.Enabled, true
 }
 
-// SetEnabled sets field value
+// HasEnabled returns a boolean if a field has been set.
+func (o *GetBreachedPasswordDetection200Response) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
 func (o *GetBreachedPasswordDetection200Response) SetEnabled(v bool) {
-	o.Enabled = v
+	o.Enabled = &v
 }
 
-// GetShields returns the Shields field value
+// GetShields returns the Shields field value if set, zero value otherwise.
 func (o *GetBreachedPasswordDetection200Response) GetShields() []GetBreachedPasswordDetection200ResponseShieldsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Shields) {
 		var ret []GetBreachedPasswordDetection200ResponseShieldsInner
 		return ret
 	}
-
 	return o.Shields
 }
 
-// GetShieldsOk returns a tuple with the Shields field value
+// GetShieldsOk returns a tuple with the Shields field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBreachedPasswordDetection200Response) GetShieldsOk() ([]GetBreachedPasswordDetection200ResponseShieldsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Shields) {
 		return nil, false
 	}
 	return o.Shields, true
 }
 
-// SetShields sets field value
+// HasShields returns a boolean if a field has been set.
+func (o *GetBreachedPasswordDetection200Response) HasShields() bool {
+	if o != nil && !IsNil(o.Shields) {
+		return true
+	}
+
+	return false
+}
+
+// SetShields gets a reference to the given []GetBreachedPasswordDetection200ResponseShieldsInner and assigns it to the Shields field.
 func (o *GetBreachedPasswordDetection200Response) SetShields(v []GetBreachedPasswordDetection200ResponseShieldsInner) {
 	o.Shields = v
 }
 
-// GetAdminNotificationFrequency returns the AdminNotificationFrequency field value
+// GetAdminNotificationFrequency returns the AdminNotificationFrequency field value if set, zero value otherwise.
 func (o *GetBreachedPasswordDetection200Response) GetAdminNotificationFrequency() []GetBreachedPasswordDetection200ResponseAdminNotificationFrequencyInner {
-	if o == nil {
+	if o == nil || IsNil(o.AdminNotificationFrequency) {
 		var ret []GetBreachedPasswordDetection200ResponseAdminNotificationFrequencyInner
 		return ret
 	}
-
 	return o.AdminNotificationFrequency
 }
 
-// GetAdminNotificationFrequencyOk returns a tuple with the AdminNotificationFrequency field value
+// GetAdminNotificationFrequencyOk returns a tuple with the AdminNotificationFrequency field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBreachedPasswordDetection200Response) GetAdminNotificationFrequencyOk() ([]GetBreachedPasswordDetection200ResponseAdminNotificationFrequencyInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AdminNotificationFrequency) {
 		return nil, false
 	}
 	return o.AdminNotificationFrequency, true
 }
 
-// SetAdminNotificationFrequency sets field value
+// HasAdminNotificationFrequency returns a boolean if a field has been set.
+func (o *GetBreachedPasswordDetection200Response) HasAdminNotificationFrequency() bool {
+	if o != nil && !IsNil(o.AdminNotificationFrequency) {
+		return true
+	}
+
+	return false
+}
+
+// SetAdminNotificationFrequency gets a reference to the given []GetBreachedPasswordDetection200ResponseAdminNotificationFrequencyInner and assigns it to the AdminNotificationFrequency field.
 func (o *GetBreachedPasswordDetection200Response) SetAdminNotificationFrequency(v []GetBreachedPasswordDetection200ResponseAdminNotificationFrequencyInner) {
 	o.AdminNotificationFrequency = v
 }
 
-// GetMethod returns the Method field value
+// GetMethod returns the Method field value if set, zero value otherwise.
 func (o *GetBreachedPasswordDetection200Response) GetMethod() GetBreachedPasswordDetection200ResponseMethod {
-	if o == nil {
+	if o == nil || IsNil(o.Method) {
 		var ret GetBreachedPasswordDetection200ResponseMethod
 		return ret
 	}
-
-	return o.Method
+	return *o.Method
 }
 
-// GetMethodOk returns a tuple with the Method field value
+// GetMethodOk returns a tuple with the Method field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBreachedPasswordDetection200Response) GetMethodOk() (*GetBreachedPasswordDetection200ResponseMethod, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Method) {
 		return nil, false
 	}
-	return &o.Method, true
+	return o.Method, true
 }
 
-// SetMethod sets field value
+// HasMethod returns a boolean if a field has been set.
+func (o *GetBreachedPasswordDetection200Response) HasMethod() bool {
+	if o != nil && !IsNil(o.Method) {
+		return true
+	}
+
+	return false
+}
+
+// SetMethod gets a reference to the given GetBreachedPasswordDetection200ResponseMethod and assigns it to the Method field.
 func (o *GetBreachedPasswordDetection200Response) SetMethod(v GetBreachedPasswordDetection200ResponseMethod) {
-	o.Method = v
+	o.Method = &v
 }
 
-// GetStage returns the Stage field value
+// GetStage returns the Stage field value if set, zero value otherwise.
 func (o *GetBreachedPasswordDetection200Response) GetStage() GetBreachedPasswordDetection200ResponseStage {
-	if o == nil {
+	if o == nil || IsNil(o.Stage) {
 		var ret GetBreachedPasswordDetection200ResponseStage
 		return ret
 	}
-
-	return o.Stage
+	return *o.Stage
 }
 
-// GetStageOk returns a tuple with the Stage field value
+// GetStageOk returns a tuple with the Stage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBreachedPasswordDetection200Response) GetStageOk() (*GetBreachedPasswordDetection200ResponseStage, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Stage) {
 		return nil, false
 	}
-	return &o.Stage, true
+	return o.Stage, true
 }
 
-// SetStage sets field value
+// HasStage returns a boolean if a field has been set.
+func (o *GetBreachedPasswordDetection200Response) HasStage() bool {
+	if o != nil && !IsNil(o.Stage) {
+		return true
+	}
+
+	return false
+}
+
+// SetStage gets a reference to the given GetBreachedPasswordDetection200ResponseStage and assigns it to the Stage field.
 func (o *GetBreachedPasswordDetection200Response) SetStage(v GetBreachedPasswordDetection200ResponseStage) {
-	o.Stage = v
+	o.Stage = &v
 }
 
 func (o GetBreachedPasswordDetection200Response) MarshalJSON() ([]byte, error) {
@@ -159,11 +199,21 @@ func (o GetBreachedPasswordDetection200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetBreachedPasswordDetection200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["enabled"] = o.Enabled
-	toSerialize["shields"] = o.Shields
-	toSerialize["admin_notification_frequency"] = o.AdminNotificationFrequency
-	toSerialize["method"] = o.Method
-	toSerialize["stage"] = o.Stage
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Shields) {
+		toSerialize["shields"] = o.Shields
+	}
+	if !IsNil(o.AdminNotificationFrequency) {
+		toSerialize["admin_notification_frequency"] = o.AdminNotificationFrequency
+	}
+	if !IsNil(o.Method) {
+		toSerialize["method"] = o.Method
+	}
+	if !IsNil(o.Stage) {
+		toSerialize["stage"] = o.Stage
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -17,60 +17,76 @@ import (
 // GetActions200ResponseActionsInnerSecretsInner struct for GetActions200ResponseActionsInnerSecretsInner
 type GetActions200ResponseActionsInnerSecretsInner struct {
 	// The name of the particular secret, e.g. API_KEY.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// The time when the secret was last updated.
-	UpdatedAt            string `json:"updated_at"`
+	UpdatedAt            *string `json:"updated_at,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetActions200ResponseActionsInnerSecretsInner GetActions200ResponseActionsInnerSecretsInner
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerSecretsInner) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerSecretsInner) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerSecretsInner) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *GetActions200ResponseActionsInnerSecretsInner) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerSecretsInner) GetUpdatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.UpdatedAt
+	return *o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerSecretsInner) GetUpdatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
-	return &o.UpdatedAt, true
+	return o.UpdatedAt, true
 }
 
-// SetUpdatedAt sets field value
+// HasUpdatedAt returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerSecretsInner) HasUpdatedAt() bool {
+	if o != nil && !IsNil(o.UpdatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
 func (o *GetActions200ResponseActionsInnerSecretsInner) SetUpdatedAt(v string) {
-	o.UpdatedAt = v
+	o.UpdatedAt = &v
 }
 
 func (o GetActions200ResponseActionsInnerSecretsInner) MarshalJSON() ([]byte, error) {
@@ -83,8 +99,12 @@ func (o GetActions200ResponseActionsInnerSecretsInner) MarshalJSON() ([]byte, er
 
 func (o GetActions200ResponseActionsInnerSecretsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["name"] = o.Name
-	toSerialize["updated_at"] = o.UpdatedAt
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

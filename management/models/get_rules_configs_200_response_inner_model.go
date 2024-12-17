@@ -17,34 +17,42 @@ import (
 // GetRulesConfigs200ResponseInner struct for GetRulesConfigs200ResponseInner
 type GetRulesConfigs200ResponseInner struct {
 	// Key for a rules config variable.
-	Key                  string `json:"key"`
+	Key                  *string `json:"key,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetRulesConfigs200ResponseInner GetRulesConfigs200ResponseInner
 
-// GetKey returns the Key field value
+// GetKey returns the Key field value if set, zero value otherwise.
 func (o *GetRulesConfigs200ResponseInner) GetKey() string {
-	if o == nil {
+	if o == nil || IsNil(o.Key) {
 		var ret string
 		return ret
 	}
-
-	return o.Key
+	return *o.Key
 }
 
-// GetKeyOk returns a tuple with the Key field value
+// GetKeyOk returns a tuple with the Key field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRulesConfigs200ResponseInner) GetKeyOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Key) {
 		return nil, false
 	}
-	return &o.Key, true
+	return o.Key, true
 }
 
-// SetKey sets field value
+// HasKey returns a boolean if a field has been set.
+func (o *GetRulesConfigs200ResponseInner) HasKey() bool {
+	if o != nil && !IsNil(o.Key) {
+		return true
+	}
+
+	return false
+}
+
+// SetKey gets a reference to the given string and assigns it to the Key field.
 func (o *GetRulesConfigs200ResponseInner) SetKey(v string) {
-	o.Key = v
+	o.Key = &v
 }
 
 func (o GetRulesConfigs200ResponseInner) MarshalJSON() ([]byte, error) {
@@ -57,7 +65,9 @@ func (o GetRulesConfigs200ResponseInner) MarshalJSON() ([]byte, error) {
 
 func (o GetRulesConfigs200ResponseInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["key"] = o.Key
+	if !IsNil(o.Key) {
+		toSerialize["key"] = o.Key
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -11,349 +11,450 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetInvitations200ResponseOneOfInner struct for GetInvitations200ResponseOneOfInner
 type GetInvitations200ResponseOneOfInner struct {
 	// The id of the user invitation.
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// Organization identifier
-	OrganizationId string                                     `json:"organization_id"`
-	Inviter        GetInvitations200ResponseOneOfInnerInviter `json:"inviter"`
-	Invitee        GetInvitations200ResponseOneOfInnerInvitee `json:"invitee"`
+	OrganizationId *string                                     `json:"organization_id,omitempty"`
+	Inviter        *GetInvitations200ResponseOneOfInnerInviter `json:"inviter,omitempty"`
+	Invitee        *GetInvitations200ResponseOneOfInnerInvitee `json:"invitee,omitempty"`
 	// The invitation url to be send to the invitee.
-	InvitationUrl string `json:"invitation_url"`
+	InvitationUrl *string `json:"invitation_url,omitempty"`
 	// The ISO 8601 formatted timestamp representing the creation time of the invitation.
-	CreatedAt string `json:"created_at"`
+	CreatedAt *string `json:"created_at,omitempty"`
 	// The ISO 8601 formatted timestamp representing the expiration time of the invitation.
-	ExpiresAt string `json:"expires_at"`
+	ExpiresAt *string `json:"expires_at,omitempty"`
 	// Auth0 client ID. Used to resolve the application's login initiation endpoint.
-	ClientId string `json:"client_id"`
+	ClientId *string `json:"client_id,omitempty"`
 	// The id of the connection to force invitee to authenticate with.
-	ConnectionId string                                         `json:"connection_id"`
-	AppMetadata  GetInvitations200ResponseOneOfInnerAppMetadata `json:"app_metadata"`
+	ConnectionId *string                                         `json:"connection_id,omitempty"`
+	AppMetadata  *GetInvitations200ResponseOneOfInnerAppMetadata `json:"app_metadata,omitempty"`
 	// Data related to the user that does not affect the application's core functionality.
-	UserMetadata map[string]interface{} `json:"user_metadata"`
+	UserMetadata map[string]interface{} `json:"user_metadata,omitempty"`
 	// List of roles IDs to associated with the user.
-	Roles []string `json:"roles"`
+	Roles []string `json:"roles,omitempty"`
 	// The id of the invitation ticket
-	TicketId string `json:"ticket_id"`
+	TicketId *string `json:"ticket_id,omitempty"`
 }
 
-type _GetInvitations200ResponseOneOfInner GetInvitations200ResponseOneOfInner
-
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetInvitations200ResponseOneOfInner) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetOrganizationId returns the OrganizationId field value
+// GetOrganizationId returns the OrganizationId field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetOrganizationId() string {
-	if o == nil {
+	if o == nil || IsNil(o.OrganizationId) {
 		var ret string
 		return ret
 	}
-
-	return o.OrganizationId
+	return *o.OrganizationId
 }
 
-// GetOrganizationIdOk returns a tuple with the OrganizationId field value
+// GetOrganizationIdOk returns a tuple with the OrganizationId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetOrganizationIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.OrganizationId) {
 		return nil, false
 	}
-	return &o.OrganizationId, true
+	return o.OrganizationId, true
 }
 
-// SetOrganizationId sets field value
+// HasOrganizationId returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasOrganizationId() bool {
+	if o != nil && !IsNil(o.OrganizationId) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrganizationId gets a reference to the given string and assigns it to the OrganizationId field.
 func (o *GetInvitations200ResponseOneOfInner) SetOrganizationId(v string) {
-	o.OrganizationId = v
+	o.OrganizationId = &v
 }
 
-// GetInviter returns the Inviter field value
+// GetInviter returns the Inviter field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetInviter() GetInvitations200ResponseOneOfInnerInviter {
-	if o == nil {
+	if o == nil || IsNil(o.Inviter) {
 		var ret GetInvitations200ResponseOneOfInnerInviter
 		return ret
 	}
-
-	return o.Inviter
+	return *o.Inviter
 }
 
-// GetInviterOk returns a tuple with the Inviter field value
+// GetInviterOk returns a tuple with the Inviter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetInviterOk() (*GetInvitations200ResponseOneOfInnerInviter, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Inviter) {
 		return nil, false
 	}
-	return &o.Inviter, true
+	return o.Inviter, true
 }
 
-// SetInviter sets field value
+// HasInviter returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasInviter() bool {
+	if o != nil && !IsNil(o.Inviter) {
+		return true
+	}
+
+	return false
+}
+
+// SetInviter gets a reference to the given GetInvitations200ResponseOneOfInnerInviter and assigns it to the Inviter field.
 func (o *GetInvitations200ResponseOneOfInner) SetInviter(v GetInvitations200ResponseOneOfInnerInviter) {
-	o.Inviter = v
+	o.Inviter = &v
 }
 
-// GetInvitee returns the Invitee field value
+// GetInvitee returns the Invitee field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetInvitee() GetInvitations200ResponseOneOfInnerInvitee {
-	if o == nil {
+	if o == nil || IsNil(o.Invitee) {
 		var ret GetInvitations200ResponseOneOfInnerInvitee
 		return ret
 	}
-
-	return o.Invitee
+	return *o.Invitee
 }
 
-// GetInviteeOk returns a tuple with the Invitee field value
+// GetInviteeOk returns a tuple with the Invitee field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetInviteeOk() (*GetInvitations200ResponseOneOfInnerInvitee, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Invitee) {
 		return nil, false
 	}
-	return &o.Invitee, true
+	return o.Invitee, true
 }
 
-// SetInvitee sets field value
+// HasInvitee returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasInvitee() bool {
+	if o != nil && !IsNil(o.Invitee) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvitee gets a reference to the given GetInvitations200ResponseOneOfInnerInvitee and assigns it to the Invitee field.
 func (o *GetInvitations200ResponseOneOfInner) SetInvitee(v GetInvitations200ResponseOneOfInnerInvitee) {
-	o.Invitee = v
+	o.Invitee = &v
 }
 
-// GetInvitationUrl returns the InvitationUrl field value
+// GetInvitationUrl returns the InvitationUrl field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetInvitationUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.InvitationUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.InvitationUrl
+	return *o.InvitationUrl
 }
 
-// GetInvitationUrlOk returns a tuple with the InvitationUrl field value
+// GetInvitationUrlOk returns a tuple with the InvitationUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetInvitationUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.InvitationUrl) {
 		return nil, false
 	}
-	return &o.InvitationUrl, true
+	return o.InvitationUrl, true
 }
 
-// SetInvitationUrl sets field value
+// HasInvitationUrl returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasInvitationUrl() bool {
+	if o != nil && !IsNil(o.InvitationUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvitationUrl gets a reference to the given string and assigns it to the InvitationUrl field.
 func (o *GetInvitations200ResponseOneOfInner) SetInvitationUrl(v string) {
-	o.InvitationUrl = v
+	o.InvitationUrl = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetCreatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetCreatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
-// SetCreatedAt sets field value
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
 func (o *GetInvitations200ResponseOneOfInner) SetCreatedAt(v string) {
-	o.CreatedAt = v
+	o.CreatedAt = &v
 }
 
-// GetExpiresAt returns the ExpiresAt field value
+// GetExpiresAt returns the ExpiresAt field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetExpiresAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.ExpiresAt) {
 		var ret string
 		return ret
 	}
-
-	return o.ExpiresAt
+	return *o.ExpiresAt
 }
 
-// GetExpiresAtOk returns a tuple with the ExpiresAt field value
+// GetExpiresAtOk returns a tuple with the ExpiresAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetExpiresAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ExpiresAt) {
 		return nil, false
 	}
-	return &o.ExpiresAt, true
+	return o.ExpiresAt, true
 }
 
-// SetExpiresAt sets field value
+// HasExpiresAt returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasExpiresAt() bool {
+	if o != nil && !IsNil(o.ExpiresAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetExpiresAt gets a reference to the given string and assigns it to the ExpiresAt field.
 func (o *GetInvitations200ResponseOneOfInner) SetExpiresAt(v string) {
-	o.ExpiresAt = v
+	o.ExpiresAt = &v
 }
 
-// GetClientId returns the ClientId field value
+// GetClientId returns the ClientId field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetClientId() string {
-	if o == nil {
+	if o == nil || IsNil(o.ClientId) {
 		var ret string
 		return ret
 	}
-
-	return o.ClientId
+	return *o.ClientId
 }
 
-// GetClientIdOk returns a tuple with the ClientId field value
+// GetClientIdOk returns a tuple with the ClientId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetClientIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ClientId) {
 		return nil, false
 	}
-	return &o.ClientId, true
+	return o.ClientId, true
 }
 
-// SetClientId sets field value
+// HasClientId returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasClientId() bool {
+	if o != nil && !IsNil(o.ClientId) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientId gets a reference to the given string and assigns it to the ClientId field.
 func (o *GetInvitations200ResponseOneOfInner) SetClientId(v string) {
-	o.ClientId = v
+	o.ClientId = &v
 }
 
-// GetConnectionId returns the ConnectionId field value
+// GetConnectionId returns the ConnectionId field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetConnectionId() string {
-	if o == nil {
+	if o == nil || IsNil(o.ConnectionId) {
 		var ret string
 		return ret
 	}
-
-	return o.ConnectionId
+	return *o.ConnectionId
 }
 
-// GetConnectionIdOk returns a tuple with the ConnectionId field value
+// GetConnectionIdOk returns a tuple with the ConnectionId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetConnectionIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ConnectionId) {
 		return nil, false
 	}
-	return &o.ConnectionId, true
+	return o.ConnectionId, true
 }
 
-// SetConnectionId sets field value
+// HasConnectionId returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasConnectionId() bool {
+	if o != nil && !IsNil(o.ConnectionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectionId gets a reference to the given string and assigns it to the ConnectionId field.
 func (o *GetInvitations200ResponseOneOfInner) SetConnectionId(v string) {
-	o.ConnectionId = v
+	o.ConnectionId = &v
 }
 
-// GetAppMetadata returns the AppMetadata field value
+// GetAppMetadata returns the AppMetadata field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetAppMetadata() GetInvitations200ResponseOneOfInnerAppMetadata {
-	if o == nil {
+	if o == nil || IsNil(o.AppMetadata) {
 		var ret GetInvitations200ResponseOneOfInnerAppMetadata
 		return ret
 	}
-
-	return o.AppMetadata
+	return *o.AppMetadata
 }
 
-// GetAppMetadataOk returns a tuple with the AppMetadata field value
+// GetAppMetadataOk returns a tuple with the AppMetadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetAppMetadataOk() (*GetInvitations200ResponseOneOfInnerAppMetadata, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AppMetadata) {
 		return nil, false
 	}
-	return &o.AppMetadata, true
+	return o.AppMetadata, true
 }
 
-// SetAppMetadata sets field value
+// HasAppMetadata returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasAppMetadata() bool {
+	if o != nil && !IsNil(o.AppMetadata) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppMetadata gets a reference to the given GetInvitations200ResponseOneOfInnerAppMetadata and assigns it to the AppMetadata field.
 func (o *GetInvitations200ResponseOneOfInner) SetAppMetadata(v GetInvitations200ResponseOneOfInnerAppMetadata) {
-	o.AppMetadata = v
+	o.AppMetadata = &v
 }
 
-// GetUserMetadata returns the UserMetadata field value
+// GetUserMetadata returns the UserMetadata field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetUserMetadata() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.UserMetadata) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.UserMetadata
 }
 
-// GetUserMetadataOk returns a tuple with the UserMetadata field value
+// GetUserMetadataOk returns a tuple with the UserMetadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetUserMetadataOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UserMetadata) {
 		return map[string]interface{}{}, false
 	}
 	return o.UserMetadata, true
 }
 
-// SetUserMetadata sets field value
+// HasUserMetadata returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasUserMetadata() bool {
+	if o != nil && !IsNil(o.UserMetadata) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserMetadata gets a reference to the given map[string]interface{} and assigns it to the UserMetadata field.
 func (o *GetInvitations200ResponseOneOfInner) SetUserMetadata(v map[string]interface{}) {
 	o.UserMetadata = v
 }
 
-// GetRoles returns the Roles field value
+// GetRoles returns the Roles field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetRoles() []string {
-	if o == nil {
+	if o == nil || IsNil(o.Roles) {
 		var ret []string
 		return ret
 	}
-
 	return o.Roles
 }
 
-// GetRolesOk returns a tuple with the Roles field value
+// GetRolesOk returns a tuple with the Roles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetRolesOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Roles) {
 		return nil, false
 	}
 	return o.Roles, true
 }
 
-// SetRoles sets field value
+// HasRoles returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasRoles() bool {
+	if o != nil && !IsNil(o.Roles) {
+		return true
+	}
+
+	return false
+}
+
+// SetRoles gets a reference to the given []string and assigns it to the Roles field.
 func (o *GetInvitations200ResponseOneOfInner) SetRoles(v []string) {
 	o.Roles = v
 }
 
-// GetTicketId returns the TicketId field value
+// GetTicketId returns the TicketId field value if set, zero value otherwise.
 func (o *GetInvitations200ResponseOneOfInner) GetTicketId() string {
-	if o == nil {
+	if o == nil || IsNil(o.TicketId) {
 		var ret string
 		return ret
 	}
-
-	return o.TicketId
+	return *o.TicketId
 }
 
-// GetTicketIdOk returns a tuple with the TicketId field value
+// GetTicketIdOk returns a tuple with the TicketId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetInvitations200ResponseOneOfInner) GetTicketIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TicketId) {
 		return nil, false
 	}
-	return &o.TicketId, true
+	return o.TicketId, true
 }
 
-// SetTicketId sets field value
+// HasTicketId returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInner) HasTicketId() bool {
+	if o != nil && !IsNil(o.TicketId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTicketId gets a reference to the given string and assigns it to the TicketId field.
 func (o *GetInvitations200ResponseOneOfInner) SetTicketId(v string) {
-	o.TicketId = v
+	o.TicketId = &v
 }
 
 func (o GetInvitations200ResponseOneOfInner) MarshalJSON() ([]byte, error) {
@@ -366,36 +467,46 @@ func (o GetInvitations200ResponseOneOfInner) MarshalJSON() ([]byte, error) {
 
 func (o GetInvitations200ResponseOneOfInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["organization_id"] = o.OrganizationId
-	toSerialize["inviter"] = o.Inviter
-	toSerialize["invitee"] = o.Invitee
-	toSerialize["invitation_url"] = o.InvitationUrl
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["expires_at"] = o.ExpiresAt
-	toSerialize["client_id"] = o.ClientId
-	toSerialize["connection_id"] = o.ConnectionId
-	toSerialize["app_metadata"] = o.AppMetadata
-	toSerialize["user_metadata"] = o.UserMetadata
-	toSerialize["roles"] = o.Roles
-	toSerialize["ticket_id"] = o.TicketId
-	return toSerialize, nil
-}
-
-func (o *GetInvitations200ResponseOneOfInner) UnmarshalJSON(data []byte) (err error) {
-	varGetInvitations200ResponseOneOfInner := _GetInvitations200ResponseOneOfInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetInvitations200ResponseOneOfInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
 	}
-
-	*o = GetInvitations200ResponseOneOfInner(varGetInvitations200ResponseOneOfInner)
-
-	return err
+	if !IsNil(o.OrganizationId) {
+		toSerialize["organization_id"] = o.OrganizationId
+	}
+	if !IsNil(o.Inviter) {
+		toSerialize["inviter"] = o.Inviter
+	}
+	if !IsNil(o.Invitee) {
+		toSerialize["invitee"] = o.Invitee
+	}
+	if !IsNil(o.InvitationUrl) {
+		toSerialize["invitation_url"] = o.InvitationUrl
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.ExpiresAt) {
+		toSerialize["expires_at"] = o.ExpiresAt
+	}
+	if !IsNil(o.ClientId) {
+		toSerialize["client_id"] = o.ClientId
+	}
+	if !IsNil(o.ConnectionId) {
+		toSerialize["connection_id"] = o.ConnectionId
+	}
+	if !IsNil(o.AppMetadata) {
+		toSerialize["app_metadata"] = o.AppMetadata
+	}
+	if !IsNil(o.UserMetadata) {
+		toSerialize["user_metadata"] = o.UserMetadata
+	}
+	if !IsNil(o.Roles) {
+		toSerialize["roles"] = o.Roles
+	}
+	if !IsNil(o.TicketId) {
+		toSerialize["ticket_id"] = o.TicketId
+	}
+	return toSerialize, nil
 }
 
 type NullableGetInvitations200ResponseOneOfInner struct {

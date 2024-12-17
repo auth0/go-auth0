@@ -11,396 +11,513 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetActions200ResponseActionsInnerIntegration Integration defines a self contained functioning unit which partners publish. A partner may create one or many of these integrations.
 type GetActions200ResponseActionsInnerIntegration struct {
 	// id is a system generated GUID. This same ID is designed to be federated in all the applicable localities.
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// catalog_id refers to the ID in the marketplace catalog
-	CatalogId string `json:"catalog_id"`
+	CatalogId *string `json:"catalog_id,omitempty"`
 	// url_slug refers to the url_slug in the marketplace catalog
-	UrlSlug string `json:"url_slug"`
+	UrlSlug *string `json:"url_slug,omitempty"`
 	// partner_id is the foreign key reference to the partner account this integration belongs to.
-	PartnerId string `json:"partner_id"`
+	PartnerId *string `json:"partner_id,omitempty"`
 	// name is the integration name, which will be used for display purposes in the marketplace.  To start we're going to make sure the display name is at least 3 characters. Can adjust this easily later.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// description adds more text for the integration name -- also relevant for the marketplace listing.
-	Description string `json:"description"`
+	Description *string `json:"description,omitempty"`
 	// short_description is the brief description of the integration, which is used for display purposes in cards
-	ShortDescription  string                                                     `json:"short_description"`
-	Logo              string                                                     `json:"logo"`
-	FeatureType       GetActions200ResponseActionsInnerIntegrationFeatureType    `json:"feature_type"`
-	TermsOfUseUrl     string                                                     `json:"terms_of_use_url"`
-	PrivacyPolicyUrl  string                                                     `json:"privacy_policy_url"`
-	PublicSupportLink string                                                     `json:"public_support_link"`
-	CurrentRelease    GetActions200ResponseActionsInnerIntegrationCurrentRelease `json:"current_release"`
-	CreatedAt         string                                                     `json:"created_at"`
-	UpdatedAt         string                                                     `json:"updated_at"`
+	ShortDescription  *string                                                     `json:"short_description,omitempty"`
+	Logo              *string                                                     `json:"logo,omitempty"`
+	FeatureType       *GetActions200ResponseActionsInnerIntegrationFeatureType    `json:"feature_type,omitempty"`
+	TermsOfUseUrl     *string                                                     `json:"terms_of_use_url,omitempty"`
+	PrivacyPolicyUrl  *string                                                     `json:"privacy_policy_url,omitempty"`
+	PublicSupportLink *string                                                     `json:"public_support_link,omitempty"`
+	CurrentRelease    *GetActions200ResponseActionsInnerIntegrationCurrentRelease `json:"current_release,omitempty"`
+	CreatedAt         *string                                                     `json:"created_at,omitempty"`
+	UpdatedAt         *string                                                     `json:"updated_at,omitempty"`
 }
 
-type _GetActions200ResponseActionsInnerIntegration GetActions200ResponseActionsInnerIntegration
-
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetCatalogId returns the CatalogId field value
+// GetCatalogId returns the CatalogId field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetCatalogId() string {
-	if o == nil {
+	if o == nil || IsNil(o.CatalogId) {
 		var ret string
 		return ret
 	}
-
-	return o.CatalogId
+	return *o.CatalogId
 }
 
-// GetCatalogIdOk returns a tuple with the CatalogId field value
+// GetCatalogIdOk returns a tuple with the CatalogId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetCatalogIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CatalogId) {
 		return nil, false
 	}
-	return &o.CatalogId, true
+	return o.CatalogId, true
 }
 
-// SetCatalogId sets field value
+// HasCatalogId returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasCatalogId() bool {
+	if o != nil && !IsNil(o.CatalogId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCatalogId gets a reference to the given string and assigns it to the CatalogId field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetCatalogId(v string) {
-	o.CatalogId = v
+	o.CatalogId = &v
 }
 
-// GetUrlSlug returns the UrlSlug field value
+// GetUrlSlug returns the UrlSlug field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetUrlSlug() string {
-	if o == nil {
+	if o == nil || IsNil(o.UrlSlug) {
 		var ret string
 		return ret
 	}
-
-	return o.UrlSlug
+	return *o.UrlSlug
 }
 
-// GetUrlSlugOk returns a tuple with the UrlSlug field value
+// GetUrlSlugOk returns a tuple with the UrlSlug field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetUrlSlugOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UrlSlug) {
 		return nil, false
 	}
-	return &o.UrlSlug, true
+	return o.UrlSlug, true
 }
 
-// SetUrlSlug sets field value
+// HasUrlSlug returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasUrlSlug() bool {
+	if o != nil && !IsNil(o.UrlSlug) {
+		return true
+	}
+
+	return false
+}
+
+// SetUrlSlug gets a reference to the given string and assigns it to the UrlSlug field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetUrlSlug(v string) {
-	o.UrlSlug = v
+	o.UrlSlug = &v
 }
 
-// GetPartnerId returns the PartnerId field value
+// GetPartnerId returns the PartnerId field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetPartnerId() string {
-	if o == nil {
+	if o == nil || IsNil(o.PartnerId) {
 		var ret string
 		return ret
 	}
-
-	return o.PartnerId
+	return *o.PartnerId
 }
 
-// GetPartnerIdOk returns a tuple with the PartnerId field value
+// GetPartnerIdOk returns a tuple with the PartnerId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetPartnerIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PartnerId) {
 		return nil, false
 	}
-	return &o.PartnerId, true
+	return o.PartnerId, true
 }
 
-// SetPartnerId sets field value
+// HasPartnerId returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasPartnerId() bool {
+	if o != nil && !IsNil(o.PartnerId) {
+		return true
+	}
+
+	return false
+}
+
+// SetPartnerId gets a reference to the given string and assigns it to the PartnerId field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetPartnerId(v string) {
-	o.PartnerId = v
+	o.PartnerId = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetDescription returns the Description field value
+// GetDescription returns the Description field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetDescription() string {
-	if o == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
-
-	return o.Description
+	return *o.Description
 }
 
-// GetDescriptionOk returns a tuple with the Description field value
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetDescriptionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
-	return &o.Description, true
+	return o.Description, true
 }
 
-// SetDescription sets field value
+// HasDescription returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetDescription(v string) {
-	o.Description = v
+	o.Description = &v
 }
 
-// GetShortDescription returns the ShortDescription field value
+// GetShortDescription returns the ShortDescription field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetShortDescription() string {
-	if o == nil {
+	if o == nil || IsNil(o.ShortDescription) {
 		var ret string
 		return ret
 	}
-
-	return o.ShortDescription
+	return *o.ShortDescription
 }
 
-// GetShortDescriptionOk returns a tuple with the ShortDescription field value
+// GetShortDescriptionOk returns a tuple with the ShortDescription field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetShortDescriptionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ShortDescription) {
 		return nil, false
 	}
-	return &o.ShortDescription, true
+	return o.ShortDescription, true
 }
 
-// SetShortDescription sets field value
+// HasShortDescription returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasShortDescription() bool {
+	if o != nil && !IsNil(o.ShortDescription) {
+		return true
+	}
+
+	return false
+}
+
+// SetShortDescription gets a reference to the given string and assigns it to the ShortDescription field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetShortDescription(v string) {
-	o.ShortDescription = v
+	o.ShortDescription = &v
 }
 
-// GetLogo returns the Logo field value
+// GetLogo returns the Logo field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetLogo() string {
-	if o == nil {
+	if o == nil || IsNil(o.Logo) {
 		var ret string
 		return ret
 	}
-
-	return o.Logo
+	return *o.Logo
 }
 
-// GetLogoOk returns a tuple with the Logo field value
+// GetLogoOk returns a tuple with the Logo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetLogoOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Logo) {
 		return nil, false
 	}
-	return &o.Logo, true
+	return o.Logo, true
 }
 
-// SetLogo sets field value
+// HasLogo returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasLogo() bool {
+	if o != nil && !IsNil(o.Logo) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogo gets a reference to the given string and assigns it to the Logo field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetLogo(v string) {
-	o.Logo = v
+	o.Logo = &v
 }
 
-// GetFeatureType returns the FeatureType field value
+// GetFeatureType returns the FeatureType field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetFeatureType() GetActions200ResponseActionsInnerIntegrationFeatureType {
-	if o == nil {
+	if o == nil || IsNil(o.FeatureType) {
 		var ret GetActions200ResponseActionsInnerIntegrationFeatureType
 		return ret
 	}
-
-	return o.FeatureType
+	return *o.FeatureType
 }
 
-// GetFeatureTypeOk returns a tuple with the FeatureType field value
+// GetFeatureTypeOk returns a tuple with the FeatureType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetFeatureTypeOk() (*GetActions200ResponseActionsInnerIntegrationFeatureType, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.FeatureType) {
 		return nil, false
 	}
-	return &o.FeatureType, true
+	return o.FeatureType, true
 }
 
-// SetFeatureType sets field value
+// HasFeatureType returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasFeatureType() bool {
+	if o != nil && !IsNil(o.FeatureType) {
+		return true
+	}
+
+	return false
+}
+
+// SetFeatureType gets a reference to the given GetActions200ResponseActionsInnerIntegrationFeatureType and assigns it to the FeatureType field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetFeatureType(v GetActions200ResponseActionsInnerIntegrationFeatureType) {
-	o.FeatureType = v
+	o.FeatureType = &v
 }
 
-// GetTermsOfUseUrl returns the TermsOfUseUrl field value
+// GetTermsOfUseUrl returns the TermsOfUseUrl field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetTermsOfUseUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.TermsOfUseUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.TermsOfUseUrl
+	return *o.TermsOfUseUrl
 }
 
-// GetTermsOfUseUrlOk returns a tuple with the TermsOfUseUrl field value
+// GetTermsOfUseUrlOk returns a tuple with the TermsOfUseUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetTermsOfUseUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TermsOfUseUrl) {
 		return nil, false
 	}
-	return &o.TermsOfUseUrl, true
+	return o.TermsOfUseUrl, true
 }
 
-// SetTermsOfUseUrl sets field value
+// HasTermsOfUseUrl returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasTermsOfUseUrl() bool {
+	if o != nil && !IsNil(o.TermsOfUseUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetTermsOfUseUrl gets a reference to the given string and assigns it to the TermsOfUseUrl field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetTermsOfUseUrl(v string) {
-	o.TermsOfUseUrl = v
+	o.TermsOfUseUrl = &v
 }
 
-// GetPrivacyPolicyUrl returns the PrivacyPolicyUrl field value
+// GetPrivacyPolicyUrl returns the PrivacyPolicyUrl field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetPrivacyPolicyUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.PrivacyPolicyUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.PrivacyPolicyUrl
+	return *o.PrivacyPolicyUrl
 }
 
-// GetPrivacyPolicyUrlOk returns a tuple with the PrivacyPolicyUrl field value
+// GetPrivacyPolicyUrlOk returns a tuple with the PrivacyPolicyUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetPrivacyPolicyUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PrivacyPolicyUrl) {
 		return nil, false
 	}
-	return &o.PrivacyPolicyUrl, true
+	return o.PrivacyPolicyUrl, true
 }
 
-// SetPrivacyPolicyUrl sets field value
+// HasPrivacyPolicyUrl returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasPrivacyPolicyUrl() bool {
+	if o != nil && !IsNil(o.PrivacyPolicyUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrivacyPolicyUrl gets a reference to the given string and assigns it to the PrivacyPolicyUrl field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetPrivacyPolicyUrl(v string) {
-	o.PrivacyPolicyUrl = v
+	o.PrivacyPolicyUrl = &v
 }
 
-// GetPublicSupportLink returns the PublicSupportLink field value
+// GetPublicSupportLink returns the PublicSupportLink field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetPublicSupportLink() string {
-	if o == nil {
+	if o == nil || IsNil(o.PublicSupportLink) {
 		var ret string
 		return ret
 	}
-
-	return o.PublicSupportLink
+	return *o.PublicSupportLink
 }
 
-// GetPublicSupportLinkOk returns a tuple with the PublicSupportLink field value
+// GetPublicSupportLinkOk returns a tuple with the PublicSupportLink field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetPublicSupportLinkOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PublicSupportLink) {
 		return nil, false
 	}
-	return &o.PublicSupportLink, true
+	return o.PublicSupportLink, true
 }
 
-// SetPublicSupportLink sets field value
+// HasPublicSupportLink returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasPublicSupportLink() bool {
+	if o != nil && !IsNil(o.PublicSupportLink) {
+		return true
+	}
+
+	return false
+}
+
+// SetPublicSupportLink gets a reference to the given string and assigns it to the PublicSupportLink field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetPublicSupportLink(v string) {
-	o.PublicSupportLink = v
+	o.PublicSupportLink = &v
 }
 
-// GetCurrentRelease returns the CurrentRelease field value
+// GetCurrentRelease returns the CurrentRelease field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetCurrentRelease() GetActions200ResponseActionsInnerIntegrationCurrentRelease {
-	if o == nil {
+	if o == nil || IsNil(o.CurrentRelease) {
 		var ret GetActions200ResponseActionsInnerIntegrationCurrentRelease
 		return ret
 	}
-
-	return o.CurrentRelease
+	return *o.CurrentRelease
 }
 
-// GetCurrentReleaseOk returns a tuple with the CurrentRelease field value
+// GetCurrentReleaseOk returns a tuple with the CurrentRelease field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetCurrentReleaseOk() (*GetActions200ResponseActionsInnerIntegrationCurrentRelease, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CurrentRelease) {
 		return nil, false
 	}
-	return &o.CurrentRelease, true
+	return o.CurrentRelease, true
 }
 
-// SetCurrentRelease sets field value
+// HasCurrentRelease returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasCurrentRelease() bool {
+	if o != nil && !IsNil(o.CurrentRelease) {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrentRelease gets a reference to the given GetActions200ResponseActionsInnerIntegrationCurrentRelease and assigns it to the CurrentRelease field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetCurrentRelease(v GetActions200ResponseActionsInnerIntegrationCurrentRelease) {
-	o.CurrentRelease = v
+	o.CurrentRelease = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetCreatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetCreatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
-// SetCreatedAt sets field value
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetCreatedAt(v string) {
-	o.CreatedAt = v
+	o.CreatedAt = &v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegration) GetUpdatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.UpdatedAt
+	return *o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegration) GetUpdatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
-	return &o.UpdatedAt, true
+	return o.UpdatedAt, true
 }
 
-// SetUpdatedAt sets field value
+// HasUpdatedAt returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegration) HasUpdatedAt() bool {
+	if o != nil && !IsNil(o.UpdatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
 func (o *GetActions200ResponseActionsInnerIntegration) SetUpdatedAt(v string) {
-	o.UpdatedAt = v
+	o.UpdatedAt = &v
 }
 
 func (o GetActions200ResponseActionsInnerIntegration) MarshalJSON() ([]byte, error) {
@@ -413,38 +530,52 @@ func (o GetActions200ResponseActionsInnerIntegration) MarshalJSON() ([]byte, err
 
 func (o GetActions200ResponseActionsInnerIntegration) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["catalog_id"] = o.CatalogId
-	toSerialize["url_slug"] = o.UrlSlug
-	toSerialize["partner_id"] = o.PartnerId
-	toSerialize["name"] = o.Name
-	toSerialize["description"] = o.Description
-	toSerialize["short_description"] = o.ShortDescription
-	toSerialize["logo"] = o.Logo
-	toSerialize["feature_type"] = o.FeatureType
-	toSerialize["terms_of_use_url"] = o.TermsOfUseUrl
-	toSerialize["privacy_policy_url"] = o.PrivacyPolicyUrl
-	toSerialize["public_support_link"] = o.PublicSupportLink
-	toSerialize["current_release"] = o.CurrentRelease
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["updated_at"] = o.UpdatedAt
-	return toSerialize, nil
-}
-
-func (o *GetActions200ResponseActionsInnerIntegration) UnmarshalJSON(data []byte) (err error) {
-	varGetActions200ResponseActionsInnerIntegration := _GetActions200ResponseActionsInnerIntegration{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetActions200ResponseActionsInnerIntegration)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
 	}
-
-	*o = GetActions200ResponseActionsInnerIntegration(varGetActions200ResponseActionsInnerIntegration)
-
-	return err
+	if !IsNil(o.CatalogId) {
+		toSerialize["catalog_id"] = o.CatalogId
+	}
+	if !IsNil(o.UrlSlug) {
+		toSerialize["url_slug"] = o.UrlSlug
+	}
+	if !IsNil(o.PartnerId) {
+		toSerialize["partner_id"] = o.PartnerId
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.ShortDescription) {
+		toSerialize["short_description"] = o.ShortDescription
+	}
+	if !IsNil(o.Logo) {
+		toSerialize["logo"] = o.Logo
+	}
+	if !IsNil(o.FeatureType) {
+		toSerialize["feature_type"] = o.FeatureType
+	}
+	if !IsNil(o.TermsOfUseUrl) {
+		toSerialize["terms_of_use_url"] = o.TermsOfUseUrl
+	}
+	if !IsNil(o.PrivacyPolicyUrl) {
+		toSerialize["privacy_policy_url"] = o.PrivacyPolicyUrl
+	}
+	if !IsNil(o.PublicSupportLink) {
+		toSerialize["public_support_link"] = o.PublicSupportLink
+	}
+	if !IsNil(o.CurrentRelease) {
+		toSerialize["current_release"] = o.CurrentRelease
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	return toSerialize, nil
 }
 
 type NullableGetActions200ResponseActionsInnerIntegration struct {

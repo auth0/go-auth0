@@ -17,137 +17,177 @@ import (
 // PostOrganizations201ResponseEnabledConnectionsInner struct for PostOrganizations201ResponseEnabledConnectionsInner
 type PostOrganizations201ResponseEnabledConnectionsInner struct {
 	// ID of the connection.
-	ConnectionId string `json:"connection_id"`
+	ConnectionId *string `json:"connection_id,omitempty"`
 	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
-	AssignMembershipOnLogin bool `json:"assign_membership_on_login"`
+	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty"`
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
-	ShowAsButton bool `json:"show_as_button"`
+	ShowAsButton *bool `json:"show_as_button,omitempty"`
 	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-	IsSignupEnabled      bool                                                          `json:"is_signup_enabled"`
-	Connection           PostOrganizations201ResponseEnabledConnectionsInnerConnection `json:"connection"`
+	IsSignupEnabled      *bool                                                          `json:"is_signup_enabled,omitempty"`
+	Connection           *PostOrganizations201ResponseEnabledConnectionsInnerConnection `json:"connection,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _PostOrganizations201ResponseEnabledConnectionsInner PostOrganizations201ResponseEnabledConnectionsInner
 
-// GetConnectionId returns the ConnectionId field value
+// GetConnectionId returns the ConnectionId field value if set, zero value otherwise.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) GetConnectionId() string {
-	if o == nil {
+	if o == nil || IsNil(o.ConnectionId) {
 		var ret string
 		return ret
 	}
-
-	return o.ConnectionId
+	return *o.ConnectionId
 }
 
-// GetConnectionIdOk returns a tuple with the ConnectionId field value
+// GetConnectionIdOk returns a tuple with the ConnectionId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) GetConnectionIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ConnectionId) {
 		return nil, false
 	}
-	return &o.ConnectionId, true
+	return o.ConnectionId, true
 }
 
-// SetConnectionId sets field value
+// HasConnectionId returns a boolean if a field has been set.
+func (o *PostOrganizations201ResponseEnabledConnectionsInner) HasConnectionId() bool {
+	if o != nil && !IsNil(o.ConnectionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectionId gets a reference to the given string and assigns it to the ConnectionId field.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) SetConnectionId(v string) {
-	o.ConnectionId = v
+	o.ConnectionId = &v
 }
 
-// GetAssignMembershipOnLogin returns the AssignMembershipOnLogin field value
+// GetAssignMembershipOnLogin returns the AssignMembershipOnLogin field value if set, zero value otherwise.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) GetAssignMembershipOnLogin() bool {
-	if o == nil {
+	if o == nil || IsNil(o.AssignMembershipOnLogin) {
 		var ret bool
 		return ret
 	}
-
-	return o.AssignMembershipOnLogin
+	return *o.AssignMembershipOnLogin
 }
 
-// GetAssignMembershipOnLoginOk returns a tuple with the AssignMembershipOnLogin field value
+// GetAssignMembershipOnLoginOk returns a tuple with the AssignMembershipOnLogin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) GetAssignMembershipOnLoginOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AssignMembershipOnLogin) {
 		return nil, false
 	}
-	return &o.AssignMembershipOnLogin, true
+	return o.AssignMembershipOnLogin, true
 }
 
-// SetAssignMembershipOnLogin sets field value
+// HasAssignMembershipOnLogin returns a boolean if a field has been set.
+func (o *PostOrganizations201ResponseEnabledConnectionsInner) HasAssignMembershipOnLogin() bool {
+	if o != nil && !IsNil(o.AssignMembershipOnLogin) {
+		return true
+	}
+
+	return false
+}
+
+// SetAssignMembershipOnLogin gets a reference to the given bool and assigns it to the AssignMembershipOnLogin field.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) SetAssignMembershipOnLogin(v bool) {
-	o.AssignMembershipOnLogin = v
+	o.AssignMembershipOnLogin = &v
 }
 
-// GetShowAsButton returns the ShowAsButton field value
+// GetShowAsButton returns the ShowAsButton field value if set, zero value otherwise.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) GetShowAsButton() bool {
-	if o == nil {
+	if o == nil || IsNil(o.ShowAsButton) {
 		var ret bool
 		return ret
 	}
-
-	return o.ShowAsButton
+	return *o.ShowAsButton
 }
 
-// GetShowAsButtonOk returns a tuple with the ShowAsButton field value
+// GetShowAsButtonOk returns a tuple with the ShowAsButton field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) GetShowAsButtonOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ShowAsButton) {
 		return nil, false
 	}
-	return &o.ShowAsButton, true
+	return o.ShowAsButton, true
 }
 
-// SetShowAsButton sets field value
+// HasShowAsButton returns a boolean if a field has been set.
+func (o *PostOrganizations201ResponseEnabledConnectionsInner) HasShowAsButton() bool {
+	if o != nil && !IsNil(o.ShowAsButton) {
+		return true
+	}
+
+	return false
+}
+
+// SetShowAsButton gets a reference to the given bool and assigns it to the ShowAsButton field.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) SetShowAsButton(v bool) {
-	o.ShowAsButton = v
+	o.ShowAsButton = &v
 }
 
-// GetIsSignupEnabled returns the IsSignupEnabled field value
+// GetIsSignupEnabled returns the IsSignupEnabled field value if set, zero value otherwise.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) GetIsSignupEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.IsSignupEnabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.IsSignupEnabled
+	return *o.IsSignupEnabled
 }
 
-// GetIsSignupEnabledOk returns a tuple with the IsSignupEnabled field value
+// GetIsSignupEnabledOk returns a tuple with the IsSignupEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) GetIsSignupEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IsSignupEnabled) {
 		return nil, false
 	}
-	return &o.IsSignupEnabled, true
+	return o.IsSignupEnabled, true
 }
 
-// SetIsSignupEnabled sets field value
+// HasIsSignupEnabled returns a boolean if a field has been set.
+func (o *PostOrganizations201ResponseEnabledConnectionsInner) HasIsSignupEnabled() bool {
+	if o != nil && !IsNil(o.IsSignupEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsSignupEnabled gets a reference to the given bool and assigns it to the IsSignupEnabled field.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) SetIsSignupEnabled(v bool) {
-	o.IsSignupEnabled = v
+	o.IsSignupEnabled = &v
 }
 
-// GetConnection returns the Connection field value
+// GetConnection returns the Connection field value if set, zero value otherwise.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) GetConnection() PostOrganizations201ResponseEnabledConnectionsInnerConnection {
-	if o == nil {
+	if o == nil || IsNil(o.Connection) {
 		var ret PostOrganizations201ResponseEnabledConnectionsInnerConnection
 		return ret
 	}
-
-	return o.Connection
+	return *o.Connection
 }
 
-// GetConnectionOk returns a tuple with the Connection field value
+// GetConnectionOk returns a tuple with the Connection field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) GetConnectionOk() (*PostOrganizations201ResponseEnabledConnectionsInnerConnection, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Connection) {
 		return nil, false
 	}
-	return &o.Connection, true
+	return o.Connection, true
 }
 
-// SetConnection sets field value
+// HasConnection returns a boolean if a field has been set.
+func (o *PostOrganizations201ResponseEnabledConnectionsInner) HasConnection() bool {
+	if o != nil && !IsNil(o.Connection) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnection gets a reference to the given PostOrganizations201ResponseEnabledConnectionsInnerConnection and assigns it to the Connection field.
 func (o *PostOrganizations201ResponseEnabledConnectionsInner) SetConnection(v PostOrganizations201ResponseEnabledConnectionsInnerConnection) {
-	o.Connection = v
+	o.Connection = &v
 }
 
 func (o PostOrganizations201ResponseEnabledConnectionsInner) MarshalJSON() ([]byte, error) {
@@ -160,11 +200,21 @@ func (o PostOrganizations201ResponseEnabledConnectionsInner) MarshalJSON() ([]by
 
 func (o PostOrganizations201ResponseEnabledConnectionsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["connection_id"] = o.ConnectionId
-	toSerialize["assign_membership_on_login"] = o.AssignMembershipOnLogin
-	toSerialize["show_as_button"] = o.ShowAsButton
-	toSerialize["is_signup_enabled"] = o.IsSignupEnabled
-	toSerialize["connection"] = o.Connection
+	if !IsNil(o.ConnectionId) {
+		toSerialize["connection_id"] = o.ConnectionId
+	}
+	if !IsNil(o.AssignMembershipOnLogin) {
+		toSerialize["assign_membership_on_login"] = o.AssignMembershipOnLogin
+	}
+	if !IsNil(o.ShowAsButton) {
+		toSerialize["show_as_button"] = o.ShowAsButton
+	}
+	if !IsNil(o.IsSignupEnabled) {
+		toSerialize["is_signup_enabled"] = o.IsSignupEnabled
+	}
+	if !IsNil(o.Connection) {
+		toSerialize["connection"] = o.Connection
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

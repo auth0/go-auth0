@@ -16,109 +16,123 @@ import (
 
 // Log struct for Log
 type Log struct {
-	Date LogDate `json:"date"`
+	Date *LogDate `json:"date,omitempty"`
 	// Type of event.
-	Type string `json:"type"`
+	Type *string `json:"type,omitempty"`
 	// Description of this event.
-	Description NullableString `json:"description"`
+	Description NullableString `json:"description,omitempty"`
 	// Name of the connection the event relates to.
-	Connection string `json:"connection"`
+	Connection *string `json:"connection,omitempty"`
 	// ID of the connection the event relates to.
-	ConnectionId string `json:"connection_id"`
+	ConnectionId *string `json:"connection_id,omitempty"`
 	// ID of the client (application).
-	ClientId string `json:"client_id"`
+	ClientId *string `json:"client_id,omitempty"`
 	// Name of the client (application).
-	ClientName string `json:"client_name"`
+	ClientName *string `json:"client_name,omitempty"`
 	// IP address of the log event source.
-	Ip string `json:"ip"`
+	Ip *string `json:"ip,omitempty"`
 	// Hostname the event applies to.
-	Hostname string `json:"hostname"`
+	Hostname *string `json:"hostname,omitempty"`
 	// ID of the user involved in the event.
-	UserId string `json:"user_id"`
+	UserId *string `json:"user_id,omitempty"`
 	// Name of the user involved in the event.
-	UserName string `json:"user_name"`
+	UserName *string `json:"user_name,omitempty"`
 	// API audience the event applies to.
-	Audience string `json:"audience"`
+	Audience *string `json:"audience,omitempty"`
 	// Scope permissions applied to the event.
-	Scope string `json:"scope"`
+	Scope *string `json:"scope,omitempty"`
 	// Name of the strategy involved in the event.
-	Strategy string `json:"strategy"`
+	Strategy *string `json:"strategy,omitempty"`
 	// Type of strategy involved in the event.
-	StrategyType string `json:"strategy_type"`
+	StrategyType *string `json:"strategy_type,omitempty"`
 	// Unique ID of the event.
-	LogId string `json:"log_id"`
+	LogId *string `json:"log_id,omitempty"`
 	// Whether the client was a mobile device (true) or desktop/laptop/server (false).
-	IsMobile bool `json:"isMobile"`
+	IsMobile *bool `json:"isMobile,omitempty"`
 	// Additional useful details about this event (structure is dependent upon event type).
-	Details map[string]interface{} `json:"details"`
+	Details map[string]interface{} `json:"details,omitempty"`
 	// User agent string from the client device that caused the event.
-	UserAgent            string          `json:"user_agent"`
-	LocationInfo         LogLocationInfo `json:"location_info"`
+	UserAgent            *string          `json:"user_agent,omitempty"`
+	LocationInfo         *LogLocationInfo `json:"location_info,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _Log Log
 
-// GetDate returns the Date field value
+// GetDate returns the Date field value if set, zero value otherwise.
 func (o *Log) GetDate() LogDate {
-	if o == nil {
+	if o == nil || IsNil(o.Date) {
 		var ret LogDate
 		return ret
 	}
-
-	return o.Date
+	return *o.Date
 }
 
-// GetDateOk returns a tuple with the Date field value
+// GetDateOk returns a tuple with the Date field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetDateOk() (*LogDate, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Date) {
 		return nil, false
 	}
-	return &o.Date, true
+	return o.Date, true
 }
 
-// SetDate sets field value
+// HasDate returns a boolean if a field has been set.
+func (o *Log) HasDate() bool {
+	if o != nil && !IsNil(o.Date) {
+		return true
+	}
+
+	return false
+}
+
+// SetDate gets a reference to the given LogDate and assigns it to the Date field.
 func (o *Log) SetDate(v LogDate) {
-	o.Date = v
+	o.Date = &v
 }
 
-// GetType returns the Type field value
+// GetType returns the Type field value if set, zero value otherwise.
 func (o *Log) GetType() string {
-	if o == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
-
-	return o.Type
+	return *o.Type
 }
 
-// GetTypeOk returns a tuple with the Type field value
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetTypeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
-	return &o.Type, true
+	return o.Type, true
 }
 
-// SetType sets field value
+// HasType returns a boolean if a field has been set.
+func (o *Log) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given string and assigns it to the Type field.
 func (o *Log) SetType(v string) {
-	o.Type = v
+	o.Type = &v
 }
 
-// GetDescription returns the Description field value
-// If the value is explicit nil, the zero value for string will be returned
+// GetDescription returns the Description field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Log) GetDescription() string {
-	if o == nil || o.Description.Get() == nil {
+	if o == nil || IsNil(o.Description.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.Description.Get()
 }
 
-// GetDescriptionOk returns a tuple with the Description field value
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Log) GetDescriptionOk() (*string, bool) {
@@ -128,417 +142,572 @@ func (o *Log) GetDescriptionOk() (*string, bool) {
 	return o.Description.Get(), o.Description.IsSet()
 }
 
-// SetDescription sets field value
+// HasDescription returns a boolean if a field has been set.
+func (o *Log) HasDescription() bool {
+	if o != nil && o.Description.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given NullableString and assigns it to the Description field.
 func (o *Log) SetDescription(v string) {
 	o.Description.Set(&v)
 }
 
-// GetConnection returns the Connection field value
+// SetDescriptionNil sets the value for Description to be an explicit nil
+func (o *Log) SetDescriptionNil() {
+	o.Description.Set(nil)
+}
+
+// UnsetDescription ensures that no value is present for Description, not even an explicit nil
+func (o *Log) UnsetDescription() {
+	o.Description.Unset()
+}
+
+// GetConnection returns the Connection field value if set, zero value otherwise.
 func (o *Log) GetConnection() string {
-	if o == nil {
+	if o == nil || IsNil(o.Connection) {
 		var ret string
 		return ret
 	}
-
-	return o.Connection
+	return *o.Connection
 }
 
-// GetConnectionOk returns a tuple with the Connection field value
+// GetConnectionOk returns a tuple with the Connection field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetConnectionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Connection) {
 		return nil, false
 	}
-	return &o.Connection, true
+	return o.Connection, true
 }
 
-// SetConnection sets field value
+// HasConnection returns a boolean if a field has been set.
+func (o *Log) HasConnection() bool {
+	if o != nil && !IsNil(o.Connection) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnection gets a reference to the given string and assigns it to the Connection field.
 func (o *Log) SetConnection(v string) {
-	o.Connection = v
+	o.Connection = &v
 }
 
-// GetConnectionId returns the ConnectionId field value
+// GetConnectionId returns the ConnectionId field value if set, zero value otherwise.
 func (o *Log) GetConnectionId() string {
-	if o == nil {
+	if o == nil || IsNil(o.ConnectionId) {
 		var ret string
 		return ret
 	}
-
-	return o.ConnectionId
+	return *o.ConnectionId
 }
 
-// GetConnectionIdOk returns a tuple with the ConnectionId field value
+// GetConnectionIdOk returns a tuple with the ConnectionId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetConnectionIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ConnectionId) {
 		return nil, false
 	}
-	return &o.ConnectionId, true
+	return o.ConnectionId, true
 }
 
-// SetConnectionId sets field value
+// HasConnectionId returns a boolean if a field has been set.
+func (o *Log) HasConnectionId() bool {
+	if o != nil && !IsNil(o.ConnectionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectionId gets a reference to the given string and assigns it to the ConnectionId field.
 func (o *Log) SetConnectionId(v string) {
-	o.ConnectionId = v
+	o.ConnectionId = &v
 }
 
-// GetClientId returns the ClientId field value
+// GetClientId returns the ClientId field value if set, zero value otherwise.
 func (o *Log) GetClientId() string {
-	if o == nil {
+	if o == nil || IsNil(o.ClientId) {
 		var ret string
 		return ret
 	}
-
-	return o.ClientId
+	return *o.ClientId
 }
 
-// GetClientIdOk returns a tuple with the ClientId field value
+// GetClientIdOk returns a tuple with the ClientId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetClientIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ClientId) {
 		return nil, false
 	}
-	return &o.ClientId, true
+	return o.ClientId, true
 }
 
-// SetClientId sets field value
+// HasClientId returns a boolean if a field has been set.
+func (o *Log) HasClientId() bool {
+	if o != nil && !IsNil(o.ClientId) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientId gets a reference to the given string and assigns it to the ClientId field.
 func (o *Log) SetClientId(v string) {
-	o.ClientId = v
+	o.ClientId = &v
 }
 
-// GetClientName returns the ClientName field value
+// GetClientName returns the ClientName field value if set, zero value otherwise.
 func (o *Log) GetClientName() string {
-	if o == nil {
+	if o == nil || IsNil(o.ClientName) {
 		var ret string
 		return ret
 	}
-
-	return o.ClientName
+	return *o.ClientName
 }
 
-// GetClientNameOk returns a tuple with the ClientName field value
+// GetClientNameOk returns a tuple with the ClientName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetClientNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ClientName) {
 		return nil, false
 	}
-	return &o.ClientName, true
+	return o.ClientName, true
 }
 
-// SetClientName sets field value
+// HasClientName returns a boolean if a field has been set.
+func (o *Log) HasClientName() bool {
+	if o != nil && !IsNil(o.ClientName) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientName gets a reference to the given string and assigns it to the ClientName field.
 func (o *Log) SetClientName(v string) {
-	o.ClientName = v
+	o.ClientName = &v
 }
 
-// GetIp returns the Ip field value
+// GetIp returns the Ip field value if set, zero value otherwise.
 func (o *Log) GetIp() string {
-	if o == nil {
+	if o == nil || IsNil(o.Ip) {
 		var ret string
 		return ret
 	}
-
-	return o.Ip
+	return *o.Ip
 }
 
-// GetIpOk returns a tuple with the Ip field value
+// GetIpOk returns a tuple with the Ip field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetIpOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Ip) {
 		return nil, false
 	}
-	return &o.Ip, true
+	return o.Ip, true
 }
 
-// SetIp sets field value
+// HasIp returns a boolean if a field has been set.
+func (o *Log) HasIp() bool {
+	if o != nil && !IsNil(o.Ip) {
+		return true
+	}
+
+	return false
+}
+
+// SetIp gets a reference to the given string and assigns it to the Ip field.
 func (o *Log) SetIp(v string) {
-	o.Ip = v
+	o.Ip = &v
 }
 
-// GetHostname returns the Hostname field value
+// GetHostname returns the Hostname field value if set, zero value otherwise.
 func (o *Log) GetHostname() string {
-	if o == nil {
+	if o == nil || IsNil(o.Hostname) {
 		var ret string
 		return ret
 	}
-
-	return o.Hostname
+	return *o.Hostname
 }
 
-// GetHostnameOk returns a tuple with the Hostname field value
+// GetHostnameOk returns a tuple with the Hostname field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetHostnameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Hostname) {
 		return nil, false
 	}
-	return &o.Hostname, true
+	return o.Hostname, true
 }
 
-// SetHostname sets field value
+// HasHostname returns a boolean if a field has been set.
+func (o *Log) HasHostname() bool {
+	if o != nil && !IsNil(o.Hostname) {
+		return true
+	}
+
+	return false
+}
+
+// SetHostname gets a reference to the given string and assigns it to the Hostname field.
 func (o *Log) SetHostname(v string) {
-	o.Hostname = v
+	o.Hostname = &v
 }
 
-// GetUserId returns the UserId field value
+// GetUserId returns the UserId field value if set, zero value otherwise.
 func (o *Log) GetUserId() string {
-	if o == nil {
+	if o == nil || IsNil(o.UserId) {
 		var ret string
 		return ret
 	}
-
-	return o.UserId
+	return *o.UserId
 }
 
-// GetUserIdOk returns a tuple with the UserId field value
+// GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetUserIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UserId) {
 		return nil, false
 	}
-	return &o.UserId, true
+	return o.UserId, true
 }
 
-// SetUserId sets field value
+// HasUserId returns a boolean if a field has been set.
+func (o *Log) HasUserId() bool {
+	if o != nil && !IsNil(o.UserId) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserId gets a reference to the given string and assigns it to the UserId field.
 func (o *Log) SetUserId(v string) {
-	o.UserId = v
+	o.UserId = &v
 }
 
-// GetUserName returns the UserName field value
+// GetUserName returns the UserName field value if set, zero value otherwise.
 func (o *Log) GetUserName() string {
-	if o == nil {
+	if o == nil || IsNil(o.UserName) {
 		var ret string
 		return ret
 	}
-
-	return o.UserName
+	return *o.UserName
 }
 
-// GetUserNameOk returns a tuple with the UserName field value
+// GetUserNameOk returns a tuple with the UserName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetUserNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UserName) {
 		return nil, false
 	}
-	return &o.UserName, true
+	return o.UserName, true
 }
 
-// SetUserName sets field value
+// HasUserName returns a boolean if a field has been set.
+func (o *Log) HasUserName() bool {
+	if o != nil && !IsNil(o.UserName) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserName gets a reference to the given string and assigns it to the UserName field.
 func (o *Log) SetUserName(v string) {
-	o.UserName = v
+	o.UserName = &v
 }
 
-// GetAudience returns the Audience field value
+// GetAudience returns the Audience field value if set, zero value otherwise.
 func (o *Log) GetAudience() string {
-	if o == nil {
+	if o == nil || IsNil(o.Audience) {
 		var ret string
 		return ret
 	}
-
-	return o.Audience
+	return *o.Audience
 }
 
-// GetAudienceOk returns a tuple with the Audience field value
+// GetAudienceOk returns a tuple with the Audience field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetAudienceOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Audience) {
 		return nil, false
 	}
-	return &o.Audience, true
+	return o.Audience, true
 }
 
-// SetAudience sets field value
+// HasAudience returns a boolean if a field has been set.
+func (o *Log) HasAudience() bool {
+	if o != nil && !IsNil(o.Audience) {
+		return true
+	}
+
+	return false
+}
+
+// SetAudience gets a reference to the given string and assigns it to the Audience field.
 func (o *Log) SetAudience(v string) {
-	o.Audience = v
+	o.Audience = &v
 }
 
-// GetScope returns the Scope field value
+// GetScope returns the Scope field value if set, zero value otherwise.
 func (o *Log) GetScope() string {
-	if o == nil {
+	if o == nil || IsNil(o.Scope) {
 		var ret string
 		return ret
 	}
-
-	return o.Scope
+	return *o.Scope
 }
 
-// GetScopeOk returns a tuple with the Scope field value
+// GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetScopeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Scope) {
 		return nil, false
 	}
-	return &o.Scope, true
+	return o.Scope, true
 }
 
-// SetScope sets field value
+// HasScope returns a boolean if a field has been set.
+func (o *Log) HasScope() bool {
+	if o != nil && !IsNil(o.Scope) {
+		return true
+	}
+
+	return false
+}
+
+// SetScope gets a reference to the given string and assigns it to the Scope field.
 func (o *Log) SetScope(v string) {
-	o.Scope = v
+	o.Scope = &v
 }
 
-// GetStrategy returns the Strategy field value
+// GetStrategy returns the Strategy field value if set, zero value otherwise.
 func (o *Log) GetStrategy() string {
-	if o == nil {
+	if o == nil || IsNil(o.Strategy) {
 		var ret string
 		return ret
 	}
-
-	return o.Strategy
+	return *o.Strategy
 }
 
-// GetStrategyOk returns a tuple with the Strategy field value
+// GetStrategyOk returns a tuple with the Strategy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetStrategyOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Strategy) {
 		return nil, false
 	}
-	return &o.Strategy, true
+	return o.Strategy, true
 }
 
-// SetStrategy sets field value
+// HasStrategy returns a boolean if a field has been set.
+func (o *Log) HasStrategy() bool {
+	if o != nil && !IsNil(o.Strategy) {
+		return true
+	}
+
+	return false
+}
+
+// SetStrategy gets a reference to the given string and assigns it to the Strategy field.
 func (o *Log) SetStrategy(v string) {
-	o.Strategy = v
+	o.Strategy = &v
 }
 
-// GetStrategyType returns the StrategyType field value
+// GetStrategyType returns the StrategyType field value if set, zero value otherwise.
 func (o *Log) GetStrategyType() string {
-	if o == nil {
+	if o == nil || IsNil(o.StrategyType) {
 		var ret string
 		return ret
 	}
-
-	return o.StrategyType
+	return *o.StrategyType
 }
 
-// GetStrategyTypeOk returns a tuple with the StrategyType field value
+// GetStrategyTypeOk returns a tuple with the StrategyType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetStrategyTypeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.StrategyType) {
 		return nil, false
 	}
-	return &o.StrategyType, true
+	return o.StrategyType, true
 }
 
-// SetStrategyType sets field value
+// HasStrategyType returns a boolean if a field has been set.
+func (o *Log) HasStrategyType() bool {
+	if o != nil && !IsNil(o.StrategyType) {
+		return true
+	}
+
+	return false
+}
+
+// SetStrategyType gets a reference to the given string and assigns it to the StrategyType field.
 func (o *Log) SetStrategyType(v string) {
-	o.StrategyType = v
+	o.StrategyType = &v
 }
 
-// GetLogId returns the LogId field value
+// GetLogId returns the LogId field value if set, zero value otherwise.
 func (o *Log) GetLogId() string {
-	if o == nil {
+	if o == nil || IsNil(o.LogId) {
 		var ret string
 		return ret
 	}
-
-	return o.LogId
+	return *o.LogId
 }
 
-// GetLogIdOk returns a tuple with the LogId field value
+// GetLogIdOk returns a tuple with the LogId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetLogIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LogId) {
 		return nil, false
 	}
-	return &o.LogId, true
+	return o.LogId, true
 }
 
-// SetLogId sets field value
+// HasLogId returns a boolean if a field has been set.
+func (o *Log) HasLogId() bool {
+	if o != nil && !IsNil(o.LogId) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogId gets a reference to the given string and assigns it to the LogId field.
 func (o *Log) SetLogId(v string) {
-	o.LogId = v
+	o.LogId = &v
 }
 
-// GetIsMobile returns the IsMobile field value
+// GetIsMobile returns the IsMobile field value if set, zero value otherwise.
 func (o *Log) GetIsMobile() bool {
-	if o == nil {
+	if o == nil || IsNil(o.IsMobile) {
 		var ret bool
 		return ret
 	}
-
-	return o.IsMobile
+	return *o.IsMobile
 }
 
-// GetIsMobileOk returns a tuple with the IsMobile field value
+// GetIsMobileOk returns a tuple with the IsMobile field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetIsMobileOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IsMobile) {
 		return nil, false
 	}
-	return &o.IsMobile, true
+	return o.IsMobile, true
 }
 
-// SetIsMobile sets field value
+// HasIsMobile returns a boolean if a field has been set.
+func (o *Log) HasIsMobile() bool {
+	if o != nil && !IsNil(o.IsMobile) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsMobile gets a reference to the given bool and assigns it to the IsMobile field.
 func (o *Log) SetIsMobile(v bool) {
-	o.IsMobile = v
+	o.IsMobile = &v
 }
 
-// GetDetails returns the Details field value
+// GetDetails returns the Details field value if set, zero value otherwise.
 func (o *Log) GetDetails() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Details
 }
 
-// GetDetailsOk returns a tuple with the Details field value
+// GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetDetailsOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Details) {
 		return map[string]interface{}{}, false
 	}
 	return o.Details, true
 }
 
-// SetDetails sets field value
+// HasDetails returns a boolean if a field has been set.
+func (o *Log) HasDetails() bool {
+	if o != nil && !IsNil(o.Details) {
+		return true
+	}
+
+	return false
+}
+
+// SetDetails gets a reference to the given map[string]interface{} and assigns it to the Details field.
 func (o *Log) SetDetails(v map[string]interface{}) {
 	o.Details = v
 }
 
-// GetUserAgent returns the UserAgent field value
+// GetUserAgent returns the UserAgent field value if set, zero value otherwise.
 func (o *Log) GetUserAgent() string {
-	if o == nil {
+	if o == nil || IsNil(o.UserAgent) {
 		var ret string
 		return ret
 	}
-
-	return o.UserAgent
+	return *o.UserAgent
 }
 
-// GetUserAgentOk returns a tuple with the UserAgent field value
+// GetUserAgentOk returns a tuple with the UserAgent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetUserAgentOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UserAgent) {
 		return nil, false
 	}
-	return &o.UserAgent, true
+	return o.UserAgent, true
 }
 
-// SetUserAgent sets field value
+// HasUserAgent returns a boolean if a field has been set.
+func (o *Log) HasUserAgent() bool {
+	if o != nil && !IsNil(o.UserAgent) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserAgent gets a reference to the given string and assigns it to the UserAgent field.
 func (o *Log) SetUserAgent(v string) {
-	o.UserAgent = v
+	o.UserAgent = &v
 }
 
-// GetLocationInfo returns the LocationInfo field value
+// GetLocationInfo returns the LocationInfo field value if set, zero value otherwise.
 func (o *Log) GetLocationInfo() LogLocationInfo {
-	if o == nil {
+	if o == nil || IsNil(o.LocationInfo) {
 		var ret LogLocationInfo
 		return ret
 	}
-
-	return o.LocationInfo
+	return *o.LocationInfo
 }
 
-// GetLocationInfoOk returns a tuple with the LocationInfo field value
+// GetLocationInfoOk returns a tuple with the LocationInfo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Log) GetLocationInfoOk() (*LogLocationInfo, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LocationInfo) {
 		return nil, false
 	}
-	return &o.LocationInfo, true
+	return o.LocationInfo, true
 }
 
-// SetLocationInfo sets field value
+// HasLocationInfo returns a boolean if a field has been set.
+func (o *Log) HasLocationInfo() bool {
+	if o != nil && !IsNil(o.LocationInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetLocationInfo gets a reference to the given LogLocationInfo and assigns it to the LocationInfo field.
 func (o *Log) SetLocationInfo(v LogLocationInfo) {
-	o.LocationInfo = v
+	o.LocationInfo = &v
 }
 
 func (o Log) MarshalJSON() ([]byte, error) {
@@ -551,26 +720,66 @@ func (o Log) MarshalJSON() ([]byte, error) {
 
 func (o Log) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["date"] = o.Date
-	toSerialize["type"] = o.Type
-	toSerialize["description"] = o.Description.Get()
-	toSerialize["connection"] = o.Connection
-	toSerialize["connection_id"] = o.ConnectionId
-	toSerialize["client_id"] = o.ClientId
-	toSerialize["client_name"] = o.ClientName
-	toSerialize["ip"] = o.Ip
-	toSerialize["hostname"] = o.Hostname
-	toSerialize["user_id"] = o.UserId
-	toSerialize["user_name"] = o.UserName
-	toSerialize["audience"] = o.Audience
-	toSerialize["scope"] = o.Scope
-	toSerialize["strategy"] = o.Strategy
-	toSerialize["strategy_type"] = o.StrategyType
-	toSerialize["log_id"] = o.LogId
-	toSerialize["isMobile"] = o.IsMobile
-	toSerialize["details"] = o.Details
-	toSerialize["user_agent"] = o.UserAgent
-	toSerialize["location_info"] = o.LocationInfo
+	if !IsNil(o.Date) {
+		toSerialize["date"] = o.Date
+	}
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if o.Description.IsSet() {
+		toSerialize["description"] = o.Description.Get()
+	}
+	if !IsNil(o.Connection) {
+		toSerialize["connection"] = o.Connection
+	}
+	if !IsNil(o.ConnectionId) {
+		toSerialize["connection_id"] = o.ConnectionId
+	}
+	if !IsNil(o.ClientId) {
+		toSerialize["client_id"] = o.ClientId
+	}
+	if !IsNil(o.ClientName) {
+		toSerialize["client_name"] = o.ClientName
+	}
+	if !IsNil(o.Ip) {
+		toSerialize["ip"] = o.Ip
+	}
+	if !IsNil(o.Hostname) {
+		toSerialize["hostname"] = o.Hostname
+	}
+	if !IsNil(o.UserId) {
+		toSerialize["user_id"] = o.UserId
+	}
+	if !IsNil(o.UserName) {
+		toSerialize["user_name"] = o.UserName
+	}
+	if !IsNil(o.Audience) {
+		toSerialize["audience"] = o.Audience
+	}
+	if !IsNil(o.Scope) {
+		toSerialize["scope"] = o.Scope
+	}
+	if !IsNil(o.Strategy) {
+		toSerialize["strategy"] = o.Strategy
+	}
+	if !IsNil(o.StrategyType) {
+		toSerialize["strategy_type"] = o.StrategyType
+	}
+	if !IsNil(o.LogId) {
+		toSerialize["log_id"] = o.LogId
+	}
+	if !IsNil(o.IsMobile) {
+		toSerialize["isMobile"] = o.IsMobile
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	if !IsNil(o.UserAgent) {
+		toSerialize["user_agent"] = o.UserAgent
+	}
+	if !IsNil(o.LocationInfo) {
+		toSerialize["location_info"] = o.LocationInfo
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -11,38 +11,43 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // PostTestAction200Response struct for PostTestAction200Response
 type PostTestAction200Response struct {
 	// The resulting payload after an action was executed.
-	Payload map[string]interface{} `json:"payload"`
+	Payload map[string]interface{} `json:"payload,omitempty"`
 }
 
-type _PostTestAction200Response PostTestAction200Response
-
-// GetPayload returns the Payload field value
+// GetPayload returns the Payload field value if set, zero value otherwise.
 func (o *PostTestAction200Response) GetPayload() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Payload) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Payload
 }
 
-// GetPayloadOk returns a tuple with the Payload field value
+// GetPayloadOk returns a tuple with the Payload field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostTestAction200Response) GetPayloadOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Payload) {
 		return map[string]interface{}{}, false
 	}
 	return o.Payload, true
 }
 
-// SetPayload sets field value
+// HasPayload returns a boolean if a field has been set.
+func (o *PostTestAction200Response) HasPayload() bool {
+	if o != nil && !IsNil(o.Payload) {
+		return true
+	}
+
+	return false
+}
+
+// SetPayload gets a reference to the given map[string]interface{} and assigns it to the Payload field.
 func (o *PostTestAction200Response) SetPayload(v map[string]interface{}) {
 	o.Payload = v
 }
@@ -57,24 +62,10 @@ func (o PostTestAction200Response) MarshalJSON() ([]byte, error) {
 
 func (o PostTestAction200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["payload"] = o.Payload
-	return toSerialize, nil
-}
-
-func (o *PostTestAction200Response) UnmarshalJSON(data []byte) (err error) {
-	varPostTestAction200Response := _PostTestAction200Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varPostTestAction200Response)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Payload) {
+		toSerialize["payload"] = o.Payload
 	}
-
-	*o = PostTestAction200Response(varPostTestAction200Response)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullablePostTestAction200Response struct {

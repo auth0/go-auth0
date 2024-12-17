@@ -17,138 +17,178 @@ import (
 // GetScimTokens200ResponseInner struct for GetScimTokens200ResponseInner
 type GetScimTokens200ResponseInner struct {
 	// The token's identifier
-	TokenId string `json:"token_id"`
+	TokenId *string `json:"token_id,omitempty"`
 	// The scopes of the scim token
-	Scopes []string `json:"scopes"`
+	Scopes []string `json:"scopes,omitempty"`
 	// The token's created at timestamp
-	CreatedAt string `json:"created_at"`
+	CreatedAt *string `json:"created_at,omitempty"`
 	// The token's valid until timestamp
-	ValidUntil string `json:"valid_until"`
+	ValidUntil *string `json:"valid_until,omitempty"`
 	// The token's last used at timestamp
-	LastUsedAt           string `json:"last_used_at"`
+	LastUsedAt           *string `json:"last_used_at,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetScimTokens200ResponseInner GetScimTokens200ResponseInner
 
-// GetTokenId returns the TokenId field value
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
 func (o *GetScimTokens200ResponseInner) GetTokenId() string {
-	if o == nil {
+	if o == nil || IsNil(o.TokenId) {
 		var ret string
 		return ret
 	}
-
-	return o.TokenId
+	return *o.TokenId
 }
 
-// GetTokenIdOk returns a tuple with the TokenId field value
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetScimTokens200ResponseInner) GetTokenIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TokenId) {
 		return nil, false
 	}
-	return &o.TokenId, true
+	return o.TokenId, true
 }
 
-// SetTokenId sets field value
+// HasTokenId returns a boolean if a field has been set.
+func (o *GetScimTokens200ResponseInner) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
 func (o *GetScimTokens200ResponseInner) SetTokenId(v string) {
-	o.TokenId = v
+	o.TokenId = &v
 }
 
-// GetScopes returns the Scopes field value
+// GetScopes returns the Scopes field value if set, zero value otherwise.
 func (o *GetScimTokens200ResponseInner) GetScopes() []string {
-	if o == nil {
+	if o == nil || IsNil(o.Scopes) {
 		var ret []string
 		return ret
 	}
-
 	return o.Scopes
 }
 
-// GetScopesOk returns a tuple with the Scopes field value
+// GetScopesOk returns a tuple with the Scopes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetScimTokens200ResponseInner) GetScopesOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Scopes) {
 		return nil, false
 	}
 	return o.Scopes, true
 }
 
-// SetScopes sets field value
+// HasScopes returns a boolean if a field has been set.
+func (o *GetScimTokens200ResponseInner) HasScopes() bool {
+	if o != nil && !IsNil(o.Scopes) {
+		return true
+	}
+
+	return false
+}
+
+// SetScopes gets a reference to the given []string and assigns it to the Scopes field.
 func (o *GetScimTokens200ResponseInner) SetScopes(v []string) {
 	o.Scopes = v
 }
 
-// GetCreatedAt returns the CreatedAt field value
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *GetScimTokens200ResponseInner) GetCreatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetScimTokens200ResponseInner) GetCreatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
-// SetCreatedAt sets field value
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetScimTokens200ResponseInner) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
 func (o *GetScimTokens200ResponseInner) SetCreatedAt(v string) {
-	o.CreatedAt = v
+	o.CreatedAt = &v
 }
 
-// GetValidUntil returns the ValidUntil field value
+// GetValidUntil returns the ValidUntil field value if set, zero value otherwise.
 func (o *GetScimTokens200ResponseInner) GetValidUntil() string {
-	if o == nil {
+	if o == nil || IsNil(o.ValidUntil) {
 		var ret string
 		return ret
 	}
-
-	return o.ValidUntil
+	return *o.ValidUntil
 }
 
-// GetValidUntilOk returns a tuple with the ValidUntil field value
+// GetValidUntilOk returns a tuple with the ValidUntil field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetScimTokens200ResponseInner) GetValidUntilOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ValidUntil) {
 		return nil, false
 	}
-	return &o.ValidUntil, true
+	return o.ValidUntil, true
 }
 
-// SetValidUntil sets field value
+// HasValidUntil returns a boolean if a field has been set.
+func (o *GetScimTokens200ResponseInner) HasValidUntil() bool {
+	if o != nil && !IsNil(o.ValidUntil) {
+		return true
+	}
+
+	return false
+}
+
+// SetValidUntil gets a reference to the given string and assigns it to the ValidUntil field.
 func (o *GetScimTokens200ResponseInner) SetValidUntil(v string) {
-	o.ValidUntil = v
+	o.ValidUntil = &v
 }
 
-// GetLastUsedAt returns the LastUsedAt field value
+// GetLastUsedAt returns the LastUsedAt field value if set, zero value otherwise.
 func (o *GetScimTokens200ResponseInner) GetLastUsedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.LastUsedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.LastUsedAt
+	return *o.LastUsedAt
 }
 
-// GetLastUsedAtOk returns a tuple with the LastUsedAt field value
+// GetLastUsedAtOk returns a tuple with the LastUsedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetScimTokens200ResponseInner) GetLastUsedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LastUsedAt) {
 		return nil, false
 	}
-	return &o.LastUsedAt, true
+	return o.LastUsedAt, true
 }
 
-// SetLastUsedAt sets field value
+// HasLastUsedAt returns a boolean if a field has been set.
+func (o *GetScimTokens200ResponseInner) HasLastUsedAt() bool {
+	if o != nil && !IsNil(o.LastUsedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastUsedAt gets a reference to the given string and assigns it to the LastUsedAt field.
 func (o *GetScimTokens200ResponseInner) SetLastUsedAt(v string) {
-	o.LastUsedAt = v
+	o.LastUsedAt = &v
 }
 
 func (o GetScimTokens200ResponseInner) MarshalJSON() ([]byte, error) {
@@ -161,11 +201,21 @@ func (o GetScimTokens200ResponseInner) MarshalJSON() ([]byte, error) {
 
 func (o GetScimTokens200ResponseInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["token_id"] = o.TokenId
-	toSerialize["scopes"] = o.Scopes
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["valid_until"] = o.ValidUntil
-	toSerialize["last_used_at"] = o.LastUsedAt
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
+	}
+	if !IsNil(o.Scopes) {
+		toSerialize["scopes"] = o.Scopes
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.ValidUntil) {
+		toSerialize["valid_until"] = o.ValidUntil
+	}
+	if !IsNil(o.LastUsedAt) {
+		toSerialize["last_used_at"] = o.LastUsedAt
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

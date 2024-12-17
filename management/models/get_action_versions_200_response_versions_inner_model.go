@@ -11,297 +11,372 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetActionVersions200ResponseVersionsInner struct for GetActionVersions200ResponseVersionsInner
 type GetActionVersions200ResponseVersionsInner struct {
 	// The unique id of an action version.
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// The id of the action to which this version belongs.
-	ActionId string `json:"action_id"`
+	ActionId *string `json:"action_id,omitempty"`
 	// The source code of this specific version of the action.
-	Code string `json:"code"`
+	Code *string `json:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this specific version depends on.
-	Dependencies []GetActions200ResponseActionsInnerDependenciesInner `json:"dependencies"`
+	Dependencies []GetActions200ResponseActionsInnerDependenciesInner `json:"dependencies,omitempty"`
 	// Indicates if this speciic version is the currently one deployed.
-	Deployed bool `json:"deployed"`
+	Deployed *bool `json:"deployed,omitempty"`
 	// The Node runtime. For example: `node12`
-	Runtime string `json:"runtime"`
+	Runtime *string `json:"runtime,omitempty"`
 	// The list of secrets that are included in an action or a version of an action.
-	Secrets []GetActions200ResponseActionsInnerSecretsInner `json:"secrets"`
-	Status  GetActionVersions200ResponseVersionsInnerStatus `json:"status"`
+	Secrets []GetActions200ResponseActionsInnerSecretsInner  `json:"secrets,omitempty"`
+	Status  *GetActionVersions200ResponseVersionsInnerStatus `json:"status,omitempty"`
 	// The index of this version in list of versions for the action.
-	Number float32 `json:"number"`
+	Number *float32 `json:"number,omitempty"`
 	// Any errors that occurred while the version was being built.
-	Errors []GetActionVersions200ResponseVersionsInnerErrorsInner `json:"errors"`
+	Errors []GetActionVersions200ResponseVersionsInnerErrorsInner `json:"errors,omitempty"`
 	// The action to which this verison belongs.
-	Action interface{} `json:"action"`
+	Action interface{} `json:"action,omitempty"`
 	// The time when this version was built successfully.
-	BuiltAt string `json:"built_at"`
+	BuiltAt *string `json:"built_at,omitempty"`
 	// The time when this version was created.
-	CreatedAt string `json:"created_at"`
+	CreatedAt *string `json:"created_at,omitempty"`
 	// The time when a version was updated. Versions are never updated externally. Only Auth0 will update an action version as it is beiing built.
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
 	// The list of triggers that this version supports. At this time, a version can only target a single trigger at a time.
-	SupportedTriggers []GetActions200ResponseActionsInnerSupportedTriggersInner `json:"supported_triggers"`
+	SupportedTriggers []GetActions200ResponseActionsInnerSupportedTriggersInner `json:"supported_triggers,omitempty"`
 }
 
-type _GetActionVersions200ResponseVersionsInner GetActionVersions200ResponseVersionsInner
-
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetActionVersions200ResponseVersionsInner) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetActionId returns the ActionId field value
+// GetActionId returns the ActionId field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetActionId() string {
-	if o == nil {
+	if o == nil || IsNil(o.ActionId) {
 		var ret string
 		return ret
 	}
-
-	return o.ActionId
+	return *o.ActionId
 }
 
-// GetActionIdOk returns a tuple with the ActionId field value
+// GetActionIdOk returns a tuple with the ActionId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetActionIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ActionId) {
 		return nil, false
 	}
-	return &o.ActionId, true
+	return o.ActionId, true
 }
 
-// SetActionId sets field value
+// HasActionId returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasActionId() bool {
+	if o != nil && !IsNil(o.ActionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetActionId gets a reference to the given string and assigns it to the ActionId field.
 func (o *GetActionVersions200ResponseVersionsInner) SetActionId(v string) {
-	o.ActionId = v
+	o.ActionId = &v
 }
 
-// GetCode returns the Code field value
+// GetCode returns the Code field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetCode() string {
-	if o == nil {
+	if o == nil || IsNil(o.Code) {
 		var ret string
 		return ret
 	}
-
-	return o.Code
+	return *o.Code
 }
 
-// GetCodeOk returns a tuple with the Code field value
+// GetCodeOk returns a tuple with the Code field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetCodeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Code) {
 		return nil, false
 	}
-	return &o.Code, true
+	return o.Code, true
 }
 
-// SetCode sets field value
+// HasCode returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasCode() bool {
+	if o != nil && !IsNil(o.Code) {
+		return true
+	}
+
+	return false
+}
+
+// SetCode gets a reference to the given string and assigns it to the Code field.
 func (o *GetActionVersions200ResponseVersionsInner) SetCode(v string) {
-	o.Code = v
+	o.Code = &v
 }
 
-// GetDependencies returns the Dependencies field value
+// GetDependencies returns the Dependencies field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetDependencies() []GetActions200ResponseActionsInnerDependenciesInner {
-	if o == nil {
+	if o == nil || IsNil(o.Dependencies) {
 		var ret []GetActions200ResponseActionsInnerDependenciesInner
 		return ret
 	}
-
 	return o.Dependencies
 }
 
-// GetDependenciesOk returns a tuple with the Dependencies field value
+// GetDependenciesOk returns a tuple with the Dependencies field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetDependenciesOk() ([]GetActions200ResponseActionsInnerDependenciesInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Dependencies) {
 		return nil, false
 	}
 	return o.Dependencies, true
 }
 
-// SetDependencies sets field value
+// HasDependencies returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasDependencies() bool {
+	if o != nil && !IsNil(o.Dependencies) {
+		return true
+	}
+
+	return false
+}
+
+// SetDependencies gets a reference to the given []GetActions200ResponseActionsInnerDependenciesInner and assigns it to the Dependencies field.
 func (o *GetActionVersions200ResponseVersionsInner) SetDependencies(v []GetActions200ResponseActionsInnerDependenciesInner) {
 	o.Dependencies = v
 }
 
-// GetDeployed returns the Deployed field value
+// GetDeployed returns the Deployed field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetDeployed() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Deployed) {
 		var ret bool
 		return ret
 	}
-
-	return o.Deployed
+	return *o.Deployed
 }
 
-// GetDeployedOk returns a tuple with the Deployed field value
+// GetDeployedOk returns a tuple with the Deployed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetDeployedOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Deployed) {
 		return nil, false
 	}
-	return &o.Deployed, true
+	return o.Deployed, true
 }
 
-// SetDeployed sets field value
+// HasDeployed returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasDeployed() bool {
+	if o != nil && !IsNil(o.Deployed) {
+		return true
+	}
+
+	return false
+}
+
+// SetDeployed gets a reference to the given bool and assigns it to the Deployed field.
 func (o *GetActionVersions200ResponseVersionsInner) SetDeployed(v bool) {
-	o.Deployed = v
+	o.Deployed = &v
 }
 
-// GetRuntime returns the Runtime field value
+// GetRuntime returns the Runtime field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetRuntime() string {
-	if o == nil {
+	if o == nil || IsNil(o.Runtime) {
 		var ret string
 		return ret
 	}
-
-	return o.Runtime
+	return *o.Runtime
 }
 
-// GetRuntimeOk returns a tuple with the Runtime field value
+// GetRuntimeOk returns a tuple with the Runtime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetRuntimeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Runtime) {
 		return nil, false
 	}
-	return &o.Runtime, true
+	return o.Runtime, true
 }
 
-// SetRuntime sets field value
+// HasRuntime returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasRuntime() bool {
+	if o != nil && !IsNil(o.Runtime) {
+		return true
+	}
+
+	return false
+}
+
+// SetRuntime gets a reference to the given string and assigns it to the Runtime field.
 func (o *GetActionVersions200ResponseVersionsInner) SetRuntime(v string) {
-	o.Runtime = v
+	o.Runtime = &v
 }
 
-// GetSecrets returns the Secrets field value
+// GetSecrets returns the Secrets field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetSecrets() []GetActions200ResponseActionsInnerSecretsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Secrets) {
 		var ret []GetActions200ResponseActionsInnerSecretsInner
 		return ret
 	}
-
 	return o.Secrets
 }
 
-// GetSecretsOk returns a tuple with the Secrets field value
+// GetSecretsOk returns a tuple with the Secrets field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetSecretsOk() ([]GetActions200ResponseActionsInnerSecretsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Secrets) {
 		return nil, false
 	}
 	return o.Secrets, true
 }
 
-// SetSecrets sets field value
+// HasSecrets returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasSecrets() bool {
+	if o != nil && !IsNil(o.Secrets) {
+		return true
+	}
+
+	return false
+}
+
+// SetSecrets gets a reference to the given []GetActions200ResponseActionsInnerSecretsInner and assigns it to the Secrets field.
 func (o *GetActionVersions200ResponseVersionsInner) SetSecrets(v []GetActions200ResponseActionsInnerSecretsInner) {
 	o.Secrets = v
 }
 
-// GetStatus returns the Status field value
+// GetStatus returns the Status field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetStatus() GetActionVersions200ResponseVersionsInnerStatus {
-	if o == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret GetActionVersions200ResponseVersionsInnerStatus
 		return ret
 	}
-
-	return o.Status
+	return *o.Status
 }
 
-// GetStatusOk returns a tuple with the Status field value
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetStatusOk() (*GetActionVersions200ResponseVersionsInnerStatus, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
-	return &o.Status, true
+	return o.Status, true
 }
 
-// SetStatus sets field value
+// HasStatus returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given GetActionVersions200ResponseVersionsInnerStatus and assigns it to the Status field.
 func (o *GetActionVersions200ResponseVersionsInner) SetStatus(v GetActionVersions200ResponseVersionsInnerStatus) {
-	o.Status = v
+	o.Status = &v
 }
 
-// GetNumber returns the Number field value
+// GetNumber returns the Number field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetNumber() float32 {
-	if o == nil {
+	if o == nil || IsNil(o.Number) {
 		var ret float32
 		return ret
 	}
-
-	return o.Number
+	return *o.Number
 }
 
-// GetNumberOk returns a tuple with the Number field value
+// GetNumberOk returns a tuple with the Number field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetNumberOk() (*float32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Number) {
 		return nil, false
 	}
-	return &o.Number, true
+	return o.Number, true
 }
 
-// SetNumber sets field value
+// HasNumber returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasNumber() bool {
+	if o != nil && !IsNil(o.Number) {
+		return true
+	}
+
+	return false
+}
+
+// SetNumber gets a reference to the given float32 and assigns it to the Number field.
 func (o *GetActionVersions200ResponseVersionsInner) SetNumber(v float32) {
-	o.Number = v
+	o.Number = &v
 }
 
-// GetErrors returns the Errors field value
+// GetErrors returns the Errors field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetErrors() []GetActionVersions200ResponseVersionsInnerErrorsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Errors) {
 		var ret []GetActionVersions200ResponseVersionsInnerErrorsInner
 		return ret
 	}
-
 	return o.Errors
 }
 
-// GetErrorsOk returns a tuple with the Errors field value
+// GetErrorsOk returns a tuple with the Errors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetErrorsOk() ([]GetActionVersions200ResponseVersionsInnerErrorsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Errors) {
 		return nil, false
 	}
 	return o.Errors, true
 }
 
-// SetErrors sets field value
+// HasErrors returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasErrors() bool {
+	if o != nil && !IsNil(o.Errors) {
+		return true
+	}
+
+	return false
+}
+
+// SetErrors gets a reference to the given []GetActionVersions200ResponseVersionsInnerErrorsInner and assigns it to the Errors field.
 func (o *GetActionVersions200ResponseVersionsInner) SetErrors(v []GetActionVersions200ResponseVersionsInnerErrorsInner) {
 	o.Errors = v
 }
 
-// GetAction returns the Action field value
-// If the value is explicit nil, the zero value for interface{} will be returned
+// GetAction returns the Action field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetActionVersions200ResponseVersionsInner) GetAction() interface{} {
 	if o == nil {
 		var ret interface{}
 		return ret
 	}
-
 	return o.Action
 }
 
-// GetActionOk returns a tuple with the Action field value
+// GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetActionVersions200ResponseVersionsInner) GetActionOk() (*interface{}, bool) {
@@ -311,103 +386,144 @@ func (o *GetActionVersions200ResponseVersionsInner) GetActionOk() (*interface{},
 	return &o.Action, true
 }
 
-// SetAction sets field value
+// HasAction returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasAction() bool {
+	if o != nil && !IsNil(o.Action) {
+		return true
+	}
+
+	return false
+}
+
+// SetAction gets a reference to the given interface{} and assigns it to the Action field.
 func (o *GetActionVersions200ResponseVersionsInner) SetAction(v interface{}) {
 	o.Action = v
 }
 
-// GetBuiltAt returns the BuiltAt field value
+// GetBuiltAt returns the BuiltAt field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetBuiltAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.BuiltAt) {
 		var ret string
 		return ret
 	}
-
-	return o.BuiltAt
+	return *o.BuiltAt
 }
 
-// GetBuiltAtOk returns a tuple with the BuiltAt field value
+// GetBuiltAtOk returns a tuple with the BuiltAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetBuiltAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.BuiltAt) {
 		return nil, false
 	}
-	return &o.BuiltAt, true
+	return o.BuiltAt, true
 }
 
-// SetBuiltAt sets field value
+// HasBuiltAt returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasBuiltAt() bool {
+	if o != nil && !IsNil(o.BuiltAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetBuiltAt gets a reference to the given string and assigns it to the BuiltAt field.
 func (o *GetActionVersions200ResponseVersionsInner) SetBuiltAt(v string) {
-	o.BuiltAt = v
+	o.BuiltAt = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetCreatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetCreatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
-// SetCreatedAt sets field value
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
 func (o *GetActionVersions200ResponseVersionsInner) SetCreatedAt(v string) {
-	o.CreatedAt = v
+	o.CreatedAt = &v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetUpdatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.UpdatedAt
+	return *o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetUpdatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
-	return &o.UpdatedAt, true
+	return o.UpdatedAt, true
 }
 
-// SetUpdatedAt sets field value
+// HasUpdatedAt returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasUpdatedAt() bool {
+	if o != nil && !IsNil(o.UpdatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
 func (o *GetActionVersions200ResponseVersionsInner) SetUpdatedAt(v string) {
-	o.UpdatedAt = v
+	o.UpdatedAt = &v
 }
 
-// GetSupportedTriggers returns the SupportedTriggers field value
+// GetSupportedTriggers returns the SupportedTriggers field value if set, zero value otherwise.
 func (o *GetActionVersions200ResponseVersionsInner) GetSupportedTriggers() []GetActions200ResponseActionsInnerSupportedTriggersInner {
-	if o == nil {
+	if o == nil || IsNil(o.SupportedTriggers) {
 		var ret []GetActions200ResponseActionsInnerSupportedTriggersInner
 		return ret
 	}
-
 	return o.SupportedTriggers
 }
 
-// GetSupportedTriggersOk returns a tuple with the SupportedTriggers field value
+// GetSupportedTriggersOk returns a tuple with the SupportedTriggers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActionVersions200ResponseVersionsInner) GetSupportedTriggersOk() ([]GetActions200ResponseActionsInnerSupportedTriggersInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SupportedTriggers) {
 		return nil, false
 	}
 	return o.SupportedTriggers, true
 }
 
-// SetSupportedTriggers sets field value
+// HasSupportedTriggers returns a boolean if a field has been set.
+func (o *GetActionVersions200ResponseVersionsInner) HasSupportedTriggers() bool {
+	if o != nil && !IsNil(o.SupportedTriggers) {
+		return true
+	}
+
+	return false
+}
+
+// SetSupportedTriggers gets a reference to the given []GetActions200ResponseActionsInnerSupportedTriggersInner and assigns it to the SupportedTriggers field.
 func (o *GetActionVersions200ResponseVersionsInner) SetSupportedTriggers(v []GetActions200ResponseActionsInnerSupportedTriggersInner) {
 	o.SupportedTriggers = v
 }
@@ -422,40 +538,52 @@ func (o GetActionVersions200ResponseVersionsInner) MarshalJSON() ([]byte, error)
 
 func (o GetActionVersions200ResponseVersionsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["action_id"] = o.ActionId
-	toSerialize["code"] = o.Code
-	toSerialize["dependencies"] = o.Dependencies
-	toSerialize["deployed"] = o.Deployed
-	toSerialize["runtime"] = o.Runtime
-	toSerialize["secrets"] = o.Secrets
-	toSerialize["status"] = o.Status
-	toSerialize["number"] = o.Number
-	toSerialize["errors"] = o.Errors
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.ActionId) {
+		toSerialize["action_id"] = o.ActionId
+	}
+	if !IsNil(o.Code) {
+		toSerialize["code"] = o.Code
+	}
+	if !IsNil(o.Dependencies) {
+		toSerialize["dependencies"] = o.Dependencies
+	}
+	if !IsNil(o.Deployed) {
+		toSerialize["deployed"] = o.Deployed
+	}
+	if !IsNil(o.Runtime) {
+		toSerialize["runtime"] = o.Runtime
+	}
+	if !IsNil(o.Secrets) {
+		toSerialize["secrets"] = o.Secrets
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.Number) {
+		toSerialize["number"] = o.Number
+	}
+	if !IsNil(o.Errors) {
+		toSerialize["errors"] = o.Errors
+	}
 	if o.Action != nil {
 		toSerialize["action"] = o.Action
 	}
-	toSerialize["built_at"] = o.BuiltAt
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["updated_at"] = o.UpdatedAt
-	toSerialize["supported_triggers"] = o.SupportedTriggers
-	return toSerialize, nil
-}
-
-func (o *GetActionVersions200ResponseVersionsInner) UnmarshalJSON(data []byte) (err error) {
-	varGetActionVersions200ResponseVersionsInner := _GetActionVersions200ResponseVersionsInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetActionVersions200ResponseVersionsInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.BuiltAt) {
+		toSerialize["built_at"] = o.BuiltAt
 	}
-
-	*o = GetActionVersions200ResponseVersionsInner(varGetActionVersions200ResponseVersionsInner)
-
-	return err
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if !IsNil(o.SupportedTriggers) {
+		toSerialize["supported_triggers"] = o.SupportedTriggers
+	}
+	return toSerialize, nil
 }
 
 type NullableGetActionVersions200ResponseVersionsInner struct {

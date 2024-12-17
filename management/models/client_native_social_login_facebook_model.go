@@ -11,40 +11,45 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // ClientNativeSocialLoginFacebook Native Social Login support for the Facebook connection
 type ClientNativeSocialLoginFacebook struct {
 	// Determine whether or not to allow signing in natively using Facebook
-	Enabled bool `json:"enabled"`
+	Enabled *bool `json:"enabled,omitempty"`
 }
 
-type _ClientNativeSocialLoginFacebook ClientNativeSocialLoginFacebook
-
-// GetEnabled returns the Enabled field value
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *ClientNativeSocialLoginFacebook) GetEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.Enabled
+	return *o.Enabled
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientNativeSocialLoginFacebook) GetEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
-	return &o.Enabled, true
+	return o.Enabled, true
 }
 
-// SetEnabled sets field value
+// HasEnabled returns a boolean if a field has been set.
+func (o *ClientNativeSocialLoginFacebook) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
 func (o *ClientNativeSocialLoginFacebook) SetEnabled(v bool) {
-	o.Enabled = v
+	o.Enabled = &v
 }
 
 func (o ClientNativeSocialLoginFacebook) MarshalJSON() ([]byte, error) {
@@ -57,24 +62,10 @@ func (o ClientNativeSocialLoginFacebook) MarshalJSON() ([]byte, error) {
 
 func (o ClientNativeSocialLoginFacebook) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["enabled"] = o.Enabled
-	return toSerialize, nil
-}
-
-func (o *ClientNativeSocialLoginFacebook) UnmarshalJSON(data []byte) (err error) {
-	varClientNativeSocialLoginFacebook := _ClientNativeSocialLoginFacebook{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varClientNativeSocialLoginFacebook)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
 	}
-
-	*o = ClientNativeSocialLoginFacebook(varClientNativeSocialLoginFacebook)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableClientNativeSocialLoginFacebook struct {

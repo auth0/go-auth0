@@ -16,59 +16,75 @@ import (
 
 // GetLogStreams200ResponseInnerOneOfFiltersInner struct for GetLogStreams200ResponseInnerOneOfFiltersInner
 type GetLogStreams200ResponseInnerOneOfFiltersInner struct {
-	Type                 GetLogStreams200ResponseInnerOneOfFiltersInnerType `json:"type"`
-	Name                 GetLogStreams200ResponseInnerOneOfFiltersInnerName `json:"name"`
+	Type                 *GetLogStreams200ResponseInnerOneOfFiltersInnerType `json:"type,omitempty"`
+	Name                 *GetLogStreams200ResponseInnerOneOfFiltersInnerName `json:"name,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetLogStreams200ResponseInnerOneOfFiltersInner GetLogStreams200ResponseInnerOneOfFiltersInner
 
-// GetType returns the Type field value
+// GetType returns the Type field value if set, zero value otherwise.
 func (o *GetLogStreams200ResponseInnerOneOfFiltersInner) GetType() GetLogStreams200ResponseInnerOneOfFiltersInnerType {
-	if o == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret GetLogStreams200ResponseInnerOneOfFiltersInnerType
 		return ret
 	}
-
-	return o.Type
+	return *o.Type
 }
 
-// GetTypeOk returns a tuple with the Type field value
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetLogStreams200ResponseInnerOneOfFiltersInner) GetTypeOk() (*GetLogStreams200ResponseInnerOneOfFiltersInnerType, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
-	return &o.Type, true
+	return o.Type, true
 }
 
-// SetType sets field value
+// HasType returns a boolean if a field has been set.
+func (o *GetLogStreams200ResponseInnerOneOfFiltersInner) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given GetLogStreams200ResponseInnerOneOfFiltersInnerType and assigns it to the Type field.
 func (o *GetLogStreams200ResponseInnerOneOfFiltersInner) SetType(v GetLogStreams200ResponseInnerOneOfFiltersInnerType) {
-	o.Type = v
+	o.Type = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetLogStreams200ResponseInnerOneOfFiltersInner) GetName() GetLogStreams200ResponseInnerOneOfFiltersInnerName {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret GetLogStreams200ResponseInnerOneOfFiltersInnerName
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetLogStreams200ResponseInnerOneOfFiltersInner) GetNameOk() (*GetLogStreams200ResponseInnerOneOfFiltersInnerName, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetLogStreams200ResponseInnerOneOfFiltersInner) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given GetLogStreams200ResponseInnerOneOfFiltersInnerName and assigns it to the Name field.
 func (o *GetLogStreams200ResponseInnerOneOfFiltersInner) SetName(v GetLogStreams200ResponseInnerOneOfFiltersInnerName) {
-	o.Name = v
+	o.Name = &v
 }
 
 func (o GetLogStreams200ResponseInnerOneOfFiltersInner) MarshalJSON() ([]byte, error) {
@@ -81,8 +97,12 @@ func (o GetLogStreams200ResponseInnerOneOfFiltersInner) MarshalJSON() ([]byte, e
 
 func (o GetLogStreams200ResponseInnerOneOfFiltersInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["type"] = o.Type
-	toSerialize["name"] = o.Name
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

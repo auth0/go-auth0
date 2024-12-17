@@ -11,39 +11,44 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetPhoneProviders200Response struct for GetPhoneProviders200Response
 type GetPhoneProviders200Response struct {
-	Provider GetPhoneProviders200ResponseProvider `json:"provider"`
+	Provider *GetPhoneProviders200ResponseProvider `json:"provider,omitempty"`
 }
 
-type _GetPhoneProviders200Response GetPhoneProviders200Response
-
-// GetProvider returns the Provider field value
+// GetProvider returns the Provider field value if set, zero value otherwise.
 func (o *GetPhoneProviders200Response) GetProvider() GetPhoneProviders200ResponseProvider {
-	if o == nil {
+	if o == nil || IsNil(o.Provider) {
 		var ret GetPhoneProviders200ResponseProvider
 		return ret
 	}
-
-	return o.Provider
+	return *o.Provider
 }
 
-// GetProviderOk returns a tuple with the Provider field value
+// GetProviderOk returns a tuple with the Provider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetPhoneProviders200Response) GetProviderOk() (*GetPhoneProviders200ResponseProvider, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Provider) {
 		return nil, false
 	}
-	return &o.Provider, true
+	return o.Provider, true
 }
 
-// SetProvider sets field value
+// HasProvider returns a boolean if a field has been set.
+func (o *GetPhoneProviders200Response) HasProvider() bool {
+	if o != nil && !IsNil(o.Provider) {
+		return true
+	}
+
+	return false
+}
+
+// SetProvider gets a reference to the given GetPhoneProviders200ResponseProvider and assigns it to the Provider field.
 func (o *GetPhoneProviders200Response) SetProvider(v GetPhoneProviders200ResponseProvider) {
-	o.Provider = v
+	o.Provider = &v
 }
 
 func (o GetPhoneProviders200Response) MarshalJSON() ([]byte, error) {
@@ -56,24 +61,10 @@ func (o GetPhoneProviders200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetPhoneProviders200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["provider"] = o.Provider
-	return toSerialize, nil
-}
-
-func (o *GetPhoneProviders200Response) UnmarshalJSON(data []byte) (err error) {
-	varGetPhoneProviders200Response := _GetPhoneProviders200Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetPhoneProviders200Response)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Provider) {
+		toSerialize["provider"] = o.Provider
 	}
-
-	*o = GetPhoneProviders200Response(varGetPhoneProviders200Response)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableGetPhoneProviders200Response struct {

@@ -11,40 +11,45 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetBranding200ResponseFont Custom font settings.
 type GetBranding200ResponseFont struct {
 	// URL for the custom font. The URL must point to a font file and not a stylesheet. Must use HTTPS.
-	Url string `json:"url"`
+	Url *string `json:"url,omitempty"`
 }
 
-type _GetBranding200ResponseFont GetBranding200ResponseFont
-
-// GetUrl returns the Url field value
+// GetUrl returns the Url field value if set, zero value otherwise.
 func (o *GetBranding200ResponseFont) GetUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.Url) {
 		var ret string
 		return ret
 	}
-
-	return o.Url
+	return *o.Url
 }
 
-// GetUrlOk returns a tuple with the Url field value
+// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBranding200ResponseFont) GetUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Url) {
 		return nil, false
 	}
-	return &o.Url, true
+	return o.Url, true
 }
 
-// SetUrl sets field value
+// HasUrl returns a boolean if a field has been set.
+func (o *GetBranding200ResponseFont) HasUrl() bool {
+	if o != nil && !IsNil(o.Url) {
+		return true
+	}
+
+	return false
+}
+
+// SetUrl gets a reference to the given string and assigns it to the Url field.
 func (o *GetBranding200ResponseFont) SetUrl(v string) {
-	o.Url = v
+	o.Url = &v
 }
 
 func (o GetBranding200ResponseFont) MarshalJSON() ([]byte, error) {
@@ -57,24 +62,10 @@ func (o GetBranding200ResponseFont) MarshalJSON() ([]byte, error) {
 
 func (o GetBranding200ResponseFont) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["url"] = o.Url
-	return toSerialize, nil
-}
-
-func (o *GetBranding200ResponseFont) UnmarshalJSON(data []byte) (err error) {
-	varGetBranding200ResponseFont := _GetBranding200ResponseFont{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetBranding200ResponseFont)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
 	}
-
-	*o = GetBranding200ResponseFont(varGetBranding200ResponseFont)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableGetBranding200ResponseFont struct {

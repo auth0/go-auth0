@@ -17,138 +17,178 @@ import (
 // GetSessionsForUser200ResponseSessionsInnerDevice Metadata related to the device used in the session
 type GetSessionsForUser200ResponseSessionsInnerDevice struct {
 	// First IP address associated with this session
-	InitialIp string `json:"initial_ip"`
+	InitialIp *string `json:"initial_ip,omitempty"`
 	// First autonomous system number associated with this session
-	InitialAsn string `json:"initial_asn"`
+	InitialAsn *string `json:"initial_asn,omitempty"`
 	// Last user agent of the device from which this user logged in
-	LastUserAgent string `json:"last_user_agent"`
+	LastUserAgent *string `json:"last_user_agent,omitempty"`
 	// Last IP address from which this user logged in
-	LastIp string `json:"last_ip"`
+	LastIp *string `json:"last_ip,omitempty"`
 	// Last autonomous system number from which this user logged in
-	LastAsn              string `json:"last_asn"`
+	LastAsn              *string `json:"last_asn,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetSessionsForUser200ResponseSessionsInnerDevice GetSessionsForUser200ResponseSessionsInnerDevice
 
-// GetInitialIp returns the InitialIp field value
+// GetInitialIp returns the InitialIp field value if set, zero value otherwise.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) GetInitialIp() string {
-	if o == nil {
+	if o == nil || IsNil(o.InitialIp) {
 		var ret string
 		return ret
 	}
-
-	return o.InitialIp
+	return *o.InitialIp
 }
 
-// GetInitialIpOk returns a tuple with the InitialIp field value
+// GetInitialIpOk returns a tuple with the InitialIp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) GetInitialIpOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.InitialIp) {
 		return nil, false
 	}
-	return &o.InitialIp, true
+	return o.InitialIp, true
 }
 
-// SetInitialIp sets field value
+// HasInitialIp returns a boolean if a field has been set.
+func (o *GetSessionsForUser200ResponseSessionsInnerDevice) HasInitialIp() bool {
+	if o != nil && !IsNil(o.InitialIp) {
+		return true
+	}
+
+	return false
+}
+
+// SetInitialIp gets a reference to the given string and assigns it to the InitialIp field.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) SetInitialIp(v string) {
-	o.InitialIp = v
+	o.InitialIp = &v
 }
 
-// GetInitialAsn returns the InitialAsn field value
+// GetInitialAsn returns the InitialAsn field value if set, zero value otherwise.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) GetInitialAsn() string {
-	if o == nil {
+	if o == nil || IsNil(o.InitialAsn) {
 		var ret string
 		return ret
 	}
-
-	return o.InitialAsn
+	return *o.InitialAsn
 }
 
-// GetInitialAsnOk returns a tuple with the InitialAsn field value
+// GetInitialAsnOk returns a tuple with the InitialAsn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) GetInitialAsnOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.InitialAsn) {
 		return nil, false
 	}
-	return &o.InitialAsn, true
+	return o.InitialAsn, true
 }
 
-// SetInitialAsn sets field value
+// HasInitialAsn returns a boolean if a field has been set.
+func (o *GetSessionsForUser200ResponseSessionsInnerDevice) HasInitialAsn() bool {
+	if o != nil && !IsNil(o.InitialAsn) {
+		return true
+	}
+
+	return false
+}
+
+// SetInitialAsn gets a reference to the given string and assigns it to the InitialAsn field.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) SetInitialAsn(v string) {
-	o.InitialAsn = v
+	o.InitialAsn = &v
 }
 
-// GetLastUserAgent returns the LastUserAgent field value
+// GetLastUserAgent returns the LastUserAgent field value if set, zero value otherwise.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) GetLastUserAgent() string {
-	if o == nil {
+	if o == nil || IsNil(o.LastUserAgent) {
 		var ret string
 		return ret
 	}
-
-	return o.LastUserAgent
+	return *o.LastUserAgent
 }
 
-// GetLastUserAgentOk returns a tuple with the LastUserAgent field value
+// GetLastUserAgentOk returns a tuple with the LastUserAgent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) GetLastUserAgentOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LastUserAgent) {
 		return nil, false
 	}
-	return &o.LastUserAgent, true
+	return o.LastUserAgent, true
 }
 
-// SetLastUserAgent sets field value
+// HasLastUserAgent returns a boolean if a field has been set.
+func (o *GetSessionsForUser200ResponseSessionsInnerDevice) HasLastUserAgent() bool {
+	if o != nil && !IsNil(o.LastUserAgent) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastUserAgent gets a reference to the given string and assigns it to the LastUserAgent field.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) SetLastUserAgent(v string) {
-	o.LastUserAgent = v
+	o.LastUserAgent = &v
 }
 
-// GetLastIp returns the LastIp field value
+// GetLastIp returns the LastIp field value if set, zero value otherwise.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) GetLastIp() string {
-	if o == nil {
+	if o == nil || IsNil(o.LastIp) {
 		var ret string
 		return ret
 	}
-
-	return o.LastIp
+	return *o.LastIp
 }
 
-// GetLastIpOk returns a tuple with the LastIp field value
+// GetLastIpOk returns a tuple with the LastIp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) GetLastIpOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LastIp) {
 		return nil, false
 	}
-	return &o.LastIp, true
+	return o.LastIp, true
 }
 
-// SetLastIp sets field value
+// HasLastIp returns a boolean if a field has been set.
+func (o *GetSessionsForUser200ResponseSessionsInnerDevice) HasLastIp() bool {
+	if o != nil && !IsNil(o.LastIp) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastIp gets a reference to the given string and assigns it to the LastIp field.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) SetLastIp(v string) {
-	o.LastIp = v
+	o.LastIp = &v
 }
 
-// GetLastAsn returns the LastAsn field value
+// GetLastAsn returns the LastAsn field value if set, zero value otherwise.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) GetLastAsn() string {
-	if o == nil {
+	if o == nil || IsNil(o.LastAsn) {
 		var ret string
 		return ret
 	}
-
-	return o.LastAsn
+	return *o.LastAsn
 }
 
-// GetLastAsnOk returns a tuple with the LastAsn field value
+// GetLastAsnOk returns a tuple with the LastAsn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) GetLastAsnOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LastAsn) {
 		return nil, false
 	}
-	return &o.LastAsn, true
+	return o.LastAsn, true
 }
 
-// SetLastAsn sets field value
+// HasLastAsn returns a boolean if a field has been set.
+func (o *GetSessionsForUser200ResponseSessionsInnerDevice) HasLastAsn() bool {
+	if o != nil && !IsNil(o.LastAsn) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastAsn gets a reference to the given string and assigns it to the LastAsn field.
 func (o *GetSessionsForUser200ResponseSessionsInnerDevice) SetLastAsn(v string) {
-	o.LastAsn = v
+	o.LastAsn = &v
 }
 
 func (o GetSessionsForUser200ResponseSessionsInnerDevice) MarshalJSON() ([]byte, error) {
@@ -161,11 +201,21 @@ func (o GetSessionsForUser200ResponseSessionsInnerDevice) MarshalJSON() ([]byte,
 
 func (o GetSessionsForUser200ResponseSessionsInnerDevice) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["initial_ip"] = o.InitialIp
-	toSerialize["initial_asn"] = o.InitialAsn
-	toSerialize["last_user_agent"] = o.LastUserAgent
-	toSerialize["last_ip"] = o.LastIp
-	toSerialize["last_asn"] = o.LastAsn
+	if !IsNil(o.InitialIp) {
+		toSerialize["initial_ip"] = o.InitialIp
+	}
+	if !IsNil(o.InitialAsn) {
+		toSerialize["initial_asn"] = o.InitialAsn
+	}
+	if !IsNil(o.LastUserAgent) {
+		toSerialize["last_user_agent"] = o.LastUserAgent
+	}
+	if !IsNil(o.LastIp) {
+		toSerialize["last_ip"] = o.LastIp
+	}
+	if !IsNil(o.LastAsn) {
+		toSerialize["last_asn"] = o.LastAsn
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

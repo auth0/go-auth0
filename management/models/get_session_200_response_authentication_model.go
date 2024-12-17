@@ -17,32 +17,40 @@ import (
 // GetSession200ResponseAuthentication Details about authentication signals obtained during the login flow
 type GetSession200ResponseAuthentication struct {
 	// Contains the authentication methods a user has completed during their session
-	Methods              []GetSession200ResponseAuthenticationMethodsInner `json:"methods"`
+	Methods              []GetSession200ResponseAuthenticationMethodsInner `json:"methods,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetSession200ResponseAuthentication GetSession200ResponseAuthentication
 
-// GetMethods returns the Methods field value
+// GetMethods returns the Methods field value if set, zero value otherwise.
 func (o *GetSession200ResponseAuthentication) GetMethods() []GetSession200ResponseAuthenticationMethodsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Methods) {
 		var ret []GetSession200ResponseAuthenticationMethodsInner
 		return ret
 	}
-
 	return o.Methods
 }
 
-// GetMethodsOk returns a tuple with the Methods field value
+// GetMethodsOk returns a tuple with the Methods field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSession200ResponseAuthentication) GetMethodsOk() ([]GetSession200ResponseAuthenticationMethodsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Methods) {
 		return nil, false
 	}
 	return o.Methods, true
 }
 
-// SetMethods sets field value
+// HasMethods returns a boolean if a field has been set.
+func (o *GetSession200ResponseAuthentication) HasMethods() bool {
+	if o != nil && !IsNil(o.Methods) {
+		return true
+	}
+
+	return false
+}
+
+// SetMethods gets a reference to the given []GetSession200ResponseAuthenticationMethodsInner and assigns it to the Methods field.
 func (o *GetSession200ResponseAuthentication) SetMethods(v []GetSession200ResponseAuthenticationMethodsInner) {
 	o.Methods = v
 }
@@ -57,7 +65,9 @@ func (o GetSession200ResponseAuthentication) MarshalJSON() ([]byte, error) {
 
 func (o GetSession200ResponseAuthentication) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["methods"] = o.Methods
+	if !IsNil(o.Methods) {
+		toSerialize["methods"] = o.Methods
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -17,86 +17,110 @@ import (
 // ClientAddonsAws AWS addon configuration.
 type ClientAddonsAws struct {
 	// AWS principal ARN, e.g. `arn:aws:iam::010616021751:saml-provider/idpname`
-	Principal string `json:"principal"`
+	Principal *string `json:"principal,omitempty"`
 	// AWS role ARN, e.g. `arn:aws:iam::010616021751:role/foo`
-	Role string `json:"role"`
+	Role *string `json:"role,omitempty"`
 	// AWS token lifetime in seconds
-	LifetimeInSeconds    int32 `json:"lifetime_in_seconds"`
+	LifetimeInSeconds    *int32 `json:"lifetime_in_seconds,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsAws ClientAddonsAws
 
-// GetPrincipal returns the Principal field value
+// GetPrincipal returns the Principal field value if set, zero value otherwise.
 func (o *ClientAddonsAws) GetPrincipal() string {
-	if o == nil {
+	if o == nil || IsNil(o.Principal) {
 		var ret string
 		return ret
 	}
-
-	return o.Principal
+	return *o.Principal
 }
 
-// GetPrincipalOk returns a tuple with the Principal field value
+// GetPrincipalOk returns a tuple with the Principal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsAws) GetPrincipalOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Principal) {
 		return nil, false
 	}
-	return &o.Principal, true
+	return o.Principal, true
 }
 
-// SetPrincipal sets field value
+// HasPrincipal returns a boolean if a field has been set.
+func (o *ClientAddonsAws) HasPrincipal() bool {
+	if o != nil && !IsNil(o.Principal) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrincipal gets a reference to the given string and assigns it to the Principal field.
 func (o *ClientAddonsAws) SetPrincipal(v string) {
-	o.Principal = v
+	o.Principal = &v
 }
 
-// GetRole returns the Role field value
+// GetRole returns the Role field value if set, zero value otherwise.
 func (o *ClientAddonsAws) GetRole() string {
-	if o == nil {
+	if o == nil || IsNil(o.Role) {
 		var ret string
 		return ret
 	}
-
-	return o.Role
+	return *o.Role
 }
 
-// GetRoleOk returns a tuple with the Role field value
+// GetRoleOk returns a tuple with the Role field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsAws) GetRoleOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Role) {
 		return nil, false
 	}
-	return &o.Role, true
+	return o.Role, true
 }
 
-// SetRole sets field value
+// HasRole returns a boolean if a field has been set.
+func (o *ClientAddonsAws) HasRole() bool {
+	if o != nil && !IsNil(o.Role) {
+		return true
+	}
+
+	return false
+}
+
+// SetRole gets a reference to the given string and assigns it to the Role field.
 func (o *ClientAddonsAws) SetRole(v string) {
-	o.Role = v
+	o.Role = &v
 }
 
-// GetLifetimeInSeconds returns the LifetimeInSeconds field value
+// GetLifetimeInSeconds returns the LifetimeInSeconds field value if set, zero value otherwise.
 func (o *ClientAddonsAws) GetLifetimeInSeconds() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.LifetimeInSeconds) {
 		var ret int32
 		return ret
 	}
-
-	return o.LifetimeInSeconds
+	return *o.LifetimeInSeconds
 }
 
-// GetLifetimeInSecondsOk returns a tuple with the LifetimeInSeconds field value
+// GetLifetimeInSecondsOk returns a tuple with the LifetimeInSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsAws) GetLifetimeInSecondsOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LifetimeInSeconds) {
 		return nil, false
 	}
-	return &o.LifetimeInSeconds, true
+	return o.LifetimeInSeconds, true
 }
 
-// SetLifetimeInSeconds sets field value
+// HasLifetimeInSeconds returns a boolean if a field has been set.
+func (o *ClientAddonsAws) HasLifetimeInSeconds() bool {
+	if o != nil && !IsNil(o.LifetimeInSeconds) {
+		return true
+	}
+
+	return false
+}
+
+// SetLifetimeInSeconds gets a reference to the given int32 and assigns it to the LifetimeInSeconds field.
 func (o *ClientAddonsAws) SetLifetimeInSeconds(v int32) {
-	o.LifetimeInSeconds = v
+	o.LifetimeInSeconds = &v
 }
 
 func (o ClientAddonsAws) MarshalJSON() ([]byte, error) {
@@ -109,9 +133,15 @@ func (o ClientAddonsAws) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsAws) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["principal"] = o.Principal
-	toSerialize["role"] = o.Role
-	toSerialize["lifetime_in_seconds"] = o.LifetimeInSeconds
+	if !IsNil(o.Principal) {
+		toSerialize["principal"] = o.Principal
+	}
+	if !IsNil(o.Role) {
+		toSerialize["role"] = o.Role
+	}
+	if !IsNil(o.LifetimeInSeconds) {
+		toSerialize["lifetime_in_seconds"] = o.LifetimeInSeconds
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

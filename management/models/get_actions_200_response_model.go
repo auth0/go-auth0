@@ -11,116 +11,145 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetActions200Response struct for GetActions200Response
 type GetActions200Response struct {
 	// The total result count.
-	Total float32 `json:"total"`
+	Total *float32 `json:"total,omitempty"`
 	// Page index of the results being returned. First page is 0.
-	Page float32 `json:"page"`
+	Page *float32 `json:"page,omitempty"`
 	// Number of results per page.
-	PerPage float32 `json:"per_page"`
+	PerPage *float32 `json:"per_page,omitempty"`
 	// The list of actions.
-	Actions []GetActions200ResponseActionsInner `json:"actions"`
+	Actions []GetActions200ResponseActionsInner `json:"actions,omitempty"`
 }
 
-type _GetActions200Response GetActions200Response
-
-// GetTotal returns the Total field value
+// GetTotal returns the Total field value if set, zero value otherwise.
 func (o *GetActions200Response) GetTotal() float32 {
-	if o == nil {
+	if o == nil || IsNil(o.Total) {
 		var ret float32
 		return ret
 	}
-
-	return o.Total
+	return *o.Total
 }
 
-// GetTotalOk returns a tuple with the Total field value
+// GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200Response) GetTotalOk() (*float32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Total) {
 		return nil, false
 	}
-	return &o.Total, true
+	return o.Total, true
 }
 
-// SetTotal sets field value
+// HasTotal returns a boolean if a field has been set.
+func (o *GetActions200Response) HasTotal() bool {
+	if o != nil && !IsNil(o.Total) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotal gets a reference to the given float32 and assigns it to the Total field.
 func (o *GetActions200Response) SetTotal(v float32) {
-	o.Total = v
+	o.Total = &v
 }
 
-// GetPage returns the Page field value
+// GetPage returns the Page field value if set, zero value otherwise.
 func (o *GetActions200Response) GetPage() float32 {
-	if o == nil {
+	if o == nil || IsNil(o.Page) {
 		var ret float32
 		return ret
 	}
-
-	return o.Page
+	return *o.Page
 }
 
-// GetPageOk returns a tuple with the Page field value
+// GetPageOk returns a tuple with the Page field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200Response) GetPageOk() (*float32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Page) {
 		return nil, false
 	}
-	return &o.Page, true
+	return o.Page, true
 }
 
-// SetPage sets field value
+// HasPage returns a boolean if a field has been set.
+func (o *GetActions200Response) HasPage() bool {
+	if o != nil && !IsNil(o.Page) {
+		return true
+	}
+
+	return false
+}
+
+// SetPage gets a reference to the given float32 and assigns it to the Page field.
 func (o *GetActions200Response) SetPage(v float32) {
-	o.Page = v
+	o.Page = &v
 }
 
-// GetPerPage returns the PerPage field value
+// GetPerPage returns the PerPage field value if set, zero value otherwise.
 func (o *GetActions200Response) GetPerPage() float32 {
-	if o == nil {
+	if o == nil || IsNil(o.PerPage) {
 		var ret float32
 		return ret
 	}
-
-	return o.PerPage
+	return *o.PerPage
 }
 
-// GetPerPageOk returns a tuple with the PerPage field value
+// GetPerPageOk returns a tuple with the PerPage field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200Response) GetPerPageOk() (*float32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PerPage) {
 		return nil, false
 	}
-	return &o.PerPage, true
+	return o.PerPage, true
 }
 
-// SetPerPage sets field value
+// HasPerPage returns a boolean if a field has been set.
+func (o *GetActions200Response) HasPerPage() bool {
+	if o != nil && !IsNil(o.PerPage) {
+		return true
+	}
+
+	return false
+}
+
+// SetPerPage gets a reference to the given float32 and assigns it to the PerPage field.
 func (o *GetActions200Response) SetPerPage(v float32) {
-	o.PerPage = v
+	o.PerPage = &v
 }
 
-// GetActions returns the Actions field value
+// GetActions returns the Actions field value if set, zero value otherwise.
 func (o *GetActions200Response) GetActions() []GetActions200ResponseActionsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Actions) {
 		var ret []GetActions200ResponseActionsInner
 		return ret
 	}
-
 	return o.Actions
 }
 
-// GetActionsOk returns a tuple with the Actions field value
+// GetActionsOk returns a tuple with the Actions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200Response) GetActionsOk() ([]GetActions200ResponseActionsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Actions) {
 		return nil, false
 	}
 	return o.Actions, true
 }
 
-// SetActions sets field value
+// HasActions returns a boolean if a field has been set.
+func (o *GetActions200Response) HasActions() bool {
+	if o != nil && !IsNil(o.Actions) {
+		return true
+	}
+
+	return false
+}
+
+// SetActions gets a reference to the given []GetActions200ResponseActionsInner and assigns it to the Actions field.
 func (o *GetActions200Response) SetActions(v []GetActions200ResponseActionsInner) {
 	o.Actions = v
 }
@@ -135,27 +164,19 @@ func (o GetActions200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetActions200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["total"] = o.Total
-	toSerialize["page"] = o.Page
-	toSerialize["per_page"] = o.PerPage
-	toSerialize["actions"] = o.Actions
-	return toSerialize, nil
-}
-
-func (o *GetActions200Response) UnmarshalJSON(data []byte) (err error) {
-	varGetActions200Response := _GetActions200Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetActions200Response)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Total) {
+		toSerialize["total"] = o.Total
 	}
-
-	*o = GetActions200Response(varGetActions200Response)
-
-	return err
+	if !IsNil(o.Page) {
+		toSerialize["page"] = o.Page
+	}
+	if !IsNil(o.PerPage) {
+		toSerialize["per_page"] = o.PerPage
+	}
+	if !IsNil(o.Actions) {
+		toSerialize["actions"] = o.Actions
+	}
+	return toSerialize, nil
 }
 
 type NullableGetActions200Response struct {

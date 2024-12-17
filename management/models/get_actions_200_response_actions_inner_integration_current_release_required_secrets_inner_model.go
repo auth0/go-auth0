@@ -11,245 +11,314 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner Param are form input values, primarily utilized when specifying secrets and configuration values for actions.  These are especially important for partner integrations -- but can be exposed to tenant admins as well if they want to parameterize their custom actions.
 type GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner struct {
-	Type GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerType `json:"type"`
+	Type *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerType `json:"type,omitempty"`
 	// The name of the parameter.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// The flag for if this parameter is required.
-	Required bool `json:"required"`
+	Required *bool `json:"required,omitempty"`
 	// The temp flag for if this parameter is required (experimental; for Labs use only).
-	Optional bool `json:"optional"`
+	Optional *bool `json:"optional,omitempty"`
 	// The short label for this parameter.
-	Label string `json:"label"`
+	Label *string `json:"label,omitempty"`
 	// The lengthier description for this parameter.
-	Description string `json:"description"`
+	Description *string `json:"description,omitempty"`
 	// The default value for this parameter.
-	DefaultValue string `json:"default_value"`
+	DefaultValue *string `json:"default_value,omitempty"`
 	// Placeholder text for this parameter.
-	Placeholder string `json:"placeholder"`
+	Placeholder *string `json:"placeholder,omitempty"`
 	// The allowable options for this param.
-	Options []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerOptionsInner `json:"options"`
+	Options []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerOptionsInner `json:"options,omitempty"`
 }
 
-type _GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner
-
-// GetType returns the Type field value
+// GetType returns the Type field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetType() GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerType {
-	if o == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerType
 		return ret
 	}
-
-	return o.Type
+	return *o.Type
 }
 
-// GetTypeOk returns a tuple with the Type field value
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetTypeOk() (*GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerType, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
-	return &o.Type, true
+	return o.Type, true
 }
 
-// SetType sets field value
+// HasType returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerType and assigns it to the Type field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) SetType(v GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerType) {
-	o.Type = v
+	o.Type = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetRequired returns the Required field value
+// GetRequired returns the Required field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetRequired() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Required) {
 		var ret bool
 		return ret
 	}
-
-	return o.Required
+	return *o.Required
 }
 
-// GetRequiredOk returns a tuple with the Required field value
+// GetRequiredOk returns a tuple with the Required field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetRequiredOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Required) {
 		return nil, false
 	}
-	return &o.Required, true
+	return o.Required, true
 }
 
-// SetRequired sets field value
+// HasRequired returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) HasRequired() bool {
+	if o != nil && !IsNil(o.Required) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequired gets a reference to the given bool and assigns it to the Required field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) SetRequired(v bool) {
-	o.Required = v
+	o.Required = &v
 }
 
-// GetOptional returns the Optional field value
+// GetOptional returns the Optional field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetOptional() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Optional) {
 		var ret bool
 		return ret
 	}
-
-	return o.Optional
+	return *o.Optional
 }
 
-// GetOptionalOk returns a tuple with the Optional field value
+// GetOptionalOk returns a tuple with the Optional field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetOptionalOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Optional) {
 		return nil, false
 	}
-	return &o.Optional, true
+	return o.Optional, true
 }
 
-// SetOptional sets field value
+// HasOptional returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) HasOptional() bool {
+	if o != nil && !IsNil(o.Optional) {
+		return true
+	}
+
+	return false
+}
+
+// SetOptional gets a reference to the given bool and assigns it to the Optional field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) SetOptional(v bool) {
-	o.Optional = v
+	o.Optional = &v
 }
 
-// GetLabel returns the Label field value
+// GetLabel returns the Label field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetLabel() string {
-	if o == nil {
+	if o == nil || IsNil(o.Label) {
 		var ret string
 		return ret
 	}
-
-	return o.Label
+	return *o.Label
 }
 
-// GetLabelOk returns a tuple with the Label field value
+// GetLabelOk returns a tuple with the Label field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetLabelOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Label) {
 		return nil, false
 	}
-	return &o.Label, true
+	return o.Label, true
 }
 
-// SetLabel sets field value
+// HasLabel returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) HasLabel() bool {
+	if o != nil && !IsNil(o.Label) {
+		return true
+	}
+
+	return false
+}
+
+// SetLabel gets a reference to the given string and assigns it to the Label field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) SetLabel(v string) {
-	o.Label = v
+	o.Label = &v
 }
 
-// GetDescription returns the Description field value
+// GetDescription returns the Description field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetDescription() string {
-	if o == nil {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
-
-	return o.Description
+	return *o.Description
 }
 
-// GetDescriptionOk returns a tuple with the Description field value
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetDescriptionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
-	return &o.Description, true
+	return o.Description, true
 }
 
-// SetDescription sets field value
+// HasDescription returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) HasDescription() bool {
+	if o != nil && !IsNil(o.Description) {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) SetDescription(v string) {
-	o.Description = v
+	o.Description = &v
 }
 
-// GetDefaultValue returns the DefaultValue field value
+// GetDefaultValue returns the DefaultValue field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetDefaultValue() string {
-	if o == nil {
+	if o == nil || IsNil(o.DefaultValue) {
 		var ret string
 		return ret
 	}
-
-	return o.DefaultValue
+	return *o.DefaultValue
 }
 
-// GetDefaultValueOk returns a tuple with the DefaultValue field value
+// GetDefaultValueOk returns a tuple with the DefaultValue field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetDefaultValueOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DefaultValue) {
 		return nil, false
 	}
-	return &o.DefaultValue, true
+	return o.DefaultValue, true
 }
 
-// SetDefaultValue sets field value
+// HasDefaultValue returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) HasDefaultValue() bool {
+	if o != nil && !IsNil(o.DefaultValue) {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultValue gets a reference to the given string and assigns it to the DefaultValue field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) SetDefaultValue(v string) {
-	o.DefaultValue = v
+	o.DefaultValue = &v
 }
 
-// GetPlaceholder returns the Placeholder field value
+// GetPlaceholder returns the Placeholder field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetPlaceholder() string {
-	if o == nil {
+	if o == nil || IsNil(o.Placeholder) {
 		var ret string
 		return ret
 	}
-
-	return o.Placeholder
+	return *o.Placeholder
 }
 
-// GetPlaceholderOk returns a tuple with the Placeholder field value
+// GetPlaceholderOk returns a tuple with the Placeholder field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetPlaceholderOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Placeholder) {
 		return nil, false
 	}
-	return &o.Placeholder, true
+	return o.Placeholder, true
 }
 
-// SetPlaceholder sets field value
+// HasPlaceholder returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) HasPlaceholder() bool {
+	if o != nil && !IsNil(o.Placeholder) {
+		return true
+	}
+
+	return false
+}
+
+// SetPlaceholder gets a reference to the given string and assigns it to the Placeholder field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) SetPlaceholder(v string) {
-	o.Placeholder = v
+	o.Placeholder = &v
 }
 
-// GetOptions returns the Options field value
+// GetOptions returns the Options field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetOptions() []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerOptionsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Options) {
 		var ret []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerOptionsInner
 		return ret
 	}
-
 	return o.Options
 }
 
-// GetOptionsOk returns a tuple with the Options field value
+// GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) GetOptionsOk() ([]GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerOptionsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Options) {
 		return nil, false
 	}
 	return o.Options, true
 }
 
-// SetOptions sets field value
+// HasOptions returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) HasOptions() bool {
+	if o != nil && !IsNil(o.Options) {
+		return true
+	}
+
+	return false
+}
+
+// SetOptions gets a reference to the given []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerOptionsInner and assigns it to the Options field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) SetOptions(v []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInnerOptionsInner) {
 	o.Options = v
 }
@@ -264,32 +333,34 @@ func (o GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecret
 
 func (o GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["type"] = o.Type
-	toSerialize["name"] = o.Name
-	toSerialize["required"] = o.Required
-	toSerialize["optional"] = o.Optional
-	toSerialize["label"] = o.Label
-	toSerialize["description"] = o.Description
-	toSerialize["default_value"] = o.DefaultValue
-	toSerialize["placeholder"] = o.Placeholder
-	toSerialize["options"] = o.Options
-	return toSerialize, nil
-}
-
-func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) UnmarshalJSON(data []byte) (err error) {
-	varGetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner := _GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Type) {
+		toSerialize["type"] = o.Type
 	}
-
-	*o = GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner(varGetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner)
-
-	return err
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Required) {
+		toSerialize["required"] = o.Required
+	}
+	if !IsNil(o.Optional) {
+		toSerialize["optional"] = o.Optional
+	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.DefaultValue) {
+		toSerialize["default_value"] = o.DefaultValue
+	}
+	if !IsNil(o.Placeholder) {
+		toSerialize["placeholder"] = o.Placeholder
+	}
+	if !IsNil(o.Options) {
+		toSerialize["options"] = o.Options
+	}
+	return toSerialize, nil
 }
 
 type NullableGetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner struct {

@@ -11,66 +11,79 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver Semver denotes the major.minor version of an integration release
 type GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver struct {
 	// Major is the major number of a semver
-	Major int32 `json:"major"`
+	Major *int32 `json:"major,omitempty"`
 	// Minior is the minior number of a semver
-	Minor int32 `json:"minor"`
+	Minor *int32 `json:"minor,omitempty"`
 }
 
-type _GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver
-
-// GetMajor returns the Major field value
+// GetMajor returns the Major field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) GetMajor() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.Major) {
 		var ret int32
 		return ret
 	}
-
-	return o.Major
+	return *o.Major
 }
 
-// GetMajorOk returns a tuple with the Major field value
+// GetMajorOk returns a tuple with the Major field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) GetMajorOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Major) {
 		return nil, false
 	}
-	return &o.Major, true
+	return o.Major, true
 }
 
-// SetMajor sets field value
+// HasMajor returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) HasMajor() bool {
+	if o != nil && !IsNil(o.Major) {
+		return true
+	}
+
+	return false
+}
+
+// SetMajor gets a reference to the given int32 and assigns it to the Major field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) SetMajor(v int32) {
-	o.Major = v
+	o.Major = &v
 }
 
-// GetMinor returns the Minor field value
+// GetMinor returns the Minor field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) GetMinor() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.Minor) {
 		var ret int32
 		return ret
 	}
-
-	return o.Minor
+	return *o.Minor
 }
 
-// GetMinorOk returns a tuple with the Minor field value
+// GetMinorOk returns a tuple with the Minor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) GetMinorOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Minor) {
 		return nil, false
 	}
-	return &o.Minor, true
+	return o.Minor, true
 }
 
-// SetMinor sets field value
+// HasMinor returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) HasMinor() bool {
+	if o != nil && !IsNil(o.Minor) {
+		return true
+	}
+
+	return false
+}
+
+// SetMinor gets a reference to the given int32 and assigns it to the Minor field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) SetMinor(v int32) {
-	o.Minor = v
+	o.Minor = &v
 }
 
 func (o GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) MarshalJSON() ([]byte, error) {
@@ -83,25 +96,13 @@ func (o GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) Marsha
 
 func (o GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["major"] = o.Major
-	toSerialize["minor"] = o.Minor
-	return toSerialize, nil
-}
-
-func (o *GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) UnmarshalJSON(data []byte) (err error) {
-	varGetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver := _GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Major) {
+		toSerialize["major"] = o.Major
 	}
-
-	*o = GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver(varGetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver)
-
-	return err
+	if !IsNil(o.Minor) {
+		toSerialize["minor"] = o.Minor
+	}
+	return toSerialize, nil
 }
 
 type NullableGetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver struct {

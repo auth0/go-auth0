@@ -13,6 +13,7 @@ package models
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // PostBrandingThemeRequestBorders struct for PostBrandingThemeRequestBorders
@@ -276,6 +277,35 @@ func (o PostBrandingThemeRequestBorders) ToMap() (map[string]interface{}, error)
 }
 
 func (o *PostBrandingThemeRequestBorders) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"button_border_radius",
+		"button_border_weight",
+		"buttons_style",
+		"input_border_radius",
+		"input_border_weight",
+		"inputs_style",
+		"show_widget_shadow",
+		"widget_border_weight",
+		"widget_corner_radius",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
 	varPostBrandingThemeRequestBorders := _PostBrandingThemeRequestBorders{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

@@ -17,34 +17,42 @@ import (
 // ClientAddonsZendesk Zendesk SSO configuration.
 type ClientAddonsZendesk struct {
 	// Zendesk account name usually first segment in your Zendesk URL. e.g. `https://acme-org.zendesk.com` would be `acme-org`.
-	AccountName          string `json:"accountName"`
+	AccountName          *string `json:"accountName,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsZendesk ClientAddonsZendesk
 
-// GetAccountName returns the AccountName field value
+// GetAccountName returns the AccountName field value if set, zero value otherwise.
 func (o *ClientAddonsZendesk) GetAccountName() string {
-	if o == nil {
+	if o == nil || IsNil(o.AccountName) {
 		var ret string
 		return ret
 	}
-
-	return o.AccountName
+	return *o.AccountName
 }
 
-// GetAccountNameOk returns a tuple with the AccountName field value
+// GetAccountNameOk returns a tuple with the AccountName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsZendesk) GetAccountNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AccountName) {
 		return nil, false
 	}
-	return &o.AccountName, true
+	return o.AccountName, true
 }
 
-// SetAccountName sets field value
+// HasAccountName returns a boolean if a field has been set.
+func (o *ClientAddonsZendesk) HasAccountName() bool {
+	if o != nil && !IsNil(o.AccountName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccountName gets a reference to the given string and assigns it to the AccountName field.
 func (o *ClientAddonsZendesk) SetAccountName(v string) {
-	o.AccountName = v
+	o.AccountName = &v
 }
 
 func (o ClientAddonsZendesk) MarshalJSON() ([]byte, error) {
@@ -57,7 +65,9 @@ func (o ClientAddonsZendesk) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsZendesk) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["accountName"] = o.AccountName
+	if !IsNil(o.AccountName) {
+		toSerialize["accountName"] = o.AccountName
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -11,92 +11,113 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetActions200ResponseActionsInnerDependenciesInner Dependency is an npm module. These values are used to produce an immutable artifact, which manifests as a layer_id.
 type GetActions200ResponseActionsInnerDependenciesInner struct {
 	// name is the name of the npm module, e.g. lodash
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// description is the version of the npm module, e.g. 4.17.1
-	Version string `json:"version"`
+	Version *string `json:"version,omitempty"`
 	// registry_url is an optional value used primarily for private npm registries.
-	RegistryUrl string `json:"registry_url"`
+	RegistryUrl *string `json:"registry_url,omitempty"`
 }
 
-type _GetActions200ResponseActionsInnerDependenciesInner GetActions200ResponseActionsInnerDependenciesInner
-
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerDependenciesInner) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerDependenciesInner) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerDependenciesInner) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *GetActions200ResponseActionsInnerDependenciesInner) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetVersion returns the Version field value
+// GetVersion returns the Version field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerDependenciesInner) GetVersion() string {
-	if o == nil {
+	if o == nil || IsNil(o.Version) {
 		var ret string
 		return ret
 	}
-
-	return o.Version
+	return *o.Version
 }
 
-// GetVersionOk returns a tuple with the Version field value
+// GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerDependenciesInner) GetVersionOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Version) {
 		return nil, false
 	}
-	return &o.Version, true
+	return o.Version, true
 }
 
-// SetVersion sets field value
+// HasVersion returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerDependenciesInner) HasVersion() bool {
+	if o != nil && !IsNil(o.Version) {
+		return true
+	}
+
+	return false
+}
+
+// SetVersion gets a reference to the given string and assigns it to the Version field.
 func (o *GetActions200ResponseActionsInnerDependenciesInner) SetVersion(v string) {
-	o.Version = v
+	o.Version = &v
 }
 
-// GetRegistryUrl returns the RegistryUrl field value
+// GetRegistryUrl returns the RegistryUrl field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerDependenciesInner) GetRegistryUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.RegistryUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.RegistryUrl
+	return *o.RegistryUrl
 }
 
-// GetRegistryUrlOk returns a tuple with the RegistryUrl field value
+// GetRegistryUrlOk returns a tuple with the RegistryUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerDependenciesInner) GetRegistryUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RegistryUrl) {
 		return nil, false
 	}
-	return &o.RegistryUrl, true
+	return o.RegistryUrl, true
 }
 
-// SetRegistryUrl sets field value
+// HasRegistryUrl returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerDependenciesInner) HasRegistryUrl() bool {
+	if o != nil && !IsNil(o.RegistryUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetRegistryUrl gets a reference to the given string and assigns it to the RegistryUrl field.
 func (o *GetActions200ResponseActionsInnerDependenciesInner) SetRegistryUrl(v string) {
-	o.RegistryUrl = v
+	o.RegistryUrl = &v
 }
 
 func (o GetActions200ResponseActionsInnerDependenciesInner) MarshalJSON() ([]byte, error) {
@@ -109,26 +130,16 @@ func (o GetActions200ResponseActionsInnerDependenciesInner) MarshalJSON() ([]byt
 
 func (o GetActions200ResponseActionsInnerDependenciesInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["name"] = o.Name
-	toSerialize["version"] = o.Version
-	toSerialize["registry_url"] = o.RegistryUrl
-	return toSerialize, nil
-}
-
-func (o *GetActions200ResponseActionsInnerDependenciesInner) UnmarshalJSON(data []byte) (err error) {
-	varGetActions200ResponseActionsInnerDependenciesInner := _GetActions200ResponseActionsInnerDependenciesInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetActions200ResponseActionsInnerDependenciesInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
 	}
-
-	*o = GetActions200ResponseActionsInnerDependenciesInner(varGetActions200ResponseActionsInnerDependenciesInner)
-
-	return err
+	if !IsNil(o.Version) {
+		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.RegistryUrl) {
+		toSerialize["registry_url"] = o.RegistryUrl
+	}
+	return toSerialize, nil
 }
 
 type NullableGetActions200ResponseActionsInnerDependenciesInner struct {

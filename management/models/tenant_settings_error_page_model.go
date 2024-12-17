@@ -11,92 +11,113 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // TenantSettingsErrorPage Error page customization.
 type TenantSettingsErrorPage struct {
 	// Custom Error HTML (<a href='https://github.com/Shopify/liquid/wiki/Liquid-for-Designers'>Liquid syntax</a> is supported).
-	Html string `json:"html"`
+	Html *string `json:"html,omitempty"`
 	// Whether to show the link to log as part of the default error page (true, default) or not to show the link (false).
-	ShowLogLink bool `json:"show_log_link"`
+	ShowLogLink *bool `json:"show_log_link,omitempty"`
 	// URL to redirect to when an error occurs instead of showing the default error page.
-	Url string `json:"url"`
+	Url *string `json:"url,omitempty"`
 }
 
-type _TenantSettingsErrorPage TenantSettingsErrorPage
-
-// GetHtml returns the Html field value
+// GetHtml returns the Html field value if set, zero value otherwise.
 func (o *TenantSettingsErrorPage) GetHtml() string {
-	if o == nil {
+	if o == nil || IsNil(o.Html) {
 		var ret string
 		return ret
 	}
-
-	return o.Html
+	return *o.Html
 }
 
-// GetHtmlOk returns a tuple with the Html field value
+// GetHtmlOk returns a tuple with the Html field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsErrorPage) GetHtmlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Html) {
 		return nil, false
 	}
-	return &o.Html, true
+	return o.Html, true
 }
 
-// SetHtml sets field value
+// HasHtml returns a boolean if a field has been set.
+func (o *TenantSettingsErrorPage) HasHtml() bool {
+	if o != nil && !IsNil(o.Html) {
+		return true
+	}
+
+	return false
+}
+
+// SetHtml gets a reference to the given string and assigns it to the Html field.
 func (o *TenantSettingsErrorPage) SetHtml(v string) {
-	o.Html = v
+	o.Html = &v
 }
 
-// GetShowLogLink returns the ShowLogLink field value
+// GetShowLogLink returns the ShowLogLink field value if set, zero value otherwise.
 func (o *TenantSettingsErrorPage) GetShowLogLink() bool {
-	if o == nil {
+	if o == nil || IsNil(o.ShowLogLink) {
 		var ret bool
 		return ret
 	}
-
-	return o.ShowLogLink
+	return *o.ShowLogLink
 }
 
-// GetShowLogLinkOk returns a tuple with the ShowLogLink field value
+// GetShowLogLinkOk returns a tuple with the ShowLogLink field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsErrorPage) GetShowLogLinkOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ShowLogLink) {
 		return nil, false
 	}
-	return &o.ShowLogLink, true
+	return o.ShowLogLink, true
 }
 
-// SetShowLogLink sets field value
+// HasShowLogLink returns a boolean if a field has been set.
+func (o *TenantSettingsErrorPage) HasShowLogLink() bool {
+	if o != nil && !IsNil(o.ShowLogLink) {
+		return true
+	}
+
+	return false
+}
+
+// SetShowLogLink gets a reference to the given bool and assigns it to the ShowLogLink field.
 func (o *TenantSettingsErrorPage) SetShowLogLink(v bool) {
-	o.ShowLogLink = v
+	o.ShowLogLink = &v
 }
 
-// GetUrl returns the Url field value
+// GetUrl returns the Url field value if set, zero value otherwise.
 func (o *TenantSettingsErrorPage) GetUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.Url) {
 		var ret string
 		return ret
 	}
-
-	return o.Url
+	return *o.Url
 }
 
-// GetUrlOk returns a tuple with the Url field value
+// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsErrorPage) GetUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Url) {
 		return nil, false
 	}
-	return &o.Url, true
+	return o.Url, true
 }
 
-// SetUrl sets field value
+// HasUrl returns a boolean if a field has been set.
+func (o *TenantSettingsErrorPage) HasUrl() bool {
+	if o != nil && !IsNil(o.Url) {
+		return true
+	}
+
+	return false
+}
+
+// SetUrl gets a reference to the given string and assigns it to the Url field.
 func (o *TenantSettingsErrorPage) SetUrl(v string) {
-	o.Url = v
+	o.Url = &v
 }
 
 func (o TenantSettingsErrorPage) MarshalJSON() ([]byte, error) {
@@ -109,26 +130,16 @@ func (o TenantSettingsErrorPage) MarshalJSON() ([]byte, error) {
 
 func (o TenantSettingsErrorPage) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["html"] = o.Html
-	toSerialize["show_log_link"] = o.ShowLogLink
-	toSerialize["url"] = o.Url
-	return toSerialize, nil
-}
-
-func (o *TenantSettingsErrorPage) UnmarshalJSON(data []byte) (err error) {
-	varTenantSettingsErrorPage := _TenantSettingsErrorPage{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTenantSettingsErrorPage)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Html) {
+		toSerialize["html"] = o.Html
 	}
-
-	*o = TenantSettingsErrorPage(varTenantSettingsErrorPage)
-
-	return err
+	if !IsNil(o.ShowLogLink) {
+		toSerialize["show_log_link"] = o.ShowLogLink
+	}
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
+	}
+	return toSerialize, nil
 }
 
 type NullableTenantSettingsErrorPage struct {

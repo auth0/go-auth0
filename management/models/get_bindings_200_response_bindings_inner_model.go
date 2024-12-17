@@ -11,168 +11,213 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetBindings200ResponseBindingsInner Binding is the associative entity joining a trigger, and an action together.
 type GetBindings200ResponseBindingsInner struct {
 	// The unique ID of this binding.
-	Id        string                                                    `json:"id"`
-	TriggerId GetActions200ResponseActionsInnerSupportedTriggersInnerId `json:"trigger_id"`
+	Id        *string                                                    `json:"id,omitempty"`
+	TriggerId *GetActions200ResponseActionsInnerSupportedTriggersInnerId `json:"trigger_id,omitempty"`
 	// The name of the binding.
-	DisplayName string                            `json:"display_name"`
-	Action      GetActions200ResponseActionsInner `json:"action"`
+	DisplayName *string                            `json:"display_name,omitempty"`
+	Action      *GetActions200ResponseActionsInner `json:"action,omitempty"`
 	// The time when the binding was created.
-	CreatedAt string `json:"created_at"`
+	CreatedAt *string `json:"created_at,omitempty"`
 	// The time when the binding was updated.
-	UpdatedAt string `json:"updated_at"`
+	UpdatedAt *string `json:"updated_at,omitempty"`
 }
 
-type _GetBindings200ResponseBindingsInner GetBindings200ResponseBindingsInner
-
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetBindings200ResponseBindingsInner) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBindings200ResponseBindingsInner) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetBindings200ResponseBindingsInner) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetBindings200ResponseBindingsInner) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetTriggerId returns the TriggerId field value
+// GetTriggerId returns the TriggerId field value if set, zero value otherwise.
 func (o *GetBindings200ResponseBindingsInner) GetTriggerId() GetActions200ResponseActionsInnerSupportedTriggersInnerId {
-	if o == nil {
+	if o == nil || IsNil(o.TriggerId) {
 		var ret GetActions200ResponseActionsInnerSupportedTriggersInnerId
 		return ret
 	}
-
-	return o.TriggerId
+	return *o.TriggerId
 }
 
-// GetTriggerIdOk returns a tuple with the TriggerId field value
+// GetTriggerIdOk returns a tuple with the TriggerId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBindings200ResponseBindingsInner) GetTriggerIdOk() (*GetActions200ResponseActionsInnerSupportedTriggersInnerId, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TriggerId) {
 		return nil, false
 	}
-	return &o.TriggerId, true
+	return o.TriggerId, true
 }
 
-// SetTriggerId sets field value
+// HasTriggerId returns a boolean if a field has been set.
+func (o *GetBindings200ResponseBindingsInner) HasTriggerId() bool {
+	if o != nil && !IsNil(o.TriggerId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTriggerId gets a reference to the given GetActions200ResponseActionsInnerSupportedTriggersInnerId and assigns it to the TriggerId field.
 func (o *GetBindings200ResponseBindingsInner) SetTriggerId(v GetActions200ResponseActionsInnerSupportedTriggersInnerId) {
-	o.TriggerId = v
+	o.TriggerId = &v
 }
 
-// GetDisplayName returns the DisplayName field value
+// GetDisplayName returns the DisplayName field value if set, zero value otherwise.
 func (o *GetBindings200ResponseBindingsInner) GetDisplayName() string {
-	if o == nil {
+	if o == nil || IsNil(o.DisplayName) {
 		var ret string
 		return ret
 	}
-
-	return o.DisplayName
+	return *o.DisplayName
 }
 
-// GetDisplayNameOk returns a tuple with the DisplayName field value
+// GetDisplayNameOk returns a tuple with the DisplayName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBindings200ResponseBindingsInner) GetDisplayNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DisplayName) {
 		return nil, false
 	}
-	return &o.DisplayName, true
+	return o.DisplayName, true
 }
 
-// SetDisplayName sets field value
+// HasDisplayName returns a boolean if a field has been set.
+func (o *GetBindings200ResponseBindingsInner) HasDisplayName() bool {
+	if o != nil && !IsNil(o.DisplayName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDisplayName gets a reference to the given string and assigns it to the DisplayName field.
 func (o *GetBindings200ResponseBindingsInner) SetDisplayName(v string) {
-	o.DisplayName = v
+	o.DisplayName = &v
 }
 
-// GetAction returns the Action field value
+// GetAction returns the Action field value if set, zero value otherwise.
 func (o *GetBindings200ResponseBindingsInner) GetAction() GetActions200ResponseActionsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Action) {
 		var ret GetActions200ResponseActionsInner
 		return ret
 	}
-
-	return o.Action
+	return *o.Action
 }
 
-// GetActionOk returns a tuple with the Action field value
+// GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBindings200ResponseBindingsInner) GetActionOk() (*GetActions200ResponseActionsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
-	return &o.Action, true
+	return o.Action, true
 }
 
-// SetAction sets field value
+// HasAction returns a boolean if a field has been set.
+func (o *GetBindings200ResponseBindingsInner) HasAction() bool {
+	if o != nil && !IsNil(o.Action) {
+		return true
+	}
+
+	return false
+}
+
+// SetAction gets a reference to the given GetActions200ResponseActionsInner and assigns it to the Action field.
 func (o *GetBindings200ResponseBindingsInner) SetAction(v GetActions200ResponseActionsInner) {
-	o.Action = v
+	o.Action = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *GetBindings200ResponseBindingsInner) GetCreatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBindings200ResponseBindingsInner) GetCreatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
-// SetCreatedAt sets field value
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetBindings200ResponseBindingsInner) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
 func (o *GetBindings200ResponseBindingsInner) SetCreatedAt(v string) {
-	o.CreatedAt = v
+	o.CreatedAt = &v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *GetBindings200ResponseBindingsInner) GetUpdatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.UpdatedAt
+	return *o.UpdatedAt
 }
 
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetBindings200ResponseBindingsInner) GetUpdatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
-	return &o.UpdatedAt, true
+	return o.UpdatedAt, true
 }
 
-// SetUpdatedAt sets field value
+// HasUpdatedAt returns a boolean if a field has been set.
+func (o *GetBindings200ResponseBindingsInner) HasUpdatedAt() bool {
+	if o != nil && !IsNil(o.UpdatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
 func (o *GetBindings200ResponseBindingsInner) SetUpdatedAt(v string) {
-	o.UpdatedAt = v
+	o.UpdatedAt = &v
 }
 
 func (o GetBindings200ResponseBindingsInner) MarshalJSON() ([]byte, error) {
@@ -185,29 +230,25 @@ func (o GetBindings200ResponseBindingsInner) MarshalJSON() ([]byte, error) {
 
 func (o GetBindings200ResponseBindingsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["trigger_id"] = o.TriggerId
-	toSerialize["display_name"] = o.DisplayName
-	toSerialize["action"] = o.Action
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["updated_at"] = o.UpdatedAt
-	return toSerialize, nil
-}
-
-func (o *GetBindings200ResponseBindingsInner) UnmarshalJSON(data []byte) (err error) {
-	varGetBindings200ResponseBindingsInner := _GetBindings200ResponseBindingsInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetBindings200ResponseBindingsInner)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
 	}
-
-	*o = GetBindings200ResponseBindingsInner(varGetBindings200ResponseBindingsInner)
-
-	return err
+	if !IsNil(o.TriggerId) {
+		toSerialize["trigger_id"] = o.TriggerId
+	}
+	if !IsNil(o.DisplayName) {
+		toSerialize["display_name"] = o.DisplayName
+	}
+	if !IsNil(o.Action) {
+		toSerialize["action"] = o.Action
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	return toSerialize, nil
 }
 
 type NullableGetBindings200ResponseBindingsInner struct {

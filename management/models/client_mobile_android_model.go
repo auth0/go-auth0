@@ -17,58 +17,74 @@ import (
 // ClientMobileAndroid Android native app configuration.
 type ClientMobileAndroid struct {
 	// App package name found in AndroidManifest.xml.
-	AppPackageName string `json:"app_package_name"`
+	AppPackageName *string `json:"app_package_name,omitempty"`
 	// SHA256 fingerprints of the app's signing certificate. Multiple fingerprints can be used to support different versions of your app, such as debug and production builds.
-	Sha256CertFingerprints []string `json:"sha256_cert_fingerprints"`
+	Sha256CertFingerprints []string `json:"sha256_cert_fingerprints,omitempty"`
 	AdditionalProperties   map[string]interface{}
 }
 
 type _ClientMobileAndroid ClientMobileAndroid
 
-// GetAppPackageName returns the AppPackageName field value
+// GetAppPackageName returns the AppPackageName field value if set, zero value otherwise.
 func (o *ClientMobileAndroid) GetAppPackageName() string {
-	if o == nil {
+	if o == nil || IsNil(o.AppPackageName) {
 		var ret string
 		return ret
 	}
-
-	return o.AppPackageName
+	return *o.AppPackageName
 }
 
-// GetAppPackageNameOk returns a tuple with the AppPackageName field value
+// GetAppPackageNameOk returns a tuple with the AppPackageName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientMobileAndroid) GetAppPackageNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AppPackageName) {
 		return nil, false
 	}
-	return &o.AppPackageName, true
+	return o.AppPackageName, true
 }
 
-// SetAppPackageName sets field value
+// HasAppPackageName returns a boolean if a field has been set.
+func (o *ClientMobileAndroid) HasAppPackageName() bool {
+	if o != nil && !IsNil(o.AppPackageName) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppPackageName gets a reference to the given string and assigns it to the AppPackageName field.
 func (o *ClientMobileAndroid) SetAppPackageName(v string) {
-	o.AppPackageName = v
+	o.AppPackageName = &v
 }
 
-// GetSha256CertFingerprints returns the Sha256CertFingerprints field value
+// GetSha256CertFingerprints returns the Sha256CertFingerprints field value if set, zero value otherwise.
 func (o *ClientMobileAndroid) GetSha256CertFingerprints() []string {
-	if o == nil {
+	if o == nil || IsNil(o.Sha256CertFingerprints) {
 		var ret []string
 		return ret
 	}
-
 	return o.Sha256CertFingerprints
 }
 
-// GetSha256CertFingerprintsOk returns a tuple with the Sha256CertFingerprints field value
+// GetSha256CertFingerprintsOk returns a tuple with the Sha256CertFingerprints field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientMobileAndroid) GetSha256CertFingerprintsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Sha256CertFingerprints) {
 		return nil, false
 	}
 	return o.Sha256CertFingerprints, true
 }
 
-// SetSha256CertFingerprints sets field value
+// HasSha256CertFingerprints returns a boolean if a field has been set.
+func (o *ClientMobileAndroid) HasSha256CertFingerprints() bool {
+	if o != nil && !IsNil(o.Sha256CertFingerprints) {
+		return true
+	}
+
+	return false
+}
+
+// SetSha256CertFingerprints gets a reference to the given []string and assigns it to the Sha256CertFingerprints field.
 func (o *ClientMobileAndroid) SetSha256CertFingerprints(v []string) {
 	o.Sha256CertFingerprints = v
 }
@@ -83,8 +99,12 @@ func (o ClientMobileAndroid) MarshalJSON() ([]byte, error) {
 
 func (o ClientMobileAndroid) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["app_package_name"] = o.AppPackageName
-	toSerialize["sha256_cert_fingerprints"] = o.Sha256CertFingerprints
+	if !IsNil(o.AppPackageName) {
+		toSerialize["app_package_name"] = o.AppPackageName
+	}
+	if !IsNil(o.Sha256CertFingerprints) {
+		toSerialize["sha256_cert_fingerprints"] = o.Sha256CertFingerprints
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

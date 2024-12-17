@@ -17,60 +17,76 @@ import (
 // GetRefreshToken200ResponseResourceServersInner struct for GetRefreshToken200ResponseResourceServersInner
 type GetRefreshToken200ResponseResourceServersInner struct {
 	// Resource server ID
-	Audience string `json:"audience"`
+	Audience *string `json:"audience,omitempty"`
 	// List of scopes for the refresh token
-	Scopes               string `json:"scopes"`
+	Scopes               *string `json:"scopes,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetRefreshToken200ResponseResourceServersInner GetRefreshToken200ResponseResourceServersInner
 
-// GetAudience returns the Audience field value
+// GetAudience returns the Audience field value if set, zero value otherwise.
 func (o *GetRefreshToken200ResponseResourceServersInner) GetAudience() string {
-	if o == nil {
+	if o == nil || IsNil(o.Audience) {
 		var ret string
 		return ret
 	}
-
-	return o.Audience
+	return *o.Audience
 }
 
-// GetAudienceOk returns a tuple with the Audience field value
+// GetAudienceOk returns a tuple with the Audience field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRefreshToken200ResponseResourceServersInner) GetAudienceOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Audience) {
 		return nil, false
 	}
-	return &o.Audience, true
+	return o.Audience, true
 }
 
-// SetAudience sets field value
+// HasAudience returns a boolean if a field has been set.
+func (o *GetRefreshToken200ResponseResourceServersInner) HasAudience() bool {
+	if o != nil && !IsNil(o.Audience) {
+		return true
+	}
+
+	return false
+}
+
+// SetAudience gets a reference to the given string and assigns it to the Audience field.
 func (o *GetRefreshToken200ResponseResourceServersInner) SetAudience(v string) {
-	o.Audience = v
+	o.Audience = &v
 }
 
-// GetScopes returns the Scopes field value
+// GetScopes returns the Scopes field value if set, zero value otherwise.
 func (o *GetRefreshToken200ResponseResourceServersInner) GetScopes() string {
-	if o == nil {
+	if o == nil || IsNil(o.Scopes) {
 		var ret string
 		return ret
 	}
-
-	return o.Scopes
+	return *o.Scopes
 }
 
-// GetScopesOk returns a tuple with the Scopes field value
+// GetScopesOk returns a tuple with the Scopes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRefreshToken200ResponseResourceServersInner) GetScopesOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Scopes) {
 		return nil, false
 	}
-	return &o.Scopes, true
+	return o.Scopes, true
 }
 
-// SetScopes sets field value
+// HasScopes returns a boolean if a field has been set.
+func (o *GetRefreshToken200ResponseResourceServersInner) HasScopes() bool {
+	if o != nil && !IsNil(o.Scopes) {
+		return true
+	}
+
+	return false
+}
+
+// SetScopes gets a reference to the given string and assigns it to the Scopes field.
 func (o *GetRefreshToken200ResponseResourceServersInner) SetScopes(v string) {
-	o.Scopes = v
+	o.Scopes = &v
 }
 
 func (o GetRefreshToken200ResponseResourceServersInner) MarshalJSON() ([]byte, error) {
@@ -83,8 +99,12 @@ func (o GetRefreshToken200ResponseResourceServersInner) MarshalJSON() ([]byte, e
 
 func (o GetRefreshToken200ResponseResourceServersInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["audience"] = o.Audience
-	toSerialize["scopes"] = o.Scopes
+	if !IsNil(o.Audience) {
+		toSerialize["audience"] = o.Audience
+	}
+	if !IsNil(o.Scopes) {
+		toSerialize["scopes"] = o.Scopes
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

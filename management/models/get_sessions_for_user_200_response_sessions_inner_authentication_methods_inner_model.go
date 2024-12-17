@@ -17,85 +17,109 @@ import (
 // GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner Authentication signal details
 type GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner struct {
 	// One of: \"federated\", \"passkey\", \"pwd\", \"sms\", \"email\", \"mfa\", \"mock\" or a custom method denoted by a URL
-	Name      string                                                                        `json:"name"`
-	Timestamp GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInnerTimestamp `json:"timestamp"`
+	Name      *string                                                                        `json:"name,omitempty"`
+	Timestamp *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInnerTimestamp `json:"timestamp,omitempty"`
 	// A specific MFA factor. Only present when \"name\" is set to \"mfa\"
-	Type                 string `json:"^type$"`
+	Type                 *string `json:"^type$,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetTimestamp returns the Timestamp field value
+// GetTimestamp returns the Timestamp field value if set, zero value otherwise.
 func (o *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) GetTimestamp() GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInnerTimestamp {
-	if o == nil {
+	if o == nil || IsNil(o.Timestamp) {
 		var ret GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInnerTimestamp
 		return ret
 	}
-
-	return o.Timestamp
+	return *o.Timestamp
 }
 
-// GetTimestampOk returns a tuple with the Timestamp field value
+// GetTimestampOk returns a tuple with the Timestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) GetTimestampOk() (*GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInnerTimestamp, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Timestamp) {
 		return nil, false
 	}
-	return &o.Timestamp, true
+	return o.Timestamp, true
 }
 
-// SetTimestamp sets field value
+// HasTimestamp returns a boolean if a field has been set.
+func (o *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) HasTimestamp() bool {
+	if o != nil && !IsNil(o.Timestamp) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimestamp gets a reference to the given GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInnerTimestamp and assigns it to the Timestamp field.
 func (o *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) SetTimestamp(v GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInnerTimestamp) {
-	o.Timestamp = v
+	o.Timestamp = &v
 }
 
-// GetType returns the Type field value
+// GetType returns the Type field value if set, zero value otherwise.
 func (o *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) GetType() string {
-	if o == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
-
-	return o.Type
+	return *o.Type
 }
 
-// GetTypeOk returns a tuple with the Type field value
+// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) GetTypeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
-	return &o.Type, true
+	return o.Type, true
 }
 
-// SetType sets field value
+// HasType returns a boolean if a field has been set.
+func (o *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) HasType() bool {
+	if o != nil && !IsNil(o.Type) {
+		return true
+	}
+
+	return false
+}
+
+// SetType gets a reference to the given string and assigns it to the Type field.
 func (o *GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) SetType(v string) {
-	o.Type = v
+	o.Type = &v
 }
 
 func (o GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) MarshalJSON() ([]byte, error) {
@@ -108,9 +132,15 @@ func (o GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) Ma
 
 func (o GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["name"] = o.Name
-	toSerialize["timestamp"] = o.Timestamp
-	toSerialize["^type$"] = o.Type
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Timestamp) {
+		toSerialize["timestamp"] = o.Timestamp
+	}
+	if !IsNil(o.Type) {
+		toSerialize["^type$"] = o.Type
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

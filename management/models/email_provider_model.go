@@ -11,141 +11,178 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // EmailProvider struct for EmailProvider
 type EmailProvider struct {
 	// Name of the email provider. Can be `mailgun`, `mandrill`, `sendgrid`, `ses`, `sparkpost`, `smtp`, `azure_cs`, or `ms365`.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// Whether the provider is enabled (true) or disabled (false).
-	Enabled bool `json:"enabled"`
+	Enabled *bool `json:"enabled,omitempty"`
 	// Email address to use as \"from\" when no other address specified.
-	DefaultFromAddress string                   `json:"default_from_address"`
-	Credentials        EmailProviderCredentials `json:"credentials"`
+	DefaultFromAddress *string                   `json:"default_from_address,omitempty"`
+	Credentials        *EmailProviderCredentials `json:"credentials,omitempty"`
 	// Specific provider setting
-	Settings map[string]interface{} `json:"settings"`
+	Settings map[string]interface{} `json:"settings,omitempty"`
 }
 
-type _EmailProvider EmailProvider
-
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *EmailProvider) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EmailProvider) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *EmailProvider) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *EmailProvider) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetEnabled returns the Enabled field value
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *EmailProvider) GetEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.Enabled
+	return *o.Enabled
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EmailProvider) GetEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
-	return &o.Enabled, true
+	return o.Enabled, true
 }
 
-// SetEnabled sets field value
+// HasEnabled returns a boolean if a field has been set.
+func (o *EmailProvider) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
 func (o *EmailProvider) SetEnabled(v bool) {
-	o.Enabled = v
+	o.Enabled = &v
 }
 
-// GetDefaultFromAddress returns the DefaultFromAddress field value
+// GetDefaultFromAddress returns the DefaultFromAddress field value if set, zero value otherwise.
 func (o *EmailProvider) GetDefaultFromAddress() string {
-	if o == nil {
+	if o == nil || IsNil(o.DefaultFromAddress) {
 		var ret string
 		return ret
 	}
-
-	return o.DefaultFromAddress
+	return *o.DefaultFromAddress
 }
 
-// GetDefaultFromAddressOk returns a tuple with the DefaultFromAddress field value
+// GetDefaultFromAddressOk returns a tuple with the DefaultFromAddress field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EmailProvider) GetDefaultFromAddressOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DefaultFromAddress) {
 		return nil, false
 	}
-	return &o.DefaultFromAddress, true
+	return o.DefaultFromAddress, true
 }
 
-// SetDefaultFromAddress sets field value
+// HasDefaultFromAddress returns a boolean if a field has been set.
+func (o *EmailProvider) HasDefaultFromAddress() bool {
+	if o != nil && !IsNil(o.DefaultFromAddress) {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultFromAddress gets a reference to the given string and assigns it to the DefaultFromAddress field.
 func (o *EmailProvider) SetDefaultFromAddress(v string) {
-	o.DefaultFromAddress = v
+	o.DefaultFromAddress = &v
 }
 
-// GetCredentials returns the Credentials field value
+// GetCredentials returns the Credentials field value if set, zero value otherwise.
 func (o *EmailProvider) GetCredentials() EmailProviderCredentials {
-	if o == nil {
+	if o == nil || IsNil(o.Credentials) {
 		var ret EmailProviderCredentials
 		return ret
 	}
-
-	return o.Credentials
+	return *o.Credentials
 }
 
-// GetCredentialsOk returns a tuple with the Credentials field value
+// GetCredentialsOk returns a tuple with the Credentials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EmailProvider) GetCredentialsOk() (*EmailProviderCredentials, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Credentials) {
 		return nil, false
 	}
-	return &o.Credentials, true
+	return o.Credentials, true
 }
 
-// SetCredentials sets field value
+// HasCredentials returns a boolean if a field has been set.
+func (o *EmailProvider) HasCredentials() bool {
+	if o != nil && !IsNil(o.Credentials) {
+		return true
+	}
+
+	return false
+}
+
+// SetCredentials gets a reference to the given EmailProviderCredentials and assigns it to the Credentials field.
 func (o *EmailProvider) SetCredentials(v EmailProviderCredentials) {
-	o.Credentials = v
+	o.Credentials = &v
 }
 
-// GetSettings returns the Settings field value
+// GetSettings returns the Settings field value if set, zero value otherwise.
 func (o *EmailProvider) GetSettings() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Settings) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Settings
 }
 
-// GetSettingsOk returns a tuple with the Settings field value
+// GetSettingsOk returns a tuple with the Settings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EmailProvider) GetSettingsOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Settings) {
 		return map[string]interface{}{}, false
 	}
 	return o.Settings, true
 }
 
-// SetSettings sets field value
+// HasSettings returns a boolean if a field has been set.
+func (o *EmailProvider) HasSettings() bool {
+	if o != nil && !IsNil(o.Settings) {
+		return true
+	}
+
+	return false
+}
+
+// SetSettings gets a reference to the given map[string]interface{} and assigns it to the Settings field.
 func (o *EmailProvider) SetSettings(v map[string]interface{}) {
 	o.Settings = v
 }
@@ -160,28 +197,22 @@ func (o EmailProvider) MarshalJSON() ([]byte, error) {
 
 func (o EmailProvider) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["name"] = o.Name
-	toSerialize["enabled"] = o.Enabled
-	toSerialize["default_from_address"] = o.DefaultFromAddress
-	toSerialize["credentials"] = o.Credentials
-	toSerialize["settings"] = o.Settings
-	return toSerialize, nil
-}
-
-func (o *EmailProvider) UnmarshalJSON(data []byte) (err error) {
-	varEmailProvider := _EmailProvider{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varEmailProvider)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
 	}
-
-	*o = EmailProvider(varEmailProvider)
-
-	return err
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.DefaultFromAddress) {
+		toSerialize["default_from_address"] = o.DefaultFromAddress
+	}
+	if !IsNil(o.Credentials) {
+		toSerialize["credentials"] = o.Credentials
+	}
+	if !IsNil(o.Settings) {
+		toSerialize["settings"] = o.Settings
+	}
+	return toSerialize, nil
 }
 
 type NullableEmailProvider struct {

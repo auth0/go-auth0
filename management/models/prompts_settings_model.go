@@ -16,86 +16,110 @@ import (
 
 // PromptsSettings struct for PromptsSettings
 type PromptsSettings struct {
-	UniversalLoginExperience PromptsSettingsUniversalLoginExperience `json:"universal_login_experience"`
+	UniversalLoginExperience *PromptsSettingsUniversalLoginExperience `json:"universal_login_experience,omitempty"`
 	// Whether identifier first is enabled or not
-	IdentifierFirst bool `json:"identifier_first"`
+	IdentifierFirst *bool `json:"identifier_first,omitempty"`
 	// Use WebAuthn with Device Biometrics as the first authentication factor
-	WebauthnPlatformFirstFactor bool `json:"webauthn_platform_first_factor"`
+	WebauthnPlatformFirstFactor *bool `json:"webauthn_platform_first_factor,omitempty"`
 	AdditionalProperties        map[string]interface{}
 }
 
 type _PromptsSettings PromptsSettings
 
-// GetUniversalLoginExperience returns the UniversalLoginExperience field value
+// GetUniversalLoginExperience returns the UniversalLoginExperience field value if set, zero value otherwise.
 func (o *PromptsSettings) GetUniversalLoginExperience() PromptsSettingsUniversalLoginExperience {
-	if o == nil {
+	if o == nil || IsNil(o.UniversalLoginExperience) {
 		var ret PromptsSettingsUniversalLoginExperience
 		return ret
 	}
-
-	return o.UniversalLoginExperience
+	return *o.UniversalLoginExperience
 }
 
-// GetUniversalLoginExperienceOk returns a tuple with the UniversalLoginExperience field value
+// GetUniversalLoginExperienceOk returns a tuple with the UniversalLoginExperience field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PromptsSettings) GetUniversalLoginExperienceOk() (*PromptsSettingsUniversalLoginExperience, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.UniversalLoginExperience) {
 		return nil, false
 	}
-	return &o.UniversalLoginExperience, true
+	return o.UniversalLoginExperience, true
 }
 
-// SetUniversalLoginExperience sets field value
+// HasUniversalLoginExperience returns a boolean if a field has been set.
+func (o *PromptsSettings) HasUniversalLoginExperience() bool {
+	if o != nil && !IsNil(o.UniversalLoginExperience) {
+		return true
+	}
+
+	return false
+}
+
+// SetUniversalLoginExperience gets a reference to the given PromptsSettingsUniversalLoginExperience and assigns it to the UniversalLoginExperience field.
 func (o *PromptsSettings) SetUniversalLoginExperience(v PromptsSettingsUniversalLoginExperience) {
-	o.UniversalLoginExperience = v
+	o.UniversalLoginExperience = &v
 }
 
-// GetIdentifierFirst returns the IdentifierFirst field value
+// GetIdentifierFirst returns the IdentifierFirst field value if set, zero value otherwise.
 func (o *PromptsSettings) GetIdentifierFirst() bool {
-	if o == nil {
+	if o == nil || IsNil(o.IdentifierFirst) {
 		var ret bool
 		return ret
 	}
-
-	return o.IdentifierFirst
+	return *o.IdentifierFirst
 }
 
-// GetIdentifierFirstOk returns a tuple with the IdentifierFirst field value
+// GetIdentifierFirstOk returns a tuple with the IdentifierFirst field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PromptsSettings) GetIdentifierFirstOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IdentifierFirst) {
 		return nil, false
 	}
-	return &o.IdentifierFirst, true
+	return o.IdentifierFirst, true
 }
 
-// SetIdentifierFirst sets field value
+// HasIdentifierFirst returns a boolean if a field has been set.
+func (o *PromptsSettings) HasIdentifierFirst() bool {
+	if o != nil && !IsNil(o.IdentifierFirst) {
+		return true
+	}
+
+	return false
+}
+
+// SetIdentifierFirst gets a reference to the given bool and assigns it to the IdentifierFirst field.
 func (o *PromptsSettings) SetIdentifierFirst(v bool) {
-	o.IdentifierFirst = v
+	o.IdentifierFirst = &v
 }
 
-// GetWebauthnPlatformFirstFactor returns the WebauthnPlatformFirstFactor field value
+// GetWebauthnPlatformFirstFactor returns the WebauthnPlatformFirstFactor field value if set, zero value otherwise.
 func (o *PromptsSettings) GetWebauthnPlatformFirstFactor() bool {
-	if o == nil {
+	if o == nil || IsNil(o.WebauthnPlatformFirstFactor) {
 		var ret bool
 		return ret
 	}
-
-	return o.WebauthnPlatformFirstFactor
+	return *o.WebauthnPlatformFirstFactor
 }
 
-// GetWebauthnPlatformFirstFactorOk returns a tuple with the WebauthnPlatformFirstFactor field value
+// GetWebauthnPlatformFirstFactorOk returns a tuple with the WebauthnPlatformFirstFactor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PromptsSettings) GetWebauthnPlatformFirstFactorOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.WebauthnPlatformFirstFactor) {
 		return nil, false
 	}
-	return &o.WebauthnPlatformFirstFactor, true
+	return o.WebauthnPlatformFirstFactor, true
 }
 
-// SetWebauthnPlatformFirstFactor sets field value
+// HasWebauthnPlatformFirstFactor returns a boolean if a field has been set.
+func (o *PromptsSettings) HasWebauthnPlatformFirstFactor() bool {
+	if o != nil && !IsNil(o.WebauthnPlatformFirstFactor) {
+		return true
+	}
+
+	return false
+}
+
+// SetWebauthnPlatformFirstFactor gets a reference to the given bool and assigns it to the WebauthnPlatformFirstFactor field.
 func (o *PromptsSettings) SetWebauthnPlatformFirstFactor(v bool) {
-	o.WebauthnPlatformFirstFactor = v
+	o.WebauthnPlatformFirstFactor = &v
 }
 
 func (o PromptsSettings) MarshalJSON() ([]byte, error) {
@@ -108,9 +132,15 @@ func (o PromptsSettings) MarshalJSON() ([]byte, error) {
 
 func (o PromptsSettings) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["universal_login_experience"] = o.UniversalLoginExperience
-	toSerialize["identifier_first"] = o.IdentifierFirst
-	toSerialize["webauthn_platform_first_factor"] = o.WebauthnPlatformFirstFactor
+	if !IsNil(o.UniversalLoginExperience) {
+		toSerialize["universal_login_experience"] = o.UniversalLoginExperience
+	}
+	if !IsNil(o.IdentifierFirst) {
+		toSerialize["identifier_first"] = o.IdentifierFirst
+	}
+	if !IsNil(o.WebauthnPlatformFirstFactor) {
+		toSerialize["webauthn_platform_first_factor"] = o.WebauthnPlatformFirstFactor
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

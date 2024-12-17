@@ -17,32 +17,40 @@ import (
 // GetSessionsForUser200ResponseSessionsInnerAuthentication Details about authentication signals obtained during the login flow
 type GetSessionsForUser200ResponseSessionsInnerAuthentication struct {
 	// Contains the authentication methods a user has completed during their session
-	Methods              []GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner `json:"methods"`
+	Methods              []GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner `json:"methods,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetSessionsForUser200ResponseSessionsInnerAuthentication GetSessionsForUser200ResponseSessionsInnerAuthentication
 
-// GetMethods returns the Methods field value
+// GetMethods returns the Methods field value if set, zero value otherwise.
 func (o *GetSessionsForUser200ResponseSessionsInnerAuthentication) GetMethods() []GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Methods) {
 		var ret []GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner
 		return ret
 	}
-
 	return o.Methods
 }
 
-// GetMethodsOk returns a tuple with the Methods field value
+// GetMethodsOk returns a tuple with the Methods field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSessionsForUser200ResponseSessionsInnerAuthentication) GetMethodsOk() ([]GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Methods) {
 		return nil, false
 	}
 	return o.Methods, true
 }
 
-// SetMethods sets field value
+// HasMethods returns a boolean if a field has been set.
+func (o *GetSessionsForUser200ResponseSessionsInnerAuthentication) HasMethods() bool {
+	if o != nil && !IsNil(o.Methods) {
+		return true
+	}
+
+	return false
+}
+
+// SetMethods gets a reference to the given []GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner and assigns it to the Methods field.
 func (o *GetSessionsForUser200ResponseSessionsInnerAuthentication) SetMethods(v []GetSessionsForUser200ResponseSessionsInnerAuthenticationMethodsInner) {
 	o.Methods = v
 }
@@ -57,7 +65,9 @@ func (o GetSessionsForUser200ResponseSessionsInnerAuthentication) MarshalJSON() 
 
 func (o GetSessionsForUser200ResponseSessionsInnerAuthentication) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["methods"] = o.Methods
+	if !IsNil(o.Methods) {
+		toSerialize["methods"] = o.Methods
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

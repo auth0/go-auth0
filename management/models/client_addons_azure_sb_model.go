@@ -17,138 +17,178 @@ import (
 // ClientAddonsAzureSb Azure Storage Bus addon configuration.
 type ClientAddonsAzureSb struct {
 	// Your Azure Service Bus namespace. Usually the first segment of your Service Bus URL (e.g. `https://acme-org.servicebus.windows.net` would be `acme-org`).
-	Namespace string `json:"namespace"`
+	Namespace *string `json:"namespace,omitempty"`
 	// Your shared access policy name defined in your Service Bus entity.
-	SasKeyName string `json:"sasKeyName"`
+	SasKeyName *string `json:"sasKeyName,omitempty"`
 	// Primary Key associated with your shared access policy.
-	SasKey string `json:"sasKey"`
+	SasKey *string `json:"sasKey,omitempty"`
 	// Entity you want to request a token for. e.g. `my-queue`.'
-	EntityPath string `json:"entityPath"`
+	EntityPath *string `json:"entityPath,omitempty"`
 	// Optional expiration in minutes for the generated token. Defaults to 5 minutes.
-	Expiration           int32 `json:"expiration"`
+	Expiration           *int32 `json:"expiration,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsAzureSb ClientAddonsAzureSb
 
-// GetNamespace returns the Namespace field value
+// GetNamespace returns the Namespace field value if set, zero value otherwise.
 func (o *ClientAddonsAzureSb) GetNamespace() string {
-	if o == nil {
+	if o == nil || IsNil(o.Namespace) {
 		var ret string
 		return ret
 	}
-
-	return o.Namespace
+	return *o.Namespace
 }
 
-// GetNamespaceOk returns a tuple with the Namespace field value
+// GetNamespaceOk returns a tuple with the Namespace field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsAzureSb) GetNamespaceOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Namespace) {
 		return nil, false
 	}
-	return &o.Namespace, true
+	return o.Namespace, true
 }
 
-// SetNamespace sets field value
+// HasNamespace returns a boolean if a field has been set.
+func (o *ClientAddonsAzureSb) HasNamespace() bool {
+	if o != nil && !IsNil(o.Namespace) {
+		return true
+	}
+
+	return false
+}
+
+// SetNamespace gets a reference to the given string and assigns it to the Namespace field.
 func (o *ClientAddonsAzureSb) SetNamespace(v string) {
-	o.Namespace = v
+	o.Namespace = &v
 }
 
-// GetSasKeyName returns the SasKeyName field value
+// GetSasKeyName returns the SasKeyName field value if set, zero value otherwise.
 func (o *ClientAddonsAzureSb) GetSasKeyName() string {
-	if o == nil {
+	if o == nil || IsNil(o.SasKeyName) {
 		var ret string
 		return ret
 	}
-
-	return o.SasKeyName
+	return *o.SasKeyName
 }
 
-// GetSasKeyNameOk returns a tuple with the SasKeyName field value
+// GetSasKeyNameOk returns a tuple with the SasKeyName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsAzureSb) GetSasKeyNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SasKeyName) {
 		return nil, false
 	}
-	return &o.SasKeyName, true
+	return o.SasKeyName, true
 }
 
-// SetSasKeyName sets field value
+// HasSasKeyName returns a boolean if a field has been set.
+func (o *ClientAddonsAzureSb) HasSasKeyName() bool {
+	if o != nil && !IsNil(o.SasKeyName) {
+		return true
+	}
+
+	return false
+}
+
+// SetSasKeyName gets a reference to the given string and assigns it to the SasKeyName field.
 func (o *ClientAddonsAzureSb) SetSasKeyName(v string) {
-	o.SasKeyName = v
+	o.SasKeyName = &v
 }
 
-// GetSasKey returns the SasKey field value
+// GetSasKey returns the SasKey field value if set, zero value otherwise.
 func (o *ClientAddonsAzureSb) GetSasKey() string {
-	if o == nil {
+	if o == nil || IsNil(o.SasKey) {
 		var ret string
 		return ret
 	}
-
-	return o.SasKey
+	return *o.SasKey
 }
 
-// GetSasKeyOk returns a tuple with the SasKey field value
+// GetSasKeyOk returns a tuple with the SasKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsAzureSb) GetSasKeyOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SasKey) {
 		return nil, false
 	}
-	return &o.SasKey, true
+	return o.SasKey, true
 }
 
-// SetSasKey sets field value
+// HasSasKey returns a boolean if a field has been set.
+func (o *ClientAddonsAzureSb) HasSasKey() bool {
+	if o != nil && !IsNil(o.SasKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetSasKey gets a reference to the given string and assigns it to the SasKey field.
 func (o *ClientAddonsAzureSb) SetSasKey(v string) {
-	o.SasKey = v
+	o.SasKey = &v
 }
 
-// GetEntityPath returns the EntityPath field value
+// GetEntityPath returns the EntityPath field value if set, zero value otherwise.
 func (o *ClientAddonsAzureSb) GetEntityPath() string {
-	if o == nil {
+	if o == nil || IsNil(o.EntityPath) {
 		var ret string
 		return ret
 	}
-
-	return o.EntityPath
+	return *o.EntityPath
 }
 
-// GetEntityPathOk returns a tuple with the EntityPath field value
+// GetEntityPathOk returns a tuple with the EntityPath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsAzureSb) GetEntityPathOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EntityPath) {
 		return nil, false
 	}
-	return &o.EntityPath, true
+	return o.EntityPath, true
 }
 
-// SetEntityPath sets field value
+// HasEntityPath returns a boolean if a field has been set.
+func (o *ClientAddonsAzureSb) HasEntityPath() bool {
+	if o != nil && !IsNil(o.EntityPath) {
+		return true
+	}
+
+	return false
+}
+
+// SetEntityPath gets a reference to the given string and assigns it to the EntityPath field.
 func (o *ClientAddonsAzureSb) SetEntityPath(v string) {
-	o.EntityPath = v
+	o.EntityPath = &v
 }
 
-// GetExpiration returns the Expiration field value
+// GetExpiration returns the Expiration field value if set, zero value otherwise.
 func (o *ClientAddonsAzureSb) GetExpiration() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.Expiration) {
 		var ret int32
 		return ret
 	}
-
-	return o.Expiration
+	return *o.Expiration
 }
 
-// GetExpirationOk returns a tuple with the Expiration field value
+// GetExpirationOk returns a tuple with the Expiration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsAzureSb) GetExpirationOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Expiration) {
 		return nil, false
 	}
-	return &o.Expiration, true
+	return o.Expiration, true
 }
 
-// SetExpiration sets field value
+// HasExpiration returns a boolean if a field has been set.
+func (o *ClientAddonsAzureSb) HasExpiration() bool {
+	if o != nil && !IsNil(o.Expiration) {
+		return true
+	}
+
+	return false
+}
+
+// SetExpiration gets a reference to the given int32 and assigns it to the Expiration field.
 func (o *ClientAddonsAzureSb) SetExpiration(v int32) {
-	o.Expiration = v
+	o.Expiration = &v
 }
 
 func (o ClientAddonsAzureSb) MarshalJSON() ([]byte, error) {
@@ -161,11 +201,21 @@ func (o ClientAddonsAzureSb) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsAzureSb) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["namespace"] = o.Namespace
-	toSerialize["sasKeyName"] = o.SasKeyName
-	toSerialize["sasKey"] = o.SasKey
-	toSerialize["entityPath"] = o.EntityPath
-	toSerialize["expiration"] = o.Expiration
+	if !IsNil(o.Namespace) {
+		toSerialize["namespace"] = o.Namespace
+	}
+	if !IsNil(o.SasKeyName) {
+		toSerialize["sasKeyName"] = o.SasKeyName
+	}
+	if !IsNil(o.SasKey) {
+		toSerialize["sasKey"] = o.SasKey
+	}
+	if !IsNil(o.EntityPath) {
+		toSerialize["entityPath"] = o.EntityPath
+	}
+	if !IsNil(o.Expiration) {
+		toSerialize["expiration"] = o.Expiration
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

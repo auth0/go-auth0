@@ -17,134 +17,174 @@ import (
 // GetActions200ResponseActionsInnerIntegrationCurrentRelease struct for GetActions200ResponseActionsInnerIntegrationCurrentRelease
 type GetActions200ResponseActionsInnerIntegrationCurrentRelease struct {
 	// The id of the associated IntegrationRelease
-	Id      string                                                           `json:"id"`
-	Trigger GetActions200ResponseActionsInnerSupportedTriggersInner          `json:"trigger"`
-	Semver  GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver `json:"semver"`
+	Id      *string                                                           `json:"id,omitempty"`
+	Trigger *GetActions200ResponseActionsInnerSupportedTriggersInner          `json:"trigger,omitempty"`
+	Semver  *GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver `json:"semver,omitempty"`
 	// required_secrets declares all the necessary secrets for an integration to work.
-	RequiredSecrets []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner `json:"required_secrets"`
+	RequiredSecrets []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner `json:"required_secrets,omitempty"`
 	// required_configuration declares all the necessary configuration fields for an integration to work.
-	RequiredConfiguration []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner `json:"required_configuration"`
+	RequiredConfiguration []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner `json:"required_configuration,omitempty"`
 	AdditionalProperties  map[string]interface{}
 }
 
 type _GetActions200ResponseActionsInnerIntegrationCurrentRelease GetActions200ResponseActionsInnerIntegrationCurrentRelease
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetTrigger returns the Trigger field value
+// GetTrigger returns the Trigger field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) GetTrigger() GetActions200ResponseActionsInnerSupportedTriggersInner {
-	if o == nil {
+	if o == nil || IsNil(o.Trigger) {
 		var ret GetActions200ResponseActionsInnerSupportedTriggersInner
 		return ret
 	}
-
-	return o.Trigger
+	return *o.Trigger
 }
 
-// GetTriggerOk returns a tuple with the Trigger field value
+// GetTriggerOk returns a tuple with the Trigger field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) GetTriggerOk() (*GetActions200ResponseActionsInnerSupportedTriggersInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Trigger) {
 		return nil, false
 	}
-	return &o.Trigger, true
+	return o.Trigger, true
 }
 
-// SetTrigger sets field value
+// HasTrigger returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) HasTrigger() bool {
+	if o != nil && !IsNil(o.Trigger) {
+		return true
+	}
+
+	return false
+}
+
+// SetTrigger gets a reference to the given GetActions200ResponseActionsInnerSupportedTriggersInner and assigns it to the Trigger field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) SetTrigger(v GetActions200ResponseActionsInnerSupportedTriggersInner) {
-	o.Trigger = v
+	o.Trigger = &v
 }
 
-// GetSemver returns the Semver field value
+// GetSemver returns the Semver field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) GetSemver() GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver {
-	if o == nil {
+	if o == nil || IsNil(o.Semver) {
 		var ret GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver
 		return ret
 	}
-
-	return o.Semver
+	return *o.Semver
 }
 
-// GetSemverOk returns a tuple with the Semver field value
+// GetSemverOk returns a tuple with the Semver field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) GetSemverOk() (*GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Semver) {
 		return nil, false
 	}
-	return &o.Semver, true
+	return o.Semver, true
 }
 
-// SetSemver sets field value
+// HasSemver returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) HasSemver() bool {
+	if o != nil && !IsNil(o.Semver) {
+		return true
+	}
+
+	return false
+}
+
+// SetSemver gets a reference to the given GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver and assigns it to the Semver field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) SetSemver(v GetActions200ResponseActionsInnerIntegrationCurrentReleaseSemver) {
-	o.Semver = v
+	o.Semver = &v
 }
 
-// GetRequiredSecrets returns the RequiredSecrets field value
+// GetRequiredSecrets returns the RequiredSecrets field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) GetRequiredSecrets() []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner {
-	if o == nil {
+	if o == nil || IsNil(o.RequiredSecrets) {
 		var ret []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner
 		return ret
 	}
-
 	return o.RequiredSecrets
 }
 
-// GetRequiredSecretsOk returns a tuple with the RequiredSecrets field value
+// GetRequiredSecretsOk returns a tuple with the RequiredSecrets field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) GetRequiredSecretsOk() ([]GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RequiredSecrets) {
 		return nil, false
 	}
 	return o.RequiredSecrets, true
 }
 
-// SetRequiredSecrets sets field value
+// HasRequiredSecrets returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) HasRequiredSecrets() bool {
+	if o != nil && !IsNil(o.RequiredSecrets) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequiredSecrets gets a reference to the given []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner and assigns it to the RequiredSecrets field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) SetRequiredSecrets(v []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) {
 	o.RequiredSecrets = v
 }
 
-// GetRequiredConfiguration returns the RequiredConfiguration field value
+// GetRequiredConfiguration returns the RequiredConfiguration field value if set, zero value otherwise.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) GetRequiredConfiguration() []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner {
-	if o == nil {
+	if o == nil || IsNil(o.RequiredConfiguration) {
 		var ret []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner
 		return ret
 	}
-
 	return o.RequiredConfiguration
 }
 
-// GetRequiredConfigurationOk returns a tuple with the RequiredConfiguration field value
+// GetRequiredConfigurationOk returns a tuple with the RequiredConfiguration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) GetRequiredConfigurationOk() ([]GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.RequiredConfiguration) {
 		return nil, false
 	}
 	return o.RequiredConfiguration, true
 }
 
-// SetRequiredConfiguration sets field value
+// HasRequiredConfiguration returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) HasRequiredConfiguration() bool {
+	if o != nil && !IsNil(o.RequiredConfiguration) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequiredConfiguration gets a reference to the given []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner and assigns it to the RequiredConfiguration field.
 func (o *GetActions200ResponseActionsInnerIntegrationCurrentRelease) SetRequiredConfiguration(v []GetActions200ResponseActionsInnerIntegrationCurrentReleaseRequiredSecretsInner) {
 	o.RequiredConfiguration = v
 }
@@ -159,11 +199,21 @@ func (o GetActions200ResponseActionsInnerIntegrationCurrentRelease) MarshalJSON(
 
 func (o GetActions200ResponseActionsInnerIntegrationCurrentRelease) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["trigger"] = o.Trigger
-	toSerialize["semver"] = o.Semver
-	toSerialize["required_secrets"] = o.RequiredSecrets
-	toSerialize["required_configuration"] = o.RequiredConfiguration
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Trigger) {
+		toSerialize["trigger"] = o.Trigger
+	}
+	if !IsNil(o.Semver) {
+		toSerialize["semver"] = o.Semver
+	}
+	if !IsNil(o.RequiredSecrets) {
+		toSerialize["required_secrets"] = o.RequiredSecrets
+	}
+	if !IsNil(o.RequiredConfiguration) {
+		toSerialize["required_configuration"] = o.RequiredConfiguration
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -17,34 +17,42 @@ import (
 // ClientAddonsZoom Zoom SSO configuration.
 type ClientAddonsZoom struct {
 	// Zoom account name usually first segment of your Zoom URL, e.g. `https://acme-org.zoom.us` would be `acme-org`.
-	Account              string `json:"account"`
+	Account              *string `json:"account,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsZoom ClientAddonsZoom
 
-// GetAccount returns the Account field value
+// GetAccount returns the Account field value if set, zero value otherwise.
 func (o *ClientAddonsZoom) GetAccount() string {
-	if o == nil {
+	if o == nil || IsNil(o.Account) {
 		var ret string
 		return ret
 	}
-
-	return o.Account
+	return *o.Account
 }
 
-// GetAccountOk returns a tuple with the Account field value
+// GetAccountOk returns a tuple with the Account field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsZoom) GetAccountOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Account) {
 		return nil, false
 	}
-	return &o.Account, true
+	return o.Account, true
 }
 
-// SetAccount sets field value
+// HasAccount returns a boolean if a field has been set.
+func (o *ClientAddonsZoom) HasAccount() bool {
+	if o != nil && !IsNil(o.Account) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccount gets a reference to the given string and assigns it to the Account field.
 func (o *ClientAddonsZoom) SetAccount(v string) {
-	o.Account = v
+	o.Account = &v
 }
 
 func (o ClientAddonsZoom) MarshalJSON() ([]byte, error) {
@@ -57,7 +65,9 @@ func (o ClientAddonsZoom) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsZoom) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["account"] = o.Account
+	if !IsNil(o.Account) {
+		toSerialize["account"] = o.Account
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -11,245 +11,316 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // Connection struct for Connection
 type Connection struct {
 	// The name of the connection
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// Connection name used in login screen
-	DisplayName string                 `json:"display_name"`
-	Options     map[string]interface{} `json:"options"`
+	DisplayName *string                `json:"display_name,omitempty"`
+	Options     map[string]interface{} `json:"options,omitempty"`
 	// The connection's identifier
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// The type of the connection, related to the identity provider
-	Strategy string `json:"strategy"`
+	Strategy *string `json:"strategy,omitempty"`
 	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
-	Realms []string `json:"realms"`
+	Realms []string `json:"realms,omitempty"`
 	// The ids of the clients for which the connection is enabled
-	EnabledClients []string `json:"enabled_clients"`
+	EnabledClients []string `json:"enabled_clients,omitempty"`
 	// True if the connection is domain level
-	IsDomainConnection bool `json:"is_domain_connection"`
+	IsDomainConnection *bool `json:"is_domain_connection,omitempty"`
 	// Metadata associated with the connection in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.
-	Metadata map[string]interface{} `json:"metadata"`
+	Metadata map[string]interface{} `json:"metadata,omitempty"`
+	// Enable the connection to be used in the new login experience. If false, it will be usable only by HRD.
+	ShowAsButton *bool `json:"show_as_button,omitempty"`
 }
 
-type _Connection Connection
-
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *Connection) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Connection) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *Connection) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *Connection) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetDisplayName returns the DisplayName field value
+// GetDisplayName returns the DisplayName field value if set, zero value otherwise.
 func (o *Connection) GetDisplayName() string {
-	if o == nil {
+	if o == nil || IsNil(o.DisplayName) {
 		var ret string
 		return ret
 	}
-
-	return o.DisplayName
+	return *o.DisplayName
 }
 
-// GetDisplayNameOk returns a tuple with the DisplayName field value
+// GetDisplayNameOk returns a tuple with the DisplayName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Connection) GetDisplayNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DisplayName) {
 		return nil, false
 	}
-	return &o.DisplayName, true
+	return o.DisplayName, true
 }
 
-// SetDisplayName sets field value
+// HasDisplayName returns a boolean if a field has been set.
+func (o *Connection) HasDisplayName() bool {
+	if o != nil && !IsNil(o.DisplayName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDisplayName gets a reference to the given string and assigns it to the DisplayName field.
 func (o *Connection) SetDisplayName(v string) {
-	o.DisplayName = v
+	o.DisplayName = &v
 }
 
-// GetOptions returns the Options field value
+// GetOptions returns the Options field value if set, zero value otherwise.
 func (o *Connection) GetOptions() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Options) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Options
 }
 
-// GetOptionsOk returns a tuple with the Options field value
+// GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Connection) GetOptionsOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Options) {
 		return map[string]interface{}{}, false
 	}
 	return o.Options, true
 }
 
-// SetOptions sets field value
+// HasOptions returns a boolean if a field has been set.
+func (o *Connection) HasOptions() bool {
+	if o != nil && !IsNil(o.Options) {
+		return true
+	}
+
+	return false
+}
+
+// SetOptions gets a reference to the given map[string]interface{} and assigns it to the Options field.
 func (o *Connection) SetOptions(v map[string]interface{}) {
 	o.Options = v
 }
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *Connection) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Connection) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *Connection) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *Connection) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetStrategy returns the Strategy field value
+// GetStrategy returns the Strategy field value if set, zero value otherwise.
 func (o *Connection) GetStrategy() string {
-	if o == nil {
+	if o == nil || IsNil(o.Strategy) {
 		var ret string
 		return ret
 	}
-
-	return o.Strategy
+	return *o.Strategy
 }
 
-// GetStrategyOk returns a tuple with the Strategy field value
+// GetStrategyOk returns a tuple with the Strategy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Connection) GetStrategyOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Strategy) {
 		return nil, false
 	}
-	return &o.Strategy, true
+	return o.Strategy, true
 }
 
-// SetStrategy sets field value
+// HasStrategy returns a boolean if a field has been set.
+func (o *Connection) HasStrategy() bool {
+	if o != nil && !IsNil(o.Strategy) {
+		return true
+	}
+
+	return false
+}
+
+// SetStrategy gets a reference to the given string and assigns it to the Strategy field.
 func (o *Connection) SetStrategy(v string) {
-	o.Strategy = v
+	o.Strategy = &v
 }
 
-// GetRealms returns the Realms field value
+// GetRealms returns the Realms field value if set, zero value otherwise.
 func (o *Connection) GetRealms() []string {
-	if o == nil {
+	if o == nil || IsNil(o.Realms) {
 		var ret []string
 		return ret
 	}
-
 	return o.Realms
 }
 
-// GetRealmsOk returns a tuple with the Realms field value
+// GetRealmsOk returns a tuple with the Realms field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Connection) GetRealmsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Realms) {
 		return nil, false
 	}
 	return o.Realms, true
 }
 
-// SetRealms sets field value
+// HasRealms returns a boolean if a field has been set.
+func (o *Connection) HasRealms() bool {
+	if o != nil && !IsNil(o.Realms) {
+		return true
+	}
+
+	return false
+}
+
+// SetRealms gets a reference to the given []string and assigns it to the Realms field.
 func (o *Connection) SetRealms(v []string) {
 	o.Realms = v
 }
 
-// GetEnabledClients returns the EnabledClients field value
+// GetEnabledClients returns the EnabledClients field value if set, zero value otherwise.
 func (o *Connection) GetEnabledClients() []string {
-	if o == nil {
+	if o == nil || IsNil(o.EnabledClients) {
 		var ret []string
 		return ret
 	}
-
 	return o.EnabledClients
 }
 
-// GetEnabledClientsOk returns a tuple with the EnabledClients field value
+// GetEnabledClientsOk returns a tuple with the EnabledClients field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Connection) GetEnabledClientsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.EnabledClients) {
 		return nil, false
 	}
 	return o.EnabledClients, true
 }
 
-// SetEnabledClients sets field value
+// HasEnabledClients returns a boolean if a field has been set.
+func (o *Connection) HasEnabledClients() bool {
+	if o != nil && !IsNil(o.EnabledClients) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabledClients gets a reference to the given []string and assigns it to the EnabledClients field.
 func (o *Connection) SetEnabledClients(v []string) {
 	o.EnabledClients = v
 }
 
-// GetIsDomainConnection returns the IsDomainConnection field value
+// GetIsDomainConnection returns the IsDomainConnection field value if set, zero value otherwise.
 func (o *Connection) GetIsDomainConnection() bool {
-	if o == nil {
+	if o == nil || IsNil(o.IsDomainConnection) {
 		var ret bool
 		return ret
 	}
-
-	return o.IsDomainConnection
+	return *o.IsDomainConnection
 }
 
-// GetIsDomainConnectionOk returns a tuple with the IsDomainConnection field value
+// GetIsDomainConnectionOk returns a tuple with the IsDomainConnection field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Connection) GetIsDomainConnectionOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IsDomainConnection) {
 		return nil, false
 	}
-	return &o.IsDomainConnection, true
+	return o.IsDomainConnection, true
 }
 
-// SetIsDomainConnection sets field value
+// HasIsDomainConnection returns a boolean if a field has been set.
+func (o *Connection) HasIsDomainConnection() bool {
+	if o != nil && !IsNil(o.IsDomainConnection) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsDomainConnection gets a reference to the given bool and assigns it to the IsDomainConnection field.
 func (o *Connection) SetIsDomainConnection(v bool) {
-	o.IsDomainConnection = v
+	o.IsDomainConnection = &v
 }
 
-// GetMetadata returns the Metadata field value
+// GetMetadata returns the Metadata field value if set, zero value otherwise.
 func (o *Connection) GetMetadata() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Metadata) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Metadata
 }
 
-// GetMetadataOk returns a tuple with the Metadata field value
+// GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Connection) GetMetadataOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Metadata) {
 		return map[string]interface{}{}, false
 	}
 	return o.Metadata, true
 }
 
-// SetMetadata sets field value
+// HasMetadata returns a boolean if a field has been set.
+func (o *Connection) HasMetadata() bool {
+	if o != nil && !IsNil(o.Metadata) {
+		return true
+	}
+
+	return false
+}
+
+// SetMetadata gets a reference to the given map[string]interface{} and assigns it to the Metadata field.
 func (o *Connection) SetMetadata(v map[string]interface{}) {
 	o.Metadata = v
 }
@@ -264,32 +335,34 @@ func (o Connection) MarshalJSON() ([]byte, error) {
 
 func (o Connection) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["name"] = o.Name
-	toSerialize["display_name"] = o.DisplayName
-	toSerialize["options"] = o.Options
-	toSerialize["id"] = o.Id
-	toSerialize["strategy"] = o.Strategy
-	toSerialize["realms"] = o.Realms
-	toSerialize["enabled_clients"] = o.EnabledClients
-	toSerialize["is_domain_connection"] = o.IsDomainConnection
-	toSerialize["metadata"] = o.Metadata
-	return toSerialize, nil
-}
-
-func (o *Connection) UnmarshalJSON(data []byte) (err error) {
-	varConnection := _Connection{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varConnection)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
 	}
-
-	*o = Connection(varConnection)
-
-	return err
+	if !IsNil(o.DisplayName) {
+		toSerialize["display_name"] = o.DisplayName
+	}
+	if !IsNil(o.Options) {
+		toSerialize["options"] = o.Options
+	}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Strategy) {
+		toSerialize["strategy"] = o.Strategy
+	}
+	if !IsNil(o.Realms) {
+		toSerialize["realms"] = o.Realms
+	}
+	if !IsNil(o.EnabledClients) {
+		toSerialize["enabled_clients"] = o.EnabledClients
+	}
+	if !IsNil(o.IsDomainConnection) {
+		toSerialize["is_domain_connection"] = o.IsDomainConnection
+	}
+	if !IsNil(o.Metadata) {
+		toSerialize["metadata"] = o.Metadata
+	}
+	return toSerialize, nil
 }
 
 type NullableConnection struct {

@@ -13,6 +13,7 @@ package models
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // UserCreate struct for UserCreate
@@ -28,8 +29,8 @@ type UserCreate struct {
 	// Whether this email address is verified (true) or unverified (false). User will receive a verification email after creation if `email_verified` is false or not specified
 	EmailVerified *bool `json:"email_verified,omitempty"`
 	// Whether this phone number has been verified (true) or not (false).
-	PhoneVerified *bool                              `json:"phone_verified,omitempty"`
-	AppMetadata   *PostInvitationsRequestAppMetadata `json:"app_metadata,omitempty"`
+	PhoneVerified *bool                                           `json:"phone_verified,omitempty"`
+	AppMetadata   *GetInvitations200ResponseOneOfInnerAppMetadata `json:"app_metadata,omitempty"`
 	// The user's given name(s).
 	GivenName *string `json:"given_name,omitempty"`
 	// The user's family name(s).
@@ -247,9 +248,9 @@ func (o *UserCreate) SetPhoneVerified(v bool) {
 }
 
 // GetAppMetadata returns the AppMetadata field value if set, zero value otherwise.
-func (o *UserCreate) GetAppMetadata() PostInvitationsRequestAppMetadata {
+func (o *UserCreate) GetAppMetadata() GetInvitations200ResponseOneOfInnerAppMetadata {
 	if o == nil || IsNil(o.AppMetadata) {
-		var ret PostInvitationsRequestAppMetadata
+		var ret GetInvitations200ResponseOneOfInnerAppMetadata
 		return ret
 	}
 	return *o.AppMetadata
@@ -257,7 +258,7 @@ func (o *UserCreate) GetAppMetadata() PostInvitationsRequestAppMetadata {
 
 // GetAppMetadataOk returns a tuple with the AppMetadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UserCreate) GetAppMetadataOk() (*PostInvitationsRequestAppMetadata, bool) {
+func (o *UserCreate) GetAppMetadataOk() (*GetInvitations200ResponseOneOfInnerAppMetadata, bool) {
 	if o == nil || IsNil(o.AppMetadata) {
 		return nil, false
 	}
@@ -273,8 +274,8 @@ func (o *UserCreate) HasAppMetadata() bool {
 	return false
 }
 
-// SetAppMetadata gets a reference to the given PostInvitationsRequestAppMetadata and assigns it to the AppMetadata field.
-func (o *UserCreate) SetAppMetadata(v PostInvitationsRequestAppMetadata) {
+// SetAppMetadata gets a reference to the given GetInvitations200ResponseOneOfInnerAppMetadata and assigns it to the AppMetadata field.
+func (o *UserCreate) SetAppMetadata(v GetInvitations200ResponseOneOfInnerAppMetadata) {
 	o.AppMetadata = &v
 }
 
@@ -653,6 +654,27 @@ func (o UserCreate) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *UserCreate) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"connection",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
 	varUserCreate := _UserCreate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

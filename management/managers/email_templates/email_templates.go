@@ -34,9 +34,9 @@ func (m *Manager) GetEmailTemplatesByTemplateName(ctx context.Context, templateN
 // PatchEmailTemplatesByTemplateName Patch an email template
 //
 // https://auth0.com/docs/api/management/v2/#!/EmailTemplates/patch_email_templates_by_template_name
-func (m *Manager) PatchEmailTemplatesByTemplateName(ctx context.Context, templateName models.GetEmailTemplatesByTemplateNameTemplateNameParameter, patchEmailTemplatesByTemplateNameRequest *models.PatchEmailTemplatesByTemplateNameRequest, opts ...management.RequestOption) (*models.GetEmailTemplatesByTemplateName200Response, error) {
+func (m *Manager) PatchEmailTemplatesByTemplateName(ctx context.Context, templateName models.GetEmailTemplatesByTemplateNameTemplateNameParameter, getEmailTemplatesByTemplateName200Response *models.GetEmailTemplatesByTemplateName200Response, opts ...management.RequestOption) (*models.GetEmailTemplatesByTemplateName200Response, error) {
 	var localVarReturnValue *models.GetEmailTemplatesByTemplateName200Response
-	err := m.management.Request(ctx, "PATCH", m.management.URI("email-templates", string(templateName)), patchEmailTemplatesByTemplateNameRequest, &localVarReturnValue, opts...)
+	err := m.management.Request(ctx, "PATCH", m.management.URI("email-templates", string(templateName)), getEmailTemplatesByTemplateName200Response, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
 	}

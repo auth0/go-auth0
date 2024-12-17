@@ -17,86 +17,110 @@ import (
 // GetErrors200ResponseOneOfInnerErrorsInner struct for GetErrors200ResponseOneOfInnerErrorsInner
 type GetErrors200ResponseOneOfInnerErrorsInner struct {
 	// Error code.
-	Code string `json:"code"`
+	Code *string `json:"code,omitempty"`
 	// Error message.
-	Message string `json:"message"`
+	Message *string `json:"message,omitempty"`
 	// Error field.
-	Path                 string `json:"path"`
+	Path                 *string `json:"path,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetErrors200ResponseOneOfInnerErrorsInner GetErrors200ResponseOneOfInnerErrorsInner
 
-// GetCode returns the Code field value
+// GetCode returns the Code field value if set, zero value otherwise.
 func (o *GetErrors200ResponseOneOfInnerErrorsInner) GetCode() string {
-	if o == nil {
+	if o == nil || IsNil(o.Code) {
 		var ret string
 		return ret
 	}
-
-	return o.Code
+	return *o.Code
 }
 
-// GetCodeOk returns a tuple with the Code field value
+// GetCodeOk returns a tuple with the Code field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetErrors200ResponseOneOfInnerErrorsInner) GetCodeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Code) {
 		return nil, false
 	}
-	return &o.Code, true
+	return o.Code, true
 }
 
-// SetCode sets field value
+// HasCode returns a boolean if a field has been set.
+func (o *GetErrors200ResponseOneOfInnerErrorsInner) HasCode() bool {
+	if o != nil && !IsNil(o.Code) {
+		return true
+	}
+
+	return false
+}
+
+// SetCode gets a reference to the given string and assigns it to the Code field.
 func (o *GetErrors200ResponseOneOfInnerErrorsInner) SetCode(v string) {
-	o.Code = v
+	o.Code = &v
 }
 
-// GetMessage returns the Message field value
+// GetMessage returns the Message field value if set, zero value otherwise.
 func (o *GetErrors200ResponseOneOfInnerErrorsInner) GetMessage() string {
-	if o == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
-
-	return o.Message
+	return *o.Message
 }
 
-// GetMessageOk returns a tuple with the Message field value
+// GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetErrors200ResponseOneOfInnerErrorsInner) GetMessageOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
-	return &o.Message, true
+	return o.Message, true
 }
 
-// SetMessage sets field value
+// HasMessage returns a boolean if a field has been set.
+func (o *GetErrors200ResponseOneOfInnerErrorsInner) HasMessage() bool {
+	if o != nil && !IsNil(o.Message) {
+		return true
+	}
+
+	return false
+}
+
+// SetMessage gets a reference to the given string and assigns it to the Message field.
 func (o *GetErrors200ResponseOneOfInnerErrorsInner) SetMessage(v string) {
-	o.Message = v
+	o.Message = &v
 }
 
-// GetPath returns the Path field value
+// GetPath returns the Path field value if set, zero value otherwise.
 func (o *GetErrors200ResponseOneOfInnerErrorsInner) GetPath() string {
-	if o == nil {
+	if o == nil || IsNil(o.Path) {
 		var ret string
 		return ret
 	}
-
-	return o.Path
+	return *o.Path
 }
 
-// GetPathOk returns a tuple with the Path field value
+// GetPathOk returns a tuple with the Path field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetErrors200ResponseOneOfInnerErrorsInner) GetPathOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Path) {
 		return nil, false
 	}
-	return &o.Path, true
+	return o.Path, true
 }
 
-// SetPath sets field value
+// HasPath returns a boolean if a field has been set.
+func (o *GetErrors200ResponseOneOfInnerErrorsInner) HasPath() bool {
+	if o != nil && !IsNil(o.Path) {
+		return true
+	}
+
+	return false
+}
+
+// SetPath gets a reference to the given string and assigns it to the Path field.
 func (o *GetErrors200ResponseOneOfInnerErrorsInner) SetPath(v string) {
-	o.Path = v
+	o.Path = &v
 }
 
 func (o GetErrors200ResponseOneOfInnerErrorsInner) MarshalJSON() ([]byte, error) {
@@ -109,9 +133,15 @@ func (o GetErrors200ResponseOneOfInnerErrorsInner) MarshalJSON() ([]byte, error)
 
 func (o GetErrors200ResponseOneOfInnerErrorsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["code"] = o.Code
-	toSerialize["message"] = o.Message
-	toSerialize["path"] = o.Path
+	if !IsNil(o.Code) {
+		toSerialize["code"] = o.Code
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.Path) {
+		toSerialize["path"] = o.Path
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -11,144 +11,181 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // PostScimToken201Response struct for PostScimToken201Response
 type PostScimToken201Response struct {
 	// The token's identifier
-	TokenId string `json:"token_id"`
+	TokenId *string `json:"token_id,omitempty"`
 	// The scim client's token
-	Token string `json:"token"`
+	Token *string `json:"token,omitempty"`
 	// The scopes of the scim token
-	Scopes []string `json:"scopes"`
+	Scopes []string `json:"scopes,omitempty"`
 	// The token's created at timestamp
-	CreatedAt string `json:"created_at"`
+	CreatedAt *string `json:"created_at,omitempty"`
 	// The token's valid until at timestamp
-	ValidUntil string `json:"valid_until"`
+	ValidUntil *string `json:"valid_until,omitempty"`
 }
 
-type _PostScimToken201Response PostScimToken201Response
-
-// GetTokenId returns the TokenId field value
+// GetTokenId returns the TokenId field value if set, zero value otherwise.
 func (o *PostScimToken201Response) GetTokenId() string {
-	if o == nil {
+	if o == nil || IsNil(o.TokenId) {
 		var ret string
 		return ret
 	}
-
-	return o.TokenId
+	return *o.TokenId
 }
 
-// GetTokenIdOk returns a tuple with the TokenId field value
+// GetTokenIdOk returns a tuple with the TokenId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostScimToken201Response) GetTokenIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TokenId) {
 		return nil, false
 	}
-	return &o.TokenId, true
+	return o.TokenId, true
 }
 
-// SetTokenId sets field value
+// HasTokenId returns a boolean if a field has been set.
+func (o *PostScimToken201Response) HasTokenId() bool {
+	if o != nil && !IsNil(o.TokenId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokenId gets a reference to the given string and assigns it to the TokenId field.
 func (o *PostScimToken201Response) SetTokenId(v string) {
-	o.TokenId = v
+	o.TokenId = &v
 }
 
-// GetToken returns the Token field value
+// GetToken returns the Token field value if set, zero value otherwise.
 func (o *PostScimToken201Response) GetToken() string {
-	if o == nil {
+	if o == nil || IsNil(o.Token) {
 		var ret string
 		return ret
 	}
-
-	return o.Token
+	return *o.Token
 }
 
-// GetTokenOk returns a tuple with the Token field value
+// GetTokenOk returns a tuple with the Token field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostScimToken201Response) GetTokenOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Token) {
 		return nil, false
 	}
-	return &o.Token, true
+	return o.Token, true
 }
 
-// SetToken sets field value
+// HasToken returns a boolean if a field has been set.
+func (o *PostScimToken201Response) HasToken() bool {
+	if o != nil && !IsNil(o.Token) {
+		return true
+	}
+
+	return false
+}
+
+// SetToken gets a reference to the given string and assigns it to the Token field.
 func (o *PostScimToken201Response) SetToken(v string) {
-	o.Token = v
+	o.Token = &v
 }
 
-// GetScopes returns the Scopes field value
+// GetScopes returns the Scopes field value if set, zero value otherwise.
 func (o *PostScimToken201Response) GetScopes() []string {
-	if o == nil {
+	if o == nil || IsNil(o.Scopes) {
 		var ret []string
 		return ret
 	}
-
 	return o.Scopes
 }
 
-// GetScopesOk returns a tuple with the Scopes field value
+// GetScopesOk returns a tuple with the Scopes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostScimToken201Response) GetScopesOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Scopes) {
 		return nil, false
 	}
 	return o.Scopes, true
 }
 
-// SetScopes sets field value
+// HasScopes returns a boolean if a field has been set.
+func (o *PostScimToken201Response) HasScopes() bool {
+	if o != nil && !IsNil(o.Scopes) {
+		return true
+	}
+
+	return false
+}
+
+// SetScopes gets a reference to the given []string and assigns it to the Scopes field.
 func (o *PostScimToken201Response) SetScopes(v []string) {
 	o.Scopes = v
 }
 
-// GetCreatedAt returns the CreatedAt field value
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *PostScimToken201Response) GetCreatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostScimToken201Response) GetCreatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
-// SetCreatedAt sets field value
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *PostScimToken201Response) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
 func (o *PostScimToken201Response) SetCreatedAt(v string) {
-	o.CreatedAt = v
+	o.CreatedAt = &v
 }
 
-// GetValidUntil returns the ValidUntil field value
+// GetValidUntil returns the ValidUntil field value if set, zero value otherwise.
 func (o *PostScimToken201Response) GetValidUntil() string {
-	if o == nil {
+	if o == nil || IsNil(o.ValidUntil) {
 		var ret string
 		return ret
 	}
-
-	return o.ValidUntil
+	return *o.ValidUntil
 }
 
-// GetValidUntilOk returns a tuple with the ValidUntil field value
+// GetValidUntilOk returns a tuple with the ValidUntil field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PostScimToken201Response) GetValidUntilOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ValidUntil) {
 		return nil, false
 	}
-	return &o.ValidUntil, true
+	return o.ValidUntil, true
 }
 
-// SetValidUntil sets field value
+// HasValidUntil returns a boolean if a field has been set.
+func (o *PostScimToken201Response) HasValidUntil() bool {
+	if o != nil && !IsNil(o.ValidUntil) {
+		return true
+	}
+
+	return false
+}
+
+// SetValidUntil gets a reference to the given string and assigns it to the ValidUntil field.
 func (o *PostScimToken201Response) SetValidUntil(v string) {
-	o.ValidUntil = v
+	o.ValidUntil = &v
 }
 
 func (o PostScimToken201Response) MarshalJSON() ([]byte, error) {
@@ -161,28 +198,22 @@ func (o PostScimToken201Response) MarshalJSON() ([]byte, error) {
 
 func (o PostScimToken201Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["token_id"] = o.TokenId
-	toSerialize["token"] = o.Token
-	toSerialize["scopes"] = o.Scopes
-	toSerialize["created_at"] = o.CreatedAt
-	toSerialize["valid_until"] = o.ValidUntil
-	return toSerialize, nil
-}
-
-func (o *PostScimToken201Response) UnmarshalJSON(data []byte) (err error) {
-	varPostScimToken201Response := _PostScimToken201Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varPostScimToken201Response)
-
-	if err != nil {
-		return err
+	if !IsNil(o.TokenId) {
+		toSerialize["token_id"] = o.TokenId
 	}
-
-	*o = PostScimToken201Response(varPostScimToken201Response)
-
-	return err
+	if !IsNil(o.Token) {
+		toSerialize["token"] = o.Token
+	}
+	if !IsNil(o.Scopes) {
+		toSerialize["scopes"] = o.Scopes
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.ValidUntil) {
+		toSerialize["valid_until"] = o.ValidUntil
+	}
+	return toSerialize, nil
 }
 
 type NullablePostScimToken201Response struct {

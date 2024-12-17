@@ -11,38 +11,43 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetDefaultMapping200Response struct for GetDefaultMapping200Response
 type GetDefaultMapping200Response struct {
 	// The mapping between auth0 and SCIM
-	Mapping []GetScimConfiguration200ResponseMappingInner `json:"mapping"`
+	Mapping []GetScimConfiguration200ResponseMappingInner `json:"mapping,omitempty"`
 }
 
-type _GetDefaultMapping200Response GetDefaultMapping200Response
-
-// GetMapping returns the Mapping field value
+// GetMapping returns the Mapping field value if set, zero value otherwise.
 func (o *GetDefaultMapping200Response) GetMapping() []GetScimConfiguration200ResponseMappingInner {
-	if o == nil {
+	if o == nil || IsNil(o.Mapping) {
 		var ret []GetScimConfiguration200ResponseMappingInner
 		return ret
 	}
-
 	return o.Mapping
 }
 
-// GetMappingOk returns a tuple with the Mapping field value
+// GetMappingOk returns a tuple with the Mapping field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetDefaultMapping200Response) GetMappingOk() ([]GetScimConfiguration200ResponseMappingInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Mapping) {
 		return nil, false
 	}
 	return o.Mapping, true
 }
 
-// SetMapping sets field value
+// HasMapping returns a boolean if a field has been set.
+func (o *GetDefaultMapping200Response) HasMapping() bool {
+	if o != nil && !IsNil(o.Mapping) {
+		return true
+	}
+
+	return false
+}
+
+// SetMapping gets a reference to the given []GetScimConfiguration200ResponseMappingInner and assigns it to the Mapping field.
 func (o *GetDefaultMapping200Response) SetMapping(v []GetScimConfiguration200ResponseMappingInner) {
 	o.Mapping = v
 }
@@ -57,24 +62,10 @@ func (o GetDefaultMapping200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetDefaultMapping200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["mapping"] = o.Mapping
-	return toSerialize, nil
-}
-
-func (o *GetDefaultMapping200Response) UnmarshalJSON(data []byte) (err error) {
-	varGetDefaultMapping200Response := _GetDefaultMapping200Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetDefaultMapping200Response)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Mapping) {
+		toSerialize["mapping"] = o.Mapping
 	}
-
-	*o = GetDefaultMapping200Response(varGetDefaultMapping200Response)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableGetDefaultMapping200Response struct {

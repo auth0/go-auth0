@@ -13,6 +13,7 @@ package models
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // PostOrganizationsRequest struct for PostOrganizationsRequest
@@ -20,8 +21,8 @@ type PostOrganizationsRequest struct {
 	// The name of this organization.
 	Name string `json:"name"`
 	// Friendly name of this organization.
-	DisplayName *string                           `json:"display_name,omitempty"`
-	Branding    *PostOrganizationsRequestBranding `json:"branding,omitempty"`
+	DisplayName *string                                        `json:"display_name,omitempty"`
+	Branding    *GetOrganizations200ResponseOneOfInnerBranding `json:"branding,omitempty"`
 	// Metadata associated with the organization, in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.
 	Metadata map[string]interface{} `json:"metadata,omitempty"`
 	// Connections that will be enabled for this organization. See POST enabled_connections endpoint for the object format. (Max of 10 connections allowed)
@@ -87,9 +88,9 @@ func (o *PostOrganizationsRequest) SetDisplayName(v string) {
 }
 
 // GetBranding returns the Branding field value if set, zero value otherwise.
-func (o *PostOrganizationsRequest) GetBranding() PostOrganizationsRequestBranding {
+func (o *PostOrganizationsRequest) GetBranding() GetOrganizations200ResponseOneOfInnerBranding {
 	if o == nil || IsNil(o.Branding) {
-		var ret PostOrganizationsRequestBranding
+		var ret GetOrganizations200ResponseOneOfInnerBranding
 		return ret
 	}
 	return *o.Branding
@@ -97,7 +98,7 @@ func (o *PostOrganizationsRequest) GetBranding() PostOrganizationsRequestBrandin
 
 // GetBrandingOk returns a tuple with the Branding field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PostOrganizationsRequest) GetBrandingOk() (*PostOrganizationsRequestBranding, bool) {
+func (o *PostOrganizationsRequest) GetBrandingOk() (*GetOrganizations200ResponseOneOfInnerBranding, bool) {
 	if o == nil || IsNil(o.Branding) {
 		return nil, false
 	}
@@ -113,8 +114,8 @@ func (o *PostOrganizationsRequest) HasBranding() bool {
 	return false
 }
 
-// SetBranding gets a reference to the given PostOrganizationsRequestBranding and assigns it to the Branding field.
-func (o *PostOrganizationsRequest) SetBranding(v PostOrganizationsRequestBranding) {
+// SetBranding gets a reference to the given GetOrganizations200ResponseOneOfInnerBranding and assigns it to the Branding field.
+func (o *PostOrganizationsRequest) SetBranding(v GetOrganizations200ResponseOneOfInnerBranding) {
 	o.Branding = &v
 }
 
@@ -209,6 +210,27 @@ func (o PostOrganizationsRequest) ToMap() (map[string]interface{}, error) {
 }
 
 func (o *PostOrganizationsRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
 	varPostOrganizationsRequest := _PostOrganizationsRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))

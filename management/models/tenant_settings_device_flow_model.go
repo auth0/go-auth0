@@ -11,65 +11,78 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // TenantSettingsDeviceFlow Device Flow configuration
 type TenantSettingsDeviceFlow struct {
-	Charset TenantSettingsDeviceFlowCharset `json:"charset"`
+	Charset *TenantSettingsDeviceFlowCharset `json:"charset,omitempty"`
 	// Mask used to format a generated User Code into a friendly, readable format.
-	Mask string `json:"mask"`
+	Mask *string `json:"mask,omitempty"`
 }
 
-type _TenantSettingsDeviceFlow TenantSettingsDeviceFlow
-
-// GetCharset returns the Charset field value
+// GetCharset returns the Charset field value if set, zero value otherwise.
 func (o *TenantSettingsDeviceFlow) GetCharset() TenantSettingsDeviceFlowCharset {
-	if o == nil {
+	if o == nil || IsNil(o.Charset) {
 		var ret TenantSettingsDeviceFlowCharset
 		return ret
 	}
-
-	return o.Charset
+	return *o.Charset
 }
 
-// GetCharsetOk returns a tuple with the Charset field value
+// GetCharsetOk returns a tuple with the Charset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsDeviceFlow) GetCharsetOk() (*TenantSettingsDeviceFlowCharset, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Charset) {
 		return nil, false
 	}
-	return &o.Charset, true
+	return o.Charset, true
 }
 
-// SetCharset sets field value
+// HasCharset returns a boolean if a field has been set.
+func (o *TenantSettingsDeviceFlow) HasCharset() bool {
+	if o != nil && !IsNil(o.Charset) {
+		return true
+	}
+
+	return false
+}
+
+// SetCharset gets a reference to the given TenantSettingsDeviceFlowCharset and assigns it to the Charset field.
 func (o *TenantSettingsDeviceFlow) SetCharset(v TenantSettingsDeviceFlowCharset) {
-	o.Charset = v
+	o.Charset = &v
 }
 
-// GetMask returns the Mask field value
+// GetMask returns the Mask field value if set, zero value otherwise.
 func (o *TenantSettingsDeviceFlow) GetMask() string {
-	if o == nil {
+	if o == nil || IsNil(o.Mask) {
 		var ret string
 		return ret
 	}
-
-	return o.Mask
+	return *o.Mask
 }
 
-// GetMaskOk returns a tuple with the Mask field value
+// GetMaskOk returns a tuple with the Mask field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TenantSettingsDeviceFlow) GetMaskOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Mask) {
 		return nil, false
 	}
-	return &o.Mask, true
+	return o.Mask, true
 }
 
-// SetMask sets field value
+// HasMask returns a boolean if a field has been set.
+func (o *TenantSettingsDeviceFlow) HasMask() bool {
+	if o != nil && !IsNil(o.Mask) {
+		return true
+	}
+
+	return false
+}
+
+// SetMask gets a reference to the given string and assigns it to the Mask field.
 func (o *TenantSettingsDeviceFlow) SetMask(v string) {
-	o.Mask = v
+	o.Mask = &v
 }
 
 func (o TenantSettingsDeviceFlow) MarshalJSON() ([]byte, error) {
@@ -82,25 +95,13 @@ func (o TenantSettingsDeviceFlow) MarshalJSON() ([]byte, error) {
 
 func (o TenantSettingsDeviceFlow) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["charset"] = o.Charset
-	toSerialize["mask"] = o.Mask
-	return toSerialize, nil
-}
-
-func (o *TenantSettingsDeviceFlow) UnmarshalJSON(data []byte) (err error) {
-	varTenantSettingsDeviceFlow := _TenantSettingsDeviceFlow{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varTenantSettingsDeviceFlow)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Charset) {
+		toSerialize["charset"] = o.Charset
 	}
-
-	*o = TenantSettingsDeviceFlow(varTenantSettingsDeviceFlow)
-
-	return err
+	if !IsNil(o.Mask) {
+		toSerialize["mask"] = o.Mask
+	}
+	return toSerialize, nil
 }
 
 type NullableTenantSettingsDeviceFlow struct {

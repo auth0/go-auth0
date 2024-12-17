@@ -16,32 +16,40 @@ import (
 
 // GetRefreshTokensForUser200Response struct for GetRefreshTokensForUser200Response
 type GetRefreshTokensForUser200Response struct {
-	Sessions             []GetRefreshTokensForUser200ResponseSessionsInner `json:"sessions"`
+	Sessions             []GetRefreshTokensForUser200ResponseSessionsInner `json:"sessions,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetRefreshTokensForUser200Response GetRefreshTokensForUser200Response
 
-// GetSessions returns the Sessions field value
+// GetSessions returns the Sessions field value if set, zero value otherwise.
 func (o *GetRefreshTokensForUser200Response) GetSessions() []GetRefreshTokensForUser200ResponseSessionsInner {
-	if o == nil {
+	if o == nil || IsNil(o.Sessions) {
 		var ret []GetRefreshTokensForUser200ResponseSessionsInner
 		return ret
 	}
-
 	return o.Sessions
 }
 
-// GetSessionsOk returns a tuple with the Sessions field value
+// GetSessionsOk returns a tuple with the Sessions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetRefreshTokensForUser200Response) GetSessionsOk() ([]GetRefreshTokensForUser200ResponseSessionsInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Sessions) {
 		return nil, false
 	}
 	return o.Sessions, true
 }
 
-// SetSessions sets field value
+// HasSessions returns a boolean if a field has been set.
+func (o *GetRefreshTokensForUser200Response) HasSessions() bool {
+	if o != nil && !IsNil(o.Sessions) {
+		return true
+	}
+
+	return false
+}
+
+// SetSessions gets a reference to the given []GetRefreshTokensForUser200ResponseSessionsInner and assigns it to the Sessions field.
 func (o *GetRefreshTokensForUser200Response) SetSessions(v []GetRefreshTokensForUser200ResponseSessionsInner) {
 	o.Sessions = v
 }
@@ -56,7 +64,9 @@ func (o GetRefreshTokensForUser200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetRefreshTokensForUser200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["sessions"] = o.Sessions
+	if !IsNil(o.Sessions) {
+		toSerialize["sessions"] = o.Sessions
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

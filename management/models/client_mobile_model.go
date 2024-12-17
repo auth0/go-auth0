@@ -16,59 +16,75 @@ import (
 
 // ClientMobile Additional configuration for native mobile apps.
 type ClientMobile struct {
-	Android              ClientMobileAndroid `json:"android"`
-	Ios                  ClientMobileIos     `json:"ios"`
+	Android              *ClientMobileAndroid `json:"android,omitempty"`
+	Ios                  *ClientMobileIos     `json:"ios,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientMobile ClientMobile
 
-// GetAndroid returns the Android field value
+// GetAndroid returns the Android field value if set, zero value otherwise.
 func (o *ClientMobile) GetAndroid() ClientMobileAndroid {
-	if o == nil {
+	if o == nil || IsNil(o.Android) {
 		var ret ClientMobileAndroid
 		return ret
 	}
-
-	return o.Android
+	return *o.Android
 }
 
-// GetAndroidOk returns a tuple with the Android field value
+// GetAndroidOk returns a tuple with the Android field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientMobile) GetAndroidOk() (*ClientMobileAndroid, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Android) {
 		return nil, false
 	}
-	return &o.Android, true
+	return o.Android, true
 }
 
-// SetAndroid sets field value
+// HasAndroid returns a boolean if a field has been set.
+func (o *ClientMobile) HasAndroid() bool {
+	if o != nil && !IsNil(o.Android) {
+		return true
+	}
+
+	return false
+}
+
+// SetAndroid gets a reference to the given ClientMobileAndroid and assigns it to the Android field.
 func (o *ClientMobile) SetAndroid(v ClientMobileAndroid) {
-	o.Android = v
+	o.Android = &v
 }
 
-// GetIos returns the Ios field value
+// GetIos returns the Ios field value if set, zero value otherwise.
 func (o *ClientMobile) GetIos() ClientMobileIos {
-	if o == nil {
+	if o == nil || IsNil(o.Ios) {
 		var ret ClientMobileIos
 		return ret
 	}
-
-	return o.Ios
+	return *o.Ios
 }
 
-// GetIosOk returns a tuple with the Ios field value
+// GetIosOk returns a tuple with the Ios field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientMobile) GetIosOk() (*ClientMobileIos, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Ios) {
 		return nil, false
 	}
-	return &o.Ios, true
+	return o.Ios, true
 }
 
-// SetIos sets field value
+// HasIos returns a boolean if a field has been set.
+func (o *ClientMobile) HasIos() bool {
+	if o != nil && !IsNil(o.Ios) {
+		return true
+	}
+
+	return false
+}
+
+// SetIos gets a reference to the given ClientMobileIos and assigns it to the Ios field.
 func (o *ClientMobile) SetIos(v ClientMobileIos) {
-	o.Ios = v
+	o.Ios = &v
 }
 
 func (o ClientMobile) MarshalJSON() ([]byte, error) {
@@ -81,8 +97,12 @@ func (o ClientMobile) MarshalJSON() ([]byte, error) {
 
 func (o ClientMobile) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["android"] = o.Android
-	toSerialize["ios"] = o.Ios
+	if !IsNil(o.Android) {
+		toSerialize["android"] = o.Android
+	}
+	if !IsNil(o.Ios) {
+		toSerialize["ios"] = o.Ios
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

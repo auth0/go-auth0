@@ -11,69 +11,72 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetEmailTemplatesByTemplateName200Response struct for GetEmailTemplatesByTemplateName200Response
 type GetEmailTemplatesByTemplateName200Response struct {
-	Template PostEmailTemplatesRequestTemplate `json:"template"`
+	Template *PostEmailTemplatesRequestTemplate `json:"template,omitempty"`
 	// Body of the email template.
-	Body NullableString `json:"body"`
+	Body NullableString `json:"body,omitempty"`
 	// Senders `from` email address.
-	From NullableString `json:"from"`
+	From NullableString `json:"from,omitempty"`
 	// URL to redirect the user to after a successful action.
-	ResultUrl NullableString `json:"resultUrl"`
+	ResultUrl NullableString `json:"resultUrl,omitempty"`
 	// Subject line of the email.
-	Subject NullableString `json:"subject"`
+	Subject NullableString `json:"subject,omitempty"`
 	// Syntax of the template body.
-	Syntax NullableString `json:"syntax"`
+	Syntax NullableString `json:"syntax,omitempty"`
 	// Lifetime in seconds that the link within the email will be valid for.
-	UrlLifetimeInSeconds NullableFloat32 `json:"urlLifetimeInSeconds"`
+	UrlLifetimeInSeconds NullableFloat32 `json:"urlLifetimeInSeconds,omitempty"`
 	// Whether the `reset_email` and `verify_email` templates should include the user's email address as the `email` parameter in the returnUrl (true) or whether no email address should be included in the redirect (false). Defaults to true.
-	IncludeEmailInRedirect bool `json:"includeEmailInRedirect"`
+	IncludeEmailInRedirect *bool `json:"includeEmailInRedirect,omitempty"`
 	// Whether the template is enabled (true) or disabled (false).
-	Enabled NullableBool `json:"enabled"`
+	Enabled NullableBool `json:"enabled,omitempty"`
 }
 
-type _GetEmailTemplatesByTemplateName200Response GetEmailTemplatesByTemplateName200Response
-
-// GetTemplate returns the Template field value
+// GetTemplate returns the Template field value if set, zero value otherwise.
 func (o *GetEmailTemplatesByTemplateName200Response) GetTemplate() PostEmailTemplatesRequestTemplate {
-	if o == nil {
+	if o == nil || IsNil(o.Template) {
 		var ret PostEmailTemplatesRequestTemplate
 		return ret
 	}
-
-	return o.Template
+	return *o.Template
 }
 
-// GetTemplateOk returns a tuple with the Template field value
+// GetTemplateOk returns a tuple with the Template field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetEmailTemplatesByTemplateName200Response) GetTemplateOk() (*PostEmailTemplatesRequestTemplate, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Template) {
 		return nil, false
 	}
-	return &o.Template, true
+	return o.Template, true
 }
 
-// SetTemplate sets field value
+// HasTemplate returns a boolean if a field has been set.
+func (o *GetEmailTemplatesByTemplateName200Response) HasTemplate() bool {
+	if o != nil && !IsNil(o.Template) {
+		return true
+	}
+
+	return false
+}
+
+// SetTemplate gets a reference to the given PostEmailTemplatesRequestTemplate and assigns it to the Template field.
 func (o *GetEmailTemplatesByTemplateName200Response) SetTemplate(v PostEmailTemplatesRequestTemplate) {
-	o.Template = v
+	o.Template = &v
 }
 
-// GetBody returns the Body field value
-// If the value is explicit nil, the zero value for string will be returned
+// GetBody returns the Body field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetEmailTemplatesByTemplateName200Response) GetBody() string {
-	if o == nil || o.Body.Get() == nil {
+	if o == nil || IsNil(o.Body.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.Body.Get()
 }
 
-// GetBodyOk returns a tuple with the Body field value
+// GetBodyOk returns a tuple with the Body field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetEmailTemplatesByTemplateName200Response) GetBodyOk() (*string, bool) {
@@ -83,23 +86,40 @@ func (o *GetEmailTemplatesByTemplateName200Response) GetBodyOk() (*string, bool)
 	return o.Body.Get(), o.Body.IsSet()
 }
 
-// SetBody sets field value
+// HasBody returns a boolean if a field has been set.
+func (o *GetEmailTemplatesByTemplateName200Response) HasBody() bool {
+	if o != nil && o.Body.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBody gets a reference to the given NullableString and assigns it to the Body field.
 func (o *GetEmailTemplatesByTemplateName200Response) SetBody(v string) {
 	o.Body.Set(&v)
 }
 
-// GetFrom returns the From field value
-// If the value is explicit nil, the zero value for string will be returned
+// SetBodyNil sets the value for Body to be an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) SetBodyNil() {
+	o.Body.Set(nil)
+}
+
+// UnsetBody ensures that no value is present for Body, not even an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) UnsetBody() {
+	o.Body.Unset()
+}
+
+// GetFrom returns the From field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetEmailTemplatesByTemplateName200Response) GetFrom() string {
-	if o == nil || o.From.Get() == nil {
+	if o == nil || IsNil(o.From.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.From.Get()
 }
 
-// GetFromOk returns a tuple with the From field value
+// GetFromOk returns a tuple with the From field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetEmailTemplatesByTemplateName200Response) GetFromOk() (*string, bool) {
@@ -109,23 +129,40 @@ func (o *GetEmailTemplatesByTemplateName200Response) GetFromOk() (*string, bool)
 	return o.From.Get(), o.From.IsSet()
 }
 
-// SetFrom sets field value
+// HasFrom returns a boolean if a field has been set.
+func (o *GetEmailTemplatesByTemplateName200Response) HasFrom() bool {
+	if o != nil && o.From.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetFrom gets a reference to the given NullableString and assigns it to the From field.
 func (o *GetEmailTemplatesByTemplateName200Response) SetFrom(v string) {
 	o.From.Set(&v)
 }
 
-// GetResultUrl returns the ResultUrl field value
-// If the value is explicit nil, the zero value for string will be returned
+// SetFromNil sets the value for From to be an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) SetFromNil() {
+	o.From.Set(nil)
+}
+
+// UnsetFrom ensures that no value is present for From, not even an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) UnsetFrom() {
+	o.From.Unset()
+}
+
+// GetResultUrl returns the ResultUrl field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetEmailTemplatesByTemplateName200Response) GetResultUrl() string {
-	if o == nil || o.ResultUrl.Get() == nil {
+	if o == nil || IsNil(o.ResultUrl.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.ResultUrl.Get()
 }
 
-// GetResultUrlOk returns a tuple with the ResultUrl field value
+// GetResultUrlOk returns a tuple with the ResultUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetEmailTemplatesByTemplateName200Response) GetResultUrlOk() (*string, bool) {
@@ -135,23 +172,40 @@ func (o *GetEmailTemplatesByTemplateName200Response) GetResultUrlOk() (*string, 
 	return o.ResultUrl.Get(), o.ResultUrl.IsSet()
 }
 
-// SetResultUrl sets field value
+// HasResultUrl returns a boolean if a field has been set.
+func (o *GetEmailTemplatesByTemplateName200Response) HasResultUrl() bool {
+	if o != nil && o.ResultUrl.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetResultUrl gets a reference to the given NullableString and assigns it to the ResultUrl field.
 func (o *GetEmailTemplatesByTemplateName200Response) SetResultUrl(v string) {
 	o.ResultUrl.Set(&v)
 }
 
-// GetSubject returns the Subject field value
-// If the value is explicit nil, the zero value for string will be returned
+// SetResultUrlNil sets the value for ResultUrl to be an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) SetResultUrlNil() {
+	o.ResultUrl.Set(nil)
+}
+
+// UnsetResultUrl ensures that no value is present for ResultUrl, not even an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) UnsetResultUrl() {
+	o.ResultUrl.Unset()
+}
+
+// GetSubject returns the Subject field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetEmailTemplatesByTemplateName200Response) GetSubject() string {
-	if o == nil || o.Subject.Get() == nil {
+	if o == nil || IsNil(o.Subject.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.Subject.Get()
 }
 
-// GetSubjectOk returns a tuple with the Subject field value
+// GetSubjectOk returns a tuple with the Subject field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetEmailTemplatesByTemplateName200Response) GetSubjectOk() (*string, bool) {
@@ -161,23 +215,40 @@ func (o *GetEmailTemplatesByTemplateName200Response) GetSubjectOk() (*string, bo
 	return o.Subject.Get(), o.Subject.IsSet()
 }
 
-// SetSubject sets field value
+// HasSubject returns a boolean if a field has been set.
+func (o *GetEmailTemplatesByTemplateName200Response) HasSubject() bool {
+	if o != nil && o.Subject.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSubject gets a reference to the given NullableString and assigns it to the Subject field.
 func (o *GetEmailTemplatesByTemplateName200Response) SetSubject(v string) {
 	o.Subject.Set(&v)
 }
 
-// GetSyntax returns the Syntax field value
-// If the value is explicit nil, the zero value for string will be returned
+// SetSubjectNil sets the value for Subject to be an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) SetSubjectNil() {
+	o.Subject.Set(nil)
+}
+
+// UnsetSubject ensures that no value is present for Subject, not even an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) UnsetSubject() {
+	o.Subject.Unset()
+}
+
+// GetSyntax returns the Syntax field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetEmailTemplatesByTemplateName200Response) GetSyntax() string {
-	if o == nil || o.Syntax.Get() == nil {
+	if o == nil || IsNil(o.Syntax.Get()) {
 		var ret string
 		return ret
 	}
-
 	return *o.Syntax.Get()
 }
 
-// GetSyntaxOk returns a tuple with the Syntax field value
+// GetSyntaxOk returns a tuple with the Syntax field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetEmailTemplatesByTemplateName200Response) GetSyntaxOk() (*string, bool) {
@@ -187,23 +258,40 @@ func (o *GetEmailTemplatesByTemplateName200Response) GetSyntaxOk() (*string, boo
 	return o.Syntax.Get(), o.Syntax.IsSet()
 }
 
-// SetSyntax sets field value
+// HasSyntax returns a boolean if a field has been set.
+func (o *GetEmailTemplatesByTemplateName200Response) HasSyntax() bool {
+	if o != nil && o.Syntax.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSyntax gets a reference to the given NullableString and assigns it to the Syntax field.
 func (o *GetEmailTemplatesByTemplateName200Response) SetSyntax(v string) {
 	o.Syntax.Set(&v)
 }
 
-// GetUrlLifetimeInSeconds returns the UrlLifetimeInSeconds field value
-// If the value is explicit nil, the zero value for float32 will be returned
+// SetSyntaxNil sets the value for Syntax to be an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) SetSyntaxNil() {
+	o.Syntax.Set(nil)
+}
+
+// UnsetSyntax ensures that no value is present for Syntax, not even an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) UnsetSyntax() {
+	o.Syntax.Unset()
+}
+
+// GetUrlLifetimeInSeconds returns the UrlLifetimeInSeconds field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetEmailTemplatesByTemplateName200Response) GetUrlLifetimeInSeconds() float32 {
-	if o == nil || o.UrlLifetimeInSeconds.Get() == nil {
+	if o == nil || IsNil(o.UrlLifetimeInSeconds.Get()) {
 		var ret float32
 		return ret
 	}
-
 	return *o.UrlLifetimeInSeconds.Get()
 }
 
-// GetUrlLifetimeInSecondsOk returns a tuple with the UrlLifetimeInSeconds field value
+// GetUrlLifetimeInSecondsOk returns a tuple with the UrlLifetimeInSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetEmailTemplatesByTemplateName200Response) GetUrlLifetimeInSecondsOk() (*float32, bool) {
@@ -213,47 +301,72 @@ func (o *GetEmailTemplatesByTemplateName200Response) GetUrlLifetimeInSecondsOk()
 	return o.UrlLifetimeInSeconds.Get(), o.UrlLifetimeInSeconds.IsSet()
 }
 
-// SetUrlLifetimeInSeconds sets field value
+// HasUrlLifetimeInSeconds returns a boolean if a field has been set.
+func (o *GetEmailTemplatesByTemplateName200Response) HasUrlLifetimeInSeconds() bool {
+	if o != nil && o.UrlLifetimeInSeconds.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetUrlLifetimeInSeconds gets a reference to the given NullableFloat32 and assigns it to the UrlLifetimeInSeconds field.
 func (o *GetEmailTemplatesByTemplateName200Response) SetUrlLifetimeInSeconds(v float32) {
 	o.UrlLifetimeInSeconds.Set(&v)
 }
 
-// GetIncludeEmailInRedirect returns the IncludeEmailInRedirect field value
+// SetUrlLifetimeInSecondsNil sets the value for UrlLifetimeInSeconds to be an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) SetUrlLifetimeInSecondsNil() {
+	o.UrlLifetimeInSeconds.Set(nil)
+}
+
+// UnsetUrlLifetimeInSeconds ensures that no value is present for UrlLifetimeInSeconds, not even an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) UnsetUrlLifetimeInSeconds() {
+	o.UrlLifetimeInSeconds.Unset()
+}
+
+// GetIncludeEmailInRedirect returns the IncludeEmailInRedirect field value if set, zero value otherwise.
 func (o *GetEmailTemplatesByTemplateName200Response) GetIncludeEmailInRedirect() bool {
-	if o == nil {
+	if o == nil || IsNil(o.IncludeEmailInRedirect) {
 		var ret bool
 		return ret
 	}
-
-	return o.IncludeEmailInRedirect
+	return *o.IncludeEmailInRedirect
 }
 
-// GetIncludeEmailInRedirectOk returns a tuple with the IncludeEmailInRedirect field value
+// GetIncludeEmailInRedirectOk returns a tuple with the IncludeEmailInRedirect field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetEmailTemplatesByTemplateName200Response) GetIncludeEmailInRedirectOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IncludeEmailInRedirect) {
 		return nil, false
 	}
-	return &o.IncludeEmailInRedirect, true
+	return o.IncludeEmailInRedirect, true
 }
 
-// SetIncludeEmailInRedirect sets field value
+// HasIncludeEmailInRedirect returns a boolean if a field has been set.
+func (o *GetEmailTemplatesByTemplateName200Response) HasIncludeEmailInRedirect() bool {
+	if o != nil && !IsNil(o.IncludeEmailInRedirect) {
+		return true
+	}
+
+	return false
+}
+
+// SetIncludeEmailInRedirect gets a reference to the given bool and assigns it to the IncludeEmailInRedirect field.
 func (o *GetEmailTemplatesByTemplateName200Response) SetIncludeEmailInRedirect(v bool) {
-	o.IncludeEmailInRedirect = v
+	o.IncludeEmailInRedirect = &v
 }
 
-// GetEnabled returns the Enabled field value
-// If the value is explicit nil, the zero value for bool will be returned
+// GetEnabled returns the Enabled field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetEmailTemplatesByTemplateName200Response) GetEnabled() bool {
-	if o == nil || o.Enabled.Get() == nil {
+	if o == nil || IsNil(o.Enabled.Get()) {
 		var ret bool
 		return ret
 	}
-
 	return *o.Enabled.Get()
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetEmailTemplatesByTemplateName200Response) GetEnabledOk() (*bool, bool) {
@@ -263,9 +376,28 @@ func (o *GetEmailTemplatesByTemplateName200Response) GetEnabledOk() (*bool, bool
 	return o.Enabled.Get(), o.Enabled.IsSet()
 }
 
-// SetEnabled sets field value
+// HasEnabled returns a boolean if a field has been set.
+func (o *GetEmailTemplatesByTemplateName200Response) HasEnabled() bool {
+	if o != nil && o.Enabled.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given NullableBool and assigns it to the Enabled field.
 func (o *GetEmailTemplatesByTemplateName200Response) SetEnabled(v bool) {
 	o.Enabled.Set(&v)
+}
+
+// SetEnabledNil sets the value for Enabled to be an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) SetEnabledNil() {
+	o.Enabled.Set(nil)
+}
+
+// UnsetEnabled ensures that no value is present for Enabled, not even an explicit nil
+func (o *GetEmailTemplatesByTemplateName200Response) UnsetEnabled() {
+	o.Enabled.Unset()
 }
 
 func (o GetEmailTemplatesByTemplateName200Response) MarshalJSON() ([]byte, error) {
@@ -278,32 +410,34 @@ func (o GetEmailTemplatesByTemplateName200Response) MarshalJSON() ([]byte, error
 
 func (o GetEmailTemplatesByTemplateName200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["template"] = o.Template
-	toSerialize["body"] = o.Body.Get()
-	toSerialize["from"] = o.From.Get()
-	toSerialize["resultUrl"] = o.ResultUrl.Get()
-	toSerialize["subject"] = o.Subject.Get()
-	toSerialize["syntax"] = o.Syntax.Get()
-	toSerialize["urlLifetimeInSeconds"] = o.UrlLifetimeInSeconds.Get()
-	toSerialize["includeEmailInRedirect"] = o.IncludeEmailInRedirect
-	toSerialize["enabled"] = o.Enabled.Get()
-	return toSerialize, nil
-}
-
-func (o *GetEmailTemplatesByTemplateName200Response) UnmarshalJSON(data []byte) (err error) {
-	varGetEmailTemplatesByTemplateName200Response := _GetEmailTemplatesByTemplateName200Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetEmailTemplatesByTemplateName200Response)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Template) {
+		toSerialize["template"] = o.Template
 	}
-
-	*o = GetEmailTemplatesByTemplateName200Response(varGetEmailTemplatesByTemplateName200Response)
-
-	return err
+	if o.Body.IsSet() {
+		toSerialize["body"] = o.Body.Get()
+	}
+	if o.From.IsSet() {
+		toSerialize["from"] = o.From.Get()
+	}
+	if o.ResultUrl.IsSet() {
+		toSerialize["resultUrl"] = o.ResultUrl.Get()
+	}
+	if o.Subject.IsSet() {
+		toSerialize["subject"] = o.Subject.Get()
+	}
+	if o.Syntax.IsSet() {
+		toSerialize["syntax"] = o.Syntax.Get()
+	}
+	if o.UrlLifetimeInSeconds.IsSet() {
+		toSerialize["urlLifetimeInSeconds"] = o.UrlLifetimeInSeconds.Get()
+	}
+	if !IsNil(o.IncludeEmailInRedirect) {
+		toSerialize["includeEmailInRedirect"] = o.IncludeEmailInRedirect
+	}
+	if o.Enabled.IsSet() {
+		toSerialize["enabled"] = o.Enabled.Get()
+	}
+	return toSerialize, nil
 }
 
 type NullableGetEmailTemplatesByTemplateName200Response struct {

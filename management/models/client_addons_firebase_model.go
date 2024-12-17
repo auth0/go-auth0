@@ -17,138 +17,178 @@ import (
 // ClientAddonsFirebase Google Firebase addon configuration.
 type ClientAddonsFirebase struct {
 	// Google Firebase Secret. (SDK 2 only).
-	Secret string `json:"secret"`
+	Secret *string `json:"secret,omitempty"`
 	// Optional ID of the private key to obtain kid header in the issued token (SDK v3+ tokens only).
-	PrivateKeyId string `json:"private_key_id"`
+	PrivateKeyId *string `json:"private_key_id,omitempty"`
 	// Private Key for signing the token (SDK v3+ tokens only).
-	PrivateKey string `json:"private_key"`
+	PrivateKey *string `json:"private_key,omitempty"`
 	// ID of the Service Account you have created (shown as `client_email` in the generated JSON file, SDK v3+ tokens only).
-	ClientEmail string `json:"client_email"`
+	ClientEmail *string `json:"client_email,omitempty"`
 	// Optional expiration in seconds for the generated token. Defaults to 3600 seconds (SDK v3+ tokens only).
-	LifetimeInSeconds    int32 `json:"lifetime_in_seconds"`
+	LifetimeInSeconds    *int32 `json:"lifetime_in_seconds,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _ClientAddonsFirebase ClientAddonsFirebase
 
-// GetSecret returns the Secret field value
+// GetSecret returns the Secret field value if set, zero value otherwise.
 func (o *ClientAddonsFirebase) GetSecret() string {
-	if o == nil {
+	if o == nil || IsNil(o.Secret) {
 		var ret string
 		return ret
 	}
-
-	return o.Secret
+	return *o.Secret
 }
 
-// GetSecretOk returns a tuple with the Secret field value
+// GetSecretOk returns a tuple with the Secret field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsFirebase) GetSecretOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Secret) {
 		return nil, false
 	}
-	return &o.Secret, true
+	return o.Secret, true
 }
 
-// SetSecret sets field value
+// HasSecret returns a boolean if a field has been set.
+func (o *ClientAddonsFirebase) HasSecret() bool {
+	if o != nil && !IsNil(o.Secret) {
+		return true
+	}
+
+	return false
+}
+
+// SetSecret gets a reference to the given string and assigns it to the Secret field.
 func (o *ClientAddonsFirebase) SetSecret(v string) {
-	o.Secret = v
+	o.Secret = &v
 }
 
-// GetPrivateKeyId returns the PrivateKeyId field value
+// GetPrivateKeyId returns the PrivateKeyId field value if set, zero value otherwise.
 func (o *ClientAddonsFirebase) GetPrivateKeyId() string {
-	if o == nil {
+	if o == nil || IsNil(o.PrivateKeyId) {
 		var ret string
 		return ret
 	}
-
-	return o.PrivateKeyId
+	return *o.PrivateKeyId
 }
 
-// GetPrivateKeyIdOk returns a tuple with the PrivateKeyId field value
+// GetPrivateKeyIdOk returns a tuple with the PrivateKeyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsFirebase) GetPrivateKeyIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PrivateKeyId) {
 		return nil, false
 	}
-	return &o.PrivateKeyId, true
+	return o.PrivateKeyId, true
 }
 
-// SetPrivateKeyId sets field value
+// HasPrivateKeyId returns a boolean if a field has been set.
+func (o *ClientAddonsFirebase) HasPrivateKeyId() bool {
+	if o != nil && !IsNil(o.PrivateKeyId) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrivateKeyId gets a reference to the given string and assigns it to the PrivateKeyId field.
 func (o *ClientAddonsFirebase) SetPrivateKeyId(v string) {
-	o.PrivateKeyId = v
+	o.PrivateKeyId = &v
 }
 
-// GetPrivateKey returns the PrivateKey field value
+// GetPrivateKey returns the PrivateKey field value if set, zero value otherwise.
 func (o *ClientAddonsFirebase) GetPrivateKey() string {
-	if o == nil {
+	if o == nil || IsNil(o.PrivateKey) {
 		var ret string
 		return ret
 	}
-
-	return o.PrivateKey
+	return *o.PrivateKey
 }
 
-// GetPrivateKeyOk returns a tuple with the PrivateKey field value
+// GetPrivateKeyOk returns a tuple with the PrivateKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsFirebase) GetPrivateKeyOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PrivateKey) {
 		return nil, false
 	}
-	return &o.PrivateKey, true
+	return o.PrivateKey, true
 }
 
-// SetPrivateKey sets field value
+// HasPrivateKey returns a boolean if a field has been set.
+func (o *ClientAddonsFirebase) HasPrivateKey() bool {
+	if o != nil && !IsNil(o.PrivateKey) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrivateKey gets a reference to the given string and assigns it to the PrivateKey field.
 func (o *ClientAddonsFirebase) SetPrivateKey(v string) {
-	o.PrivateKey = v
+	o.PrivateKey = &v
 }
 
-// GetClientEmail returns the ClientEmail field value
+// GetClientEmail returns the ClientEmail field value if set, zero value otherwise.
 func (o *ClientAddonsFirebase) GetClientEmail() string {
-	if o == nil {
+	if o == nil || IsNil(o.ClientEmail) {
 		var ret string
 		return ret
 	}
-
-	return o.ClientEmail
+	return *o.ClientEmail
 }
 
-// GetClientEmailOk returns a tuple with the ClientEmail field value
+// GetClientEmailOk returns a tuple with the ClientEmail field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsFirebase) GetClientEmailOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ClientEmail) {
 		return nil, false
 	}
-	return &o.ClientEmail, true
+	return o.ClientEmail, true
 }
 
-// SetClientEmail sets field value
+// HasClientEmail returns a boolean if a field has been set.
+func (o *ClientAddonsFirebase) HasClientEmail() bool {
+	if o != nil && !IsNil(o.ClientEmail) {
+		return true
+	}
+
+	return false
+}
+
+// SetClientEmail gets a reference to the given string and assigns it to the ClientEmail field.
 func (o *ClientAddonsFirebase) SetClientEmail(v string) {
-	o.ClientEmail = v
+	o.ClientEmail = &v
 }
 
-// GetLifetimeInSeconds returns the LifetimeInSeconds field value
+// GetLifetimeInSeconds returns the LifetimeInSeconds field value if set, zero value otherwise.
 func (o *ClientAddonsFirebase) GetLifetimeInSeconds() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.LifetimeInSeconds) {
 		var ret int32
 		return ret
 	}
-
-	return o.LifetimeInSeconds
+	return *o.LifetimeInSeconds
 }
 
-// GetLifetimeInSecondsOk returns a tuple with the LifetimeInSeconds field value
+// GetLifetimeInSecondsOk returns a tuple with the LifetimeInSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddonsFirebase) GetLifetimeInSecondsOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LifetimeInSeconds) {
 		return nil, false
 	}
-	return &o.LifetimeInSeconds, true
+	return o.LifetimeInSeconds, true
 }
 
-// SetLifetimeInSeconds sets field value
+// HasLifetimeInSeconds returns a boolean if a field has been set.
+func (o *ClientAddonsFirebase) HasLifetimeInSeconds() bool {
+	if o != nil && !IsNil(o.LifetimeInSeconds) {
+		return true
+	}
+
+	return false
+}
+
+// SetLifetimeInSeconds gets a reference to the given int32 and assigns it to the LifetimeInSeconds field.
 func (o *ClientAddonsFirebase) SetLifetimeInSeconds(v int32) {
-	o.LifetimeInSeconds = v
+	o.LifetimeInSeconds = &v
 }
 
 func (o ClientAddonsFirebase) MarshalJSON() ([]byte, error) {
@@ -161,11 +201,21 @@ func (o ClientAddonsFirebase) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddonsFirebase) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["secret"] = o.Secret
-	toSerialize["private_key_id"] = o.PrivateKeyId
-	toSerialize["private_key"] = o.PrivateKey
-	toSerialize["client_email"] = o.ClientEmail
-	toSerialize["lifetime_in_seconds"] = o.LifetimeInSeconds
+	if !IsNil(o.Secret) {
+		toSerialize["secret"] = o.Secret
+	}
+	if !IsNil(o.PrivateKeyId) {
+		toSerialize["private_key_id"] = o.PrivateKeyId
+	}
+	if !IsNil(o.PrivateKey) {
+		toSerialize["private_key"] = o.PrivateKey
+	}
+	if !IsNil(o.ClientEmail) {
+		toSerialize["client_email"] = o.ClientEmail
+	}
+	if !IsNil(o.LifetimeInSeconds) {
+		toSerialize["lifetime_in_seconds"] = o.LifetimeInSeconds
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value

@@ -11,37 +11,42 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetTriggers200Response struct for GetTriggers200Response
 type GetTriggers200Response struct {
-	Triggers []GetActions200ResponseActionsInnerSupportedTriggersInner `json:"triggers"`
+	Triggers []GetActions200ResponseActionsInnerSupportedTriggersInner `json:"triggers,omitempty"`
 }
 
-type _GetTriggers200Response GetTriggers200Response
-
-// GetTriggers returns the Triggers field value
+// GetTriggers returns the Triggers field value if set, zero value otherwise.
 func (o *GetTriggers200Response) GetTriggers() []GetActions200ResponseActionsInnerSupportedTriggersInner {
-	if o == nil {
+	if o == nil || IsNil(o.Triggers) {
 		var ret []GetActions200ResponseActionsInnerSupportedTriggersInner
 		return ret
 	}
-
 	return o.Triggers
 }
 
-// GetTriggersOk returns a tuple with the Triggers field value
+// GetTriggersOk returns a tuple with the Triggers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetTriggers200Response) GetTriggersOk() ([]GetActions200ResponseActionsInnerSupportedTriggersInner, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Triggers) {
 		return nil, false
 	}
 	return o.Triggers, true
 }
 
-// SetTriggers sets field value
+// HasTriggers returns a boolean if a field has been set.
+func (o *GetTriggers200Response) HasTriggers() bool {
+	if o != nil && !IsNil(o.Triggers) {
+		return true
+	}
+
+	return false
+}
+
+// SetTriggers gets a reference to the given []GetActions200ResponseActionsInnerSupportedTriggersInner and assigns it to the Triggers field.
 func (o *GetTriggers200Response) SetTriggers(v []GetActions200ResponseActionsInnerSupportedTriggersInner) {
 	o.Triggers = v
 }
@@ -56,24 +61,10 @@ func (o GetTriggers200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetTriggers200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["triggers"] = o.Triggers
-	return toSerialize, nil
-}
-
-func (o *GetTriggers200Response) UnmarshalJSON(data []byte) (err error) {
-	varGetTriggers200Response := _GetTriggers200Response{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetTriggers200Response)
-
-	if err != nil {
-		return err
+	if !IsNil(o.Triggers) {
+		toSerialize["triggers"] = o.Triggers
 	}
-
-	*o = GetTriggers200Response(varGetTriggers200Response)
-
-	return err
+	return toSerialize, nil
 }
 
 type NullableGetTriggers200Response struct {

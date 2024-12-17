@@ -11,760 +11,987 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // ClientAddons Addons enabled for this client and their associated configurations.
 type ClientAddons struct {
-	Aws       ClientAddonsAws       `json:"aws"`
-	AzureBlob ClientAddonsAzureBlob `json:"azure_blob"`
-	AzureSb   ClientAddonsAzureSb   `json:"azure_sb"`
-	Rms       ClientAddonsRms       `json:"rms"`
-	Mscrm     ClientAddonsMscrm     `json:"mscrm"`
-	Slack     ClientAddonsSlack     `json:"slack"`
-	Sentry    ClientAddonsSentry    `json:"sentry"`
+	Aws       *ClientAddonsAws       `json:"aws,omitempty"`
+	AzureBlob *ClientAddonsAzureBlob `json:"azure_blob,omitempty"`
+	AzureSb   *ClientAddonsAzureSb   `json:"azure_sb,omitempty"`
+	Rms       *ClientAddonsRms       `json:"rms,omitempty"`
+	Mscrm     *ClientAddonsMscrm     `json:"mscrm,omitempty"`
+	Slack     *ClientAddonsSlack     `json:"slack,omitempty"`
+	Sentry    *ClientAddonsSentry    `json:"sentry,omitempty"`
 	// Box SSO indicator (no configuration settings needed for Box SSO).
-	Box map[string]interface{} `json:"box"`
+	Box map[string]interface{} `json:"box,omitempty"`
 	// CloudBees SSO indicator (no configuration settings needed for CloudBees SSO).
-	Cloudbees map[string]interface{} `json:"cloudbees"`
+	Cloudbees map[string]interface{} `json:"cloudbees,omitempty"`
 	// Concur SSO indicator (no configuration settings needed for Concur SSO).
-	Concur map[string]interface{} `json:"concur"`
+	Concur map[string]interface{} `json:"concur,omitempty"`
 	// Dropbox SSO indicator (no configuration settings needed for Dropbox SSO).
-	Dropbox              map[string]interface{}           `json:"dropbox"`
-	Echosign             ClientAddonsEchosign             `json:"echosign"`
-	Egnyte               ClientAddonsEgnyte               `json:"egnyte"`
-	Firebase             ClientAddonsFirebase             `json:"firebase"`
-	Newrelic             ClientAddonsNewrelic             `json:"newrelic"`
-	Office365            ClientAddonsOffice365            `json:"office365"`
-	Salesforce           ClientAddonsSalesforce           `json:"salesforce"`
-	SalesforceApi        ClientAddonsSalesforceApi        `json:"salesforce_api"`
-	SalesforceSandboxApi ClientAddonsSalesforceSandboxApi `json:"salesforce_sandbox_api"`
-	Samlp                ClientAddonsSamlp                `json:"samlp"`
-	Layer                ClientAddonsLayer                `json:"layer"`
-	SapApi               ClientAddonsSapApi               `json:"sap_api"`
-	Sharepoint           ClientAddonsSharepoint           `json:"sharepoint"`
-	Springcm             ClientAddonsSpringcm             `json:"springcm"`
-	Wams                 ClientAddonsWams                 `json:"wams"`
+	Dropbox              map[string]interface{}            `json:"dropbox,omitempty"`
+	Echosign             *ClientAddonsEchosign             `json:"echosign,omitempty"`
+	Egnyte               *ClientAddonsEgnyte               `json:"egnyte,omitempty"`
+	Firebase             *ClientAddonsFirebase             `json:"firebase,omitempty"`
+	Newrelic             *ClientAddonsNewrelic             `json:"newrelic,omitempty"`
+	Office365            *ClientAddonsOffice365            `json:"office365,omitempty"`
+	Salesforce           *ClientAddonsSalesforce           `json:"salesforce,omitempty"`
+	SalesforceApi        *ClientAddonsSalesforceApi        `json:"salesforce_api,omitempty"`
+	SalesforceSandboxApi *ClientAddonsSalesforceSandboxApi `json:"salesforce_sandbox_api,omitempty"`
+	Samlp                *ClientAddonsSamlp                `json:"samlp,omitempty"`
+	Layer                *ClientAddonsLayer                `json:"layer,omitempty"`
+	SapApi               *ClientAddonsSapApi               `json:"sap_api,omitempty"`
+	Sharepoint           *ClientAddonsSharepoint           `json:"sharepoint,omitempty"`
+	Springcm             *ClientAddonsSpringcm             `json:"springcm,omitempty"`
+	Wams                 *ClientAddonsWams                 `json:"wams,omitempty"`
 	// WS-Fed (WIF) addon indicator. Actual configuration is stored in `callback` and `client_aliases` properties on the client.
-	Wsfed          map[string]interface{}     `json:"wsfed"`
-	Zendesk        ClientAddonsZendesk        `json:"zendesk"`
-	Zoom           ClientAddonsZoom           `json:"zoom"`
-	SsoIntegration ClientAddonsSsoIntegration `json:"sso_integration"`
+	Wsfed          map[string]interface{}      `json:"wsfed,omitempty"`
+	Zendesk        *ClientAddonsZendesk        `json:"zendesk,omitempty"`
+	Zoom           *ClientAddonsZoom           `json:"zoom,omitempty"`
+	SsoIntegration *ClientAddonsSsoIntegration `json:"sso_integration,omitempty"`
 	// Okta Access Gateway SSO configuration
-	Oag map[string]interface{} `json:"oag"`
+	Oag map[string]interface{} `json:"oag,omitempty"`
 }
 
-type _ClientAddons ClientAddons
-
-// GetAws returns the Aws field value
+// GetAws returns the Aws field value if set, zero value otherwise.
 func (o *ClientAddons) GetAws() ClientAddonsAws {
-	if o == nil {
+	if o == nil || IsNil(o.Aws) {
 		var ret ClientAddonsAws
 		return ret
 	}
-
-	return o.Aws
+	return *o.Aws
 }
 
-// GetAwsOk returns a tuple with the Aws field value
+// GetAwsOk returns a tuple with the Aws field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetAwsOk() (*ClientAddonsAws, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Aws) {
 		return nil, false
 	}
-	return &o.Aws, true
+	return o.Aws, true
 }
 
-// SetAws sets field value
+// HasAws returns a boolean if a field has been set.
+func (o *ClientAddons) HasAws() bool {
+	if o != nil && !IsNil(o.Aws) {
+		return true
+	}
+
+	return false
+}
+
+// SetAws gets a reference to the given ClientAddonsAws and assigns it to the Aws field.
 func (o *ClientAddons) SetAws(v ClientAddonsAws) {
-	o.Aws = v
+	o.Aws = &v
 }
 
-// GetAzureBlob returns the AzureBlob field value
+// GetAzureBlob returns the AzureBlob field value if set, zero value otherwise.
 func (o *ClientAddons) GetAzureBlob() ClientAddonsAzureBlob {
-	if o == nil {
+	if o == nil || IsNil(o.AzureBlob) {
 		var ret ClientAddonsAzureBlob
 		return ret
 	}
-
-	return o.AzureBlob
+	return *o.AzureBlob
 }
 
-// GetAzureBlobOk returns a tuple with the AzureBlob field value
+// GetAzureBlobOk returns a tuple with the AzureBlob field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetAzureBlobOk() (*ClientAddonsAzureBlob, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AzureBlob) {
 		return nil, false
 	}
-	return &o.AzureBlob, true
+	return o.AzureBlob, true
 }
 
-// SetAzureBlob sets field value
+// HasAzureBlob returns a boolean if a field has been set.
+func (o *ClientAddons) HasAzureBlob() bool {
+	if o != nil && !IsNil(o.AzureBlob) {
+		return true
+	}
+
+	return false
+}
+
+// SetAzureBlob gets a reference to the given ClientAddonsAzureBlob and assigns it to the AzureBlob field.
 func (o *ClientAddons) SetAzureBlob(v ClientAddonsAzureBlob) {
-	o.AzureBlob = v
+	o.AzureBlob = &v
 }
 
-// GetAzureSb returns the AzureSb field value
+// GetAzureSb returns the AzureSb field value if set, zero value otherwise.
 func (o *ClientAddons) GetAzureSb() ClientAddonsAzureSb {
-	if o == nil {
+	if o == nil || IsNil(o.AzureSb) {
 		var ret ClientAddonsAzureSb
 		return ret
 	}
-
-	return o.AzureSb
+	return *o.AzureSb
 }
 
-// GetAzureSbOk returns a tuple with the AzureSb field value
+// GetAzureSbOk returns a tuple with the AzureSb field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetAzureSbOk() (*ClientAddonsAzureSb, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.AzureSb) {
 		return nil, false
 	}
-	return &o.AzureSb, true
+	return o.AzureSb, true
 }
 
-// SetAzureSb sets field value
+// HasAzureSb returns a boolean if a field has been set.
+func (o *ClientAddons) HasAzureSb() bool {
+	if o != nil && !IsNil(o.AzureSb) {
+		return true
+	}
+
+	return false
+}
+
+// SetAzureSb gets a reference to the given ClientAddonsAzureSb and assigns it to the AzureSb field.
 func (o *ClientAddons) SetAzureSb(v ClientAddonsAzureSb) {
-	o.AzureSb = v
+	o.AzureSb = &v
 }
 
-// GetRms returns the Rms field value
+// GetRms returns the Rms field value if set, zero value otherwise.
 func (o *ClientAddons) GetRms() ClientAddonsRms {
-	if o == nil {
+	if o == nil || IsNil(o.Rms) {
 		var ret ClientAddonsRms
 		return ret
 	}
-
-	return o.Rms
+	return *o.Rms
 }
 
-// GetRmsOk returns a tuple with the Rms field value
+// GetRmsOk returns a tuple with the Rms field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetRmsOk() (*ClientAddonsRms, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Rms) {
 		return nil, false
 	}
-	return &o.Rms, true
+	return o.Rms, true
 }
 
-// SetRms sets field value
+// HasRms returns a boolean if a field has been set.
+func (o *ClientAddons) HasRms() bool {
+	if o != nil && !IsNil(o.Rms) {
+		return true
+	}
+
+	return false
+}
+
+// SetRms gets a reference to the given ClientAddonsRms and assigns it to the Rms field.
 func (o *ClientAddons) SetRms(v ClientAddonsRms) {
-	o.Rms = v
+	o.Rms = &v
 }
 
-// GetMscrm returns the Mscrm field value
+// GetMscrm returns the Mscrm field value if set, zero value otherwise.
 func (o *ClientAddons) GetMscrm() ClientAddonsMscrm {
-	if o == nil {
+	if o == nil || IsNil(o.Mscrm) {
 		var ret ClientAddonsMscrm
 		return ret
 	}
-
-	return o.Mscrm
+	return *o.Mscrm
 }
 
-// GetMscrmOk returns a tuple with the Mscrm field value
+// GetMscrmOk returns a tuple with the Mscrm field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetMscrmOk() (*ClientAddonsMscrm, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Mscrm) {
 		return nil, false
 	}
-	return &o.Mscrm, true
+	return o.Mscrm, true
 }
 
-// SetMscrm sets field value
+// HasMscrm returns a boolean if a field has been set.
+func (o *ClientAddons) HasMscrm() bool {
+	if o != nil && !IsNil(o.Mscrm) {
+		return true
+	}
+
+	return false
+}
+
+// SetMscrm gets a reference to the given ClientAddonsMscrm and assigns it to the Mscrm field.
 func (o *ClientAddons) SetMscrm(v ClientAddonsMscrm) {
-	o.Mscrm = v
+	o.Mscrm = &v
 }
 
-// GetSlack returns the Slack field value
+// GetSlack returns the Slack field value if set, zero value otherwise.
 func (o *ClientAddons) GetSlack() ClientAddonsSlack {
-	if o == nil {
+	if o == nil || IsNil(o.Slack) {
 		var ret ClientAddonsSlack
 		return ret
 	}
-
-	return o.Slack
+	return *o.Slack
 }
 
-// GetSlackOk returns a tuple with the Slack field value
+// GetSlackOk returns a tuple with the Slack field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetSlackOk() (*ClientAddonsSlack, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Slack) {
 		return nil, false
 	}
-	return &o.Slack, true
+	return o.Slack, true
 }
 
-// SetSlack sets field value
+// HasSlack returns a boolean if a field has been set.
+func (o *ClientAddons) HasSlack() bool {
+	if o != nil && !IsNil(o.Slack) {
+		return true
+	}
+
+	return false
+}
+
+// SetSlack gets a reference to the given ClientAddonsSlack and assigns it to the Slack field.
 func (o *ClientAddons) SetSlack(v ClientAddonsSlack) {
-	o.Slack = v
+	o.Slack = &v
 }
 
-// GetSentry returns the Sentry field value
+// GetSentry returns the Sentry field value if set, zero value otherwise.
 func (o *ClientAddons) GetSentry() ClientAddonsSentry {
-	if o == nil {
+	if o == nil || IsNil(o.Sentry) {
 		var ret ClientAddonsSentry
 		return ret
 	}
-
-	return o.Sentry
+	return *o.Sentry
 }
 
-// GetSentryOk returns a tuple with the Sentry field value
+// GetSentryOk returns a tuple with the Sentry field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetSentryOk() (*ClientAddonsSentry, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Sentry) {
 		return nil, false
 	}
-	return &o.Sentry, true
+	return o.Sentry, true
 }
 
-// SetSentry sets field value
+// HasSentry returns a boolean if a field has been set.
+func (o *ClientAddons) HasSentry() bool {
+	if o != nil && !IsNil(o.Sentry) {
+		return true
+	}
+
+	return false
+}
+
+// SetSentry gets a reference to the given ClientAddonsSentry and assigns it to the Sentry field.
 func (o *ClientAddons) SetSentry(v ClientAddonsSentry) {
-	o.Sentry = v
+	o.Sentry = &v
 }
 
-// GetBox returns the Box field value
+// GetBox returns the Box field value if set, zero value otherwise.
 func (o *ClientAddons) GetBox() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Box) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Box
 }
 
-// GetBoxOk returns a tuple with the Box field value
+// GetBoxOk returns a tuple with the Box field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetBoxOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Box) {
 		return map[string]interface{}{}, false
 	}
 	return o.Box, true
 }
 
-// SetBox sets field value
+// HasBox returns a boolean if a field has been set.
+func (o *ClientAddons) HasBox() bool {
+	if o != nil && !IsNil(o.Box) {
+		return true
+	}
+
+	return false
+}
+
+// SetBox gets a reference to the given map[string]interface{} and assigns it to the Box field.
 func (o *ClientAddons) SetBox(v map[string]interface{}) {
 	o.Box = v
 }
 
-// GetCloudbees returns the Cloudbees field value
+// GetCloudbees returns the Cloudbees field value if set, zero value otherwise.
 func (o *ClientAddons) GetCloudbees() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Cloudbees) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Cloudbees
 }
 
-// GetCloudbeesOk returns a tuple with the Cloudbees field value
+// GetCloudbeesOk returns a tuple with the Cloudbees field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetCloudbeesOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Cloudbees) {
 		return map[string]interface{}{}, false
 	}
 	return o.Cloudbees, true
 }
 
-// SetCloudbees sets field value
+// HasCloudbees returns a boolean if a field has been set.
+func (o *ClientAddons) HasCloudbees() bool {
+	if o != nil && !IsNil(o.Cloudbees) {
+		return true
+	}
+
+	return false
+}
+
+// SetCloudbees gets a reference to the given map[string]interface{} and assigns it to the Cloudbees field.
 func (o *ClientAddons) SetCloudbees(v map[string]interface{}) {
 	o.Cloudbees = v
 }
 
-// GetConcur returns the Concur field value
+// GetConcur returns the Concur field value if set, zero value otherwise.
 func (o *ClientAddons) GetConcur() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Concur) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Concur
 }
 
-// GetConcurOk returns a tuple with the Concur field value
+// GetConcurOk returns a tuple with the Concur field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetConcurOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Concur) {
 		return map[string]interface{}{}, false
 	}
 	return o.Concur, true
 }
 
-// SetConcur sets field value
+// HasConcur returns a boolean if a field has been set.
+func (o *ClientAddons) HasConcur() bool {
+	if o != nil && !IsNil(o.Concur) {
+		return true
+	}
+
+	return false
+}
+
+// SetConcur gets a reference to the given map[string]interface{} and assigns it to the Concur field.
 func (o *ClientAddons) SetConcur(v map[string]interface{}) {
 	o.Concur = v
 }
 
-// GetDropbox returns the Dropbox field value
+// GetDropbox returns the Dropbox field value if set, zero value otherwise.
 func (o *ClientAddons) GetDropbox() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Dropbox) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Dropbox
 }
 
-// GetDropboxOk returns a tuple with the Dropbox field value
+// GetDropboxOk returns a tuple with the Dropbox field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetDropboxOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Dropbox) {
 		return map[string]interface{}{}, false
 	}
 	return o.Dropbox, true
 }
 
-// SetDropbox sets field value
+// HasDropbox returns a boolean if a field has been set.
+func (o *ClientAddons) HasDropbox() bool {
+	if o != nil && !IsNil(o.Dropbox) {
+		return true
+	}
+
+	return false
+}
+
+// SetDropbox gets a reference to the given map[string]interface{} and assigns it to the Dropbox field.
 func (o *ClientAddons) SetDropbox(v map[string]interface{}) {
 	o.Dropbox = v
 }
 
-// GetEchosign returns the Echosign field value
+// GetEchosign returns the Echosign field value if set, zero value otherwise.
 func (o *ClientAddons) GetEchosign() ClientAddonsEchosign {
-	if o == nil {
+	if o == nil || IsNil(o.Echosign) {
 		var ret ClientAddonsEchosign
 		return ret
 	}
-
-	return o.Echosign
+	return *o.Echosign
 }
 
-// GetEchosignOk returns a tuple with the Echosign field value
+// GetEchosignOk returns a tuple with the Echosign field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetEchosignOk() (*ClientAddonsEchosign, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Echosign) {
 		return nil, false
 	}
-	return &o.Echosign, true
+	return o.Echosign, true
 }
 
-// SetEchosign sets field value
+// HasEchosign returns a boolean if a field has been set.
+func (o *ClientAddons) HasEchosign() bool {
+	if o != nil && !IsNil(o.Echosign) {
+		return true
+	}
+
+	return false
+}
+
+// SetEchosign gets a reference to the given ClientAddonsEchosign and assigns it to the Echosign field.
 func (o *ClientAddons) SetEchosign(v ClientAddonsEchosign) {
-	o.Echosign = v
+	o.Echosign = &v
 }
 
-// GetEgnyte returns the Egnyte field value
+// GetEgnyte returns the Egnyte field value if set, zero value otherwise.
 func (o *ClientAddons) GetEgnyte() ClientAddonsEgnyte {
-	if o == nil {
+	if o == nil || IsNil(o.Egnyte) {
 		var ret ClientAddonsEgnyte
 		return ret
 	}
-
-	return o.Egnyte
+	return *o.Egnyte
 }
 
-// GetEgnyteOk returns a tuple with the Egnyte field value
+// GetEgnyteOk returns a tuple with the Egnyte field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetEgnyteOk() (*ClientAddonsEgnyte, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Egnyte) {
 		return nil, false
 	}
-	return &o.Egnyte, true
+	return o.Egnyte, true
 }
 
-// SetEgnyte sets field value
+// HasEgnyte returns a boolean if a field has been set.
+func (o *ClientAddons) HasEgnyte() bool {
+	if o != nil && !IsNil(o.Egnyte) {
+		return true
+	}
+
+	return false
+}
+
+// SetEgnyte gets a reference to the given ClientAddonsEgnyte and assigns it to the Egnyte field.
 func (o *ClientAddons) SetEgnyte(v ClientAddonsEgnyte) {
-	o.Egnyte = v
+	o.Egnyte = &v
 }
 
-// GetFirebase returns the Firebase field value
+// GetFirebase returns the Firebase field value if set, zero value otherwise.
 func (o *ClientAddons) GetFirebase() ClientAddonsFirebase {
-	if o == nil {
+	if o == nil || IsNil(o.Firebase) {
 		var ret ClientAddonsFirebase
 		return ret
 	}
-
-	return o.Firebase
+	return *o.Firebase
 }
 
-// GetFirebaseOk returns a tuple with the Firebase field value
+// GetFirebaseOk returns a tuple with the Firebase field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetFirebaseOk() (*ClientAddonsFirebase, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Firebase) {
 		return nil, false
 	}
-	return &o.Firebase, true
+	return o.Firebase, true
 }
 
-// SetFirebase sets field value
+// HasFirebase returns a boolean if a field has been set.
+func (o *ClientAddons) HasFirebase() bool {
+	if o != nil && !IsNil(o.Firebase) {
+		return true
+	}
+
+	return false
+}
+
+// SetFirebase gets a reference to the given ClientAddonsFirebase and assigns it to the Firebase field.
 func (o *ClientAddons) SetFirebase(v ClientAddonsFirebase) {
-	o.Firebase = v
+	o.Firebase = &v
 }
 
-// GetNewrelic returns the Newrelic field value
+// GetNewrelic returns the Newrelic field value if set, zero value otherwise.
 func (o *ClientAddons) GetNewrelic() ClientAddonsNewrelic {
-	if o == nil {
+	if o == nil || IsNil(o.Newrelic) {
 		var ret ClientAddonsNewrelic
 		return ret
 	}
-
-	return o.Newrelic
+	return *o.Newrelic
 }
 
-// GetNewrelicOk returns a tuple with the Newrelic field value
+// GetNewrelicOk returns a tuple with the Newrelic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetNewrelicOk() (*ClientAddonsNewrelic, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Newrelic) {
 		return nil, false
 	}
-	return &o.Newrelic, true
+	return o.Newrelic, true
 }
 
-// SetNewrelic sets field value
+// HasNewrelic returns a boolean if a field has been set.
+func (o *ClientAddons) HasNewrelic() bool {
+	if o != nil && !IsNil(o.Newrelic) {
+		return true
+	}
+
+	return false
+}
+
+// SetNewrelic gets a reference to the given ClientAddonsNewrelic and assigns it to the Newrelic field.
 func (o *ClientAddons) SetNewrelic(v ClientAddonsNewrelic) {
-	o.Newrelic = v
+	o.Newrelic = &v
 }
 
-// GetOffice365 returns the Office365 field value
+// GetOffice365 returns the Office365 field value if set, zero value otherwise.
 func (o *ClientAddons) GetOffice365() ClientAddonsOffice365 {
-	if o == nil {
+	if o == nil || IsNil(o.Office365) {
 		var ret ClientAddonsOffice365
 		return ret
 	}
-
-	return o.Office365
+	return *o.Office365
 }
 
-// GetOffice365Ok returns a tuple with the Office365 field value
+// GetOffice365Ok returns a tuple with the Office365 field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetOffice365Ok() (*ClientAddonsOffice365, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Office365) {
 		return nil, false
 	}
-	return &o.Office365, true
+	return o.Office365, true
 }
 
-// SetOffice365 sets field value
+// HasOffice365 returns a boolean if a field has been set.
+func (o *ClientAddons) HasOffice365() bool {
+	if o != nil && !IsNil(o.Office365) {
+		return true
+	}
+
+	return false
+}
+
+// SetOffice365 gets a reference to the given ClientAddonsOffice365 and assigns it to the Office365 field.
 func (o *ClientAddons) SetOffice365(v ClientAddonsOffice365) {
-	o.Office365 = v
+	o.Office365 = &v
 }
 
-// GetSalesforce returns the Salesforce field value
+// GetSalesforce returns the Salesforce field value if set, zero value otherwise.
 func (o *ClientAddons) GetSalesforce() ClientAddonsSalesforce {
-	if o == nil {
+	if o == nil || IsNil(o.Salesforce) {
 		var ret ClientAddonsSalesforce
 		return ret
 	}
-
-	return o.Salesforce
+	return *o.Salesforce
 }
 
-// GetSalesforceOk returns a tuple with the Salesforce field value
+// GetSalesforceOk returns a tuple with the Salesforce field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetSalesforceOk() (*ClientAddonsSalesforce, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Salesforce) {
 		return nil, false
 	}
-	return &o.Salesforce, true
+	return o.Salesforce, true
 }
 
-// SetSalesforce sets field value
+// HasSalesforce returns a boolean if a field has been set.
+func (o *ClientAddons) HasSalesforce() bool {
+	if o != nil && !IsNil(o.Salesforce) {
+		return true
+	}
+
+	return false
+}
+
+// SetSalesforce gets a reference to the given ClientAddonsSalesforce and assigns it to the Salesforce field.
 func (o *ClientAddons) SetSalesforce(v ClientAddonsSalesforce) {
-	o.Salesforce = v
+	o.Salesforce = &v
 }
 
-// GetSalesforceApi returns the SalesforceApi field value
+// GetSalesforceApi returns the SalesforceApi field value if set, zero value otherwise.
 func (o *ClientAddons) GetSalesforceApi() ClientAddonsSalesforceApi {
-	if o == nil {
+	if o == nil || IsNil(o.SalesforceApi) {
 		var ret ClientAddonsSalesforceApi
 		return ret
 	}
-
-	return o.SalesforceApi
+	return *o.SalesforceApi
 }
 
-// GetSalesforceApiOk returns a tuple with the SalesforceApi field value
+// GetSalesforceApiOk returns a tuple with the SalesforceApi field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetSalesforceApiOk() (*ClientAddonsSalesforceApi, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SalesforceApi) {
 		return nil, false
 	}
-	return &o.SalesforceApi, true
+	return o.SalesforceApi, true
 }
 
-// SetSalesforceApi sets field value
+// HasSalesforceApi returns a boolean if a field has been set.
+func (o *ClientAddons) HasSalesforceApi() bool {
+	if o != nil && !IsNil(o.SalesforceApi) {
+		return true
+	}
+
+	return false
+}
+
+// SetSalesforceApi gets a reference to the given ClientAddonsSalesforceApi and assigns it to the SalesforceApi field.
 func (o *ClientAddons) SetSalesforceApi(v ClientAddonsSalesforceApi) {
-	o.SalesforceApi = v
+	o.SalesforceApi = &v
 }
 
-// GetSalesforceSandboxApi returns the SalesforceSandboxApi field value
+// GetSalesforceSandboxApi returns the SalesforceSandboxApi field value if set, zero value otherwise.
 func (o *ClientAddons) GetSalesforceSandboxApi() ClientAddonsSalesforceSandboxApi {
-	if o == nil {
+	if o == nil || IsNil(o.SalesforceSandboxApi) {
 		var ret ClientAddonsSalesforceSandboxApi
 		return ret
 	}
-
-	return o.SalesforceSandboxApi
+	return *o.SalesforceSandboxApi
 }
 
-// GetSalesforceSandboxApiOk returns a tuple with the SalesforceSandboxApi field value
+// GetSalesforceSandboxApiOk returns a tuple with the SalesforceSandboxApi field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetSalesforceSandboxApiOk() (*ClientAddonsSalesforceSandboxApi, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SalesforceSandboxApi) {
 		return nil, false
 	}
-	return &o.SalesforceSandboxApi, true
+	return o.SalesforceSandboxApi, true
 }
 
-// SetSalesforceSandboxApi sets field value
+// HasSalesforceSandboxApi returns a boolean if a field has been set.
+func (o *ClientAddons) HasSalesforceSandboxApi() bool {
+	if o != nil && !IsNil(o.SalesforceSandboxApi) {
+		return true
+	}
+
+	return false
+}
+
+// SetSalesforceSandboxApi gets a reference to the given ClientAddonsSalesforceSandboxApi and assigns it to the SalesforceSandboxApi field.
 func (o *ClientAddons) SetSalesforceSandboxApi(v ClientAddonsSalesforceSandboxApi) {
-	o.SalesforceSandboxApi = v
+	o.SalesforceSandboxApi = &v
 }
 
-// GetSamlp returns the Samlp field value
+// GetSamlp returns the Samlp field value if set, zero value otherwise.
 func (o *ClientAddons) GetSamlp() ClientAddonsSamlp {
-	if o == nil {
+	if o == nil || IsNil(o.Samlp) {
 		var ret ClientAddonsSamlp
 		return ret
 	}
-
-	return o.Samlp
+	return *o.Samlp
 }
 
-// GetSamlpOk returns a tuple with the Samlp field value
+// GetSamlpOk returns a tuple with the Samlp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetSamlpOk() (*ClientAddonsSamlp, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Samlp) {
 		return nil, false
 	}
-	return &o.Samlp, true
+	return o.Samlp, true
 }
 
-// SetSamlp sets field value
+// HasSamlp returns a boolean if a field has been set.
+func (o *ClientAddons) HasSamlp() bool {
+	if o != nil && !IsNil(o.Samlp) {
+		return true
+	}
+
+	return false
+}
+
+// SetSamlp gets a reference to the given ClientAddonsSamlp and assigns it to the Samlp field.
 func (o *ClientAddons) SetSamlp(v ClientAddonsSamlp) {
-	o.Samlp = v
+	o.Samlp = &v
 }
 
-// GetLayer returns the Layer field value
+// GetLayer returns the Layer field value if set, zero value otherwise.
 func (o *ClientAddons) GetLayer() ClientAddonsLayer {
-	if o == nil {
+	if o == nil || IsNil(o.Layer) {
 		var ret ClientAddonsLayer
 		return ret
 	}
-
-	return o.Layer
+	return *o.Layer
 }
 
-// GetLayerOk returns a tuple with the Layer field value
+// GetLayerOk returns a tuple with the Layer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetLayerOk() (*ClientAddonsLayer, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Layer) {
 		return nil, false
 	}
-	return &o.Layer, true
+	return o.Layer, true
 }
 
-// SetLayer sets field value
+// HasLayer returns a boolean if a field has been set.
+func (o *ClientAddons) HasLayer() bool {
+	if o != nil && !IsNil(o.Layer) {
+		return true
+	}
+
+	return false
+}
+
+// SetLayer gets a reference to the given ClientAddonsLayer and assigns it to the Layer field.
 func (o *ClientAddons) SetLayer(v ClientAddonsLayer) {
-	o.Layer = v
+	o.Layer = &v
 }
 
-// GetSapApi returns the SapApi field value
+// GetSapApi returns the SapApi field value if set, zero value otherwise.
 func (o *ClientAddons) GetSapApi() ClientAddonsSapApi {
-	if o == nil {
+	if o == nil || IsNil(o.SapApi) {
 		var ret ClientAddonsSapApi
 		return ret
 	}
-
-	return o.SapApi
+	return *o.SapApi
 }
 
-// GetSapApiOk returns a tuple with the SapApi field value
+// GetSapApiOk returns a tuple with the SapApi field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetSapApiOk() (*ClientAddonsSapApi, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SapApi) {
 		return nil, false
 	}
-	return &o.SapApi, true
+	return o.SapApi, true
 }
 
-// SetSapApi sets field value
+// HasSapApi returns a boolean if a field has been set.
+func (o *ClientAddons) HasSapApi() bool {
+	if o != nil && !IsNil(o.SapApi) {
+		return true
+	}
+
+	return false
+}
+
+// SetSapApi gets a reference to the given ClientAddonsSapApi and assigns it to the SapApi field.
 func (o *ClientAddons) SetSapApi(v ClientAddonsSapApi) {
-	o.SapApi = v
+	o.SapApi = &v
 }
 
-// GetSharepoint returns the Sharepoint field value
+// GetSharepoint returns the Sharepoint field value if set, zero value otherwise.
 func (o *ClientAddons) GetSharepoint() ClientAddonsSharepoint {
-	if o == nil {
+	if o == nil || IsNil(o.Sharepoint) {
 		var ret ClientAddonsSharepoint
 		return ret
 	}
-
-	return o.Sharepoint
+	return *o.Sharepoint
 }
 
-// GetSharepointOk returns a tuple with the Sharepoint field value
+// GetSharepointOk returns a tuple with the Sharepoint field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetSharepointOk() (*ClientAddonsSharepoint, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Sharepoint) {
 		return nil, false
 	}
-	return &o.Sharepoint, true
+	return o.Sharepoint, true
 }
 
-// SetSharepoint sets field value
+// HasSharepoint returns a boolean if a field has been set.
+func (o *ClientAddons) HasSharepoint() bool {
+	if o != nil && !IsNil(o.Sharepoint) {
+		return true
+	}
+
+	return false
+}
+
+// SetSharepoint gets a reference to the given ClientAddonsSharepoint and assigns it to the Sharepoint field.
 func (o *ClientAddons) SetSharepoint(v ClientAddonsSharepoint) {
-	o.Sharepoint = v
+	o.Sharepoint = &v
 }
 
-// GetSpringcm returns the Springcm field value
+// GetSpringcm returns the Springcm field value if set, zero value otherwise.
 func (o *ClientAddons) GetSpringcm() ClientAddonsSpringcm {
-	if o == nil {
+	if o == nil || IsNil(o.Springcm) {
 		var ret ClientAddonsSpringcm
 		return ret
 	}
-
-	return o.Springcm
+	return *o.Springcm
 }
 
-// GetSpringcmOk returns a tuple with the Springcm field value
+// GetSpringcmOk returns a tuple with the Springcm field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetSpringcmOk() (*ClientAddonsSpringcm, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Springcm) {
 		return nil, false
 	}
-	return &o.Springcm, true
+	return o.Springcm, true
 }
 
-// SetSpringcm sets field value
+// HasSpringcm returns a boolean if a field has been set.
+func (o *ClientAddons) HasSpringcm() bool {
+	if o != nil && !IsNil(o.Springcm) {
+		return true
+	}
+
+	return false
+}
+
+// SetSpringcm gets a reference to the given ClientAddonsSpringcm and assigns it to the Springcm field.
 func (o *ClientAddons) SetSpringcm(v ClientAddonsSpringcm) {
-	o.Springcm = v
+	o.Springcm = &v
 }
 
-// GetWams returns the Wams field value
+// GetWams returns the Wams field value if set, zero value otherwise.
 func (o *ClientAddons) GetWams() ClientAddonsWams {
-	if o == nil {
+	if o == nil || IsNil(o.Wams) {
 		var ret ClientAddonsWams
 		return ret
 	}
-
-	return o.Wams
+	return *o.Wams
 }
 
-// GetWamsOk returns a tuple with the Wams field value
+// GetWamsOk returns a tuple with the Wams field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetWamsOk() (*ClientAddonsWams, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Wams) {
 		return nil, false
 	}
-	return &o.Wams, true
+	return o.Wams, true
 }
 
-// SetWams sets field value
+// HasWams returns a boolean if a field has been set.
+func (o *ClientAddons) HasWams() bool {
+	if o != nil && !IsNil(o.Wams) {
+		return true
+	}
+
+	return false
+}
+
+// SetWams gets a reference to the given ClientAddonsWams and assigns it to the Wams field.
 func (o *ClientAddons) SetWams(v ClientAddonsWams) {
-	o.Wams = v
+	o.Wams = &v
 }
 
-// GetWsfed returns the Wsfed field value
+// GetWsfed returns the Wsfed field value if set, zero value otherwise.
 func (o *ClientAddons) GetWsfed() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Wsfed) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Wsfed
 }
 
-// GetWsfedOk returns a tuple with the Wsfed field value
+// GetWsfedOk returns a tuple with the Wsfed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetWsfedOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Wsfed) {
 		return map[string]interface{}{}, false
 	}
 	return o.Wsfed, true
 }
 
-// SetWsfed sets field value
+// HasWsfed returns a boolean if a field has been set.
+func (o *ClientAddons) HasWsfed() bool {
+	if o != nil && !IsNil(o.Wsfed) {
+		return true
+	}
+
+	return false
+}
+
+// SetWsfed gets a reference to the given map[string]interface{} and assigns it to the Wsfed field.
 func (o *ClientAddons) SetWsfed(v map[string]interface{}) {
 	o.Wsfed = v
 }
 
-// GetZendesk returns the Zendesk field value
+// GetZendesk returns the Zendesk field value if set, zero value otherwise.
 func (o *ClientAddons) GetZendesk() ClientAddonsZendesk {
-	if o == nil {
+	if o == nil || IsNil(o.Zendesk) {
 		var ret ClientAddonsZendesk
 		return ret
 	}
-
-	return o.Zendesk
+	return *o.Zendesk
 }
 
-// GetZendeskOk returns a tuple with the Zendesk field value
+// GetZendeskOk returns a tuple with the Zendesk field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetZendeskOk() (*ClientAddonsZendesk, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Zendesk) {
 		return nil, false
 	}
-	return &o.Zendesk, true
+	return o.Zendesk, true
 }
 
-// SetZendesk sets field value
+// HasZendesk returns a boolean if a field has been set.
+func (o *ClientAddons) HasZendesk() bool {
+	if o != nil && !IsNil(o.Zendesk) {
+		return true
+	}
+
+	return false
+}
+
+// SetZendesk gets a reference to the given ClientAddonsZendesk and assigns it to the Zendesk field.
 func (o *ClientAddons) SetZendesk(v ClientAddonsZendesk) {
-	o.Zendesk = v
+	o.Zendesk = &v
 }
 
-// GetZoom returns the Zoom field value
+// GetZoom returns the Zoom field value if set, zero value otherwise.
 func (o *ClientAddons) GetZoom() ClientAddonsZoom {
-	if o == nil {
+	if o == nil || IsNil(o.Zoom) {
 		var ret ClientAddonsZoom
 		return ret
 	}
-
-	return o.Zoom
+	return *o.Zoom
 }
 
-// GetZoomOk returns a tuple with the Zoom field value
+// GetZoomOk returns a tuple with the Zoom field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetZoomOk() (*ClientAddonsZoom, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Zoom) {
 		return nil, false
 	}
-	return &o.Zoom, true
+	return o.Zoom, true
 }
 
-// SetZoom sets field value
+// HasZoom returns a boolean if a field has been set.
+func (o *ClientAddons) HasZoom() bool {
+	if o != nil && !IsNil(o.Zoom) {
+		return true
+	}
+
+	return false
+}
+
+// SetZoom gets a reference to the given ClientAddonsZoom and assigns it to the Zoom field.
 func (o *ClientAddons) SetZoom(v ClientAddonsZoom) {
-	o.Zoom = v
+	o.Zoom = &v
 }
 
-// GetSsoIntegration returns the SsoIntegration field value
+// GetSsoIntegration returns the SsoIntegration field value if set, zero value otherwise.
 func (o *ClientAddons) GetSsoIntegration() ClientAddonsSsoIntegration {
-	if o == nil {
+	if o == nil || IsNil(o.SsoIntegration) {
 		var ret ClientAddonsSsoIntegration
 		return ret
 	}
-
-	return o.SsoIntegration
+	return *o.SsoIntegration
 }
 
-// GetSsoIntegrationOk returns a tuple with the SsoIntegration field value
+// GetSsoIntegrationOk returns a tuple with the SsoIntegration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientAddons) GetSsoIntegrationOk() (*ClientAddonsSsoIntegration, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SsoIntegration) {
 		return nil, false
 	}
-	return &o.SsoIntegration, true
+	return o.SsoIntegration, true
 }
 
-// SetSsoIntegration sets field value
+// HasSsoIntegration returns a boolean if a field has been set.
+func (o *ClientAddons) HasSsoIntegration() bool {
+	if o != nil && !IsNil(o.SsoIntegration) {
+		return true
+	}
+
+	return false
+}
+
+// SetSsoIntegration gets a reference to the given ClientAddonsSsoIntegration and assigns it to the SsoIntegration field.
 func (o *ClientAddons) SetSsoIntegration(v ClientAddonsSsoIntegration) {
-	o.SsoIntegration = v
+	o.SsoIntegration = &v
 }
 
-// GetOag returns the Oag field value
-// If the value is explicit nil, the zero value for map[string]interface{} will be returned
+// GetOag returns the Oag field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ClientAddons) GetOag() map[string]interface{} {
 	if o == nil {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Oag
 }
 
-// GetOagOk returns a tuple with the Oag field value
+// GetOagOk returns a tuple with the Oag field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ClientAddons) GetOagOk() (map[string]interface{}, bool) {
@@ -774,7 +1001,16 @@ func (o *ClientAddons) GetOagOk() (map[string]interface{}, bool) {
 	return o.Oag, true
 }
 
-// SetOag sets field value
+// HasOag returns a boolean if a field has been set.
+func (o *ClientAddons) HasOag() bool {
+	if o != nil && !IsNil(o.Oag) {
+		return true
+	}
+
+	return false
+}
+
+// SetOag gets a reference to the given map[string]interface{} and assigns it to the Oag field.
 func (o *ClientAddons) SetOag(v map[string]interface{}) {
 	o.Oag = v
 }
@@ -789,55 +1025,97 @@ func (o ClientAddons) MarshalJSON() ([]byte, error) {
 
 func (o ClientAddons) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["aws"] = o.Aws
-	toSerialize["azure_blob"] = o.AzureBlob
-	toSerialize["azure_sb"] = o.AzureSb
-	toSerialize["rms"] = o.Rms
-	toSerialize["mscrm"] = o.Mscrm
-	toSerialize["slack"] = o.Slack
-	toSerialize["sentry"] = o.Sentry
-	toSerialize["box"] = o.Box
-	toSerialize["cloudbees"] = o.Cloudbees
-	toSerialize["concur"] = o.Concur
-	toSerialize["dropbox"] = o.Dropbox
-	toSerialize["echosign"] = o.Echosign
-	toSerialize["egnyte"] = o.Egnyte
-	toSerialize["firebase"] = o.Firebase
-	toSerialize["newrelic"] = o.Newrelic
-	toSerialize["office365"] = o.Office365
-	toSerialize["salesforce"] = o.Salesforce
-	toSerialize["salesforce_api"] = o.SalesforceApi
-	toSerialize["salesforce_sandbox_api"] = o.SalesforceSandboxApi
-	toSerialize["samlp"] = o.Samlp
-	toSerialize["layer"] = o.Layer
-	toSerialize["sap_api"] = o.SapApi
-	toSerialize["sharepoint"] = o.Sharepoint
-	toSerialize["springcm"] = o.Springcm
-	toSerialize["wams"] = o.Wams
-	toSerialize["wsfed"] = o.Wsfed
-	toSerialize["zendesk"] = o.Zendesk
-	toSerialize["zoom"] = o.Zoom
-	toSerialize["sso_integration"] = o.SsoIntegration
+	if !IsNil(o.Aws) {
+		toSerialize["aws"] = o.Aws
+	}
+	if !IsNil(o.AzureBlob) {
+		toSerialize["azure_blob"] = o.AzureBlob
+	}
+	if !IsNil(o.AzureSb) {
+		toSerialize["azure_sb"] = o.AzureSb
+	}
+	if !IsNil(o.Rms) {
+		toSerialize["rms"] = o.Rms
+	}
+	if !IsNil(o.Mscrm) {
+		toSerialize["mscrm"] = o.Mscrm
+	}
+	if !IsNil(o.Slack) {
+		toSerialize["slack"] = o.Slack
+	}
+	if !IsNil(o.Sentry) {
+		toSerialize["sentry"] = o.Sentry
+	}
+	if !IsNil(o.Box) {
+		toSerialize["box"] = o.Box
+	}
+	if !IsNil(o.Cloudbees) {
+		toSerialize["cloudbees"] = o.Cloudbees
+	}
+	if !IsNil(o.Concur) {
+		toSerialize["concur"] = o.Concur
+	}
+	if !IsNil(o.Dropbox) {
+		toSerialize["dropbox"] = o.Dropbox
+	}
+	if !IsNil(o.Echosign) {
+		toSerialize["echosign"] = o.Echosign
+	}
+	if !IsNil(o.Egnyte) {
+		toSerialize["egnyte"] = o.Egnyte
+	}
+	if !IsNil(o.Firebase) {
+		toSerialize["firebase"] = o.Firebase
+	}
+	if !IsNil(o.Newrelic) {
+		toSerialize["newrelic"] = o.Newrelic
+	}
+	if !IsNil(o.Office365) {
+		toSerialize["office365"] = o.Office365
+	}
+	if !IsNil(o.Salesforce) {
+		toSerialize["salesforce"] = o.Salesforce
+	}
+	if !IsNil(o.SalesforceApi) {
+		toSerialize["salesforce_api"] = o.SalesforceApi
+	}
+	if !IsNil(o.SalesforceSandboxApi) {
+		toSerialize["salesforce_sandbox_api"] = o.SalesforceSandboxApi
+	}
+	if !IsNil(o.Samlp) {
+		toSerialize["samlp"] = o.Samlp
+	}
+	if !IsNil(o.Layer) {
+		toSerialize["layer"] = o.Layer
+	}
+	if !IsNil(o.SapApi) {
+		toSerialize["sap_api"] = o.SapApi
+	}
+	if !IsNil(o.Sharepoint) {
+		toSerialize["sharepoint"] = o.Sharepoint
+	}
+	if !IsNil(o.Springcm) {
+		toSerialize["springcm"] = o.Springcm
+	}
+	if !IsNil(o.Wams) {
+		toSerialize["wams"] = o.Wams
+	}
+	if !IsNil(o.Wsfed) {
+		toSerialize["wsfed"] = o.Wsfed
+	}
+	if !IsNil(o.Zendesk) {
+		toSerialize["zendesk"] = o.Zendesk
+	}
+	if !IsNil(o.Zoom) {
+		toSerialize["zoom"] = o.Zoom
+	}
+	if !IsNil(o.SsoIntegration) {
+		toSerialize["sso_integration"] = o.SsoIntegration
+	}
 	if o.Oag != nil {
 		toSerialize["oag"] = o.Oag
 	}
 	return toSerialize, nil
-}
-
-func (o *ClientAddons) UnmarshalJSON(data []byte) (err error) {
-	varClientAddons := _ClientAddons{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varClientAddons)
-
-	if err != nil {
-		return err
-	}
-
-	*o = ClientAddons(varClientAddons)
-
-	return err
 }
 
 type NullableClientAddons struct {

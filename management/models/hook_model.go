@@ -11,168 +11,213 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // Hook struct for Hook
 type Hook struct {
 	// Trigger ID
-	TriggerId string `json:"triggerId"`
+	TriggerId *string `json:"triggerId,omitempty"`
 	// ID of this hook.
-	Id string `json:"id"`
+	Id *string `json:"id,omitempty"`
 	// Name of this hook.
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// Whether this hook will be executed (true) or ignored (false).
-	Enabled bool `json:"enabled"`
+	Enabled *bool `json:"enabled,omitempty"`
 	// Code to be executed when this hook runs.
-	Script string `json:"script"`
+	Script *string `json:"script,omitempty"`
 	// Dependencies of this hook used by webtask server.
-	Dependencies map[string]interface{} `json:"dependencies"`
+	Dependencies map[string]interface{} `json:"dependencies,omitempty"`
 }
 
-type _Hook Hook
-
-// GetTriggerId returns the TriggerId field value
+// GetTriggerId returns the TriggerId field value if set, zero value otherwise.
 func (o *Hook) GetTriggerId() string {
-	if o == nil {
+	if o == nil || IsNil(o.TriggerId) {
 		var ret string
 		return ret
 	}
-
-	return o.TriggerId
+	return *o.TriggerId
 }
 
-// GetTriggerIdOk returns a tuple with the TriggerId field value
+// GetTriggerIdOk returns a tuple with the TriggerId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetTriggerIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.TriggerId) {
 		return nil, false
 	}
-	return &o.TriggerId, true
+	return o.TriggerId, true
 }
 
-// SetTriggerId sets field value
+// HasTriggerId returns a boolean if a field has been set.
+func (o *Hook) HasTriggerId() bool {
+	if o != nil && !IsNil(o.TriggerId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTriggerId gets a reference to the given string and assigns it to the TriggerId field.
 func (o *Hook) SetTriggerId(v string) {
-	o.TriggerId = v
+	o.TriggerId = &v
 }
 
-// GetId returns the Id field value
+// GetId returns the Id field value if set, zero value otherwise.
 func (o *Hook) GetId() string {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-
-	return o.Id
+	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
-// SetId sets field value
+// HasId returns a boolean if a field has been set.
+func (o *Hook) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
 func (o *Hook) SetId(v string) {
-	o.Id = v
+	o.Id = &v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *Hook) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *Hook) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *Hook) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
-// GetEnabled returns the Enabled field value
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
 func (o *Hook) GetEnabled() bool {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		var ret bool
 		return ret
 	}
-
-	return o.Enabled
+	return *o.Enabled
 }
 
-// GetEnabledOk returns a tuple with the Enabled field value
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetEnabledOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Enabled) {
 		return nil, false
 	}
-	return &o.Enabled, true
+	return o.Enabled, true
 }
 
-// SetEnabled sets field value
+// HasEnabled returns a boolean if a field has been set.
+func (o *Hook) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
 func (o *Hook) SetEnabled(v bool) {
-	o.Enabled = v
+	o.Enabled = &v
 }
 
-// GetScript returns the Script field value
+// GetScript returns the Script field value if set, zero value otherwise.
 func (o *Hook) GetScript() string {
-	if o == nil {
+	if o == nil || IsNil(o.Script) {
 		var ret string
 		return ret
 	}
-
-	return o.Script
+	return *o.Script
 }
 
-// GetScriptOk returns a tuple with the Script field value
+// GetScriptOk returns a tuple with the Script field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetScriptOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Script) {
 		return nil, false
 	}
-	return &o.Script, true
+	return o.Script, true
 }
 
-// SetScript sets field value
+// HasScript returns a boolean if a field has been set.
+func (o *Hook) HasScript() bool {
+	if o != nil && !IsNil(o.Script) {
+		return true
+	}
+
+	return false
+}
+
+// SetScript gets a reference to the given string and assigns it to the Script field.
 func (o *Hook) SetScript(v string) {
-	o.Script = v
+	o.Script = &v
 }
 
-// GetDependencies returns the Dependencies field value
+// GetDependencies returns the Dependencies field value if set, zero value otherwise.
 func (o *Hook) GetDependencies() map[string]interface{} {
-	if o == nil {
+	if o == nil || IsNil(o.Dependencies) {
 		var ret map[string]interface{}
 		return ret
 	}
-
 	return o.Dependencies
 }
 
-// GetDependenciesOk returns a tuple with the Dependencies field value
+// GetDependenciesOk returns a tuple with the Dependencies field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Hook) GetDependenciesOk() (map[string]interface{}, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Dependencies) {
 		return map[string]interface{}{}, false
 	}
 	return o.Dependencies, true
 }
 
-// SetDependencies sets field value
+// HasDependencies returns a boolean if a field has been set.
+func (o *Hook) HasDependencies() bool {
+	if o != nil && !IsNil(o.Dependencies) {
+		return true
+	}
+
+	return false
+}
+
+// SetDependencies gets a reference to the given map[string]interface{} and assigns it to the Dependencies field.
 func (o *Hook) SetDependencies(v map[string]interface{}) {
 	o.Dependencies = v
 }
@@ -187,29 +232,25 @@ func (o Hook) MarshalJSON() ([]byte, error) {
 
 func (o Hook) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["triggerId"] = o.TriggerId
-	toSerialize["id"] = o.Id
-	toSerialize["name"] = o.Name
-	toSerialize["enabled"] = o.Enabled
-	toSerialize["script"] = o.Script
-	toSerialize["dependencies"] = o.Dependencies
-	return toSerialize, nil
-}
-
-func (o *Hook) UnmarshalJSON(data []byte) (err error) {
-	varHook := _Hook{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varHook)
-
-	if err != nil {
-		return err
+	if !IsNil(o.TriggerId) {
+		toSerialize["triggerId"] = o.TriggerId
 	}
-
-	*o = Hook(varHook)
-
-	return err
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.Script) {
+		toSerialize["script"] = o.Script
+	}
+	if !IsNil(o.Dependencies) {
+		toSerialize["dependencies"] = o.Dependencies
+	}
+	return toSerialize, nil
 }
 
 type NullableHook struct {

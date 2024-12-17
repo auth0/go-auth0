@@ -11,65 +11,78 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 )
 
 // GetOrganizations200ResponseOneOfInnerBranding Theme defines how to style the login pages
 type GetOrganizations200ResponseOneOfInnerBranding struct {
 	// URL of logo to display on login page
-	LogoUrl string                                              `json:"logo_url"`
-	Colors  GetOrganizations200ResponseOneOfInnerBrandingColors `json:"colors"`
+	LogoUrl *string                                              `json:"logo_url,omitempty"`
+	Colors  *GetOrganizations200ResponseOneOfInnerBrandingColors `json:"colors,omitempty"`
 }
 
-type _GetOrganizations200ResponseOneOfInnerBranding GetOrganizations200ResponseOneOfInnerBranding
-
-// GetLogoUrl returns the LogoUrl field value
+// GetLogoUrl returns the LogoUrl field value if set, zero value otherwise.
 func (o *GetOrganizations200ResponseOneOfInnerBranding) GetLogoUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.LogoUrl) {
 		var ret string
 		return ret
 	}
-
-	return o.LogoUrl
+	return *o.LogoUrl
 }
 
-// GetLogoUrlOk returns a tuple with the LogoUrl field value
+// GetLogoUrlOk returns a tuple with the LogoUrl field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetOrganizations200ResponseOneOfInnerBranding) GetLogoUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LogoUrl) {
 		return nil, false
 	}
-	return &o.LogoUrl, true
+	return o.LogoUrl, true
 }
 
-// SetLogoUrl sets field value
+// HasLogoUrl returns a boolean if a field has been set.
+func (o *GetOrganizations200ResponseOneOfInnerBranding) HasLogoUrl() bool {
+	if o != nil && !IsNil(o.LogoUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetLogoUrl gets a reference to the given string and assigns it to the LogoUrl field.
 func (o *GetOrganizations200ResponseOneOfInnerBranding) SetLogoUrl(v string) {
-	o.LogoUrl = v
+	o.LogoUrl = &v
 }
 
-// GetColors returns the Colors field value
+// GetColors returns the Colors field value if set, zero value otherwise.
 func (o *GetOrganizations200ResponseOneOfInnerBranding) GetColors() GetOrganizations200ResponseOneOfInnerBrandingColors {
-	if o == nil {
+	if o == nil || IsNil(o.Colors) {
 		var ret GetOrganizations200ResponseOneOfInnerBrandingColors
 		return ret
 	}
-
-	return o.Colors
+	return *o.Colors
 }
 
-// GetColorsOk returns a tuple with the Colors field value
+// GetColorsOk returns a tuple with the Colors field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetOrganizations200ResponseOneOfInnerBranding) GetColorsOk() (*GetOrganizations200ResponseOneOfInnerBrandingColors, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Colors) {
 		return nil, false
 	}
-	return &o.Colors, true
+	return o.Colors, true
 }
 
-// SetColors sets field value
+// HasColors returns a boolean if a field has been set.
+func (o *GetOrganizations200ResponseOneOfInnerBranding) HasColors() bool {
+	if o != nil && !IsNil(o.Colors) {
+		return true
+	}
+
+	return false
+}
+
+// SetColors gets a reference to the given GetOrganizations200ResponseOneOfInnerBrandingColors and assigns it to the Colors field.
 func (o *GetOrganizations200ResponseOneOfInnerBranding) SetColors(v GetOrganizations200ResponseOneOfInnerBrandingColors) {
-	o.Colors = v
+	o.Colors = &v
 }
 
 func (o GetOrganizations200ResponseOneOfInnerBranding) MarshalJSON() ([]byte, error) {
@@ -82,25 +95,13 @@ func (o GetOrganizations200ResponseOneOfInnerBranding) MarshalJSON() ([]byte, er
 
 func (o GetOrganizations200ResponseOneOfInnerBranding) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["logo_url"] = o.LogoUrl
-	toSerialize["colors"] = o.Colors
-	return toSerialize, nil
-}
-
-func (o *GetOrganizations200ResponseOneOfInnerBranding) UnmarshalJSON(data []byte) (err error) {
-	varGetOrganizations200ResponseOneOfInnerBranding := _GetOrganizations200ResponseOneOfInnerBranding{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetOrganizations200ResponseOneOfInnerBranding)
-
-	if err != nil {
-		return err
+	if !IsNil(o.LogoUrl) {
+		toSerialize["logo_url"] = o.LogoUrl
 	}
-
-	*o = GetOrganizations200ResponseOneOfInnerBranding(varGetOrganizations200ResponseOneOfInnerBranding)
-
-	return err
+	if !IsNil(o.Colors) {
+		toSerialize["colors"] = o.Colors
+	}
+	return toSerialize, nil
 }
 
 type NullableGetOrganizations200ResponseOneOfInnerBranding struct {
