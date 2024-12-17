@@ -86,7 +86,6 @@ func (o *PutPnProvidersRequest) UnmarshalJSON(data []byte) (err error) {
 	varPutPnProvidersRequest := _PutPnProvidersRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPutPnProvidersRequest)
 
 	if err != nil {

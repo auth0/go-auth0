@@ -114,7 +114,6 @@ func (o *PostVerificationEmailRequestIdentity) UnmarshalJSON(data []byte) (err e
 	varPostVerificationEmailRequestIdentity := _PostVerificationEmailRequestIdentity{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostVerificationEmailRequestIdentity)
 
 	if err != nil {

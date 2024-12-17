@@ -631,7 +631,6 @@ func (o *ResourceServerCreate) UnmarshalJSON(data []byte) (err error) {
 	varResourceServerCreate := _ResourceServerCreate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varResourceServerCreate)
 
 	if err != nil {

@@ -160,7 +160,6 @@ func (o *PatchBindingsRequestBindingsInnerOneOf) UnmarshalJSON(data []byte) (err
 	varPatchBindingsRequestBindingsInnerOneOf := _PatchBindingsRequestBindingsInnerOneOf{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPatchBindingsRequestBindingsInnerOneOf)
 
 	if err != nil {

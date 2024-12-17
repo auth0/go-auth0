@@ -306,7 +306,6 @@ func (o *Enrollment) UnmarshalJSON(data []byte) (err error) {
 	varEnrollment := _Enrollment{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varEnrollment)
 
 	if err != nil {

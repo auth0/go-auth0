@@ -143,7 +143,6 @@ func (o *EmailProviderCreateCredentialsAnyOf5) UnmarshalJSON(data []byte) (err e
 	varEmailProviderCreateCredentialsAnyOf5 := _EmailProviderCreateCredentialsAnyOf5{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varEmailProviderCreateCredentialsAnyOf5)
 
 	if err != nil {

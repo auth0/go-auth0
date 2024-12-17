@@ -334,7 +334,6 @@ func (o *ConnectionCreate) UnmarshalJSON(data []byte) (err error) {
 	varConnectionCreate := _ConnectionCreate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varConnectionCreate)
 
 	if err != nil {

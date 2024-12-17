@@ -362,7 +362,6 @@ func (o *PostInvitationsRequest) UnmarshalJSON(data []byte) (err error) {
 	varPostInvitationsRequest := _PostInvitationsRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostInvitationsRequest)
 
 	if err != nil {

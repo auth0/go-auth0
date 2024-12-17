@@ -86,7 +86,6 @@ func (o *PutPhoneProvidersRequest) UnmarshalJSON(data []byte) (err error) {
 	varPutPhoneProvidersRequest := _PutPhoneProvidersRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPutPhoneProvidersRequest)
 
 	if err != nil {

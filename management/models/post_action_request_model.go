@@ -263,7 +263,6 @@ func (o *PostActionRequest) UnmarshalJSON(data []byte) (err error) {
 	varPostActionRequest := _PostActionRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostActionRequest)
 
 	if err != nil {

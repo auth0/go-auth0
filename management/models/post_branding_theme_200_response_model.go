@@ -250,7 +250,6 @@ func (o *PostBrandingTheme200Response) UnmarshalJSON(data []byte) (err error) {
 	varPostBrandingTheme200Response := _PostBrandingTheme200Response{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostBrandingTheme200Response)
 
 	if err != nil {

@@ -161,7 +161,6 @@ func (o *EnrollmentCreate) UnmarshalJSON(data []byte) (err error) {
 	varEnrollmentCreate := _EnrollmentCreate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varEnrollmentCreate)
 
 	if err != nil {

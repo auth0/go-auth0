@@ -87,7 +87,6 @@ func (o *PutFactorsByNameRequest) UnmarshalJSON(data []byte) (err error) {
 	varPutFactorsByNameRequest := _PutFactorsByNameRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPutFactorsByNameRequest)
 
 	if err != nil {

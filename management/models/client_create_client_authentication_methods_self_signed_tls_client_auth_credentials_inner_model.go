@@ -150,7 +150,6 @@ func (o *ClientCreateClientAuthenticationMethodsSelfSignedTlsClientAuthCredentia
 	varClientCreateClientAuthenticationMethodsSelfSignedTlsClientAuthCredentialsInner := _ClientCreateClientAuthenticationMethodsSelfSignedTlsClientAuthCredentialsInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varClientCreateClientAuthenticationMethodsSelfSignedTlsClientAuthCredentialsInner)
 
 	if err != nil {

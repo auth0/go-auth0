@@ -87,7 +87,6 @@ func (o *GetInvitations200ResponseOneOfInnerInviter) UnmarshalJSON(data []byte) 
 	varGetInvitations200ResponseOneOfInnerInviter := _GetInvitations200ResponseOneOfInnerInviter{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varGetInvitations200ResponseOneOfInnerInviter)
 
 	if err != nil {

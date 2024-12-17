@@ -234,7 +234,6 @@ func (o *PostOrganizationsRequest) UnmarshalJSON(data []byte) (err error) {
 	varPostOrganizationsRequest := _PostOrganizationsRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostOrganizationsRequest)
 
 	if err != nil {

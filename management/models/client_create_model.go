@@ -1475,7 +1475,6 @@ func (o *ClientCreate) UnmarshalJSON(data []byte) (err error) {
 	varClientCreate := _ClientCreate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varClientCreate)
 
 	if err != nil {

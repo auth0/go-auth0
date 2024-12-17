@@ -369,7 +369,6 @@ func (o *PostEmailTemplatesRequest) UnmarshalJSON(data []byte) (err error) {
 	varPostEmailTemplatesRequest := _PostEmailTemplatesRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostEmailTemplatesRequest)
 
 	if err != nil {

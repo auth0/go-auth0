@@ -124,7 +124,6 @@ func (o *Token) UnmarshalJSON(data []byte) (err error) {
 	varToken := _Token{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varToken)
 
 	if err != nil {

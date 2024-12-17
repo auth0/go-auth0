@@ -115,7 +115,6 @@ func (o *PatchScimConfigurationRequest) UnmarshalJSON(data []byte) (err error) {
 	varPatchScimConfigurationRequest := _PatchScimConfigurationRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPatchScimConfigurationRequest)
 
 	if err != nil {

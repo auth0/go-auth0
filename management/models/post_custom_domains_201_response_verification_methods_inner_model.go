@@ -151,7 +151,6 @@ func (o *PostCustomDomains201ResponseVerificationMethodsInner) UnmarshalJSON(dat
 	varPostCustomDomains201ResponseVerificationMethodsInner := _PostCustomDomains201ResponseVerificationMethodsInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostCustomDomains201ResponseVerificationMethodsInner)
 
 	if err != nil {

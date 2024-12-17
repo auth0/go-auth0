@@ -198,7 +198,6 @@ func (o *PostOrganizationsRequestEnabledConnectionsInner) UnmarshalJSON(data []b
 	varPostOrganizationsRequestEnabledConnectionsInner := _PostOrganizationsRequestEnabledConnectionsInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostOrganizationsRequestEnabledConnectionsInner)
 
 	if err != nil {

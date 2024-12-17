@@ -695,7 +695,6 @@ func (o *GetAuthenticationMethods200ResponseOneOfInner) UnmarshalJSON(data []byt
 	varGetAuthenticationMethods200ResponseOneOfInner := _GetAuthenticationMethods200ResponseOneOfInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varGetAuthenticationMethods200ResponseOneOfInner)
 
 	if err != nil {

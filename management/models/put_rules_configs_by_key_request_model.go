@@ -87,7 +87,6 @@ func (o *PutRulesConfigsByKeyRequest) UnmarshalJSON(data []byte) (err error) {
 	varPutRulesConfigsByKeyRequest := _PutRulesConfigsByKeyRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPutRulesConfigsByKeyRequest)
 
 	if err != nil {

@@ -87,7 +87,6 @@ func (o *ClientClientAuthenticationMethodsPrivateKeyJwtCredentialsInner) Unmarsh
 	varClientClientAuthenticationMethodsPrivateKeyJwtCredentialsInner := _ClientClientAuthenticationMethodsPrivateKeyJwtCredentialsInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varClientClientAuthenticationMethodsPrivateKeyJwtCredentialsInner)
 
 	if err != nil {

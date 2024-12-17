@@ -87,7 +87,6 @@ func (o *PostTestActionRequest) UnmarshalJSON(data []byte) (err error) {
 	varPostTestActionRequest := _PostTestActionRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostTestActionRequest)
 
 	if err != nil {

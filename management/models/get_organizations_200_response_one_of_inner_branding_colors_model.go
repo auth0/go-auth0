@@ -115,7 +115,6 @@ func (o *GetOrganizations200ResponseOneOfInnerBrandingColors) UnmarshalJSON(data
 	varGetOrganizations200ResponseOneOfInnerBrandingColors := _GetOrganizations200ResponseOneOfInnerBrandingColors{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varGetOrganizations200ResponseOneOfInnerBrandingColors)
 
 	if err != nil {

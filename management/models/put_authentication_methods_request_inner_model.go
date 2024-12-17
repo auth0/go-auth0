@@ -270,7 +270,6 @@ func (o *PutAuthenticationMethodsRequestInner) UnmarshalJSON(data []byte) (err e
 	varPutAuthenticationMethodsRequestInner := _PutAuthenticationMethodsRequestInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPutAuthenticationMethodsRequestInner)
 
 	if err != nil {

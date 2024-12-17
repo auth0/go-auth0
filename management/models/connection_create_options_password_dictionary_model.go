@@ -123,7 +123,6 @@ func (o *ConnectionCreateOptionsPasswordDictionary) UnmarshalJSON(data []byte) (
 	varConnectionCreateOptionsPasswordDictionary := _ConnectionCreateOptionsPasswordDictionary{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varConnectionCreateOptionsPasswordDictionary)
 
 	if err != nil {

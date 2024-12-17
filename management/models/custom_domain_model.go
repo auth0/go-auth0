@@ -355,7 +355,6 @@ func (o *CustomDomain) UnmarshalJSON(data []byte) (err error) {
 	varCustomDomain := _CustomDomain{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varCustomDomain)
 
 	if err != nil {

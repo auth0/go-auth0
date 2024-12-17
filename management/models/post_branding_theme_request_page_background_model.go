@@ -142,7 +142,6 @@ func (o *PostBrandingThemeRequestPageBackground) UnmarshalJSON(data []byte) (err
 	varPostBrandingThemeRequestPageBackground := _PostBrandingThemeRequestPageBackground{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostBrandingThemeRequestPageBackground)
 
 	if err != nil {

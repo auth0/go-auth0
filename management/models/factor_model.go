@@ -160,7 +160,6 @@ func (o *Factor) UnmarshalJSON(data []byte) (err error) {
 	varFactor := _Factor{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varFactor)
 
 	if err != nil {

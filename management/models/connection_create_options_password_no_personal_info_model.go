@@ -86,7 +86,6 @@ func (o *ConnectionCreateOptionsPasswordNoPersonalInfo) UnmarshalJSON(data []byt
 	varConnectionCreateOptionsPasswordNoPersonalInfo := _ConnectionCreateOptionsPasswordNoPersonalInfo{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varConnectionCreateOptionsPasswordNoPersonalInfo)
 
 	if err != nil {

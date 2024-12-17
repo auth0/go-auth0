@@ -224,7 +224,6 @@ func (o *PostLogStreamsRequestOneOf5) UnmarshalJSON(data []byte) (err error) {
 	varPostLogStreamsRequestOneOf5 := _PostLogStreamsRequestOneOf5{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostLogStreamsRequestOneOf5)
 
 	if err != nil {

@@ -115,7 +115,6 @@ func (o *PostRolePermissionAssignmentRequestPermissionsInner) UnmarshalJSON(data
 	varPostRolePermissionAssignmentRequestPermissionsInner := _PostRolePermissionAssignmentRequestPermissionsInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostRolePermissionAssignmentRequestPermissionsInner)
 
 	if err != nil {

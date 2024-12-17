@@ -87,7 +87,6 @@ func (o *PutMessageTypesRequest) UnmarshalJSON(data []byte) (err error) {
 	varPutMessageTypesRequest := _PutMessageTypesRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPutMessageTypesRequest)
 
 	if err != nil {

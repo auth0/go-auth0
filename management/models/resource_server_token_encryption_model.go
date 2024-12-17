@@ -113,7 +113,6 @@ func (o *ResourceServerTokenEncryption) UnmarshalJSON(data []byte) (err error) {
 	varResourceServerTokenEncryption := _ResourceServerTokenEncryption{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varResourceServerTokenEncryption)
 
 	if err != nil {

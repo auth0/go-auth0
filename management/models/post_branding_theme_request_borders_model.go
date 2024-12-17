@@ -309,7 +309,6 @@ func (o *PostBrandingThemeRequestBorders) UnmarshalJSON(data []byte) (err error)
 	varPostBrandingThemeRequestBorders := _PostBrandingThemeRequestBorders{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostBrandingThemeRequestBorders)
 
 	if err != nil {

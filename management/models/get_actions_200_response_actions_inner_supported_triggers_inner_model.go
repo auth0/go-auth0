@@ -271,7 +271,6 @@ func (o *GetActions200ResponseActionsInnerSupportedTriggersInner) UnmarshalJSON(
 	varGetActions200ResponseActionsInnerSupportedTriggersInner := _GetActions200ResponseActionsInnerSupportedTriggersInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varGetActions200ResponseActionsInnerSupportedTriggersInner)
 
 	if err != nil {

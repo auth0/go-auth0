@@ -87,7 +87,6 @@ func (o *ClientCreateOidcLogout) UnmarshalJSON(data []byte) (err error) {
 	varClientCreateOidcLogout := _ClientCreateOidcLogout{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varClientCreateOidcLogout)
 
 	if err != nil {

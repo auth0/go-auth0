@@ -581,7 +581,6 @@ func (o *PostBrandingThemeRequestColors) UnmarshalJSON(data []byte) (err error) 
 	varPostBrandingThemeRequestColors := _PostBrandingThemeRequestColors{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostBrandingThemeRequestColors)
 
 	if err != nil {

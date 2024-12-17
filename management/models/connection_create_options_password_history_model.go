@@ -122,7 +122,6 @@ func (o *ConnectionCreateOptionsPasswordHistory) UnmarshalJSON(data []byte) (err
 	varConnectionCreateOptionsPasswordHistory := _ConnectionCreateOptionsPasswordHistory{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varConnectionCreateOptionsPasswordHistory)
 
 	if err != nil {

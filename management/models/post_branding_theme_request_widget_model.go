@@ -196,7 +196,6 @@ func (o *PostBrandingThemeRequestWidget) UnmarshalJSON(data []byte) (err error) 
 	varPostBrandingThemeRequestWidget := _PostBrandingThemeRequestWidget{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostBrandingThemeRequestWidget)
 
 	if err != nil {

@@ -87,7 +87,6 @@ func (o *PutFactorsByName200Response) UnmarshalJSON(data []byte) (err error) {
 	varPutFactorsByName200Response := _PutFactorsByName200Response{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPutFactorsByName200Response)
 
 	if err != nil {

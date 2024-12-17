@@ -114,7 +114,6 @@ func (o *PostLogStreamsRequestOneOf1Sink) UnmarshalJSON(data []byte) (err error)
 	varPostLogStreamsRequestOneOf1Sink := _PostLogStreamsRequestOneOf1Sink{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostLogStreamsRequestOneOf1Sink)
 
 	if err != nil {

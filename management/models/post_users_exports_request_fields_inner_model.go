@@ -124,7 +124,6 @@ func (o *PostUsersExportsRequestFieldsInner) UnmarshalJSON(data []byte) (err err
 	varPostUsersExportsRequestFieldsInner := _PostUsersExportsRequestFieldsInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostUsersExportsRequestFieldsInner)
 
 	if err != nil {

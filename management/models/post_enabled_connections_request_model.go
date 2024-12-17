@@ -198,7 +198,6 @@ func (o *PostEnabledConnectionsRequest) UnmarshalJSON(data []byte) (err error) {
 	varPostEnabledConnectionsRequest := _PostEnabledConnectionsRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostEnabledConnectionsRequest)
 
 	if err != nil {

@@ -115,7 +115,6 @@ func (o *TemplateMessages) UnmarshalJSON(data []byte) (err error) {
 	varTemplateMessages := _TemplateMessages{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varTemplateMessages)
 
 	if err != nil {

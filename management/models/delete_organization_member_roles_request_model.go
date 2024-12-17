@@ -87,7 +87,6 @@ func (o *DeleteOrganizationMemberRolesRequest) UnmarshalJSON(data []byte) (err e
 	varDeleteOrganizationMemberRolesRequest := _DeleteOrganizationMemberRolesRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varDeleteOrganizationMemberRolesRequest)
 
 	if err != nil {

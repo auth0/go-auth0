@@ -178,7 +178,6 @@ func (o *PutSns200Response) UnmarshalJSON(data []byte) (err error) {
 	varPutSns200Response := _PutSns200Response{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPutSns200Response)
 
 	if err != nil {

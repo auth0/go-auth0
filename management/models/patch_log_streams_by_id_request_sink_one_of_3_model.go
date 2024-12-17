@@ -179,7 +179,6 @@ func (o *PatchLogStreamsByIdRequestSinkOneOf3) UnmarshalJSON(data []byte) (err e
 	varPatchLogStreamsByIdRequestSinkOneOf3 := _PatchLogStreamsByIdRequestSinkOneOf3{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPatchLogStreamsByIdRequestSinkOneOf3)
 
 	if err != nil {

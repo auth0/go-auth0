@@ -86,7 +86,6 @@ func (o *PutUniversalLoginRequestOneOf) UnmarshalJSON(data []byte) (err error) {
 	varPutUniversalLoginRequestOneOf := _PutUniversalLoginRequestOneOf{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPutUniversalLoginRequestOneOf)
 
 	if err != nil {

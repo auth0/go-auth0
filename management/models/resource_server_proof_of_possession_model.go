@@ -114,7 +114,6 @@ func (o *ResourceServerProofOfPossession) UnmarshalJSON(data []byte) (err error)
 	varResourceServerProofOfPossession := _ResourceServerProofOfPossession{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varResourceServerProofOfPossession)
 
 	if err != nil {

@@ -86,7 +86,6 @@ func (o *TenantSettingsSessionCookie) UnmarshalJSON(data []byte) (err error) {
 	varTenantSettingsSessionCookie := _TenantSettingsSessionCookie{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varTenantSettingsSessionCookie)
 
 	if err != nil {

@@ -298,7 +298,6 @@ func (o *ClientRefreshToken) UnmarshalJSON(data []byte) (err error) {
 	varClientRefreshToken := _ClientRefreshToken{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varClientRefreshToken)
 
 	if err != nil {

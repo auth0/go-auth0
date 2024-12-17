@@ -464,7 +464,6 @@ func (o *GetSigningKeys200ResponseInner) UnmarshalJSON(data []byte) (err error) 
 	varGetSigningKeys200ResponseInner := _GetSigningKeys200ResponseInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varGetSigningKeys200ResponseInner)
 
 	if err != nil {

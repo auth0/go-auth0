@@ -381,7 +381,6 @@ func (o *PostAuthenticationMethodsRequest) UnmarshalJSON(data []byte) (err error
 	varPostAuthenticationMethodsRequest := _PostAuthenticationMethodsRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostAuthenticationMethodsRequest)
 
 	if err != nil {

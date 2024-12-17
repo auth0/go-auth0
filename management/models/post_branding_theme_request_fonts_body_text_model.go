@@ -115,7 +115,6 @@ func (o *PostBrandingThemeRequestFontsBodyText) UnmarshalJSON(data []byte) (err 
 	varPostBrandingThemeRequestFontsBodyText := _PostBrandingThemeRequestFontsBodyText{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostBrandingThemeRequestFontsBodyText)
 
 	if err != nil {

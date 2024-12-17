@@ -369,7 +369,6 @@ func (o *EmailTemplateUpdate) UnmarshalJSON(data []byte) (err error) {
 	varEmailTemplateUpdate := _EmailTemplateUpdate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varEmailTemplateUpdate)
 
 	if err != nil {

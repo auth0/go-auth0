@@ -151,7 +151,6 @@ func (o *GetLogStreams200ResponseInnerOneOf1Sink) UnmarshalJSON(data []byte) (er
 	varGetLogStreams200ResponseInnerOneOf1Sink := _GetLogStreams200ResponseInnerOneOf1Sink{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varGetLogStreams200ResponseInnerOneOf1Sink)
 
 	if err != nil {

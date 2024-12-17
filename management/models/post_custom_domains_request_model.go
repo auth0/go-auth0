@@ -222,7 +222,6 @@ func (o *PostCustomDomainsRequest) UnmarshalJSON(data []byte) (err error) {
 	varPostCustomDomainsRequest := _PostCustomDomainsRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostCustomDomainsRequest)
 
 	if err != nil {

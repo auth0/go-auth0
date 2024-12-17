@@ -225,7 +225,6 @@ func (o *EmailProviderCreate) UnmarshalJSON(data []byte) (err error) {
 	varEmailProviderCreate := _EmailProviderCreate{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varEmailProviderCreate)
 
 	if err != nil {

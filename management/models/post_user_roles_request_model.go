@@ -87,7 +87,6 @@ func (o *PostUserRolesRequest) UnmarshalJSON(data []byte) (err error) {
 	varPostUserRolesRequest := _PostUserRolesRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostUserRolesRequest)
 
 	if err != nil {

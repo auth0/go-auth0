@@ -392,7 +392,6 @@ func (o *PostVerify200Response) UnmarshalJSON(data []byte) (err error) {
 	varPostVerify200Response := _PostVerify200Response{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varPostVerify200Response)
 
 	if err != nil {

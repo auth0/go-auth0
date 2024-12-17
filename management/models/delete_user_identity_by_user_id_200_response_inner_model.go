@@ -327,7 +327,6 @@ func (o *DeleteUserIdentityByUserId200ResponseInner) UnmarshalJSON(data []byte) 
 	varDeleteUserIdentityByUserId200ResponseInner := _DeleteUserIdentityByUserId200ResponseInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varDeleteUserIdentityByUserId200ResponseInner)
 
 	if err != nil {

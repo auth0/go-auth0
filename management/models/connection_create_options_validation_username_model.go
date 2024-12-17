@@ -113,7 +113,6 @@ func (o *ConnectionCreateOptionsValidationUsername) UnmarshalJSON(data []byte) (
 	varConnectionCreateOptionsValidationUsername := _ConnectionCreateOptionsValidationUsername{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varConnectionCreateOptionsValidationUsername)
 
 	if err != nil {

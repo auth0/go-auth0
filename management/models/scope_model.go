@@ -124,7 +124,6 @@ func (o *Scope) UnmarshalJSON(data []byte) (err error) {
 	varScope := _Scope{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varScope)
 
 	if err != nil {

@@ -87,7 +87,6 @@ func (o *ClientClientAuthenticationMethodsSelfSignedTlsClientAuth) UnmarshalJSON
 	varClientClientAuthenticationMethodsSelfSignedTlsClientAuth := _ClientClientAuthenticationMethodsSelfSignedTlsClientAuth{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
 	err = decoder.Decode(&varClientClientAuthenticationMethodsSelfSignedTlsClientAuth)
 
 	if err != nil {
