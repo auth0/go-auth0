@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // DeleteRolePermissionAssignment Remove permissions from a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/delete_role_permission_assignment
-func (m *Manager) DeleteRolePermissionAssignment(ctx context.Context, id string, postRolePermissionAssignmentRequest *models.PostRolePermissionAssignmentRequest, opts ...management.RequestOption) error {
+func (m *Manager) DeletePermissions(ctx context.Context, id string, postRolePermissionAssignmentRequest *models.PostRolePermissionAssignmentRequest, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("roles", string(id), "permissions"), postRolePermissionAssignmentRequest, nil, opts...)
 	if err != nil {
@@ -34,7 +34,7 @@ func (m *Manager) DeleteRolePermissionAssignment(ctx context.Context, id string,
 // DeleteRolesById Delete a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/delete_roles_by_id
-func (m *Manager) DeleteRolesById(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("roles", string(id)), nil, nil, opts...)
 	if err != nil {
@@ -46,7 +46,7 @@ func (m *Manager) DeleteRolesById(ctx context.Context, id string, opts ...manage
 // GetRolePermission Get permissions granted by role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/get_role_permission
-func (m *Manager) GetRolePermission(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetRolePermission200Response, error) {
+func (m *Manager) GetPermissions(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetRolePermission200Response, error) {
 	var localVarReturnValue *models.GetRolePermission200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("roles", string(id), "permissions"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -58,7 +58,7 @@ func (m *Manager) GetRolePermission(ctx context.Context, id string, opts ...mana
 // GetRoleUser Get a role&#39;s users
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/get_role_user
-func (m *Manager) GetRoleUser(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetRoleUser200Response, error) {
+func (m *Manager) GetUsers(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetRoleUser200Response, error) {
 	var localVarReturnValue *models.GetRoleUser200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("roles", string(id), "users"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -70,7 +70,7 @@ func (m *Manager) GetRoleUser(ctx context.Context, id string, opts ...management
 // GetRoles Get roles
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/get_roles
-func (m *Manager) GetRoles(ctx context.Context, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200Response, error) {
+func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200Response, error) {
 	var localVarReturnValue *models.GetOrganizationMemberRoles200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("roles"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -82,7 +82,7 @@ func (m *Manager) GetRoles(ctx context.Context, opts ...management.RequestOption
 // GetRolesById Get a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/get_roles_by_id
-func (m *Manager) GetRolesById(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200ResponseOneOfInner, error) {
+func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetOrganizationMemberRoles200ResponseOneOfInner
 	err := m.management.Request(ctx, "GET", m.management.URI("roles", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -94,7 +94,7 @@ func (m *Manager) GetRolesById(ctx context.Context, id string, opts ...managemen
 // PatchRolesById Update a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/patch_roles_by_id
-func (m *Manager) PatchRolesById(ctx context.Context, id string, roleUpdate *models.RoleUpdate, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200ResponseOneOfInner, error) {
+func (m *Manager) Update(ctx context.Context, id string, roleUpdate *models.RoleUpdate, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetOrganizationMemberRoles200ResponseOneOfInner
 	err := m.management.Request(ctx, "PATCH", m.management.URI("roles", string(id)), roleUpdate, &localVarReturnValue, opts...)
 	if err != nil {
@@ -106,7 +106,7 @@ func (m *Manager) PatchRolesById(ctx context.Context, id string, roleUpdate *mod
 // PostRolePermissionAssignment Associate permissions with a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/post_role_permission_assignment
-func (m *Manager) PostRolePermissionAssignment(ctx context.Context, id string, postRolePermissionAssignmentRequest *models.PostRolePermissionAssignmentRequest, opts ...management.RequestOption) error {
+func (m *Manager) AddPermissions(ctx context.Context, id string, postRolePermissionAssignmentRequest *models.PostRolePermissionAssignmentRequest, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "POST", m.management.URI("roles", string(id), "permissions"), postRolePermissionAssignmentRequest, nil, opts...)
 	if err != nil {
@@ -118,7 +118,7 @@ func (m *Manager) PostRolePermissionAssignment(ctx context.Context, id string, p
 // PostRoleUsers Assign users to a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/post_role_users
-func (m *Manager) PostRoleUsers(ctx context.Context, id string, postRoleUsersRequest *models.PostRoleUsersRequest, opts ...management.RequestOption) error {
+func (m *Manager) AssignUsers(ctx context.Context, id string, postRoleUsersRequest *models.PostRoleUsersRequest, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "POST", m.management.URI("roles", string(id), "users"), postRoleUsersRequest, nil, opts...)
 	if err != nil {
@@ -130,7 +130,7 @@ func (m *Manager) PostRoleUsers(ctx context.Context, id string, postRoleUsersReq
 // PostRoles Create a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/post_roles
-func (m *Manager) PostRoles(ctx context.Context, roleCreate *models.RoleCreate, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200ResponseOneOfInner, error) {
+func (m *Manager) Create(ctx context.Context, roleCreate *models.RoleCreate, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetOrganizationMemberRoles200ResponseOneOfInner
 	err := m.management.Request(ctx, "POST", m.management.URI("roles"), roleCreate, &localVarReturnValue, opts...)
 	if err != nil {

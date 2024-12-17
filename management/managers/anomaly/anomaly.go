@@ -21,7 +21,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // DeleteIpsById Remove the blocked IP address
 //
 // https://auth0.com/docs/api/management/v2/#!/Anomaly/delete_ips_by_id
-func (m *Manager) DeleteIpsById(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) DeleteBlockedIp(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("anomaly", "blocks", "ips", string(id)), nil, nil, opts...)
 	if err != nil {
@@ -33,7 +33,7 @@ func (m *Manager) DeleteIpsById(ctx context.Context, id string, opts ...manageme
 // GetIpsById Check if an IP address is blocked
 //
 // https://auth0.com/docs/api/management/v2/#!/Anomaly/get_ips_by_id
-func (m *Manager) GetIpsById(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) CheckIfIpIsBlocked(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "GET", m.management.URI("anomaly", "blocks", "ips", string(id)), nil, nil, opts...)
 	if err != nil {

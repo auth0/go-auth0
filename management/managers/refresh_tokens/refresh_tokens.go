@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // DeleteRefreshToken Delete a refresh tokens
 //
 // https://auth0.com/docs/api/management/v2/#!/RefreshTokens/delete_refresh_token
-func (m *Manager) DeleteRefreshToken(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("refresh-tokens", string(id)), nil, nil, opts...)
 	if err != nil {
@@ -34,7 +34,7 @@ func (m *Manager) DeleteRefreshToken(ctx context.Context, id string, opts ...man
 // GetRefreshToken Get a refresh token
 //
 // https://auth0.com/docs/api/management/v2/#!/RefreshTokens/get_refresh_token
-func (m *Manager) GetRefreshToken(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetRefreshToken200Response, error) {
+func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetRefreshToken200Response, error) {
 	var localVarReturnValue *models.GetRefreshToken200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("refresh-tokens", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {

@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // DeleteRulesById Delete a rule
 //
 // https://auth0.com/docs/api/management/v2/#!/Rules/delete_rules_by_id
-func (m *Manager) DeleteRulesById(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("rules", string(id)), nil, nil, opts...)
 	if err != nil {
@@ -34,7 +34,7 @@ func (m *Manager) DeleteRulesById(ctx context.Context, id string, opts ...manage
 // GetRules Get rules
 //
 // https://auth0.com/docs/api/management/v2/#!/Rules/get_rules
-func (m *Manager) GetRules(ctx context.Context, opts ...management.RequestOption) (*models.GetRules200Response, error) {
+func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetRules200Response, error) {
 	var localVarReturnValue *models.GetRules200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("rules"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -46,7 +46,7 @@ func (m *Manager) GetRules(ctx context.Context, opts ...management.RequestOption
 // GetRulesById Get a rule
 //
 // https://auth0.com/docs/api/management/v2/#!/Rules/get_rules_by_id
-func (m *Manager) GetRulesById(ctx context.Context, id string, opts ...management.RequestOption) (*models.Rule, error) {
+func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.Rule, error) {
 	var localVarReturnValue *models.Rule
 	err := m.management.Request(ctx, "GET", m.management.URI("rules", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -58,7 +58,7 @@ func (m *Manager) GetRulesById(ctx context.Context, id string, opts ...managemen
 // PatchRulesById Update a rule
 //
 // https://auth0.com/docs/api/management/v2/#!/Rules/patch_rules_by_id
-func (m *Manager) PatchRulesById(ctx context.Context, id string, ruleUpdate *models.RuleUpdate, opts ...management.RequestOption) (*models.Rule, error) {
+func (m *Manager) Update(ctx context.Context, id string, ruleUpdate *models.RuleUpdate, opts ...management.RequestOption) (*models.Rule, error) {
 	var localVarReturnValue *models.Rule
 	err := m.management.Request(ctx, "PATCH", m.management.URI("rules", string(id)), ruleUpdate, &localVarReturnValue, opts...)
 	if err != nil {
@@ -70,7 +70,7 @@ func (m *Manager) PatchRulesById(ctx context.Context, id string, ruleUpdate *mod
 // PostRules Create a rule
 //
 // https://auth0.com/docs/api/management/v2/#!/Rules/post_rules
-func (m *Manager) PostRules(ctx context.Context, ruleCreate *models.RuleCreate, opts ...management.RequestOption) (*models.Rule, error) {
+func (m *Manager) Create(ctx context.Context, ruleCreate *models.RuleCreate, opts ...management.RequestOption) (*models.Rule, error) {
 	var localVarReturnValue *models.Rule
 	err := m.management.Request(ctx, "POST", m.management.URI("rules"), ruleCreate, &localVarReturnValue, opts...)
 	if err != nil {

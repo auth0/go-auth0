@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // DeleteClientGrantsById Delete client grant
 //
 // https://auth0.com/docs/api/management/v2/#!/ClientGrants/delete_client_grants_by_id
-func (m *Manager) DeleteClientGrantsById(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("client-grants", string(id)), nil, nil, opts...)
 	if err != nil {
@@ -34,7 +34,7 @@ func (m *Manager) DeleteClientGrantsById(ctx context.Context, id string, opts ..
 // GetClientGrants Get client grants
 //
 // https://auth0.com/docs/api/management/v2/#!/ClientGrants/get_client_grants
-func (m *Manager) GetClientGrants(ctx context.Context, opts ...management.RequestOption) (*models.GetClientGrants200Response, error) {
+func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetClientGrants200Response, error) {
 	var localVarReturnValue *models.GetClientGrants200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("client-grants"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -46,7 +46,7 @@ func (m *Manager) GetClientGrants(ctx context.Context, opts ...management.Reques
 // PatchClientGrantsById Update client grant
 //
 // https://auth0.com/docs/api/management/v2/#!/ClientGrants/patch_client_grants_by_id
-func (m *Manager) PatchClientGrantsById(ctx context.Context, id string, patchClientGrantsByIdRequest *models.PatchClientGrantsByIdRequest, opts ...management.RequestOption) (*models.ClientGrant, error) {
+func (m *Manager) Update(ctx context.Context, id string, patchClientGrantsByIdRequest *models.PatchClientGrantsByIdRequest, opts ...management.RequestOption) (*models.ClientGrant, error) {
 	var localVarReturnValue *models.ClientGrant
 	err := m.management.Request(ctx, "PATCH", m.management.URI("client-grants", string(id)), patchClientGrantsByIdRequest, &localVarReturnValue, opts...)
 	if err != nil {
@@ -58,7 +58,7 @@ func (m *Manager) PatchClientGrantsById(ctx context.Context, id string, patchCli
 // PostClientGrants Create client grant
 //
 // https://auth0.com/docs/api/management/v2/#!/ClientGrants/post_client_grants
-func (m *Manager) PostClientGrants(ctx context.Context, clientGrantCreate *models.ClientGrantCreate, opts ...management.RequestOption) (*models.ClientGrant, error) {
+func (m *Manager) Create(ctx context.Context, clientGrantCreate *models.ClientGrantCreate, opts ...management.RequestOption) (*models.ClientGrant, error) {
 	var localVarReturnValue *models.ClientGrant
 	err := m.management.Request(ctx, "POST", m.management.URI("client-grants"), clientGrantCreate, &localVarReturnValue, opts...)
 	if err != nil {

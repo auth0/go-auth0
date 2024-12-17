@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // GetLogs Search log events
 //
 // https://auth0.com/docs/api/management/v2/#!/Logs/get_logs
-func (m *Manager) GetLogs(ctx context.Context, opts ...management.RequestOption) (*models.GetLogs200Response, error) {
+func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetLogs200Response, error) {
 	var localVarReturnValue *models.GetLogs200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("logs"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -34,7 +34,7 @@ func (m *Manager) GetLogs(ctx context.Context, opts ...management.RequestOption)
 // GetLogsById Get a log event by id
 //
 // https://auth0.com/docs/api/management/v2/#!/Logs/get_logs_by_id
-func (m *Manager) GetLogsById(ctx context.Context, id string, opts ...management.RequestOption) (*models.Log, error) {
+func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.Log, error) {
 	var localVarReturnValue *models.Log
 	err := m.management.Request(ctx, "GET", m.management.URI("logs", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {

@@ -34,7 +34,7 @@ func (m *Manager) DeleteAuthenticationMethods(ctx context.Context, id string, op
 // DeleteAuthenticationMethodsByAuthenticationMethodId Deletes an authentication method by ID
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_authentication_methods_by_authentication_method_id
-func (m *Manager) DeleteAuthenticationMethodsByAuthenticationMethodId(ctx context.Context, id string, authenticationMethodId string, opts ...management.RequestOption) error {
+func (m *Manager) DeleteAuthenticationMethod(ctx context.Context, id string, authenticationMethodId string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("users", string(id), "authentication-methods", string(authenticationMethodId)), nil, nil, opts...)
 	if err != nil {
@@ -46,7 +46,7 @@ func (m *Manager) DeleteAuthenticationMethodsByAuthenticationMethodId(ctx contex
 // DeleteAuthenticators Delete All Authenticators
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_authenticators
-func (m *Manager) DeleteAuthenticators(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) DeleteAllAuthenticators(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("users", string(id), "authenticators"), nil, nil, opts...)
 	if err != nil {
@@ -58,7 +58,7 @@ func (m *Manager) DeleteAuthenticators(ctx context.Context, id string, opts ...m
 // DeleteMultifactorByProvider Delete a User&#39;s Multi-factor Provider
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_multifactor_by_provider
-func (m *Manager) DeleteMultifactorByProvider(ctx context.Context, id string, provider models.DeleteMultifactorByProviderProviderParameter, opts ...management.RequestOption) error {
+func (m *Manager) DeleteMultifactorProvider(ctx context.Context, id string, provider models.DeleteMultifactorByProviderProviderParameter, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("users", string(id), "multifactor", string(provider)), nil, nil, opts...)
 	if err != nil {
@@ -82,7 +82,7 @@ func (m *Manager) DeletePermissions(ctx context.Context, id string, deletePermis
 // DeleteRefreshTokensForUser Delete refresh tokens for a user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_refresh_tokens_for_user
-func (m *Manager) DeleteRefreshTokensForUser(ctx context.Context, userId string, opts ...management.RequestOption) error {
+func (m *Manager) DeleteRefreshTokens(ctx context.Context, userId string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("users", string(userId), "refresh-tokens"), nil, nil, opts...)
 	if err != nil {
@@ -94,7 +94,7 @@ func (m *Manager) DeleteRefreshTokensForUser(ctx context.Context, userId string,
 // DeleteSessionsForUser Delete sessions for user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_sessions_for_user
-func (m *Manager) DeleteSessionsForUser(ctx context.Context, userId string, opts ...management.RequestOption) error {
+func (m *Manager) DeleteSessions(ctx context.Context, userId string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("users", string(userId), "sessions"), nil, nil, opts...)
 	if err != nil {
@@ -106,7 +106,7 @@ func (m *Manager) DeleteSessionsForUser(ctx context.Context, userId string, opts
 // DeleteUserIdentityByUserId Unlink a User Identity
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_user_identity_by_user_id
-func (m *Manager) DeleteUserIdentityByUserId(ctx context.Context, id string, provider models.DeleteUserIdentityByUserIdProviderParameter, userId string, opts ...management.RequestOption) ([]*models.DeleteUserIdentityByUserId200ResponseInner, error) {
+func (m *Manager) Unlink(ctx context.Context, id string, provider models.DeleteUserIdentityByUserIdProviderParameter, userId string, opts ...management.RequestOption) ([]*models.DeleteUserIdentityByUserId200ResponseInner, error) {
 	var localVarReturnValue []*models.DeleteUserIdentityByUserId200ResponseInner
 	err := m.management.Request(ctx, "DELETE", m.management.URI("users", string(id), "identities", string(provider), string(userId)), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -118,7 +118,7 @@ func (m *Manager) DeleteUserIdentityByUserId(ctx context.Context, id string, pro
 // DeleteUserRoles Removes roles from a user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_user_roles
-func (m *Manager) DeleteUserRoles(ctx context.Context, id string, deleteUserRolesRequest *models.DeleteUserRolesRequest, opts ...management.RequestOption) error {
+func (m *Manager) DeleteRoles(ctx context.Context, id string, deleteUserRolesRequest *models.DeleteUserRolesRequest, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("users", string(id), "roles"), deleteUserRolesRequest, nil, opts...)
 	if err != nil {
@@ -130,7 +130,7 @@ func (m *Manager) DeleteUserRoles(ctx context.Context, id string, deleteUserRole
 // DeleteUsersById Delete a User
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_users_by_id
-func (m *Manager) DeleteUsersById(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("users", string(id)), nil, nil, opts...)
 	if err != nil {
@@ -154,7 +154,7 @@ func (m *Manager) GetAuthenticationMethods(ctx context.Context, id string, opts 
 // GetAuthenticationMethodsByAuthenticationMethodId Gets an authentication method by ID.
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_authentication_methods_by_authentication_method_id
-func (m *Manager) GetAuthenticationMethodsByAuthenticationMethodId(ctx context.Context, id string, authenticationMethodId string, opts ...management.RequestOption) (*models.GetAuthenticationMethods200ResponseOneOfInner, error) {
+func (m *Manager) GetAuthenticationMethod(ctx context.Context, id string, authenticationMethodId string, opts ...management.RequestOption) (*models.GetAuthenticationMethods200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetAuthenticationMethods200ResponseOneOfInner
 	err := m.management.Request(ctx, "GET", m.management.URI("users", string(id), "authentication-methods", string(authenticationMethodId)), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -178,7 +178,7 @@ func (m *Manager) GetEnrollments(ctx context.Context, id string, opts ...managem
 // GetLogsByUser Get user&#39;s log events
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_logs_by_user
-func (m *Manager) GetLogsByUser(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetLogs200Response, error) {
+func (m *Manager) GetLogs(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetLogs200Response, error) {
 	var localVarReturnValue *models.GetLogs200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("users", string(id), "logs"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -202,7 +202,7 @@ func (m *Manager) GetPermissions(ctx context.Context, id string, opts ...managem
 // GetRefreshTokensForUser Get refresh tokens for a user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_refresh_tokens_for_user
-func (m *Manager) GetRefreshTokensForUser(ctx context.Context, userId string, opts ...management.RequestOption) (*models.GetRefreshTokensForUser200Response, error) {
+func (m *Manager) GetRefreshTokens(ctx context.Context, userId string, opts ...management.RequestOption) (*models.GetRefreshTokensForUser200Response, error) {
 	var localVarReturnValue *models.GetRefreshTokensForUser200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("users", string(userId), "refresh-tokens"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -214,7 +214,7 @@ func (m *Manager) GetRefreshTokensForUser(ctx context.Context, userId string, op
 // GetSessionsForUser Get sessions for user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_sessions_for_user
-func (m *Manager) GetSessionsForUser(ctx context.Context, userId string, opts ...management.RequestOption) (*models.GetSessionsForUser200Response, error) {
+func (m *Manager) GetSessions(ctx context.Context, userId string, opts ...management.RequestOption) (*models.GetSessionsForUser200Response, error) {
 	var localVarReturnValue *models.GetSessionsForUser200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("users", string(userId), "sessions"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -238,7 +238,7 @@ func (m *Manager) GetUserOrganizations(ctx context.Context, id string, opts ...m
 // GetUserRoles Get a user&#39;s roles
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_user_roles
-func (m *Manager) GetUserRoles(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200Response, error) {
+func (m *Manager) GetRoles(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200Response, error) {
 	var localVarReturnValue *models.GetOrganizationMemberRoles200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("users", string(id), "roles"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -250,7 +250,7 @@ func (m *Manager) GetUserRoles(ctx context.Context, id string, opts ...managemen
 // GetUsers List or Search Users
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_users
-func (m *Manager) GetUsers(ctx context.Context, opts ...management.RequestOption) (*models.GetUsers200Response, error) {
+func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetUsers200Response, error) {
 	var localVarReturnValue *models.GetUsers200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("users"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -262,7 +262,7 @@ func (m *Manager) GetUsers(ctx context.Context, opts ...management.RequestOption
 // GetUsersById Get a User
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_users_by_id
-func (m *Manager) GetUsersById(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetUsers200ResponseOneOfInner, error) {
+func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetUsers200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetUsers200ResponseOneOfInner
 	err := m.management.Request(ctx, "GET", m.management.URI("users", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -274,7 +274,7 @@ func (m *Manager) GetUsersById(ctx context.Context, id string, opts ...managemen
 // PatchAuthenticationMethodsByAuthenticationMethodId Updates an authentication method.
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/patch_authentication_methods_by_authentication_method_id
-func (m *Manager) PatchAuthenticationMethodsByAuthenticationMethodId(ctx context.Context, id string, authenticationMethodId string, patchAuthenticationMethodsByAuthenticationMethodIdRequest *models.PatchAuthenticationMethodsByAuthenticationMethodIdRequest, opts ...management.RequestOption) (*models.PutAuthenticationMethods200ResponseInner, error) {
+func (m *Manager) UpdateAuthenticationMethod(ctx context.Context, id string, authenticationMethodId string, patchAuthenticationMethodsByAuthenticationMethodIdRequest *models.PatchAuthenticationMethodsByAuthenticationMethodIdRequest, opts ...management.RequestOption) (*models.PutAuthenticationMethods200ResponseInner, error) {
 	var localVarReturnValue *models.PutAuthenticationMethods200ResponseInner
 	err := m.management.Request(ctx, "PATCH", m.management.URI("users", string(id), "authentication-methods", string(authenticationMethodId)), patchAuthenticationMethodsByAuthenticationMethodIdRequest, &localVarReturnValue, opts...)
 	if err != nil {
@@ -286,7 +286,7 @@ func (m *Manager) PatchAuthenticationMethodsByAuthenticationMethodId(ctx context
 // PatchUsersById Update a User
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/patch_users_by_id
-func (m *Manager) PatchUsersById(ctx context.Context, id string, userUpdate *models.UserUpdate, opts ...management.RequestOption) (*models.GetUsers200ResponseOneOfInner, error) {
+func (m *Manager) Update(ctx context.Context, id string, userUpdate *models.UserUpdate, opts ...management.RequestOption) (*models.GetUsers200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetUsers200ResponseOneOfInner
 	err := m.management.Request(ctx, "PATCH", m.management.URI("users", string(id)), userUpdate, &localVarReturnValue, opts...)
 	if err != nil {
@@ -298,7 +298,7 @@ func (m *Manager) PatchUsersById(ctx context.Context, id string, userUpdate *mod
 // PostAuthenticationMethods Creates an authentication method for a given user. Authentication methods created via this endpoint will be auto confirmed and should already have verification completed.
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_authentication_methods
-func (m *Manager) PostAuthenticationMethods(ctx context.Context, id string, postAuthenticationMethodsRequest *models.PostAuthenticationMethodsRequest, opts ...management.RequestOption) (*models.PostAuthenticationMethods201Response, error) {
+func (m *Manager) CreateAuthenticationMethod(ctx context.Context, id string, postAuthenticationMethodsRequest *models.PostAuthenticationMethodsRequest, opts ...management.RequestOption) (*models.PostAuthenticationMethods201Response, error) {
 	var localVarReturnValue *models.PostAuthenticationMethods201Response
 	err := m.management.Request(ctx, "POST", m.management.URI("users", string(id), "authentication-methods"), postAuthenticationMethodsRequest, &localVarReturnValue, opts...)
 	if err != nil {
@@ -310,7 +310,7 @@ func (m *Manager) PostAuthenticationMethods(ctx context.Context, id string, post
 // PostIdentities Link a User Account
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_identities
-func (m *Manager) PostIdentities(ctx context.Context, id string, postIdentitiesRequest *models.PostIdentitiesRequest, opts ...management.RequestOption) ([]*models.UserIdentity, error) {
+func (m *Manager) Link(ctx context.Context, id string, postIdentitiesRequest *models.PostIdentitiesRequest, opts ...management.RequestOption) ([]*models.UserIdentity, error) {
 	var localVarReturnValue []*models.UserIdentity
 	err := m.management.Request(ctx, "POST", m.management.URI("users", string(id), "identities"), postIdentitiesRequest, &localVarReturnValue, opts...)
 	if err != nil {
@@ -322,7 +322,7 @@ func (m *Manager) PostIdentities(ctx context.Context, id string, postIdentitiesR
 // PostInvalidateRememberBrowser Invalidate All Remembered Browsers for Multi-factor Authentication
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_invalidate_remember_browser
-func (m *Manager) PostInvalidateRememberBrowser(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) InvalidateRememberBrowser(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "POST", m.management.URI("users", string(id), "multifactor", "actions", "invalidate-remember-browser"), nil, nil, opts...)
 	if err != nil {
@@ -334,7 +334,7 @@ func (m *Manager) PostInvalidateRememberBrowser(ctx context.Context, id string, 
 // PostPermissions Assign Permissions to a User
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_permissions
-func (m *Manager) PostPermissions(ctx context.Context, id string, postPermissionsRequest *models.PostPermissionsRequest, opts ...management.RequestOption) error {
+func (m *Manager) AssignPermissions(ctx context.Context, id string, postPermissionsRequest *models.PostPermissionsRequest, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "POST", m.management.URI("users", string(id), "permissions"), postPermissionsRequest, nil, opts...)
 	if err != nil {
@@ -346,7 +346,7 @@ func (m *Manager) PostPermissions(ctx context.Context, id string, postPermission
 // PostRecoveryCodeRegeneration Generate New Multi-factor Authentication Recovery Code
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_recovery_code_regeneration
-func (m *Manager) PostRecoveryCodeRegeneration(ctx context.Context, id string, opts ...management.RequestOption) (*models.PostRecoveryCodeRegeneration200Response, error) {
+func (m *Manager) RegenerateRecoveryCode(ctx context.Context, id string, opts ...management.RequestOption) (*models.PostRecoveryCodeRegeneration200Response, error) {
 	var localVarReturnValue *models.PostRecoveryCodeRegeneration200Response
 	err := m.management.Request(ctx, "POST", m.management.URI("users", string(id), "recovery-code-regeneration"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -358,7 +358,7 @@ func (m *Manager) PostRecoveryCodeRegeneration(ctx context.Context, id string, o
 // PostUserRoles Assign roles to a user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_user_roles
-func (m *Manager) PostUserRoles(ctx context.Context, id string, postUserRolesRequest *models.PostUserRolesRequest, opts ...management.RequestOption) error {
+func (m *Manager) AssignRoles(ctx context.Context, id string, postUserRolesRequest *models.PostUserRolesRequest, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "POST", m.management.URI("users", string(id), "roles"), postUserRolesRequest, nil, opts...)
 	if err != nil {
@@ -370,7 +370,7 @@ func (m *Manager) PostUserRoles(ctx context.Context, id string, postUserRolesReq
 // PostUsers Create a User
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_users
-func (m *Manager) PostUsers(ctx context.Context, userCreate *models.UserCreate, opts ...management.RequestOption) (*models.GetUsers200ResponseOneOfInner, error) {
+func (m *Manager) Create(ctx context.Context, userCreate *models.UserCreate, opts ...management.RequestOption) (*models.GetUsers200ResponseOneOfInner, error) {
 	var localVarReturnValue *models.GetUsers200ResponseOneOfInner
 	err := m.management.Request(ctx, "POST", m.management.URI("users"), userCreate, &localVarReturnValue, opts...)
 	if err != nil {
@@ -382,7 +382,7 @@ func (m *Manager) PostUsers(ctx context.Context, userCreate *models.UserCreate, 
 // PutAuthenticationMethods Updates all authentication methods by replacing them with the given ones.
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/put_authentication_methods
-func (m *Manager) PutAuthenticationMethods(ctx context.Context, id string, putAuthenticationMethodsRequestInner []*models.PutAuthenticationMethodsRequestInner, opts ...management.RequestOption) ([]*models.PutAuthenticationMethods200ResponseInner, error) {
+func (m *Manager) UpdateAuthenticationMethods(ctx context.Context, id string, putAuthenticationMethodsRequestInner []*models.PutAuthenticationMethodsRequestInner, opts ...management.RequestOption) ([]*models.PutAuthenticationMethods200ResponseInner, error) {
 	var localVarReturnValue []*models.PutAuthenticationMethods200ResponseInner
 	err := m.management.Request(ctx, "PUT", m.management.URI("users", string(id), "authentication-methods"), putAuthenticationMethodsRequestInner, &localVarReturnValue, opts...)
 	if err != nil {

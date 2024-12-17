@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // GetActiveUsers Get active users count
 //
 // https://auth0.com/docs/api/management/v2/#!/Stats/get_active_users
-func (m *Manager) GetActiveUsers(ctx context.Context, opts ...management.RequestOption) (float32, error) {
+func (m *Manager) GetActiveUsersCount(ctx context.Context, opts ...management.RequestOption) (float32, error) {
 	var localVarReturnValue float32
 	err := m.management.Request(ctx, "GET", m.management.URI("stats", "active-users"), nil, &localVarReturnValue, opts...)
 	if err != nil {

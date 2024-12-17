@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // GetSigningKey Get an Application Signing Key by its key id
 //
 // https://auth0.com/docs/api/management/v2/#!/Keys/get_signing_key
-func (m *Manager) GetSigningKey(ctx context.Context, kid string, opts ...management.RequestOption) (*models.GetSigningKeys200ResponseInner, error) {
+func (m *Manager) Get(ctx context.Context, kid string, opts ...management.RequestOption) (*models.GetSigningKeys200ResponseInner, error) {
 	var localVarReturnValue *models.GetSigningKeys200ResponseInner
 	err := m.management.Request(ctx, "GET", m.management.URI("keys", "signing", string(kid)), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -34,7 +34,7 @@ func (m *Manager) GetSigningKey(ctx context.Context, kid string, opts ...managem
 // GetSigningKeys Get all Application Signing Keys
 //
 // https://auth0.com/docs/api/management/v2/#!/Keys/get_signing_keys
-func (m *Manager) GetSigningKeys(ctx context.Context, opts ...management.RequestOption) ([]*models.GetSigningKeys200ResponseInner, error) {
+func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) ([]*models.GetSigningKeys200ResponseInner, error) {
 	var localVarReturnValue []*models.GetSigningKeys200ResponseInner
 	err := m.management.Request(ctx, "GET", m.management.URI("keys", "signing"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -46,7 +46,7 @@ func (m *Manager) GetSigningKeys(ctx context.Context, opts ...management.Request
 // PostSigningKeys Rotate the Application Signing Key
 //
 // https://auth0.com/docs/api/management/v2/#!/Keys/post_signing_keys
-func (m *Manager) PostSigningKeys(ctx context.Context, opts ...management.RequestOption) (*models.PostSigningKeys201Response, error) {
+func (m *Manager) Rotate(ctx context.Context, opts ...management.RequestOption) (*models.PostSigningKeys201Response, error) {
 	var localVarReturnValue *models.PostSigningKeys201Response
 	err := m.management.Request(ctx, "POST", m.management.URI("keys", "signing", "rotate"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -58,7 +58,7 @@ func (m *Manager) PostSigningKeys(ctx context.Context, opts ...management.Reques
 // PutSigningKeys Revoke an Application Signing Key by its key id
 //
 // https://auth0.com/docs/api/management/v2/#!/Keys/put_signing_keys
-func (m *Manager) PutSigningKeys(ctx context.Context, kid string, opts ...management.RequestOption) (*models.PutSigningKeys200Response, error) {
+func (m *Manager) Revoke(ctx context.Context, kid string, opts ...management.RequestOption) (*models.PutSigningKeys200Response, error) {
 	var localVarReturnValue *models.PutSigningKeys200Response
 	err := m.management.Request(ctx, "PUT", m.management.URI("keys", "signing", string(kid), "revoke"), nil, &localVarReturnValue, opts...)
 	if err != nil {

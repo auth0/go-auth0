@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // DeleteConnectionsById Delete a connection
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/delete_connections_by_id
-func (m *Manager) DeleteConnectionsById(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("connections", string(id)), nil, nil, opts...)
 	if err != nil {
@@ -46,7 +46,7 @@ func (m *Manager) DeleteScimConfiguration(ctx context.Context, id string, opts .
 // DeleteTokensByTokenId Delete a connection&#39;s SCIM token
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/delete_tokens_by_token_id
-func (m *Manager) DeleteTokensByTokenId(ctx context.Context, id string, tokenId string, opts ...management.RequestOption) error {
+func (m *Manager) DeleteScimToken(ctx context.Context, id string, tokenId string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("connections", string(id), "scim-configuration", "tokens", string(tokenId)), nil, nil, opts...)
 	if err != nil {
@@ -58,7 +58,7 @@ func (m *Manager) DeleteTokensByTokenId(ctx context.Context, id string, tokenId 
 // DeleteUsersByEmail Delete a connection user
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/delete_users_by_email
-func (m *Manager) DeleteUsersByEmail(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) DeleteUserByEmail(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("connections", string(id), "users"), nil, nil, opts...)
 	if err != nil {
@@ -70,7 +70,7 @@ func (m *Manager) DeleteUsersByEmail(ctx context.Context, id string, opts ...man
 // GetConnections Get all connections
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/get_connections
-func (m *Manager) GetConnections(ctx context.Context, opts ...management.RequestOption) (*models.GetConnections200Response, error) {
+func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetConnections200Response, error) {
 	var localVarReturnValue *models.GetConnections200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("connections"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -82,7 +82,7 @@ func (m *Manager) GetConnections(ctx context.Context, opts ...management.Request
 // GetConnectionsById Get a connection
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/get_connections_by_id
-func (m *Manager) GetConnectionsById(ctx context.Context, id string, opts ...management.RequestOption) (*models.Connection, error) {
+func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.Connection, error) {
 	var localVarReturnValue *models.Connection
 	err := m.management.Request(ctx, "GET", m.management.URI("connections", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -94,7 +94,7 @@ func (m *Manager) GetConnectionsById(ctx context.Context, id string, opts ...man
 // GetDefaultMapping Get a connection&#39;s default SCIM mapping
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/get_default_mapping
-func (m *Manager) GetDefaultMapping(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetDefaultMapping200Response, error) {
+func (m *Manager) GetDefaultScimMapping(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetDefaultMapping200Response, error) {
 	var localVarReturnValue *models.GetDefaultMapping200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("connections", string(id), "scim-configuration", "default-mapping"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -130,7 +130,7 @@ func (m *Manager) GetScimTokens(ctx context.Context, id string, opts ...manageme
 // GetStatus Check connection status
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/get_status
-func (m *Manager) GetStatus(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) CheckStatus(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "GET", m.management.URI("connections", string(id), "status"), nil, nil, opts...)
 	if err != nil {
@@ -142,7 +142,7 @@ func (m *Manager) GetStatus(ctx context.Context, id string, opts ...management.R
 // PatchConnectionsById Update a connection
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/patch_connections_by_id
-func (m *Manager) PatchConnectionsById(ctx context.Context, id string, connectionUpdate *models.ConnectionUpdate, opts ...management.RequestOption) (*models.Connection, error) {
+func (m *Manager) Update(ctx context.Context, id string, connectionUpdate *models.ConnectionUpdate, opts ...management.RequestOption) (*models.Connection, error) {
 	var localVarReturnValue *models.Connection
 	err := m.management.Request(ctx, "PATCH", m.management.URI("connections", string(id)), connectionUpdate, &localVarReturnValue, opts...)
 	if err != nil {
@@ -154,7 +154,7 @@ func (m *Manager) PatchConnectionsById(ctx context.Context, id string, connectio
 // PatchScimConfiguration Patch a connection&#39;s SCIM configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/patch_scim_configuration
-func (m *Manager) PatchScimConfiguration(ctx context.Context, id string, patchScimConfigurationRequest *models.PatchScimConfigurationRequest, opts ...management.RequestOption) (*models.GetScimConfiguration200Response, error) {
+func (m *Manager) UpdateScimConfiguration(ctx context.Context, id string, patchScimConfigurationRequest *models.PatchScimConfigurationRequest, opts ...management.RequestOption) (*models.GetScimConfiguration200Response, error) {
 	var localVarReturnValue *models.GetScimConfiguration200Response
 	err := m.management.Request(ctx, "PATCH", m.management.URI("connections", string(id), "scim-configuration"), patchScimConfigurationRequest, &localVarReturnValue, opts...)
 	if err != nil {
@@ -166,7 +166,7 @@ func (m *Manager) PatchScimConfiguration(ctx context.Context, id string, patchSc
 // PostConnections Create a connection
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/post_connections
-func (m *Manager) PostConnections(ctx context.Context, connectionCreate *models.ConnectionCreate, opts ...management.RequestOption) (*models.Connection, error) {
+func (m *Manager) Create(ctx context.Context, connectionCreate *models.ConnectionCreate, opts ...management.RequestOption) (*models.Connection, error) {
 	var localVarReturnValue *models.Connection
 	err := m.management.Request(ctx, "POST", m.management.URI("connections"), connectionCreate, &localVarReturnValue, opts...)
 	if err != nil {
@@ -178,7 +178,7 @@ func (m *Manager) PostConnections(ctx context.Context, connectionCreate *models.
 // PostScimConfiguration Create a SCIM configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/post_scim_configuration
-func (m *Manager) PostScimConfiguration(ctx context.Context, id string, postScimConfigurationRequest *models.PostScimConfigurationRequest, opts ...management.RequestOption) (*models.GetScimConfiguration200Response, error) {
+func (m *Manager) CreateScimConfiguration(ctx context.Context, id string, postScimConfigurationRequest *models.PostScimConfigurationRequest, opts ...management.RequestOption) (*models.GetScimConfiguration200Response, error) {
 	var localVarReturnValue *models.GetScimConfiguration200Response
 	err := m.management.Request(ctx, "POST", m.management.URI("connections", string(id), "scim-configuration"), postScimConfigurationRequest, &localVarReturnValue, opts...)
 	if err != nil {
@@ -190,7 +190,7 @@ func (m *Manager) PostScimConfiguration(ctx context.Context, id string, postScim
 // PostScimToken Create a SCIM Token
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/post_scim_token
-func (m *Manager) PostScimToken(ctx context.Context, id string, postScimTokenRequest *models.PostScimTokenRequest, opts ...management.RequestOption) (*models.PostScimToken201Response, error) {
+func (m *Manager) CreateScimToken(ctx context.Context, id string, postScimTokenRequest *models.PostScimTokenRequest, opts ...management.RequestOption) (*models.PostScimToken201Response, error) {
 	var localVarReturnValue *models.PostScimToken201Response
 	err := m.management.Request(ctx, "POST", m.management.URI("connections", string(id), "scim-configuration", "tokens"), postScimTokenRequest, &localVarReturnValue, opts...)
 	if err != nil {

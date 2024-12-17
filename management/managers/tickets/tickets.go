@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // PostEmailVerification Create an email verification ticket
 //
 // https://auth0.com/docs/api/management/v2/#!/Tickets/post_email_verification
-func (m *Manager) PostEmailVerification(ctx context.Context, postEmailVerificationRequest *models.PostEmailVerificationRequest, opts ...management.RequestOption) (*models.PostEmailVerification201Response, error) {
+func (m *Manager) VerifyEmail(ctx context.Context, postEmailVerificationRequest *models.PostEmailVerificationRequest, opts ...management.RequestOption) (*models.PostEmailVerification201Response, error) {
 	var localVarReturnValue *models.PostEmailVerification201Response
 	err := m.management.Request(ctx, "POST", m.management.URI("tickets", "email-verification"), postEmailVerificationRequest, &localVarReturnValue, opts...)
 	if err != nil {
@@ -34,7 +34,7 @@ func (m *Manager) PostEmailVerification(ctx context.Context, postEmailVerificati
 // PostPasswordChange Create a password change ticket
 //
 // https://auth0.com/docs/api/management/v2/#!/Tickets/post_password_change
-func (m *Manager) PostPasswordChange(ctx context.Context, postPasswordChangeRequest *models.PostPasswordChangeRequest, opts ...management.RequestOption) (*models.PostPasswordChange201Response, error) {
+func (m *Manager) ChangePassword(ctx context.Context, postPasswordChangeRequest *models.PostPasswordChangeRequest, opts ...management.RequestOption) (*models.PostPasswordChange201Response, error) {
 	var localVarReturnValue *models.PostPasswordChange201Response
 	err := m.management.Request(ctx, "POST", m.management.URI("tickets", "password-change"), postPasswordChangeRequest, &localVarReturnValue, opts...)
 	if err != nil {

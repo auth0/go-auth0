@@ -33,8 +33,6 @@ type Connection struct {
 	IsDomainConnection *bool `json:"is_domain_connection,omitempty"`
 	// Metadata associated with the connection in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.
 	Metadata map[string]interface{} `json:"metadata,omitempty"`
-	// Enable the connection to be used in the new login experience. If false, it will be usable only by HRD.
-	ShowAsButton *bool `json:"show_as_button,omitempty"`
 }
 
 // GetName returns the Name field value if set, zero value otherwise.

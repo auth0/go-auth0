@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // DeleteGrantsById Delete a grant by id
 //
 // https://auth0.com/docs/api/management/v2/#!/Grants/delete_grants_by_id
-func (m *Manager) DeleteGrantsById(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("grants", string(id)), nil, nil, opts...)
 	if err != nil {
@@ -34,7 +34,7 @@ func (m *Manager) DeleteGrantsById(ctx context.Context, id string, opts ...manag
 // DeleteGrantsByUserId Delete a grant by user_id
 //
 // https://auth0.com/docs/api/management/v2/#!/Grants/delete_grants_by_user_id
-func (m *Manager) DeleteGrantsByUserId(ctx context.Context, opts ...management.RequestOption) error {
+func (m *Manager) DeleteByUserId(ctx context.Context, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("grants"), nil, nil, opts...)
 	if err != nil {
@@ -46,7 +46,7 @@ func (m *Manager) DeleteGrantsByUserId(ctx context.Context, opts ...management.R
 // GetGrants Get grants
 //
 // https://auth0.com/docs/api/management/v2/#!/Grants/get_grants
-func (m *Manager) GetGrants(ctx context.Context, opts ...management.RequestOption) (*models.GetGrants200Response, error) {
+func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetGrants200Response, error) {
 	var localVarReturnValue *models.GetGrants200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("grants"), nil, &localVarReturnValue, opts...)
 	if err != nil {

@@ -34,7 +34,7 @@ func (m *Manager) GetErrors(ctx context.Context, id string, opts ...management.R
 // GetJobsById Get a job
 //
 // https://auth0.com/docs/api/management/v2/#!/Jobs/get_jobs_by_id
-func (m *Manager) GetJobsById(ctx context.Context, id string, opts ...management.RequestOption) (*models.Job, error) {
+func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.Job, error) {
 	var localVarReturnValue *models.Job
 	err := m.management.Request(ctx, "GET", m.management.URI("jobs", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -46,7 +46,7 @@ func (m *Manager) GetJobsById(ctx context.Context, id string, opts ...management
 // PostUsersExports Create export users job
 //
 // https://auth0.com/docs/api/management/v2/#!/Jobs/post_users_exports
-func (m *Manager) PostUsersExports(ctx context.Context, postUsersExportsRequest *models.PostUsersExportsRequest, opts ...management.RequestOption) (*models.Job, error) {
+func (m *Manager) ExportUsers(ctx context.Context, postUsersExportsRequest *models.PostUsersExportsRequest, opts ...management.RequestOption) (*models.Job, error) {
 	var localVarReturnValue *models.Job
 	err := m.management.Request(ctx, "POST", m.management.URI("jobs", "users-exports"), postUsersExportsRequest, &localVarReturnValue, opts...)
 	if err != nil {
@@ -58,7 +58,7 @@ func (m *Manager) PostUsersExports(ctx context.Context, postUsersExportsRequest 
 // PostUsersImports Create import users job
 //
 // https://auth0.com/docs/api/management/v2/#!/Jobs/post_users_imports
-func (m *Manager) PostUsersImports(ctx context.Context, opts ...management.RequestOption) (*models.Job, error) {
+func (m *Manager) ImportUsers(ctx context.Context, opts ...management.RequestOption) (*models.Job, error) {
 	var localVarReturnValue *models.Job
 	err := m.management.Request(ctx, "POST", m.management.URI("jobs", "users-imports"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -70,7 +70,7 @@ func (m *Manager) PostUsersImports(ctx context.Context, opts ...management.Reque
 // PostVerificationEmail Send an email address verification email
 //
 // https://auth0.com/docs/api/management/v2/#!/Jobs/post_verification_email
-func (m *Manager) PostVerificationEmail(ctx context.Context, postVerificationEmailRequest *models.PostVerificationEmailRequest, opts ...management.RequestOption) (*models.Job, error) {
+func (m *Manager) VerifyEmail(ctx context.Context, postVerificationEmailRequest *models.PostVerificationEmailRequest, opts ...management.RequestOption) (*models.Job, error) {
 	var localVarReturnValue *models.Job
 	err := m.management.Request(ctx, "POST", m.management.URI("jobs", "verification-email"), postVerificationEmailRequest, &localVarReturnValue, opts...)
 	if err != nil {

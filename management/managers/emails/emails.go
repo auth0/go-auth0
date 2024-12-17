@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // GetProvider Get the email provider
 //
 // https://auth0.com/docs/api/management/v2/#!/Emails/get_provider
-func (m *Manager) GetProvider(ctx context.Context, opts ...management.RequestOption) (*models.EmailProvider, error) {
+func (m *Manager) Get(ctx context.Context, opts ...management.RequestOption) (*models.EmailProvider, error) {
 	var localVarReturnValue *models.EmailProvider
 	err := m.management.Request(ctx, "GET", m.management.URI("emails", "provider"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -34,7 +34,7 @@ func (m *Manager) GetProvider(ctx context.Context, opts ...management.RequestOpt
 // PatchProvider Update the email provider
 //
 // https://auth0.com/docs/api/management/v2/#!/Emails/patch_provider
-func (m *Manager) PatchProvider(ctx context.Context, emailProviderUpdate *models.EmailProviderUpdate, opts ...management.RequestOption) (*models.EmailProvider, error) {
+func (m *Manager) Update(ctx context.Context, emailProviderUpdate *models.EmailProviderUpdate, opts ...management.RequestOption) (*models.EmailProvider, error) {
 	var localVarReturnValue *models.EmailProvider
 	err := m.management.Request(ctx, "PATCH", m.management.URI("emails", "provider"), emailProviderUpdate, &localVarReturnValue, opts...)
 	if err != nil {
@@ -46,7 +46,7 @@ func (m *Manager) PatchProvider(ctx context.Context, emailProviderUpdate *models
 // PostProvider Configure the email provider
 //
 // https://auth0.com/docs/api/management/v2/#!/Emails/post_provider
-func (m *Manager) PostProvider(ctx context.Context, emailProviderCreate *models.EmailProviderCreate, opts ...management.RequestOption) (*models.EmailProvider, error) {
+func (m *Manager) Configure(ctx context.Context, emailProviderCreate *models.EmailProviderCreate, opts ...management.RequestOption) (*models.EmailProvider, error) {
 	var localVarReturnValue *models.EmailProvider
 	err := m.management.Request(ctx, "POST", m.management.URI("emails", "provider"), emailProviderCreate, &localVarReturnValue, opts...)
 	if err != nil {

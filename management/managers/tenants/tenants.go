@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // PatchSettings Update tenant settings
 //
 // https://auth0.com/docs/api/management/v2/#!/Tenants/patch_settings
-func (m *Manager) PatchSettings(ctx context.Context, tenantSettingsUpdate *models.TenantSettingsUpdate, opts ...management.RequestOption) (*models.TenantSettings, error) {
+func (m *Manager) UpdateSettings(ctx context.Context, tenantSettingsUpdate *models.TenantSettingsUpdate, opts ...management.RequestOption) (*models.TenantSettings, error) {
 	var localVarReturnValue *models.TenantSettings
 	err := m.management.Request(ctx, "PATCH", m.management.URI("tenants", "settings"), tenantSettingsUpdate, &localVarReturnValue, opts...)
 	if err != nil {
@@ -34,7 +34,7 @@ func (m *Manager) PatchSettings(ctx context.Context, tenantSettingsUpdate *model
 // TenantSettingsRoute Get tenant settings
 //
 // https://auth0.com/docs/api/management/v2/#!/Tenants/tenant_settings_route
-func (m *Manager) TenantSettingsRoute(ctx context.Context, opts ...management.RequestOption) (*models.TenantSettings, error) {
+func (m *Manager) GetSettings(ctx context.Context, opts ...management.RequestOption) (*models.TenantSettings, error) {
 	var localVarReturnValue *models.TenantSettings
 	err := m.management.Request(ctx, "GET", m.management.URI("tenants", "settings"), nil, &localVarReturnValue, opts...)
 	if err != nil {

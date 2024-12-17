@@ -22,7 +22,7 @@ func NewManager(mgmt *management.Management) *Manager {
 // DeleteHooksById Delete a hook
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/delete_hooks_by_id
-func (m *Manager) DeleteHooksById(ctx context.Context, id string, opts ...management.RequestOption) error {
+func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "DELETE", m.management.URI("hooks", string(id)), nil, nil, opts...)
 	if err != nil {
@@ -46,7 +46,7 @@ func (m *Manager) DeleteSecrets(ctx context.Context, id string, requestBody []*s
 // GetHooks Get hooks
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/get_hooks
-func (m *Manager) GetHooks(ctx context.Context, opts ...management.RequestOption) (*models.GetHooks200Response, error) {
+func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetHooks200Response, error) {
 	var localVarReturnValue *models.GetHooks200Response
 	err := m.management.Request(ctx, "GET", m.management.URI("hooks"), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -58,7 +58,7 @@ func (m *Manager) GetHooks(ctx context.Context, opts ...management.RequestOption
 // GetHooksById Get a hook
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/get_hooks_by_id
-func (m *Manager) GetHooksById(ctx context.Context, id string, opts ...management.RequestOption) (*models.Hook, error) {
+func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.Hook, error) {
 	var localVarReturnValue *models.Hook
 	err := m.management.Request(ctx, "GET", m.management.URI("hooks", string(id)), nil, &localVarReturnValue, opts...)
 	if err != nil {
@@ -82,7 +82,7 @@ func (m *Manager) GetSecrets(ctx context.Context, id string, opts ...management.
 // PatchHooksById Update a hook
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/patch_hooks_by_id
-func (m *Manager) PatchHooksById(ctx context.Context, id string, hookUpdate *models.HookUpdate, opts ...management.RequestOption) (*models.Hook, error) {
+func (m *Manager) Update(ctx context.Context, id string, hookUpdate *models.HookUpdate, opts ...management.RequestOption) (*models.Hook, error) {
 	var localVarReturnValue *models.Hook
 	err := m.management.Request(ctx, "PATCH", m.management.URI("hooks", string(id)), hookUpdate, &localVarReturnValue, opts...)
 	if err != nil {
@@ -94,7 +94,7 @@ func (m *Manager) PatchHooksById(ctx context.Context, id string, hookUpdate *mod
 // PatchSecrets Update hook secrets
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/patch_secrets
-func (m *Manager) PatchSecrets(ctx context.Context, id string, requestBody map[string]interface{}, opts ...management.RequestOption) error {
+func (m *Manager) UpdateSecrets(ctx context.Context, id string, requestBody map[string]interface{}, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "PATCH", m.management.URI("hooks", string(id), "secrets"), requestBody, nil, opts...)
 	if err != nil {
@@ -106,7 +106,7 @@ func (m *Manager) PatchSecrets(ctx context.Context, id string, requestBody map[s
 // PostHooks Create a hook
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/post_hooks
-func (m *Manager) PostHooks(ctx context.Context, hookCreate *models.HookCreate, opts ...management.RequestOption) (*models.Hook, error) {
+func (m *Manager) Create(ctx context.Context, hookCreate *models.HookCreate, opts ...management.RequestOption) (*models.Hook, error) {
 	var localVarReturnValue *models.Hook
 	err := m.management.Request(ctx, "POST", m.management.URI("hooks"), hookCreate, &localVarReturnValue, opts...)
 	if err != nil {
@@ -118,7 +118,7 @@ func (m *Manager) PostHooks(ctx context.Context, hookCreate *models.HookCreate, 
 // PostSecrets Add hook secrets
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/post_secrets
-func (m *Manager) PostSecrets(ctx context.Context, id string, requestBody map[string]interface{}, opts ...management.RequestOption) error {
+func (m *Manager) AddSecrets(ctx context.Context, id string, requestBody map[string]interface{}, opts ...management.RequestOption) error {
 
 	err := m.management.Request(ctx, "POST", m.management.URI("hooks", string(id), "secrets"), requestBody, nil, opts...)
 	if err != nil {
