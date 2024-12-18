@@ -19,14 +19,22 @@ import (
 
 // GetClientGrants200Response - struct for GetClientGrants200Response
 type GetClientGrants200Response struct {
-	GetClientGrants200ResponseOneOf *GetClientGrants200ResponseOneOf
-	ArrayOfClientGrant              *[]ClientGrant
+	GetClientGrants200ResponseOneOf  *GetClientGrants200ResponseOneOf
+	GetClientGrants200ResponseOneOf1 *GetClientGrants200ResponseOneOf1
+	ArrayOfClientGrant               *[]ClientGrant
 }
 
 // GetClientGrants200ResponseOneOfAsGetClientGrants200Response is a convenience function that returns GetClientGrants200ResponseOneOf wrapped in GetClientGrants200Response
 func GetClientGrants200ResponseOneOfAsGetClientGrants200Response(v *GetClientGrants200ResponseOneOf) GetClientGrants200Response {
 	return GetClientGrants200Response{
 		GetClientGrants200ResponseOneOf: v,
+	}
+}
+
+// GetClientGrants200ResponseOneOf1AsGetClientGrants200Response is a convenience function that returns GetClientGrants200ResponseOneOf1 wrapped in GetClientGrants200Response
+func GetClientGrants200ResponseOneOf1AsGetClientGrants200Response(v *GetClientGrants200ResponseOneOf1) GetClientGrants200Response {
+	return GetClientGrants200Response{
+		GetClientGrants200ResponseOneOf1: v,
 	}
 }
 
@@ -58,6 +66,23 @@ func (dst *GetClientGrants200Response) UnmarshalJSON(data []byte) error {
 		dst.GetClientGrants200ResponseOneOf = nil
 	}
 
+	// try to unmarshal data into GetClientGrants200ResponseOneOf1
+	err = newStrictDecoder(data).Decode(&dst.GetClientGrants200ResponseOneOf1)
+	if err == nil {
+		jsonGetClientGrants200ResponseOneOf1, _ := json.Marshal(dst.GetClientGrants200ResponseOneOf1)
+		if string(jsonGetClientGrants200ResponseOneOf1) == "{}" { // empty struct
+			dst.GetClientGrants200ResponseOneOf1 = nil
+		} else {
+			if err = validator.Validate(dst.GetClientGrants200ResponseOneOf1); err != nil {
+				dst.GetClientGrants200ResponseOneOf1 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.GetClientGrants200ResponseOneOf1 = nil
+	}
+
 	// try to unmarshal data into ArrayOfClientGrant
 	err = newStrictDecoder(data).Decode(&dst.ArrayOfClientGrant)
 	if err == nil {
@@ -78,6 +103,7 @@ func (dst *GetClientGrants200Response) UnmarshalJSON(data []byte) error {
 	if match > 1 { // more than 1 match
 		// reset to nil
 		dst.GetClientGrants200ResponseOneOf = nil
+		dst.GetClientGrants200ResponseOneOf1 = nil
 		dst.ArrayOfClientGrant = nil
 
 		return fmt.Errorf("data matches more than one schema in oneOf(GetClientGrants200Response)")
@@ -94,6 +120,10 @@ func (src GetClientGrants200Response) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.GetClientGrants200ResponseOneOf)
 	}
 
+	if src.GetClientGrants200ResponseOneOf1 != nil {
+		return json.Marshal(&src.GetClientGrants200ResponseOneOf1)
+	}
+
 	if src.ArrayOfClientGrant != nil {
 		return json.Marshal(&src.ArrayOfClientGrant)
 	}
@@ -108,6 +138,10 @@ func (obj *GetClientGrants200Response) GetActualInstance() interface{} {
 	}
 	if obj.GetClientGrants200ResponseOneOf != nil {
 		return obj.GetClientGrants200ResponseOneOf
+	}
+
+	if obj.GetClientGrants200ResponseOneOf1 != nil {
+		return obj.GetClientGrants200ResponseOneOf1
 	}
 
 	if obj.ArrayOfClientGrant != nil {

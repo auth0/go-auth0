@@ -12,6 +12,7 @@ package models
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // GetExecution200Response The result of a specific execution of a trigger.
@@ -22,9 +23,9 @@ type GetExecution200Response struct {
 	Status    *GetExecution200ResponseStatus                             `json:"status,omitempty"`
 	Results   []GetExecution200ResponseResultsInner                      `json:"results,omitempty"`
 	// The time that the execution was started.
-	CreatedAt *string `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// The time that the exeution finished executing.
-	UpdatedAt *string `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
@@ -156,9 +157,9 @@ func (o *GetExecution200Response) SetResults(v []GetExecution200ResponseResultsI
 }
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *GetExecution200Response) GetCreatedAt() string {
+func (o *GetExecution200Response) GetCreatedAt() time.Time {
 	if o == nil || IsNil(o.CreatedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.CreatedAt
@@ -166,7 +167,7 @@ func (o *GetExecution200Response) GetCreatedAt() string {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetExecution200Response) GetCreatedAtOk() (*string, bool) {
+func (o *GetExecution200Response) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
@@ -182,15 +183,15 @@ func (o *GetExecution200Response) HasCreatedAt() bool {
 	return false
 }
 
-// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
-func (o *GetExecution200Response) SetCreatedAt(v string) {
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
+func (o *GetExecution200Response) SetCreatedAt(v time.Time) {
 	o.CreatedAt = &v
 }
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *GetExecution200Response) GetUpdatedAt() string {
+func (o *GetExecution200Response) GetUpdatedAt() time.Time {
 	if o == nil || IsNil(o.UpdatedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.UpdatedAt
@@ -198,7 +199,7 @@ func (o *GetExecution200Response) GetUpdatedAt() string {
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetExecution200Response) GetUpdatedAtOk() (*string, bool) {
+func (o *GetExecution200Response) GetUpdatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
@@ -214,8 +215,8 @@ func (o *GetExecution200Response) HasUpdatedAt() bool {
 	return false
 }
 
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
-func (o *GetExecution200Response) SetUpdatedAt(v string) {
+// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
+func (o *GetExecution200Response) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt = &v
 }
 

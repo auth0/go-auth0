@@ -12,6 +12,7 @@ package models
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // GetActions200ResponseActionsInner struct for GetActions200ResponseActionsInner
@@ -22,6 +23,12 @@ type GetActions200ResponseActionsInner struct {
 	Name *string `json:"name,omitempty"`
 	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
 	SupportedTriggers []GetActions200ResponseActionsInnerSupportedTriggersInner `json:"supported_triggers,omitempty"`
+	// True if all of an Action's contents have been deployed.
+	AllChangesDeployed *bool `json:"all_changes_deployed,omitempty"`
+	// The time when this action was created.
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+	// The time when this action was updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// The source code of the action.
 	Code *string `json:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this action depends on.
@@ -36,14 +43,8 @@ type GetActions200ResponseActionsInner struct {
 	InstalledIntegrationId *string                                       `json:"installed_integration_id,omitempty"`
 	Integration            *GetActions200ResponseActionsInnerIntegration `json:"integration,omitempty"`
 	Status                 *GetActions200ResponseActionsInnerStatus      `json:"status,omitempty"`
-	// True if all of an Action's contents have been deployed.
-	AllChangesDeployed *bool `json:"all_changes_deployed,omitempty"`
 	// The time when this action was built successfully.
-	BuiltAt *string `json:"built_at,omitempty"`
-	// The time when this action was created.
-	CreatedAt *string `json:"created_at,omitempty"`
-	// The time when this action was updated.
-	UpdatedAt *string `json:"updated_at,omitempty"`
+	BuiltAt *time.Time `json:"built_at,omitempty"`
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
@@ -140,6 +141,102 @@ func (o *GetActions200ResponseActionsInner) HasSupportedTriggers() bool {
 // SetSupportedTriggers gets a reference to the given []GetActions200ResponseActionsInnerSupportedTriggersInner and assigns it to the SupportedTriggers field.
 func (o *GetActions200ResponseActionsInner) SetSupportedTriggers(v []GetActions200ResponseActionsInnerSupportedTriggersInner) {
 	o.SupportedTriggers = v
+}
+
+// GetAllChangesDeployed returns the AllChangesDeployed field value if set, zero value otherwise.
+func (o *GetActions200ResponseActionsInner) GetAllChangesDeployed() bool {
+	if o == nil || IsNil(o.AllChangesDeployed) {
+		var ret bool
+		return ret
+	}
+	return *o.AllChangesDeployed
+}
+
+// GetAllChangesDeployedOk returns a tuple with the AllChangesDeployed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetActions200ResponseActionsInner) GetAllChangesDeployedOk() (*bool, bool) {
+	if o == nil || IsNil(o.AllChangesDeployed) {
+		return nil, false
+	}
+	return o.AllChangesDeployed, true
+}
+
+// HasAllChangesDeployed returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInner) HasAllChangesDeployed() bool {
+	if o != nil && !IsNil(o.AllChangesDeployed) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllChangesDeployed gets a reference to the given bool and assigns it to the AllChangesDeployed field.
+func (o *GetActions200ResponseActionsInner) SetAllChangesDeployed(v bool) {
+	o.AllChangesDeployed = &v
+}
+
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+func (o *GetActions200ResponseActionsInner) GetCreatedAt() time.Time {
+	if o == nil || IsNil(o.CreatedAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetActions200ResponseActionsInner) GetCreatedAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.CreatedAt) {
+		return nil, false
+	}
+	return o.CreatedAt, true
+}
+
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInner) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
+func (o *GetActions200ResponseActionsInner) SetCreatedAt(v time.Time) {
+	o.CreatedAt = &v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+func (o *GetActions200ResponseActionsInner) GetUpdatedAt() time.Time {
+	if o == nil || IsNil(o.UpdatedAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetActions200ResponseActionsInner) GetUpdatedAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.UpdatedAt) {
+		return nil, false
+	}
+	return o.UpdatedAt, true
+}
+
+// HasUpdatedAt returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInner) HasUpdatedAt() bool {
+	if o != nil && !IsNil(o.UpdatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
+func (o *GetActions200ResponseActionsInner) SetUpdatedAt(v time.Time) {
+	o.UpdatedAt = &v
 }
 
 // GetCode returns the Code field value if set, zero value otherwise.
@@ -398,42 +495,10 @@ func (o *GetActions200ResponseActionsInner) SetStatus(v GetActions200ResponseAct
 	o.Status = &v
 }
 
-// GetAllChangesDeployed returns the AllChangesDeployed field value if set, zero value otherwise.
-func (o *GetActions200ResponseActionsInner) GetAllChangesDeployed() bool {
-	if o == nil || IsNil(o.AllChangesDeployed) {
-		var ret bool
-		return ret
-	}
-	return *o.AllChangesDeployed
-}
-
-// GetAllChangesDeployedOk returns a tuple with the AllChangesDeployed field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetActions200ResponseActionsInner) GetAllChangesDeployedOk() (*bool, bool) {
-	if o == nil || IsNil(o.AllChangesDeployed) {
-		return nil, false
-	}
-	return o.AllChangesDeployed, true
-}
-
-// HasAllChangesDeployed returns a boolean if a field has been set.
-func (o *GetActions200ResponseActionsInner) HasAllChangesDeployed() bool {
-	if o != nil && !IsNil(o.AllChangesDeployed) {
-		return true
-	}
-
-	return false
-}
-
-// SetAllChangesDeployed gets a reference to the given bool and assigns it to the AllChangesDeployed field.
-func (o *GetActions200ResponseActionsInner) SetAllChangesDeployed(v bool) {
-	o.AllChangesDeployed = &v
-}
-
 // GetBuiltAt returns the BuiltAt field value if set, zero value otherwise.
-func (o *GetActions200ResponseActionsInner) GetBuiltAt() string {
+func (o *GetActions200ResponseActionsInner) GetBuiltAt() time.Time {
 	if o == nil || IsNil(o.BuiltAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.BuiltAt
@@ -441,7 +506,7 @@ func (o *GetActions200ResponseActionsInner) GetBuiltAt() string {
 
 // GetBuiltAtOk returns a tuple with the BuiltAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetActions200ResponseActionsInner) GetBuiltAtOk() (*string, bool) {
+func (o *GetActions200ResponseActionsInner) GetBuiltAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.BuiltAt) {
 		return nil, false
 	}
@@ -457,73 +522,9 @@ func (o *GetActions200ResponseActionsInner) HasBuiltAt() bool {
 	return false
 }
 
-// SetBuiltAt gets a reference to the given string and assigns it to the BuiltAt field.
-func (o *GetActions200ResponseActionsInner) SetBuiltAt(v string) {
+// SetBuiltAt gets a reference to the given time.Time and assigns it to the BuiltAt field.
+func (o *GetActions200ResponseActionsInner) SetBuiltAt(v time.Time) {
 	o.BuiltAt = &v
-}
-
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *GetActions200ResponseActionsInner) GetCreatedAt() string {
-	if o == nil || IsNil(o.CreatedAt) {
-		var ret string
-		return ret
-	}
-	return *o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetActions200ResponseActionsInner) GetCreatedAtOk() (*string, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
-		return nil, false
-	}
-	return o.CreatedAt, true
-}
-
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *GetActions200ResponseActionsInner) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
-func (o *GetActions200ResponseActionsInner) SetCreatedAt(v string) {
-	o.CreatedAt = &v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *GetActions200ResponseActionsInner) GetUpdatedAt() string {
-	if o == nil || IsNil(o.UpdatedAt) {
-		var ret string
-		return ret
-	}
-	return *o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetActions200ResponseActionsInner) GetUpdatedAtOk() (*string, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
-		return nil, false
-	}
-	return o.UpdatedAt, true
-}
-
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *GetActions200ResponseActionsInner) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
-func (o *GetActions200ResponseActionsInner) SetUpdatedAt(v string) {
-	o.UpdatedAt = &v
 }
 
 func (o GetActions200ResponseActionsInner) MarshalJSON() ([]byte, error) {
@@ -544,6 +545,15 @@ func (o GetActions200ResponseActionsInner) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.SupportedTriggers) {
 		toSerialize["supported_triggers"] = o.SupportedTriggers
+	}
+	if !IsNil(o.AllChangesDeployed) {
+		toSerialize["all_changes_deployed"] = o.AllChangesDeployed
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updated_at"] = o.UpdatedAt
 	}
 	if !IsNil(o.Code) {
 		toSerialize["code"] = o.Code
@@ -569,17 +579,8 @@ func (o GetActions200ResponseActionsInner) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
 	}
-	if !IsNil(o.AllChangesDeployed) {
-		toSerialize["all_changes_deployed"] = o.AllChangesDeployed
-	}
 	if !IsNil(o.BuiltAt) {
 		toSerialize["built_at"] = o.BuiltAt
-	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["created_at"] = o.CreatedAt
-	}
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
 	}
 	return toSerialize, nil
 }

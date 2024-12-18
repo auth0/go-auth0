@@ -18,15 +18,15 @@ import (
 
 // PutPhoneProvidersRequest struct for PutPhoneProvidersRequest
 type PutPhoneProvidersRequest struct {
-	Provider GetPhoneProviders200ResponseProvider `json:"provider"`
+	Provider GetGuardianPhoneProviders200ResponseProvider `json:"provider"`
 }
 
 type _PutPhoneProvidersRequest PutPhoneProvidersRequest
 
 // GetProvider returns the Provider field value
-func (o *PutPhoneProvidersRequest) GetProvider() GetPhoneProviders200ResponseProvider {
+func (o *PutPhoneProvidersRequest) GetProvider() GetGuardianPhoneProviders200ResponseProvider {
 	if o == nil {
-		var ret GetPhoneProviders200ResponseProvider
+		var ret GetGuardianPhoneProviders200ResponseProvider
 		return ret
 	}
 
@@ -35,7 +35,7 @@ func (o *PutPhoneProvidersRequest) GetProvider() GetPhoneProviders200ResponsePro
 
 // GetProviderOk returns a tuple with the Provider field value
 // and a boolean to check if the value has been set.
-func (o *PutPhoneProvidersRequest) GetProviderOk() (*GetPhoneProviders200ResponseProvider, bool) {
+func (o *PutPhoneProvidersRequest) GetProviderOk() (*GetGuardianPhoneProviders200ResponseProvider, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -43,7 +43,7 @@ func (o *PutPhoneProvidersRequest) GetProviderOk() (*GetPhoneProviders200Respons
 }
 
 // SetProvider sets field value
-func (o *PutPhoneProvidersRequest) SetProvider(v GetPhoneProviders200ResponseProvider) {
+func (o *PutPhoneProvidersRequest) SetProvider(v GetGuardianPhoneProviders200ResponseProvider) {
 	o.Provider = v
 }
 

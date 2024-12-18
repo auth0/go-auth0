@@ -16,14 +16,14 @@ import (
 
 // PatchCustomDomainsByIdRequest struct for PatchCustomDomainsByIdRequest
 type PatchCustomDomainsByIdRequest struct {
-	TlsPolicy            *PostCustomDomainsRequestTlsPolicy                 `json:"tls_policy,omitempty"`
+	TlsPolicy            *PatchCustomDomainsByIdRequestTlsPolicy            `json:"tls_policy,omitempty"`
 	CustomClientIpHeader *PatchCustomDomainsByIdRequestCustomClientIpHeader `json:"custom_client_ip_header,omitempty"`
 }
 
 // GetTlsPolicy returns the TlsPolicy field value if set, zero value otherwise.
-func (o *PatchCustomDomainsByIdRequest) GetTlsPolicy() PostCustomDomainsRequestTlsPolicy {
+func (o *PatchCustomDomainsByIdRequest) GetTlsPolicy() PatchCustomDomainsByIdRequestTlsPolicy {
 	if o == nil || IsNil(o.TlsPolicy) {
-		var ret PostCustomDomainsRequestTlsPolicy
+		var ret PatchCustomDomainsByIdRequestTlsPolicy
 		return ret
 	}
 	return *o.TlsPolicy
@@ -31,7 +31,7 @@ func (o *PatchCustomDomainsByIdRequest) GetTlsPolicy() PostCustomDomainsRequestT
 
 // GetTlsPolicyOk returns a tuple with the TlsPolicy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchCustomDomainsByIdRequest) GetTlsPolicyOk() (*PostCustomDomainsRequestTlsPolicy, bool) {
+func (o *PatchCustomDomainsByIdRequest) GetTlsPolicyOk() (*PatchCustomDomainsByIdRequestTlsPolicy, bool) {
 	if o == nil || IsNil(o.TlsPolicy) {
 		return nil, false
 	}
@@ -47,8 +47,8 @@ func (o *PatchCustomDomainsByIdRequest) HasTlsPolicy() bool {
 	return false
 }
 
-// SetTlsPolicy gets a reference to the given PostCustomDomainsRequestTlsPolicy and assigns it to the TlsPolicy field.
-func (o *PatchCustomDomainsByIdRequest) SetTlsPolicy(v PostCustomDomainsRequestTlsPolicy) {
+// SetTlsPolicy gets a reference to the given PatchCustomDomainsByIdRequestTlsPolicy and assigns it to the TlsPolicy field.
+func (o *PatchCustomDomainsByIdRequest) SetTlsPolicy(v PatchCustomDomainsByIdRequestTlsPolicy) {
 	o.TlsPolicy = &v
 }
 

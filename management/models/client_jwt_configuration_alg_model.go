@@ -22,6 +22,7 @@ type ClientJwtConfigurationAlg string
 const (
 	CLIENTJWTCONFIGURATIONALG_HS256 ClientJwtConfigurationAlg = "HS256"
 	CLIENTJWTCONFIGURATIONALG_RS256 ClientJwtConfigurationAlg = "RS256"
+	CLIENTJWTCONFIGURATIONALG_RS512 ClientJwtConfigurationAlg = "RS512"
 	CLIENTJWTCONFIGURATIONALG_PS256 ClientJwtConfigurationAlg = "PS256"
 )
 
@@ -29,6 +30,7 @@ const (
 var AllowedClientJwtConfigurationAlgEnumValues = []ClientJwtConfigurationAlg{
 	"HS256",
 	"RS256",
+	"RS512",
 	"PS256",
 }
 

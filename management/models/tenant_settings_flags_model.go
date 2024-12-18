@@ -62,6 +62,8 @@ type TenantSettingsFlags struct {
 	MfaShowFactorListOnEnrollment *bool `json:"mfa_show_factor_list_on_enrollment,omitempty"`
 	// Removes alg property from jwks .well-known endpoint
 	RemoveAlgFromJwks *bool `json:"remove_alg_from_jwks,omitempty"`
+	// Improves bot detection during signup in classic universal login
+	ImprovedSignupBotDetectionInClassic *bool `json:"improved_signup_bot_detection_in_classic,omitempty"`
 }
 
 // GetChangePwdFlowV1 returns the ChangePwdFlowV1 field value if set, zero value otherwise.
@@ -800,6 +802,38 @@ func (o *TenantSettingsFlags) SetRemoveAlgFromJwks(v bool) {
 	o.RemoveAlgFromJwks = &v
 }
 
+// GetImprovedSignupBotDetectionInClassic returns the ImprovedSignupBotDetectionInClassic field value if set, zero value otherwise.
+func (o *TenantSettingsFlags) GetImprovedSignupBotDetectionInClassic() bool {
+	if o == nil || IsNil(o.ImprovedSignupBotDetectionInClassic) {
+		var ret bool
+		return ret
+	}
+	return *o.ImprovedSignupBotDetectionInClassic
+}
+
+// GetImprovedSignupBotDetectionInClassicOk returns a tuple with the ImprovedSignupBotDetectionInClassic field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TenantSettingsFlags) GetImprovedSignupBotDetectionInClassicOk() (*bool, bool) {
+	if o == nil || IsNil(o.ImprovedSignupBotDetectionInClassic) {
+		return nil, false
+	}
+	return o.ImprovedSignupBotDetectionInClassic, true
+}
+
+// HasImprovedSignupBotDetectionInClassic returns a boolean if a field has been set.
+func (o *TenantSettingsFlags) HasImprovedSignupBotDetectionInClassic() bool {
+	if o != nil && !IsNil(o.ImprovedSignupBotDetectionInClassic) {
+		return true
+	}
+
+	return false
+}
+
+// SetImprovedSignupBotDetectionInClassic gets a reference to the given bool and assigns it to the ImprovedSignupBotDetectionInClassic field.
+func (o *TenantSettingsFlags) SetImprovedSignupBotDetectionInClassic(v bool) {
+	o.ImprovedSignupBotDetectionInClassic = &v
+}
+
 func (o TenantSettingsFlags) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -878,6 +912,9 @@ func (o TenantSettingsFlags) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RemoveAlgFromJwks) {
 		toSerialize["remove_alg_from_jwks"] = o.RemoveAlgFromJwks
+	}
+	if !IsNil(o.ImprovedSignupBotDetectionInClassic) {
+		toSerialize["improved_signup_bot_detection_in_classic"] = o.ImprovedSignupBotDetectionInClassic
 	}
 	return toSerialize, nil
 }

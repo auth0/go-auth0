@@ -14,9 +14,9 @@ import (
 	"encoding/json"
 )
 
-// PatchOrganizationsByIdRequestBranding Theme defines how to style the login pages
+// PatchOrganizationsByIdRequestBranding Theme defines how to style the login pages.
 type PatchOrganizationsByIdRequestBranding struct {
-	// URL of logo to display on login page
+	// URL of logo to display on login page.
 	LogoUrl *string                                              `json:"logo_url,omitempty"`
 	Colors  *GetOrganizations200ResponseOneOfInnerBrandingColors `json:"colors,omitempty"`
 }

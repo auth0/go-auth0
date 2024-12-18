@@ -12,6 +12,7 @@ package models
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // GetExecution200ResponseResultsInner Captures the results of a single action being executed.
@@ -20,9 +21,9 @@ type GetExecution200ResponseResultsInner struct {
 	ActionName *string                                               `json:"action_name,omitempty"`
 	Error      *GetActionVersions200ResponseVersionsInnerErrorsInner `json:"error,omitempty"`
 	// The time when the action was started.
-	StartedAt *string `json:"started_at,omitempty"`
+	StartedAt *time.Time `json:"started_at,omitempty"`
 	// The time when the action finished executing.
-	EndedAt *string `json:"ended_at,omitempty"`
+	EndedAt *time.Time `json:"ended_at,omitempty"`
 }
 
 // GetActionName returns the ActionName field value if set, zero value otherwise.
@@ -90,9 +91,9 @@ func (o *GetExecution200ResponseResultsInner) SetError(v GetActionVersions200Res
 }
 
 // GetStartedAt returns the StartedAt field value if set, zero value otherwise.
-func (o *GetExecution200ResponseResultsInner) GetStartedAt() string {
+func (o *GetExecution200ResponseResultsInner) GetStartedAt() time.Time {
 	if o == nil || IsNil(o.StartedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.StartedAt
@@ -100,7 +101,7 @@ func (o *GetExecution200ResponseResultsInner) GetStartedAt() string {
 
 // GetStartedAtOk returns a tuple with the StartedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetExecution200ResponseResultsInner) GetStartedAtOk() (*string, bool) {
+func (o *GetExecution200ResponseResultsInner) GetStartedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.StartedAt) {
 		return nil, false
 	}
@@ -116,15 +117,15 @@ func (o *GetExecution200ResponseResultsInner) HasStartedAt() bool {
 	return false
 }
 
-// SetStartedAt gets a reference to the given string and assigns it to the StartedAt field.
-func (o *GetExecution200ResponseResultsInner) SetStartedAt(v string) {
+// SetStartedAt gets a reference to the given time.Time and assigns it to the StartedAt field.
+func (o *GetExecution200ResponseResultsInner) SetStartedAt(v time.Time) {
 	o.StartedAt = &v
 }
 
 // GetEndedAt returns the EndedAt field value if set, zero value otherwise.
-func (o *GetExecution200ResponseResultsInner) GetEndedAt() string {
+func (o *GetExecution200ResponseResultsInner) GetEndedAt() time.Time {
 	if o == nil || IsNil(o.EndedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.EndedAt
@@ -132,7 +133,7 @@ func (o *GetExecution200ResponseResultsInner) GetEndedAt() string {
 
 // GetEndedAtOk returns a tuple with the EndedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetExecution200ResponseResultsInner) GetEndedAtOk() (*string, bool) {
+func (o *GetExecution200ResponseResultsInner) GetEndedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.EndedAt) {
 		return nil, false
 	}
@@ -148,8 +149,8 @@ func (o *GetExecution200ResponseResultsInner) HasEndedAt() bool {
 	return false
 }
 
-// SetEndedAt gets a reference to the given string and assigns it to the EndedAt field.
-func (o *GetExecution200ResponseResultsInner) SetEndedAt(v string) {
+// SetEndedAt gets a reference to the given time.Time and assigns it to the EndedAt field.
+func (o *GetExecution200ResponseResultsInner) SetEndedAt(v time.Time) {
 	o.EndedAt = &v
 }
 

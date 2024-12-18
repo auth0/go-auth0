@@ -26,12 +26,12 @@ type ClientUpdate struct {
 	LogoUri *string `json:"logo_uri,omitempty"`
 	// A set of URLs that are valid to call back from Auth0 when authenticating users
 	Callbacks  []string                       `json:"callbacks,omitempty"`
-	OidcLogout NullableClientUpdateOidcLogout `json:"oidc_logout,omitempty"`
+	OidcLogout NullableClientCreateOidcLogout `json:"oidc_logout,omitempty"`
 	// A set of URLs that represents valid origins for CORS
 	AllowedOrigins []string `json:"allowed_origins,omitempty"`
 	// A set of URLs that represents valid web origins for use with web message response mode
 	WebOrigins []string `json:"web_origins,omitempty"`
-	// A set of grant types that the client is authorized to use
+	// A set of grant types that the client is authorized to use. Can include `authorization_code`, `implicit`, `refresh_token`, `client_credentials`, `password`, `http://auth0.com/oauth/grant-type/password-realm`, `http://auth0.com/oauth/grant-type/mfa-oob`, `http://auth0.com/oauth/grant-type/mfa-otp`, `http://auth0.com/oauth/grant-type/mfa-recovery-code`, `urn:openid:params:grant-type:ciba`, and `urn:ietf:params:oauth:grant-type:device_code`.
 	GrantTypes []string `json:"grant_types,omitempty"`
 	// List of audiences for SAML protocol
 	ClientAliases []string `json:"client_aliases,omitempty"`
@@ -68,17 +68,18 @@ type ClientUpdate struct {
 	Mobile         NullableClientUpdateMobile `json:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginUri            *string                                   `json:"initiate_login_uri,omitempty"`
-	NativeSocialLogin           NullableClientNativeSocialLogin           `json:"native_social_login,omitempty"`
+	NativeSocialLogin           NullableClientUpdateNativeSocialLogin     `json:"native_social_login,omitempty"`
 	RefreshToken                NullableClientRefreshToken                `json:"refresh_token,omitempty"`
+	DefaultOrganization         NullableClientDefaultOrganization         `json:"default_organization,omitempty"`
 	OrganizationUsage           *ClientOrganizationUsage                  `json:"organization_usage,omitempty"`
 	OrganizationRequireBehavior *ClientOrganizationRequireBehavior        `json:"organization_require_behavior,omitempty"`
 	ClientAuthenticationMethods NullableClientClientAuthenticationMethods `json:"client_authentication_methods,omitempty"`
 	// Makes the use of Pushed Authorization Requests mandatory for this client
-	RequirePushedAuthorizationRequests *bool                                   `json:"require_pushed_authorization_requests,omitempty"`
-	SignedRequestObject                NullableClientUpdateSignedRequestObject `json:"signed_request_object,omitempty"`
+	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession *bool                         `json:"require_proof_of_possession,omitempty"`
-	ComplianceLevel          NullableClientComplianceLevel `json:"compliance_level,omitempty"`
+	RequireProofOfPossession *bool                                   `json:"require_proof_of_possession,omitempty"`
+	SignedRequestObject      NullableClientUpdateSignedRequestObject `json:"signed_request_object,omitempty"`
+	ComplianceLevel          NullableClientComplianceLevel           `json:"compliance_level,omitempty"`
 }
 
 // GetName returns the Name field value if set, zero value otherwise.
@@ -242,9 +243,9 @@ func (o *ClientUpdate) SetCallbacks(v []string) {
 }
 
 // GetOidcLogout returns the OidcLogout field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ClientUpdate) GetOidcLogout() ClientUpdateOidcLogout {
+func (o *ClientUpdate) GetOidcLogout() ClientCreateOidcLogout {
 	if o == nil || IsNil(o.OidcLogout.Get()) {
-		var ret ClientUpdateOidcLogout
+		var ret ClientCreateOidcLogout
 		return ret
 	}
 	return *o.OidcLogout.Get()
@@ -253,7 +254,7 @@ func (o *ClientUpdate) GetOidcLogout() ClientUpdateOidcLogout {
 // GetOidcLogoutOk returns a tuple with the OidcLogout field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ClientUpdate) GetOidcLogoutOk() (*ClientUpdateOidcLogout, bool) {
+func (o *ClientUpdate) GetOidcLogoutOk() (*ClientCreateOidcLogout, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -269,8 +270,8 @@ func (o *ClientUpdate) HasOidcLogout() bool {
 	return false
 }
 
-// SetOidcLogout gets a reference to the given NullableClientUpdateOidcLogout and assigns it to the OidcLogout field.
-func (o *ClientUpdate) SetOidcLogout(v ClientUpdateOidcLogout) {
+// SetOidcLogout gets a reference to the given NullableClientCreateOidcLogout and assigns it to the OidcLogout field.
+func (o *ClientUpdate) SetOidcLogout(v ClientCreateOidcLogout) {
 	o.OidcLogout.Set(&v)
 }
 
@@ -1119,9 +1120,9 @@ func (o *ClientUpdate) SetInitiateLoginUri(v string) {
 }
 
 // GetNativeSocialLogin returns the NativeSocialLogin field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ClientUpdate) GetNativeSocialLogin() ClientNativeSocialLogin {
+func (o *ClientUpdate) GetNativeSocialLogin() ClientUpdateNativeSocialLogin {
 	if o == nil || IsNil(o.NativeSocialLogin.Get()) {
-		var ret ClientNativeSocialLogin
+		var ret ClientUpdateNativeSocialLogin
 		return ret
 	}
 	return *o.NativeSocialLogin.Get()
@@ -1130,7 +1131,7 @@ func (o *ClientUpdate) GetNativeSocialLogin() ClientNativeSocialLogin {
 // GetNativeSocialLoginOk returns a tuple with the NativeSocialLogin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ClientUpdate) GetNativeSocialLoginOk() (*ClientNativeSocialLogin, bool) {
+func (o *ClientUpdate) GetNativeSocialLoginOk() (*ClientUpdateNativeSocialLogin, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1146,8 +1147,8 @@ func (o *ClientUpdate) HasNativeSocialLogin() bool {
 	return false
 }
 
-// SetNativeSocialLogin gets a reference to the given NullableClientNativeSocialLogin and assigns it to the NativeSocialLogin field.
-func (o *ClientUpdate) SetNativeSocialLogin(v ClientNativeSocialLogin) {
+// SetNativeSocialLogin gets a reference to the given NullableClientUpdateNativeSocialLogin and assigns it to the NativeSocialLogin field.
+func (o *ClientUpdate) SetNativeSocialLogin(v ClientUpdateNativeSocialLogin) {
 	o.NativeSocialLogin.Set(&v)
 }
 
@@ -1202,6 +1203,49 @@ func (o *ClientUpdate) SetRefreshTokenNil() {
 // UnsetRefreshToken ensures that no value is present for RefreshToken, not even an explicit nil
 func (o *ClientUpdate) UnsetRefreshToken() {
 	o.RefreshToken.Unset()
+}
+
+// GetDefaultOrganization returns the DefaultOrganization field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ClientUpdate) GetDefaultOrganization() ClientDefaultOrganization {
+	if o == nil || IsNil(o.DefaultOrganization.Get()) {
+		var ret ClientDefaultOrganization
+		return ret
+	}
+	return *o.DefaultOrganization.Get()
+}
+
+// GetDefaultOrganizationOk returns a tuple with the DefaultOrganization field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ClientUpdate) GetDefaultOrganizationOk() (*ClientDefaultOrganization, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DefaultOrganization.Get(), o.DefaultOrganization.IsSet()
+}
+
+// HasDefaultOrganization returns a boolean if a field has been set.
+func (o *ClientUpdate) HasDefaultOrganization() bool {
+	if o != nil && o.DefaultOrganization.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultOrganization gets a reference to the given NullableClientDefaultOrganization and assigns it to the DefaultOrganization field.
+func (o *ClientUpdate) SetDefaultOrganization(v ClientDefaultOrganization) {
+	o.DefaultOrganization.Set(&v)
+}
+
+// SetDefaultOrganizationNil sets the value for DefaultOrganization to be an explicit nil
+func (o *ClientUpdate) SetDefaultOrganizationNil() {
+	o.DefaultOrganization.Set(nil)
+}
+
+// UnsetDefaultOrganization ensures that no value is present for DefaultOrganization, not even an explicit nil
+func (o *ClientUpdate) UnsetDefaultOrganization() {
+	o.DefaultOrganization.Unset()
 }
 
 // GetOrganizationUsage returns the OrganizationUsage field value if set, zero value otherwise.
@@ -1343,6 +1387,38 @@ func (o *ClientUpdate) SetRequirePushedAuthorizationRequests(v bool) {
 	o.RequirePushedAuthorizationRequests = &v
 }
 
+// GetRequireProofOfPossession returns the RequireProofOfPossession field value if set, zero value otherwise.
+func (o *ClientUpdate) GetRequireProofOfPossession() bool {
+	if o == nil || IsNil(o.RequireProofOfPossession) {
+		var ret bool
+		return ret
+	}
+	return *o.RequireProofOfPossession
+}
+
+// GetRequireProofOfPossessionOk returns a tuple with the RequireProofOfPossession field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClientUpdate) GetRequireProofOfPossessionOk() (*bool, bool) {
+	if o == nil || IsNil(o.RequireProofOfPossession) {
+		return nil, false
+	}
+	return o.RequireProofOfPossession, true
+}
+
+// HasRequireProofOfPossession returns a boolean if a field has been set.
+func (o *ClientUpdate) HasRequireProofOfPossession() bool {
+	if o != nil && !IsNil(o.RequireProofOfPossession) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequireProofOfPossession gets a reference to the given bool and assigns it to the RequireProofOfPossession field.
+func (o *ClientUpdate) SetRequireProofOfPossession(v bool) {
+	o.RequireProofOfPossession = &v
+}
+
 // GetSignedRequestObject returns the SignedRequestObject field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ClientUpdate) GetSignedRequestObject() ClientUpdateSignedRequestObject {
 	if o == nil || IsNil(o.SignedRequestObject.Get()) {
@@ -1384,38 +1460,6 @@ func (o *ClientUpdate) SetSignedRequestObjectNil() {
 // UnsetSignedRequestObject ensures that no value is present for SignedRequestObject, not even an explicit nil
 func (o *ClientUpdate) UnsetSignedRequestObject() {
 	o.SignedRequestObject.Unset()
-}
-
-// GetRequireProofOfPossession returns the RequireProofOfPossession field value if set, zero value otherwise.
-func (o *ClientUpdate) GetRequireProofOfPossession() bool {
-	if o == nil || IsNil(o.RequireProofOfPossession) {
-		var ret bool
-		return ret
-	}
-	return *o.RequireProofOfPossession
-}
-
-// GetRequireProofOfPossessionOk returns a tuple with the RequireProofOfPossession field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ClientUpdate) GetRequireProofOfPossessionOk() (*bool, bool) {
-	if o == nil || IsNil(o.RequireProofOfPossession) {
-		return nil, false
-	}
-	return o.RequireProofOfPossession, true
-}
-
-// HasRequireProofOfPossession returns a boolean if a field has been set.
-func (o *ClientUpdate) HasRequireProofOfPossession() bool {
-	if o != nil && !IsNil(o.RequireProofOfPossession) {
-		return true
-	}
-
-	return false
-}
-
-// SetRequireProofOfPossession gets a reference to the given bool and assigns it to the RequireProofOfPossession field.
-func (o *ClientUpdate) SetRequireProofOfPossession(v bool) {
-	o.RequireProofOfPossession = &v
 }
 
 // GetComplianceLevel returns the ComplianceLevel field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1567,6 +1611,9 @@ func (o ClientUpdate) ToMap() (map[string]interface{}, error) {
 	if o.RefreshToken.IsSet() {
 		toSerialize["refresh_token"] = o.RefreshToken.Get()
 	}
+	if o.DefaultOrganization.IsSet() {
+		toSerialize["default_organization"] = o.DefaultOrganization.Get()
+	}
 	if !IsNil(o.OrganizationUsage) {
 		toSerialize["organization_usage"] = o.OrganizationUsage
 	}
@@ -1579,11 +1626,11 @@ func (o ClientUpdate) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.RequirePushedAuthorizationRequests) {
 		toSerialize["require_pushed_authorization_requests"] = o.RequirePushedAuthorizationRequests
 	}
-	if o.SignedRequestObject.IsSet() {
-		toSerialize["signed_request_object"] = o.SignedRequestObject.Get()
-	}
 	if !IsNil(o.RequireProofOfPossession) {
 		toSerialize["require_proof_of_possession"] = o.RequireProofOfPossession
+	}
+	if o.SignedRequestObject.IsSet() {
+		toSerialize["signed_request_object"] = o.SignedRequestObject.Get()
 	}
 	if o.ComplianceLevel.IsSet() {
 		toSerialize["compliance_level"] = o.ComplianceLevel.Get()

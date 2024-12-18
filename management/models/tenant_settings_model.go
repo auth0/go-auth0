@@ -41,6 +41,8 @@ type TenantSettings struct {
 	IdleSessionLifetime *float32 `json:"idle_session_lifetime,omitempty"`
 	// Selected sandbox version for the extensibility environment.
 	SandboxVersion *string `json:"sandbox_version,omitempty"`
+	// Selected sandbox version for rules and hooks extensibility.
+	LegacySandboxVersion *string `json:"legacy_sandbox_version,omitempty"`
 	// Available sandbox versions for the extensibility environment.
 	SandboxVersionsAvailable []string `json:"sandbox_versions_available,omitempty"`
 	// The default absolute redirection uri, must be https
@@ -49,6 +51,7 @@ type TenantSettings struct {
 	EnabledLocales []GetCustomTextByLanguageLanguageParameter `json:"enabled_locales,omitempty"`
 	SessionCookie  NullableTenantSettingsSessionCookie        `json:"session_cookie,omitempty"`
 	Sessions       NullableTenantSettingsSessions             `json:"sessions,omitempty"`
+	OidcLogout     *TenantSettingsOidcLogout                  `json:"oidc_logout,omitempty"`
 	// Whether to accept an organization name instead of an ID on auth endpoints
 	AllowOrganizationNameInAuthenticationApi *bool `json:"allow_organization_name_in_authentication_api,omitempty"`
 	// Whether to enable flexible factors for MFA in the PostLogin action
@@ -584,6 +587,38 @@ func (o *TenantSettings) SetSandboxVersion(v string) {
 	o.SandboxVersion = &v
 }
 
+// GetLegacySandboxVersion returns the LegacySandboxVersion field value if set, zero value otherwise.
+func (o *TenantSettings) GetLegacySandboxVersion() string {
+	if o == nil || IsNil(o.LegacySandboxVersion) {
+		var ret string
+		return ret
+	}
+	return *o.LegacySandboxVersion
+}
+
+// GetLegacySandboxVersionOk returns a tuple with the LegacySandboxVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TenantSettings) GetLegacySandboxVersionOk() (*string, bool) {
+	if o == nil || IsNil(o.LegacySandboxVersion) {
+		return nil, false
+	}
+	return o.LegacySandboxVersion, true
+}
+
+// HasLegacySandboxVersion returns a boolean if a field has been set.
+func (o *TenantSettings) HasLegacySandboxVersion() bool {
+	if o != nil && !IsNil(o.LegacySandboxVersion) {
+		return true
+	}
+
+	return false
+}
+
+// SetLegacySandboxVersion gets a reference to the given string and assigns it to the LegacySandboxVersion field.
+func (o *TenantSettings) SetLegacySandboxVersion(v string) {
+	o.LegacySandboxVersion = &v
+}
+
 // GetSandboxVersionsAvailable returns the SandboxVersionsAvailable field value if set, zero value otherwise.
 func (o *TenantSettings) GetSandboxVersionsAvailable() []string {
 	if o == nil || IsNil(o.SandboxVersionsAvailable) {
@@ -764,6 +799,38 @@ func (o *TenantSettings) SetSessionsNil() {
 // UnsetSessions ensures that no value is present for Sessions, not even an explicit nil
 func (o *TenantSettings) UnsetSessions() {
 	o.Sessions.Unset()
+}
+
+// GetOidcLogout returns the OidcLogout field value if set, zero value otherwise.
+func (o *TenantSettings) GetOidcLogout() TenantSettingsOidcLogout {
+	if o == nil || IsNil(o.OidcLogout) {
+		var ret TenantSettingsOidcLogout
+		return ret
+	}
+	return *o.OidcLogout
+}
+
+// GetOidcLogoutOk returns a tuple with the OidcLogout field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TenantSettings) GetOidcLogoutOk() (*TenantSettingsOidcLogout, bool) {
+	if o == nil || IsNil(o.OidcLogout) {
+		return nil, false
+	}
+	return o.OidcLogout, true
+}
+
+// HasOidcLogout returns a boolean if a field has been set.
+func (o *TenantSettings) HasOidcLogout() bool {
+	if o != nil && !IsNil(o.OidcLogout) {
+		return true
+	}
+
+	return false
+}
+
+// SetOidcLogout gets a reference to the given TenantSettingsOidcLogout and assigns it to the OidcLogout field.
+func (o *TenantSettings) SetOidcLogout(v TenantSettingsOidcLogout) {
+	o.OidcLogout = &v
 }
 
 // GetAllowOrganizationNameInAuthenticationApi returns the AllowOrganizationNameInAuthenticationApi field value if set, zero value otherwise.
@@ -992,6 +1059,9 @@ func (o TenantSettings) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SandboxVersion) {
 		toSerialize["sandbox_version"] = o.SandboxVersion
 	}
+	if !IsNil(o.LegacySandboxVersion) {
+		toSerialize["legacy_sandbox_version"] = o.LegacySandboxVersion
+	}
 	if !IsNil(o.SandboxVersionsAvailable) {
 		toSerialize["sandbox_versions_available"] = o.SandboxVersionsAvailable
 	}
@@ -1006,6 +1076,9 @@ func (o TenantSettings) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Sessions.IsSet() {
 		toSerialize["sessions"] = o.Sessions.Get()
+	}
+	if !IsNil(o.OidcLogout) {
+		toSerialize["oidc_logout"] = o.OidcLogout
 	}
 	if !IsNil(o.AllowOrganizationNameInAuthenticationApi) {
 		toSerialize["allow_organization_name_in_authentication_api"] = o.AllowOrganizationNameInAuthenticationApi

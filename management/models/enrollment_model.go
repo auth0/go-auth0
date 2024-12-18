@@ -26,9 +26,11 @@ type Enrollment struct {
 	// Device identifier. This is usually the phone identifier.
 	Identifier *string `json:"identifier,omitempty"`
 	// Phone number.
-	PhoneNumber *string               `json:"phone_number,omitempty"`
-	EnrolledAt  *EnrollmentEnrolledAt `json:"enrolled_at,omitempty"`
-	LastAuth    *EnrollmentLastAuth   `json:"last_auth,omitempty"`
+	PhoneNumber *string `json:"phone_number,omitempty"`
+	// Enrollment date and time.
+	EnrolledAt *string `json:"enrolled_at,omitempty"`
+	// Last authentication date and time.
+	LastAuth *string `json:"last_auth,omitempty"`
 }
 
 type _Enrollment Enrollment
@@ -186,9 +188,9 @@ func (o *Enrollment) SetPhoneNumber(v string) {
 }
 
 // GetEnrolledAt returns the EnrolledAt field value if set, zero value otherwise.
-func (o *Enrollment) GetEnrolledAt() EnrollmentEnrolledAt {
+func (o *Enrollment) GetEnrolledAt() string {
 	if o == nil || IsNil(o.EnrolledAt) {
-		var ret EnrollmentEnrolledAt
+		var ret string
 		return ret
 	}
 	return *o.EnrolledAt
@@ -196,7 +198,7 @@ func (o *Enrollment) GetEnrolledAt() EnrollmentEnrolledAt {
 
 // GetEnrolledAtOk returns a tuple with the EnrolledAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Enrollment) GetEnrolledAtOk() (*EnrollmentEnrolledAt, bool) {
+func (o *Enrollment) GetEnrolledAtOk() (*string, bool) {
 	if o == nil || IsNil(o.EnrolledAt) {
 		return nil, false
 	}
@@ -212,15 +214,15 @@ func (o *Enrollment) HasEnrolledAt() bool {
 	return false
 }
 
-// SetEnrolledAt gets a reference to the given EnrollmentEnrolledAt and assigns it to the EnrolledAt field.
-func (o *Enrollment) SetEnrolledAt(v EnrollmentEnrolledAt) {
+// SetEnrolledAt gets a reference to the given string and assigns it to the EnrolledAt field.
+func (o *Enrollment) SetEnrolledAt(v string) {
 	o.EnrolledAt = &v
 }
 
 // GetLastAuth returns the LastAuth field value if set, zero value otherwise.
-func (o *Enrollment) GetLastAuth() EnrollmentLastAuth {
+func (o *Enrollment) GetLastAuth() string {
 	if o == nil || IsNil(o.LastAuth) {
-		var ret EnrollmentLastAuth
+		var ret string
 		return ret
 	}
 	return *o.LastAuth
@@ -228,7 +230,7 @@ func (o *Enrollment) GetLastAuth() EnrollmentLastAuth {
 
 // GetLastAuthOk returns a tuple with the LastAuth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Enrollment) GetLastAuthOk() (*EnrollmentLastAuth, bool) {
+func (o *Enrollment) GetLastAuthOk() (*string, bool) {
 	if o == nil || IsNil(o.LastAuth) {
 		return nil, false
 	}
@@ -244,8 +246,8 @@ func (o *Enrollment) HasLastAuth() bool {
 	return false
 }
 
-// SetLastAuth gets a reference to the given EnrollmentLastAuth and assigns it to the LastAuth field.
-func (o *Enrollment) SetLastAuth(v EnrollmentLastAuth) {
+// SetLastAuth gets a reference to the given string and assigns it to the LastAuth field.
+func (o *Enrollment) SetLastAuth(v string) {
 	o.LastAuth = &v
 }
 

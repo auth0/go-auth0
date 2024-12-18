@@ -16,7 +16,7 @@ import (
 	"fmt"
 )
 
-// ConnectionCreateOptionsPasswordNoPersonalInfo Options for password expiration policy
+// ConnectionCreateOptionsPasswordNoPersonalInfo Options for personal info in passwords policy
 type ConnectionCreateOptionsPasswordNoPersonalInfo struct {
 	Enable bool `json:"enable"`
 }

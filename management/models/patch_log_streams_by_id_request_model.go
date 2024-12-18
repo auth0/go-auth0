@@ -19,6 +19,8 @@ type PatchLogStreamsByIdRequest struct {
 	// log stream name
 	Name   *string                                   `json:"name,omitempty"`
 	Status *GetLogStreams200ResponseInnerOneOfStatus `json:"status,omitempty"`
+	// True for priority log streams, false for non-priority
+	IsPriority *bool `json:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
 	Filters []GetLogStreams200ResponseInnerOneOfFiltersInner `json:"filters,omitempty"`
 	Sink    *PatchLogStreamsByIdRequestSink                  `json:"sink,omitempty"`
@@ -86,6 +88,38 @@ func (o *PatchLogStreamsByIdRequest) HasStatus() bool {
 // SetStatus gets a reference to the given GetLogStreams200ResponseInnerOneOfStatus and assigns it to the Status field.
 func (o *PatchLogStreamsByIdRequest) SetStatus(v GetLogStreams200ResponseInnerOneOfStatus) {
 	o.Status = &v
+}
+
+// GetIsPriority returns the IsPriority field value if set, zero value otherwise.
+func (o *PatchLogStreamsByIdRequest) GetIsPriority() bool {
+	if o == nil || IsNil(o.IsPriority) {
+		var ret bool
+		return ret
+	}
+	return *o.IsPriority
+}
+
+// GetIsPriorityOk returns a tuple with the IsPriority field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PatchLogStreamsByIdRequest) GetIsPriorityOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsPriority) {
+		return nil, false
+	}
+	return o.IsPriority, true
+}
+
+// HasIsPriority returns a boolean if a field has been set.
+func (o *PatchLogStreamsByIdRequest) HasIsPriority() bool {
+	if o != nil && !IsNil(o.IsPriority) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsPriority gets a reference to the given bool and assigns it to the IsPriority field.
+func (o *PatchLogStreamsByIdRequest) SetIsPriority(v bool) {
+	o.IsPriority = &v
 }
 
 // GetFilters returns the Filters field value if set, zero value otherwise.
@@ -167,6 +201,9 @@ func (o PatchLogStreamsByIdRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.IsPriority) {
+		toSerialize["isPriority"] = o.IsPriority
 	}
 	if !IsNil(o.Filters) {
 		toSerialize["filters"] = o.Filters

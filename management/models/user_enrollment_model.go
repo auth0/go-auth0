@@ -12,6 +12,7 @@ package models
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // UserEnrollment struct for UserEnrollment
@@ -29,9 +30,9 @@ type UserEnrollment struct {
 	PhoneNumber *string                   `json:"phone_number,omitempty"`
 	AuthMethod  *UserEnrollmentAuthMethod `json:"auth_method,omitempty"`
 	// Start date and time of this enrollment.
-	EnrolledAt *string `json:"enrolled_at,omitempty"`
+	EnrolledAt *time.Time `json:"enrolled_at,omitempty"`
 	// Last authentication date and time of this enrollment.
-	LastAuth             *string `json:"last_auth,omitempty"`
+	LastAuth             *time.Time `json:"last_auth,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -262,9 +263,9 @@ func (o *UserEnrollment) SetAuthMethod(v UserEnrollmentAuthMethod) {
 }
 
 // GetEnrolledAt returns the EnrolledAt field value if set, zero value otherwise.
-func (o *UserEnrollment) GetEnrolledAt() string {
+func (o *UserEnrollment) GetEnrolledAt() time.Time {
 	if o == nil || IsNil(o.EnrolledAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.EnrolledAt
@@ -272,7 +273,7 @@ func (o *UserEnrollment) GetEnrolledAt() string {
 
 // GetEnrolledAtOk returns a tuple with the EnrolledAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UserEnrollment) GetEnrolledAtOk() (*string, bool) {
+func (o *UserEnrollment) GetEnrolledAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.EnrolledAt) {
 		return nil, false
 	}
@@ -288,15 +289,15 @@ func (o *UserEnrollment) HasEnrolledAt() bool {
 	return false
 }
 
-// SetEnrolledAt gets a reference to the given string and assigns it to the EnrolledAt field.
-func (o *UserEnrollment) SetEnrolledAt(v string) {
+// SetEnrolledAt gets a reference to the given time.Time and assigns it to the EnrolledAt field.
+func (o *UserEnrollment) SetEnrolledAt(v time.Time) {
 	o.EnrolledAt = &v
 }
 
 // GetLastAuth returns the LastAuth field value if set, zero value otherwise.
-func (o *UserEnrollment) GetLastAuth() string {
+func (o *UserEnrollment) GetLastAuth() time.Time {
 	if o == nil || IsNil(o.LastAuth) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.LastAuth
@@ -304,7 +305,7 @@ func (o *UserEnrollment) GetLastAuth() string {
 
 // GetLastAuthOk returns a tuple with the LastAuth field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UserEnrollment) GetLastAuthOk() (*string, bool) {
+func (o *UserEnrollment) GetLastAuthOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.LastAuth) {
 		return nil, false
 	}
@@ -320,8 +321,8 @@ func (o *UserEnrollment) HasLastAuth() bool {
 	return false
 }
 
-// SetLastAuth gets a reference to the given string and assigns it to the LastAuth field.
-func (o *UserEnrollment) SetLastAuth(v string) {
+// SetLastAuth gets a reference to the given time.Time and assigns it to the LastAuth field.
+func (o *UserEnrollment) SetLastAuth(v time.Time) {
 	o.LastAuth = &v
 }
 

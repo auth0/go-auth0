@@ -19,8 +19,9 @@ type Connection struct {
 	// The name of the connection
 	Name *string `json:"name,omitempty"`
 	// Connection name used in login screen
-	DisplayName *string                `json:"display_name,omitempty"`
-	Options     map[string]interface{} `json:"options,omitempty"`
+	DisplayName *string `json:"display_name,omitempty"`
+	// In order to return options in the response, the `read:connections_options` scope must be present
+	Options map[string]interface{} `json:"options,omitempty"`
 	// The connection's identifier
 	Id *string `json:"id,omitempty"`
 	// The type of the connection, related to the identity provider

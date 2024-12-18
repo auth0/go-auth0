@@ -23,7 +23,8 @@ type PostBrandingThemeRequestColors struct {
 	// Base Hover Color
 	BaseHoverColor *string `json:"base_hover_color,omitempty"`
 	// Body text
-	BodyText string `json:"body_text"`
+	BodyText           string                                            `json:"body_text"`
+	CaptchaWidgetTheme *PostBrandingThemeRequestColorsCaptchaWidgetTheme `json:"captcha_widget_theme,omitempty"`
 	// Error
 	Error string `json:"error"`
 	// Header
@@ -144,6 +145,38 @@ func (o *PostBrandingThemeRequestColors) GetBodyTextOk() (*string, bool) {
 // SetBodyText sets field value
 func (o *PostBrandingThemeRequestColors) SetBodyText(v string) {
 	o.BodyText = v
+}
+
+// GetCaptchaWidgetTheme returns the CaptchaWidgetTheme field value if set, zero value otherwise.
+func (o *PostBrandingThemeRequestColors) GetCaptchaWidgetTheme() PostBrandingThemeRequestColorsCaptchaWidgetTheme {
+	if o == nil || IsNil(o.CaptchaWidgetTheme) {
+		var ret PostBrandingThemeRequestColorsCaptchaWidgetTheme
+		return ret
+	}
+	return *o.CaptchaWidgetTheme
+}
+
+// GetCaptchaWidgetThemeOk returns a tuple with the CaptchaWidgetTheme field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PostBrandingThemeRequestColors) GetCaptchaWidgetThemeOk() (*PostBrandingThemeRequestColorsCaptchaWidgetTheme, bool) {
+	if o == nil || IsNil(o.CaptchaWidgetTheme) {
+		return nil, false
+	}
+	return o.CaptchaWidgetTheme, true
+}
+
+// HasCaptchaWidgetTheme returns a boolean if a field has been set.
+func (o *PostBrandingThemeRequestColors) HasCaptchaWidgetTheme() bool {
+	if o != nil && !IsNil(o.CaptchaWidgetTheme) {
+		return true
+	}
+
+	return false
+}
+
+// SetCaptchaWidgetTheme gets a reference to the given PostBrandingThemeRequestColorsCaptchaWidgetTheme and assigns it to the CaptchaWidgetTheme field.
+func (o *PostBrandingThemeRequestColors) SetCaptchaWidgetTheme(v PostBrandingThemeRequestColorsCaptchaWidgetTheme) {
+	o.CaptchaWidgetTheme = &v
 }
 
 // GetError returns the Error field value
@@ -523,6 +556,9 @@ func (o PostBrandingThemeRequestColors) ToMap() (map[string]interface{}, error) 
 		toSerialize["base_hover_color"] = o.BaseHoverColor
 	}
 	toSerialize["body_text"] = o.BodyText
+	if !IsNil(o.CaptchaWidgetTheme) {
+		toSerialize["captcha_widget_theme"] = o.CaptchaWidgetTheme
+	}
 	toSerialize["error"] = o.Error
 	toSerialize["header"] = o.Header
 	toSerialize["icons"] = o.Icons

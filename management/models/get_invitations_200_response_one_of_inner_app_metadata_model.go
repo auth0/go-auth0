@@ -16,26 +16,127 @@ import (
 
 // GetInvitations200ResponseOneOfInnerAppMetadata Data related to the user that does affect the application's core functionality.
 type GetInvitations200ResponseOneOfInnerAppMetadata struct {
-	ClientID             interface{} `json:"clientID,omitempty"`
-	GlobalClientID       interface{} `json:"globalClientID,omitempty"`
-	GlobalClientId       interface{} `json:"global_client_id,omitempty"`
-	EmailVerified        interface{} `json:"email_verified,omitempty"`
-	UserId               interface{} `json:"user_id,omitempty"`
-	Identities           interface{} `json:"identities,omitempty"`
-	LastIP               interface{} `json:"lastIP,omitempty"`
-	LastLogin            interface{} `json:"lastLogin,omitempty"`
-	Metadata             interface{} `json:"metadata,omitempty"`
-	CreatedAt            interface{} `json:"created_at,omitempty"`
-	LoginsCount          interface{} `json:"loginsCount,omitempty"`
-	Id                   interface{} `json:"_id,omitempty"`
-	Email                interface{} `json:"email,omitempty"`
-	Blocked              interface{} `json:"blocked,omitempty"`
-	Tenant               interface{} `json:"__tenant,omitempty"`
-	UpdatedAt            interface{} `json:"updated_at,omitempty"`
-	AdditionalProperties map[string]interface{}
+	Tenant                  interface{} `json:"__tenant,omitempty"`
+	Id                      interface{} `json:"_id,omitempty"`
+	Blocked                 interface{} `json:"blocked,omitempty"`
+	ClientID                interface{} `json:"clientID,omitempty"`
+	CreatedAt               interface{} `json:"created_at,omitempty"`
+	EmailVerified           interface{} `json:"email_verified,omitempty"`
+	Email                   interface{} `json:"email,omitempty"`
+	GlobalClientID          interface{} `json:"globalClientID,omitempty"`
+	GlobalClientId          interface{} `json:"global_client_id,omitempty"`
+	Identities              interface{} `json:"identities,omitempty"`
+	LastIP                  interface{} `json:"lastIP,omitempty"`
+	LastLogin               interface{} `json:"lastLogin,omitempty"`
+	LoginsCount             interface{} `json:"loginsCount,omitempty"`
+	Metadata                interface{} `json:"metadata,omitempty"`
+	MultifactorLastModified interface{} `json:"multifactor_last_modified,omitempty"`
+	Multifactor             interface{} `json:"multifactor,omitempty"`
+	UpdatedAt               interface{} `json:"updated_at,omitempty"`
+	UserId                  interface{} `json:"user_id,omitempty"`
+	AdditionalProperties    map[string]interface{}
 }
 
 type _GetInvitations200ResponseOneOfInnerAppMetadata GetInvitations200ResponseOneOfInnerAppMetadata
+
+// GetTenant returns the Tenant field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetTenant() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.Tenant
+}
+
+// GetTenantOk returns a tuple with the Tenant field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetTenantOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.Tenant) {
+		return nil, false
+	}
+	return &o.Tenant, true
+}
+
+// HasTenant returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasTenant() bool {
+	if o != nil && !IsNil(o.Tenant) {
+		return true
+	}
+
+	return false
+}
+
+// SetTenant gets a reference to the given interface{} and assigns it to the Tenant field.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetTenant(v interface{}) {
+	o.Tenant = v
+}
+
+// GetId returns the Id field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetId() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetIdOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.Id) {
+		return nil, false
+	}
+	return &o.Id, true
+}
+
+// HasId returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given interface{} and assigns it to the Id field.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetId(v interface{}) {
+	o.Id = v
+}
+
+// GetBlocked returns the Blocked field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetBlocked() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.Blocked
+}
+
+// GetBlockedOk returns a tuple with the Blocked field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetBlockedOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.Blocked) {
+		return nil, false
+	}
+	return &o.Blocked, true
+}
+
+// HasBlocked returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasBlocked() bool {
+	if o != nil && !IsNil(o.Blocked) {
+		return true
+	}
+
+	return false
+}
+
+// SetBlocked gets a reference to the given interface{} and assigns it to the Blocked field.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetBlocked(v interface{}) {
+	o.Blocked = v
+}
 
 // GetClientID returns the ClientID field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetClientID() interface{} {
@@ -68,6 +169,105 @@ func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasClientID() bool {
 // SetClientID gets a reference to the given interface{} and assigns it to the ClientID field.
 func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetClientID(v interface{}) {
 	o.ClientID = v
+}
+
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetCreatedAt() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetCreatedAtOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.CreatedAt) {
+		return nil, false
+	}
+	return &o.CreatedAt, true
+}
+
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given interface{} and assigns it to the CreatedAt field.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetCreatedAt(v interface{}) {
+	o.CreatedAt = v
+}
+
+// GetEmailVerified returns the EmailVerified field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetEmailVerified() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.EmailVerified
+}
+
+// GetEmailVerifiedOk returns a tuple with the EmailVerified field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetEmailVerifiedOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.EmailVerified) {
+		return nil, false
+	}
+	return &o.EmailVerified, true
+}
+
+// HasEmailVerified returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasEmailVerified() bool {
+	if o != nil && !IsNil(o.EmailVerified) {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailVerified gets a reference to the given interface{} and assigns it to the EmailVerified field.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetEmailVerified(v interface{}) {
+	o.EmailVerified = v
+}
+
+// GetEmail returns the Email field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetEmail() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.Email
+}
+
+// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetEmailOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.Email) {
+		return nil, false
+	}
+	return &o.Email, true
+}
+
+// HasEmail returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasEmail() bool {
+	if o != nil && !IsNil(o.Email) {
+		return true
+	}
+
+	return false
+}
+
+// SetEmail gets a reference to the given interface{} and assigns it to the Email field.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetEmail(v interface{}) {
+	o.Email = v
 }
 
 // GetGlobalClientID returns the GlobalClientID field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -134,72 +334,6 @@ func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasGlobalClientId() boo
 // SetGlobalClientId gets a reference to the given interface{} and assigns it to the GlobalClientId field.
 func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetGlobalClientId(v interface{}) {
 	o.GlobalClientId = v
-}
-
-// GetEmailVerified returns the EmailVerified field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetEmailVerified() interface{} {
-	if o == nil {
-		var ret interface{}
-		return ret
-	}
-	return o.EmailVerified
-}
-
-// GetEmailVerifiedOk returns a tuple with the EmailVerified field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetEmailVerifiedOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.EmailVerified) {
-		return nil, false
-	}
-	return &o.EmailVerified, true
-}
-
-// HasEmailVerified returns a boolean if a field has been set.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasEmailVerified() bool {
-	if o != nil && !IsNil(o.EmailVerified) {
-		return true
-	}
-
-	return false
-}
-
-// SetEmailVerified gets a reference to the given interface{} and assigns it to the EmailVerified field.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetEmailVerified(v interface{}) {
-	o.EmailVerified = v
-}
-
-// GetUserId returns the UserId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetUserId() interface{} {
-	if o == nil {
-		var ret interface{}
-		return ret
-	}
-	return o.UserId
-}
-
-// GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetUserIdOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.UserId) {
-		return nil, false
-	}
-	return &o.UserId, true
-}
-
-// HasUserId returns a boolean if a field has been set.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasUserId() bool {
-	if o != nil && !IsNil(o.UserId) {
-		return true
-	}
-
-	return false
-}
-
-// SetUserId gets a reference to the given interface{} and assigns it to the UserId field.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetUserId(v interface{}) {
-	o.UserId = v
 }
 
 // GetIdentities returns the Identities field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -301,72 +435,6 @@ func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetLastLogin(v interfac
 	o.LastLogin = v
 }
 
-// GetMetadata returns the Metadata field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetMetadata() interface{} {
-	if o == nil {
-		var ret interface{}
-		return ret
-	}
-	return o.Metadata
-}
-
-// GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetMetadataOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Metadata) {
-		return nil, false
-	}
-	return &o.Metadata, true
-}
-
-// HasMetadata returns a boolean if a field has been set.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasMetadata() bool {
-	if o != nil && !IsNil(o.Metadata) {
-		return true
-	}
-
-	return false
-}
-
-// SetMetadata gets a reference to the given interface{} and assigns it to the Metadata field.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetMetadata(v interface{}) {
-	o.Metadata = v
-}
-
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetCreatedAt() interface{} {
-	if o == nil {
-		var ret interface{}
-		return ret
-	}
-	return o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetCreatedAtOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
-		return nil, false
-	}
-	return &o.CreatedAt, true
-}
-
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreatedAt gets a reference to the given interface{} and assigns it to the CreatedAt field.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetCreatedAt(v interface{}) {
-	o.CreatedAt = v
-}
-
 // GetLoginsCount returns the LoginsCount field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetLoginsCount() interface{} {
 	if o == nil {
@@ -400,136 +468,103 @@ func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetLoginsCount(v interf
 	o.LoginsCount = v
 }
 
-// GetId returns the Id field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetId() interface{} {
+// GetMetadata returns the Metadata field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetMetadata() interface{} {
 	if o == nil {
 		var ret interface{}
 		return ret
 	}
-	return o.Id
+	return o.Metadata
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetIdOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Id) {
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetMetadataOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.Metadata) {
 		return nil, false
 	}
-	return &o.Id, true
+	return &o.Metadata, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
+// HasMetadata returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasMetadata() bool {
+	if o != nil && !IsNil(o.Metadata) {
 		return true
 	}
 
 	return false
 }
 
-// SetId gets a reference to the given interface{} and assigns it to the Id field.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetId(v interface{}) {
-	o.Id = v
+// SetMetadata gets a reference to the given interface{} and assigns it to the Metadata field.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetMetadata(v interface{}) {
+	o.Metadata = v
 }
 
-// GetEmail returns the Email field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetEmail() interface{} {
+// GetMultifactorLastModified returns the MultifactorLastModified field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetMultifactorLastModified() interface{} {
 	if o == nil {
 		var ret interface{}
 		return ret
 	}
-	return o.Email
+	return o.MultifactorLastModified
 }
 
-// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
+// GetMultifactorLastModifiedOk returns a tuple with the MultifactorLastModified field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetEmailOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Email) {
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetMultifactorLastModifiedOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.MultifactorLastModified) {
 		return nil, false
 	}
-	return &o.Email, true
+	return &o.MultifactorLastModified, true
 }
 
-// HasEmail returns a boolean if a field has been set.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasEmail() bool {
-	if o != nil && !IsNil(o.Email) {
+// HasMultifactorLastModified returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasMultifactorLastModified() bool {
+	if o != nil && !IsNil(o.MultifactorLastModified) {
 		return true
 	}
 
 	return false
 }
 
-// SetEmail gets a reference to the given interface{} and assigns it to the Email field.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetEmail(v interface{}) {
-	o.Email = v
+// SetMultifactorLastModified gets a reference to the given interface{} and assigns it to the MultifactorLastModified field.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetMultifactorLastModified(v interface{}) {
+	o.MultifactorLastModified = v
 }
 
-// GetBlocked returns the Blocked field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetBlocked() interface{} {
+// GetMultifactor returns the Multifactor field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetMultifactor() interface{} {
 	if o == nil {
 		var ret interface{}
 		return ret
 	}
-	return o.Blocked
+	return o.Multifactor
 }
 
-// GetBlockedOk returns a tuple with the Blocked field value if set, nil otherwise
+// GetMultifactorOk returns a tuple with the Multifactor field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetBlockedOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Blocked) {
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetMultifactorOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.Multifactor) {
 		return nil, false
 	}
-	return &o.Blocked, true
+	return &o.Multifactor, true
 }
 
-// HasBlocked returns a boolean if a field has been set.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasBlocked() bool {
-	if o != nil && !IsNil(o.Blocked) {
+// HasMultifactor returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasMultifactor() bool {
+	if o != nil && !IsNil(o.Multifactor) {
 		return true
 	}
 
 	return false
 }
 
-// SetBlocked gets a reference to the given interface{} and assigns it to the Blocked field.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetBlocked(v interface{}) {
-	o.Blocked = v
-}
-
-// GetTenant returns the Tenant field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetTenant() interface{} {
-	if o == nil {
-		var ret interface{}
-		return ret
-	}
-	return o.Tenant
-}
-
-// GetTenantOk returns a tuple with the Tenant field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetTenantOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Tenant) {
-		return nil, false
-	}
-	return &o.Tenant, true
-}
-
-// HasTenant returns a boolean if a field has been set.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasTenant() bool {
-	if o != nil && !IsNil(o.Tenant) {
-		return true
-	}
-
-	return false
-}
-
-// SetTenant gets a reference to the given interface{} and assigns it to the Tenant field.
-func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetTenant(v interface{}) {
-	o.Tenant = v
+// SetMultifactor gets a reference to the given interface{} and assigns it to the Multifactor field.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetMultifactor(v interface{}) {
+	o.Multifactor = v
 }
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -565,6 +600,39 @@ func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetUpdatedAt(v interfac
 	o.UpdatedAt = v
 }
 
+// GetUserId returns the UserId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetUserId() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.UserId
+}
+
+// GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) GetUserIdOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.UserId) {
+		return nil, false
+	}
+	return &o.UserId, true
+}
+
+// HasUserId returns a boolean if a field has been set.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) HasUserId() bool {
+	if o != nil && !IsNil(o.UserId) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserId gets a reference to the given interface{} and assigns it to the UserId field.
+func (o *GetInvitations200ResponseOneOfInnerAppMetadata) SetUserId(v interface{}) {
+	o.UserId = v
+}
+
 func (o GetInvitations200ResponseOneOfInnerAppMetadata) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -575,20 +643,32 @@ func (o GetInvitations200ResponseOneOfInnerAppMetadata) MarshalJSON() ([]byte, e
 
 func (o GetInvitations200ResponseOneOfInnerAppMetadata) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if o.Tenant != nil {
+		toSerialize["__tenant"] = o.Tenant
+	}
+	if o.Id != nil {
+		toSerialize["_id"] = o.Id
+	}
+	if o.Blocked != nil {
+		toSerialize["blocked"] = o.Blocked
+	}
 	if o.ClientID != nil {
 		toSerialize["clientID"] = o.ClientID
+	}
+	if o.CreatedAt != nil {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if o.EmailVerified != nil {
+		toSerialize["email_verified"] = o.EmailVerified
+	}
+	if o.Email != nil {
+		toSerialize["email"] = o.Email
 	}
 	if o.GlobalClientID != nil {
 		toSerialize["globalClientID"] = o.GlobalClientID
 	}
 	if o.GlobalClientId != nil {
 		toSerialize["global_client_id"] = o.GlobalClientId
-	}
-	if o.EmailVerified != nil {
-		toSerialize["email_verified"] = o.EmailVerified
-	}
-	if o.UserId != nil {
-		toSerialize["user_id"] = o.UserId
 	}
 	if o.Identities != nil {
 		toSerialize["identities"] = o.Identities
@@ -599,29 +679,23 @@ func (o GetInvitations200ResponseOneOfInnerAppMetadata) ToMap() (map[string]inte
 	if o.LastLogin != nil {
 		toSerialize["lastLogin"] = o.LastLogin
 	}
-	if o.Metadata != nil {
-		toSerialize["metadata"] = o.Metadata
-	}
-	if o.CreatedAt != nil {
-		toSerialize["created_at"] = o.CreatedAt
-	}
 	if o.LoginsCount != nil {
 		toSerialize["loginsCount"] = o.LoginsCount
 	}
-	if o.Id != nil {
-		toSerialize["_id"] = o.Id
+	if o.Metadata != nil {
+		toSerialize["metadata"] = o.Metadata
 	}
-	if o.Email != nil {
-		toSerialize["email"] = o.Email
+	if o.MultifactorLastModified != nil {
+		toSerialize["multifactor_last_modified"] = o.MultifactorLastModified
 	}
-	if o.Blocked != nil {
-		toSerialize["blocked"] = o.Blocked
-	}
-	if o.Tenant != nil {
-		toSerialize["__tenant"] = o.Tenant
+	if o.Multifactor != nil {
+		toSerialize["multifactor"] = o.Multifactor
 	}
 	if o.UpdatedAt != nil {
 		toSerialize["updated_at"] = o.UpdatedAt
+	}
+	if o.UserId != nil {
+		toSerialize["user_id"] = o.UserId
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -645,22 +719,24 @@ func (o *GetInvitations200ResponseOneOfInnerAppMetadata) UnmarshalJSON(data []by
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "__tenant")
+		delete(additionalProperties, "_id")
+		delete(additionalProperties, "blocked")
 		delete(additionalProperties, "clientID")
+		delete(additionalProperties, "created_at")
+		delete(additionalProperties, "email_verified")
+		delete(additionalProperties, "email")
 		delete(additionalProperties, "globalClientID")
 		delete(additionalProperties, "global_client_id")
-		delete(additionalProperties, "email_verified")
-		delete(additionalProperties, "user_id")
 		delete(additionalProperties, "identities")
 		delete(additionalProperties, "lastIP")
 		delete(additionalProperties, "lastLogin")
-		delete(additionalProperties, "metadata")
-		delete(additionalProperties, "created_at")
 		delete(additionalProperties, "loginsCount")
-		delete(additionalProperties, "_id")
-		delete(additionalProperties, "email")
-		delete(additionalProperties, "blocked")
-		delete(additionalProperties, "__tenant")
+		delete(additionalProperties, "metadata")
+		delete(additionalProperties, "multifactor_last_modified")
+		delete(additionalProperties, "multifactor")
 		delete(additionalProperties, "updated_at")
+		delete(additionalProperties, "user_id")
 		o.AdditionalProperties = additionalProperties
 	}
 

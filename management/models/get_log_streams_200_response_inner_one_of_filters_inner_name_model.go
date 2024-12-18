@@ -35,6 +35,7 @@ const (
 	GETLOGSTREAMS200RESPONSEINNERONEOFFILTERSINNERNAME_AUTH_TOKEN_EXCHANGE_SUCCESS GetLogStreams200ResponseInnerOneOfFiltersInnerName = "auth.token_exchange.success"
 	GETLOGSTREAMS200RESPONSEINNERONEOFFILTERSINNERNAME_MANAGEMENT_FAIL             GetLogStreams200ResponseInnerOneOfFiltersInnerName = "management.fail"
 	GETLOGSTREAMS200RESPONSEINNERONEOFFILTERSINNERNAME_MANAGEMENT_SUCCESS          GetLogStreams200ResponseInnerOneOfFiltersInnerName = "management.success"
+	GETLOGSTREAMS200RESPONSEINNERONEOFFILTERSINNERNAME_SCIM_EVENT                  GetLogStreams200ResponseInnerOneOfFiltersInnerName = "scim.event"
 	GETLOGSTREAMS200RESPONSEINNERONEOFFILTERSINNERNAME_SYSTEM_NOTIFICATION         GetLogStreams200ResponseInnerOneOfFiltersInnerName = "system.notification"
 	GETLOGSTREAMS200RESPONSEINNERONEOFFILTERSINNERNAME_USER_FAIL                   GetLogStreams200ResponseInnerOneOfFiltersInnerName = "user.fail"
 	GETLOGSTREAMS200RESPONSEINNERONEOFFILTERSINNERNAME_USER_NOTIFICATION           GetLogStreams200ResponseInnerOneOfFiltersInnerName = "user.notification"
@@ -59,6 +60,7 @@ var AllowedGetLogStreams200ResponseInnerOneOfFiltersInnerNameEnumValues = []GetL
 	"auth.token_exchange.success",
 	"management.fail",
 	"management.success",
+	"scim.event",
 	"system.notification",
 	"user.fail",
 	"user.notification",

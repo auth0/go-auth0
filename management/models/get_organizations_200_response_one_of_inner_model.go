@@ -16,14 +16,14 @@ import (
 
 // GetOrganizations200ResponseOneOfInner struct for GetOrganizations200ResponseOneOfInner
 type GetOrganizations200ResponseOneOfInner struct {
-	// Organization identifier
+	// Organization identifier.
 	Id *string `json:"id,omitempty"`
 	// The name of this organization.
 	Name *string `json:"name,omitempty"`
 	// Friendly name of this organization.
 	DisplayName *string                                        `json:"display_name,omitempty"`
 	Branding    *GetOrganizations200ResponseOneOfInnerBranding `json:"branding,omitempty"`
-	// Metadata associated with the organization, in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.
+	// Metadata associated with the organization, in the form of an object with string values (max 255 chars). Maximum of 25 metadata properties allowed.
 	Metadata             map[string]interface{} `json:"metadata,omitempty"`
 	AdditionalProperties map[string]interface{}
 }

@@ -55,7 +55,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetClientsById Get a client
+// GetClientsById Get client by ID
 //
 // https://auth0.com/docs/api/management/v2/#!/Clients/get_clients_by_id
 func (m *Manager) Get(ctx context.Context, clientId string, opts ...management.RequestOption) (*models.Client, error) {

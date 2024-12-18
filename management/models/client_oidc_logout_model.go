@@ -17,8 +17,9 @@ import (
 // ClientOidcLogout Configuration for OIDC backchannel logout
 type ClientOidcLogout struct {
 	// Comma-separated list of URLs that are valid to call back from Auth0 for OIDC backchannel logout. Currently only one URL is allowed.
-	BackchannelLogoutUrls []string `json:"backchannel_logout_urls,omitempty"`
-	AdditionalProperties  map[string]interface{}
+	BackchannelLogoutUrls       []string                                     `json:"backchannel_logout_urls,omitempty"`
+	BackchannelLogoutInitiators *ClientOidcLogoutBackchannelLogoutInitiators `json:"backchannel_logout_initiators,omitempty"`
+	AdditionalProperties        map[string]interface{}
 }
 
 type _ClientOidcLogout ClientOidcLogout
@@ -55,6 +56,38 @@ func (o *ClientOidcLogout) SetBackchannelLogoutUrls(v []string) {
 	o.BackchannelLogoutUrls = v
 }
 
+// GetBackchannelLogoutInitiators returns the BackchannelLogoutInitiators field value if set, zero value otherwise.
+func (o *ClientOidcLogout) GetBackchannelLogoutInitiators() ClientOidcLogoutBackchannelLogoutInitiators {
+	if o == nil || IsNil(o.BackchannelLogoutInitiators) {
+		var ret ClientOidcLogoutBackchannelLogoutInitiators
+		return ret
+	}
+	return *o.BackchannelLogoutInitiators
+}
+
+// GetBackchannelLogoutInitiatorsOk returns a tuple with the BackchannelLogoutInitiators field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClientOidcLogout) GetBackchannelLogoutInitiatorsOk() (*ClientOidcLogoutBackchannelLogoutInitiators, bool) {
+	if o == nil || IsNil(o.BackchannelLogoutInitiators) {
+		return nil, false
+	}
+	return o.BackchannelLogoutInitiators, true
+}
+
+// HasBackchannelLogoutInitiators returns a boolean if a field has been set.
+func (o *ClientOidcLogout) HasBackchannelLogoutInitiators() bool {
+	if o != nil && !IsNil(o.BackchannelLogoutInitiators) {
+		return true
+	}
+
+	return false
+}
+
+// SetBackchannelLogoutInitiators gets a reference to the given ClientOidcLogoutBackchannelLogoutInitiators and assigns it to the BackchannelLogoutInitiators field.
+func (o *ClientOidcLogout) SetBackchannelLogoutInitiators(v ClientOidcLogoutBackchannelLogoutInitiators) {
+	o.BackchannelLogoutInitiators = &v
+}
+
 func (o ClientOidcLogout) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -67,6 +100,9 @@ func (o ClientOidcLogout) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.BackchannelLogoutUrls) {
 		toSerialize["backchannel_logout_urls"] = o.BackchannelLogoutUrls
+	}
+	if !IsNil(o.BackchannelLogoutInitiators) {
+		toSerialize["backchannel_logout_initiators"] = o.BackchannelLogoutInitiators
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -91,6 +127,7 @@ func (o *ClientOidcLogout) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "backchannel_logout_urls")
+		delete(additionalProperties, "backchannel_logout_initiators")
 		o.AdditionalProperties = additionalProperties
 	}
 

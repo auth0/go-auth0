@@ -64,8 +64,12 @@ type TenantSettingsUpdateFlags struct {
 	DisableFieldsMapFix *bool `json:"disable_fields_map_fix,omitempty"`
 	// Used to allow users to pick what factor to enroll of the available MFA factors.
 	MfaShowFactorListOnEnrollment *bool `json:"mfa_show_factor_list_on_enrollment,omitempty"`
+	// Require the use of JWT Secured Authorization Requests (JAR)
+	RequireSignedRequestObject *bool `json:"require_signed_request_object,omitempty"`
 	// Removes alg property from jwks .well-known endpoint
 	RemoveAlgFromJwks *bool `json:"remove_alg_from_jwks,omitempty"`
+	// Improves bot detection during signup in classic universal login
+	ImprovedSignupBotDetectionInClassic *bool `json:"improved_signup_bot_detection_in_classic,omitempty"`
 }
 
 // GetChangePwdFlowV1 returns the ChangePwdFlowV1 field value if set, zero value otherwise.
@@ -836,6 +840,38 @@ func (o *TenantSettingsUpdateFlags) SetMfaShowFactorListOnEnrollment(v bool) {
 	o.MfaShowFactorListOnEnrollment = &v
 }
 
+// GetRequireSignedRequestObject returns the RequireSignedRequestObject field value if set, zero value otherwise.
+func (o *TenantSettingsUpdateFlags) GetRequireSignedRequestObject() bool {
+	if o == nil || IsNil(o.RequireSignedRequestObject) {
+		var ret bool
+		return ret
+	}
+	return *o.RequireSignedRequestObject
+}
+
+// GetRequireSignedRequestObjectOk returns a tuple with the RequireSignedRequestObject field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TenantSettingsUpdateFlags) GetRequireSignedRequestObjectOk() (*bool, bool) {
+	if o == nil || IsNil(o.RequireSignedRequestObject) {
+		return nil, false
+	}
+	return o.RequireSignedRequestObject, true
+}
+
+// HasRequireSignedRequestObject returns a boolean if a field has been set.
+func (o *TenantSettingsUpdateFlags) HasRequireSignedRequestObject() bool {
+	if o != nil && !IsNil(o.RequireSignedRequestObject) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequireSignedRequestObject gets a reference to the given bool and assigns it to the RequireSignedRequestObject field.
+func (o *TenantSettingsUpdateFlags) SetRequireSignedRequestObject(v bool) {
+	o.RequireSignedRequestObject = &v
+}
+
 // GetRemoveAlgFromJwks returns the RemoveAlgFromJwks field value if set, zero value otherwise.
 func (o *TenantSettingsUpdateFlags) GetRemoveAlgFromJwks() bool {
 	if o == nil || IsNil(o.RemoveAlgFromJwks) {
@@ -866,6 +902,38 @@ func (o *TenantSettingsUpdateFlags) HasRemoveAlgFromJwks() bool {
 // SetRemoveAlgFromJwks gets a reference to the given bool and assigns it to the RemoveAlgFromJwks field.
 func (o *TenantSettingsUpdateFlags) SetRemoveAlgFromJwks(v bool) {
 	o.RemoveAlgFromJwks = &v
+}
+
+// GetImprovedSignupBotDetectionInClassic returns the ImprovedSignupBotDetectionInClassic field value if set, zero value otherwise.
+func (o *TenantSettingsUpdateFlags) GetImprovedSignupBotDetectionInClassic() bool {
+	if o == nil || IsNil(o.ImprovedSignupBotDetectionInClassic) {
+		var ret bool
+		return ret
+	}
+	return *o.ImprovedSignupBotDetectionInClassic
+}
+
+// GetImprovedSignupBotDetectionInClassicOk returns a tuple with the ImprovedSignupBotDetectionInClassic field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TenantSettingsUpdateFlags) GetImprovedSignupBotDetectionInClassicOk() (*bool, bool) {
+	if o == nil || IsNil(o.ImprovedSignupBotDetectionInClassic) {
+		return nil, false
+	}
+	return o.ImprovedSignupBotDetectionInClassic, true
+}
+
+// HasImprovedSignupBotDetectionInClassic returns a boolean if a field has been set.
+func (o *TenantSettingsUpdateFlags) HasImprovedSignupBotDetectionInClassic() bool {
+	if o != nil && !IsNil(o.ImprovedSignupBotDetectionInClassic) {
+		return true
+	}
+
+	return false
+}
+
+// SetImprovedSignupBotDetectionInClassic gets a reference to the given bool and assigns it to the ImprovedSignupBotDetectionInClassic field.
+func (o *TenantSettingsUpdateFlags) SetImprovedSignupBotDetectionInClassic(v bool) {
+	o.ImprovedSignupBotDetectionInClassic = &v
 }
 
 func (o TenantSettingsUpdateFlags) MarshalJSON() ([]byte, error) {
@@ -950,8 +1018,14 @@ func (o TenantSettingsUpdateFlags) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.MfaShowFactorListOnEnrollment) {
 		toSerialize["mfa_show_factor_list_on_enrollment"] = o.MfaShowFactorListOnEnrollment
 	}
+	if !IsNil(o.RequireSignedRequestObject) {
+		toSerialize["require_signed_request_object"] = o.RequireSignedRequestObject
+	}
 	if !IsNil(o.RemoveAlgFromJwks) {
 		toSerialize["remove_alg_from_jwks"] = o.RemoveAlgFromJwks
+	}
+	if !IsNil(o.ImprovedSignupBotDetectionInClassic) {
+		toSerialize["improved_signup_bot_detection_in_classic"] = o.ImprovedSignupBotDetectionInClassic
 	}
 	return toSerialize, nil
 }

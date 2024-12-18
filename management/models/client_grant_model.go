@@ -23,7 +23,10 @@ type ClientGrant struct {
 	// The audience (API identifier) of this client grant.
 	Audience *string `json:"audience,omitempty"`
 	// Scopes allowed for this client grant.
-	Scope []string `json:"scope,omitempty"`
+	Scope             []string                      `json:"scope,omitempty"`
+	OrganizationUsage *ClientGrantOrganizationUsage `json:"organization_usage,omitempty"`
+	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
+	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty"`
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
@@ -154,6 +157,70 @@ func (o *ClientGrant) SetScope(v []string) {
 	o.Scope = v
 }
 
+// GetOrganizationUsage returns the OrganizationUsage field value if set, zero value otherwise.
+func (o *ClientGrant) GetOrganizationUsage() ClientGrantOrganizationUsage {
+	if o == nil || IsNil(o.OrganizationUsage) {
+		var ret ClientGrantOrganizationUsage
+		return ret
+	}
+	return *o.OrganizationUsage
+}
+
+// GetOrganizationUsageOk returns a tuple with the OrganizationUsage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClientGrant) GetOrganizationUsageOk() (*ClientGrantOrganizationUsage, bool) {
+	if o == nil || IsNil(o.OrganizationUsage) {
+		return nil, false
+	}
+	return o.OrganizationUsage, true
+}
+
+// HasOrganizationUsage returns a boolean if a field has been set.
+func (o *ClientGrant) HasOrganizationUsage() bool {
+	if o != nil && !IsNil(o.OrganizationUsage) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrganizationUsage gets a reference to the given ClientGrantOrganizationUsage and assigns it to the OrganizationUsage field.
+func (o *ClientGrant) SetOrganizationUsage(v ClientGrantOrganizationUsage) {
+	o.OrganizationUsage = &v
+}
+
+// GetAllowAnyOrganization returns the AllowAnyOrganization field value if set, zero value otherwise.
+func (o *ClientGrant) GetAllowAnyOrganization() bool {
+	if o == nil || IsNil(o.AllowAnyOrganization) {
+		var ret bool
+		return ret
+	}
+	return *o.AllowAnyOrganization
+}
+
+// GetAllowAnyOrganizationOk returns a tuple with the AllowAnyOrganization field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClientGrant) GetAllowAnyOrganizationOk() (*bool, bool) {
+	if o == nil || IsNil(o.AllowAnyOrganization) {
+		return nil, false
+	}
+	return o.AllowAnyOrganization, true
+}
+
+// HasAllowAnyOrganization returns a boolean if a field has been set.
+func (o *ClientGrant) HasAllowAnyOrganization() bool {
+	if o != nil && !IsNil(o.AllowAnyOrganization) {
+		return true
+	}
+
+	return false
+}
+
+// SetAllowAnyOrganization gets a reference to the given bool and assigns it to the AllowAnyOrganization field.
+func (o *ClientGrant) SetAllowAnyOrganization(v bool) {
+	o.AllowAnyOrganization = &v
+}
+
 func (o ClientGrant) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -175,6 +242,12 @@ func (o ClientGrant) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Scope) {
 		toSerialize["scope"] = o.Scope
+	}
+	if !IsNil(o.OrganizationUsage) {
+		toSerialize["organization_usage"] = o.OrganizationUsage
+	}
+	if !IsNil(o.AllowAnyOrganization) {
+		toSerialize["allow_any_organization"] = o.AllowAnyOrganization
 	}
 	return toSerialize, nil
 }

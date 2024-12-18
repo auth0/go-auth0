@@ -20,7 +20,7 @@ type GetActionVersions200Response struct {
 	Total *float32 `json:"total,omitempty"`
 	// Page index of the results being returned. First page is 0.
 	Page *float32 `json:"page,omitempty"`
-	// Number of results per page. Paging is disabled if parameter not sent.
+	// Number of results per page.
 	PerPage  *float32                                    `json:"per_page,omitempty"`
 	Versions []GetActionVersions200ResponseVersionsInner `json:"versions,omitempty"`
 }

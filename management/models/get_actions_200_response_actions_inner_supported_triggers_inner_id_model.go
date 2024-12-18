@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// GetActions200ResponseActionsInnerSupportedTriggersInnerId the model 'GetActions200ResponseActionsInnerSupportedTriggersInnerId'
+// GetActions200ResponseActionsInnerSupportedTriggersInnerId An actions extensibility point.
 type GetActions200ResponseActionsInnerSupportedTriggersInnerId string
 
 // List of get_actions_200_response_actions_inner_supported_triggers_inner_id
@@ -26,11 +26,11 @@ const (
 	GETACTIONS200RESPONSEACTIONSINNERSUPPORTEDTRIGGERSINNERID_POST_USER_REGISTRATION        GetActions200ResponseActionsInnerSupportedTriggersInnerId = "post-user-registration"
 	GETACTIONS200RESPONSEACTIONSINNERSUPPORTEDTRIGGERSINNERID_POST_CHANGE_PASSWORD          GetActions200ResponseActionsInnerSupportedTriggersInnerId = "post-change-password"
 	GETACTIONS200RESPONSEACTIONSINNERSUPPORTEDTRIGGERSINNERID_SEND_PHONE_MESSAGE            GetActions200ResponseActionsInnerSupportedTriggersInnerId = "send-phone-message"
-	GETACTIONS200RESPONSEACTIONSINNERSUPPORTEDTRIGGERSINNERID_IGA_APPROVAL                  GetActions200ResponseActionsInnerSupportedTriggersInnerId = "iga-approval"
-	GETACTIONS200RESPONSEACTIONSINNERSUPPORTEDTRIGGERSINNERID_IGA_CERTIFICATION             GetActions200ResponseActionsInnerSupportedTriggersInnerId = "iga-certification"
-	GETACTIONS200RESPONSEACTIONSINNERSUPPORTEDTRIGGERSINNERID_IGA_FULFILLMENT_ASSIGNMENT    GetActions200ResponseActionsInnerSupportedTriggersInnerId = "iga-fulfillment-assignment"
-	GETACTIONS200RESPONSEACTIONSINNERSUPPORTEDTRIGGERSINNERID_IGA_FULFILLMENT_EXECUTION     GetActions200ResponseActionsInnerSupportedTriggersInnerId = "iga-fulfillment-execution"
+	GETACTIONS200RESPONSEACTIONSINNERSUPPORTEDTRIGGERSINNERID_CUSTOM_PHONE_PROVIDER         GetActions200ResponseActionsInnerSupportedTriggersInnerId = "custom-phone-provider"
+	GETACTIONS200RESPONSEACTIONSINNERSUPPORTEDTRIGGERSINNERID_CUSTOM_EMAIL_PROVIDER         GetActions200ResponseActionsInnerSupportedTriggersInnerId = "custom-email-provider"
 	GETACTIONS200RESPONSEACTIONSINNERSUPPORTEDTRIGGERSINNERID_PASSWORD_RESET_POST_CHALLENGE GetActions200ResponseActionsInnerSupportedTriggersInnerId = "password-reset-post-challenge"
+	GETACTIONS200RESPONSEACTIONSINNERSUPPORTEDTRIGGERSINNERID_CUSTOM_TOKEN_EXCHANGE_BETA    GetActions200ResponseActionsInnerSupportedTriggersInnerId = "custom-token-exchange-beta"
+	GETACTIONS200RESPONSEACTIONSINNERSUPPORTEDTRIGGERSINNERID_CUSTOM_TOKEN_EXCHANGE         GetActions200ResponseActionsInnerSupportedTriggersInnerId = "custom-token-exchange"
 )
 
 // All allowed values of GetActions200ResponseActionsInnerSupportedTriggersInnerId enum
@@ -41,11 +41,11 @@ var AllowedGetActions200ResponseActionsInnerSupportedTriggersInnerIdEnumValues =
 	"post-user-registration",
 	"post-change-password",
 	"send-phone-message",
-	"iga-approval",
-	"iga-certification",
-	"iga-fulfillment-assignment",
-	"iga-fulfillment-execution",
+	"custom-phone-provider",
+	"custom-email-provider",
 	"password-reset-post-challenge",
+	"custom-token-exchange-beta",
+	"custom-token-exchange",
 }
 
 func (v *GetActions200ResponseActionsInnerSupportedTriggersInnerId) UnmarshalJSON(src []byte) error {

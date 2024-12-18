@@ -21,9 +21,9 @@ type UserUpdate struct {
 	// Whether this email address is verified (true) or unverified (false). If set to false the user will not receive a verification email unless `verify_email` is set to true.
 	EmailVerified *bool `json:"email_verified,omitempty"`
 	// Email address of this user.
-	Email *string `json:"email,omitempty"`
-	// The user's phone number (following the E.164 recommendation), only valid for users from SMS connections.
-	PhoneNumber *string `json:"phone_number,omitempty"`
+	Email NullableString `json:"email,omitempty"`
+	// The user's phone number (following the E.164 recommendation).
+	PhoneNumber NullableString `json:"phone_number,omitempty"`
 	// Whether this phone number has been verified (true) or not (false).
 	PhoneVerified *bool `json:"phone_verified,omitempty"`
 	// User metadata to which this user has read/write access.
@@ -41,16 +41,16 @@ type UserUpdate struct {
 	Picture NullableString `json:"picture,omitempty"`
 	// Whether this user will receive a verification email after creation (true) or no email (false). Overrides behavior of `email_verified` parameter.
 	VerifyEmail *bool `json:"verify_email,omitempty"`
-	// Whether this user will receive a text after changing the phone number (true) or no text (false). Only valid when changing phone number.
+	// Whether this user will receive a text after changing the phone number (true) or no text (false). Only valid when changing phone number for SMS connections.
 	VerifyPhoneNumber *bool `json:"verify_phone_number,omitempty"`
-	// New password for this user (mandatory for non-SMS connections).
+	// New password for this user. Only valid for database connections.
 	Password *string `json:"password,omitempty"`
-	// ID of the connection this user should be created in.
+	// Name of the connection to target for this user update.
 	Connection *string `json:"connection,omitempty"`
 	// Auth0 client ID. Only valid when updating email address.
 	ClientId *string `json:"client_id,omitempty"`
 	// The user's username. Only valid if the connection requires a username.
-	Username             *string `json:"username,omitempty"`
+	Username             NullableString `json:"username,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -120,68 +120,90 @@ func (o *UserUpdate) SetEmailVerified(v bool) {
 	o.EmailVerified = &v
 }
 
-// GetEmail returns the Email field value if set, zero value otherwise.
+// GetEmail returns the Email field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *UserUpdate) GetEmail() string {
-	if o == nil || IsNil(o.Email) {
+	if o == nil || IsNil(o.Email.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.Email
+	return *o.Email.Get()
 }
 
 // GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *UserUpdate) GetEmailOk() (*string, bool) {
-	if o == nil || IsNil(o.Email) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Email, true
+	return o.Email.Get(), o.Email.IsSet()
 }
 
 // HasEmail returns a boolean if a field has been set.
 func (o *UserUpdate) HasEmail() bool {
-	if o != nil && !IsNil(o.Email) {
+	if o != nil && o.Email.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetEmail gets a reference to the given string and assigns it to the Email field.
+// SetEmail gets a reference to the given NullableString and assigns it to the Email field.
 func (o *UserUpdate) SetEmail(v string) {
-	o.Email = &v
+	o.Email.Set(&v)
 }
 
-// GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise.
+// SetEmailNil sets the value for Email to be an explicit nil
+func (o *UserUpdate) SetEmailNil() {
+	o.Email.Set(nil)
+}
+
+// UnsetEmail ensures that no value is present for Email, not even an explicit nil
+func (o *UserUpdate) UnsetEmail() {
+	o.Email.Unset()
+}
+
+// GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *UserUpdate) GetPhoneNumber() string {
-	if o == nil || IsNil(o.PhoneNumber) {
+	if o == nil || IsNil(o.PhoneNumber.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.PhoneNumber
+	return *o.PhoneNumber.Get()
 }
 
 // GetPhoneNumberOk returns a tuple with the PhoneNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *UserUpdate) GetPhoneNumberOk() (*string, bool) {
-	if o == nil || IsNil(o.PhoneNumber) {
+	if o == nil {
 		return nil, false
 	}
-	return o.PhoneNumber, true
+	return o.PhoneNumber.Get(), o.PhoneNumber.IsSet()
 }
 
 // HasPhoneNumber returns a boolean if a field has been set.
 func (o *UserUpdate) HasPhoneNumber() bool {
-	if o != nil && !IsNil(o.PhoneNumber) {
+	if o != nil && o.PhoneNumber.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetPhoneNumber gets a reference to the given string and assigns it to the PhoneNumber field.
+// SetPhoneNumber gets a reference to the given NullableString and assigns it to the PhoneNumber field.
 func (o *UserUpdate) SetPhoneNumber(v string) {
-	o.PhoneNumber = &v
+	o.PhoneNumber.Set(&v)
+}
+
+// SetPhoneNumberNil sets the value for PhoneNumber to be an explicit nil
+func (o *UserUpdate) SetPhoneNumberNil() {
+	o.PhoneNumber.Set(nil)
+}
+
+// UnsetPhoneNumber ensures that no value is present for PhoneNumber, not even an explicit nil
+func (o *UserUpdate) UnsetPhoneNumber() {
+	o.PhoneNumber.Unset()
 }
 
 // GetPhoneVerified returns the PhoneVerified field value if set, zero value otherwise.
@@ -667,36 +689,47 @@ func (o *UserUpdate) SetClientId(v string) {
 	o.ClientId = &v
 }
 
-// GetUsername returns the Username field value if set, zero value otherwise.
+// GetUsername returns the Username field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *UserUpdate) GetUsername() string {
-	if o == nil || IsNil(o.Username) {
+	if o == nil || IsNil(o.Username.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.Username
+	return *o.Username.Get()
 }
 
 // GetUsernameOk returns a tuple with the Username field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *UserUpdate) GetUsernameOk() (*string, bool) {
-	if o == nil || IsNil(o.Username) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Username, true
+	return o.Username.Get(), o.Username.IsSet()
 }
 
 // HasUsername returns a boolean if a field has been set.
 func (o *UserUpdate) HasUsername() bool {
-	if o != nil && !IsNil(o.Username) {
+	if o != nil && o.Username.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetUsername gets a reference to the given string and assigns it to the Username field.
+// SetUsername gets a reference to the given NullableString and assigns it to the Username field.
 func (o *UserUpdate) SetUsername(v string) {
-	o.Username = &v
+	o.Username.Set(&v)
+}
+
+// SetUsernameNil sets the value for Username to be an explicit nil
+func (o *UserUpdate) SetUsernameNil() {
+	o.Username.Set(nil)
+}
+
+// UnsetUsername ensures that no value is present for Username, not even an explicit nil
+func (o *UserUpdate) UnsetUsername() {
+	o.Username.Unset()
 }
 
 func (o UserUpdate) MarshalJSON() ([]byte, error) {
@@ -715,11 +748,11 @@ func (o UserUpdate) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EmailVerified) {
 		toSerialize["email_verified"] = o.EmailVerified
 	}
-	if !IsNil(o.Email) {
-		toSerialize["email"] = o.Email
+	if o.Email.IsSet() {
+		toSerialize["email"] = o.Email.Get()
 	}
-	if !IsNil(o.PhoneNumber) {
-		toSerialize["phone_number"] = o.PhoneNumber
+	if o.PhoneNumber.IsSet() {
+		toSerialize["phone_number"] = o.PhoneNumber.Get()
 	}
 	if !IsNil(o.PhoneVerified) {
 		toSerialize["phone_verified"] = o.PhoneVerified
@@ -760,8 +793,8 @@ func (o UserUpdate) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ClientId) {
 		toSerialize["client_id"] = o.ClientId
 	}
-	if !IsNil(o.Username) {
-		toSerialize["username"] = o.Username
+	if o.Username.IsSet() {
+		toSerialize["username"] = o.Username.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {

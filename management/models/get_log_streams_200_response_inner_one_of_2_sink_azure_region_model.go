@@ -44,6 +44,7 @@ const (
 	GETLOGSTREAMS200RESPONSEINNERONEOF2SINKAZUREREGION_SOUTHCENTRALUS     GetLogStreams200ResponseInnerOneOf2SinkAzureRegion = "southcentralus"
 	GETLOGSTREAMS200RESPONSEINNERONEOF2SINKAZUREREGION_SOUTHEASTASIA      GetLogStreams200ResponseInnerOneOf2SinkAzureRegion = "southeastasia"
 	GETLOGSTREAMS200RESPONSEINNERONEOF2SINKAZUREREGION_SOUTHINDIA         GetLogStreams200ResponseInnerOneOf2SinkAzureRegion = "southindia"
+	GETLOGSTREAMS200RESPONSEINNERONEOF2SINKAZUREREGION_SWEDENCENTRAL      GetLogStreams200ResponseInnerOneOf2SinkAzureRegion = "swedencentral"
 	GETLOGSTREAMS200RESPONSEINNERONEOF2SINKAZUREREGION_SWITZERLANDNORTH   GetLogStreams200ResponseInnerOneOf2SinkAzureRegion = "switzerlandnorth"
 	GETLOGSTREAMS200RESPONSEINNERONEOF2SINKAZUREREGION_UAENORTH           GetLogStreams200ResponseInnerOneOf2SinkAzureRegion = "uaenorth"
 	GETLOGSTREAMS200RESPONSEINNERONEOF2SINKAZUREREGION_UKSOUTH            GetLogStreams200ResponseInnerOneOf2SinkAzureRegion = "uksouth"
@@ -81,6 +82,7 @@ var AllowedGetLogStreams200ResponseInnerOneOf2SinkAzureRegionEnumValues = []GetL
 	"southcentralus",
 	"southeastasia",
 	"southindia",
+	"swedencentral",
 	"switzerlandnorth",
 	"uaenorth",
 	"uksouth",

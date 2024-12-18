@@ -19,13 +19,14 @@ type GetSessionsForUser200ResponseSessionsInner struct {
 	// The ID of the session
 	Id *string `json:"id,omitempty"`
 	// ID of the user which can be used when interacting with other APIs.
-	UserId          *string                                                    `json:"user_id,omitempty"`
-	CreatedAt       *GetSessionsForUser200ResponseSessionsInnerCreatedAt       `json:"created_at,omitempty"`
-	UpdatedAt       *GetSessionsForUser200ResponseSessionsInnerUpdatedAt       `json:"updated_at,omitempty"`
-	AuthenticatedAt *GetSessionsForUser200ResponseSessionsInnerAuthenticatedAt `json:"authenticated_at,omitempty"`
-	IdleExpiresAt   *GetSessionsForUser200ResponseSessionsInnerIdleExpiresAt   `json:"idle_expires_at,omitempty"`
-	ExpiresAt       *GetSessionsForUser200ResponseSessionsInnerExpiresAt       `json:"expires_at,omitempty"`
-	Device          *GetSessionsForUser200ResponseSessionsInnerDevice          `json:"device,omitempty"`
+	UserId           *string                                                     `json:"user_id,omitempty"`
+	CreatedAt        *GetSessionsForUser200ResponseSessionsInnerCreatedAt        `json:"created_at,omitempty"`
+	UpdatedAt        *GetSessionsForUser200ResponseSessionsInnerUpdatedAt        `json:"updated_at,omitempty"`
+	AuthenticatedAt  *GetSessionsForUser200ResponseSessionsInnerAuthenticatedAt  `json:"authenticated_at,omitempty"`
+	IdleExpiresAt    *GetSessionsForUser200ResponseSessionsInnerIdleExpiresAt    `json:"idle_expires_at,omitempty"`
+	ExpiresAt        *GetSessionsForUser200ResponseSessionsInnerExpiresAt        `json:"expires_at,omitempty"`
+	LastInteractedAt *GetSessionsForUser200ResponseSessionsInnerLastInteractedAt `json:"last_interacted_at,omitempty"`
+	Device           *GetSessionsForUser200ResponseSessionsInnerDevice           `json:"device,omitempty"`
 	// List of client details for the session
 	Clients              []GetSession200ResponseClientsInner                       `json:"clients,omitempty"`
 	Authentication       *GetSessionsForUser200ResponseSessionsInnerAuthentication `json:"authentication,omitempty"`
@@ -258,6 +259,38 @@ func (o *GetSessionsForUser200ResponseSessionsInner) SetExpiresAt(v GetSessionsF
 	o.ExpiresAt = &v
 }
 
+// GetLastInteractedAt returns the LastInteractedAt field value if set, zero value otherwise.
+func (o *GetSessionsForUser200ResponseSessionsInner) GetLastInteractedAt() GetSessionsForUser200ResponseSessionsInnerLastInteractedAt {
+	if o == nil || IsNil(o.LastInteractedAt) {
+		var ret GetSessionsForUser200ResponseSessionsInnerLastInteractedAt
+		return ret
+	}
+	return *o.LastInteractedAt
+}
+
+// GetLastInteractedAtOk returns a tuple with the LastInteractedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetSessionsForUser200ResponseSessionsInner) GetLastInteractedAtOk() (*GetSessionsForUser200ResponseSessionsInnerLastInteractedAt, bool) {
+	if o == nil || IsNil(o.LastInteractedAt) {
+		return nil, false
+	}
+	return o.LastInteractedAt, true
+}
+
+// HasLastInteractedAt returns a boolean if a field has been set.
+func (o *GetSessionsForUser200ResponseSessionsInner) HasLastInteractedAt() bool {
+	if o != nil && !IsNil(o.LastInteractedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetLastInteractedAt gets a reference to the given GetSessionsForUser200ResponseSessionsInnerLastInteractedAt and assigns it to the LastInteractedAt field.
+func (o *GetSessionsForUser200ResponseSessionsInner) SetLastInteractedAt(v GetSessionsForUser200ResponseSessionsInnerLastInteractedAt) {
+	o.LastInteractedAt = &v
+}
+
 // GetDevice returns the Device field value if set, zero value otherwise.
 func (o *GetSessionsForUser200ResponseSessionsInner) GetDevice() GetSessionsForUser200ResponseSessionsInnerDevice {
 	if o == nil || IsNil(o.Device) {
@@ -385,6 +418,9 @@ func (o GetSessionsForUser200ResponseSessionsInner) ToMap() (map[string]interfac
 	if !IsNil(o.ExpiresAt) {
 		toSerialize["expires_at"] = o.ExpiresAt
 	}
+	if !IsNil(o.LastInteractedAt) {
+		toSerialize["last_interacted_at"] = o.LastInteractedAt
+	}
 	if !IsNil(o.Device) {
 		toSerialize["device"] = o.Device
 	}
@@ -423,6 +459,7 @@ func (o *GetSessionsForUser200ResponseSessionsInner) UnmarshalJSON(data []byte) 
 		delete(additionalProperties, "authenticated_at")
 		delete(additionalProperties, "idle_expires_at")
 		delete(additionalProperties, "expires_at")
+		delete(additionalProperties, "last_interacted_at")
 		delete(additionalProperties, "device")
 		delete(additionalProperties, "clients")
 		delete(additionalProperties, "authentication")

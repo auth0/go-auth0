@@ -30,8 +30,11 @@ const (
 	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_SIGNUP_PASSWORD             GetCustomTextByLanguagePromptParameter = "signup-password"
 	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_PHONE_IDENTIFIER_ENROLLMENT GetCustomTextByLanguagePromptParameter = "phone-identifier-enrollment"
 	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_PHONE_IDENTIFIER_CHALLENGE  GetCustomTextByLanguagePromptParameter = "phone-identifier-challenge"
+	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_EMAIL_IDENTIFIER_CHALLENGE  GetCustomTextByLanguagePromptParameter = "email-identifier-challenge"
 	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_RESET_PASSWORD              GetCustomTextByLanguagePromptParameter = "reset-password"
+	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_CUSTOM_FORM                 GetCustomTextByLanguagePromptParameter = "custom-form"
 	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_CONSENT                     GetCustomTextByLanguagePromptParameter = "consent"
+	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_CUSTOMIZED_CONSENT          GetCustomTextByLanguagePromptParameter = "customized-consent"
 	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_LOGOUT                      GetCustomTextByLanguagePromptParameter = "logout"
 	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_MFA_PUSH                    GetCustomTextByLanguagePromptParameter = "mfa-push"
 	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_MFA_OTP                     GetCustomTextByLanguagePromptParameter = "mfa-otp"
@@ -50,6 +53,7 @@ const (
 	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_INVITATION                  GetCustomTextByLanguagePromptParameter = "invitation"
 	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_COMMON                      GetCustomTextByLanguagePromptParameter = "common"
 	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_PASSKEYS                    GetCustomTextByLanguagePromptParameter = "passkeys"
+	GETCUSTOMTEXTBYLANGUAGEPROMPTPARAMETER_CAPTCHA                     GetCustomTextByLanguagePromptParameter = "captcha"
 )
 
 // All allowed values of GetCustomTextByLanguagePromptParameter enum
@@ -64,8 +68,11 @@ var AllowedGetCustomTextByLanguagePromptParameterEnumValues = []GetCustomTextByL
 	"signup-password",
 	"phone-identifier-enrollment",
 	"phone-identifier-challenge",
+	"email-identifier-challenge",
 	"reset-password",
+	"custom-form",
 	"consent",
+	"customized-consent",
 	"logout",
 	"mfa-push",
 	"mfa-otp",
@@ -84,6 +91,7 @@ var AllowedGetCustomTextByLanguagePromptParameterEnumValues = []GetCustomTextByL
 	"invitation",
 	"common",
 	"passkeys",
+	"captcha",
 }
 
 func (v *GetCustomTextByLanguagePromptParameter) UnmarshalJSON(src []byte) error {

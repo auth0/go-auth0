@@ -25,8 +25,11 @@ type ConnectionCreate struct {
 	Strategy    ConnectionCreateStrategy `json:"strategy"`
 	Options     *ConnectionCreateOptions `json:"options,omitempty"`
 	// The identifiers of the clients for which the connection is to be enabled. If the array is empty or the property is not specified, no clients are enabled
-	EnabledClients     []string `json:"enabled_clients,omitempty"`
-	IsDomainConnection *bool    `json:"is_domain_connection,omitempty"`
+	EnabledClients []string `json:"enabled_clients,omitempty"`
+	// <code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)
+	IsDomainConnection *bool `json:"is_domain_connection,omitempty"`
+	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)
+	ShowAsButton *bool `json:"show_as_button,omitempty"`
 	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
 	Realms []string `json:"realms,omitempty"`
 	// Metadata associated with the connection in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.
@@ -211,6 +214,38 @@ func (o *ConnectionCreate) SetIsDomainConnection(v bool) {
 	o.IsDomainConnection = &v
 }
 
+// GetShowAsButton returns the ShowAsButton field value if set, zero value otherwise.
+func (o *ConnectionCreate) GetShowAsButton() bool {
+	if o == nil || IsNil(o.ShowAsButton) {
+		var ret bool
+		return ret
+	}
+	return *o.ShowAsButton
+}
+
+// GetShowAsButtonOk returns a tuple with the ShowAsButton field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectionCreate) GetShowAsButtonOk() (*bool, bool) {
+	if o == nil || IsNil(o.ShowAsButton) {
+		return nil, false
+	}
+	return o.ShowAsButton, true
+}
+
+// HasShowAsButton returns a boolean if a field has been set.
+func (o *ConnectionCreate) HasShowAsButton() bool {
+	if o != nil && !IsNil(o.ShowAsButton) {
+		return true
+	}
+
+	return false
+}
+
+// SetShowAsButton gets a reference to the given bool and assigns it to the ShowAsButton field.
+func (o *ConnectionCreate) SetShowAsButton(v bool) {
+	o.ShowAsButton = &v
+}
+
 // GetRealms returns the Realms field value if set, zero value otherwise.
 func (o *ConnectionCreate) GetRealms() []string {
 	if o == nil || IsNil(o.Realms) {
@@ -298,6 +333,9 @@ func (o ConnectionCreate) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IsDomainConnection) {
 		toSerialize["is_domain_connection"] = o.IsDomainConnection
+	}
+	if !IsNil(o.ShowAsButton) {
+		toSerialize["show_as_button"] = o.ShowAsButton
 	}
 	if !IsNil(o.Realms) {
 		toSerialize["realms"] = o.Realms

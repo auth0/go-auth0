@@ -18,7 +18,7 @@ import (
 
 // PostAuthenticationMethodsRequest struct for PostAuthenticationMethodsRequest
 type PostAuthenticationMethodsRequest struct {
-	Type PutAuthenticationMethods200ResponseInnerType `json:"type"`
+	Type PostAuthenticationMethodsRequestType `json:"type"`
 	// A human-readable label to identify the authentication method.
 	Name *string `json:"name,omitempty"`
 	// Base32 encoded secret for TOTP generation.
@@ -26,22 +26,22 @@ type PostAuthenticationMethodsRequest struct {
 	// Applies to phone authentication methods only. The destination phone number used to send verification codes via text and voice.
 	PhoneNumber *string `json:"phone_number,omitempty"`
 	// Applies to email authentication methods only. The email address used to send verification messages.
-	Email                         *string                                                        `json:"email,omitempty"`
-	PreferredAuthenticationMethod *PostAuthenticationMethodsRequestPreferredAuthenticationMethod `json:"preferred_authentication_method,omitempty"`
-	// Applies to email webauthn authenticators only. The id of the credential.
+	Email                         *string                                                            `json:"email,omitempty"`
+	PreferredAuthenticationMethod *PutAuthenticationMethodsRequestInnerPreferredAuthenticationMethod `json:"preferred_authentication_method,omitempty"`
+	// Applies to webauthn authentication methods only. The id of the credential.
 	KeyId *string `json:"key_id,omitempty"`
-	// Applies to email webauthn authenticators only. The public key.
+	// Applies to webauthn authentication methods only. The public key.
 	PublicKey *string `json:"public_key,omitempty"`
-	// Applies to email webauthn authenticators only. The relying party identifier.
+	// Applies to webauthn authentication methods only. The relying party identifier.
 	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty"`
 }
 
 type _PostAuthenticationMethodsRequest PostAuthenticationMethodsRequest
 
 // GetType returns the Type field value
-func (o *PostAuthenticationMethodsRequest) GetType() PutAuthenticationMethods200ResponseInnerType {
+func (o *PostAuthenticationMethodsRequest) GetType() PostAuthenticationMethodsRequestType {
 	if o == nil {
-		var ret PutAuthenticationMethods200ResponseInnerType
+		var ret PostAuthenticationMethodsRequestType
 		return ret
 	}
 
@@ -50,7 +50,7 @@ func (o *PostAuthenticationMethodsRequest) GetType() PutAuthenticationMethods200
 
 // GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *PostAuthenticationMethodsRequest) GetTypeOk() (*PutAuthenticationMethods200ResponseInnerType, bool) {
+func (o *PostAuthenticationMethodsRequest) GetTypeOk() (*PostAuthenticationMethodsRequestType, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -58,7 +58,7 @@ func (o *PostAuthenticationMethodsRequest) GetTypeOk() (*PutAuthenticationMethod
 }
 
 // SetType sets field value
-func (o *PostAuthenticationMethodsRequest) SetType(v PutAuthenticationMethods200ResponseInnerType) {
+func (o *PostAuthenticationMethodsRequest) SetType(v PostAuthenticationMethodsRequestType) {
 	o.Type = v
 }
 
@@ -191,9 +191,9 @@ func (o *PostAuthenticationMethodsRequest) SetEmail(v string) {
 }
 
 // GetPreferredAuthenticationMethod returns the PreferredAuthenticationMethod field value if set, zero value otherwise.
-func (o *PostAuthenticationMethodsRequest) GetPreferredAuthenticationMethod() PostAuthenticationMethodsRequestPreferredAuthenticationMethod {
+func (o *PostAuthenticationMethodsRequest) GetPreferredAuthenticationMethod() PutAuthenticationMethodsRequestInnerPreferredAuthenticationMethod {
 	if o == nil || IsNil(o.PreferredAuthenticationMethod) {
-		var ret PostAuthenticationMethodsRequestPreferredAuthenticationMethod
+		var ret PutAuthenticationMethodsRequestInnerPreferredAuthenticationMethod
 		return ret
 	}
 	return *o.PreferredAuthenticationMethod
@@ -201,7 +201,7 @@ func (o *PostAuthenticationMethodsRequest) GetPreferredAuthenticationMethod() Po
 
 // GetPreferredAuthenticationMethodOk returns a tuple with the PreferredAuthenticationMethod field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PostAuthenticationMethodsRequest) GetPreferredAuthenticationMethodOk() (*PostAuthenticationMethodsRequestPreferredAuthenticationMethod, bool) {
+func (o *PostAuthenticationMethodsRequest) GetPreferredAuthenticationMethodOk() (*PutAuthenticationMethodsRequestInnerPreferredAuthenticationMethod, bool) {
 	if o == nil || IsNil(o.PreferredAuthenticationMethod) {
 		return nil, false
 	}
@@ -217,8 +217,8 @@ func (o *PostAuthenticationMethodsRequest) HasPreferredAuthenticationMethod() bo
 	return false
 }
 
-// SetPreferredAuthenticationMethod gets a reference to the given PostAuthenticationMethodsRequestPreferredAuthenticationMethod and assigns it to the PreferredAuthenticationMethod field.
-func (o *PostAuthenticationMethodsRequest) SetPreferredAuthenticationMethod(v PostAuthenticationMethodsRequestPreferredAuthenticationMethod) {
+// SetPreferredAuthenticationMethod gets a reference to the given PutAuthenticationMethodsRequestInnerPreferredAuthenticationMethod and assigns it to the PreferredAuthenticationMethod field.
+func (o *PostAuthenticationMethodsRequest) SetPreferredAuthenticationMethod(v PutAuthenticationMethodsRequestInnerPreferredAuthenticationMethod) {
 	o.PreferredAuthenticationMethod = &v
 }
 

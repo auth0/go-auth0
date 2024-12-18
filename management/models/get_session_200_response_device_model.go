@@ -16,6 +16,8 @@ import (
 
 // GetSession200ResponseDevice Metadata related to the device used in the session
 type GetSession200ResponseDevice struct {
+	// First user agent of the device from which this user logged in
+	InitialUserAgent *string `json:"initial_user_agent,omitempty"`
 	// First IP address associated with this session
 	InitialIp NullableString `json:"initial_ip,omitempty"`
 	// First autonomous system number associated with this session
@@ -30,6 +32,38 @@ type GetSession200ResponseDevice struct {
 }
 
 type _GetSession200ResponseDevice GetSession200ResponseDevice
+
+// GetInitialUserAgent returns the InitialUserAgent field value if set, zero value otherwise.
+func (o *GetSession200ResponseDevice) GetInitialUserAgent() string {
+	if o == nil || IsNil(o.InitialUserAgent) {
+		var ret string
+		return ret
+	}
+	return *o.InitialUserAgent
+}
+
+// GetInitialUserAgentOk returns a tuple with the InitialUserAgent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetSession200ResponseDevice) GetInitialUserAgentOk() (*string, bool) {
+	if o == nil || IsNil(o.InitialUserAgent) {
+		return nil, false
+	}
+	return o.InitialUserAgent, true
+}
+
+// HasInitialUserAgent returns a boolean if a field has been set.
+func (o *GetSession200ResponseDevice) HasInitialUserAgent() bool {
+	if o != nil && !IsNil(o.InitialUserAgent) {
+		return true
+	}
+
+	return false
+}
+
+// SetInitialUserAgent gets a reference to the given string and assigns it to the InitialUserAgent field.
+func (o *GetSession200ResponseDevice) SetInitialUserAgent(v string) {
+	o.InitialUserAgent = &v
+}
 
 // GetInitialIp returns the InitialIp field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetSession200ResponseDevice) GetInitialIp() string {
@@ -223,6 +257,9 @@ func (o GetSession200ResponseDevice) MarshalJSON() ([]byte, error) {
 
 func (o GetSession200ResponseDevice) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.InitialUserAgent) {
+		toSerialize["initial_user_agent"] = o.InitialUserAgent
+	}
 	if o.InitialIp.IsSet() {
 		toSerialize["initial_ip"] = o.InitialIp.Get()
 	}
@@ -260,6 +297,7 @@ func (o *GetSession200ResponseDevice) UnmarshalJSON(data []byte) (err error) {
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "initial_user_agent")
 		delete(additionalProperties, "initial_ip")
 		delete(additionalProperties, "initial_asn")
 		delete(additionalProperties, "last_user_agent")

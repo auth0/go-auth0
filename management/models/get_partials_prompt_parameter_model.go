@@ -23,6 +23,7 @@ const (
 	GETPARTIALSPROMPTPARAMETER_LOGIN              GetPartialsPromptParameter = "login"
 	GETPARTIALSPROMPTPARAMETER_LOGIN_ID           GetPartialsPromptParameter = "login-id"
 	GETPARTIALSPROMPTPARAMETER_LOGIN_PASSWORD     GetPartialsPromptParameter = "login-password"
+	GETPARTIALSPROMPTPARAMETER_LOGIN_PASSWORDLESS GetPartialsPromptParameter = "login-passwordless"
 	GETPARTIALSPROMPTPARAMETER_SIGNUP             GetPartialsPromptParameter = "signup"
 	GETPARTIALSPROMPTPARAMETER_SIGNUP_ID          GetPartialsPromptParameter = "signup-id"
 	GETPARTIALSPROMPTPARAMETER_SIGNUP_PASSWORD    GetPartialsPromptParameter = "signup-password"
@@ -34,6 +35,7 @@ var AllowedGetPartialsPromptParameterEnumValues = []GetPartialsPromptParameter{
 	"login",
 	"login-id",
 	"login-password",
+	"login-passwordless",
 	"signup",
 	"signup-id",
 	"signup-password",

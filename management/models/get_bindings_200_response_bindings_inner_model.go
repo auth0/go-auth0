@@ -12,6 +12,7 @@ package models
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // GetBindings200ResponseBindingsInner Binding is the associative entity joining a trigger, and an action together.
@@ -23,9 +24,9 @@ type GetBindings200ResponseBindingsInner struct {
 	DisplayName *string                            `json:"display_name,omitempty"`
 	Action      *GetActions200ResponseActionsInner `json:"action,omitempty"`
 	// The time when the binding was created.
-	CreatedAt *string `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// The time when the binding was updated.
-	UpdatedAt *string `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
@@ -157,9 +158,9 @@ func (o *GetBindings200ResponseBindingsInner) SetAction(v GetActions200ResponseA
 }
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *GetBindings200ResponseBindingsInner) GetCreatedAt() string {
+func (o *GetBindings200ResponseBindingsInner) GetCreatedAt() time.Time {
 	if o == nil || IsNil(o.CreatedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.CreatedAt
@@ -167,7 +168,7 @@ func (o *GetBindings200ResponseBindingsInner) GetCreatedAt() string {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetBindings200ResponseBindingsInner) GetCreatedAtOk() (*string, bool) {
+func (o *GetBindings200ResponseBindingsInner) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
@@ -183,15 +184,15 @@ func (o *GetBindings200ResponseBindingsInner) HasCreatedAt() bool {
 	return false
 }
 
-// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
-func (o *GetBindings200ResponseBindingsInner) SetCreatedAt(v string) {
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
+func (o *GetBindings200ResponseBindingsInner) SetCreatedAt(v time.Time) {
 	o.CreatedAt = &v
 }
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *GetBindings200ResponseBindingsInner) GetUpdatedAt() string {
+func (o *GetBindings200ResponseBindingsInner) GetUpdatedAt() time.Time {
 	if o == nil || IsNil(o.UpdatedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.UpdatedAt
@@ -199,7 +200,7 @@ func (o *GetBindings200ResponseBindingsInner) GetUpdatedAt() string {
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetBindings200ResponseBindingsInner) GetUpdatedAtOk() (*string, bool) {
+func (o *GetBindings200ResponseBindingsInner) GetUpdatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
@@ -215,8 +216,8 @@ func (o *GetBindings200ResponseBindingsInner) HasUpdatedAt() bool {
 	return false
 }
 
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
-func (o *GetBindings200ResponseBindingsInner) SetUpdatedAt(v string) {
+// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
+func (o *GetBindings200ResponseBindingsInner) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt = &v
 }
 

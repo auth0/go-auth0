@@ -16,42 +16,76 @@ import (
 
 // GetRefreshTokensForUser200Response struct for GetRefreshTokensForUser200Response
 type GetRefreshTokensForUser200Response struct {
-	Sessions             []GetRefreshTokensForUser200ResponseSessionsInner `json:"sessions,omitempty"`
+	Tokens []GetRefreshTokensForUser200ResponseTokensInner `json:"tokens,omitempty"`
+	// A cursor to be used as the \"from\" query parameter for the next page of results.
+	Next                 *string `json:"next,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
 type _GetRefreshTokensForUser200Response GetRefreshTokensForUser200Response
 
-// GetSessions returns the Sessions field value if set, zero value otherwise.
-func (o *GetRefreshTokensForUser200Response) GetSessions() []GetRefreshTokensForUser200ResponseSessionsInner {
-	if o == nil || IsNil(o.Sessions) {
-		var ret []GetRefreshTokensForUser200ResponseSessionsInner
+// GetTokens returns the Tokens field value if set, zero value otherwise.
+func (o *GetRefreshTokensForUser200Response) GetTokens() []GetRefreshTokensForUser200ResponseTokensInner {
+	if o == nil || IsNil(o.Tokens) {
+		var ret []GetRefreshTokensForUser200ResponseTokensInner
 		return ret
 	}
-	return o.Sessions
+	return o.Tokens
 }
 
-// GetSessionsOk returns a tuple with the Sessions field value if set, nil otherwise
+// GetTokensOk returns a tuple with the Tokens field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetRefreshTokensForUser200Response) GetSessionsOk() ([]GetRefreshTokensForUser200ResponseSessionsInner, bool) {
-	if o == nil || IsNil(o.Sessions) {
+func (o *GetRefreshTokensForUser200Response) GetTokensOk() ([]GetRefreshTokensForUser200ResponseTokensInner, bool) {
+	if o == nil || IsNil(o.Tokens) {
 		return nil, false
 	}
-	return o.Sessions, true
+	return o.Tokens, true
 }
 
-// HasSessions returns a boolean if a field has been set.
-func (o *GetRefreshTokensForUser200Response) HasSessions() bool {
-	if o != nil && !IsNil(o.Sessions) {
+// HasTokens returns a boolean if a field has been set.
+func (o *GetRefreshTokensForUser200Response) HasTokens() bool {
+	if o != nil && !IsNil(o.Tokens) {
 		return true
 	}
 
 	return false
 }
 
-// SetSessions gets a reference to the given []GetRefreshTokensForUser200ResponseSessionsInner and assigns it to the Sessions field.
-func (o *GetRefreshTokensForUser200Response) SetSessions(v []GetRefreshTokensForUser200ResponseSessionsInner) {
-	o.Sessions = v
+// SetTokens gets a reference to the given []GetRefreshTokensForUser200ResponseTokensInner and assigns it to the Tokens field.
+func (o *GetRefreshTokensForUser200Response) SetTokens(v []GetRefreshTokensForUser200ResponseTokensInner) {
+	o.Tokens = v
+}
+
+// GetNext returns the Next field value if set, zero value otherwise.
+func (o *GetRefreshTokensForUser200Response) GetNext() string {
+	if o == nil || IsNil(o.Next) {
+		var ret string
+		return ret
+	}
+	return *o.Next
+}
+
+// GetNextOk returns a tuple with the Next field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetRefreshTokensForUser200Response) GetNextOk() (*string, bool) {
+	if o == nil || IsNil(o.Next) {
+		return nil, false
+	}
+	return o.Next, true
+}
+
+// HasNext returns a boolean if a field has been set.
+func (o *GetRefreshTokensForUser200Response) HasNext() bool {
+	if o != nil && !IsNil(o.Next) {
+		return true
+	}
+
+	return false
+}
+
+// SetNext gets a reference to the given string and assigns it to the Next field.
+func (o *GetRefreshTokensForUser200Response) SetNext(v string) {
+	o.Next = &v
 }
 
 func (o GetRefreshTokensForUser200Response) MarshalJSON() ([]byte, error) {
@@ -64,8 +98,11 @@ func (o GetRefreshTokensForUser200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetRefreshTokensForUser200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Sessions) {
-		toSerialize["sessions"] = o.Sessions
+	if !IsNil(o.Tokens) {
+		toSerialize["tokens"] = o.Tokens
+	}
+	if !IsNil(o.Next) {
+		toSerialize["next"] = o.Next
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -89,7 +126,8 @@ func (o *GetRefreshTokensForUser200Response) UnmarshalJSON(data []byte) (err err
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
-		delete(additionalProperties, "sessions")
+		delete(additionalProperties, "tokens")
+		delete(additionalProperties, "next")
 		o.AdditionalProperties = additionalProperties
 	}
 

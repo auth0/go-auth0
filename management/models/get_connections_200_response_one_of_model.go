@@ -16,10 +16,10 @@ import (
 
 // GetConnections200ResponseOneOf struct for GetConnections200ResponseOneOf
 type GetConnections200ResponseOneOf struct {
-	Start       *float32     `json:"start,omitempty"`
-	Limit       *float32     `json:"limit,omitempty"`
-	Total       *float32     `json:"total,omitempty"`
-	Connections []Connection `json:"connections,omitempty"`
+	Start       *float32            `json:"start,omitempty"`
+	Limit       *float32            `json:"limit,omitempty"`
+	Total       *float32            `json:"total,omitempty"`
+	Connections []ConnectionForList `json:"connections,omitempty"`
 }
 
 // GetStart returns the Start field value if set, zero value otherwise.
@@ -119,9 +119,9 @@ func (o *GetConnections200ResponseOneOf) SetTotal(v float32) {
 }
 
 // GetConnections returns the Connections field value if set, zero value otherwise.
-func (o *GetConnections200ResponseOneOf) GetConnections() []Connection {
+func (o *GetConnections200ResponseOneOf) GetConnections() []ConnectionForList {
 	if o == nil || IsNil(o.Connections) {
-		var ret []Connection
+		var ret []ConnectionForList
 		return ret
 	}
 	return o.Connections
@@ -129,7 +129,7 @@ func (o *GetConnections200ResponseOneOf) GetConnections() []Connection {
 
 // GetConnectionsOk returns a tuple with the Connections field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetConnections200ResponseOneOf) GetConnectionsOk() ([]Connection, bool) {
+func (o *GetConnections200ResponseOneOf) GetConnectionsOk() ([]ConnectionForList, bool) {
 	if o == nil || IsNil(o.Connections) {
 		return nil, false
 	}
@@ -145,8 +145,8 @@ func (o *GetConnections200ResponseOneOf) HasConnections() bool {
 	return false
 }
 
-// SetConnections gets a reference to the given []Connection and assigns it to the Connections field.
-func (o *GetConnections200ResponseOneOf) SetConnections(v []Connection) {
+// SetConnections gets a reference to the given []ConnectionForList and assigns it to the Connections field.
+func (o *GetConnections200ResponseOneOf) SetConnections(v []ConnectionForList) {
 	o.Connections = v
 }
 

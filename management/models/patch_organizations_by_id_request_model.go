@@ -21,7 +21,7 @@ type PatchOrganizationsByIdRequest struct {
 	// The name of this organization.
 	Name     *string                                       `json:"name,omitempty"`
 	Branding NullablePatchOrganizationsByIdRequestBranding `json:"branding,omitempty"`
-	// Metadata associated with the organization, in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.
+	// Metadata associated with the organization, in the form of an object with string values (max 255 chars). Maximum of 25 metadata properties allowed.
 	Metadata map[string]interface{} `json:"metadata,omitempty"`
 }
 

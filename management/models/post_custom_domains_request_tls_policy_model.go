@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// PostCustomDomainsRequestTlsPolicy compatible includes TLS 1.0, 1.1, 1.2, and recommended only includes TLS 1.2
+// PostCustomDomainsRequestTlsPolicy recommended includes TLS 1.2
 type PostCustomDomainsRequestTlsPolicy string
 
 // List of post_custom_domains_request_tls_policy

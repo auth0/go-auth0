@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// PutAuthenticationMethodsRequestInnerPreferredAuthenticationMethod The preferred authentication method for phone authentication method.
+// PutAuthenticationMethodsRequestInnerPreferredAuthenticationMethod Applies to phone authentication methods only. The preferred communication method.
 type PutAuthenticationMethodsRequestInnerPreferredAuthenticationMethod string
 
 // List of put_authentication_methods_request_inner_preferred_authentication_method

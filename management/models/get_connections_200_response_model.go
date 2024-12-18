@@ -20,7 +20,7 @@ import (
 // GetConnections200Response - struct for GetConnections200Response
 type GetConnections200Response struct {
 	GetConnections200ResponseOneOf *GetConnections200ResponseOneOf
-	ArrayOfConnection              *[]Connection
+	ArrayOfConnectionForList       *[]ConnectionForList
 }
 
 // GetConnections200ResponseOneOfAsGetConnections200Response is a convenience function that returns GetConnections200ResponseOneOf wrapped in GetConnections200Response
@@ -30,10 +30,10 @@ func GetConnections200ResponseOneOfAsGetConnections200Response(v *GetConnections
 	}
 }
 
-// []ConnectionAsGetConnections200Response is a convenience function that returns []Connection wrapped in GetConnections200Response
-func ArrayOfConnectionAsGetConnections200Response(v *[]Connection) GetConnections200Response {
+// []ConnectionForListAsGetConnections200Response is a convenience function that returns []ConnectionForList wrapped in GetConnections200Response
+func ArrayOfConnectionForListAsGetConnections200Response(v *[]ConnectionForList) GetConnections200Response {
 	return GetConnections200Response{
-		ArrayOfConnection: v,
+		ArrayOfConnectionForList: v,
 	}
 }
 
@@ -58,27 +58,27 @@ func (dst *GetConnections200Response) UnmarshalJSON(data []byte) error {
 		dst.GetConnections200ResponseOneOf = nil
 	}
 
-	// try to unmarshal data into ArrayOfConnection
-	err = newStrictDecoder(data).Decode(&dst.ArrayOfConnection)
+	// try to unmarshal data into ArrayOfConnectionForList
+	err = newStrictDecoder(data).Decode(&dst.ArrayOfConnectionForList)
 	if err == nil {
-		jsonArrayOfConnection, _ := json.Marshal(dst.ArrayOfConnection)
-		if string(jsonArrayOfConnection) == "{}" { // empty struct
-			dst.ArrayOfConnection = nil
+		jsonArrayOfConnectionForList, _ := json.Marshal(dst.ArrayOfConnectionForList)
+		if string(jsonArrayOfConnectionForList) == "{}" { // empty struct
+			dst.ArrayOfConnectionForList = nil
 		} else {
-			if err = validator.Validate(dst.ArrayOfConnection); err != nil {
-				dst.ArrayOfConnection = nil
+			if err = validator.Validate(dst.ArrayOfConnectionForList); err != nil {
+				dst.ArrayOfConnectionForList = nil
 			} else {
 				match++
 			}
 		}
 	} else {
-		dst.ArrayOfConnection = nil
+		dst.ArrayOfConnectionForList = nil
 	}
 
 	if match > 1 { // more than 1 match
 		// reset to nil
 		dst.GetConnections200ResponseOneOf = nil
-		dst.ArrayOfConnection = nil
+		dst.ArrayOfConnectionForList = nil
 
 		return fmt.Errorf("data matches more than one schema in oneOf(GetConnections200Response)")
 	} else if match == 1 {
@@ -94,8 +94,8 @@ func (src GetConnections200Response) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.GetConnections200ResponseOneOf)
 	}
 
-	if src.ArrayOfConnection != nil {
-		return json.Marshal(&src.ArrayOfConnection)
+	if src.ArrayOfConnectionForList != nil {
+		return json.Marshal(&src.ArrayOfConnectionForList)
 	}
 
 	return nil, nil // no data in oneOf schemas
@@ -110,8 +110,8 @@ func (obj *GetConnections200Response) GetActualInstance() interface{} {
 		return obj.GetConnections200ResponseOneOf
 	}
 
-	if obj.ArrayOfConnection != nil {
-		return obj.ArrayOfConnection
+	if obj.ArrayOfConnectionForList != nil {
+		return obj.ArrayOfConnectionForList
 	}
 
 	// all schemas are nil

@@ -22,6 +22,8 @@ type GetLogStreams200ResponseInnerOneOf7 struct {
 	Name   *string                                   `json:"name,omitempty"`
 	Status *GetLogStreams200ResponseInnerOneOfStatus `json:"status,omitempty"`
 	Type   *GetLogStreams200ResponseInnerOneOf7Type  `json:"type,omitempty"`
+	// True for priority log streams, false for non-priority
+	IsPriority *bool `json:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
 	Filters              []GetLogStreams200ResponseInnerOneOfFiltersInner `json:"filters,omitempty"`
 	Sink                 *GetLogStreams200ResponseInnerOneOf7Sink         `json:"sink,omitempty"`
@@ -158,6 +160,38 @@ func (o *GetLogStreams200ResponseInnerOneOf7) SetType(v GetLogStreams200Response
 	o.Type = &v
 }
 
+// GetIsPriority returns the IsPriority field value if set, zero value otherwise.
+func (o *GetLogStreams200ResponseInnerOneOf7) GetIsPriority() bool {
+	if o == nil || IsNil(o.IsPriority) {
+		var ret bool
+		return ret
+	}
+	return *o.IsPriority
+}
+
+// GetIsPriorityOk returns a tuple with the IsPriority field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetLogStreams200ResponseInnerOneOf7) GetIsPriorityOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsPriority) {
+		return nil, false
+	}
+	return o.IsPriority, true
+}
+
+// HasIsPriority returns a boolean if a field has been set.
+func (o *GetLogStreams200ResponseInnerOneOf7) HasIsPriority() bool {
+	if o != nil && !IsNil(o.IsPriority) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsPriority gets a reference to the given bool and assigns it to the IsPriority field.
+func (o *GetLogStreams200ResponseInnerOneOf7) SetIsPriority(v bool) {
+	o.IsPriority = &v
+}
+
 // GetFilters returns the Filters field value if set, zero value otherwise.
 func (o *GetLogStreams200ResponseInnerOneOf7) GetFilters() []GetLogStreams200ResponseInnerOneOfFiltersInner {
 	if o == nil || IsNil(o.Filters) {
@@ -244,6 +278,9 @@ func (o GetLogStreams200ResponseInnerOneOf7) ToMap() (map[string]interface{}, er
 	if !IsNil(o.Type) {
 		toSerialize["type"] = o.Type
 	}
+	if !IsNil(o.IsPriority) {
+		toSerialize["isPriority"] = o.IsPriority
+	}
 	if !IsNil(o.Filters) {
 		toSerialize["filters"] = o.Filters
 	}
@@ -276,6 +313,7 @@ func (o *GetLogStreams200ResponseInnerOneOf7) UnmarshalJSON(data []byte) (err er
 		delete(additionalProperties, "name")
 		delete(additionalProperties, "status")
 		delete(additionalProperties, "type")
+		delete(additionalProperties, "isPriority")
 		delete(additionalProperties, "filters")
 		delete(additionalProperties, "sink")
 		o.AdditionalProperties = additionalProperties

@@ -20,7 +20,7 @@ import (
 type UserCreate struct {
 	// The user's email.
 	Email *string `json:"email,omitempty"`
-	// The user's phone number (following the E.164 recommendation), only valid for users from SMS connections.
+	// The user's phone number (following the E.164 recommendation).
 	PhoneNumber *string `json:"phone_number,omitempty"`
 	// Data related to the user that does not affect the application's core functionality.
 	UserMetadata map[string]interface{} `json:"user_metadata,omitempty"`
@@ -45,7 +45,7 @@ type UserCreate struct {
 	UserId *string `json:"user_id,omitempty"`
 	// Name of the connection this user should be created in.
 	Connection string `json:"connection"`
-	// Initial password for this user (mandatory only for auth0 connection strategy).
+	// Initial password for this user. Only valid for auth0 connection strategy.
 	Password *string `json:"password,omitempty"`
 	// Whether the user will receive a verification email after creation (true) or no email (false). Overrides behavior of `email_verified` parameter.
 	VerifyEmail *bool `json:"verify_email,omitempty"`

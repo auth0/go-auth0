@@ -19,9 +19,8 @@ type GetUsers200ResponseOneOfInnerIdentitiesInner struct {
 	// Name of the connection containing this identity.
 	Connection *string `json:"connection,omitempty"`
 	// Unique identifier of the user user for this identity.
-	UserId *string `json:"user_id,omitempty"`
-	// The type of identity provider
-	Provider *string `json:"provider,omitempty"`
+	UserId   *string                                               `json:"user_id,omitempty"`
+	Provider *GetUsers200ResponseOneOfInnerIdentitiesInnerProvider `json:"provider,omitempty"`
 	// Whether this identity is from a social provider (true) or not (false).
 	IsSocial *bool `json:"isSocial,omitempty"`
 	// IDP access token returned only if scope read:user_idp_tokens is defined.
@@ -98,9 +97,9 @@ func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) SetUserId(v string) {
 }
 
 // GetProvider returns the Provider field value if set, zero value otherwise.
-func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetProvider() string {
+func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetProvider() GetUsers200ResponseOneOfInnerIdentitiesInnerProvider {
 	if o == nil || IsNil(o.Provider) {
-		var ret string
+		var ret GetUsers200ResponseOneOfInnerIdentitiesInnerProvider
 		return ret
 	}
 	return *o.Provider
@@ -108,7 +107,7 @@ func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetProvider() string {
 
 // GetProviderOk returns a tuple with the Provider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetProviderOk() (*string, bool) {
+func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) GetProviderOk() (*GetUsers200ResponseOneOfInnerIdentitiesInnerProvider, bool) {
 	if o == nil || IsNil(o.Provider) {
 		return nil, false
 	}
@@ -124,8 +123,8 @@ func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) HasProvider() bool {
 	return false
 }
 
-// SetProvider gets a reference to the given string and assigns it to the Provider field.
-func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) SetProvider(v string) {
+// SetProvider gets a reference to the given GetUsers200ResponseOneOfInnerIdentitiesInnerProvider and assigns it to the Provider field.
+func (o *GetUsers200ResponseOneOfInnerIdentitiesInner) SetProvider(v GetUsers200ResponseOneOfInnerIdentitiesInnerProvider) {
 	o.Provider = &v
 }
 

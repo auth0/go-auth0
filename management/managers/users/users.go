@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteAuthenticationMethods Deletes all authentication methods for the given user
+// DeleteAuthenticationMethods Delete all authentication methods for the given user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_authentication_methods
 func (m *Manager) DeleteAuthenticationMethods(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) DeleteAuthenticationMethods(ctx context.Context, id string, op
 	return nil
 }
 
-// DeleteAuthenticationMethodsByAuthenticationMethodId Deletes an authentication method by ID
+// DeleteAuthenticationMethodsByAuthenticationMethodId Delete an authentication method by ID
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_authentication_methods_by_authentication_method_id
 func (m *Manager) DeleteAuthenticationMethod(ctx context.Context, id string, authenticationMethodId string, opts ...management.RequestOption) error {
@@ -139,7 +139,7 @@ func (m *Manager) Delete(ctx context.Context, id string, opts ...management.Requ
 	return nil
 }
 
-// GetAuthenticationMethods Gets a list of authentication methods
+// GetAuthenticationMethods Get a list of authentication methods
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_authentication_methods
 func (m *Manager) GetAuthenticationMethods(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetAuthenticationMethods200Response, error) {
@@ -151,7 +151,7 @@ func (m *Manager) GetAuthenticationMethods(ctx context.Context, id string, opts 
 	return localVarReturnValue, nil
 }
 
-// GetAuthenticationMethodsByAuthenticationMethodId Gets an authentication method by ID.
+// GetAuthenticationMethodsByAuthenticationMethodId Get an authentication method by ID
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_authentication_methods_by_authentication_method_id
 func (m *Manager) GetAuthenticationMethod(ctx context.Context, id string, authenticationMethodId string, opts ...management.RequestOption) (*models.GetAuthenticationMethods200ResponseOneOfInner, error) {
@@ -271,11 +271,11 @@ func (m *Manager) Get(ctx context.Context, id string, opts ...management.Request
 	return localVarReturnValue, nil
 }
 
-// PatchAuthenticationMethodsByAuthenticationMethodId Updates an authentication method.
+// PatchAuthenticationMethodsByAuthenticationMethodId Update an authentication method
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/patch_authentication_methods_by_authentication_method_id
-func (m *Manager) UpdateAuthenticationMethod(ctx context.Context, id string, authenticationMethodId string, patchAuthenticationMethodsByAuthenticationMethodIdRequest *models.PatchAuthenticationMethodsByAuthenticationMethodIdRequest, opts ...management.RequestOption) (*models.PutAuthenticationMethods200ResponseInner, error) {
-	var localVarReturnValue *models.PutAuthenticationMethods200ResponseInner
+func (m *Manager) UpdateAuthenticationMethod(ctx context.Context, id string, authenticationMethodId string, patchAuthenticationMethodsByAuthenticationMethodIdRequest *models.PatchAuthenticationMethodsByAuthenticationMethodIdRequest, opts ...management.RequestOption) (*models.PatchAuthenticationMethodsByAuthenticationMethodId200Response, error) {
+	var localVarReturnValue *models.PatchAuthenticationMethodsByAuthenticationMethodId200Response
 	err := m.management.Request(ctx, "PATCH", m.management.URI("users", string(id), "authentication-methods", string(authenticationMethodId)), patchAuthenticationMethodsByAuthenticationMethodIdRequest, &localVarReturnValue, opts...)
 	if err != nil {
 		return nil, err
@@ -295,7 +295,7 @@ func (m *Manager) Update(ctx context.Context, id string, userUpdate *models.User
 	return localVarReturnValue, nil
 }
 
-// PostAuthenticationMethods Creates an authentication method for a given user. Authentication methods created via this endpoint will be auto confirmed and should already have verification completed.
+// PostAuthenticationMethods Creates an authentication method for a given user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_authentication_methods
 func (m *Manager) CreateAuthenticationMethod(ctx context.Context, id string, postAuthenticationMethodsRequest *models.PostAuthenticationMethodsRequest, opts ...management.RequestOption) (*models.PostAuthenticationMethods201Response, error) {
@@ -379,7 +379,7 @@ func (m *Manager) Create(ctx context.Context, userCreate *models.UserCreate, opt
 	return localVarReturnValue, nil
 }
 
-// PutAuthenticationMethods Updates all authentication methods by replacing them with the given ones.
+// PutAuthenticationMethods Update all authentication methods by replacing them with the given ones
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/put_authentication_methods
 func (m *Manager) UpdateAuthenticationMethods(ctx context.Context, id string, putAuthenticationMethodsRequestInner []*models.PutAuthenticationMethodsRequestInner, opts ...management.RequestOption) ([]*models.PutAuthenticationMethods200ResponseInner, error) {

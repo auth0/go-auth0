@@ -24,6 +24,8 @@ type EnrollmentCreate struct {
 	Email *string `json:"email,omitempty"`
 	// Send an email to the user to start the enrollment
 	SendMail *bool `json:"send_mail,omitempty"`
+	// Optional. Specify the locale of the enrollment email. Used with send_email.
+	EmailLocale *string `json:"email_locale,omitempty"`
 }
 
 type _EnrollmentCreate EnrollmentCreate
@@ -116,6 +118,38 @@ func (o *EnrollmentCreate) SetSendMail(v bool) {
 	o.SendMail = &v
 }
 
+// GetEmailLocale returns the EmailLocale field value if set, zero value otherwise.
+func (o *EnrollmentCreate) GetEmailLocale() string {
+	if o == nil || IsNil(o.EmailLocale) {
+		var ret string
+		return ret
+	}
+	return *o.EmailLocale
+}
+
+// GetEmailLocaleOk returns a tuple with the EmailLocale field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnrollmentCreate) GetEmailLocaleOk() (*string, bool) {
+	if o == nil || IsNil(o.EmailLocale) {
+		return nil, false
+	}
+	return o.EmailLocale, true
+}
+
+// HasEmailLocale returns a boolean if a field has been set.
+func (o *EnrollmentCreate) HasEmailLocale() bool {
+	if o != nil && !IsNil(o.EmailLocale) {
+		return true
+	}
+
+	return false
+}
+
+// SetEmailLocale gets a reference to the given string and assigns it to the EmailLocale field.
+func (o *EnrollmentCreate) SetEmailLocale(v string) {
+	o.EmailLocale = &v
+}
+
 func (o EnrollmentCreate) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -132,6 +166,9 @@ func (o EnrollmentCreate) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SendMail) {
 		toSerialize["send_mail"] = o.SendMail
+	}
+	if !IsNil(o.EmailLocale) {
+		toSerialize["email_locale"] = o.EmailLocale
 	}
 	return toSerialize, nil
 }

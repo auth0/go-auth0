@@ -20,92 +20,147 @@ type GetCustomTextByLanguageLanguageParameter string
 
 // List of get_custom_text_by_language_language_parameter
 const (
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_AR    GetCustomTextByLanguageLanguageParameter = "ar"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_BG    GetCustomTextByLanguageLanguageParameter = "bg"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_BS    GetCustomTextByLanguageLanguageParameter = "bs"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_CA_ES GetCustomTextByLanguageLanguageParameter = "ca-ES"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_CS    GetCustomTextByLanguageLanguageParameter = "cs"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_CY    GetCustomTextByLanguageLanguageParameter = "cy"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_DA    GetCustomTextByLanguageLanguageParameter = "da"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_DE    GetCustomTextByLanguageLanguageParameter = "de"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_EL    GetCustomTextByLanguageLanguageParameter = "el"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_EN    GetCustomTextByLanguageLanguageParameter = "en"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ES    GetCustomTextByLanguageLanguageParameter = "es"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ET    GetCustomTextByLanguageLanguageParameter = "et"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_EU_ES GetCustomTextByLanguageLanguageParameter = "eu-ES"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_FI    GetCustomTextByLanguageLanguageParameter = "fi"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_FR    GetCustomTextByLanguageLanguageParameter = "fr"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_FR_CA GetCustomTextByLanguageLanguageParameter = "fr-CA"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_FR_FR GetCustomTextByLanguageLanguageParameter = "fr-FR"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_GL_ES GetCustomTextByLanguageLanguageParameter = "gl-ES"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_HE    GetCustomTextByLanguageLanguageParameter = "he"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_HI    GetCustomTextByLanguageLanguageParameter = "hi"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_HR    GetCustomTextByLanguageLanguageParameter = "hr"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_HU    GetCustomTextByLanguageLanguageParameter = "hu"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ID    GetCustomTextByLanguageLanguageParameter = "id"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_IS    GetCustomTextByLanguageLanguageParameter = "is"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_IT    GetCustomTextByLanguageLanguageParameter = "it"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_JA    GetCustomTextByLanguageLanguageParameter = "ja"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_KO    GetCustomTextByLanguageLanguageParameter = "ko"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_LT    GetCustomTextByLanguageLanguageParameter = "lt"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_LV    GetCustomTextByLanguageLanguageParameter = "lv"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_NB    GetCustomTextByLanguageLanguageParameter = "nb"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_NL    GetCustomTextByLanguageLanguageParameter = "nl"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_NN    GetCustomTextByLanguageLanguageParameter = "nn"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_NO    GetCustomTextByLanguageLanguageParameter = "no"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_PL    GetCustomTextByLanguageLanguageParameter = "pl"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_PT    GetCustomTextByLanguageLanguageParameter = "pt"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_PT_BR GetCustomTextByLanguageLanguageParameter = "pt-BR"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_PT_PT GetCustomTextByLanguageLanguageParameter = "pt-PT"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_RO    GetCustomTextByLanguageLanguageParameter = "ro"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_RU    GetCustomTextByLanguageLanguageParameter = "ru"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_SK    GetCustomTextByLanguageLanguageParameter = "sk"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_SL    GetCustomTextByLanguageLanguageParameter = "sl"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_SR    GetCustomTextByLanguageLanguageParameter = "sr"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_SV    GetCustomTextByLanguageLanguageParameter = "sv"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_TH    GetCustomTextByLanguageLanguageParameter = "th"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_TR    GetCustomTextByLanguageLanguageParameter = "tr"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_UK    GetCustomTextByLanguageLanguageParameter = "uk"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_VI    GetCustomTextByLanguageLanguageParameter = "vi"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ZH_CN GetCustomTextByLanguageLanguageParameter = "zh-CN"
-	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ZH_TW GetCustomTextByLanguageLanguageParameter = "zh-TW"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_AM     GetCustomTextByLanguageLanguageParameter = "am"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_AR     GetCustomTextByLanguageLanguageParameter = "ar"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_AR_EG  GetCustomTextByLanguageLanguageParameter = "ar-EG"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_AR_SA  GetCustomTextByLanguageLanguageParameter = "ar-SA"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_AZ     GetCustomTextByLanguageLanguageParameter = "az"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_BG     GetCustomTextByLanguageLanguageParameter = "bg"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_BN     GetCustomTextByLanguageLanguageParameter = "bn"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_BS     GetCustomTextByLanguageLanguageParameter = "bs"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_CA_ES  GetCustomTextByLanguageLanguageParameter = "ca-ES"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_CNR    GetCustomTextByLanguageLanguageParameter = "cnr"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_CS     GetCustomTextByLanguageLanguageParameter = "cs"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_CY     GetCustomTextByLanguageLanguageParameter = "cy"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_DA     GetCustomTextByLanguageLanguageParameter = "da"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_DE     GetCustomTextByLanguageLanguageParameter = "de"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_EL     GetCustomTextByLanguageLanguageParameter = "el"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_EN     GetCustomTextByLanguageLanguageParameter = "en"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_EN_CA  GetCustomTextByLanguageLanguageParameter = "en-CA"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ES     GetCustomTextByLanguageLanguageParameter = "es"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ES_419 GetCustomTextByLanguageLanguageParameter = "es-419"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ES_AR  GetCustomTextByLanguageLanguageParameter = "es-AR"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ES_MX  GetCustomTextByLanguageLanguageParameter = "es-MX"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ET     GetCustomTextByLanguageLanguageParameter = "et"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_EU_ES  GetCustomTextByLanguageLanguageParameter = "eu-ES"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_FA     GetCustomTextByLanguageLanguageParameter = "fa"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_FI     GetCustomTextByLanguageLanguageParameter = "fi"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_FR     GetCustomTextByLanguageLanguageParameter = "fr"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_FR_CA  GetCustomTextByLanguageLanguageParameter = "fr-CA"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_FR_FR  GetCustomTextByLanguageLanguageParameter = "fr-FR"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_GL_ES  GetCustomTextByLanguageLanguageParameter = "gl-ES"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_GU     GetCustomTextByLanguageLanguageParameter = "gu"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_HE     GetCustomTextByLanguageLanguageParameter = "he"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_HI     GetCustomTextByLanguageLanguageParameter = "hi"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_HR     GetCustomTextByLanguageLanguageParameter = "hr"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_HU     GetCustomTextByLanguageLanguageParameter = "hu"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_HY     GetCustomTextByLanguageLanguageParameter = "hy"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ID     GetCustomTextByLanguageLanguageParameter = "id"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_IS     GetCustomTextByLanguageLanguageParameter = "is"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_IT     GetCustomTextByLanguageLanguageParameter = "it"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_JA     GetCustomTextByLanguageLanguageParameter = "ja"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_KA     GetCustomTextByLanguageLanguageParameter = "ka"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_KK     GetCustomTextByLanguageLanguageParameter = "kk"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_KN     GetCustomTextByLanguageLanguageParameter = "kn"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_KO     GetCustomTextByLanguageLanguageParameter = "ko"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_LT     GetCustomTextByLanguageLanguageParameter = "lt"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_LV     GetCustomTextByLanguageLanguageParameter = "lv"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_MK     GetCustomTextByLanguageLanguageParameter = "mk"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ML     GetCustomTextByLanguageLanguageParameter = "ml"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_MN     GetCustomTextByLanguageLanguageParameter = "mn"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_MR     GetCustomTextByLanguageLanguageParameter = "mr"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_MS     GetCustomTextByLanguageLanguageParameter = "ms"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_MY     GetCustomTextByLanguageLanguageParameter = "my"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_NB     GetCustomTextByLanguageLanguageParameter = "nb"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_NL     GetCustomTextByLanguageLanguageParameter = "nl"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_NN     GetCustomTextByLanguageLanguageParameter = "nn"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_NO     GetCustomTextByLanguageLanguageParameter = "no"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_PA     GetCustomTextByLanguageLanguageParameter = "pa"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_PL     GetCustomTextByLanguageLanguageParameter = "pl"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_PT     GetCustomTextByLanguageLanguageParameter = "pt"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_PT_BR  GetCustomTextByLanguageLanguageParameter = "pt-BR"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_PT_PT  GetCustomTextByLanguageLanguageParameter = "pt-PT"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_RO     GetCustomTextByLanguageLanguageParameter = "ro"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_RU     GetCustomTextByLanguageLanguageParameter = "ru"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_SK     GetCustomTextByLanguageLanguageParameter = "sk"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_SL     GetCustomTextByLanguageLanguageParameter = "sl"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_SO     GetCustomTextByLanguageLanguageParameter = "so"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_SQ     GetCustomTextByLanguageLanguageParameter = "sq"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_SR     GetCustomTextByLanguageLanguageParameter = "sr"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_SV     GetCustomTextByLanguageLanguageParameter = "sv"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_SW     GetCustomTextByLanguageLanguageParameter = "sw"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_TA     GetCustomTextByLanguageLanguageParameter = "ta"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_TE     GetCustomTextByLanguageLanguageParameter = "te"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_TH     GetCustomTextByLanguageLanguageParameter = "th"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_TL     GetCustomTextByLanguageLanguageParameter = "tl"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_TR     GetCustomTextByLanguageLanguageParameter = "tr"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_UK     GetCustomTextByLanguageLanguageParameter = "uk"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_UR     GetCustomTextByLanguageLanguageParameter = "ur"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_VI     GetCustomTextByLanguageLanguageParameter = "vi"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ZGH    GetCustomTextByLanguageLanguageParameter = "zgh"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ZH_CN  GetCustomTextByLanguageLanguageParameter = "zh-CN"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ZH_HK  GetCustomTextByLanguageLanguageParameter = "zh-HK"
+	GETCUSTOMTEXTBYLANGUAGELANGUAGEPARAMETER_ZH_TW  GetCustomTextByLanguageLanguageParameter = "zh-TW"
 )
 
 // All allowed values of GetCustomTextByLanguageLanguageParameter enum
 var AllowedGetCustomTextByLanguageLanguageParameterEnumValues = []GetCustomTextByLanguageLanguageParameter{
+	"am",
 	"ar",
+	"ar-EG",
+	"ar-SA",
+	"az",
 	"bg",
+	"bn",
 	"bs",
 	"ca-ES",
+	"cnr",
 	"cs",
 	"cy",
 	"da",
 	"de",
 	"el",
 	"en",
+	"en-CA",
 	"es",
+	"es-419",
+	"es-AR",
+	"es-MX",
 	"et",
 	"eu-ES",
+	"fa",
 	"fi",
 	"fr",
 	"fr-CA",
 	"fr-FR",
 	"gl-ES",
+	"gu",
 	"he",
 	"hi",
 	"hr",
 	"hu",
+	"hy",
 	"id",
 	"is",
 	"it",
 	"ja",
+	"ka",
+	"kk",
+	"kn",
 	"ko",
 	"lt",
 	"lv",
+	"mk",
+	"ml",
+	"mn",
+	"mr",
+	"ms",
+	"my",
 	"nb",
 	"nl",
 	"nn",
 	"no",
+	"pa",
 	"pl",
 	"pt",
 	"pt-BR",
@@ -114,13 +169,22 @@ var AllowedGetCustomTextByLanguageLanguageParameterEnumValues = []GetCustomTextB
 	"ru",
 	"sk",
 	"sl",
+	"so",
+	"sq",
 	"sr",
 	"sv",
+	"sw",
+	"ta",
+	"te",
 	"th",
+	"tl",
 	"tr",
 	"uk",
+	"ur",
 	"vi",
+	"zgh",
 	"zh-CN",
+	"zh-HK",
 	"zh-TW",
 }
 

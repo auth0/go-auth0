@@ -23,6 +23,7 @@ const (
 	GETEMAILTEMPLATESBYTEMPLATENAMETEMPLATENAMEPARAMETER_VERIFY_EMAIL         GetEmailTemplatesByTemplateNameTemplateNameParameter = "verify_email"
 	GETEMAILTEMPLATESBYTEMPLATENAMETEMPLATENAMEPARAMETER_VERIFY_EMAIL_BY_CODE GetEmailTemplatesByTemplateNameTemplateNameParameter = "verify_email_by_code"
 	GETEMAILTEMPLATESBYTEMPLATENAMETEMPLATENAMEPARAMETER_RESET_EMAIL          GetEmailTemplatesByTemplateNameTemplateNameParameter = "reset_email"
+	GETEMAILTEMPLATESBYTEMPLATENAMETEMPLATENAMEPARAMETER_RESET_EMAIL_BY_CODE  GetEmailTemplatesByTemplateNameTemplateNameParameter = "reset_email_by_code"
 	GETEMAILTEMPLATESBYTEMPLATENAMETEMPLATENAMEPARAMETER_WELCOME_EMAIL        GetEmailTemplatesByTemplateNameTemplateNameParameter = "welcome_email"
 	GETEMAILTEMPLATESBYTEMPLATENAMETEMPLATENAMEPARAMETER_BLOCKED_ACCOUNT      GetEmailTemplatesByTemplateNameTemplateNameParameter = "blocked_account"
 	GETEMAILTEMPLATESBYTEMPLATENAMETEMPLATENAMEPARAMETER_STOLEN_CREDENTIALS   GetEmailTemplatesByTemplateNameTemplateNameParameter = "stolen_credentials"
@@ -38,6 +39,7 @@ var AllowedGetEmailTemplatesByTemplateNameTemplateNameParameterEnumValues = []Ge
 	"verify_email",
 	"verify_email_by_code",
 	"reset_email",
+	"reset_email_by_code",
 	"welcome_email",
 	"blocked_account",
 	"stolen_credentials",

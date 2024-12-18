@@ -12,6 +12,7 @@ package models
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // GetActions200ResponseActionsInnerSecretsInner struct for GetActions200ResponseActionsInnerSecretsInner
@@ -19,7 +20,7 @@ type GetActions200ResponseActionsInnerSecretsInner struct {
 	// The name of the particular secret, e.g. API_KEY.
 	Name *string `json:"name,omitempty"`
 	// The time when the secret was last updated.
-	UpdatedAt            *string `json:"updated_at,omitempty"`
+	UpdatedAt            *time.Time `json:"updated_at,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -58,9 +59,9 @@ func (o *GetActions200ResponseActionsInnerSecretsInner) SetName(v string) {
 }
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *GetActions200ResponseActionsInnerSecretsInner) GetUpdatedAt() string {
+func (o *GetActions200ResponseActionsInnerSecretsInner) GetUpdatedAt() time.Time {
 	if o == nil || IsNil(o.UpdatedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.UpdatedAt
@@ -68,7 +69,7 @@ func (o *GetActions200ResponseActionsInnerSecretsInner) GetUpdatedAt() string {
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetActions200ResponseActionsInnerSecretsInner) GetUpdatedAtOk() (*string, bool) {
+func (o *GetActions200ResponseActionsInnerSecretsInner) GetUpdatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
@@ -84,8 +85,8 @@ func (o *GetActions200ResponseActionsInnerSecretsInner) HasUpdatedAt() bool {
 	return false
 }
 
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
-func (o *GetActions200ResponseActionsInnerSecretsInner) SetUpdatedAt(v string) {
+// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
+func (o *GetActions200ResponseActionsInnerSecretsInner) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt = &v
 }
 

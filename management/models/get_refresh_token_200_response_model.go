@@ -23,6 +23,7 @@ type GetRefreshToken200Response struct {
 	CreatedAt     NullableGetRefreshToken200ResponseCreatedAt     `json:"created_at,omitempty"`
 	IdleExpiresAt NullableGetRefreshToken200ResponseIdleExpiresAt `json:"idle_expires_at,omitempty"`
 	ExpiresAt     NullableGetRefreshToken200ResponseExpiresAt     `json:"expires_at,omitempty"`
+	Device        *GetRefreshToken200ResponseDevice               `json:"device,omitempty"`
 	// ID of the client application granted with this refresh token
 	ClientId *string `json:"client_id,omitempty"`
 	// ID of the authenticated session used to obtain this refresh-token
@@ -30,7 +31,8 @@ type GetRefreshToken200Response struct {
 	// True if the token is a rotating refresh token
 	Rotating *bool `json:"rotating,omitempty"`
 	// A list of the resource server IDs associated to this refresh-token and their granted scopes
-	ResourceServers      []GetRefreshToken200ResponseResourceServersInner `json:"resource_servers,omitempty"`
+	ResourceServers      []GetRefreshToken200ResponseResourceServersInner  `json:"resource_servers,omitempty"`
+	LastExchangedAt      NullableGetRefreshToken200ResponseLastExchangedAt `json:"last_exchanged_at,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -229,6 +231,38 @@ func (o *GetRefreshToken200Response) UnsetExpiresAt() {
 	o.ExpiresAt.Unset()
 }
 
+// GetDevice returns the Device field value if set, zero value otherwise.
+func (o *GetRefreshToken200Response) GetDevice() GetRefreshToken200ResponseDevice {
+	if o == nil || IsNil(o.Device) {
+		var ret GetRefreshToken200ResponseDevice
+		return ret
+	}
+	return *o.Device
+}
+
+// GetDeviceOk returns a tuple with the Device field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetRefreshToken200Response) GetDeviceOk() (*GetRefreshToken200ResponseDevice, bool) {
+	if o == nil || IsNil(o.Device) {
+		return nil, false
+	}
+	return o.Device, true
+}
+
+// HasDevice returns a boolean if a field has been set.
+func (o *GetRefreshToken200Response) HasDevice() bool {
+	if o != nil && !IsNil(o.Device) {
+		return true
+	}
+
+	return false
+}
+
+// SetDevice gets a reference to the given GetRefreshToken200ResponseDevice and assigns it to the Device field.
+func (o *GetRefreshToken200Response) SetDevice(v GetRefreshToken200ResponseDevice) {
+	o.Device = &v
+}
+
 // GetClientId returns the ClientId field value if set, zero value otherwise.
 func (o *GetRefreshToken200Response) GetClientId() string {
 	if o == nil || IsNil(o.ClientId) {
@@ -368,6 +402,49 @@ func (o *GetRefreshToken200Response) SetResourceServers(v []GetRefreshToken200Re
 	o.ResourceServers = v
 }
 
+// GetLastExchangedAt returns the LastExchangedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetRefreshToken200Response) GetLastExchangedAt() GetRefreshToken200ResponseLastExchangedAt {
+	if o == nil || IsNil(o.LastExchangedAt.Get()) {
+		var ret GetRefreshToken200ResponseLastExchangedAt
+		return ret
+	}
+	return *o.LastExchangedAt.Get()
+}
+
+// GetLastExchangedAtOk returns a tuple with the LastExchangedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetRefreshToken200Response) GetLastExchangedAtOk() (*GetRefreshToken200ResponseLastExchangedAt, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastExchangedAt.Get(), o.LastExchangedAt.IsSet()
+}
+
+// HasLastExchangedAt returns a boolean if a field has been set.
+func (o *GetRefreshToken200Response) HasLastExchangedAt() bool {
+	if o != nil && o.LastExchangedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastExchangedAt gets a reference to the given NullableGetRefreshToken200ResponseLastExchangedAt and assigns it to the LastExchangedAt field.
+func (o *GetRefreshToken200Response) SetLastExchangedAt(v GetRefreshToken200ResponseLastExchangedAt) {
+	o.LastExchangedAt.Set(&v)
+}
+
+// SetLastExchangedAtNil sets the value for LastExchangedAt to be an explicit nil
+func (o *GetRefreshToken200Response) SetLastExchangedAtNil() {
+	o.LastExchangedAt.Set(nil)
+}
+
+// UnsetLastExchangedAt ensures that no value is present for LastExchangedAt, not even an explicit nil
+func (o *GetRefreshToken200Response) UnsetLastExchangedAt() {
+	o.LastExchangedAt.Unset()
+}
+
 func (o GetRefreshToken200Response) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -393,6 +470,9 @@ func (o GetRefreshToken200Response) ToMap() (map[string]interface{}, error) {
 	if o.ExpiresAt.IsSet() {
 		toSerialize["expires_at"] = o.ExpiresAt.Get()
 	}
+	if !IsNil(o.Device) {
+		toSerialize["device"] = o.Device
+	}
 	if !IsNil(o.ClientId) {
 		toSerialize["client_id"] = o.ClientId
 	}
@@ -404,6 +484,9 @@ func (o GetRefreshToken200Response) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ResourceServers) {
 		toSerialize["resource_servers"] = o.ResourceServers
+	}
+	if o.LastExchangedAt.IsSet() {
+		toSerialize["last_exchanged_at"] = o.LastExchangedAt.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -432,10 +515,12 @@ func (o *GetRefreshToken200Response) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "created_at")
 		delete(additionalProperties, "idle_expires_at")
 		delete(additionalProperties, "expires_at")
+		delete(additionalProperties, "device")
 		delete(additionalProperties, "client_id")
 		delete(additionalProperties, "session_id")
 		delete(additionalProperties, "rotating")
 		delete(additionalProperties, "resource_servers")
+		delete(additionalProperties, "last_exchanged_at")
 		o.AdditionalProperties = additionalProperties
 	}
 

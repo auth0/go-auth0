@@ -22,6 +22,9 @@ type ConnectionCreateOptionsCustomScripts struct {
 	ChangePassword       *string `json:"change_password,omitempty"`
 	Verify               *string `json:"verify,omitempty"`
 	Create               *string `json:"create,omitempty"`
+	ChangeUsername       *string `json:"change_username,omitempty"`
+	ChangeEmail          *string `json:"change_email,omitempty"`
+	ChangePhoneNumber    *string `json:"change_phone_number,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -219,6 +222,102 @@ func (o *ConnectionCreateOptionsCustomScripts) SetCreate(v string) {
 	o.Create = &v
 }
 
+// GetChangeUsername returns the ChangeUsername field value if set, zero value otherwise.
+func (o *ConnectionCreateOptionsCustomScripts) GetChangeUsername() string {
+	if o == nil || IsNil(o.ChangeUsername) {
+		var ret string
+		return ret
+	}
+	return *o.ChangeUsername
+}
+
+// GetChangeUsernameOk returns a tuple with the ChangeUsername field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectionCreateOptionsCustomScripts) GetChangeUsernameOk() (*string, bool) {
+	if o == nil || IsNil(o.ChangeUsername) {
+		return nil, false
+	}
+	return o.ChangeUsername, true
+}
+
+// HasChangeUsername returns a boolean if a field has been set.
+func (o *ConnectionCreateOptionsCustomScripts) HasChangeUsername() bool {
+	if o != nil && !IsNil(o.ChangeUsername) {
+		return true
+	}
+
+	return false
+}
+
+// SetChangeUsername gets a reference to the given string and assigns it to the ChangeUsername field.
+func (o *ConnectionCreateOptionsCustomScripts) SetChangeUsername(v string) {
+	o.ChangeUsername = &v
+}
+
+// GetChangeEmail returns the ChangeEmail field value if set, zero value otherwise.
+func (o *ConnectionCreateOptionsCustomScripts) GetChangeEmail() string {
+	if o == nil || IsNil(o.ChangeEmail) {
+		var ret string
+		return ret
+	}
+	return *o.ChangeEmail
+}
+
+// GetChangeEmailOk returns a tuple with the ChangeEmail field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectionCreateOptionsCustomScripts) GetChangeEmailOk() (*string, bool) {
+	if o == nil || IsNil(o.ChangeEmail) {
+		return nil, false
+	}
+	return o.ChangeEmail, true
+}
+
+// HasChangeEmail returns a boolean if a field has been set.
+func (o *ConnectionCreateOptionsCustomScripts) HasChangeEmail() bool {
+	if o != nil && !IsNil(o.ChangeEmail) {
+		return true
+	}
+
+	return false
+}
+
+// SetChangeEmail gets a reference to the given string and assigns it to the ChangeEmail field.
+func (o *ConnectionCreateOptionsCustomScripts) SetChangeEmail(v string) {
+	o.ChangeEmail = &v
+}
+
+// GetChangePhoneNumber returns the ChangePhoneNumber field value if set, zero value otherwise.
+func (o *ConnectionCreateOptionsCustomScripts) GetChangePhoneNumber() string {
+	if o == nil || IsNil(o.ChangePhoneNumber) {
+		var ret string
+		return ret
+	}
+	return *o.ChangePhoneNumber
+}
+
+// GetChangePhoneNumberOk returns a tuple with the ChangePhoneNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectionCreateOptionsCustomScripts) GetChangePhoneNumberOk() (*string, bool) {
+	if o == nil || IsNil(o.ChangePhoneNumber) {
+		return nil, false
+	}
+	return o.ChangePhoneNumber, true
+}
+
+// HasChangePhoneNumber returns a boolean if a field has been set.
+func (o *ConnectionCreateOptionsCustomScripts) HasChangePhoneNumber() bool {
+	if o != nil && !IsNil(o.ChangePhoneNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetChangePhoneNumber gets a reference to the given string and assigns it to the ChangePhoneNumber field.
+func (o *ConnectionCreateOptionsCustomScripts) SetChangePhoneNumber(v string) {
+	o.ChangePhoneNumber = &v
+}
+
 func (o ConnectionCreateOptionsCustomScripts) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -246,6 +345,15 @@ func (o ConnectionCreateOptionsCustomScripts) ToMap() (map[string]interface{}, e
 	}
 	if !IsNil(o.Create) {
 		toSerialize["create"] = o.Create
+	}
+	if !IsNil(o.ChangeUsername) {
+		toSerialize["change_username"] = o.ChangeUsername
+	}
+	if !IsNil(o.ChangeEmail) {
+		toSerialize["change_email"] = o.ChangeEmail
+	}
+	if !IsNil(o.ChangePhoneNumber) {
+		toSerialize["change_phone_number"] = o.ChangePhoneNumber
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -275,6 +383,9 @@ func (o *ConnectionCreateOptionsCustomScripts) UnmarshalJSON(data []byte) (err e
 		delete(additionalProperties, "change_password")
 		delete(additionalProperties, "verify")
 		delete(additionalProperties, "create")
+		delete(additionalProperties, "change_username")
+		delete(additionalProperties, "change_email")
+		delete(additionalProperties, "change_phone_number")
 		o.AdditionalProperties = additionalProperties
 	}
 

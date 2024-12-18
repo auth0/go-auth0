@@ -12,6 +12,7 @@ package models
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // GetActions200ResponseActionsInnerIntegration Integration defines a self contained functioning unit which partners publish. A partner may create one or many of these integrations.
@@ -36,8 +37,8 @@ type GetActions200ResponseActionsInnerIntegration struct {
 	PrivacyPolicyUrl  *string                                                     `json:"privacy_policy_url,omitempty"`
 	PublicSupportLink *string                                                     `json:"public_support_link,omitempty"`
 	CurrentRelease    *GetActions200ResponseActionsInnerIntegrationCurrentRelease `json:"current_release,omitempty"`
-	CreatedAt         *string                                                     `json:"created_at,omitempty"`
-	UpdatedAt         *string                                                     `json:"updated_at,omitempty"`
+	CreatedAt         *time.Time                                                  `json:"created_at,omitempty"`
+	UpdatedAt         *time.Time                                                  `json:"updated_at,omitempty"`
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
@@ -457,9 +458,9 @@ func (o *GetActions200ResponseActionsInnerIntegration) SetCurrentRelease(v GetAc
 }
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *GetActions200ResponseActionsInnerIntegration) GetCreatedAt() string {
+func (o *GetActions200ResponseActionsInnerIntegration) GetCreatedAt() time.Time {
 	if o == nil || IsNil(o.CreatedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.CreatedAt
@@ -467,7 +468,7 @@ func (o *GetActions200ResponseActionsInnerIntegration) GetCreatedAt() string {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetActions200ResponseActionsInnerIntegration) GetCreatedAtOk() (*string, bool) {
+func (o *GetActions200ResponseActionsInnerIntegration) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
@@ -483,15 +484,15 @@ func (o *GetActions200ResponseActionsInnerIntegration) HasCreatedAt() bool {
 	return false
 }
 
-// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
-func (o *GetActions200ResponseActionsInnerIntegration) SetCreatedAt(v string) {
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
+func (o *GetActions200ResponseActionsInnerIntegration) SetCreatedAt(v time.Time) {
 	o.CreatedAt = &v
 }
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *GetActions200ResponseActionsInnerIntegration) GetUpdatedAt() string {
+func (o *GetActions200ResponseActionsInnerIntegration) GetUpdatedAt() time.Time {
 	if o == nil || IsNil(o.UpdatedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.UpdatedAt
@@ -499,7 +500,7 @@ func (o *GetActions200ResponseActionsInnerIntegration) GetUpdatedAt() string {
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetActions200ResponseActionsInnerIntegration) GetUpdatedAtOk() (*string, bool) {
+func (o *GetActions200ResponseActionsInnerIntegration) GetUpdatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
@@ -515,8 +516,8 @@ func (o *GetActions200ResponseActionsInnerIntegration) HasUpdatedAt() bool {
 	return false
 }
 
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
-func (o *GetActions200ResponseActionsInnerIntegration) SetUpdatedAt(v string) {
+// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
+func (o *GetActions200ResponseActionsInnerIntegration) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt = &v
 }
 

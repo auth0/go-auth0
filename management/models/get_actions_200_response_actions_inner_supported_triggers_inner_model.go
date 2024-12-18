@@ -29,6 +29,7 @@ type GetActions200ResponseActionsInnerSupportedTriggersInner struct {
 	DefaultRuntime *string `json:"default_runtime,omitempty"`
 	// compatible_triggers informs which other trigger supports the same event and api.
 	CompatibleTriggers []GetActions200ResponseActionsInnerSupportedTriggersInnerCompatibleTriggersInner `json:"compatible_triggers,omitempty"`
+	BindingPolicy      *GetActions200ResponseActionsInnerSupportedTriggersInnerBindingPolicy            `json:"binding_policy,omitempty"`
 }
 
 type _GetActions200ResponseActionsInnerSupportedTriggersInner GetActions200ResponseActionsInnerSupportedTriggersInner
@@ -217,6 +218,38 @@ func (o *GetActions200ResponseActionsInnerSupportedTriggersInner) SetCompatibleT
 	o.CompatibleTriggers = v
 }
 
+// GetBindingPolicy returns the BindingPolicy field value if set, zero value otherwise.
+func (o *GetActions200ResponseActionsInnerSupportedTriggersInner) GetBindingPolicy() GetActions200ResponseActionsInnerSupportedTriggersInnerBindingPolicy {
+	if o == nil || IsNil(o.BindingPolicy) {
+		var ret GetActions200ResponseActionsInnerSupportedTriggersInnerBindingPolicy
+		return ret
+	}
+	return *o.BindingPolicy
+}
+
+// GetBindingPolicyOk returns a tuple with the BindingPolicy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetActions200ResponseActionsInnerSupportedTriggersInner) GetBindingPolicyOk() (*GetActions200ResponseActionsInnerSupportedTriggersInnerBindingPolicy, bool) {
+	if o == nil || IsNil(o.BindingPolicy) {
+		return nil, false
+	}
+	return o.BindingPolicy, true
+}
+
+// HasBindingPolicy returns a boolean if a field has been set.
+func (o *GetActions200ResponseActionsInnerSupportedTriggersInner) HasBindingPolicy() bool {
+	if o != nil && !IsNil(o.BindingPolicy) {
+		return true
+	}
+
+	return false
+}
+
+// SetBindingPolicy gets a reference to the given GetActions200ResponseActionsInnerSupportedTriggersInnerBindingPolicy and assigns it to the BindingPolicy field.
+func (o *GetActions200ResponseActionsInnerSupportedTriggersInner) SetBindingPolicy(v GetActions200ResponseActionsInnerSupportedTriggersInnerBindingPolicy) {
+	o.BindingPolicy = &v
+}
+
 func (o GetActions200ResponseActionsInnerSupportedTriggersInner) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -242,6 +275,9 @@ func (o GetActions200ResponseActionsInnerSupportedTriggersInner) ToMap() (map[st
 	}
 	if !IsNil(o.CompatibleTriggers) {
 		toSerialize["compatible_triggers"] = o.CompatibleTriggers
+	}
+	if !IsNil(o.BindingPolicy) {
+		toSerialize["binding_policy"] = o.BindingPolicy
 	}
 	return toSerialize, nil
 }

@@ -15,19 +15,21 @@ import (
 	"fmt"
 )
 
-// ConnectionCreateOptionsSetUserRootAttributes Determines whether the 'name', 'given_name', 'family_name', 'nickname', and 'picture' attributes can be independently updated when using an external IdP. Possible values are 'on_each_login' (default value, it configures the connection to automatically update the root attributes from the external IdP with each user login. When this setting is used, root attributes cannot be independently updated), 'on_first_login' (configures the connection to only set the root attributes on first login, allowing them to be independently updated thereafter)
+// ConnectionCreateOptionsSetUserRootAttributes When using an external IdP, this flag determines  whether 'name', 'given_name', 'family_name', 'nickname', and 'picture' attributes are updated. In addition, it also determines whether the user is created when user doesnt exist previously. Possible values are 'on_each_login' (default value, it configures the connection to automatically create the user if necessary and update the root attributes from the external IdP with each user login. When this setting is used, root attributes cannot be independently updated), 'on_first_login' (configures the connection to create the user and set the root attributes on first login only, allowing them to be independently updated thereafter), and 'never_on_login' (configures the connection not to create the user and not to set the root attributes from the external IdP, allowing them to be independently updated).
 type ConnectionCreateOptionsSetUserRootAttributes string
 
 // List of connectionCreate_options_set_user_root_attributes
 const (
-	CONNECTIONCREATEOPTIONSSETUSERROOTATTRIBUTES_EACH_LOGIN  ConnectionCreateOptionsSetUserRootAttributes = "on_each_login"
-	CONNECTIONCREATEOPTIONSSETUSERROOTATTRIBUTES_FIRST_LOGIN ConnectionCreateOptionsSetUserRootAttributes = "on_first_login"
+	CONNECTIONCREATEOPTIONSSETUSERROOTATTRIBUTES_ON_EACH_LOGIN  ConnectionCreateOptionsSetUserRootAttributes = "on_each_login"
+	CONNECTIONCREATEOPTIONSSETUSERROOTATTRIBUTES_ON_FIRST_LOGIN ConnectionCreateOptionsSetUserRootAttributes = "on_first_login"
+	CONNECTIONCREATEOPTIONSSETUSERROOTATTRIBUTES_NEVER_ON_LOGIN ConnectionCreateOptionsSetUserRootAttributes = "never_on_login"
 )
 
 // All allowed values of ConnectionCreateOptionsSetUserRootAttributes enum
 var AllowedConnectionCreateOptionsSetUserRootAttributesEnumValues = []ConnectionCreateOptionsSetUserRootAttributes{
 	"on_each_login",
 	"on_first_login",
+	"never_on_login",
 }
 
 func (v *ConnectionCreateOptionsSetUserRootAttributes) UnmarshalJSON(src []byte) error {

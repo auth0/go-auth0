@@ -12,22 +12,23 @@ package models
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // GetInvitations200ResponseOneOfInner struct for GetInvitations200ResponseOneOfInner
 type GetInvitations200ResponseOneOfInner struct {
 	// The id of the user invitation.
 	Id *string `json:"id,omitempty"`
-	// Organization identifier
+	// Organization identifier.
 	OrganizationId *string                                     `json:"organization_id,omitempty"`
 	Inviter        *GetInvitations200ResponseOneOfInnerInviter `json:"inviter,omitempty"`
 	Invitee        *GetInvitations200ResponseOneOfInnerInvitee `json:"invitee,omitempty"`
 	// The invitation url to be send to the invitee.
 	InvitationUrl *string `json:"invitation_url,omitempty"`
 	// The ISO 8601 formatted timestamp representing the creation time of the invitation.
-	CreatedAt *string `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// The ISO 8601 formatted timestamp representing the expiration time of the invitation.
-	ExpiresAt *string `json:"expires_at,omitempty"`
+	ExpiresAt *time.Time `json:"expires_at,omitempty"`
 	// Auth0 client ID. Used to resolve the application's login initiation endpoint.
 	ClientId *string `json:"client_id,omitempty"`
 	// The id of the connection to force invitee to authenticate with.
@@ -202,9 +203,9 @@ func (o *GetInvitations200ResponseOneOfInner) SetInvitationUrl(v string) {
 }
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *GetInvitations200ResponseOneOfInner) GetCreatedAt() string {
+func (o *GetInvitations200ResponseOneOfInner) GetCreatedAt() time.Time {
 	if o == nil || IsNil(o.CreatedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.CreatedAt
@@ -212,7 +213,7 @@ func (o *GetInvitations200ResponseOneOfInner) GetCreatedAt() string {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetInvitations200ResponseOneOfInner) GetCreatedAtOk() (*string, bool) {
+func (o *GetInvitations200ResponseOneOfInner) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
@@ -228,15 +229,15 @@ func (o *GetInvitations200ResponseOneOfInner) HasCreatedAt() bool {
 	return false
 }
 
-// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
-func (o *GetInvitations200ResponseOneOfInner) SetCreatedAt(v string) {
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
+func (o *GetInvitations200ResponseOneOfInner) SetCreatedAt(v time.Time) {
 	o.CreatedAt = &v
 }
 
 // GetExpiresAt returns the ExpiresAt field value if set, zero value otherwise.
-func (o *GetInvitations200ResponseOneOfInner) GetExpiresAt() string {
+func (o *GetInvitations200ResponseOneOfInner) GetExpiresAt() time.Time {
 	if o == nil || IsNil(o.ExpiresAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.ExpiresAt
@@ -244,7 +245,7 @@ func (o *GetInvitations200ResponseOneOfInner) GetExpiresAt() string {
 
 // GetExpiresAtOk returns a tuple with the ExpiresAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetInvitations200ResponseOneOfInner) GetExpiresAtOk() (*string, bool) {
+func (o *GetInvitations200ResponseOneOfInner) GetExpiresAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.ExpiresAt) {
 		return nil, false
 	}
@@ -260,8 +261,8 @@ func (o *GetInvitations200ResponseOneOfInner) HasExpiresAt() bool {
 	return false
 }
 
-// SetExpiresAt gets a reference to the given string and assigns it to the ExpiresAt field.
-func (o *GetInvitations200ResponseOneOfInner) SetExpiresAt(v string) {
+// SetExpiresAt gets a reference to the given time.Time and assigns it to the ExpiresAt field.
+func (o *GetInvitations200ResponseOneOfInner) SetExpiresAt(v time.Time) {
 	o.ExpiresAt = &v
 }
 

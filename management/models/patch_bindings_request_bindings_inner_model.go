@@ -11,77 +11,164 @@ API version: 2.0
 package models
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
-
-	"gopkg.in/validator.v2"
 )
 
-// PatchBindingsRequestBindingsInner - struct for PatchBindingsRequestBindingsInner
+// PatchBindingsRequestBindingsInner struct for PatchBindingsRequestBindingsInner
 type PatchBindingsRequestBindingsInner struct {
-	PatchBindingsRequestBindingsInnerOneOf *PatchBindingsRequestBindingsInnerOneOf
+	Ref PatchBindingsRequestBindingsInnerRef `json:"ref"`
+	// The name of the binding.
+	DisplayName *string `json:"display_name,omitempty"`
+	// The list of secrets that are included in an action or a version of an action.
+	Secrets []PostActionRequestSecretsInner `json:"secrets,omitempty"`
 }
 
-// PatchBindingsRequestBindingsInnerOneOfAsPatchBindingsRequestBindingsInner is a convenience function that returns PatchBindingsRequestBindingsInnerOneOf wrapped in PatchBindingsRequestBindingsInner
-func PatchBindingsRequestBindingsInnerOneOfAsPatchBindingsRequestBindingsInner(v *PatchBindingsRequestBindingsInnerOneOf) PatchBindingsRequestBindingsInner {
-	return PatchBindingsRequestBindingsInner{
-		PatchBindingsRequestBindingsInnerOneOf: v,
+type _PatchBindingsRequestBindingsInner PatchBindingsRequestBindingsInner
+
+// GetRef returns the Ref field value
+func (o *PatchBindingsRequestBindingsInner) GetRef() PatchBindingsRequestBindingsInnerRef {
+	if o == nil {
+		var ret PatchBindingsRequestBindingsInnerRef
+		return ret
 	}
+
+	return o.Ref
 }
 
-// Unmarshal JSON data into one of the pointers in the struct
-func (dst *PatchBindingsRequestBindingsInner) UnmarshalJSON(data []byte) error {
-	var err error
-	match := 0
-	// try to unmarshal data into PatchBindingsRequestBindingsInnerOneOf
-	err = newStrictDecoder(data).Decode(&dst.PatchBindingsRequestBindingsInnerOneOf)
-	if err == nil {
-		jsonPatchBindingsRequestBindingsInnerOneOf, _ := json.Marshal(dst.PatchBindingsRequestBindingsInnerOneOf)
-		if string(jsonPatchBindingsRequestBindingsInnerOneOf) == "{}" { // empty struct
-			dst.PatchBindingsRequestBindingsInnerOneOf = nil
-		} else {
-			if err = validator.Validate(dst.PatchBindingsRequestBindingsInnerOneOf); err != nil {
-				dst.PatchBindingsRequestBindingsInnerOneOf = nil
-			} else {
-				match++
-			}
+// GetRefOk returns a tuple with the Ref field value
+// and a boolean to check if the value has been set.
+func (o *PatchBindingsRequestBindingsInner) GetRefOk() (*PatchBindingsRequestBindingsInnerRef, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Ref, true
+}
+
+// SetRef sets field value
+func (o *PatchBindingsRequestBindingsInner) SetRef(v PatchBindingsRequestBindingsInnerRef) {
+	o.Ref = v
+}
+
+// GetDisplayName returns the DisplayName field value if set, zero value otherwise.
+func (o *PatchBindingsRequestBindingsInner) GetDisplayName() string {
+	if o == nil || IsNil(o.DisplayName) {
+		var ret string
+		return ret
+	}
+	return *o.DisplayName
+}
+
+// GetDisplayNameOk returns a tuple with the DisplayName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PatchBindingsRequestBindingsInner) GetDisplayNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DisplayName) {
+		return nil, false
+	}
+	return o.DisplayName, true
+}
+
+// HasDisplayName returns a boolean if a field has been set.
+func (o *PatchBindingsRequestBindingsInner) HasDisplayName() bool {
+	if o != nil && !IsNil(o.DisplayName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDisplayName gets a reference to the given string and assigns it to the DisplayName field.
+func (o *PatchBindingsRequestBindingsInner) SetDisplayName(v string) {
+	o.DisplayName = &v
+}
+
+// GetSecrets returns the Secrets field value if set, zero value otherwise.
+func (o *PatchBindingsRequestBindingsInner) GetSecrets() []PostActionRequestSecretsInner {
+	if o == nil || IsNil(o.Secrets) {
+		var ret []PostActionRequestSecretsInner
+		return ret
+	}
+	return o.Secrets
+}
+
+// GetSecretsOk returns a tuple with the Secrets field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PatchBindingsRequestBindingsInner) GetSecretsOk() ([]PostActionRequestSecretsInner, bool) {
+	if o == nil || IsNil(o.Secrets) {
+		return nil, false
+	}
+	return o.Secrets, true
+}
+
+// HasSecrets returns a boolean if a field has been set.
+func (o *PatchBindingsRequestBindingsInner) HasSecrets() bool {
+	if o != nil && !IsNil(o.Secrets) {
+		return true
+	}
+
+	return false
+}
+
+// SetSecrets gets a reference to the given []PostActionRequestSecretsInner and assigns it to the Secrets field.
+func (o *PatchBindingsRequestBindingsInner) SetSecrets(v []PostActionRequestSecretsInner) {
+	o.Secrets = v
+}
+
+func (o PatchBindingsRequestBindingsInner) MarshalJSON() ([]byte, error) {
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o PatchBindingsRequestBindingsInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["ref"] = o.Ref
+	if !IsNil(o.DisplayName) {
+		toSerialize["display_name"] = o.DisplayName
+	}
+	if !IsNil(o.Secrets) {
+		toSerialize["secrets"] = o.Secrets
+	}
+	return toSerialize, nil
+}
+
+func (o *PatchBindingsRequestBindingsInner) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"ref",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
-	} else {
-		dst.PatchBindingsRequestBindingsInnerOneOf = nil
 	}
 
-	if match > 1 { // more than 1 match
-		// reset to nil
-		dst.PatchBindingsRequestBindingsInnerOneOf = nil
+	varPatchBindingsRequestBindingsInner := _PatchBindingsRequestBindingsInner{}
 
-		return fmt.Errorf("data matches more than one schema in oneOf(PatchBindingsRequestBindingsInner)")
-	} else if match == 1 {
-		return nil // exactly one match
-	} else { // no match
-		return fmt.Errorf("data failed to match schemas in oneOf(PatchBindingsRequestBindingsInner)")
-	}
-}
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	err = decoder.Decode(&varPatchBindingsRequestBindingsInner)
 
-// Marshal data from the first non-nil pointers in the struct to JSON
-func (src PatchBindingsRequestBindingsInner) MarshalJSON() ([]byte, error) {
-	if src.PatchBindingsRequestBindingsInnerOneOf != nil {
-		return json.Marshal(&src.PatchBindingsRequestBindingsInnerOneOf)
+	if err != nil {
+		return err
 	}
 
-	return nil, nil // no data in oneOf schemas
-}
+	*o = PatchBindingsRequestBindingsInner(varPatchBindingsRequestBindingsInner)
 
-// Get the actual instance
-func (obj *PatchBindingsRequestBindingsInner) GetActualInstance() interface{} {
-	if obj == nil {
-		return nil
-	}
-	if obj.PatchBindingsRequestBindingsInnerOneOf != nil {
-		return obj.PatchBindingsRequestBindingsInnerOneOf
-	}
-
-	// all schemas are nil
-	return nil
+	return err
 }
 
 type NullablePatchBindingsRequestBindingsInner struct {

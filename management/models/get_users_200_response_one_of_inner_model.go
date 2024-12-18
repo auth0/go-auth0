@@ -24,7 +24,7 @@ type GetUsers200ResponseOneOfInner struct {
 	EmailVerified *bool `json:"email_verified,omitempty"`
 	// Username of this user.
 	Username *string `json:"username,omitempty"`
-	// Phone number for this user when using SMS connections. Follows the <a href=\"https://en.wikipedia.org/wiki/E.164\">E.164 recommendation</a>.
+	// Phone number for this user. Follows the <a href=\"https://en.wikipedia.org/wiki/E.164\">E.164 recommendation</a>.
 	PhoneNumber *string `json:"phone_number,omitempty"`
 	// Whether this phone number has been verified (true) or not (false).
 	PhoneVerified *bool                                   `json:"phone_verified,omitempty"`

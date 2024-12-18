@@ -18,8 +18,11 @@ import (
 type ConnectionCreateOptions struct {
 	Validation NullableConnectionCreateOptionsValidation `json:"validation,omitempty"`
 	// An array of user fields that should not be stored in the Auth0 database (https://manage.local.dev.auth0.com/docs/security/data-security/denylist)
-	NonPersistentAttrs  []string `json:"non_persistent_attrs,omitempty"`
-	EnableScriptContext *bool    `json:"enable_script_context,omitempty"`
+	NonPersistentAttrs []string `json:"non_persistent_attrs,omitempty"`
+	// Order of precedence for attribute types. If the property is not specified, the default precedence of attributes will be used.
+	Precedence          []ConnectionCreateOptionsPrecedenceInner `json:"precedence,omitempty"`
+	Attributes          *ConnectionCreateOptionsAttributes       `json:"attributes,omitempty"`
+	EnableScriptContext *bool                                    `json:"enable_script_context,omitempty"`
 	// Set to true to use a legacy user store
 	EnabledDatabaseCustomization *bool `json:"enabledDatabaseCustomization,omitempty"`
 	// Enable this if you have a legacy user store and you want to gradually migrate those users to the Auth0 user store
@@ -45,6 +48,7 @@ type ConnectionCreateOptions struct {
 	UpstreamParams        map[string]interface{}                               `json:"upstream_params,omitempty"`
 	SetUserRootAttributes *ConnectionCreateOptionsSetUserRootAttributes        `json:"set_user_root_attributes,omitempty"`
 	GatewayAuthentication NullableConnectionCreateOptionsGatewayAuthentication `json:"gateway_authentication,omitempty"`
+	Configuration         *ConnectionCreateOptionsConfiguration                `json:"configuration,omitempty"`
 	AdditionalProperties  map[string]interface{}
 }
 
@@ -123,6 +127,70 @@ func (o *ConnectionCreateOptions) HasNonPersistentAttrs() bool {
 // SetNonPersistentAttrs gets a reference to the given []string and assigns it to the NonPersistentAttrs field.
 func (o *ConnectionCreateOptions) SetNonPersistentAttrs(v []string) {
 	o.NonPersistentAttrs = v
+}
+
+// GetPrecedence returns the Precedence field value if set, zero value otherwise.
+func (o *ConnectionCreateOptions) GetPrecedence() []ConnectionCreateOptionsPrecedenceInner {
+	if o == nil || IsNil(o.Precedence) {
+		var ret []ConnectionCreateOptionsPrecedenceInner
+		return ret
+	}
+	return o.Precedence
+}
+
+// GetPrecedenceOk returns a tuple with the Precedence field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectionCreateOptions) GetPrecedenceOk() ([]ConnectionCreateOptionsPrecedenceInner, bool) {
+	if o == nil || IsNil(o.Precedence) {
+		return nil, false
+	}
+	return o.Precedence, true
+}
+
+// HasPrecedence returns a boolean if a field has been set.
+func (o *ConnectionCreateOptions) HasPrecedence() bool {
+	if o != nil && !IsNil(o.Precedence) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrecedence gets a reference to the given []ConnectionCreateOptionsPrecedenceInner and assigns it to the Precedence field.
+func (o *ConnectionCreateOptions) SetPrecedence(v []ConnectionCreateOptionsPrecedenceInner) {
+	o.Precedence = v
+}
+
+// GetAttributes returns the Attributes field value if set, zero value otherwise.
+func (o *ConnectionCreateOptions) GetAttributes() ConnectionCreateOptionsAttributes {
+	if o == nil || IsNil(o.Attributes) {
+		var ret ConnectionCreateOptionsAttributes
+		return ret
+	}
+	return *o.Attributes
+}
+
+// GetAttributesOk returns a tuple with the Attributes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectionCreateOptions) GetAttributesOk() (*ConnectionCreateOptionsAttributes, bool) {
+	if o == nil || IsNil(o.Attributes) {
+		return nil, false
+	}
+	return o.Attributes, true
+}
+
+// HasAttributes returns a boolean if a field has been set.
+func (o *ConnectionCreateOptions) HasAttributes() bool {
+	if o != nil && !IsNil(o.Attributes) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttributes gets a reference to the given ConnectionCreateOptionsAttributes and assigns it to the Attributes field.
+func (o *ConnectionCreateOptions) SetAttributes(v ConnectionCreateOptionsAttributes) {
+	o.Attributes = &v
 }
 
 // GetEnableScriptContext returns the EnableScriptContext field value if set, zero value otherwise.
@@ -950,6 +1018,38 @@ func (o *ConnectionCreateOptions) UnsetGatewayAuthentication() {
 	o.GatewayAuthentication.Unset()
 }
 
+// GetConfiguration returns the Configuration field value if set, zero value otherwise.
+func (o *ConnectionCreateOptions) GetConfiguration() ConnectionCreateOptionsConfiguration {
+	if o == nil || IsNil(o.Configuration) {
+		var ret ConnectionCreateOptionsConfiguration
+		return ret
+	}
+	return *o.Configuration
+}
+
+// GetConfigurationOk returns a tuple with the Configuration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConnectionCreateOptions) GetConfigurationOk() (*ConnectionCreateOptionsConfiguration, bool) {
+	if o == nil || IsNil(o.Configuration) {
+		return nil, false
+	}
+	return o.Configuration, true
+}
+
+// HasConfiguration returns a boolean if a field has been set.
+func (o *ConnectionCreateOptions) HasConfiguration() bool {
+	if o != nil && !IsNil(o.Configuration) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfiguration gets a reference to the given ConnectionCreateOptionsConfiguration and assigns it to the Configuration field.
+func (o *ConnectionCreateOptions) SetConfiguration(v ConnectionCreateOptionsConfiguration) {
+	o.Configuration = &v
+}
+
 func (o ConnectionCreateOptions) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -965,6 +1065,12 @@ func (o ConnectionCreateOptions) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.NonPersistentAttrs) {
 		toSerialize["non_persistent_attrs"] = o.NonPersistentAttrs
+	}
+	if !IsNil(o.Precedence) {
+		toSerialize["precedence"] = o.Precedence
+	}
+	if !IsNil(o.Attributes) {
+		toSerialize["attributes"] = o.Attributes
 	}
 	if !IsNil(o.EnableScriptContext) {
 		toSerialize["enable_script_context"] = o.EnableScriptContext
@@ -1035,6 +1141,9 @@ func (o ConnectionCreateOptions) ToMap() (map[string]interface{}, error) {
 	if o.GatewayAuthentication.IsSet() {
 		toSerialize["gateway_authentication"] = o.GatewayAuthentication.Get()
 	}
+	if !IsNil(o.Configuration) {
+		toSerialize["configuration"] = o.Configuration
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -1059,6 +1168,8 @@ func (o *ConnectionCreateOptions) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "validation")
 		delete(additionalProperties, "non_persistent_attrs")
+		delete(additionalProperties, "precedence")
+		delete(additionalProperties, "attributes")
 		delete(additionalProperties, "enable_script_context")
 		delete(additionalProperties, "enabledDatabaseCustomization")
 		delete(additionalProperties, "import_mode")
@@ -1082,6 +1193,7 @@ func (o *ConnectionCreateOptions) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "upstream_params")
 		delete(additionalProperties, "set_user_root_attributes")
 		delete(additionalProperties, "gateway_authentication")
+		delete(additionalProperties, "configuration")
 		o.AdditionalProperties = additionalProperties
 	}
 

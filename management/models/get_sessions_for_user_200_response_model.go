@@ -16,7 +16,9 @@ import (
 
 // GetSessionsForUser200Response struct for GetSessionsForUser200Response
 type GetSessionsForUser200Response struct {
-	Sessions             []GetSessionsForUser200ResponseSessionsInner `json:"sessions,omitempty"`
+	Sessions []GetSessionsForUser200ResponseSessionsInner `json:"sessions,omitempty"`
+	// A cursor to be used as the \"from\" query parameter for the next page of results.
+	Next                 *string `json:"next,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -54,6 +56,38 @@ func (o *GetSessionsForUser200Response) SetSessions(v []GetSessionsForUser200Res
 	o.Sessions = v
 }
 
+// GetNext returns the Next field value if set, zero value otherwise.
+func (o *GetSessionsForUser200Response) GetNext() string {
+	if o == nil || IsNil(o.Next) {
+		var ret string
+		return ret
+	}
+	return *o.Next
+}
+
+// GetNextOk returns a tuple with the Next field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetSessionsForUser200Response) GetNextOk() (*string, bool) {
+	if o == nil || IsNil(o.Next) {
+		return nil, false
+	}
+	return o.Next, true
+}
+
+// HasNext returns a boolean if a field has been set.
+func (o *GetSessionsForUser200Response) HasNext() bool {
+	if o != nil && !IsNil(o.Next) {
+		return true
+	}
+
+	return false
+}
+
+// SetNext gets a reference to the given string and assigns it to the Next field.
+func (o *GetSessionsForUser200Response) SetNext(v string) {
+	o.Next = &v
+}
+
 func (o GetSessionsForUser200Response) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -66,6 +100,9 @@ func (o GetSessionsForUser200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Sessions) {
 		toSerialize["sessions"] = o.Sessions
+	}
+	if !IsNil(o.Next) {
+		toSerialize["next"] = o.Next
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -90,6 +127,7 @@ func (o *GetSessionsForUser200Response) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "sessions")
+		delete(additionalProperties, "next")
 		o.AdditionalProperties = additionalProperties
 	}
 

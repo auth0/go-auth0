@@ -19,13 +19,14 @@ type GetSession200Response struct {
 	// The ID of the session
 	Id *string `json:"id,omitempty"`
 	// ID of the user which can be used when interacting with other APIs.
-	UserId          *string                                      `json:"user_id,omitempty"`
-	CreatedAt       NullableGetSession200ResponseCreatedAt       `json:"created_at,omitempty"`
-	UpdatedAt       NullableGetSession200ResponseUpdatedAt       `json:"updated_at,omitempty"`
-	AuthenticatedAt NullableGetSession200ResponseAuthenticatedAt `json:"authenticated_at,omitempty"`
-	IdleExpiresAt   NullableGetSession200ResponseIdleExpiresAt   `json:"idle_expires_at,omitempty"`
-	ExpiresAt       NullableGetSession200ResponseExpiresAt       `json:"expires_at,omitempty"`
-	Device          *GetSession200ResponseDevice                 `json:"device,omitempty"`
+	UserId           *string                                       `json:"user_id,omitempty"`
+	CreatedAt        NullableGetSession200ResponseCreatedAt        `json:"created_at,omitempty"`
+	UpdatedAt        NullableGetSession200ResponseUpdatedAt        `json:"updated_at,omitempty"`
+	AuthenticatedAt  NullableGetSession200ResponseAuthenticatedAt  `json:"authenticated_at,omitempty"`
+	IdleExpiresAt    NullableGetSession200ResponseIdleExpiresAt    `json:"idle_expires_at,omitempty"`
+	ExpiresAt        NullableGetSession200ResponseExpiresAt        `json:"expires_at,omitempty"`
+	LastInteractedAt NullableGetSession200ResponseLastInteractedAt `json:"last_interacted_at,omitempty"`
+	Device           *GetSession200ResponseDevice                  `json:"device,omitempty"`
 	// List of client details for the session
 	Clients              []GetSession200ResponseClientsInner  `json:"clients,omitempty"`
 	Authentication       *GetSession200ResponseAuthentication `json:"authentication,omitempty"`
@@ -313,6 +314,49 @@ func (o *GetSession200Response) UnsetExpiresAt() {
 	o.ExpiresAt.Unset()
 }
 
+// GetLastInteractedAt returns the LastInteractedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetSession200Response) GetLastInteractedAt() GetSession200ResponseLastInteractedAt {
+	if o == nil || IsNil(o.LastInteractedAt.Get()) {
+		var ret GetSession200ResponseLastInteractedAt
+		return ret
+	}
+	return *o.LastInteractedAt.Get()
+}
+
+// GetLastInteractedAtOk returns a tuple with the LastInteractedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetSession200Response) GetLastInteractedAtOk() (*GetSession200ResponseLastInteractedAt, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastInteractedAt.Get(), o.LastInteractedAt.IsSet()
+}
+
+// HasLastInteractedAt returns a boolean if a field has been set.
+func (o *GetSession200Response) HasLastInteractedAt() bool {
+	if o != nil && o.LastInteractedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastInteractedAt gets a reference to the given NullableGetSession200ResponseLastInteractedAt and assigns it to the LastInteractedAt field.
+func (o *GetSession200Response) SetLastInteractedAt(v GetSession200ResponseLastInteractedAt) {
+	o.LastInteractedAt.Set(&v)
+}
+
+// SetLastInteractedAtNil sets the value for LastInteractedAt to be an explicit nil
+func (o *GetSession200Response) SetLastInteractedAtNil() {
+	o.LastInteractedAt.Set(nil)
+}
+
+// UnsetLastInteractedAt ensures that no value is present for LastInteractedAt, not even an explicit nil
+func (o *GetSession200Response) UnsetLastInteractedAt() {
+	o.LastInteractedAt.Unset()
+}
+
 // GetDevice returns the Device field value if set, zero value otherwise.
 func (o *GetSession200Response) GetDevice() GetSession200ResponseDevice {
 	if o == nil || IsNil(o.Device) {
@@ -440,6 +484,9 @@ func (o GetSession200Response) ToMap() (map[string]interface{}, error) {
 	if o.ExpiresAt.IsSet() {
 		toSerialize["expires_at"] = o.ExpiresAt.Get()
 	}
+	if o.LastInteractedAt.IsSet() {
+		toSerialize["last_interacted_at"] = o.LastInteractedAt.Get()
+	}
 	if !IsNil(o.Device) {
 		toSerialize["device"] = o.Device
 	}
@@ -478,6 +525,7 @@ func (o *GetSession200Response) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "authenticated_at")
 		delete(additionalProperties, "idle_expires_at")
 		delete(additionalProperties, "expires_at")
+		delete(additionalProperties, "last_interacted_at")
 		delete(additionalProperties, "device")
 		delete(additionalProperties, "clients")
 		delete(additionalProperties, "authentication")

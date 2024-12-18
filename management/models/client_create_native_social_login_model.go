@@ -16,94 +16,105 @@ import (
 
 // ClientCreateNativeSocialLogin Configure native social settings
 type ClientCreateNativeSocialLogin struct {
-	Apple    NullableClientCreateNativeSocialLoginApple    `json:"apple,omitempty"`
-	Facebook NullableClientCreateNativeSocialLoginFacebook `json:"facebook,omitempty"`
+	Apple    *ClientCreateNativeSocialLoginApple    `json:"apple,omitempty"`
+	Facebook *ClientCreateNativeSocialLoginFacebook `json:"facebook,omitempty"`
+	Google   *ClientCreateNativeSocialLoginGoogle   `json:"google,omitempty"`
 }
 
-// GetApple returns the Apple field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetApple returns the Apple field value if set, zero value otherwise.
 func (o *ClientCreateNativeSocialLogin) GetApple() ClientCreateNativeSocialLoginApple {
-	if o == nil || IsNil(o.Apple.Get()) {
+	if o == nil || IsNil(o.Apple) {
 		var ret ClientCreateNativeSocialLoginApple
 		return ret
 	}
-	return *o.Apple.Get()
+	return *o.Apple
 }
 
 // GetAppleOk returns a tuple with the Apple field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ClientCreateNativeSocialLogin) GetAppleOk() (*ClientCreateNativeSocialLoginApple, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Apple) {
 		return nil, false
 	}
-	return o.Apple.Get(), o.Apple.IsSet()
+	return o.Apple, true
 }
 
 // HasApple returns a boolean if a field has been set.
 func (o *ClientCreateNativeSocialLogin) HasApple() bool {
-	if o != nil && o.Apple.IsSet() {
+	if o != nil && !IsNil(o.Apple) {
 		return true
 	}
 
 	return false
 }
 
-// SetApple gets a reference to the given NullableClientCreateNativeSocialLoginApple and assigns it to the Apple field.
+// SetApple gets a reference to the given ClientCreateNativeSocialLoginApple and assigns it to the Apple field.
 func (o *ClientCreateNativeSocialLogin) SetApple(v ClientCreateNativeSocialLoginApple) {
-	o.Apple.Set(&v)
+	o.Apple = &v
 }
 
-// SetAppleNil sets the value for Apple to be an explicit nil
-func (o *ClientCreateNativeSocialLogin) SetAppleNil() {
-	o.Apple.Set(nil)
-}
-
-// UnsetApple ensures that no value is present for Apple, not even an explicit nil
-func (o *ClientCreateNativeSocialLogin) UnsetApple() {
-	o.Apple.Unset()
-}
-
-// GetFacebook returns the Facebook field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetFacebook returns the Facebook field value if set, zero value otherwise.
 func (o *ClientCreateNativeSocialLogin) GetFacebook() ClientCreateNativeSocialLoginFacebook {
-	if o == nil || IsNil(o.Facebook.Get()) {
+	if o == nil || IsNil(o.Facebook) {
 		var ret ClientCreateNativeSocialLoginFacebook
 		return ret
 	}
-	return *o.Facebook.Get()
+	return *o.Facebook
 }
 
 // GetFacebookOk returns a tuple with the Facebook field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ClientCreateNativeSocialLogin) GetFacebookOk() (*ClientCreateNativeSocialLoginFacebook, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Facebook) {
 		return nil, false
 	}
-	return o.Facebook.Get(), o.Facebook.IsSet()
+	return o.Facebook, true
 }
 
 // HasFacebook returns a boolean if a field has been set.
 func (o *ClientCreateNativeSocialLogin) HasFacebook() bool {
-	if o != nil && o.Facebook.IsSet() {
+	if o != nil && !IsNil(o.Facebook) {
 		return true
 	}
 
 	return false
 }
 
-// SetFacebook gets a reference to the given NullableClientCreateNativeSocialLoginFacebook and assigns it to the Facebook field.
+// SetFacebook gets a reference to the given ClientCreateNativeSocialLoginFacebook and assigns it to the Facebook field.
 func (o *ClientCreateNativeSocialLogin) SetFacebook(v ClientCreateNativeSocialLoginFacebook) {
-	o.Facebook.Set(&v)
+	o.Facebook = &v
 }
 
-// SetFacebookNil sets the value for Facebook to be an explicit nil
-func (o *ClientCreateNativeSocialLogin) SetFacebookNil() {
-	o.Facebook.Set(nil)
+// GetGoogle returns the Google field value if set, zero value otherwise.
+func (o *ClientCreateNativeSocialLogin) GetGoogle() ClientCreateNativeSocialLoginGoogle {
+	if o == nil || IsNil(o.Google) {
+		var ret ClientCreateNativeSocialLoginGoogle
+		return ret
+	}
+	return *o.Google
 }
 
-// UnsetFacebook ensures that no value is present for Facebook, not even an explicit nil
-func (o *ClientCreateNativeSocialLogin) UnsetFacebook() {
-	o.Facebook.Unset()
+// GetGoogleOk returns a tuple with the Google field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClientCreateNativeSocialLogin) GetGoogleOk() (*ClientCreateNativeSocialLoginGoogle, bool) {
+	if o == nil || IsNil(o.Google) {
+		return nil, false
+	}
+	return o.Google, true
+}
+
+// HasGoogle returns a boolean if a field has been set.
+func (o *ClientCreateNativeSocialLogin) HasGoogle() bool {
+	if o != nil && !IsNil(o.Google) {
+		return true
+	}
+
+	return false
+}
+
+// SetGoogle gets a reference to the given ClientCreateNativeSocialLoginGoogle and assigns it to the Google field.
+func (o *ClientCreateNativeSocialLogin) SetGoogle(v ClientCreateNativeSocialLoginGoogle) {
+	o.Google = &v
 }
 
 func (o ClientCreateNativeSocialLogin) MarshalJSON() ([]byte, error) {
@@ -116,11 +127,14 @@ func (o ClientCreateNativeSocialLogin) MarshalJSON() ([]byte, error) {
 
 func (o ClientCreateNativeSocialLogin) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Apple.IsSet() {
-		toSerialize["apple"] = o.Apple.Get()
+	if !IsNil(o.Apple) {
+		toSerialize["apple"] = o.Apple
 	}
-	if o.Facebook.IsSet() {
-		toSerialize["facebook"] = o.Facebook.Get()
+	if !IsNil(o.Facebook) {
+		toSerialize["facebook"] = o.Facebook
+	}
+	if !IsNil(o.Google) {
+		toSerialize["google"] = o.Google
 	}
 	return toSerialize, nil
 }

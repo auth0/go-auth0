@@ -11,41 +11,78 @@ API version: 2.0
 package models
 
 import (
-	"bytes"
 	"encoding/json"
-	"fmt"
 )
 
 // ClientCreateOidcLogout Configuration for OIDC backchannel logout
 type ClientCreateOidcLogout struct {
 	// Comma-separated list of URLs that are valid to call back from Auth0 for OIDC backchannel logout. Currently only one URL is allowed.
-	BackchannelLogoutUrls []string `json:"backchannel_logout_urls"`
+	BackchannelLogoutUrls       []string                                           `json:"backchannel_logout_urls,omitempty"`
+	BackchannelLogoutInitiators *ClientCreateOidcLogoutBackchannelLogoutInitiators `json:"backchannel_logout_initiators,omitempty"`
 }
 
-type _ClientCreateOidcLogout ClientCreateOidcLogout
-
-// GetBackchannelLogoutUrls returns the BackchannelLogoutUrls field value
+// GetBackchannelLogoutUrls returns the BackchannelLogoutUrls field value if set, zero value otherwise.
 func (o *ClientCreateOidcLogout) GetBackchannelLogoutUrls() []string {
-	if o == nil {
+	if o == nil || IsNil(o.BackchannelLogoutUrls) {
 		var ret []string
 		return ret
 	}
-
 	return o.BackchannelLogoutUrls
 }
 
-// GetBackchannelLogoutUrlsOk returns a tuple with the BackchannelLogoutUrls field value
+// GetBackchannelLogoutUrlsOk returns a tuple with the BackchannelLogoutUrls field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ClientCreateOidcLogout) GetBackchannelLogoutUrlsOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.BackchannelLogoutUrls) {
 		return nil, false
 	}
 	return o.BackchannelLogoutUrls, true
 }
 
-// SetBackchannelLogoutUrls sets field value
+// HasBackchannelLogoutUrls returns a boolean if a field has been set.
+func (o *ClientCreateOidcLogout) HasBackchannelLogoutUrls() bool {
+	if o != nil && !IsNil(o.BackchannelLogoutUrls) {
+		return true
+	}
+
+	return false
+}
+
+// SetBackchannelLogoutUrls gets a reference to the given []string and assigns it to the BackchannelLogoutUrls field.
 func (o *ClientCreateOidcLogout) SetBackchannelLogoutUrls(v []string) {
 	o.BackchannelLogoutUrls = v
+}
+
+// GetBackchannelLogoutInitiators returns the BackchannelLogoutInitiators field value if set, zero value otherwise.
+func (o *ClientCreateOidcLogout) GetBackchannelLogoutInitiators() ClientCreateOidcLogoutBackchannelLogoutInitiators {
+	if o == nil || IsNil(o.BackchannelLogoutInitiators) {
+		var ret ClientCreateOidcLogoutBackchannelLogoutInitiators
+		return ret
+	}
+	return *o.BackchannelLogoutInitiators
+}
+
+// GetBackchannelLogoutInitiatorsOk returns a tuple with the BackchannelLogoutInitiators field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ClientCreateOidcLogout) GetBackchannelLogoutInitiatorsOk() (*ClientCreateOidcLogoutBackchannelLogoutInitiators, bool) {
+	if o == nil || IsNil(o.BackchannelLogoutInitiators) {
+		return nil, false
+	}
+	return o.BackchannelLogoutInitiators, true
+}
+
+// HasBackchannelLogoutInitiators returns a boolean if a field has been set.
+func (o *ClientCreateOidcLogout) HasBackchannelLogoutInitiators() bool {
+	if o != nil && !IsNil(o.BackchannelLogoutInitiators) {
+		return true
+	}
+
+	return false
+}
+
+// SetBackchannelLogoutInitiators gets a reference to the given ClientCreateOidcLogoutBackchannelLogoutInitiators and assigns it to the BackchannelLogoutInitiators field.
+func (o *ClientCreateOidcLogout) SetBackchannelLogoutInitiators(v ClientCreateOidcLogoutBackchannelLogoutInitiators) {
+	o.BackchannelLogoutInitiators = &v
 }
 
 func (o ClientCreateOidcLogout) MarshalJSON() ([]byte, error) {
@@ -58,44 +95,13 @@ func (o ClientCreateOidcLogout) MarshalJSON() ([]byte, error) {
 
 func (o ClientCreateOidcLogout) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["backchannel_logout_urls"] = o.BackchannelLogoutUrls
+	if !IsNil(o.BackchannelLogoutUrls) {
+		toSerialize["backchannel_logout_urls"] = o.BackchannelLogoutUrls
+	}
+	if !IsNil(o.BackchannelLogoutInitiators) {
+		toSerialize["backchannel_logout_initiators"] = o.BackchannelLogoutInitiators
+	}
 	return toSerialize, nil
-}
-
-func (o *ClientCreateOidcLogout) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"backchannel_logout_urls",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varClientCreateOidcLogout := _ClientCreateOidcLogout{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	err = decoder.Decode(&varClientCreateOidcLogout)
-
-	if err != nil {
-		return err
-	}
-
-	*o = ClientCreateOidcLogout(varClientCreateOidcLogout)
-
-	return err
 }
 
 type NullableClientCreateOidcLogout struct {

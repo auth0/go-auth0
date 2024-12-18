@@ -14,6 +14,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 // GetAuthenticationMethods200ResponseOneOfInner struct for GetAuthenticationMethods200ResponseOneOfInner
@@ -38,11 +39,11 @@ type GetAuthenticationMethods200ResponseOneOfInner struct {
 	// Applies to webauthn authentication methods only. The public key.
 	PublicKey *string `json:"public_key,omitempty"`
 	// Authenticator creation date
-	CreatedAt string `json:"created_at"`
+	CreatedAt time.Time `json:"created_at"`
 	// Enrollment date
-	EnrolledAt *string `json:"enrolled_at,omitempty"`
+	EnrolledAt *time.Time `json:"enrolled_at,omitempty"`
 	// Last authentication
-	LastAuthAt *string `json:"last_auth_at,omitempty"`
+	LastAuthAt *time.Time `json:"last_auth_at,omitempty"`
 	// Applies to passkeys only. The kind of device the credential is stored on as defined by backup eligibility. \"single_device\" credentials cannot be backed up and synced to another device, \"multi_device\" credentials can be backed up if enabled by the end-user.
 	CredentialDeviceType *string `json:"credential_device_type,omitempty"`
 	// Applies to passkeys only. Whether the credential was backed up.
@@ -392,9 +393,9 @@ func (o *GetAuthenticationMethods200ResponseOneOfInner) SetPublicKey(v string) {
 }
 
 // GetCreatedAt returns the CreatedAt field value
-func (o *GetAuthenticationMethods200ResponseOneOfInner) GetCreatedAt() string {
+func (o *GetAuthenticationMethods200ResponseOneOfInner) GetCreatedAt() time.Time {
 	if o == nil {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 
@@ -403,7 +404,7 @@ func (o *GetAuthenticationMethods200ResponseOneOfInner) GetCreatedAt() string {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
-func (o *GetAuthenticationMethods200ResponseOneOfInner) GetCreatedAtOk() (*string, bool) {
+func (o *GetAuthenticationMethods200ResponseOneOfInner) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -411,14 +412,14 @@ func (o *GetAuthenticationMethods200ResponseOneOfInner) GetCreatedAtOk() (*strin
 }
 
 // SetCreatedAt sets field value
-func (o *GetAuthenticationMethods200ResponseOneOfInner) SetCreatedAt(v string) {
+func (o *GetAuthenticationMethods200ResponseOneOfInner) SetCreatedAt(v time.Time) {
 	o.CreatedAt = v
 }
 
 // GetEnrolledAt returns the EnrolledAt field value if set, zero value otherwise.
-func (o *GetAuthenticationMethods200ResponseOneOfInner) GetEnrolledAt() string {
+func (o *GetAuthenticationMethods200ResponseOneOfInner) GetEnrolledAt() time.Time {
 	if o == nil || IsNil(o.EnrolledAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.EnrolledAt
@@ -426,7 +427,7 @@ func (o *GetAuthenticationMethods200ResponseOneOfInner) GetEnrolledAt() string {
 
 // GetEnrolledAtOk returns a tuple with the EnrolledAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetAuthenticationMethods200ResponseOneOfInner) GetEnrolledAtOk() (*string, bool) {
+func (o *GetAuthenticationMethods200ResponseOneOfInner) GetEnrolledAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.EnrolledAt) {
 		return nil, false
 	}
@@ -442,15 +443,15 @@ func (o *GetAuthenticationMethods200ResponseOneOfInner) HasEnrolledAt() bool {
 	return false
 }
 
-// SetEnrolledAt gets a reference to the given string and assigns it to the EnrolledAt field.
-func (o *GetAuthenticationMethods200ResponseOneOfInner) SetEnrolledAt(v string) {
+// SetEnrolledAt gets a reference to the given time.Time and assigns it to the EnrolledAt field.
+func (o *GetAuthenticationMethods200ResponseOneOfInner) SetEnrolledAt(v time.Time) {
 	o.EnrolledAt = &v
 }
 
 // GetLastAuthAt returns the LastAuthAt field value if set, zero value otherwise.
-func (o *GetAuthenticationMethods200ResponseOneOfInner) GetLastAuthAt() string {
+func (o *GetAuthenticationMethods200ResponseOneOfInner) GetLastAuthAt() time.Time {
 	if o == nil || IsNil(o.LastAuthAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.LastAuthAt
@@ -458,7 +459,7 @@ func (o *GetAuthenticationMethods200ResponseOneOfInner) GetLastAuthAt() string {
 
 // GetLastAuthAtOk returns a tuple with the LastAuthAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetAuthenticationMethods200ResponseOneOfInner) GetLastAuthAtOk() (*string, bool) {
+func (o *GetAuthenticationMethods200ResponseOneOfInner) GetLastAuthAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.LastAuthAt) {
 		return nil, false
 	}
@@ -474,8 +475,8 @@ func (o *GetAuthenticationMethods200ResponseOneOfInner) HasLastAuthAt() bool {
 	return false
 }
 
-// SetLastAuthAt gets a reference to the given string and assigns it to the LastAuthAt field.
-func (o *GetAuthenticationMethods200ResponseOneOfInner) SetLastAuthAt(v string) {
+// SetLastAuthAt gets a reference to the given time.Time and assigns it to the LastAuthAt field.
+func (o *GetAuthenticationMethods200ResponseOneOfInner) SetLastAuthAt(v time.Time) {
 	o.LastAuthAt = &v
 }
 

@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// PostEmailTemplatesRequestTemplate Template name. Can be `verify_email`, `verify_email_by_code`, `reset_email`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `change_password` (legacy), or `password_reset` (legacy).
+// PostEmailTemplatesRequestTemplate Template name. Can be `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `change_password` (legacy), or `password_reset` (legacy).
 type PostEmailTemplatesRequestTemplate string
 
 // List of post_email_templates_request_template
@@ -23,6 +23,7 @@ const (
 	POSTEMAILTEMPLATESREQUESTTEMPLATE_VERIFY_EMAIL         PostEmailTemplatesRequestTemplate = "verify_email"
 	POSTEMAILTEMPLATESREQUESTTEMPLATE_VERIFY_EMAIL_BY_CODE PostEmailTemplatesRequestTemplate = "verify_email_by_code"
 	POSTEMAILTEMPLATESREQUESTTEMPLATE_RESET_EMAIL          PostEmailTemplatesRequestTemplate = "reset_email"
+	POSTEMAILTEMPLATESREQUESTTEMPLATE_RESET_EMAIL_BY_CODE  PostEmailTemplatesRequestTemplate = "reset_email_by_code"
 	POSTEMAILTEMPLATESREQUESTTEMPLATE_WELCOME_EMAIL        PostEmailTemplatesRequestTemplate = "welcome_email"
 	POSTEMAILTEMPLATESREQUESTTEMPLATE_BLOCKED_ACCOUNT      PostEmailTemplatesRequestTemplate = "blocked_account"
 	POSTEMAILTEMPLATESREQUESTTEMPLATE_STOLEN_CREDENTIALS   PostEmailTemplatesRequestTemplate = "stolen_credentials"
@@ -38,6 +39,7 @@ var AllowedPostEmailTemplatesRequestTemplateEnumValues = []PostEmailTemplatesReq
 	"verify_email",
 	"verify_email_by_code",
 	"reset_email",
+	"reset_email_by_code",
 	"welcome_email",
 	"blocked_account",
 	"stolen_credentials",

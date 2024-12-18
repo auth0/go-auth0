@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// GetAuthenticationMethods200ResponseOneOfInnerPreferredAuthenticationMethod The authentication method preferred for phone authenticators.
+// GetAuthenticationMethods200ResponseOneOfInnerPreferredAuthenticationMethod Applies to phone authentication methods only. The preferred communication method.
 type GetAuthenticationMethods200ResponseOneOfInnerPreferredAuthenticationMethod string
 
 // List of get_authentication_methods_200_response_oneOf_inner_preferred_authentication_method

@@ -19,14 +19,22 @@ import (
 
 // GetClients200Response - struct for GetClients200Response
 type GetClients200Response struct {
-	GetClients200ResponseOneOf *GetClients200ResponseOneOf
-	ArrayOfClient              *[]Client
+	GetClients200ResponseOneOf  *GetClients200ResponseOneOf
+	GetClients200ResponseOneOf1 *GetClients200ResponseOneOf1
+	ArrayOfClient               *[]Client
 }
 
 // GetClients200ResponseOneOfAsGetClients200Response is a convenience function that returns GetClients200ResponseOneOf wrapped in GetClients200Response
 func GetClients200ResponseOneOfAsGetClients200Response(v *GetClients200ResponseOneOf) GetClients200Response {
 	return GetClients200Response{
 		GetClients200ResponseOneOf: v,
+	}
+}
+
+// GetClients200ResponseOneOf1AsGetClients200Response is a convenience function that returns GetClients200ResponseOneOf1 wrapped in GetClients200Response
+func GetClients200ResponseOneOf1AsGetClients200Response(v *GetClients200ResponseOneOf1) GetClients200Response {
+	return GetClients200Response{
+		GetClients200ResponseOneOf1: v,
 	}
 }
 
@@ -58,6 +66,23 @@ func (dst *GetClients200Response) UnmarshalJSON(data []byte) error {
 		dst.GetClients200ResponseOneOf = nil
 	}
 
+	// try to unmarshal data into GetClients200ResponseOneOf1
+	err = newStrictDecoder(data).Decode(&dst.GetClients200ResponseOneOf1)
+	if err == nil {
+		jsonGetClients200ResponseOneOf1, _ := json.Marshal(dst.GetClients200ResponseOneOf1)
+		if string(jsonGetClients200ResponseOneOf1) == "{}" { // empty struct
+			dst.GetClients200ResponseOneOf1 = nil
+		} else {
+			if err = validator.Validate(dst.GetClients200ResponseOneOf1); err != nil {
+				dst.GetClients200ResponseOneOf1 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.GetClients200ResponseOneOf1 = nil
+	}
+
 	// try to unmarshal data into ArrayOfClient
 	err = newStrictDecoder(data).Decode(&dst.ArrayOfClient)
 	if err == nil {
@@ -78,6 +103,7 @@ func (dst *GetClients200Response) UnmarshalJSON(data []byte) error {
 	if match > 1 { // more than 1 match
 		// reset to nil
 		dst.GetClients200ResponseOneOf = nil
+		dst.GetClients200ResponseOneOf1 = nil
 		dst.ArrayOfClient = nil
 
 		return fmt.Errorf("data matches more than one schema in oneOf(GetClients200Response)")
@@ -94,6 +120,10 @@ func (src GetClients200Response) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.GetClients200ResponseOneOf)
 	}
 
+	if src.GetClients200ResponseOneOf1 != nil {
+		return json.Marshal(&src.GetClients200ResponseOneOf1)
+	}
+
 	if src.ArrayOfClient != nil {
 		return json.Marshal(&src.ArrayOfClient)
 	}
@@ -108,6 +138,10 @@ func (obj *GetClients200Response) GetActualInstance() interface{} {
 	}
 	if obj.GetClients200ResponseOneOf != nil {
 		return obj.GetClients200ResponseOneOf
+	}
+
+	if obj.GetClients200ResponseOneOf1 != nil {
+		return obj.GetClients200ResponseOneOf1
 	}
 
 	if obj.ArrayOfClient != nil {

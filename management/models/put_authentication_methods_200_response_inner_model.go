@@ -13,6 +13,7 @@ package models
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 // PutAuthenticationMethods200ResponseInner The successfully created authentication method.
@@ -37,7 +38,7 @@ type PutAuthenticationMethods200ResponseInner struct {
 	// Applies to webauthn authenticators only. The relying party identifier.
 	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty"`
 	// Authentication method creation date
-	CreatedAt            *string `json:"created_at,omitempty"`
+	CreatedAt            *time.Time `json:"created_at,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -388,9 +389,9 @@ func (o *PutAuthenticationMethods200ResponseInner) SetRelyingPartyIdentifier(v s
 }
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *PutAuthenticationMethods200ResponseInner) GetCreatedAt() string {
+func (o *PutAuthenticationMethods200ResponseInner) GetCreatedAt() time.Time {
 	if o == nil || IsNil(o.CreatedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.CreatedAt
@@ -398,7 +399,7 @@ func (o *PutAuthenticationMethods200ResponseInner) GetCreatedAt() string {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PutAuthenticationMethods200ResponseInner) GetCreatedAtOk() (*string, bool) {
+func (o *PutAuthenticationMethods200ResponseInner) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
@@ -414,8 +415,8 @@ func (o *PutAuthenticationMethods200ResponseInner) HasCreatedAt() bool {
 	return false
 }
 
-// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
-func (o *PutAuthenticationMethods200ResponseInner) SetCreatedAt(v string) {
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
+func (o *PutAuthenticationMethods200ResponseInner) SetCreatedAt(v time.Time) {
 	o.CreatedAt = &v
 }
 

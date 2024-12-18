@@ -16,11 +16,11 @@ import (
 	"fmt"
 )
 
-// GetOrganizations200ResponseOneOfInnerBrandingColors Color scheme used to customize the login pages
+// GetOrganizations200ResponseOneOfInnerBrandingColors Color scheme used to customize the login pages.
 type GetOrganizations200ResponseOneOfInnerBrandingColors struct {
-	// HEX Color for primary elements
+	// HEX Color for primary elements.
 	Primary string `json:"primary"`
-	// HEX Color for background
+	// HEX Color for background.
 	PageBackground string `json:"page_background"`
 }
 

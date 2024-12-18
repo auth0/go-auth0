@@ -23,7 +23,7 @@ type PostOrganizationsRequest struct {
 	// Friendly name of this organization.
 	DisplayName *string                                        `json:"display_name,omitempty"`
 	Branding    *GetOrganizations200ResponseOneOfInnerBranding `json:"branding,omitempty"`
-	// Metadata associated with the organization, in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.
+	// Metadata associated with the organization, in the form of an object with string values (max 255 chars). Maximum of 25 metadata properties allowed.
 	Metadata map[string]interface{} `json:"metadata,omitempty"`
 	// Connections that will be enabled for this organization. See POST enabled_connections endpoint for the object format. (Max of 10 connections allowed)
 	EnabledConnections []PostOrganizationsRequestEnabledConnectionsInner `json:"enabled_connections,omitempty"`

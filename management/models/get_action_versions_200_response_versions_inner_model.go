@@ -12,6 +12,7 @@ package models
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // GetActionVersions200ResponseVersionsInner struct for GetActionVersions200ResponseVersionsInner
@@ -35,14 +36,13 @@ type GetActionVersions200ResponseVersionsInner struct {
 	Number *float32 `json:"number,omitempty"`
 	// Any errors that occurred while the version was being built.
 	Errors []GetActionVersions200ResponseVersionsInnerErrorsInner `json:"errors,omitempty"`
-	// The action to which this verison belongs.
-	Action interface{} `json:"action,omitempty"`
+	Action *GetActionVersions200ResponseVersionsInnerAction       `json:"action,omitempty"`
 	// The time when this version was built successfully.
-	BuiltAt *string `json:"built_at,omitempty"`
+	BuiltAt *time.Time `json:"built_at,omitempty"`
 	// The time when this version was created.
-	CreatedAt *string `json:"created_at,omitempty"`
-	// The time when a version was updated. Versions are never updated externally. Only Auth0 will update an action version as it is beiing built.
-	UpdatedAt *string `json:"updated_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+	// The time when a version was updated. Versions are never updated externally. Only Auth0 will update an action version as it is being built.
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// The list of triggers that this version supports. At this time, a version can only target a single trigger at a time.
 	SupportedTriggers []GetActions200ResponseActionsInnerSupportedTriggersInner `json:"supported_triggers,omitempty"`
 }
@@ -367,23 +367,22 @@ func (o *GetActionVersions200ResponseVersionsInner) SetErrors(v []GetActionVersi
 	o.Errors = v
 }
 
-// GetAction returns the Action field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetActionVersions200ResponseVersionsInner) GetAction() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetAction returns the Action field value if set, zero value otherwise.
+func (o *GetActionVersions200ResponseVersionsInner) GetAction() GetActionVersions200ResponseVersionsInnerAction {
+	if o == nil || IsNil(o.Action) {
+		var ret GetActionVersions200ResponseVersionsInnerAction
 		return ret
 	}
-	return o.Action
+	return *o.Action
 }
 
 // GetActionOk returns a tuple with the Action field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetActionVersions200ResponseVersionsInner) GetActionOk() (*interface{}, bool) {
+func (o *GetActionVersions200ResponseVersionsInner) GetActionOk() (*GetActionVersions200ResponseVersionsInnerAction, bool) {
 	if o == nil || IsNil(o.Action) {
 		return nil, false
 	}
-	return &o.Action, true
+	return o.Action, true
 }
 
 // HasAction returns a boolean if a field has been set.
@@ -395,15 +394,15 @@ func (o *GetActionVersions200ResponseVersionsInner) HasAction() bool {
 	return false
 }
 
-// SetAction gets a reference to the given interface{} and assigns it to the Action field.
-func (o *GetActionVersions200ResponseVersionsInner) SetAction(v interface{}) {
-	o.Action = v
+// SetAction gets a reference to the given GetActionVersions200ResponseVersionsInnerAction and assigns it to the Action field.
+func (o *GetActionVersions200ResponseVersionsInner) SetAction(v GetActionVersions200ResponseVersionsInnerAction) {
+	o.Action = &v
 }
 
 // GetBuiltAt returns the BuiltAt field value if set, zero value otherwise.
-func (o *GetActionVersions200ResponseVersionsInner) GetBuiltAt() string {
+func (o *GetActionVersions200ResponseVersionsInner) GetBuiltAt() time.Time {
 	if o == nil || IsNil(o.BuiltAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.BuiltAt
@@ -411,7 +410,7 @@ func (o *GetActionVersions200ResponseVersionsInner) GetBuiltAt() string {
 
 // GetBuiltAtOk returns a tuple with the BuiltAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetActionVersions200ResponseVersionsInner) GetBuiltAtOk() (*string, bool) {
+func (o *GetActionVersions200ResponseVersionsInner) GetBuiltAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.BuiltAt) {
 		return nil, false
 	}
@@ -427,15 +426,15 @@ func (o *GetActionVersions200ResponseVersionsInner) HasBuiltAt() bool {
 	return false
 }
 
-// SetBuiltAt gets a reference to the given string and assigns it to the BuiltAt field.
-func (o *GetActionVersions200ResponseVersionsInner) SetBuiltAt(v string) {
+// SetBuiltAt gets a reference to the given time.Time and assigns it to the BuiltAt field.
+func (o *GetActionVersions200ResponseVersionsInner) SetBuiltAt(v time.Time) {
 	o.BuiltAt = &v
 }
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *GetActionVersions200ResponseVersionsInner) GetCreatedAt() string {
+func (o *GetActionVersions200ResponseVersionsInner) GetCreatedAt() time.Time {
 	if o == nil || IsNil(o.CreatedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.CreatedAt
@@ -443,7 +442,7 @@ func (o *GetActionVersions200ResponseVersionsInner) GetCreatedAt() string {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetActionVersions200ResponseVersionsInner) GetCreatedAtOk() (*string, bool) {
+func (o *GetActionVersions200ResponseVersionsInner) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
@@ -459,15 +458,15 @@ func (o *GetActionVersions200ResponseVersionsInner) HasCreatedAt() bool {
 	return false
 }
 
-// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
-func (o *GetActionVersions200ResponseVersionsInner) SetCreatedAt(v string) {
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
+func (o *GetActionVersions200ResponseVersionsInner) SetCreatedAt(v time.Time) {
 	o.CreatedAt = &v
 }
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *GetActionVersions200ResponseVersionsInner) GetUpdatedAt() string {
+func (o *GetActionVersions200ResponseVersionsInner) GetUpdatedAt() time.Time {
 	if o == nil || IsNil(o.UpdatedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.UpdatedAt
@@ -475,7 +474,7 @@ func (o *GetActionVersions200ResponseVersionsInner) GetUpdatedAt() string {
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetActionVersions200ResponseVersionsInner) GetUpdatedAtOk() (*string, bool) {
+func (o *GetActionVersions200ResponseVersionsInner) GetUpdatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
@@ -491,8 +490,8 @@ func (o *GetActionVersions200ResponseVersionsInner) HasUpdatedAt() bool {
 	return false
 }
 
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
-func (o *GetActionVersions200ResponseVersionsInner) SetUpdatedAt(v string) {
+// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
+func (o *GetActionVersions200ResponseVersionsInner) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt = &v
 }
 
@@ -568,7 +567,7 @@ func (o GetActionVersions200ResponseVersionsInner) ToMap() (map[string]interface
 	if !IsNil(o.Errors) {
 		toSerialize["errors"] = o.Errors
 	}
-	if o.Action != nil {
+	if !IsNil(o.Action) {
 		toSerialize["action"] = o.Action
 	}
 	if !IsNil(o.BuiltAt) {
