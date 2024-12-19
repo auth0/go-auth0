@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// GetBreachedPasswordDetection Get Breached Password Detection settings
+// GetBreachedPasswordDetectionConfig Get Breached Password Detection settings
 //
 // https://auth0.com/docs/api/management/v2/#!/AttackProtection/get_breached_password_detection
 func (m *Manager) GetBreachedPasswordDetectionConfig(ctx context.Context, opts ...management.RequestOption) (*models.GetBreachedPasswordDetection200Response, error) {
@@ -31,7 +31,7 @@ func (m *Manager) GetBreachedPasswordDetectionConfig(ctx context.Context, opts .
 	return localVarReturnValue, nil
 }
 
-// GetBruteForceProtection Get Brute-force settings
+// GetBruteForceConfig Get Brute-force settings
 //
 // https://auth0.com/docs/api/management/v2/#!/AttackProtection/get_brute_force_protection
 func (m *Manager) GetBruteForceConfig(ctx context.Context, opts ...management.RequestOption) (*models.GetBruteForceProtection200Response, error) {
@@ -43,7 +43,7 @@ func (m *Manager) GetBruteForceConfig(ctx context.Context, opts ...management.Re
 	return localVarReturnValue, nil
 }
 
-// GetSuspiciousIpThrottling Get Suspicious IP Throttling settings
+// GetSuspiciousIpThrottlingConfig Get Suspicious IP Throttling settings
 //
 // https://auth0.com/docs/api/management/v2/#!/AttackProtection/get_suspicious_ip_throttling
 func (m *Manager) GetSuspiciousIpThrottlingConfig(ctx context.Context, opts ...management.RequestOption) (*models.GetSuspiciousIpThrottling200Response, error) {
@@ -55,7 +55,7 @@ func (m *Manager) GetSuspiciousIpThrottlingConfig(ctx context.Context, opts ...m
 	return localVarReturnValue, nil
 }
 
-// PatchBreachedPasswordDetection Update Breached Password Detection settings
+// UpdateBreachedPasswordDetectionConfig Update Breached Password Detection settings
 //
 // https://auth0.com/docs/api/management/v2/#!/AttackProtection/patch_breached_password_detection
 func (m *Manager) UpdateBreachedPasswordDetectionConfig(ctx context.Context, patchBreachedPasswordDetectionRequest *models.PatchBreachedPasswordDetectionRequest, opts ...management.RequestOption) (*models.GetBreachedPasswordDetection200Response, error) {
@@ -67,7 +67,7 @@ func (m *Manager) UpdateBreachedPasswordDetectionConfig(ctx context.Context, pat
 	return localVarReturnValue, nil
 }
 
-// PatchBruteForceProtection Update Brute-force settings
+// UpdateBruteForceConfig Update Brute-force settings
 //
 // https://auth0.com/docs/api/management/v2/#!/AttackProtection/patch_brute_force_protection
 func (m *Manager) UpdateBruteForceConfig(ctx context.Context, patchBruteForceProtectionRequest *models.PatchBruteForceProtectionRequest, opts ...management.RequestOption) (*models.GetBruteForceProtection200Response, error) {
@@ -79,7 +79,7 @@ func (m *Manager) UpdateBruteForceConfig(ctx context.Context, patchBruteForcePro
 	return localVarReturnValue, nil
 }
 
-// PatchSuspiciousIpThrottling Update Suspicious IP Throttling settings
+// UpdateSuspiciousIpThrottlingConfig Update Suspicious IP Throttling settings
 //
 // https://auth0.com/docs/api/management/v2/#!/AttackProtection/patch_suspicious_ip_throttling
 func (m *Manager) UpdateSuspiciousIpThrottlingConfig(ctx context.Context, patchSuspiciousIpThrottlingRequest *models.PatchSuspiciousIpThrottlingRequest, opts ...management.RequestOption) (*models.GetSuspiciousIpThrottling200Response, error) {

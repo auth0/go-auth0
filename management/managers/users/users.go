@@ -31,7 +31,7 @@ func (m *Manager) DeleteAuthenticationMethods(ctx context.Context, id string, op
 	return nil
 }
 
-// DeleteAuthenticationMethodsByAuthenticationMethodId Delete an authentication method by ID
+// DeleteAuthenticationMethod Delete an authentication method by ID
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_authentication_methods_by_authentication_method_id
 func (m *Manager) DeleteAuthenticationMethod(ctx context.Context, id string, authenticationMethodId string, opts ...management.RequestOption) error {
@@ -43,7 +43,7 @@ func (m *Manager) DeleteAuthenticationMethod(ctx context.Context, id string, aut
 	return nil
 }
 
-// DeleteAuthenticators Delete All Authenticators
+// DeleteAllAuthenticators Delete All Authenticators
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_authenticators
 func (m *Manager) DeleteAllAuthenticators(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -55,7 +55,7 @@ func (m *Manager) DeleteAllAuthenticators(ctx context.Context, id string, opts .
 	return nil
 }
 
-// DeleteMultifactorByProvider Delete a User&#39;s Multi-factor Provider
+// DeleteMultifactorProvider Delete a User&#39;s Multi-factor Provider
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_multifactor_by_provider
 func (m *Manager) DeleteMultifactorProvider(ctx context.Context, id string, provider models.DeleteMultifactorByProviderProviderParameter, opts ...management.RequestOption) error {
@@ -79,7 +79,7 @@ func (m *Manager) DeletePermissions(ctx context.Context, id string, deletePermis
 	return nil
 }
 
-// DeleteRefreshTokensForUser Delete refresh tokens for a user
+// DeleteRefreshTokens Delete refresh tokens for a user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_refresh_tokens_for_user
 func (m *Manager) DeleteRefreshTokens(ctx context.Context, userId string, opts ...management.RequestOption) error {
@@ -91,7 +91,7 @@ func (m *Manager) DeleteRefreshTokens(ctx context.Context, userId string, opts .
 	return nil
 }
 
-// DeleteSessionsForUser Delete sessions for user
+// DeleteSessions Delete sessions for user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_sessions_for_user
 func (m *Manager) DeleteSessions(ctx context.Context, userId string, opts ...management.RequestOption) error {
@@ -103,7 +103,7 @@ func (m *Manager) DeleteSessions(ctx context.Context, userId string, opts ...man
 	return nil
 }
 
-// DeleteUserIdentityByUserId Unlink a User Identity
+// Unlink Unlink a User Identity
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_user_identity_by_user_id
 func (m *Manager) Unlink(ctx context.Context, id string, provider models.DeleteUserIdentityByUserIdProviderParameter, userId string, opts ...management.RequestOption) ([]*models.DeleteUserIdentityByUserId200ResponseInner, error) {
@@ -115,7 +115,7 @@ func (m *Manager) Unlink(ctx context.Context, id string, provider models.DeleteU
 	return localVarReturnValue, nil
 }
 
-// DeleteUserRoles Removes roles from a user
+// DeleteRoles Removes roles from a user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_user_roles
 func (m *Manager) DeleteRoles(ctx context.Context, id string, deleteUserRolesRequest *models.DeleteUserRolesRequest, opts ...management.RequestOption) error {
@@ -127,7 +127,7 @@ func (m *Manager) DeleteRoles(ctx context.Context, id string, deleteUserRolesReq
 	return nil
 }
 
-// DeleteUsersById Delete a User
+// Delete Delete a User
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/delete_users_by_id
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -151,7 +151,7 @@ func (m *Manager) GetAuthenticationMethods(ctx context.Context, id string, opts 
 	return localVarReturnValue, nil
 }
 
-// GetAuthenticationMethodsByAuthenticationMethodId Get an authentication method by ID
+// GetAuthenticationMethod Get an authentication method by ID
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_authentication_methods_by_authentication_method_id
 func (m *Manager) GetAuthenticationMethod(ctx context.Context, id string, authenticationMethodId string, opts ...management.RequestOption) (*models.GetAuthenticationMethods200ResponseOneOfInner, error) {
@@ -175,7 +175,7 @@ func (m *Manager) GetEnrollments(ctx context.Context, id string, opts ...managem
 	return localVarReturnValue, nil
 }
 
-// GetLogsByUser Get user&#39;s log events
+// GetLogs Get user&#39;s log events
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_logs_by_user
 func (m *Manager) GetLogs(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetLogs200Response, error) {
@@ -199,7 +199,7 @@ func (m *Manager) GetPermissions(ctx context.Context, id string, opts ...managem
 	return localVarReturnValue, nil
 }
 
-// GetRefreshTokensForUser Get refresh tokens for a user
+// GetRefreshTokens Get refresh tokens for a user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_refresh_tokens_for_user
 func (m *Manager) GetRefreshTokens(ctx context.Context, userId string, opts ...management.RequestOption) (*models.GetRefreshTokensForUser200Response, error) {
@@ -211,7 +211,7 @@ func (m *Manager) GetRefreshTokens(ctx context.Context, userId string, opts ...m
 	return localVarReturnValue, nil
 }
 
-// GetSessionsForUser Get sessions for user
+// GetSessions Get sessions for user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_sessions_for_user
 func (m *Manager) GetSessions(ctx context.Context, userId string, opts ...management.RequestOption) (*models.GetSessionsForUser200Response, error) {
@@ -235,7 +235,7 @@ func (m *Manager) GetUserOrganizations(ctx context.Context, id string, opts ...m
 	return localVarReturnValue, nil
 }
 
-// GetUserRoles Get a user&#39;s roles
+// GetRoles Get a user&#39;s roles
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_user_roles
 func (m *Manager) GetRoles(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200Response, error) {
@@ -247,7 +247,7 @@ func (m *Manager) GetRoles(ctx context.Context, id string, opts ...management.Re
 	return localVarReturnValue, nil
 }
 
-// GetUsers List or Search Users
+// GetAll List or Search Users
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_users
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetUsers200Response, error) {
@@ -259,7 +259,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetUsersById Get a User
+// Get Get a User
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/get_users_by_id
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetUsers200ResponseOneOfInner, error) {
@@ -271,7 +271,7 @@ func (m *Manager) Get(ctx context.Context, id string, opts ...management.Request
 	return localVarReturnValue, nil
 }
 
-// PatchAuthenticationMethodsByAuthenticationMethodId Update an authentication method
+// UpdateAuthenticationMethod Update an authentication method
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/patch_authentication_methods_by_authentication_method_id
 func (m *Manager) UpdateAuthenticationMethod(ctx context.Context, id string, authenticationMethodId string, patchAuthenticationMethodsByAuthenticationMethodIdRequest *models.PatchAuthenticationMethodsByAuthenticationMethodIdRequest, opts ...management.RequestOption) (*models.PatchAuthenticationMethodsByAuthenticationMethodId200Response, error) {
@@ -283,7 +283,7 @@ func (m *Manager) UpdateAuthenticationMethod(ctx context.Context, id string, aut
 	return localVarReturnValue, nil
 }
 
-// PatchUsersById Update a User
+// Update Update a User
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/patch_users_by_id
 func (m *Manager) Update(ctx context.Context, id string, userUpdate *models.UserUpdate, opts ...management.RequestOption) (*models.GetUsers200ResponseOneOfInner, error) {
@@ -295,7 +295,7 @@ func (m *Manager) Update(ctx context.Context, id string, userUpdate *models.User
 	return localVarReturnValue, nil
 }
 
-// PostAuthenticationMethods Creates an authentication method for a given user
+// CreateAuthenticationMethod Creates an authentication method for a given user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_authentication_methods
 func (m *Manager) CreateAuthenticationMethod(ctx context.Context, id string, postAuthenticationMethodsRequest *models.PostAuthenticationMethodsRequest, opts ...management.RequestOption) (*models.PostAuthenticationMethods201Response, error) {
@@ -307,7 +307,7 @@ func (m *Manager) CreateAuthenticationMethod(ctx context.Context, id string, pos
 	return localVarReturnValue, nil
 }
 
-// PostIdentities Link a User Account
+// Link Link a User Account
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_identities
 func (m *Manager) Link(ctx context.Context, id string, postIdentitiesRequest *models.PostIdentitiesRequest, opts ...management.RequestOption) ([]*models.UserIdentity, error) {
@@ -319,7 +319,7 @@ func (m *Manager) Link(ctx context.Context, id string, postIdentitiesRequest *mo
 	return localVarReturnValue, nil
 }
 
-// PostInvalidateRememberBrowser Invalidate All Remembered Browsers for Multi-factor Authentication
+// InvalidateRememberBrowser Invalidate All Remembered Browsers for Multi-factor Authentication
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_invalidate_remember_browser
 func (m *Manager) InvalidateRememberBrowser(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -331,7 +331,7 @@ func (m *Manager) InvalidateRememberBrowser(ctx context.Context, id string, opts
 	return nil
 }
 
-// PostPermissions Assign Permissions to a User
+// AssignPermissions Assign Permissions to a User
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_permissions
 func (m *Manager) AssignPermissions(ctx context.Context, id string, postPermissionsRequest *models.PostPermissionsRequest, opts ...management.RequestOption) error {
@@ -343,7 +343,7 @@ func (m *Manager) AssignPermissions(ctx context.Context, id string, postPermissi
 	return nil
 }
 
-// PostRecoveryCodeRegeneration Generate New Multi-factor Authentication Recovery Code
+// RegenerateRecoveryCode Generate New Multi-factor Authentication Recovery Code
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_recovery_code_regeneration
 func (m *Manager) RegenerateRecoveryCode(ctx context.Context, id string, opts ...management.RequestOption) (*models.PostRecoveryCodeRegeneration200Response, error) {
@@ -355,7 +355,7 @@ func (m *Manager) RegenerateRecoveryCode(ctx context.Context, id string, opts ..
 	return localVarReturnValue, nil
 }
 
-// PostUserRoles Assign roles to a user
+// AssignRoles Assign roles to a user
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_user_roles
 func (m *Manager) AssignRoles(ctx context.Context, id string, postUserRolesRequest *models.PostUserRolesRequest, opts ...management.RequestOption) error {
@@ -367,7 +367,7 @@ func (m *Manager) AssignRoles(ctx context.Context, id string, postUserRolesReque
 	return nil
 }
 
-// PostUsers Create a User
+// Create Create a User
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/post_users
 func (m *Manager) Create(ctx context.Context, userCreate *models.UserCreate, opts ...management.RequestOption) (*models.GetUsers200ResponseOneOfInner, error) {
@@ -379,7 +379,7 @@ func (m *Manager) Create(ctx context.Context, userCreate *models.UserCreate, opt
 	return localVarReturnValue, nil
 }
 
-// PutAuthenticationMethods Update all authentication methods by replacing them with the given ones
+// UpdateAuthenticationMethods Update all authentication methods by replacing them with the given ones
 //
 // https://auth0.com/docs/api/management/v2/#!/Users/put_authentication_methods
 func (m *Manager) UpdateAuthenticationMethods(ctx context.Context, id string, putAuthenticationMethodsRequestInner []*models.PutAuthenticationMethodsRequestInner, opts ...management.RequestOption) ([]*models.PutAuthenticationMethods200ResponseInner, error) {

@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteRolePermissionAssignment Remove permissions from a role
+// DeletePermissions Remove permissions from a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/delete_role_permission_assignment
 func (m *Manager) DeletePermissions(ctx context.Context, id string, postRolePermissionAssignmentRequest *models.PostRolePermissionAssignmentRequest, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) DeletePermissions(ctx context.Context, id string, postRolePerm
 	return nil
 }
 
-// DeleteRolesById Delete a role
+// Delete Delete a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/delete_roles_by_id
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -43,7 +43,7 @@ func (m *Manager) Delete(ctx context.Context, id string, opts ...management.Requ
 	return nil
 }
 
-// GetRolePermission Get permissions granted by role
+// GetPermissions Get permissions granted by role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/get_role_permission
 func (m *Manager) GetPermissions(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetRolePermission200Response, error) {
@@ -55,7 +55,7 @@ func (m *Manager) GetPermissions(ctx context.Context, id string, opts ...managem
 	return localVarReturnValue, nil
 }
 
-// GetRoleUser Get a role&#39;s users
+// GetUsers Get a role&#39;s users
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/get_role_user
 func (m *Manager) GetUsers(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetRoleUser200Response, error) {
@@ -67,7 +67,7 @@ func (m *Manager) GetUsers(ctx context.Context, id string, opts ...management.Re
 	return localVarReturnValue, nil
 }
 
-// GetRoles Get roles
+// GetAll Get roles
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/get_roles
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200Response, error) {
@@ -79,7 +79,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetRolesById Get a role
+// Get Get a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/get_roles_by_id
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200ResponseOneOfInner, error) {
@@ -91,7 +91,7 @@ func (m *Manager) Get(ctx context.Context, id string, opts ...management.Request
 	return localVarReturnValue, nil
 }
 
-// PatchRolesById Update a role
+// Update Update a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/patch_roles_by_id
 func (m *Manager) Update(ctx context.Context, id string, roleUpdate *models.RoleUpdate, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200ResponseOneOfInner, error) {
@@ -103,7 +103,7 @@ func (m *Manager) Update(ctx context.Context, id string, roleUpdate *models.Role
 	return localVarReturnValue, nil
 }
 
-// PostRolePermissionAssignment Associate permissions with a role
+// AddPermissions Associate permissions with a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/post_role_permission_assignment
 func (m *Manager) AddPermissions(ctx context.Context, id string, postRolePermissionAssignmentRequest *models.PostRolePermissionAssignmentRequest, opts ...management.RequestOption) error {
@@ -115,7 +115,7 @@ func (m *Manager) AddPermissions(ctx context.Context, id string, postRolePermiss
 	return nil
 }
 
-// PostRoleUsers Assign users to a role
+// AssignUsers Assign users to a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/post_role_users
 func (m *Manager) AssignUsers(ctx context.Context, id string, postRoleUsersRequest *models.PostRoleUsersRequest, opts ...management.RequestOption) error {
@@ -127,7 +127,7 @@ func (m *Manager) AssignUsers(ctx context.Context, id string, postRoleUsersReque
 	return nil
 }
 
-// PostRoles Create a role
+// Create Create a role
 //
 // https://auth0.com/docs/api/management/v2/#!/Roles/post_roles
 func (m *Manager) Create(ctx context.Context, roleCreate *models.RoleCreate, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200ResponseOneOfInner, error) {

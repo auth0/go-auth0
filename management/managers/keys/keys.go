@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// GetSigningKey Get an Application Signing Key by its key id
+// Get Get an Application Signing Key by its key id
 //
 // https://auth0.com/docs/api/management/v2/#!/Keys/get_signing_key
 func (m *Manager) Get(ctx context.Context, kid string, opts ...management.RequestOption) (*models.GetSigningKeys200ResponseInner, error) {
@@ -31,7 +31,7 @@ func (m *Manager) Get(ctx context.Context, kid string, opts ...management.Reques
 	return localVarReturnValue, nil
 }
 
-// GetSigningKeys Get all Application Signing Keys
+// GetAll Get all Application Signing Keys
 //
 // https://auth0.com/docs/api/management/v2/#!/Keys/get_signing_keys
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) ([]*models.GetSigningKeys200ResponseInner, error) {
@@ -43,7 +43,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// PostSigningKeys Rotate the Application Signing Key
+// Rotate Rotate the Application Signing Key
 //
 // https://auth0.com/docs/api/management/v2/#!/Keys/post_signing_keys
 func (m *Manager) Rotate(ctx context.Context, opts ...management.RequestOption) (*models.PostSigningKeys201Response, error) {
@@ -55,7 +55,7 @@ func (m *Manager) Rotate(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// PutSigningKeys Revoke an Application Signing Key by its key id
+// Revoke Revoke an Application Signing Key by its key id
 //
 // https://auth0.com/docs/api/management/v2/#!/Keys/put_signing_keys
 func (m *Manager) Revoke(ctx context.Context, kid string, opts ...management.RequestOption) (*models.PutSigningKeys200Response, error) {

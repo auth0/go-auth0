@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteUserBlocks Unblock by identifier
+// DeleteAll Unblock by identifier
 //
 // https://auth0.com/docs/api/management/v2/#!/UserBlocks/delete_user_blocks
 func (m *Manager) DeleteAll(ctx context.Context, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) DeleteAll(ctx context.Context, opts ...management.RequestOptio
 	return nil
 }
 
-// DeleteUserBlocksById Unblock a user
+// Delete Unblock a user
 //
 // https://auth0.com/docs/api/management/v2/#!/UserBlocks/delete_user_blocks_by_id
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -43,7 +43,7 @@ func (m *Manager) Delete(ctx context.Context, id string, opts ...management.Requ
 	return nil
 }
 
-// GetUserBlocks Get blocks by identifier
+// GetAll Get blocks by identifier
 //
 // https://auth0.com/docs/api/management/v2/#!/UserBlocks/get_user_blocks
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.UserBlock, error) {
@@ -55,7 +55,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetUserBlocksById Get a user&#39;s blocks
+// Get Get a user&#39;s blocks
 //
 // https://auth0.com/docs/api/management/v2/#!/UserBlocks/get_user_blocks_by_id
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.UserBlock, error) {

@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteResourceServersById Delete a resource server
+// Delete Delete a resource server
 //
 // https://auth0.com/docs/api/management/v2/#!/ResourceServers/delete_resource_servers_by_id
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) Delete(ctx context.Context, id string, opts ...management.Requ
 	return nil
 }
 
-// GetResourceServers Get resource servers
+// GetAll Get resource servers
 //
 // https://auth0.com/docs/api/management/v2/#!/ResourceServers/get_resource_servers
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetResourceServers200Response, error) {
@@ -43,7 +43,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetResourceServersById Get a resource server
+// Get Get a resource server
 //
 // https://auth0.com/docs/api/management/v2/#!/ResourceServers/get_resource_servers_by_id
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.ResourceServer, error) {
@@ -55,7 +55,7 @@ func (m *Manager) Get(ctx context.Context, id string, opts ...management.Request
 	return localVarReturnValue, nil
 }
 
-// PatchResourceServersById Update a resource server
+// Update Update a resource server
 //
 // https://auth0.com/docs/api/management/v2/#!/ResourceServers/patch_resource_servers_by_id
 func (m *Manager) Update(ctx context.Context, id string, resourceServerUpdate *models.ResourceServerUpdate, opts ...management.RequestOption) (*models.ResourceServer, error) {
@@ -67,7 +67,7 @@ func (m *Manager) Update(ctx context.Context, id string, resourceServerUpdate *m
 	return localVarReturnValue, nil
 }
 
-// PostResourceServers Create a resource server
+// Create Create a resource server
 //
 // https://auth0.com/docs/api/management/v2/#!/ResourceServers/post_resource_servers
 func (m *Manager) Create(ctx context.Context, resourceServerCreate *models.ResourceServerCreate, opts ...management.RequestOption) (*models.ResourceServer, error) {

@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteClientGrantsById Delete client grant
+// Delete Delete client grant
 //
 // https://auth0.com/docs/api/management/v2/#!/ClientGrants/delete_client_grants_by_id
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) Delete(ctx context.Context, id string, opts ...management.Requ
 	return nil
 }
 
-// GetClientGrants Get client grants
+// GetAll Get client grants
 //
 // https://auth0.com/docs/api/management/v2/#!/ClientGrants/get_client_grants
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetClientGrants200Response, error) {
@@ -43,7 +43,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// PatchClientGrantsById Update client grant
+// Update Update client grant
 //
 // https://auth0.com/docs/api/management/v2/#!/ClientGrants/patch_client_grants_by_id
 func (m *Manager) Update(ctx context.Context, id string, patchClientGrantsByIdRequest *models.PatchClientGrantsByIdRequest, opts ...management.RequestOption) (*models.ClientGrant, error) {
@@ -55,7 +55,7 @@ func (m *Manager) Update(ctx context.Context, id string, patchClientGrantsByIdRe
 	return localVarReturnValue, nil
 }
 
-// PostClientGrants Create client grant
+// Create Create client grant
 //
 // https://auth0.com/docs/api/management/v2/#!/ClientGrants/post_client_grants
 func (m *Manager) Create(ctx context.Context, clientGrantCreate *models.ClientGrantCreate, opts ...management.RequestOption) (*models.ClientGrant, error) {

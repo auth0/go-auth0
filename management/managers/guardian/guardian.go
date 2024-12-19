@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteEnrollmentsById Delete a multi-factor authentication enrollment
+// DeleteGuardianEnrollment Delete a multi-factor authentication enrollment
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/delete_enrollments_by_id
 func (m *Manager) DeleteGuardianEnrollment(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) DeleteGuardianEnrollment(ctx context.Context, id string, opts 
 	return nil
 }
 
-// GetApns Get APNS push notification configuration
+// GetPushNotificationProviderAPNS Get APNS push notification configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/get_apns
 func (m *Manager) GetPushNotificationProviderAPNS(ctx context.Context, opts ...management.RequestOption) (*models.GetApns200Response, error) {
@@ -43,7 +43,7 @@ func (m *Manager) GetPushNotificationProviderAPNS(ctx context.Context, opts ...m
 	return localVarReturnValue, nil
 }
 
-// GetEnrollmentsById Get a multi-factor authentication enrollment
+// GetGuardianEnrollment Get a multi-factor authentication enrollment
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/get_enrollments_by_id
 func (m *Manager) GetGuardianEnrollment(ctx context.Context, id string, opts ...management.RequestOption) (*models.Enrollment, error) {
@@ -55,7 +55,7 @@ func (m *Manager) GetGuardianEnrollment(ctx context.Context, id string, opts ...
 	return localVarReturnValue, nil
 }
 
-// GetFactorPhoneTemplates Get Enrollment and Verification Phone Templates
+// GetPhoneFactorTemplates Get Enrollment and Verification Phone Templates
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/get_factor_phone_templates
 func (m *Manager) GetPhoneFactorTemplates(ctx context.Context, opts ...management.RequestOption) (*models.TemplateMessages, error) {
@@ -67,7 +67,7 @@ func (m *Manager) GetPhoneFactorTemplates(ctx context.Context, opts ...managemen
 	return localVarReturnValue, nil
 }
 
-// GetFactorSmsTemplates Get SMS enrollment and verification templates
+// GetSmsFactorTemplates Get SMS enrollment and verification templates
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/get_factor_sms_templates
 func (m *Manager) GetSmsFactorTemplates(ctx context.Context, opts ...management.RequestOption) (*models.TemplateMessages, error) {
@@ -91,7 +91,7 @@ func (m *Manager) GetFactors(ctx context.Context, opts ...management.RequestOpti
 	return localVarReturnValue, nil
 }
 
-// GetGuardianPhoneProviders Get phone provider configuration
+// GetPhoneFactorSelectedProvider Get phone provider configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/get_guardian_phone_providers
 func (m *Manager) GetPhoneFactorSelectedProvider(ctx context.Context, opts ...management.RequestOption) (*models.GetGuardianPhoneProviders200Response, error) {
@@ -103,7 +103,7 @@ func (m *Manager) GetPhoneFactorSelectedProvider(ctx context.Context, opts ...ma
 	return localVarReturnValue, nil
 }
 
-// GetMessageTypes Get Enabled Phone Factors
+// GetPhoneFactorMessageTypes Get Enabled Phone Factors
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/get_message_types
 func (m *Manager) GetPhoneFactorMessageTypes(ctx context.Context, opts ...management.RequestOption) (*models.GetMessageTypes200Response, error) {
@@ -115,7 +115,7 @@ func (m *Manager) GetPhoneFactorMessageTypes(ctx context.Context, opts ...manage
 	return localVarReturnValue, nil
 }
 
-// GetPhoneTwilioFactorProvider Get Twilio configuration
+// GetPhoneFactorProviderTwilio Get Twilio configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/get_phone_twilio_factor_provider
 func (m *Manager) GetPhoneFactorProviderTwilio(ctx context.Context, opts ...management.RequestOption) (*models.TwilioFactorProvider, error) {
@@ -127,7 +127,7 @@ func (m *Manager) GetPhoneFactorProviderTwilio(ctx context.Context, opts ...mana
 	return localVarReturnValue, nil
 }
 
-// GetPnProviders Get push notification provider
+// GetPushNotificationSelectedProvider Get push notification provider
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/get_pn_providers
 func (m *Manager) GetPushNotificationSelectedProvider(ctx context.Context, opts ...management.RequestOption) (*models.GetPnProviders200Response, error) {
@@ -151,7 +151,7 @@ func (m *Manager) GetPolicies(ctx context.Context, opts ...management.RequestOpt
 	return localVarReturnValue, nil
 }
 
-// GetSmsProviders Get SMS configuration
+// GetSmsSelectedProvider Get SMS configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/get_sms_providers
 func (m *Manager) GetSmsSelectedProvider(ctx context.Context, opts ...management.RequestOption) (*models.GetGuardianPhoneProviders200Response, error) {
@@ -163,7 +163,7 @@ func (m *Manager) GetSmsSelectedProvider(ctx context.Context, opts ...management
 	return localVarReturnValue, nil
 }
 
-// GetSmsTwilioFactorProvider Get Twilio SMS configuration
+// GetSmsFactorProviderTwilio Get Twilio SMS configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/get_sms_twilio_factor_provider
 func (m *Manager) GetSmsFactorProviderTwilio(ctx context.Context, opts ...management.RequestOption) (*models.SmsTwilioFactorProvider, error) {
@@ -175,7 +175,7 @@ func (m *Manager) GetSmsFactorProviderTwilio(ctx context.Context, opts ...manage
 	return localVarReturnValue, nil
 }
 
-// GetSns Get AWS SNS configuration
+// GetPushNotificationProviderSNS Get AWS SNS configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/get_sns
 func (m *Manager) GetPushNotificationProviderSNS(ctx context.Context, opts ...management.RequestOption) (*models.SnsFactorProvider, error) {
@@ -187,7 +187,7 @@ func (m *Manager) GetPushNotificationProviderSNS(ctx context.Context, opts ...ma
 	return localVarReturnValue, nil
 }
 
-// PatchApns Update APNs provider configuration
+// UpdatePushNotificationProviderAPNS Update APNs provider configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/patch_apns
 func (m *Manager) UpdatePushNotificationProviderAPNS(ctx context.Context, putApnsRequest *models.PutApnsRequest, opts ...management.RequestOption) (*models.PutApns200Response, error) {
@@ -199,7 +199,7 @@ func (m *Manager) UpdatePushNotificationProviderAPNS(ctx context.Context, putApn
 	return localVarReturnValue, nil
 }
 
-// PatchFcm Updates FCM configuration
+// UpdatePushNotificationProviderFCM Updates FCM configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/patch_fcm
 func (m *Manager) UpdatePushNotificationProviderFCM(ctx context.Context, putFcmRequest *models.PutFcmRequest, opts ...management.RequestOption) (*map[string]interface{}, error) {
@@ -211,7 +211,7 @@ func (m *Manager) UpdatePushNotificationProviderFCM(ctx context.Context, putFcmR
 	return localVarReturnValue, nil
 }
 
-// PatchSns Update AWS SNS configuration
+// UpdatePushNotificationProviderSNS Update AWS SNS configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/patch_sns
 func (m *Manager) UpdatePushNotificationProviderSNS(ctx context.Context, putSnsRequest *models.PutSnsRequest, opts ...management.RequestOption) (*models.PutSnsRequest, error) {
@@ -223,7 +223,7 @@ func (m *Manager) UpdatePushNotificationProviderSNS(ctx context.Context, putSnsR
 	return localVarReturnValue, nil
 }
 
-// PostTicket Create a multi-factor authentication enrollment ticket
+// CreateEnrollmentTicket Create a multi-factor authentication enrollment ticket
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/post_ticket
 func (m *Manager) CreateEnrollmentTicket(ctx context.Context, enrollmentCreate *models.EnrollmentCreate, opts ...management.RequestOption) (*models.PostTicket200Response, error) {
@@ -235,7 +235,7 @@ func (m *Manager) CreateEnrollmentTicket(ctx context.Context, enrollmentCreate *
 	return localVarReturnValue, nil
 }
 
-// PutApns Update APNS configuration
+// SetPushNotificationProviderAPNS Update APNS configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_apns
 func (m *Manager) SetPushNotificationProviderAPNS(ctx context.Context, putApnsRequest *models.PutApnsRequest, opts ...management.RequestOption) (*models.PutApns200Response, error) {
@@ -247,7 +247,7 @@ func (m *Manager) SetPushNotificationProviderAPNS(ctx context.Context, putApnsRe
 	return localVarReturnValue, nil
 }
 
-// PutFactorPhoneTemplates Update Enrollment and Verification Phone Templates
+// SetPhoneFactorTemplates Update Enrollment and Verification Phone Templates
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_factor_phone_templates
 func (m *Manager) SetPhoneFactorTemplates(ctx context.Context, templateMessages *models.TemplateMessages, opts ...management.RequestOption) (*models.TemplateMessages, error) {
@@ -259,7 +259,7 @@ func (m *Manager) SetPhoneFactorTemplates(ctx context.Context, templateMessages 
 	return localVarReturnValue, nil
 }
 
-// PutFactorSmsTemplates Update SMS enrollment and verification templates
+// SetSmsFactorTemplates Update SMS enrollment and verification templates
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_factor_sms_templates
 func (m *Manager) SetSmsFactorTemplates(ctx context.Context, templateMessages *models.TemplateMessages, opts ...management.RequestOption) (*models.TemplateMessages, error) {
@@ -271,7 +271,7 @@ func (m *Manager) SetSmsFactorTemplates(ctx context.Context, templateMessages *m
 	return localVarReturnValue, nil
 }
 
-// PutFactorsByName Update multi-factor authentication type
+// UpdateFactor Update multi-factor authentication type
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_factors_by_name
 func (m *Manager) UpdateFactor(ctx context.Context, name models.PutFactorsByNameNameParameter, putFactorsByNameRequest *models.PutFactorsByNameRequest, opts ...management.RequestOption) (*models.PutFactorsByName200Response, error) {
@@ -283,7 +283,7 @@ func (m *Manager) UpdateFactor(ctx context.Context, name models.PutFactorsByName
 	return localVarReturnValue, nil
 }
 
-// PutFcm Updates FCM configuration
+// SetPushNotificationProviderFCM Updates FCM configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_fcm
 func (m *Manager) SetPushNotificationProviderFCM(ctx context.Context, putFcmRequest *models.PutFcmRequest, opts ...management.RequestOption) (*map[string]interface{}, error) {
@@ -295,7 +295,7 @@ func (m *Manager) SetPushNotificationProviderFCM(ctx context.Context, putFcmRequ
 	return localVarReturnValue, nil
 }
 
-// PutMessageTypes Update the Enabled Phone Factors
+// UpdatePhoneFactorMessageTypes Update the Enabled Phone Factors
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_message_types
 func (m *Manager) UpdatePhoneFactorMessageTypes(ctx context.Context, putMessageTypesRequest *models.PutMessageTypesRequest, opts ...management.RequestOption) (*models.GetMessageTypes200Response, error) {
@@ -307,7 +307,7 @@ func (m *Manager) UpdatePhoneFactorMessageTypes(ctx context.Context, putMessageT
 	return localVarReturnValue, nil
 }
 
-// PutPhoneProviders Update phone provider configuration
+// UpdatePhoneFactorSelectedProvider Update phone provider configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_phone_providers
 func (m *Manager) UpdatePhoneFactorSelectedProvider(ctx context.Context, putPhoneProvidersRequest *models.PutPhoneProvidersRequest, opts ...management.RequestOption) (*models.GetGuardianPhoneProviders200Response, error) {
@@ -319,7 +319,7 @@ func (m *Manager) UpdatePhoneFactorSelectedProvider(ctx context.Context, putPhon
 	return localVarReturnValue, nil
 }
 
-// PutPnProviders Update Push Notification configuration
+// SetPushNotificationSelectedProvider Update Push Notification configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_pn_providers
 func (m *Manager) SetPushNotificationSelectedProvider(ctx context.Context, putPnProvidersRequest *models.PutPnProvidersRequest, opts ...management.RequestOption) (*models.GetPnProviders200Response, error) {
@@ -331,7 +331,7 @@ func (m *Manager) SetPushNotificationSelectedProvider(ctx context.Context, putPn
 	return localVarReturnValue, nil
 }
 
-// PutPolicies Update multi-factor authentication policies
+// UpdatePolicies Update multi-factor authentication policies
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_policies
 func (m *Manager) UpdatePolicies(ctx context.Context, getPolicies200ResponseInner []*models.GetPolicies200ResponseInner, opts ...management.RequestOption) ([]*models.GetPolicies200ResponseInner, error) {
@@ -343,7 +343,7 @@ func (m *Manager) UpdatePolicies(ctx context.Context, getPolicies200ResponseInne
 	return localVarReturnValue, nil
 }
 
-// PutSmsProviders Update SMS configuration
+// SetSmsSelectedProvider Update SMS configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_sms_providers
 func (m *Manager) SetSmsSelectedProvider(ctx context.Context, putPhoneProvidersRequest *models.PutPhoneProvidersRequest, opts ...management.RequestOption) (*models.GetGuardianPhoneProviders200Response, error) {
@@ -355,7 +355,7 @@ func (m *Manager) SetSmsSelectedProvider(ctx context.Context, putPhoneProvidersR
 	return localVarReturnValue, nil
 }
 
-// PutSmsTwilioFactorProvider Update Twilio SMS configuration
+// SetSmsFactorProviderTwilio Update Twilio SMS configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_sms_twilio_factor_provider
 func (m *Manager) SetSmsFactorProviderTwilio(ctx context.Context, putTwilioRequest *models.PutTwilioRequest, opts ...management.RequestOption) (*models.SmsTwilioFactorProvider, error) {
@@ -367,7 +367,7 @@ func (m *Manager) SetSmsFactorProviderTwilio(ctx context.Context, putTwilioReque
 	return localVarReturnValue, nil
 }
 
-// PutSns Update AWS SNS configuration
+// SetPushNotificationProviderSNS Update AWS SNS configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_sns
 func (m *Manager) SetPushNotificationProviderSNS(ctx context.Context, putSnsRequest *models.PutSnsRequest, opts ...management.RequestOption) (*models.PutSnsRequest, error) {
@@ -379,7 +379,7 @@ func (m *Manager) SetPushNotificationProviderSNS(ctx context.Context, putSnsRequ
 	return localVarReturnValue, nil
 }
 
-// PutTwilio Update Twilio configuration
+// UpdatePhoneFactorProviderTwilio Update Twilio configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Guardian/put_twilio
 func (m *Manager) UpdatePhoneFactorProviderTwilio(ctx context.Context, putTwilioRequest *models.PutTwilioRequest, opts ...management.RequestOption) (*models.TwilioFactorProvider, error) {

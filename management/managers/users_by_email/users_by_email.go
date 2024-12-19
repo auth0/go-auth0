@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// GetUsersByEmail Search Users by Email
+// GetByEmail Search Users by Email
 //
 // https://auth0.com/docs/api/management/v2/#!/UsersByEmail/get_users_by_email
 func (m *Manager) GetByEmail(ctx context.Context, opts ...management.RequestOption) ([]*models.GetUsers200ResponseOneOfInner, error) {

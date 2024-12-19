@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// GetLogs Search log events
+// GetAll Search log events
 //
 // https://auth0.com/docs/api/management/v2/#!/Logs/get_logs
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetLogs200Response, error) {
@@ -31,7 +31,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetLogsById Get a log event by id
+// Get Get a log event by id
 //
 // https://auth0.com/docs/api/management/v2/#!/Logs/get_logs_by_id
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.Log, error) {

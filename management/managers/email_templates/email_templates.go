@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// GetEmailTemplatesByTemplateName Get an email template
+// Get Get an email template
 //
 // https://auth0.com/docs/api/management/v2/#!/EmailTemplates/get_email_templates_by_template_name
 func (m *Manager) Get(ctx context.Context, templateName models.GetEmailTemplatesByTemplateNameTemplateNameParameter, opts ...management.RequestOption) (*models.GetEmailTemplatesByTemplateName200Response, error) {
@@ -31,7 +31,7 @@ func (m *Manager) Get(ctx context.Context, templateName models.GetEmailTemplates
 	return localVarReturnValue, nil
 }
 
-// PatchEmailTemplatesByTemplateName Patch an email template
+// Update Patch an email template
 //
 // https://auth0.com/docs/api/management/v2/#!/EmailTemplates/patch_email_templates_by_template_name
 func (m *Manager) Update(ctx context.Context, templateName models.GetEmailTemplatesByTemplateNameTemplateNameParameter, getEmailTemplatesByTemplateName200Response *models.GetEmailTemplatesByTemplateName200Response, opts ...management.RequestOption) (*models.GetEmailTemplatesByTemplateName200Response, error) {
@@ -43,7 +43,7 @@ func (m *Manager) Update(ctx context.Context, templateName models.GetEmailTempla
 	return localVarReturnValue, nil
 }
 
-// PostEmailTemplates Create an email template
+// Create Create an email template
 //
 // https://auth0.com/docs/api/management/v2/#!/EmailTemplates/post_email_templates
 func (m *Manager) Create(ctx context.Context, postEmailTemplatesRequest *models.PostEmailTemplatesRequest, opts ...management.RequestOption) (*models.PostEmailTemplatesRequest, error) {
@@ -55,7 +55,7 @@ func (m *Manager) Create(ctx context.Context, postEmailTemplatesRequest *models.
 	return localVarReturnValue, nil
 }
 
-// PutEmailTemplatesByTemplateName Update an email template
+// Put Update an email template
 //
 // https://auth0.com/docs/api/management/v2/#!/EmailTemplates/put_email_templates_by_template_name
 func (m *Manager) Put(ctx context.Context, templateName models.GetEmailTemplatesByTemplateNameTemplateNameParameter, emailTemplateUpdate *models.EmailTemplateUpdate, opts ...management.RequestOption) (*models.PostEmailTemplatesRequest, error) {

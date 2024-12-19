@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteLogStreamsById Delete log stream
+// Delete Delete log stream
 //
 // https://auth0.com/docs/api/management/v2/#!/LogStreams/delete_log_streams_by_id
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) Delete(ctx context.Context, id string, opts ...management.Requ
 	return nil
 }
 
-// GetLogStreams Get log streams
+// GetAll Get log streams
 //
 // https://auth0.com/docs/api/management/v2/#!/LogStreams/get_log_streams
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) ([]*models.GetLogStreams200ResponseInner, error) {
@@ -43,7 +43,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetLogStreamsById Get log stream by ID
+// Get Get log stream by ID
 //
 // https://auth0.com/docs/api/management/v2/#!/LogStreams/get_log_streams_by_id
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetLogStreams200ResponseInner, error) {
@@ -55,7 +55,7 @@ func (m *Manager) Get(ctx context.Context, id string, opts ...management.Request
 	return localVarReturnValue, nil
 }
 
-// PatchLogStreamsById Update a log stream
+// Update Update a log stream
 //
 // https://auth0.com/docs/api/management/v2/#!/LogStreams/patch_log_streams_by_id
 func (m *Manager) Update(ctx context.Context, id string, patchLogStreamsByIdRequest *models.PatchLogStreamsByIdRequest, opts ...management.RequestOption) (*models.GetLogStreams200ResponseInner, error) {
@@ -67,7 +67,7 @@ func (m *Manager) Update(ctx context.Context, id string, patchLogStreamsByIdRequ
 	return localVarReturnValue, nil
 }
 
-// PostLogStreams Create a log stream
+// Create Create a log stream
 //
 // https://auth0.com/docs/api/management/v2/#!/LogStreams/post_log_streams
 func (m *Manager) Create(ctx context.Context, postLogStreamsRequest *models.PostLogStreamsRequest, opts ...management.RequestOption) (*models.GetLogStreams200ResponseInner, error) {

@@ -43,7 +43,7 @@ func (m *Manager) GetPartials(ctx context.Context, prompt models.GetPartialsProm
 	return localVarReturnValue, nil
 }
 
-// GetPrompts Get prompt settings
+// Get Get prompt settings
 //
 // https://auth0.com/docs/api/management/v2/#!/Prompts/get_prompts
 func (m *Manager) Get(ctx context.Context, opts ...management.RequestOption) (*models.PromptsSettings, error) {
@@ -55,7 +55,7 @@ func (m *Manager) Get(ctx context.Context, opts ...management.RequestOption) (*m
 	return localVarReturnValue, nil
 }
 
-// PatchPrompts Update prompt settings
+// Update Update prompt settings
 //
 // https://auth0.com/docs/api/management/v2/#!/Prompts/patch_prompts
 func (m *Manager) Update(ctx context.Context, promptsSettingsUpdate *models.PromptsSettingsUpdate, opts ...management.RequestOption) (*models.PromptsSettings, error) {
@@ -67,7 +67,7 @@ func (m *Manager) Update(ctx context.Context, promptsSettingsUpdate *models.Prom
 	return localVarReturnValue, nil
 }
 
-// PutCustomTextByLanguage Set custom text for a specific prompt
+// UpdateCustomTextByLanguage Set custom text for a specific prompt
 //
 // https://auth0.com/docs/api/management/v2/#!/Prompts/put_custom_text_by_language
 func (m *Manager) UpdateCustomTextByLanguage(ctx context.Context, prompt models.GetCustomTextByLanguagePromptParameter, language models.GetCustomTextByLanguageLanguageParameter, requestBody map[string]interface{}, opts ...management.RequestOption) error {
@@ -79,7 +79,7 @@ func (m *Manager) UpdateCustomTextByLanguage(ctx context.Context, prompt models.
 	return nil
 }
 
-// PutPartials Set partials for a prompt
+// UpdatePartials Set partials for a prompt
 //
 // https://auth0.com/docs/api/management/v2/#!/Prompts/put_partials
 func (m *Manager) UpdatePartials(ctx context.Context, prompt models.GetPartialsPromptParameter, requestBody map[string]interface{}, opts ...management.RequestOption) error {

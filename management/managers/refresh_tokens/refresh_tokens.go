@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteRefreshToken Delete a refresh tokens
+// Delete Delete a refresh tokens
 //
 // https://auth0.com/docs/api/management/v2/#!/RefreshTokens/delete_refresh_token
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) Delete(ctx context.Context, id string, opts ...management.Requ
 	return nil
 }
 
-// GetRefreshToken Get a refresh token
+// Get Get a refresh token
 //
 // https://auth0.com/docs/api/management/v2/#!/RefreshTokens/get_refresh_token
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetRefreshToken200Response, error) {

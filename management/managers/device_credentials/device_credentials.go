@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteDeviceCredentialsById Delete a device credential
+// Delete Delete a device credential
 //
 // https://auth0.com/docs/api/management/v2/#!/DeviceCredentials/delete_device_credentials_by_id
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) Delete(ctx context.Context, id string, opts ...management.Requ
 	return nil
 }
 
-// GetDeviceCredentials Retrieve device credentials
+// GetAll Retrieve device credentials
 //
 // https://auth0.com/docs/api/management/v2/#!/DeviceCredentials/get_device_credentials
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetDeviceCredentials200Response, error) {
@@ -43,7 +43,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// PostDeviceCredentials Create a device public key credential
+// CreatePublicKey Create a device public key credential
 //
 // https://auth0.com/docs/api/management/v2/#!/DeviceCredentials/post_device_credentials
 func (m *Manager) CreatePublicKey(ctx context.Context, deviceCredentialCreate *models.DeviceCredentialCreate, opts ...management.RequestOption) (*models.PostDeviceCredentials201Response, error) {

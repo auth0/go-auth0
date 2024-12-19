@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteAction Delete an action
+// Delete Delete an action
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/delete_action
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) Delete(ctx context.Context, id string, opts ...management.Requ
 	return nil
 }
 
-// GetAction Get an action
+// Get Get an action
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/get_action
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetActions200ResponseActionsInner, error) {
@@ -43,7 +43,7 @@ func (m *Manager) Get(ctx context.Context, id string, opts ...management.Request
 	return localVarReturnValue, nil
 }
 
-// GetActionVersion Get a specific version of an action
+// GetVersion Get a specific version of an action
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/get_action_version
 func (m *Manager) GetVersion(ctx context.Context, actionId string, id string, opts ...management.RequestOption) (*models.GetActionVersions200ResponseVersionsInner, error) {
@@ -55,7 +55,7 @@ func (m *Manager) GetVersion(ctx context.Context, actionId string, id string, op
 	return localVarReturnValue, nil
 }
 
-// GetActionVersions Get an action&#39;s versions
+// GetVersions Get an action&#39;s versions
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/get_action_versions
 func (m *Manager) GetVersions(ctx context.Context, actionId string, opts ...management.RequestOption) (*models.GetActionVersions200Response, error) {
@@ -67,7 +67,7 @@ func (m *Manager) GetVersions(ctx context.Context, actionId string, opts ...mana
 	return localVarReturnValue, nil
 }
 
-// GetActions Get actions
+// GetAll Get actions
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/get_actions
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetActions200Response, error) {
@@ -79,7 +79,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetBindings Get trigger bindings
+// GetTriggerBindings Get trigger bindings
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/get_bindings
 func (m *Manager) GetTriggerBindings(ctx context.Context, triggerId string, opts ...management.RequestOption) (*models.GetBindings200Response, error) {
@@ -103,7 +103,7 @@ func (m *Manager) GetExecution(ctx context.Context, id string, opts ...managemen
 	return localVarReturnValue, nil
 }
 
-// GetTriggers Get triggers
+// GetAllTriggers Get triggers
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/get_triggers
 func (m *Manager) GetAllTriggers(ctx context.Context, opts ...management.RequestOption) (*models.GetTriggers200Response, error) {
@@ -115,7 +115,7 @@ func (m *Manager) GetAllTriggers(ctx context.Context, opts ...management.Request
 	return localVarReturnValue, nil
 }
 
-// PatchAction Update an action
+// Update Update an action
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/patch_action
 func (m *Manager) Update(ctx context.Context, id string, patchActionRequest *models.PatchActionRequest, opts ...management.RequestOption) (*models.GetActions200ResponseActionsInner, error) {
@@ -127,7 +127,7 @@ func (m *Manager) Update(ctx context.Context, id string, patchActionRequest *mod
 	return localVarReturnValue, nil
 }
 
-// PatchBindings Update trigger bindings
+// UpdateTriggerBindings Update trigger bindings
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/patch_bindings
 func (m *Manager) UpdateTriggerBindings(ctx context.Context, triggerId string, patchBindingsRequest *models.PatchBindingsRequest, opts ...management.RequestOption) (*models.PatchBindings200Response, error) {
@@ -139,7 +139,7 @@ func (m *Manager) UpdateTriggerBindings(ctx context.Context, triggerId string, p
 	return localVarReturnValue, nil
 }
 
-// PostAction Create an action
+// Create Create an action
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/post_action
 func (m *Manager) Create(ctx context.Context, postActionRequest *models.PostActionRequest, opts ...management.RequestOption) (*models.GetActions200ResponseActionsInner, error) {
@@ -151,7 +151,7 @@ func (m *Manager) Create(ctx context.Context, postActionRequest *models.PostActi
 	return localVarReturnValue, nil
 }
 
-// PostDeployAction Deploy an action
+// Deploy Deploy an action
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/post_deploy_action
 func (m *Manager) Deploy(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetActionVersions200ResponseVersionsInner, error) {
@@ -163,7 +163,7 @@ func (m *Manager) Deploy(ctx context.Context, id string, opts ...management.Requ
 	return localVarReturnValue, nil
 }
 
-// PostDeployDraftVersion Roll back to a previous action version
+// DeployVersion Roll back to a previous action version
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/post_deploy_draft_version
 func (m *Manager) DeployVersion(ctx context.Context, id string, actionId string, postDeployDraftVersionRequest *models.PostDeployDraftVersionRequest, opts ...management.RequestOption) (*models.GetActionVersions200ResponseVersionsInner, error) {
@@ -175,7 +175,7 @@ func (m *Manager) DeployVersion(ctx context.Context, id string, actionId string,
 	return localVarReturnValue, nil
 }
 
-// PostTestAction Test an Action
+// Test Test an Action
 //
 // https://auth0.com/docs/api/management/v2/#!/Actions/post_test_action
 func (m *Manager) Test(ctx context.Context, id string, postTestActionRequest *models.PostTestActionRequest, opts ...management.RequestOption) (*models.PostTestAction200Response, error) {

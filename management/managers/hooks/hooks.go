@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteHooksById Delete a hook
+// Delete Delete a hook
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/delete_hooks_by_id
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -43,7 +43,7 @@ func (m *Manager) DeleteSecrets(ctx context.Context, id string, requestBody []*s
 	return nil
 }
 
-// GetHooks Get hooks
+// GetAll Get hooks
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/get_hooks
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetHooks200Response, error) {
@@ -55,7 +55,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetHooksById Get a hook
+// Get Get a hook
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/get_hooks_by_id
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.Hook, error) {
@@ -79,7 +79,7 @@ func (m *Manager) GetSecrets(ctx context.Context, id string, opts ...management.
 	return localVarReturnValue, nil
 }
 
-// PatchHooksById Update a hook
+// Update Update a hook
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/patch_hooks_by_id
 func (m *Manager) Update(ctx context.Context, id string, hookUpdate *models.HookUpdate, opts ...management.RequestOption) (*models.Hook, error) {
@@ -91,7 +91,7 @@ func (m *Manager) Update(ctx context.Context, id string, hookUpdate *models.Hook
 	return localVarReturnValue, nil
 }
 
-// PatchSecrets Update hook secrets
+// UpdateSecrets Update hook secrets
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/patch_secrets
 func (m *Manager) UpdateSecrets(ctx context.Context, id string, requestBody map[string]interface{}, opts ...management.RequestOption) error {
@@ -103,7 +103,7 @@ func (m *Manager) UpdateSecrets(ctx context.Context, id string, requestBody map[
 	return nil
 }
 
-// PostHooks Create a hook
+// Create Create a hook
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/post_hooks
 func (m *Manager) Create(ctx context.Context, hookCreate *models.HookCreate, opts ...management.RequestOption) (*models.Hook, error) {
@@ -115,7 +115,7 @@ func (m *Manager) Create(ctx context.Context, hookCreate *models.HookCreate, opt
 	return localVarReturnValue, nil
 }
 
-// PostSecrets Add hook secrets
+// AddSecrets Add hook secrets
 //
 // https://auth0.com/docs/api/management/v2/#!/Hooks/post_secrets
 func (m *Manager) AddSecrets(ctx context.Context, id string, requestBody map[string]interface{}, opts ...management.RequestOption) error {

@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteRulesConfigsByKey Delete rules config for a given key
+// Delete Delete rules config for a given key
 //
 // https://auth0.com/docs/api/management/v2/#!/RulesConfigs/delete_rules_configs_by_key
 func (m *Manager) Delete(ctx context.Context, key string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) Delete(ctx context.Context, key string, opts ...management.Req
 	return nil
 }
 
-// GetRulesConfigs Retrieve config variable keys for rules (get_rules-configs)
+// GetAll Retrieve config variable keys for rules (get_rules-configs)
 //
 // https://auth0.com/docs/api/management/v2/#!/RulesConfigs/get_rules_configs
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) ([]*models.GetRulesConfigs200ResponseInner, error) {
@@ -43,7 +43,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// PutRulesConfigsByKey Set rules config for a given key
+// Set Set rules config for a given key
 //
 // https://auth0.com/docs/api/management/v2/#!/RulesConfigs/put_rules_configs_by_key
 func (m *Manager) Set(ctx context.Context, key string, putRulesConfigsByKeyRequest *models.PutRulesConfigsByKeyRequest, opts ...management.RequestOption) (*models.PutRulesConfigsByKey200Response, error) {

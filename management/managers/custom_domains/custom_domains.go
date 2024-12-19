@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteCustomDomainsById Delete custom domain configuration
+// Delete Delete custom domain configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/CustomDomains/delete_custom_domains_by_id
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) Delete(ctx context.Context, id string, opts ...management.Requ
 	return nil
 }
 
-// GetCustomDomains Get custom domains configurations
+// GetAll Get custom domains configurations
 //
 // https://auth0.com/docs/api/management/v2/#!/CustomDomains/get_custom_domains
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) ([]*models.CustomDomain, error) {
@@ -43,7 +43,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetCustomDomainsById Get custom domain configuration
+// Get Get custom domain configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/CustomDomains/get_custom_domains_by_id
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.CustomDomain, error) {
@@ -55,7 +55,7 @@ func (m *Manager) Get(ctx context.Context, id string, opts ...management.Request
 	return localVarReturnValue, nil
 }
 
-// PatchCustomDomainsById Update custom domain configuration
+// Update Update custom domain configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/CustomDomains/patch_custom_domains_by_id
 func (m *Manager) Update(ctx context.Context, id string, patchCustomDomainsByIdRequest *models.PatchCustomDomainsByIdRequest, opts ...management.RequestOption) (*models.PostCustomDomains201Response, error) {
@@ -67,7 +67,7 @@ func (m *Manager) Update(ctx context.Context, id string, patchCustomDomainsByIdR
 	return localVarReturnValue, nil
 }
 
-// PostCustomDomains Configure a new custom domain
+// Create Configure a new custom domain
 //
 // https://auth0.com/docs/api/management/v2/#!/CustomDomains/post_custom_domains
 func (m *Manager) Create(ctx context.Context, postCustomDomainsRequest *models.PostCustomDomainsRequest, opts ...management.RequestOption) (*models.PostCustomDomains201Response, error) {
@@ -79,7 +79,7 @@ func (m *Manager) Create(ctx context.Context, postCustomDomainsRequest *models.P
 	return localVarReturnValue, nil
 }
 
-// PostVerify Verify a custom domain
+// Verify Verify a custom domain
 //
 // https://auth0.com/docs/api/management/v2/#!/CustomDomains/post_verify
 func (m *Manager) Verify(ctx context.Context, id string, opts ...management.RequestOption) (*models.PostVerify200Response, error) {

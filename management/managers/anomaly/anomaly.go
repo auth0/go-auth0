@@ -18,7 +18,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteIpsById Remove the blocked IP address
+// DeleteBlockedIp Remove the blocked IP address
 //
 // https://auth0.com/docs/api/management/v2/#!/Anomaly/delete_ips_by_id
 func (m *Manager) DeleteBlockedIp(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -30,7 +30,7 @@ func (m *Manager) DeleteBlockedIp(ctx context.Context, id string, opts ...manage
 	return nil
 }
 
-// GetIpsById Check if an IP address is blocked
+// CheckIfIpIsBlocked Check if an IP address is blocked
 //
 // https://auth0.com/docs/api/management/v2/#!/Anomaly/get_ips_by_id
 func (m *Manager) CheckIfIpIsBlocked(ctx context.Context, id string, opts ...management.RequestOption) error {

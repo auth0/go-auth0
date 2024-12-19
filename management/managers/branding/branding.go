@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteBrandingTheme Delete branding theme
+// DeleteTheme Delete branding theme
 //
 // https://auth0.com/docs/api/management/v2/#!/Branding/delete_branding_theme
 func (m *Manager) DeleteTheme(ctx context.Context, themeId string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) DeleteTheme(ctx context.Context, themeId string, opts ...manag
 	return nil
 }
 
-// DeleteUniversalLogin Delete template for New Universal Login Experience
+// DeleteUniversalLoginTemplate Delete template for New Universal Login Experience
 //
 // https://auth0.com/docs/api/management/v2/#!/Branding/delete_universal_login
 func (m *Manager) DeleteUniversalLoginTemplate(ctx context.Context, opts ...management.RequestOption) error {
@@ -43,7 +43,7 @@ func (m *Manager) DeleteUniversalLoginTemplate(ctx context.Context, opts ...mana
 	return nil
 }
 
-// GetBranding Get branding settings
+// GetSettings Get branding settings
 //
 // https://auth0.com/docs/api/management/v2/#!/Branding/get_branding
 func (m *Manager) GetSettings(ctx context.Context, opts ...management.RequestOption) (*models.GetBranding200Response, error) {
@@ -55,7 +55,7 @@ func (m *Manager) GetSettings(ctx context.Context, opts ...management.RequestOpt
 	return localVarReturnValue, nil
 }
 
-// GetBrandingTheme Get branding theme
+// GetTheme Get branding theme
 //
 // https://auth0.com/docs/api/management/v2/#!/Branding/get_branding_theme
 func (m *Manager) GetTheme(ctx context.Context, themeId string, opts ...management.RequestOption) (*models.PostBrandingTheme200Response, error) {
@@ -67,7 +67,7 @@ func (m *Manager) GetTheme(ctx context.Context, themeId string, opts ...manageme
 	return localVarReturnValue, nil
 }
 
-// GetDefaultBrandingTheme Get default branding theme
+// GetDefaultTheme Get default branding theme
 //
 // https://auth0.com/docs/api/management/v2/#!/Branding/get_default_branding_theme
 func (m *Manager) GetDefaultTheme(ctx context.Context, opts ...management.RequestOption) (*models.PostBrandingTheme200Response, error) {
@@ -79,7 +79,7 @@ func (m *Manager) GetDefaultTheme(ctx context.Context, opts ...management.Reques
 	return localVarReturnValue, nil
 }
 
-// GetUniversalLogin Get template for New Universal Login Experience
+// GetUniversalLoginTemplate Get template for New Universal Login Experience
 //
 // https://auth0.com/docs/api/management/v2/#!/Branding/get_universal_login
 func (m *Manager) GetUniversalLoginTemplate(ctx context.Context, opts ...management.RequestOption) (*models.GetUniversalLogin200Response, error) {
@@ -91,7 +91,7 @@ func (m *Manager) GetUniversalLoginTemplate(ctx context.Context, opts ...managem
 	return localVarReturnValue, nil
 }
 
-// PatchBranding Update branding settings
+// UpdateSettings Update branding settings
 //
 // https://auth0.com/docs/api/management/v2/#!/Branding/patch_branding
 func (m *Manager) UpdateSettings(ctx context.Context, patchBrandingRequest *models.PatchBrandingRequest, opts ...management.RequestOption) (*models.GetBranding200Response, error) {
@@ -103,7 +103,7 @@ func (m *Manager) UpdateSettings(ctx context.Context, patchBrandingRequest *mode
 	return localVarReturnValue, nil
 }
 
-// PatchBrandingTheme Update branding theme
+// UpdateTheme Update branding theme
 //
 // https://auth0.com/docs/api/management/v2/#!/Branding/patch_branding_theme
 func (m *Manager) UpdateTheme(ctx context.Context, themeId string, postBrandingThemeRequest *models.PostBrandingThemeRequest, opts ...management.RequestOption) (*models.PostBrandingTheme200Response, error) {
@@ -115,7 +115,7 @@ func (m *Manager) UpdateTheme(ctx context.Context, themeId string, postBrandingT
 	return localVarReturnValue, nil
 }
 
-// PostBrandingTheme Create branding theme
+// CreateTheme Create branding theme
 //
 // https://auth0.com/docs/api/management/v2/#!/Branding/post_branding_theme
 func (m *Manager) CreateTheme(ctx context.Context, postBrandingThemeRequest *models.PostBrandingThemeRequest, opts ...management.RequestOption) (*models.PostBrandingTheme200Response, error) {
@@ -127,7 +127,7 @@ func (m *Manager) CreateTheme(ctx context.Context, postBrandingThemeRequest *mod
 	return localVarReturnValue, nil
 }
 
-// PutUniversalLogin Set template for New Universal Login Experience
+// SetUniversalLoginTemplate Set template for New Universal Login Experience
 //
 // https://auth0.com/docs/api/management/v2/#!/Branding/put_universal_login
 func (m *Manager) SetUniversalLoginTemplate(ctx context.Context, putUniversalLoginRequest *models.PutUniversalLoginRequest, opts ...management.RequestOption) error {

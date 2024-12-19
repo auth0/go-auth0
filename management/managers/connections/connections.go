@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteConnectionsById Delete a connection
+// Delete Delete a connection
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/delete_connections_by_id
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -43,7 +43,7 @@ func (m *Manager) DeleteScimConfiguration(ctx context.Context, id string, opts .
 	return nil
 }
 
-// DeleteTokensByTokenId Delete a connection&#39;s SCIM token
+// DeleteScimToken Delete a connection&#39;s SCIM token
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/delete_tokens_by_token_id
 func (m *Manager) DeleteScimToken(ctx context.Context, id string, tokenId string, opts ...management.RequestOption) error {
@@ -55,7 +55,7 @@ func (m *Manager) DeleteScimToken(ctx context.Context, id string, tokenId string
 	return nil
 }
 
-// DeleteUsersByEmail Delete a connection user
+// DeleteUserByEmail Delete a connection user
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/delete_users_by_email
 func (m *Manager) DeleteUserByEmail(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -67,7 +67,7 @@ func (m *Manager) DeleteUserByEmail(ctx context.Context, id string, opts ...mana
 	return nil
 }
 
-// GetConnections Get all connections
+// GetAll Get all connections
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/get_connections
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetConnections200Response, error) {
@@ -79,7 +79,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetConnectionsById Get a connection
+// Get Get a connection
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/get_connections_by_id
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.Connection, error) {
@@ -91,7 +91,7 @@ func (m *Manager) Get(ctx context.Context, id string, opts ...management.Request
 	return localVarReturnValue, nil
 }
 
-// GetDefaultMapping Get a connection&#39;s default SCIM mapping
+// GetDefaultScimMapping Get a connection&#39;s default SCIM mapping
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/get_default_mapping
 func (m *Manager) GetDefaultScimMapping(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetDefaultMapping200Response, error) {
@@ -127,7 +127,7 @@ func (m *Manager) GetScimTokens(ctx context.Context, id string, opts ...manageme
 	return localVarReturnValue, nil
 }
 
-// GetStatus Check connection status
+// CheckStatus Check connection status
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/get_status
 func (m *Manager) CheckStatus(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -139,7 +139,7 @@ func (m *Manager) CheckStatus(ctx context.Context, id string, opts ...management
 	return nil
 }
 
-// PatchConnectionsById Update a connection
+// Update Update a connection
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/patch_connections_by_id
 func (m *Manager) Update(ctx context.Context, id string, connectionUpdate *models.ConnectionUpdate, opts ...management.RequestOption) (*models.Connection, error) {
@@ -151,7 +151,7 @@ func (m *Manager) Update(ctx context.Context, id string, connectionUpdate *model
 	return localVarReturnValue, nil
 }
 
-// PatchScimConfiguration Patch a connection&#39;s SCIM configuration
+// UpdateScimConfiguration Patch a connection&#39;s SCIM configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/patch_scim_configuration
 func (m *Manager) UpdateScimConfiguration(ctx context.Context, id string, patchScimConfigurationRequest *models.PatchScimConfigurationRequest, opts ...management.RequestOption) (*models.GetScimConfiguration200Response, error) {
@@ -163,7 +163,7 @@ func (m *Manager) UpdateScimConfiguration(ctx context.Context, id string, patchS
 	return localVarReturnValue, nil
 }
 
-// PostConnections Create a connection
+// Create Create a connection
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/post_connections
 func (m *Manager) Create(ctx context.Context, connectionCreate *models.ConnectionCreate, opts ...management.RequestOption) (*models.Connection, error) {
@@ -175,7 +175,7 @@ func (m *Manager) Create(ctx context.Context, connectionCreate *models.Connectio
 	return localVarReturnValue, nil
 }
 
-// PostScimConfiguration Create a SCIM configuration
+// CreateScimConfiguration Create a SCIM configuration
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/post_scim_configuration
 func (m *Manager) CreateScimConfiguration(ctx context.Context, id string, postScimConfigurationRequest *models.PostScimConfigurationRequest, opts ...management.RequestOption) (*models.GetScimConfiguration200Response, error) {
@@ -187,7 +187,7 @@ func (m *Manager) CreateScimConfiguration(ctx context.Context, id string, postSc
 	return localVarReturnValue, nil
 }
 
-// PostScimToken Create a SCIM Token
+// CreateScimToken Create a SCIM Token
 //
 // https://auth0.com/docs/api/management/v2/#!/Connections/post_scim_token
 func (m *Manager) CreateScimToken(ctx context.Context, id string, postScimTokenRequest *models.PostScimTokenRequest, opts ...management.RequestOption) (*models.PostScimToken201Response, error) {

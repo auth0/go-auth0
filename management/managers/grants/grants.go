@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteGrantsById Delete a grant by id
+// Delete Delete a grant by id
 //
 // https://auth0.com/docs/api/management/v2/#!/Grants/delete_grants_by_id
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) Delete(ctx context.Context, id string, opts ...management.Requ
 	return nil
 }
 
-// DeleteGrantsByUserId Delete a grant by user_id
+// DeleteByUserId Delete a grant by user_id
 //
 // https://auth0.com/docs/api/management/v2/#!/Grants/delete_grants_by_user_id
 func (m *Manager) DeleteByUserId(ctx context.Context, opts ...management.RequestOption) error {
@@ -43,7 +43,7 @@ func (m *Manager) DeleteByUserId(ctx context.Context, opts ...management.Request
 	return nil
 }
 
-// GetGrants Get grants
+// GetAll Get grants
 //
 // https://auth0.com/docs/api/management/v2/#!/Grants/get_grants
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetGrants200Response, error) {

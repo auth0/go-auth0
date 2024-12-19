@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteClientsById Delete a client
+// Delete Delete a client
 //
 // https://auth0.com/docs/api/management/v2/#!/Clients/delete_clients_by_id
 func (m *Manager) Delete(ctx context.Context, clientId string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) Delete(ctx context.Context, clientId string, opts ...managemen
 	return nil
 }
 
-// DeleteCredentialsByCredentialId Delete a client credential
+// DeleteCredential Delete a client credential
 //
 // https://auth0.com/docs/api/management/v2/#!/Clients/delete_credentials_by_credential_id
 func (m *Manager) DeleteCredential(ctx context.Context, clientId string, credentialId string, opts ...management.RequestOption) error {
@@ -43,7 +43,7 @@ func (m *Manager) DeleteCredential(ctx context.Context, clientId string, credent
 	return nil
 }
 
-// GetClients Get clients
+// GetAll Get clients
 //
 // https://auth0.com/docs/api/management/v2/#!/Clients/get_clients
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetClients200Response, error) {
@@ -55,7 +55,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetClientsById Get client by ID
+// Get Get client by ID
 //
 // https://auth0.com/docs/api/management/v2/#!/Clients/get_clients_by_id
 func (m *Manager) Get(ctx context.Context, clientId string, opts ...management.RequestOption) (*models.Client, error) {
@@ -79,7 +79,7 @@ func (m *Manager) GetCredentials(ctx context.Context, clientId string, opts ...m
 	return localVarReturnValue, nil
 }
 
-// GetCredentialsByCredentialId Get client credential details
+// GetCredential Get client credential details
 //
 // https://auth0.com/docs/api/management/v2/#!/Clients/get_credentials_by_credential_id
 func (m *Manager) GetCredential(ctx context.Context, clientId string, credentialId string, opts ...management.RequestOption) (*models.GetCredentials200ResponseInner, error) {
@@ -91,7 +91,7 @@ func (m *Manager) GetCredential(ctx context.Context, clientId string, credential
 	return localVarReturnValue, nil
 }
 
-// PatchClientsById Update a client
+// Update Update a client
 //
 // https://auth0.com/docs/api/management/v2/#!/Clients/patch_clients_by_id
 func (m *Manager) Update(ctx context.Context, clientId string, clientUpdate *models.ClientUpdate, opts ...management.RequestOption) (*models.Client, error) {
@@ -103,7 +103,7 @@ func (m *Manager) Update(ctx context.Context, clientId string, clientUpdate *mod
 	return localVarReturnValue, nil
 }
 
-// PatchCredentialsByCredentialId Update a client credential
+// UpdateCredential Update a client credential
 //
 // https://auth0.com/docs/api/management/v2/#!/Clients/patch_credentials_by_credential_id
 func (m *Manager) UpdateCredential(ctx context.Context, clientId string, credentialId string, patchCredentialsByCredentialIdRequest *models.PatchCredentialsByCredentialIdRequest, opts ...management.RequestOption) (*models.GetCredentials200ResponseInner, error) {
@@ -115,7 +115,7 @@ func (m *Manager) UpdateCredential(ctx context.Context, clientId string, credent
 	return localVarReturnValue, nil
 }
 
-// PostClients Create a client
+// Create Create a client
 //
 // https://auth0.com/docs/api/management/v2/#!/Clients/post_clients
 func (m *Manager) Create(ctx context.Context, clientCreate *models.ClientCreate, opts ...management.RequestOption) (*models.Client, error) {
@@ -127,7 +127,7 @@ func (m *Manager) Create(ctx context.Context, clientCreate *models.ClientCreate,
 	return localVarReturnValue, nil
 }
 
-// PostCredentials Create a client credential
+// CreateCredential Create a client credential
 //
 // https://auth0.com/docs/api/management/v2/#!/Clients/post_credentials
 func (m *Manager) CreateCredential(ctx context.Context, clientId string, postCredentialsRequest *models.PostCredentialsRequest, opts ...management.RequestOption) (*models.GetCredentials200ResponseInner, error) {
@@ -139,7 +139,7 @@ func (m *Manager) CreateCredential(ctx context.Context, clientId string, postCre
 	return localVarReturnValue, nil
 }
 
-// PostRotateSecret Rotate a client secret
+// RotateClientSecret Rotate a client secret
 //
 // https://auth0.com/docs/api/management/v2/#!/Clients/post_rotate_secret
 func (m *Manager) RotateClientSecret(ctx context.Context, clientId string, opts ...management.RequestOption) (*models.Client, error) {

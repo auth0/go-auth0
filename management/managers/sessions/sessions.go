@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteSession Delete session
+// Delete Delete session
 //
 // https://auth0.com/docs/api/management/v2/#!/Sessions/delete_session
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) Delete(ctx context.Context, id string, opts ...management.Requ
 	return nil
 }
 
-// GetSession Get session
+// Get Get session
 //
 // https://auth0.com/docs/api/management/v2/#!/Sessions/get_session
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetSession200Response, error) {

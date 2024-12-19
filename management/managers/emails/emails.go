@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// GetProvider Get email provider
+// Get Get email provider
 //
 // https://auth0.com/docs/api/management/v2/#!/Emails/get_provider
 func (m *Manager) Get(ctx context.Context, opts ...management.RequestOption) (*models.EmailProvider, error) {
@@ -31,7 +31,7 @@ func (m *Manager) Get(ctx context.Context, opts ...management.RequestOption) (*m
 	return localVarReturnValue, nil
 }
 
-// PatchProvider Update email provider
+// Update Update email provider
 //
 // https://auth0.com/docs/api/management/v2/#!/Emails/patch_provider
 func (m *Manager) Update(ctx context.Context, emailProviderUpdate *models.EmailProviderUpdate, opts ...management.RequestOption) (*models.EmailProvider, error) {
@@ -43,7 +43,7 @@ func (m *Manager) Update(ctx context.Context, emailProviderUpdate *models.EmailP
 	return localVarReturnValue, nil
 }
 
-// PostProvider Configure email provider
+// Configure Configure email provider
 //
 // https://auth0.com/docs/api/management/v2/#!/Emails/post_provider
 func (m *Manager) Configure(ctx context.Context, emailProviderCreate *models.EmailProviderCreate, opts ...management.RequestOption) (*models.EmailProvider, error) {

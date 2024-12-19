@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// DeleteEnabledConnectionsByConnectionId Delete connections from an organization
+// DeleteEnabledConnection Delete connections from an organization
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/delete_enabled_connections_by_connection_id
 func (m *Manager) DeleteEnabledConnection(ctx context.Context, id string, connectionId string, opts ...management.RequestOption) error {
@@ -31,7 +31,7 @@ func (m *Manager) DeleteEnabledConnection(ctx context.Context, id string, connec
 	return nil
 }
 
-// DeleteInvitationsByInvitationId Delete an invitation to an Organization
+// DeleteInvitation Delete an invitation to an Organization
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/delete_invitations_by_invitation_id
 func (m *Manager) DeleteInvitation(ctx context.Context, id string, invitationId string, opts ...management.RequestOption) error {
@@ -55,7 +55,7 @@ func (m *Manager) DeleteMembers(ctx context.Context, id string, deleteMembersReq
 	return nil
 }
 
-// DeleteOrganizationMemberRoles Delete user roles from an Organization member
+// DeleteMemberRoles Delete user roles from an Organization member
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/delete_organization_member_roles
 func (m *Manager) DeleteMemberRoles(ctx context.Context, id string, userId string, deleteOrganizationMemberRolesRequest *models.DeleteOrganizationMemberRolesRequest, opts ...management.RequestOption) error {
@@ -67,7 +67,7 @@ func (m *Manager) DeleteMemberRoles(ctx context.Context, id string, userId strin
 	return nil
 }
 
-// DeleteOrganizationsById Delete organization
+// Delete Delete organization
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/delete_organizations_by_id
 func (m *Manager) Delete(ctx context.Context, id string, opts ...management.RequestOption) error {
@@ -91,7 +91,7 @@ func (m *Manager) GetEnabledConnections(ctx context.Context, id string, opts ...
 	return localVarReturnValue, nil
 }
 
-// GetEnabledConnectionsByConnectionId Get an enabled connection for an organization
+// GetEnabledConnection Get an enabled connection for an organization
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_enabled_connections_by_connection_id
 func (m *Manager) GetEnabledConnection(ctx context.Context, id string, connectionId string, opts ...management.RequestOption) (*models.GetEnabledConnections200ResponseOneOfInner, error) {
@@ -115,7 +115,7 @@ func (m *Manager) GetInvitations(ctx context.Context, id string, opts ...managem
 	return localVarReturnValue, nil
 }
 
-// GetInvitationsByInvitationId Get a specific invitation to an Organization
+// GetInvitation Get a specific invitation to an Organization
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_invitations_by_invitation_id
 func (m *Manager) GetInvitation(ctx context.Context, id string, invitationId string, opts ...management.RequestOption) (*models.GetInvitations200ResponseOneOfInner, error) {
@@ -139,7 +139,7 @@ func (m *Manager) GetMembers(ctx context.Context, id string, opts ...management.
 	return localVarReturnValue, nil
 }
 
-// GetNameByName Get organization by name
+// GetByName Get organization by name
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_name_by_name
 func (m *Manager) GetByName(ctx context.Context, name string, opts ...management.RequestOption) (*models.GetOrganizations200ResponseOneOfInner, error) {
@@ -151,7 +151,7 @@ func (m *Manager) GetByName(ctx context.Context, name string, opts ...management
 	return localVarReturnValue, nil
 }
 
-// GetOrganizationMemberRoles Get user roles assigned to an Organization member
+// GetMemberRoles Get user roles assigned to an Organization member
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_organization_member_roles
 func (m *Manager) GetMemberRoles(ctx context.Context, id string, userId string, opts ...management.RequestOption) (*models.GetOrganizationMemberRoles200Response, error) {
@@ -163,7 +163,7 @@ func (m *Manager) GetMemberRoles(ctx context.Context, id string, userId string, 
 	return localVarReturnValue, nil
 }
 
-// GetOrganizations Get organizations
+// GetAll Get organizations
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_organizations
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) (*models.GetOrganizations200Response, error) {
@@ -175,7 +175,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// GetOrganizationsById Get organization
+// Get Get organization
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/get_organizations_by_id
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.GetOrganizations200ResponseOneOfInner, error) {
@@ -187,7 +187,7 @@ func (m *Manager) Get(ctx context.Context, id string, opts ...management.Request
 	return localVarReturnValue, nil
 }
 
-// PatchEnabledConnectionsByConnectionId Update the Connection of an Organization
+// UpdateEnabledConnection Update the Connection of an Organization
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/patch_enabled_connections_by_connection_id
 func (m *Manager) UpdateEnabledConnection(ctx context.Context, id string, connectionId string, patchEnabledConnectionsByConnectionIdRequest *models.PatchEnabledConnectionsByConnectionIdRequest, opts ...management.RequestOption) (*models.GetEnabledConnections200ResponseOneOfInner, error) {
@@ -199,7 +199,7 @@ func (m *Manager) UpdateEnabledConnection(ctx context.Context, id string, connec
 	return localVarReturnValue, nil
 }
 
-// PatchOrganizationsById Modify an Organization
+// Update Modify an Organization
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/patch_organizations_by_id
 func (m *Manager) Update(ctx context.Context, id string, patchOrganizationsByIdRequest *models.PatchOrganizationsByIdRequest, opts ...management.RequestOption) (*models.GetOrganizations200ResponseOneOfInner, error) {
@@ -211,7 +211,7 @@ func (m *Manager) Update(ctx context.Context, id string, patchOrganizationsByIdR
 	return localVarReturnValue, nil
 }
 
-// PostEnabledConnections Add connections to an organization
+// AddEnabledConnection Add connections to an organization
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/post_enabled_connections
 func (m *Manager) AddEnabledConnection(ctx context.Context, id string, postEnabledConnectionsRequest *models.PostEnabledConnectionsRequest, opts ...management.RequestOption) (*models.GetEnabledConnections200ResponseOneOfInner, error) {
@@ -223,7 +223,7 @@ func (m *Manager) AddEnabledConnection(ctx context.Context, id string, postEnabl
 	return localVarReturnValue, nil
 }
 
-// PostInvitations Create invitations to an organization
+// CreateInvitation Create invitations to an organization
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/post_invitations
 func (m *Manager) CreateInvitation(ctx context.Context, id string, postInvitationsRequest *models.PostInvitationsRequest, opts ...management.RequestOption) (*models.GetInvitations200ResponseOneOfInner, error) {
@@ -235,7 +235,7 @@ func (m *Manager) CreateInvitation(ctx context.Context, id string, postInvitatio
 	return localVarReturnValue, nil
 }
 
-// PostMembers Add members to an organization
+// AddMembers Add members to an organization
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/post_members
 func (m *Manager) AddMembers(ctx context.Context, id string, postMembersRequest *models.PostMembersRequest, opts ...management.RequestOption) error {
@@ -247,7 +247,7 @@ func (m *Manager) AddMembers(ctx context.Context, id string, postMembersRequest 
 	return nil
 }
 
-// PostOrganizationMemberRoles Assign user roles to an Organization member
+// AddMemberRoles Assign user roles to an Organization member
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/post_organization_member_roles
 func (m *Manager) AddMemberRoles(ctx context.Context, id string, userId string, postOrganizationMemberRolesRequest *models.PostOrganizationMemberRolesRequest, opts ...management.RequestOption) error {
@@ -259,7 +259,7 @@ func (m *Manager) AddMemberRoles(ctx context.Context, id string, userId string, 
 	return nil
 }
 
-// PostOrganizations Create an Organization
+// Create Create an Organization
 //
 // https://auth0.com/docs/api/management/v2/#!/Organizations/post_organizations
 func (m *Manager) Create(ctx context.Context, postOrganizationsRequest *models.PostOrganizationsRequest, opts ...management.RequestOption) (*models.PostOrganizations201Response, error) {

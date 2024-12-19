@@ -19,7 +19,7 @@ func NewManager(mgmt *management.Management) *Manager {
 	}
 }
 
-// GetTokens Get blacklisted tokens
+// GetAll Get blacklisted tokens
 //
 // https://auth0.com/docs/api/management/v2/#!/Blacklists/get_tokens
 func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) ([]*models.Token, error) {
@@ -31,7 +31,7 @@ func (m *Manager) GetAll(ctx context.Context, opts ...management.RequestOption) 
 	return localVarReturnValue, nil
 }
 
-// PostTokens Blacklist a token
+// Add Blacklist a token
 //
 // https://auth0.com/docs/api/management/v2/#!/Blacklists/post_tokens
 func (m *Manager) Add(ctx context.Context, token *models.Token, opts ...management.RequestOption) error {

@@ -31,7 +31,7 @@ func (m *Manager) GetErrors(ctx context.Context, id string, opts ...management.R
 	return localVarReturnValue, nil
 }
 
-// GetJobsById Get a job
+// Get Get a job
 //
 // https://auth0.com/docs/api/management/v2/#!/Jobs/get_jobs_by_id
 func (m *Manager) Get(ctx context.Context, id string, opts ...management.RequestOption) (*models.Job, error) {
@@ -43,7 +43,7 @@ func (m *Manager) Get(ctx context.Context, id string, opts ...management.Request
 	return localVarReturnValue, nil
 }
 
-// PostUsersExports Create export users job
+// ExportUsers Create export users job
 //
 // https://auth0.com/docs/api/management/v2/#!/Jobs/post_users_exports
 func (m *Manager) ExportUsers(ctx context.Context, postUsersExportsRequest *models.PostUsersExportsRequest, opts ...management.RequestOption) (*models.Job, error) {
@@ -55,7 +55,7 @@ func (m *Manager) ExportUsers(ctx context.Context, postUsersExportsRequest *mode
 	return localVarReturnValue, nil
 }
 
-// PostUsersImports Create import users job
+// ImportUsers Create import users job
 //
 // https://auth0.com/docs/api/management/v2/#!/Jobs/post_users_imports
 func (m *Manager) ImportUsers(ctx context.Context, opts ...management.RequestOption) (*models.Job, error) {
@@ -67,7 +67,7 @@ func (m *Manager) ImportUsers(ctx context.Context, opts ...management.RequestOpt
 	return localVarReturnValue, nil
 }
 
-// PostVerificationEmail Send an email address verification email
+// VerifyEmail Send an email address verification email
 //
 // https://auth0.com/docs/api/management/v2/#!/Jobs/post_verification_email
 func (m *Manager) VerifyEmail(ctx context.Context, postVerificationEmailRequest *models.PostVerificationEmailRequest, opts ...management.RequestOption) (*models.Job, error) {
