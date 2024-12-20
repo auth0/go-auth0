@@ -454,28 +454,18 @@ type PromptRendering struct {
 
 // MarshalJSON implements a custom [json.Marshaler].
 func (c *PromptRendering) MarshalJSON() ([]byte, error) {
+	copyPromptRendering := *c
 
 	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
-		return json.Marshal(&PromptRendering{
-			RenderingMode:           c.RenderingMode,
-			ContextConfiguration:    nil,
-			DefaultHeadTagsDisabled: nil,
-			HeadTags:                nil,
-			Tenant:                  nil,
-			Prompt:                  nil,
-			Screen:                  nil,
-		})
+		copyPromptRendering.ContextConfiguration = nil
+		copyPromptRendering.DefaultHeadTagsDisabled = nil
+		copyPromptRendering.HeadTags = nil
 	}
+	copyPromptRendering.Tenant = nil
+	copyPromptRendering.Prompt = nil
+	copyPromptRendering.Screen = nil
 
-	return json.Marshal(&PromptRendering{
-		RenderingMode:           c.RenderingMode,
-		ContextConfiguration:    c.ContextConfiguration,
-		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
-		HeadTags:                c.HeadTags,
-		Tenant:                  nil,
-		Prompt:                  nil,
-		Screen:                  nil,
-	})
+	return json.Marshal(&copyPromptRendering)
 }
 
 // MarshalJSON implements a custom [json.Marshaler].
