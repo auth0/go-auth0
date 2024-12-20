@@ -1,5 +1,11 @@
 # Change Log
 
+## [v1.13.1](https://github.com/auth0/go-auth0/tree/v1.13.1) (2024-12-20)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.13.0...v1.13.1)
+
+**Fixed**
+- PATCH: Fix logic to handle the PATCH payload for `renderingMode` as standard [\#476](https://github.com/auth0/go-auth0/pull/476) ([ramya18101](https://github.com/ramya18101))
+
 ## [v1.13.0](https://github.com/auth0/go-auth0/tree/v1.13.0) (2024-12-06)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.12.0...v1.13.0)
 
