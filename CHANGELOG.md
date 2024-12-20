@@ -1,6 +1,6 @@
 # Change Log
 
-# [v1.13.1](https://github.com/auth0/go-auth0/tree/v1.11.2) (2024-12-20)
+## [v1.13.1](https://github.com/auth0/go-auth0/tree/v1.13.1) (2024-12-20)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.13.0...v1.13.1)
 
 **Fixed**
