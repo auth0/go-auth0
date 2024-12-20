@@ -7,36 +7,36 @@ interactions:
         proto_major: 1
         proto_minor: 1
         content_length: 99
-        transfer_encoding: []
-        trailer: {}
+        transfer_encoding: [ ]
+        trailer: { }
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"domain":"1734696838.auth.uat.auth0.com","type":"auth0_managed_certs","tls_policy":"recommended"}
-        form: {}
+          {"domain":"1734698728.auth.uat.auth0.com","type":"auth0_managed_certs","tls_policy":"recommended"}
+        form: { }
         headers:
-            Content-Type:
-                - application/json
-            User-Agent:
-                - Go-Auth0/1.13.0
+          Content-Type:
+            - application/json
+          User-Agent:
+            - Go-Auth0/1.13.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains
         method: POST
       response:
         proto: HTTP/2.0
         proto_major: 2
         proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
-        content_length: 169
+        transfer_encoding: [ ]
+        trailer: { }
+        content_length: 342
         uncompressed: false
-        body: '{"custom_domain_id":"cd_7SgKHnrmHQNuTXEs","domain":"1730881029.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-7sgkhnrmhqnutxes.edge.tenants.us.auth0.com","domain":"1730881029.auth.uat.auth0.com"}]},"tls_policy":"recommended"}'
+        body: '{"custom_domain_id":"cd_hW5C18CQPXRsKpDz","domain":"1733383424.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-hw5c18cqpxrskpdz.edge.tenants.us.auth0.com","domain":"1733383424.auth.uat.auth0.com"}]},"tls_policy":"recommended"}'
         headers:
-            Content-Type:
-                - application/json; charset=utf-8
-        status: 409 Conflict
-        code: 409
-        duration: 1.190303208s
+          Content-Type:
+            - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 994.566333ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -72,20 +72,56 @@ interactions:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 778.887334ms
+        duration: 2.757435792s
     - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 408
+        content_length: 30
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"rendering_mode":"advanced","context_configuration":["branding.settings","branding.themes.default"],"default_head_tags_disabled":false,"head_tags":[{"attributes":{"async":true,"defer":true,"integrity":["sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="],"src":"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"},"content":"","tag":"script"}]}
+            {"rendering_mode":"standard"}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.13.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/prompts/signup/screen/signup/rendering
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 29
+        uncompressed: false
+        body: '{"rendering_mode":"standard"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 909.9325ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 154
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"rendering_mode":"advanced","context_configuration":["branding.settings","branding.themes.default","client.logo_uri"],"default_head_tags_disabled":true}
         form: {}
         headers:
             Content-Type:
@@ -102,14 +138,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"rendering_mode":"advanced","context_configuration":["branding.settings","branding.themes.default"],"default_head_tags_disabled":false,"head_tags":[{"attributes":{"async":true,"defer":true,"integrity":["sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="],"src":"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"},"content":"","tag":"script"}]}'
+        body: '{"rendering_mode":"advanced","context_configuration":["branding.settings","branding.themes.default","client.logo_uri"],"default_head_tags_disabled":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 430.98975ms
-    - id: 3
+        duration: 683.566875ms
+    - id: 4
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -137,14 +173,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"tenant":"go-auth0-dev.eu.auth0.com","prompt":"signup","screen":"signup","rendering_mode":"advanced","context_configuration":["branding.settings","branding.themes.default"],"default_head_tags_disabled":false,"head_tags":[{"tag":"script","content":"","attributes":{"src":"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js","async":true,"defer":true,"integrity":["sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="]}}]}'
+        body: '{"tenant":"go-auth0-dev.eu.auth0.com","prompt":"signup","screen":"signup","rendering_mode":"advanced","context_configuration":["branding.settings","branding.themes.default","client.logo_uri"],"default_head_tags_disabled":true,"head_tags":[{"tag":"script","content":"","attributes":{"src":"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js","async":true,"defer":true,"integrity":["sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="]}}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 428.221208ms
-    - id: 4
+        duration: 391.312833ms
+    - id: 5
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -178,39 +214,39 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 544.41275ms
-    - id: 5
+        duration: 533.039666ms
+    - id: 6
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
         content_length: 0
-        transfer_encoding: []
-        trailer: {}
+        transfer_encoding: [ ]
+        trailer: { }
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: ""
-        form: {}
+        form: { }
         headers:
-            Content-Type:
-                - application/json
-            User-Agent:
-                - Go-Auth0/1.13.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_7SgKHnrmHQNuTXEs
+          Content-Type:
+            - application/json
+          User-Agent:
+            - Go-Auth0/1.13.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_hW5C18CQPXRsKpDz
         method: DELETE
       response:
         proto: HTTP/2.0
         proto_major: 2
         proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
+        transfer_encoding: [ ]
+        trailer: { }
         content_length: 0
         uncompressed: false
         body: ""
         headers:
-            Content-Type:
-                - application/json; charset=utf-8
+          Content-Type:
+            - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 383.460542ms
+        duration: 411.741083ms

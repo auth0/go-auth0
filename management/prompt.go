@@ -454,18 +454,19 @@ type PromptRendering struct {
 
 // MarshalJSON implements a custom [json.Marshaler].
 func (c *PromptRendering) MarshalJSON() ([]byte, error) {
-	copyPromptRendering := *c
-
-	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
-		copyPromptRendering.ContextConfiguration = nil
-		copyPromptRendering.DefaultHeadTagsDisabled = nil
-		copyPromptRendering.HeadTags = nil
+	type RenderingSubSet struct {
+		RenderingMode           *RenderingMode `json:"rendering_mode,omitempty"`
+		ContextConfiguration    *[]string      `json:"context_configuration,omitempty"`
+		DefaultHeadTagsDisabled *bool          `json:"default_head_tags_disabled,omitempty"`
+		HeadTags                []interface{}  `json:"head_tags,omitempty"`
 	}
-	copyPromptRendering.Tenant = nil
-	copyPromptRendering.Prompt = nil
-	copyPromptRendering.Screen = nil
 
-	return json.Marshal(&copyPromptRendering)
+	return json.Marshal(&RenderingSubSet{
+		RenderingMode:           c.RenderingMode,
+		ContextConfiguration:    c.ContextConfiguration,
+		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
+		HeadTags:                c.HeadTags,
+	})
 }
 
 // MarshalJSON implements a custom [json.Marshaler].
@@ -632,10 +633,19 @@ func (m *PromptManager) ReadRendering(ctx context.Context, prompt PromptType, sc
 	err = m.management.Request(ctx, "GET", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), &c, opts...)
 	return
 }
+func (c *PromptRendering) cleanForPatch() *PromptRendering {
+	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
+		return &PromptRendering{
+			RenderingMode: c.RenderingMode,
+		}
+	}
+	return c
+}
 
 // UpdateRendering updates the settings for the ACUL.
 //
 // See: https://auth0.com/docs/api/management/v2/prompts/patch-rendering
 func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, screen ScreenName, c *PromptRendering, opts ...RequestOption) error {
+	c = c.cleanForPatch()
 	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), c, opts...)
 }
