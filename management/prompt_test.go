@@ -143,7 +143,7 @@ func TestPromptManager_ReadRendering(t *testing.T) {
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
-// Able to update the renderingMode to advanced and the setting configs when parsing the advanced renderingMode in payload
+// Able to update the renderingMode to advanced and the setting configs when parsing the advanced renderingMode in payload.
 func TestPromptManager_UpdateRenderingWithAdvancedMode(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -168,7 +168,7 @@ func TestPromptManager_UpdateRenderingWithAdvancedMode(t *testing.T) {
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
-// Unable to update the setting configs and only able to update the renderingMode to standard when parsing the standard renderingMode in payload
+// Unable to update the setting configs and only able to update the renderingMode to standard when parsing the standard renderingMode in payload.
 func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -187,15 +187,16 @@ func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
 
 	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
 	assert.NoError(t, err)
-	assert.Equal(t, expected.GetRenderingMode(), actual.GetRenderingMode())
-	assert.NotEqual(t, expected.GetContextConfiguration(), actual.GetContextConfiguration())
-	assert.NotEqual(t, expected.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
+
+	assert.Equal(t, updateData.GetRenderingMode(), actual.GetRenderingMode())
+	assert.NotEqual(t, updateData.GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.NotEqual(t, updateData.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
 	assert.Equal(t, expected.HeadTags, actual.HeadTags)
 	assert.Equal(t, PromptSignup, *actual.GetPrompt())
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
-// Able to update the setting's configs even the existing renderingMode is standard since renderingMode is not parsed in payload(updateData)
+// Able to update the setting's configs even the existing renderingMode is standard since renderingMode is not parsed in payload(updateData).
 func TestPromptManager_UpdateRendering(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
