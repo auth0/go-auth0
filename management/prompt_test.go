@@ -132,7 +132,7 @@ func TestPromptManager_ReadRendering(t *testing.T) {
 
 	_ = givenACustomDomain(t)
 	_ = givenAUniversalLoginTemplate(t)
-	expected := givenAPromptRendering(t)
+	expected := givenAPromptRendering(t, RenderingModeAdvanced)
 	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
 	assert.NoError(t, err)
 	assert.Equal(t, expected.GetRenderingMode(), actual.GetRenderingMode())
@@ -143,15 +143,19 @@ func TestPromptManager_ReadRendering(t *testing.T) {
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
-func TestPromptManager_UpdateRendering(t *testing.T) {
+// Able to update the renderingMode to advanced and the setting configs when parsing the advanced renderingMode in payload.
+func TestPromptManager_UpdateRenderingWithAdvancedMode(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	_ = givenACustomDomain(t)
 	_ = givenAUniversalLoginTemplate(t)
-	_ = givenAPromptRendering(t)
-	updateData := &PromptRendering{}
-	updateData.ContextConfiguration = &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"}
-	updateData.DefaultHeadTagsDisabled = auth0.Bool(true)
+	_ = givenAPromptRendering(t, RenderingModeStandard)
+
+	updateData := &PromptRendering{
+		RenderingMode:           &RenderingModeAdvanced,
+		ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"},
+		DefaultHeadTagsDisabled: auth0.Bool(true),
+	}
 
 	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, updateData)
 	assert.NoError(t, err)
@@ -164,25 +168,54 @@ func TestPromptManager_UpdateRendering(t *testing.T) {
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
+// Unable to update the setting configs and only able to update the renderingMode to standard when parsing the standard renderingMode in payload.
 func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	_ = givenACustomDomain(t)
 	_ = givenAUniversalLoginTemplate(t)
-	expected := givenAPromptRendering(t)
-	expected.RenderingMode = &RenderingModeStandard
-	expected.ContextConfiguration = &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"}
-	expected.DefaultHeadTagsDisabled = auth0.Bool(true)
+	expected := givenAPromptRendering(t, RenderingModeAdvanced)
 
-	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, expected)
+	updateData := &PromptRendering{
+		RenderingMode:           &RenderingModeStandard,
+		ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"},
+		DefaultHeadTagsDisabled: auth0.Bool(true),
+	}
+
+	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, updateData)
 	assert.NoError(t, err)
 
 	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
 	assert.NoError(t, err)
-	assert.Equal(t, expected.GetRenderingMode(), actual.GetRenderingMode())
-	assert.NotEqual(t, expected.GetContextConfiguration(), actual.GetContextConfiguration())
-	assert.NotEqual(t, expected.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
+
+	assert.Equal(t, updateData.GetRenderingMode(), actual.GetRenderingMode())
+	assert.NotEqual(t, updateData.GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.NotEqual(t, updateData.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
 	assert.Equal(t, expected.HeadTags, actual.HeadTags)
+	assert.Equal(t, PromptSignup, *actual.GetPrompt())
+	assert.Equal(t, ScreenSignup, *actual.GetScreen())
+}
+
+// Able to update the setting's configs even the existing renderingMode is standard since renderingMode is not parsed in payload(updateData).
+func TestPromptManager_UpdateRendering(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	_ = givenACustomDomain(t)
+	_ = givenAUniversalLoginTemplate(t)
+	_ = givenAPromptRendering(t, RenderingModeStandard)
+
+	updateData := &PromptRendering{
+		ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"},
+		DefaultHeadTagsDisabled: auth0.Bool(true),
+	}
+
+	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, updateData)
+	assert.NoError(t, err)
+
+	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
+	assert.NoError(t, err)
+	assert.Equal(t, updateData.GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, updateData.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
 	assert.Equal(t, PromptSignup, *actual.GetPrompt())
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
@@ -353,11 +386,11 @@ func givenAPartialPrompt(t *testing.T, prompt PromptType) *PromptScreenPartials 
 	return partials
 }
 
-func givenAPromptRendering(t *testing.T) *PromptRendering {
+func givenAPromptRendering(t *testing.T, mode RenderingMode) *PromptRendering {
 	t.Helper()
 
 	settings := &PromptRendering{
-		RenderingMode:           &RenderingModeStandard,
+		RenderingMode:           &mode,
 		ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default"},
 		DefaultHeadTagsDisabled: auth0.Bool(false),
 		HeadTags: []interface{}{
@@ -368,7 +401,7 @@ func givenAPromptRendering(t *testing.T) *PromptRendering {
 					"defer": true,
 					"src":   "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js",
 					"async": true,
-					"integrity": []string{
+					"integrity": []interface{}{
 						"sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==",
 					},
 				},
