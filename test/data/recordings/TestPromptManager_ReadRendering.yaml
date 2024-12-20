@@ -197,7 +197,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.13.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_7SgKHnrmHQNuTXEs
         method: DELETE
       response:
         proto: HTTP/2.0
