@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 99
+        content_length: 93
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-          {"domain":"1734698728.auth.uat.auth0.com","type":"auth0_managed_certs","tls_policy":"recommended"}
+            {"domain":"1730881029.auth.uat.auth0.com","type":"auth0_managed_certs","tls_policy":"recommended"}
         form: {}
         headers:
-          Content-Type:
-            - application/json
-          User-Agent:
-            - Go-Auth0/1.13.0
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.13.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains
         method: POST
       response:
@@ -28,15 +28,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 169
+        content_length: 328
         uncompressed: false
-        body: '{"custom_domain_id":"cd_hW5C18CQPXRsKpDz","domain":"1733383424.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-hw5c18cqpxrskpdz.edge.tenants.us.auth0.com","domain":"1733383424.auth.uat.auth0.com"}]},"tls_policy":"recommended"}'
+        body: '{"custom_domain_id":"cd_7SgKHnrmHQNuTXEs","domain":"1730881029.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-7sgkhnrmhqnutxes.edge.tenants.us.auth0.com","domain":"1730881029.auth.uat.auth0.com"}]},"tls_policy":"recommended"}'
         headers:
-          Content-Type:
-            - application/json; charset=utf-8
+            Content-Type:
+                - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 994.566333ms
+        duration: 923.825708ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -72,7 +72,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 778.887334ms
+        duration: 2.783568542s
     - id: 2
       request:
         proto: HTTP/1.1
@@ -108,7 +108,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 430.98975ms
+        duration: 345.701625ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -143,7 +143,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 428.221208ms
+        duration: 348.5575ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -178,7 +178,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 544.41275ms
+        duration: 433.247666ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -193,11 +193,11 @@ interactions:
         body: ""
         form: {}
         headers:
-          Content-Type:
-            - application/json
-          User-Agent:
-            - Go-Auth0/1.13.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_hW5C18CQPXRsKpDz
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.13.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_7SgKHnrmHQNuTXEs
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -209,8 +209,8 @@ interactions:
         uncompressed: false
         body: ""
         headers:
-          Content-Type:
-            - application/json; charset=utf-8
+            Content-Type:
+                - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 411.741083ms
+        duration: 383.460542ms
