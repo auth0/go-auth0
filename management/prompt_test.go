@@ -167,9 +167,9 @@ func TestPromptManager_UpdateRendering(t *testing.T) {
 func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	_ = givenACustomDomain(t)
+	// _ = givenACustomDomain(t)
 	_ = givenAUniversalLoginTemplate(t)
-	expected := givenAPromptRendering(t)
+	expected := givenAPromptStandardRendering(t)
 	expected.RenderingMode = &RenderingModeStandard
 	expected.ContextConfiguration = &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"}
 	expected.DefaultHeadTagsDisabled = auth0.Bool(true)
@@ -357,6 +357,34 @@ func givenAPromptRendering(t *testing.T) *PromptRendering {
 	t.Helper()
 
 	settings := &PromptRendering{
+		RenderingMode:           &RenderingModeAdvanced,
+		ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default"},
+		DefaultHeadTagsDisabled: auth0.Bool(false),
+		HeadTags: []interface{}{
+			map[string]interface{}{
+				"tag":     "script",
+				"content": "",
+				"attributes": map[string]interface{}{
+					"defer": true,
+					"src":   "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js",
+					"async": true,
+					"integrity": []interface{}{
+						"sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==",
+					},
+				},
+			},
+		},
+	}
+
+	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, settings)
+	assert.NoError(t, err)
+
+	return settings
+}
+func givenAPromptStandardRendering(t *testing.T) *PromptRendering {
+	t.Helper()
+
+	settings := &PromptRendering{
 		RenderingMode:           &RenderingModeStandard,
 		ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default"},
 		DefaultHeadTagsDisabled: auth0.Bool(false),
@@ -368,7 +396,7 @@ func givenAPromptRendering(t *testing.T) *PromptRendering {
 					"defer": true,
 					"src":   "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js",
 					"async": true,
-					"integrity": []string{
+					"integrity": []interface{}{
 						"sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==",
 					},
 				},
