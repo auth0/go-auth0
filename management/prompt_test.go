@@ -167,7 +167,7 @@ func TestPromptManager_UpdateRendering(t *testing.T) {
 func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	// _ = givenACustomDomain(t)
+	_ = givenACustomDomain(t)
 	_ = givenAUniversalLoginTemplate(t)
 	expected := givenAPromptStandardRendering(t)
 	expected.RenderingMode = &RenderingModeStandard
