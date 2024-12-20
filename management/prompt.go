@@ -461,18 +461,21 @@ func (c *PromptRendering) MarshalJSON() ([]byte, error) {
 		HeadTags                []interface{}  `json:"head_tags,omitempty"`
 	}
 
-	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
-		return json.Marshal(&RenderingSubSet{
-			RenderingMode: c.RenderingMode,
-		})
-	}
-
 	return json.Marshal(&RenderingSubSet{
 		RenderingMode:           c.RenderingMode,
 		ContextConfiguration:    c.ContextConfiguration,
 		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
 		HeadTags:                c.HeadTags,
 	})
+}
+
+func (c *PromptRendering) CleanForPatch() *PromptRendering {
+	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
+		return &PromptRendering{
+			RenderingMode: c.RenderingMode,
+		}
+	}
+	return c
 }
 
 // MarshalJSON implements a custom [json.Marshaler].
@@ -644,5 +647,6 @@ func (m *PromptManager) ReadRendering(ctx context.Context, prompt PromptType, sc
 //
 // See: https://auth0.com/docs/api/management/v2/prompts/patch-rendering
 func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, screen ScreenName, c *PromptRendering, opts ...RequestOption) error {
+	c = c.CleanForPatch()
 	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), c, opts...)
 }
