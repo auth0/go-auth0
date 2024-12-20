@@ -169,7 +169,7 @@ func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
 
 	_ = givenACustomDomain(t)
 	_ = givenAUniversalLoginTemplate(t)
-	expected := givenAPromptStandardRendering(t)
+	expected := givenAPromptRendering(t)
 	expected.RenderingMode = &RenderingModeStandard
 	expected.ContextConfiguration = &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"}
 	expected.DefaultHeadTagsDisabled = auth0.Bool(true)
@@ -183,6 +183,28 @@ func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
 	assert.NotEqual(t, expected.GetContextConfiguration(), actual.GetContextConfiguration())
 	assert.NotEqual(t, expected.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
 	assert.Equal(t, expected.HeadTags, actual.HeadTags)
+	assert.Equal(t, PromptSignup, *actual.GetPrompt())
+	assert.Equal(t, ScreenSignup, *actual.GetScreen())
+}
+
+func TestPromptManager_UpdateRenderingWithAdvancedMode(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	_ = givenACustomDomain(t)
+	_ = givenAUniversalLoginTemplate(t)
+	_ = givenAPromptRendering(t)
+	updateData := &PromptRendering{}
+	updateData.RenderingMode = &RenderingModeAdvanced
+	updateData.ContextConfiguration = &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"}
+	updateData.DefaultHeadTagsDisabled = auth0.Bool(true)
+
+	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, updateData)
+	assert.NoError(t, err)
+
+	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
+	assert.NoError(t, err)
+	assert.Equal(t, updateData.GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, updateData.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
 	assert.Equal(t, PromptSignup, *actual.GetPrompt())
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
@@ -354,34 +376,6 @@ func givenAPartialPrompt(t *testing.T, prompt PromptType) *PromptScreenPartials 
 }
 
 func givenAPromptRendering(t *testing.T) *PromptRendering {
-	t.Helper()
-
-	settings := &PromptRendering{
-		RenderingMode:           &RenderingModeAdvanced,
-		ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default"},
-		DefaultHeadTagsDisabled: auth0.Bool(false),
-		HeadTags: []interface{}{
-			map[string]interface{}{
-				"tag":     "script",
-				"content": "",
-				"attributes": map[string]interface{}{
-					"defer": true,
-					"src":   "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js",
-					"async": true,
-					"integrity": []interface{}{
-						"sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==",
-					},
-				},
-			},
-		},
-	}
-
-	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, settings)
-	assert.NoError(t, err)
-
-	return settings
-}
-func givenAPromptStandardRendering(t *testing.T) *PromptRendering {
 	t.Helper()
 
 	settings := &PromptRendering{
