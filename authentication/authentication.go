@@ -123,6 +123,7 @@ type Authentication struct {
 	MFA          *MFA
 	OAuth        *OAuth
 	Passwordless *Passwordless
+	CIBA         *CIBA
 
 	auth0ClientInfo           *client.Auth0ClientInfo
 	basePath                  string
@@ -184,6 +185,7 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 	a.MFA = (*MFA)(&a.common)
 	a.OAuth = (*OAuth)(&a.common)
 	a.Passwordless = (*Passwordless)(&a.common)
+	a.CIBA = (*CIBA)(&a.common)
 
 	validatorOpts := []idtokenvalidator.Option{}
 
