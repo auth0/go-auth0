@@ -167,6 +167,23 @@ func TestOptionDefaults(t *testing.T) {
 	assert.Equal(t, "false", includeTotals)
 }
 
+func TestOptionCheckpointDefaults(t *testing.T) {
+	r, _ := http.NewRequest("GET", "/", nil)
+
+	applyListCheckpointDefaults([]RequestOption{
+		Take(20),    // This should be persisted (default is 50).
+		From("abc"), // This should be persisted (default is nil).
+	}).apply(r)
+
+	v := r.URL.Query()
+
+	take := v.Get("take")
+	assert.Equal(t, "20", take)
+
+	from := v.Get("from")
+	assert.Equal(t, "abc", from)
+}
+
 func TestOptionSort(t *testing.T) {
 	r, _ := http.NewRequest("GET", "/", nil)
 
