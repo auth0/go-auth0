@@ -14206,6 +14206,92 @@ func TestTLSClientAuth_String(t *testing.T) {
 	}
 }
 
+func TestTokenExchangeProfile_GetActionID(tt *testing.T) {
+	var zeroValue string
+	t := &TokenExchangeProfile{ActionID: &zeroValue}
+	t.GetActionID()
+	t = &TokenExchangeProfile{}
+	t.GetActionID()
+	t = nil
+	t.GetActionID()
+}
+
+func TestTokenExchangeProfile_GetCreatedAt(tt *testing.T) {
+	var zeroValue string
+	t := &TokenExchangeProfile{CreatedAt: &zeroValue}
+	t.GetCreatedAt()
+	t = &TokenExchangeProfile{}
+	t.GetCreatedAt()
+	t = nil
+	t.GetCreatedAt()
+}
+
+func TestTokenExchangeProfile_GetID(tt *testing.T) {
+	var zeroValue string
+	t := &TokenExchangeProfile{ID: &zeroValue}
+	t.GetID()
+	t = &TokenExchangeProfile{}
+	t.GetID()
+	t = nil
+	t.GetID()
+}
+
+func TestTokenExchangeProfile_GetName(tt *testing.T) {
+	var zeroValue string
+	t := &TokenExchangeProfile{Name: &zeroValue}
+	t.GetName()
+	t = &TokenExchangeProfile{}
+	t.GetName()
+	t = nil
+	t.GetName()
+}
+
+func TestTokenExchangeProfile_GetSubjectTokenType(tt *testing.T) {
+	var zeroValue string
+	t := &TokenExchangeProfile{SubjectTokenType: &zeroValue}
+	t.GetSubjectTokenType()
+	t = &TokenExchangeProfile{}
+	t.GetSubjectTokenType()
+	t = nil
+	t.GetSubjectTokenType()
+}
+
+func TestTokenExchangeProfile_GetType(tt *testing.T) {
+	var zeroValue string
+	t := &TokenExchangeProfile{Type: &zeroValue}
+	t.GetType()
+	t = &TokenExchangeProfile{}
+	t.GetType()
+	t = nil
+	t.GetType()
+}
+
+func TestTokenExchangeProfile_GetUpdatedAt(tt *testing.T) {
+	var zeroValue string
+	t := &TokenExchangeProfile{UpdatedAt: &zeroValue}
+	t.GetUpdatedAt()
+	t = &TokenExchangeProfile{}
+	t.GetUpdatedAt()
+	t = nil
+	t.GetUpdatedAt()
+}
+
+func TestTokenExchangeProfile_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TokenExchangeProfile{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTokenExchangeProfileList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TokenExchangeProfileList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestUser_GetAppMetadata(tt *testing.T) {
 	var zeroValue map[string]interface{}
 	u := &User{AppMetadata: &zeroValue}

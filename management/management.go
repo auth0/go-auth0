@@ -118,6 +118,9 @@ type Management struct {
 	// EncryptionKey manages Auth0 Encryption Keys.
 	EncryptionKey *EncryptionKeyManager
 
+	// TokenExchangeProfile manages Auth0 Token Exchange Profiles.
+	TokenExchangeProfile *TokenExchangeProfileManager
+
 	url             *url.URL
 	basePath        string
 	userAgent       string

@@ -11307,6 +11307,72 @@ func (t *TLSClientAuth) String() string {
 	return Stringify(t)
 }
 
+// GetActionID returns the ActionID field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetActionID() string {
+	if t == nil || t.ActionID == nil {
+		return ""
+	}
+	return *t.ActionID
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetCreatedAt() string {
+	if t == nil || t.CreatedAt == nil {
+		return ""
+	}
+	return *t.CreatedAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetID() string {
+	if t == nil || t.ID == nil {
+		return ""
+	}
+	return *t.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetName() string {
+	if t == nil || t.Name == nil {
+		return ""
+	}
+	return *t.Name
+}
+
+// GetSubjectTokenType returns the SubjectTokenType field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetSubjectTokenType() string {
+	if t == nil || t.SubjectTokenType == nil {
+		return ""
+	}
+	return *t.SubjectTokenType
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetType() string {
+	if t == nil || t.Type == nil {
+		return ""
+	}
+	return *t.Type
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetUpdatedAt() string {
+	if t == nil || t.UpdatedAt == nil {
+		return ""
+	}
+	return *t.UpdatedAt
+}
+
+// String returns a string representation of TokenExchangeProfile.
+func (t *TokenExchangeProfile) String() string {
+	return Stringify(t)
+}
+
+// String returns a string representation of TokenExchangeProfileList.
+func (t *TokenExchangeProfileList) String() string {
+	return Stringify(t)
+}
+
 // GetAppMetadata returns the AppMetadata field if it's non-nil, zero value otherwise.
 func (u *User) GetAppMetadata() map[string]interface{} {
 	if u == nil || u.AppMetadata == nil {
