@@ -32,17 +32,17 @@ type TokenExchangeProfileList struct {
 // MarshalJSON implements the json.Marshaler interface for the TokenExchangeProfile type.
 func (t *TokenExchangeProfile) MarshalJSON() ([]byte, error) {
 	type TokenExchangeProfileSubset struct {
-		ID               *string `json:"id,omitempty"`
 		Name             *string `json:"name,omitempty"`
 		SubjectTokenType *string `json:"subject_token_type,omitempty"`
 		ActionID         *string `json:"action_id,omitempty"`
+		Type             *string `json:"type,omitempty"`
 	}
 
 	return json.Marshal(&TokenExchangeProfileSubset{
-		ID:               t.ID,
 		Name:             t.Name,
 		SubjectTokenType: t.SubjectTokenType,
 		ActionID:         t.ActionID,
+		Type:             t.Type,
 	})
 }
 
@@ -50,30 +50,40 @@ func (t *TokenExchangeProfile) MarshalJSON() ([]byte, error) {
 type TokenExchangeProfileManager manager
 
 // Create a new token exchange profile.
+//
+// See: https://auth0.com/docs/api/management/v2#!/token-exchange-profiles/post_token_exchange_profile
 func (m *TokenExchangeProfileManager) Create(ctx context.Context, t *TokenExchangeProfile, opts ...RequestOption) (err error) {
 	err = m.management.Request(ctx, "POST", m.management.URI("token-exchange-profiles"), t, opts...)
 	return
 }
 
 // List all token exchange profiles.
+//
+// See: https://auth0.com/docs/api/management/v2#!/token-exchange-profiles/get_token_exchange_profiles
 func (m *TokenExchangeProfileManager) List(ctx context.Context, opts ...RequestOption) (t *TokenExchangeProfileList, err error) {
-	err = m.management.Request(ctx, "GET", m.management.URI("token-exchange-profiles"), &t, applyListDefaults(opts))
+	err = m.management.Request(ctx, "GET", m.management.URI("token-exchange-profiles"), &t, applyListCheckpointDefaults(opts))
 	return
 }
 
 // Read a single token exchange profile against the ID.
+//
+// See: https://auth0.com/docs/api/management/v2#!/token-exchange-profiles/get_token_exchange_profile
 func (m *TokenExchangeProfileManager) Read(ctx context.Context, id string, opts ...RequestOption) (t *TokenExchangeProfile, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("token-exchange-profiles", id), &t, opts...)
 	return
 }
 
 // Update an existing token exchange profile against the ID.
+//
+// See: https://auth0.com/docs/api/management/v2#!/token-exchange-profiles/patch_token_exchange_profile
 func (m *TokenExchangeProfileManager) Update(ctx context.Context, id string, t *TokenExchangeProfile, opts ...RequestOption) (err error) {
 	err = m.management.Request(ctx, "PATCH", m.management.URI("token-exchange-profiles", id), t, opts...)
 	return
 }
 
 // Delete an existing token exchange profile against the ID.
+//
+// See: https://auth0.com/docs/api/management/v2#!/token-exchange-profiles/delete_token_exchange_profile
 func (m *TokenExchangeProfileManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
 	err = m.management.Request(ctx, "DELETE", m.management.URI("token-exchange-profiles", id), nil, opts...)
 	return

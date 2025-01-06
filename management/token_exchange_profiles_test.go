@@ -2,11 +2,13 @@ package management
 
 import (
 	"context"
-	"github.com/auth0/go-auth0"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+
+	"github.com/auth0/go-auth0"
 )
 
 func TestTokenExchangeProfileManager_Create(t *testing.T) {
@@ -16,10 +18,9 @@ func TestTokenExchangeProfileManager_Create(t *testing.T) {
 		Name:             auth0.String("Test-Token-Exchange-Profile"),
 		SubjectTokenType: auth0.String("https://acme.com/cis-token"),
 		ActionID:         auth0.String(action.GetID()),
-		Type:             auth0.String("custom-authentication"),
+		Type:             auth0.String("custom_authentication"),
 	}
 	err := api.TokenExchangeProfile.Create(context.Background(), tokenExchangeProfile)
-
 	assert.NoError(t, err)
 	assert.NotEmpty(t, tokenExchangeProfile.GetID())
 
@@ -29,6 +30,7 @@ func TestTokenExchangeProfileManager_Create(t *testing.T) {
 
 	t.Cleanup(func() {
 		cleanupTokenExchangeProfile(t, tokenExchangeProfile.GetID())
+		cleanupAction(t, action.GetID())
 	})
 }
 
@@ -86,13 +88,14 @@ func givenAnTokenExchangeProfile(t *testing.T) *TokenExchangeProfile {
 		Name:             auth0.Stringf("%d-Test-Token-Exchange-Profile", time.Now().UTC().Unix()),
 		SubjectTokenType: auth0.String("https://acme.com/cis-token"),
 		ActionID:         auth0.String(action.GetID()),
-		Type:             auth0.String("custom-authentication"),
+		Type:             auth0.String("custom_authentication"),
 	}
 	err := api.TokenExchangeProfile.Create(context.Background(), tokenExchangeProfile)
 	assert.NoError(t, err)
 
 	t.Cleanup(func() {
 		cleanupTokenExchangeProfile(t, tokenExchangeProfile.GetID())
+		cleanupAction(t, action.GetID())
 	})
 
 	return tokenExchangeProfile
@@ -109,13 +112,9 @@ func givenAnCustomTokenExchangeAction(t *testing.T) *Action {
 	assert.NoError(t, err)
 	ensureActionBuilt(t, action.GetID())
 
-	t.Cleanup(func() {
-		cleanupAction(t, action.GetID())
-	})
-
-	actionVersion, err := api.Action.Deploy(context.Background(), action.GetID())
+	_, err = api.Action.Deploy(context.Background(), action.GetID())
 	assert.NoError(t, err)
-	assert.NotEmpty(t, actionVersion.GetID())
+	assert.NotEmpty(t, action.GetID())
 	return action
 }
 
