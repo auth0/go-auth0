@@ -46,6 +46,13 @@ func (t *TokenExchangeProfile) MarshalJSON() ([]byte, error) {
 	})
 }
 
+func (t *TokenExchangeProfile) cleanForPatch() *TokenExchangeProfile {
+	return &TokenExchangeProfile{
+		Name:             t.Name,
+		SubjectTokenType: t.SubjectTokenType,
+	}
+}
+
 // TokenExchangeProfileManager manages Auth0 Token Exchange Profile resources.
 type TokenExchangeProfileManager manager
 
@@ -77,6 +84,7 @@ func (m *TokenExchangeProfileManager) Read(ctx context.Context, id string, opts 
 //
 // See: https://auth0.com/docs/api/management/v2#!/token-exchange-profiles/patch_token_exchange_profile
 func (m *TokenExchangeProfileManager) Update(ctx context.Context, id string, t *TokenExchangeProfile, opts ...RequestOption) (err error) {
+	t.cleanForPatch()
 	err = m.management.Request(ctx, "PATCH", m.management.URI("token-exchange-profiles", id), t, opts...)
 	return
 }
