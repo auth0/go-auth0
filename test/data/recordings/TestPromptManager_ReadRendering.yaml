@@ -19,7 +19,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
+                - Go-Auth0/1.13.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains
         method: POST
       response:
@@ -55,7 +55,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
+                - Go-Auth0/1.13.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/branding/templates/universal-login
         method: PUT
       response:
@@ -91,7 +91,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
+                - Go-Auth0/1.13.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/prompts/signup/screen/signup/rendering
         method: PATCH
       response:
@@ -126,7 +126,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
+                - Go-Auth0/1.13.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/prompts/signup/screen/signup/rendering
         method: GET
       response:
@@ -161,7 +161,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
+                - Go-Auth0/1.13.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/branding/templates/universal-login
         method: DELETE
       response:
@@ -196,7 +196,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
+                - Go-Auth0/1.13.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_7SgKHnrmHQNuTXEs
         method: DELETE
       response:

@@ -461,12 +461,6 @@ func (c *PromptRendering) MarshalJSON() ([]byte, error) {
 		HeadTags                []interface{}  `json:"head_tags,omitempty"`
 	}
 
-	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
-		return json.Marshal(&RenderingSubSet{
-			RenderingMode: c.RenderingMode,
-		})
-	}
-
 	return json.Marshal(&RenderingSubSet{
 		RenderingMode:           c.RenderingMode,
 		ContextConfiguration:    c.ContextConfiguration,
@@ -639,10 +633,19 @@ func (m *PromptManager) ReadRendering(ctx context.Context, prompt PromptType, sc
 	err = m.management.Request(ctx, "GET", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), &c, opts...)
 	return
 }
+func (c *PromptRendering) cleanForPatch() *PromptRendering {
+	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
+		return &PromptRendering{
+			RenderingMode: c.RenderingMode,
+		}
+	}
+	return c
+}
 
 // UpdateRendering updates the settings for the ACUL.
 //
 // See: https://auth0.com/docs/api/management/v2/prompts/patch-rendering
 func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, screen ScreenName, c *PromptRendering, opts ...RequestOption) error {
+	c = c.cleanForPatch()
 	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), c, opts...)
 }

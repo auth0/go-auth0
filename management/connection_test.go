@@ -564,6 +564,56 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 		},
 	},
 	{
+		name: "Auth0 Connection with Email as Identifier With VerificationMethod OTP",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-Email-VerificationMethod-OTP%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
+			Attributes: &ConnectionOptionsAttributes{
+				Email: &ConnectionOptionsEmailAttribute{
+					Identifier: &ConnectionOptionsAttributeIdentifier{
+						Active: auth0.Bool(true),
+					},
+					VerificationMethod: &ConnectionOptionsEmailAttributeVerificationMethodOtp,
+					ProfileRequired:    auth0.Bool(true),
+					Signup: &ConnectionOptionsAttributeSignup{
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
+				},
+			},
+		},
+	},
+	{
+		name: "Auth0 Connection with Email as Identifier With VerificationMethod Link",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-Email-VerificationMethod-Link%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			Precedence: &[]string{"username", "email", "phone_number"},
+			Attributes: &ConnectionOptionsAttributes{
+				Email: &ConnectionOptionsEmailAttribute{
+					Identifier: &ConnectionOptionsAttributeIdentifier{
+						Active: auth0.Bool(true),
+					},
+					VerificationMethod: &ConnectionOptionsEmailAttributeVerificationMethodLink,
+					ProfileRequired:    auth0.Bool(true),
+					Signup: &ConnectionOptionsAttributeSignup{
+						Status: auth0.String("required"),
+						Verification: &ConnectionOptionsAttributeVerification{
+							Active: auth0.Bool(false),
+						},
+					},
+				},
+			},
+		},
+	},
+	{
 		name: "Auth0 Connection with Username as Identifier",
 		connection: Connection{
 			Name:     auth0.Stringf("Test-Auth0-Connection-Username-%d", time.Now().Unix()),
