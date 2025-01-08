@@ -413,6 +413,54 @@ type RefreshTokenResourceServer struct {
 	Scopes   *string `json:"scopes,omitempty"`
 }
 
+// UserSessionList represents a list of user sessions.
+type UserSessionList struct {
+	List
+	Sessions []*UserSession `json:"sessions,omitempty"`
+}
+
+// UserSession represents a user session.
+type UserSession struct {
+	ID               *string                    `json:"id,omitempty"`
+	UserID           *string                    `json:"user_id,omitempty"`
+	CreatedAt        *string                    `json:"created_at,omitempty"`
+	UpdatedAt        *string                    `json:"updated_at,omitempty"`
+	AuthenticatedAt  *string                    `json:"authenticated_at,omitempty"`
+	IdleExpiresAt    *string                    `json:"idle_expires_at,omitempty"`
+	ExpiresAt        *string                    `json:"expires_at,omitempty"`
+	LastInteractedAt *string                    `json:"last_interacted_at,omitempty"`
+	Device           *UserSessionDevice         `json:"device,omitempty"`
+	Clients          []*UserSessionClient       `json:"clients,omitempty"`
+	Authentication   *UserSessionAuthentication `json:"authentication,omitempty"`
+}
+
+// UserSessionDevice represents the device metadata for a user session.
+type UserSessionDevice struct {
+	InitialUserAgent *string `json:"initial_user_agent,omitempty"`
+	InitialIP        *string `json:"initial_ip,omitempty"`
+	InitialASN       *string `json:"initial_asn,omitempty"`
+	LastUserAgent    *string `json:"last_user_agent,omitempty"`
+	LastIP           *string `json:"last_ip,omitempty"`
+	LastASN          *string `json:"last_asn,omitempty"`
+}
+
+// UserSessionClient represents the client details for a user session.
+type UserSessionClient struct {
+	ClientID *string `json:"client_id,omitempty"`
+}
+
+// UserSessionAuthentication represents the authentication signals obtained during the login flow.
+type UserSessionAuthentication struct {
+	Methods []*UserSessionAuthenticationMethod `json:"methods,omitempty"`
+}
+
+// UserSessionAuthenticationMethod represents the authentication signal details.
+type UserSessionAuthenticationMethod struct {
+	Name      *string `json:"name,omitempty"`
+	Timestamp *string `json:"timestamp,omitempty"`
+	Type      *string `json:"type,omitempty"`
+}
+
 // UserManager manages Auth0 User resources.
 type UserManager manager
 
@@ -766,5 +814,24 @@ func (m *UserManager) ListRefreshTokens(ctx context.Context, userID string, opts
 // See: https://auth0.com/docs/api/management/v2#!/Users/delete-refresh-tokens-for-user
 func (m *UserManager) DeleteRefreshTokens(ctx context.Context, userID string, opts ...RequestOption) (err error) {
 	err = m.management.Request(ctx, "DELETE", m.management.URI("users", userID, "refresh-tokens"), nil, opts...)
+	return
+}
+
+// ListUserSessions retrieves details for a user's sessions.
+//
+// It allows pagination using the provided options. For more information on pagination, refer to:
+// https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
+//
+// See: https://auth0.com/docs/api/management/v2/users/get-sessions-for-user
+func (m *UserManager) ListUserSessions(ctx context.Context, userID string, opts ...RequestOption) (r *UserSessionList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("users", userID, "sessions"), &r, applyListCheckpointDefaults(opts))
+	return
+}
+
+// DeleteUserSessions deletes all sessions for a user.
+//
+// See: https://auth0.com/docs/api/management/v2/users/delete-sessions-for-user
+func (m *UserManager) DeleteUserSessions(ctx context.Context, userID string, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "DELETE", m.management.URI("users", userID, "sessions"), nil, opts...)
 	return
 }
