@@ -1,0 +1,248 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 190
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"1736161779-Test-Action","supported_triggers":[{"id":"custom-token-exchange","version":"v1"}],"code":"exports.onExecutePostLogin = async (event, api) =\u003e {}","runtime":"node18"}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.13.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/actions/actions
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 399
+        uncompressed: false
+        body: '{"id":"b136b5da-3da6-4fd0-8d7a-025949b6cc3b","name":"1736161779-Test-Action","supported_triggers":[{"id":"custom-token-exchange","version":"v1"}],"created_at":"2025-01-06T11:09:39.622509117Z","updated_at":"2025-01-06T11:09:39.631558930Z","code":"exports.onExecutePostLogin = async (event, api) => {}","dependencies":[],"runtime":"node18","status":"pending","secrets":[],"all_changes_deployed":false}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 366.535167ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.13.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/actions/actions/b136b5da-3da6-4fd0-8d7a-025949b6cc3b
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"id":"b136b5da-3da6-4fd0-8d7a-025949b6cc3b","name":"1736161779-Test-Action","supported_triggers":[{"id":"custom-token-exchange","version":"v1"}],"created_at":"2025-01-06T11:09:39.622509117Z","updated_at":"2025-01-06T11:09:39.631558930Z","code":"exports.onExecutePostLogin = async (event, api) => {}","dependencies":[],"runtime":"node18","status":"built","secrets":[],"all_changes_deployed":false}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 329.899166ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.13.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/actions/actions/b136b5da-3da6-4fd0-8d7a-025949b6cc3b/deploy
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"code":"exports.onExecutePostLogin = async (event, api) => {}","dependencies":[],"id":"577888fd-a497-4011-bfa9-877a0b552ab5","deployed":false,"number":1,"secrets":[],"status":"built","created_at":"2025-01-06T11:09:40.307126280Z","updated_at":"2025-01-06T11:09:40.307126280Z","runtime":"node18","supported_triggers":[{"id":"custom-token-exchange","version":"v1"}],"action":{"id":"b136b5da-3da6-4fd0-8d7a-025949b6cc3b","name":"1736161779-Test-Action","supported_triggers":[{"id":"custom-token-exchange","version":"v1"}],"created_at":"2025-01-06T11:09:39.622509117Z","updated_at":"2025-01-06T11:09:39.622509117Z","all_changes_deployed":false}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 1.167273s
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 182
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"1736161781-Test-Token-Exchange-Profile","subject_token_type":"https://acme.com/cis-token","action_id":"b136b5da-3da6-4fd0-8d7a-025949b6cc3b","type":"custom_authentication"}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.13.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/token-exchange-profiles
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 289
+        uncompressed: false
+        body: '{"id":"tep_23W3Yyk1jvoLWsVZ","name":"1736161781-Test-Token-Exchange-Profile","type":"custom_authentication","subject_token_type":"https://acme.com/cis-token","action_id":"b136b5da-3da6-4fd0-8d7a-025949b6cc3b","created_at":"2025-01-06T11:09:41.536Z","updated_at":"2025-01-06T11:09:41.536Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 402.46675ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.13.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/token-exchange-profiles?take=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"token_exchange_profiles":[{"id":"tep_23W3Yyk1jvoLWsVZ","name":"1736161781-Test-Token-Exchange-Profile","type":"custom_authentication","subject_token_type":"https://acme.com/cis-token","action_id":"b136b5da-3da6-4fd0-8d7a-025949b6cc3b","created_at":"2025-01-06T11:09:41.536Z","updated_at":"2025-01-06T11:09:41.536Z"}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 383.865834ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.13.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/token-exchange-profiles/tep_23W3Yyk1jvoLWsVZ
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers: {}
+        status: 204 No Content
+        code: 204
+        duration: 4.203427708s
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.13.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/actions/actions/b136b5da-3da6-4fd0-8d7a-025949b6cc3b
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 498.413291ms
