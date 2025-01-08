@@ -3311,6 +3311,14 @@ func (c *ConnectionOptionsEmailAttribute) GetSignup() *ConnectionOptionsAttribut
 	return c.Signup
 }
 
+// GetVerificationMethod returns the VerificationMethod field.
+func (c *ConnectionOptionsEmailAttribute) GetVerificationMethod() *ConnectionOptionsEmailAttributeVerificationMethod {
+	if c == nil {
+		return nil
+	}
+	return c.VerificationMethod
+}
+
 // String returns a string representation of ConnectionOptionsEmailAttribute.
 func (c *ConnectionOptionsEmailAttribute) String() string {
 	return Stringify(c)
@@ -11829,6 +11837,196 @@ func (u *UserRecoveryCode) GetRecoveryCode() string {
 
 // String returns a string representation of UserRecoveryCode.
 func (u *UserRecoveryCode) String() string {
+	return Stringify(u)
+}
+
+// GetAuthenticatedAt returns the AuthenticatedAt field if it's non-nil, zero value otherwise.
+func (u *UserSession) GetAuthenticatedAt() string {
+	if u == nil || u.AuthenticatedAt == nil {
+		return ""
+	}
+	return *u.AuthenticatedAt
+}
+
+// GetAuthentication returns the Authentication field.
+func (u *UserSession) GetAuthentication() *UserSessionAuthentication {
+	if u == nil {
+		return nil
+	}
+	return u.Authentication
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (u *UserSession) GetCreatedAt() string {
+	if u == nil || u.CreatedAt == nil {
+		return ""
+	}
+	return *u.CreatedAt
+}
+
+// GetDevice returns the Device field.
+func (u *UserSession) GetDevice() *UserSessionDevice {
+	if u == nil {
+		return nil
+	}
+	return u.Device
+}
+
+// GetExpiresAt returns the ExpiresAt field if it's non-nil, zero value otherwise.
+func (u *UserSession) GetExpiresAt() string {
+	if u == nil || u.ExpiresAt == nil {
+		return ""
+	}
+	return *u.ExpiresAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (u *UserSession) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+// GetIdleExpiresAt returns the IdleExpiresAt field if it's non-nil, zero value otherwise.
+func (u *UserSession) GetIdleExpiresAt() string {
+	if u == nil || u.IdleExpiresAt == nil {
+		return ""
+	}
+	return *u.IdleExpiresAt
+}
+
+// GetLastInteractedAt returns the LastInteractedAt field if it's non-nil, zero value otherwise.
+func (u *UserSession) GetLastInteractedAt() string {
+	if u == nil || u.LastInteractedAt == nil {
+		return ""
+	}
+	return *u.LastInteractedAt
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (u *UserSession) GetUpdatedAt() string {
+	if u == nil || u.UpdatedAt == nil {
+		return ""
+	}
+	return *u.UpdatedAt
+}
+
+// GetUserID returns the UserID field if it's non-nil, zero value otherwise.
+func (u *UserSession) GetUserID() string {
+	if u == nil || u.UserID == nil {
+		return ""
+	}
+	return *u.UserID
+}
+
+// String returns a string representation of UserSession.
+func (u *UserSession) String() string {
+	return Stringify(u)
+}
+
+// String returns a string representation of UserSessionAuthentication.
+func (u *UserSessionAuthentication) String() string {
+	return Stringify(u)
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (u *UserSessionAuthenticationMethod) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+// GetTimestamp returns the Timestamp field if it's non-nil, zero value otherwise.
+func (u *UserSessionAuthenticationMethod) GetTimestamp() string {
+	if u == nil || u.Timestamp == nil {
+		return ""
+	}
+	return *u.Timestamp
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (u *UserSessionAuthenticationMethod) GetType() string {
+	if u == nil || u.Type == nil {
+		return ""
+	}
+	return *u.Type
+}
+
+// String returns a string representation of UserSessionAuthenticationMethod.
+func (u *UserSessionAuthenticationMethod) String() string {
+	return Stringify(u)
+}
+
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (u *UserSessionClient) GetClientID() string {
+	if u == nil || u.ClientID == nil {
+		return ""
+	}
+	return *u.ClientID
+}
+
+// String returns a string representation of UserSessionClient.
+func (u *UserSessionClient) String() string {
+	return Stringify(u)
+}
+
+// GetInitialASN returns the InitialASN field if it's non-nil, zero value otherwise.
+func (u *UserSessionDevice) GetInitialASN() string {
+	if u == nil || u.InitialASN == nil {
+		return ""
+	}
+	return *u.InitialASN
+}
+
+// GetInitialIP returns the InitialIP field if it's non-nil, zero value otherwise.
+func (u *UserSessionDevice) GetInitialIP() string {
+	if u == nil || u.InitialIP == nil {
+		return ""
+	}
+	return *u.InitialIP
+}
+
+// GetInitialUserAgent returns the InitialUserAgent field if it's non-nil, zero value otherwise.
+func (u *UserSessionDevice) GetInitialUserAgent() string {
+	if u == nil || u.InitialUserAgent == nil {
+		return ""
+	}
+	return *u.InitialUserAgent
+}
+
+// GetLastASN returns the LastASN field if it's non-nil, zero value otherwise.
+func (u *UserSessionDevice) GetLastASN() string {
+	if u == nil || u.LastASN == nil {
+		return ""
+	}
+	return *u.LastASN
+}
+
+// GetLastIP returns the LastIP field if it's non-nil, zero value otherwise.
+func (u *UserSessionDevice) GetLastIP() string {
+	if u == nil || u.LastIP == nil {
+		return ""
+	}
+	return *u.LastIP
+}
+
+// GetLastUserAgent returns the LastUserAgent field if it's non-nil, zero value otherwise.
+func (u *UserSessionDevice) GetLastUserAgent() string {
+	if u == nil || u.LastUserAgent == nil {
+		return ""
+	}
+	return *u.LastUserAgent
+}
+
+// String returns a string representation of UserSessionDevice.
+func (u *UserSessionDevice) String() string {
+	return Stringify(u)
+}
+
+// String returns a string representation of UserSessionList.
+func (u *UserSessionList) String() string {
 	return Stringify(u)
 }
 

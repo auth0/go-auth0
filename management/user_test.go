@@ -299,6 +299,23 @@ func TestUserManager_Unlink(t *testing.T) {
 	assert.Equal(t, mainUser.GetID(), "auth0|"+unlinkedIdentities[0].GetUserID())
 }
 
+func TestUserManager_ListUserSessions(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	user := givenAUser(t)
+	sessions, err := api.User.ListUserSessions(context.Background(), user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, sessions.Sessions, 0)
+}
+
+func TestUserManager_DeleteUserSessions(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	user := givenAUser(t)
+	err := api.User.DeleteUserSessions(context.Background(), user.GetID())
+	assert.NoError(t, err)
+}
+
 func TestUser_MarshalJSON(t *testing.T) {
 	for user, expected := range map[*User]string{
 		{}:                                 `{}`,

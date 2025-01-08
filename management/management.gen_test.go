@@ -4058,6 +4058,13 @@ func TestConnectionOptionsEmailAttribute_GetSignup(tt *testing.T) {
 	c.GetSignup()
 }
 
+func TestConnectionOptionsEmailAttribute_GetVerificationMethod(tt *testing.T) {
+	c := &ConnectionOptionsEmailAttribute{}
+	c.GetVerificationMethod()
+	c = nil
+	c.GetVerificationMethod()
+}
+
 func TestConnectionOptionsEmailAttribute_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsEmailAttribute{}
@@ -14873,6 +14880,248 @@ func TestUserRecoveryCode_GetRecoveryCode(tt *testing.T) {
 func TestUserRecoveryCode_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &UserRecoveryCode{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserSession_GetAuthenticatedAt(tt *testing.T) {
+	var zeroValue string
+	u := &UserSession{AuthenticatedAt: &zeroValue}
+	u.GetAuthenticatedAt()
+	u = &UserSession{}
+	u.GetAuthenticatedAt()
+	u = nil
+	u.GetAuthenticatedAt()
+}
+
+func TestUserSession_GetAuthentication(tt *testing.T) {
+	u := &UserSession{}
+	u.GetAuthentication()
+	u = nil
+	u.GetAuthentication()
+}
+
+func TestUserSession_GetCreatedAt(tt *testing.T) {
+	var zeroValue string
+	u := &UserSession{CreatedAt: &zeroValue}
+	u.GetCreatedAt()
+	u = &UserSession{}
+	u.GetCreatedAt()
+	u = nil
+	u.GetCreatedAt()
+}
+
+func TestUserSession_GetDevice(tt *testing.T) {
+	u := &UserSession{}
+	u.GetDevice()
+	u = nil
+	u.GetDevice()
+}
+
+func TestUserSession_GetExpiresAt(tt *testing.T) {
+	var zeroValue string
+	u := &UserSession{ExpiresAt: &zeroValue}
+	u.GetExpiresAt()
+	u = &UserSession{}
+	u.GetExpiresAt()
+	u = nil
+	u.GetExpiresAt()
+}
+
+func TestUserSession_GetID(tt *testing.T) {
+	var zeroValue string
+	u := &UserSession{ID: &zeroValue}
+	u.GetID()
+	u = &UserSession{}
+	u.GetID()
+	u = nil
+	u.GetID()
+}
+
+func TestUserSession_GetIdleExpiresAt(tt *testing.T) {
+	var zeroValue string
+	u := &UserSession{IdleExpiresAt: &zeroValue}
+	u.GetIdleExpiresAt()
+	u = &UserSession{}
+	u.GetIdleExpiresAt()
+	u = nil
+	u.GetIdleExpiresAt()
+}
+
+func TestUserSession_GetLastInteractedAt(tt *testing.T) {
+	var zeroValue string
+	u := &UserSession{LastInteractedAt: &zeroValue}
+	u.GetLastInteractedAt()
+	u = &UserSession{}
+	u.GetLastInteractedAt()
+	u = nil
+	u.GetLastInteractedAt()
+}
+
+func TestUserSession_GetUpdatedAt(tt *testing.T) {
+	var zeroValue string
+	u := &UserSession{UpdatedAt: &zeroValue}
+	u.GetUpdatedAt()
+	u = &UserSession{}
+	u.GetUpdatedAt()
+	u = nil
+	u.GetUpdatedAt()
+}
+
+func TestUserSession_GetUserID(tt *testing.T) {
+	var zeroValue string
+	u := &UserSession{UserID: &zeroValue}
+	u.GetUserID()
+	u = &UserSession{}
+	u.GetUserID()
+	u = nil
+	u.GetUserID()
+}
+
+func TestUserSession_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserSession{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserSessionAuthentication_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserSessionAuthentication{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserSessionAuthenticationMethod_GetName(tt *testing.T) {
+	var zeroValue string
+	u := &UserSessionAuthenticationMethod{Name: &zeroValue}
+	u.GetName()
+	u = &UserSessionAuthenticationMethod{}
+	u.GetName()
+	u = nil
+	u.GetName()
+}
+
+func TestUserSessionAuthenticationMethod_GetTimestamp(tt *testing.T) {
+	var zeroValue string
+	u := &UserSessionAuthenticationMethod{Timestamp: &zeroValue}
+	u.GetTimestamp()
+	u = &UserSessionAuthenticationMethod{}
+	u.GetTimestamp()
+	u = nil
+	u.GetTimestamp()
+}
+
+func TestUserSessionAuthenticationMethod_GetType(tt *testing.T) {
+	var zeroValue string
+	u := &UserSessionAuthenticationMethod{Type: &zeroValue}
+	u.GetType()
+	u = &UserSessionAuthenticationMethod{}
+	u.GetType()
+	u = nil
+	u.GetType()
+}
+
+func TestUserSessionAuthenticationMethod_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserSessionAuthenticationMethod{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserSessionClient_GetClientID(tt *testing.T) {
+	var zeroValue string
+	u := &UserSessionClient{ClientID: &zeroValue}
+	u.GetClientID()
+	u = &UserSessionClient{}
+	u.GetClientID()
+	u = nil
+	u.GetClientID()
+}
+
+func TestUserSessionClient_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserSessionClient{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserSessionDevice_GetInitialASN(tt *testing.T) {
+	var zeroValue string
+	u := &UserSessionDevice{InitialASN: &zeroValue}
+	u.GetInitialASN()
+	u = &UserSessionDevice{}
+	u.GetInitialASN()
+	u = nil
+	u.GetInitialASN()
+}
+
+func TestUserSessionDevice_GetInitialIP(tt *testing.T) {
+	var zeroValue string
+	u := &UserSessionDevice{InitialIP: &zeroValue}
+	u.GetInitialIP()
+	u = &UserSessionDevice{}
+	u.GetInitialIP()
+	u = nil
+	u.GetInitialIP()
+}
+
+func TestUserSessionDevice_GetInitialUserAgent(tt *testing.T) {
+	var zeroValue string
+	u := &UserSessionDevice{InitialUserAgent: &zeroValue}
+	u.GetInitialUserAgent()
+	u = &UserSessionDevice{}
+	u.GetInitialUserAgent()
+	u = nil
+	u.GetInitialUserAgent()
+}
+
+func TestUserSessionDevice_GetLastASN(tt *testing.T) {
+	var zeroValue string
+	u := &UserSessionDevice{LastASN: &zeroValue}
+	u.GetLastASN()
+	u = &UserSessionDevice{}
+	u.GetLastASN()
+	u = nil
+	u.GetLastASN()
+}
+
+func TestUserSessionDevice_GetLastIP(tt *testing.T) {
+	var zeroValue string
+	u := &UserSessionDevice{LastIP: &zeroValue}
+	u.GetLastIP()
+	u = &UserSessionDevice{}
+	u.GetLastIP()
+	u = nil
+	u.GetLastIP()
+}
+
+func TestUserSessionDevice_GetLastUserAgent(tt *testing.T) {
+	var zeroValue string
+	u := &UserSessionDevice{LastUserAgent: &zeroValue}
+	u.GetLastUserAgent()
+	u = &UserSessionDevice{}
+	u.GetLastUserAgent()
+	u = nil
+	u.GetLastUserAgent()
+}
+
+func TestUserSessionDevice_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserSessionDevice{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserSessionList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserSessionList{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

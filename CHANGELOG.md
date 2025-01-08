@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.14.0](https://github.com/auth0/go-auth0/tree/v1.14.0) (2025-01-08)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.13.1...v1.14.0)
+
+**Added**
+- Add Support for User sessions Endpoints in `UserManager` [\#482](https://github.com/auth0/go-auth0/pull/482) ([developerkunal](https://github.com/developerkunal))
+- Support for CIBA  [\#473](https://github.com/auth0/go-auth0/pull/473) ([duedares-rvj](https://github.com/duedares-rvj))
+- Add Support for `VerificationMethod` Attribute for Email-based Auth0 ConnectionOptions [\#481](https://github.com/auth0/go-auth0/pull/481) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.13.1](https://github.com/auth0/go-auth0/tree/v1.13.1) (2024-12-20)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.13.0...v1.13.1)
 
