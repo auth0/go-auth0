@@ -174,6 +174,15 @@ func applyListDefaults(options []RequestOption) RequestOption {
 	})
 }
 
+func applyListCheckpointDefaults(options []RequestOption) RequestOption {
+	return newRequestOption(func(r *http.Request) {
+		Take(50).apply(r)
+		for _, option := range options {
+			option.apply(r)
+		}
+	})
+}
+
 // IncludeFields configures a request to include the desired fields.
 func IncludeFields(fields ...string) RequestOption {
 	return newRequestOption(func(r *http.Request) {
