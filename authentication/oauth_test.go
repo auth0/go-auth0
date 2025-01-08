@@ -10,6 +10,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/auth0/go-auth0/authentication/ciba"
+
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwt"
 	"github.com/stretchr/testify/assert"
@@ -18,6 +20,37 @@ import (
 	"github.com/auth0/go-auth0/authentication/oauth"
 )
 
+func TestLoginWithGrant(t *testing.T) {
+	t.Run("Should return token for CIBA", func(t *testing.T) {
+		// This test required approval on Guardian MFA application.
+		// Hence, it cannot be recorded and is only for manual testing.
+		t.Skip("Skipped as cannot be test in E2E scenario")
+
+		// Call the Initiate method of the CIBA manager
+		resp, err := authAPI.CIBA.Initiate(context.Background(), ciba.Request{
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			Scope:        "openid",
+			LoginHint: map[string]string{
+				"format": "iss_sub",
+				"iss":    "https://witty-silver-sailfish-sus1-staging-20240704.sus.auth0.com/",
+				"sub":    "auth0|6707939cad3d8bec47ecfa2e",
+			},
+			BindingMessage: "TEST-BINDING-MESSAGE",
+		})
+
+		token, err := authAPI.OAuth.LoginWithGrant(context.Background(),
+			"urn:openid:params:grant-type:ciba",
+			url.Values{
+				"auth_req_id":   []string{resp.AuthReqID},
+				"client_id":     []string{clientID},
+				"client_secret": []string{clientSecret},
+			},
+			oauth.IDTokenValidationOptions{})
+		assert.Empty(t, err)
+		assert.NotEmpty(t, token.AccessToken)
+	})
+}
 func TestOAuthLoginWithPassword(t *testing.T) {
 	auth, err := New(
 		context.Background(),
