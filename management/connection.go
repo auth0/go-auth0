@@ -499,11 +499,22 @@ type ConnectionOptionsAttributeAllowedTypes struct {
 	PhoneNumber *bool `json:"phone_number,omitempty"`
 }
 
+// ConnectionOptionsEmailAttributeVerificationMethod defines the verification method for email attributes.
+type ConnectionOptionsEmailAttributeVerificationMethod string
+
+var (
+	// ConnectionOptionsEmailAttributeVerificationMethodLink is the "link" verification method.
+	ConnectionOptionsEmailAttributeVerificationMethodLink ConnectionOptionsEmailAttributeVerificationMethod = "link"
+	// ConnectionOptionsEmailAttributeVerificationMethodOtp is the "otp" verification method.
+	ConnectionOptionsEmailAttributeVerificationMethodOtp ConnectionOptionsEmailAttributeVerificationMethod = "otp"
+)
+
 // ConnectionOptionsEmailAttribute defines configuration settings for email attributes.
 type ConnectionOptionsEmailAttribute struct {
-	Identifier      *ConnectionOptionsAttributeIdentifier `json:"identifier,omitempty"`
-	ProfileRequired *bool                                 `json:"profile_required,omitempty"`
-	Signup          *ConnectionOptionsAttributeSignup     `json:"signup,omitempty"`
+	Identifier         *ConnectionOptionsAttributeIdentifier              `json:"identifier,omitempty"`
+	ProfileRequired    *bool                                              `json:"profile_required,omitempty"`
+	Signup             *ConnectionOptionsAttributeSignup                  `json:"signup,omitempty"`
+	VerificationMethod *ConnectionOptionsEmailAttributeVerificationMethod `json:"verification_method,omitempty"`
 }
 
 // ConnectionOptionsUsernameAttribute defines configuration settings for username attributes.

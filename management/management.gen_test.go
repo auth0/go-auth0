@@ -4058,6 +4058,13 @@ func TestConnectionOptionsEmailAttribute_GetSignup(tt *testing.T) {
 	c.GetSignup()
 }
 
+func TestConnectionOptionsEmailAttribute_GetVerificationMethod(tt *testing.T) {
+	c := &ConnectionOptionsEmailAttribute{}
+	c.GetVerificationMethod()
+	c = nil
+	c.GetVerificationMethod()
+}
+
 func TestConnectionOptionsEmailAttribute_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsEmailAttribute{}

@@ -3311,6 +3311,14 @@ func (c *ConnectionOptionsEmailAttribute) GetSignup() *ConnectionOptionsAttribut
 	return c.Signup
 }
 
+// GetVerificationMethod returns the VerificationMethod field.
+func (c *ConnectionOptionsEmailAttribute) GetVerificationMethod() *ConnectionOptionsEmailAttributeVerificationMethod {
+	if c == nil {
+		return nil
+	}
+	return c.VerificationMethod
+}
+
 // String returns a string representation of ConnectionOptionsEmailAttribute.
 func (c *ConnectionOptionsEmailAttribute) String() string {
 	return Stringify(c)
