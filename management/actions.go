@@ -27,8 +27,6 @@ const (
 	ActionTriggerCustomEmailProvider string = "custom-email-provider"
 	// ActionTriggerPasswordResetPostChallenge constant.
 	ActionTriggerPasswordResetPostChallenge string = "password-reset-post-challenge"
-	// ActionTriggerCustomTokenExchangeBeta constant.
-	ActionTriggerCustomTokenExchangeBeta string = "custom-token-exchange-beta" // #nosec
 	// ActionTriggerCustomTokenExchange constant.
 	ActionTriggerCustomTokenExchange string = "custom-token-exchange" // #nosec
 )
