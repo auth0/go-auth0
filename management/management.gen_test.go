@@ -49,6 +49,16 @@ func TestAction_GetDependencies(tt *testing.T) {
 	a.GetDependencies()
 }
 
+func TestAction_GetDeploy(tt *testing.T) {
+	var zeroValue bool
+	a := &Action{Deploy: &zeroValue}
+	a.GetDeploy()
+	a = &Action{}
+	a.GetDeploy()
+	a = nil
+	a.GetDeploy()
+}
+
 func TestAction_GetDeployedVersion(tt *testing.T) {
 	a := &Action{}
 	a.GetDeployedVersion()
@@ -1926,6 +1936,13 @@ func TestClient_GetTokenEndpointAuthMethod(tt *testing.T) {
 	c.GetTokenEndpointAuthMethod()
 }
 
+func TestClient_GetTokenExchange(tt *testing.T) {
+	c := &Client{}
+	c.GetTokenExchange()
+	c = nil
+	c.GetTokenExchange()
+}
+
 func TestClient_GetWebOrigins(tt *testing.T) {
 	var zeroValue []string
 	c := &Client{WebOrigins: &zeroValue}
@@ -2563,6 +2580,24 @@ func TestClientSignedRequestObject_GetRequired(tt *testing.T) {
 func TestClientSignedRequestObject_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientSignedRequestObject{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientTokenExchange_GetAllowAnyProfileOfType(tt *testing.T) {
+	var zeroValue []string
+	c := &ClientTokenExchange{AllowAnyProfileOfType: &zeroValue}
+	c.GetAllowAnyProfileOfType()
+	c = &ClientTokenExchange{}
+	c.GetAllowAnyProfileOfType()
+	c = nil
+	c.GetAllowAnyProfileOfType()
+}
+
+func TestClientTokenExchange_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientTokenExchange{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

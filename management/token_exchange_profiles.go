@@ -46,8 +46,8 @@ func (t *TokenExchangeProfile) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (t *TokenExchangeProfile) cleanForPatch() *TokenExchangeProfile {
-	return &TokenExchangeProfile{
+func (t *TokenExchangeProfile) cleanForPatch() {
+	*t = TokenExchangeProfile{
 		Name:             t.Name,
 		SubjectTokenType: t.SubjectTokenType,
 	}

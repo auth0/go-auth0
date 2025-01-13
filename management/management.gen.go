@@ -39,6 +39,14 @@ func (a *Action) GetDependencies() []ActionDependency {
 	return *a.Dependencies
 }
 
+// GetDeploy returns the Deploy field if it's non-nil, zero value otherwise.
+func (a *Action) GetDeploy() bool {
+	if a == nil || a.Deploy == nil {
+		return false
+	}
+	return *a.Deploy
+}
+
 // GetDeployedVersion returns the DeployedVersion field.
 func (a *Action) GetDeployedVersion() *ActionVersion {
 	if a == nil {
@@ -1535,6 +1543,14 @@ func (c *Client) GetTokenEndpointAuthMethod() string {
 	return *c.TokenEndpointAuthMethod
 }
 
+// GetTokenExchange returns the TokenExchange field.
+func (c *Client) GetTokenExchange() *ClientTokenExchange {
+	if c == nil {
+		return nil
+	}
+	return c.TokenExchange
+}
+
 // GetWebOrigins returns the WebOrigins field if it's non-nil, zero value otherwise.
 func (c *Client) GetWebOrigins() []string {
 	if c == nil || c.WebOrigins == nil {
@@ -2111,6 +2127,19 @@ func (c *ClientSignedRequestObject) GetRequired() bool {
 
 // String returns a string representation of ClientSignedRequestObject.
 func (c *ClientSignedRequestObject) String() string {
+	return Stringify(c)
+}
+
+// GetAllowAnyProfileOfType returns the AllowAnyProfileOfType field if it's non-nil, zero value otherwise.
+func (c *ClientTokenExchange) GetAllowAnyProfileOfType() []string {
+	if c == nil || c.AllowAnyProfileOfType == nil {
+		return nil
+	}
+	return *c.AllowAnyProfileOfType
+}
+
+// String returns a string representation of ClientTokenExchange.
+func (c *ClientTokenExchange) String() string {
 	return Stringify(c)
 }
 

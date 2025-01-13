@@ -60,6 +60,8 @@ func TestTokenExchangeProfileManager_Update(t *testing.T) {
 	tokenExchangeProfileUpdated := &TokenExchangeProfile{
 		Name:             auth0.Stringf("%d-Test-Token-Exchange-Profile-Updated", time.Now().UTC().Unix()),
 		SubjectTokenType: auth0.String("https://acme.com/ping-token"),
+		ActionID:         auth0.String(tokenExchangeProfile.GetActionID()),
+		Type:             auth0.String("custom_authentication"),
 	}
 	err := api.TokenExchangeProfile.Update(context.Background(), tokenExchangeProfile.GetID(), tokenExchangeProfileUpdated)
 	assert.NoError(t, err)

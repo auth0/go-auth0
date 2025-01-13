@@ -49,6 +49,44 @@ func TestActionManager_Create(t *testing.T) {
 	})
 }
 
+func TestActionManager_CreateWithDeploy(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedAction := &Action{
+		Name: auth0.Stringf("Test Action (%s)", time.Now().Format(time.StampMilli)),
+		Code: auth0.String("exports.onExecutePostLogin = async (event, api) =\u003e {}"),
+		SupportedTriggers: []ActionTrigger{
+			{
+				ID:      auth0.String(ActionTriggerCustomTokenExchange),
+				Version: auth0.String("v1"),
+			},
+		},
+		Secrets: &[]ActionSecret{
+			{
+				Name:  auth0.String("mySecretName"),
+				Value: auth0.String("mySecretValue"),
+			},
+		},
+		Deploy:  auth0.Bool(true),
+		Runtime: auth0.String("node18"),
+	}
+
+	err := api.Action.Create(context.Background(), expectedAction)
+
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedAction.GetID())
+
+	ensureActionBuilt(t, expectedAction.GetID())
+
+	actualAction, err := api.Action.Read(context.Background(), expectedAction.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, ActionStatusBuilt, actualAction.GetStatus())
+	assert.NotEmpty(t, actualAction.GetDeployedVersion())
+	t.Cleanup(func() {
+		cleanupAction(t, expectedAction.GetID())
+	})
+}
+
 func TestActionManager_Read(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
