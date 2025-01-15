@@ -11466,6 +11466,13 @@ func TestRefreshToken_GetCreatedAt(tt *testing.T) {
 	r.GetCreatedAt()
 }
 
+func TestRefreshToken_GetDevice(tt *testing.T) {
+	r := &RefreshToken{}
+	r.GetDevice()
+	r = nil
+	r.GetDevice()
+}
+
 func TestRefreshToken_GetExpiresAt(tt *testing.T) {
 	var zeroValue time.Time
 	r := &RefreshToken{ExpiresAt: &zeroValue}
@@ -11494,6 +11501,16 @@ func TestRefreshToken_GetIdleExpiresAt(tt *testing.T) {
 	r.GetIdleExpiresAt()
 	r = nil
 	r.GetIdleExpiresAt()
+}
+
+func TestRefreshToken_GetLastExchangedAt(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshToken{LastExchangedAt: &zeroValue}
+	r.GetLastExchangedAt()
+	r = &RefreshToken{}
+	r.GetLastExchangedAt()
+	r = nil
+	r.GetLastExchangedAt()
 }
 
 func TestRefreshToken_GetRotating(tt *testing.T) {
@@ -11529,6 +11546,74 @@ func TestRefreshToken_GetUserID(tt *testing.T) {
 func TestRefreshToken_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &RefreshToken{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestRefreshTokenDevice_GetInitialASN(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshTokenDevice{InitialASN: &zeroValue}
+	r.GetInitialASN()
+	r = &RefreshTokenDevice{}
+	r.GetInitialASN()
+	r = nil
+	r.GetInitialASN()
+}
+
+func TestRefreshTokenDevice_GetInitialIP(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshTokenDevice{InitialIP: &zeroValue}
+	r.GetInitialIP()
+	r = &RefreshTokenDevice{}
+	r.GetInitialIP()
+	r = nil
+	r.GetInitialIP()
+}
+
+func TestRefreshTokenDevice_GetInitialUserAgent(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshTokenDevice{InitialUserAgent: &zeroValue}
+	r.GetInitialUserAgent()
+	r = &RefreshTokenDevice{}
+	r.GetInitialUserAgent()
+	r = nil
+	r.GetInitialUserAgent()
+}
+
+func TestRefreshTokenDevice_GetLastASN(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshTokenDevice{LastASN: &zeroValue}
+	r.GetLastASN()
+	r = &RefreshTokenDevice{}
+	r.GetLastASN()
+	r = nil
+	r.GetLastASN()
+}
+
+func TestRefreshTokenDevice_GetLastIP(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshTokenDevice{LastIP: &zeroValue}
+	r.GetLastIP()
+	r = &RefreshTokenDevice{}
+	r.GetLastIP()
+	r = nil
+	r.GetLastIP()
+}
+
+func TestRefreshTokenDevice_GetLastUserAgent(tt *testing.T) {
+	var zeroValue string
+	r := &RefreshTokenDevice{LastUserAgent: &zeroValue}
+	r.GetLastUserAgent()
+	r = &RefreshTokenDevice{}
+	r.GetLastUserAgent()
+	r = nil
+	r.GetLastUserAgent()
+}
+
+func TestRefreshTokenDevice_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &RefreshTokenDevice{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -13040,6 +13125,240 @@ func TestSentryClientAddon_GetOrgSlug(tt *testing.T) {
 func TestSentryClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SentryClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSession_GetAuthenticatedAt(tt *testing.T) {
+	var zeroValue string
+	s := &Session{AuthenticatedAt: &zeroValue}
+	s.GetAuthenticatedAt()
+	s = &Session{}
+	s.GetAuthenticatedAt()
+	s = nil
+	s.GetAuthenticatedAt()
+}
+
+func TestSession_GetAuthentication(tt *testing.T) {
+	s := &Session{}
+	s.GetAuthentication()
+	s = nil
+	s.GetAuthentication()
+}
+
+func TestSession_GetCreatedAt(tt *testing.T) {
+	var zeroValue string
+	s := &Session{CreatedAt: &zeroValue}
+	s.GetCreatedAt()
+	s = &Session{}
+	s.GetCreatedAt()
+	s = nil
+	s.GetCreatedAt()
+}
+
+func TestSession_GetDevice(tt *testing.T) {
+	s := &Session{}
+	s.GetDevice()
+	s = nil
+	s.GetDevice()
+}
+
+func TestSession_GetExpiresAt(tt *testing.T) {
+	var zeroValue string
+	s := &Session{ExpiresAt: &zeroValue}
+	s.GetExpiresAt()
+	s = &Session{}
+	s.GetExpiresAt()
+	s = nil
+	s.GetExpiresAt()
+}
+
+func TestSession_GetID(tt *testing.T) {
+	var zeroValue string
+	s := &Session{ID: &zeroValue}
+	s.GetID()
+	s = &Session{}
+	s.GetID()
+	s = nil
+	s.GetID()
+}
+
+func TestSession_GetIdleExpiresAt(tt *testing.T) {
+	var zeroValue string
+	s := &Session{IdleExpiresAt: &zeroValue}
+	s.GetIdleExpiresAt()
+	s = &Session{}
+	s.GetIdleExpiresAt()
+	s = nil
+	s.GetIdleExpiresAt()
+}
+
+func TestSession_GetLastInteractedAt(tt *testing.T) {
+	var zeroValue string
+	s := &Session{LastInteractedAt: &zeroValue}
+	s.GetLastInteractedAt()
+	s = &Session{}
+	s.GetLastInteractedAt()
+	s = nil
+	s.GetLastInteractedAt()
+}
+
+func TestSession_GetUpdatedAt(tt *testing.T) {
+	var zeroValue string
+	s := &Session{UpdatedAt: &zeroValue}
+	s.GetUpdatedAt()
+	s = &Session{}
+	s.GetUpdatedAt()
+	s = nil
+	s.GetUpdatedAt()
+}
+
+func TestSession_GetUserID(tt *testing.T) {
+	var zeroValue string
+	s := &Session{UserID: &zeroValue}
+	s.GetUserID()
+	s = &Session{}
+	s.GetUserID()
+	s = nil
+	s.GetUserID()
+}
+
+func TestSession_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &Session{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSessionAuthentication_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SessionAuthentication{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSessionAuthenticationMethod_GetName(tt *testing.T) {
+	var zeroValue string
+	s := &SessionAuthenticationMethod{Name: &zeroValue}
+	s.GetName()
+	s = &SessionAuthenticationMethod{}
+	s.GetName()
+	s = nil
+	s.GetName()
+}
+
+func TestSessionAuthenticationMethod_GetTimestamp(tt *testing.T) {
+	var zeroValue string
+	s := &SessionAuthenticationMethod{Timestamp: &zeroValue}
+	s.GetTimestamp()
+	s = &SessionAuthenticationMethod{}
+	s.GetTimestamp()
+	s = nil
+	s.GetTimestamp()
+}
+
+func TestSessionAuthenticationMethod_GetType(tt *testing.T) {
+	var zeroValue string
+	s := &SessionAuthenticationMethod{Type: &zeroValue}
+	s.GetType()
+	s = &SessionAuthenticationMethod{}
+	s.GetType()
+	s = nil
+	s.GetType()
+}
+
+func TestSessionAuthenticationMethod_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SessionAuthenticationMethod{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSessionClient_GetClientID(tt *testing.T) {
+	var zeroValue string
+	s := &SessionClient{ClientID: &zeroValue}
+	s.GetClientID()
+	s = &SessionClient{}
+	s.GetClientID()
+	s = nil
+	s.GetClientID()
+}
+
+func TestSessionClient_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SessionClient{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSessionDevice_GetInitialASN(tt *testing.T) {
+	var zeroValue string
+	s := &SessionDevice{InitialASN: &zeroValue}
+	s.GetInitialASN()
+	s = &SessionDevice{}
+	s.GetInitialASN()
+	s = nil
+	s.GetInitialASN()
+}
+
+func TestSessionDevice_GetInitialIP(tt *testing.T) {
+	var zeroValue string
+	s := &SessionDevice{InitialIP: &zeroValue}
+	s.GetInitialIP()
+	s = &SessionDevice{}
+	s.GetInitialIP()
+	s = nil
+	s.GetInitialIP()
+}
+
+func TestSessionDevice_GetInitialUserAgent(tt *testing.T) {
+	var zeroValue string
+	s := &SessionDevice{InitialUserAgent: &zeroValue}
+	s.GetInitialUserAgent()
+	s = &SessionDevice{}
+	s.GetInitialUserAgent()
+	s = nil
+	s.GetInitialUserAgent()
+}
+
+func TestSessionDevice_GetLastASN(tt *testing.T) {
+	var zeroValue string
+	s := &SessionDevice{LastASN: &zeroValue}
+	s.GetLastASN()
+	s = &SessionDevice{}
+	s.GetLastASN()
+	s = nil
+	s.GetLastASN()
+}
+
+func TestSessionDevice_GetLastIP(tt *testing.T) {
+	var zeroValue string
+	s := &SessionDevice{LastIP: &zeroValue}
+	s.GetLastIP()
+	s = &SessionDevice{}
+	s.GetLastIP()
+	s = nil
+	s.GetLastIP()
+}
+
+func TestSessionDevice_GetLastUserAgent(tt *testing.T) {
+	var zeroValue string
+	s := &SessionDevice{LastUserAgent: &zeroValue}
+	s.GetLastUserAgent()
+	s = &SessionDevice{}
+	s.GetLastUserAgent()
+	s = nil
+	s.GetLastUserAgent()
+}
+
+func TestSessionDevice_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SessionDevice{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
