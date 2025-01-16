@@ -65,14 +65,14 @@ type RefreshTokenManager manager
 // Read retrieves a refresh token by its ID.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Refresh_Tokens/get-refresh-token
-func (m *RefreshTokenManager) Read(ctx context.Context, id string, opts ...RequestOption) (r *RefreshToken, err error) {
-	err = m.management.Request(ctx, "GET", m.management.URI("refresh-tokens", id), &r, opts...)
+func (m *RefreshTokenManager) Read(ctx context.Context, refreshTokenID string, opts ...RequestOption) (r *RefreshToken, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("refresh-tokens", refreshTokenID), &r, opts...)
 	return
 }
 
 // Delete removes a refresh token by its ID.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Refresh_Tokens/delete_refresh_token
-func (m *RefreshTokenManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
-	return m.management.Request(ctx, "DELETE", m.management.URI("refresh-tokens", id), nil, opts...)
+func (m *RefreshTokenManager) Delete(ctx context.Context, refreshTokenID string, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "DELETE", m.management.URI("refresh-tokens", refreshTokenID), nil, opts...)
 }

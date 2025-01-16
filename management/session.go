@@ -58,13 +58,13 @@ func (m *SessionManager) Read(ctx context.Context, sessionID string, opts ...Req
 // Delete removes a session by its ID.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Sessions/delete-session
-func (m *SessionManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
-	return m.management.Request(ctx, "DELETE", m.management.URI("sessions", id), nil, opts...)
+func (m *SessionManager) Delete(ctx context.Context, sessionID string, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "DELETE", m.management.URI("sessions", sessionID), nil, opts...)
 }
 
 // Revoke revokes a session by its ID.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Sessions/revoke-session
-func (m *SessionManager) Revoke(ctx context.Context, id string, opts ...RequestOption) (err error) {
-	return m.management.Request(ctx, "POST", m.management.URI("sessions", id, "revoke"), nil, opts...)
+func (m *SessionManager) Revoke(ctx context.Context, sessionID string, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "POST", m.management.URI("sessions", sessionID, "revoke"), nil, opts...)
 }
