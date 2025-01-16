@@ -388,31 +388,6 @@ type AuthenticationMethodList struct {
 	Authenticators []*AuthenticationMethod `json:"authenticators,omitempty"`
 }
 
-// RefreshTokenList represents a list of user refresh tokens.
-type RefreshTokenList struct {
-	List
-	Tokens []*RefreshToken `json:"tokens,omitempty"`
-}
-
-// RefreshToken represents a refresh token for a user.
-type RefreshToken struct {
-	ID             *string                       `json:"id,omitempty"`
-	UserID         *string                       `json:"user_id,omitempty"`
-	CreatedAt      *time.Time                    `json:"created_at,omitempty"`
-	IdleExpiresAt  *time.Time                    `json:"idle_expires_at,omitempty"`
-	ExpiresAt      *time.Time                    `json:"expires_at,omitempty"`
-	ClientID       *string                       `json:"client_id,omitempty"`
-	SessionID      *string                       `json:"session_id,omitempty"`
-	Rotating       *bool                         `json:"rotating,omitempty"`
-	ResourceServer []*RefreshTokenResourceServer `json:"resource_servers,omitempty"`
-}
-
-// RefreshTokenResourceServer represents the resource server associated with a refresh token.
-type RefreshTokenResourceServer struct {
-	Audience *string `json:"audience,omitempty"`
-	Scopes   *string `json:"scopes,omitempty"`
-}
-
 // UserSessionList represents a list of user sessions.
 type UserSessionList struct {
 	List
