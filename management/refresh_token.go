@@ -5,6 +5,12 @@ import (
 	"time"
 )
 
+// RefreshTokenList represents a list of user refresh tokens.
+type RefreshTokenList struct {
+	List
+	Tokens []*RefreshToken `json:"tokens,omitempty"`
+}
+
 // RefreshToken represents a refresh token.
 type RefreshToken struct {
 	// ID of the refresh token
@@ -45,6 +51,12 @@ type RefreshTokenDevice struct {
 	LastASN *string `json:"last_asn,omitempty"`
 	// Last user agent associated with the refresh token
 	LastUserAgent *string `json:"last_user_agent,omitempty"`
+}
+
+// RefreshTokenResourceServer represents the resource server associated with a refresh token.
+type RefreshTokenResourceServer struct {
+	Audience *string `json:"audience,omitempty"`
+	Scopes   *string `json:"scopes,omitempty"`
 }
 
 // RefreshTokenManager manages refresh tokens using the Management API.

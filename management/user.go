@@ -388,18 +388,6 @@ type AuthenticationMethodList struct {
 	Authenticators []*AuthenticationMethod `json:"authenticators,omitempty"`
 }
 
-// RefreshTokenList represents a list of user refresh tokens.
-type RefreshTokenList struct {
-	List
-	Tokens []*RefreshToken `json:"tokens,omitempty"`
-}
-
-// RefreshTokenResourceServer represents the resource server associated with a refresh token.
-type RefreshTokenResourceServer struct {
-	Audience *string `json:"audience,omitempty"`
-	Scopes   *string `json:"scopes,omitempty"`
-}
-
 // UserSessionList represents a list of user sessions.
 type UserSessionList struct {
 	List
