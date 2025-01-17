@@ -9173,6 +9173,14 @@ func (r *RefreshToken) GetCreatedAt() time.Time {
 	return *r.CreatedAt
 }
 
+// GetDevice returns the Device field.
+func (r *RefreshToken) GetDevice() *RefreshTokenDevice {
+	if r == nil {
+		return nil
+	}
+	return r.Device
+}
+
 // GetExpiresAt returns the ExpiresAt field if it's non-nil, zero value otherwise.
 func (r *RefreshToken) GetExpiresAt() time.Time {
 	if r == nil || r.ExpiresAt == nil {
@@ -9195,6 +9203,14 @@ func (r *RefreshToken) GetIdleExpiresAt() time.Time {
 		return time.Time{}
 	}
 	return *r.IdleExpiresAt
+}
+
+// GetLastExchangedAt returns the LastExchangedAt field if it's non-nil, zero value otherwise.
+func (r *RefreshToken) GetLastExchangedAt() string {
+	if r == nil || r.LastExchangedAt == nil {
+		return ""
+	}
+	return *r.LastExchangedAt
 }
 
 // GetRotating returns the Rotating field if it's non-nil, zero value otherwise.
@@ -9223,6 +9239,59 @@ func (r *RefreshToken) GetUserID() string {
 
 // String returns a string representation of RefreshToken.
 func (r *RefreshToken) String() string {
+	return Stringify(r)
+}
+
+// GetInitialASN returns the InitialASN field if it's non-nil, zero value otherwise.
+func (r *RefreshTokenDevice) GetInitialASN() string {
+	if r == nil || r.InitialASN == nil {
+		return ""
+	}
+	return *r.InitialASN
+}
+
+// GetInitialIP returns the InitialIP field if it's non-nil, zero value otherwise.
+func (r *RefreshTokenDevice) GetInitialIP() string {
+	if r == nil || r.InitialIP == nil {
+		return ""
+	}
+	return *r.InitialIP
+}
+
+// GetInitialUserAgent returns the InitialUserAgent field if it's non-nil, zero value otherwise.
+func (r *RefreshTokenDevice) GetInitialUserAgent() string {
+	if r == nil || r.InitialUserAgent == nil {
+		return ""
+	}
+	return *r.InitialUserAgent
+}
+
+// GetLastASN returns the LastASN field if it's non-nil, zero value otherwise.
+func (r *RefreshTokenDevice) GetLastASN() string {
+	if r == nil || r.LastASN == nil {
+		return ""
+	}
+	return *r.LastASN
+}
+
+// GetLastIP returns the LastIP field if it's non-nil, zero value otherwise.
+func (r *RefreshTokenDevice) GetLastIP() string {
+	if r == nil || r.LastIP == nil {
+		return ""
+	}
+	return *r.LastIP
+}
+
+// GetLastUserAgent returns the LastUserAgent field if it's non-nil, zero value otherwise.
+func (r *RefreshTokenDevice) GetLastUserAgent() string {
+	if r == nil || r.LastUserAgent == nil {
+		return ""
+	}
+	return *r.LastUserAgent
+}
+
+// String returns a string representation of RefreshTokenDevice.
+func (r *RefreshTokenDevice) String() string {
 	return Stringify(r)
 }
 
@@ -10401,6 +10470,191 @@ func (s *SentryClientAddon) GetOrgSlug() string {
 
 // String returns a string representation of SentryClientAddon.
 func (s *SentryClientAddon) String() string {
+	return Stringify(s)
+}
+
+// GetAuthenticatedAt returns the AuthenticatedAt field if it's non-nil, zero value otherwise.
+func (s *Session) GetAuthenticatedAt() string {
+	if s == nil || s.AuthenticatedAt == nil {
+		return ""
+	}
+	return *s.AuthenticatedAt
+}
+
+// GetAuthentication returns the Authentication field.
+func (s *Session) GetAuthentication() *SessionAuthentication {
+	if s == nil {
+		return nil
+	}
+	return s.Authentication
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (s *Session) GetCreatedAt() string {
+	if s == nil || s.CreatedAt == nil {
+		return ""
+	}
+	return *s.CreatedAt
+}
+
+// GetDevice returns the Device field.
+func (s *Session) GetDevice() *SessionDevice {
+	if s == nil {
+		return nil
+	}
+	return s.Device
+}
+
+// GetExpiresAt returns the ExpiresAt field if it's non-nil, zero value otherwise.
+func (s *Session) GetExpiresAt() string {
+	if s == nil || s.ExpiresAt == nil {
+		return ""
+	}
+	return *s.ExpiresAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (s *Session) GetID() string {
+	if s == nil || s.ID == nil {
+		return ""
+	}
+	return *s.ID
+}
+
+// GetIdleExpiresAt returns the IdleExpiresAt field if it's non-nil, zero value otherwise.
+func (s *Session) GetIdleExpiresAt() string {
+	if s == nil || s.IdleExpiresAt == nil {
+		return ""
+	}
+	return *s.IdleExpiresAt
+}
+
+// GetLastInteractedAt returns the LastInteractedAt field if it's non-nil, zero value otherwise.
+func (s *Session) GetLastInteractedAt() string {
+	if s == nil || s.LastInteractedAt == nil {
+		return ""
+	}
+	return *s.LastInteractedAt
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (s *Session) GetUpdatedAt() string {
+	if s == nil || s.UpdatedAt == nil {
+		return ""
+	}
+	return *s.UpdatedAt
+}
+
+// GetUserID returns the UserID field if it's non-nil, zero value otherwise.
+func (s *Session) GetUserID() string {
+	if s == nil || s.UserID == nil {
+		return ""
+	}
+	return *s.UserID
+}
+
+// String returns a string representation of Session.
+func (s *Session) String() string {
+	return Stringify(s)
+}
+
+// String returns a string representation of SessionAuthentication.
+func (s *SessionAuthentication) String() string {
+	return Stringify(s)
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (s *SessionAuthenticationMethod) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+// GetTimestamp returns the Timestamp field if it's non-nil, zero value otherwise.
+func (s *SessionAuthenticationMethod) GetTimestamp() string {
+	if s == nil || s.Timestamp == nil {
+		return ""
+	}
+	return *s.Timestamp
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (s *SessionAuthenticationMethod) GetType() string {
+	if s == nil || s.Type == nil {
+		return ""
+	}
+	return *s.Type
+}
+
+// String returns a string representation of SessionAuthenticationMethod.
+func (s *SessionAuthenticationMethod) String() string {
+	return Stringify(s)
+}
+
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (s *SessionClient) GetClientID() string {
+	if s == nil || s.ClientID == nil {
+		return ""
+	}
+	return *s.ClientID
+}
+
+// String returns a string representation of SessionClient.
+func (s *SessionClient) String() string {
+	return Stringify(s)
+}
+
+// GetInitialASN returns the InitialASN field if it's non-nil, zero value otherwise.
+func (s *SessionDevice) GetInitialASN() string {
+	if s == nil || s.InitialASN == nil {
+		return ""
+	}
+	return *s.InitialASN
+}
+
+// GetInitialIP returns the InitialIP field if it's non-nil, zero value otherwise.
+func (s *SessionDevice) GetInitialIP() string {
+	if s == nil || s.InitialIP == nil {
+		return ""
+	}
+	return *s.InitialIP
+}
+
+// GetInitialUserAgent returns the InitialUserAgent field if it's non-nil, zero value otherwise.
+func (s *SessionDevice) GetInitialUserAgent() string {
+	if s == nil || s.InitialUserAgent == nil {
+		return ""
+	}
+	return *s.InitialUserAgent
+}
+
+// GetLastASN returns the LastASN field if it's non-nil, zero value otherwise.
+func (s *SessionDevice) GetLastASN() string {
+	if s == nil || s.LastASN == nil {
+		return ""
+	}
+	return *s.LastASN
+}
+
+// GetLastIP returns the LastIP field if it's non-nil, zero value otherwise.
+func (s *SessionDevice) GetLastIP() string {
+	if s == nil || s.LastIP == nil {
+		return ""
+	}
+	return *s.LastIP
+}
+
+// GetLastUserAgent returns the LastUserAgent field if it's non-nil, zero value otherwise.
+func (s *SessionDevice) GetLastUserAgent() string {
+	if s == nil || s.LastUserAgent == nil {
+		return ""
+	}
+	return *s.LastUserAgent
+}
+
+// String returns a string representation of SessionDevice.
+func (s *SessionDevice) String() string {
 	return Stringify(s)
 }
 

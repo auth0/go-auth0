@@ -121,6 +121,12 @@ type Management struct {
 	// TokenExchangeProfile manages Auth0 Token Exchange Profiles.
 	TokenExchangeProfile *TokenExchangeProfileManager
 
+  // RefreshToken manages Auth0 Refresh Tokens.
+	RefreshToken *RefreshTokenManager
+
+	// Session manages Auth0 Sessions.
+	Session *SessionManager
+
 	url             *url.URL
 	basePath        string
 	userAgent       string
@@ -228,6 +234,7 @@ func New(domain string, options ...Option) (*Management, error) {
 		management: m,
 		Vault:      (*flowVaultConnectionManager)(&m.common),
 	}
-
+	m.RefreshToken = (*RefreshTokenManager)(&m.common)
+	m.Session = (*SessionManager)(&m.common)
 	return m, nil
 }
