@@ -14259,7 +14259,7 @@ func TestTokenExchangeProfile_GetActionID(tt *testing.T) {
 }
 
 func TestTokenExchangeProfile_GetCreatedAt(tt *testing.T) {
-	var zeroValue string
+	var zeroValue time.Time
 	t := &TokenExchangeProfile{CreatedAt: &zeroValue}
 	t.GetCreatedAt()
 	t = &TokenExchangeProfile{}
@@ -14309,7 +14309,7 @@ func TestTokenExchangeProfile_GetType(tt *testing.T) {
 }
 
 func TestTokenExchangeProfile_GetUpdatedAt(tt *testing.T) {
-	var zeroValue string
+	var zeroValue time.Time
 	t := &TokenExchangeProfile{UpdatedAt: &zeroValue}
 	t.GetUpdatedAt()
 	t = &TokenExchangeProfile{}

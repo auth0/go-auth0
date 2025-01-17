@@ -3,6 +3,7 @@ package management
 import (
 	"context"
 	"encoding/json"
+	"time"
 )
 
 // TokenExchangeProfile represents a token exchange profile.
@@ -18,9 +19,9 @@ type TokenExchangeProfile struct {
 	// Type is the type of the token exchange profile.
 	Type *string `json:"type,omitempty"`
 	// CreatedAt is the date and time when the token exchange profile was created.
-	CreatedAt *string `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// UpdatedAt is the date and time when the token exchange profile was last updated.
-	UpdatedAt *string `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
 // TokenExchangeProfileList is a list of TokenExchangeProfiles.

@@ -11353,9 +11353,9 @@ func (t *TokenExchangeProfile) GetActionID() string {
 }
 
 // GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
-func (t *TokenExchangeProfile) GetCreatedAt() string {
+func (t *TokenExchangeProfile) GetCreatedAt() time.Time {
 	if t == nil || t.CreatedAt == nil {
-		return ""
+		return time.Time{}
 	}
 	return *t.CreatedAt
 }
@@ -11393,9 +11393,9 @@ func (t *TokenExchangeProfile) GetType() string {
 }
 
 // GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
-func (t *TokenExchangeProfile) GetUpdatedAt() string {
+func (t *TokenExchangeProfile) GetUpdatedAt() time.Time {
 	if t == nil || t.UpdatedAt == nil {
-		return ""
+		return time.Time{}
 	}
 	return *t.UpdatedAt
 }
