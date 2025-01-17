@@ -121,7 +121,7 @@ type Management struct {
 	// TokenExchangeProfile manages Auth0 Token Exchange Profiles.
 	TokenExchangeProfile *TokenExchangeProfileManager
 
-  // RefreshToken manages Auth0 Refresh Tokens.
+	// RefreshToken manages Auth0 Refresh Tokens.
 	RefreshToken *RefreshTokenManager
 
 	// Session manages Auth0 Sessions.
