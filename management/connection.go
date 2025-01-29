@@ -1424,7 +1424,9 @@ type ConnectionOptionsSAML struct {
 	SetUserAttributes  *string   `json:"set_user_root_attributes,omitempty"`
 	NonPersistentAttrs *[]string `json:"non_persistent_attrs,omitempty"`
 
-	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
+	UpstreamParams              map[string]interface{} `json:"upstream_params,omitempty"`
+	GlobalTokenRevocationJWTIss *string                `json:"global_token_revocation_jwt_iss,omitempty"`
+	GlobalTokenRevocationJWTSub *string                `json:"global_token_revocation_jwt_sub,omitempty"`
 }
 
 // ConnectionOptionsSAMLIdpInitiated is used to configure the
