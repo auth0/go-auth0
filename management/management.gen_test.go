@@ -49,6 +49,16 @@ func TestAction_GetDependencies(tt *testing.T) {
 	a.GetDependencies()
 }
 
+func TestAction_GetDeploy(tt *testing.T) {
+	var zeroValue bool
+	a := &Action{Deploy: &zeroValue}
+	a.GetDeploy()
+	a = &Action{}
+	a.GetDeploy()
+	a = nil
+	a.GetDeploy()
+}
+
 func TestAction_GetDeployedVersion(tt *testing.T) {
 	a := &Action{}
 	a.GetDeployedVersion()
@@ -1926,6 +1936,13 @@ func TestClient_GetTokenEndpointAuthMethod(tt *testing.T) {
 	c.GetTokenEndpointAuthMethod()
 }
 
+func TestClient_GetTokenExchange(tt *testing.T) {
+	c := &Client{}
+	c.GetTokenExchange()
+	c = nil
+	c.GetTokenExchange()
+}
+
 func TestClient_GetWebOrigins(tt *testing.T) {
 	var zeroValue []string
 	c := &Client{WebOrigins: &zeroValue}
@@ -2563,6 +2580,24 @@ func TestClientSignedRequestObject_GetRequired(tt *testing.T) {
 func TestClientSignedRequestObject_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientSignedRequestObject{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientTokenExchange_GetAllowAnyProfileOfType(tt *testing.T) {
+	var zeroValue []string
+	c := &ClientTokenExchange{AllowAnyProfileOfType: &zeroValue}
+	c.GetAllowAnyProfileOfType()
+	c = &ClientTokenExchange{}
+	c.GetAllowAnyProfileOfType()
+	c = nil
+	c.GetAllowAnyProfileOfType()
+}
+
+func TestClientTokenExchange_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientTokenExchange{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -14527,6 +14562,92 @@ func TestTLSClientAuth_GetCredentials(tt *testing.T) {
 func TestTLSClientAuth_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TLSClientAuth{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTokenExchangeProfile_GetActionID(tt *testing.T) {
+	var zeroValue string
+	t := &TokenExchangeProfile{ActionID: &zeroValue}
+	t.GetActionID()
+	t = &TokenExchangeProfile{}
+	t.GetActionID()
+	t = nil
+	t.GetActionID()
+}
+
+func TestTokenExchangeProfile_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	t := &TokenExchangeProfile{CreatedAt: &zeroValue}
+	t.GetCreatedAt()
+	t = &TokenExchangeProfile{}
+	t.GetCreatedAt()
+	t = nil
+	t.GetCreatedAt()
+}
+
+func TestTokenExchangeProfile_GetID(tt *testing.T) {
+	var zeroValue string
+	t := &TokenExchangeProfile{ID: &zeroValue}
+	t.GetID()
+	t = &TokenExchangeProfile{}
+	t.GetID()
+	t = nil
+	t.GetID()
+}
+
+func TestTokenExchangeProfile_GetName(tt *testing.T) {
+	var zeroValue string
+	t := &TokenExchangeProfile{Name: &zeroValue}
+	t.GetName()
+	t = &TokenExchangeProfile{}
+	t.GetName()
+	t = nil
+	t.GetName()
+}
+
+func TestTokenExchangeProfile_GetSubjectTokenType(tt *testing.T) {
+	var zeroValue string
+	t := &TokenExchangeProfile{SubjectTokenType: &zeroValue}
+	t.GetSubjectTokenType()
+	t = &TokenExchangeProfile{}
+	t.GetSubjectTokenType()
+	t = nil
+	t.GetSubjectTokenType()
+}
+
+func TestTokenExchangeProfile_GetType(tt *testing.T) {
+	var zeroValue string
+	t := &TokenExchangeProfile{Type: &zeroValue}
+	t.GetType()
+	t = &TokenExchangeProfile{}
+	t.GetType()
+	t = nil
+	t.GetType()
+}
+
+func TestTokenExchangeProfile_GetUpdatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	t := &TokenExchangeProfile{UpdatedAt: &zeroValue}
+	t.GetUpdatedAt()
+	t = &TokenExchangeProfile{}
+	t.GetUpdatedAt()
+	t = nil
+	t.GetUpdatedAt()
+}
+
+func TestTokenExchangeProfile_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TokenExchangeProfile{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTokenExchangeProfileList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TokenExchangeProfileList{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

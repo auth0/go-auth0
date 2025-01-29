@@ -39,6 +39,14 @@ func (a *Action) GetDependencies() []ActionDependency {
 	return *a.Dependencies
 }
 
+// GetDeploy returns the Deploy field if it's non-nil, zero value otherwise.
+func (a *Action) GetDeploy() bool {
+	if a == nil || a.Deploy == nil {
+		return false
+	}
+	return *a.Deploy
+}
+
 // GetDeployedVersion returns the DeployedVersion field.
 func (a *Action) GetDeployedVersion() *ActionVersion {
 	if a == nil {
@@ -1535,6 +1543,14 @@ func (c *Client) GetTokenEndpointAuthMethod() string {
 	return *c.TokenEndpointAuthMethod
 }
 
+// GetTokenExchange returns the TokenExchange field.
+func (c *Client) GetTokenExchange() *ClientTokenExchange {
+	if c == nil {
+		return nil
+	}
+	return c.TokenExchange
+}
+
 // GetWebOrigins returns the WebOrigins field if it's non-nil, zero value otherwise.
 func (c *Client) GetWebOrigins() []string {
 	if c == nil || c.WebOrigins == nil {
@@ -2111,6 +2127,19 @@ func (c *ClientSignedRequestObject) GetRequired() bool {
 
 // String returns a string representation of ClientSignedRequestObject.
 func (c *ClientSignedRequestObject) String() string {
+	return Stringify(c)
+}
+
+// GetAllowAnyProfileOfType returns the AllowAnyProfileOfType field if it's non-nil, zero value otherwise.
+func (c *ClientTokenExchange) GetAllowAnyProfileOfType() []string {
+	if c == nil || c.AllowAnyProfileOfType == nil {
+		return nil
+	}
+	return *c.AllowAnyProfileOfType
+}
+
+// String returns a string representation of ClientTokenExchange.
+func (c *ClientTokenExchange) String() string {
 	return Stringify(c)
 }
 
@@ -11566,6 +11595,72 @@ func (t *TLSClientAuth) GetCredentials() []Credential {
 
 // String returns a string representation of TLSClientAuth.
 func (t *TLSClientAuth) String() string {
+	return Stringify(t)
+}
+
+// GetActionID returns the ActionID field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetActionID() string {
+	if t == nil || t.ActionID == nil {
+		return ""
+	}
+	return *t.ActionID
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetCreatedAt() time.Time {
+	if t == nil || t.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *t.CreatedAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetID() string {
+	if t == nil || t.ID == nil {
+		return ""
+	}
+	return *t.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetName() string {
+	if t == nil || t.Name == nil {
+		return ""
+	}
+	return *t.Name
+}
+
+// GetSubjectTokenType returns the SubjectTokenType field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetSubjectTokenType() string {
+	if t == nil || t.SubjectTokenType == nil {
+		return ""
+	}
+	return *t.SubjectTokenType
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetType() string {
+	if t == nil || t.Type == nil {
+		return ""
+	}
+	return *t.Type
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (t *TokenExchangeProfile) GetUpdatedAt() time.Time {
+	if t == nil || t.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *t.UpdatedAt
+}
+
+// String returns a string representation of TokenExchangeProfile.
+func (t *TokenExchangeProfile) String() string {
+	return Stringify(t)
+}
+
+// String returns a string representation of TokenExchangeProfileList.
+func (t *TokenExchangeProfileList) String() string {
 	return Stringify(t)
 }
 

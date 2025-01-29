@@ -11,6 +11,24 @@ const (
 	ActionTriggerPostLogin string = "post-login"
 	// ActionTriggerClientCredentials constant.
 	ActionTriggerClientCredentials string = "client-credentials"
+	// ActionTriggerCredentialsExchange constant.
+	ActionTriggerCredentialsExchange string = "credentials-exchange"
+	// ActionTriggerPreUserRegistration constant.
+	ActionTriggerPreUserRegistration string = "pre-user-registration"
+	// ActionTriggerPostUserRegistration constant.
+	ActionTriggerPostUserRegistration string = "post-user-registration"
+	// ActionTriggerPostChangePassword constant.
+	ActionTriggerPostChangePassword string = "post-change-password"
+	// ActionTriggerSendPhoneMessage constant.
+	ActionTriggerSendPhoneMessage string = "send-phone-message"
+	// ActionTriggerCustomPhoneProvider constant.
+	ActionTriggerCustomPhoneProvider string = "custom-phone-provider"
+	// ActionTriggerCustomEmailProvider constant.
+	ActionTriggerCustomEmailProvider string = "custom-email-provider"
+	// ActionTriggerPasswordResetPostChallenge constant.
+	ActionTriggerPasswordResetPostChallenge string = "password-reset-post-challenge"
+	// ActionTriggerCustomTokenExchange constant.
+	ActionTriggerCustomTokenExchange string = "custom-token-exchange" // #nosec
 )
 
 // ActionTrigger is part of a Flow.
@@ -100,6 +118,8 @@ type Action struct {
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// The time when this action was updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
+	// Deploy indicates if the action should be deployed while creating it.
+	Deploy *bool `json:"deploy,omitempty"`
 }
 
 // ActionList is a list of Actions.

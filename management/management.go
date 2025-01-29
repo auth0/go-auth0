@@ -118,6 +118,9 @@ type Management struct {
 	// EncryptionKey manages Auth0 Encryption Keys.
 	EncryptionKey *EncryptionKeyManager
 
+	// TokenExchangeProfile manages Auth0 Token Exchange Profiles.
+	TokenExchangeProfile *TokenExchangeProfileManager
+
 	// RefreshToken manages Auth0 Refresh Tokens.
 	RefreshToken *RefreshTokenManager
 
@@ -225,6 +228,7 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.Ticket = (*TicketManager)(&m.common)
 	m.User = (*UserManager)(&m.common)
 	m.SelfServiceProfile = (*SelfServiceProfileManager)(&m.common)
+	m.TokenExchangeProfile = (*TokenExchangeProfileManager)(&m.common)
 	m.Form = (*FormManager)(&m.common)
 	m.Flow = &FlowManager{
 		management: m,

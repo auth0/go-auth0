@@ -30,6 +30,30 @@ func TestClient_Create(t *testing.T) {
 	})
 }
 
+func TestClient_CreateWithTokenExchange(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedClient := &Client{
+		Name:        auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
+		Description: auth0.String("This is just a test client."),
+		TokenExchange: &ClientTokenExchange{
+			AllowAnyProfileOfType: &[]string{"custom_authentication"},
+		},
+		OIDCConformant: auth0.Bool(true),
+	}
+
+	err := api.Client.Create(context.Background(), expectedClient)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedClient.GetClientID())
+
+	actualClient, err := api.Client.Read(context.Background(), expectedClient.GetClientID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedClient.GetTokenExchange(), actualClient.GetTokenExchange())
+	t.Cleanup(func() {
+		cleanupClient(t, expectedClient.GetClientID())
+	})
+}
+
 func TestClient_CreateWithDefaultOrg(t *testing.T) {
 	configureHTTPTestRecordings(t)
 

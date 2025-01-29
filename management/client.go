@@ -140,6 +140,13 @@ type Client struct {
 	RequireProofOfPossession *bool `json:"require_proof_of_possession,omitempty"`
 
 	DefaultOrganization *ClientDefaultOrganization `json:"default_organization,omitempty"`
+
+	TokenExchange *ClientTokenExchange `json:"token_exchange,omitempty"`
+}
+
+// ClientTokenExchange allows configuration for token exchange.
+type ClientTokenExchange struct {
+	AllowAnyProfileOfType *[]string `json:"allow_any_profile_of_type,omitempty"`
 }
 
 // ClientDefaultOrganization allows the support for client credentials feature.
