@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.15.0](https://github.com/auth0/go-auth0/tree/v1.15.0) (2025-01-29)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.14.0...v1.15.0)
+
+**Added**
+- Add Support for Token Exchange Profile with `TokenExchangeProfileManager` [\#478](https://github.com/auth0/go-auth0/pull/478) ([developerkunal](https://github.com/developerkunal))
+- Add Support for Refresh Tokens and Sessions Endpoints [\#484](https://github.com/auth0/go-auth0/pull/484) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.14.0](https://github.com/auth0/go-auth0/tree/v1.14.0) (2025-01-08)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.13.1...v1.14.0)
 
