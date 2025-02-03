@@ -260,16 +260,40 @@ func TestBrandingPhoneProvider_UnmarshalJSON(t *testing.T) {
 			},
 			wantErr: false,
 		},
+		{
+			name:    "Invalid JSON structure (credentials as number)",
+			jsonStr: `{"name":"twilio","disabled":false,"configuration":{"delivery_methods":["text"],"default_from":"1234567890","sid":"sid"},"credentials":123}`,
+			want:    nil,
+			wantErr: true,
+		},
+		{
+			name:    "Invalid credentials JSON (wrong type)",
+			jsonStr: `{"name":"twilio","disabled":false,"configuration":{"delivery_methods":["text"],"default_from":"1234567890","sid":"sid"},"credentials":{"auth_token":123}}`,
+			want:    nil,
+			wantErr: true,
+		},
+		{
+			name:    "Empty JSON object",
+			jsonStr: `{}`,
+			want:    &BrandingPhoneProvider{},
+			wantErr: false,
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			var got BrandingPhoneProvider
 			err := json.Unmarshal([]byte(tt.jsonStr), &got)
+
 			if (err != nil) != tt.wantErr {
 				t.Errorf("UnmarshalJSON() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
+
+			if tt.wantErr {
+				return
+			}
+
 			assert.Equal(t, tt.want, &got)
 		})
 	}

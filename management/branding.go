@@ -123,7 +123,7 @@ func (b *BrandingPhoneProvider) UnmarshalJSON(data []byte) error {
 	} else {
 		b.Credentials = &BrandingPhoneProviderCredential{}
 		if err := json.Unmarshal(aux.Credentials, b.Credentials); err != nil {
-			return err
+			return fmt.Errorf("invalid credentials: %w", err)
 		}
 	}
 
