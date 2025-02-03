@@ -221,6 +221,60 @@ func TestBrandingColors(t *testing.T) {
 	})
 }
 
+func TestBrandingPhoneProvider_UnmarshalJSON(t *testing.T) {
+	tests := []struct {
+		name    string
+		jsonStr string
+		want    *BrandingPhoneProvider
+		wantErr bool
+	}{
+		{
+			name:    "Valid JSON with credentials",
+			jsonStr: `{"name":"twilio","disabled":false,"configuration":{"delivery_methods":["text"],"default_from":"1234567890","sid":"sid"},"credentials":{"auth_token":"auth_token"}}`,
+			want: &BrandingPhoneProvider{
+				Name:     auth0.String("twilio"),
+				Disabled: auth0.Bool(false),
+				Configuration: &BrandingPhoneProviderConfiguration{
+					DeliveryMethods: &[]string{"text"},
+					DefaultFrom:     auth0.String("1234567890"),
+					SID:             auth0.String("sid"),
+				},
+				Credentials: &BrandingPhoneProviderCredential{
+					AuthToken: auth0.String("auth_token"),
+				},
+			},
+			wantErr: false,
+		},
+		{
+			name:    "Valid JSON without credentials",
+			jsonStr: `{"name":"twilio","disabled":false,"configuration":{"delivery_methods":["text"],"default_from":"1234567890","sid":"sid"}}`,
+			want: &BrandingPhoneProvider{
+				Name:     auth0.String("twilio"),
+				Disabled: auth0.Bool(false),
+				Configuration: &BrandingPhoneProviderConfiguration{
+					DeliveryMethods: &[]string{"text"},
+					DefaultFrom:     auth0.String("1234567890"),
+					SID:             auth0.String("sid"),
+				},
+				Credentials: nil,
+			},
+			wantErr: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var got BrandingPhoneProvider
+			err := json.Unmarshal([]byte(tt.jsonStr), &got)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("UnmarshalJSON() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			assert.Equal(t, tt.want, &got)
+		})
+	}
+}
+
 func givenAnBrandingPhoneProvider(t *testing.T) *BrandingPhoneProvider {
 	t.Helper()
 
