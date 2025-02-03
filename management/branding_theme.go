@@ -35,6 +35,7 @@ type BrandingThemeColors struct {
 	BaseFocusColor          *string `json:"base_focus_color,omitempty"`
 	BaseHoverColor          *string `json:"base_hover_color,omitempty"`
 	BodyText                string  `json:"body_text"`
+	CaptchaWidgetTheme      string  `json:"captcha_widget_theme"`
 	Error                   string  `json:"error"`
 	Header                  string  `json:"header"`
 	Icons                   string  `json:"icons"`
