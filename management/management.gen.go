@@ -2030,6 +2030,14 @@ func (c *ClientNativeSocialLogin) GetFacebook() *ClientNativeSocialLoginSupportE
 	return c.Facebook
 }
 
+// GetGoogle returns the Google field.
+func (c *ClientNativeSocialLogin) GetGoogle() *ClientNativeSocialLoginSupportEnabled {
+	if c == nil {
+		return nil
+	}
+	return c.Google
+}
+
 // String returns a string representation of ClientNativeSocialLogin.
 func (c *ClientNativeSocialLogin) String() string {
 	return Stringify(c)
