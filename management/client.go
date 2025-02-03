@@ -224,6 +224,9 @@ type ClientNativeSocialLogin struct {
 	// Native Social Login support for the Apple connection
 	Apple *ClientNativeSocialLoginSupportEnabled `json:"apple,omitempty"`
 
+	// Native Google Login support for the Google connection Enable Sign in with Google (Android 4.4+) using Credentials Manager
+	Google *ClientNativeSocialLoginSupportEnabled `json:"google,omitempty"`
+
 	// Native Social Login support for the Facebook connection
 	Facebook *ClientNativeSocialLoginSupportEnabled `json:"facebook,omitempty"`
 }
