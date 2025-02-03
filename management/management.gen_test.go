@@ -1286,6 +1286,150 @@ func TestBrandingPageBackgroundGradient_String(t *testing.T) {
 	}
 }
 
+func TestBrandingPhoneProvider_GetConfiguration(tt *testing.T) {
+	b := &BrandingPhoneProvider{}
+	b.GetConfiguration()
+	b = nil
+	b.GetConfiguration()
+}
+
+func TestBrandingPhoneProvider_GetCredentials(tt *testing.T) {
+	b := &BrandingPhoneProvider{}
+	b.GetCredentials()
+	b = nil
+	b.GetCredentials()
+}
+
+func TestBrandingPhoneProvider_GetDisabled(tt *testing.T) {
+	var zeroValue bool
+	b := &BrandingPhoneProvider{Disabled: &zeroValue}
+	b.GetDisabled()
+	b = &BrandingPhoneProvider{}
+	b.GetDisabled()
+	b = nil
+	b.GetDisabled()
+}
+
+func TestBrandingPhoneProvider_GetID(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProvider{ID: &zeroValue}
+	b.GetID()
+	b = &BrandingPhoneProvider{}
+	b.GetID()
+	b = nil
+	b.GetID()
+}
+
+func TestBrandingPhoneProvider_GetName(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProvider{Name: &zeroValue}
+	b.GetName()
+	b = &BrandingPhoneProvider{}
+	b.GetName()
+	b = nil
+	b.GetName()
+}
+
+func TestBrandingPhoneProvider_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneProvider{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingPhoneProviderConfiguration_GetDefaultFrom(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProviderConfiguration{DefaultFrom: &zeroValue}
+	b.GetDefaultFrom()
+	b = &BrandingPhoneProviderConfiguration{}
+	b.GetDefaultFrom()
+	b = nil
+	b.GetDefaultFrom()
+}
+
+func TestBrandingPhoneProviderConfiguration_GetDeliveryMethods(tt *testing.T) {
+	var zeroValue []string
+	b := &BrandingPhoneProviderConfiguration{DeliveryMethods: &zeroValue}
+	b.GetDeliveryMethods()
+	b = &BrandingPhoneProviderConfiguration{}
+	b.GetDeliveryMethods()
+	b = nil
+	b.GetDeliveryMethods()
+}
+
+func TestBrandingPhoneProviderConfiguration_GetMSSID(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProviderConfiguration{MSSID: &zeroValue}
+	b.GetMSSID()
+	b = &BrandingPhoneProviderConfiguration{}
+	b.GetMSSID()
+	b = nil
+	b.GetMSSID()
+}
+
+func TestBrandingPhoneProviderConfiguration_GetSID(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProviderConfiguration{SID: &zeroValue}
+	b.GetSID()
+	b = &BrandingPhoneProviderConfiguration{}
+	b.GetSID()
+	b = nil
+	b.GetSID()
+}
+
+func TestBrandingPhoneProviderConfiguration_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneProviderConfiguration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingPhoneProviderCredential_GetAuthToken(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProviderCredential{AuthToken: &zeroValue}
+	b.GetAuthToken()
+	b = &BrandingPhoneProviderCredential{}
+	b.GetAuthToken()
+	b = nil
+	b.GetAuthToken()
+}
+
+func TestBrandingPhoneProviderCredential_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneProviderCredential{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingPhoneProviderCustomConfiguration_GetDeliveryMethods(tt *testing.T) {
+	var zeroValue []string
+	b := &BrandingPhoneProviderCustomConfiguration{DeliveryMethods: &zeroValue}
+	b.GetDeliveryMethods()
+	b = &BrandingPhoneProviderCustomConfiguration{}
+	b.GetDeliveryMethods()
+	b = nil
+	b.GetDeliveryMethods()
+}
+
+func TestBrandingPhoneProviderCustomConfiguration_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneProviderCustomConfiguration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingPhoneProviderList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneProviderList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBrandingTheme_GetDisplayName(tt *testing.T) {
 	var zeroValue string
 	b := &BrandingTheme{DisplayName: &zeroValue}

@@ -3,6 +3,7 @@ package management
 import (
 	"context"
 	"encoding/json"
+	"net/http"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -79,6 +80,78 @@ func TestBrandingManager_UniversalLogin(t *testing.T) {
 	})
 }
 
+func TestBrandingManager_ListPhoneProviders(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedProvider := givenAnBrandingPhoneProvider(t)
+	actualProviders, err := api.Branding.ListPhoneProviders(context.Background())
+	assert.NoError(t, err)
+	assert.NotEmpty(t, actualProviders)
+	assert.Equal(t, actualProviders.Providers[0].GetID(), expectedProvider.GetID())
+}
+
+func TestBrandingManager_CreatePhoneProvider(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedProvider := &BrandingPhoneProvider{
+		Name:     auth0.String("custom"),
+		Disabled: auth0.Bool(false),
+		Configuration: &BrandingPhoneProviderConfiguration{
+			DeliveryMethods: &[]string{"text"},
+		},
+		Credentials: &BrandingPhoneProviderCredential{},
+	}
+
+	err := api.Branding.CreatePhoneProvider(context.Background(), expectedProvider)
+	assert.NoError(t, err)
+
+	actualProvider, err := api.Branding.ReadPhoneProvider(context.Background(), expectedProvider.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedProvider, actualProvider)
+
+	t.Cleanup(func() {
+		cleanupBrandingPhoneProvider(t, expectedProvider.GetID())
+	})
+}
+
+func TestBrandingManager_ReadPhoneProvider(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedProvider := givenAnBrandingPhoneProvider(t)
+
+	actualProvider, err := api.Branding.ReadPhoneProvider(context.Background(), expectedProvider.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedProvider, actualProvider)
+}
+
+func TestBrandingManager_UpdatePhoneProvider(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedProvider := givenAnBrandingPhoneProvider(t)
+
+	updatedProvider := &BrandingPhoneProvider{
+		Name:     auth0.String("custom"),
+		Disabled: auth0.Bool(false),
+		Configuration: &BrandingPhoneProviderConfiguration{
+			DeliveryMethods: &[]string{"text"},
+		},
+		Credentials: &BrandingPhoneProviderCredential{},
+	}
+
+	err := api.Branding.UpdatePhoneProvider(context.Background(), expectedProvider.GetID(), updatedProvider)
+	assert.NoError(t, err)
+
+	actualProvider, err := api.Branding.ReadPhoneProvider(context.Background(), expectedProvider.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, updatedProvider, actualProvider)
+}
+
+func TestBrandingManager_DeletePhoneProvider(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedProvider := givenAnBrandingPhoneProvider(t)
+
+	err := api.Branding.DeletePhoneProvider(context.Background(), expectedProvider.GetID())
+	assert.NoError(t, err)
+}
+
 func TestBrandingColors(t *testing.T) {
 	var testCases = []struct {
 		name   string
@@ -146,4 +219,41 @@ func TestBrandingColors(t *testing.T) {
 		})
 		assert.Contains(t, err.Error(), "only one of PageBackground and PageBackgroundGradient is allowed")
 	})
+}
+
+func givenAnBrandingPhoneProvider(t *testing.T) *BrandingPhoneProvider {
+	t.Helper()
+
+	provider := &BrandingPhoneProvider{
+		Name:     auth0.String("twilio"),
+		Disabled: auth0.Bool(false),
+		Configuration: &BrandingPhoneProviderConfiguration{
+			DeliveryMethods: &[]string{"text"},
+			DefaultFrom:     auth0.String("1234567890"),
+			SID:             auth0.String("sid"),
+		},
+		Credentials: &BrandingPhoneProviderCredential{
+			AuthToken: auth0.String("auth_token"),
+		},
+	}
+
+	err := api.Branding.CreatePhoneProvider(context.Background(), provider)
+	if err != nil {
+		t.Error(err)
+	}
+	t.Cleanup(func() {
+		cleanupBrandingPhoneProvider(t, provider.GetID())
+	})
+	return provider
+}
+
+func cleanupBrandingPhoneProvider(t *testing.T, providerID string) {
+	t.Helper()
+
+	err := api.Branding.DeletePhoneProvider(context.Background(), providerID)
+	if err != nil {
+		if err.(Error).Status() != http.StatusNotFound {
+			t.Error(err)
+		}
+	}
 }

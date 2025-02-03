@@ -50,6 +50,86 @@ type BrandingPageBackgroundGradient struct {
 	AngleDegree *int    `json:"angle_deg,omitempty"`
 }
 
+// BrandingPhoneProviderList is list of BrandingPhoneProvider.
+type BrandingPhoneProviderList struct {
+	Providers []*BrandingPhoneProvider `json:"providers,omitempty"`
+}
+
+// BrandingPhoneProvider is used to configure phone providers.
+type BrandingPhoneProvider struct {
+	ID            *string                             `json:"id,omitempty"`
+	Name          *string                             `json:"name,omitempty"`
+	Disabled      *bool                               `json:"disabled,omitempty"`
+	Configuration *BrandingPhoneProviderConfiguration `json:"configuration,omitempty"`
+	Credentials   *BrandingPhoneProviderCredential    `json:"credentials,omitempty"`
+}
+
+// BrandingPhoneProviderCredential represents the credentials for a phone provider.
+type BrandingPhoneProviderCredential struct {
+	AuthToken *string `json:"auth_token,omitempty"`
+}
+
+// BrandingPhoneProviderConfiguration is used to configure phone providers.
+type BrandingPhoneProviderConfiguration struct {
+	DefaultFrom     *string   `json:"default_from,omitempty"`
+	MSSID           *string   `json:"mssid,omitempty"`
+	SID             *string   `json:"sid,omitempty"`
+	DeliveryMethods *[]string `json:"delivery_methods,omitempty"`
+}
+
+// BrandingPhoneProviderCustomConfiguration is used to configure a custom phone provider.
+type BrandingPhoneProviderCustomConfiguration struct {
+	DeliveryMethods *[]string `json:"delivery_methods,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaler interface.
+//
+// It is required to handle the json field credentials, which can either
+// be a JSON object, or null.
+func (b *BrandingPhoneProvider) MarshalJSON() ([]byte, error) {
+	type BrandingPhoneProviderSubset struct {
+		Name          *string                             `json:"name,omitempty"`
+		Disabled      *bool                               `json:"disabled,omitempty"`
+		Configuration *BrandingPhoneProviderConfiguration `json:"configuration,omitempty"`
+		Credentials   *BrandingPhoneProviderCredential    `json:"credentials,omitempty"`
+	}
+	return json.Marshal(&BrandingPhoneProviderSubset{
+		Name:          b.Name,
+		Disabled:      b.Disabled,
+		Configuration: b.Configuration,
+		Credentials:   b.Credentials,
+	})
+}
+
+// UnmarshalJSON implements the json.Unmarshaler interface.
+//
+// It is required to handle the json field credentials, which can either
+// be a JSON object, or null.
+func (b *BrandingPhoneProvider) UnmarshalJSON(data []byte) error {
+	type Alias BrandingPhoneProvider
+	aux := &struct {
+		Credentials json.RawMessage `json:"credentials,omitempty"`
+		*Alias
+	}{
+		Alias: (*Alias)(b),
+	}
+
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+
+	if len(aux.Credentials) == 0 {
+		b.Credentials = nil
+	} else {
+		b.Credentials = &BrandingPhoneProviderCredential{}
+		if err := json.Unmarshal(aux.Credentials, b.Credentials); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 // MarshalJSON implements the json.Marshaler interface.
 //
 // It is required to handle the json field page_background, which can either
@@ -171,4 +251,41 @@ func (m *BrandingManager) SetUniversalLogin(ctx context.Context, ul *BrandingUni
 // See: https://auth0.com/docs/api/management/v2#!/Branding/delete_universal_login
 func (m *BrandingManager) DeleteUniversalLogin(ctx context.Context, opts ...RequestOption) (err error) {
 	return m.management.Request(ctx, "DELETE", m.management.URI("branding", "templates", "universal-login"), nil, opts...)
+}
+
+// ListPhoneProviders retrieves the list of phone providers for a Tenant.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/get-branding-phone-providers
+func (m *BrandingManager) ListPhoneProviders(ctx context.Context, opts ...RequestOption) (pps *BrandingPhoneProviderList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("branding", "phone", "providers"), &pps, opts...)
+	return
+}
+
+// ReadPhoneProvider retrieves a phone provider for a Tenant.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/get-phone-provider
+func (m *BrandingManager) ReadPhoneProvider(ctx context.Context, id string, opts ...RequestOption) (pp *BrandingPhoneProvider, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("branding", "phone", "providers", id), &pp, opts...)
+	return
+}
+
+// CreatePhoneProvider creates a phone provider for a Tenant.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/create-phone-provider
+func (m *BrandingManager) CreatePhoneProvider(ctx context.Context, pp *BrandingPhoneProvider, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "POST", m.management.URI("branding", "phone", "providers"), pp, opts...)
+}
+
+// DeletePhoneProvider deletes a phone provider for a Tenant.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/delete-phone-provider
+func (m *BrandingManager) DeletePhoneProvider(ctx context.Context, id string, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "DELETE", m.management.URI("branding", "phone", "providers", id), nil, opts...)
+}
+
+// UpdatePhoneProvider updates a phone provider for a Tenant.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/update-phone-provider
+func (m *BrandingManager) UpdatePhoneProvider(ctx context.Context, id string, pp *BrandingPhoneProvider, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "PATCH", m.management.URI("branding", "phone", "providers", id), pp, opts...)
 }

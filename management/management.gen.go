@@ -1011,6 +1011,119 @@ func (b *BrandingPageBackgroundGradient) String() string {
 	return Stringify(b)
 }
 
+// GetConfiguration returns the Configuration field.
+func (b *BrandingPhoneProvider) GetConfiguration() *BrandingPhoneProviderConfiguration {
+	if b == nil {
+		return nil
+	}
+	return b.Configuration
+}
+
+// GetCredentials returns the Credentials field.
+func (b *BrandingPhoneProvider) GetCredentials() *BrandingPhoneProviderCredential {
+	if b == nil {
+		return nil
+	}
+	return b.Credentials
+}
+
+// GetDisabled returns the Disabled field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProvider) GetDisabled() bool {
+	if b == nil || b.Disabled == nil {
+		return false
+	}
+	return *b.Disabled
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProvider) GetID() string {
+	if b == nil || b.ID == nil {
+		return ""
+	}
+	return *b.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProvider) GetName() string {
+	if b == nil || b.Name == nil {
+		return ""
+	}
+	return *b.Name
+}
+
+// String returns a string representation of BrandingPhoneProvider.
+func (b *BrandingPhoneProvider) String() string {
+	return Stringify(b)
+}
+
+// GetDefaultFrom returns the DefaultFrom field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProviderConfiguration) GetDefaultFrom() string {
+	if b == nil || b.DefaultFrom == nil {
+		return ""
+	}
+	return *b.DefaultFrom
+}
+
+// GetDeliveryMethods returns the DeliveryMethods field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProviderConfiguration) GetDeliveryMethods() []string {
+	if b == nil || b.DeliveryMethods == nil {
+		return nil
+	}
+	return *b.DeliveryMethods
+}
+
+// GetMSSID returns the MSSID field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProviderConfiguration) GetMSSID() string {
+	if b == nil || b.MSSID == nil {
+		return ""
+	}
+	return *b.MSSID
+}
+
+// GetSID returns the SID field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProviderConfiguration) GetSID() string {
+	if b == nil || b.SID == nil {
+		return ""
+	}
+	return *b.SID
+}
+
+// String returns a string representation of BrandingPhoneProviderConfiguration.
+func (b *BrandingPhoneProviderConfiguration) String() string {
+	return Stringify(b)
+}
+
+// GetAuthToken returns the AuthToken field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProviderCredential) GetAuthToken() string {
+	if b == nil || b.AuthToken == nil {
+		return ""
+	}
+	return *b.AuthToken
+}
+
+// String returns a string representation of BrandingPhoneProviderCredential.
+func (b *BrandingPhoneProviderCredential) String() string {
+	return Stringify(b)
+}
+
+// GetDeliveryMethods returns the DeliveryMethods field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProviderCustomConfiguration) GetDeliveryMethods() []string {
+	if b == nil || b.DeliveryMethods == nil {
+		return nil
+	}
+	return *b.DeliveryMethods
+}
+
+// String returns a string representation of BrandingPhoneProviderCustomConfiguration.
+func (b *BrandingPhoneProviderCustomConfiguration) String() string {
+	return Stringify(b)
+}
+
+// String returns a string representation of BrandingPhoneProviderList.
+func (b *BrandingPhoneProviderList) String() string {
+	return Stringify(b)
+}
+
 // GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
 func (b *BrandingTheme) GetDisplayName() string {
 	if b == nil || b.DisplayName == nil {
