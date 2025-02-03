@@ -1011,6 +1011,14 @@ func (b *BrandingPageBackgroundGradient) String() string {
 	return Stringify(b)
 }
 
+// GetChannel returns the Channel field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProvider) GetChannel() string {
+	if b == nil || b.Channel == nil {
+		return ""
+	}
+	return *b.Channel
+}
+
 // GetConfiguration returns the Configuration field.
 func (b *BrandingPhoneProvider) GetConfiguration() *BrandingPhoneProviderConfiguration {
 	if b == nil {
@@ -1049,6 +1057,14 @@ func (b *BrandingPhoneProvider) GetName() string {
 		return ""
 	}
 	return *b.Name
+}
+
+// GetTenant returns the Tenant field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProvider) GetTenant() string {
+	if b == nil || b.Tenant == nil {
+		return ""
+	}
+	return *b.Tenant
 }
 
 // String returns a string representation of BrandingPhoneProvider.

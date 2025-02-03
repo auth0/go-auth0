@@ -1286,6 +1286,16 @@ func TestBrandingPageBackgroundGradient_String(t *testing.T) {
 	}
 }
 
+func TestBrandingPhoneProvider_GetChannel(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProvider{Channel: &zeroValue}
+	b.GetChannel()
+	b = &BrandingPhoneProvider{}
+	b.GetChannel()
+	b = nil
+	b.GetChannel()
+}
+
 func TestBrandingPhoneProvider_GetConfiguration(tt *testing.T) {
 	b := &BrandingPhoneProvider{}
 	b.GetConfiguration()
@@ -1328,6 +1338,16 @@ func TestBrandingPhoneProvider_GetName(tt *testing.T) {
 	b.GetName()
 	b = nil
 	b.GetName()
+}
+
+func TestBrandingPhoneProvider_GetTenant(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProvider{Tenant: &zeroValue}
+	b.GetTenant()
+	b = &BrandingPhoneProvider{}
+	b.GetTenant()
+	b = nil
+	b.GetTenant()
 }
 
 func TestBrandingPhoneProvider_String(t *testing.T) {
