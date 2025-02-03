@@ -284,6 +284,24 @@ func TestBrandingPhoneProvider_UnmarshalJSON(t *testing.T) {
 			want:    &BrandingPhoneProvider{},
 			wantErr: false,
 		},
+		{
+			name:    "Malformed JSON (syntax error)",
+			jsonStr: `{"name": "twilio", "disabled": false, "configuration":`,
+			want:    nil,
+			wantErr: true,
+		},
+		{
+			name:    "Not a JSON object",
+			jsonStr: `["invalid", "json", "array"]`,
+			want:    nil,
+			wantErr: true,
+		},
+		{
+			name:    "Non-JSON input",
+			jsonStr: `this is not JSON`,
+			want:    nil,
+			wantErr: true,
+		},
 	}
 
 	for _, tt := range tests {
