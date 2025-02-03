@@ -40,6 +40,7 @@ func TestBrandingThemeManager_Create(t *testing.T) {
 		Colors: BrandingThemeColors{
 			BodyText:                "#00FF00",
 			Error:                   "#00FF00",
+			CaptchaWidgetTheme:      "auto",
 			Header:                  "#00FF00",
 			Icons:                   "#00FF00",
 			InputBackground:         "#00FF00",
@@ -139,6 +140,7 @@ func TestBrandingThemeManager_Update(t *testing.T) {
 		Colors: BrandingThemeColors{
 			BodyText:                "#00FF00",
 			Error:                   "#00FF00",
+			CaptchaWidgetTheme:      "auto",
 			Header:                  "#00FF00",
 			Icons:                   "#00FF00",
 			InputBackground:         "#00FF00",
@@ -238,6 +240,7 @@ func givenABrandingTheme(t *testing.T) *BrandingTheme {
 		Colors: BrandingThemeColors{
 			BodyText:                "#00FF00",
 			Error:                   "#00FF00",
+			CaptchaWidgetTheme:      "auto",
 			Header:                  "#00FF00",
 			Icons:                   "#00FF00",
 			InputBackground:         "#00FF00",

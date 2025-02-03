@@ -2453,6 +2453,13 @@ func TestClientNativeSocialLogin_GetFacebook(tt *testing.T) {
 	c.GetFacebook()
 }
 
+func TestClientNativeSocialLogin_GetGoogle(tt *testing.T) {
+	c := &ClientNativeSocialLogin{}
+	c.GetGoogle()
+	c = nil
+	c.GetGoogle()
+}
+
 func TestClientNativeSocialLogin_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientNativeSocialLogin{}
