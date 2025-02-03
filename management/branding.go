@@ -60,6 +60,8 @@ type BrandingPhoneProvider struct {
 	ID            *string                             `json:"id,omitempty"`
 	Name          *string                             `json:"name,omitempty"`
 	Disabled      *bool                               `json:"disabled,omitempty"`
+	Channel       *string                             `json:"channel,omitempty"`
+	Tenant        *string                             `json:"tenant,omitempty"`
 	Configuration *BrandingPhoneProviderConfiguration `json:"configuration,omitempty"`
 	Credentials   *BrandingPhoneProviderCredential    `json:"credentials,omitempty"`
 }
