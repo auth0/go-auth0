@@ -187,8 +187,10 @@ var connectionTestCases = []connectionTestCase{
 			Strategy: auth0.String("samlp"),
 		},
 		options: &ConnectionOptionsSAML{
-			StrategyVersion: auth0.Int(2),
-			SignInEndpoint:  auth0.String("https://saml.identity/provider"),
+			GlobalTokenRevocationJWTSub: auth0.String("user123"),
+			GlobalTokenRevocationJWTIss: auth0.String("issuer.example.com"),
+			StrategyVersion:             auth0.Int(2),
+			SignInEndpoint:              auth0.String("https://saml.identity/provider"),
 			SigningCert: auth0.String(`-----BEGIN CERTIFICATE-----
 MIID6TCCA1ICAQEwDQYJKoZIhvcNAQEFBQAwgYsxCzAJBgNVBAYTAlVTMRMwEQYD
 VQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMRQwEgYDVQQK

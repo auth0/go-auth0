@@ -5492,6 +5492,22 @@ func (c *ConnectionOptionsSAML) GetFieldsMap() map[string]interface{} {
 	return c.FieldsMap
 }
 
+// GetGlobalTokenRevocationJWTIss returns the GlobalTokenRevocationJWTIss field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetGlobalTokenRevocationJWTIss() string {
+	if c == nil || c.GlobalTokenRevocationJWTIss == nil {
+		return ""
+	}
+	return *c.GlobalTokenRevocationJWTIss
+}
+
+// GetGlobalTokenRevocationJWTSub returns the GlobalTokenRevocationJWTSub field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetGlobalTokenRevocationJWTSub() string {
+	if c == nil || c.GlobalTokenRevocationJWTSub == nil {
+		return ""
+	}
+	return *c.GlobalTokenRevocationJWTSub
+}
+
 // GetIdpInitiated returns the IdpInitiated field.
 func (c *ConnectionOptionsSAML) GetIdpInitiated() *ConnectionOptionsSAMLIdpInitiated {
 	if c == nil {
