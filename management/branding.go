@@ -106,7 +106,9 @@ func (b *BrandingPhoneProvider) MarshalJSON() ([]byte, error) {
 // It is required to handle the json field credentials, which can either
 // be a JSON object, or null.
 func (b *BrandingPhoneProvider) UnmarshalJSON(data []byte) error {
+	// Define an alias to prevent infinite recursion
 	type Alias BrandingPhoneProvider
+
 	aux := &struct {
 		Credentials json.RawMessage `json:"credentials,omitempty"`
 		*Alias
@@ -115,16 +117,17 @@ func (b *BrandingPhoneProvider) UnmarshalJSON(data []byte) error {
 	}
 
 	if err := json.Unmarshal(data, &aux); err != nil {
-		return err
+		return fmt.Errorf("failed to unmarshal BrandingPhoneProvider: %w", err)
 	}
 
-	if len(aux.Credentials) == 0 {
-		b.Credentials = nil
-	} else {
-		b.Credentials = &BrandingPhoneProviderCredential{}
-		if err := json.Unmarshal(aux.Credentials, b.Credentials); err != nil {
-			return fmt.Errorf("invalid credentials: %w", err)
+	if len(aux.Credentials) > 0 {
+		var cred BrandingPhoneProviderCredential
+		if err := json.Unmarshal(aux.Credentials, &cred); err != nil {
+			return fmt.Errorf("invalid credentials JSON structure: %w", err)
 		}
+		b.Credentials = &cred
+	} else {
+		b.Credentials = nil
 	}
 
 	return nil

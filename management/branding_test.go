@@ -261,7 +261,7 @@ func TestBrandingPhoneProvider_UnmarshalJSON(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:    "Invalid JSON structure (credentials as number)",
+			name:    "Invalid JSON structure (credentials as a number)",
 			jsonStr: `{"name":"twilio","disabled":false,"configuration":{"delivery_methods":["text"],"default_from":"1234567890","sid":"sid"},"credentials":123}`,
 			want:    nil,
 			wantErr: true,
@@ -269,6 +269,12 @@ func TestBrandingPhoneProvider_UnmarshalJSON(t *testing.T) {
 		{
 			name:    "Invalid credentials JSON (wrong type)",
 			jsonStr: `{"name":"twilio","disabled":false,"configuration":{"delivery_methods":["text"],"default_from":"1234567890","sid":"sid"},"credentials":{"auth_token":123}}`,
+			want:    nil,
+			wantErr: true,
+		},
+		{
+			name:    "Malformed JSON (missing closing bracket)",
+			jsonStr: `{"name":"twilio","disabled":false,"configuration":{"delivery_methods":["text"],"default_from":"1234567890","sid":"sid","credentials":{"auth_token":"auth_token"}`,
 			want:    nil,
 			wantErr: true,
 		},
@@ -291,6 +297,7 @@ func TestBrandingPhoneProvider_UnmarshalJSON(t *testing.T) {
 			}
 
 			if tt.wantErr {
+				assert.Error(t, err)
 				return
 			}
 
