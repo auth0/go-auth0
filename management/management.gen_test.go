@@ -8716,6 +8716,135 @@ func TestEnrollmentTicket_String(t *testing.T) {
 	}
 }
 
+func TestEventStream_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	e := &EventStream{CreatedAt: &zeroValue}
+	e.GetCreatedAt()
+	e = &EventStream{}
+	e.GetCreatedAt()
+	e = nil
+	e.GetCreatedAt()
+}
+
+func TestEventStream_GetDestination(tt *testing.T) {
+	e := &EventStream{}
+	e.GetDestination()
+	e = nil
+	e.GetDestination()
+}
+
+func TestEventStream_GetID(tt *testing.T) {
+	var zeroValue string
+	e := &EventStream{ID: &zeroValue}
+	e.GetID()
+	e = &EventStream{}
+	e.GetID()
+	e = nil
+	e.GetID()
+}
+
+func TestEventStream_GetName(tt *testing.T) {
+	var zeroValue string
+	e := &EventStream{Name: &zeroValue}
+	e.GetName()
+	e = &EventStream{}
+	e.GetName()
+	e = nil
+	e.GetName()
+}
+
+func TestEventStream_GetStatus(tt *testing.T) {
+	var zeroValue string
+	e := &EventStream{Status: &zeroValue}
+	e.GetStatus()
+	e = &EventStream{}
+	e.GetStatus()
+	e = nil
+	e.GetStatus()
+}
+
+func TestEventStream_GetSubscriptions(tt *testing.T) {
+	var zeroValue []EventStreamSubscription
+	e := &EventStream{Subscriptions: &zeroValue}
+	e.GetSubscriptions()
+	e = &EventStream{}
+	e.GetSubscriptions()
+	e = nil
+	e.GetSubscriptions()
+}
+
+func TestEventStream_GetUpdatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	e := &EventStream{UpdatedAt: &zeroValue}
+	e.GetUpdatedAt()
+	e = &EventStream{}
+	e.GetUpdatedAt()
+	e = nil
+	e.GetUpdatedAt()
+}
+
+func TestEventStream_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventStream{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventStreamDestination_GetEventStreamDestinationConfiguration(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	e := &EventStreamDestination{EventStreamDestinationConfiguration: &zeroValue}
+	e.GetEventStreamDestinationConfiguration()
+	e = &EventStreamDestination{}
+	e.GetEventStreamDestinationConfiguration()
+	e = nil
+	e.GetEventStreamDestinationConfiguration()
+}
+
+func TestEventStreamDestination_GetEventStreamDestinationType(tt *testing.T) {
+	var zeroValue string
+	e := &EventStreamDestination{EventStreamDestinationType: &zeroValue}
+	e.GetEventStreamDestinationType()
+	e = &EventStreamDestination{}
+	e.GetEventStreamDestinationType()
+	e = nil
+	e.GetEventStreamDestinationType()
+}
+
+func TestEventStreamDestination_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventStreamDestination{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventStreamList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventStreamList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventStreamSubscription_GetEventStreamSubscriptionType(tt *testing.T) {
+	var zeroValue string
+	e := &EventStreamSubscription{EventStreamSubscriptionType: &zeroValue}
+	e.GetEventStreamSubscriptionType()
+	e = &EventStreamSubscription{}
+	e.GetEventStreamSubscriptionType()
+	e = nil
+	e.GetEventStreamSubscriptionType()
+}
+
+func TestEventStreamSubscription_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventStreamSubscription{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestFirebaseClientAddon_GetClientEmail(tt *testing.T) {
 	var zeroValue string
 	f := &FirebaseClientAddon{ClientEmail: &zeroValue}
