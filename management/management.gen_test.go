@@ -1303,13 +1303,6 @@ func TestBrandingPhoneProvider_GetConfiguration(tt *testing.T) {
 	b.GetConfiguration()
 }
 
-func TestBrandingPhoneProvider_GetCredentials(tt *testing.T) {
-	b := &BrandingPhoneProvider{}
-	b.GetCredentials()
-	b = nil
-	b.GetCredentials()
-}
-
 func TestBrandingPhoneProvider_GetDisabled(tt *testing.T) {
 	var zeroValue bool
 	b := &BrandingPhoneProvider{Disabled: &zeroValue}

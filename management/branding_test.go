@@ -86,7 +86,7 @@ func TestBrandingManager_ListPhoneProviders(t *testing.T) {
 	actualProviders, err := api.Branding.ListPhoneProviders(context.Background())
 	assert.NoError(t, err)
 	assert.NotEmpty(t, actualProviders)
-	assert.Equal(t, actualProviders.Providers[0].GetID(), expectedProvider.GetID())
+	assert.Contains(t, actualProviders.Providers, expectedProvider)
 }
 
 func TestBrandingManager_CreatePhoneProvider(t *testing.T) {
@@ -98,7 +98,7 @@ func TestBrandingManager_CreatePhoneProvider(t *testing.T) {
 		Configuration: &BrandingPhoneProviderConfiguration{
 			DeliveryMethods: &[]string{"text"},
 		},
-		Credentials: &BrandingPhoneProviderCredential{},
+		Credentials: BrandingPhoneProviderCredential{},
 	}
 
 	err := api.Branding.CreatePhoneProvider(context.Background(), expectedProvider)
@@ -127,21 +127,18 @@ func TestBrandingManager_UpdatePhoneProvider(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	expectedProvider := givenAnBrandingPhoneProvider(t)
 
-	updatedProvider := &BrandingPhoneProvider{
-		Name:     auth0.String("custom"),
-		Disabled: auth0.Bool(false),
-		Configuration: &BrandingPhoneProviderConfiguration{
-			DeliveryMethods: &[]string{"text"},
-		},
-		Credentials: &BrandingPhoneProviderCredential{},
+	expectedProvider.Name = auth0.String("custom")
+	expectedProvider.Disabled = auth0.Bool(false)
+	expectedProvider.Configuration = &BrandingPhoneProviderConfiguration{
+		DeliveryMethods: &[]string{"text"},
 	}
+	expectedProvider.Credentials = BrandingPhoneProviderCredential{}
 
-	err := api.Branding.UpdatePhoneProvider(context.Background(), expectedProvider.GetID(), updatedProvider)
+	err := api.Branding.UpdatePhoneProvider(context.Background(), expectedProvider.GetID(), expectedProvider)
 	assert.NoError(t, err)
-
 	actualProvider, err := api.Branding.ReadPhoneProvider(context.Background(), expectedProvider.GetID())
 	assert.NoError(t, err)
-	assert.Equal(t, updatedProvider, actualProvider)
+	assert.Equal(t, expectedProvider, actualProvider)
 }
 
 func TestBrandingManager_DeletePhoneProvider(t *testing.T) {
@@ -221,109 +218,6 @@ func TestBrandingColors(t *testing.T) {
 	})
 }
 
-func TestBrandingPhoneProvider_UnmarshalJSON(t *testing.T) {
-	tests := []struct {
-		name    string
-		jsonStr string
-		want    *BrandingPhoneProvider
-		wantErr bool
-	}{
-		{
-			name:    "Valid JSON with credentials",
-			jsonStr: `{"name":"twilio","disabled":false,"configuration":{"delivery_methods":["text"],"default_from":"1234567890","sid":"sid"},"credentials":{"auth_token":"auth_token"}}`,
-			want: &BrandingPhoneProvider{
-				Name:     auth0.String("twilio"),
-				Disabled: auth0.Bool(false),
-				Configuration: &BrandingPhoneProviderConfiguration{
-					DeliveryMethods: &[]string{"text"},
-					DefaultFrom:     auth0.String("1234567890"),
-					SID:             auth0.String("sid"),
-				},
-				Credentials: &BrandingPhoneProviderCredential{
-					AuthToken: auth0.String("auth_token"),
-				},
-			},
-			wantErr: false,
-		},
-		{
-			name:    "Valid JSON without credentials",
-			jsonStr: `{"name":"twilio","disabled":false,"configuration":{"delivery_methods":["text"],"default_from":"1234567890","sid":"sid"}}`,
-			want: &BrandingPhoneProvider{
-				Name:     auth0.String("twilio"),
-				Disabled: auth0.Bool(false),
-				Configuration: &BrandingPhoneProviderConfiguration{
-					DeliveryMethods: &[]string{"text"},
-					DefaultFrom:     auth0.String("1234567890"),
-					SID:             auth0.String("sid"),
-				},
-				Credentials: nil,
-			},
-			wantErr: false,
-		},
-		{
-			name:    "Invalid JSON structure (credentials as a number)",
-			jsonStr: `{"name":"twilio","disabled":false,"configuration":{"delivery_methods":["text"],"default_from":"1234567890","sid":"sid"},"credentials":123}`,
-			want:    nil,
-			wantErr: true,
-		},
-		{
-			name:    "Invalid credentials JSON (wrong type)",
-			jsonStr: `{"name":"twilio","disabled":false,"configuration":{"delivery_methods":["text"],"default_from":"1234567890","sid":"sid"},"credentials":{"auth_token":123}}`,
-			want:    nil,
-			wantErr: true,
-		},
-		{
-			name:    "Malformed JSON (missing closing bracket)",
-			jsonStr: `{"name":"twilio","disabled":false,"configuration":{"delivery_methods":["text"],"default_from":"1234567890","sid":"sid","credentials":{"auth_token":"auth_token"}`,
-			want:    nil,
-			wantErr: true,
-		},
-		{
-			name:    "Empty JSON object",
-			jsonStr: `{}`,
-			want:    &BrandingPhoneProvider{},
-			wantErr: false,
-		},
-		{
-			name:    "Malformed JSON (syntax error)",
-			jsonStr: `{"name": "twilio", "disabled": false, "configuration":`,
-			want:    nil,
-			wantErr: true,
-		},
-		{
-			name:    "Not a JSON object",
-			jsonStr: `["invalid", "json", "array"]`,
-			want:    nil,
-			wantErr: true,
-		},
-		{
-			name:    "Non-JSON input",
-			jsonStr: `this is not JSON`,
-			want:    nil,
-			wantErr: true,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			var got BrandingPhoneProvider
-			err := json.Unmarshal([]byte(tt.jsonStr), &got)
-
-			if (err != nil) != tt.wantErr {
-				t.Errorf("UnmarshalJSON() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-
-			if tt.wantErr {
-				assert.Error(t, err)
-				return
-			}
-
-			assert.Equal(t, tt.want, &got)
-		})
-	}
-}
-
 func givenAnBrandingPhoneProvider(t *testing.T) *BrandingPhoneProvider {
 	t.Helper()
 
@@ -335,7 +229,7 @@ func givenAnBrandingPhoneProvider(t *testing.T) *BrandingPhoneProvider {
 			DefaultFrom:     auth0.String("1234567890"),
 			SID:             auth0.String("sid"),
 		},
-		Credentials: &BrandingPhoneProviderCredential{
+		Credentials: BrandingPhoneProviderCredential{
 			AuthToken: auth0.String("auth_token"),
 		},
 	}
@@ -344,6 +238,7 @@ func givenAnBrandingPhoneProvider(t *testing.T) *BrandingPhoneProvider {
 	if err != nil {
 		t.Error(err)
 	}
+	provider.Credentials = BrandingPhoneProviderCredential{}
 	t.Cleanup(func() {
 		cleanupBrandingPhoneProvider(t, provider.GetID())
 	})

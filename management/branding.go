@@ -63,7 +63,7 @@ type BrandingPhoneProvider struct {
 	Channel       *string                             `json:"channel,omitempty"`
 	Tenant        *string                             `json:"tenant,omitempty"`
 	Configuration *BrandingPhoneProviderConfiguration `json:"configuration,omitempty"`
-	Credentials   *BrandingPhoneProviderCredential    `json:"credentials,omitempty"`
+	Credentials   BrandingPhoneProviderCredential     `json:"credentials,omitempty"`
 }
 
 // BrandingPhoneProviderCredential represents the credentials for a phone provider.
@@ -93,7 +93,7 @@ func (b *BrandingPhoneProvider) MarshalJSON() ([]byte, error) {
 		Name          *string                             `json:"name,omitempty"`
 		Disabled      *bool                               `json:"disabled,omitempty"`
 		Configuration *BrandingPhoneProviderConfiguration `json:"configuration,omitempty"`
-		Credentials   *BrandingPhoneProviderCredential    `json:"credentials,omitempty"`
+		Credentials   BrandingPhoneProviderCredential     `json:"credentials,omitempty"`
 	}
 	return json.Marshal(&BrandingPhoneProviderSubset{
 		Name:          b.Name,
@@ -101,38 +101,6 @@ func (b *BrandingPhoneProvider) MarshalJSON() ([]byte, error) {
 		Configuration: b.Configuration,
 		Credentials:   b.Credentials,
 	})
-}
-
-// UnmarshalJSON implements the json.Unmarshaler interface.
-//
-// It is required to handle the json field credentials, which can either
-// be a JSON object, or null.
-func (b *BrandingPhoneProvider) UnmarshalJSON(data []byte) error {
-	// Define an alias to prevent infinite recursion
-	type Alias BrandingPhoneProvider
-
-	aux := &struct {
-		Credentials json.RawMessage `json:"credentials,omitempty"`
-		*Alias
-	}{
-		Alias: (*Alias)(b),
-	}
-
-	if err := json.Unmarshal(data, &aux); err != nil {
-		return fmt.Errorf("failed to unmarshal BrandingPhoneProvider: %w", err)
-	}
-
-	if len(aux.Credentials) > 0 {
-		var cred BrandingPhoneProviderCredential
-		if err := json.Unmarshal(aux.Credentials, &cred); err != nil {
-			return fmt.Errorf("invalid credentials JSON structure: %w", err)
-		}
-		b.Credentials = &cred
-	} else {
-		b.Credentials = nil
-	}
-
-	return nil
 }
 
 // MarshalJSON implements the json.Marshaler interface.
