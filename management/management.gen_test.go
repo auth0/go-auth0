@@ -6939,6 +6939,26 @@ func TestConnectionOptionsSAML_GetFieldsMap(tt *testing.T) {
 	c.GetFieldsMap()
 }
 
+func TestConnectionOptionsSAML_GetGlobalTokenRevocationJWTIss(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{GlobalTokenRevocationJWTIss: &zeroValue}
+	c.GetGlobalTokenRevocationJWTIss()
+	c = &ConnectionOptionsSAML{}
+	c.GetGlobalTokenRevocationJWTIss()
+	c = nil
+	c.GetGlobalTokenRevocationJWTIss()
+}
+
+func TestConnectionOptionsSAML_GetGlobalTokenRevocationJWTSub(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{GlobalTokenRevocationJWTSub: &zeroValue}
+	c.GetGlobalTokenRevocationJWTSub()
+	c = &ConnectionOptionsSAML{}
+	c.GetGlobalTokenRevocationJWTSub()
+	c = nil
+	c.GetGlobalTokenRevocationJWTSub()
+}
+
 func TestConnectionOptionsSAML_GetIdpInitiated(tt *testing.T) {
 	c := &ConnectionOptionsSAML{}
 	c.GetIdpInitiated()
