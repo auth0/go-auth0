@@ -19,7 +19,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.15.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/suspicious-ip-throttling
         method: GET
       response:
@@ -30,10 +30,10 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["block","admin_notification"],"allowlist":["127.0.0.1"],"stage":{"pre-login":{"max_attempts":1,"rate":34560},"pre-user-registration":{"max_attempts":1,"rate":1200}}}'
+        body: '{"enabled":true,"shields":["admin_notification","block"],"allowlist":[],"stage":{"pre-login":{"max_attempts":1,"rate":34560},"pre-user-registration":{"max_attempts":1,"rate":1200}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 167.981375ms
+        duration: 364.248208ms

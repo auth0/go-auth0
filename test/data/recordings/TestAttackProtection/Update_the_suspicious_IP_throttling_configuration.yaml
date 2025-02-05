@@ -19,7 +19,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.15.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/suspicious-ip-throttling
         method: GET
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["block","admin_notification"],"allowlist":["127.0.0.1"],"stage":{"pre-login":{"max_attempts":1,"rate":34560},"pre-user-registration":{"max_attempts":1,"rate":1200}}}'
+        body: '{"enabled":true,"shields":["admin_notification","block"],"allowlist":[],"stage":{"pre-login":{"max_attempts":1,"rate":34560},"pre-user-registration":{"max_attempts":1,"rate":1200}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 108.283542ms
+        duration: 365.477458ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.15.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/suspicious-ip-throttling
         method: PATCH
       response:
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["block","admin_notification"],"allowlist":["127.0.0.1"],"stage":{"pre-login":{"max_attempts":100,"rate":864000},"pre-user-registration":{"max_attempts":50,"rate":1200}}}'
+        body: '{"enabled":true,"shields":["admin_notification","block"],"allowlist":[],"stage":{"pre-login":{"max_attempts":100,"rate":864000},"pre-user-registration":{"max_attempts":50,"rate":1200}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 194.100958ms
+        duration: 374.946291ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -91,7 +91,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.15.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/suspicious-ip-throttling
         method: GET
       response:
@@ -102,32 +102,32 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["block","admin_notification"],"allowlist":["127.0.0.1"],"stage":{"pre-login":{"max_attempts":100,"rate":864000},"pre-user-registration":{"max_attempts":50,"rate":1200}}}'
+        body: '{"enabled":true,"shields":["admin_notification","block"],"allowlist":[],"stage":{"pre-login":{"max_attempts":100,"rate":864000},"pre-user-registration":{"max_attempts":50,"rate":1200}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 6.30475825s
+        duration: 382.327042ms
     - id: 3
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 193
+        content_length: 182
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"enabled":true,"shields":["block","admin_notification"],"allowlist":["127.0.0.1"],"stage":{"pre-login":{"max_attempts":1,"rate":34560},"pre-user-registration":{"max_attempts":1,"rate":1200}}}
+            {"enabled":true,"shields":["admin_notification","block"],"allowlist":[],"stage":{"pre-login":{"max_attempts":1,"rate":34560},"pre-user-registration":{"max_attempts":1,"rate":1200}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.15.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/suspicious-ip-throttling
         method: PATCH
       response:
@@ -138,10 +138,10 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["block","admin_notification"],"allowlist":["127.0.0.1"],"stage":{"pre-login":{"max_attempts":1,"rate":34560},"pre-user-registration":{"max_attempts":1,"rate":1200}}}'
+        body: '{"enabled":true,"shields":["admin_notification","block"],"allowlist":[],"stage":{"pre-login":{"max_attempts":1,"rate":34560},"pre-user-registration":{"max_attempts":1,"rate":1200}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 145.156084ms
+        duration: 385.389375ms

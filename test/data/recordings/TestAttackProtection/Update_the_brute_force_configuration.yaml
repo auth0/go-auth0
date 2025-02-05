@@ -19,7 +19,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.15.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/brute-force-protection
         method: GET
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["user_notification","block"],"mode":"count_per_identifier","allowlist":["127.0.0.1"],"max_attempts":1}'
+        body: '{"enabled":true,"shields":["user_notification","block"],"mode":"count_per_identifier_and_ip","allowlist":["8.8.4.4","8.8.8.8"],"max_attempts":1}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 123.429666ms
+        duration: 812.792375ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.15.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/brute-force-protection
         method: PATCH
       response:
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["user_notification","block"],"mode":"count_per_identifier","allowlist":["127.0.0.1"],"max_attempts":10}'
+        body: '{"enabled":true,"shields":["user_notification","block"],"mode":"count_per_identifier_and_ip","allowlist":["8.8.4.4","8.8.8.8"],"max_attempts":10}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 142.537208ms
+        duration: 402.629084ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -91,7 +91,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.15.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/brute-force-protection
         method: GET
       response:
@@ -102,32 +102,32 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["user_notification","block"],"mode":"count_per_identifier","allowlist":["127.0.0.1"],"max_attempts":10}'
+        body: '{"enabled":true,"shields":["user_notification","block"],"mode":"count_per_identifier_and_ip","allowlist":["8.8.4.4","8.8.8.8"],"max_attempts":10}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 222.443042ms
+        duration: 1.855696959s
     - id: 3
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 130
+        content_length: 145
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"enabled":true,"shields":["user_notification","block"],"allowlist":["127.0.0.1"],"mode":"count_per_identifier","max_attempts":1}
+            {"enabled":true,"shields":["user_notification","block"],"allowlist":["8.8.4.4","8.8.8.8"],"mode":"count_per_identifier_and_ip","max_attempts":1}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.15.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/brute-force-protection
         method: PATCH
       response:
@@ -138,10 +138,10 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["user_notification","block"],"mode":"count_per_identifier","allowlist":["127.0.0.1"],"max_attempts":1}'
+        body: '{"enabled":true,"shields":["user_notification","block"],"mode":"count_per_identifier_and_ip","allowlist":["8.8.4.4","8.8.8.8"],"max_attempts":1}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 121.814167ms
+        duration: 383.950667ms
