@@ -29,8 +29,8 @@ type EventStreamSubscription struct {
 
 // EventStreamDestination represents destination details.
 type EventStreamDestination struct {
-	EventStreamDestinationType          *string                 `json:"type,omitempty"`
-	EventStreamDestinationConfiguration *map[string]interface{} `json:"configuration,omitempty"`
+	EventStreamDestinationType          *string                `json:"type,omitempty"`
+	EventStreamDestinationConfiguration map[string]interface{} `json:"configuration,omitempty"`
 }
 
 // reset cleans up unnecessary fields based on the operation type.

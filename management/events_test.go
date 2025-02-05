@@ -27,7 +27,7 @@ func TestEventStreamManager_CreateTypeWebhook(t *testing.T) {
 		},
 		Destination: &EventStreamDestination{
 			EventStreamDestinationType: auth0.String("webhook"),
-			EventStreamDestinationConfiguration: &map[string]interface{}{
+			EventStreamDestinationConfiguration: map[string]interface{}{
 				"webhook_endpoint": "https://eof28wtn4v4506o.m.pipedream.net",
 				"webhook_authorization": &map[string]string{
 					"method": "bearer",
@@ -59,7 +59,7 @@ func TestEventStreamManager_CreateTypeEventBridge(t *testing.T) {
 		},
 		Destination: &EventStreamDestination{
 			EventStreamDestinationType: auth0.String("eventbridge"),
-			EventStreamDestinationConfiguration: &map[string]interface{}{
+			EventStreamDestinationConfiguration: map[string]interface{}{
 				"aws_account_id": "242109005777",
 				"aws_region":     "us-east-2",
 			},
@@ -147,7 +147,7 @@ func givenEventStream(t *testing.T) *EventStream {
 		},
 		Destination: &EventStreamDestination{
 			EventStreamDestinationType: auth0.String("eventbridge"),
-			EventStreamDestinationConfiguration: &map[string]interface{}{
+			EventStreamDestinationConfiguration: map[string]interface{}{
 				"aws_account_id": "242109005777",
 				"aws_region":     "us-east-2",
 			},

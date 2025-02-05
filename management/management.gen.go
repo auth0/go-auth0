@@ -7079,12 +7079,12 @@ func (e *EventStream) String() string {
 	return Stringify(e)
 }
 
-// GetEventStreamDestinationConfiguration returns the EventStreamDestinationConfiguration field if it's non-nil, zero value otherwise.
+// GetEventStreamDestinationConfiguration returns the EventStreamDestinationConfiguration map if it's non-nil, an empty map otherwise.
 func (e *EventStreamDestination) GetEventStreamDestinationConfiguration() map[string]interface{} {
 	if e == nil || e.EventStreamDestinationConfiguration == nil {
 		return map[string]interface{}{}
 	}
-	return *e.EventStreamDestinationConfiguration
+	return e.EventStreamDestinationConfiguration
 }
 
 // GetEventStreamDestinationType returns the EventStreamDestinationType field if it's non-nil, zero value otherwise.

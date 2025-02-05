@@ -8792,8 +8792,8 @@ func TestEventStream_String(t *testing.T) {
 }
 
 func TestEventStreamDestination_GetEventStreamDestinationConfiguration(tt *testing.T) {
-	var zeroValue map[string]interface{}
-	e := &EventStreamDestination{EventStreamDestinationConfiguration: &zeroValue}
+	zeroValue := map[string]interface{}{}
+	e := &EventStreamDestination{EventStreamDestinationConfiguration: zeroValue}
 	e.GetEventStreamDestinationConfiguration()
 	e = &EventStreamDestination{}
 	e.GetEventStreamDestinationConfiguration()
