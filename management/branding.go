@@ -63,7 +63,7 @@ type BrandingPhoneProvider struct {
 	Channel       *string                             `json:"channel,omitempty"`
 	Tenant        *string                             `json:"tenant,omitempty"`
 	Configuration *BrandingPhoneProviderConfiguration `json:"configuration,omitempty"`
-	Credentials   BrandingPhoneProviderCredential     `json:"credentials,omitempty"`
+	Credentials   *BrandingPhoneProviderCredential    `json:"credentials,omitempty"`
 }
 
 // BrandingPhoneProviderCredential represents the credentials for a phone provider.
@@ -93,7 +93,7 @@ func (b *BrandingPhoneProvider) MarshalJSON() ([]byte, error) {
 		Name          *string                             `json:"name,omitempty"`
 		Disabled      *bool                               `json:"disabled,omitempty"`
 		Configuration *BrandingPhoneProviderConfiguration `json:"configuration,omitempty"`
-		Credentials   BrandingPhoneProviderCredential     `json:"credentials,omitempty"`
+		Credentials   *BrandingPhoneProviderCredential    `json:"credentials,omitempty"`
 	}
 	return json.Marshal(&BrandingPhoneProviderSubset{
 		Name:          b.Name,

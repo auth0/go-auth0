@@ -98,7 +98,7 @@ func TestBrandingManager_CreatePhoneProvider(t *testing.T) {
 		Configuration: &BrandingPhoneProviderConfiguration{
 			DeliveryMethods: &[]string{"text"},
 		},
-		Credentials: BrandingPhoneProviderCredential{},
+		Credentials: &BrandingPhoneProviderCredential{},
 	}
 
 	err := api.Branding.CreatePhoneProvider(context.Background(), expectedProvider)
@@ -106,6 +106,9 @@ func TestBrandingManager_CreatePhoneProvider(t *testing.T) {
 
 	actualProvider, err := api.Branding.ReadPhoneProvider(context.Background(), expectedProvider.GetID())
 	assert.NoError(t, err)
+
+	// Update the expectedProvider's Credentials to nil as the API doesn't return the credentials in the response.
+	expectedProvider.Credentials = nil
 	assert.Equal(t, expectedProvider, actualProvider)
 
 	t.Cleanup(func() {
@@ -125,20 +128,29 @@ func TestBrandingManager_ReadPhoneProvider(t *testing.T) {
 
 func TestBrandingManager_UpdatePhoneProvider(t *testing.T) {
 	configureHTTPTestRecordings(t)
-	expectedProvider := givenAnBrandingPhoneProvider(t)
 
-	expectedProvider.Name = auth0.String("custom")
-	expectedProvider.Disabled = auth0.Bool(false)
-	expectedProvider.Configuration = &BrandingPhoneProviderConfiguration{
-		DeliveryMethods: &[]string{"text"},
-	}
-	expectedProvider.Credentials = BrandingPhoneProviderCredential{}
+	var (
+		existingProvider      = givenAnBrandingPhoneProvider(t)
+		updateProviderRequest = &BrandingPhoneProvider{
+			Name:     auth0.String("custom"),
+			Disabled: auth0.Bool(false),
+			Configuration: &BrandingPhoneProviderConfiguration{
+				DeliveryMethods: &[]string{"text"},
+			},
+			Credentials: &BrandingPhoneProviderCredential{},
+		}
+	)
 
-	err := api.Branding.UpdatePhoneProvider(context.Background(), expectedProvider.GetID(), expectedProvider)
+	err := api.Branding.UpdatePhoneProvider(context.Background(), existingProvider.GetID(), updateProviderRequest)
 	assert.NoError(t, err)
-	actualProvider, err := api.Branding.ReadPhoneProvider(context.Background(), expectedProvider.GetID())
+
+	actualProvider, err := api.Branding.ReadPhoneProvider(context.Background(), existingProvider.GetID())
 	assert.NoError(t, err)
-	assert.Equal(t, expectedProvider, actualProvider)
+
+	// Update the updateProviderRequest's Credentials to nil as the API doesn't return the credentials in the response.
+	updateProviderRequest.Credentials = nil
+
+	assert.Equal(t, updateProviderRequest, actualProvider)
 }
 
 func TestBrandingManager_DeletePhoneProvider(t *testing.T) {
@@ -229,7 +241,7 @@ func givenAnBrandingPhoneProvider(t *testing.T) *BrandingPhoneProvider {
 			DefaultFrom:     auth0.String("1234567890"),
 			SID:             auth0.String("sid"),
 		},
-		Credentials: BrandingPhoneProviderCredential{
+		Credentials: &BrandingPhoneProviderCredential{
 			AuthToken: auth0.String("auth_token"),
 		},
 	}
@@ -238,7 +250,10 @@ func givenAnBrandingPhoneProvider(t *testing.T) *BrandingPhoneProvider {
 	if err != nil {
 		t.Error(err)
 	}
-	provider.Credentials = BrandingPhoneProviderCredential{}
+
+	// Update the provider's Credentials to nil as the API doesn't return the credentials in the response.
+	provider.Credentials = nil
+
 	t.Cleanup(func() {
 		cleanupBrandingPhoneProvider(t, provider.GetID())
 	})
