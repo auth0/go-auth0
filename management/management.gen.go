@@ -1027,6 +1027,14 @@ func (b *BrandingPhoneProvider) GetConfiguration() *BrandingPhoneProviderConfigu
 	return b.Configuration
 }
 
+// GetCredentials returns the Credentials field.
+func (b *BrandingPhoneProvider) GetCredentials() *BrandingPhoneProviderCredential {
+	if b == nil {
+		return nil
+	}
+	return b.Credentials
+}
+
 // GetDisabled returns the Disabled field if it's non-nil, zero value otherwise.
 func (b *BrandingPhoneProvider) GetDisabled() bool {
 	if b == nil || b.Disabled == nil {
