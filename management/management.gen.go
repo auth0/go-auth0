@@ -7018,6 +7018,106 @@ func (e *EnrollmentTicket) String() string {
 	return Stringify(e)
 }
 
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (e *EventStream) GetCreatedAt() time.Time {
+	if e == nil || e.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *e.CreatedAt
+}
+
+// GetDestination returns the Destination field.
+func (e *EventStream) GetDestination() *EventStreamDestination {
+	if e == nil {
+		return nil
+	}
+	return e.Destination
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (e *EventStream) GetID() string {
+	if e == nil || e.ID == nil {
+		return ""
+	}
+	return *e.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (e *EventStream) GetName() string {
+	if e == nil || e.Name == nil {
+		return ""
+	}
+	return *e.Name
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (e *EventStream) GetStatus() string {
+	if e == nil || e.Status == nil {
+		return ""
+	}
+	return *e.Status
+}
+
+// GetSubscriptions returns the Subscriptions field if it's non-nil, zero value otherwise.
+func (e *EventStream) GetSubscriptions() []EventStreamSubscription {
+	if e == nil || e.Subscriptions == nil {
+		return nil
+	}
+	return *e.Subscriptions
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (e *EventStream) GetUpdatedAt() time.Time {
+	if e == nil || e.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *e.UpdatedAt
+}
+
+// String returns a string representation of EventStream.
+func (e *EventStream) String() string {
+	return Stringify(e)
+}
+
+// GetEventStreamDestinationConfiguration returns the EventStreamDestinationConfiguration map if it's non-nil, an empty map otherwise.
+func (e *EventStreamDestination) GetEventStreamDestinationConfiguration() map[string]interface{} {
+	if e == nil || e.EventStreamDestinationConfiguration == nil {
+		return map[string]interface{}{}
+	}
+	return e.EventStreamDestinationConfiguration
+}
+
+// GetEventStreamDestinationType returns the EventStreamDestinationType field if it's non-nil, zero value otherwise.
+func (e *EventStreamDestination) GetEventStreamDestinationType() string {
+	if e == nil || e.EventStreamDestinationType == nil {
+		return ""
+	}
+	return *e.EventStreamDestinationType
+}
+
+// String returns a string representation of EventStreamDestination.
+func (e *EventStreamDestination) String() string {
+	return Stringify(e)
+}
+
+// String returns a string representation of EventStreamList.
+func (e *EventStreamList) String() string {
+	return Stringify(e)
+}
+
+// GetEventStreamSubscriptionType returns the EventStreamSubscriptionType field if it's non-nil, zero value otherwise.
+func (e *EventStreamSubscription) GetEventStreamSubscriptionType() string {
+	if e == nil || e.EventStreamSubscriptionType == nil {
+		return ""
+	}
+	return *e.EventStreamSubscriptionType
+}
+
+// String returns a string representation of EventStreamSubscription.
+func (e *EventStreamSubscription) String() string {
+	return Stringify(e)
+}
+
 // GetClientEmail returns the ClientEmail field if it's non-nil, zero value otherwise.
 func (f *FirebaseClientAddon) GetClientEmail() string {
 	if f == nil || f.ClientEmail == nil {
