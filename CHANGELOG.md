@@ -1,5 +1,14 @@
 # Change Log
 
+## [v1.16.0](https://github.com/auth0/go-auth0/tree/v1.16.0) (2025-02-06)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.15.0...v1.16.0)
+
+**Added**
+- Add Support For Event Streams with `EventStreamManager` [\#496](https://github.com/auth0/go-auth0/pull/496) ([duedares-rvj](https://github.com/duedares-rvj))
+- Add Support For Global Token Revocation To SAML Connections in `ConnectionManager` [\#491](https://github.com/auth0/go-auth0/pull/491) ([developerkunal](https://github.com/developerkunal))
+- Add Support For `Sign in With Google For Native Apps` in `ClientManager` [\#493](https://github.com/auth0/go-auth0/pull/493) ([developerkunal](https://github.com/developerkunal))
+- Add support for setting `captcha_widget_theme` in `BrandingTheme` Struct in `BrandingThemeManager` [\#492](https://github.com/auth0/go-auth0/pull/492) ([duedares-rvj](https://github.com/duedares-rvj))
+
 ## [v1.15.0](https://github.com/auth0/go-auth0/tree/v1.15.0) (2025-01-29)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.14.0...v1.15.0)
 
