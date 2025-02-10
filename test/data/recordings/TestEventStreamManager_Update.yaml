@@ -1,0 +1,180 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 221
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"eventbridge-example","subscriptions":[{"event_type":"user.created"},{"event_type":"user.deleted"}],"destination":{"type":"eventbridge","configuration":{"aws_account_id":"242109005777","aws_region":"us-east-2"}}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.15.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 499
+        uncompressed: false
+        body: '{"id":"est_5xvyCzrNF2LvonxHsvYUoU","status":"disabled","name":"eventbridge-example","subscriptions":[{"event_type":"user.created"},{"event_type":"user.deleted"}],"created_at":"2025-02-04T07:17:09.867Z","updated_at":"2025-02-04T07:17:09.867Z","destination":{"type":"eventbridge","configuration":{"aws_region":"us-east-2","aws_account_id":"242109005777","aws_partner_event_source":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-4dfa0cd9-06c5-4f03-9984-0f427fde6769/auth0.events"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 1.221146875s
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 98
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"status":"enabled","name":"updated-stream-name","subscriptions":[{"event_type":"user.created"}]}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.15.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_5xvyCzrNF2LvonxHsvYUoU
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"id":"est_5xvyCzrNF2LvonxHsvYUoU","status":"enabled","name":"updated-stream-name","subscriptions":[{"event_type":"user.created"}],"created_at":"2025-02-04T07:17:09.867Z","updated_at":"2025-02-04T07:17:10.262Z","destination":{"type":"eventbridge","configuration":{"aws_region":"us-east-2","aws_account_id":"242109005777","aws_partner_event_source":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-4dfa0cd9-06c5-4f03-9984-0f427fde6769/auth0.events"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 397.751541ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.15.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_5xvyCzrNF2LvonxHsvYUoU
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"id":"est_5xvyCzrNF2LvonxHsvYUoU","status":"enabled","name":"updated-stream-name","subscriptions":[{"event_type":"user.created"}],"created_at":"2025-02-04T07:17:09.867Z","updated_at":"2025-02-04T07:17:10.262Z","destination":{"type":"eventbridge","configuration":{"aws_region":"us-east-2","aws_account_id":"242109005777","aws_partner_event_source":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-4dfa0cd9-06c5-4f03-9984-0f427fde6769/auth0.events"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 493.799625ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.15.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_5xvyCzrNF2LvonxHsvYUoU
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 487.4725ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.15.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_5xvyCzrNF2LvonxHsvYUoU
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 476.982917ms
