@@ -174,9 +174,9 @@ func TestBrandingManager_TryPhoneProvider(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestBrandingManager_ReadPhoneNotificationTemplates(t *testing.T) {
+func TestBrandingManager_ListPhoneNotificationTemplate(t *testing.T) {
 	configureHTTPTestRecordings(t)
-	templates, err := api.Branding.ReadPhoneNotificationTemplates(context.Background())
+	templates, err := api.Branding.ListPhoneNotificationTemplate(context.Background())
 	assert.NoError(t, err)
 	assert.NotEmpty(t, templates)
 	assert.Greater(t, len(templates.Templates), 0)

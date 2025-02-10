@@ -358,10 +358,10 @@ func (m *BrandingManager) TryPhoneProvider(ctx context.Context, id string, provi
 	return m.management.Request(ctx, "POST", m.management.URI("branding", "phone", "providers", id, "try"), provider, opts...)
 }
 
-// ReadPhoneNotificationTemplates retrieves a list of phone notification templates.
+// ListPhoneNotificationTemplate retrieves a list of phone notification templates.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/get-phone-templates
-func (m *BrandingManager) ReadPhoneNotificationTemplates(ctx context.Context, opts ...RequestOption) (pnts *BrandingPhoneNotificationTemplateList, err error) {
+func (m *BrandingManager) ListPhoneNotificationTemplate(ctx context.Context, opts ...RequestOption) (pnts *BrandingPhoneNotificationTemplateList, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("branding", "phone", "templates"), &pnts, opts...)
 	return
 }
