@@ -1012,6 +1012,122 @@ func (b *BrandingPageBackgroundGradient) String() string {
 }
 
 // GetChannel returns the Channel field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplate) GetChannel() string {
+	if b == nil || b.Channel == nil {
+		return ""
+	}
+	return *b.Channel
+}
+
+// GetContent returns the Content field.
+func (b *BrandingPhoneNotificationTemplate) GetContent() *BrandingPhoneNotificationTemplateContent {
+	if b == nil {
+		return nil
+	}
+	return b.Content
+}
+
+// GetCustomizable returns the Customizable field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplate) GetCustomizable() bool {
+	if b == nil || b.Customizable == nil {
+		return false
+	}
+	return *b.Customizable
+}
+
+// GetDisabled returns the Disabled field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplate) GetDisabled() bool {
+	if b == nil || b.Disabled == nil {
+		return false
+	}
+	return *b.Disabled
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplate) GetID() string {
+	if b == nil || b.ID == nil {
+		return ""
+	}
+	return *b.ID
+}
+
+// GetTenant returns the Tenant field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplate) GetTenant() string {
+	if b == nil || b.Tenant == nil {
+		return ""
+	}
+	return *b.Tenant
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplate) GetType() string {
+	if b == nil || b.Type == nil {
+		return ""
+	}
+	return *b.Type
+}
+
+// String returns a string representation of BrandingPhoneNotificationTemplate.
+func (b *BrandingPhoneNotificationTemplate) String() string {
+	return Stringify(b)
+}
+
+// GetBody returns the Body field.
+func (b *BrandingPhoneNotificationTemplateContent) GetBody() *BrandingPhoneNotificationTemplateContentBody {
+	if b == nil {
+		return nil
+	}
+	return b.Body
+}
+
+// GetFrom returns the From field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplateContent) GetFrom() string {
+	if b == nil || b.From == nil {
+		return ""
+	}
+	return *b.From
+}
+
+// GetSyntax returns the Syntax field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplateContent) GetSyntax() string {
+	if b == nil || b.Syntax == nil {
+		return ""
+	}
+	return *b.Syntax
+}
+
+// String returns a string representation of BrandingPhoneNotificationTemplateContent.
+func (b *BrandingPhoneNotificationTemplateContent) String() string {
+	return Stringify(b)
+}
+
+// GetText returns the Text field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplateContentBody) GetText() string {
+	if b == nil || b.Text == nil {
+		return ""
+	}
+	return *b.Text
+}
+
+// GetVoice returns the Voice field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplateContentBody) GetVoice() string {
+	if b == nil || b.Voice == nil {
+		return ""
+	}
+	return *b.Voice
+}
+
+// String returns a string representation of BrandingPhoneNotificationTemplateContentBody.
+func (b *BrandingPhoneNotificationTemplateContentBody) String() string {
+	return Stringify(b)
+}
+
+// String returns a string representation of BrandingPhoneNotificationTemplateList.
+func (b *BrandingPhoneNotificationTemplateList) String() string {
+	return Stringify(b)
+}
+
+// GetChannel returns the Channel field if it's non-nil, zero value otherwise.
 func (b *BrandingPhoneProvider) GetChannel() string {
 	if b == nil || b.Channel == nil {
 		return ""
@@ -1204,6 +1320,72 @@ func (b *BrandingThemeText) String() string {
 
 // String returns a string representation of BrandingThemeWidget.
 func (b *BrandingThemeWidget) String() string {
+	return Stringify(b)
+}
+
+// GetDeliveryMethod returns the DeliveryMethod field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneNotificationTemplate) GetDeliveryMethod() string {
+	if b == nil || b.DeliveryMethod == nil {
+		return ""
+	}
+	return *b.DeliveryMethod
+}
+
+// GetMessage returns the Message field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneNotificationTemplate) GetMessage() string {
+	if b == nil || b.Message == nil {
+		return ""
+	}
+	return *b.Message
+}
+
+// GetTo returns the To field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneNotificationTemplate) GetTo() string {
+	if b == nil || b.To == nil {
+		return ""
+	}
+	return *b.To
+}
+
+// String returns a string representation of BrandingTryPhoneNotificationTemplate.
+func (b *BrandingTryPhoneNotificationTemplate) String() string {
+	return Stringify(b)
+}
+
+// GetCode returns the Code field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneProvider) GetCode() int {
+	if b == nil || b.Code == nil {
+		return 0
+	}
+	return *b.Code
+}
+
+// GetDeliveryMethod returns the DeliveryMethod field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneProvider) GetDeliveryMethod() string {
+	if b == nil || b.DeliveryMethod == nil {
+		return ""
+	}
+	return *b.DeliveryMethod
+}
+
+// GetMessage returns the Message field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneProvider) GetMessage() string {
+	if b == nil || b.Message == nil {
+		return ""
+	}
+	return *b.Message
+}
+
+// GetTo returns the To field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneProvider) GetTo() string {
+	if b == nil || b.To == nil {
+		return ""
+	}
+	return *b.To
+}
+
+// String returns a string representation of BrandingTryPhoneProvider.
+func (b *BrandingTryPhoneProvider) String() string {
 	return Stringify(b)
 }
 

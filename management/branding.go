@@ -66,6 +66,51 @@ type BrandingPhoneProvider struct {
 	Credentials   *BrandingPhoneProviderCredential    `json:"credentials,omitempty"`
 }
 
+// BrandingTryPhoneProvider is used to test a phone provider.
+type BrandingTryPhoneProvider struct {
+	To             *string `json:"to,omitempty"`
+	DeliveryMethod *string `json:"delivery_method,omitempty"`
+	Code           *int    `json:"code,omitempty"`
+	Message        *string `json:"message,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaler interface.
+//
+// It is required to handle the json field credentials, which can either
+// be a JSON object, or null.
+func (b *BrandingTryPhoneProvider) MarshalJSON() ([]byte, error) {
+	type BrandingTryPhoneProviderSubset struct {
+		To             *string `json:"to,omitempty"`
+		DeliveryMethod *string `json:"delivery_method,omitempty"`
+	}
+	return json.Marshal(&BrandingTryPhoneProviderSubset{
+		To:             b.To,
+		DeliveryMethod: b.DeliveryMethod,
+	})
+}
+
+// BrandingTryPhoneNotificationTemplate is used to test a phone notification template.
+type BrandingTryPhoneNotificationTemplate struct {
+	To             *string `json:"to,omitempty"`
+	DeliveryMethod *string `json:"delivery_method,omitempty"`
+	Message        *string `json:"message,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaler interface.
+//
+// It is required to handle the json field credentials, which can either
+// be a JSON object, or null.
+func (b *BrandingTryPhoneNotificationTemplate) MarshalJSON() ([]byte, error) {
+	type BrandingTryPhoneNotificationTemplateSubset struct {
+		To             *string `json:"to,omitempty"`
+		DeliveryMethod *string `json:"delivery_method,omitempty"`
+	}
+	return json.Marshal(&BrandingTryPhoneNotificationTemplateSubset{
+		To:             b.To,
+		DeliveryMethod: b.DeliveryMethod,
+	})
+}
+
 // BrandingPhoneProviderCredential represents the credentials for a phone provider.
 type BrandingPhoneProviderCredential struct {
 	AuthToken *string `json:"auth_token,omitempty"`
@@ -82,6 +127,49 @@ type BrandingPhoneProviderConfiguration struct {
 // BrandingPhoneProviderCustomConfiguration is used to configure a custom phone provider.
 type BrandingPhoneProviderCustomConfiguration struct {
 	DeliveryMethods *[]string `json:"delivery_methods,omitempty"`
+}
+
+// BrandingPhoneNotificationTemplateList is list of BrandingPhoneNotificationTemplate.
+type BrandingPhoneNotificationTemplateList struct {
+	Templates []*BrandingPhoneNotificationTemplate `json:"templates,omitempty"`
+}
+
+// BrandingPhoneNotificationTemplate is used to customize the phone notification template.
+type BrandingPhoneNotificationTemplate struct {
+	ID           *string                                   `json:"id,omitempty"`
+	Channel      *string                                   `json:"channel,omitempty"`
+	Tenant       *string                                   `json:"tenant,omitempty"`
+	Customizable *bool                                     `json:"customizable,omitempty"`
+	Content      *BrandingPhoneNotificationTemplateContent `json:"content,omitempty"`
+	Type         *string                                   `json:"type,omitempty"`
+	Disabled     *bool                                     `json:"disabled,omitempty"`
+}
+
+// BrandingPhoneNotificationTemplateContent is used to customize the phone notification template content.
+type BrandingPhoneNotificationTemplateContent struct {
+	Syntax *string                                       `json:"syntax,omitempty"`
+	From   *string                                       `json:"from,omitempty"`
+	Body   *BrandingPhoneNotificationTemplateContentBody `json:"body,omitempty"`
+}
+
+// BrandingPhoneNotificationTemplateContentBody is used to customize the phone notification template content body.
+type BrandingPhoneNotificationTemplateContentBody struct {
+	Text  *string `json:"text,omitempty"`
+	Voice *string `json:"voice,omitempty"`
+}
+
+func (bpnt *BrandingPhoneNotificationTemplate) reset(method string) {
+	bpnt.ID = nil
+	bpnt.Channel = nil
+	bpnt.Tenant = nil
+	bpnt.Customizable = nil
+
+	switch method {
+	case "update":
+		bpnt.Type = nil
+		bpnt.Content.Syntax = nil
+	default:
+	}
 }
 
 // MarshalJSON implements the json.Marshaler interface.
@@ -261,4 +349,64 @@ func (m *BrandingManager) DeletePhoneProvider(ctx context.Context, id string, op
 // See: https://auth0.com/docs/api/management/v2#!/Branding/update-phone-provider
 func (m *BrandingManager) UpdatePhoneProvider(ctx context.Context, id string, pp *BrandingPhoneProvider, opts ...RequestOption) (err error) {
 	return m.management.Request(ctx, "PATCH", m.management.URI("branding", "phone", "providers", id), pp, opts...)
+}
+
+// TryPhoneProvider sends a test message to a phone provider for a Tenant.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/try-phone-providerto
+func (m *BrandingManager) TryPhoneProvider(ctx context.Context, id string, provider *BrandingTryPhoneProvider, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "POST", m.management.URI("branding", "phone", "providers", id, "try"), provider, opts...)
+}
+
+// ReadPhoneNotificationTemplates retrieves a list of phone notification templates.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/get-phone-templates
+func (m *BrandingManager) ReadPhoneNotificationTemplates(ctx context.Context, opts ...RequestOption) (pnts *BrandingPhoneNotificationTemplateList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("branding", "phone", "templates"), &pnts, opts...)
+	return
+}
+
+// ReadPhoneNotificationTemplate retrieves a phone notification template.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/get-phone-template
+func (m *BrandingManager) ReadPhoneNotificationTemplate(ctx context.Context, id string, opts ...RequestOption) (pnt *BrandingPhoneNotificationTemplate, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("branding", "phone", "templates", id), &pnt, opts...)
+	return
+}
+
+// UpdatePhoneNotificationTemplate updates a phone notification template.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/update-phone-template
+func (m *BrandingManager) UpdatePhoneNotificationTemplate(ctx context.Context, id string, pp *BrandingPhoneNotificationTemplate, opts ...RequestOption) (err error) {
+	pp.reset("update")
+	return m.management.Request(ctx, "PATCH", m.management.URI("branding", "phone", "templates", id), pp, opts...)
+}
+
+// CreatePhoneNotificationTemplate creates a phone notification template.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/create-phone-template
+func (m *BrandingManager) CreatePhoneNotificationTemplate(ctx context.Context, pp *BrandingPhoneNotificationTemplate, opts ...RequestOption) (err error) {
+	pp.reset("create")
+	return m.management.Request(ctx, "POST", m.management.URI("branding", "phone", "templates"), pp, opts...)
+}
+
+// DeletePhoneNotificationTemplate deletes a phone notification template.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/delete-phone-template
+func (m *BrandingManager) DeletePhoneNotificationTemplate(ctx context.Context, id string, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "DELETE", m.management.URI("branding", "phone", "templates", id), nil, opts...)
+}
+
+// ResetPhoneNotificationTemplate resets a phone notification template.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/reset-phone-template
+func (m *BrandingManager) ResetPhoneNotificationTemplate(ctx context.Context, id string, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "PATCH", m.management.URI("branding", "phone", "templates", id, "reset"), nil, opts...)
+}
+
+// TryPhoneNotificationTemplate sends a test message to a phone notification template.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Branding/try-phone-template
+func (m *BrandingManager) TryPhoneNotificationTemplate(ctx context.Context, id string, template *BrandingTryPhoneNotificationTemplate, opts ...RequestOption) (err error) {
+	return m.management.Request(ctx, "POST", m.management.URI("branding", "phone", "templates", id, "try"), template, opts...)
 }

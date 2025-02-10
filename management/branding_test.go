@@ -161,6 +161,108 @@ func TestBrandingManager_DeletePhoneProvider(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+func TestBrandingManager_TryPhoneProvider(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedProvider := givenAnBrandingPhoneProvider(t)
+
+	expectedProviderTest := &BrandingTryPhoneProvider{
+		To:             auth0.String("911234567890"),
+		DeliveryMethod: auth0.String("text"),
+	}
+
+	err := api.Branding.TryPhoneProvider(context.Background(), expectedProvider.GetID(), expectedProviderTest)
+	assert.NoError(t, err)
+}
+
+func TestBrandingManager_ReadPhoneNotificationTemplates(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	templates, err := api.Branding.ReadPhoneNotificationTemplates(context.Background())
+	assert.NoError(t, err)
+	assert.NotEmpty(t, templates)
+	assert.Greater(t, len(templates.Templates), 0)
+}
+
+func TestBrandingManager_ReadPhoneNotificationTemplate(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedTemplate := givenABrandingPhoneNotificationTemplate(t)
+
+	actualTemplate, err := api.Branding.ReadPhoneNotificationTemplate(context.Background(), expectedTemplate.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedTemplate, actualTemplate)
+}
+
+func TestBrandingManager_CreatePhoneNotificationTemplate(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedTemplate := &BrandingPhoneNotificationTemplate{
+		Type: auth0.String("change_password"),
+		Content: &BrandingPhoneNotificationTemplateContent{
+			Syntax: auth0.String("liquid"),
+			Body: &BrandingPhoneNotificationTemplateContentBody{
+				Text:  auth0.String("We Detected a security breach in your account. Please reset your password. {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}."),
+				Voice: auth0.String("We Detected a security breach in your account. Please reset your password. {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}."),
+			},
+			From: auth0.String("1234567890"),
+		},
+		Disabled: auth0.Bool(false),
+	}
+
+	err := api.Branding.CreatePhoneNotificationTemplate(context.Background(), expectedTemplate)
+	assert.NoError(t, err)
+
+	actualTemplate, err := api.Branding.ReadPhoneNotificationTemplate(context.Background(), expectedTemplate.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedTemplate, actualTemplate)
+
+	t.Cleanup(func() {
+		cleanupBrandingPhoneTemplate(t, expectedTemplate.GetID())
+	})
+}
+
+func TestBrandingManager_UpdatePhoneNotificationTemplate(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedTemplate := givenABrandingPhoneNotificationTemplate(t)
+
+	expectedTemplate.Content.Body.Text = auth0.String("We Detected a security breach in your account. Please reset your password. {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}.")
+	expectedTemplate.Content.Body.Voice = auth0.String("We Detected a security breach in your account. Please reset your password. {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}.")
+	expectedTemplate.Disabled = auth0.Bool(true)
+	err := api.Branding.UpdatePhoneNotificationTemplate(context.Background(), expectedTemplate.GetID(), expectedTemplate)
+	assert.NoError(t, err)
+
+	actualTemplate, err := api.Branding.ReadPhoneNotificationTemplate(context.Background(), expectedTemplate.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedTemplate, actualTemplate)
+}
+
+func TestBrandingManager_ResetPhoneNotificationTemplate(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedTemplate := givenABrandingPhoneNotificationTemplate(t)
+
+	err := api.Branding.ResetPhoneNotificationTemplate(context.Background(), expectedTemplate.GetID())
+	assert.NoError(t, err)
+}
+
+func TestBrandingManager_DeletePhoneNotificationTemplate(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedTemplate := givenABrandingPhoneNotificationTemplate(t)
+
+	err := api.Branding.DeletePhoneNotificationTemplate(context.Background(), expectedTemplate.GetID())
+	assert.NoError(t, err)
+}
+
+func TestBrandingManager_TryPhoneNotificationTemplate(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	expectedTemplate := givenABrandingPhoneNotificationTemplate(t)
+
+	expectedTemplateTest := &BrandingTryPhoneNotificationTemplate{
+		To:             auth0.String("911234567890"),
+		DeliveryMethod: auth0.String("text"),
+	}
+
+	err := api.Branding.TryPhoneNotificationTemplate(context.Background(), expectedTemplate.GetID(), expectedTemplateTest)
+	assert.NoError(t, err)
+}
+
 func TestBrandingColors(t *testing.T) {
 	var testCases = []struct {
 		name   string
@@ -260,10 +362,47 @@ func givenAnBrandingPhoneProvider(t *testing.T) *BrandingPhoneProvider {
 	return provider
 }
 
+func givenABrandingPhoneNotificationTemplate(t *testing.T) *BrandingPhoneNotificationTemplate {
+	t.Helper()
+
+	template := &BrandingPhoneNotificationTemplate{
+		Type: auth0.String("otp_verify"),
+		Content: &BrandingPhoneNotificationTemplateContent{
+			Syntax: auth0.String("liquid"),
+			Body: &BrandingPhoneNotificationTemplateContentBody{
+				Text:  auth0.String("We Detected a security breach in your account. Please reset your password. {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}."),
+				Voice: auth0.String("We Detected a security breach in your account. Please reset your password. {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}."),
+			},
+			From: auth0.String("1234567890"),
+		},
+		Disabled: auth0.Bool(false),
+	}
+
+	err := api.Branding.CreatePhoneNotificationTemplate(context.Background(), template)
+	if err != nil {
+		t.Error(err)
+	}
+	t.Cleanup(func() {
+		cleanupBrandingPhoneTemplate(t, template.GetID())
+	})
+	return template
+}
+
 func cleanupBrandingPhoneProvider(t *testing.T, providerID string) {
 	t.Helper()
 
 	err := api.Branding.DeletePhoneProvider(context.Background(), providerID)
+	if err != nil {
+		if err.(Error).Status() != http.StatusNotFound {
+			t.Error(err)
+		}
+	}
+}
+
+func cleanupBrandingPhoneTemplate(t *testing.T, templateID string) {
+	t.Helper()
+
+	err := api.Branding.DeletePhoneNotificationTemplate(context.Background(), templateID)
 	if err != nil {
 		if err.(Error).Status() != http.StatusNotFound {
 			t.Error(err)
