@@ -10733,6 +10733,274 @@ func TestMultiFactorWebAuthnSettings_String(t *testing.T) {
 	}
 }
 
+func TestNetworkACL_GetActive(tt *testing.T) {
+	var zeroValue bool
+	n := &NetworkACL{Active: &zeroValue}
+	n.GetActive()
+	n = &NetworkACL{}
+	n.GetActive()
+	n = nil
+	n.GetActive()
+}
+
+func TestNetworkACL_GetCreatedAt(tt *testing.T) {
+	var zeroValue string
+	n := &NetworkACL{CreatedAt: &zeroValue}
+	n.GetCreatedAt()
+	n = &NetworkACL{}
+	n.GetCreatedAt()
+	n = nil
+	n.GetCreatedAt()
+}
+
+func TestNetworkACL_GetDescription(tt *testing.T) {
+	var zeroValue string
+	n := &NetworkACL{Description: &zeroValue}
+	n.GetDescription()
+	n = &NetworkACL{}
+	n.GetDescription()
+	n = nil
+	n.GetDescription()
+}
+
+func TestNetworkACL_GetID(tt *testing.T) {
+	var zeroValue string
+	n := &NetworkACL{ID: &zeroValue}
+	n.GetID()
+	n = &NetworkACL{}
+	n.GetID()
+	n = nil
+	n.GetID()
+}
+
+func TestNetworkACL_GetPriority(tt *testing.T) {
+	var zeroValue int
+	n := &NetworkACL{Priority: &zeroValue}
+	n.GetPriority()
+	n = &NetworkACL{}
+	n.GetPriority()
+	n = nil
+	n.GetPriority()
+}
+
+func TestNetworkACL_GetRule(tt *testing.T) {
+	n := &NetworkACL{}
+	n.GetRule()
+	n = nil
+	n.GetRule()
+}
+
+func TestNetworkACL_GetUpdatedAt(tt *testing.T) {
+	var zeroValue string
+	n := &NetworkACL{UpdatedAt: &zeroValue}
+	n.GetUpdatedAt()
+	n = &NetworkACL{}
+	n.GetUpdatedAt()
+	n = nil
+	n.GetUpdatedAt()
+}
+
+func TestNetworkACL_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &NetworkACL{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestNetworkACLList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &NetworkACLList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestNetworkACLRule_GetAction(tt *testing.T) {
+	n := &NetworkACLRule{}
+	n.GetAction()
+	n = nil
+	n.GetAction()
+}
+
+func TestNetworkACLRule_GetMatch(tt *testing.T) {
+	n := &NetworkACLRule{}
+	n.GetMatch()
+	n = nil
+	n.GetMatch()
+}
+
+func TestNetworkACLRule_GetNotMatch(tt *testing.T) {
+	n := &NetworkACLRule{}
+	n.GetNotMatch()
+	n = nil
+	n.GetNotMatch()
+}
+
+func TestNetworkACLRule_GetScope(tt *testing.T) {
+	var zeroValue string
+	n := &NetworkACLRule{Scope: &zeroValue}
+	n.GetScope()
+	n = &NetworkACLRule{}
+	n.GetScope()
+	n = nil
+	n.GetScope()
+}
+
+func TestNetworkACLRule_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &NetworkACLRule{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestNetworkACLRuleAction_GetAllow(tt *testing.T) {
+	var zeroValue bool
+	n := &NetworkACLRuleAction{Allow: &zeroValue}
+	n.GetAllow()
+	n = &NetworkACLRuleAction{}
+	n.GetAllow()
+	n = nil
+	n.GetAllow()
+}
+
+func TestNetworkACLRuleAction_GetBlock(tt *testing.T) {
+	var zeroValue bool
+	n := &NetworkACLRuleAction{Block: &zeroValue}
+	n.GetBlock()
+	n = &NetworkACLRuleAction{}
+	n.GetBlock()
+	n = nil
+	n.GetBlock()
+}
+
+func TestNetworkACLRuleAction_GetLog(tt *testing.T) {
+	var zeroValue bool
+	n := &NetworkACLRuleAction{Log: &zeroValue}
+	n.GetLog()
+	n = &NetworkACLRuleAction{}
+	n.GetLog()
+	n = nil
+	n.GetLog()
+}
+
+func TestNetworkACLRuleAction_GetRedirect(tt *testing.T) {
+	var zeroValue bool
+	n := &NetworkACLRuleAction{Redirect: &zeroValue}
+	n.GetRedirect()
+	n = &NetworkACLRuleAction{}
+	n.GetRedirect()
+	n = nil
+	n.GetRedirect()
+}
+
+func TestNetworkACLRuleAction_GetRedirectURI(tt *testing.T) {
+	var zeroValue string
+	n := &NetworkACLRuleAction{RedirectURI: &zeroValue}
+	n.GetRedirectURI()
+	n = &NetworkACLRuleAction{}
+	n.GetRedirectURI()
+	n = nil
+	n.GetRedirectURI()
+}
+
+func TestNetworkACLRuleAction_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &NetworkACLRuleAction{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestNetworkACLRuleMatch_GetAnonymousProxy(tt *testing.T) {
+	var zeroValue bool
+	n := &NetworkACLRuleMatch{AnonymousProxy: &zeroValue}
+	n.GetAnonymousProxy()
+	n = &NetworkACLRuleMatch{}
+	n.GetAnonymousProxy()
+	n = nil
+	n.GetAnonymousProxy()
+}
+
+func TestNetworkACLRuleMatch_GetGeoCountryCodes(tt *testing.T) {
+	var zeroValue []string
+	n := &NetworkACLRuleMatch{GeoCountryCodes: &zeroValue}
+	n.GetGeoCountryCodes()
+	n = &NetworkACLRuleMatch{}
+	n.GetGeoCountryCodes()
+	n = nil
+	n.GetGeoCountryCodes()
+}
+
+func TestNetworkACLRuleMatch_GetGeoSubdivisionCodes(tt *testing.T) {
+	var zeroValue []string
+	n := &NetworkACLRuleMatch{GeoSubdivisionCodes: &zeroValue}
+	n.GetGeoSubdivisionCodes()
+	n = &NetworkACLRuleMatch{}
+	n.GetGeoSubdivisionCodes()
+	n = nil
+	n.GetGeoSubdivisionCodes()
+}
+
+func TestNetworkACLRuleMatch_GetIPv4Cidrs(tt *testing.T) {
+	var zeroValue []string
+	n := &NetworkACLRuleMatch{IPv4Cidrs: &zeroValue}
+	n.GetIPv4Cidrs()
+	n = &NetworkACLRuleMatch{}
+	n.GetIPv4Cidrs()
+	n = nil
+	n.GetIPv4Cidrs()
+}
+
+func TestNetworkACLRuleMatch_GetIPv6Cidrs(tt *testing.T) {
+	var zeroValue []string
+	n := &NetworkACLRuleMatch{IPv6Cidrs: &zeroValue}
+	n.GetIPv6Cidrs()
+	n = &NetworkACLRuleMatch{}
+	n.GetIPv6Cidrs()
+	n = nil
+	n.GetIPv6Cidrs()
+}
+
+func TestNetworkACLRuleMatch_GetJa3Fingerprints(tt *testing.T) {
+	var zeroValue []string
+	n := &NetworkACLRuleMatch{Ja3Fingerprints: &zeroValue}
+	n.GetJa3Fingerprints()
+	n = &NetworkACLRuleMatch{}
+	n.GetJa3Fingerprints()
+	n = nil
+	n.GetJa3Fingerprints()
+}
+
+func TestNetworkACLRuleMatch_GetJa4Fingerprints(tt *testing.T) {
+	var zeroValue []string
+	n := &NetworkACLRuleMatch{Ja4Fingerprints: &zeroValue}
+	n.GetJa4Fingerprints()
+	n = &NetworkACLRuleMatch{}
+	n.GetJa4Fingerprints()
+	n = nil
+	n.GetJa4Fingerprints()
+}
+
+func TestNetworkACLRuleMatch_GetUserAgents(tt *testing.T) {
+	var zeroValue []string
+	n := &NetworkACLRuleMatch{UserAgents: &zeroValue}
+	n.GetUserAgents()
+	n = &NetworkACLRuleMatch{}
+	n.GetUserAgents()
+	n = nil
+	n.GetUserAgents()
+}
+
+func TestNetworkACLRuleMatch_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &NetworkACLRuleMatch{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestNewRelicClientAddon_GetAccount(tt *testing.T) {
 	var zeroValue string
 	n := &NewRelicClientAddon{Account: &zeroValue}
