@@ -10808,14 +10808,6 @@ func TestNetworkACL_String(t *testing.T) {
 	}
 }
 
-func TestNetworkACLList_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &NetworkACLList{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestNetworkACLRule_GetAction(tt *testing.T) {
 	n := &NetworkACLRule{}
 	n.GetAction()

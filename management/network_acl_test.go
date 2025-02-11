@@ -42,8 +42,8 @@ func TestNetworkACLManager_List(t *testing.T) {
 	expectedNetworkACL := givenANetworkACL(t)
 	networkACLList, err := api.NetworkACL.List(context.Background())
 	assert.NoError(t, err)
-	assert.Greater(t, len(networkACLList.NetworkACLs), 0)
-	assert.Contains(t, networkACLList.NetworkACLs, expectedNetworkACL)
+	assert.Greater(t, len(networkACLList), 0)
+	assert.Contains(t, networkACLList, expectedNetworkACL)
 }
 
 func TestNetworkACLManager_Read(t *testing.T) {
@@ -78,7 +78,7 @@ func givenANetworkACL(t *testing.T) *NetworkACL {
 	networkACL := &NetworkACL{
 		Description: auth0.String("some-description"),
 		Active:      auth0.Bool(true),
-		Priority:    auth0.Int(1),
+		Priority:    auth0.Int(4),
 		Rule: &NetworkACLRule{
 			Action: &NetworkACLRuleAction{
 				Redirect:    auth0.Bool(true),

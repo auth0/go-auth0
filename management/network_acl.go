@@ -68,12 +68,6 @@ type NetworkACLRuleMatch struct {
 	UserAgents *[]string `json:"user_agents,omitempty"`
 }
 
-// NetworkACLList : Network ACLs
-type NetworkACLList struct {
-	// The Network ACLs
-	NetworkACLs []*NetworkACL `json:"network_acls,omitempty"`
-}
-
 // NetworkACLManager manages Network ACL resources.
 type NetworkACLManager manager
 
@@ -99,7 +93,7 @@ func (m *NetworkACLManager) Delete(ctx context.Context, id string, opts ...Reque
 }
 
 // List all Network ACLs.
-func (m *NetworkACLManager) List(ctx context.Context, opts ...RequestOption) (nl *NetworkACLList, err error) {
+func (m *NetworkACLManager) List(ctx context.Context, opts ...RequestOption) (nl []*NetworkACL, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("network-acls"), &nl, opts...)
 	return
 }

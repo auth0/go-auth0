@@ -8643,11 +8643,6 @@ func (n *NetworkACL) String() string {
 	return Stringify(n)
 }
 
-// String returns a string representation of NetworkACLList.
-func (n *NetworkACLList) String() string {
-	return Stringify(n)
-}
-
 // GetAction returns the Action field.
 func (n *NetworkACLRule) GetAction() *NetworkACLRuleAction {
 	if n == nil {
