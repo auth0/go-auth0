@@ -176,10 +176,12 @@ func TestBrandingManager_TryPhoneProvider(t *testing.T) {
 
 func TestBrandingManager_ListPhoneNotificationTemplate(t *testing.T) {
 	configureHTTPTestRecordings(t)
+	expectedTemplate := givenABrandingPhoneNotificationTemplate(t)
 	templates, err := api.Branding.ListPhoneNotificationTemplate(context.Background())
 	assert.NoError(t, err)
 	assert.NotEmpty(t, templates)
 	assert.Greater(t, len(templates.Templates), 0)
+	assert.Contains(t, templates.Templates, expectedTemplate)
 }
 
 func TestBrandingManager_ReadPhoneNotificationTemplate(t *testing.T) {
