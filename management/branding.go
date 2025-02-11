@@ -124,11 +124,6 @@ type BrandingPhoneProviderConfiguration struct {
 	DeliveryMethods *[]string `json:"delivery_methods,omitempty"`
 }
 
-// BrandingPhoneProviderCustomConfiguration is used to configure a custom phone provider.
-type BrandingPhoneProviderCustomConfiguration struct {
-	DeliveryMethods *[]string `json:"delivery_methods,omitempty"`
-}
-
 // BrandingPhoneNotificationTemplateList is list of BrandingPhoneNotificationTemplate.
 type BrandingPhoneNotificationTemplateList struct {
 	Templates []*BrandingPhoneNotificationTemplate `json:"templates,omitempty"`

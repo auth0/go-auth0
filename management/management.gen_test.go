@@ -1570,24 +1570,6 @@ func TestBrandingPhoneProviderCredential_String(t *testing.T) {
 	}
 }
 
-func TestBrandingPhoneProviderCustomConfiguration_GetDeliveryMethods(tt *testing.T) {
-	var zeroValue []string
-	b := &BrandingPhoneProviderCustomConfiguration{DeliveryMethods: &zeroValue}
-	b.GetDeliveryMethods()
-	b = &BrandingPhoneProviderCustomConfiguration{}
-	b.GetDeliveryMethods()
-	b = nil
-	b.GetDeliveryMethods()
-}
-
-func TestBrandingPhoneProviderCustomConfiguration_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &BrandingPhoneProviderCustomConfiguration{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestBrandingPhoneProviderList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &BrandingPhoneProviderList{}

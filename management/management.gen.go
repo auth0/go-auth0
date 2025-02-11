@@ -1238,19 +1238,6 @@ func (b *BrandingPhoneProviderCredential) String() string {
 	return Stringify(b)
 }
 
-// GetDeliveryMethods returns the DeliveryMethods field if it's non-nil, zero value otherwise.
-func (b *BrandingPhoneProviderCustomConfiguration) GetDeliveryMethods() []string {
-	if b == nil || b.DeliveryMethods == nil {
-		return nil
-	}
-	return *b.DeliveryMethods
-}
-
-// String returns a string representation of BrandingPhoneProviderCustomConfiguration.
-func (b *BrandingPhoneProviderCustomConfiguration) String() string {
-	return Stringify(b)
-}
-
 // String returns a string representation of BrandingPhoneProviderList.
 func (b *BrandingPhoneProviderList) String() string {
 	return Stringify(b)
