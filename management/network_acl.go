@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 )
 
-// NetworkACL : Network ACL
+// NetworkACL : Network ACL.
 type NetworkACL struct {
 	// The id of the Network ACL
 	ID *string `json:"id,omitempty"`
@@ -23,7 +23,7 @@ type NetworkACL struct {
 	UpdatedAt *string `json:"updated_at,omitempty"`
 }
 
-// NetworkACLRule : Network ACL Rule
+// NetworkACLRule : Network ACL Rule.
 type NetworkACLRule struct {
 	// The action of the Network ACL Rule
 	Action *NetworkACLRuleAction `json:"action,omitempty"`
@@ -35,7 +35,7 @@ type NetworkACLRule struct {
 	Scope *string `json:"scope,omitempty"`
 }
 
-// NetworkACLRuleAction : Network ACL Rule Action
+// NetworkACLRuleAction : Network ACL Rule Action.
 type NetworkACLRuleAction struct {
 	// The block of the Network ACL Rule Action
 	Block *bool `json:"block,omitempty"`
@@ -49,7 +49,7 @@ type NetworkACLRuleAction struct {
 	RedirectURI *string `json:"redirect_uri,omitempty"`
 }
 
-// NetworkACLRuleMatch : Network ACL Rule Match
+// NetworkACLRuleMatch : Network ACL Rule Match.
 type NetworkACLRuleMatch struct {
 	// Anonymous Proxy as reported by GeoIP
 	AnonymousProxy *bool `json:"anonymous_proxy,omitempty"`
@@ -104,7 +104,7 @@ func (m *NetworkACLManager) Read(ctx context.Context, id string, opts ...Request
 	return
 }
 
-// Update a Network ACL. its a put
+// Update a Network ACL.
 func (m *NetworkACLManager) Update(ctx context.Context, id string, n *NetworkACL, opts ...RequestOption) (err error) {
 	return m.management.Request(ctx, "PUT", m.management.URI("network-acls", id), n, opts...)
 }
