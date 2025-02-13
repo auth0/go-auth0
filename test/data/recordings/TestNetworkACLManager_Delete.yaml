@@ -1,0 +1,144 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 197
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"description":"some-description","active":true,"priority":1,"rule":{"action":{"redirect":true,"redirect_uri":"https://example.com"},"match":{"geo_country_codes":["US"]},"scope":"authentication"}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/network-acls
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 320
+        uncompressed: false
+        body: '{"id":"a0645fff-ea15-402c-83d2-ef15e10a740c","description":"some-description","active":true,"priority":1,"rule":{"match":{"geo_country_codes":["US"]},"scope":"authentication","action":{"redirect":true,"redirect_uri":"https://example.com"}},"created_at":"2025-02-13T05:59:49.220Z","updated_at":"2025-02-13T05:59:49.220Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 835.034958ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/network-acls/a0645fff-ea15-402c-83d2-ef15e10a740c
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 24
+        uncompressed: false
+        body: '{"code":204,"object":""}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 377.276333ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/network-acls/a0645fff-ea15-402c-83d2-ef15e10a740c
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"statusCode":404,"error":"Not Found","message":"NetworkACL with this ID was not found"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 404 Not Found
+        code: 404
+        duration: 373.160959ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/network-acls/a0645fff-ea15-402c-83d2-ef15e10a740c
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"statusCode":404,"error":"Not Found","message":"NetworkACL with this ID was not found"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 404 Not Found
+        code: 404
+        duration: 371.136041ms

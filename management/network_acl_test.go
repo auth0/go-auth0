@@ -2,10 +2,12 @@ package management
 
 import (
 	"context"
-	"github.com/auth0/go-auth0"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+
+	"github.com/auth0/go-auth0"
 )
 
 func TestNetworkACLManager_Create(t *testing.T) {
@@ -58,6 +60,8 @@ func TestNetworkACLManager_Update(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	networkACL := givenANetworkACL(t)
 	networkACL.Description = auth0.String("updated-description")
+	networkACL.Priority = auth0.Int(2)
+	networkACL.Active = auth0.Bool(false)
 	networkACL.Rule = &NetworkACLRule{
 		Action: &NetworkACLRuleAction{
 			Block: auth0.Bool(true),
@@ -74,11 +78,21 @@ func TestNetworkACLManager_Update(t *testing.T) {
 	assert.Equal(t, networkACL, actualNetworkACL)
 }
 
+func TestNetworkACLManager_Delete(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	networkACL := givenANetworkACL(t)
+	err := api.NetworkACL.Delete(context.Background(), networkACL.GetID())
+	assert.NoError(t, err)
+	_, err = api.NetworkACL.Read(context.Background(), networkACL.GetID())
+	assert.Error(t, err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
+}
+
 func givenANetworkACL(t *testing.T) *NetworkACL {
 	networkACL := &NetworkACL{
 		Description: auth0.String("some-description"),
 		Active:      auth0.Bool(true),
-		Priority:    auth0.Int(4),
+		Priority:    auth0.Int(1),
 		Rule: &NetworkACLRule{
 			Action: &NetworkACLRuleAction{
 				Redirect:    auth0.Bool(true),

@@ -1,6 +1,9 @@
 package management
 
-import "context"
+import (
+	"context"
+	"encoding/json"
+)
 
 // NetworkACL : Network ACL
 type NetworkACL struct {
@@ -66,6 +69,25 @@ type NetworkACLRuleMatch struct {
 	Ja4Fingerprints *[]string `json:"ja4_fingerprints,omitempty"`
 	// User Agents
 	UserAgents *[]string `json:"user_agents,omitempty"`
+}
+
+// MarshalJSON implements the json.Marshaler interface.
+//
+// It is required to handle the json field page_background, which can either
+// be a hex color string, or an object describing a gradient.
+func (n *NetworkACL) MarshalJSON() ([]byte, error) {
+	type networkACLSubset struct {
+		Description *string         `json:"description,omitempty"`
+		Active      *bool           `json:"active,omitempty"`
+		Priority    *int            `json:"priority,omitempty"`
+		Rule        *NetworkACLRule `json:"rule,omitempty"`
+	}
+	return json.Marshal(&networkACLSubset{
+		Description: n.Description,
+		Active:      n.Active,
+		Priority:    n.Priority,
+		Rule:        n.Rule,
+	})
 }
 
 // NetworkACLManager manages Network ACL resources.
