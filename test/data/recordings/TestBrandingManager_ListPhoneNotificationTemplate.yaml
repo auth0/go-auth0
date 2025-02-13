@@ -1,0 +1,109 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 531
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"content":{"syntax":"liquid","from":"1234567890","body":{"text":"We Detected a security breach in your account. Please reset your password. {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}.","voice":"We Detected a security breach in your account. Please reset your password. {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}."}},"type":"otp_verify","disabled":false}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/branding/phone/templates
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 683
+        uncompressed: false
+        body: '{"id":"tem_4AgSVs5KcemmkX2Swf2opZ","tenant":"go-auth0-dev.eu.auth0.com","channel":"phone","type":"otp_verify","disabled":false,"created_at":"2025-02-11T12:07:29.986Z","updated_at":"2025-02-11T12:07:29.986Z","content":{"syntax":"liquid","body":{"text":"We Detected a security breach in your account. Please reset your password. {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}.","voice":"We Detected a security breach in your account. Please reset your password. {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}."},"from":"1234567890"}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 938.972459ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/branding/phone/templates
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"templates":[{"id":"tem_4AgSVs5KcemmkX2Swf2opZ","tenant":"go-auth0-dev.eu.auth0.com","channel":"phone","type":"otp_verify","disabled":false,"created_at":"2025-02-11T12:07:29.986Z","updated_at":"2025-02-11T12:07:29.986Z","content":{"syntax":"liquid","body":{"text":"We Detected a security breach in your account. Please reset your password. {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}.","voice":"We Detected a security breach in your account. Please reset your password. {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}."},"from":"1234567890"}},{"tenant":"go-auth0-dev.eu.auth0.com","channel":"phone","type":"blocked_account","disabled":false,"created_at":"2025-02-11T12:07:30.362Z","updated_at":"2025-02-11T12:07:30.362Z","content":{"syntax":"liquid","body":{"text":"We detected suspicious activity on your account from the ip {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}. Logins from this IP have been blocked on your account. If this is your IP, please reset your password to unblock your account. Otherwise, disregard this message.","voice":"We detected suspicious activity on your account from the ip {{user.source_ip}}{% if user.city %} from {{user.city}}, {{user.country}}{% elsif user.country %} from {{user.country}}{% endif %}. Logins from this IP have been blocked on your account. If this is your IP, please reset your password to unblock your account. Otherwise, disregard this message."},"from":""}},{"tenant":"go-auth0-dev.eu.auth0.com","channel":"phone","type":"change_password","disabled":false,"created_at":"2025-02-11T12:07:30.363Z","updated_at":"2025-02-11T12:07:30.363Z","content":{"syntax":"liquid","body":{"text":"{{ code | escape }} is your password change code for {{ friendly_name | escape }}","voice":"Hello. Your password change code for {{ friendly_name | escape }} is {{ pause }} {{ code | escape }}. I repeat, your password change code is {{ pause }} {{ code | escape }}"},"from":""}},{"tenant":"go-auth0-dev.eu.auth0.com","channel":"phone","type":"otp_enroll","disabled":false,"created_at":"2025-02-11T12:07:30.363Z","updated_at":"2025-02-11T12:07:30.363Z","content":{"syntax":"liquid","body":{"text":"{{ code | escape }} is your verification code for {{ friendly_name | escape }}. Please enter this code to verify your enrollment.","voice":"Hello. Your verification code for {{ friendly_name | escape }} is {{ pause }} {{ code | escape }}. I repeat, your verification code is {{ pause }} {{ code | escape }}"},"from":""}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 376.088542ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/branding/phone/templates/tem_4AgSVs5KcemmkX2Swf2opZ
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 958.914417ms
