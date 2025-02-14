@@ -129,6 +129,7 @@ var allowedPromptsWithPartials = []PromptType{
 	PromptLoginID,
 	PromptLoginPassword,
 	PromptLoginPasswordLess,
+	PromptCustomizedConsent,
 }
 
 // PromptType defines the prompt that we are managing.
