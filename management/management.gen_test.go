@@ -13456,6 +13456,13 @@ func TestSelfServiceProfileTicket_GetConnectionID(tt *testing.T) {
 	s.GetConnectionID()
 }
 
+func TestSelfServiceProfileTicket_GetDomainAliasesConfig(tt *testing.T) {
+	s := &SelfServiceProfileTicket{}
+	s.GetDomainAliasesConfig()
+	s = nil
+	s.GetDomainAliasesConfig()
+}
+
 func TestSelfServiceProfileTicket_GetEnabledClients(tt *testing.T) {
 	var zeroValue []string
 	s := &SelfServiceProfileTicket{EnabledClients: &zeroValue}
@@ -13569,9 +13576,82 @@ func TestSelfServiceProfileTicketConnectionConfigOptions_GetIconURL(tt *testing.
 	s.GetIconURL()
 }
 
+func TestSelfServiceProfileTicketConnectionConfigOptions_GetIDPInitiated(tt *testing.T) {
+	s := &SelfServiceProfileTicketConnectionConfigOptions{}
+	s.GetIDPInitiated()
+	s = nil
+	s.GetIDPInitiated()
+}
+
 func TestSelfServiceProfileTicketConnectionConfigOptions_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SelfServiceProfileTicketConnectionConfigOptions{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileTicketConnectionConfigOptionsIDPInitiated_GetClientAuthorizeURL(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{ClientAuthorizeURL: &zeroValue}
+	s.GetClientAuthorizeURL()
+	s = &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{}
+	s.GetClientAuthorizeURL()
+	s = nil
+	s.GetClientAuthorizeURL()
+}
+
+func TestSelfServiceProfileTicketConnectionConfigOptionsIDPInitiated_GetClientID(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{ClientID: &zeroValue}
+	s.GetClientID()
+	s = &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{}
+	s.GetClientID()
+	s = nil
+	s.GetClientID()
+}
+
+func TestSelfServiceProfileTicketConnectionConfigOptionsIDPInitiated_GetClientProtocol(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{ClientProtocol: &zeroValue}
+	s.GetClientProtocol()
+	s = &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{}
+	s.GetClientProtocol()
+	s = nil
+	s.GetClientProtocol()
+}
+
+func TestSelfServiceProfileTicketConnectionConfigOptionsIDPInitiated_GetEnabled(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{Enabled: &zeroValue}
+	s.GetEnabled()
+	s = &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{}
+	s.GetEnabled()
+	s = nil
+	s.GetEnabled()
+}
+
+func TestSelfServiceProfileTicketConnectionConfigOptionsIDPInitiated_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileTicketDomainAliasesConfig_GetDomainVerification(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfileTicketDomainAliasesConfig{DomainVerification: &zeroValue}
+	s.GetDomainVerification()
+	s = &SelfServiceProfileTicketDomainAliasesConfig{}
+	s.GetDomainVerification()
+	s = nil
+	s.GetDomainVerification()
+}
+
+func TestSelfServiceProfileTicketDomainAliasesConfig_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicketDomainAliasesConfig{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
