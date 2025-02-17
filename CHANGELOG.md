@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.17.0](https://github.com/auth0/go-auth0/tree/v1.17.0) (2025-02-14)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.16.0...v1.17.0)
+
+**Added**
+- Add Support For Extensibility as Custom Provider in `BrandingManager` [\#495](https://github.com/auth0/go-auth0/pull/495) ([developerkunal](https://github.com/developerkunal))
+- Add Support for `form-content` Insertion Point For Prompt Partials in `PromptManager` [\#503](https://github.com/auth0/go-auth0/pull/503) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.16.0](https://github.com/auth0/go-auth0/tree/v1.16.0) (2025-02-06)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.15.0...v1.16.0)
 
