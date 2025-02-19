@@ -8830,6 +8830,19 @@ func (m *MultiFactorPushDirectFCM) String() string {
 	return Stringify(m)
 }
 
+// GetServerCredentials returns the ServerCredentials field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushDirectFCMv1) GetServerCredentials() string {
+	if m == nil || m.ServerCredentials == nil {
+		return ""
+	}
+	return *m.ServerCredentials
+}
+
+// String returns a string representation of MultiFactorPushDirectFCMv1.
+func (m *MultiFactorPushDirectFCMv1) String() string {
+	return Stringify(m)
+}
+
 // GetEnrollmentMessage returns the EnrollmentMessage field if it's non-nil, zero value otherwise.
 func (m *MultiFactorSMSTemplate) GetEnrollmentMessage() string {
 	if m == nil || m.EnrollmentMessage == nil {
