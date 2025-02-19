@@ -370,14 +370,14 @@ func (m *MultiFactorPush) UpdateDirectAPNS(ctx context.Context, sc *MultiFactorP
 
 // UpdateDirectFCM updates the Google FCM provider configuration for direct mode.
 //
-// See: https://auth0.com/docs/api/management/v2#!/Guardian/patch_fcm
+// See: https://auth0.com/docs/api/management/v2#!/Guardian/put-fcm
 func (m *MultiFactorPush) UpdateDirectFCM(ctx context.Context, sc *MultiFactorPushDirectFCM, opts ...RequestOption) error {
 	return m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", "push-notification", "providers", "fcm"), sc, opts...)
 }
 
-// UpdateDirectFCMv1 updates the Google FCM provider configuration for direct mode.
+// UpdateDirectFCMv1 updates the Google FCM provider configuration for direct mode (v1).
 //
-// See: https://auth0.com/docs/api/management/v2#!/Guardian/patch_fcmv-1
+// See: https://auth0.com/docs/api/management/v2#!/Guardian/put-fcmv-1
 func (m *MultiFactorPush) UpdateDirectFCMv1(ctx context.Context, sc *MultiFactorPushDirectFCMv1, opts ...RequestOption) error {
 	return m.management.Request(ctx, "PUT", m.management.URI("guardian", "factors", "push-notification", "providers", "fcmv1"), sc, opts...)
 }
