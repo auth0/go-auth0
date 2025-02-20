@@ -306,6 +306,20 @@ func TestGuardian(t *testing.T) {
 				err = api.Guardian.MultiFactor.Push.UpdateDirectFCM(context.Background(), expectedDirectFCM)
 				assert.NoError(t, err)
 			})
+
+			t.Run("DirectFCMv1", func(t *testing.T) {
+				configureHTTPTestRecordings(t)
+
+				// This is a write only property
+
+				err := error(nil)
+
+				expectedDirectFCMv1 := &MultiFactorPushDirectFCMv1{
+					ServerCredentials: auth0.String("abc123"),
+				}
+				err = api.Guardian.MultiFactor.Push.UpdateDirectFCMv1(context.Background(), expectedDirectFCMv1)
+				assert.NoError(t, err)
+			})
 		})
 
 		t.Run("Email Enable", func(t *testing.T) {

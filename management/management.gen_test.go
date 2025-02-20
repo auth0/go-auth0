@@ -11045,6 +11045,24 @@ func TestMultiFactorPushDirectFCM_String(t *testing.T) {
 	}
 }
 
+func TestMultiFactorPushDirectFCMv1_GetServerCredentials(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorPushDirectFCMv1{ServerCredentials: &zeroValue}
+	m.GetServerCredentials()
+	m = &MultiFactorPushDirectFCMv1{}
+	m.GetServerCredentials()
+	m = nil
+	m.GetServerCredentials()
+}
+
+func TestMultiFactorPushDirectFCMv1_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorPushDirectFCMv1{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestMultiFactorSMSTemplate_GetEnrollmentMessage(tt *testing.T) {
 	var zeroValue string
 	m := &MultiFactorSMSTemplate{EnrollmentMessage: &zeroValue}
