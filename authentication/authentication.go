@@ -340,7 +340,7 @@ func createClientAssertion(clientAssertionSigningAlg, clientAssertionSigningKey,
 		Subject(clientID).
 		JwtID(uuid.New().String()).
 		Issuer(clientID).
-		Audience([]string{domain}).
+		Claim("aud", domain).
 		Expiration(time.Now().Add(2 * time.Minute)).
 		Build()
 	if err != nil {
