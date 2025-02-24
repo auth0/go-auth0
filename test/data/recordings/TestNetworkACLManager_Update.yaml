@@ -1,0 +1,145 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 197
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"description":"some-description","active":true,"priority":1,"rule":{"action":{"redirect":true,"redirect_uri":"https://example.com"},"match":{"geo_country_codes":["US"]},"scope":"authentication"}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/network-acls
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 320
+        uncompressed: false
+        body: '{"id":"90ed85f0-dcf7-4620-9a48-16c2dac0be82","description":"some-description","active":true,"priority":1,"rule":{"match":{"geo_country_codes":["US"]},"scope":"authentication","action":{"redirect":true,"redirect_uri":"https://example.com"}},"created_at":"2025-02-13T05:57:36.617Z","updated_at":"2025-02-13T05:57:36.617Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 371.040541ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 166
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"description":"updated-description","active":false,"priority":2,"rule":{"action":{"block":true},"match":{"geo_country_codes":["US","CA"]},"scope":"authentication"}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/network-acls/90ed85f0-dcf7-4620-9a48-16c2dac0be82
+        method: PUT
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"id":"90ed85f0-dcf7-4620-9a48-16c2dac0be82","description":"updated-description","active":false,"priority":2,"rule":{"match":{"geo_country_codes":["US","CA"]},"scope":"authentication","action":{"block":true}},"created_at":"2025-02-13T05:57:36.617Z","updated_at":"2025-02-13T05:57:37.000Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 380.622458ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/network-acls/90ed85f0-dcf7-4620-9a48-16c2dac0be82
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"id":"90ed85f0-dcf7-4620-9a48-16c2dac0be82","tenant_id":"go-auth0-dev.eu.auth0.com","description":"updated-description","active":false,"priority":2,"rule":{"match":{"geo_country_codes":["US","CA"]},"scope":"authentication","action":{"block":true}},"created_at":"2025-02-13T05:57:36.617Z","updated_at":"2025-02-13T05:57:37.000Z","deleted_at":null}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 359.793083ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/network-acls/90ed85f0-dcf7-4620-9a48-16c2dac0be82
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 24
+        uncompressed: false
+        body: '{"code":204,"object":""}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 341.423916ms
