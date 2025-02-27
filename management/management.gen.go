@@ -11456,6 +11456,14 @@ func (t *Tenant) GetMTLS() *TenantMTLSConfiguration {
 	return t.MTLS
 }
 
+// GetOIDCLogout returns the OIDCLogout field.
+func (t *Tenant) GetOIDCLogout() *TenantOIDCLogout {
+	if t == nil {
+		return nil
+	}
+	return t.OIDCLogout
+}
+
 // GetPictureURL returns the PictureURL field if it's non-nil, zero value otherwise.
 func (t *Tenant) GetPictureURL() string {
 	if t == nil || t.PictureURL == nil {
@@ -11872,6 +11880,19 @@ func (t *TenantMTLSConfiguration) GetEnableEndpointAliases() bool {
 
 // String returns a string representation of TenantMTLSConfiguration.
 func (t *TenantMTLSConfiguration) String() string {
+	return Stringify(t)
+}
+
+// GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery returns the OIDCResourceProviderLogoutEndSessionEndpointDiscovery field if it's non-nil, zero value otherwise.
+func (t *TenantOIDCLogout) GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery() bool {
+	if t == nil || t.OIDCResourceProviderLogoutEndSessionEndpointDiscovery == nil {
+		return false
+	}
+	return *t.OIDCResourceProviderLogoutEndSessionEndpointDiscovery
+}
+
+// String returns a string representation of TenantOIDCLogout.
+func (t *TenantOIDCLogout) String() string {
 	return Stringify(t)
 }
 

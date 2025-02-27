@@ -42,6 +42,9 @@ func TestTenantManager(t *testing.T) {
 		Sessions: &TenantSessions{
 			OIDCLogoutPromptEnabled: auth0.Bool(false),
 		},
+		OIDCLogout: &TenantOIDCLogout{
+			OIDCResourceProviderLogoutEndSessionEndpointDiscovery: auth0.Bool(true),
+		},
 		ACRValuesSupported:                   &[]string{"foo", "bar"},
 		PushedAuthorizationRequestsSupported: auth0.Bool(true),
 		MTLS: &TenantMTLSConfiguration{
