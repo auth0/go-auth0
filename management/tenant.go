@@ -82,6 +82,9 @@ type Tenant struct {
 	// Sessions related settings for the tenant.
 	Sessions *TenantSessions `json:"sessions,omitempty"`
 
+	// OIDC logout related settings for the tenant.
+	OIDCLogout *TenantOIDCLogout `json:"oidc_logout,omitempty"`
+
 	// If `true`, allows accepting an organization name or organization ID on auth endpoints.
 	AllowOrgNameInAuthAPI *bool `json:"allow_organization_name_in_authentication_api,omitempty"`
 
@@ -402,6 +405,12 @@ type TenantSessionCookie struct {
 type TenantSessions struct {
 	// Whether to bypass prompting logic (false) when performing OIDC Logout.
 	OIDCLogoutPromptEnabled *bool `json:"oidc_logout_prompt_enabled,omitempty"`
+}
+
+// TenantOIDCLogout manages OIDC logout related settings for the tenant.
+type TenantOIDCLogout struct {
+	// Enable the end_session_endpoint URL in the .well-known discovery configuration.
+	OIDCResourceProviderLogoutEndSessionEndpointDiscovery *bool `json:"rp_logout_end_session_endpoint_discovery,omitempty"`
 }
 
 // TenantManager manages Auth0 Tenant resources.
