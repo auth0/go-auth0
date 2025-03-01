@@ -128,6 +128,12 @@ func TestSelfServiceProfileManager_CreateAndRevokeTicket(t *testing.T) {
 			Options: &SelfServiceProfileTicketConnectionConfigOptions{
 				IconURL:       auth0.String("https://metabox.com/my_icon.jpeg"),
 				DomainAliases: &[]string{"okta.com"},
+				IDPInitiated: &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{
+					Enabled:            auth0.Bool(true),
+					ClientID:           auth0.String(client.GetClientID()),
+					ClientProtocol:     auth0.String("oauth2"),
+					ClientAuthorizeURL: auth0.String("scope=openid,profile,email"),
+				},
 			},
 		},
 		EnabledClients: &[]string{client.GetClientID()},
@@ -137,6 +143,9 @@ func TestSelfServiceProfileManager_CreateAndRevokeTicket(t *testing.T) {
 				ShowAsButton:            auth0.Bool(true),
 				OrganizationID:          auth0.String(org.GetID()),
 			},
+		},
+		DomainAliasesConfig: &SelfServiceProfileTicketDomainAliasesConfig{
+			DomainVerification: auth0.String("none"),
 		},
 	}
 	err := api.SelfServiceProfile.CreateTicket(context.Background(), ssop.GetID(), ticket)

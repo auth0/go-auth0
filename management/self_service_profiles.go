@@ -69,8 +69,21 @@ type SelfServiceProfileTicket struct {
 
 	TTLSec int `json:"ttl_sec,omitempty"`
 
+	// DomainAliasesConfig is the configuration for domain aliases.
+	// Defines whether Self-Service Domain Verification is none, optional or required.
+	// The object is optional and if not provided it defaults to { domain_verification: ‘none' }.
+	// If the object is provided, domain_verification is required within it.
+	DomainAliasesConfig *SelfServiceProfileTicketDomainAliasesConfig `json:"domain_aliases_config,omitempty"`
+
 	// The ticket that is generated.
 	Ticket *string `json:"ticket,omitempty"`
+}
+
+// SelfServiceProfileTicketDomainAliasesConfig is the configuration for domain aliases.
+type SelfServiceProfileTicketDomainAliasesConfig struct {
+	// Defines whether Self-Service Domain Verification is none, optional or required.
+	// Possible values: [none, optional, required]
+	DomainVerification *string `json:"domain_verification,omitempty"`
 }
 
 // SelfServiceProfileTicketConnectionConfig sets the configuration for SSOTicket.
@@ -83,16 +96,29 @@ type SelfServiceProfileTicketConnectionConfig struct {
 	// created as a part of the SSO flow.
 	DisplayName *string `json:"display_name,omitempty"`
 
-	IsDomainConnection *bool                                            `json:"is_domain_connection,omitempty"`
-	ShowAsButton       *bool                                            `json:"show_as_button,omitempty"`
-	Metadata           *map[string]interface{}                          `json:"metadata,omitempty"`
-	Options            *SelfServiceProfileTicketConnectionConfigOptions `json:"options,omitempty"`
+	IsDomainConnection *bool `json:"is_domain_connection,omitempty"`
+	// ShowAsButton is a flag that determines if the connection should be shown as a button.
+	// If false, the connection will be usable only by HRD.
+	// If true, the connection will be shown as a button in the login page.
+	// The default value is false.
+	ShowAsButton *bool                                            `json:"show_as_button,omitempty"`
+	Metadata     *map[string]interface{}                          `json:"metadata,omitempty"`
+	Options      *SelfServiceProfileTicketConnectionConfigOptions `json:"options,omitempty"`
 }
 
 // SelfServiceProfileTicketConnectionConfigOptions is the list of Options for SSO Ticket.
 type SelfServiceProfileTicketConnectionConfigOptions struct {
-	IconURL       *string   `json:"icon_url,omitempty"`
-	DomainAliases *[]string `json:"domain_aliases,omitempty"`
+	IconURL       *string                                                      `json:"icon_url,omitempty"`
+	DomainAliases *[]string                                                    `json:"domain_aliases,omitempty"`
+	IDPInitiated  *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated `json:"idpinitiated,omitempty"`
+}
+
+// SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated is the list of IDP Initiated Options for SSO Ticket.
+type SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated struct {
+	Enabled            *bool   `json:"enabled,omitempty"`
+	ClientID           *string `json:"client_id,omitempty"`
+	ClientProtocol     *string `json:"client_protocol,omitempty"`
+	ClientAuthorizeURL *string `json:"client_authorizequery,omitempty"`
 }
 
 // SelfServiceProfileTicketEnabledOrganizations is the list of Organizations associated with the SSO Ticket.
