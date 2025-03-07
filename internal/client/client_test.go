@@ -131,7 +131,6 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				t.Log(start.Unix())
 				w.Header().Set("X-RateLimit-Limit", "1")
 				w.Header().Set("X-RateLimit-Remaining", "0")
 				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(2*time.Second).Unix()))
@@ -163,7 +162,6 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				t.Log(start.Unix())
 				w.Header().Set("X-RateLimit-Limit", "1")
 				w.Header().Set("X-RateLimit-Remaining", "0")
 				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(2*time.Hour).Unix()))
@@ -225,7 +223,6 @@ func TestRetries(t *testing.T) {
 		// Use a fixed future time that's safely in the future
 		futureTime := time.Now().Add(2 * time.Second)
 		futureTimeStr := futureTime.Format(time.RFC1123)
-		t.Logf("Using date: %s", futureTimeStr)
 
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
