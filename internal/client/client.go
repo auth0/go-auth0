@@ -173,21 +173,66 @@ func backoffDelay() rehttp.DelayFn {
 			return time.Duration(wait)
 		}
 
-		// Check against the rate limit reset value, if that is longer than use that.
+		// First, check for Retry-After header which is the most reliable
+		// indication of when we can retry (RFC 7231, Section 7.1.3)
+		if retryAfter := attempt.Response.Header.Get("Retry-After"); retryAfter != "" {
+			// Try to parse as seconds (integer value per standard)
+			if seconds, err := strconv.Atoi(retryAfter); err == nil {
+				retryAfterDuration := time.Duration(seconds) * time.Second
+				// Cap to max delay
+				if float64(retryAfterDuration) > maxDelay {
+					return time.Duration(maxDelay)
+				}
+				return retryAfterDuration
+			}
+
+			// Try to parse as HTTP date format using the standard Go HTTP parser
+			// This handles multiple RFC formats
+			if date, err := http.ParseTime(retryAfter); err == nil {
+				// Calculate duration until the future time
+				retryAfterDuration := time.Until(date)
+				
+				// If the parsed time is in the past or too close to now due to clock skew,
+				// use the minimum delay
+				if retryAfterDuration < time.Duration(minDelay) {
+					return time.Duration(minDelay)
+				}
+				
+				// Cap to max delay
+				if float64(retryAfterDuration) > maxDelay {
+					return time.Duration(maxDelay)
+				}
+				
+				return retryAfterDuration
+			}
+
+			// If we couldn't parse the Retry-After value, use the default delay
+			return time.Duration(wait)
+		}
+
+		// Fall back to X-RateLimit-Reset if Retry-After is not available
 		resetAtS := attempt.Response.Header.Get("X-RateLimit-Reset")
 		resetAt, err := strconv.ParseInt(resetAtS, 10, 64)
-
 		if err != nil {
 			return time.Duration(wait)
 		}
 
-		// However don't use that rate limit value if it will take us beyond the max wait time.
-		maxDelayTime := time.Now().Add(time.Duration(maxDelay)).Unix()
-		if resetAt > maxDelayTime {
-			return time.Duration(wait)
+		// Calculate delay from reset timestamp
+		now := time.Now().Unix()
+		delaySeconds := resetAt - now
+
+		// Handle clock skew by ensuring a minimum delay when the
+		// reset time appears to be in the past or too close to current time
+		if delaySeconds <= 0 {
+			return time.Duration(minDelay)
 		}
 
-		return time.Duration(resetAt-time.Now().Unix()) * time.Second
+		// Cap the delay to max delay
+		if float64(delaySeconds)*float64(time.Second) > maxDelay {
+			return time.Duration(maxDelay)
+		}
+
+		return time.Duration(delaySeconds) * time.Second
 	}
 }
 
@@ -209,7 +254,7 @@ func Auth0ClientInfoTransport(base http.RoundTripper, auth0ClientInfo *Auth0Clie
 	}
 
 	auth0ClientJSON, err := json.Marshal(auth0ClientInfo)
-	if err != nil {
+	if (err != nil) {
 		return nil, err
 	}
 
