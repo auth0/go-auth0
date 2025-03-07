@@ -150,7 +150,7 @@ func retryErrors(err error) bool {
 
 // backoffDelay implements an exponential backoff with jitter and handles rate limiting.
 func backoffDelay() rehttp.DelayFn {
-	prng := rand.New(rand.NewSource(time.Now().UnixNano())) // Random generator
+	prng := rand.New(rand.NewSource(time.Now().UnixNano())) // #nosec G404: Random generator
 	const (
 		minDelay  = 250 * time.Millisecond
 		maxDelay  = 10 * time.Second
