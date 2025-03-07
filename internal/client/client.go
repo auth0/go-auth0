@@ -148,91 +148,70 @@ func retryErrors(err error) bool {
 	return true
 }
 
-// backoffDelay implements a DelayFn that is an exponential backoff with jitter
-// and a minimum value.
+// backoffDelay implements an exponential backoff with jitter and handles rate limiting.
 func backoffDelay() rehttp.DelayFn {
-	// Disable gosec lint for as we don't need secure randomness here and the error
-	// handling of an error adds needless complexity.
-	//nolint:gosec
-	PRNG := rand.New(rand.NewSource(time.Now().UnixNano()))
-	minDelay := float64(250 * time.Millisecond)
-	maxDelay := float64(10 * time.Second)
-	baseDelay := float64(250 * time.Millisecond)
+	prng := rand.New(rand.NewSource(time.Now().UnixNano())) // Random generator
+	const (
+		minDelay  = 250 * time.Millisecond
+		maxDelay  = 10 * time.Second
+		baseDelay = 250 * time.Millisecond
+	)
 
 	return func(attempt rehttp.Attempt) time.Duration {
-		wait := baseDelay * math.Pow(2, float64(attempt.Index))
-		minValue := wait + 1
-		maxValue := wait + baseDelay
-		wait = PRNG.Float64()*(maxValue-minValue) + minValue
+		// Calculate exponential backoff with jitter
+		expBackoff := time.Duration(float64(baseDelay) * math.Pow(2, float64(attempt.Index)))
+		jitter := time.Duration(prng.Float64() * float64(baseDelay))
+		wait := expBackoff + jitter
 
-		wait = math.Min(wait, maxDelay)
-		wait = math.Max(wait, minDelay)
-
-		// If we're calculating the delay for anything other than a 429 status code then return now
-		if attempt.Response == nil || attempt.Response.StatusCode != http.StatusTooManyRequests {
-			return time.Duration(wait)
+		// Clamp the delay within min and max bounds
+		if wait < minDelay {
+			wait = minDelay
+		} else if wait > maxDelay {
+			wait = maxDelay
 		}
 
-		// First, check for Retry-After header which is the most reliable
-		// indication of when we can retry (RFC 7231, Section 7.1.3)
+		// If response is nil or not a 429 status, return computed delay
+		if attempt.Response == nil || attempt.Response.StatusCode != http.StatusTooManyRequests {
+			return wait
+		}
+
+		// Check Retry-After header (RFC 7231)
 		if retryAfter := attempt.Response.Header.Get("Retry-After"); retryAfter != "" {
-			// Try to parse as seconds (integer value per standard)
 			if seconds, err := strconv.Atoi(retryAfter); err == nil {
 				retryAfterDuration := time.Duration(seconds) * time.Second
-				// Cap to max delay
-				if float64(retryAfterDuration) > maxDelay {
-					return time.Duration(maxDelay)
+				if retryAfterDuration > maxDelay {
+					return maxDelay
+				}
+				if retryAfterDuration < minDelay {
+					return minDelay
 				}
 				return retryAfterDuration
 			}
-
-			// Try to parse as HTTP date format using the standard Go HTTP parser
-			// This handles multiple RFC formats
 			if date, err := http.ParseTime(retryAfter); err == nil {
-				// Calculate duration until the future time
 				retryAfterDuration := time.Until(date)
-
-				// If the parsed time is in the past or too close to now due to clock skew,
-				// use the minimum delay
-				if retryAfterDuration < time.Duration(minDelay) {
-					return time.Duration(minDelay)
+				if retryAfterDuration > maxDelay {
+					return maxDelay
 				}
-
-				// Cap to max delay
-				if float64(retryAfterDuration) > maxDelay {
-					return time.Duration(maxDelay)
+				if retryAfterDuration < minDelay {
+					return minDelay
 				}
-
 				return retryAfterDuration
 			}
-
-			// If we couldn't parse the Retry-After value, use the default delay
-			return time.Duration(wait)
 		}
 
-		// Fall back to X-RateLimit-Reset if Retry-After is not available
-		resetAtS := attempt.Response.Header.Get("X-RateLimit-Reset")
-		resetAt, err := strconv.ParseInt(resetAtS, 10, 64)
-		if err != nil {
-			return time.Duration(wait)
+		// Fallback to X-RateLimit-Reset if Retry-After is unavailable
+		if resetAt, err := strconv.ParseInt(attempt.Response.Header.Get("X-RateLimit-Reset"), 10, 64); err == nil {
+			delay := time.Duration(resetAt-time.Now().Unix()) * time.Second
+			if delay > maxDelay {
+				return maxDelay
+			}
+			if delay < minDelay {
+				return minDelay
+			}
+			return delay
 		}
 
-		// Calculate delay from reset timestamp
-		now := time.Now().Unix()
-		delaySeconds := resetAt - now
-
-		// Handle clock skew by ensuring a minimum delay when the
-		// reset time appears to be in the past or too close to current time
-		if delaySeconds <= 0 {
-			return time.Duration(minDelay)
-		}
-
-		// Cap the delay to max delay
-		if float64(delaySeconds)*float64(time.Second) > maxDelay {
-			return time.Duration(maxDelay)
-		}
-
-		return time.Duration(delaySeconds) * time.Second
+		return wait
 	}
 }
 
