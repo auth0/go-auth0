@@ -191,18 +191,18 @@ func backoffDelay() rehttp.DelayFn {
 			if date, err := http.ParseTime(retryAfter); err == nil {
 				// Calculate duration until the future time
 				retryAfterDuration := time.Until(date)
-				
+
 				// If the parsed time is in the past or too close to now due to clock skew,
 				// use the minimum delay
 				if retryAfterDuration < time.Duration(minDelay) {
 					return time.Duration(minDelay)
 				}
-				
+
 				// Cap to max delay
 				if float64(retryAfterDuration) > maxDelay {
 					return time.Duration(maxDelay)
 				}
-				
+
 				return retryAfterDuration
 			}
 
@@ -254,7 +254,7 @@ func Auth0ClientInfoTransport(base http.RoundTripper, auth0ClientInfo *Auth0Clie
 	}
 
 	auth0ClientJSON, err := json.Marshal(auth0ClientInfo)
-	if (err != nil) {
+	if err != nil {
 		return nil, err
 	}
 

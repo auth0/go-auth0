@@ -194,7 +194,7 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				 // Use a whole integer value as per RFC 7231
+				// Use a whole integer value as per RFC 7231
 				w.Header().Set("Retry-After", "2")
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
@@ -240,7 +240,7 @@ func TestRetries(t *testing.T) {
 
 		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
 		r, err := c.Get(s.URL)
-		
+
 		// Just check that the retry worked and we got a successful response
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, r.StatusCode)
@@ -288,7 +288,7 @@ func TestRetries(t *testing.T) {
 			i++
 			if i == 1 {
 				// Set contradicting retry headers
-				w.Header().Set("Retry-After", "1") // 1 second
+				w.Header().Set("Retry-After", "1")                                               // 1 second
 				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(5*time.Second).Unix())) // 5 seconds
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
@@ -407,68 +407,68 @@ func TestRetries(t *testing.T) {
 	})
 
 	t.Run("Should handle invalid Retry-After header gracefully", func(t *testing.T) {
-        start := time.Now()
-        i := 0
+		start := time.Now()
+		i := 0
 
-        h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
-            i++
-            if i == 1 {
-                // Set an invalid Retry-After header
-                w.Header().Set("Retry-After", "not-a-valid-value")
-                w.WriteHeader(http.StatusTooManyRequests)
-                return
-            }
-            w.WriteHeader(http.StatusOK)
-        })
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			i++
+			if i == 1 {
+				// Set an invalid Retry-After header
+				w.Header().Set("Retry-After", "not-a-valid-value")
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
 
-        s := httptest.NewServer(h)
-        defer s.Close()
+		s := httptest.NewServer(h)
+		defer s.Close()
 
-        c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
-        r, err := c.Get(s.URL)
-        assert.NoError(t, err)
-        assert.Equal(t, http.StatusOK, r.StatusCode)
-        assert.Equal(t, 2, i)
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+		assert.Equal(t, 2, i)
 
-        // Should fall back to default exponential backoff
-        elapsed := time.Since(start).Milliseconds()
-        assert.GreaterOrEqual(t, elapsed, int64(250))
-    })
+		// Should fall back to default exponential backoff
+		elapsed := time.Since(start).Milliseconds()
+		assert.GreaterOrEqual(t, elapsed, int64(250))
+	})
 
-    t.Run("Should handle invalid X-RateLimit-Reset header gracefully", func(t *testing.T) {
-        start := time.Now()
-        i := 0
+	t.Run("Should handle invalid X-RateLimit-Reset header gracefully", func(t *testing.T) {
+		start := time.Now()
+		i := 0
 
-        h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
-            i++
-            if i == 1 {
-                // Set an invalid X-RateLimit-Reset header
-                w.Header().Set("X-RateLimit-Reset", "not-a-timestamp")
-                w.WriteHeader(http.StatusTooManyRequests)
-                return
-            }
-            w.WriteHeader(http.StatusOK)
-        })
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			i++
+			if i == 1 {
+				// Set an invalid X-RateLimit-Reset header
+				w.Header().Set("X-RateLimit-Reset", "not-a-timestamp")
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
 
-        s := httptest.NewServer(h)
-        defer s.Close()
+		s := httptest.NewServer(h)
+		defer s.Close()
 
-        c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
-        r, err := c.Get(s.URL)
-        assert.NoError(t, err)
-        assert.Equal(t, http.StatusOK, r.StatusCode)
-        assert.Equal(t, 2, i)
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+		assert.Equal(t, 2, i)
 
-        // Should fall back to default exponential backoff
-        elapsed := time.Since(start).Milliseconds()
-        assert.GreaterOrEqual(t, elapsed, int64(250))
-    })
+		// Should fall back to default exponential backoff
+		elapsed := time.Since(start).Milliseconds()
+		assert.GreaterOrEqual(t, elapsed, int64(250))
+	})
 }
 
 func TestWrapUserAgent(t *testing.T) {
 	testHandler := http.HandlerFunc(func(_ http.ResponseWriter, r *http.Request) {
 		ua := r.Header.Get("User-Agent")
-		if (ua != UserAgent) {
+		if ua != UserAgent {
 			t.Errorf("Expected User-Agent header to match %q but got %q", UserAgent, ua)
 		}
 	})
@@ -576,120 +576,120 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 }
 
 func TestWrap(t *testing.T) {
-    t.Run("Should handle nil client", func(t *testing.T) {
-        c := Wrap(nil)
-        assert.NotNil(t, c)
-    })
+	t.Run("Should handle nil client", func(t *testing.T) {
+		c := Wrap(nil)
+		assert.NotNil(t, c)
+	})
 
-    t.Run("Should apply multiple options", func(t *testing.T) {
-        var appliedOptions int
-        
-        option1 := func(c *http.Client) {
-            appliedOptions++
-        }
-        
-        option2 := func(c *http.Client) {
-            appliedOptions++
-        }
-        
-        Wrap(http.DefaultClient, option1, option2)
-        assert.Equal(t, 2, appliedOptions)
-    })
+	t.Run("Should apply multiple options", func(t *testing.T) {
+		var appliedOptions int
+
+		option1 := func(_ *http.Client) {
+			appliedOptions++
+		}
+
+		option2 := func(_ *http.Client) {
+			appliedOptions++
+		}
+
+		Wrap(http.DefaultClient, option1, option2)
+		assert.Equal(t, 2, appliedOptions)
+	})
 }
 
 func TestWithAuth0ClientInfoErrors(t *testing.T) {
-    // Test with bad client info that will cause JSON marshal to fail
-    badClientInfo := &Auth0ClientInfo{
-        Name: "test",
-        Env: map[string]string{
-            "badValue": string([]byte{0}), // Invalid UTF-8 sequence
-        },
-    }
-    
-    // We'll use a custom transport that sets a special header
-    // to verify it's still used after WithAuth0ClientInfo is called
-    customTransport := RoundTripFunc(func(req *http.Request) (*http.Response, error) {
-        req.Header.Set("X-Custom-Header", "custom-value")
-        return &http.Response{StatusCode: http.StatusOK, Header: req.Header}, nil
-    })
-    
-    // Create a client with our custom transport
-    badClient := &http.Client{Transport: customTransport}
-    
-    // Apply the option with bad client info
-    WithAuth0ClientInfo(badClientInfo)(badClient)
-    
-    // Make a request and verify our custom transport was used
-    // (it should set X-Custom-Header which we'll check in the response)
-    req, _ := http.NewRequest("GET", "http://example.com", nil)
-    resp, err := badClient.Transport.RoundTrip(req)
-    
-    assert.NoError(t, err)
-    assert.Equal(t, "custom-value", resp.Header.Get("X-Custom-Header"))
-    
-    // Test with nil client info (which should be treated as empty)
-    emptyClient := &http.Client{Transport: customTransport}
-    
-    // Apply the option with nil client info
-    WithAuth0ClientInfo(nil)(emptyClient)
-    
-    // Make another request and verify our custom transport is still used
-    req2, _ := http.NewRequest("GET", "http://example.com", nil)
-    resp2, err := emptyClient.Transport.RoundTrip(req2)
-    
-    assert.NoError(t, err)
-    assert.Equal(t, "custom-value", resp2.Header.Get("X-Custom-Header"))
+	// Test with bad client info that will cause JSON marshal to fail
+	badClientInfo := &Auth0ClientInfo{
+		Name: "test",
+		Env: map[string]string{
+			"badValue": string([]byte{0}), // Invalid UTF-8 sequence
+		},
+	}
+
+	// We'll use a custom transport that sets a special header
+	// to verify it's still used after WithAuth0ClientInfo is called
+	customTransport := RoundTripFunc(func(req *http.Request) (*http.Response, error) {
+		req.Header.Set("X-Custom-Header", "custom-value")
+		return &http.Response{StatusCode: http.StatusOK, Header: req.Header}, nil
+	})
+
+	// Create a client with our custom transport
+	badClient := &http.Client{Transport: customTransport}
+
+	// Apply the option with bad client info
+	WithAuth0ClientInfo(badClientInfo)(badClient)
+
+	// Make a request and verify our custom transport was used
+	// (it should set X-Custom-Header which we'll check in the response)
+	req, _ := http.NewRequest("GET", "http://example.com", nil)
+	resp, err := badClient.Transport.RoundTrip(req)
+
+	assert.NoError(t, err)
+	assert.Equal(t, "custom-value", resp.Header.Get("X-Custom-Header"))
+
+	// Test with nil client info (which should be treated as empty)
+	emptyClient := &http.Client{Transport: customTransport}
+
+	// Apply the option with nil client info
+	WithAuth0ClientInfo(nil)(emptyClient)
+
+	// Make another request and verify our custom transport is still used
+	req2, _ := http.NewRequest("GET", "http://example.com", nil)
+	resp2, err := emptyClient.Transport.RoundTrip(req2)
+
+	assert.NoError(t, err)
+	assert.Equal(t, "custom-value", resp2.Header.Get("X-Custom-Header"))
 }
 
 func TestEmptyChecks(t *testing.T) {
-    t.Run("Auth0ClientInfo.IsEmpty", func(t *testing.T) {
-        var nilInfo *Auth0ClientInfo
-        assert.True(t, nilInfo.IsEmpty())
-        
-        emptyInfo := &Auth0ClientInfo{}
-        assert.True(t, emptyInfo.IsEmpty())
-        
-        populatedInfo := &Auth0ClientInfo{Name: "test"}
-        assert.False(t, populatedInfo.IsEmpty())
-    })
-    
-    t.Run("RetryOptions.IsEmpty", func(t *testing.T) {
-        var nilOptions *RetryOptions
-        assert.True(t, nilOptions.IsEmpty())
-        
-        emptyOptions := &RetryOptions{}
-        assert.True(t, emptyOptions.IsEmpty())
-        
-        populatedOptions := &RetryOptions{MaxRetries: 1}
-        assert.False(t, populatedOptions.IsEmpty())
-    })
+	t.Run("Auth0ClientInfo.IsEmpty", func(t *testing.T) {
+		var nilInfo *Auth0ClientInfo
+		assert.True(t, nilInfo.IsEmpty())
+
+		emptyInfo := &Auth0ClientInfo{}
+		assert.True(t, emptyInfo.IsEmpty())
+
+		populatedInfo := &Auth0ClientInfo{Name: "test"}
+		assert.False(t, populatedInfo.IsEmpty())
+	})
+
+	t.Run("RetryOptions.IsEmpty", func(t *testing.T) {
+		var nilOptions *RetryOptions
+		assert.True(t, nilOptions.IsEmpty())
+
+		emptyOptions := &RetryOptions{}
+		assert.True(t, emptyOptions.IsEmpty())
+
+		populatedOptions := &RetryOptions{MaxRetries: 1}
+		assert.False(t, populatedOptions.IsEmpty())
+	})
 }
 
 func TestRoundTripFunc(t *testing.T) {
-    called := false
-    f := RoundTripFunc(func(req *http.Request) (*http.Response, error) {
-        called = true
-        return &http.Response{StatusCode: http.StatusOK}, nil
-    })
-    
-    req, _ := http.NewRequest("GET", "http://example.com", nil)
-    resp, err := f.RoundTrip(req)
-    
-    assert.True(t, called)
-    assert.NoError(t, err)
-    assert.Equal(t, http.StatusOK, resp.StatusCode)
+	called := false
+	f := RoundTripFunc(func(_ *http.Request) (*http.Response, error) {
+		called = true
+		return &http.Response{StatusCode: http.StatusOK}, nil
+	})
+
+	req, _ := http.NewRequest("GET", "http://example.com", nil)
+	resp, err := f.RoundTrip(req)
+
+	assert.True(t, called)
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
 }
 
 func TestDebugTransport(t *testing.T) {
-    t.Run("With debugging disabled", func(t *testing.T) {
-        base := RoundTripFunc(func(req *http.Request) (*http.Response, error) {
-            return &http.Response{StatusCode: http.StatusOK}, nil
-        })
-        
-        transport := DebugTransport(base, false)
-        req, _ := http.NewRequest("GET", "http://example.com", nil)
-        resp, _ := transport.RoundTrip(req)
-        
-        assert.Equal(t, http.StatusOK, resp.StatusCode)
-    })
+	t.Run("With debugging disabled", func(t *testing.T) {
+		base := RoundTripFunc(func(_ *http.Request) (*http.Response, error) {
+			return &http.Response{StatusCode: http.StatusOK}, nil
+		})
+
+		transport := DebugTransport(base, false)
+		req, _ := http.NewRequest("GET", "http://example.com", nil)
+		resp, _ := transport.RoundTrip(req)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+	})
 }
