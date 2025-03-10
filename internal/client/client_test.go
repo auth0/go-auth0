@@ -329,7 +329,7 @@ func TestRetries(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, r.StatusCode)
 		assert.Equal(t, 2, i)
-		})
+	})
 
 	t.Run("Should handle rate limit headers correctly", func(t *testing.T) {
 		i := 0
@@ -337,7 +337,7 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				w.Header().Set("Retry-After", "1") 
+				w.Header().Set("Retry-After", "1")
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
 			}
@@ -376,7 +376,7 @@ func TestRetries(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, r.StatusCode)
 		assert.Equal(t, 2, i)
-			})
+	})
 
 	t.Run("Should handle invalid Retry-After header gracefully", func(t *testing.T) {
 		start := time.Now()
