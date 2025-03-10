@@ -152,9 +152,9 @@ func retryErrors(err error) bool {
 func backoffDelay() rehttp.DelayFn {
 	prng := rand.New(rand.NewSource(time.Now().UnixNano())) // #nosec G404: Random generator
 	const (
-		minDelay  = 250 * time.Millisecond
+		minDelay  = 1 * time.Second
 		maxDelay  = 10 * time.Second
-		baseDelay = 250 * time.Millisecond
+		baseDelay = 1 * time.Second
 	)
 
 	return func(attempt rehttp.Attempt) time.Duration {
