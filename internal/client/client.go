@@ -147,7 +147,6 @@ func retryErrors(err error) bool {
 	// Retry other errors as they are most likely recoverable.
 	return true
 }
-
 // backoffDelay implements an exponential backoff with jitter and handles rate limiting.
 func backoffDelay() rehttp.DelayFn {
 	prng := rand.New(rand.NewSource(time.Now().UnixNano())) // #nosec G404: Random generator
@@ -179,6 +178,9 @@ func backoffDelay() rehttp.DelayFn {
 		if retryAfter := attempt.Response.Header.Get("Retry-After"); retryAfter != "" {
 			if seconds, err := strconv.Atoi(retryAfter); err == nil {
 				retryAfterDuration := time.Duration(seconds) * time.Second
+				// Add 10% jitter to beat caching
+				retryAfterDuration = time.Duration(float64(retryAfterDuration) * 1.1)
+				
 				if retryAfterDuration > maxDelay {
 					return maxDelay
 				}
@@ -189,6 +191,9 @@ func backoffDelay() rehttp.DelayFn {
 			}
 			if date, err := http.ParseTime(retryAfter); err == nil {
 				retryAfterDuration := time.Until(date)
+
+				retryAfterDuration = time.Duration(float64(retryAfterDuration) * 1.1)
+				
 				if retryAfterDuration > maxDelay {
 					return maxDelay
 				}
@@ -202,6 +207,9 @@ func backoffDelay() rehttp.DelayFn {
 		// Fallback to X-RateLimit-Reset if Retry-After is unavailable
 		if resetAt, err := strconv.ParseInt(attempt.Response.Header.Get("X-RateLimit-Reset"), 10, 64); err == nil {
 			delay := time.Duration(resetAt-time.Now().Unix()) * time.Second
+			
+			delay = time.Duration(float64(delay) * 1.1)
+
 			if delay > maxDelay {
 				return maxDelay
 			}
