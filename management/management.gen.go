@@ -4849,6 +4849,14 @@ func (c *ConnectionOptionsOAuth2) GetClientSecret() string {
 	return *c.ClientSecret
 }
 
+// GetCustomHeaders returns the CustomHeaders map if it's non-nil, an empty map otherwise.
+func (c *ConnectionOptionsOAuth2) GetCustomHeaders() map[string]string {
+	if c == nil || c.CustomHeaders == nil {
+		return map[string]string{}
+	}
+	return c.CustomHeaders
+}
+
 // GetLogoURL returns the LogoURL field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOAuth2) GetLogoURL() string {
 	if c == nil || c.LogoURL == nil {
@@ -11448,6 +11456,14 @@ func (t *Tenant) GetMTLS() *TenantMTLSConfiguration {
 	return t.MTLS
 }
 
+// GetOIDCLogout returns the OIDCLogout field.
+func (t *Tenant) GetOIDCLogout() *TenantOIDCLogout {
+	if t == nil {
+		return nil
+	}
+	return t.OIDCLogout
+}
+
 // GetPictureURL returns the PictureURL field if it's non-nil, zero value otherwise.
 func (t *Tenant) GetPictureURL() string {
 	if t == nil || t.PictureURL == nil {
@@ -11864,6 +11880,19 @@ func (t *TenantMTLSConfiguration) GetEnableEndpointAliases() bool {
 
 // String returns a string representation of TenantMTLSConfiguration.
 func (t *TenantMTLSConfiguration) String() string {
+	return Stringify(t)
+}
+
+// GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery returns the OIDCResourceProviderLogoutEndSessionEndpointDiscovery field if it's non-nil, zero value otherwise.
+func (t *TenantOIDCLogout) GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery() bool {
+	if t == nil || t.OIDCResourceProviderLogoutEndSessionEndpointDiscovery == nil {
+		return false
+	}
+	return *t.OIDCResourceProviderLogoutEndSessionEndpointDiscovery
+}
+
+// String returns a string representation of TenantOIDCLogout.
+func (t *TenantOIDCLogout) String() string {
 	return Stringify(t)
 }
 

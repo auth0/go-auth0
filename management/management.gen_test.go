@@ -5991,6 +5991,16 @@ func TestConnectionOptionsOAuth2_GetClientSecret(tt *testing.T) {
 	c.GetClientSecret()
 }
 
+func TestConnectionOptionsOAuth2_GetCustomHeaders(tt *testing.T) {
+	zeroValue := map[string]string{}
+	c := &ConnectionOptionsOAuth2{CustomHeaders: zeroValue}
+	c.GetCustomHeaders()
+	c = &ConnectionOptionsOAuth2{}
+	c.GetCustomHeaders()
+	c = nil
+	c.GetCustomHeaders()
+}
+
 func TestConnectionOptionsOAuth2_GetLogoURL(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOAuth2{LogoURL: &zeroValue}
@@ -14380,6 +14390,13 @@ func TestTenant_GetMTLS(tt *testing.T) {
 	t.GetMTLS()
 }
 
+func TestTenant_GetOIDCLogout(tt *testing.T) {
+	t := &Tenant{}
+	t.GetOIDCLogout()
+	t = nil
+	t.GetOIDCLogout()
+}
+
 func TestTenant_GetPictureURL(tt *testing.T) {
 	var zeroValue string
 	t := &Tenant{PictureURL: &zeroValue}
@@ -14902,6 +14919,24 @@ func TestTenantMTLSConfiguration_GetEnableEndpointAliases(tt *testing.T) {
 func TestTenantMTLSConfiguration_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TenantMTLSConfiguration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTenantOIDCLogout_GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantOIDCLogout{OIDCResourceProviderLogoutEndSessionEndpointDiscovery: &zeroValue}
+	t.GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery()
+	t = &TenantOIDCLogout{}
+	t.GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery()
+	t = nil
+	t.GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery()
+}
+
+func TestTenantOIDCLogout_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TenantOIDCLogout{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
