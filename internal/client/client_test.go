@@ -1,18 +1,23 @@
 package client
 
 import (
+	"bytes"
 	"context"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"runtime"
+	"strings"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0"
 )
@@ -664,4 +669,173 @@ func TestDebugTransport(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 	})
+
+	t.Run("With debugging enabled", func(t *testing.T) {
+		// Capture log output
+		var buf bytes.Buffer
+		log.SetOutput(&buf)
+		defer log.SetOutput(os.Stderr) // Restore default output
+
+		base := RoundTripFunc(func(_ *http.Request) (*http.Response, error) {
+			return &http.Response{
+				StatusCode: http.StatusOK,
+				Body:       io.NopCloser(strings.NewReader("test response body")),
+				Header:     http.Header{"Content-Type": []string{"text/plain"}},
+			}, nil
+		})
+
+		transport := DebugTransport(base, true)
+		req, _ := http.NewRequest("GET", "http://example.com", nil)
+		req.Header.Set("User-Agent", "test-agent")
+
+		resp, err := transport.RoundTrip(req)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+
+		// Check that log contains request and response info
+		logOutput := buf.String()
+		assert.Contains(t, logOutput, "GET /")
+		assert.Contains(t, logOutput, "Host: example.com")
+		assert.Contains(t, logOutput, "User-Agent: test-agent")
+		assert.Contains(t, logOutput, "HTTP/0.0 200 OK")
+		assert.Contains(t, logOutput, "Content-Type: text/plain")
+		assert.Contains(t, logOutput, "test response body")
+	})
+
+	t.Run("With error response", func(t *testing.T) {
+		// Capture log output
+		var buf bytes.Buffer
+		log.SetOutput(&buf)
+		defer log.SetOutput(os.Stderr) // Restore default output
+
+		expectedErr := fmt.Errorf("network error")
+		base := RoundTripFunc(func(_ *http.Request) (*http.Response, error) {
+			return nil, expectedErr
+		})
+
+		transport := DebugTransport(base, true)
+		req, _ := http.NewRequest("GET", "http://example.com", nil)
+
+		resp, err := transport.RoundTrip(req)
+
+		assert.Error(t, err)
+		assert.Equal(t, expectedErr, err)
+		assert.Nil(t, resp)
+		logOutput := buf.String()
+		assert.Contains(t, logOutput, "GET /")
+		assert.Contains(t, logOutput, "Host: example.com")
+		assert.Contains(t, logOutput, "GET")
+		assert.NotContains(t, logOutput, "HTTP/0.0 200 OK")
+		assert.Contains(t, logOutput, "GET")
+		assert.NotContains(t, logOutput, "<")
+	})
+}
+
+func TestWithDebug(t *testing.T) {
+	t.Run("Enables debug transport when true", func(t *testing.T) {
+		// Setup a test server to verify request made with debug transport
+		var requestReceived bool
+		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			requestReceived = true
+			w.WriteHeader(http.StatusOK)
+		}))
+		defer ts.Close()
+
+		// Capture log output
+		var buf bytes.Buffer
+		log.SetOutput(&buf)
+		defer log.SetOutput(os.Stderr)
+
+		// Create client with debug enabled
+		client := Wrap(http.DefaultClient, WithDebug(true))
+
+		// Make a request
+		resp, err := client.Get(ts.URL)
+
+		// Verify request was successful
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.True(t, requestReceived)
+
+		// Verify debug output was logged - check for reasonable parts of the output
+		logOutput := buf.String()
+		assert.Contains(t, logOutput, "GET /")
+		assert.Contains(t, logOutput, "Host: 127.0.0.1:")
+		assert.Contains(t, logOutput, "HTTP/1.1 200 OK")
+	})
+
+	t.Run("Keeps original transport when false", func(t *testing.T) {
+		// Setup a custom transport we can verify remains unchanged
+		customTransport := RoundTripFunc(func(_ *http.Request) (*http.Response, error) {
+			return &http.Response{
+				StatusCode: http.StatusTeapot,
+				Body:       io.NopCloser(strings.NewReader("")),
+			}, nil
+		})
+
+		client := &http.Client{Transport: customTransport}
+
+		// Apply WithDebug(false)
+		WithDebug(false)(client)
+
+		// Verify the transport hasn't changed
+		req, _ := http.NewRequest("GET", "http://example.com", nil)
+		resp, err := client.Transport.RoundTrip(req)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusTeapot, resp.StatusCode)
+	})
+}
+
+func TestDumpRequest(t *testing.T) {
+	// Capture log output
+	var buf bytes.Buffer
+	log.SetOutput(&buf)
+	defer log.SetOutput(os.Stderr)
+
+	// Create a sample request with headers and body
+	body := strings.NewReader(`{"test":"value"}`)
+	req, err := http.NewRequest("POST", "https://api.example.com/test", body)
+	require.NoError(t, err)
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer test-token")
+
+	// Call dumpRequest
+	dumpRequest(req)
+
+	// Verify log output contains expected request details
+	logOutput := buf.String()
+	assert.Contains(t, logOutput, "POST /test")
+	assert.Contains(t, logOutput, "Host: api.example.com")
+	assert.Contains(t, logOutput, "Content-Type: application/json")
+	assert.Contains(t, logOutput, "Authorization: Bearer test-token")
+	assert.Contains(t, logOutput, `{"test":"value"}`)
+}
+
+func TestDumpResponse(t *testing.T) {
+	// Capture log output
+	var buf bytes.Buffer
+	log.SetOutput(&buf)
+	defer log.SetOutput(os.Stderr)
+
+	// Create a sample response with headers and body
+	body := io.NopCloser(strings.NewReader(`{"result":"success"}`))
+	resp := &http.Response{
+		Status:     "200 OK",
+		StatusCode: 200,
+		Proto:      "HTTP/1.1",
+		Header:     http.Header{"Content-Type": []string{"application/json"}},
+		Body:       body,
+	}
+
+	// Call dumpResponse
+	dumpResponse(resp)
+
+	// Verify log output contains expected response details - look for the actual output format
+	logOutput := buf.String()
+	assert.Contains(t, logOutput, "HTTP/0.0 200 OK") // The actual format of the dump
+	assert.Contains(t, logOutput, "Content-Type: application/json")
+	assert.Contains(t, logOutput, `{"result":"success"}`)
 }
