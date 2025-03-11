@@ -7,7 +7,7 @@ Before you submit a pull request, there are a couple requirements to satisfy.
 
 Ensure you have the following prerequisites met:
 
-- **Go Version**: You must have Go version 1.21 or newer installed on your system. You can check your Go version by running `go version` in your terminal.
+- **Go Version**: You must have Go version 1.23 or newer installed on your system. You can check your Go version by running `go version` in your terminal.
 - **GOPATH Set Up**: Make sure you have set up your GOPATH.
 - **Export GOPATH**: Ensure you have exported your GOPATH to your system's environment variables. This allows tools and libraries to locate your Go workspace.
 - **Modify bashrc or zshrc**: To automatically set your GOPATH and export it every time you open a terminal, you can add the following lines to your `~/.bashrc` or `~/.zshrc` file on Linux and macOS systems:
