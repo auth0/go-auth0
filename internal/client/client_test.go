@@ -561,11 +561,13 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				futureTime := time.Now().Add(2 * time.Second).In(time.FixedZone("GMT", 0))
-				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
-				w.WriteHeader(http.StatusTooManyRequests)
+				futureTime := time.Now().Add(5 * time.Second).UTC()
+				retryAfter := futureTime.Format(time.RFC1123)
+				retryAfter = strings.Replace(retryAfter, "UTC", "GMT", 1) // Ensure correct format
+				t.Logf("Setting Retry-After header to: %s", retryAfter)
 
-				time.Sleep(2 * time.Second)
+				w.Header().Set("Retry-After", retryAfter)
+				w.WriteHeader(http.StatusTooManyRequests)
 				return
 			}
 			w.WriteHeader(http.StatusOK)
@@ -585,8 +587,8 @@ func TestRetries(t *testing.T) {
 		elapsed := time.Since(start).Milliseconds()
 		t.Logf("Actual wait time: %dms", elapsed)
 
-		assert.GreaterOrEqual(t, elapsed, int64(2400), "Expected wait >= 2400ms, got %dms", elapsed)
-		assert.LessOrEqual(t, elapsed, int64(3500), "Expected wait <= 3500ms, got %dms", elapsed)
+		assert.GreaterOrEqual(t, elapsed, int64(6000), "Expected wait >= 6000ms, got %dms", elapsed)
+		assert.LessOrEqual(t, elapsed, int64(8000), "Expected wait <= 8000ms, got %dms", elapsed)
 	})
 }
 
