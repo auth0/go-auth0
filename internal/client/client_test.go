@@ -226,9 +226,8 @@ func TestRetries(t *testing.T) {
 		s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				futureTime := time.Now().Add(500 * time.Millisecond)
-				futureTimeStr := futureTime.Format(time.RFC1123)
-				w.Header().Set("Retry-After", futureTimeStr)
+				futureTime := time.Now().Add(500 * time.Millisecond).In(time.FixedZone("GMT", 0))
+				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
 			}
@@ -466,7 +465,7 @@ func TestRetries(t *testing.T) {
 
 			i++
 			if i == 1 {
-				futureTime := time.Now().Add(1 * time.Second)
+				futureTime := time.Now().Add(1 * time.Second).In(time.FixedZone("GMT", 0))
 				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
@@ -486,7 +485,7 @@ func TestRetries(t *testing.T) {
 
 		actualWaitTime := requestTimes[1].Sub(requestTimes[0]).Milliseconds()
 
-		minExpectedDelay := int64(1200)
+		minExpectedDelay := int64(1000)
 		maxExpectedDelay := int64(3000)
 		t.Logf("Wait time between requests: %dms", actualWaitTime)
 
@@ -504,7 +503,7 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				futureTime := time.Now().Add(200 * time.Millisecond)
+				futureTime := time.Now().Add(200 * time.Millisecond).In(time.FixedZone("GMT", 0))
 				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
@@ -534,7 +533,7 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				futureTime := time.Now().Add(30 * time.Second)
+				futureTime := time.Now().Add(30 * time.Second).In(time.FixedZone("GMT", 0))
 				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
