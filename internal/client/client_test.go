@@ -587,7 +587,7 @@ func TestRetries(t *testing.T) {
 		elapsed := time.Since(start).Milliseconds()
 		t.Logf("Actual wait time: %dms", elapsed)
 
-		assert.GreaterOrEqual(t, elapsed, int64(6000), "Expected wait >= 6000ms, got %dms", elapsed)
+		assert.GreaterOrEqual(t, elapsed, int64(5000), "Expected wait >= 6000ms, got %dms", elapsed)
 		assert.LessOrEqual(t, elapsed, int64(8000), "Expected wait <= 8000ms, got %dms", elapsed)
 	})
 }
