@@ -179,8 +179,8 @@ func backoffDelay() rehttp.DelayFn {
 		if retryAfter := attempt.Response.Header.Get("Retry-After"); retryAfter != "" {
 			if seconds, err := strconv.Atoi(retryAfter); err == nil {
 				retryAfterDuration := time.Duration(seconds) * time.Second
-				// Add 10% jitter to beat caching
-				retryAfterDuration = time.Duration(float64(retryAfterDuration) * 1.1)
+				// Add 25% Padding to beat caching
+				retryAfterDuration = time.Duration(float64(retryAfterDuration) * 1.25)
 
 				if retryAfterDuration > maxDelay {
 					return maxDelay
@@ -192,8 +192,8 @@ func backoffDelay() rehttp.DelayFn {
 			}
 			if date, err := http.ParseTime(retryAfter); err == nil {
 				retryAfterDuration := time.Until(date)
-
-				retryAfterDuration = time.Duration(float64(retryAfterDuration) * 1.1)
+				// Add 25% Padding to beat caching
+				retryAfterDuration = time.Duration(float64(retryAfterDuration) * 1.25)
 
 				if retryAfterDuration > maxDelay {
 					return maxDelay
@@ -208,8 +208,8 @@ func backoffDelay() rehttp.DelayFn {
 		// Fallback to X-RateLimit-Reset if Retry-After is unavailable
 		if resetAt, err := strconv.ParseInt(attempt.Response.Header.Get("X-RateLimit-Reset"), 10, 64); err == nil {
 			delay := time.Duration(resetAt-time.Now().Unix()) * time.Second
-
-			delay = time.Duration(float64(delay) * 1.1)
+			// Add 25% Padding to beat caching
+			delay = time.Duration(float64(delay) * 1.25)
 
 			if delay > maxDelay {
 				return maxDelay

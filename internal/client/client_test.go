@@ -47,8 +47,8 @@ func TestRetries(t *testing.T) {
 		assert.Equal(t, 2, i)
 
 		elapsed := time.Since(start).Milliseconds()
-		assert.GreaterOrEqual(t, elapsed, int64(250), "Should have minimum delay")
-		assert.LessOrEqual(t, elapsed, int64(2000), "Should complete within reasonable time")
+		assert.GreaterOrEqual(t, elapsed, int64(250))
+		assert.LessOrEqual(t, elapsed, int64(2000))
 	})
 
 	t.Run("Max retries", func(t *testing.T) {
@@ -107,8 +107,8 @@ func TestRetries(t *testing.T) {
 
 		assert.Error(t, err)
 		elapsed := time.Since(start).Milliseconds()
-		assert.GreaterOrEqual(t, elapsed, int64(750), "Should have attempted retries")
-		assert.LessOrEqual(t, elapsed, int64(5000), "Should complete within 5 seconds")
+		assert.GreaterOrEqual(t, elapsed, int64(750))
+		assert.LessOrEqual(t, elapsed, int64(5000))
 	})
 
 	t.Run("Should not retry some errors", func(t *testing.T) {
@@ -186,9 +186,8 @@ func TestRetries(t *testing.T) {
 		assert.Equal(t, http.StatusOK, r.StatusCode)
 
 		elapsed := time.Since(start).Milliseconds()
-		// Expect delay between 250ms and 10s due to capping
 		assert.GreaterOrEqual(t, elapsed, int64(250))
-		assert.LessOrEqual(t, elapsed, int64(11000)) // Allow a bit of slack for test execution
+		assert.LessOrEqual(t, elapsed, int64(11000))
 		assert.Equal(t, 2, i)
 	})
 
@@ -199,7 +198,6 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				// Use a whole integer value as per RFC 7231
 				w.Header().Set("Retry-After", "2")
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
@@ -217,7 +215,7 @@ func TestRetries(t *testing.T) {
 		assert.Equal(t, http.StatusOK, r.StatusCode)
 
 		elapsed := time.Since(start).Seconds()
-		assert.GreaterOrEqual(t, elapsed, float64(1.9)) // Allow slight tolerance
+		assert.GreaterOrEqual(t, elapsed, float64(1.9))
 		assert.LessOrEqual(t, elapsed, float64(3.0))
 		assert.Equal(t, 2, i)
 	})
@@ -225,7 +223,6 @@ func TestRetries(t *testing.T) {
 	t.Run("Should respect Retry-After header with HTTP date", func(t *testing.T) {
 		i := 0
 
-		// Create test server first to avoid time gap
 		s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
@@ -242,7 +239,6 @@ func TestRetries(t *testing.T) {
 		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
 		r, err := c.Get(s.URL)
 
-		// Just check that the retry worked and we got a successful response
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, r.StatusCode)
 		assert.Equal(t, 2, i)
@@ -255,7 +251,6 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				// Set reset time to current time (simulating clock skew)
 				w.Header().Set("X-RateLimit-Limit", "1")
 				w.Header().Set("X-RateLimit-Remaining", "0")
 				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Unix()))
@@ -276,8 +271,8 @@ func TestRetries(t *testing.T) {
 		assert.Equal(t, 2, i)
 
 		elapsed := time.Since(start).Milliseconds()
-		assert.GreaterOrEqual(t, elapsed, int64(250), "Should have minimum delay")
-		assert.LessOrEqual(t, elapsed, int64(2000), "Should complete within reasonable time")
+		assert.GreaterOrEqual(t, elapsed, int64(250))
+		assert.LessOrEqual(t, elapsed, int64(2000))
 	})
 
 	t.Run("Should use Retry-After over X-RateLimit-Reset when both present", func(t *testing.T) {
@@ -287,9 +282,8 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				// Set contradicting retry headers
-				w.Header().Set("Retry-After", "1")                                               // 1 second
-				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(5*time.Second).Unix())) // 5 seconds
+				w.Header().Set("Retry-After", "1")
+				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(5*time.Second).Unix()))
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
 			}
@@ -306,7 +300,6 @@ func TestRetries(t *testing.T) {
 		assert.Equal(t, http.StatusOK, r.StatusCode)
 
 		elapsed := time.Since(start).Seconds()
-		// Should use Retry-After value (1s)
 		assert.GreaterOrEqual(t, elapsed, float64(1.0))
 		assert.LessOrEqual(t, elapsed, float64(2.0))
 		assert.Equal(t, 2, i)
@@ -318,8 +311,7 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				// Set a very long retry time
-				w.Header().Set("Retry-After", "30") // 30 seconds
+				w.Header().Set("Retry-After", "30")
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
 			}
@@ -365,8 +357,7 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				// Set a very long delay (2 hours)
-				w.Header().Set("Retry-After", "7200") // 2 hours in seconds
+				w.Header().Set("Retry-After", "7200")
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
 			}
@@ -390,7 +381,6 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				// Set an invalid Retry-After header
 				w.Header().Set("Retry-After", "not-a-valid-value")
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
@@ -407,7 +397,6 @@ func TestRetries(t *testing.T) {
 		assert.Equal(t, http.StatusOK, r.StatusCode)
 		assert.Equal(t, 2, i)
 
-		// Should fall back to default exponential backoff
 		elapsed := time.Since(start).Milliseconds()
 		assert.GreaterOrEqual(t, elapsed, int64(250))
 	})
@@ -419,7 +408,6 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				// Set an invalid X-RateLimit-Reset header
 				w.Header().Set("X-RateLimit-Reset", "not-a-timestamp")
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
@@ -436,9 +424,137 @@ func TestRetries(t *testing.T) {
 		assert.Equal(t, http.StatusOK, r.StatusCode)
 		assert.Equal(t, 2, i)
 
-		// Should fall back to default exponential backoff
 		elapsed := time.Since(start).Milliseconds()
 		assert.GreaterOrEqual(t, elapsed, int64(250))
+	})
+
+	t.Run("Should enforce minimum delay with Retry-After header", func(t *testing.T) {
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			i++
+			if i == 1 {
+				w.Header().Set("Retry-After", "0.1")
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		start := time.Now()
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+		assert.Equal(t, 2, i)
+
+		elapsed := time.Since(start).Milliseconds()
+		assert.GreaterOrEqual(t, elapsed, int64(1000))
+		assert.LessOrEqual(t, elapsed, int64(2000))
+	})
+
+	t.Run("Should handle Retry-After with HTTP date format", func(t *testing.T) {
+		i := 0
+		var requestTimes []time.Time
+
+		s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			requestTimes = append(requestTimes, time.Now())
+
+			i++
+			if i == 1 {
+				futureTime := time.Now().Add(1 * time.Second)
+				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		}))
+		defer s.Close()
+
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+		assert.Equal(t, 2, i)
+
+		assert.Len(t, requestTimes, 2)
+
+		actualWaitTime := requestTimes[1].Sub(requestTimes[0]).Milliseconds()
+
+		minExpectedDelay := int64(1200)
+		maxExpectedDelay := int64(3000)
+		t.Logf("Wait time between requests: %dms", actualWaitTime)
+
+		assert.GreaterOrEqual(t, actualWaitTime, minExpectedDelay,
+			"Wait between requests should be at least %dms, got %dms",
+			minExpectedDelay, actualWaitTime)
+
+		assert.LessOrEqual(t, actualWaitTime, maxExpectedDelay,
+			"Wait time shouldn't be excessive")
+	})
+
+	t.Run("Should enforce minimum delay with HTTP date Retry-After header", func(t *testing.T) {
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			i++
+			if i == 1 {
+				futureTime := time.Now().Add(200 * time.Millisecond)
+				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		start := time.Now()
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+		assert.Equal(t, 2, i)
+
+		elapsed := time.Since(start).Milliseconds()
+		assert.GreaterOrEqual(t, elapsed, int64(1000))
+		assert.LessOrEqual(t, elapsed, int64(2000))
+	})
+
+	t.Run("Should cap HTTP date Retry-After to maximum delay", func(t *testing.T) {
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			i++
+			if i == 1 {
+				futureTime := time.Now().Add(30 * time.Second)
+				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		start := time.Now()
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+		assert.Equal(t, 2, i)
+
+		elapsed := time.Since(start).Milliseconds()
+		assert.LessOrEqual(t, elapsed, int64(11000))
 	})
 }
 
@@ -575,42 +691,32 @@ func TestWrap(t *testing.T) {
 }
 
 func TestWithAuth0ClientInfoErrors(t *testing.T) {
-	// Test with bad client info that will cause JSON marshal to fail
 	badClientInfo := &Auth0ClientInfo{
 		Name: "test",
 		Env: map[string]string{
-			"badValue": string([]byte{0}), // Invalid UTF-8 sequence
+			"badValue": string([]byte{0}),
 		},
 	}
 
-	// We'll use a custom transport that sets a special header
-	// to verify it's still used after WithAuth0ClientInfo is called
 	customTransport := RoundTripFunc(func(req *http.Request) (*http.Response, error) {
 		req.Header.Set("X-Custom-Header", "custom-value")
 		return &http.Response{StatusCode: http.StatusOK, Header: req.Header}, nil
 	})
 
-	// Create a client with our custom transport
 	badClient := &http.Client{Transport: customTransport}
 
-	// Apply the option with bad client info
 	WithAuth0ClientInfo(badClientInfo)(badClient)
 
-	// Make a request and verify our custom transport was used
-	// (it should set X-Custom-Header which we'll check in the response)
 	req, _ := http.NewRequest("GET", "http://example.com", nil)
 	resp, err := badClient.Transport.RoundTrip(req)
 
 	assert.NoError(t, err)
 	assert.Equal(t, "custom-value", resp.Header.Get("X-Custom-Header"))
 
-	// Test with nil client info (which should be treated as empty)
 	emptyClient := &http.Client{Transport: customTransport}
 
-	// Apply the option with nil client info
 	WithAuth0ClientInfo(nil)(emptyClient)
 
-	// Make another request and verify our custom transport is still used
 	req2, _ := http.NewRequest("GET", "http://example.com", nil)
 	resp2, err := emptyClient.Transport.RoundTrip(req2)
 
@@ -671,10 +777,9 @@ func TestDebugTransport(t *testing.T) {
 	})
 
 	t.Run("With debugging enabled", func(t *testing.T) {
-		// Capture log output
 		var buf bytes.Buffer
 		log.SetOutput(&buf)
-		defer log.SetOutput(os.Stderr) // Restore default output
+		defer log.SetOutput(os.Stderr)
 
 		base := RoundTripFunc(func(_ *http.Request) (*http.Response, error) {
 			return &http.Response{
@@ -693,7 +798,6 @@ func TestDebugTransport(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 
-		// Check that log contains request and response info
 		logOutput := buf.String()
 		assert.Contains(t, logOutput, "GET /")
 		assert.Contains(t, logOutput, "Host: example.com")
@@ -704,10 +808,9 @@ func TestDebugTransport(t *testing.T) {
 	})
 
 	t.Run("With error response", func(t *testing.T) {
-		// Capture log output
 		var buf bytes.Buffer
 		log.SetOutput(&buf)
-		defer log.SetOutput(os.Stderr) // Restore default output
+		defer log.SetOutput(os.Stderr)
 
 		expectedErr := fmt.Errorf("network error")
 		base := RoundTripFunc(func(_ *http.Request) (*http.Response, error) {
@@ -734,7 +837,6 @@ func TestDebugTransport(t *testing.T) {
 
 func TestWithDebug(t *testing.T) {
 	t.Run("Enables debug transport when true", func(t *testing.T) {
-		// Setup a test server to verify request made with debug transport
 		var requestReceived bool
 		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			requestReceived = true
@@ -742,23 +844,18 @@ func TestWithDebug(t *testing.T) {
 		}))
 		defer ts.Close()
 
-		// Capture log output
 		var buf bytes.Buffer
 		log.SetOutput(&buf)
 		defer log.SetOutput(os.Stderr)
 
-		// Create client with debug enabled
 		client := Wrap(http.DefaultClient, WithDebug(true))
 
-		// Make a request
 		resp, err := client.Get(ts.URL)
 
-		// Verify request was successful
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.True(t, requestReceived)
 
-		// Verify debug output was logged - check for reasonable parts of the output
 		logOutput := buf.String()
 		assert.Contains(t, logOutput, "GET /")
 		assert.Contains(t, logOutput, "Host: 127.0.0.1:")
@@ -766,7 +863,6 @@ func TestWithDebug(t *testing.T) {
 	})
 
 	t.Run("Keeps original transport when false", func(t *testing.T) {
-		// Setup a custom transport we can verify remains unchanged
 		customTransport := RoundTripFunc(func(_ *http.Request) (*http.Response, error) {
 			return &http.Response{
 				StatusCode: http.StatusTeapot,
@@ -776,10 +872,8 @@ func TestWithDebug(t *testing.T) {
 
 		client := &http.Client{Transport: customTransport}
 
-		// Apply WithDebug(false)
 		WithDebug(false)(client)
 
-		// Verify the transport hasn't changed
 		req, _ := http.NewRequest("GET", "http://example.com", nil)
 		resp, err := client.Transport.RoundTrip(req)
 
@@ -789,12 +883,10 @@ func TestWithDebug(t *testing.T) {
 }
 
 func TestDumpRequest(t *testing.T) {
-	// Capture log output
 	var buf bytes.Buffer
 	log.SetOutput(&buf)
 	defer log.SetOutput(os.Stderr)
 
-	// Create a sample request with headers and body
 	body := strings.NewReader(`{"test":"value"}`)
 	req, err := http.NewRequest("POST", "https://api.example.com/test", body)
 	require.NoError(t, err)
@@ -802,10 +894,8 @@ func TestDumpRequest(t *testing.T) {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer test-token")
 
-	// Call dumpRequest
 	dumpRequest(req)
 
-	// Verify log output contains expected request details
 	logOutput := buf.String()
 	assert.Contains(t, logOutput, "POST /test")
 	assert.Contains(t, logOutput, "Host: api.example.com")
@@ -815,12 +905,10 @@ func TestDumpRequest(t *testing.T) {
 }
 
 func TestDumpResponse(t *testing.T) {
-	// Capture log output
 	var buf bytes.Buffer
 	log.SetOutput(&buf)
 	defer log.SetOutput(os.Stderr)
 
-	// Create a sample response with headers and body
 	body := io.NopCloser(strings.NewReader(`{"result":"success"}`))
 	resp := &http.Response{
 		Status:     "200 OK",
@@ -830,12 +918,10 @@ func TestDumpResponse(t *testing.T) {
 		Body:       body,
 	}
 
-	// Call dumpResponse
 	dumpResponse(resp)
 
-	// Verify log output contains expected response details - look for the actual output format
 	logOutput := buf.String()
-	assert.Contains(t, logOutput, "HTTP/0.0 200 OK") // The actual format of the dump
+	assert.Contains(t, logOutput, "HTTP/0.0 200 OK")
 	assert.Contains(t, logOutput, "Content-Type: application/json")
 	assert.Contains(t, logOutput, `{"result":"success"}`)
 }
