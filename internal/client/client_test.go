@@ -433,7 +433,7 @@ func TestRetries(t *testing.T) {
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
 			if i == 1 {
-				w.Header().Set("Retry-After", "0.1")
+				w.Header().Set("Retry-After", "0")
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
 			}
@@ -554,6 +554,39 @@ func TestRetries(t *testing.T) {
 
 		elapsed := time.Since(start).Milliseconds()
 		assert.LessOrEqual(t, elapsed, int64(11000))
+	})
+	t.Run("Should return calculated delay when within min and max limits", func(t *testing.T) {
+		i := 0
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			i++
+			if i == 1 {
+				futureTime := time.Now().Add(2 * time.Second).In(time.FixedZone("GMT", 0))
+				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
+				w.WriteHeader(http.StatusTooManyRequests)
+
+				time.Sleep(2 * time.Second)
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		start := time.Now()
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+		r, err := c.Get(s.URL)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, r.StatusCode)
+		assert.Equal(t, 2, i)
+
+		elapsed := time.Since(start).Milliseconds()
+		t.Logf("Actual wait time: %dms", elapsed)
+
+		assert.GreaterOrEqual(t, elapsed, int64(2400), "Expected wait >= 2400ms, got %dms", elapsed)
+		assert.LessOrEqual(t, elapsed, int64(3500), "Expected wait <= 3500ms, got %dms", elapsed)
 	})
 }
 
