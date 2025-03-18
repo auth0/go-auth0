@@ -19,6 +19,10 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/rehttp"
+	"github.com/google/uuid"
+	"github.com/lestrrat-go/jwx/v2/jwa"
+	"github.com/lestrrat-go/jwx/v2/jwk"
+	"github.com/lestrrat-go/jwx/v2/jwt"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
 
@@ -379,7 +383,68 @@ func OAuth2ClientCredentialsAndAudience(
 	return cfg.TokenSource(ctx)
 }
 
+// OAuth2ClientCredentialsPrivateKeyJwt sets the oauth2
+// client credentials with Private Key JWT authentication.
+func OAuth2ClientCredentialsPrivateKeyJwt(ctx context.Context, uri, clientAssertionSigningAlg, clientAssertionSigningKey, clientID string) oauth2.TokenSource {
+	audience := uri + "/api/v2/"
+	return OAuth2ClientCredentialsPrivateKeyJwtAndAudience(ctx, uri, clientAssertionSigningAlg, clientAssertionSigningKey, clientID, audience)
+}
+
+// OAuth2ClientCredentialsPrivateKeyJwtAndAudience sets the oauth2
+// client credentials with Private Key JWT authentication
+// with a custom audience.
+func OAuth2ClientCredentialsPrivateKeyJwtAndAudience(
+	ctx context.Context,
+	uri,
+	clientAssertionSigningAlg,
+	clientAssertionSigningKey,
+	clientID,
+	audience string,
+) oauth2.TokenSource {
+	return newPrivateKeyJwtTokenSource(ctx, uri, clientAssertionSigningAlg, clientAssertionSigningKey, clientID, audience)
+}
+
 // StaticToken sets a static token to be used for oauth2.
 func StaticToken(token string) oauth2.TokenSource {
 	return oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})
+}
+
+func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
+	switch alg {
+	case "RS256":
+		return jwa.RS256, nil
+	case "RS384":
+		return jwa.RS384, nil
+	case "PS256":
+		return jwa.PS256, nil
+	default:
+		return "", fmt.Errorf("Unsupported client assertion algorithm \"%s\" provided", alg)
+	}
+}
+
+// CreateClientAssertion creates a client assertion for the provided client ID and domain.
+func CreateClientAssertion(alg jwa.SignatureAlgorithm, signingKey, clientID, domain string) (string, error) {
+	key, err := jwk.ParseKey([]byte(signingKey), jwk.WithPEM(true))
+	if err != nil {
+		return "", err
+	}
+
+	token, err := jwt.NewBuilder().
+		IssuedAt(time.Now()).
+		Subject(clientID).
+		JwtID(uuid.New().String()).
+		Issuer(clientID).
+		Claim("aud", domain).
+		Expiration(time.Now().Add(2 * time.Minute)).
+		Build()
+	if err != nil {
+		return "", err
+	}
+
+	b, err := jwt.Sign(token, jwt.WithKey(alg, key))
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
 }
