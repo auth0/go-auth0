@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/auth0/go-auth0/authentication/ciba"
+	"github.com/auth0/go-auth0/internal/client"
 
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwt"
@@ -286,7 +287,7 @@ func TestLoginWithClientCredentials(t *testing.T) {
 		skipE2E(t)
 		configureHTTPTestRecordings(t, authAPI)
 
-		auth, err := createClientAssertion("RS256", jwtPrivateKey, clientID, "https://"+domain+"/")
+		auth, err := client.CreateClientAssertion("RS256", jwtPrivateKey, clientID, "https://"+domain+"/")
 		require.NoError(t, err)
 
 		tokenSet, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
