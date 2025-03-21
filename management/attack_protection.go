@@ -24,7 +24,16 @@ type BreachedPasswordDetection struct {
 
 // BreachedPasswordDetectionStage is used to specify per-stage configuration options.
 type BreachedPasswordDetectionStage struct {
+	PreChangePassword   *BreachedPasswordDetectionPreChangePassword   `json:"pre-change-password,omitempty"`
 	PreUserRegistration *BreachedPasswordDetectionPreUserRegistration `json:"pre-user-registration,omitempty"`
+}
+
+// BreachedPasswordDetectionPreChangePassword is used to specify breached password detection
+// configuration (shields) for the change password flow.
+type BreachedPasswordDetectionPreChangePassword struct {
+	// Action to take when a breached password is detected during a password change.
+	// Possible values: block, admin_notification.
+	Shields *[]string `json:"shields,omitempty"`
 }
 
 // BreachedPasswordDetectionPreUserRegistration is used to specify breached password detection
