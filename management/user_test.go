@@ -316,6 +316,15 @@ func TestUserManager_DeleteUserSessions(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+func TestUserManager_GetUserLogs(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	user := givenAUser(t)
+	logs, err := api.User.GetUserLogs(context.Background(), user.GetID())
+	assert.NoError(t, err)
+	assert.Len(t, logs, 0)
+}
+
 func TestUser_MarshalJSON(t *testing.T) {
 	for user, expected := range map[*User]string{
 		{}:                                 `{}`,
