@@ -32,6 +32,9 @@ func TestAttackProtection(t *testing.T) {
 				PreUserRegistration: &BreachedPasswordDetectionPreUserRegistration{
 					Shields: &[]string{"block"},
 				},
+				PreChangePassword: &BreachedPasswordDetectionPreChangePassword{
+					Shields: &[]string{"block"},
+				},
 			},
 		}
 
@@ -43,7 +46,7 @@ func TestAttackProtection(t *testing.T) {
 		assert.Equal(t, expected.GetEnabled(), actual.GetEnabled())
 		assert.Equal(t, expected.GetMethod(), actual.GetMethod())
 		assert.Equal(t, expected.GetStage().GetPreUserRegistration().GetShields(), actual.GetStage().GetPreUserRegistration().GetShields())
-
+		assert.Equal(t, expected.GetStage().GetPreChangePassword().GetShields(), actual.GetStage().GetPreChangePassword().GetShields())
 		// Restore initial settings.
 		err = api.AttackProtection.UpdateBreachedPasswordDetection(context.Background(), preTestBPDSettings)
 		assert.NoError(t, err)

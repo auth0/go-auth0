@@ -1435,6 +1435,19 @@ func (b *BreachedPasswordDetection) String() string {
 }
 
 // GetShields returns the Shields field if it's non-nil, zero value otherwise.
+func (b *BreachedPasswordDetectionPreChangePassword) GetShields() []string {
+	if b == nil || b.Shields == nil {
+		return nil
+	}
+	return *b.Shields
+}
+
+// String returns a string representation of BreachedPasswordDetectionPreChangePassword.
+func (b *BreachedPasswordDetectionPreChangePassword) String() string {
+	return Stringify(b)
+}
+
+// GetShields returns the Shields field if it's non-nil, zero value otherwise.
 func (b *BreachedPasswordDetectionPreUserRegistration) GetShields() []string {
 	if b == nil || b.Shields == nil {
 		return nil
@@ -1445,6 +1458,14 @@ func (b *BreachedPasswordDetectionPreUserRegistration) GetShields() []string {
 // String returns a string representation of BreachedPasswordDetectionPreUserRegistration.
 func (b *BreachedPasswordDetectionPreUserRegistration) String() string {
 	return Stringify(b)
+}
+
+// GetPreChangePassword returns the PreChangePassword field.
+func (b *BreachedPasswordDetectionStage) GetPreChangePassword() *BreachedPasswordDetectionPreChangePassword {
+	if b == nil {
+		return nil
+	}
+	return b.PreChangePassword
 }
 
 // GetPreUserRegistration returns the PreUserRegistration field.
@@ -4847,6 +4868,14 @@ func (c *ConnectionOptionsOAuth2) GetClientSecret() string {
 		return ""
 	}
 	return *c.ClientSecret
+}
+
+// GetCustomHeaders returns the CustomHeaders map if it's non-nil, an empty map otherwise.
+func (c *ConnectionOptionsOAuth2) GetCustomHeaders() map[string]string {
+	if c == nil || c.CustomHeaders == nil {
+		return map[string]string{}
+	}
+	return c.CustomHeaders
 }
 
 // GetLogoURL returns the LogoURL field if it's non-nil, zero value otherwise.
@@ -8830,6 +8859,19 @@ func (m *MultiFactorPushDirectFCM) String() string {
 	return Stringify(m)
 }
 
+// GetServerCredentials returns the ServerCredentials field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushDirectFCMv1) GetServerCredentials() string {
+	if m == nil || m.ServerCredentials == nil {
+		return ""
+	}
+	return *m.ServerCredentials
+}
+
+// String returns a string representation of MultiFactorPushDirectFCMv1.
+func (m *MultiFactorPushDirectFCMv1) String() string {
+	return Stringify(m)
+}
+
 // GetEnrollmentMessage returns the EnrollmentMessage field if it's non-nil, zero value otherwise.
 func (m *MultiFactorSMSTemplate) GetEnrollmentMessage() string {
 	if m == nil || m.EnrollmentMessage == nil {
@@ -11501,6 +11543,14 @@ func (t *Tenant) GetMTLS() *TenantMTLSConfiguration {
 	return t.MTLS
 }
 
+// GetOIDCLogout returns the OIDCLogout field.
+func (t *Tenant) GetOIDCLogout() *TenantOIDCLogout {
+	if t == nil {
+		return nil
+	}
+	return t.OIDCLogout
+}
+
 // GetPictureURL returns the PictureURL field if it's non-nil, zero value otherwise.
 func (t *Tenant) GetPictureURL() string {
 	if t == nil || t.PictureURL == nil {
@@ -11917,6 +11967,19 @@ func (t *TenantMTLSConfiguration) GetEnableEndpointAliases() bool {
 
 // String returns a string representation of TenantMTLSConfiguration.
 func (t *TenantMTLSConfiguration) String() string {
+	return Stringify(t)
+}
+
+// GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery returns the OIDCResourceProviderLogoutEndSessionEndpointDiscovery field if it's non-nil, zero value otherwise.
+func (t *TenantOIDCLogout) GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery() bool {
+	if t == nil || t.OIDCResourceProviderLogoutEndSessionEndpointDiscovery == nil {
+		return false
+	}
+	return *t.OIDCResourceProviderLogoutEndSessionEndpointDiscovery
+}
+
+// String returns a string representation of TenantOIDCLogout.
+func (t *TenantOIDCLogout) String() string {
 	return Stringify(t)
 }
 

@@ -148,46 +148,79 @@ func retryErrors(err error) bool {
 	return true
 }
 
-// backoffDelay implements a DelayFn that is an exponential backoff with jitter
-// and a minimum value.
+// backoffDelay implements an exponential backoff with jitter and handles rate limiting.
 func backoffDelay() rehttp.DelayFn {
-	// Disable gosec lint for as we don't need secure randomness here and the error
-	// handling of an error adds needless complexity.
-	//nolint:gosec
-	PRNG := rand.New(rand.NewSource(time.Now().UnixNano()))
-	minDelay := float64(250 * time.Millisecond)
-	maxDelay := float64(10 * time.Second)
-	baseDelay := float64(250 * time.Millisecond)
+	prng := rand.New(rand.NewSource(time.Now().UnixNano())) // #nosec G404: Random generator
+	const (
+		minDelay  = 1 * time.Second
+		maxDelay  = 10 * time.Second
+		baseDelay = 1 * time.Second
+	)
 
 	return func(attempt rehttp.Attempt) time.Duration {
-		wait := baseDelay * math.Pow(2, float64(attempt.Index))
-		minValue := wait + 1
-		maxValue := wait + baseDelay
-		wait = PRNG.Float64()*(maxValue-minValue) + minValue
+		// Calculate exponential backoff with jitter
+		expBackoff := time.Duration(float64(baseDelay) * math.Pow(2, float64(attempt.Index)))
+		jitter := time.Duration(prng.Float64() * float64(baseDelay))
+		wait := expBackoff + jitter
 
-		wait = math.Min(wait, maxDelay)
-		wait = math.Max(wait, minDelay)
+		// Clamp the delay within min and max bounds
+		if wait < minDelay {
+			wait = minDelay
+		} else if wait > maxDelay {
+			wait = maxDelay
+		}
 
-		// If we're calculating the delay for anything other than a 429 status code then return now
+		// If response is nil or not a 429 status, return computed delay
 		if attempt.Response == nil || attempt.Response.StatusCode != http.StatusTooManyRequests {
-			return time.Duration(wait)
+			return wait
 		}
 
-		// Check against the rate limit reset value, if that is longer than use that.
-		resetAtS := attempt.Response.Header.Get("X-RateLimit-Reset")
-		resetAt, err := strconv.ParseInt(resetAtS, 10, 64)
+		// Check Retry-After header (RFC 7231)
+		if retryAfter := attempt.Response.Header.Get("Retry-After"); retryAfter != "" {
+			if seconds, err := strconv.Atoi(retryAfter); err == nil {
+				retryAfterDuration := time.Duration(seconds) * time.Second
+				// Add 25% Padding to beat caching
+				retryAfterDuration = time.Duration(float64(retryAfterDuration) * 1.25)
 
-		if err != nil {
-			return time.Duration(wait)
+				if retryAfterDuration > maxDelay {
+					return maxDelay
+				}
+				if retryAfterDuration < minDelay {
+					return minDelay
+				}
+				return retryAfterDuration
+			}
+			if date, err := http.ParseTime(retryAfter); err == nil {
+				retryAfterDuration := time.Until(date)
+				// Add 25% Padding to beat caching
+				retryAfterDuration = time.Duration(float64(retryAfterDuration) * 1.25)
+
+				if retryAfterDuration > maxDelay {
+					return maxDelay
+				}
+				if retryAfterDuration < minDelay {
+					return minDelay
+				}
+				return retryAfterDuration
+			}
 		}
 
-		// However don't use that rate limit value if it will take us beyond the max wait time.
-		maxDelayTime := time.Now().Add(time.Duration(maxDelay)).Unix()
-		if resetAt > maxDelayTime {
-			return time.Duration(wait)
+		// Fallback to X-RateLimit-Reset if Retry-After is unavailable
+		if resetAt, err := strconv.ParseInt(attempt.Response.Header.Get("X-RateLimit-Reset"), 10, 64); err == nil {
+			delay := time.Duration(resetAt-time.Now().Unix()) * time.Second
+			// Add 25% Padding to beat caching
+			delay = time.Duration(float64(delay) * 1.25)
+
+			if delay > maxDelay {
+				return maxDelay
+			}
+			if delay < minDelay {
+				return minDelay
+			}
+			return delay
 		}
 
-		return time.Duration(resetAt-time.Now().Unix()) * time.Second
+		return wait
 	}
 }
 

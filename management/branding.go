@@ -167,23 +167,11 @@ func (bpnt *BrandingPhoneNotificationTemplate) reset(method string) {
 	}
 }
 
-// MarshalJSON implements the json.Marshaler interface.
-//
-// It is required to handle the json field credentials, which can either
-// be a JSON object, or null.
-func (b *BrandingPhoneProvider) MarshalJSON() ([]byte, error) {
-	type BrandingPhoneProviderSubset struct {
-		Name          *string                             `json:"name,omitempty"`
-		Disabled      *bool                               `json:"disabled,omitempty"`
-		Configuration *BrandingPhoneProviderConfiguration `json:"configuration,omitempty"`
-		Credentials   *BrandingPhoneProviderCredential    `json:"credentials,omitempty"`
-	}
-	return json.Marshal(&BrandingPhoneProviderSubset{
-		Name:          b.Name,
-		Disabled:      b.Disabled,
-		Configuration: b.Configuration,
-		Credentials:   b.Credentials,
-	})
+// reset resets the BrandingPhoneProvider fields.
+func (b *BrandingPhoneProvider) reset() {
+	b.ID = nil
+	b.Channel = nil
+	b.Tenant = nil
 }
 
 // MarshalJSON implements the json.Marshaler interface.
@@ -329,6 +317,7 @@ func (m *BrandingManager) ReadPhoneProvider(ctx context.Context, id string, opts
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/create-phone-provider
 func (m *BrandingManager) CreatePhoneProvider(ctx context.Context, pp *BrandingPhoneProvider, opts ...RequestOption) (err error) {
+	pp.reset()
 	return m.management.Request(ctx, "POST", m.management.URI("branding", "phone", "providers"), pp, opts...)
 }
 
@@ -343,6 +332,7 @@ func (m *BrandingManager) DeletePhoneProvider(ctx context.Context, id string, op
 //
 // See: https://auth0.com/docs/api/management/v2#!/Branding/update-phone-provider
 func (m *BrandingManager) UpdatePhoneProvider(ctx context.Context, id string, pp *BrandingPhoneProvider, opts ...RequestOption) (err error) {
+	pp.reset()
 	return m.management.Request(ctx, "PATCH", m.management.URI("branding", "phone", "providers", id), pp, opts...)
 }
 

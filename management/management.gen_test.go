@@ -1833,6 +1833,24 @@ func TestBreachedPasswordDetection_String(t *testing.T) {
 	}
 }
 
+func TestBreachedPasswordDetectionPreChangePassword_GetShields(tt *testing.T) {
+	var zeroValue []string
+	b := &BreachedPasswordDetectionPreChangePassword{Shields: &zeroValue}
+	b.GetShields()
+	b = &BreachedPasswordDetectionPreChangePassword{}
+	b.GetShields()
+	b = nil
+	b.GetShields()
+}
+
+func TestBreachedPasswordDetectionPreChangePassword_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BreachedPasswordDetectionPreChangePassword{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBreachedPasswordDetectionPreUserRegistration_GetShields(tt *testing.T) {
 	var zeroValue []string
 	b := &BreachedPasswordDetectionPreUserRegistration{Shields: &zeroValue}
@@ -1849,6 +1867,13 @@ func TestBreachedPasswordDetectionPreUserRegistration_String(t *testing.T) {
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
+}
+
+func TestBreachedPasswordDetectionStage_GetPreChangePassword(tt *testing.T) {
+	b := &BreachedPasswordDetectionStage{}
+	b.GetPreChangePassword()
+	b = nil
+	b.GetPreChangePassword()
 }
 
 func TestBreachedPasswordDetectionStage_GetPreUserRegistration(tt *testing.T) {
@@ -5989,6 +6014,16 @@ func TestConnectionOptionsOAuth2_GetClientSecret(tt *testing.T) {
 	c.GetClientSecret()
 	c = nil
 	c.GetClientSecret()
+}
+
+func TestConnectionOptionsOAuth2_GetCustomHeaders(tt *testing.T) {
+	zeroValue := map[string]string{}
+	c := &ConnectionOptionsOAuth2{CustomHeaders: zeroValue}
+	c.GetCustomHeaders()
+	c = &ConnectionOptionsOAuth2{}
+	c.GetCustomHeaders()
+	c = nil
+	c.GetCustomHeaders()
 }
 
 func TestConnectionOptionsOAuth2_GetLogoURL(tt *testing.T) {
@@ -11045,6 +11080,24 @@ func TestMultiFactorPushDirectFCM_String(t *testing.T) {
 	}
 }
 
+func TestMultiFactorPushDirectFCMv1_GetServerCredentials(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorPushDirectFCMv1{ServerCredentials: &zeroValue}
+	m.GetServerCredentials()
+	m = &MultiFactorPushDirectFCMv1{}
+	m.GetServerCredentials()
+	m = nil
+	m.GetServerCredentials()
+}
+
+func TestMultiFactorPushDirectFCMv1_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorPushDirectFCMv1{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestMultiFactorSMSTemplate_GetEnrollmentMessage(tt *testing.T) {
 	var zeroValue string
 	m := &MultiFactorSMSTemplate{EnrollmentMessage: &zeroValue}
@@ -14442,6 +14495,13 @@ func TestTenant_GetMTLS(tt *testing.T) {
 	t.GetMTLS()
 }
 
+func TestTenant_GetOIDCLogout(tt *testing.T) {
+	t := &Tenant{}
+	t.GetOIDCLogout()
+	t = nil
+	t.GetOIDCLogout()
+}
+
 func TestTenant_GetPictureURL(tt *testing.T) {
 	var zeroValue string
 	t := &Tenant{PictureURL: &zeroValue}
@@ -14964,6 +15024,24 @@ func TestTenantMTLSConfiguration_GetEnableEndpointAliases(tt *testing.T) {
 func TestTenantMTLSConfiguration_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TenantMTLSConfiguration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTenantOIDCLogout_GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantOIDCLogout{OIDCResourceProviderLogoutEndSessionEndpointDiscovery: &zeroValue}
+	t.GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery()
+	t = &TenantOIDCLogout{}
+	t.GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery()
+	t = nil
+	t.GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery()
+}
+
+func TestTenantOIDCLogout_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TenantOIDCLogout{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
