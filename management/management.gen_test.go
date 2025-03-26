@@ -13644,14 +13644,14 @@ func TestSelfServiceProfileTicketConnectionConfigOptions_String(t *testing.T) {
 	}
 }
 
-func TestSelfServiceProfileTicketConnectionConfigOptionsIDPInitiated_GetClientAuthorizeURL(tt *testing.T) {
+func TestSelfServiceProfileTicketConnectionConfigOptionsIDPInitiated_GetClientAuthorizeQuery(tt *testing.T) {
 	var zeroValue string
-	s := &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{ClientAuthorizeURL: &zeroValue}
-	s.GetClientAuthorizeURL()
+	s := &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{ClientAuthorizeQuery: &zeroValue}
+	s.GetClientAuthorizeQuery()
 	s = &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{}
-	s.GetClientAuthorizeURL()
+	s.GetClientAuthorizeQuery()
 	s = nil
-	s.GetClientAuthorizeURL()
+	s.GetClientAuthorizeQuery()
 }
 
 func TestSelfServiceProfileTicketConnectionConfigOptionsIDPInitiated_GetClientID(tt *testing.T) {

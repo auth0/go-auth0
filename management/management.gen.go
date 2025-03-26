@@ -10861,12 +10861,12 @@ func (s *SelfServiceProfileTicketConnectionConfigOptions) String() string {
 	return Stringify(s)
 }
 
-// GetClientAuthorizeURL returns the ClientAuthorizeURL field if it's non-nil, zero value otherwise.
-func (s *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated) GetClientAuthorizeURL() string {
-	if s == nil || s.ClientAuthorizeURL == nil {
+// GetClientAuthorizeQuery returns the ClientAuthorizeQuery field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated) GetClientAuthorizeQuery() string {
+	if s == nil || s.ClientAuthorizeQuery == nil {
 		return ""
 	}
-	return *s.ClientAuthorizeURL
+	return *s.ClientAuthorizeQuery
 }
 
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.

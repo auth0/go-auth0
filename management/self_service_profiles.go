@@ -115,10 +115,10 @@ type SelfServiceProfileTicketConnectionConfigOptions struct {
 
 // SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated is the list of IDP Initiated Options for SSO Ticket.
 type SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated struct {
-	Enabled            *bool   `json:"enabled,omitempty"`
-	ClientID           *string `json:"client_id,omitempty"`
-	ClientProtocol     *string `json:"client_protocol,omitempty"`
-	ClientAuthorizeURL *string `json:"client_authorizequery,omitempty"`
+	Enabled              *bool   `json:"enabled,omitempty"`
+	ClientID             *string `json:"client_id,omitempty"`
+	ClientProtocol       *string `json:"client_protocol,omitempty"`
+	ClientAuthorizeQuery *string `json:"client_authorizequery,omitempty"`
 }
 
 // SelfServiceProfileTicketEnabledOrganizations is the list of Organizations associated with the SSO Ticket.
