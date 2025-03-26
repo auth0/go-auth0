@@ -810,3 +810,20 @@ func (m *UserManager) DeleteUserSessions(ctx context.Context, userID string, opt
 	err = m.management.Request(ctx, "DELETE", m.management.URI("users", userID, "sessions"), nil, opts...)
 	return
 }
+
+// GetUserLogs retrieves logs for a user.
+//
+// It allows pagination using the provided options. For more information on pagination, refer to:
+// https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Page_Based_Pagination
+//
+// For more information on all possible event types, their respective acronyms and descriptions, see Log Event Type Codes.
+//
+// For more information on the list of fields that can be used in sort, see Searchable Fields.
+//
+// Auth0 limits the number of logs you can return by search criteria to 100 logs per request. Furthermore, you may only paginate through up to 1,000 search results. If you exceed this threshold, please redefine your search.
+//
+// See: https://auth0.com/docs/api/management/v2/users/get-logs-by-user
+func (m *UserManager) GetUserLogs(ctx context.Context, userID string, opts ...RequestOption) (r []*Log, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("users", userID, "logs"), &r, opts...)
+	return
+}
