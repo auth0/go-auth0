@@ -1,0 +1,109 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 157
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"description":"some-description","active":true,"priority":1,"rule":{"action":{"block":true},"match":{"ipv6_cidrs":["2001:db8::/32"]},"scope":"management"}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/network-acls
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 280
+        uncompressed: false
+        body: '{"id":"d489d9e8-6a3f-427c-89cf-59218e290745","description":"some-description","active":true,"priority":1,"rule":{"match":{"ipv6_cidrs":["2001:db8::/32"]},"scope":"management","action":{"block":true}},"created_at":"2025-02-13T05:57:33.156Z","updated_at":"2025-02-13T05:57:33.156Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 840.036834ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/network-acls/d489d9e8-6a3f-427c-89cf-59218e290745
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"id":"d489d9e8-6a3f-427c-89cf-59218e290745","tenant_id":"go-auth0-dev.eu.auth0.com","description":"some-description","active":true,"priority":1,"rule":{"match":{"ipv6_cidrs":["2001:db8::/32"]},"scope":"management","action":{"block":true}},"created_at":"2025-02-13T05:57:33.156Z","updated_at":"2025-02-13T05:57:33.156Z","deleted_at":null}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 373.074792ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.16.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/network-acls/d489d9e8-6a3f-427c-89cf-59218e290745
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 24
+        uncompressed: false
+        body: '{"code":204,"object":""}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 377.957833ms
