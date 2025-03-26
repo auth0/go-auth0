@@ -10750,6 +10750,14 @@ func (s *SelfServiceProfileTicket) GetConnectionID() string {
 	return *s.ConnectionID
 }
 
+// GetDomainAliasesConfig returns the DomainAliasesConfig field.
+func (s *SelfServiceProfileTicket) GetDomainAliasesConfig() *SelfServiceProfileTicketDomainAliasesConfig {
+	if s == nil {
+		return nil
+	}
+	return s.DomainAliasesConfig
+}
+
 // GetEnabledClients returns the EnabledClients field if it's non-nil, zero value otherwise.
 func (s *SelfServiceProfileTicket) GetEnabledClients() []string {
 	if s == nil || s.EnabledClients == nil {
@@ -10840,8 +10848,66 @@ func (s *SelfServiceProfileTicketConnectionConfigOptions) GetIconURL() string {
 	return *s.IconURL
 }
 
+// GetIDPInitiated returns the IDPInitiated field.
+func (s *SelfServiceProfileTicketConnectionConfigOptions) GetIDPInitiated() *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated {
+	if s == nil {
+		return nil
+	}
+	return s.IDPInitiated
+}
+
 // String returns a string representation of SelfServiceProfileTicketConnectionConfigOptions.
 func (s *SelfServiceProfileTicketConnectionConfigOptions) String() string {
+	return Stringify(s)
+}
+
+// GetClientAuthorizeQuery returns the ClientAuthorizeQuery field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated) GetClientAuthorizeQuery() string {
+	if s == nil || s.ClientAuthorizeQuery == nil {
+		return ""
+	}
+	return *s.ClientAuthorizeQuery
+}
+
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated) GetClientID() string {
+	if s == nil || s.ClientID == nil {
+		return ""
+	}
+	return *s.ClientID
+}
+
+// GetClientProtocol returns the ClientProtocol field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated) GetClientProtocol() string {
+	if s == nil || s.ClientProtocol == nil {
+		return ""
+	}
+	return *s.ClientProtocol
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated) GetEnabled() bool {
+	if s == nil || s.Enabled == nil {
+		return false
+	}
+	return *s.Enabled
+}
+
+// String returns a string representation of SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated.
+func (s *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated) String() string {
+	return Stringify(s)
+}
+
+// GetDomainVerification returns the DomainVerification field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketDomainAliasesConfig) GetDomainVerification() string {
+	if s == nil || s.DomainVerification == nil {
+		return ""
+	}
+	return *s.DomainVerification
+}
+
+// String returns a string representation of SelfServiceProfileTicketDomainAliasesConfig.
+func (s *SelfServiceProfileTicketDomainAliasesConfig) String() string {
 	return Stringify(s)
 }
 
