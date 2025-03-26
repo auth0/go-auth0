@@ -1011,6 +1011,238 @@ func (b *BrandingPageBackgroundGradient) String() string {
 	return Stringify(b)
 }
 
+// GetChannel returns the Channel field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplate) GetChannel() string {
+	if b == nil || b.Channel == nil {
+		return ""
+	}
+	return *b.Channel
+}
+
+// GetContent returns the Content field.
+func (b *BrandingPhoneNotificationTemplate) GetContent() *BrandingPhoneNotificationTemplateContent {
+	if b == nil {
+		return nil
+	}
+	return b.Content
+}
+
+// GetCustomizable returns the Customizable field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplate) GetCustomizable() bool {
+	if b == nil || b.Customizable == nil {
+		return false
+	}
+	return *b.Customizable
+}
+
+// GetDisabled returns the Disabled field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplate) GetDisabled() bool {
+	if b == nil || b.Disabled == nil {
+		return false
+	}
+	return *b.Disabled
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplate) GetID() string {
+	if b == nil || b.ID == nil {
+		return ""
+	}
+	return *b.ID
+}
+
+// GetTenant returns the Tenant field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplate) GetTenant() string {
+	if b == nil || b.Tenant == nil {
+		return ""
+	}
+	return *b.Tenant
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplate) GetType() string {
+	if b == nil || b.Type == nil {
+		return ""
+	}
+	return *b.Type
+}
+
+// String returns a string representation of BrandingPhoneNotificationTemplate.
+func (b *BrandingPhoneNotificationTemplate) String() string {
+	return Stringify(b)
+}
+
+// GetBody returns the Body field.
+func (b *BrandingPhoneNotificationTemplateContent) GetBody() *BrandingPhoneNotificationTemplateContentBody {
+	if b == nil {
+		return nil
+	}
+	return b.Body
+}
+
+// GetFrom returns the From field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplateContent) GetFrom() string {
+	if b == nil || b.From == nil {
+		return ""
+	}
+	return *b.From
+}
+
+// GetSyntax returns the Syntax field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplateContent) GetSyntax() string {
+	if b == nil || b.Syntax == nil {
+		return ""
+	}
+	return *b.Syntax
+}
+
+// String returns a string representation of BrandingPhoneNotificationTemplateContent.
+func (b *BrandingPhoneNotificationTemplateContent) String() string {
+	return Stringify(b)
+}
+
+// GetText returns the Text field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplateContentBody) GetText() string {
+	if b == nil || b.Text == nil {
+		return ""
+	}
+	return *b.Text
+}
+
+// GetVoice returns the Voice field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneNotificationTemplateContentBody) GetVoice() string {
+	if b == nil || b.Voice == nil {
+		return ""
+	}
+	return *b.Voice
+}
+
+// String returns a string representation of BrandingPhoneNotificationTemplateContentBody.
+func (b *BrandingPhoneNotificationTemplateContentBody) String() string {
+	return Stringify(b)
+}
+
+// String returns a string representation of BrandingPhoneNotificationTemplateList.
+func (b *BrandingPhoneNotificationTemplateList) String() string {
+	return Stringify(b)
+}
+
+// GetChannel returns the Channel field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProvider) GetChannel() string {
+	if b == nil || b.Channel == nil {
+		return ""
+	}
+	return *b.Channel
+}
+
+// GetConfiguration returns the Configuration field.
+func (b *BrandingPhoneProvider) GetConfiguration() *BrandingPhoneProviderConfiguration {
+	if b == nil {
+		return nil
+	}
+	return b.Configuration
+}
+
+// GetCredentials returns the Credentials field.
+func (b *BrandingPhoneProvider) GetCredentials() *BrandingPhoneProviderCredential {
+	if b == nil {
+		return nil
+	}
+	return b.Credentials
+}
+
+// GetDisabled returns the Disabled field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProvider) GetDisabled() bool {
+	if b == nil || b.Disabled == nil {
+		return false
+	}
+	return *b.Disabled
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProvider) GetID() string {
+	if b == nil || b.ID == nil {
+		return ""
+	}
+	return *b.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProvider) GetName() string {
+	if b == nil || b.Name == nil {
+		return ""
+	}
+	return *b.Name
+}
+
+// GetTenant returns the Tenant field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProvider) GetTenant() string {
+	if b == nil || b.Tenant == nil {
+		return ""
+	}
+	return *b.Tenant
+}
+
+// String returns a string representation of BrandingPhoneProvider.
+func (b *BrandingPhoneProvider) String() string {
+	return Stringify(b)
+}
+
+// GetDefaultFrom returns the DefaultFrom field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProviderConfiguration) GetDefaultFrom() string {
+	if b == nil || b.DefaultFrom == nil {
+		return ""
+	}
+	return *b.DefaultFrom
+}
+
+// GetDeliveryMethods returns the DeliveryMethods field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProviderConfiguration) GetDeliveryMethods() []string {
+	if b == nil || b.DeliveryMethods == nil {
+		return nil
+	}
+	return *b.DeliveryMethods
+}
+
+// GetMSSID returns the MSSID field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProviderConfiguration) GetMSSID() string {
+	if b == nil || b.MSSID == nil {
+		return ""
+	}
+	return *b.MSSID
+}
+
+// GetSID returns the SID field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProviderConfiguration) GetSID() string {
+	if b == nil || b.SID == nil {
+		return ""
+	}
+	return *b.SID
+}
+
+// String returns a string representation of BrandingPhoneProviderConfiguration.
+func (b *BrandingPhoneProviderConfiguration) String() string {
+	return Stringify(b)
+}
+
+// GetAuthToken returns the AuthToken field if it's non-nil, zero value otherwise.
+func (b *BrandingPhoneProviderCredential) GetAuthToken() string {
+	if b == nil || b.AuthToken == nil {
+		return ""
+	}
+	return *b.AuthToken
+}
+
+// String returns a string representation of BrandingPhoneProviderCredential.
+func (b *BrandingPhoneProviderCredential) String() string {
+	return Stringify(b)
+}
+
+// String returns a string representation of BrandingPhoneProviderList.
+func (b *BrandingPhoneProviderList) String() string {
+	return Stringify(b)
+}
+
 // GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
 func (b *BrandingTheme) GetDisplayName() string {
 	if b == nil || b.DisplayName == nil {
@@ -1075,6 +1307,72 @@ func (b *BrandingThemeText) String() string {
 
 // String returns a string representation of BrandingThemeWidget.
 func (b *BrandingThemeWidget) String() string {
+	return Stringify(b)
+}
+
+// GetDeliveryMethod returns the DeliveryMethod field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneNotificationTemplate) GetDeliveryMethod() string {
+	if b == nil || b.DeliveryMethod == nil {
+		return ""
+	}
+	return *b.DeliveryMethod
+}
+
+// GetMessage returns the Message field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneNotificationTemplate) GetMessage() string {
+	if b == nil || b.Message == nil {
+		return ""
+	}
+	return *b.Message
+}
+
+// GetTo returns the To field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneNotificationTemplate) GetTo() string {
+	if b == nil || b.To == nil {
+		return ""
+	}
+	return *b.To
+}
+
+// String returns a string representation of BrandingTryPhoneNotificationTemplate.
+func (b *BrandingTryPhoneNotificationTemplate) String() string {
+	return Stringify(b)
+}
+
+// GetCode returns the Code field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneProvider) GetCode() int {
+	if b == nil || b.Code == nil {
+		return 0
+	}
+	return *b.Code
+}
+
+// GetDeliveryMethod returns the DeliveryMethod field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneProvider) GetDeliveryMethod() string {
+	if b == nil || b.DeliveryMethod == nil {
+		return ""
+	}
+	return *b.DeliveryMethod
+}
+
+// GetMessage returns the Message field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneProvider) GetMessage() string {
+	if b == nil || b.Message == nil {
+		return ""
+	}
+	return *b.Message
+}
+
+// GetTo returns the To field if it's non-nil, zero value otherwise.
+func (b *BrandingTryPhoneProvider) GetTo() string {
+	if b == nil || b.To == nil {
+		return ""
+	}
+	return *b.To
+}
+
+// String returns a string representation of BrandingTryPhoneProvider.
+func (b *BrandingTryPhoneProvider) String() string {
 	return Stringify(b)
 }
 
@@ -4572,6 +4870,14 @@ func (c *ConnectionOptionsOAuth2) GetClientSecret() string {
 	return *c.ClientSecret
 }
 
+// GetCustomHeaders returns the CustomHeaders map if it's non-nil, an empty map otherwise.
+func (c *ConnectionOptionsOAuth2) GetCustomHeaders() map[string]string {
+	if c == nil || c.CustomHeaders == nil {
+		return map[string]string{}
+	}
+	return c.CustomHeaders
+}
+
 // GetLogoURL returns the LogoURL field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOAuth2) GetLogoURL() string {
 	if c == nil || c.LogoURL == nil {
@@ -7039,6 +7345,106 @@ func (e *EnrollmentTicket) String() string {
 	return Stringify(e)
 }
 
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (e *EventStream) GetCreatedAt() time.Time {
+	if e == nil || e.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *e.CreatedAt
+}
+
+// GetDestination returns the Destination field.
+func (e *EventStream) GetDestination() *EventStreamDestination {
+	if e == nil {
+		return nil
+	}
+	return e.Destination
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (e *EventStream) GetID() string {
+	if e == nil || e.ID == nil {
+		return ""
+	}
+	return *e.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (e *EventStream) GetName() string {
+	if e == nil || e.Name == nil {
+		return ""
+	}
+	return *e.Name
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (e *EventStream) GetStatus() string {
+	if e == nil || e.Status == nil {
+		return ""
+	}
+	return *e.Status
+}
+
+// GetSubscriptions returns the Subscriptions field if it's non-nil, zero value otherwise.
+func (e *EventStream) GetSubscriptions() []EventStreamSubscription {
+	if e == nil || e.Subscriptions == nil {
+		return nil
+	}
+	return *e.Subscriptions
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (e *EventStream) GetUpdatedAt() time.Time {
+	if e == nil || e.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *e.UpdatedAt
+}
+
+// String returns a string representation of EventStream.
+func (e *EventStream) String() string {
+	return Stringify(e)
+}
+
+// GetEventStreamDestinationConfiguration returns the EventStreamDestinationConfiguration map if it's non-nil, an empty map otherwise.
+func (e *EventStreamDestination) GetEventStreamDestinationConfiguration() map[string]interface{} {
+	if e == nil || e.EventStreamDestinationConfiguration == nil {
+		return map[string]interface{}{}
+	}
+	return e.EventStreamDestinationConfiguration
+}
+
+// GetEventStreamDestinationType returns the EventStreamDestinationType field if it's non-nil, zero value otherwise.
+func (e *EventStreamDestination) GetEventStreamDestinationType() string {
+	if e == nil || e.EventStreamDestinationType == nil {
+		return ""
+	}
+	return *e.EventStreamDestinationType
+}
+
+// String returns a string representation of EventStreamDestination.
+func (e *EventStreamDestination) String() string {
+	return Stringify(e)
+}
+
+// String returns a string representation of EventStreamList.
+func (e *EventStreamList) String() string {
+	return Stringify(e)
+}
+
+// GetEventStreamSubscriptionType returns the EventStreamSubscriptionType field if it's non-nil, zero value otherwise.
+func (e *EventStreamSubscription) GetEventStreamSubscriptionType() string {
+	if e == nil || e.EventStreamSubscriptionType == nil {
+		return ""
+	}
+	return *e.EventStreamSubscriptionType
+}
+
+// String returns a string representation of EventStreamSubscription.
+func (e *EventStreamSubscription) String() string {
+	return Stringify(e)
+}
+
 // GetClientEmail returns the ClientEmail field if it's non-nil, zero value otherwise.
 func (f *FirebaseClientAddon) GetClientEmail() string {
 	if f == nil || f.ClientEmail == nil {
@@ -8450,6 +8856,19 @@ func (m *MultiFactorPushDirectFCM) GetServerKey() string {
 
 // String returns a string representation of MultiFactorPushDirectFCM.
 func (m *MultiFactorPushDirectFCM) String() string {
+	return Stringify(m)
+}
+
+// GetServerCredentials returns the ServerCredentials field if it's non-nil, zero value otherwise.
+func (m *MultiFactorPushDirectFCMv1) GetServerCredentials() string {
+	if m == nil || m.ServerCredentials == nil {
+		return ""
+	}
+	return *m.ServerCredentials
+}
+
+// String returns a string representation of MultiFactorPushDirectFCMv1.
+func (m *MultiFactorPushDirectFCMv1) String() string {
 	return Stringify(m)
 }
 
@@ -11058,6 +11477,14 @@ func (t *Tenant) GetMTLS() *TenantMTLSConfiguration {
 	return t.MTLS
 }
 
+// GetOIDCLogout returns the OIDCLogout field.
+func (t *Tenant) GetOIDCLogout() *TenantOIDCLogout {
+	if t == nil {
+		return nil
+	}
+	return t.OIDCLogout
+}
+
 // GetPictureURL returns the PictureURL field if it's non-nil, zero value otherwise.
 func (t *Tenant) GetPictureURL() string {
 	if t == nil || t.PictureURL == nil {
@@ -11474,6 +11901,19 @@ func (t *TenantMTLSConfiguration) GetEnableEndpointAliases() bool {
 
 // String returns a string representation of TenantMTLSConfiguration.
 func (t *TenantMTLSConfiguration) String() string {
+	return Stringify(t)
+}
+
+// GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery returns the OIDCResourceProviderLogoutEndSessionEndpointDiscovery field if it's non-nil, zero value otherwise.
+func (t *TenantOIDCLogout) GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery() bool {
+	if t == nil || t.OIDCResourceProviderLogoutEndSessionEndpointDiscovery == nil {
+		return false
+	}
+	return *t.OIDCResourceProviderLogoutEndSessionEndpointDiscovery
+}
+
+// String returns a string representation of TenantOIDCLogout.
+func (t *TenantOIDCLogout) String() string {
 	return Stringify(t)
 }
 

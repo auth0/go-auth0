@@ -129,6 +129,7 @@ var allowedPromptsWithPartials = []PromptType{
 	PromptLoginID,
 	PromptLoginPassword,
 	PromptLoginPasswordLess,
+	PromptCustomizedConsent,
 }
 
 // PromptType defines the prompt that we are managing.
@@ -400,6 +401,9 @@ const (
 
 	// InsertionPointSecondaryActionsEnd represents the secondary-actions-end insertion point.
 	InsertionPointSecondaryActionsEnd InsertionPoint = "secondary-actions-end"
+
+	// InsertionPointFormContent represents the form-content insertion point.
+	InsertionPointFormContent InsertionPoint = "form-content"
 )
 
 // ScreenPartials is a map of insertion points to partials.

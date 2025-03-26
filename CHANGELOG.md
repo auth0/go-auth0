@@ -1,5 +1,36 @@
 # Change Log
 
+## [v1.18.0](https://github.com/auth0/go-auth0/tree/v1.18.0) (2025-03-11)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.17.0...v1.18.0)
+
+**Added**
+- Add tenant OIDC logout configuration [\#517](https://github.com/auth0/go-auth0/pull/517) ([ErwinSteffens](https://github.com/ErwinSteffens))
+- Add `custom_headers` Attribute to `ConnectionOptionsOAuth2` in `ConnectionManager` [\#522](https://github.com/auth0/go-auth0/pull/522) ([developerkunal](https://github.com/developerkunal))
+- Add Support for `FCMv1 Server Credentials` in `MultiFactorPush` Sub-Manager of `GuardianManager` [\#512](https://github.com/auth0/go-auth0/pull/512) ([chrisnellis](https://github.com/chrisnellis))
+
+**Changed**
+- Bump Go version to 1.23 and upgrade golang.org/x/oauth2 to v0.28.0 [\#518](https://github.com/auth0/go-auth0/pull/518) ([developerkunal](https://github.com/developerkunal))
+- refactor: use a single client assertion audience [\#513](https://github.com/auth0/go-auth0/pull/513) ([panva](https://github.com/panva))
+
+**Fixed**
+- [GH-501] Fix Retry Mechanism to Handle Burst Limit Due to Clock Skew Issue [\#523](https://github.com/auth0/go-auth0/pull/523) ([developerkunal](https://github.com/developerkunal))
+
+## [v1.17.0](https://github.com/auth0/go-auth0/tree/v1.17.0) (2025-02-14)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.16.0...v1.17.0)
+
+**Added**
+- Add Support For Extensibility as Custom Provider in `BrandingManager` [\#495](https://github.com/auth0/go-auth0/pull/495) ([developerkunal](https://github.com/developerkunal))
+- Add Support for `form-content` Insertion Point For Prompt Partials in `PromptManager` [\#503](https://github.com/auth0/go-auth0/pull/503) ([developerkunal](https://github.com/developerkunal))
+
+## [v1.16.0](https://github.com/auth0/go-auth0/tree/v1.16.0) (2025-02-06)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.15.0...v1.16.0)
+
+**Added**
+- Add Support For Event Streams with `EventStreamManager` [\#496](https://github.com/auth0/go-auth0/pull/496) ([duedares-rvj](https://github.com/duedares-rvj))
+- Add Support For Global Token Revocation To SAML Connections in `ConnectionManager` [\#491](https://github.com/auth0/go-auth0/pull/491) ([developerkunal](https://github.com/developerkunal))
+- Add Support For `Sign in With Google For Native Apps` in `ClientManager` [\#493](https://github.com/auth0/go-auth0/pull/493) ([developerkunal](https://github.com/developerkunal))
+- Add support for setting `captcha_widget_theme` in `BrandingTheme` Struct in `BrandingThemeManager` [\#492](https://github.com/auth0/go-auth0/pull/492) ([duedares-rvj](https://github.com/duedares-rvj))
+
 ## [v1.15.0](https://github.com/auth0/go-auth0/tree/v1.15.0) (2025-01-29)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.14.0...v1.15.0)
 

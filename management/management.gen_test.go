@@ -1286,6 +1286,298 @@ func TestBrandingPageBackgroundGradient_String(t *testing.T) {
 	}
 }
 
+func TestBrandingPhoneNotificationTemplate_GetChannel(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneNotificationTemplate{Channel: &zeroValue}
+	b.GetChannel()
+	b = &BrandingPhoneNotificationTemplate{}
+	b.GetChannel()
+	b = nil
+	b.GetChannel()
+}
+
+func TestBrandingPhoneNotificationTemplate_GetContent(tt *testing.T) {
+	b := &BrandingPhoneNotificationTemplate{}
+	b.GetContent()
+	b = nil
+	b.GetContent()
+}
+
+func TestBrandingPhoneNotificationTemplate_GetCustomizable(tt *testing.T) {
+	var zeroValue bool
+	b := &BrandingPhoneNotificationTemplate{Customizable: &zeroValue}
+	b.GetCustomizable()
+	b = &BrandingPhoneNotificationTemplate{}
+	b.GetCustomizable()
+	b = nil
+	b.GetCustomizable()
+}
+
+func TestBrandingPhoneNotificationTemplate_GetDisabled(tt *testing.T) {
+	var zeroValue bool
+	b := &BrandingPhoneNotificationTemplate{Disabled: &zeroValue}
+	b.GetDisabled()
+	b = &BrandingPhoneNotificationTemplate{}
+	b.GetDisabled()
+	b = nil
+	b.GetDisabled()
+}
+
+func TestBrandingPhoneNotificationTemplate_GetID(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneNotificationTemplate{ID: &zeroValue}
+	b.GetID()
+	b = &BrandingPhoneNotificationTemplate{}
+	b.GetID()
+	b = nil
+	b.GetID()
+}
+
+func TestBrandingPhoneNotificationTemplate_GetTenant(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneNotificationTemplate{Tenant: &zeroValue}
+	b.GetTenant()
+	b = &BrandingPhoneNotificationTemplate{}
+	b.GetTenant()
+	b = nil
+	b.GetTenant()
+}
+
+func TestBrandingPhoneNotificationTemplate_GetType(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneNotificationTemplate{Type: &zeroValue}
+	b.GetType()
+	b = &BrandingPhoneNotificationTemplate{}
+	b.GetType()
+	b = nil
+	b.GetType()
+}
+
+func TestBrandingPhoneNotificationTemplate_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneNotificationTemplate{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingPhoneNotificationTemplateContent_GetBody(tt *testing.T) {
+	b := &BrandingPhoneNotificationTemplateContent{}
+	b.GetBody()
+	b = nil
+	b.GetBody()
+}
+
+func TestBrandingPhoneNotificationTemplateContent_GetFrom(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneNotificationTemplateContent{From: &zeroValue}
+	b.GetFrom()
+	b = &BrandingPhoneNotificationTemplateContent{}
+	b.GetFrom()
+	b = nil
+	b.GetFrom()
+}
+
+func TestBrandingPhoneNotificationTemplateContent_GetSyntax(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneNotificationTemplateContent{Syntax: &zeroValue}
+	b.GetSyntax()
+	b = &BrandingPhoneNotificationTemplateContent{}
+	b.GetSyntax()
+	b = nil
+	b.GetSyntax()
+}
+
+func TestBrandingPhoneNotificationTemplateContent_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneNotificationTemplateContent{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingPhoneNotificationTemplateContentBody_GetText(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneNotificationTemplateContentBody{Text: &zeroValue}
+	b.GetText()
+	b = &BrandingPhoneNotificationTemplateContentBody{}
+	b.GetText()
+	b = nil
+	b.GetText()
+}
+
+func TestBrandingPhoneNotificationTemplateContentBody_GetVoice(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneNotificationTemplateContentBody{Voice: &zeroValue}
+	b.GetVoice()
+	b = &BrandingPhoneNotificationTemplateContentBody{}
+	b.GetVoice()
+	b = nil
+	b.GetVoice()
+}
+
+func TestBrandingPhoneNotificationTemplateContentBody_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneNotificationTemplateContentBody{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingPhoneNotificationTemplateList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneNotificationTemplateList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingPhoneProvider_GetChannel(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProvider{Channel: &zeroValue}
+	b.GetChannel()
+	b = &BrandingPhoneProvider{}
+	b.GetChannel()
+	b = nil
+	b.GetChannel()
+}
+
+func TestBrandingPhoneProvider_GetConfiguration(tt *testing.T) {
+	b := &BrandingPhoneProvider{}
+	b.GetConfiguration()
+	b = nil
+	b.GetConfiguration()
+}
+
+func TestBrandingPhoneProvider_GetCredentials(tt *testing.T) {
+	b := &BrandingPhoneProvider{}
+	b.GetCredentials()
+	b = nil
+	b.GetCredentials()
+}
+
+func TestBrandingPhoneProvider_GetDisabled(tt *testing.T) {
+	var zeroValue bool
+	b := &BrandingPhoneProvider{Disabled: &zeroValue}
+	b.GetDisabled()
+	b = &BrandingPhoneProvider{}
+	b.GetDisabled()
+	b = nil
+	b.GetDisabled()
+}
+
+func TestBrandingPhoneProvider_GetID(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProvider{ID: &zeroValue}
+	b.GetID()
+	b = &BrandingPhoneProvider{}
+	b.GetID()
+	b = nil
+	b.GetID()
+}
+
+func TestBrandingPhoneProvider_GetName(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProvider{Name: &zeroValue}
+	b.GetName()
+	b = &BrandingPhoneProvider{}
+	b.GetName()
+	b = nil
+	b.GetName()
+}
+
+func TestBrandingPhoneProvider_GetTenant(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProvider{Tenant: &zeroValue}
+	b.GetTenant()
+	b = &BrandingPhoneProvider{}
+	b.GetTenant()
+	b = nil
+	b.GetTenant()
+}
+
+func TestBrandingPhoneProvider_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneProvider{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingPhoneProviderConfiguration_GetDefaultFrom(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProviderConfiguration{DefaultFrom: &zeroValue}
+	b.GetDefaultFrom()
+	b = &BrandingPhoneProviderConfiguration{}
+	b.GetDefaultFrom()
+	b = nil
+	b.GetDefaultFrom()
+}
+
+func TestBrandingPhoneProviderConfiguration_GetDeliveryMethods(tt *testing.T) {
+	var zeroValue []string
+	b := &BrandingPhoneProviderConfiguration{DeliveryMethods: &zeroValue}
+	b.GetDeliveryMethods()
+	b = &BrandingPhoneProviderConfiguration{}
+	b.GetDeliveryMethods()
+	b = nil
+	b.GetDeliveryMethods()
+}
+
+func TestBrandingPhoneProviderConfiguration_GetMSSID(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProviderConfiguration{MSSID: &zeroValue}
+	b.GetMSSID()
+	b = &BrandingPhoneProviderConfiguration{}
+	b.GetMSSID()
+	b = nil
+	b.GetMSSID()
+}
+
+func TestBrandingPhoneProviderConfiguration_GetSID(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProviderConfiguration{SID: &zeroValue}
+	b.GetSID()
+	b = &BrandingPhoneProviderConfiguration{}
+	b.GetSID()
+	b = nil
+	b.GetSID()
+}
+
+func TestBrandingPhoneProviderConfiguration_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneProviderConfiguration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingPhoneProviderCredential_GetAuthToken(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingPhoneProviderCredential{AuthToken: &zeroValue}
+	b.GetAuthToken()
+	b = &BrandingPhoneProviderCredential{}
+	b.GetAuthToken()
+	b = nil
+	b.GetAuthToken()
+}
+
+func TestBrandingPhoneProviderCredential_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneProviderCredential{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingPhoneProviderList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingPhoneProviderList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBrandingTheme_GetDisplayName(tt *testing.T) {
 	var zeroValue string
 	b := &BrandingTheme{DisplayName: &zeroValue}
@@ -1377,6 +1669,92 @@ func TestBrandingThemeText_String(t *testing.T) {
 func TestBrandingThemeWidget_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &BrandingThemeWidget{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingTryPhoneNotificationTemplate_GetDeliveryMethod(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingTryPhoneNotificationTemplate{DeliveryMethod: &zeroValue}
+	b.GetDeliveryMethod()
+	b = &BrandingTryPhoneNotificationTemplate{}
+	b.GetDeliveryMethod()
+	b = nil
+	b.GetDeliveryMethod()
+}
+
+func TestBrandingTryPhoneNotificationTemplate_GetMessage(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingTryPhoneNotificationTemplate{Message: &zeroValue}
+	b.GetMessage()
+	b = &BrandingTryPhoneNotificationTemplate{}
+	b.GetMessage()
+	b = nil
+	b.GetMessage()
+}
+
+func TestBrandingTryPhoneNotificationTemplate_GetTo(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingTryPhoneNotificationTemplate{To: &zeroValue}
+	b.GetTo()
+	b = &BrandingTryPhoneNotificationTemplate{}
+	b.GetTo()
+	b = nil
+	b.GetTo()
+}
+
+func TestBrandingTryPhoneNotificationTemplate_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingTryPhoneNotificationTemplate{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingTryPhoneProvider_GetCode(tt *testing.T) {
+	var zeroValue int
+	b := &BrandingTryPhoneProvider{Code: &zeroValue}
+	b.GetCode()
+	b = &BrandingTryPhoneProvider{}
+	b.GetCode()
+	b = nil
+	b.GetCode()
+}
+
+func TestBrandingTryPhoneProvider_GetDeliveryMethod(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingTryPhoneProvider{DeliveryMethod: &zeroValue}
+	b.GetDeliveryMethod()
+	b = &BrandingTryPhoneProvider{}
+	b.GetDeliveryMethod()
+	b = nil
+	b.GetDeliveryMethod()
+}
+
+func TestBrandingTryPhoneProvider_GetMessage(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingTryPhoneProvider{Message: &zeroValue}
+	b.GetMessage()
+	b = &BrandingTryPhoneProvider{}
+	b.GetMessage()
+	b = nil
+	b.GetMessage()
+}
+
+func TestBrandingTryPhoneProvider_GetTo(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingTryPhoneProvider{To: &zeroValue}
+	b.GetTo()
+	b = &BrandingTryPhoneProvider{}
+	b.GetTo()
+	b = nil
+	b.GetTo()
+}
+
+func TestBrandingTryPhoneProvider_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingTryPhoneProvider{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -5638,6 +6016,16 @@ func TestConnectionOptionsOAuth2_GetClientSecret(tt *testing.T) {
 	c.GetClientSecret()
 }
 
+func TestConnectionOptionsOAuth2_GetCustomHeaders(tt *testing.T) {
+	zeroValue := map[string]string{}
+	c := &ConnectionOptionsOAuth2{CustomHeaders: zeroValue}
+	c.GetCustomHeaders()
+	c = &ConnectionOptionsOAuth2{}
+	c.GetCustomHeaders()
+	c = nil
+	c.GetCustomHeaders()
+}
+
 func TestConnectionOptionsOAuth2_GetLogoURL(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOAuth2{LogoURL: &zeroValue}
@@ -8741,6 +9129,135 @@ func TestEnrollmentTicket_String(t *testing.T) {
 	}
 }
 
+func TestEventStream_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	e := &EventStream{CreatedAt: &zeroValue}
+	e.GetCreatedAt()
+	e = &EventStream{}
+	e.GetCreatedAt()
+	e = nil
+	e.GetCreatedAt()
+}
+
+func TestEventStream_GetDestination(tt *testing.T) {
+	e := &EventStream{}
+	e.GetDestination()
+	e = nil
+	e.GetDestination()
+}
+
+func TestEventStream_GetID(tt *testing.T) {
+	var zeroValue string
+	e := &EventStream{ID: &zeroValue}
+	e.GetID()
+	e = &EventStream{}
+	e.GetID()
+	e = nil
+	e.GetID()
+}
+
+func TestEventStream_GetName(tt *testing.T) {
+	var zeroValue string
+	e := &EventStream{Name: &zeroValue}
+	e.GetName()
+	e = &EventStream{}
+	e.GetName()
+	e = nil
+	e.GetName()
+}
+
+func TestEventStream_GetStatus(tt *testing.T) {
+	var zeroValue string
+	e := &EventStream{Status: &zeroValue}
+	e.GetStatus()
+	e = &EventStream{}
+	e.GetStatus()
+	e = nil
+	e.GetStatus()
+}
+
+func TestEventStream_GetSubscriptions(tt *testing.T) {
+	var zeroValue []EventStreamSubscription
+	e := &EventStream{Subscriptions: &zeroValue}
+	e.GetSubscriptions()
+	e = &EventStream{}
+	e.GetSubscriptions()
+	e = nil
+	e.GetSubscriptions()
+}
+
+func TestEventStream_GetUpdatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	e := &EventStream{UpdatedAt: &zeroValue}
+	e.GetUpdatedAt()
+	e = &EventStream{}
+	e.GetUpdatedAt()
+	e = nil
+	e.GetUpdatedAt()
+}
+
+func TestEventStream_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventStream{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventStreamDestination_GetEventStreamDestinationConfiguration(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	e := &EventStreamDestination{EventStreamDestinationConfiguration: zeroValue}
+	e.GetEventStreamDestinationConfiguration()
+	e = &EventStreamDestination{}
+	e.GetEventStreamDestinationConfiguration()
+	e = nil
+	e.GetEventStreamDestinationConfiguration()
+}
+
+func TestEventStreamDestination_GetEventStreamDestinationType(tt *testing.T) {
+	var zeroValue string
+	e := &EventStreamDestination{EventStreamDestinationType: &zeroValue}
+	e.GetEventStreamDestinationType()
+	e = &EventStreamDestination{}
+	e.GetEventStreamDestinationType()
+	e = nil
+	e.GetEventStreamDestinationType()
+}
+
+func TestEventStreamDestination_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventStreamDestination{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventStreamList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventStreamList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventStreamSubscription_GetEventStreamSubscriptionType(tt *testing.T) {
+	var zeroValue string
+	e := &EventStreamSubscription{EventStreamSubscriptionType: &zeroValue}
+	e.GetEventStreamSubscriptionType()
+	e = &EventStreamSubscription{}
+	e.GetEventStreamSubscriptionType()
+	e = nil
+	e.GetEventStreamSubscriptionType()
+}
+
+func TestEventStreamSubscription_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventStreamSubscription{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestFirebaseClientAddon_GetClientEmail(tt *testing.T) {
 	var zeroValue string
 	f := &FirebaseClientAddon{ClientEmail: &zeroValue}
@@ -10558,6 +11075,24 @@ func TestMultiFactorPushDirectFCM_GetServerKey(tt *testing.T) {
 func TestMultiFactorPushDirectFCM_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorPushDirectFCM{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestMultiFactorPushDirectFCMv1_GetServerCredentials(tt *testing.T) {
+	var zeroValue string
+	m := &MultiFactorPushDirectFCMv1{ServerCredentials: &zeroValue}
+	m.GetServerCredentials()
+	m = &MultiFactorPushDirectFCMv1{}
+	m.GetServerCredentials()
+	m = nil
+	m.GetServerCredentials()
+}
+
+func TestMultiFactorPushDirectFCMv1_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MultiFactorPushDirectFCMv1{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -13880,6 +14415,13 @@ func TestTenant_GetMTLS(tt *testing.T) {
 	t.GetMTLS()
 }
 
+func TestTenant_GetOIDCLogout(tt *testing.T) {
+	t := &Tenant{}
+	t.GetOIDCLogout()
+	t = nil
+	t.GetOIDCLogout()
+}
+
 func TestTenant_GetPictureURL(tt *testing.T) {
 	var zeroValue string
 	t := &Tenant{PictureURL: &zeroValue}
@@ -14402,6 +14944,24 @@ func TestTenantMTLSConfiguration_GetEnableEndpointAliases(tt *testing.T) {
 func TestTenantMTLSConfiguration_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TenantMTLSConfiguration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTenantOIDCLogout_GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantOIDCLogout{OIDCResourceProviderLogoutEndSessionEndpointDiscovery: &zeroValue}
+	t.GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery()
+	t = &TenantOIDCLogout{}
+	t.GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery()
+	t = nil
+	t.GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery()
+}
+
+func TestTenantOIDCLogout_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TenantOIDCLogout{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
