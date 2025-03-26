@@ -1435,6 +1435,19 @@ func (b *BreachedPasswordDetection) String() string {
 }
 
 // GetShields returns the Shields field if it's non-nil, zero value otherwise.
+func (b *BreachedPasswordDetectionPreChangePassword) GetShields() []string {
+	if b == nil || b.Shields == nil {
+		return nil
+	}
+	return *b.Shields
+}
+
+// String returns a string representation of BreachedPasswordDetectionPreChangePassword.
+func (b *BreachedPasswordDetectionPreChangePassword) String() string {
+	return Stringify(b)
+}
+
+// GetShields returns the Shields field if it's non-nil, zero value otherwise.
 func (b *BreachedPasswordDetectionPreUserRegistration) GetShields() []string {
 	if b == nil || b.Shields == nil {
 		return nil
@@ -1445,6 +1458,14 @@ func (b *BreachedPasswordDetectionPreUserRegistration) GetShields() []string {
 // String returns a string representation of BreachedPasswordDetectionPreUserRegistration.
 func (b *BreachedPasswordDetectionPreUserRegistration) String() string {
 	return Stringify(b)
+}
+
+// GetPreChangePassword returns the PreChangePassword field.
+func (b *BreachedPasswordDetectionStage) GetPreChangePassword() *BreachedPasswordDetectionPreChangePassword {
+	if b == nil {
+		return nil
+	}
+	return b.PreChangePassword
 }
 
 // GetPreUserRegistration returns the PreUserRegistration field.

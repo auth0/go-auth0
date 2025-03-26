@@ -1833,6 +1833,24 @@ func TestBreachedPasswordDetection_String(t *testing.T) {
 	}
 }
 
+func TestBreachedPasswordDetectionPreChangePassword_GetShields(tt *testing.T) {
+	var zeroValue []string
+	b := &BreachedPasswordDetectionPreChangePassword{Shields: &zeroValue}
+	b.GetShields()
+	b = &BreachedPasswordDetectionPreChangePassword{}
+	b.GetShields()
+	b = nil
+	b.GetShields()
+}
+
+func TestBreachedPasswordDetectionPreChangePassword_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BreachedPasswordDetectionPreChangePassword{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBreachedPasswordDetectionPreUserRegistration_GetShields(tt *testing.T) {
 	var zeroValue []string
 	b := &BreachedPasswordDetectionPreUserRegistration{Shields: &zeroValue}
@@ -1849,6 +1867,13 @@ func TestBreachedPasswordDetectionPreUserRegistration_String(t *testing.T) {
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
+}
+
+func TestBreachedPasswordDetectionStage_GetPreChangePassword(tt *testing.T) {
+	b := &BreachedPasswordDetectionStage{}
+	b.GetPreChangePassword()
+	b = nil
+	b.GetPreChangePassword()
 }
 
 func TestBreachedPasswordDetectionStage_GetPreUserRegistration(tt *testing.T) {
