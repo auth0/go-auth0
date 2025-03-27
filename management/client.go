@@ -520,8 +520,9 @@ type SalesforceSandboxAPIClientAddon struct {
 type SAML2ClientAddon struct {
 	// The mappings between the Auth0 user profile and the output attributes on the SAML Assertion.
 	// Each "name" represents the property name on the Auth0 user profile.
+	// Each "value" can be a string or an array of strings if multiple values are expected.
 	// Each "value" is the name (including namespace) for the resulting SAML attribute in the assertion.
-	Mappings *map[string]string `json:"mappings,omitempty"`
+	Mappings *map[string]interface{} `json:"mappings,omitempty"`
 	// The audience of the SAML Assertion.
 	Audience *string `json:"audience,omitempty"`
 	// The recipient of the SAML Assertion.

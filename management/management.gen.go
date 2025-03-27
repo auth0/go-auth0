@@ -10558,9 +10558,9 @@ func (s *SAML2ClientAddon) GetMapIdentities() bool {
 }
 
 // GetMappings returns the Mappings field if it's non-nil, zero value otherwise.
-func (s *SAML2ClientAddon) GetMappings() map[string]string {
+func (s *SAML2ClientAddon) GetMappings() map[string]interface{} {
 	if s == nil || s.Mappings == nil {
-		return map[string]string{}
+		return map[string]interface{}{}
 	}
 	return *s.Mappings
 }
