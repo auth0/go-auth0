@@ -43,8 +43,10 @@ var connectionTestCases = []connectionTestCase{
 					"alias": "login_hint",
 				},
 			},
-			CustomHeaders: map[string]string{
-				"X-Auth0-Client": "my-client",
+			CustomHeaders: &[]map[string]string{
+				{
+					"X-Auth0-Client": "my-client",
+				},
 			},
 		},
 	},
