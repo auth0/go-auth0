@@ -1435,6 +1435,19 @@ func (b *BreachedPasswordDetection) String() string {
 }
 
 // GetShields returns the Shields field if it's non-nil, zero value otherwise.
+func (b *BreachedPasswordDetectionPreChangePassword) GetShields() []string {
+	if b == nil || b.Shields == nil {
+		return nil
+	}
+	return *b.Shields
+}
+
+// String returns a string representation of BreachedPasswordDetectionPreChangePassword.
+func (b *BreachedPasswordDetectionPreChangePassword) String() string {
+	return Stringify(b)
+}
+
+// GetShields returns the Shields field if it's non-nil, zero value otherwise.
 func (b *BreachedPasswordDetectionPreUserRegistration) GetShields() []string {
 	if b == nil || b.Shields == nil {
 		return nil
@@ -1445,6 +1458,14 @@ func (b *BreachedPasswordDetectionPreUserRegistration) GetShields() []string {
 // String returns a string representation of BreachedPasswordDetectionPreUserRegistration.
 func (b *BreachedPasswordDetectionPreUserRegistration) String() string {
 	return Stringify(b)
+}
+
+// GetPreChangePassword returns the PreChangePassword field.
+func (b *BreachedPasswordDetectionStage) GetPreChangePassword() *BreachedPasswordDetectionPreChangePassword {
+	if b == nil {
+		return nil
+	}
+	return b.PreChangePassword
 }
 
 // GetPreUserRegistration returns the PreUserRegistration field.
@@ -8930,6 +8951,218 @@ func (m *MultiFactorWebAuthnSettings) String() string {
 	return Stringify(m)
 }
 
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (n *NetworkACL) GetActive() bool {
+	if n == nil || n.Active == nil {
+		return false
+	}
+	return *n.Active
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (n *NetworkACL) GetCreatedAt() string {
+	if n == nil || n.CreatedAt == nil {
+		return ""
+	}
+	return *n.CreatedAt
+}
+
+// GetDescription returns the Description field if it's non-nil, zero value otherwise.
+func (n *NetworkACL) GetDescription() string {
+	if n == nil || n.Description == nil {
+		return ""
+	}
+	return *n.Description
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (n *NetworkACL) GetID() string {
+	if n == nil || n.ID == nil {
+		return ""
+	}
+	return *n.ID
+}
+
+// GetPriority returns the Priority field if it's non-nil, zero value otherwise.
+func (n *NetworkACL) GetPriority() int {
+	if n == nil || n.Priority == nil {
+		return 0
+	}
+	return *n.Priority
+}
+
+// GetRule returns the Rule field.
+func (n *NetworkACL) GetRule() *NetworkACLRule {
+	if n == nil {
+		return nil
+	}
+	return n.Rule
+}
+
+// GetUpdatedAt returns the UpdatedAt field if it's non-nil, zero value otherwise.
+func (n *NetworkACL) GetUpdatedAt() string {
+	if n == nil || n.UpdatedAt == nil {
+		return ""
+	}
+	return *n.UpdatedAt
+}
+
+// String returns a string representation of NetworkACL.
+func (n *NetworkACL) String() string {
+	return Stringify(n)
+}
+
+// GetAction returns the Action field.
+func (n *NetworkACLRule) GetAction() *NetworkACLRuleAction {
+	if n == nil {
+		return nil
+	}
+	return n.Action
+}
+
+// GetMatch returns the Match field.
+func (n *NetworkACLRule) GetMatch() *NetworkACLRuleMatch {
+	if n == nil {
+		return nil
+	}
+	return n.Match
+}
+
+// GetNotMatch returns the NotMatch field.
+func (n *NetworkACLRule) GetNotMatch() *NetworkACLRuleMatch {
+	if n == nil {
+		return nil
+	}
+	return n.NotMatch
+}
+
+// GetScope returns the Scope field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRule) GetScope() string {
+	if n == nil || n.Scope == nil {
+		return ""
+	}
+	return *n.Scope
+}
+
+// String returns a string representation of NetworkACLRule.
+func (n *NetworkACLRule) String() string {
+	return Stringify(n)
+}
+
+// GetAllow returns the Allow field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleAction) GetAllow() bool {
+	if n == nil || n.Allow == nil {
+		return false
+	}
+	return *n.Allow
+}
+
+// GetBlock returns the Block field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleAction) GetBlock() bool {
+	if n == nil || n.Block == nil {
+		return false
+	}
+	return *n.Block
+}
+
+// GetLog returns the Log field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleAction) GetLog() bool {
+	if n == nil || n.Log == nil {
+		return false
+	}
+	return *n.Log
+}
+
+// GetRedirect returns the Redirect field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleAction) GetRedirect() bool {
+	if n == nil || n.Redirect == nil {
+		return false
+	}
+	return *n.Redirect
+}
+
+// GetRedirectURI returns the RedirectURI field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleAction) GetRedirectURI() string {
+	if n == nil || n.RedirectURI == nil {
+		return ""
+	}
+	return *n.RedirectURI
+}
+
+// String returns a string representation of NetworkACLRuleAction.
+func (n *NetworkACLRuleAction) String() string {
+	return Stringify(n)
+}
+
+// GetAnonymousProxy returns the AnonymousProxy field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleMatch) GetAnonymousProxy() bool {
+	if n == nil || n.AnonymousProxy == nil {
+		return false
+	}
+	return *n.AnonymousProxy
+}
+
+// GetGeoCountryCodes returns the GeoCountryCodes field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleMatch) GetGeoCountryCodes() []string {
+	if n == nil || n.GeoCountryCodes == nil {
+		return nil
+	}
+	return *n.GeoCountryCodes
+}
+
+// GetGeoSubdivisionCodes returns the GeoSubdivisionCodes field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleMatch) GetGeoSubdivisionCodes() []string {
+	if n == nil || n.GeoSubdivisionCodes == nil {
+		return nil
+	}
+	return *n.GeoSubdivisionCodes
+}
+
+// GetIPv4Cidrs returns the IPv4Cidrs field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleMatch) GetIPv4Cidrs() []string {
+	if n == nil || n.IPv4Cidrs == nil {
+		return nil
+	}
+	return *n.IPv4Cidrs
+}
+
+// GetIPv6Cidrs returns the IPv6Cidrs field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleMatch) GetIPv6Cidrs() []string {
+	if n == nil || n.IPv6Cidrs == nil {
+		return nil
+	}
+	return *n.IPv6Cidrs
+}
+
+// GetJa3Fingerprints returns the Ja3Fingerprints field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleMatch) GetJa3Fingerprints() []string {
+	if n == nil || n.Ja3Fingerprints == nil {
+		return nil
+	}
+	return *n.Ja3Fingerprints
+}
+
+// GetJa4Fingerprints returns the Ja4Fingerprints field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleMatch) GetJa4Fingerprints() []string {
+	if n == nil || n.Ja4Fingerprints == nil {
+		return nil
+	}
+	return *n.Ja4Fingerprints
+}
+
+// GetUserAgents returns the UserAgents field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleMatch) GetUserAgents() []string {
+	if n == nil || n.UserAgents == nil {
+		return nil
+	}
+	return *n.UserAgents
+}
+
+// String returns a string representation of NetworkACLRuleMatch.
+func (n *NetworkACLRuleMatch) String() string {
+	return Stringify(n)
+}
+
 // GetAccount returns the Account field if it's non-nil, zero value otherwise.
 func (n *NewRelicClientAddon) GetAccount() string {
 	if n == nil || n.Account == nil {
@@ -10758,6 +10991,14 @@ func (s *SelfServiceProfileTicket) GetConnectionID() string {
 	return *s.ConnectionID
 }
 
+// GetDomainAliasesConfig returns the DomainAliasesConfig field.
+func (s *SelfServiceProfileTicket) GetDomainAliasesConfig() *SelfServiceProfileTicketDomainAliasesConfig {
+	if s == nil {
+		return nil
+	}
+	return s.DomainAliasesConfig
+}
+
 // GetEnabledClients returns the EnabledClients field if it's non-nil, zero value otherwise.
 func (s *SelfServiceProfileTicket) GetEnabledClients() []string {
 	if s == nil || s.EnabledClients == nil {
@@ -10848,8 +11089,66 @@ func (s *SelfServiceProfileTicketConnectionConfigOptions) GetIconURL() string {
 	return *s.IconURL
 }
 
+// GetIDPInitiated returns the IDPInitiated field.
+func (s *SelfServiceProfileTicketConnectionConfigOptions) GetIDPInitiated() *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated {
+	if s == nil {
+		return nil
+	}
+	return s.IDPInitiated
+}
+
 // String returns a string representation of SelfServiceProfileTicketConnectionConfigOptions.
 func (s *SelfServiceProfileTicketConnectionConfigOptions) String() string {
+	return Stringify(s)
+}
+
+// GetClientAuthorizeQuery returns the ClientAuthorizeQuery field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated) GetClientAuthorizeQuery() string {
+	if s == nil || s.ClientAuthorizeQuery == nil {
+		return ""
+	}
+	return *s.ClientAuthorizeQuery
+}
+
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated) GetClientID() string {
+	if s == nil || s.ClientID == nil {
+		return ""
+	}
+	return *s.ClientID
+}
+
+// GetClientProtocol returns the ClientProtocol field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated) GetClientProtocol() string {
+	if s == nil || s.ClientProtocol == nil {
+		return ""
+	}
+	return *s.ClientProtocol
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated) GetEnabled() bool {
+	if s == nil || s.Enabled == nil {
+		return false
+	}
+	return *s.Enabled
+}
+
+// String returns a string representation of SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated.
+func (s *SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated) String() string {
+	return Stringify(s)
+}
+
+// GetDomainVerification returns the DomainVerification field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketDomainAliasesConfig) GetDomainVerification() string {
+	if s == nil || s.DomainVerification == nil {
+		return ""
+	}
+	return *s.DomainVerification
+}
+
+// String returns a string representation of SelfServiceProfileTicketDomainAliasesConfig.
+func (s *SelfServiceProfileTicketDomainAliasesConfig) String() string {
 	return Stringify(s)
 }
 
