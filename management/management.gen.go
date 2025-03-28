@@ -4870,12 +4870,12 @@ func (c *ConnectionOptionsOAuth2) GetClientSecret() string {
 	return *c.ClientSecret
 }
 
-// GetCustomHeaders returns the CustomHeaders map if it's non-nil, an empty map otherwise.
-func (c *ConnectionOptionsOAuth2) GetCustomHeaders() map[string]string {
+// GetCustomHeaders returns the CustomHeaders field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth2) GetCustomHeaders() []map[string]string {
 	if c == nil || c.CustomHeaders == nil {
-		return map[string]string{}
+		return []map[string]string{}
 	}
-	return c.CustomHeaders
+	return *c.CustomHeaders
 }
 
 // GetLogoURL returns the LogoURL field if it's non-nil, zero value otherwise.
