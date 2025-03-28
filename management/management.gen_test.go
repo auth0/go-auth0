@@ -13254,7 +13254,7 @@ func TestSAML2ClientAddon_GetMapIdentities(tt *testing.T) {
 }
 
 func TestSAML2ClientAddon_GetMappings(tt *testing.T) {
-	var zeroValue map[string]string
+	var zeroValue map[string]interface{}
 	s := &SAML2ClientAddon{Mappings: &zeroValue}
 	s.GetMappings()
 	s = &SAML2ClientAddon{}
