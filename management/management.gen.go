@@ -2415,6 +2415,14 @@ func (c *ClientRefreshToken) GetLeeway() int {
 	return *c.Leeway
 }
 
+// GetPolicies returns the Policies field if it's non-nil, zero value otherwise.
+func (c *ClientRefreshToken) GetPolicies() []ClientRefreshTokenPolicy {
+	if c == nil || c.Policies == nil {
+		return nil
+	}
+	return *c.Policies
+}
+
 // GetRotationType returns the RotationType field if it's non-nil, zero value otherwise.
 func (c *ClientRefreshToken) GetRotationType() string {
 	if c == nil || c.RotationType == nil {
@@ -2433,6 +2441,27 @@ func (c *ClientRefreshToken) GetTokenLifetime() int {
 
 // String returns a string representation of ClientRefreshToken.
 func (c *ClientRefreshToken) String() string {
+	return Stringify(c)
+}
+
+// GetAudience returns the Audience field if it's non-nil, zero value otherwise.
+func (c *ClientRefreshTokenPolicy) GetAudience() string {
+	if c == nil || c.Audience == nil {
+		return ""
+	}
+	return *c.Audience
+}
+
+// GetScope returns the Scope field if it's non-nil, zero value otherwise.
+func (c *ClientRefreshTokenPolicy) GetScope() []string {
+	if c == nil || c.Scope == nil {
+		return nil
+	}
+	return *c.Scope
+}
+
+// String returns a string representation of ClientRefreshTokenPolicy.
+func (c *ClientRefreshTokenPolicy) String() string {
 	return Stringify(c)
 }
 
