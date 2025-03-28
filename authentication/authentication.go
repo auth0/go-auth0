@@ -11,10 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/lestrrat-go/jwx/v2/jwa"
-	"github.com/lestrrat-go/jwx/v2/jwk"
-	"github.com/lestrrat-go/jwx/v2/jwt"
 
 	"github.com/auth0/go-auth0/authentication/oauth"
 	"github.com/auth0/go-auth0/internal/client"
@@ -256,8 +253,13 @@ func (a *Authentication) addClientAuthenticationToURLValues(params oauth.ClientA
 
 	switch {
 	case a.clientAssertionSigningKey != "" && a.clientAssertionSigningAlg != "":
-		clientAssertion, err := createClientAssertion(
-			a.clientAssertionSigningAlg,
+		alg, err := determineAlg(a.clientAssertionSigningAlg)
+		if err != nil {
+			return err
+		}
+
+		clientAssertion, err := client.CreateClientAssertion(
+			alg,
 			a.clientAssertionSigningKey,
 			clientID,
 			a.url.JoinPath("/").String(),
@@ -292,8 +294,13 @@ func (a *Authentication) addClientAuthenticationToClientAuthStruct(params *oauth
 	}
 
 	if a.clientAssertionSigningKey != "" && a.clientAssertionSigningAlg != "" {
-		clientAssertion, err := createClientAssertion(
-			a.clientAssertionSigningAlg,
+		alg, err := determineAlg(a.clientAssertionSigningAlg)
+		if err != nil {
+			return err
+		}
+
+		clientAssertion, err := client.CreateClientAssertion(
+			alg,
 			a.clientAssertionSigningKey,
 			params.ClientID,
 			a.url.JoinPath("/").String(),
@@ -322,35 +329,4 @@ func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
 	default:
 		return "", fmt.Errorf("Unsupported client assertion algorithm \"%s\" provided", alg)
 	}
-}
-
-func createClientAssertion(clientAssertionSigningAlg, clientAssertionSigningKey, clientID, domain string) (string, error) {
-	alg, err := determineAlg(clientAssertionSigningAlg)
-	if err != nil {
-		return "", err
-	}
-
-	key, err := jwk.ParseKey([]byte(clientAssertionSigningKey), jwk.WithPEM(true))
-	if err != nil {
-		return "", err
-	}
-
-	token, err := jwt.NewBuilder().
-		IssuedAt(time.Now()).
-		Subject(clientID).
-		JwtID(uuid.New().String()).
-		Issuer(clientID).
-		Claim("aud", domain).
-		Expiration(time.Now().Add(2 * time.Minute)).
-		Build()
-	if err != nil {
-		return "", err
-	}
-
-	b, err := jwt.Sign(token, jwt.WithKey(alg, key))
-	if err != nil {
-		return "", err
-	}
-
-	return string(b), nil
 }
