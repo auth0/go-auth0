@@ -142,6 +142,10 @@ type Client struct {
 	DefaultOrganization *ClientDefaultOrganization `json:"default_organization,omitempty"`
 
 	TokenExchange *ClientTokenExchange `json:"token_exchange,omitempty"`
+
+	// Session Transfer settings for the client - Allows Native to Web SSO
+	SessionTransfer *SessionTransfer `json:"session_transfer,omitempty"`
+
 }
 
 // ClientTokenExchange allows configuration for token exchange.
@@ -357,6 +361,14 @@ type BackChannelLogoutInitiators struct {
 	Mode               *string   `json:"mode,omitempty"`
 	SelectedInitiators *[]string `json:"selected_initiators,omitempty"`
 }
+
+// Session Transfer defines the setting to allow Native to Web SSO session transfer.
+type SessionTransfer struct {
+	CanCreateSessionTransferToken   *bool     `json:"can_create_session_transfer_token,omitempty"`
+	AllowedAuthenticationMethods    *[]string `json:"allowed_authentication_methods,omitempty"`
+	EnforceDeviceBinding            *string   `json:"enforce_device_binding,omitempty"`
+}
+
 
 // ClientAddons defines the `addons` settings for a Client.
 type ClientAddons struct {
