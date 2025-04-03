@@ -746,6 +746,46 @@ func (m *ClientManager) GetCredential(ctx context.Context, clientID string, cred
 	return
 }
 
+// GetSessionTransfer safely returns the SessionTransfer configuration.
+// If the Client or SessionTransfer is nil, it returns nil.
+func (c *Client) GetSessionTransfer() *SessionTransfer {
+	if c == nil || c.SessionTransfer == nil {
+		return nil
+	}
+	return c.SessionTransfer
+}
+
+// GetCanCreateSessionTransferToken safely returns the value of CanCreateSessionTransferToken.
+// If the SessionTransfer or the field is nil, it defaults to false.
+func (s *SessionTransfer) GetCanCreateSessionTransferToken() bool {
+	if s == nil || s.CanCreateSessionTransferToken == nil {
+		// Default to false if not set
+		return false
+	}
+	return *s.CanCreateSessionTransferToken
+}
+
+// GetAllowedAuthenticationMethods safely returns the list of allowed authentication methods.
+// If the SessionTransfer or the field is nil, it returns nil.
+func (s *SessionTransfer) GetAllowedAuthenticationMethods() []string {
+	if s == nil || s.AllowedAuthenticationMethods == nil {
+		// Return nil if the field is not set
+		return nil
+	}
+	return *s.AllowedAuthenticationMethods
+}
+
+// GetEnforceDeviceBinding safely returns the enforce device binding setting.
+// If the SessionTransfer or the field is nil, it returns an empty string.
+func (s *SessionTransfer) GetEnforceDeviceBinding() string {
+	if s == nil || s.EnforceDeviceBinding == nil {
+		// Return empty string if not set
+		return ""
+	}
+	return *s.EnforceDeviceBinding
+}
+
+
 // DeleteCredential deletes a client credentials object.
 func (m *ClientManager) DeleteCredential(ctx context.Context, clientID string, credentialID string, opts ...RequestOption) error {
 	return m.management.Request(ctx, "DELETE", m.management.URI("clients", clientID, "credentials", credentialID), nil, opts...)
