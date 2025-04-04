@@ -1870,6 +1870,14 @@ func (c *Client) GetTokenExchange() *ClientTokenExchange {
 	return c.TokenExchange
 }
 
+// GetTokenQouta returns the TokenQouta field.
+func (c *Client) GetTokenQouta() *ClientTokenQuota {
+	if c == nil {
+		return nil
+	}
+	return c.TokenQouta
+}
+
 // GetWebOrigins returns the WebOrigins field if it's non-nil, zero value otherwise.
 func (c *Client) GetWebOrigins() []string {
 	if c == nil || c.WebOrigins == nil {
@@ -2467,6 +2475,19 @@ func (c *ClientTokenExchange) GetAllowAnyProfileOfType() []string {
 
 // String returns a string representation of ClientTokenExchange.
 func (c *ClientTokenExchange) String() string {
+	return Stringify(c)
+}
+
+// GetClientCredentials returns the ClientCredentials field.
+func (c *ClientTokenQuota) GetClientCredentials() *TokenQuotaClientCredentials {
+	if c == nil {
+		return nil
+	}
+	return c.ClientCredentials
+}
+
+// String returns a string representation of ClientTokenQuota.
+func (c *ClientTokenQuota) String() string {
 	return Stringify(c)
 }
 
@@ -9242,6 +9263,14 @@ func (o *Organization) GetName() string {
 	return *o.Name
 }
 
+// GetTokenQuota returns the TokenQuota field.
+func (o *Organization) GetTokenQuota() *OrganizationTokenQuota {
+	if o == nil {
+		return nil
+	}
+	return o.TokenQuota
+}
+
 // String returns a string representation of Organization.
 func (o *Organization) String() string {
 	return Stringify(o)
@@ -9586,6 +9615,19 @@ func (o *OrganizationMemberRole) String() string {
 
 // String returns a string representation of OrganizationMemberRoleList.
 func (o *OrganizationMemberRoleList) String() string {
+	return Stringify(o)
+}
+
+// GetClientCredentials returns the ClientCredentials field.
+func (o *OrganizationTokenQuota) GetClientCredentials() *TokenQuotaClientCredentials {
+	if o == nil {
+		return nil
+	}
+	return o.ClientCredentials
+}
+
+// String returns a string representation of OrganizationTokenQuota.
+func (o *OrganizationTokenQuota) String() string {
 	return Stringify(o)
 }
 
@@ -11691,6 +11733,14 @@ func (t *Tenant) GetDefaultRedirectionURI() string {
 	return *t.DefaultRedirectionURI
 }
 
+// GetDefaultTokenQuota returns the DefaultTokenQuota field.
+func (t *Tenant) GetDefaultTokenQuota() *TenantDefaultTokenQuota {
+	if t == nil {
+		return nil
+	}
+	return t.DefaultTokenQuota
+}
+
 // GetDeviceFlow returns the DeviceFlow field.
 func (t *Tenant) GetDeviceFlow() *TenantDeviceFlow {
 	if t == nil {
@@ -11866,6 +11916,27 @@ func (t *TenantChangePassword) GetHTML() string {
 
 // String returns a string representation of TenantChangePassword.
 func (t *TenantChangePassword) String() string {
+	return Stringify(t)
+}
+
+// GetClients returns the Clients field.
+func (t *TenantDefaultTokenQuota) GetClients() *TenantTokenQuotaConfiguration {
+	if t == nil {
+		return nil
+	}
+	return t.Clients
+}
+
+// GetOrganizations returns the Organizations field.
+func (t *TenantDefaultTokenQuota) GetOrganizations() *TenantTokenQuotaConfiguration {
+	if t == nil {
+		return nil
+	}
+	return t.Organizations
+}
+
+// String returns a string representation of TenantDefaultTokenQuota.
+func (t *TenantDefaultTokenQuota) String() string {
 	return Stringify(t)
 }
 
@@ -12221,6 +12292,19 @@ func (t *TenantSessions) String() string {
 	return Stringify(t)
 }
 
+// GetClientCredentials returns the ClientCredentials field.
+func (t *TenantTokenQuotaConfiguration) GetClientCredentials() *TokenQuotaClientCredentials {
+	if t == nil {
+		return nil
+	}
+	return t.ClientCredentials
+}
+
+// String returns a string representation of TenantTokenQuotaConfiguration.
+func (t *TenantTokenQuotaConfiguration) String() string {
+	return Stringify(t)
+}
+
 // GetColors returns the Colors field.
 func (t *TenantUniversalLogin) GetColors() *TenantUniversalLoginColors {
 	if t == nil {
@@ -12424,6 +12508,35 @@ func (t *TokenExchangeProfile) String() string {
 
 // String returns a string representation of TokenExchangeProfileList.
 func (t *TokenExchangeProfileList) String() string {
+	return Stringify(t)
+}
+
+// GetEnforce returns the Enforce field if it's non-nil, zero value otherwise.
+func (t *TokenQuotaClientCredentials) GetEnforce() bool {
+	if t == nil || t.Enforce == nil {
+		return false
+	}
+	return *t.Enforce
+}
+
+// GetPerDay returns the PerDay field if it's non-nil, zero value otherwise.
+func (t *TokenQuotaClientCredentials) GetPerDay() int {
+	if t == nil || t.PerDay == nil {
+		return 0
+	}
+	return *t.PerDay
+}
+
+// GetPerHour returns the PerHour field if it's non-nil, zero value otherwise.
+func (t *TokenQuotaClientCredentials) GetPerHour() int {
+	if t == nil || t.PerHour == nil {
+		return 0
+	}
+	return *t.PerHour
+}
+
+// String returns a string representation of TokenQuotaClientCredentials.
+func (t *TokenQuotaClientCredentials) String() string {
 	return Stringify(t)
 }
 
