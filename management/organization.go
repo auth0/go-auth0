@@ -41,12 +41,7 @@ type Organization struct {
 	//
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
-	TokenQuota *OrganizationTokenQuota `json:"token_quota,omitempty"`
-}
-
-// OrganizationTokenQuota is used to configure token quota for Organization.
-type OrganizationTokenQuota struct {
-	ClientCredentials *TokenQuotaClientCredentials `json:"client_credentials,omitempty"`
+	TokenQuota *TokenQuota `json:"token_quota,omitempty"`
 }
 
 // OrganizationBranding holds branding information for an Organization.

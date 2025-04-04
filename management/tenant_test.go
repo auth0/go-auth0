@@ -51,14 +51,14 @@ func TestTenantManager(t *testing.T) {
 			EnableEndpointAliases: auth0.Bool(true),
 		},
 		DefaultTokenQuota: &TenantDefaultTokenQuota{
-			Clients: &TenantTokenQuotaConfiguration{
+			Clients: &TokenQuota{
 				&TokenQuotaClientCredentials{
 					Enforce: auth0.Bool(true),
 					PerDay:  auth0.Int(100),
 					PerHour: auth0.Int(10),
 				},
 			},
-			Organizations: &TenantTokenQuotaConfiguration{
+			Organizations: &TokenQuota{
 				&TokenQuotaClientCredentials{
 					Enforce: auth0.Bool(true),
 					PerDay:  auth0.Int(100),
@@ -136,14 +136,14 @@ func TestTenantManager_NullableFields(t *testing.T) {
 			EnableEndpointAliases: auth0.Bool(true),
 		},
 		DefaultTokenQuota: &TenantDefaultTokenQuota{
-			Clients: &TenantTokenQuotaConfiguration{
+			Clients: &TokenQuota{
 				&TokenQuotaClientCredentials{
 					Enforce: auth0.Bool(true),
 					PerDay:  auth0.Int(100),
 					PerHour: auth0.Int(10),
 				},
 			},
-			Organizations: &TenantTokenQuotaConfiguration{
+			Organizations: &TokenQuota{
 				&TokenQuotaClientCredentials{
 					Enforce: auth0.Bool(true),
 					PerDay:  auth0.Int(100),

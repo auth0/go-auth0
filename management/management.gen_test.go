@@ -2346,11 +2346,11 @@ func TestClient_GetTokenExchange(tt *testing.T) {
 	c.GetTokenExchange()
 }
 
-func TestClient_GetTokenQouta(tt *testing.T) {
+func TestClient_GetTokenQuota(tt *testing.T) {
 	c := &Client{}
-	c.GetTokenQouta()
+	c.GetTokenQuota()
 	c = nil
-	c.GetTokenQouta()
+	c.GetTokenQuota()
 }
 
 func TestClient_GetWebOrigins(tt *testing.T) {
@@ -3015,21 +3015,6 @@ func TestClientTokenExchange_GetAllowAnyProfileOfType(tt *testing.T) {
 func TestClientTokenExchange_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientTokenExchange{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestClientTokenQuota_GetClientCredentials(tt *testing.T) {
-	c := &ClientTokenQuota{}
-	c.GetClientCredentials()
-	c = nil
-	c.GetClientCredentials()
-}
-
-func TestClientTokenQuota_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &ClientTokenQuota{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -12040,21 +12025,6 @@ func TestOrganizationMemberRoleList_String(t *testing.T) {
 	}
 }
 
-func TestOrganizationTokenQuota_GetClientCredentials(tt *testing.T) {
-	o := &OrganizationTokenQuota{}
-	o.GetClientCredentials()
-	o = nil
-	o.GetClientCredentials()
-}
-
-func TestOrganizationTokenQuota_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &OrganizationTokenQuota{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestPasskeyAuthenticationMethod_GetEnabled(tt *testing.T) {
 	var zeroValue bool
 	p := &PasskeyAuthenticationMethod{Enabled: &zeroValue}
@@ -15416,21 +15386,6 @@ func TestTenantSessions_String(t *testing.T) {
 	}
 }
 
-func TestTenantTokenQuotaConfiguration_GetClientCredentials(tt *testing.T) {
-	t := &TenantTokenQuotaConfiguration{}
-	t.GetClientCredentials()
-	t = nil
-	t.GetClientCredentials()
-}
-
-func TestTenantTokenQuotaConfiguration_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &TenantTokenQuotaConfiguration{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestTenantUniversalLogin_GetColors(tt *testing.T) {
 	t := &TenantUniversalLogin{}
 	t.GetColors()
@@ -15688,6 +15643,21 @@ func TestTokenExchangeProfile_String(t *testing.T) {
 func TestTokenExchangeProfileList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TokenExchangeProfileList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTokenQuota_GetClientCredentials(tt *testing.T) {
+	t := &TokenQuota{}
+	t.GetClientCredentials()
+	t = nil
+	t.GetClientCredentials()
+}
+
+func TestTokenQuota_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TokenQuota{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

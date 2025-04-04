@@ -137,14 +137,14 @@ type Tenant struct {
 
 // TenantDefaultTokenQuota holds settings for the default token quota.
 type TenantDefaultTokenQuota struct {
-	// Token quota configuration for client credentials.
-	Clients *TenantTokenQuotaConfiguration `json:"clients,omitempty"`
+	// Token quota configuration for clients.
+	Clients *TokenQuota `json:"clients,omitempty"`
 	// Token quota configuration for organizations.
-	Organizations *TenantTokenQuotaConfiguration `json:"organizations,omitempty"`
+	Organizations *TokenQuota `json:"organizations,omitempty"`
 }
 
-// TenantTokenQuotaConfiguration holds settings for the token quota configuration.
-type TenantTokenQuotaConfiguration struct {
+// TokenQuota holds settings for the token quota configuration.
+type TokenQuota struct {
 	ClientCredentials *TokenQuotaClientCredentials `json:"client_credentials,omitempty"`
 }
 
