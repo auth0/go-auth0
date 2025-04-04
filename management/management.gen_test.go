@@ -2302,6 +2302,13 @@ func TestClient_GetRequirePushedAuthorizationRequests(tt *testing.T) {
 	c.GetRequirePushedAuthorizationRequests()
 }
 
+func TestClient_GetSessionTransfer(tt *testing.T) {
+	c := &Client{}
+	c.GetSessionTransfer()
+	c = nil
+	c.GetSessionTransfer()
+}
+
 func TestClient_GetSignedRequestObject(tt *testing.T) {
 	c := &Client{}
 	c.GetSignedRequestObject()
@@ -14321,6 +14328,44 @@ func TestSessionDevice_GetLastUserAgent(tt *testing.T) {
 func TestSessionDevice_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SessionDevice{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSessionTransfer_GetAllowedAuthenticationMethods(tt *testing.T) {
+	var zeroValue []string
+	s := &SessionTransfer{AllowedAuthenticationMethods: &zeroValue}
+	s.GetAllowedAuthenticationMethods()
+	s = &SessionTransfer{}
+	s.GetAllowedAuthenticationMethods()
+	s = nil
+	s.GetAllowedAuthenticationMethods()
+}
+
+func TestSessionTransfer_GetCanCreateSessionTransferToken(tt *testing.T) {
+	var zeroValue bool
+	s := &SessionTransfer{CanCreateSessionTransferToken: &zeroValue}
+	s.GetCanCreateSessionTransferToken()
+	s = &SessionTransfer{}
+	s.GetCanCreateSessionTransferToken()
+	s = nil
+	s.GetCanCreateSessionTransferToken()
+}
+
+func TestSessionTransfer_GetEnforceDeviceBinding(tt *testing.T) {
+	var zeroValue string
+	s := &SessionTransfer{EnforceDeviceBinding: &zeroValue}
+	s.GetEnforceDeviceBinding()
+	s = &SessionTransfer{}
+	s.GetEnforceDeviceBinding()
+	s = nil
+	s.GetEnforceDeviceBinding()
+}
+
+func TestSessionTransfer_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SessionTransfer{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

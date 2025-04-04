@@ -1830,6 +1830,14 @@ func (c *Client) GetRequirePushedAuthorizationRequests() bool {
 	return *c.RequirePushedAuthorizationRequests
 }
 
+// GetSessionTransfer returns the SessionTransfer field.
+func (c *Client) GetSessionTransfer() *SessionTransfer {
+	if c == nil {
+		return nil
+	}
+	return c.SessionTransfer
+}
+
 // GetSignedRequestObject returns the SignedRequestObject field.
 func (c *Client) GetSignedRequestObject() *ClientSignedRequestObject {
 	if c == nil {
@@ -11397,6 +11405,35 @@ func (s *SessionDevice) GetLastUserAgent() string {
 
 // String returns a string representation of SessionDevice.
 func (s *SessionDevice) String() string {
+	return Stringify(s)
+}
+
+// GetAllowedAuthenticationMethods returns the AllowedAuthenticationMethods field if it's non-nil, zero value otherwise.
+func (s *SessionTransfer) GetAllowedAuthenticationMethods() []string {
+	if s == nil || s.AllowedAuthenticationMethods == nil {
+		return nil
+	}
+	return *s.AllowedAuthenticationMethods
+}
+
+// GetCanCreateSessionTransferToken returns the CanCreateSessionTransferToken field if it's non-nil, zero value otherwise.
+func (s *SessionTransfer) GetCanCreateSessionTransferToken() bool {
+	if s == nil || s.CanCreateSessionTransferToken == nil {
+		return false
+	}
+	return *s.CanCreateSessionTransferToken
+}
+
+// GetEnforceDeviceBinding returns the EnforceDeviceBinding field if it's non-nil, zero value otherwise.
+func (s *SessionTransfer) GetEnforceDeviceBinding() string {
+	if s == nil || s.EnforceDeviceBinding == nil {
+		return ""
+	}
+	return *s.EnforceDeviceBinding
+}
+
+// String returns a string representation of SessionTransfer.
+func (s *SessionTransfer) String() string {
 	return Stringify(s)
 }
 

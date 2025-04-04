@@ -11,7 +11,6 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0"
-	
 )
 
 func TestClient_Create(t *testing.T) {
@@ -55,12 +54,14 @@ func TestClient_CreateWithTokenExchange(t *testing.T) {
 	})
 }
 
-
 func TestClient_SessionTransfer(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
+	ctx := context.Background()
+
+	clientName := auth0.Stringf("Test Client SessionTransfer (%s)", time.Now().Format(time.StampMilli))
 	expectedClient := &Client{
-		Name:        auth0.Stringf("Test Client SessionTransfer (%s)", time.Now().Format(time.StampMilli)),
+		Name:        clientName,
 		Description: auth0.String("This is a test client with Session Transfer."),
 		SessionTransfer: &SessionTransfer{
 			CanCreateSessionTransferToken: auth0.Bool(true),
@@ -69,60 +70,54 @@ func TestClient_SessionTransfer(t *testing.T) {
 		},
 	}
 
-	// Create the client
-	err := api.Client.Create(context.Background(), expectedClient)
-	require.NoError(t, err)
-	assert.NotEmpty(t, expectedClient.GetClientID())
+	// Create client
+	require.NoError(t, api.Client.Create(ctx, expectedClient))
+	require.NotEmpty(t, expectedClient.GetClientID())
 
 	t.Cleanup(func() {
 		cleanupClient(t, expectedClient.GetClientID())
 	})
 
-	// Read it back
-	actualClient, err := api.Client.Read(context.Background(), expectedClient.GetClientID())
+	// Verify creation
+	created, err := api.Client.Read(ctx, expectedClient.GetClientID())
 	require.NoError(t, err)
+	require.NotNil(t, created.SessionTransfer)
+	assert.Equal(t, expectedClient.GetSessionTransfer(), created.GetSessionTransfer())
 
-	assert.Equal(t, true, actualClient.SessionTransfer.GetCanCreateSessionTransferToken())
-	assert.Equal(t, []string{"cookie", "query"}, actualClient.GetSessionTransfer().GetAllowedAuthenticationMethods())
-	assert.Equal(t, "ip", actualClient.GetSessionTransfer().GetEnforceDeviceBinding())
-
-	// Update the field
-	updatedTransfer := &SessionTransfer{
+	// Update session transfer
+	created.SessionTransfer = &SessionTransfer{
 		CanCreateSessionTransferToken: auth0.Bool(false),
 		AllowedAuthenticationMethods:  &[]string{"cookie"},
 		EnforceDeviceBinding:          auth0.String("none"),
 	}
-	actualClient.SessionTransfer = updatedTransfer
 
-	// Strip read-only fields
-	actualClient.ClientID = nil
-	actualClient.SigningKeys = nil
-	if actualClient.JWTConfiguration != nil {
-		actualClient.JWTConfiguration.SecretEncoded = nil
+	// Strip fields not allowed on update
+	created.ClientID = nil
+	created.SigningKeys = nil
+	if created.JWTConfiguration != nil {
+		created.JWTConfiguration.SecretEncoded = nil
 	}
 
-	err = api.Client.Update(context.Background(), actualClient.GetClientID(), actualClient)
-	require.NoError(t, err)
+	require.NoError(t, api.Client.Update(ctx, expectedClient.GetClientID(), created))
 
-	// Read back updated
-	actualClient, err = api.Client.Read(context.Background(), expectedClient.GetClientID())
+	// Verify update
+	updated, err := api.Client.Read(ctx, expectedClient.GetClientID())
 	require.NoError(t, err)
+	require.NotNil(t, updated.SessionTransfer)
+	assert.Equal(t, created.GetSessionTransfer(), updated.GetSessionTransfer())
 
-	assert.Equal(t, false, actualClient.SessionTransfer.GetCanCreateSessionTransferToken())
-	assert.Equal(t, []string{"cookie"}, actualClient.GetSessionTransfer().GetAllowedAuthenticationMethods())
-	assert.Equal(t, "none", actualClient.GetSessionTransfer().GetEnforceDeviceBinding())
+	// Remove session transfer via PATCH
+	type clientPatch struct {
+		SessionTransfer *SessionTransfer `json:"session_transfer"`
+	}
+	patch := &clientPatch{SessionTransfer: nil}
+	require.NoError(t, api.Request(ctx, http.MethodPatch, api.URI("clients", expectedClient.GetClientID()), patch))
 
-	// Optional: unset it
-	actualClient.SessionTransfer = nil
-	err = api.Client.Update(context.Background(), expectedClient.GetClientID(), actualClient)
+	// Verify removal
+	final, err := api.Client.Read(ctx, expectedClient.GetClientID())
 	require.NoError(t, err)
-
-	// Confirm it’s gone
-	finalClient, err := api.Client.Read(context.Background(), expectedClient.GetClientID())
-	require.NoError(t, err)
-	assert.Nil(t, finalClient.SessionTransfer)
+	assert.Nil(t, final.GetSessionTransfer())
 }
-
 
 func TestClient_CreateWithDefaultOrg(t *testing.T) {
 	configureHTTPTestRecordings(t)
