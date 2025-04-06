@@ -366,3 +366,160 @@ func TestPrivateKeyJwtTokenSourceRefresh(t *testing.T) {
 	// Verify server received two requests
 	assert.Equal(t, 2, requestCount)
 }
+
+func TestPrivateKeyJwtTokenSourceErrors(t *testing.T) {
+	// Generate a test RSA key for valid cases
+	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	require.NoError(t, err)
+	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
+	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  "RSA PRIVATE KEY",
+		Bytes: privateKeyBytes,
+	})
+
+	t.Run("invalid algorithm", func(t *testing.T) {
+		ts := &privateKeyJwtTokenSource{
+			ctx:                       context.Background(),
+			uri:                       "https://example.com",
+			clientID:                  "client-id",
+			clientAssertionSigningAlg: "INVALID_ALG", // Invalid algorithm
+			clientAssertionSigningKey: string(privateKeyPEM),
+			audience:                  "audience",
+		}
+
+		_, err := ts.Token()
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "invalid algorithm")
+	})
+
+	t.Run("invalid URI", func(t *testing.T) {
+		ts := &privateKeyJwtTokenSource{
+			ctx:                       context.Background(),
+			uri:                       "://invalid-uri", // Invalid URI format
+			clientID:                  "client-id",
+			clientAssertionSigningAlg: "RS256",
+			clientAssertionSigningKey: string(privateKeyPEM),
+			audience:                  "audience",
+		}
+
+		_, err := ts.Token()
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "invalid URI")
+	})
+
+	t.Run("invalid signing key", func(t *testing.T) {
+		ts := &privateKeyJwtTokenSource{
+			ctx:                       context.Background(),
+			uri:                       "https://example.com",
+			clientID:                  "client-id",
+			clientAssertionSigningAlg: "RS256",
+			clientAssertionSigningKey: "not-a-valid-key", // Invalid key
+			audience:                  "audience",
+		}
+
+		_, err := ts.Token()
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "failed to create client assertion")
+	})
+
+	t.Run("token request failure", func(t *testing.T) {
+		// Create a server that returns an error
+		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(`{"error": "server_error"}`))
+		}))
+		defer server.Close()
+
+		ts := &privateKeyJwtTokenSource{
+			ctx:                       context.Background(),
+			uri:                       server.URL,
+			clientID:                  "client-id",
+			clientAssertionSigningAlg: "RS256",
+			clientAssertionSigningKey: string(privateKeyPEM),
+			audience:                  "audience",
+		}
+
+		_, err := ts.Token()
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "token request failed")
+	})
+
+	t.Run("connection refused error", func(t *testing.T) {
+		// Create a server, then immediately close it to simulate a connection refused error
+		server := httptest.NewServer(http.HandlerFunc(func(_ http.ResponseWriter, _ *http.Request) {}))
+		serverURL := server.URL
+		server.Close() // Close immediately to simulate connection failure
+
+		ts := &privateKeyJwtTokenSource{
+			ctx:                       context.Background(),
+			uri:                       serverURL,
+			clientID:                  "client-id",
+			clientAssertionSigningAlg: "RS256",
+			clientAssertionSigningKey: string(privateKeyPEM),
+			audience:                  "audience",
+		}
+
+		_, err := ts.Token()
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "token request failed")
+	})
+}
+
+func TestCreateClientAssertionErrors(t *testing.T) {
+	// Test with invalid key
+	t.Run("invalid key", func(t *testing.T) {
+		_, err := CreateClientAssertion(
+			jwa.RS256,
+			"not-a-valid-key",
+			"client-id",
+			"https://example.com/",
+		)
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "failed to parse signing key")
+	})
+
+	// Test with incompatible key type
+	t.Run("incompatible key type", func(t *testing.T) {
+		// Generate EC key
+		ecKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+		require.NoError(t, err)
+
+		ecKeyBytes, err := x509.MarshalECPrivateKey(ecKey)
+		require.NoError(t, err)
+
+		ecKeyPEM := pem.EncodeToMemory(&pem.Block{
+			Type:  "EC PRIVATE KEY",
+			Bytes: ecKeyBytes,
+		})
+
+		// Try to use EC key with RS256
+		_, err = CreateClientAssertion(
+			jwa.RS256,
+			string(ecKeyPEM),
+			"client-id",
+			"https://example.com/",
+		)
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "requires an RSA key")
+	})
+
+	// Test unsupported algorithm
+	t.Run("unsupported algorithm", func(t *testing.T) {
+		privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+		require.NoError(t, err)
+
+		privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
+		privateKeyPEM := pem.EncodeToMemory(&pem.Block{
+			Type:  "RSA PRIVATE KEY",
+			Bytes: privateKeyBytes,
+		})
+
+		key, err := jwk.ParseKey(privateKeyPEM, jwk.WithPEM(true))
+		require.NoError(t, err)
+
+		// Using an unsupported algorithm
+		err = verifyKeyCompatibility("unsupported" /* using string instead of jwa.SignatureAlgorithm */, key)
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "unsupported algorithm")
+	})
+}
