@@ -4,14 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"net/url"
 	"reflect"
 	"strings"
 	"time"
-
-	"github.com/lestrrat-go/jwx/v2/jwa"
 
 	"github.com/auth0/go-auth0/authentication/oauth"
 	"github.com/auth0/go-auth0/internal/client"
@@ -253,7 +250,7 @@ func (a *Authentication) addClientAuthenticationToURLValues(params oauth.ClientA
 
 	switch {
 	case a.clientAssertionSigningKey != "" && a.clientAssertionSigningAlg != "":
-		alg, err := determineAlg(a.clientAssertionSigningAlg)
+		alg, err := client.DetermineSigningAlgorithm(a.clientAssertionSigningAlg)
 		if err != nil {
 			return err
 		}
@@ -295,7 +292,7 @@ func (a *Authentication) addClientAuthenticationToClientAuthStruct(params *oauth
 	}
 
 	if a.clientAssertionSigningKey != "" && a.clientAssertionSigningAlg != "" {
-		alg, err := determineAlg(a.clientAssertionSigningAlg)
+		alg, err := client.DetermineSigningAlgorithm(a.clientAssertionSigningAlg)
 		if err != nil {
 			return err
 		}
@@ -322,29 +319,4 @@ func (a *Authentication) addClientAuthenticationToClientAuthStruct(params *oauth
 	}
 
 	return nil
-}
-
-func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
-	switch alg {
-	case "RS256":
-		return jwa.RS256, nil
-	case "RS384":
-		return jwa.RS384, nil
-	case "RS512":
-		return jwa.RS512, nil
-	case "PS256":
-		return jwa.PS256, nil
-	case "PS384":
-		return jwa.PS384, nil
-	case "PS512":
-		return jwa.PS512, nil
-	case "ES256":
-		return jwa.ES256, nil
-	case "ES384":
-		return jwa.ES384, nil
-	case "ES512":
-		return jwa.ES512, nil
-	default:
-		return "", fmt.Errorf("unsupported client assertion algorithm %q provided", alg)
-	}
 }

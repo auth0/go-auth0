@@ -46,7 +46,7 @@ func TestDetermineAlg(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			alg, err := determineAlg(tc.algorithm)
+			alg, err := DetermineSigningAlgorithm(tc.algorithm)
 
 			if tc.expectedError {
 				assert.Error(t, err)
@@ -84,7 +84,7 @@ func TestClientAssertion(t *testing.T) {
 	}
 
 	// Get the signed assertion
-	alg, err := determineAlg(ts.clientAssertionSigningAlg)
+	alg, err := DetermineSigningAlgorithm(ts.clientAssertionSigningAlg)
 	require.NoError(t, err)
 
 	baseURL, err := url.Parse(ts.uri)
@@ -149,7 +149,7 @@ func TestECClientAssertion(t *testing.T) {
 	}
 
 	// Get the signed assertion
-	alg, err := determineAlg(ts.clientAssertionSigningAlg)
+	alg, err := DetermineSigningAlgorithm(ts.clientAssertionSigningAlg)
 	require.NoError(t, err)
 
 	baseURL, err := url.Parse(ts.uri)
@@ -224,7 +224,7 @@ func TestIncompatibleKeyTypeForAlgorithm(t *testing.T) {
 	}
 
 	// Get the signed assertion
-	alg, err := determineAlg(ts.clientAssertionSigningAlg)
+	alg, err := DetermineSigningAlgorithm(ts.clientAssertionSigningAlg)
 	require.NoError(t, err)
 
 	baseURL, err := url.Parse(ts.uri)
@@ -312,58 +312,57 @@ func TestPrivateKeyJwtTokenSource(t *testing.T) {
 	assert.Equal(t, "Bearer", token.TokenType)
 }
 
-
 func TestPrivateKeyJwtTokenSourceRefresh(t *testing.T) {
-    // Generate a test RSA key
-    privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
-    require.NoError(t, err)
-    privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
-    privateKeyPEM := pem.EncodeToMemory(&pem.Block{
-        Type:  "RSA PRIVATE KEY",
-        Bytes: privateKeyBytes,
-    })
+	// Generate a test RSA key
+	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	require.NoError(t, err)
+	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
+	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  "RSA PRIVATE KEY",
+		Bytes: privateKeyBytes,
+	})
 
-    // Track token request count
-    requestCount := 0
-    
-    // Create a test server
-    server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        requestCount++
-        
-        // Return a token with short expiration
-        w.Header().Set("Content-Type", "application/json")
-        w.Write([]byte(fmt.Sprintf(`{
+	// Track token request count
+	requestCount := 0
+
+	// Create a test server
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		requestCount++
+
+		// Return a token with short expiration
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(fmt.Appendf(nil, `{
             "access_token": "mock-token-%d",
             "token_type": "Bearer",
             "expires_in": 2
-        }`, requestCount)))
-    }))
-    defer server.Close()
+        }`, requestCount))
+	}))
+	defer server.Close()
 
-    // Create token source
-    tokenSource := newPrivateKeyJwtTokenSource(
-        context.Background(),
-        server.URL,
-        "RS256",
-        string(privateKeyPEM),
-        "test-client-id",
-        "test-audience",
-    )
+	// Create token source
+	tokenSource := newPrivateKeyJwtTokenSource(
+		context.Background(),
+		server.URL,
+		"RS256",
+		string(privateKeyPEM),
+		"test-client-id",
+		"test-audience",
+	)
 
-    // Get first token
-    token1, err := tokenSource.Token()
-    require.NoError(t, err)
-    assert.Equal(t, "mock-token-1", token1.AccessToken)
-    
-    // Wait for token to expire (just over 2 seconds)
-    time.Sleep(3 * time.Second)
-    
-    // Get second token - should trigger a refresh
-    token2, err := tokenSource.Token()
-    require.NoError(t, err)
-    assert.Equal(t, "mock-token-2", token2.AccessToken)
-    assert.NotEqual(t, token1.AccessToken, token2.AccessToken)
-    
-    // Verify server received two requests
-    assert.Equal(t, 2, requestCount)
+	// Get first token
+	token1, err := tokenSource.Token()
+	require.NoError(t, err)
+	assert.Equal(t, "mock-token-1", token1.AccessToken)
+
+	// Wait for token to expire (just over 2 seconds)
+	time.Sleep(3 * time.Second)
+
+	// Get second token - should trigger a refresh
+	token2, err := tokenSource.Token()
+	require.NoError(t, err)
+	assert.Equal(t, "mock-token-2", token2.AccessToken)
+	assert.NotEqual(t, token1.AccessToken, token2.AccessToken)
+
+	// Verify server received two requests
+	assert.Equal(t, 2, requestCount)
 }

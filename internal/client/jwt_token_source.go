@@ -14,7 +14,7 @@ import (
 	"golang.org/x/oauth2/clientcredentials"
 )
 
-// privateKeyJwtTokenSource implements oauth2.TokenSource for Private Key JWT client authentication
+// privateKeyJwtTokenSource implements oauth2.TokenSource for Private Key JWT client authentication.
 type privateKeyJwtTokenSource struct {
 	ctx                       context.Context
 	uri                       string
@@ -24,7 +24,7 @@ type privateKeyJwtTokenSource struct {
 	audience                  string
 }
 
-// newPrivateKeyJwtTokenSource creates a new token source that uses Private Key JWT authentication
+// newPrivateKeyJwtTokenSource creates a new token source that uses Private Key JWT authentication.
 func newPrivateKeyJwtTokenSource(
 	ctx context.Context,
 	uri,
@@ -45,9 +45,9 @@ func newPrivateKeyJwtTokenSource(
 	return oauth2.ReuseTokenSource(nil, source)
 }
 
-// Token generates a new token using Private Key JWT client authentication
+// Token generates a new token using Private Key JWT client authentication.
 func (p privateKeyJwtTokenSource) Token() (*oauth2.Token, error) {
-	alg, err := determineAlg(p.clientAssertionSigningAlg)
+	alg, err := DetermineSigningAlgorithm(p.clientAssertionSigningAlg)
 	if err != nil {
 		return nil, fmt.Errorf("invalid algorithm: %w", err)
 	}
@@ -86,8 +86,8 @@ func (p privateKeyJwtTokenSource) Token() (*oauth2.Token, error) {
 	return token, nil
 }
 
-// determineAlg returns the appropriate JWA signature algorithm based on the string representation
-func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
+// DetermineSigningAlgorithm returns the appropriate JWA signature algorithm based on the string representation.
+func DetermineSigningAlgorithm(alg string) (jwa.SignatureAlgorithm, error) {
 	switch alg {
 	case "RS256":
 		return jwa.RS256, nil
@@ -112,7 +112,7 @@ func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
 	}
 }
 
-// CreateClientAssertion creates a JWT token for client authentication with the specified lifetime
+// CreateClientAssertion creates a JWT token for client authentication with the specified lifetime.
 func CreateClientAssertion(alg jwa.SignatureAlgorithm, signingKey, clientID, audience string) (string, error) {
 	key, err := jwk.ParseKey([]byte(signingKey), jwk.WithPEM(true))
 	if err != nil {
@@ -146,7 +146,7 @@ func CreateClientAssertion(alg jwa.SignatureAlgorithm, signingKey, clientID, aud
 	return string(signedToken), nil
 }
 
-// verifyKeyCompatibility checks if the provided key is compatible with the specified algorithm
+// verifyKeyCompatibility checks if the provided key is compatible with the specified algorithm.
 func verifyKeyCompatibility(alg jwa.SignatureAlgorithm, key jwk.Key) error {
 	keyType := key.KeyType()
 
