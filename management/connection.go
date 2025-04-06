@@ -153,7 +153,8 @@ type Connection struct {
 	// Provisioning Ticket URL is Ticket URL for Active Directory/LDAP, etc.
 	ProvisioningTicketURL *string `json:"provisioning_ticket_url,omitempty"`
 
-	// Display connection as a button.
+	// ShowAsButton Display connection as a button.
+	// Enable showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to false.)
 	ShowAsButton *bool `json:"show_as_button,omitempty"`
 }
 
@@ -1143,7 +1144,7 @@ type ConnectionOptionsOAuth2 struct {
 	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 
 	// CustomHeaders specifies custom headers.
-	CustomHeaders map[string]string `json:"custom_headers,omitempty"`
+	CustomHeaders *[]map[string]string `json:"custom_headers,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface for ConnectionOptionsOAuth2.
