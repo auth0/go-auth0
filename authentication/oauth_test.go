@@ -318,7 +318,7 @@ func TestLoginWithClientCredentials(t *testing.T) {
 			Audience: "test-audience",
 		}, oauth.IDTokenValidationOptions{})
 
-		assert.ErrorContains(t, err, "Unsupported client assertion algorithm \"invalid-alg\" provided")
+		assert.ErrorContains(t, err, "unsupported client assertion algorithm \"invalid-alg\" provided")
 	})
 
 	t.Run("Should support passing an organization", func(t *testing.T) {

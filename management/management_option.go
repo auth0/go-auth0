@@ -50,17 +50,17 @@ func WithClientCredentialsAndAudience(ctx context.Context, clientID, clientSecre
 
 // WithClientCredentialsPrivateKeyJwt configures management to authenticate using the client
 // credentials with Private Key JWT authentication flow.
-func WithClientCredentialsPrivateKeyJwt(ctx context.Context, clientAssertionSigningAlg, clientAssertionSigningKey, clientID string) Option {
+func WithClientCredentialsPrivateKeyJwt(ctx context.Context, clientID, clientAssertionSigningKey, clientAssertionSigningAlg string) Option {
 	return func(m *Management) {
-		m.tokenSource = client.OAuth2ClientCredentialsPrivateKeyJwt(ctx, m.url.String(), clientAssertionSigningAlg, clientAssertionSigningKey, clientID)
+		m.tokenSource = client.OAuth2ClientCredentialsPrivateKeyJwt(ctx, m.url.String(), clientID, clientAssertionSigningKey, clientAssertionSigningAlg)
 	}
 }
 
 // WithClientCredentialsPrivateKeyJwtAndAudience configures management to authenticate using the client
 // credentials with Private Key JWT authentication flow and custom audience.
-func WithClientCredentialsPrivateKeyJwtAndAudience(ctx context.Context, clientAssertionSigningAlg, clientAssertionSigningKey, clientID, audience string) Option {
+func WithClientCredentialsPrivateKeyJwtAndAudience(ctx context.Context, clientID, clientAssertionSigningKey, clientAssertionSigningAlg, audience string) Option {
 	return func(m *Management) {
-		m.tokenSource = client.OAuth2ClientCredentialsPrivateKeyJwtAndAudience(ctx, m.url.String(), clientAssertionSigningAlg, clientAssertionSigningKey, clientID, audience)
+		m.tokenSource = client.OAuth2ClientCredentialsPrivateKeyJwtAndAudience(ctx, m.url.String(), clientID, clientAssertionSigningKey, clientAssertionSigningAlg, audience)
 	}
 }
 

@@ -258,6 +258,7 @@ func (a *Authentication) addClientAuthenticationToURLValues(params oauth.ClientA
 			return err
 		}
 
+		// Using the improved createClientAssertion with a standard lifetime
 		clientAssertion, err := client.CreateClientAssertion(
 			alg,
 			a.clientAssertionSigningKey,
@@ -299,6 +300,7 @@ func (a *Authentication) addClientAuthenticationToClientAuthStruct(params *oauth
 			return err
 		}
 
+		// Using the improved createClientAssertion with a standard lifetime
 		clientAssertion, err := client.CreateClientAssertion(
 			alg,
 			a.clientAssertionSigningKey,
@@ -326,7 +328,23 @@ func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
 	switch alg {
 	case "RS256":
 		return jwa.RS256, nil
+	case "RS384":
+		return jwa.RS384, nil
+	case "RS512":
+		return jwa.RS512, nil
+	case "PS256":
+		return jwa.PS256, nil
+	case "PS384":
+		return jwa.PS384, nil
+	case "PS512":
+		return jwa.PS512, nil
+	case "ES256":
+		return jwa.ES256, nil
+	case "ES384":
+		return jwa.ES384, nil
+	case "ES512":
+		return jwa.ES512, nil
 	default:
-		return "", fmt.Errorf("Unsupported client assertion algorithm \"%s\" provided", alg)
+		return "", fmt.Errorf("unsupported client assertion algorithm %q provided", alg)
 	}
 }
