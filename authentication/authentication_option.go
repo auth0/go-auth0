@@ -83,6 +83,26 @@ func WithRetries(maxRetries int, statuses []int) Option {
 	}
 }
 
+// RetryStrategy defines the retry rules that should be followed by the SDK when making requests.
+type RetryStrategy struct {
+	MaxRetries int
+	Statuses   []int
+
+	// PerAttemptTimeout can optionally be set to timeout individual API requests.
+	PerAttemptTimeout time.Duration
+}
+
+// WithRetryStrategy configures the management client to only retry under the conditions provided.
+func WithRetryStrategy(retryStrategy RetryStrategy) Option {
+	return func(a *Authentication) {
+		a.retryStrategy = client.RetryOptions{
+			MaxRetries:        retryStrategy.MaxRetries,
+			Statuses:          retryStrategy.Statuses,
+			PerAttemptTimeout: retryStrategy.PerAttemptTimeout,
+		}
+	}
+}
+
 // WithNoRetries configures the management client to only retry under the conditions provided.
 func WithNoRetries() Option {
 	return func(a *Authentication) {

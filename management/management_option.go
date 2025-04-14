@@ -3,6 +3,7 @@ package management
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/auth0/go-auth0/internal/client"
 )
@@ -119,6 +120,26 @@ func WithRetries(maxRetries int, statuses []int) Option {
 		m.retryStrategy = client.RetryOptions{
 			MaxRetries: maxRetries,
 			Statuses:   statuses,
+		}
+	}
+}
+
+// RetryStrategy defines the retry rules that should be followed by the SDK when making requests.
+type RetryStrategy struct {
+	MaxRetries int
+	Statuses   []int
+
+	// PerAttemptTimeout can optionally be set to timeout individual API requests.
+	PerAttemptTimeout time.Duration
+}
+
+// WithRetryStrategy configures the management client to only retry under the conditions provided.
+func WithRetryStrategy(retryStrategy RetryStrategy) Option {
+	return func(m *Management) {
+		m.retryStrategy = client.RetryOptions{
+			MaxRetries:        retryStrategy.MaxRetries,
+			Statuses:          retryStrategy.Statuses,
+			PerAttemptTimeout: retryStrategy.PerAttemptTimeout,
 		}
 	}
 }
