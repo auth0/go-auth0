@@ -30,6 +30,34 @@ func TestClient_Create(t *testing.T) {
 	})
 }
 
+func TestClient_CreateWithClientRefreshToken(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedClient := &Client{
+		Name:        auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
+		Description: auth0.String("This is just a test client."),
+		RefreshToken: &ClientRefreshToken{
+			ExpirationType: auth0.String("expiring"),
+			RotationType:   auth0.String("non-rotating"),
+			Policies: &[]ClientRefreshTokenPolicy{
+				{
+					Audience: auth0.String("https://periscope"),
+					Scope:    &[]string{"create:bar"},
+				},
+			},
+		},
+	}
+	err := api.Client.Create(context.Background(), expectedClient)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedClient.GetClientID())
+	actualClient, err := api.Client.Read(context.Background(), expectedClient.GetClientID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedClient.GetRefreshToken(), actualClient.GetRefreshToken())
+	t.Cleanup(func() {
+		cleanupClient(t, expectedClient.GetClientID())
+	})
+}
+
 func TestClient_CreateWithTokenExchange(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -45,7 +73,6 @@ func TestClient_CreateWithTokenExchange(t *testing.T) {
 	err := api.Client.Create(context.Background(), expectedClient)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, expectedClient.GetClientID())
-
 	actualClient, err := api.Client.Read(context.Background(), expectedClient.GetClientID())
 	assert.NoError(t, err)
 	assert.Equal(t, expectedClient.GetTokenExchange(), actualClient.GetTokenExchange())
