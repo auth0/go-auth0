@@ -3384,6 +3384,16 @@ func TestConnectionOptions_GetPrecedence(tt *testing.T) {
 	c.GetPrecedence()
 }
 
+func TestConnectionOptions_GetRealmFallback(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptions{RealmFallback: &zeroValue}
+	c.GetRealmFallback()
+	c = &ConnectionOptions{}
+	c.GetRealmFallback()
+	c = nil
+	c.GetRealmFallback()
+}
+
 func TestConnectionOptions_GetRequiresUsername(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptions{RequiresUsername: &zeroValue}
