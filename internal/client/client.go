@@ -57,6 +57,9 @@ var DefaultAuth0ClientInfo = &Auth0ClientInfo{
 type RetryOptions struct {
 	MaxRetries int
 	Statuses   []int
+
+	// PerAttemptTimeout can optionally be set to timeout individual API requests.
+	PerAttemptTimeout time.Duration
 }
 
 // IsEmpty checks whether the provided Auth0ClientInfo data is nil or has no data to allow
@@ -111,6 +114,7 @@ func RetriesTransport(base http.RoundTripper, r RetryOptions) http.RoundTripper 
 		),
 		backoffDelay(),
 	)
+	tr.PerAttemptTimeout = r.PerAttemptTimeout
 
 	return tr
 }
