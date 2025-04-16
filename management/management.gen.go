@@ -2767,6 +2767,14 @@ func (c *ConnectionOptions) GetPrecedence() []string {
 	return *c.Precedence
 }
 
+// GetRealmFallback returns the RealmFallback field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptions) GetRealmFallback() bool {
+	if c == nil || c.RealmFallback == nil {
+		return false
+	}
+	return *c.RealmFallback
+}
+
 // GetRequiresUsername returns the RequiresUsername field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptions) GetRequiresUsername() bool {
 	if c == nil || c.RequiresUsername == nil {
