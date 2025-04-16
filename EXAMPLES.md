@@ -1,10 +1,93 @@
 # Examples
 
+- [OAuth Client Credentials](#oauth-client-credentials)
 - [Request Options](#request-options)
 - [Pagination](#pagination)
   - [Page based pagination](#page-based-pagination)
   - [Checkpoint pagination](#checkpoint-pagination)
 - [Custom User Structs](#providing-a-custom-user-struct)
+
+## OAuth Client Credentials
+
+The SDK provides several ways to authenticate with Auth0 using OAuth client credentials.
+
+### Management API Initialization
+
+When initializing the Management API client, you can use these client credentials options:
+
+```go
+// Standard client credentials with client secret
+api, err := management.New(
+    "your-tenant.auth0.com",
+    management.WithClientCredentials(
+        context.Background(),
+        "YOUR_CLIENT_ID",
+        "YOUR_CLIENT_SECRET"
+    )
+)
+
+// Client credentials with custom audience
+api, err := management.New(
+    "your-tenant.auth0.com",
+    management.WithClientCredentialsAndAudience(
+        context.Background(),
+        "YOUR_CLIENT_ID",
+        "YOUR_CLIENT_SECRET",
+        "https://custom-api.example.com"
+    )
+)
+
+// Client credentials with Private Key JWT
+api, err := management.New(
+    "your-tenant.auth0.com",
+    management.WithClientCredentialsPrivateKeyJwt(
+        context.Background(),
+        "YOUR_CLIENT_ID",
+        privateKey,
+        "RS256"
+    )
+)
+
+// Private Key JWT with custom audience
+api, err := management.New(
+    "your-tenant.auth0.com",
+    management.WithClientCredentialsPrivateKeyJwtAndAudience(
+        context.Background(),
+        "YOUR_CLIENT_ID",
+        privateKey,
+        "RS256",
+        "https://custom-api.example.com"
+    )
+)
+
+// Using a pre-acquired static token
+api, err := management.New(
+    "your-tenant.auth0.com",
+    management.WithStaticToken("YOUR_ACCESS_TOKEN")
+)
+```
+
+### Authentication API Initialization
+
+For the Authentication API, use these initialization patterns:
+
+```go
+// With client secret authentication
+auth, err := authentication.New(
+    context.Background(),
+    "your-tenant.auth0.com",
+    authentication.WithClientID("YOUR_CLIENT_ID"),
+    authentication.WithClientSecret("YOUR_CLIENT_SECRET")
+)
+
+// With private key JWT authentication
+auth, err := authentication.New(
+    context.Background(),
+    "your-tenant.auth0.com",
+    authentication.WithClientID("YOUR_CLIENT_ID"),
+    authentication.WithClientAssertion(privateKey, "RS256")
+)
+```
 
 ## Request Options
 
@@ -42,7 +125,7 @@ This SDK supports both offset and checkpoint pagination.
 
 ### Page based pagination
 
-When retrieving lists of resources, if no query parameters are set using the `management.PerPage` and `Management.IncludeTotals` helper funcs, then the SDK will default to sending `per_page=50` and `include_totals=true`. 
+When retrieving lists of resources, if no query parameters are set using the `management.PerPage` and `Management.IncludeTotals` helper funcs, then the SDK will default to sending `per_page=50` and `include_totals=true`.
 
 > **Note**
 > The maximum value of the `per_page` query parameter is 100.
@@ -71,16 +154,17 @@ for {
     page++
 }
 ```
+
 </details>
 
 ### Checkpoint pagination
 
 Checkpoint pagination can be used when you wish to retrieve more than 1000 results from certain APIs. The APIs that support checkpoint based pagination are:
 
-* `Log.List` (`/api/v2/logs`)
-* `Organization.List` (`/api/v2/organizations`)
-* `Organization.Members` (`/api/v2/organizations/{id}/members`)
-* `Role.Users` (`/api/v2/roles/{id}/users`)
+- `Log.List` (`/api/v2/logs`)
+- `Organization.List` (`/api/v2/organizations`)
+- `Organization.Members` (`/api/v2/organizations/{id}/members`)
+- `Role.Users` (`/api/v2/roles/{id}/users`)
 
 <details>
   <summary>Checkpoint pagination example</summary>
@@ -109,11 +193,11 @@ for {
     if err != nil {
         log.Fatalf("err :%+v", err)
     }
-    
+
     for _, org := range orgList.Organizations {
         log.Printf("org %s", org.GetID())
     }
-    
+
     // The `HasNext` helper func checks whether
     // the API has informed us that there is
     // more data to retrieve or not.
@@ -122,6 +206,7 @@ for {
     }
 }
 ```
+
 </details>
 
 However, for `Log.List`, the `Next` value is not returned via the API but instead is an ID of a log entry. Determining if there are more logs to retrieved must also be done manually.
@@ -159,6 +244,7 @@ for {
     logFromId = logs[len(logs)-1].GetID()
 }
 ```
+
 </details>
 
 ## Providing a custom User struct
