@@ -45,7 +45,7 @@ func New(
 	if i := strings.Index(domain, "//"); i != -1 {
 		domain = domain[i+2:]
 	}
-	alg, err := determineAlg(idTokenSigningAlg)
+	alg, err := determineSigningAlgorithm(idTokenSigningAlg)
 	if err != nil {
 		return nil, err
 	}
@@ -201,7 +201,7 @@ func (i *IDTokenValidator) Validate(idToken string, optional ValidationOptions) 
 	return err
 }
 
-func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
+func determineSigningAlgorithm(alg string) (jwa.SignatureAlgorithm, error) {
 	switch alg {
 	case "HS256":
 		return jwa.HS256, nil
