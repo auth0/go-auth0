@@ -379,6 +379,27 @@ func OAuth2ClientCredentialsAndAudience(
 	return cfg.TokenSource(ctx)
 }
 
+// OAuth2ClientCredentialsPrivateKeyJwt sets the oauth2
+// client credentials with Private Key JWT authentication.
+func OAuth2ClientCredentialsPrivateKeyJwt(ctx context.Context, uri, clientID, clientAssertionSigningKey, clientAssertionSigningAlg string) oauth2.TokenSource {
+	audience := uri + "/api/v2/"
+	return OAuth2ClientCredentialsPrivateKeyJwtAndAudience(ctx, uri, clientID, clientAssertionSigningKey, clientAssertionSigningAlg, audience)
+}
+
+// OAuth2ClientCredentialsPrivateKeyJwtAndAudience sets the oauth2
+// client credentials with Private Key JWT authentication
+// with a custom audience.
+func OAuth2ClientCredentialsPrivateKeyJwtAndAudience(
+	ctx context.Context,
+	uri,
+	clientID,
+	clientAssertionSigningKey,
+	clientAssertionSigningAlg,
+	audience string,
+) oauth2.TokenSource {
+	return newPrivateKeyJwtTokenSource(ctx, uri, clientAssertionSigningAlg, clientAssertionSigningKey, clientID, audience)
+}
+
 // StaticToken sets a static token to be used for oauth2.
 func StaticToken(token string) oauth2.TokenSource {
 	return oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})
