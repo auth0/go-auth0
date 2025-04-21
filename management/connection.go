@@ -1144,7 +1144,7 @@ type ConnectionOptionsOAuth2 struct {
 	UpstreamParams map[string]interface{} `json:"upstream_params,omitempty"`
 
 	// CustomHeaders specifies custom headers.
-	CustomHeaders map[string]string `json:"custom_headers,omitempty"`
+	CustomHeaders *[]map[string]string `json:"custom_headers,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface for ConnectionOptionsOAuth2.

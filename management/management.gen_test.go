@@ -6055,8 +6055,8 @@ func TestConnectionOptionsOAuth2_GetClientSecret(tt *testing.T) {
 }
 
 func TestConnectionOptionsOAuth2_GetCustomHeaders(tt *testing.T) {
-	zeroValue := map[string]string{}
-	c := &ConnectionOptionsOAuth2{CustomHeaders: zeroValue}
+	var zeroValue []map[string]string
+	c := &ConnectionOptionsOAuth2{CustomHeaders: &zeroValue}
 	c.GetCustomHeaders()
 	c = &ConnectionOptionsOAuth2{}
 	c.GetCustomHeaders()

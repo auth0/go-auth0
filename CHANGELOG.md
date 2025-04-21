@@ -1,5 +1,17 @@
 # Change Log
 
+## [v1.19.0](https://github.com/auth0/go-auth0/tree/v1.19.0) (2025-03-28)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.18.0...v1.19.0)
+
+**⚠️ BREAKING CHANGES**
+- Breaking Change: Migrate `custom_headers` from `map[string]string` to `*[]map[string]string` in `ConnectionOptionsOAuth2` [\#534](https://github.com/auth0/go-auth0/pull/534) ([developerkunal](https://github.com/developerkunal))
+
+**Added**
+- Add Support For Tenant ACL Endpoints to `NetworkACLManager` [\#504](https://github.com/auth0/go-auth0/pull/504) ([developerkunal](https://github.com/developerkunal))
+- Add Extended Support for `DomainAliasesConfig` and `ConnectionConfig` Enhancements in `SelfServiceProfileTicket` in `SelfServiceProfileManager` [\#509](https://github.com/auth0/go-auth0/pull/509) ([developerkunal](https://github.com/developerkunal))
+- Add Support for Breached Password Detection `(PreChangePassword)` Stage in `AttackProtectionManager` [\#499](https://github.com/auth0/go-auth0/pull/499) ([developerkunal](https://github.com/developerkunal))
+- Add support for `GetUserLogs` method to fetch user log events in `UserManager` [\#529](https://github.com/auth0/go-auth0/pull/529) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.18.0](https://github.com/auth0/go-auth0/tree/v1.18.0) (2025-03-11)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.17.0...v1.18.0)
 

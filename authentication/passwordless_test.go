@@ -8,6 +8,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	"github.com/auth0/go-auth0/internal/client"
+
 	"github.com/auth0/go-auth0/authentication/oauth"
 	"github.com/auth0/go-auth0/authentication/passwordless"
 )
@@ -179,7 +181,7 @@ func TestPasswordlessWithClientAssertion(t *testing.T) {
 		require.NoError(t, err)
 		configureHTTPTestRecordings(t, api)
 
-		auth, err := createClientAssertion("RS256", jwtPrivateKey, clientID, "https://"+domain+"/")
+		auth, err := client.CreateClientAssertion("RS256", jwtPrivateKey, clientID, "https://"+domain+"/")
 		require.NoError(t, err)
 
 		r, err := api.Passwordless.SendSMS(context.Background(), passwordless.SendSMSRequest{
