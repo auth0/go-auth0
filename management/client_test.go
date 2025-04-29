@@ -108,6 +108,71 @@ func TestClient_CreateWithTokenExchange(t *testing.T) {
 	})
 }
 
+func TestClient_SessionTransfer(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	ctx := context.Background()
+
+	clientName := auth0.Stringf("Test Client SessionTransfer (%s)", time.Now().Format(time.StampMilli))
+	expectedClient := &Client{
+		Name:        clientName,
+		Description: auth0.String("This is a test client with Session Transfer."),
+		SessionTransfer: &SessionTransfer{
+			CanCreateSessionTransferToken: auth0.Bool(true),
+			AllowedAuthenticationMethods:  &[]string{"cookie", "query"},
+			EnforceDeviceBinding:          auth0.String("ip"),
+		},
+	}
+
+	// Create client
+	require.NoError(t, api.Client.Create(ctx, expectedClient))
+	require.NotEmpty(t, expectedClient.GetClientID())
+
+	t.Cleanup(func() {
+		cleanupClient(t, expectedClient.GetClientID())
+	})
+
+	// Verify creation
+	created, err := api.Client.Read(ctx, expectedClient.GetClientID())
+	require.NoError(t, err)
+	require.NotNil(t, created.SessionTransfer)
+	assert.Equal(t, expectedClient.GetSessionTransfer(), created.GetSessionTransfer())
+
+	// Update session transfer
+	created.SessionTransfer = &SessionTransfer{
+		CanCreateSessionTransferToken: auth0.Bool(false),
+		AllowedAuthenticationMethods:  &[]string{"cookie"},
+		EnforceDeviceBinding:          auth0.String("none"),
+	}
+
+	// Strip fields not allowed on update
+	created.ClientID = nil
+	created.SigningKeys = nil
+	if created.JWTConfiguration != nil {
+		created.JWTConfiguration.SecretEncoded = nil
+	}
+
+	require.NoError(t, api.Client.Update(ctx, expectedClient.GetClientID(), created))
+
+	// Verify update
+	updated, err := api.Client.Read(ctx, expectedClient.GetClientID())
+	require.NoError(t, err)
+	require.NotNil(t, updated.SessionTransfer)
+	assert.Equal(t, created.GetSessionTransfer(), updated.GetSessionTransfer())
+
+	// Remove session transfer via PATCH
+	type clientPatch struct {
+		SessionTransfer *SessionTransfer `json:"session_transfer"`
+	}
+	patch := &clientPatch{SessionTransfer: nil}
+	require.NoError(t, api.Request(ctx, http.MethodPatch, api.URI("clients", expectedClient.GetClientID()), patch))
+
+	// Verify removal
+	final, err := api.Client.Read(ctx, expectedClient.GetClientID())
+	require.NoError(t, err)
+	assert.Nil(t, final.GetSessionTransfer())
+}
+
 func TestClient_CreateWithDefaultOrg(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
