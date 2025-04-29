@@ -2939,6 +2939,16 @@ func TestClientRefreshToken_GetLeeway(tt *testing.T) {
 	c.GetLeeway()
 }
 
+func TestClientRefreshToken_GetPolicies(tt *testing.T) {
+	var zeroValue []ClientRefreshTokenPolicy
+	c := &ClientRefreshToken{Policies: &zeroValue}
+	c.GetPolicies()
+	c = &ClientRefreshToken{}
+	c.GetPolicies()
+	c = nil
+	c.GetPolicies()
+}
+
 func TestClientRefreshToken_GetRotationType(tt *testing.T) {
 	var zeroValue string
 	c := &ClientRefreshToken{RotationType: &zeroValue}
@@ -2962,6 +2972,34 @@ func TestClientRefreshToken_GetTokenLifetime(tt *testing.T) {
 func TestClientRefreshToken_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientRefreshToken{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientRefreshTokenPolicy_GetAudience(tt *testing.T) {
+	var zeroValue string
+	c := &ClientRefreshTokenPolicy{Audience: &zeroValue}
+	c.GetAudience()
+	c = &ClientRefreshTokenPolicy{}
+	c.GetAudience()
+	c = nil
+	c.GetAudience()
+}
+
+func TestClientRefreshTokenPolicy_GetScope(tt *testing.T) {
+	var zeroValue []string
+	c := &ClientRefreshTokenPolicy{Scope: &zeroValue}
+	c.GetScope()
+	c = &ClientRefreshTokenPolicy{}
+	c.GetScope()
+	c = nil
+	c.GetScope()
+}
+
+func TestClientRefreshTokenPolicy_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientRefreshTokenPolicy{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
