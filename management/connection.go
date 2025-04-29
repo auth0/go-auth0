@@ -444,6 +444,9 @@ type ConnectionOptions struct {
 	//   - Combining `attributes` and `validation` in the same configuration is not allowed.
 	//   - If any identifier is required in the profile, it must be active during signup.
 	Attributes *ConnectionOptionsAttributes `json:"attributes,omitempty"`
+
+	// Set to true to consume feature only when connections_realm_fallback flag is enabled for tenant
+	RealmFallback *bool `json:"realm_fallback,omitempty"`
 }
 
 // ConnectionOptionsAttributes defines the structure for attribute configurations.
