@@ -3,8 +3,12 @@ package client
 import (
 	"bytes"
 	"context"
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/x509"
 	"encoding/base64"
 	"encoding/json"
+	"encoding/pem"
 	"fmt"
 	"io"
 	"log"
@@ -608,6 +612,38 @@ func TestWrapUserAgent(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+func TestOAuth2ClientCredentials(t *testing.T) {
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/oauth/token":
+			// Make sure we read the body before trying to parse the form
+			bodyBytes, err := io.ReadAll(r.Body)
+			assert.NoError(t, err)
+			r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+
+			w.Header().Set("Content-Type", "application/json")
+			_, err = w.Write([]byte(`{"access_token":"defaultToken","token_type":"Bearer"}`))
+			assert.NoError(t, err)
+		default:
+			http.NotFound(w, r)
+		}
+	})
+	testServer := httptest.NewServer(handler)
+	defer testServer.Close()
+
+	tokenSource := OAuth2ClientCredentials(
+		context.Background(),
+		testServer.URL,
+		"clientID",
+		"clientSecret",
+	)
+
+	token, err := tokenSource.Token()
+	assert.NoError(t, err)
+	assert.Equal(t, "defaultToken", token.AccessToken)
+	assert.Equal(t, "Bearer", token.TokenType)
+}
+
 func TestOAuth2ClientCredentialsAndAudience(t *testing.T) {
 	const expectedAudience = "myAudience"
 
@@ -638,6 +674,100 @@ func TestOAuth2ClientCredentialsAndAudience(t *testing.T) {
 	token, err := tokenSource.Token()
 	assert.NoError(t, err)
 	assert.Equal(t, "someToken", token.AccessToken)
+}
+
+func TestOAuth2ClientCredentialsPrivateKeyJwt(t *testing.T) {
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/oauth/token":
+			// Capture the raw body for debugging
+			rawBody, err := io.ReadAll(r.Body)
+			assert.NoError(t, err)
+
+			r.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+			err = r.ParseForm()
+			assert.NoError(t, err)
+
+			w.Header().Set("Content-Type", "application/json")
+			_, err = w.Write([]byte(`{"access_token":"jwtToken","token_type":"Bearer"}`))
+			assert.NoError(t, err)
+		default:
+			http.NotFound(w, r)
+		}
+	})
+	testServer := httptest.NewServer(handler)
+	defer testServer.Close()
+
+	// Generate test private key
+	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	require.NoError(t, err)
+
+	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  "RSA PRIVATE KEY",
+		Bytes: x509.MarshalPKCS1PrivateKey(privateKey),
+	})
+
+	tokenSource := OAuth2ClientCredentialsPrivateKeyJwt(
+		context.Background(),
+		testServer.URL,
+		"test-client",
+		string(privateKeyPEM),
+		"RS256",
+	)
+
+	token, err := tokenSource.Token()
+	assert.NoError(t, err)
+	assert.Equal(t, "jwtToken", token.AccessToken)
+	assert.Equal(t, "Bearer", token.TokenType)
+}
+
+func TestOAuth2ClientCredentialsPrivateKeyJwtAndAudience(t *testing.T) {
+	const customAudience = "https://custom-api.example.com"
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/oauth/token":
+			// Capture the raw body for debugging
+			rawBody, err := io.ReadAll(r.Body)
+			assert.NoError(t, err)
+
+			// Use the form parsing instead for x-www-form-urlencoded
+			r.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+			err = r.ParseForm()
+			assert.NoError(t, err)
+
+			w.Header().Set("Content-Type", "application/json")
+			_, err = w.Write([]byte(`{"access_token":"customJwtToken","token_type":"Bearer"}`))
+			assert.NoError(t, err)
+		default:
+			http.NotFound(w, r)
+		}
+	})
+	testServer := httptest.NewServer(handler)
+	defer testServer.Close()
+
+	// Generate test private key
+	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	require.NoError(t, err)
+
+	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  "RSA PRIVATE KEY",
+		Bytes: x509.MarshalPKCS1PrivateKey(privateKey),
+	})
+
+	tokenSource := OAuth2ClientCredentialsPrivateKeyJwtAndAudience(
+		context.Background(),
+		testServer.URL,
+		"test-client",
+		string(privateKeyPEM),
+		"RS256",
+		customAudience,
+	)
+
+	token, err := tokenSource.Token()
+	assert.NoError(t, err)
+	assert.Equal(t, "customJwtToken", token.AccessToken)
+	assert.Equal(t, "Bearer", token.TokenType)
 }
 
 func TestWrapAuth0ClientInfo(t *testing.T) {

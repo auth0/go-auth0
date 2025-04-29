@@ -281,6 +281,18 @@ type ClientRefreshToken struct {
 
 	// Period in seconds after which inactive refresh tokens will expire.
 	IdleTokenLifetime *int `json:"idle_token_lifetime,omitempty"`
+
+	// A collection of policies governing multi-resource refresh token exchange (MRRT), defining how refresh tokens can be used across different resource servers
+	Policies *[]ClientRefreshTokenPolicy `json:"policies,omitempty"`
+}
+
+// ClientRefreshTokenPolicy is used to configure the Refresh Token policies for our Client.
+type ClientRefreshTokenPolicy struct {
+	// The identifier of the resource server to which the Multi Resource Refresh Token Policy applies
+	Audience *string `json:"audience,omitempty"`
+
+	// The resource server permissions granted under the Multi Resource Refresh Token Policy, defining the context in which an access token can be used
+	Scope *[]string `json:"scope,omitempty"`
 }
 
 // Credential is used to configure Client Credentials.

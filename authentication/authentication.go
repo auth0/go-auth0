@@ -4,17 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"net/url"
 	"reflect"
 	"strings"
 	"time"
-
-	"github.com/google/uuid"
-	"github.com/lestrrat-go/jwx/v2/jwa"
-	"github.com/lestrrat-go/jwx/v2/jwk"
-	"github.com/lestrrat-go/jwx/v2/jwt"
 
 	"github.com/auth0/go-auth0/authentication/oauth"
 	"github.com/auth0/go-auth0/internal/client"
@@ -256,8 +250,14 @@ func (a *Authentication) addClientAuthenticationToURLValues(params oauth.ClientA
 
 	switch {
 	case a.clientAssertionSigningKey != "" && a.clientAssertionSigningAlg != "":
-		clientAssertion, err := createClientAssertion(
-			a.clientAssertionSigningAlg,
+		alg, err := client.DetermineSigningAlgorithm(a.clientAssertionSigningAlg)
+		if err != nil {
+			return err
+		}
+
+		// Using the improved createClientAssertion with a standard lifetime
+		clientAssertion, err := client.CreateClientAssertion(
+			alg,
 			a.clientAssertionSigningKey,
 			clientID,
 			a.url.JoinPath("/").String(),
@@ -292,8 +292,14 @@ func (a *Authentication) addClientAuthenticationToClientAuthStruct(params *oauth
 	}
 
 	if a.clientAssertionSigningKey != "" && a.clientAssertionSigningAlg != "" {
-		clientAssertion, err := createClientAssertion(
-			a.clientAssertionSigningAlg,
+		alg, err := client.DetermineSigningAlgorithm(a.clientAssertionSigningAlg)
+		if err != nil {
+			return err
+		}
+
+		// Using the improved createClientAssertion with a standard lifetime
+		clientAssertion, err := client.CreateClientAssertion(
+			alg,
 			a.clientAssertionSigningKey,
 			params.ClientID,
 			a.url.JoinPath("/").String(),
@@ -313,44 +319,4 @@ func (a *Authentication) addClientAuthenticationToClientAuthStruct(params *oauth
 	}
 
 	return nil
-}
-
-func determineAlg(alg string) (jwa.SignatureAlgorithm, error) {
-	switch alg {
-	case "RS256":
-		return jwa.RS256, nil
-	default:
-		return "", fmt.Errorf("Unsupported client assertion algorithm \"%s\" provided", alg)
-	}
-}
-
-func createClientAssertion(clientAssertionSigningAlg, clientAssertionSigningKey, clientID, domain string) (string, error) {
-	alg, err := determineAlg(clientAssertionSigningAlg)
-	if err != nil {
-		return "", err
-	}
-
-	key, err := jwk.ParseKey([]byte(clientAssertionSigningKey), jwk.WithPEM(true))
-	if err != nil {
-		return "", err
-	}
-
-	token, err := jwt.NewBuilder().
-		IssuedAt(time.Now()).
-		Subject(clientID).
-		JwtID(uuid.New().String()).
-		Issuer(clientID).
-		Claim("aud", domain).
-		Expiration(time.Now().Add(2 * time.Minute)).
-		Build()
-	if err != nil {
-		return "", err
-	}
-
-	b, err := jwt.Sign(token, jwt.WithKey(alg, key))
-	if err != nil {
-		return "", err
-	}
-
-	return string(b), nil
 }
