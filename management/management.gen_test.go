@@ -12929,6 +12929,14 @@ func TestResourceServerTokenEncryptionKey_String(t *testing.T) {
 	}
 }
 
+func TestRetryStrategy_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &RetryStrategy{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestRMSClientAddon_GetURL(tt *testing.T) {
 	var zeroValue string
 	r := &RMSClientAddon{URL: &zeroValue}
