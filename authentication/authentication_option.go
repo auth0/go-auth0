@@ -53,7 +53,7 @@ func WithClient(client *http.Client) Option {
 	}
 }
 
-// WithNoAuth0ClientInfo configures the management client to not send the "Auth0-Client" header
+// WithNoAuth0ClientInfo configures the authentication client to not send the "Auth0-Client" header
 // at all.
 func WithNoAuth0ClientInfo() Option {
 	return func(a *Authentication) {
@@ -73,7 +73,9 @@ func WithAuth0ClientEnvEntry(key string, value string) Option {
 	}
 }
 
-// WithRetries configures the management client to only retry under the conditions provided.
+// WithRetries configures the authentication client to only retry under the conditions provided.
+//
+// Deprecated: Use WithRetryStrategy instead.
 func WithRetries(maxRetries int, statuses []int) Option {
 	return func(a *Authentication) {
 		a.retryStrategy = client.RetryOptions{
@@ -92,7 +94,7 @@ type RetryStrategy struct {
 	PerAttemptTimeout time.Duration
 }
 
-// WithRetryStrategy configures the management client to only retry under the conditions provided.
+// WithRetryStrategy configures the authentication client to only retry under the conditions provided.
 func WithRetryStrategy(retryStrategy RetryStrategy) Option {
 	return func(a *Authentication) {
 		a.retryStrategy = client.RetryOptions{
@@ -103,7 +105,7 @@ func WithRetryStrategy(retryStrategy RetryStrategy) Option {
 	}
 }
 
-// WithNoRetries configures the management client to only retry under the conditions provided.
+// WithNoRetries configures the authentication client to only retry under the conditions provided.
 func WithNoRetries() Option {
 	return func(a *Authentication) {
 		a.retryStrategy = client.RetryOptions{}

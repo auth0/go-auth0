@@ -115,6 +115,8 @@ func WithNoAuth0ClientInfo() Option {
 }
 
 // WithRetries configures the management client to only retry under the conditions provided.
+//
+// Deprecated: use WithRetryStrategy instead.
 func WithRetries(maxRetries int, statuses []int) Option {
 	return func(m *Management) {
 		m.retryStrategy = client.RetryOptions{
