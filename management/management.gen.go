@@ -10309,6 +10309,11 @@ func (r *ResourceServerTokenEncryptionKey) String() string {
 	return Stringify(r)
 }
 
+// String returns a string representation of RetryStrategy.
+func (r *RetryStrategy) String() string {
+	return Stringify(r)
+}
+
 // GetURL returns the URL field if it's non-nil, zero value otherwise.
 func (r *RMSClientAddon) GetURL() string {
 	if r == nil || r.URL == nil {

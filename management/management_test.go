@@ -10,6 +10,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"runtime"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -528,6 +529,57 @@ func TestRetries(t *testing.T) {
 		_, err = m.User.Read(ctx, "123")
 		assert.ErrorIs(t, err, context.Canceled)
 		assert.Equal(t, 1, i) // 1 request should have been made before the context times out
+	})
+
+	t.Run("Retry per request timeout", func(t *testing.T) {
+		var i atomic.Int64
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			ctx := r.Context()
+
+			c := i.Add(1)
+			t.Log(c)
+			if c == 2 {
+				cancel()
+			}
+
+			timer := time.NewTimer(10 * time.Second)
+			select {
+			case <-timer.C:
+				t.Log("completed")
+				w.WriteHeader(http.StatusOK)
+				return
+			case <-ctx.Done():
+				t.Log("cancelled")
+				w.WriteHeader(499)
+				return
+			}
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		m, err := New(
+			s.URL,
+			WithInsecure(),
+			WithRetryStrategy(RetryStrategy{
+				MaxRetries: 10,
+				Statuses: []int{
+					http.StatusInternalServerError,
+					http.StatusBadGateway,
+					http.StatusServiceUnavailable,
+					http.StatusGatewayTimeout,
+				},
+				PerAttemptTimeout: 5 * time.Millisecond,
+			}),
+		)
+		assert.NoError(t, err)
+
+		_, err = m.User.Read(ctx, "123")
+		assert.ErrorIs(t, err, context.Canceled)
+		assert.Equal(t, int64(2), i.Load()) // 1 request should have been made before the context times out
 	})
 }
 
