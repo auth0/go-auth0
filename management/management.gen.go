@@ -6653,6 +6653,14 @@ func (c *CustomDomain) GetDomain() string {
 	return *c.Domain
 }
 
+// GetDomainMetadata returns the DomainMetadata map if it's non-nil, an empty map otherwise.
+func (c *CustomDomain) GetDomainMetadata() map[string]interface{} {
+	if c == nil || c.DomainMetadata == nil {
+		return map[string]interface{}{}
+	}
+	return c.DomainMetadata
+}
+
 // GetID returns the ID field if it's non-nil, zero value otherwise.
 func (c *CustomDomain) GetID() string {
 	if c == nil || c.ID == nil {
@@ -6719,6 +6727,11 @@ func (c *CustomDomain) GetVerificationMethod() string {
 
 // String returns a string representation of CustomDomain.
 func (c *CustomDomain) String() string {
+	return Stringify(c)
+}
+
+// String returns a string representation of CustomDomainList.
+func (c *CustomDomainList) String() string {
 	return Stringify(c)
 }
 

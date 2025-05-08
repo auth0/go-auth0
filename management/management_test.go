@@ -16,6 +16,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/auth0/go-auth0"
 	"github.com/auth0/go-auth0/internal/client"
@@ -597,4 +598,83 @@ func TestApiCallContextTimeout(t *testing.T) {
 
 	_, err = m.User.Read(ctx, "123")
 	assert.ErrorIs(t, err, context.DeadlineExceeded)
+}
+
+func TestCustomDomainHeader(t *testing.T) {
+	t.Run("Option applies custom domain header", func(t *testing.T) {
+		tests := []struct {
+			name          string
+			inputDomain   string
+			expectedValue string
+		}{
+			{"sets valid custom domain", "my.custom.domain", "my.custom.domain"},
+			{"sets empty custom domain", "", ""},
+			{"sets domain with subdomain", "sub.domain.example.com", "sub.domain.example.com"},
+		}
+
+		for _, tt := range tests {
+			t.Run(tt.name, func(t *testing.T) {
+				r, _ := http.NewRequest("GET", "/", nil)
+				CustomDomainHeader(tt.inputDomain).apply(r)
+				got := r.Header.Get("Auth0-Custom-Domain")
+				assert.Equal(t, tt.expectedValue, got)
+			})
+		}
+	})
+
+	t.Run("Middleware applies custom domain header only on whitelisted paths", func(t *testing.T) {
+		globalDomain := "global.custom.domain"
+		whitelistedPath := "/api/v2/users"
+		nonWhitelistedPath := "/api/v2/clients"
+
+		t.Run("applies on whitelisted endpoint", func(t *testing.T) {
+			var actualHeader string
+
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				if r.URL.Path == whitelistedPath {
+					actualHeader = r.Header.Get("Auth0-Custom-Domain")
+					w.Write([]byte(`{"users":[]}`))
+					return
+				}
+				http.NotFound(w, r)
+			}))
+			defer server.Close()
+
+			m, err := New(
+				server.URL,
+				WithInsecure(),
+				WithCustomDomainHeader(globalDomain),
+			)
+			require.NoError(t, err)
+
+			_, err = m.User.List(context.Background())
+			require.NoError(t, err)
+			assert.Equal(t, globalDomain, actualHeader)
+		})
+
+		t.Run("does not apply on non-whitelisted endpoint", func(t *testing.T) {
+			var actualHeader string
+
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				if r.URL.Path == nonWhitelistedPath {
+					actualHeader = r.Header.Get("Auth0-Custom-Domain")
+					w.Write([]byte(`{"clients":[]}`))
+					return
+				}
+				http.NotFound(w, r)
+			}))
+			defer server.Close()
+
+			m, err := New(
+				server.URL,
+				WithInsecure(),
+				WithCustomDomainHeader(globalDomain),
+			)
+			require.NoError(t, err)
+
+			_, err = m.Client.List(context.Background())
+			require.NoError(t, err)
+			assert.Empty(t, actualHeader, "Header should not be set for non-whitelisted endpoint")
+		})
+	})
 }

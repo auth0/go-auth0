@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 99
+        content_length: 138
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"domain":"1674668771.auth.uat.auth0.com","type":"auth0_managed_certs","tls_policy":"recommended"}
+            {"domain":"1746693339094632000.tempdomain.com","type":"auth0_managed_certs","tls_policy":"recommended","domain_metadata":{"key":"value"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.20.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains
         method: POST
       response:
@@ -28,51 +28,51 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 300
+        content_length: 385
         uncompressed: false
-        body: '{"custom_domain_id":"cd_xFmdOfl4i2CwG9Rk","domain":"1674668771.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"cname","record":"go-auth0-dev.eu.auth0.com-cd-xfmdofl4i2cwg9rk.edge.tenants.eu.auth0.com"}]},"tls_policy":"recommended"}'
+        body: '{"custom_domain_id":"cd_Ybe6kDqUy1v12sHd","domain":"1746693339094632000.tempdomain.com","primary":false,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-ybe6kdquy1v12shd.edge.tenants.us.auth0.com","domain":"1746693339094632000.tempdomain.com"}]},"tls_policy":"recommended","domain_metadata":{"key":"value"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 3.961443458s
+        duration: 440.396625ms
     - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 138
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            null
+            {"domain":"1746693339535347000.tempdomain.com","type":"auth0_managed_certs","tls_policy":"recommended","domain_metadata":{"key":"value"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.20.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains
-        method: GET
+        method: POST
       response:
         proto: HTTP/2.0
         proto_major: 2
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
-        body: '[{"custom_domain_id":"cd_xFmdOfl4i2CwG9Rk","domain":"1674668771.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"cname","record":"go-auth0-dev.eu.auth0.com-cd-xfmdofl4i2cwg9rk.edge.tenants.eu.auth0.com"}]},"tls_policy":"recommended"}]'
+        content_length: 385
+        uncompressed: false
+        body: '{"custom_domain_id":"cd_yf3MUWH2RL05YqwO","domain":"1746693339535347000.tempdomain.com","primary":false,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-yf3muwh2rl05yqwo.edge.tenants.us.auth0.com","domain":"1746693339535347000.tempdomain.com"}]},"tls_policy":"recommended","domain_metadata":{"key":"value"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 200 OK
-        code: 200
-        duration: 105.714333ms
+        status: 201 Created
+        code: 201
+        duration: 580.563083ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,8 +90,43 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_xFmdOfl4i2CwG9Rk
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"custom_domain_id":"cd_5OhmCGeoVlOPsgh5","domain":"testing.acmetest.org","primary":true,"status":"ready","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-5ohmcgeovlopsgh5.edge.tenants.us.auth0.com","domain":"testing.acmetest.org"}]},"tls_policy":"recommended"},{"custom_domain_id":"cd_Ybe6kDqUy1v12sHd","domain":"1746693339094632000.tempdomain.com","primary":false,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-ybe6kdquy1v12shd.edge.tenants.us.auth0.com","domain":"1746693339094632000.tempdomain.com"}]},"tls_policy":"recommended","domain_metadata":{"key":"value"}},{"custom_domain_id":"cd_yf3MUWH2RL05YqwO","domain":"1746693339535347000.tempdomain.com","primary":false,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-yf3muwh2rl05yqwo.edge.tenants.us.auth0.com","domain":"1746693339535347000.tempdomain.com"}]},"tls_policy":"recommended","domain_metadata":{"key":"value"}}]'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 416.143292ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_yf3MUWH2RL05YqwO
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -107,4 +142,39 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 4.549778792s
+        duration: 396.843291ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_Ybe6kDqUy1v12sHd
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 517.73125ms
