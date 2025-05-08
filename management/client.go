@@ -156,7 +156,7 @@ type Client struct {
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	TokenQuota *TokenQuota `json:"token_quota,omitempty"`
-  
+
 	// Session Transfer settings for the client - Allows Native to Web SSO
 	SessionTransfer *SessionTransfer `json:"session_transfer,omitempty"`
 }
