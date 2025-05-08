@@ -678,3 +678,17 @@ func TestCustomDomainHeader(t *testing.T) {
 		})
 	})
 }
+
+func TestApplyCustomDomainHeader_InvalidURI(t *testing.T) {
+	m := &Management{
+		customDomainHeader: "invalid.test.domain",
+	}
+
+	req, _ := http.NewRequest("GET", "/", nil)
+
+	// Pass an invalid URI to trigger the error path
+	m.applyCustomDomainHeader(req, "http://%41:8080/") // %41 is 'A', but in host:port, this is invalid
+
+	// Header should not be set
+	assert.Empty(t, req.Header.Get("Auth0-Custom-Domain"))
+}
