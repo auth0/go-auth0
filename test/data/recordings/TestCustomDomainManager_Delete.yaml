@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 99
+        content_length: 138
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"domain":"1674668763.auth.uat.auth0.com","type":"auth0_managed_certs","tls_policy":"recommended"}
+            {"domain":"1746693337311354000.tempdomain.com","type":"auth0_managed_certs","tls_policy":"recommended","domain_metadata":{"key":"value"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
+                - Go-Auth0/1.20.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains
         method: POST
       response:
@@ -28,15 +28,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 300
+        content_length: 385
         uncompressed: false
-        body: '{"custom_domain_id":"cd_FEt6ft8M0RkBUDsp","domain":"1674668763.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"cname","record":"go-auth0-dev.eu.auth0.com-cd-fet6ft8m0rkbudsp.edge.tenants.eu.auth0.com"}]},"tls_policy":"recommended"}'
+        body: '{"custom_domain_id":"cd_gjYKB6PA7x4iq2Bs","domain":"1746693337311354000.tempdomain.com","primary":false,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-gjykb6pa7x4iq2bs.edge.tenants.us.auth0.com","domain":"1746693337311354000.tempdomain.com"}]},"tls_policy":"recommended","domain_metadata":{"key":"value"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 3.849140708s
+        duration: 478.661792ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_FEt6ft8M0RkBUDsp
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_gjYKB6PA7x4iq2Bs
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -71,27 +71,26 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 4.505441292s
+        duration: 478.102792ms
     - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 5
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            null
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_FEt6ft8M0RkBUDsp
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_gjYKB6PA7x4iq2Bs
         method: GET
       response:
         proto: HTTP/2.0
@@ -101,13 +100,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"statusCode":404,"error":"Not Found","message":"The custom domain cd_FEt6ft8M0RkBUDsp does not exist","errorCode":"inexistent_custom_domain"}'
+        body: '{"statusCode":404,"error":"Not Found","message":"The custom domain cd_gjYKB6PA7x4iq2Bs does not exist","errorCode":"inexistent_custom_domain"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 404 Not Found
         code: 404
-        duration: 105.840042ms
+        duration: 413.013708ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,8 +124,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0-SDK/latest
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_FEt6ft8M0RkBUDsp
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_gjYKB6PA7x4iq2Bs
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -142,4 +141,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 101.973625ms
+        duration: 409.8905ms
