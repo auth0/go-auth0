@@ -156,6 +156,9 @@ type Client struct {
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	TokenQuota *TokenQuota `json:"token_quota,omitempty"`
+  
+	// Session Transfer settings for the client - Allows Native to Web SSO
+	SessionTransfer *SessionTransfer `json:"session_transfer,omitempty"`
 }
 
 // ClientTokenExchange allows configuration for token exchange.
@@ -292,6 +295,18 @@ type ClientRefreshToken struct {
 
 	// Period in seconds after which inactive refresh tokens will expire.
 	IdleTokenLifetime *int `json:"idle_token_lifetime,omitempty"`
+
+	// A collection of policies governing multi-resource refresh token exchange (MRRT), defining how refresh tokens can be used across different resource servers
+	Policies *[]ClientRefreshTokenPolicy `json:"policies,omitempty"`
+}
+
+// ClientRefreshTokenPolicy is used to configure the Refresh Token policies for our Client.
+type ClientRefreshTokenPolicy struct {
+	// The identifier of the resource server to which the Multi Resource Refresh Token Policy applies
+	Audience *string `json:"audience,omitempty"`
+
+	// The resource server permissions granted under the Multi Resource Refresh Token Policy, defining the context in which an access token can be used
+	Scope *[]string `json:"scope,omitempty"`
 }
 
 // Credential is used to configure Client Credentials.
@@ -370,6 +385,13 @@ type OIDCLogout struct {
 type BackChannelLogoutInitiators struct {
 	Mode               *string   `json:"mode,omitempty"`
 	SelectedInitiators *[]string `json:"selected_initiators,omitempty"`
+}
+
+// SessionTransfer Transfer defines the setting to allow Native to Web SSO session transfer.
+type SessionTransfer struct {
+	CanCreateSessionTransferToken *bool     `json:"can_create_session_transfer_token,omitempty"`
+	AllowedAuthenticationMethods  *[]string `json:"allowed_authentication_methods,omitempty"`
+	EnforceDeviceBinding          *string   `json:"enforce_device_binding,omitempty"`
 }
 
 // ClientAddons defines the `addons` settings for a Client.

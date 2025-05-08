@@ -1,5 +1,16 @@
 # Change Log
 
+## [v1.20.0](https://github.com/auth0/go-auth0/tree/v1.20.0) (2025-05-05)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.19.0...v1.20.0)
+
+**Added**
+- Add support for setting per-attempt-timeout [\#539](https://github.com/auth0/go-auth0/pull/539) ([pete-woods](https://github.com/pete-woods))
+- Add 'mgmt_api_read' log type to enhance log categorization in `LogManager` [\#545](https://github.com/auth0/go-auth0/pull/545) ([developerkunal](https://github.com/developerkunal))
+- Adding support for Native to Web SSO - Session Transfer [\#536](https://github.com/auth0/go-auth0/pull/536) ([nelsonmaia](https://github.com/nelsonmaia))
+- Add support to set RealmFallback to Connection Options [\#541](https://github.com/auth0/go-auth0/pull/541) ([duedares-rvj](https://github.com/duedares-rvj))
+- Add Support Multi-Resource Refresh Token `Policies` in `ClientRefreshToken` within `Client Manager` [\#532](https://github.com/auth0/go-auth0/pull/532) ([developerkunal](https://github.com/developerkunal))
+- Add Private Key JWT support for client credentials in Management API [\#528](https://github.com/auth0/go-auth0/pull/528) ([ErwinSteffens](https://github.com/ErwinSteffens))
+
 ## [v1.19.0](https://github.com/auth0/go-auth0/tree/v1.19.0) (2025-03-28)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.18.0...v1.19.0)
 

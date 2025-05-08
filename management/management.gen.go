@@ -1830,6 +1830,14 @@ func (c *Client) GetRequirePushedAuthorizationRequests() bool {
 	return *c.RequirePushedAuthorizationRequests
 }
 
+// GetSessionTransfer returns the SessionTransfer field.
+func (c *Client) GetSessionTransfer() *SessionTransfer {
+	if c == nil {
+		return nil
+	}
+	return c.SessionTransfer
+}
+
 // GetSignedRequestObject returns the SignedRequestObject field.
 func (c *Client) GetSignedRequestObject() *ClientSignedRequestObject {
 	if c == nil {
@@ -2423,6 +2431,14 @@ func (c *ClientRefreshToken) GetLeeway() int {
 	return *c.Leeway
 }
 
+// GetPolicies returns the Policies field if it's non-nil, zero value otherwise.
+func (c *ClientRefreshToken) GetPolicies() []ClientRefreshTokenPolicy {
+	if c == nil || c.Policies == nil {
+		return nil
+	}
+	return *c.Policies
+}
+
 // GetRotationType returns the RotationType field if it's non-nil, zero value otherwise.
 func (c *ClientRefreshToken) GetRotationType() string {
 	if c == nil || c.RotationType == nil {
@@ -2441,6 +2457,27 @@ func (c *ClientRefreshToken) GetTokenLifetime() int {
 
 // String returns a string representation of ClientRefreshToken.
 func (c *ClientRefreshToken) String() string {
+	return Stringify(c)
+}
+
+// GetAudience returns the Audience field if it's non-nil, zero value otherwise.
+func (c *ClientRefreshTokenPolicy) GetAudience() string {
+	if c == nil || c.Audience == nil {
+		return ""
+	}
+	return *c.Audience
+}
+
+// GetScope returns the Scope field if it's non-nil, zero value otherwise.
+func (c *ClientRefreshTokenPolicy) GetScope() []string {
+	if c == nil || c.Scope == nil {
+		return nil
+	}
+	return *c.Scope
+}
+
+// String returns a string representation of ClientRefreshTokenPolicy.
+func (c *ClientRefreshTokenPolicy) String() string {
 	return Stringify(c)
 }
 
@@ -2773,6 +2810,14 @@ func (c *ConnectionOptions) GetPrecedence() []string {
 		return nil
 	}
 	return *c.Precedence
+}
+
+// GetRealmFallback returns the RealmFallback field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptions) GetRealmFallback() bool {
+	if c == nil || c.RealmFallback == nil {
+		return false
+	}
+	return *c.RealmFallback
 }
 
 // GetRequiresUsername returns the RequiresUsername field if it's non-nil, zero value otherwise.
@@ -10280,6 +10325,11 @@ func (r *ResourceServerTokenEncryptionKey) String() string {
 	return Stringify(r)
 }
 
+// String returns a string representation of RetryStrategy.
+func (r *RetryStrategy) String() string {
+	return Stringify(r)
+}
+
 // GetURL returns the URL field if it's non-nil, zero value otherwise.
 func (r *RMSClientAddon) GetURL() string {
 	if r == nil || r.URL == nil {
@@ -11413,6 +11463,35 @@ func (s *SessionDevice) GetLastUserAgent() string {
 
 // String returns a string representation of SessionDevice.
 func (s *SessionDevice) String() string {
+	return Stringify(s)
+}
+
+// GetAllowedAuthenticationMethods returns the AllowedAuthenticationMethods field if it's non-nil, zero value otherwise.
+func (s *SessionTransfer) GetAllowedAuthenticationMethods() []string {
+	if s == nil || s.AllowedAuthenticationMethods == nil {
+		return nil
+	}
+	return *s.AllowedAuthenticationMethods
+}
+
+// GetCanCreateSessionTransferToken returns the CanCreateSessionTransferToken field if it's non-nil, zero value otherwise.
+func (s *SessionTransfer) GetCanCreateSessionTransferToken() bool {
+	if s == nil || s.CanCreateSessionTransferToken == nil {
+		return false
+	}
+	return *s.CanCreateSessionTransferToken
+}
+
+// GetEnforceDeviceBinding returns the EnforceDeviceBinding field if it's non-nil, zero value otherwise.
+func (s *SessionTransfer) GetEnforceDeviceBinding() string {
+	if s == nil || s.EnforceDeviceBinding == nil {
+		return ""
+	}
+	return *s.EnforceDeviceBinding
+}
+
+// String returns a string representation of SessionTransfer.
+func (s *SessionTransfer) String() string {
 	return Stringify(s)
 }
 

@@ -39,7 +39,7 @@ func TestLoginWithGrant(t *testing.T) {
 			},
 			BindingMessage: "TEST-BINDING-MESSAGE",
 		})
-
+		assert.Empty(t, err)
 		token, err := authAPI.OAuth.LoginWithGrant(context.Background(),
 			"urn:openid:params:grant-type:ciba",
 			url.Values{
