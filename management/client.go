@@ -143,6 +143,20 @@ type Client struct {
 
 	TokenExchange *ClientTokenExchange `json:"token_exchange,omitempty"`
 
+	// TokenQuota Token Quota configuration, to configure quotas for token issuance for clients.
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/clients/{id}
+	//
+	// {
+	//	 "token_quota": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	TokenQuota *TokenQuota `json:"token_quota,omitempty"`
+
 	// Session Transfer settings for the client - Allows Native to Web SSO
 	SessionTransfer *SessionTransfer `json:"session_transfer,omitempty"`
 }
