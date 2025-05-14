@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 81
+        content_length: 98
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"domain":"1724659065.tempdomain.com","type":"auth0_managed_certs","tls_policy":"recommended"}
+            {"domain":"1747220381.tempdomain.com","type":"auth0_managed_certs","tls_policy":"recommended"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.9.0
+                - Go-Auth0/1.20.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains
         method: POST
       response:
@@ -28,15 +28,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 304
+        content_length: 339
         uncompressed: false
-        body: '{"custom_domain_id":"cd_itzPuKdJ8NdyfDpI","domain":"1724659065.tempdomain.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-itzpukdj8ndyfdpi.edge.tenants.us.auth0.com","domain":"kunal.dawar"}]},"tls_policy":"recommended"}'
+        body: '{"custom_domain_id":"cd_i4mVcdyPwpPCzUD3","domain":"1747220381.tempdomain.com","primary":false,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-i4mvcdypwppczud3.edge.tenants.us.auth0.com","domain":"1747220381.tempdomain.com"}]},"tls_policy":"recommended"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 1.658834625s
+        duration: 981.391125ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,7 +55,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.9.0
+                - Go-Auth0/1.20.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/branding/templates/universal-login
         method: PUT
       response:
@@ -72,28 +72,28 @@ interactions:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 2.838140417s
+        duration: 637.245667ms
     - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 355
+        content_length: 408
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"login-passwordless-email-code":{"form-content-end":"\u003cdiv\u003eForm Content Start\u003c/div\u003e","form-content-start":"\u003cdiv\u003eForm Content Start\u003c/div\u003e"},"login-passwordless-sms-otp":{"form-content-end":"\u003cdiv\u003eForm Content Start\u003c/div\u003e","form-content-start":"\u003cdiv\u003eForm Content Start\u003c/div\u003e"}}
+            {"rendering_mode":"advanced","context_configuration":["branding.settings","branding.themes.default"],"default_head_tags_disabled":false,"head_tags":[{"attributes":{"async":true,"defer":true,"integrity":["sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="],"src":"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"},"content":"","tag":"script"}]}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.9.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/prompts/login-passwordless/partials
-        method: PUT
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/prompts/signup/screen/signup/rendering
+        method: PATCH
       response:
         proto: HTTP/2.0
         proto_major: 2
@@ -102,13 +102,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"login-passwordless-email-code":{"form-content-end":"<div>Form Content Start</div>","form-content-start":"<div>Form Content Start</div>"},"login-passwordless-sms-otp":{"form-content-end":"<div>Form Content Start</div>","form-content-start":"<div>Form Content Start</div>"}}'
+        body: '{"rendering_mode":"advanced","context_configuration":["branding.settings","branding.themes.default"],"default_head_tags_disabled":false,"head_tags":[{"attributes":{"async":true,"defer":true,"integrity":["sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="],"src":"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"},"content":"","tag":"script"}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 411.334083ms
+        duration: 455.612792ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -126,8 +126,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.9.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/prompts/login-passwordless/partials
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/prompts/rendering?include_totals=true&per_page=50
         method: GET
       response:
         proto: HTTP/2.0
@@ -137,49 +137,48 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"login-passwordless-email-code":{"form-content-end":"<div>Form Content Start</div>","form-content-start":"<div>Form Content Start</div>"},"login-passwordless-sms-otp":{"form-content-end":"<div>Form Content Start</div>","form-content-start":"<div>Form Content Start</div>"}}'
+        body: '{"configs":[{"prompt":"signup","screen":"signup","rendering_mode":"advanced","context_configuration":["branding.settings","branding.themes.default"],"default_head_tags_disabled":false,"head_tags":[{"tag":"script","content":"","attributes":{"src":"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js","async":true,"defer":true,"integrity":["sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="]}}],"filters":null}],"start":0,"limit":50,"total":1}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 367.680375ms
+        duration: 370.402167ms
     - id: 4
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 3
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            {}
+        body: ""
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.9.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/prompts/login-passwordless/partials
-        method: PUT
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/branding/templates/universal-login
+        method: DELETE
       response:
         proto: HTTP/2.0
         proto_major: 2
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 2
+        content_length: 0
         uncompressed: false
-        body: '{}'
+        body: ""
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 200 OK
-        code: 200
-        duration: 382.801458ms
+        status: 204 No Content
+        code: 204
+        duration: 444.462459ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -197,8 +196,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.9.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/branding/templates/universal-login
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_i4mVcdyPwpPCzUD3
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -214,39 +213,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 503.549041ms
-    - id: 6
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 0
-        transfer_encoding: []
-        trailer: {}
-        host: go-auth0-dev.eu.auth0.com
-        remote_addr: ""
-        request_uri: ""
-        body: ""
-        form: {}
-        headers:
-            Content-Type:
-                - application/json
-            User-Agent:
-                - Go-Auth0/1.9.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_itzPuKdJ8NdyfDpI
-        method: DELETE
-      response:
-        proto: HTTP/2.0
-        proto_major: 2
-        proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
-        content_length: 0
-        uncompressed: false
-        body: ""
-        headers:
-            Content-Type:
-                - application/json; charset=utf-8
-        status: 204 No Content
-        code: 204
-        duration: 1.395291834s
+        duration: 391.238541ms

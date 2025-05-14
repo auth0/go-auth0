@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"domain":"1674668736.auth.uat.auth0.com","type":"auth0_managed_certs","tls_policy":"recommended"}
+            {"domain":"1674668736.tempdomain.com","type":"auth0_managed_certs","tls_policy":"recommended"}
         form: {}
         headers:
             Content-Type:
@@ -30,7 +30,7 @@ interactions:
         trailer: {}
         content_length: 300
         uncompressed: false
-        body: '{"custom_domain_id":"cd_Qgv4RYP5j8Eovjl5","domain":"1674668736.auth.uat.auth0.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"cname","record":"go-auth0-dev.eu.auth0.com-cd-qgv4ryp5j8eovjl5.edge.tenants.eu.auth0.com"}]},"tls_policy":"recommended"}'
+        body: '{"custom_domain_id":"cd_Qgv4RYP5j8Eovjl5","domain":"1674668736.tempdomain.com","primary":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"cname","record":"go-auth0-dev.eu.auth0.com-cd-qgv4ryp5j8eovjl5.edge.tenants.eu.auth0.com"}]},"tls_policy":"recommended"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8

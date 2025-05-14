@@ -15,7 +15,7 @@ func TestCustomDomainManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expected := &CustomDomain{
-		Domain:    auth0.Stringf("%d.auth.uat.auth0.com", time.Now().UTC().Unix()),
+		Domain:    auth0.Stringf("%d.tempdomain.com", time.Now().UTC().Unix()),
 		Type:      auth0.String("auth0_managed_certs"),
 		TLSPolicy: auth0.String("recommended"),
 	}
@@ -96,7 +96,7 @@ func givenACustomDomain(t *testing.T) *CustomDomain {
 	t.Helper()
 
 	customDomain := &CustomDomain{
-		Domain:    auth0.Stringf("%d.auth.uat.auth0.com", time.Now().UTC().Unix()),
+		Domain:    auth0.Stringf("%d.tempdomain.com", time.Now().UTC().Unix()),
 		Type:      auth0.String("auth0_managed_certs"),
 		TLSPolicy: auth0.String("recommended"),
 	}
