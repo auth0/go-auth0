@@ -163,6 +163,7 @@ func TestPromptManager_ListRendering(t *testing.T) {
 		}
 	}
 	assert.True(t, found, "expected PromptRendering not found in actual.PromptRendering")
+	assert.Greater(t, len(actual.PromptRenderings), 0)
 }
 
 // Able to update the renderingMode to advanced and the setting configs when parsing the advanced renderingMode in payload.
