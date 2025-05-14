@@ -456,6 +456,12 @@ type PromptRendering struct {
 	HeadTags                []interface{}  `json:"head_tags,omitempty"`
 }
 
+// PromptRenderingList is a list of prompt rendering settings.
+type PromptRenderingList struct {
+	List
+	PromptRenderings []*PromptRendering `json:"configs"`
+}
+
 // MarshalJSON implements a custom [json.Marshaler].
 func (c *PromptRendering) MarshalJSON() ([]byte, error) {
 	type RenderingSubSet struct {
@@ -652,4 +658,12 @@ func (c *PromptRendering) cleanForPatch() *PromptRendering {
 func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, screen ScreenName, c *PromptRendering, opts ...RequestOption) error {
 	c = c.cleanForPatch()
 	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), c, opts...)
+}
+
+// ListRendering lists the settings for all the ACUL.
+//
+// See: https://auth0.com/docs/api/management/v2/prompts/get-all-rendering
+func (m *PromptManager) ListRendering(ctx context.Context, opts ...RequestOption) (c *PromptRenderingList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("prompts", "rendering"), &c, applyListDefaults(opts))
+	return
 }

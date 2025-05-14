@@ -143,6 +143,28 @@ func TestPromptManager_ReadRendering(t *testing.T) {
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
+func TestPromptManager_ListRendering(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	_ = givenACustomDomain(t)
+	_ = givenAUniversalLoginTemplate(t)
+	expected := givenAPromptRendering(t, RenderingModeAdvanced)
+
+	actual, err := api.Prompt.ListRendering(context.Background())
+	assert.NoError(t, err)
+	found := false
+	for _, r := range actual.PromptRenderings {
+		if r.RenderingMode != nil && expected.RenderingMode != nil &&
+			*r.GetRenderingMode() == *expected.GetRenderingMode() &&
+			assert.Equal(t, expected.GetContextConfiguration(), r.GetContextConfiguration()) &&
+			assert.Equal(t, expected.GetDefaultHeadTagsDisabled(), r.GetDefaultHeadTagsDisabled()) &&
+			assert.Equal(t, expected.HeadTags, r.HeadTags) {
+			found = true
+			break
+		}
+	}
+	assert.True(t, found, "expected PromptRendering not found in actual.PromptRendering")
+}
+
 // Able to update the renderingMode to advanced and the setting configs when parsing the advanced renderingMode in payload.
 func TestPromptManager_UpdateRenderingWithAdvancedMode(t *testing.T) {
 	configureHTTPTestRecordings(t)
