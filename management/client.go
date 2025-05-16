@@ -543,12 +543,16 @@ type SAML2ClientAddon struct {
 	// The mappings between the Auth0 user profile and the output attributes on the SAML Assertion.
 	// Each "name" represents the property name on the Auth0 user profile.
 	// Each "value" is the name (including namespace) for the resulting SAML attribute in the assertion.
-	Mappings *map[string]string `json:"mappings,omitempty"`
+	Mappings *map[string]string `json:"-"`
+	// The mappings between the Auth0 user profile and the output attributes on the SAML Assertion.
+	// Each "name" represents the property name on the Auth0 user profile.
+	// and each "value" can be either a string or a list of strings representing one or more SAML attribute names (including namespaces).
+	FlexibleMappings map[string]interface{} `json:"mappings,omitempty"`
 	// The audience of the SAML Assertion.
 	Audience *string `json:"audience,omitempty"`
 	// The recipient of the SAML Assertion.
 	Recipient *string `json:"recipient,omitempty"`
-	// Whether or not a UPN claim should be created.
+	// Whether a UPN claim should be created.
 	CreateUPNClaim *bool `json:"createUpnClaim,omitempty"`
 	// If `PassthroughClaimsWithNoMapping` is true and this is false, for each claim that is not mapped to the common profile Auth0 will add a prefix
 	// 	http://schema.auth0.com	. If true it will passthrough the claim as-is.
@@ -567,7 +571,7 @@ type SAML2ClientAddon struct {
 	Destination *string `json:"destination,omitempty"`
 	// Expiration of the token.
 	LifetimeInSeconds *int `json:"lifetimeInSeconds,omitempty"`
-	// Whether or not the SAML Response should be signed. By default the SAML Assertion will be signed, but not the SAML Response.
+	// Whether the SAML Response should be signed. By default, the SAML Assertion will be signed, but not the SAML Response.
 	// If true, SAML Response will be signed instead of SAML Assertion.
 	SignResponse         *bool   `json:"signResponse,omitempty"`
 	NameIdentifierFormat *string `json:"nameIdentifierFormat,omitempty"`
@@ -589,6 +593,72 @@ type SAML2ClientAddon struct {
 	SigningCert *string `json:"signingCert,omitempty"`
 	//  An object that controls SAML logout behavior.
 	Logout *SAML2ClientAddonLogout `json:"logout,omitempty"`
+}
+
+// UnmarshalJSON allows SAML2ClientAddon to accept both map[string]string and map[string]any
+// for the "mappings" field when decoding JSON.
+func (s *SAML2ClientAddon) UnmarshalJSON(data []byte) error {
+	// Define a temporary struct to extract the mappings field as map[string]any
+	type saml2Alias SAML2ClientAddon
+	aux := &struct {
+		Mappings map[string]any `json:"mappings,omitempty"`
+		*saml2Alias
+	}{
+		saml2Alias: (*saml2Alias)(s),
+	}
+
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+
+	s.FlexibleMappings = aux.Mappings
+
+	// If all values in mappings are strings, also populate the legacy Mappings field
+	if aux.Mappings != nil && allValuesAreString(aux.Mappings) {
+		m := make(map[string]string, len(aux.Mappings))
+		for k, v := range aux.Mappings {
+			m[k] = v.(string)
+		}
+		s.Mappings = &m
+	} else {
+		s.Mappings = nil
+	}
+
+	return nil
+}
+
+// allValuesAreString returns true if all values in the map are strings.
+func allValuesAreString(m map[string]any) bool {
+	for _, v := range m {
+		if _, ok := v.(string); !ok {
+			return false
+		}
+	}
+	return true
+}
+
+// MarshalJSON ensures that the "mappings" field is serialized as map[string]any,
+// but if only the legacy Mappings field is set, it will convert it for output.
+func (s *SAML2ClientAddon) MarshalJSON() ([]byte, error) {
+	type saml2Alias SAML2ClientAddon
+	aux := &struct {
+		Mappings map[string]any `json:"mappings,omitempty"`
+		*saml2Alias
+	}{
+		saml2Alias: (*saml2Alias)(s),
+		Mappings:   s.FlexibleMappings,
+	}
+
+	// If FlexibleMappings is nil but legacy Mappings is set, convert it for output
+	if aux.Mappings == nil && s.Mappings != nil {
+		m := make(map[string]any, len(*s.Mappings))
+		for k, v := range *s.Mappings {
+			m[k] = v
+		}
+		aux.Mappings = m
+	}
+
+	return json.Marshal(aux)
 }
 
 // SAML2ClientAddonLogout defines the `logout` settings for the SAML2Addon.

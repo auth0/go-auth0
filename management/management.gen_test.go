@@ -13269,6 +13269,16 @@ func TestSAML2ClientAddon_GetDigestAlgorithm(tt *testing.T) {
 	s.GetDigestAlgorithm()
 }
 
+func TestSAML2ClientAddon_GetFlexibleMappings(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	s := &SAML2ClientAddon{FlexibleMappings: zeroValue}
+	s.GetFlexibleMappings()
+	s = &SAML2ClientAddon{}
+	s.GetFlexibleMappings()
+	s = nil
+	s.GetFlexibleMappings()
+}
+
 func TestSAML2ClientAddon_GetIncludeAttributeNameFormat(tt *testing.T) {
 	var zeroValue bool
 	s := &SAML2ClientAddon{IncludeAttributeNameFormat: &zeroValue}
