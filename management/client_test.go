@@ -121,6 +121,7 @@ func TestClient_SessionTransfer(t *testing.T) {
 			CanCreateSessionTransferToken: auth0.Bool(true),
 			AllowedAuthenticationMethods:  &[]string{"cookie", "query"},
 			EnforceDeviceBinding:          auth0.String("ip"),
+			AllowRefreshToken:             auth0.Bool(true),
 		},
 	}
 
@@ -143,6 +144,7 @@ func TestClient_SessionTransfer(t *testing.T) {
 		CanCreateSessionTransferToken: auth0.Bool(false),
 		AllowedAuthenticationMethods:  &[]string{"cookie"},
 		EnforceDeviceBinding:          auth0.String("none"),
+		AllowRefreshToken:             auth0.Bool(false), 
 	}
 
 	// Strip fields not allowed on update
