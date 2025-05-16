@@ -696,6 +696,75 @@ func TestClient_SAML2ClientAddonMappings(t *testing.T) {
 		assert.Empty(t, decoded.GetMappings()) // Legacy mappings should be ignored
 		assert.Equal(t, flexibleMappings, decoded.GetFlexibleMappings())
 	})
+	t.Run("Invalid mappings type", func(t *testing.T) {
+		input := `{"mappings": "not-an-object"}`
+		var decoded SAML2ClientAddon
+		err := json.Unmarshal([]byte(input), &decoded)
+		assert.Error(t, err)
+	})
+	t.Run("Marshal with legacy mappings", func(t *testing.T) {
+		legacyMappings := map[string]string{
+			"email": "User.Email",
+			"name":  "User.Name",
+		}
+		saml2 := &SAML2ClientAddon{
+			Mappings: &legacyMappings,
+		}
+
+		data, err := json.Marshal(saml2)
+		assert.NoError(t, err)
+
+		expectedJSON := `{
+		"mappings": {
+			"email": "User.Email",
+			"name": "User.Name"
+		}}`
+
+		assert.JSONEq(t, expectedJSON, string(data))
+	})
+	t.Run("Marshal with flexible mappings", func(t *testing.T) {
+		flexibleMappings := map[string]interface{}{
+			"email": []interface{}{"User.Email", "User.AltEmail"},
+			"name":  "User.Name",
+		}
+		saml2 := &SAML2ClientAddon{
+			FlexibleMappings: flexibleMappings,
+		}
+
+		data, err := json.Marshal(saml2)
+		assert.NoError(t, err)
+
+		expectedJSON := `{
+		"mappings": {
+			"email": ["User.Email", "User.AltEmail"],
+			"name": "User.Name"
+		}
+	}`
+
+		assert.JSONEq(t, expectedJSON, string(data))
+	})
+
+	t.Run("Marshal with both mappings - prefer flexible", func(t *testing.T) {
+		legacy := map[string]string{"email": "User.Email"}
+		flexible := map[string]interface{}{
+			"email": []interface{}{"User.Email", "User.AltEmail"},
+		}
+		saml2 := &SAML2ClientAddon{
+			Mappings:         &legacy,
+			FlexibleMappings: flexible,
+		}
+
+		data, err := json.Marshal(saml2)
+		assert.NoError(t, err)
+
+		expectedJSON := `{
+		"mappings": {
+			"email": ["User.Email", "User.AltEmail"]
+		}
+	}`
+
+		assert.JSONEq(t, expectedJSON, string(data))
+	})
 }
 
 func TestClient_CreateWithOIDCLogout(t *testing.T) {
