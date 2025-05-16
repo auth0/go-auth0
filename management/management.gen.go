@@ -4916,9 +4916,9 @@ func (c *ConnectionOptionsOAuth2) GetClientSecret() string {
 }
 
 // GetCustomHeaders returns the CustomHeaders field if it's non-nil, zero value otherwise.
-func (c *ConnectionOptionsOAuth2) GetCustomHeaders() []map[string]string {
+func (c *ConnectionOptionsOAuth2) GetCustomHeaders() map[string]string {
 	if c == nil || c.CustomHeaders == nil {
-		return []map[string]string{}
+		return map[string]string{}
 	}
 	return *c.CustomHeaders
 }
