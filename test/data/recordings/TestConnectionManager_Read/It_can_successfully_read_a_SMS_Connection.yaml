@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-SMS-Connection-1728906681","strategy":"sms","options":{"name":"Test-Connection-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"authParams":{"scope":"openid profile"},"twilio_sid":"abc132asdfasdf56","twilio_token":"234127asdfsada23","messaging_service_sid":"273248090982390423","disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-SMS-Connection-1747381016","strategy":"sms","options":{"name":"Test-Connection-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"authParams":{"scope":"openid profile"},"twilio_sid":"abc132asdfasdf56","twilio_token":"234127asdfsada23","messaging_service_sid":"273248090982390423","disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
+                - Go-Auth0/1.20.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 606
         uncompressed: false
-        body: '{"id":"con_898aCs7LfIwoYtlS","options":{"name":"Test-Connection-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"authParams":{"scope":"openid profile"},"twilio_sid":"abc132asdfasdf56","twilio_token":"234127asdfsada23","messaging_service_sid":"273248090982390423","disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"sms","name":"Test-SMS-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-SMS-Connection-1728906681"]}'
+        body: '{"id":"con_AhZPxc9mpQ0MMGHL","options":{"name":"Test-Connection-SMS","from":"+17777777777","syntax":"liquid","template":"Your verification code is { code }}","totp":{"time_step":110,"length":5},"authParams":{"scope":"openid profile"},"twilio_sid":"abc132asdfasdf56","twilio_token":"234127asdfsada23","messaging_service_sid":"273248090982390423","disable_signup":true,"brute_force_protection":true,"upstream_params":{"screen_name":{"alias":"login_hint"}}},"strategy":"sms","name":"Test-SMS-Connection-1747381016","is_domain_connection":false,"enabled_clients":[],"realms":["Test-SMS-Connection-1747381016"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 338.90025ms
+        duration: 394.447ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_898aCs7LfIwoYtlS
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_AhZPxc9mpQ0MMGHL
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_898aCs7LfIwoYtlS","options":{"from":"+17777777777","name":"Test-Connection-SMS","totp":{"length":5,"time_step":110},"syntax":"liquid","template":"Your verification code is { code }}","authParams":{"scope":"openid profile"},"twilio_sid":"abc132asdfasdf56","twilio_token":"234127asdfsada23","disable_signup":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"messaging_service_sid":"273248090982390423","brute_force_protection":true},"strategy":"sms","name":"Test-SMS-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-SMS-Connection-1728906681"]}'
+        body: '{"id":"con_AhZPxc9mpQ0MMGHL","options":{"from":"+17777777777","name":"Test-Connection-SMS","totp":{"length":5,"time_step":110},"syntax":"liquid","template":"Your verification code is { code }}","authParams":{"scope":"openid profile"},"twilio_sid":"abc132asdfasdf56","twilio_token":"234127asdfsada23","disable_signup":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"messaging_service_sid":"273248090982390423","brute_force_protection":true},"strategy":"sms","name":"Test-SMS-Connection-1747381016","is_domain_connection":false,"enabled_clients":[],"realms":["Test-SMS-Connection-1747381016"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 325.165459ms
+        duration: 375.709792ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -89,8 +89,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_898aCs7LfIwoYtlS
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_AhZPxc9mpQ0MMGHL
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -100,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-10-14T11:51:49.740Z"}'
+        body: '{"deleted_at":"2025-05-16T07:37:05.884Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 334.017417ms
+        duration: 375.406167ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -124,8 +124,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_898aCs7LfIwoYtlS
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_AhZPxc9mpQ0MMGHL
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -133,12 +133,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 0
+        content_length: 41
         uncompressed: false
-        body: ""
+        body: '{"deleted_at":"2025-05-16T07:37:05.884Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 204 No Content
-        code: 204
-        duration: 318.277917ms
+        status: 202 Accepted
+        code: 202
+        duration: 350.555834ms

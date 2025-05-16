@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-GoogleOAuth2-Connection-1728906681","strategy":"google-oauth2"}
+            {"name":"Test-GoogleOAuth2-Connection-1747381128","strategy":"google-oauth2"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
+                - Go-Auth0/1.20.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 276
         uncompressed: false
-        body: '{"id":"con_DZ2mkiaTVQXkEUkr","options":{"email":true,"profile":true,"scope":["email","profile"]},"strategy":"google-oauth2","name":"Test-GoogleOAuth2-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GoogleOAuth2-Connection-1728906681"]}'
+        body: '{"id":"con_AFHDSGgOtfOyLwRT","options":{"email":true,"profile":true,"scope":["email","profile"]},"strategy":"google-oauth2","name":"Test-GoogleOAuth2-Connection-1747381128","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GoogleOAuth2-Connection-1747381128"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 314.873375ms
+        duration: 383.922541ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,8 +55,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_DZ2mkiaTVQXkEUkr
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_AFHDSGgOtfOyLwRT
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_DZ2mkiaTVQXkEUkr","options":{"email":true,"scope":["profile","https://www.googleapis.com/auth/calendar","email"],"profile":true,"youtube":false,"calendar":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"allowed_audiences":["example.com","api.example.com"]},"strategy":"google-oauth2","name":"Test-GoogleOAuth2-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GoogleOAuth2-Connection-1728906681"]}'
+        body: '{"id":"con_AFHDSGgOtfOyLwRT","options":{"email":true,"scope":["profile","https://www.googleapis.com/auth/calendar","email"],"profile":true,"youtube":false,"calendar":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"allowed_audiences":["example.com","api.example.com"]},"strategy":"google-oauth2","name":"Test-GoogleOAuth2-Connection-1747381128","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GoogleOAuth2-Connection-1747381128"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 340.001875ms
+        duration: 384.446459ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -90,8 +90,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_DZ2mkiaTVQXkEUkr
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_AFHDSGgOtfOyLwRT
         method: GET
       response:
         proto: HTTP/2.0
@@ -101,13 +101,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_DZ2mkiaTVQXkEUkr","options":{"email":true,"scope":["profile","https://www.googleapis.com/auth/calendar","email"],"profile":true,"youtube":false,"calendar":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"allowed_audiences":["example.com","api.example.com"]},"strategy":"google-oauth2","name":"Test-GoogleOAuth2-Connection-1728906681","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GoogleOAuth2-Connection-1728906681"]}'
+        body: '{"id":"con_AFHDSGgOtfOyLwRT","options":{"email":true,"scope":["profile","https://www.googleapis.com/auth/calendar","email"],"profile":true,"youtube":false,"calendar":true,"upstream_params":{"screen_name":{"alias":"login_hint"}},"allowed_audiences":["example.com","api.example.com"]},"strategy":"google-oauth2","name":"Test-GoogleOAuth2-Connection-1747381128","is_domain_connection":false,"enabled_clients":[],"realms":["Test-GoogleOAuth2-Connection-1747381128"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 344.102083ms
+        duration: 343.181958ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,8 +125,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_DZ2mkiaTVQXkEUkr
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_AFHDSGgOtfOyLwRT
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -136,10 +136,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-10-14T11:52:42.026Z"}'
+        body: '{"deleted_at":"2025-05-16T07:38:53.535Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 312.933125ms
+        duration: 520.680875ms

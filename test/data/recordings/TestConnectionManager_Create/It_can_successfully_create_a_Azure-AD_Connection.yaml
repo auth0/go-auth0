@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-AzureAD-Connection-1728906681","strategy":"waad","options":{"client_id":"123456","client_secret":"123456","strategy_version":2,"tenant_domain":"example.onmicrosoft.com","domain":"example.onmicrosoft.com","upstream_params":{"screen_name":{"alias":"login_hint"}},"userid_attribute":"sub"}}
+            {"name":"Test-AzureAD-Connection-1747380988","strategy":"waad","options":{"client_id":"123456","client_secret":"123456","strategy_version":2,"tenant_domain":"example.onmicrosoft.com","domain":"example.onmicrosoft.com","upstream_params":{"screen_name":{"alias":"login_hint"}},"userid_attribute":"sub"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
+                - Go-Auth0/1.20.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"id":"con_bgwXKlGVBnEEX05e","options":{"client_id":"123456","client_secret":"123456","strategy_version":2,"tenant_domain":"example.onmicrosoft.com","domain":"example.onmicrosoft.com","upstream_params":{"screen_name":{"alias":"login_hint"}},"userid_attribute":"sub","thumbprints":["31cee5dc8cfdde0eeec2035e1269b0fd66063e4a","8b0d415d77326e4d3b926b4879e25e218a9ab35f","dcf68ae047f204d42edc2b6362c6b7626850e44d","f0f5d00dbe263a6a25bbf06d1b78c35f8a91db15","77e662d066eeb38b0468ea97814f2932f61cdca2"],"app_domain":"go-auth0-dev.eu.auth0.com.sus.auth0.com","identity_api":"microsoft-identity-platform-v2.0","useCommonEndpoint":false,"should_trust_email_verified_connection":"never_set_emails_as_verified","waad_common_endpoint":false,"use_wsfed":false,"waad_protocol":"openid-connect"},"strategy":"waad","name":"Test-AzureAD-Connection-1728906681","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.sus.auth0.com/go-auth0-dev.eu.auth0.com/p/waad/mpcMkfnt","is_domain_connection":false,"show_as_button":false,"display_name":"Test-AzureAD-Connection-1728906681","enabled_clients":[],"realms":["Test-AzureAD-Connection-1728906681"]}'
+        body: '{"id":"con_nwzZiABineEkfLT7","options":{"client_id":"123456","client_secret":"123456","strategy_version":2,"tenant_domain":"example.onmicrosoft.com","domain":"example.onmicrosoft.com","upstream_params":{"screen_name":{"alias":"login_hint"}},"userid_attribute":"sub","thumbprints":["2588523ac1e10d9adce647ea420f2e8e41cc4cd6","08dbf4388dd1c2a9471445676a8300b21087d971","3e854a7a2ac83af993c8b43d1bd05e9c1c28b3b9","fe33708de4a7bd34caf1711daf94143e40512cba","f9c800be39a6436e0ab36d332290c1e125bcf78c","2a6f2868351b6ffa55506b13dfc7875fceefd3bf"],"app_domain":"go-auth0-dev.eu.auth0.com.us.auth0.com","identity_api":"microsoft-identity-platform-v2.0","useCommonEndpoint":false,"should_trust_email_verified_connection":"never_set_emails_as_verified","waad_common_endpoint":false,"use_wsfed":false,"waad_protocol":"openid-connect"},"strategy":"waad","name":"Test-AzureAD-Connection-1747380988","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.us.auth0.com/go-auth0-dev.eu.auth0.com/p/waad/HETEkunG","is_domain_connection":false,"show_as_button":false,"display_name":"Test-AzureAD-Connection-1747380988","enabled_clients":[],"realms":["Test-AzureAD-Connection-1747380988"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 962.756417ms
+        duration: 868.86275ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_bgwXKlGVBnEEX05e
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_nwzZiABineEkfLT7
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -65,10 +65,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-10-14T11:51:29.162Z"}'
+        body: '{"deleted_at":"2025-05-16T07:36:37.352Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 360.150084ms
+        duration: 390.4965ms

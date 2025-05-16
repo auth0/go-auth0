@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-ADFS-Connection-1728906681","strategy":"adfs","options":{"strategy_version":2,"fedMetadataXml":"\u003c?xml version=\"1.0\" encoding=\"utf-8\"?\u003e\n\u003cEntityDescriptor entityID=\"https://example.com\"\n                  xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\"\u003e\n    \u003cRoleDescriptor xsi:type=\"fed:ApplicationServiceType\"\n                    protocolSupportEnumeration=\"http://docs.oasis-open.org/wsfed/federation/200706\"\n                    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                    xmlns:fed=\"http://docs.oasis-open.org/wsfed/federation/200706\"\u003e\n        \u003cfed:TargetScopes\u003e\n            \u003cwsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\"\u003e\n                \u003cwsa:Address\u003ehttps://adfs.provider/\u003c/wsa:Address\u003e\n            \u003c/wsa:EndpointReference\u003e\n        \u003c/fed:TargetScopes\u003e\n        \u003cfed:ApplicationServiceEndpoint\u003e\n            \u003cwsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\"\u003e\n                \u003cwsa:Address\u003ehttps://adfs.provider/wsfed\u003c/wsa:Address\u003e\n            \u003c/wsa:EndpointReference\u003e\n        \u003c/fed:ApplicationServiceEndpoint\u003e\n        \u003cfed:PassiveRequestorEndpoint\u003e\n            \u003cwsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\"\u003e\n                \u003cwsa:Address\u003ehttps://adfs.provider/wsfed\u003c/wsa:Address\u003e\n            \u003c/wsa:EndpointReference\u003e\n        \u003c/fed:PassiveRequestorEndpoint\u003e\n    \u003c/RoleDescriptor\u003e\n    \u003cIDPSSODescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\"\u003e\n        \u003cSingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"\n                             Location=\"https://adfs.provider/sign_out\"/\u003e\n        \u003cSingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"\n                             Location=\"https://adfs.provider/sign_in\"/\u003e\n    \u003c/IDPSSODescriptor\u003e\n\u003c/EntityDescriptor\u003e\n","upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-ADFS-Connection-1747381016","strategy":"adfs","options":{"strategy_version":2,"fedMetadataXml":"\u003c?xml version=\"1.0\" encoding=\"utf-8\"?\u003e\n\u003cEntityDescriptor entityID=\"https://example.com\"\n                  xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\"\u003e\n    \u003cRoleDescriptor xsi:type=\"fed:ApplicationServiceType\"\n                    protocolSupportEnumeration=\"http://docs.oasis-open.org/wsfed/federation/200706\"\n                    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                    xmlns:fed=\"http://docs.oasis-open.org/wsfed/federation/200706\"\u003e\n        \u003cfed:TargetScopes\u003e\n            \u003cwsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\"\u003e\n                \u003cwsa:Address\u003ehttps://adfs.provider/\u003c/wsa:Address\u003e\n            \u003c/wsa:EndpointReference\u003e\n        \u003c/fed:TargetScopes\u003e\n        \u003cfed:ApplicationServiceEndpoint\u003e\n            \u003cwsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\"\u003e\n                \u003cwsa:Address\u003ehttps://adfs.provider/wsfed\u003c/wsa:Address\u003e\n            \u003c/wsa:EndpointReference\u003e\n        \u003c/fed:ApplicationServiceEndpoint\u003e\n        \u003cfed:PassiveRequestorEndpoint\u003e\n            \u003cwsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\"\u003e\n                \u003cwsa:Address\u003ehttps://adfs.provider/wsfed\u003c/wsa:Address\u003e\n            \u003c/wsa:EndpointReference\u003e\n        \u003c/fed:PassiveRequestorEndpoint\u003e\n    \u003c/RoleDescriptor\u003e\n    \u003cIDPSSODescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\"\u003e\n        \u003cSingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"\n                             Location=\"https://adfs.provider/sign_out\"/\u003e\n        \u003cSingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"\n                             Location=\"https://adfs.provider/sign_in\"/\u003e\n    \u003c/IDPSSODescriptor\u003e\n\u003c/EntityDescriptor\u003e\n","upstream_params":{"screen_name":{"alias":"login_hint"}}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
+                - Go-Auth0/1.20.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"id":"con_HpmCEK0EtFZQsMYb","options":{"strategy_version":2,"fedMetadataXml":"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<EntityDescriptor entityID=\"https://example.com\"\n                  xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\">\n    <RoleDescriptor xsi:type=\"fed:ApplicationServiceType\"\n                    protocolSupportEnumeration=\"http://docs.oasis-open.org/wsfed/federation/200706\"\n                    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                    xmlns:fed=\"http://docs.oasis-open.org/wsfed/federation/200706\">\n        <fed:TargetScopes>\n            <wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\n                <wsa:Address>https://adfs.provider/</wsa:Address>\n            </wsa:EndpointReference>\n        </fed:TargetScopes>\n        <fed:ApplicationServiceEndpoint>\n            <wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\n                <wsa:Address>https://adfs.provider/wsfed</wsa:Address>\n            </wsa:EndpointReference>\n        </fed:ApplicationServiceEndpoint>\n        <fed:PassiveRequestorEndpoint>\n            <wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\n                <wsa:Address>https://adfs.provider/wsfed</wsa:Address>\n            </wsa:EndpointReference>\n        </fed:PassiveRequestorEndpoint>\n    </RoleDescriptor>\n    <IDPSSODescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">\n        <SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"\n                             Location=\"https://adfs.provider/sign_out\"/>\n        <SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"\n                             Location=\"https://adfs.provider/sign_in\"/>\n    </IDPSSODescriptor>\n</EntityDescriptor>\n","upstream_params":{"screen_name":{"alias":"login_hint"}},"thumbprints":[],"signInEndpoint":"https://adfs.provider/wsfed","should_trust_email_verified_connection":"always_set_emails_as_verified"},"strategy":"adfs","name":"Test-ADFS-Connection-1728906681","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.sus.auth0.com/p/adfs/f8SyYukK","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-ADFS-Connection-1728906681"]}'
+        body: '{"id":"con_jDCbVls8aAPgC3bY","options":{"strategy_version":2,"fedMetadataXml":"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<EntityDescriptor entityID=\"https://example.com\"\n                  xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\">\n    <RoleDescriptor xsi:type=\"fed:ApplicationServiceType\"\n                    protocolSupportEnumeration=\"http://docs.oasis-open.org/wsfed/federation/200706\"\n                    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                    xmlns:fed=\"http://docs.oasis-open.org/wsfed/federation/200706\">\n        <fed:TargetScopes>\n            <wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\n                <wsa:Address>https://adfs.provider/</wsa:Address>\n            </wsa:EndpointReference>\n        </fed:TargetScopes>\n        <fed:ApplicationServiceEndpoint>\n            <wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\n                <wsa:Address>https://adfs.provider/wsfed</wsa:Address>\n            </wsa:EndpointReference>\n        </fed:ApplicationServiceEndpoint>\n        <fed:PassiveRequestorEndpoint>\n            <wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\n                <wsa:Address>https://adfs.provider/wsfed</wsa:Address>\n            </wsa:EndpointReference>\n        </fed:PassiveRequestorEndpoint>\n    </RoleDescriptor>\n    <IDPSSODescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">\n        <SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"\n                             Location=\"https://adfs.provider/sign_out\"/>\n        <SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"\n                             Location=\"https://adfs.provider/sign_in\"/>\n    </IDPSSODescriptor>\n</EntityDescriptor>\n","upstream_params":{"screen_name":{"alias":"login_hint"}},"thumbprints":[],"signInEndpoint":"https://adfs.provider/wsfed","should_trust_email_verified_connection":"always_set_emails_as_verified"},"strategy":"adfs","name":"Test-ADFS-Connection-1747381016","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.us.auth0.com/p/adfs/uxdQIC6r","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-ADFS-Connection-1747381016"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 368.72775ms
+        duration: 402.597458ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -54,8 +54,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?include_totals=true&name=Test-ADFS-Connection-1728906681&per_page=50
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?include_totals=true&name=Test-ADFS-Connection-1747381016&per_page=50
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +65,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"total":1,"start":0,"limit":50,"connections":[{"id":"con_HpmCEK0EtFZQsMYb","options":{"thumbprints":[],"fedMetadataXml":"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<EntityDescriptor entityID=\"https://example.com\"\n                  xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\">\n    <RoleDescriptor xsi:type=\"fed:ApplicationServiceType\"\n                    protocolSupportEnumeration=\"http://docs.oasis-open.org/wsfed/federation/200706\"\n                    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                    xmlns:fed=\"http://docs.oasis-open.org/wsfed/federation/200706\">\n        <fed:TargetScopes>\n            <wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\n                <wsa:Address>https://adfs.provider/</wsa:Address>\n            </wsa:EndpointReference>\n        </fed:TargetScopes>\n        <fed:ApplicationServiceEndpoint>\n            <wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\n                <wsa:Address>https://adfs.provider/wsfed</wsa:Address>\n            </wsa:EndpointReference>\n        </fed:ApplicationServiceEndpoint>\n        <fed:PassiveRequestorEndpoint>\n            <wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\n                <wsa:Address>https://adfs.provider/wsfed</wsa:Address>\n            </wsa:EndpointReference>\n        </fed:PassiveRequestorEndpoint>\n    </RoleDescriptor>\n    <IDPSSODescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">\n        <SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"\n                             Location=\"https://adfs.provider/sign_out\"/>\n        <SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"\n                             Location=\"https://adfs.provider/sign_in\"/>\n    </IDPSSODescriptor>\n</EntityDescriptor>\n","signInEndpoint":"https://adfs.provider/wsfed","upstream_params":{"screen_name":{"alias":"login_hint"}},"strategy_version":2,"should_trust_email_verified_connection":"always_set_emails_as_verified"},"strategy":"adfs","name":"Test-ADFS-Connection-1728906681","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.sus.auth0.com/p/adfs/f8SyYukK","is_domain_connection":false,"show_as_button":false,"realms":["Test-ADFS-Connection-1728906681"],"enabled_clients":[]}]}'
+        body: '{"total":1,"start":0,"limit":50,"connections":[{"id":"con_jDCbVls8aAPgC3bY","options":{"thumbprints":[],"fedMetadataXml":"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<EntityDescriptor entityID=\"https://example.com\"\n                  xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\">\n    <RoleDescriptor xsi:type=\"fed:ApplicationServiceType\"\n                    protocolSupportEnumeration=\"http://docs.oasis-open.org/wsfed/federation/200706\"\n                    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                    xmlns:fed=\"http://docs.oasis-open.org/wsfed/federation/200706\">\n        <fed:TargetScopes>\n            <wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\n                <wsa:Address>https://adfs.provider/</wsa:Address>\n            </wsa:EndpointReference>\n        </fed:TargetScopes>\n        <fed:ApplicationServiceEndpoint>\n            <wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\n                <wsa:Address>https://adfs.provider/wsfed</wsa:Address>\n            </wsa:EndpointReference>\n        </fed:ApplicationServiceEndpoint>\n        <fed:PassiveRequestorEndpoint>\n            <wsa:EndpointReference xmlns:wsa=\"http://www.w3.org/2005/08/addressing\">\n                <wsa:Address>https://adfs.provider/wsfed</wsa:Address>\n            </wsa:EndpointReference>\n        </fed:PassiveRequestorEndpoint>\n    </RoleDescriptor>\n    <IDPSSODescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">\n        <SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"\n                             Location=\"https://adfs.provider/sign_out\"/>\n        <SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"\n                             Location=\"https://adfs.provider/sign_in\"/>\n    </IDPSSODescriptor>\n</EntityDescriptor>\n","signInEndpoint":"https://adfs.provider/wsfed","upstream_params":{"screen_name":{"alias":"login_hint"}},"strategy_version":2,"should_trust_email_verified_connection":"always_set_emails_as_verified"},"strategy":"adfs","name":"Test-ADFS-Connection-1747381016","provisioning_ticket_url":"https://go-auth0-dev.eu.auth0.com.us.auth0.com/p/adfs/uxdQIC6r","is_domain_connection":false,"show_as_button":false,"realms":["Test-ADFS-Connection-1747381016"],"enabled_clients":[]}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 317.190667ms
+        duration: 409.23025ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -89,8 +89,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_HpmCEK0EtFZQsMYb
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_jDCbVls8aAPgC3bY
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -100,13 +100,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2024-10-14T11:52:25.179Z"}'
+        body: '{"deleted_at":"2025-05-16T07:37:56.670Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 342.527042ms
+        duration: 370.866542ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -124,8 +124,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.1
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_HpmCEK0EtFZQsMYb
+                - Go-Auth0/1.20.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_jDCbVls8aAPgC3bY
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -133,12 +133,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 0
+        content_length: 41
         uncompressed: false
-        body: ""
+        body: '{"deleted_at":"2025-05-16T07:37:56.670Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 204 No Content
-        code: 204
-        duration: 431.717875ms
+        status: 202 Accepted
+        code: 202
+        duration: 364.632209ms
