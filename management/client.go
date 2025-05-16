@@ -378,6 +378,7 @@ type SessionTransfer struct {
 	CanCreateSessionTransferToken *bool     `json:"can_create_session_transfer_token,omitempty"`
 	AllowedAuthenticationMethods  *[]string `json:"allowed_authentication_methods,omitempty"`
 	EnforceDeviceBinding          *string   `json:"enforce_device_binding,omitempty"`
+	AllowRefreshToken 			  *bool     `json:"allow_refresh_token,omitempty"`
 }
 
 // ClientAddons defines the `addons` settings for a Client.
