@@ -15706,6 +15706,14 @@ func TestTokenExchangeProfileList_String(t *testing.T) {
 	}
 }
 
+func TestUpdateEnabledClients_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UpdateEnabledClients{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestUser_GetAppMetadata(tt *testing.T) {
 	var zeroValue map[string]interface{}
 	u := &User{AppMetadata: &zeroValue}

@@ -12506,6 +12506,11 @@ func (t *TokenExchangeProfileList) String() string {
 	return Stringify(t)
 }
 
+// String returns a string representation of UpdateEnabledClients.
+func (u *UpdateEnabledClients) String() string {
+	return Stringify(u)
+}
+
 // GetAppMetadata returns the AppMetadata field if it's non-nil, zero value otherwise.
 func (u *User) GetAppMetadata() map[string]interface{} {
 	if u == nil || u.AppMetadata == nil {

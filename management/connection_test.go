@@ -877,6 +877,59 @@ func TestConnectionManager_ReadByName(t *testing.T) {
 	})
 }
 
+func TestConnectionManager_UpdateEnabledClients_Add(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	client := givenAClient(t)
+	connection := givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+	})
+
+	connectionWithUpdatedOptions := []UpdateEnabledClients{
+		{
+			ClientID: *client.ClientID,
+			Status:   true,
+		},
+	}
+
+	err := api.Connection.UpdateEnabledClients(context.Background(), connection.GetID(), connectionWithUpdatedOptions)
+	assert.NoError(t, err)
+
+	actualConnection, err := api.Connection.Read(context.Background(), connection.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, *actualConnection.EnabledClients, []string{*client.ClientID})
+}
+
+func TestConnectionManager_UpdateEnabledClients_Remove(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	client := givenAClient(t)
+	connection := givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:           auth0.Stringf("Test-Auth0-Connection-%d", time.Now().Unix()),
+			Strategy:       auth0.String("auth0"),
+			EnabledClients: &[]string{*client.ClientID},
+		},
+	})
+
+	connectionWithUpdatedOptions := []UpdateEnabledClients{
+		{
+			ClientID: *client.ClientID,
+			Status:   false,
+		},
+	}
+
+	err := api.Connection.UpdateEnabledClients(context.Background(), connection.GetID(), connectionWithUpdatedOptions)
+	assert.NoError(t, err)
+
+	actualConnection, err := api.Connection.Read(context.Background(), connection.GetID())
+	assert.NoError(t, err)
+	assert.Empty(t, *actualConnection.EnabledClients)
+}
+
 func TestConnectionManager_Update(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully update a "+testCase.name, func(t *testing.T) {
