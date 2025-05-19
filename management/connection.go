@@ -158,6 +158,15 @@ type Connection struct {
 	ShowAsButton *bool `json:"show_as_button,omitempty"`
 }
 
+// ConnectionEnabledClient represents the payload for the clients status for a connection.
+type ConnectionEnabledClient struct {
+	// ClientID is The client_id of the client
+	ClientID string `json:"client_id"`
+
+	// Status indicates if the connection is enabled or not for this client_id
+	Status bool `json:"status"`
+}
+
 // SCIMConfiguration represents the SCIM configuration for a connection.
 // This struct is used primarily for enterprise connections.
 type SCIMConfiguration struct {
@@ -251,15 +260,6 @@ func (st *SCIMToken) MarshalJSON() ([]byte, error) {
 		Scopes:        st.Scopes,
 		TokenLifeTime: st.TokenLifeTime,
 	})
-}
-
-// UpdateEnabledClients represents the payload for updating the clients for a connection.
-type UpdateEnabledClients struct {
-	// ClientID is The client_id of the client to be the subject to change status
-	ClientID string `json:"client_id"`
-
-	// Status indicates if the connection is enabled or not for this client_id
-	Status bool `json:"status"`
 }
 
 // MarshalJSON implements the json.Marshaler interface.
@@ -1586,7 +1586,7 @@ func (m *ConnectionManager) ReadByName(ctx context.Context, name string, opts ..
 // UpdateEnabledClients updates the enabled clients for a connection by its connection ID.
 //
 // See: https://auth0.com/docs/api/management/v2/connections/patch-clients
-func (m *ConnectionManager) UpdateEnabledClients(ctx context.Context, id string, update []UpdateEnabledClients, opts ...RequestOption) error {
+func (m *ConnectionManager) UpdateEnabledClients(ctx context.Context, id string, update []ConnectionEnabledClient, opts ...RequestOption) error {
 	return m.management.Request(ctx, "PATCH", m.management.URI("connections", id, "clients"), update, opts...)
 }
 

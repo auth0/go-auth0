@@ -888,7 +888,7 @@ func TestConnectionManager_UpdateEnabledClients_Add(t *testing.T) {
 		},
 	})
 
-	connectionWithUpdatedOptions := []UpdateEnabledClients{
+	connectionWithUpdatedOptions := []ConnectionEnabledClient{
 		{
 			ClientID: *client.ClientID,
 			Status:   true,
@@ -915,7 +915,7 @@ func TestConnectionManager_UpdateEnabledClients_Remove(t *testing.T) {
 		},
 	})
 
-	connectionWithUpdatedOptions := []UpdateEnabledClients{
+	connectionWithUpdatedOptions := []ConnectionEnabledClient{
 		{
 			ClientID: *client.ClientID,
 			Status:   false,

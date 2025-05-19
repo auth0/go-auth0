@@ -3182,6 +3182,14 @@ func TestConnection_String(t *testing.T) {
 	}
 }
 
+func TestConnectionEnabledClient_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionEnabledClient{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestConnectionGatewayAuthentication_GetAudience(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionGatewayAuthentication{Audience: &zeroValue}
@@ -15701,14 +15709,6 @@ func TestTokenExchangeProfile_String(t *testing.T) {
 func TestTokenExchangeProfileList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TokenExchangeProfileList{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
-func TestUpdateEnabledClients_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &UpdateEnabledClients{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

@@ -2602,6 +2602,11 @@ func (c *Connection) String() string {
 	return Stringify(c)
 }
 
+// String returns a string representation of ConnectionEnabledClient.
+func (c *ConnectionEnabledClient) String() string {
+	return Stringify(c)
+}
+
 // GetAudience returns the Audience field if it's non-nil, zero value otherwise.
 func (c *ConnectionGatewayAuthentication) GetAudience() string {
 	if c == nil || c.Audience == nil {
@@ -12504,11 +12509,6 @@ func (t *TokenExchangeProfile) String() string {
 // String returns a string representation of TokenExchangeProfileList.
 func (t *TokenExchangeProfileList) String() string {
 	return Stringify(t)
-}
-
-// String returns a string representation of UpdateEnabledClients.
-func (u *UpdateEnabledClients) String() string {
-	return Stringify(u)
 }
 
 // GetAppMetadata returns the AppMetadata field if it's non-nil, zero value otherwise.
