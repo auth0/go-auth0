@@ -119,6 +119,9 @@ const (
 
 	// PromptCaptcha represents the captcha prompt.
 	PromptCaptcha PromptType = "captcha"
+
+	// PromptBruteForceProtection represents the brute-force-protection prompt.
+	PromptBruteForceProtection PromptType = "brute-force-protection"
 )
 
 var allowedPromptsWithPartials = []PromptType{
@@ -340,6 +343,9 @@ const (
 	// ScreenMFABeginEnrollOptions represents the mfa-begin-enroll-options screen.
 	ScreenMFABeginEnrollOptions ScreenName = "mfa-begin-enroll-options"
 
+	// ScreenMFARecoveryCodeChallengeNewCode represents the mfa-recovery-code-challenge-new-code screen.
+	ScreenMFARecoveryCodeChallengeNewCode ScreenName = "mfa-recovery-code-challenge-new-code"
+
 	// ScreenStatus represents the status screen.
 	ScreenStatus ScreenName = "status"
 
@@ -381,6 +387,15 @@ const (
 
 	// ScreenInterstitialCaptcha represents the interstitial-captcha screen.
 	ScreenInterstitialCaptcha ScreenName = "interstitial-captcha"
+
+	// ScreenBruteForceProtectionUnblock represents the brute-force-protection-unblock screen.
+	ScreenBruteForceProtectionUnblock ScreenName = "brute-force-protection-unblock"
+
+	// ScreenBruteForceProtectionUnblockFailure represents the brute-force-protection-unblock-failure.
+	ScreenBruteForceProtectionUnblockFailure ScreenName = "brute-force-protection-unblock-failure"
+
+	// ScreenBruteForceProtectionUnblockSuccess represents the brute-force-protection-unblock-success.
+	ScreenBruteForceProtectionUnblockSuccess ScreenName = "brute-force-protection-unblock-success"
 )
 
 const (
