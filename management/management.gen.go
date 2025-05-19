@@ -11458,6 +11458,14 @@ func (s *SessionTransfer) GetAllowedAuthenticationMethods() []string {
 	return *s.AllowedAuthenticationMethods
 }
 
+// GetAllowRefreshToken returns the AllowRefreshToken field if it's non-nil, zero value otherwise.
+func (s *SessionTransfer) GetAllowRefreshToken() bool {
+	if s == nil || s.AllowRefreshToken == nil {
+		return false
+	}
+	return *s.AllowRefreshToken
+}
+
 // GetCanCreateSessionTransferToken returns the CanCreateSessionTransferToken field if it's non-nil, zero value otherwise.
 func (s *SessionTransfer) GetCanCreateSessionTransferToken() bool {
 	if s == nil || s.CanCreateSessionTransferToken == nil {
