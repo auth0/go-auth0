@@ -9912,6 +9912,11 @@ func (p *PromptRendering) String() string {
 	return Stringify(p)
 }
 
+// String returns a string representation of PromptRenderingList.
+func (p *PromptRenderingList) String() string {
+	return Stringify(p)
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (r *RefreshToken) GetClientID() string {
 	if r == nil || r.ClientID == nil {

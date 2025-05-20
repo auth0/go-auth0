@@ -12429,6 +12429,14 @@ func TestPromptRendering_String(t *testing.T) {
 	}
 }
 
+func TestPromptRenderingList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PromptRenderingList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestRefreshToken_GetClientID(tt *testing.T) {
 	var zeroValue string
 	r := &RefreshToken{ClientID: &zeroValue}
