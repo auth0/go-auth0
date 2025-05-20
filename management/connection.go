@@ -138,9 +138,10 @@ type Connection struct {
 	// Options for validation.
 	Options interface{} `json:"-"`
 
-	// The identifiers of the clients for which the connection is to be
-	// enabled. If the array is empty or the property is not specified, no
-	// clients are enabled.
+	// EnabledClients holds the identifiers of clients for which the connection is enabled.
+	//
+	// Deprecated: This field is deprecated and will be removed in future versions.
+	// Use UpdateEnabledClients and ReadEnabledClients methods instead for managing enabled clients.
 	EnabledClients *[]string `json:"enabled_clients,omitempty"`
 
 	// Defines the realms for which the connection will be used (ie: email
@@ -156,6 +157,21 @@ type Connection struct {
 	// ShowAsButton Display connection as a button.
 	// Enable showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to false.)
 	ShowAsButton *bool `json:"show_as_button,omitempty"`
+}
+
+// ConnectionEnabledClientList is a list of enabled clients for a connection.
+type ConnectionEnabledClientList struct {
+	List
+	Clients *[]ConnectionEnabledClient `json:"clients,omitempty"`
+}
+
+// ConnectionEnabledClient represents the payload for the clients status for a connection.
+type ConnectionEnabledClient struct {
+	// ClientID is The client_id of the client
+	ClientID *string `json:"client_id,omitempty"`
+
+	// Status indicates if the connection is enabled or not for this client_id
+	Status *bool `json:"status,omitempty"`
 }
 
 // SCIMConfiguration represents the SCIM configuration for a connection.
@@ -1572,6 +1588,21 @@ func (m *ConnectionManager) ReadByName(ctx context.Context, name string, opts ..
 		return c.Connections[0], nil
 	}
 	return nil, &managementError{404, "Not Found", "Connection not found"}
+}
+
+// ReadEnabledClients  retrieves the enabled clients for a connection by its connection ID.
+//
+// See: https://auth0.com/docs/api/management/v2/connections/get-connection-clients
+func (m *ConnectionManager) ReadEnabledClients(ctx context.Context, id string, opts ...RequestOption) (c *ConnectionEnabledClientList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("connections", id, "clients"), &c, opts...)
+	return
+}
+
+// UpdateEnabledClients updates the enabled clients for a connection by its connection ID.
+//
+// See: https://auth0.com/docs/api/management/v2/connections/patch-clients
+func (m *ConnectionManager) UpdateEnabledClients(ctx context.Context, id string, c []ConnectionEnabledClient, opts ...RequestOption) error {
+	return m.management.Request(ctx, "PATCH", m.management.URI("connections", id, "clients"), c, opts...)
 }
 
 // CreateSCIMConfiguration creates a SCIM configuration for a connection by its connection ID.

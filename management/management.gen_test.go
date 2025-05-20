@@ -3182,6 +3182,52 @@ func TestConnection_String(t *testing.T) {
 	}
 }
 
+func TestConnectionEnabledClient_GetClientID(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionEnabledClient{ClientID: &zeroValue}
+	c.GetClientID()
+	c = &ConnectionEnabledClient{}
+	c.GetClientID()
+	c = nil
+	c.GetClientID()
+}
+
+func TestConnectionEnabledClient_GetStatus(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionEnabledClient{Status: &zeroValue}
+	c.GetStatus()
+	c = &ConnectionEnabledClient{}
+	c.GetStatus()
+	c = nil
+	c.GetStatus()
+}
+
+func TestConnectionEnabledClient_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionEnabledClient{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionEnabledClientList_GetClients(tt *testing.T) {
+	var zeroValue []ConnectionEnabledClient
+	c := &ConnectionEnabledClientList{Clients: &zeroValue}
+	c.GetClients()
+	c = &ConnectionEnabledClientList{}
+	c.GetClients()
+	c = nil
+	c.GetClients()
+}
+
+func TestConnectionEnabledClientList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionEnabledClientList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestConnectionGatewayAuthentication_GetAudience(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionGatewayAuthentication{Audience: &zeroValue}
@@ -12383,6 +12429,14 @@ func TestPromptRendering_String(t *testing.T) {
 	}
 }
 
+func TestPromptRenderingList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PromptRenderingList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestRefreshToken_GetClientID(tt *testing.T) {
 	var zeroValue string
 	r := &RefreshToken{ClientID: &zeroValue}
@@ -14397,6 +14451,16 @@ func TestSessionTransfer_GetAllowedAuthenticationMethods(tt *testing.T) {
 	s.GetAllowedAuthenticationMethods()
 	s = nil
 	s.GetAllowedAuthenticationMethods()
+}
+
+func TestSessionTransfer_GetAllowRefreshToken(tt *testing.T) {
+	var zeroValue bool
+	s := &SessionTransfer{AllowRefreshToken: &zeroValue}
+	s.GetAllowRefreshToken()
+	s = &SessionTransfer{}
+	s.GetAllowRefreshToken()
+	s = nil
+	s.GetAllowRefreshToken()
 }
 
 func TestSessionTransfer_GetCanCreateSessionTransferToken(tt *testing.T) {

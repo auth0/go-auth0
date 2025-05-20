@@ -876,6 +876,49 @@ func TestConnectionManager_ReadByName(t *testing.T) {
 	})
 }
 
+func TestConnectionManager_EnabledClients(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	client := givenAClient(t)
+
+	connection := givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-%d", time.Now().UnixNano()),
+			Strategy: auth0.String("auth0"),
+		},
+	})
+
+	t.Run("add client to connection", func(t *testing.T) {
+		payload := []ConnectionEnabledClient{
+			{
+				ClientID: client.ClientID,
+				Status:   auth0.Bool(true),
+			},
+		}
+
+		err := api.Connection.UpdateEnabledClients(context.Background(), connection.GetID(), payload)
+		assert.NoError(t, err)
+
+		clientIDs := getEnabledClientIDs(t, connection.GetID())
+		assert.Contains(t, clientIDs, client.GetClientID(), "client should be enabled")
+	})
+
+	t.Run("remove client from connection", func(t *testing.T) {
+		payload := []ConnectionEnabledClient{
+			{
+				ClientID: client.ClientID,
+				Status:   auth0.Bool(false),
+			},
+		}
+
+		err := api.Connection.UpdateEnabledClients(context.Background(), connection.GetID(), payload)
+		assert.NoError(t, err)
+
+		clientIDs := getEnabledClientIDs(t, connection.GetID())
+		assert.NotContains(t, clientIDs, client.GetClientID(), "client should be removed")
+	})
+}
+
 func TestConnectionManager_Update(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully update a "+testCase.name, func(t *testing.T) {
@@ -1361,4 +1404,18 @@ func getStrategyVersion(strategy string, options interface{}) int {
 	default:
 		return -1
 	}
+}
+
+func getEnabledClientIDs(t *testing.T, connectionID string) []string {
+	t.Helper()
+
+	resp, err := api.Connection.ReadEnabledClients(context.Background(), connectionID)
+	assert.NoError(t, err, "failed to read enabled clients")
+	assert.NotNil(t, resp.GetClients(), "clients list should not be nil")
+
+	var clientIDs []string
+	for _, c := range resp.GetClients() {
+		clientIDs = append(clientIDs, c.GetClientID())
+	}
+	return clientIDs
 }
