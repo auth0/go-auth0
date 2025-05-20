@@ -2602,6 +2602,40 @@ func (c *Connection) String() string {
 	return Stringify(c)
 }
 
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (c *ConnectionEnabledClient) GetClientID() string {
+	if c == nil || c.ClientID == nil {
+		return ""
+	}
+	return *c.ClientID
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (c *ConnectionEnabledClient) GetStatus() bool {
+	if c == nil || c.Status == nil {
+		return false
+	}
+	return *c.Status
+}
+
+// String returns a string representation of ConnectionEnabledClient.
+func (c *ConnectionEnabledClient) String() string {
+	return Stringify(c)
+}
+
+// GetClients returns the Clients field if it's non-nil, zero value otherwise.
+func (c *ConnectionEnabledClientList) GetClients() []ConnectionEnabledClient {
+	if c == nil || c.Clients == nil {
+		return nil
+	}
+	return *c.Clients
+}
+
+// String returns a string representation of ConnectionEnabledClientList.
+func (c *ConnectionEnabledClientList) String() string {
+	return Stringify(c)
+}
+
 // GetAudience returns the Audience field if it's non-nil, zero value otherwise.
 func (c *ConnectionGatewayAuthentication) GetAudience() string {
 	if c == nil || c.Audience == nil {
