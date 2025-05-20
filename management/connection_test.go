@@ -877,57 +877,47 @@ func TestConnectionManager_ReadByName(t *testing.T) {
 	})
 }
 
-func TestConnectionManager_UpdateEnabledClients_Add(t *testing.T) {
+func TestConnectionManager_EnabledClients(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	client := givenAClient(t)
+
 	connection := givenAConnection(t, connectionTestCase{
 		connection: Connection{
-			Name:     auth0.Stringf("Test-Auth0-Connection-%d", time.Now().Unix()),
+			Name:     auth0.Stringf("Test-Auth0-Connection-%d", time.Now().UnixNano()),
 			Strategy: auth0.String("auth0"),
 		},
 	})
 
-	connectionWithUpdatedOptions := []ConnectionEnabledClient{
-		{
-			ClientID: *client.ClientID,
-			Status:   true,
-		},
-	}
+	t.Run("add client to connection", func(t *testing.T) {
+		payload := []ConnectionEnabledClient{
+			{
+				ClientID: client.ClientID,
+				Status:   auth0.Bool(true),
+			},
+		}
 
-	err := api.Connection.UpdateEnabledClients(context.Background(), connection.GetID(), connectionWithUpdatedOptions)
-	assert.NoError(t, err)
+		err := api.Connection.UpdateEnabledClients(context.Background(), connection.GetID(), payload)
+		assert.NoError(t, err)
 
-	actualConnection, err := api.Connection.Read(context.Background(), connection.GetID())
-	assert.NoError(t, err)
-	assert.Equal(t, *actualConnection.EnabledClients, []string{*client.ClientID})
-}
-
-func TestConnectionManager_UpdateEnabledClients_Remove(t *testing.T) {
-	configureHTTPTestRecordings(t)
-
-	client := givenAClient(t)
-	connection := givenAConnection(t, connectionTestCase{
-		connection: Connection{
-			Name:           auth0.Stringf("Test-Auth0-Connection-%d", time.Now().Unix()),
-			Strategy:       auth0.String("auth0"),
-			EnabledClients: &[]string{*client.ClientID},
-		},
+		clientIDs := getEnabledClientIDs(t, connection.GetID())
+		assert.Contains(t, clientIDs, client.GetClientID(), "client should be enabled")
 	})
 
-	connectionWithUpdatedOptions := []ConnectionEnabledClient{
-		{
-			ClientID: *client.ClientID,
-			Status:   false,
-		},
-	}
+	t.Run("remove client from connection", func(t *testing.T) {
+		payload := []ConnectionEnabledClient{
+			{
+				ClientID: client.ClientID,
+				Status:   auth0.Bool(false),
+			},
+		}
 
-	err := api.Connection.UpdateEnabledClients(context.Background(), connection.GetID(), connectionWithUpdatedOptions)
-	assert.NoError(t, err)
+		err := api.Connection.UpdateEnabledClients(context.Background(), connection.GetID(), payload)
+		assert.NoError(t, err)
 
-	actualConnection, err := api.Connection.Read(context.Background(), connection.GetID())
-	assert.NoError(t, err)
-	assert.Empty(t, *actualConnection.EnabledClients)
+		clientIDs := getEnabledClientIDs(t, connection.GetID())
+		assert.NotContains(t, clientIDs, client.GetClientID(), "client should be removed")
+	})
 }
 
 func TestConnectionManager_Update(t *testing.T) {
@@ -1415,4 +1405,18 @@ func getStrategyVersion(strategy string, options interface{}) int {
 	default:
 		return -1
 	}
+}
+
+func getEnabledClientIDs(t *testing.T, connectionID string) []string {
+	t.Helper()
+
+	resp, err := api.Connection.ReadEnabledClients(context.Background(), connectionID)
+	assert.NoError(t, err, "failed to read enabled clients")
+	assert.NotNil(t, resp.GetClients(), "clients list should not be nil")
+
+	var clientIDs []string
+	for _, c := range resp.GetClients() {
+		clientIDs = append(clientIDs, c.GetClientID())
+	}
+	return clientIDs
 }
