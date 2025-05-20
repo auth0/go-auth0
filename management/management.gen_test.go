@@ -14399,6 +14399,16 @@ func TestSessionTransfer_GetAllowedAuthenticationMethods(tt *testing.T) {
 	s.GetAllowedAuthenticationMethods()
 }
 
+func TestSessionTransfer_GetAllowRefreshToken(tt *testing.T) {
+	var zeroValue bool
+	s := &SessionTransfer{AllowRefreshToken: &zeroValue}
+	s.GetAllowRefreshToken()
+	s = &SessionTransfer{}
+	s.GetAllowRefreshToken()
+	s = nil
+	s.GetAllowRefreshToken()
+}
+
 func TestSessionTransfer_GetCanCreateSessionTransferToken(tt *testing.T) {
 	var zeroValue bool
 	s := &SessionTransfer{CanCreateSessionTransferToken: &zeroValue}
