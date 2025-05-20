@@ -143,7 +143,7 @@ type Connection struct {
 	// Deprecated: This field is deprecated and will be removed in future versions.
 	// Use UpdateEnabledClients and ReadEnabledClients methods instead for managing enabled clients.
 	EnabledClients *[]string `json:"enabled_clients,omitempty"`
-	
+
 	// Defines the realms for which the connection will be used (ie: email
 	// domains). If the array is empty or the property is not specified, the
 	// connection name will be added as realm.
