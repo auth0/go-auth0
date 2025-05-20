@@ -10606,6 +10606,14 @@ func (s *SAML2ClientAddon) GetDigestAlgorithm() string {
 	return *s.DigestAlgorithm
 }
 
+// GetFlexibleMappings returns the FlexibleMappings map if it's non-nil, an empty map otherwise.
+func (s *SAML2ClientAddon) GetFlexibleMappings() map[string]interface{} {
+	if s == nil || s.FlexibleMappings == nil {
+		return map[string]interface{}{}
+	}
+	return s.FlexibleMappings
+}
+
 // GetIncludeAttributeNameFormat returns the IncludeAttributeNameFormat field if it's non-nil, zero value otherwise.
 func (s *SAML2ClientAddon) GetIncludeAttributeNameFormat() bool {
 	if s == nil || s.IncludeAttributeNameFormat == nil {
