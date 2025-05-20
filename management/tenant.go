@@ -119,6 +119,46 @@ type Tenant struct {
 
 	// Enables the use of Pushed Authorization Requests
 	PushedAuthorizationRequestsSupported *bool `json:"pushed_authorization_requests_supported,omitempty"`
+
+	// Token Quota configuration, to configure quotas for token issuance for clients and organizations.
+	// Applied to all clients and organizations unless overridden in individual client or organization settings.
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/tenants/settings
+	// {
+	//   "default_token_quota": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	DefaultTokenQuota *TenantDefaultTokenQuota `json:"default_token_quota,omitempty"`
+}
+
+// TenantDefaultTokenQuota holds settings for the default token quota.
+type TenantDefaultTokenQuota struct {
+	// Token quota configuration for clients.
+	Clients *TokenQuota `json:"clients,omitempty"`
+	// Token quota configuration for organizations.
+	Organizations *TokenQuota `json:"organizations,omitempty"`
+}
+
+// TokenQuota holds settings for the token quota configuration.
+type TokenQuota struct {
+	ClientCredentials *TokenQuotaClientCredentials `json:"client_credentials,omitempty"`
+}
+
+// TokenQuotaClientCredentials holds settings for the token quota configuration client credentials.
+type TokenQuotaClientCredentials struct {
+	// If enabled, the quota will be enforced and requests in excess of the quota will fail.
+	// If disabled, the quota will not be enforced, but notifications for requests exceeding the quota will be available in logs.
+	Enforce *bool `json:"enforce,omitempty"`
+
+	// Maximum number of issued tokens per day
+	PerDay *int `json:"per_day,omitempty"`
+
+	// Maximum number of issued tokens per hour
+	PerHour *int `json:"per_hour,omitempty"`
 }
 
 // TenantMTLSConfiguration hold settings for mTLS. If true, enables mTLS endpoint aliases.
