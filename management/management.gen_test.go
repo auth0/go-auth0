@@ -8270,6 +8270,16 @@ func TestCustomDomain_GetDomain(tt *testing.T) {
 	c.GetDomain()
 }
 
+func TestCustomDomain_GetDomainMetadata(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &CustomDomain{DomainMetadata: zeroValue}
+	c.GetDomainMetadata()
+	c = &CustomDomain{}
+	c.GetDomainMetadata()
+	c = nil
+	c.GetDomainMetadata()
+}
+
 func TestCustomDomain_GetID(tt *testing.T) {
 	var zeroValue string
 	c := &CustomDomain{ID: &zeroValue}
@@ -8350,6 +8360,14 @@ func TestCustomDomain_GetVerificationMethod(tt *testing.T) {
 func TestCustomDomain_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &CustomDomain{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestCustomDomainList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CustomDomainList{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
