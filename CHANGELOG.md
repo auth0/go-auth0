@@ -1,5 +1,17 @@
 # Change Log
 
+## [v1.21.0](https://github.com/auth0/go-auth0/tree/v1.21.0) (2025-05-20)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.20.0...v1.21.0)
+
+**⚠️ BREAKING CHANGES**
+- Fix: Correct `CustomHeaders` type and JSON tag in `ConnectionOptionsOAuth2` within `ConnectionManager` [\#554](https://github.com/auth0/go-auth0/pull/554) ([developerkunal](https://github.com/developerkunal))
+
+**Added**
+- Add support for `FlexibleMappings` SAML2 mappings in SAML2ClientAddon and enhance serialization tests [\#555](https://github.com/auth0/go-auth0/pull/555) ([developerkunal](https://github.com/developerkunal))
+- Add `ReadEnabledClients` and `UpdateEnabledClients` methods; deprecate `EnabledClients` field in `Connection` struct of `ConnectionManager` [\#556](https://github.com/auth0/go-auth0/pull/556) ([ErwinSteffens](https://github.com/ErwinSteffens))
+- Add Support for `ListRendering` method and associated tests for `PromptManager` [\#552](https://github.com/auth0/go-auth0/pull/552) ([developerkunal](https://github.com/developerkunal))
+- Add `AllowRefreshToken` support to `SessionTransfer`  in `ClientManager` [\#557](https://github.com/auth0/go-auth0/pull/557) ([nelsonmaia](https://github.com/nelsonmaia))
+
 ## [v1.20.0](https://github.com/auth0/go-auth0/tree/v1.20.0) (2025-05-05)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.19.0...v1.20.0)
 

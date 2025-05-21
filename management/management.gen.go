@@ -2602,6 +2602,40 @@ func (c *Connection) String() string {
 	return Stringify(c)
 }
 
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (c *ConnectionEnabledClient) GetClientID() string {
+	if c == nil || c.ClientID == nil {
+		return ""
+	}
+	return *c.ClientID
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (c *ConnectionEnabledClient) GetStatus() bool {
+	if c == nil || c.Status == nil {
+		return false
+	}
+	return *c.Status
+}
+
+// String returns a string representation of ConnectionEnabledClient.
+func (c *ConnectionEnabledClient) String() string {
+	return Stringify(c)
+}
+
+// GetClients returns the Clients field if it's non-nil, zero value otherwise.
+func (c *ConnectionEnabledClientList) GetClients() []ConnectionEnabledClient {
+	if c == nil || c.Clients == nil {
+		return nil
+	}
+	return *c.Clients
+}
+
+// String returns a string representation of ConnectionEnabledClientList.
+func (c *ConnectionEnabledClientList) String() string {
+	return Stringify(c)
+}
+
 // GetAudience returns the Audience field if it's non-nil, zero value otherwise.
 func (c *ConnectionGatewayAuthentication) GetAudience() string {
 	if c == nil || c.Audience == nil {
@@ -4916,9 +4950,9 @@ func (c *ConnectionOptionsOAuth2) GetClientSecret() string {
 }
 
 // GetCustomHeaders returns the CustomHeaders field if it's non-nil, zero value otherwise.
-func (c *ConnectionOptionsOAuth2) GetCustomHeaders() []map[string]string {
+func (c *ConnectionOptionsOAuth2) GetCustomHeaders() map[string]string {
 	if c == nil || c.CustomHeaders == nil {
-		return []map[string]string{}
+		return map[string]string{}
 	}
 	return *c.CustomHeaders
 }
@@ -9891,6 +9925,11 @@ func (p *PromptRendering) String() string {
 	return Stringify(p)
 }
 
+// String returns a string representation of PromptRenderingList.
+func (p *PromptRenderingList) String() string {
+	return Stringify(p)
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (r *RefreshToken) GetClientID() string {
 	if r == nil || r.ClientID == nil {
@@ -10578,6 +10617,14 @@ func (s *SAML2ClientAddon) GetDigestAlgorithm() string {
 		return ""
 	}
 	return *s.DigestAlgorithm
+}
+
+// GetFlexibleMappings returns the FlexibleMappings map if it's non-nil, an empty map otherwise.
+func (s *SAML2ClientAddon) GetFlexibleMappings() map[string]interface{} {
+	if s == nil || s.FlexibleMappings == nil {
+		return map[string]interface{}{}
+	}
+	return s.FlexibleMappings
 }
 
 // GetIncludeAttributeNameFormat returns the IncludeAttributeNameFormat field if it's non-nil, zero value otherwise.
@@ -11469,6 +11516,14 @@ func (s *SessionTransfer) GetAllowedAuthenticationMethods() []string {
 		return nil
 	}
 	return *s.AllowedAuthenticationMethods
+}
+
+// GetAllowRefreshToken returns the AllowRefreshToken field if it's non-nil, zero value otherwise.
+func (s *SessionTransfer) GetAllowRefreshToken() bool {
+	if s == nil || s.AllowRefreshToken == nil {
+		return false
+	}
+	return *s.AllowRefreshToken
 }
 
 // GetCanCreateSessionTransferToken returns the CanCreateSessionTransferToken field if it's non-nil, zero value otherwise.
