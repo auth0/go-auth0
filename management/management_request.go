@@ -36,6 +36,23 @@ func (m *Management) URI(path ...string) string {
 	return baseURL.String() + strings.Join(escapedPath, "/")
 }
 
+// isHeaderOnlyHTTPMethod checks if the HTTP method is one that does not require a
+// request body.
+//
+// This can be used to decide whether to remove an empty object from the
+// request body to fix issues with CDNs like CloudFront.
+//
+// For example:
+// https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorCustomOrigin.html#RequestCustom-get-body
+func isHeaderOnlyHTTPMethod(method string) bool {
+	switch method {
+	case http.MethodGet, http.MethodHead, http.MethodOptions:
+		return true
+	default:
+		return false
+	}
+}
+
 // NewRequest returns a new HTTP request. If the payload is not nil it will be
 // encoded as JSON.
 func (m *Management) NewRequest(
@@ -46,6 +63,7 @@ func (m *Management) NewRequest(
 	options ...RequestOption,
 ) (*http.Request, error) {
 	const nullBody = "null\n"
+	const emptyBody = "{}\n"
 	var body bytes.Buffer
 
 	if payload != nil {
@@ -54,7 +72,8 @@ func (m *Management) NewRequest(
 		}
 	}
 
-	if body.String() == nullBody {
+	bodyString := body.String()
+	if bodyString == nullBody || bodyString == emptyBody && isHeaderOnlyHTTPMethod(method) {
 		body.Reset()
 	}
 
