@@ -34,7 +34,8 @@ type CustomDomain struct {
 	// send in the cname-api-key header field.
 	CNAMEAPIKey *string `json:"cname_api_key,omitempty"`
 
-	// Deprecated: The custom domain verification method. The only allowed value is "txt".
+	// Deprecated: The verification status is no longer used and will be removed in a future release.
+	// The custom domain verification method. The only allowed value is "txt".
 	VerificationMethod *string `json:"verification_method,omitempty"`
 
 	Verification *CustomDomainVerification `json:"verification,omitempty"`
@@ -49,6 +50,21 @@ type CustomDomain struct {
 	// A maximum of 10 metadata entries is allowed.
 	// To remove metadata, set each key's value to nil.
 	DomainMetadata map[string]interface{} `json:"domain_metadata,omitempty"`
+
+	// The custom domain certificate.
+	Certificate *CustomDomainCertificate `json:"certificate,omitempty"`
+}
+
+// CustomDomainCertificate is the custom domain certificate.
+type CustomDomainCertificate struct {
+	// Status of The certificate.
+	Status *string `json:"status,omitempty"`
+	// Error message if the certificate is not valid.
+	ErrorMsg *string `json:"error_msg,omitempty"`
+	// The certificate authority.
+	CertificateAuthority *string `json:"certificate_authority,omitempty"`
+	// Renewal status of the certificate.
+	RenewsBefore *string `json:"renews_before,omitempty"`
 }
 
 // CustomDomainList is a list of CustomDomains.
@@ -63,6 +79,14 @@ type CustomDomainList struct {
 type CustomDomainVerification struct {
 	// The custom domain verification methods.
 	Methods []map[string]interface{} `json:"methods,omitempty"`
+	// Expiration date of the custom domain verification.
+	Expiration *int64 `json:"expiration,omitempty"`
+	// The custom domain verification status.
+	Status *string `json:"status,omitempty"`
+	// The custom domain verification error.
+	ErrorMsg *string `json:"error_msg,omitempty"`
+	// The custom domain verification error code.
+	LastVerifiedAt *string `json:"last_verified_at,omitempty"`
 }
 
 // CustomDomainManager manages Auth0 CustomDomain resources.

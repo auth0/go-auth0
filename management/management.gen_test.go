@@ -8240,6 +8240,13 @@ func TestCredential_String(t *testing.T) {
 	}
 }
 
+func TestCustomDomain_GetCertificate(tt *testing.T) {
+	c := &CustomDomain{}
+	c.GetCertificate()
+	c = nil
+	c.GetCertificate()
+}
+
 func TestCustomDomain_GetCNAMEAPIKey(tt *testing.T) {
 	var zeroValue string
 	c := &CustomDomain{CNAMEAPIKey: &zeroValue}
@@ -8365,12 +8372,100 @@ func TestCustomDomain_String(t *testing.T) {
 	}
 }
 
+func TestCustomDomainCertificate_GetCertificateAuthority(tt *testing.T) {
+	var zeroValue string
+	c := &CustomDomainCertificate{CertificateAuthority: &zeroValue}
+	c.GetCertificateAuthority()
+	c = &CustomDomainCertificate{}
+	c.GetCertificateAuthority()
+	c = nil
+	c.GetCertificateAuthority()
+}
+
+func TestCustomDomainCertificate_GetErrorMsg(tt *testing.T) {
+	var zeroValue string
+	c := &CustomDomainCertificate{ErrorMsg: &zeroValue}
+	c.GetErrorMsg()
+	c = &CustomDomainCertificate{}
+	c.GetErrorMsg()
+	c = nil
+	c.GetErrorMsg()
+}
+
+func TestCustomDomainCertificate_GetRenewsBefore(tt *testing.T) {
+	var zeroValue string
+	c := &CustomDomainCertificate{RenewsBefore: &zeroValue}
+	c.GetRenewsBefore()
+	c = &CustomDomainCertificate{}
+	c.GetRenewsBefore()
+	c = nil
+	c.GetRenewsBefore()
+}
+
+func TestCustomDomainCertificate_GetStatus(tt *testing.T) {
+	var zeroValue string
+	c := &CustomDomainCertificate{Status: &zeroValue}
+	c.GetStatus()
+	c = &CustomDomainCertificate{}
+	c.GetStatus()
+	c = nil
+	c.GetStatus()
+}
+
+func TestCustomDomainCertificate_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CustomDomainCertificate{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestCustomDomainList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &CustomDomainList{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
+}
+
+func TestCustomDomainVerification_GetErrorMsg(tt *testing.T) {
+	var zeroValue string
+	c := &CustomDomainVerification{ErrorMsg: &zeroValue}
+	c.GetErrorMsg()
+	c = &CustomDomainVerification{}
+	c.GetErrorMsg()
+	c = nil
+	c.GetErrorMsg()
+}
+
+func TestCustomDomainVerification_GetExpiration(tt *testing.T) {
+	var zeroValue int64
+	c := &CustomDomainVerification{Expiration: &zeroValue}
+	c.GetExpiration()
+	c = &CustomDomainVerification{}
+	c.GetExpiration()
+	c = nil
+	c.GetExpiration()
+}
+
+func TestCustomDomainVerification_GetLastVerifiedAt(tt *testing.T) {
+	var zeroValue string
+	c := &CustomDomainVerification{LastVerifiedAt: &zeroValue}
+	c.GetLastVerifiedAt()
+	c = &CustomDomainVerification{}
+	c.GetLastVerifiedAt()
+	c = nil
+	c.GetLastVerifiedAt()
+}
+
+func TestCustomDomainVerification_GetStatus(tt *testing.T) {
+	var zeroValue string
+	c := &CustomDomainVerification{Status: &zeroValue}
+	c.GetStatus()
+	c = &CustomDomainVerification{}
+	c.GetStatus()
+	c = nil
+	c.GetStatus()
 }
 
 func TestCustomDomainVerification_String(t *testing.T) {

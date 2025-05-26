@@ -6663,6 +6663,14 @@ func (c *Credential) String() string {
 	return Stringify(c)
 }
 
+// GetCertificate returns the Certificate field.
+func (c *CustomDomain) GetCertificate() *CustomDomainCertificate {
+	if c == nil {
+		return nil
+	}
+	return c.Certificate
+}
+
 // GetCNAMEAPIKey returns the CNAMEAPIKey field if it's non-nil, zero value otherwise.
 func (c *CustomDomain) GetCNAMEAPIKey() string {
 	if c == nil || c.CNAMEAPIKey == nil {
@@ -6764,9 +6772,78 @@ func (c *CustomDomain) String() string {
 	return Stringify(c)
 }
 
+// GetCertificateAuthority returns the CertificateAuthority field if it's non-nil, zero value otherwise.
+func (c *CustomDomainCertificate) GetCertificateAuthority() string {
+	if c == nil || c.CertificateAuthority == nil {
+		return ""
+	}
+	return *c.CertificateAuthority
+}
+
+// GetErrorMsg returns the ErrorMsg field if it's non-nil, zero value otherwise.
+func (c *CustomDomainCertificate) GetErrorMsg() string {
+	if c == nil || c.ErrorMsg == nil {
+		return ""
+	}
+	return *c.ErrorMsg
+}
+
+// GetRenewsBefore returns the RenewsBefore field if it's non-nil, zero value otherwise.
+func (c *CustomDomainCertificate) GetRenewsBefore() string {
+	if c == nil || c.RenewsBefore == nil {
+		return ""
+	}
+	return *c.RenewsBefore
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (c *CustomDomainCertificate) GetStatus() string {
+	if c == nil || c.Status == nil {
+		return ""
+	}
+	return *c.Status
+}
+
+// String returns a string representation of CustomDomainCertificate.
+func (c *CustomDomainCertificate) String() string {
+	return Stringify(c)
+}
+
 // String returns a string representation of CustomDomainList.
 func (c *CustomDomainList) String() string {
 	return Stringify(c)
+}
+
+// GetErrorMsg returns the ErrorMsg field if it's non-nil, zero value otherwise.
+func (c *CustomDomainVerification) GetErrorMsg() string {
+	if c == nil || c.ErrorMsg == nil {
+		return ""
+	}
+	return *c.ErrorMsg
+}
+
+// GetExpiration returns the Expiration field if it's non-nil, zero value otherwise.
+func (c *CustomDomainVerification) GetExpiration() int64 {
+	if c == nil || c.Expiration == nil {
+		return 0
+	}
+	return *c.Expiration
+}
+
+// GetLastVerifiedAt returns the LastVerifiedAt field if it's non-nil, zero value otherwise.
+func (c *CustomDomainVerification) GetLastVerifiedAt() string {
+	if c == nil || c.LastVerifiedAt == nil {
+		return ""
+	}
+	return *c.LastVerifiedAt
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (c *CustomDomainVerification) GetStatus() string {
+	if c == nil || c.Status == nil {
+		return ""
+	}
+	return *c.Status
 }
 
 // String returns a string representation of CustomDomainVerification.
