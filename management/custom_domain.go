@@ -55,15 +55,18 @@ type CustomDomain struct {
 	Certificate *CustomDomainCertificate `json:"certificate,omitempty"`
 }
 
-// CustomDomainCertificate is the custom domain certificate.
+// CustomDomainCertificate represents the certificate details for a custom domain.
 type CustomDomainCertificate struct {
-	// Status of The certificate.
+	// Status indicates the current state of the certificate provisioning process.
 	Status *string `json:"status,omitempty"`
-	// Error message if the certificate is not valid.
+
+	// ErrorMsg contains the error message if the provisioning process fails.
 	ErrorMsg *string `json:"error_msg,omitempty"`
-	// The certificate authority.
+
+	// CertificateAuthority is the name of the certificate authority that issued the certificate.
 	CertificateAuthority *string `json:"certificate_authority,omitempty"`
-	// Renewal status of the certificate.
+
+	// RenewsBefore specifies the date by which the certificate should be renewed.
 	RenewsBefore *string `json:"renews_before,omitempty"`
 }
 
@@ -75,17 +78,18 @@ type CustomDomainList struct {
 	CustomDomains []*CustomDomain `json:"custom_domains"`
 }
 
-// CustomDomainVerification is used to verify a CustomDomain.
+// CustomDomainVerification contains information related to verifying a custom domain.
 type CustomDomainVerification struct {
-	// The custom domain verification methods.
+	// Methods defines the list of domain verification methods used.
 	Methods []map[string]interface{} `json:"methods,omitempty"`
-	// Expiration date of the custom domain verification.
-	Expiration *int64 `json:"expiration,omitempty"`
-	// The custom domain verification status.
+
+	// Status represents the current status of the domain verification process.
 	Status *string `json:"status,omitempty"`
-	// The custom domain verification error.
+
+	// ErrorMsg contains the error message, if any, from the last DNS verification check.
 	ErrorMsg *string `json:"error_msg,omitempty"`
-	// The custom domain verification error code.
+
+	// LastVerifiedAt indicates the last time the domain was successfully verified.
 	LastVerifiedAt *string `json:"last_verified_at,omitempty"`
 }
 

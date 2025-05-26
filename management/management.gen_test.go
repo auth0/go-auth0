@@ -8438,16 +8438,6 @@ func TestCustomDomainVerification_GetErrorMsg(tt *testing.T) {
 	c.GetErrorMsg()
 }
 
-func TestCustomDomainVerification_GetExpiration(tt *testing.T) {
-	var zeroValue int64
-	c := &CustomDomainVerification{Expiration: &zeroValue}
-	c.GetExpiration()
-	c = &CustomDomainVerification{}
-	c.GetExpiration()
-	c = nil
-	c.GetExpiration()
-}
-
 func TestCustomDomainVerification_GetLastVerifiedAt(tt *testing.T) {
 	var zeroValue string
 	c := &CustomDomainVerification{LastVerifiedAt: &zeroValue}

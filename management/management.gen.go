@@ -6822,14 +6822,6 @@ func (c *CustomDomainVerification) GetErrorMsg() string {
 	return *c.ErrorMsg
 }
 
-// GetExpiration returns the Expiration field if it's non-nil, zero value otherwise.
-func (c *CustomDomainVerification) GetExpiration() int64 {
-	if c == nil || c.Expiration == nil {
-		return 0
-	}
-	return *c.Expiration
-}
-
 // GetLastVerifiedAt returns the LastVerifiedAt field if it's non-nil, zero value otherwise.
 func (c *CustomDomainVerification) GetLastVerifiedAt() string {
 	if c == nil || c.LastVerifiedAt == nil {
