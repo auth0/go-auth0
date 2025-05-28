@@ -8278,8 +8278,8 @@ func TestCustomDomain_GetDomain(tt *testing.T) {
 }
 
 func TestCustomDomain_GetDomainMetadata(tt *testing.T) {
-	zeroValue := map[string]interface{}{}
-	c := &CustomDomain{DomainMetadata: zeroValue}
+	var zeroValue map[string]string
+	c := &CustomDomain{DomainMetadata: &zeroValue}
 	c.GetDomainMetadata()
 	c = &CustomDomain{}
 	c.GetDomainMetadata()

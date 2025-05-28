@@ -49,7 +49,7 @@ type CustomDomain struct {
 	// DomainMetadata holds custom metadata for the domain as key-value pairs (string to string, max 255 characters per value).
 	// A maximum of 10 metadata entries is allowed.
 	// To remove metadata, set each key's value to nil.
-	DomainMetadata map[string]interface{} `json:"domain_metadata,omitempty"`
+	DomainMetadata *map[string]string `json:"domain_metadata,omitempty"`
 
 	// The custom domain certificate.
 	Certificate *CustomDomainCertificate `json:"certificate,omitempty"`

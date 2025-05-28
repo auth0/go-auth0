@@ -6695,12 +6695,12 @@ func (c *CustomDomain) GetDomain() string {
 	return *c.Domain
 }
 
-// GetDomainMetadata returns the DomainMetadata map if it's non-nil, an empty map otherwise.
-func (c *CustomDomain) GetDomainMetadata() map[string]interface{} {
+// GetDomainMetadata returns the DomainMetadata field if it's non-nil, zero value otherwise.
+func (c *CustomDomain) GetDomainMetadata() map[string]string {
 	if c == nil || c.DomainMetadata == nil {
-		return map[string]interface{}{}
+		return map[string]string{}
 	}
-	return c.DomainMetadata
+	return *c.DomainMetadata
 }
 
 // GetID returns the ID field if it's non-nil, zero value otherwise.
