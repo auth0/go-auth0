@@ -3182,6 +3182,52 @@ func TestConnection_String(t *testing.T) {
 	}
 }
 
+func TestConnectionEnabledClient_GetClientID(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionEnabledClient{ClientID: &zeroValue}
+	c.GetClientID()
+	c = &ConnectionEnabledClient{}
+	c.GetClientID()
+	c = nil
+	c.GetClientID()
+}
+
+func TestConnectionEnabledClient_GetStatus(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionEnabledClient{Status: &zeroValue}
+	c.GetStatus()
+	c = &ConnectionEnabledClient{}
+	c.GetStatus()
+	c = nil
+	c.GetStatus()
+}
+
+func TestConnectionEnabledClient_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionEnabledClient{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionEnabledClientList_GetClients(tt *testing.T) {
+	var zeroValue []ConnectionEnabledClient
+	c := &ConnectionEnabledClientList{Clients: &zeroValue}
+	c.GetClients()
+	c = &ConnectionEnabledClientList{}
+	c.GetClients()
+	c = nil
+	c.GetClients()
+}
+
+func TestConnectionEnabledClientList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionEnabledClientList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestConnectionGatewayAuthentication_GetAudience(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionGatewayAuthentication{Audience: &zeroValue}
@@ -6072,7 +6118,7 @@ func TestConnectionOptionsOAuth2_GetClientSecret(tt *testing.T) {
 }
 
 func TestConnectionOptionsOAuth2_GetCustomHeaders(tt *testing.T) {
-	var zeroValue []map[string]string
+	var zeroValue map[string]string
 	c := &ConnectionOptionsOAuth2{CustomHeaders: &zeroValue}
 	c.GetCustomHeaders()
 	c = &ConnectionOptionsOAuth2{}
@@ -12383,6 +12429,14 @@ func TestPromptRendering_String(t *testing.T) {
 	}
 }
 
+func TestPromptRenderingList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PromptRenderingList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestRefreshToken_GetClientID(tt *testing.T) {
 	var zeroValue string
 	r := &RefreshToken{ClientID: &zeroValue}
@@ -13267,6 +13321,16 @@ func TestSAML2ClientAddon_GetDigestAlgorithm(tt *testing.T) {
 	s.GetDigestAlgorithm()
 	s = nil
 	s.GetDigestAlgorithm()
+}
+
+func TestSAML2ClientAddon_GetFlexibleMappings(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	s := &SAML2ClientAddon{FlexibleMappings: zeroValue}
+	s.GetFlexibleMappings()
+	s = &SAML2ClientAddon{}
+	s.GetFlexibleMappings()
+	s = nil
+	s.GetFlexibleMappings()
 }
 
 func TestSAML2ClientAddon_GetIncludeAttributeNameFormat(tt *testing.T) {
@@ -14397,6 +14461,16 @@ func TestSessionTransfer_GetAllowedAuthenticationMethods(tt *testing.T) {
 	s.GetAllowedAuthenticationMethods()
 	s = nil
 	s.GetAllowedAuthenticationMethods()
+}
+
+func TestSessionTransfer_GetAllowRefreshToken(tt *testing.T) {
+	var zeroValue bool
+	s := &SessionTransfer{AllowRefreshToken: &zeroValue}
+	s.GetAllowRefreshToken()
+	s = &SessionTransfer{}
+	s.GetAllowRefreshToken()
+	s = nil
+	s.GetAllowRefreshToken()
 }
 
 func TestSessionTransfer_GetCanCreateSessionTransferToken(tt *testing.T) {
