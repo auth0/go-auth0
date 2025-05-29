@@ -159,6 +159,34 @@ type Connection struct {
 	ShowAsButton *bool `json:"show_as_button,omitempty"`
 }
 
+// ConnectionKey is used to fetch public keys for a connection.
+type ConnectionKey struct {
+	// The key ID of the signing key.
+	KID *string `json:"kid,omitempty"`
+	// The public certificate of the signing key.
+	Cert *string `json:"cert,omitempty"`
+	// The public certificate of the signing key in PKCS7 format.
+	PKCS *string `json:"pkcs,omitempty"`
+	// True if the key is the current key.
+	Current *bool `json:"current,omitempty"`
+	// True if the key is the next key.
+	Next *bool `json:"next,omitempty"`
+	// True if the key is the previous key.
+	Previous *bool `json:"previous,omitempty"`
+	// The date and time when the key became the current key.
+	CurrentSince *string `json:"current_since,omitempty"`
+	// The certificate fingerprint.
+	Fingerprint *string `json:"fingerprint,omitempty"`
+	// The certificate thumbprint.
+	Thumbprint *string `json:"thumbprint,omitempty"`
+	// The signing key algorithm.
+	Algorithm *string `json:"algorithm,omitempty"`
+	// The signing key use, whether for encryption or signing.
+	KeyUse *string `json:"key_use,omitempty"`
+	// The subject distinguished name (DN) of the certificate.
+	SubjectDN *string `json:"subject_dn,omitempty"`
+}
+
 // ConnectionEnabledClientList is a list of enabled clients for a connection.
 type ConnectionEnabledClientList struct {
 	List
@@ -600,6 +628,12 @@ type ConnectionOptionsOkta struct {
 
 	ConnectionSettings *ConnectionOptionsOIDCConnectionSettings `json:"connection_settings,omitempty"`
 	AttributeMap       *ConnectionOptionsOIDCAttributeMap       `json:"attribute_map,omitempty"`
+
+	// TokenEndpointAuthMethod specifies the authentication method for the token endpoint.
+	TokenEndpointAuthMethod *string `json:"token_endpoint_auth_method,omitempty"`
+
+	// TokenEndpointAuthSigningAlg specifies the signing algorithm for the token endpoint.
+	TokenEndpointAuthSigningAlg *string `json:"token_endpoint_auth_signing_alg,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsOkta.
@@ -1068,6 +1102,12 @@ type ConnectionOptionsOIDC struct {
 
 	ConnectionSettings *ConnectionOptionsOIDCConnectionSettings `json:"connection_settings,omitempty"`
 	AttributeMap       *ConnectionOptionsOIDCAttributeMap       `json:"attribute_map,omitempty"`
+
+	// TokenEndpointAuthMethod specifies the authentication method for the token endpoint.
+	TokenEndpointAuthMethod *string `json:"token_endpoint_auth_method,omitempty"`
+
+	// TokenEndpointAuthSigningAlg specifies the signing algorithm for the token endpoint.
+	TokenEndpointAuthSigningAlg *string `json:"token_endpoint_auth_signing_alg,omitempty"`
 }
 
 // ConnectionOptionsOIDCConnectionSettings contains PKCE configuration for the connection.
@@ -1688,4 +1728,21 @@ func (m *ConnectionManager) ListSCIMToken(ctx context.Context, id string, opts .
 func (m *ConnectionManager) DeleteSCIMToken(ctx context.Context, id, tokenID string, opts ...RequestOption) (err error) {
 	err = m.management.Request(ctx, "DELETE", m.management.URI("connections", id, "scim-configuration", "tokens", tokenID), nil, opts...)
 	return
+}
+
+// ReadKeys Return the set of the connection’s public keys used to verify signatures on signed JWTs.
+// This method only works with enterprise connections.
+//
+// See: https://auth0.com/docs/api/management/v2/connections/get-connection-keys
+func (m *ConnectionManager) ReadKeys(ctx context.Context, id string, opts ...RequestOption) (keys []*ConnectionKey, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("connections", id, "keys"), &keys, opts...)
+	return
+}
+
+// RotateKeys rotates the connection's public key used to verify signatures on signed JWTs.
+// This method only works with enterprise connections.
+//
+// See: https://auth0.com/docs/api/management/v2/connections/rotate-connection-keys
+func (m *ConnectionManager) RotateKeys(ctx context.Context, id string, opts ...RequestOption) error {
+	return m.management.Request(ctx, "POST", m.management.URI("connections", id, "keys", "rotate"), nil, opts...)
 }

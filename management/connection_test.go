@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"strings"
 	"testing"
 	"time"
 
@@ -1222,6 +1223,74 @@ func TestConnectionManager_DeleteSCIMToken(t *testing.T) {
 		cleanupSCIMConfig(t, expectedConnection.GetID())
 	})
 }
+
+func TestConnectionManager_ReadKeys(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	tests := []struct {
+		name     string
+		strategy string
+		options  interface{}
+	}{
+		{
+			name:     "OIDC Connection",
+			strategy: "oidc",
+			options: &ConnectionOptionsOIDC{
+				ClientID:              auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+				Scope:                 auth0.String("openid"),
+				Issuer:                auth0.String("https://example.com"),
+				AuthorizationEndpoint: auth0.String("https://example.com"),
+				JWKSURI:               auth0.String("https://example.com/jwks"),
+				Type:                  auth0.String("front_channel"),
+				DiscoveryURL:          auth0.String("https://www.paypalobjects.com/.well-known/openid-configuration"),
+				UpstreamParams: map[string]interface{}{
+					"screen_name": map[string]interface{}{
+						"alias": "login_hint",
+					},
+				},
+				TokenEndpointAuthMethod:     auth0.String("private_key_jwt"),
+				TokenEndpointAuthSigningAlg: auth0.String("RS256"),
+			},
+		},
+		{
+			name:     "Okta Connection",
+			strategy: "okta",
+			options: &ConnectionOptionsOkta{
+				ClientID:              auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+				ClientSecret:          auth0.String("mySecret"),
+				Scope:                 auth0.String("openid"),
+				Domain:                auth0.String("domain.okta.com"),
+				Issuer:                auth0.String("https://example.com"),
+				AuthorizationEndpoint: auth0.String("https://example.com"),
+				JWKSURI:               auth0.String("https://example.com/jwks"),
+				UpstreamParams: map[string]interface{}{
+					"screen_name": map[string]interface{}{
+						"alias": "login_hint",
+					},
+				},
+				TokenEndpointAuthMethod:     auth0.String("private_key_jwt"),
+				TokenEndpointAuthSigningAlg: auth0.String("RS256"),
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			conn := givenAConnection(t, connectionTestCase{
+				connection: Connection{
+					Name:     auth0.Stringf("Test-%s-Connection-%d", strings.ToUpper(tc.strategy), time.Now().Unix()),
+					Strategy: auth0.String(tc.strategy),
+				},
+				options: tc.options,
+			})
+
+			keys, err := api.Connection.ReadKeys(context.Background(), conn.GetID())
+			assert.NoError(t, err)
+			assert.NotEmpty(t, keys)
+		})
+	}
+}
+
 func TestConnectionOptionsUsernameAttribute_MarshalJSON(t *testing.T) {
 	for attribute, expected := range map[*ConnectionOptionsUsernameAttribute]string{
 		{
