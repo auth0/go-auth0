@@ -19,7 +19,7 @@ func TestCustomDomainManager_Create(t *testing.T) {
 		Domain:         auth0.Stringf("%d.tempdomain.com", time.Now().UTC().Unix()),
 		Type:           auth0.String("auth0_managed_certs"),
 		TLSPolicy:      auth0.String("recommended"),
-		DomainMetadata: map[string]interface{}{"key": "value"},
+		DomainMetadata: &map[string]interface{}{"key": "value"},
 	}
 
 	err := api.CustomDomain.Create(context.Background(), expected)
@@ -56,7 +56,7 @@ func TestCustomDomainManager_Update(t *testing.T) {
 		err := api.CustomDomain.Update(context.Background(), customDomain.GetID(),
 			&CustomDomain{
 				TLSPolicy:      auth0.String("recommended"),
-				DomainMetadata: map[string]interface{}{"key2": "value2"},
+				DomainMetadata: &map[string]interface{}{"key2": "value2"},
 			},
 		)
 		assertNoCustomDomainErr(t, err)
@@ -75,7 +75,7 @@ func TestCustomDomainManager_Update(t *testing.T) {
 	t.Run("Remove all metadata keys explicitly", func(t *testing.T) {
 		err := api.CustomDomain.Update(context.Background(), customDomain.GetID(),
 			&CustomDomain{
-				DomainMetadata: map[string]interface{}{
+				DomainMetadata: &map[string]interface{}{
 					"key":  nil,
 					"key2": nil,
 				},
@@ -180,7 +180,7 @@ func givenACustomDomain(t *testing.T) *CustomDomain {
 		Domain:         auth0.Stringf("%d.tempdomain.com", time.Now().UTC().UnixNano()),
 		Type:           auth0.String("auth0_managed_certs"),
 		TLSPolicy:      auth0.String("recommended"),
-		DomainMetadata: map[string]interface{}{"key": "value"},
+		DomainMetadata: &map[string]interface{}{"key": "value"},
 	}
 
 	err := api.CustomDomain.Create(context.Background(), customDomain)
