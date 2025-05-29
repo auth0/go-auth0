@@ -36,7 +36,7 @@ func (m *Management) URI(path ...string) string {
 	return baseURL.String() + strings.Join(escapedPath, "/")
 }
 
-// isHeaderOnlyHTTPMethod checks if the HTTP method is one that does not require a
+// methodAllowsBody checks if the HTTP method is one that does not require a
 // request body.
 //
 // This can be used to decide whether to remove an empty object from the
@@ -44,12 +44,12 @@ func (m *Management) URI(path ...string) string {
 //
 // For example:
 // https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorCustomOrigin.html#RequestCustom-get-body
-func isHeaderOnlyHTTPMethod(method string) bool {
+func methodAllowsBody(method string) bool {
 	switch method {
-	case http.MethodGet, http.MethodHead, http.MethodOptions:
-		return true
-	default:
+	case http.MethodGet, http.MethodHead, http.MethodOptions, http.MethodDelete:
 		return false
+	default:
+		return true
 	}
 }
 
@@ -62,19 +62,19 @@ func (m *Management) NewRequest(
 	payload interface{},
 	options ...RequestOption,
 ) (*http.Request, error) {
-	const nullBody = "null\n"
-	const emptyBody = "{}\n"
 	var body bytes.Buffer
+	setContentType := false
 
-	if payload != nil {
+	if payload != nil && methodAllowsBody(method) {
 		if err := json.NewEncoder(&body).Encode(payload); err != nil {
 			return nil, fmt.Errorf("encoding request payload failed: %w", err)
 		}
-	}
-
-	bodyString := body.String()
-	if bodyString == nullBody || bodyString == emptyBody && isHeaderOnlyHTTPMethod(method) {
-		body.Reset()
+		encoded := bytes.TrimSpace(body.Bytes())
+		if !bytes.Equal(encoded, []byte("null")) {
+			setContentType = true
+		} else {
+			body.Reset()
+		}
 	}
 
 	request, err := http.NewRequestWithContext(ctx, method, uri, &body)
@@ -82,7 +82,9 @@ func (m *Management) NewRequest(
 		return nil, err
 	}
 
-	request.Header.Add("Content-Type", "application/json")
+	if setContentType {
+		request.Header.Add("Content-Type", "application/json")
+	}
 
 	for _, option := range options {
 		option.apply(request)

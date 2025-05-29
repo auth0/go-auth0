@@ -122,7 +122,12 @@ func TestNewRequest(t *testing.T) {
 			require.NoError(t, err)
 
 			assert.Equal(t, testCase.expectedBody, string(requestBody))
-			assert.Equal(t, "application/json", request.Header.Get("Content-Type"))
+
+			if testCase.expectedBody != "" {
+				assert.Equal(t, "application/json", request.Header.Get("Content-Type"))
+			} else {
+				assert.Empty(t, request.Header.Get("Content-Type"))
+			}
 		})
 	}
 }
