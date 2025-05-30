@@ -1743,6 +1743,7 @@ func (m *ConnectionManager) ReadKeys(ctx context.Context, id string, opts ...Req
 // This method only works with enterprise connections.
 //
 // See: https://auth0.com/docs/api/management/v2/connections/rotate-connection-keys
-func (m *ConnectionManager) RotateKeys(ctx context.Context, id string, opts ...RequestOption) error {
-	return m.management.Request(ctx, "POST", m.management.URI("connections", id, "keys", "rotate"), nil, opts...)
+func (m *ConnectionManager) RotateKeys(ctx context.Context, id string, opts ...RequestOption) (key *ConnectionKey, err error) {
+	err = m.management.Request(ctx, "POST", m.management.URI("connections", id, "keys", "rotate"), &key, opts...)
+	return
 }

@@ -1291,6 +1291,62 @@ func TestConnectionManager_ReadKeys(t *testing.T) {
 	}
 }
 
+func TestConnectionManager_RotateKeys(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	conn := givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Connection-Rotate-Keys-%d", time.Now().Unix()),
+			Strategy: auth0.String("oidc"),
+		},
+		options: &ConnectionOptionsOIDC{
+			ClientID:              auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+			Scope:                 auth0.String("openid"),
+			Issuer:                auth0.String("https://example.com"),
+			AuthorizationEndpoint: auth0.String("https://example.com"),
+			JWKSURI:               auth0.String("https://example.com/jwks"),
+			Type:                  auth0.String("front_channel"),
+			DiscoveryURL:          auth0.String("https://www.paypalobjects.com/.well-known/openid-configuration"),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+			TokenEndpointAuthMethod:     auth0.String("private_key_jwt"),
+			TokenEndpointAuthSigningAlg: auth0.String("RS256"),
+		},
+	})
+
+	ctx := context.Background()
+
+	beforeKeys, err := api.Connection.ReadKeys(ctx, conn.GetID())
+	assert.NoError(t, err)
+	assert.NotEmpty(t, beforeKeys)
+
+	rotatedKey, err := api.Connection.RotateKeys(ctx, conn.GetID())
+	assert.NoError(t, err)
+	assert.NotNil(t, rotatedKey)
+
+	afterKeys, err := api.Connection.ReadKeys(ctx, conn.GetID())
+	assert.NoError(t, err)
+	assert.NotEmpty(t, afterKeys)
+
+	foundRotated := false
+	for _, k := range afterKeys {
+		if k.GetKID() == rotatedKey.GetKID() {
+			foundRotated = true
+			break
+		}
+	}
+	assert.True(t, foundRotated, "Rotated key should be present in afterKeys")
+
+	assert.NotEqual(t, len(beforeKeys), len(afterKeys), "Keys should be different after rotation")
+
+	t.Cleanup(func() {
+		cleanupConnection(t, conn.GetID())
+	})
+}
+
 func TestConnectionOptionsUsernameAttribute_MarshalJSON(t *testing.T) {
 	for attribute, expected := range map[*ConnectionOptionsUsernameAttribute]string{
 		{
