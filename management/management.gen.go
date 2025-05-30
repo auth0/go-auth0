@@ -2689,6 +2689,107 @@ func (c *ConnectionGatewayAuthentication) String() string {
 	return Stringify(c)
 }
 
+// GetAlgorithm returns the Algorithm field if it's non-nil, zero value otherwise.
+func (c *ConnectionKey) GetAlgorithm() string {
+	if c == nil || c.Algorithm == nil {
+		return ""
+	}
+	return *c.Algorithm
+}
+
+// GetCert returns the Cert field if it's non-nil, zero value otherwise.
+func (c *ConnectionKey) GetCert() string {
+	if c == nil || c.Cert == nil {
+		return ""
+	}
+	return *c.Cert
+}
+
+// GetCurrent returns the Current field if it's non-nil, zero value otherwise.
+func (c *ConnectionKey) GetCurrent() bool {
+	if c == nil || c.Current == nil {
+		return false
+	}
+	return *c.Current
+}
+
+// GetCurrentSince returns the CurrentSince field if it's non-nil, zero value otherwise.
+func (c *ConnectionKey) GetCurrentSince() string {
+	if c == nil || c.CurrentSince == nil {
+		return ""
+	}
+	return *c.CurrentSince
+}
+
+// GetFingerprint returns the Fingerprint field if it's non-nil, zero value otherwise.
+func (c *ConnectionKey) GetFingerprint() string {
+	if c == nil || c.Fingerprint == nil {
+		return ""
+	}
+	return *c.Fingerprint
+}
+
+// GetKeyUse returns the KeyUse field if it's non-nil, zero value otherwise.
+func (c *ConnectionKey) GetKeyUse() string {
+	if c == nil || c.KeyUse == nil {
+		return ""
+	}
+	return *c.KeyUse
+}
+
+// GetKID returns the KID field if it's non-nil, zero value otherwise.
+func (c *ConnectionKey) GetKID() string {
+	if c == nil || c.KID == nil {
+		return ""
+	}
+	return *c.KID
+}
+
+// GetNext returns the Next field if it's non-nil, zero value otherwise.
+func (c *ConnectionKey) GetNext() bool {
+	if c == nil || c.Next == nil {
+		return false
+	}
+	return *c.Next
+}
+
+// GetPKCS returns the PKCS field if it's non-nil, zero value otherwise.
+func (c *ConnectionKey) GetPKCS() string {
+	if c == nil || c.PKCS == nil {
+		return ""
+	}
+	return *c.PKCS
+}
+
+// GetPrevious returns the Previous field if it's non-nil, zero value otherwise.
+func (c *ConnectionKey) GetPrevious() bool {
+	if c == nil || c.Previous == nil {
+		return false
+	}
+	return *c.Previous
+}
+
+// GetSubjectDN returns the SubjectDN field if it's non-nil, zero value otherwise.
+func (c *ConnectionKey) GetSubjectDN() string {
+	if c == nil || c.SubjectDN == nil {
+		return ""
+	}
+	return *c.SubjectDN
+}
+
+// GetThumbprint returns the Thumbprint field if it's non-nil, zero value otherwise.
+func (c *ConnectionKey) GetThumbprint() string {
+	if c == nil || c.Thumbprint == nil {
+		return ""
+	}
+	return *c.Thumbprint
+}
+
+// String returns a string representation of ConnectionKey.
+func (c *ConnectionKey) String() string {
+	return Stringify(c)
+}
+
 // String returns a string representation of ConnectionList.
 func (c *ConnectionList) String() string {
 	return Stringify(c)
@@ -5162,6 +5263,22 @@ func (c *ConnectionOptionsOIDC) GetTokenEndpoint() string {
 	return *c.TokenEndpoint
 }
 
+// GetTokenEndpointAuthMethod returns the TokenEndpointAuthMethod field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOIDC) GetTokenEndpointAuthMethod() string {
+	if c == nil || c.TokenEndpointAuthMethod == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthMethod
+}
+
+// GetTokenEndpointAuthSigningAlg returns the TokenEndpointAuthSigningAlg field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOIDC) GetTokenEndpointAuthSigningAlg() string {
+	if c == nil || c.TokenEndpointAuthSigningAlg == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthSigningAlg
+}
+
 // GetType returns the Type field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOIDC) GetType() string {
 	if c == nil || c.Type == nil {
@@ -5343,6 +5460,22 @@ func (c *ConnectionOptionsOkta) GetTokenEndpoint() string {
 		return ""
 	}
 	return *c.TokenEndpoint
+}
+
+// GetTokenEndpointAuthMethod returns the TokenEndpointAuthMethod field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetTokenEndpointAuthMethod() string {
+	if c == nil || c.TokenEndpointAuthMethod == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthMethod
+}
+
+// GetTokenEndpointAuthSigningAlg returns the TokenEndpointAuthSigningAlg field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetTokenEndpointAuthSigningAlg() string {
+	if c == nil || c.TokenEndpointAuthSigningAlg == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthSigningAlg
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
