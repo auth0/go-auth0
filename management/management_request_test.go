@@ -32,6 +32,15 @@ func TestNewRequest(t *testing.T) {
 			expectedBody:  `{"name":"TestClient","description":"Test description"}` + "\n",
 		},
 		{
+			name:          "Create client request empty object body",
+			method:        http.MethodPost,
+			endpoint:      api.URI("clients"),
+			payload:       &Client{},
+			options:       nil,
+			expectedError: "",
+			expectedBody:  "{}\n",
+		},
+		{
 			name:          "Read client request",
 			method:        http.MethodGet,
 			endpoint:      api.URI("clients", "c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX"),
@@ -45,6 +54,15 @@ func TestNewRequest(t *testing.T) {
 			method:        http.MethodGet,
 			endpoint:      api.URI("clients"),
 			payload:       nil,
+			options:       nil,
+			expectedError: "",
+			expectedBody:  "",
+		},
+		{
+			name:          "List clients request empty body",
+			method:        http.MethodGet,
+			endpoint:      api.URI("clients"),
+			payload:       &Client{},
 			options:       nil,
 			expectedError: "",
 			expectedBody:  "",
@@ -104,7 +122,12 @@ func TestNewRequest(t *testing.T) {
 			require.NoError(t, err)
 
 			assert.Equal(t, testCase.expectedBody, string(requestBody))
-			assert.Equal(t, "application/json", request.Header.Get("Content-Type"))
+
+			if testCase.expectedBody != "" {
+				assert.Equal(t, "application/json", request.Header.Get("Content-Type"))
+			} else {
+				assert.Empty(t, request.Header.Get("Content-Type"))
+			}
 		})
 	}
 }
