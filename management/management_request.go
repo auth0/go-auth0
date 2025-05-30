@@ -36,6 +36,23 @@ func (m *Management) URI(path ...string) string {
 	return baseURL.String() + strings.Join(escapedPath, "/")
 }
 
+// methodAllowsBody checks if the HTTP method is one that does not require a
+// request body.
+//
+// This can be used to decide whether to remove an empty object from the
+// request body to fix issues with CDNs like CloudFront.
+//
+// For example:
+// https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorCustomOrigin.html#RequestCustom-get-body
+func methodAllowsBody(method string) bool {
+	switch method {
+	case http.MethodGet, http.MethodHead, http.MethodOptions, http.MethodDelete:
+		return false
+	default:
+		return true
+	}
+}
+
 // NewRequest returns a new HTTP request. If the payload is not nil it will be
 // encoded as JSON.
 func (m *Management) NewRequest(
@@ -45,17 +62,19 @@ func (m *Management) NewRequest(
 	payload interface{},
 	options ...RequestOption,
 ) (*http.Request, error) {
-	const nullBody = "null\n"
 	var body bytes.Buffer
+	setContentType := false
 
-	if payload != nil {
+	if payload != nil && methodAllowsBody(method) {
 		if err := json.NewEncoder(&body).Encode(payload); err != nil {
 			return nil, fmt.Errorf("encoding request payload failed: %w", err)
 		}
-	}
-
-	if body.String() == nullBody {
-		body.Reset()
+		encoded := bytes.TrimSpace(body.Bytes())
+		if !bytes.Equal(encoded, []byte("null")) {
+			setContentType = true
+		} else {
+			body.Reset()
+		}
 	}
 
 	request, err := http.NewRequestWithContext(ctx, method, uri, &body)
@@ -63,7 +82,9 @@ func (m *Management) NewRequest(
 		return nil, err
 	}
 
-	request.Header.Add("Content-Type", "application/json")
+	if setContentType {
+		request.Header.Add("Content-Type", "application/json")
+	}
 
 	for _, option := range options {
 		option.apply(request)
