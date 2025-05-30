@@ -1,5 +1,14 @@
 # Change Log
 
+## [v1.22.0](https://github.com/auth0/go-auth0/tree/v1.22.0) (2025-05-30)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.21.0...v1.22.0)
+
+**Added**
+- Add Support for Limiting M2M Usage via `Tenant-Wide` Defaults and `Client/Organization` Overrides [\#537](https://github.com/auth0/go-auth0/pull/537) ([developerkunal](https://github.com/developerkunal))
+
+**Fixed**
+- Fix: Prevent sending `{}` as body in requests for methods that don’t allow or expect a payload [\#546](https://github.com/auth0/go-auth0/pull/546) ([jeffmay](https://github.com/jeffmay))
+
 ## [v1.21.0](https://github.com/auth0/go-auth0/tree/v1.21.0) (2025-05-20)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.20.0...v1.21.0)
 
