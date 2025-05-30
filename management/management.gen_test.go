@@ -2353,6 +2353,13 @@ func TestClient_GetTokenExchange(tt *testing.T) {
 	c.GetTokenExchange()
 }
 
+func TestClient_GetTokenQuota(tt *testing.T) {
+	c := &Client{}
+	c.GetTokenQuota()
+	c = nil
+	c.GetTokenQuota()
+}
+
 func TestClient_GetWebOrigins(tt *testing.T) {
 	var zeroValue []string
 	c := &Client{WebOrigins: &zeroValue}
@@ -11829,6 +11836,13 @@ func TestOrganization_GetName(tt *testing.T) {
 	o.GetName()
 }
 
+func TestOrganization_GetTokenQuota(tt *testing.T) {
+	o := &Organization{}
+	o.GetTokenQuota()
+	o = nil
+	o.GetTokenQuota()
+}
+
 func TestOrganization_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &Organization{}
@@ -15033,6 +15047,13 @@ func TestTenant_GetDefaultRedirectionURI(tt *testing.T) {
 	t.GetDefaultRedirectionURI()
 }
 
+func TestTenant_GetDefaultTokenQuota(tt *testing.T) {
+	t := &Tenant{}
+	t.GetDefaultTokenQuota()
+	t = nil
+	t.GetDefaultTokenQuota()
+}
+
 func TestTenant_GetDeviceFlow(tt *testing.T) {
 	t := &Tenant{}
 	t.GetDeviceFlow()
@@ -15227,6 +15248,28 @@ func TestTenantChangePassword_GetHTML(tt *testing.T) {
 func TestTenantChangePassword_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TenantChangePassword{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTenantDefaultTokenQuota_GetClients(tt *testing.T) {
+	t := &TenantDefaultTokenQuota{}
+	t.GetClients()
+	t = nil
+	t.GetClients()
+}
+
+func TestTenantDefaultTokenQuota_GetOrganizations(tt *testing.T) {
+	t := &TenantDefaultTokenQuota{}
+	t.GetOrganizations()
+	t = nil
+	t.GetOrganizations()
+}
+
+func TestTenantDefaultTokenQuota_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TenantDefaultTokenQuota{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -15943,6 +15986,59 @@ func TestTokenExchangeProfile_String(t *testing.T) {
 func TestTokenExchangeProfileList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TokenExchangeProfileList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTokenQuota_GetClientCredentials(tt *testing.T) {
+	t := &TokenQuota{}
+	t.GetClientCredentials()
+	t = nil
+	t.GetClientCredentials()
+}
+
+func TestTokenQuota_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TokenQuota{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTokenQuotaClientCredentials_GetEnforce(tt *testing.T) {
+	var zeroValue bool
+	t := &TokenQuotaClientCredentials{Enforce: &zeroValue}
+	t.GetEnforce()
+	t = &TokenQuotaClientCredentials{}
+	t.GetEnforce()
+	t = nil
+	t.GetEnforce()
+}
+
+func TestTokenQuotaClientCredentials_GetPerDay(tt *testing.T) {
+	var zeroValue int
+	t := &TokenQuotaClientCredentials{PerDay: &zeroValue}
+	t.GetPerDay()
+	t = &TokenQuotaClientCredentials{}
+	t.GetPerDay()
+	t = nil
+	t.GetPerDay()
+}
+
+func TestTokenQuotaClientCredentials_GetPerHour(tt *testing.T) {
+	var zeroValue int
+	t := &TokenQuotaClientCredentials{PerHour: &zeroValue}
+	t.GetPerHour()
+	t = &TokenQuotaClientCredentials{}
+	t.GetPerHour()
+	t = nil
+	t.GetPerHour()
+}
+
+func TestTokenQuotaClientCredentials_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TokenQuotaClientCredentials{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
