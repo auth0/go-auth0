@@ -1730,7 +1730,7 @@ func (m *ConnectionManager) DeleteSCIMToken(ctx context.Context, id, tokenID str
 	return
 }
 
-// ReadKeys Return the set of the connection’s public keys used to verify signatures on signed JWTs.
+// ReadKeys returns the set of the connection’s public keys used to verify JWT signatures.
 // This method only works with enterprise connections.
 //
 // See: https://auth0.com/docs/api/management/v2/connections/get-connection-keys
