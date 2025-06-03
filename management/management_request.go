@@ -310,6 +310,9 @@ func Header(key, value string) RequestOption {
 func Body(b []byte) RequestOption {
 	return newRequestOption(func(r *http.Request) {
 		r.Body = io.NopCloser(bytes.NewReader(b))
+		if len(b) > 0 {
+			r.Header.Set("Content-Type", "application/json")
+		}
 	})
 }
 
