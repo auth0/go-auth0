@@ -103,6 +103,17 @@ func TestNewRequest(t *testing.T) {
 			expectedError: "",
 			expectedBody:  "{}" + "\n",
 		},
+		{
+			name:     "Request with options",
+			method:   http.MethodPost,
+			endpoint: api.URI("clients"),
+			payload:  nil,
+			options: []RequestOption{
+				Body([]byte(`{"custom":"data"}`)),
+			},
+			expectedError: "",
+			expectedBody:  `{"custom":"data"}`,
+		},
 	}
 
 	for _, testCase := range testCases {
