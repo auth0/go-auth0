@@ -133,15 +133,16 @@ type Management struct {
 	// NetworkACL manages Auth0 Network ACLs.
 	NetworkACL *NetworkACLManager
 
-	url             *url.URL
-	basePath        string
-	userAgent       string
-	debug           bool
-	tokenSource     oauth2.TokenSource
-	http            *http.Client
-	auth0ClientInfo *client.Auth0ClientInfo
-	common          manager
-	retryStrategy   client.RetryOptions
+	url                *url.URL
+	basePath           string
+	userAgent          string
+	debug              bool
+	tokenSource        oauth2.TokenSource
+	http               *http.Client
+	auth0ClientInfo    *client.Auth0ClientInfo
+	common             manager
+	retryStrategy      client.RetryOptions
+	customDomainHeader string
 }
 
 type manager struct {
