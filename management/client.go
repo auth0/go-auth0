@@ -780,7 +780,9 @@ func (m *ClientManager) List(ctx context.Context, opts ...RequestOption) (c *Cli
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/patch_clients_by_id
 func (m *ClientManager) Update(ctx context.Context, id string, c *Client, opts ...RequestOption) (err error) {
-	c.CleanForPatch()
+	if c != nil {
+		c.CleanForPatch()
+	}
 	return m.management.Request(ctx, "PATCH", m.management.URI("clients", id), c, opts...)
 }
 
