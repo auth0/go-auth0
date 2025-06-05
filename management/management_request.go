@@ -46,7 +46,7 @@ func (m *Management) URI(path ...string) string {
 // https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorCustomOrigin.html#RequestCustom-get-body
 func methodAllowsBody(method string) bool {
 	switch method {
-	case http.MethodGet, http.MethodHead, http.MethodOptions, http.MethodDelete:
+	case http.MethodGet, http.MethodHead, http.MethodOptions:
 		return false
 	default:
 		return true
