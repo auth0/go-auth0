@@ -163,7 +163,7 @@ func (m *SelfServiceProfileManager) List(ctx context.Context, opts ...RequestOpt
 	return
 }
 
-// Get a single Self Service Profile against the ID.
+// Read retrieves a single Self Service Profile by its ID.
 func (m *SelfServiceProfileManager) Read(ctx context.Context, id string, opts ...RequestOption) (s *SelfServiceProfile, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("self-service-profiles", id), &s, opts...)
 	return

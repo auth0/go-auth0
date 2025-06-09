@@ -287,10 +287,10 @@ func TestGuardian(t *testing.T) {
 				assert.NoError(t, err)
 
 				actualDirectAPNS, err := api.Guardian.MultiFactor.Push.DirectAPNS(context.Background())
+				// Cannot test `enabled` parameter as we cannot send it due to API limitations.
 				assert.NoError(t, err)
 				assert.Equal(t, expectedDirectAPNS.GetSandbox(), actualDirectAPNS.GetSandbox())
 				assert.Equal(t, expectedDirectAPNS.GetBundleID(), actualDirectAPNS.GetBundleID())
-				// Cannot test enabled parameter as we cannot send it
 			})
 
 			t.Run("DirectFCM", func(t *testing.T) {
@@ -535,11 +535,13 @@ func getInitialMFAStatus(mfaName string) (bool, error) {
 	}
 
 	enabled := false
+
 	for _, mfa := range mfaList {
 		if mfa.GetName() == mfaName {
 			enabled = mfa.GetEnabled()
 		}
 	}
+
 	return enabled, nil
 }
 
@@ -550,10 +552,12 @@ func assertMFAIsEnabled(t *testing.T, mfaName string) {
 	assert.NoError(t, err)
 
 	enabled := false
+
 	for _, mfa := range mfaList {
 		if mfa.GetName() == mfaName {
 			enabled = mfa.GetEnabled()
 		}
 	}
+
 	assert.True(t, enabled)
 }

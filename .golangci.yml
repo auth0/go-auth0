@@ -1,42 +1,62 @@
+version: "2"
 run:
-  timeout: 5m
   allow-parallel-runners: true
-
 linters:
-  disable-all: true
+  default: none
   enable:
-    - unused
-    - gofmt
-    - staticcheck
-    - revive
-    - godot
-    - whitespace
-    - goimports
-    - unconvert
-    - gocritic
     - errcheck
-    - gosec
+    - gocritic
     - gocyclo
-
-linters-settings:
-  gofmt:
-    simplify: true
-  staticcheck:
-    checks: [ "all" ]
-  godot:
-    scope: declarations
-    capital: true
-  goimports:
-    local-prefixes: "github.com/auth0/go-auth0"
-
-issues:
-  exclude-use-default: false
-  exclude:
-    - "Error return value of `response.Body.Close` is not checked"
-    - "Error return value of `w.Write` is not checked"
-    - "G307: Deferring unsafe method \"Close\" on type \"io.ReadCloser\""
-    - "should have a package comment"
-  exclude-rules:
-    - path: "(.+)_test.go"
-      linters:
-        - gosec
+    - godot
+    - gosec
+    - revive
+    - staticcheck
+    - unconvert
+    - unused
+    - whitespace
+    - dupword
+    - fatcontext
+    - govet
+    - misspell
+    - wsl
+  settings:
+    godot:
+      scope: declarations
+      capital: true
+    staticcheck:
+      checks:
+        - all
+  exclusions:
+    generated: lax
+    rules:
+      - linters:
+          - gosec
+        path: (.+)_test.go
+      - path: (.+)\.go$
+        text: Error return value of `response.Body.Close` is not checked
+      - path: (.+)\.go$
+        text: Error return value of `w.Write` is not checked
+      - path: (.+)\.go$
+        text: 'G307: Deferring unsafe method "Close" on type "io.ReadCloser"'
+      - path: (.+)\.go$
+        text: should have a package comment
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    gofmt:
+      simplify: true
+    goimports:
+      local-prefixes:
+        - github.com/auth0/go-auth0
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

@@ -22,7 +22,9 @@ func (m *Management) URI(path ...string) string {
 	}
 
 	const escapedForwardSlash = "%2F"
+
 	var escapedPath []string
+
 	for _, unescapedPath := range path {
 		// Go's url.PathEscape will not escape "/", but some user IDs do have a valid "/" in them.
 		// See https://github.com/golang/go/blob/b55a2fb3b0d67b346bac871737b862f16e5a6447/src/net/url/url.go#L141.
@@ -63,12 +65,14 @@ func (m *Management) NewRequest(
 	options ...RequestOption,
 ) (*http.Request, error) {
 	var body bytes.Buffer
+
 	setContentType := false
 
 	if payload != nil && methodAllowsBody(method) {
 		if err := json.NewEncoder(&body).Encode(payload); err != nil {
 			return nil, fmt.Errorf("encoding request payload failed: %w", err)
 		}
+
 		encoded := bytes.TrimSpace(body.Bytes())
 		if !bytes.Equal(encoded, []byte("null")) {
 			setContentType = true
@@ -189,6 +193,7 @@ func applyListDefaults(options []RequestOption) RequestOption {
 	return newRequestOption(func(r *http.Request) {
 		PerPage(50).apply(r)
 		IncludeTotals(true).apply(r)
+
 		for _, option := range options {
 			option.apply(r)
 		}
@@ -198,6 +203,7 @@ func applyListDefaults(options []RequestOption) RequestOption {
 func applyListCheckpointDefaults(options []RequestOption) RequestOption {
 	return newRequestOption(func(r *http.Request) {
 		Take(50).apply(r)
+
 		for _, option := range options {
 			option.apply(r)
 		}
@@ -322,6 +328,7 @@ func Stringify(v interface{}) string {
 	if err != nil {
 		panic(err)
 	}
+
 	return string(b)
 }
 

@@ -237,6 +237,7 @@ func TestAuth0Client(t *testing.T) {
 			assert.Equal(t, runtime.Version(), auth0Client.Env["go"])
 		})
 		s := httptest.NewTLSServer(h)
+
 		t.Cleanup(func() {
 			s.Close()
 		})
@@ -260,6 +261,7 @@ func TestAuth0Client(t *testing.T) {
 			assert.Empty(t, rawHeader)
 		})
 		s := httptest.NewTLSServer(h)
+
 		t.Cleanup(func() {
 			s.Close()
 		})
@@ -293,6 +295,7 @@ func TestAuth0Client(t *testing.T) {
 			assert.Equal(t, "bar", auth0Client.Env["foo"])
 		})
 		s := httptest.NewTLSServer(h)
+
 		t.Cleanup(func() {
 			s.Close()
 		})
@@ -315,6 +318,7 @@ func TestAuth0Client(t *testing.T) {
 			assert.Equal(t, "", header)
 		})
 		s := httptest.NewTLSServer(h)
+
 		t.Cleanup(func() {
 			s.Close()
 		})
@@ -344,6 +348,7 @@ func TestRetries(t *testing.T) {
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -376,6 +381,7 @@ func TestRetries(t *testing.T) {
 				w.WriteHeader(http.StatusBadGateway)
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -405,6 +411,7 @@ func TestRetries(t *testing.T) {
 
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
+
 			w.WriteHeader(http.StatusBadGateway)
 		})
 
@@ -431,6 +438,7 @@ func TestRetries(t *testing.T) {
 
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
+
 			cancel()
 			w.WriteHeader(http.StatusBadGateway)
 		})
@@ -458,6 +466,7 @@ func TestRetries(t *testing.T) {
 
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
+
 			cancel()
 			w.WriteHeader(http.StatusBadGateway)
 		})
@@ -485,6 +494,7 @@ func TestRetries(t *testing.T) {
 
 	t.Run("Retry per request timeout", func(t *testing.T) {
 		var i atomic.Int64
+
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 
@@ -493,6 +503,7 @@ func TestRetries(t *testing.T) {
 
 			c := i.Add(1)
 			t.Log(c)
+
 			if c == 2 {
 				cancel()
 			}
@@ -502,10 +513,12 @@ func TestRetries(t *testing.T) {
 			case <-timer.C:
 				t.Log("completed")
 				w.WriteHeader(http.StatusOK)
+
 				return
 			case <-ctx.Done():
 				t.Log("cancelled")
 				w.WriteHeader(499)
+
 				return
 			}
 		})
@@ -542,6 +555,7 @@ func TestWithClockTolerance(t *testing.T) {
 	idTokenClientID := "test-client-id"
 
 	var idToken string
+
 	h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		tokenSet := &oauth.TokenSet{
 			AccessToken: "test-access-token",
@@ -555,18 +569,22 @@ func TestWithClockTolerance(t *testing.T) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+
 		w.WriteHeader(http.StatusOK)
+
 		if _, err := fmt.Fprint(w, string(b)); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
 	})
 	s := httptest.NewTLSServer(h)
+
 	t.Cleanup(func() {
 		s.Close()
 	})
 
 	URL, err := url.Parse(s.URL)
 	require.NoError(t, err)
+
 	builder := jwt.NewBuilder().
 		Issuer(s.URL + "/").
 		Subject("me").
@@ -579,6 +597,7 @@ func TestWithClockTolerance(t *testing.T) {
 
 	b, err := jwt.Sign(token, jwt.WithKey(jwa.HS256, []byte(idTokenClientSecret)))
 	require.NoError(t, err)
+
 	idToken = string(b)
 
 	api, err := New(

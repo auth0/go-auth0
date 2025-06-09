@@ -132,6 +132,7 @@ func TestNewRequest(t *testing.T) {
 			if testCase.expectedError != "" {
 				assert.EqualError(t, err, testCase.expectedError)
 				assert.Nil(t, request)
+
 				return
 			}
 

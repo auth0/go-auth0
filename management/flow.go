@@ -108,7 +108,7 @@ func (m *FlowManager) Create(ctx context.Context, r *Flow, opts ...RequestOption
 	return m.management.Request(ctx, "POST", m.management.URI("flows"), r, opts...)
 }
 
-// Retrieve flow details.
+// Read retrieves flow details.
 func (m *FlowManager) Read(ctx context.Context, id string, opts ...RequestOption) (r *Flow, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("flows", id), &r, opts...)
 	return

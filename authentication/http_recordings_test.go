@@ -67,6 +67,7 @@ func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 		rb := strings.TrimSpace(string(reqBody))
 
 		bodyMatches := false
+
 		switch r.Header.Get("Content-Type") {
 		case "application/json":
 			v := map[string]interface{}{}
@@ -75,6 +76,7 @@ func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 
 			if assertion, ok := v["client_assertion"].(string); ok && assertion != "" {
 				verifyClientAssertion(t, assertion)
+
 				v["client_assertion"] = "test-client_assertion"
 			}
 
@@ -82,7 +84,6 @@ func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 			require.NoError(t, err)
 
 			bodyMatches = assert.JSONEq(t, i.Body, string(body))
-			break
 		case "application/x-www-form-urlencoded":
 			err = r.ParseForm()
 			require.NoError(t, err)
@@ -93,7 +94,6 @@ func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 			}
 
 			bodyMatches = assert.Equal(t, i.Form, r.Form)
-			break
 		default:
 			bodyMatches = rb == i.Body
 		}
@@ -104,6 +104,7 @@ func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 	t.Cleanup(func() {
 		err := recorderTransport.Stop()
 		require.NoError(t, err)
+
 		auth.http.Transport = initialTransport
 	})
 }
@@ -142,6 +143,7 @@ func redactHeaders(i *cassette.Interaction) {
 			delete(i.Request.Headers, header)
 		}
 	}
+
 	for header := range i.Response.Headers {
 		if _, ok := allowedHeaders[header]; !ok {
 			delete(i.Response.Headers, header)
@@ -157,7 +159,8 @@ func redactClientAuth(t *testing.T, i *cassette.Interaction) {
 		"client_assertion": true,
 	}
 
-	if contentType == "application/x-www-form-urlencoded" {
+	switch contentType {
+	case "application/x-www-form-urlencoded":
 		for param := range clientAuthParams {
 			if i.Request.Form.Has(param) {
 				i.Request.Form.Set(param, "test-"+param)
@@ -165,7 +168,7 @@ func redactClientAuth(t *testing.T, i *cassette.Interaction) {
 		}
 
 		i.Request.Body = i.Request.Form.Encode()
-	} else if contentType == "application/json" {
+	case "application/json":
 		jsonBody := map[string]interface{}{}
 
 		if len(i.Request.Body) == 0 {

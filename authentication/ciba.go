@@ -26,6 +26,7 @@ func (c *CIBA) Initiate(ctx context.Context, body ciba.Request, opts ...RequestO
 	}
 
 	var missing []string
+
 	check(&missing, "ClientID", body.ClientID != "" || c.authentication.clientID != "")
 	check(&missing, "ClientSecret", body.ClientSecret != "" || c.authentication.clientSecret != "")
 	check(&missing, "LoginHint", len(body.LoginHint) != 0)

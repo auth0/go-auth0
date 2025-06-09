@@ -499,6 +499,7 @@ func (c *PromptPartials) MarshalJSON() ([]byte, error) {
 	body := map[string]PromptPartials{
 		string(c.Prompt): *c,
 	}
+
 	return json.Marshal(body)
 }
 
@@ -507,6 +508,7 @@ func (c *PromptPartials) UnmarshalJSON(data []byte) error {
 	var body map[string]struct {
 		PromptPartials
 	}
+
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
@@ -664,6 +666,7 @@ func (c *PromptRendering) cleanForPatch() *PromptRendering {
 			RenderingMode: c.RenderingMode,
 		}
 	}
+
 	return c
 }
 
@@ -674,6 +677,7 @@ func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, 
 	if c != nil {
 		c = c.cleanForPatch()
 	}
+
 	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), c, opts...)
 }
 

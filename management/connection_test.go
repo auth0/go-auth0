@@ -835,6 +835,7 @@ func TestConnectionManager_Read(t *testing.T) {
 			assert.Equal(t, expectedConnection.GetName(), actualConnection.GetName())
 			assert.Equal(t, expectedConnection.GetStrategy(), actualConnection.GetStrategy())
 			assert.IsType(t, testCase.options, actualConnection.Options)
+
 			switch testCase.connection.GetStrategy() {
 			case "ad", "adfs", "auth0", "samlp", "waad", "windowslive", "wordpress":
 				assert.ObjectsAreEqualValues(getStrategyVersion(testCase.connection.GetStrategy(), testCase.options), getStrategyVersion(actualConnection.GetStrategy(), actualConnection.Options))
@@ -1363,6 +1364,7 @@ func givenASCIMConfiguration(t *testing.T, connectionID string) *SCIMConfigurati
 
 func givenAOktaConnection(t *testing.T) *Connection {
 	t.Helper()
+
 	return givenAConnection(t, connectionTestCase{
 		connection: Connection{
 			Name:     auth0.Stringf("Test-Okta-Connection-%d", time.Now().Unix()),
@@ -1417,5 +1419,6 @@ func getEnabledClientIDs(t *testing.T, connectionID string) []string {
 	for _, c := range resp.GetClients() {
 		clientIDs = append(clientIDs, c.GetClientID())
 	}
+
 	return clientIDs
 }

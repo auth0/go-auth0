@@ -15,6 +15,7 @@ import (
 
 func TestFormManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
+
 	form := &Form{
 		Name: auth0.String("test-form"),
 		Languages: &FormLanguages{
@@ -113,6 +114,7 @@ func TestFormManager_MarshalJSON(t *testing.T) {
 
 func givenAForm(t *testing.T) *Form {
 	t.Helper()
+
 	form := &Form{
 		Name: auth0.String("test-form"),
 		Languages: &FormLanguages{
@@ -125,6 +127,7 @@ func givenAForm(t *testing.T) *Form {
 	t.Cleanup(func() {
 		cleanupForm(t, form.GetID())
 	})
+
 	return form
 }
 
