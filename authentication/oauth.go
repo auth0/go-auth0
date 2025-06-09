@@ -216,7 +216,7 @@ func (o *OAuth) PushedAuthorization(ctx context.Context, body oauth.PushedAuthor
 	check(&missing, "RedirectURI", body.RedirectURI != "")
 
 	if len(missing) > 0 {
-		return nil, fmt.Errorf("Missing required fields: %s", strings.Join(missing, ", "))
+		return nil, fmt.Errorf("missing required fields: %s", strings.Join(missing, ", "))
 	}
 
 	data := url.Values{

@@ -248,7 +248,7 @@ func (m *ActionManager) Create(ctx context.Context, a *Action, opts ...RequestOp
 	return m.management.Request(ctx, "POST", m.management.URI("actions", "actions"), a, opts...)
 }
 
-// Retrieve action details.
+// Read retrieves action details.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Actions/get_action
 func (m *ActionManager) Read(ctx context.Context, id string, opts ...RequestOption) (a *Action, err error) {

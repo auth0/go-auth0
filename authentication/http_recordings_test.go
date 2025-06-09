@@ -82,7 +82,6 @@ func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 			require.NoError(t, err)
 
 			bodyMatches = assert.JSONEq(t, i.Body, string(body))
-			break
 		case "application/x-www-form-urlencoded":
 			err = r.ParseForm()
 			require.NoError(t, err)
@@ -93,7 +92,6 @@ func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 			}
 
 			bodyMatches = assert.Equal(t, i.Form, r.Form)
-			break
 		default:
 			bodyMatches = rb == i.Body
 		}
@@ -157,7 +155,8 @@ func redactClientAuth(t *testing.T, i *cassette.Interaction) {
 		"client_assertion": true,
 	}
 
-	if contentType == "application/x-www-form-urlencoded" {
+	switch contentType {
+	case "application/x-www-form-urlencoded":
 		for param := range clientAuthParams {
 			if i.Request.Form.Has(param) {
 				i.Request.Form.Set(param, "test-"+param)
@@ -165,7 +164,7 @@ func redactClientAuth(t *testing.T, i *cassette.Interaction) {
 		}
 
 		i.Request.Body = i.Request.Form.Encode()
-	} else if contentType == "application/json" {
+	case "application/json":
 		jsonBody := map[string]interface{}{}
 
 		if len(i.Request.Body) == 0 {

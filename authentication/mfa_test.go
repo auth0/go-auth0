@@ -20,7 +20,7 @@ func TestMFAChallenge(t *testing.T) {
 		require.NoError(t, err)
 
 		_, err = auth.MFA.Challenge(context.Background(), mfa.ChallengeRequest{})
-		assert.ErrorContains(t, err, "Missing required fields: ClientID, MFAToken, ChallengeType")
+		assert.ErrorContains(t, err, "missing required fields: ClientID, MFAToken, ChallengeType")
 	})
 
 	t.Run("Should make a challenge request using OTP", func(t *testing.T) {
@@ -67,7 +67,7 @@ func TestMFAVerifyWithOTP(t *testing.T) {
 		require.NoError(t, err)
 
 		_, err = auth.MFA.VerifyWithOTP(context.Background(), mfa.VerifyWithOTPRequest{})
-		assert.ErrorContains(t, err, "Missing required fields: ClientID, MFAToken, OTP")
+		assert.ErrorContains(t, err, "missing required fields: ClientID, MFAToken, OTP")
 	})
 
 	t.Run("Should return tokens for a valid request", func(t *testing.T) {
@@ -96,7 +96,7 @@ func TestMFAVerifyWithOOB(t *testing.T) {
 		require.NoError(t, err)
 
 		_, err = auth.MFA.VerifyWithOOB(context.Background(), mfa.VerifyWithOOBRequest{})
-		assert.ErrorContains(t, err, "Missing required fields: ClientID, MFAToken, OOB")
+		assert.ErrorContains(t, err, "missing required fields: ClientID, MFAToken, OOB")
 	})
 
 	t.Run("Should return an error when requesting before authorizing", func(t *testing.T) {
@@ -155,7 +155,7 @@ func TestMFAVerifyWithRecoveryCode(t *testing.T) {
 		require.NoError(t, err)
 
 		_, err = auth.MFA.VerifyWithRecoveryCode(context.Background(), mfa.VerifyWithRecoveryCodeRequest{})
-		assert.ErrorContains(t, err, "Missing required fields: ClientID, MFAToken, RecoveryCode")
+		assert.ErrorContains(t, err, "missing required fields: ClientID, MFAToken, RecoveryCode")
 	})
 
 	t.Run("Should return tokens for a valid request", func(t *testing.T) {
@@ -187,7 +187,7 @@ func TestMFAAddAuthenticator(t *testing.T) {
 		_, err = auth.MFA.AddAuthenticator(context.Background(),
 			"mfa-token",
 			mfa.AddAuthenticatorRequest{})
-		assert.ErrorContains(t, err, "Missing required fields: ClientID, AuthenticatorTypes")
+		assert.ErrorContains(t, err, "missing required fields: ClientID, AuthenticatorTypes")
 	})
 
 	t.Run("Should return response for OOB (SMS channel)", func(t *testing.T) {

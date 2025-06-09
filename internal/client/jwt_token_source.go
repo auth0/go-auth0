@@ -151,13 +151,12 @@ func verifyKeyCompatibility(alg jwa.SignatureAlgorithm, key jwk.Key) error {
 	keyType := key.KeyType()
 
 	// Check key compatibility with algorithm
-	switch {
-	case alg == jwa.RS256 || alg == jwa.RS384 || alg == jwa.RS512 ||
-		alg == jwa.PS256 || alg == jwa.PS384 || alg == jwa.PS512:
+	switch alg {
+	case jwa.RS256, jwa.RS384, jwa.RS512, jwa.PS256, jwa.PS384, jwa.PS512:
 		if keyType != "RSA" {
 			return fmt.Errorf("%s algorithm requires an RSA key, but got %s", alg, keyType)
 		}
-	case alg == jwa.ES256 || alg == jwa.ES384 || alg == jwa.ES512:
+	case jwa.ES256, jwa.ES384, jwa.ES512:
 		if keyType != "EC" {
 			return fmt.Errorf("%s algorithm requires an EC key, but got %s", alg, keyType)
 		}

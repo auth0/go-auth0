@@ -131,7 +131,7 @@ func (i *IDTokenValidator) Validate(idToken string, optional ValidationOptions) 
 		if len(t.Audience()) > 1 {
 			azp, azpExists := t.Get("azp")
 
-			if azpExists == false {
+			if !azpExists {
 				return jwt.NewValidationError(errors.New("azp claim must be a string present in the ID token when Audience (aud) claim has multiple values"))
 			}
 

@@ -51,7 +51,7 @@ func (m *RoleManager) Create(ctx context.Context, r *Role, opts ...RequestOption
 	return m.management.Request(ctx, "POST", m.management.URI("roles"), r, opts...)
 }
 
-// Retrieve a role.
+// Read retrieves details for a role.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Roles/get_roles_by_id
 func (m *RoleManager) Read(ctx context.Context, id string, opts ...RequestOption) (r *Role, err error) {

@@ -236,7 +236,7 @@ func (m *OrganizationManager) Create(ctx context.Context, o *Organization, opts 
 	return
 }
 
-// Get a specific organization.
+// Read retrieves a specific organization.
 //
 // See: https://auth0.com/docs/api/management/v2/#!/Organizations/get_organizations_by_id
 func (m *OrganizationManager) Read(ctx context.Context, id string, opts ...RequestOption) (o *Organization, err error) {

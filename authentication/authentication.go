@@ -268,14 +268,11 @@ func (a *Authentication) addClientAuthenticationToURLValues(params oauth.ClientA
 
 		body.Set("client_assertion", clientAssertion)
 		body.Set("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer")
-		break
 	case params.ClientAssertion != "" && params.ClientAssertionType != "":
 		body.Set("client_assertion", params.ClientAssertion)
 		body.Set("client_assertion_type", params.ClientAssertionType)
-		break
 	case clientSecret != "":
 		body.Set("client_secret", clientSecret)
-		break
 	}
 
 	if required && (body.Get("client_secret") == "" && body.Get("client_assertion") == "") {

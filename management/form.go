@@ -90,7 +90,7 @@ func (m *FormManager) Create(ctx context.Context, r *Form, opts ...RequestOption
 	return m.management.Request(ctx, "POST", m.management.URI("forms"), r, opts...)
 }
 
-// Retrieve form details.
+// Read retrieves form details.
 func (m *FormManager) Read(ctx context.Context, id string, opts ...RequestOption) (r *Form, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("forms", id), &r, opts...)
 	return

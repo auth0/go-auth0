@@ -478,7 +478,7 @@ func TestPushedAuthorizationRequest(t *testing.T) {
 		)
 		require.NoError(t, err)
 		_, err = auth.OAuth.PushedAuthorization(context.Background(), oauth.PushedAuthorizationRequest{})
-		assert.ErrorContains(t, err, "Missing required fields: ClientID, ResponseType, RedirectURI")
+		assert.ErrorContains(t, err, "missing required fields: ClientID, ResponseType, RedirectURI")
 	})
 
 	t.Run("Should make a PAR request", func(t *testing.T) {
