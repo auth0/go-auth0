@@ -22,6 +22,7 @@ func (d *Database) Signup(ctx context.Context, params database.SignupRequest, op
 	}
 
 	err = d.authentication.Request(ctx, "POST", d.authentication.URI("dbconnections", "signup"), params, &r, opts...)
+
 	return
 }
 

@@ -227,6 +227,7 @@ type ActionManager manager
 func applyActionsListDefaults(options []RequestOption) RequestOption {
 	return newRequestOption(func(r *http.Request) {
 		PerPage(50).apply(r)
+
 		for _, option := range options {
 			option.apply(r)
 		}
@@ -305,6 +306,7 @@ func (m *ActionManager) UpdateBindings(ctx context.Context, triggerID string, b 
 	bl := &actionBindingsPerTrigger{
 		Bindings: b,
 	}
+
 	return m.management.Request(ctx, "PATCH", m.management.URI("actions", "triggers", triggerID, "bindings"), &bl, opts...)
 }
 
@@ -342,6 +344,7 @@ func (m *ActionManager) Test(ctx context.Context, id string, payload *ActionTest
 		Payload: payload,
 	}
 	err = m.management.Request(ctx, "POST", m.management.URI("actions", "actions", id, "test"), &r, opts...)
+
 	return
 }
 

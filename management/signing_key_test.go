@@ -48,6 +48,7 @@ func TestSigningKey(t *testing.T) {
 		assert.NoError(t, err)
 
 		var signingKey *SigningKey
+
 		for _, key := range signingKeys {
 			if key.GetPrevious() {
 				signingKey = key

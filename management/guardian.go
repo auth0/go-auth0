@@ -171,6 +171,7 @@ func (m *EnrollmentManager) CreateTicket(ctx context.Context, t *CreateEnrollmen
 
 	var out EnrollmentTicket
 	err = json.NewDecoder(response.Body).Decode(&out)
+
 	return out, err
 }
 

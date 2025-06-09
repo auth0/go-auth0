@@ -87,6 +87,7 @@ func (m *TokenExchangeProfileManager) Read(ctx context.Context, id string, opts 
 func (m *TokenExchangeProfileManager) Update(ctx context.Context, id string, t *TokenExchangeProfile, opts ...RequestOption) (err error) {
 	t.cleanForPatch()
 	err = m.management.Request(ctx, "PATCH", m.management.URI("token-exchange-profiles", id), t, opts...)
+
 	return
 }
 

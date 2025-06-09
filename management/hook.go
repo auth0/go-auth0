@@ -43,10 +43,12 @@ type HookSecrets map[string]string
 func (s HookSecrets) Keys() []string {
 	keys := make([]string, len(s))
 	i := 0
+
 	for k := range s {
 		keys[i] = k
 		i++
 	}
+
 	return keys
 }
 
@@ -54,11 +56,13 @@ func (s HookSecrets) Keys() []string {
 // are present in s that are missing from other.
 func (s HookSecrets) difference(other HookSecrets) HookSecrets {
 	d := make(HookSecrets)
+
 	for k, v := range s {
 		if _, ok := other[k]; !ok {
 			d[k] = v
 		}
 	}
+
 	return d
 }
 
@@ -66,11 +70,13 @@ func (s HookSecrets) difference(other HookSecrets) HookSecrets {
 // keys which are present in both s and other.
 func (s HookSecrets) intersection(other HookSecrets) HookSecrets {
 	i := make(HookSecrets)
+
 	for k, v := range s {
 		if _, ok := other[k]; ok {
 			i[k] = v
 		}
 	}
+
 	return i
 }
 
@@ -143,15 +149,19 @@ func (m *HookManager) ReplaceSecrets(ctx context.Context, hookID string, s HookS
 	if err != nil {
 		return err
 	}
+
 	if add := s.difference(o); len(add) > 0 {
 		err = m.CreateSecrets(ctx, hookID, add, opts...)
 	}
+
 	if update := s.intersection(o); len(update) > 0 {
 		err = m.UpdateSecrets(ctx, hookID, update, opts...)
 	}
+
 	if rm := o.difference(s); len(rm) > 0 {
 		err = m.RemoveSecrets(ctx, hookID, rm.Keys(), opts...)
 	}
+
 	return err
 }
 
@@ -180,9 +190,11 @@ func (m *HookManager) RemoveAllSecrets(ctx context.Context, hookID string, opts 
 	if err != nil {
 		return err
 	}
+
 	keys := s.Keys()
 	if len(keys) > 0 {
 		err = m.RemoveSecrets(ctx, hookID, keys, opts...)
 	}
+
 	return err
 }

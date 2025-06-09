@@ -85,6 +85,7 @@ type UserAddress struct {
 // field on the struct.
 func (u *UserInfoResponse) UnmarshalJSON(b []byte) error {
 	type userInfoWrapper UserInfoResponse
+
 	ui := userInfoWrapper{}
 
 	err := json.Unmarshal(b, &ui)
@@ -100,6 +101,7 @@ func (u *UserInfoResponse) UnmarshalJSON(b []byte) error {
 	typ := reflect.TypeOf(ui)
 	for i := 0; i < typ.NumField(); i++ {
 		field := typ.Field(i)
+
 		jsonTag := strings.Split(field.Tag.Get("json"), ",")[0]
 		if jsonTag != "" && jsonTag != "-" {
 			delete(ui.AdditionalClaims, jsonTag)
@@ -146,6 +148,7 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 	if i := strings.Index(domain, "//"); i != -1 {
 		domain = domain[i+2:]
 	}
+
 	domain = "https://" + domain
 
 	u, err := url.Parse(domain)
@@ -203,6 +206,7 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 	if err != nil {
 		return nil, err
 	}
+
 	a.idTokenValidator = validator
 
 	return a, nil
@@ -212,12 +216,13 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 //
 // This endpoint will work only if `openid` was granted as a scope for the access token. The user profile
 // information included in the response depends on the scopes requested. For example, a scope of just openid
-// may return less information than a a scope of `openid profile email`.
+// may return less information than a scope of `openid profile email`.
 //
 // See: https://auth0.com/docs/api/authentication?http#get-user-info
 func (a *Authentication) UserInfo(ctx context.Context, accessToken string, opts ...RequestOption) (user *UserInfoResponse, err error) {
 	opts = append(opts, Header("Authorization", "Bearer "+accessToken))
 	err = a.Request(ctx, "GET", a.URI("userinfo"), nil, &user, opts...)
+
 	return
 }
 
@@ -241,6 +246,7 @@ func (a *Authentication) addClientAuthenticationToURLValues(params oauth.ClientA
 	if params.ClientID == "" {
 		clientID = a.clientID
 	}
+
 	body.Set("client_id", clientID)
 
 	clientSecret := params.ClientSecret

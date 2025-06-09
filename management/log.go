@@ -142,9 +142,11 @@ func (l *Log) TypeName() string {
 	if l.Type == nil {
 		return ""
 	}
+
 	if name, ok := logTypeName[*l.Type]; ok {
 		return name
 	}
+
 	return ""
 }
 
@@ -153,6 +155,7 @@ func (l *Log) TypeName() string {
 // It is required due to differences in the scope field which cane be a string or array of strings.
 func (l *Log) UnmarshalJSON(data []byte) error {
 	type log Log
+
 	type logWrapper struct {
 		*log
 		RawScope interface{} `json:"scope"`
@@ -173,6 +176,7 @@ func (l *Log) UnmarshalJSON(data []byte) error {
 			for i, v := range rawScope {
 				scopes[i] = v.(string)
 			}
+
 			scope := strings.Join(scopes, " ")
 			l.Scope = &scope
 		case string:

@@ -103,6 +103,7 @@ func (m *EncryptionKeyManager) Delete(ctx context.Context, kid string, opts ...R
 func (m *EncryptionKeyManager) ImportWrappedKey(ctx context.Context, e *EncryptionKey, opts ...RequestOption) error {
 	id := *e.KID
 	e.reset("import")
+
 	return m.management.Request(ctx, "POST", m.management.URI("keys", "encryption", id), e, opts...)
 }
 

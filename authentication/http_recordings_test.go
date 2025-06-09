@@ -67,6 +67,7 @@ func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 		rb := strings.TrimSpace(string(reqBody))
 
 		bodyMatches := false
+
 		switch r.Header.Get("Content-Type") {
 		case "application/json":
 			v := map[string]interface{}{}
@@ -75,6 +76,7 @@ func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 
 			if assertion, ok := v["client_assertion"].(string); ok && assertion != "" {
 				verifyClientAssertion(t, assertion)
+
 				v["client_assertion"] = "test-client_assertion"
 			}
 
@@ -102,6 +104,7 @@ func configureHTTPTestRecordings(t *testing.T, auth *Authentication) {
 	t.Cleanup(func() {
 		err := recorderTransport.Stop()
 		require.NoError(t, err)
+
 		auth.http.Transport = initialTransport
 	})
 }
@@ -140,6 +143,7 @@ func redactHeaders(i *cassette.Interaction) {
 			delete(i.Request.Headers, header)
 		}
 	}
+
 	for header := range i.Response.Headers {
 		if _, ok := allowedHeaders[header]; !ok {
 			delete(i.Response.Headers, header)

@@ -16,13 +16,13 @@ type SigningKey struct {
 	// The public certificate of the signing key in pkcs7 format.
 	PKCS7 *string `json:"pkcs7,omitempty"`
 
-	// True if the key is the the current key.
+	// True if the key is the current key.
 	Current *bool `json:"current,omitempty"`
 
-	// True if the key is the the next key.
+	// True if the key is the next key.
 	Next *bool `json:"next,omitempty"`
 
-	// True if the key is the the previous key.
+	// True if the key is the previous key.
 	Previous *bool `json:"previous,omitempty"`
 
 	// The date and time when the key became the current key.

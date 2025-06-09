@@ -93,9 +93,11 @@ func (m *RoleManager) List(ctx context.Context, opts ...RequestOption) (r *RoleL
 func (m *RoleManager) AssignUsers(ctx context.Context, id string, users []*User, opts ...RequestOption) error {
 	u := make(map[string][]*string)
 	u["users"] = make([]*string, len(users))
+
 	for i, user := range users {
 		u["users"][i] = user.ID
 	}
+
 	return m.management.Request(ctx, "POST", m.management.URI("roles", id, "users"), &u, opts...)
 }
 
@@ -115,6 +117,7 @@ func (m *RoleManager) Users(ctx context.Context, id string, opts ...RequestOptio
 func (m *RoleManager) AssociatePermissions(ctx context.Context, id string, permissions []*Permission, opts ...RequestOption) error {
 	p := make(map[string][]*Permission)
 	p["permissions"] = permissions
+
 	return m.management.Request(ctx, "POST", m.management.URI("roles", id, "permissions"), &p, opts...)
 }
 
@@ -134,5 +137,6 @@ func (m *RoleManager) Permissions(ctx context.Context, id string, opts ...Reques
 func (m *RoleManager) RemovePermissions(ctx context.Context, id string, permissions []*Permission, opts ...RequestOption) error {
 	p := make(map[string][]*Permission)
 	p["permissions"] = permissions
+
 	return m.management.Request(ctx, "DELETE", m.management.URI("roles", id, "permissions"), &p, opts...)
 }

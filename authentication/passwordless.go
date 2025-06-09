@@ -26,6 +26,7 @@ func (p *Passwordless) SendEmail(ctx context.Context, params passwordless.SendEm
 	params.Connection = "email"
 
 	err = p.authentication.Request(ctx, "POST", p.authentication.URI("passwordless", "start"), params, &r, opts...)
+
 	return
 }
 
@@ -54,6 +55,7 @@ func (p *Passwordless) LoginWithEmail(ctx context.Context, params passwordless.L
 			return nil, err
 		}
 	}
+
 	return
 }
 
@@ -72,6 +74,7 @@ func (p *Passwordless) SendSMS(ctx context.Context, params passwordless.SendSMSR
 	params.Connection = "sms"
 
 	err = p.authentication.Request(ctx, "POST", p.authentication.URI("passwordless", "start"), params, &r, opts...)
+
 	return
 }
 

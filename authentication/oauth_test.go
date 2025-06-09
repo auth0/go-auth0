@@ -534,6 +534,7 @@ func withIDToken(t *testing.T, extras map[string]interface{}) (*Authentication, 
 	idTokenClientid := "test-client-id"
 
 	var idToken string
+
 	h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		tokenSet := &oauth.TokenSet{
 			AccessToken: "test-access-token",
@@ -547,12 +548,15 @@ func withIDToken(t *testing.T, extras map[string]interface{}) (*Authentication, 
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+
 		w.WriteHeader(http.StatusOK)
+
 		if _, err := fmt.Fprint(w, string(b)); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
 	})
 	s := httptest.NewTLSServer(h)
+
 	t.Cleanup(func() {
 		s.Close()
 	})

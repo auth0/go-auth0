@@ -45,6 +45,7 @@ func New(
 	if i := strings.Index(domain, "//"); i != -1 {
 		domain = domain[i+2:]
 	}
+
 	alg, err := determineSigningAlgorithm(idTokenSigningAlg)
 	if err != nil {
 		return nil, err
@@ -66,6 +67,7 @@ func New(
 		i.jwksURL = i.issuer + ".well-known/jwks.json"
 		i.jwks = jwk.NewCache(ctx)
 		registerOpts := []jwk.RegisterOption{}
+
 		if i.httpClient != nil {
 			registerOpts = append(registerOpts, jwk.WithHTTPClient(i.httpClient))
 		}
@@ -108,6 +110,7 @@ func (i *IDTokenValidator) Validate(idToken string, optional ValidationOptions) 
 				if !exists {
 					return jwt.NewValidationError(errors.New("org_name claim must be a string present in the ID token"))
 				}
+
 				if orgName != strings.ToLower(optional.Organization) {
 					return jwt.NewValidationError(fmt.Errorf("org_name claim value mismatch in the ID token; expected \"%s\", found \"%s\"", optional.Organization, orgName))
 				}
@@ -198,6 +201,7 @@ func (i *IDTokenValidator) Validate(idToken string, optional ValidationOptions) 
 	}
 
 	_, err = jwt.Parse([]byte(idToken), keyOpts...)
+
 	return err
 }
 

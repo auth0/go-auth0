@@ -82,6 +82,7 @@ func (n *NetworkACL) MarshalJSON() ([]byte, error) {
 		Priority    *int            `json:"priority,omitempty"`
 		Rule        *NetworkACLRule `json:"rule,omitempty"`
 	}
+
 	return json.Marshal(&networkACLSubset{
 		Description: n.Description,
 		Active:      n.Active,

@@ -34,6 +34,7 @@ func TestNetworkACLManager_Create(t *testing.T) {
 	t.Cleanup(func() {
 		cleanupNetworkACL(t, expectedNetworkACL.GetID())
 	})
+
 	actualNetworkACL, err := api.NetworkACL.Read(context.Background(), expectedNetworkACL.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, expectedNetworkACL, actualNetworkACL)
@@ -111,6 +112,7 @@ func givenANetworkACL(t *testing.T) *NetworkACL {
 	t.Cleanup(func() {
 		cleanupNetworkACL(t, networkACL.GetID())
 	})
+
 	return networkACL
 }
 

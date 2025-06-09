@@ -125,6 +125,7 @@ func CreateClientAssertion(alg jwa.SignatureAlgorithm, signingKey, clientID, aud
 	}
 
 	now := time.Now()
+
 	token, err := jwt.NewBuilder().
 		IssuedAt(now).
 		NotBefore(now).

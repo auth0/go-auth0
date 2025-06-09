@@ -535,11 +535,13 @@ func getInitialMFAStatus(mfaName string) (bool, error) {
 	}
 
 	enabled := false
+
 	for _, mfa := range mfaList {
 		if mfa.GetName() == mfaName {
 			enabled = mfa.GetEnabled()
 		}
 	}
+
 	return enabled, nil
 }
 
@@ -550,10 +552,12 @@ func assertMFAIsEnabled(t *testing.T, mfaName string) {
 	assert.NoError(t, err)
 
 	enabled := false
+
 	for _, mfa := range mfaList {
 		if mfa.GetName() == mfaName {
 			enabled = mfa.GetEnabled()
 		}
 	}
+
 	assert.True(t, enabled)
 }

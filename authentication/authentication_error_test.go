@@ -101,6 +101,7 @@ func Test_newError(t *testing.T) {
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
 			err := newError(&testCase.givenResponse)
+
 			var actualError *Error
 			ok := errors.As(err, &actualError)
 			assert.True(t, ok, "newError should return an *Error")

@@ -185,38 +185,49 @@ type ClientSignedRequestObject struct {
 func (c *Client) CleanForPatch() {
 	if c.SignedRequestObject != nil && c.SignedRequestObject.Credentials != nil {
 		var credentials []Credential
+
 		for _, cred := range *c.SignedRequestObject.Credentials {
 			if cred.ID != nil && *cred.ID != "" {
 				credentials = append(credentials, Credential{ID: cred.ID})
 			}
 		}
+
 		c.SignedRequestObject.Credentials = &credentials
 	}
+
 	if c.ClientAuthenticationMethods != nil && c.ClientAuthenticationMethods.TLSClientAuth != nil && c.ClientAuthenticationMethods.TLSClientAuth.Credentials != nil {
 		var credentials []Credential
+
 		for _, cred := range *c.ClientAuthenticationMethods.TLSClientAuth.Credentials {
 			if cred.ID != nil && *cred.ID != "" {
 				credentials = append(credentials, Credential{ID: cred.ID})
 			}
 		}
+
 		c.ClientAuthenticationMethods.TLSClientAuth.Credentials = &credentials
 	}
+
 	if c.ClientAuthenticationMethods != nil && c.ClientAuthenticationMethods.SelfSignedTLSClientAuth != nil && c.ClientAuthenticationMethods.SelfSignedTLSClientAuth.Credentials != nil {
 		var credentials []Credential
+
 		for _, cred := range *c.ClientAuthenticationMethods.SelfSignedTLSClientAuth.Credentials {
 			if cred.ID != nil && *cred.ID != "" {
 				credentials = append(credentials, Credential{ID: cred.ID})
 			}
 		}
+
 		c.ClientAuthenticationMethods.SelfSignedTLSClientAuth.Credentials = &credentials
 	}
+
 	if c.ClientAuthenticationMethods != nil && c.ClientAuthenticationMethods.PrivateKeyJWT != nil && c.ClientAuthenticationMethods.PrivateKeyJWT.Credentials != nil {
 		var credentials []Credential
+
 		for _, cred := range *c.ClientAuthenticationMethods.PrivateKeyJWT.Credentials {
 			if cred.ID != nil && *cred.ID != "" {
 				credentials = append(credentials, Credential{ID: cred.ID})
 			}
 		}
+
 		c.ClientAuthenticationMethods.PrivateKeyJWT.Credentials = &credentials
 	}
 }
@@ -575,7 +586,7 @@ type SAML2ClientAddon struct {
 	// If true, for each claim that is not mapped to the common profile, Auth0 will passthrough those in the output assertion.
 	// If false, those claims won't be mapped.
 	PassthroughClaimsWithNoMapping *bool `json:"passthroughClaimsWithNoMapping,omitempty"`
-	// If true, it will will add more information in the token like the provider used (google, adfs, ad, etc.) and the access_token if available.
+	// If true, it will add more information in the token like the provider used (google, adfs, ad, etc.) and the access_token if available.
 	MapIdentities *bool `json:"mapIdentities,omitempty"`
 	// Signature algorithm to sign the SAML Assertion or response.
 	SignatureAlgorithm *string `json:"signatureAlgorithm,omitempty"`
@@ -615,6 +626,7 @@ type SAML2ClientAddon struct {
 func (s *SAML2ClientAddon) UnmarshalJSON(data []byte) error {
 	// Define a temporary struct to extract the mappings field as map[string]any
 	type saml2Alias SAML2ClientAddon
+
 	aux := &struct {
 		Mappings map[string]any `json:"mappings,omitempty"`
 		*saml2Alias
@@ -634,6 +646,7 @@ func (s *SAML2ClientAddon) UnmarshalJSON(data []byte) error {
 		for k, v := range aux.Mappings {
 			m[k] = v.(string)
 		}
+
 		s.Mappings = &m
 	} else {
 		s.Mappings = nil
@@ -649,6 +662,7 @@ func allValuesAreString(m map[string]any) bool {
 			return false
 		}
 	}
+
 	return true
 }
 
@@ -656,6 +670,7 @@ func allValuesAreString(m map[string]any) bool {
 // but if only the legacy Mappings field is set, it will convert it for output.
 func (s *SAML2ClientAddon) MarshalJSON() ([]byte, error) {
 	type saml2Alias SAML2ClientAddon
+
 	aux := &struct {
 		Mappings map[string]any `json:"mappings,omitempty"`
 		*saml2Alias
@@ -670,6 +685,7 @@ func (s *SAML2ClientAddon) MarshalJSON() ([]byte, error) {
 		for k, v := range *s.Mappings {
 			m[k] = v
 		}
+
 		aux.Mappings = m
 	}
 
@@ -852,6 +868,7 @@ func (m *ClientManager) DeleteCredential(ctx context.Context, clientID string, c
 // be an int, or a string in older tenants.
 func (jc *ClientJWTConfiguration) UnmarshalJSON(b []byte) error {
 	type clientJWTConfiguration ClientJWTConfiguration
+
 	type clientJWTConfigurationWrapper struct {
 		*clientJWTConfiguration
 		RawLifetimeInSeconds interface{} `json:"lifetime_in_seconds,omitempty"`
@@ -875,6 +892,7 @@ func (jc *ClientJWTConfiguration) UnmarshalJSON(b []byte) error {
 			if err != nil {
 				return unexpectedTypeError
 			}
+
 			jc.LifetimeInSeconds = &value
 		default:
 			return unexpectedTypeError
@@ -887,6 +905,7 @@ func (jc *ClientJWTConfiguration) UnmarshalJSON(b []byte) error {
 // MarshalJSON implements the json.Marshaler interface.
 func (jc *ClientJWTConfiguration) MarshalJSON() ([]byte, error) {
 	type clientJWTConfiguration ClientJWTConfiguration
+
 	type clientJWTConfigurationWrapper struct {
 		*clientJWTConfiguration
 		RawLifetimeInSeconds interface{} `json:"lifetime_in_seconds,omitempty"`

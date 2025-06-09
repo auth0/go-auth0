@@ -144,6 +144,7 @@ func (m *MFA) AddAuthenticator(ctx context.Context, accessOrMfaToken string, bod
 	missing := []string{}
 	check(&missing, "ClientID", (body.ClientID != "" || m.authentication.clientID != ""))
 	check(&missing, "AuthenticatorTypes", len(body.AuthenticatorTypes) > 0)
+
 	if len(missing) > 0 {
 		return nil, fmt.Errorf("missing required fields: %s", strings.Join(missing, ", "))
 	}
@@ -153,6 +154,7 @@ func (m *MFA) AddAuthenticator(ctx context.Context, accessOrMfaToken string, bod
 	}
 
 	err = m.authentication.Request(ctx, "POST", m.authentication.URI("mfa", "associate"), body, &a, opts...)
+
 	return
 }
 
@@ -162,6 +164,7 @@ func (m *MFA) AddAuthenticator(ctx context.Context, accessOrMfaToken string, bod
 func (m *MFA) ListAuthenticators(ctx context.Context, accessOrMfaToken string, opts ...RequestOption) (a []mfa.ListAuthenticatorsResponse, err error) {
 	opts = append(opts, Header("Authorization", "Bearer "+accessOrMfaToken))
 	err = m.authentication.Request(ctx, "GET", m.authentication.URI("mfa", "authenticators"), nil, &a, opts...)
+
 	return
 }
 
@@ -171,5 +174,6 @@ func (m *MFA) ListAuthenticators(ctx context.Context, accessOrMfaToken string, o
 func (m *MFA) DeleteAuthenticator(ctx context.Context, accessToken string, authenticatorID string, opts ...RequestOption) (err error) {
 	opts = append(opts, Header("Authorization", "Bearer "+accessToken))
 	err = m.authentication.Request(ctx, "DELETE", m.authentication.URI("mfa", "authenticators", authenticatorID), nil, nil, opts...)
+
 	return
 }

@@ -130,6 +130,7 @@ func TestTenantManager_NullableFields(t *testing.T) {
 		err := api.Tenant.Update(context.Background(), initialSettings)
 		require.NoError(t, err)
 	})
+
 	newTenantSettings := &Tenant{
 		ACRValuesSupported: &[]string{"foo", "bar"},
 		MTLS: &TenantMTLSConfiguration{
@@ -177,6 +178,7 @@ func TestTenantManager_NullableFields(t *testing.T) {
 		MTLS               *TenantMTLSConfiguration `json:"mtls"`
 		DefaultTokenQuota  *TenantDefaultTokenQuota `json:"default_token_quota"`
 	}
+
 	nullableTenantSettings := &CustomTenant{
 		ACRValuesSupported: nil,
 		MTLS:               nil,
