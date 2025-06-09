@@ -674,7 +674,9 @@ func (c *PromptRendering) cleanForPatch() *PromptRendering {
 //
 // See: https://auth0.com/docs/api/management/v2/prompts/patch-rendering
 func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, screen ScreenName, c *PromptRendering, opts ...RequestOption) error {
-	c = c.cleanForPatch()
+	if c != nil {
+		c = c.cleanForPatch()
+	}
 	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), c, opts...)
 }
 
