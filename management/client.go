@@ -799,6 +799,7 @@ func (m *ClientManager) Update(ctx context.Context, id string, c *Client, opts .
 	if c != nil {
 		c.CleanForPatch()
 	}
+
 	return m.management.Request(ctx, "PATCH", m.management.URI("clients", id), c, opts...)
 }
 

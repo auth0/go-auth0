@@ -23,7 +23,8 @@ func (m *MFA) Challenge(ctx context.Context, body mfa.ChallengeRequest, opts ...
 	check(&missing, "ChallengeType", body.ChallengeType != "")
 
 	if len(missing) > 0 {
-		return nil, fmt.Errorf("missing required fields: %s", strings.Join(missing, ", "))
+		//nolint ST1005 Keeping message unchanged for backward compatibility
+		return nil, fmt.Errorf("Missing required fields: %s", strings.Join(missing, ", "))
 	}
 
 	err = m.authentication.addClientAuthenticationToClientAuthStruct(&body.ClientAuthentication, false)
@@ -51,7 +52,8 @@ func (m *MFA) VerifyWithOTP(ctx context.Context, body mfa.VerifyWithOTPRequest, 
 	check(&missing, "OTP", body.OTP != "")
 
 	if len(missing) > 0 {
-		return nil, fmt.Errorf("missing required fields: %s", strings.Join(missing, ", "))
+		//nolint ST1005 Keeping message unchanged for backward compatibility
+		return nil, fmt.Errorf("Missing required fields: %s", strings.Join(missing, ", "))
 	}
 
 	data := url.Values{
@@ -82,7 +84,8 @@ func (m *MFA) VerifyWithOOB(ctx context.Context, body mfa.VerifyWithOOBRequest, 
 	check(&missing, "OOBCode", body.OOBCode != "")
 
 	if len(missing) > 0 {
-		return nil, fmt.Errorf("missing required fields: %s", strings.Join(missing, ", "))
+		//nolint ST1005 Keeping message unchanged for backward compatibility
+		return nil, fmt.Errorf("Missing required fields: %s", strings.Join(missing, ", "))
 	}
 
 	data := url.Values{
@@ -116,7 +119,8 @@ func (m *MFA) VerifyWithRecoveryCode(ctx context.Context, body mfa.VerifyWithRec
 	check(&missing, "RecoveryCode", body.RecoveryCode != "")
 
 	if len(missing) > 0 {
-		return nil, fmt.Errorf("missing required fields: %s", strings.Join(missing, ", "))
+		//nolint ST1005 Keeping message unchanged for backward compatibility
+		return nil, fmt.Errorf("Missing required fields: %s", strings.Join(missing, ", "))
 	}
 
 	data := url.Values{
@@ -146,7 +150,8 @@ func (m *MFA) AddAuthenticator(ctx context.Context, accessOrMfaToken string, bod
 	check(&missing, "AuthenticatorTypes", len(body.AuthenticatorTypes) > 0)
 
 	if len(missing) > 0 {
-		return nil, fmt.Errorf("missing required fields: %s", strings.Join(missing, ", "))
+		//nolint ST1005 Keeping message unchanged for backward compatibility
+		return nil, fmt.Errorf("Missing required fields: %s", strings.Join(missing, ", "))
 	}
 
 	if err = m.authentication.addClientAuthenticationToClientAuthStruct(&body.ClientAuthentication, true); err != nil {

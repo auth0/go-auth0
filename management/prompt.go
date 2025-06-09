@@ -677,6 +677,7 @@ func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, 
 	if c != nil {
 		c = c.cleanForPatch()
 	}
+
 	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), c, opts...)
 }
 
