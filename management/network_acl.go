@@ -110,6 +110,11 @@ func (m *NetworkACLManager) Update(ctx context.Context, id string, n *NetworkACL
 	return m.management.Request(ctx, "PUT", m.management.URI("network-acls", id), n, opts...)
 }
 
+// Patch a Network ACL.
+func (m *NetworkACLManager) Patch(ctx context.Context, id string, n *NetworkACL, opts ...RequestOption) error {
+	return m.management.Request(ctx, "PATCH", m.management.URI("network-acls", id), n, opts...)
+}
+
 // Delete a Network ACL.
 func (m *NetworkACLManager) Delete(ctx context.Context, id string, opts ...RequestOption) (err error) {
 	return m.management.Request(ctx, "DELETE", m.management.URI("network-acls", id), nil, opts...)

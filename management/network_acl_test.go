@@ -79,6 +79,24 @@ func TestNetworkACLManager_Update(t *testing.T) {
 	assert.Equal(t, networkACL, actualNetworkACL)
 }
 
+// TestNetworkACLManager_Patch tests the ability to patch a Network ACL.
+func TestNetworkACLManager_Patch(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	networkACL := givenANetworkACL(t)
+
+	patch := &NetworkACL{
+		Description: auth0.String("patched-description"),
+		Priority:    auth0.Int(2),
+	}
+
+	err := api.NetworkACL.Patch(context.Background(), networkACL.GetID(), patch)
+	assert.NoError(t, err)
+
+	actualNetworkACL, err := api.NetworkACL.Read(context.Background(), networkACL.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, "patched-description", actualNetworkACL.GetDescription())
+	assert.Equal(t, 2, actualNetworkACL.GetPriority())
+}
 func TestNetworkACLManager_Delete(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	networkACL := givenANetworkACL(t)
