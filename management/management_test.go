@@ -642,9 +642,12 @@ func TestCustomDomainHeader(t *testing.T) {
 			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				if r.URL.Path == whitelistedPath {
 					actualHeader = r.Header.Get("Auth0-Custom-Domain")
+
 					w.Write([]byte(`{"users":[]}`))
+
 					return
 				}
+
 				http.NotFound(w, r)
 			}))
 			defer server.Close()
@@ -667,9 +670,12 @@ func TestCustomDomainHeader(t *testing.T) {
 			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				if r.URL.Path == nonWhitelistedPath {
 					actualHeader = r.Header.Get("Auth0-Custom-Domain")
+
 					w.Write([]byte(`{"clients":[]}`))
+
 					return
 				}
+
 				http.NotFound(w, r)
 			}))
 			defer server.Close()

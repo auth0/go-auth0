@@ -68,6 +68,7 @@ func TestCustomDomainManager_Update(t *testing.T) {
 			"key":  "value",  // original preserved
 			"key2": "value2", // newly added
 		}
+
 		assert.Equal(t, "recommended", updated.GetTLSPolicy())
 		assert.Equal(t, expected, updated.GetDomainMetadata())
 	})
@@ -153,6 +154,7 @@ func TestCustomDomainManager_ListWithPagination(t *testing.T) {
 	allDomains = append(allDomains, firstPage.CustomDomains...)
 	allDomains = append(allDomains, secondPage.CustomDomains...)
 	found := map[string]bool{}
+
 	for _, d := range allDomains {
 		found[d.GetID()] = true
 	}

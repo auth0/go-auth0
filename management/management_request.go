@@ -30,6 +30,7 @@ func compileWhitelistedPathPatterns() []*regexp.Regexp {
 	for i, pattern := range patterns {
 		compiled[i] = regexp.MustCompile(pattern)
 	}
+
 	return compiled
 }
 
@@ -42,6 +43,7 @@ func isCustomDomainPathWhitelisted(path string) bool {
 			return true
 		}
 	}
+
 	return false
 }
 
