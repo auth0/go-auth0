@@ -85,11 +85,11 @@ func TestClient_CreateWithClientRefreshToken(t *testing.T) {
 	})
 }
 
-func TestClientManager_GetEnabledConnections(t *testing.T) {
+func TestClientManager_ReadEnabledConnections(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expectedClient := givenAClient(t)
-	actualConnections, err := api.Client.GetEnabledConnections(context.Background(), expectedClient.GetClientID())
+	actualConnections, err := api.Client.ReadEnabledConnections(context.Background(), expectedClient.GetClientID())
 	assert.NoError(t, err)
 	assert.Equal(t, 0, len(actualConnections.Connections))
 
@@ -103,7 +103,7 @@ func TestClientManager_GetEnabledConnections(t *testing.T) {
 	err = api.Connection.UpdateEnabledClients(context.Background(), expectedConnection.GetID(), payload)
 
 	assert.NoError(t, err)
-	actualConnections, err = api.Client.GetEnabledConnections(context.Background(), expectedClient.GetClientID())
+	actualConnections, err = api.Client.ReadEnabledConnections(context.Background(), expectedClient.GetClientID())
 	assert.NoError(t, err)
 	assert.Equal(t, 1, len(actualConnections.Connections))
 	assert.Equal(t, expectedConnection.GetID(), actualConnections.Connections[0].GetID())
