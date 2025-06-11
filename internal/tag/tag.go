@@ -10,6 +10,7 @@ func Scopes(v interface{}) (scopes []string) {
 	if val.Kind() == reflect.Ptr {
 		val = val.Elem()
 	}
+
 	typ := val.Type()
 
 	for i := 0; i < typ.NumField(); i++ {
@@ -19,6 +20,7 @@ func Scopes(v interface{}) (scopes []string) {
 				if field.Kind() == reflect.Ptr {
 					field = field.Elem()
 				}
+
 				if field.CanAddr() && field.Bool() {
 					scopes = append(scopes, scope)
 				}
@@ -35,6 +37,7 @@ func SetScopes(v interface{}, enable bool, scopes ...string) {
 	if val.Kind() == reflect.Ptr {
 		val = val.Elem()
 	}
+
 	typ := val.Type()
 
 	in := func(scope string, scopes []string) bool {
@@ -43,6 +46,7 @@ func SetScopes(v interface{}, enable bool, scopes ...string) {
 				return true
 			}
 		}
+
 		return false
 	}
 
@@ -51,9 +55,11 @@ func SetScopes(v interface{}, enable bool, scopes ...string) {
 			if in(scope, scopes) {
 				field := val.Field(i)
 				v := reflect.ValueOf(enable)
+
 				if field.Kind() == reflect.Ptr {
 					v = reflect.ValueOf(&enable)
 				}
+
 				if field.CanSet() {
 					field.Set(v)
 				}

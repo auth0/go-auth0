@@ -41,6 +41,7 @@ func (td *Auth0ClientInfo) IsEmpty() bool {
 	if td == nil {
 		return true
 	}
+
 	return td.Name == "" && td.Version == "" && len(td.Env) == 0
 }
 
@@ -68,6 +69,7 @@ func (r *RetryOptions) IsEmpty() bool {
 	if r == nil {
 		return true
 	}
+
 	return r.MaxRetries == 0 && len(r.Statuses) == 0
 }
 
@@ -144,6 +146,7 @@ func retryErrors(err error) bool {
 	if certVerificationErrorRe.MatchString(err.Error()) {
 		return false
 	}
+
 	if ok := errors.As(err, &x509.UnknownAuthorityError{}); ok {
 		return false
 	}
@@ -155,6 +158,7 @@ func retryErrors(err error) bool {
 // backoffDelay implements an exponential backoff with jitter and handles rate limiting.
 func backoffDelay() rehttp.DelayFn {
 	prng := rand.New(rand.NewSource(time.Now().UnixNano())) // #nosec G404: Random generator
+
 	const (
 		minDelay  = 1 * time.Second
 		maxDelay  = 10 * time.Second
@@ -189,11 +193,14 @@ func backoffDelay() rehttp.DelayFn {
 				if retryAfterDuration > maxDelay {
 					return maxDelay
 				}
+
 				if retryAfterDuration < minDelay {
 					return minDelay
 				}
+
 				return retryAfterDuration
 			}
+
 			if date, err := http.ParseTime(retryAfter); err == nil {
 				retryAfterDuration := time.Until(date)
 				// Add 25% Padding to beat caching
@@ -202,9 +209,11 @@ func backoffDelay() rehttp.DelayFn {
 				if retryAfterDuration > maxDelay {
 					return maxDelay
 				}
+
 				if retryAfterDuration < minDelay {
 					return minDelay
 				}
+
 				return retryAfterDuration
 			}
 		}
@@ -218,9 +227,11 @@ func backoffDelay() rehttp.DelayFn {
 			if delay > maxDelay {
 				return maxDelay
 			}
+
 			if delay < minDelay {
 				return minDelay
 			}
+
 			return delay
 		}
 
@@ -233,6 +244,7 @@ func UserAgentTransport(base http.RoundTripper, userAgent string) http.RoundTrip
 	if base == nil {
 		base = http.DefaultTransport
 	}
+
 	return RoundTripFunc(func(req *http.Request) (*http.Response, error) {
 		req.Header.Set("User-Agent", userAgent)
 		return base.RoundTrip(req)
@@ -274,16 +286,21 @@ func DebugTransport(base http.RoundTripper, debug bool) http.RoundTripper {
 	if base == nil {
 		base = http.DefaultTransport
 	}
+
 	if !debug {
 		return base
 	}
+
 	return RoundTripFunc(func(req *http.Request) (*http.Response, error) {
 		dumpRequest(req)
+
 		res, err := base.RoundTrip(req)
 		if err != nil {
 			return res, err
 		}
+
 		dumpResponse(res)
+
 		return res, nil
 	})
 }
@@ -320,10 +337,12 @@ func WithAuth0ClientInfo(auth0ClientInfo *Auth0ClientInfo) Option {
 		if auth0ClientInfo.IsEmpty() {
 			return
 		}
+
 		transport, err := Auth0ClientInfoTransport(c.Transport, auth0ClientInfo)
 		if err != nil {
 			return
 		}
+
 		c.Transport = transport
 	}
 }
@@ -333,6 +352,7 @@ func WrapWithTokenSource(base *http.Client, tokenSource oauth2.TokenSource, opti
 	if base == nil {
 		base = http.DefaultClient
 	}
+
 	client := &http.Client{
 		Timeout: base.Timeout,
 		Transport: &oauth2.Transport{
@@ -353,6 +373,7 @@ func Wrap(base *http.Client, options ...Option) *http.Client {
 	for _, option := range options {
 		option(base)
 	}
+
 	return base
 }
 

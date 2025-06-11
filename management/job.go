@@ -69,10 +69,12 @@ type Job struct {
 // MarshalJSON is a custom serializer for the Job type.
 func (j *Job) MarshalJSON() ([]byte, error) {
 	type job Job
+
 	type identity struct {
 		UserID   *string `json:"user_id,omitempty"`
 		Provider *string `json:"provider,omitempty"`
 	}
+
 	type jobWrapper struct {
 		*job
 		Identity *identity `json:"identity,omitempty"`
@@ -155,12 +157,15 @@ func (m *JobManager) ImportUsers(ctx context.Context, j *Job, opts ...RequestOpt
 	if err := mp.WriteField("connection_id", j.GetConnectionID()); err != nil {
 		return err
 	}
+
 	if err := mp.WriteField("upsert", strconv.FormatBool(j.GetUpsert())); err != nil {
 		return err
 	}
+
 	if err := mp.WriteField("external_id", j.GetExternalID()); err != nil {
 		return err
 	}
+
 	if err := mp.WriteField("send_completion_email", strconv.FormatBool(j.GetSendCompletionEmail())); err != nil {
 		return err
 	}
@@ -184,6 +189,7 @@ func (m *JobManager) ImportUsers(ctx context.Context, j *Job, opts ...RequestOpt
 			return err
 		}
 	}
+
 	if err := mp.Close(); err != nil {
 		return err
 	}
@@ -192,6 +198,7 @@ func (m *JobManager) ImportUsers(ctx context.Context, j *Job, opts ...RequestOpt
 	if err != nil {
 		return err
 	}
+
 	request.Header.Add("Content-Type", mp.FormDataContentType())
 
 	for _, option := range opts {

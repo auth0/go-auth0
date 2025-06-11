@@ -15,6 +15,7 @@ import (
 
 func TestSelfServiceProfileManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
+
 	ssop := &SelfServiceProfile{
 		Name:              auth0.String("Sample Self Service Profile"),
 		Description:       auth0.String("Sample Desc"),
@@ -153,11 +154,13 @@ func TestSelfServiceProfileManager_CreateAndRevokeTicket(t *testing.T) {
 	assert.NotEmpty(t, ticket.GetTicket())
 
 	ticketURL := ticket.GetTicket()
+
 	ticketIDMap, err := url.ParseQuery(ticketURL)
 	if err != nil {
 		ticketID := ticketIDMap["ticketId"][0]
 		err = api.SelfServiceProfile.RevokeTicket(context.Background(), ssop.GetID(), ticketID)
 	}
+
 	assert.NoError(t, err)
 }
 
@@ -193,6 +196,7 @@ func TestSelfServiceProfileManager_MarshalJSON(t *testing.T) {
 
 func givenASelfServiceProfile(t *testing.T) *SelfServiceProfile {
 	t.Helper()
+
 	ssop := &SelfServiceProfile{
 		Name:              auth0.String("Sample Self Service Profile"),
 		Description:       auth0.String("Sample Desc"),
@@ -217,11 +221,13 @@ func givenASelfServiceProfile(t *testing.T) *SelfServiceProfile {
 	t.Cleanup(func() {
 		cleanSelfServiceProfile(t, ssop.GetID())
 	})
+
 	return ssop
 }
 
 func cleanSelfServiceProfile(t *testing.T, id string) {
 	t.Helper()
+
 	err := api.SelfServiceProfile.Delete(context.Background(), id)
 	assert.NoError(t, err)
 }

@@ -76,6 +76,7 @@ func TestLoginWithSMS(t *testing.T) {
 func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 	t.Run("error for an invalid organization when using org_id", func(t *testing.T) {
 		skipE2E(t)
+
 		extras := map[string]interface{}{
 			"org_id": "org_124",
 		}
@@ -94,6 +95,7 @@ func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 
 	t.Run("error for an invalid organization when using org_name", func(t *testing.T) {
 		skipE2E(t)
+
 		extras := map[string]interface{}{
 			"org_name": "wrong-org",
 		}
@@ -112,6 +114,7 @@ func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 
 	t.Run("error for an invalid nonce", func(t *testing.T) {
 		skipE2E(t)
+
 		extras := map[string]interface{}{
 			"nonce": "wrong-nonce",
 		}
@@ -130,6 +133,7 @@ func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 
 	t.Run("error for an invalid maxage", func(t *testing.T) {
 		skipE2E(t)
+
 		extras := map[string]interface{}{
 			"auth_time": time.Now().Add(-500 * time.Second).Unix(),
 		}
@@ -150,6 +154,7 @@ func TestPasswordlessWithIDTokenVerification(t *testing.T) {
 func TestPasswordlessWithClientAssertion(t *testing.T) {
 	t.Run("Should support using private key jwt auth", func(t *testing.T) {
 		skipE2E(t)
+
 		api, err := New(
 			context.Background(),
 			domain,
@@ -172,6 +177,7 @@ func TestPasswordlessWithClientAssertion(t *testing.T) {
 
 	t.Run("Should support passing private key jwt auth", func(t *testing.T) {
 		skipE2E(t)
+
 		api, err := New(
 			context.Background(),
 			domain,

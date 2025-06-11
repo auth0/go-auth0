@@ -150,6 +150,7 @@ func TestClient_SessionTransfer(t *testing.T) {
 	// Strip fields not allowed on update
 	created.ClientID = nil
 	created.SigningKeys = nil
+
 	if created.JWTConfiguration != nil {
 		created.JWTConfiguration.SecretEncoded = nil
 	}
@@ -166,6 +167,7 @@ func TestClient_SessionTransfer(t *testing.T) {
 	type clientPatch struct {
 		SessionTransfer *SessionTransfer `json:"session_transfer"`
 	}
+
 	patch := &clientPatch{SessionTransfer: nil}
 	require.NoError(t, api.Request(ctx, http.MethodPatch, api.URI("clients", expectedClient.GetClientID()), patch))
 
@@ -700,6 +702,7 @@ func TestClient_SAML2ClientAddonMappings(t *testing.T) {
 	})
 	t.Run("Invalid mappings type", func(t *testing.T) {
 		input := `{"mappings": "not-an-object"}`
+
 		var decoded SAML2ClientAddon
 		err := json.Unmarshal([]byte(input), &decoded)
 		assert.Error(t, err)

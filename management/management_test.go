@@ -46,6 +46,7 @@ func TestMain(m *testing.M) {
 	httpRecordings = os.Getenv("AUTH0_HTTP_RECORDINGS")
 
 	httpRecordingsEnabled = envVarEnabled(httpRecordings)
+
 	initializeTestClient()
 
 	code := m.Run()
@@ -432,6 +433,7 @@ func TestRetries(t *testing.T) {
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -462,6 +464,7 @@ func TestRetries(t *testing.T) {
 				w.WriteHeader(http.StatusBadGateway)
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -489,6 +492,7 @@ func TestRetries(t *testing.T) {
 
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
+
 			w.WriteHeader(http.StatusBadGateway)
 		})
 
@@ -513,6 +517,7 @@ func TestRetries(t *testing.T) {
 
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
+
 			cancel()
 			w.WriteHeader(http.StatusBadGateway)
 		})
@@ -534,6 +539,7 @@ func TestRetries(t *testing.T) {
 
 	t.Run("Retry per request timeout", func(t *testing.T) {
 		var i atomic.Int64
+
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 
@@ -542,6 +548,7 @@ func TestRetries(t *testing.T) {
 
 			c := i.Add(1)
 			t.Log(c)
+
 			if c == 2 {
 				cancel()
 			}
@@ -551,10 +558,12 @@ func TestRetries(t *testing.T) {
 			case <-timer.C:
 				t.Log("completed")
 				w.WriteHeader(http.StatusOK)
+
 				return
 			case <-ctx.Done():
 				t.Log("cancelled")
 				w.WriteHeader(499)
+
 				return
 			}
 		})

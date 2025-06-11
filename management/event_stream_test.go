@@ -12,6 +12,7 @@ import (
 
 func TestEventStreamManager_CreateTypeWebhook(t *testing.T) {
 	configureHTTPTestRecordings(t)
+
 	givenEventStream := &EventStream{
 		Name: auth0.String("webhook-example"),
 		Subscriptions: &[]EventStreamSubscription{
@@ -47,6 +48,7 @@ func TestEventStreamManager_CreateTypeWebhook(t *testing.T) {
 
 func TestEventStreamManager_CreateTypeEventBridge(t *testing.T) {
 	configureHTTPTestRecordings(t)
+
 	givenEventStream := &EventStream{
 		Name: auth0.String("eventbridge-example"),
 		Subscriptions: &[]EventStreamSubscription{
@@ -160,11 +162,13 @@ func givenEventStream(t *testing.T) *EventStream {
 	t.Cleanup(func() {
 		cleanUpEventStream(t, givenEventStream.GetID())
 	})
+
 	return givenEventStream
 }
 
 func cleanUpEventStream(t *testing.T, id string) {
 	t.Helper()
+
 	err := api.EventStream.Delete(context.Background(), id)
 	assert.NoError(t, err)
 }

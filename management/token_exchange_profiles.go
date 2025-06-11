@@ -85,8 +85,12 @@ func (m *TokenExchangeProfileManager) Read(ctx context.Context, id string, opts 
 //
 // See: https://auth0.com/docs/api/management/v2#!/token-exchange-profiles/patch_token_exchange_profile
 func (m *TokenExchangeProfileManager) Update(ctx context.Context, id string, t *TokenExchangeProfile, opts ...RequestOption) (err error) {
-	t.cleanForPatch()
+	if t != nil {
+		t.cleanForPatch()
+	}
+
 	err = m.management.Request(ctx, "PATCH", m.management.URI("token-exchange-profiles", id), t, opts...)
+
 	return
 }
 

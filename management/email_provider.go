@@ -180,6 +180,7 @@ func (ep *EmailProvider) MarshalJSON() ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
+
 		wrapper.RawCredentials = credentialsJSON
 	}
 
@@ -188,6 +189,7 @@ func (ep *EmailProvider) MarshalJSON() ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
+
 		wrapper.RawSettings = settingsJSON
 	}
 
@@ -305,6 +307,7 @@ func (m *EmailProviderManager) Create(ctx context.Context, ep *EmailProvider, op
 func (m *EmailProviderManager) Read(ctx context.Context, opts ...RequestOption) (ep *EmailProvider, err error) {
 	opts = append(opts, IncludeFields("name", "enabled", "default_from_address", "credentials", "settings"))
 	err = m.management.Request(ctx, http.MethodGet, m.management.URI("emails", "provider"), &ep, opts...)
+
 	return
 }
 

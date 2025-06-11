@@ -37,6 +37,7 @@ func TestRetries(t *testing.T) {
 				w.WriteHeader(http.StatusTooManyRequests)
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -63,6 +64,7 @@ func TestRetries(t *testing.T) {
 				w.WriteHeader(http.StatusGatewayTimeout)
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -86,6 +88,7 @@ func TestRetries(t *testing.T) {
 				w.WriteHeader(http.StatusGatewayTimeout)
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -110,6 +113,7 @@ func TestRetries(t *testing.T) {
 		_, err := c.Get(s.URL)
 
 		assert.Error(t, err)
+
 		elapsed := time.Since(start).Milliseconds()
 		assert.GreaterOrEqual(t, elapsed, int64(750))
 		assert.LessOrEqual(t, elapsed, int64(5000))
@@ -120,6 +124,7 @@ func TestRetries(t *testing.T) {
 		start := time.Now()
 		h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			i++
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -128,6 +133,7 @@ func TestRetries(t *testing.T) {
 		_, err := c.Get(s.URL)
 
 		elapsed := time.Since(start).Milliseconds()
+
 		assert.Error(t, err)
 		assert.Equal(t, 0, i)
 		assert.Less(t, elapsed, int64(250))
@@ -144,8 +150,10 @@ func TestRetries(t *testing.T) {
 				w.Header().Set("X-RateLimit-Remaining", "0")
 				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(2*time.Second).Unix()))
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -175,8 +183,10 @@ func TestRetries(t *testing.T) {
 				w.Header().Set("X-RateLimit-Remaining", "0")
 				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(2*time.Hour).Unix()))
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -204,8 +214,10 @@ func TestRetries(t *testing.T) {
 			if i == 1 {
 				w.Header().Set("Retry-After", "2")
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -233,8 +245,10 @@ func TestRetries(t *testing.T) {
 				futureTime := time.Now().Add(500 * time.Millisecond).In(time.FixedZone("GMT", 0))
 				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		}))
 		defer s.Close()
@@ -258,8 +272,10 @@ func TestRetries(t *testing.T) {
 				w.Header().Set("X-RateLimit-Remaining", "0")
 				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Unix()))
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -288,8 +304,10 @@ func TestRetries(t *testing.T) {
 				w.Header().Set("Retry-After", "1")
 				w.Header().Set("X-RateLimit-Reset", fmt.Sprint(start.Add(5*time.Second).Unix()))
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -316,8 +334,10 @@ func TestRetries(t *testing.T) {
 			if i == 1 {
 				w.Header().Set("Retry-After", "30")
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -339,8 +359,10 @@ func TestRetries(t *testing.T) {
 			if i == 1 {
 				w.Header().Set("Retry-After", "1")
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -362,8 +384,10 @@ func TestRetries(t *testing.T) {
 			if i == 1 {
 				w.Header().Set("Retry-After", "7200")
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -386,8 +410,10 @@ func TestRetries(t *testing.T) {
 			if i == 1 {
 				w.Header().Set("Retry-After", "not-a-valid-value")
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -413,8 +439,10 @@ func TestRetries(t *testing.T) {
 			if i == 1 {
 				w.Header().Set("X-RateLimit-Reset", "not-a-timestamp")
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -439,8 +467,10 @@ func TestRetries(t *testing.T) {
 			if i == 1 {
 				w.Header().Set("Retry-After", "0")
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -462,6 +492,7 @@ func TestRetries(t *testing.T) {
 
 	t.Run("Should handle Retry-After with HTTP date format", func(t *testing.T) {
 		i := 0
+
 		var requestTimes []time.Time
 
 		s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
@@ -472,8 +503,10 @@ func TestRetries(t *testing.T) {
 				futureTime := time.Now().Add(1 * time.Second).In(time.FixedZone("GMT", 0))
 				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		}))
 		defer s.Close()
@@ -491,6 +524,7 @@ func TestRetries(t *testing.T) {
 
 		minExpectedDelay := int64(1000)
 		maxExpectedDelay := int64(3000)
+
 		t.Logf("Wait time between requests: %dms", actualWaitTime)
 
 		assert.GreaterOrEqual(t, actualWaitTime, minExpectedDelay,
@@ -510,8 +544,10 @@ func TestRetries(t *testing.T) {
 				futureTime := time.Now().Add(200 * time.Millisecond).In(time.FixedZone("GMT", 0))
 				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -540,8 +576,10 @@ func TestRetries(t *testing.T) {
 				futureTime := time.Now().Add(30 * time.Second).In(time.FixedZone("GMT", 0))
 				w.Header().Set("Retry-After", futureTime.Format(time.RFC1123))
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -572,8 +610,10 @@ func TestRetries(t *testing.T) {
 
 				w.Header().Set("Retry-After", retryAfter)
 				w.WriteHeader(http.StatusTooManyRequests)
+
 				return
 			}
+
 			w.WriteHeader(http.StatusOK)
 		})
 
@@ -619,6 +659,7 @@ func TestOAuth2ClientCredentials(t *testing.T) {
 			// Make sure we read the body before trying to parse the form
 			bodyBytes, err := io.ReadAll(r.Body)
 			assert.NoError(t, err)
+
 			r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 
 			w.Header().Set("Content-Type", "application/json")
@@ -628,6 +669,7 @@ func TestOAuth2ClientCredentials(t *testing.T) {
 			http.NotFound(w, r)
 		}
 	})
+
 	testServer := httptest.NewServer(handler)
 	defer testServer.Close()
 
@@ -695,6 +737,7 @@ func TestOAuth2ClientCredentialsPrivateKeyJwt(t *testing.T) {
 			http.NotFound(w, r)
 		}
 	})
+
 	testServer := httptest.NewServer(handler)
 	defer testServer.Close()
 
@@ -743,6 +786,7 @@ func TestOAuth2ClientCredentialsPrivateKeyJwtAndAudience(t *testing.T) {
 			http.NotFound(w, r)
 		}
 	})
+
 	testServer := httptest.NewServer(handler)
 	defer testServer.Close()
 
@@ -787,6 +831,7 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 		})
 
 		testServer := httptest.NewServer(testHandler)
+
 		t.Cleanup(func() {
 			testServer.Close()
 		})
@@ -821,6 +866,7 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 			})
 
 			testServer := httptest.NewServer(testHandler)
+
 			t.Cleanup(func() {
 				testServer.Close()
 			})
@@ -891,6 +937,7 @@ func TestWithAuth0ClientInfoErrors(t *testing.T) {
 func TestEmptyChecks(t *testing.T) {
 	t.Run("Auth0ClientInfo.IsEmpty", func(t *testing.T) {
 		var nilInfo *Auth0ClientInfo
+
 		assert.True(t, nilInfo.IsEmpty())
 
 		emptyInfo := &Auth0ClientInfo{}
@@ -902,6 +949,7 @@ func TestEmptyChecks(t *testing.T) {
 
 	t.Run("RetryOptions.IsEmpty", func(t *testing.T) {
 		var nilOptions *RetryOptions
+
 		assert.True(t, nilOptions.IsEmpty())
 
 		emptyOptions := &RetryOptions{}
@@ -942,7 +990,9 @@ func TestDebugTransport(t *testing.T) {
 
 	t.Run("With debugging enabled", func(t *testing.T) {
 		var buf bytes.Buffer
+
 		log.SetOutput(&buf)
+
 		defer log.SetOutput(os.Stderr)
 
 		base := RoundTripFunc(func(_ *http.Request) (*http.Response, error) {
@@ -973,7 +1023,9 @@ func TestDebugTransport(t *testing.T) {
 
 	t.Run("With error response", func(t *testing.T) {
 		var buf bytes.Buffer
+
 		log.SetOutput(&buf)
+
 		defer log.SetOutput(os.Stderr)
 
 		expectedErr := fmt.Errorf("network error")
@@ -989,6 +1041,7 @@ func TestDebugTransport(t *testing.T) {
 		assert.Error(t, err)
 		assert.Equal(t, expectedErr, err)
 		assert.Nil(t, resp)
+
 		logOutput := buf.String()
 		assert.Contains(t, logOutput, "GET /")
 		assert.Contains(t, logOutput, "Host: example.com")
@@ -1002,14 +1055,18 @@ func TestDebugTransport(t *testing.T) {
 func TestWithDebug(t *testing.T) {
 	t.Run("Enables debug transport when true", func(t *testing.T) {
 		var requestReceived bool
+
 		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			requestReceived = true
+
 			w.WriteHeader(http.StatusOK)
 		}))
 		defer ts.Close()
 
 		var buf bytes.Buffer
+
 		log.SetOutput(&buf)
+
 		defer log.SetOutput(os.Stderr)
 
 		client := Wrap(http.DefaultClient, WithDebug(true))
@@ -1048,7 +1105,9 @@ func TestWithDebug(t *testing.T) {
 
 func TestDumpRequest(t *testing.T) {
 	var buf bytes.Buffer
+
 	log.SetOutput(&buf)
+
 	defer log.SetOutput(os.Stderr)
 
 	body := strings.NewReader(`{"test":"value"}`)
@@ -1070,7 +1129,9 @@ func TestDumpRequest(t *testing.T) {
 
 func TestDumpResponse(t *testing.T) {
 	var buf bytes.Buffer
+
 	log.SetOutput(&buf)
+
 	defer log.SetOutput(os.Stderr)
 
 	body := io.NopCloser(strings.NewReader(`{"result":"success"}`))

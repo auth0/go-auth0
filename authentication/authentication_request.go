@@ -101,9 +101,10 @@ func (a *Authentication) Do(req *http.Request) (*http.Response, error) {
 
 // Request combines NewRequest and Do, while also handling decoding of response payload. If payload
 // is of type url.Values then a request with content type `application/x-www-form-urlencoded` will be
-// performed otherwise a a request of type `"application/json` will be performed.
+// performed otherwise a request of type `"application/json` will be performed.
 func (a *Authentication) Request(ctx context.Context, method, uri string, payload interface{}, resp interface{}, opts ...RequestOption) error {
 	var request *http.Request
+
 	var err error
 	switch p := payload.(type) {
 	case url.Values:

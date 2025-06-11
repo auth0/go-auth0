@@ -42,7 +42,7 @@ func (m *RuleManager) Create(ctx context.Context, r *Rule, opts ...RequestOption
 	return m.management.Request(ctx, "POST", m.management.URI("rules"), r, opts...)
 }
 
-// Retrieve rule details. Accepts a list of fields to include or exclude in the result.
+// Read retrieves rule details. Accepts a list of fields to include or exclude in the result.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Rules/get_rules_by_id
 func (m *RuleManager) Read(ctx context.Context, id string, opts ...RequestOption) (r *Rule, err error) {

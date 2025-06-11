@@ -14,6 +14,7 @@ func BoolValue(b *bool) bool {
 	if b != nil {
 		return *b
 	}
+
 	return false
 }
 
@@ -28,6 +29,7 @@ func IntValue(i *int) int {
 	if i != nil {
 		return *i
 	}
+
 	return 0
 }
 
@@ -42,6 +44,7 @@ func Float64Value(f *float64) float64 {
 	if f != nil {
 		return *f
 	}
+
 	return 0.00
 }
 
@@ -62,6 +65,7 @@ func StringValue(v *string) string {
 	if v != nil {
 		return *v
 	}
+
 	return ""
 }
 
@@ -76,5 +80,6 @@ func TimeValue(t *time.Time) time.Time {
 	if t != nil {
 		return *t
 	}
+
 	return time.Time{}
 }

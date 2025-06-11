@@ -46,6 +46,7 @@ func configureHTTPTestRecordings(t *testing.T) {
 	t.Cleanup(func() {
 		err := recorderTransport.Stop()
 		require.NoError(t, err)
+
 		api.http.Transport = initialTransport
 	})
 }
@@ -87,6 +88,7 @@ func redactHeaders(i *cassette.Interaction) {
 			delete(i.Request.Headers, header)
 		}
 	}
+
 	for header := range i.Response.Headers {
 		if _, ok := allowedHeaders[header]; !ok {
 			delete(i.Response.Headers, header)
@@ -135,6 +137,7 @@ func redactSensitiveDataInSigningKey(t *testing.T, i *cassette.Interaction) {
 		require.NoError(t, err)
 
 		i.Response.Body = fmt.Sprintf(`[%s,%s]`, signingKeyBody, previousSigningKeyBody)
+
 		return
 	}
 
@@ -146,6 +149,7 @@ func redactSensitiveDataInSigningKey(t *testing.T, i *cassette.Interaction) {
 		require.NoError(t, err)
 
 		i.Response.Body = string(signingKeyBody)
+
 		return
 	}
 
@@ -157,6 +161,7 @@ func redactSensitiveDataInSigningKey(t *testing.T, i *cassette.Interaction) {
 		require.NoError(t, err)
 
 		i.Response.Body = string(signingKeyBody)
+
 		return
 	}
 
@@ -165,12 +170,14 @@ func redactSensitiveDataInSigningKey(t *testing.T, i *cassette.Interaction) {
 		require.NoError(t, err)
 
 		i.Response.Body = string(signingKeyBody)
+
 		return
 	}
 }
 
 func redactSensitiveDataInConnectionSCIMToken(t *testing.T, i *cassette.Interaction) {
 	isTokenURL := strings.Contains(i.Request.URL, "https://"+domain+"/api/v2/connections") && strings.Contains(i.Request.URL, "scim-configuration/tokens")
+
 	create := isTokenURL && i.Request.Method == http.MethodPost
 	if create {
 		var token SCIMToken

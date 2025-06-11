@@ -114,6 +114,15 @@ func TestNewRequest(t *testing.T) {
 			expectedError: "",
 			expectedBody:  `{"custom":"data"}`,
 		},
+		{
+			name:          "Request with Delete with Body",
+			method:        http.MethodDelete,
+			endpoint:      api.URI("clients", "c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX"),
+			payload:       &Client{Name: auth0.String("TestClient"), Description: auth0.String("Test description")},
+			options:       nil,
+			expectedError: "",
+			expectedBody:  `{"name":"TestClient","description":"Test description"}` + "\n",
+		},
 	}
 
 	for _, testCase := range testCases {
@@ -123,6 +132,7 @@ func TestNewRequest(t *testing.T) {
 			if testCase.expectedError != "" {
 				assert.EqualError(t, err, testCase.expectedError)
 				assert.Nil(t, request)
+
 				return
 			}
 

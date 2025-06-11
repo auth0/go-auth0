@@ -57,6 +57,7 @@ type LogStream struct {
 // MarshalJSON is a custom serializer for the LogStream type.
 func (ls *LogStream) MarshalJSON() ([]byte, error) {
 	type logStream LogStream
+
 	type logStreamWrapper struct {
 		*logStream
 		RawSink json.RawMessage `json:"sink,omitempty"`
@@ -69,6 +70,7 @@ func (ls *LogStream) MarshalJSON() ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
+
 		w.RawSink = b
 	}
 
@@ -78,6 +80,7 @@ func (ls *LogStream) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON is a custom deserializer for the LogStream type.
 func (ls *LogStream) UnmarshalJSON(b []byte) error {
 	type logStream LogStream
+
 	type logStreamWrapper struct {
 		*logStream
 		RawSink json.RawMessage `json:"sink,omitempty"`

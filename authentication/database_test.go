@@ -333,6 +333,7 @@ func givenSignUpDetails(t *testing.T, options *management.ConnectionOptions) *us
 			connection:  "Username-Password-Authentication",
 		}
 	}
+
 	conn := givenAConnection(t, options)
 
 	return &userDetails{

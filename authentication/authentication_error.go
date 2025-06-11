@@ -48,6 +48,7 @@ func (a *Error) GetMFAToken() string {
 	if a == nil || a.MFAToken == "" {
 		return ""
 	}
+
 	return a.MFAToken
 }
 
@@ -61,6 +62,7 @@ func (a *Error) Status() int {
 // It is required to handle the differences between error responses between the APIs.
 func (a *Error) UnmarshalJSON(b []byte) error {
 	type authError Error
+
 	type authErrorWrapper struct {
 		*authError
 		Code        string          `json:"code"`
@@ -80,6 +82,7 @@ func (a *Error) UnmarshalJSON(b []byte) error {
 
 	if len(alias.Description) > 0 {
 		var descText string
+
 		err := json.Unmarshal(alias.Description, &descText)
 		if err == nil {
 			a.Message = descText

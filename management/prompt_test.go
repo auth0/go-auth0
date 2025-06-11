@@ -57,6 +57,7 @@ func TestPromptCustomText(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	const prompt = "login"
+
 	const lang = "en"
 
 	t.Cleanup(func() {
@@ -151,7 +152,9 @@ func TestPromptManager_ListRendering(t *testing.T) {
 
 	actual, err := api.Prompt.ListRendering(context.Background())
 	assert.NoError(t, err)
+
 	found := false
+
 	for _, r := range actual.PromptRenderings {
 		if r.RenderingMode != nil && expected.RenderingMode != nil &&
 			*r.GetRenderingMode() == *expected.GetRenderingMode() &&
@@ -162,6 +165,7 @@ func TestPromptManager_ListRendering(t *testing.T) {
 			break
 		}
 	}
+
 	assert.True(t, found, "expected PromptRendering not found in actual.PromptRendering")
 	assert.Greater(t, len(actual.PromptRenderings), 0)
 }

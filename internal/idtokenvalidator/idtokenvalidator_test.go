@@ -631,25 +631,31 @@ func configureSigning(t *testing.T, args jwtArgs) (jwa.SignatureAlgorithm, jwk.K
 		raw, err := jwk.FromRaw([]byte(args.clientSecret))
 		return jwa.HS256, raw, nil, err
 	}
+
 	publicKey, err := jwk.ParseKey([]byte(args.publicKey), jwk.WithPEM(true))
 	if err != nil {
 		return jwa.RS256, nil, nil, err
 	}
+
 	err = publicKey.Set(jwk.KeyIDKey, "1")
 	if err != nil {
 		return jwa.RS256, nil, nil, err
 	}
+
 	err = publicKey.Set(jwk.AlgorithmKey, jwa.RS256)
 	if err != nil {
 		return jwa.RS256, nil, nil, err
 	}
+
 	h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		b, err := json.Marshal(publicKey)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+
 		w.WriteHeader(http.StatusOK)
+
 		if _, err := fmt.Fprintf(w, `{"keys": [%s] }`, b); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
@@ -664,10 +670,13 @@ func configureSigning(t *testing.T, args jwtArgs) (jwa.SignatureAlgorithm, jwk.K
 	if err != nil {
 		return jwa.RS256, nil, nil, err
 	}
+
 	err = privateKey.Set(jwk.KeyIDKey, "1")
 	if err != nil {
 		return jwa.RS256, nil, nil, err
 	}
+
 	err = privateKey.Set(jwk.AlgorithmKey, jwa.RS256)
+
 	return jwa.RS256, privateKey, s, err
 }
