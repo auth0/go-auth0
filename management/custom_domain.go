@@ -16,6 +16,7 @@ type CustomDomain struct {
 	// Can be either "auth0_managed_certs" or "self_managed_certs".
 	Type *string `json:"type,omitempty"`
 
+	// Deprecated: Primary field is no longer used and will be removed in a future release.
 	// Primary is true if the domain was marked as "primary", false otherwise.
 	Primary *bool `json:"primary,omitempty"`
 
@@ -33,6 +34,7 @@ type CustomDomain struct {
 	// send in the cname-api-key header field.
 	CNAMEAPIKey *string `json:"cname_api_key,omitempty"`
 
+	// Deprecated: The verification status is no longer used and will be removed in a future release.
 	// The custom domain verification method. The only allowed value is "txt".
 	VerificationMethod *string `json:"verification_method,omitempty"`
 
@@ -43,12 +45,52 @@ type CustomDomain struct {
 
 	// The HTTP header to fetch the client's IP address.
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty"`
+
+	// DomainMetadata holds custom metadata for the domain as key-value pairs (string to string, max 255 characters per value).
+	// A maximum of 10 metadata entries is allowed.
+	// To remove metadata, set each key's value to nil.
+	DomainMetadata *map[string]interface{} `json:"domain_metadata,omitempty"`
+
+	// The custom domain certificate.
+	Certificate *CustomDomainCertificate `json:"certificate,omitempty"`
 }
 
-// CustomDomainVerification is used to verify a CustomDomain.
+// CustomDomainCertificate represents the certificate details for a custom domain.
+type CustomDomainCertificate struct {
+	// Status indicates the current state of the certificate provisioning process.
+	Status *string `json:"status,omitempty"`
+
+	// ErrorMsg contains the error message if the provisioning process fails.
+	ErrorMsg *string `json:"error_msg,omitempty"`
+
+	// CertificateAuthority is the name of the certificate authority that issued the certificate.
+	CertificateAuthority *string `json:"certificate_authority,omitempty"`
+
+	// RenewsBefore specifies the date by which the certificate should be renewed.
+	RenewsBefore *string `json:"renews_before,omitempty"`
+}
+
+// CustomDomainList is a list of CustomDomains.
+type CustomDomainList struct {
+	// List is the list of custom domains.
+	List
+	// CustomDomains is the list of custom domains.
+	CustomDomains []*CustomDomain `json:"custom_domains"`
+}
+
+// CustomDomainVerification contains information related to verifying a custom domain.
 type CustomDomainVerification struct {
-	// The custom domain verification methods.
+	// Methods defines the list of domain verification methods used.
 	Methods []map[string]interface{} `json:"methods,omitempty"`
+
+	// Status represents the current status of the domain verification process.
+	Status *string `json:"status,omitempty"`
+
+	// ErrorMsg contains the error message, if any, from the last DNS verification check.
+	ErrorMsg *string `json:"error_msg,omitempty"`
+
+	// LastVerifiedAt indicates the last time the domain was successfully verified.
+	LastVerifiedAt *string `json:"last_verified_at,omitempty"`
 }
 
 // CustomDomainManager manages Auth0 CustomDomain resources.
@@ -99,5 +141,16 @@ func (m *CustomDomainManager) Delete(ctx context.Context, id string, opts ...Req
 // See: https://auth0.com/docs/api/management/v2#!/Custom_Domains/get_custom_domains
 func (m *CustomDomainManager) List(ctx context.Context, opts ...RequestOption) (c []*CustomDomain, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("custom-domains"), &c, opts...)
+	return
+}
+
+// ListWithPagination lists all custom domains with support for pagination.
+// This method supports checkpoint pagination. Pagination options (e.g., 'from' and 'take')
+// should be passed via opts. The returned CustomDomainList will contain the list of custom domains
+// for the current page and pagination information.
+//
+// See: https://auth0.com/docs/api/management/v2#!/Custom_Domains/get_custom_domains
+func (m *CustomDomainManager) ListWithPagination(ctx context.Context, opts ...RequestOption) (c *CustomDomainList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("custom-domains"), &c, applyListCheckpointDefaults(opts))
 	return
 }
