@@ -1333,12 +1333,14 @@ func TestConnectionManager_RotateKeys(t *testing.T) {
 	assert.NotEmpty(t, afterKeys)
 
 	foundRotated := false
+
 	for _, k := range afterKeys {
 		if k.GetKID() == rotatedKey.GetKID() {
 			foundRotated = true
 			break
 		}
 	}
+
 	assert.True(t, foundRotated, "Rotated key should be present in afterKeys")
 
 	assert.NotEqual(t, len(beforeKeys), len(afterKeys), "Keys should be different after rotation")
