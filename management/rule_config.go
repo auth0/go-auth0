@@ -32,11 +32,13 @@ func (m *RuleConfigManager) Read(ctx context.Context, key string, opts ...Reques
 	if err != nil {
 		return nil, err
 	}
+
 	for _, r := range rs {
 		if r.GetKey() == key {
 			return r, nil
 		}
 	}
+
 	return nil, &managementError{404, "Not Found", "Rule config not found"}
 }
 

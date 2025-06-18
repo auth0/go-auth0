@@ -45,7 +45,7 @@ func (o *OAuth) LoginWithGrant(ctx context.Context, grantType string, body url.V
 // See: https://auth0.com/docs/api/authentication#resource-owner-password
 //
 // Use the `Header` RequestOption to set the `auth0-forwarded-for` header to an end-user's IP if you
-// you want brute force protection to work in server-side scenarios.
+// want brute force protection to work in server-side scenarios.
 // See https://auth0.com/docs/get-started/authentication-and-authorization-flow/avoid-common-issues-with-resource-owner-password-flow-and-attack-protection
 func (o *OAuth) LoginWithPassword(ctx context.Context, body oauth.LoginWithPasswordRequest, validationOptions oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	grantType := "password"
@@ -56,6 +56,7 @@ func (o *OAuth) LoginWithPassword(ctx context.Context, body oauth.LoginWithPassw
 
 	if body.Realm != "" {
 		grantType = "http://auth0.com/oauth/grant-type/password-realm"
+
 		data.Set("realm", body.Realm)
 	}
 
@@ -78,6 +79,7 @@ func (o *OAuth) LoginWithPassword(ctx context.Context, body oauth.LoginWithPassw
 	}
 
 	t, err = o.LoginWithGrant(ctx, grantType, data, validationOptions, opts...)
+
 	return
 }
 
@@ -103,6 +105,7 @@ func (o *OAuth) LoginWithAuthCode(ctx context.Context, body oauth.LoginWithAuthC
 	}
 
 	t, err = o.LoginWithGrant(ctx, "authorization_code", data, validationOptions, opts...)
+
 	return
 }
 
@@ -130,6 +133,7 @@ func (o *OAuth) LoginWithAuthCodeWithPKCE(ctx context.Context, body oauth.LoginW
 	}
 
 	t, err = o.LoginWithGrant(ctx, "authorization_code", data, validationOptions, opts...)
+
 	return
 }
 
@@ -159,6 +163,7 @@ func (o *OAuth) LoginWithClientCredentials(ctx context.Context, body oauth.Login
 	}
 
 	t, err = o.LoginWithGrant(ctx, "client_credentials", data, validationOptions, opts...)
+
 	return
 }
 
@@ -181,6 +186,7 @@ func (o *OAuth) RefreshToken(ctx context.Context, body oauth.RefreshTokenRequest
 	}
 
 	t, err = o.LoginWithGrant(ctx, "refresh_token", data, validationOptions, opts...)
+
 	return
 }
 
@@ -216,7 +222,7 @@ func (o *OAuth) PushedAuthorization(ctx context.Context, body oauth.PushedAuthor
 	check(&missing, "RedirectURI", body.RedirectURI != "")
 
 	if len(missing) > 0 {
-		return nil, fmt.Errorf("Missing required fields: %s", strings.Join(missing, ", "))
+		return nil, fmt.Errorf("missing required fields: %s", strings.Join(missing, ", "))
 	}
 
 	data := url.Values{

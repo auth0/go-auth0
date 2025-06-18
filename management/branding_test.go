@@ -361,6 +361,7 @@ func givenAnBrandingPhoneProvider(t *testing.T) *BrandingPhoneProvider {
 	t.Cleanup(func() {
 		cleanupBrandingPhoneProvider(t, provider.GetID())
 	})
+
 	return provider
 }
 
@@ -384,9 +385,11 @@ func givenABrandingPhoneNotificationTemplate(t *testing.T) *BrandingPhoneNotific
 	if err != nil {
 		t.Error(err)
 	}
+
 	t.Cleanup(func() {
 		cleanupBrandingPhoneTemplate(t, template.GetID())
 	})
+
 	return template
 }
 

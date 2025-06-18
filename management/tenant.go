@@ -170,6 +170,7 @@ type TenantMTLSConfiguration struct {
 // MarshalJSON is a custom serializer for the Tenant type.
 func (t *Tenant) MarshalJSON() ([]byte, error) {
 	type tenant Tenant
+
 	type tenantWrapper struct {
 		*tenant
 		SessionLifetimeInMinutes     *int `json:"session_lifetime_in_minutes,omitempty"`
@@ -184,6 +185,7 @@ func (t *Tenant) MarshalJSON() ([]byte, error) {
 		if sessionLifetime < 1 {
 			w.SessionLifetimeInMinutes = auth0.Int(int(math.Round(sessionLifetime * 60.0)))
 			w.SessionLifetime = nil
+
 			defer func() { w.SessionLifetime = &sessionLifetime }()
 		} else {
 			w.SessionLifetime = auth0.Float64(math.Round(sessionLifetime))
@@ -196,6 +198,7 @@ func (t *Tenant) MarshalJSON() ([]byte, error) {
 		if idleSessionLifetime < 1 {
 			w.IdleSessionLifetimeInMinutes = auth0.Int(int(math.Round(idleSessionLifetime * 60.0)))
 			w.IdleSessionLifetime = nil
+
 			defer func() { w.IdleSessionLifetime = &idleSessionLifetime }()
 		} else {
 			w.IdleSessionLifetime = auth0.Float64(math.Round(idleSessionLifetime))
@@ -301,7 +304,7 @@ type TenantFlags struct {
 	// Whether ID tokens and the userinfo endpoint includes a complete user profile (true) or only OpenID Connect claims (false).
 	EnableLegacyProfile *bool `json:"enable_legacy_profile,omitempty"`
 
-	// Whether ID tokens can be used to authorize some types of requests to API v2 (true) not not (false).
+	// Whether ID tokens can be used to authorize some types of requests to API v2 (true) not (false).
 	EnableIDTokenAPI2 *bool `json:"enable_idtoken_api2,omitempty"`
 
 	// Do not Publish Enterprise Connections Information with IdP domains on the lock configuration file.
@@ -362,6 +365,7 @@ type TenantUniversalLoginColors struct {
 // MarshalJSON is a custom serializer for the TenantUniversalLoginColors type.
 func (c *TenantUniversalLoginColors) MarshalJSON() ([]byte, error) {
 	type colors TenantUniversalLoginColors
+
 	type colorsWrapper struct {
 		*colors
 		RawPageBackground interface{} `json:"page_background,omitempty"`
@@ -387,6 +391,7 @@ func (c *TenantUniversalLoginColors) MarshalJSON() ([]byte, error) {
 // be a hex color string, or an object describing a gradient.
 func (c *TenantUniversalLoginColors) UnmarshalJSON(data []byte) error {
 	type colors BrandingColors
+
 	type colorsWrapper struct {
 		*colors
 		RawPageBackground json.RawMessage `json:"page_background,omitempty"`
@@ -401,6 +406,7 @@ func (c *TenantUniversalLoginColors) UnmarshalJSON(data []byte) error {
 
 	if alias.RawPageBackground != nil {
 		var v interface{}
+
 		err = json.Unmarshal(alias.RawPageBackground, &v)
 		if err != nil {
 			return err
@@ -412,10 +418,12 @@ func (c *TenantUniversalLoginColors) UnmarshalJSON(data []byte) error {
 
 		case map[string]interface{}:
 			var gradient BrandingPageBackgroundGradient
+
 			err = json.Unmarshal(alias.RawPageBackground, &gradient)
 			if err != nil {
 				return err
 			}
+
 			c.PageBackgroundGradient = &gradient
 
 		default:

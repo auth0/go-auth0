@@ -607,10 +607,12 @@ func givenAUser(t *testing.T) *User {
 // It does not create new refresh tokens but rather retrieves existing ones.
 func retrieveRefreshTokens(t *testing.T) *RefreshTokenList {
 	t.Helper()
+
 	user := &User{ID: auth0.String("UserID")}
 
 	tokens, err := api.User.ListRefreshTokens(context.Background(), user.GetID())
 	require.NoError(t, err)
+
 	return tokens
 }
 

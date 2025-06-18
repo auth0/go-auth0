@@ -83,6 +83,7 @@ func (b *BrandingTryPhoneProvider) MarshalJSON() ([]byte, error) {
 		To             *string `json:"to,omitempty"`
 		DeliveryMethod *string `json:"delivery_method,omitempty"`
 	}
+
 	return json.Marshal(&BrandingTryPhoneProviderSubset{
 		To:             b.To,
 		DeliveryMethod: b.DeliveryMethod,
@@ -105,6 +106,7 @@ func (b *BrandingTryPhoneNotificationTemplate) MarshalJSON() ([]byte, error) {
 		To             *string `json:"to,omitempty"`
 		DeliveryMethod *string `json:"delivery_method,omitempty"`
 	}
+
 	return json.Marshal(&BrandingTryPhoneNotificationTemplateSubset{
 		To:             b.To,
 		DeliveryMethod: b.DeliveryMethod,
@@ -180,6 +182,7 @@ func (b *BrandingPhoneProvider) reset() {
 // be a hex color string, or an object describing a gradient.
 func (bc *BrandingColors) MarshalJSON() ([]byte, error) {
 	type brandingColors BrandingColors
+
 	type brandingColorsWrapper struct {
 		*brandingColors
 		RawPageBackground interface{} `json:"page_background,omitempty"`
@@ -205,6 +208,7 @@ func (bc *BrandingColors) MarshalJSON() ([]byte, error) {
 // be a hex color string, or an object describing a gradient.
 func (bc *BrandingColors) UnmarshalJSON(data []byte) error {
 	type brandingColors BrandingColors
+
 	type brandingColorsWrapper struct {
 		*brandingColors
 		RawPageBackground json.RawMessage `json:"page_background,omitempty"`
@@ -219,6 +223,7 @@ func (bc *BrandingColors) UnmarshalJSON(data []byte) error {
 
 	if alias.RawPageBackground != nil {
 		var v interface{}
+
 		err = json.Unmarshal(alias.RawPageBackground, &v)
 		if err != nil {
 			return err
@@ -230,10 +235,12 @@ func (bc *BrandingColors) UnmarshalJSON(data []byte) error {
 
 		case map[string]interface{}:
 			var gradient BrandingPageBackgroundGradient
+
 			err = json.Unmarshal(alias.RawPageBackground, &gradient)
 			if err != nil {
 				return err
 			}
+
 			bc.PageBackgroundGradient = &gradient
 
 		default:

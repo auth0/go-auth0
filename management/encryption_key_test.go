@@ -35,6 +35,7 @@ type kwpImpl struct {
 
 func TestEncryptionKeyManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
+
 	givenEncryptionKey := &EncryptionKey{
 		Type: auth0.String("customer-provided-root-key"),
 	}
@@ -64,17 +65,20 @@ func TestEncryptionKeyManager_Read(t *testing.T) {
 
 func TestEncryptionKeyManager_Rekey(t *testing.T) {
 	configureHTTPTestRecordings(t)
+
 	oldKeyList, err := api.EncryptionKey.List(context.Background(), PerPage(50), Page(0))
 	assert.NoError(t, err)
 	assert.NotEmpty(t, oldKeyList.Keys)
 
 	var oldKey, newKey *EncryptionKey
+
 	for _, key := range oldKeyList.Keys {
 		if key.GetState() == "active" && key.GetType() == "tenant-master-key" {
 			oldKey = key
 			break
 		}
 	}
+
 	assert.NotNil(t, oldKey)
 
 	err = api.EncryptionKey.Rekey(context.Background())
@@ -90,6 +94,7 @@ func TestEncryptionKeyManager_Rekey(t *testing.T) {
 			break
 		}
 	}
+
 	assert.NotNil(t, newKey)
 
 	assert.NotEqual(t, oldKey.GetKID(), newKey.GetKID())
@@ -133,6 +138,7 @@ func TestEncryptionKeyManager_ImportWrappedKey(t *testing.T) {
 
 func givenEncryptionKey(t *testing.T) *EncryptionKey {
 	t.Helper()
+
 	givenEncryptionKey := &EncryptionKey{
 		Type: auth0.String("customer-provided-root-key"),
 	}
@@ -142,11 +148,13 @@ func givenEncryptionKey(t *testing.T) *EncryptionKey {
 	t.Cleanup(func() {
 		cleanUpEncryptionKey(t, givenEncryptionKey.GetKID())
 	})
+
 	return givenEncryptionKey
 }
 
 func cleanUpEncryptionKey(t *testing.T, kid string) {
 	t.Helper()
+
 	err := api.EncryptionKey.Delete(context.Background(), kid)
 	assert.NoError(t, err)
 }
@@ -193,6 +201,7 @@ func createAWSWrappedCiphertext(publicKeyPEM string) (string, error) {
 	}
 
 	wrappedEphemeralKey = append(wrappedEphemeralKey, wrappedTargetKey...)
+
 	return base64.StdEncoding.EncodeToString(wrappedEphemeralKey), nil
 }
 
@@ -203,6 +212,7 @@ func newKWP(wrappingKey []byte) (*kwpImpl, error) {
 		if err != nil {
 			return nil, fmt.Errorf("kwp: error building AES cipher: %v", err)
 		}
+
 		return &kwpImpl{block: block}, nil
 	default:
 		return nil, fmt.Errorf("kwp: invalid AES key size; want 16 or 32, got %d", len(wrappingKey))
@@ -241,7 +251,9 @@ func (kwp *kwpImpl) computeW(iv, key []byte) ([]byte, error) {
 			copy(data[8*(j+1):], buf[8:])
 		}
 	}
+
 	copy(data[:8], buf)
+
 	return data, nil
 }
 
@@ -249,6 +261,7 @@ func (kwp *kwpImpl) wrap(data []byte) ([]byte, error) {
 	if len(data) < minWrapSize {
 		return nil, fmt.Errorf("kwp: key size to wrap too small")
 	}
+
 	if len(data) > maxWrapSize {
 		return nil, fmt.Errorf("kwp: key size to wrap too large")
 	}

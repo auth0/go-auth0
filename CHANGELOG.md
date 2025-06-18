@@ -1,5 +1,17 @@
 # Change Log
 
+## [v1.22.2](https://github.com/auth0/go-auth0/tree/v1.22.2) (2025-06-09)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.22.1...v1.22.2)
+
+**Fixed**
+- Revert `DELETE` body restriction and fix `CleanForPatch` nil checks in Update methods [\#565](https://github.com/auth0/go-auth0/pull/565) ([developerkunal](https://github.com/developerkunal))
+
+## [v1.22.1](https://github.com/auth0/go-auth0/tree/v1.22.1) (2025-06-03)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.22.0...v1.22.1)
+
+**Fixed**
+- Fix: Set Content-Type header to application/json for non-empty request bodies [\#562](https://github.com/auth0/go-auth0/pull/562) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.22.0](https://github.com/auth0/go-auth0/tree/v1.22.0) (2025-05-30)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.21.0...v1.22.0)
 

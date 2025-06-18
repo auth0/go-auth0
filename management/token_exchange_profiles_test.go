@@ -117,11 +117,13 @@ func givenAnCustomTokenExchangeAction(t *testing.T) *Action {
 	_, err = api.Action.Deploy(context.Background(), action.GetID())
 	assert.NoError(t, err)
 	assert.NotEmpty(t, action.GetID())
+
 	return action
 }
 
 func cleanupTokenExchangeProfile(t *testing.T, id string) {
 	t.Helper()
+
 	err := api.TokenExchangeProfile.Delete(context.Background(), id)
 	assert.NoError(t, err)
 }

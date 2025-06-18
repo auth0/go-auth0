@@ -300,6 +300,7 @@ func (st *SCIMToken) MarshalJSON() ([]byte, error) {
 // MarshalJSON implements the json.Marshaler interface.
 func (c *Connection) MarshalJSON() ([]byte, error) {
 	type connection Connection
+
 	type connectionWrapper struct {
 		*connection
 		RawOptions json.RawMessage `json:"options,omitempty"`
@@ -312,6 +313,7 @@ func (c *Connection) MarshalJSON() ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
+
 		w.RawOptions = b
 	}
 
@@ -321,6 +323,7 @@ func (c *Connection) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the json.Unmarshaler interface.
 func (c *Connection) UnmarshalJSON(b []byte) error {
 	type connection Connection
+
 	type connectionWrapper struct {
 		*connection
 		RawOptions json.RawMessage `json:"options,omitempty"`
@@ -516,6 +519,7 @@ type ConnectionOptionsAttributeSignup struct {
 // MarshalJSON implements the json.Marshaler interface.
 func (c *ConnectionOptionsUsernameAttribute) MarshalJSON() ([]byte, error) {
 	type connectionOptionsUsernameAttribute ConnectionOptionsUsernameAttribute
+
 	alias := &struct {
 		*connectionOptionsUsernameAttribute
 	}{
@@ -647,15 +651,19 @@ func (c *ConnectionOptionsOkta) SetScopes(enable bool, scopes ...string) {
 	for _, scope := range c.Scopes() {
 		scopeMap[scope] = true
 	}
+
 	for _, scope := range scopes {
 		scopeMap[scope] = enable
 	}
+
 	scopeSlice := make([]string, 0, len(scopeMap))
+
 	for scope, enabled := range scopeMap {
 		if enabled {
 			scopeSlice = append(scopeSlice, scope)
 		}
 	}
+
 	sort.Strings(scopeSlice)
 	scope := strings.Join(scopeSlice, " ")
 	c.Scope = &scope
@@ -721,6 +729,7 @@ func (c *ConnectionOptionsGoogleOAuth2) SetScopes(enable bool, scopes ...string)
 // be an array of strings or a single string.
 func (c *ConnectionOptionsGoogleOAuth2) UnmarshalJSON(data []byte) error {
 	type connectionOptionsGoogleOAuth2 ConnectionOptionsGoogleOAuth2
+
 	type connectionOptionsGoogleOAuth2Wrapper struct {
 		*connectionOptionsGoogleOAuth2
 		RawAllowedAudiences interface{} `json:"allowed_audiences,omitempty"`
@@ -755,6 +764,7 @@ func (c *ConnectionOptionsGoogleOAuth2) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaler interface.
 func (c *ConnectionOptionsGoogleOAuth2) MarshalJSON() ([]byte, error) {
 	type connectionOptionsGoogleOAuth2 ConnectionOptionsGoogleOAuth2
+
 	type connectionOptionsGoogleOAuth2Wrapper struct {
 		*connectionOptionsGoogleOAuth2
 		RawAllowedAudiences interface{} `json:"allowed_audiences,omitempty"`
@@ -1147,15 +1157,19 @@ func (c *ConnectionOptionsOIDC) SetScopes(enable bool, scopes ...string) {
 	for _, scope := range c.Scopes() {
 		scopeMap[scope] = true
 	}
+
 	for _, scope := range scopes {
 		scopeMap[scope] = enable
 	}
+
 	scopeSlice := make([]string, 0, len(scopeMap))
+
 	for scope, enabled := range scopeMap {
 		if enabled {
 			scopeSlice = append(scopeSlice, scope)
 		}
 	}
+
 	sort.Strings(scopeSlice)
 	scope := strings.Join(scopeSlice, " ")
 	c.Scope = &scope
@@ -1211,6 +1225,7 @@ type ConnectionOptionsOAuth2 struct {
 // be an array of strings or a single string.
 func (c *ConnectionOptionsOAuth2) UnmarshalJSON(data []byte) error {
 	type connectionOptionsOAuth2 ConnectionOptionsOAuth2
+
 	type connectionOptionsOAuth2Wrapper struct {
 		*connectionOptionsOAuth2
 		RawScope interface{} `json:"scope,omitempty"`
@@ -1230,6 +1245,7 @@ func (c *ConnectionOptionsOAuth2) UnmarshalJSON(data []byte) error {
 			for i, v := range rawScope {
 				scopes[i] = v.(string)
 			}
+
 			c.Scope = auth0.String(strings.Join(scopes, " "))
 		case string:
 			c.Scope = auth0.String(rawScope)
@@ -1244,12 +1260,14 @@ func (c *ConnectionOptionsOAuth2) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaler interface for ConnectionOptionsOAuth2.
 func (c *ConnectionOptionsOAuth2) MarshalJSON() ([]byte, error) {
 	type connectionOptionsOAuth2 ConnectionOptionsOAuth2
+
 	type connectionOptionsOAuth2Wrapper struct {
 		*connectionOptionsOAuth2
 		RawScope interface{} `json:"scope,omitempty"`
 	}
 
 	alias := &connectionOptionsOAuth2Wrapper{(*connectionOptionsOAuth2)(c), nil}
+
 	if c.Scope != nil {
 		scopes := strings.Fields(*c.Scope)
 		alias.RawScope = scopes
@@ -1269,15 +1287,19 @@ func (c *ConnectionOptionsOAuth2) SetScopes(enable bool, scopes ...string) {
 	for _, scope := range c.Scopes() {
 		scopeMap[scope] = true
 	}
+
 	for _, scope := range scopes {
 		scopeMap[scope] = enable
 	}
+
 	scopeSlice := make([]string, 0, len(scopeMap))
+
 	for scope, enabled := range scopeMap {
 		if enabled {
 			scopeSlice = append(scopeSlice, scope)
 		}
 	}
+
 	sort.Strings(scopeSlice)
 	scope := strings.Join(scopeSlice, " ")
 	c.Scope = &scope
@@ -1620,13 +1642,16 @@ func (m *ConnectionManager) ReadByName(ctx context.Context, name string, opts ..
 	if name == "" {
 		return nil, &managementError{400, "Bad Request", "Name cannot be empty"}
 	}
+
 	c, err := m.List(ctx, append(opts, Parameter("name", name))...)
 	if err != nil {
 		return nil, err
 	}
+
 	if len(c.Connections) > 0 {
 		return c.Connections[0], nil
 	}
+
 	return nil, &managementError{404, "Not Found", "Connection not found"}
 }
 

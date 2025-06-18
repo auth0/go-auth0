@@ -520,6 +520,7 @@ func TestOrganizationManager_ClientGrantsWithOrg(t *testing.T) {
 	// List all clients associated with a ClientGrant given an organizationID as query param
 	clients, err := api.Client.List(context.Background(), Parameter("q", fmt.Sprintf("client_grant.organization_id:%s", org.GetID())))
 	require.NoError(t, err)
+
 	for _, c := range clients.Clients {
 		assert.Equal(t, org.GetID(), c.DefaultOrganization.GetOrganizationID())
 	}

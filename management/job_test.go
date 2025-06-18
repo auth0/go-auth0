@@ -32,6 +32,7 @@ func TestJobManager_ExportUsers(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	givenAUser(t)
+
 	conn, err := api.Connection.ReadByName(context.Background(), "Username-Password-Authentication")
 	assert.NoError(t, err)
 

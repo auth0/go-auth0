@@ -68,6 +68,7 @@ func WithAuth0ClientEnvEntry(key string, value string) Option {
 			if a.auth0ClientInfo.Env == nil {
 				a.auth0ClientInfo.Env = map[string]string{}
 			}
+
 			a.auth0ClientInfo.Env[key] = value
 		}
 	}

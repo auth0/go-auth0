@@ -156,6 +156,7 @@ func New(domain string, options ...Option) (*Management, error) {
 	if i := strings.Index(domain, "//"); i != -1 {
 		domain = domain[i+2:]
 	}
+
 	domain = "https://" + domain
 
 	u, err := url.Parse(domain)
@@ -244,5 +245,6 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.RefreshToken = (*RefreshTokenManager)(&m.common)
 	m.Session = (*SessionManager)(&m.common)
 	m.NetworkACL = (*NetworkACLManager)(&m.common)
+
 	return m, nil
 }

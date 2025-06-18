@@ -118,6 +118,7 @@ type httpAction struct {
 
 func givenAFlow(t *testing.T) *Flow {
 	t.Helper()
+
 	flow := &Flow{
 		Name: auth0.String("test-flow"),
 	}
@@ -127,6 +128,7 @@ func givenAFlow(t *testing.T) *Flow {
 	t.Cleanup(func() {
 		cleanupFlow(t, flow.GetID())
 	})
+
 	return flow
 }
 
@@ -151,6 +153,7 @@ Flow Vault Connection tests.
 */
 func TestFlowVaultConnectionManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
+
 	flowVaultConnection := &FlowVaultConnection{
 		AppID: auth0.String("HTTP"),
 		Name:  auth0.String("test-vault-connection"),
