@@ -126,6 +126,7 @@ type ResourceServerProofOfPossession struct {
 	//
 	// Available options:
 	//   - "mtls"
+	//   - "dpop"
 	Mechanism *string `json:"mechanism,omitempty"`
 
 	// Whether the use of Proof-of-Possession is required for the resource server.
