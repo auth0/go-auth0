@@ -865,6 +865,12 @@ func (m *ClientManager) DeleteCredential(ctx context.Context, clientID string, c
 	return m.management.Request(ctx, "DELETE", m.management.URI("clients", clientID, "credentials", credentialID), nil, opts...)
 }
 
+// ReadEnabledConnections returns a list of enabled connections for a client.
+func (m *ClientManager) ReadEnabledConnections(ctx context.Context, clientID string, opts ...RequestOption) (c *ConnectionList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("clients", clientID, "connections"), &c, applyListCheckpointDefaults(opts))
+	return
+}
+
 // UnmarshalJSON implements the json.Unmarshaler interface.
 //
 // It is required to handle the json field lifetime_in_seconds, which can either
