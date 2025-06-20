@@ -3293,6 +3293,134 @@ func TestConnectionGatewayAuthentication_String(t *testing.T) {
 	}
 }
 
+func TestConnectionKey_GetAlgorithm(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionKey{Algorithm: &zeroValue}
+	c.GetAlgorithm()
+	c = &ConnectionKey{}
+	c.GetAlgorithm()
+	c = nil
+	c.GetAlgorithm()
+}
+
+func TestConnectionKey_GetCert(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionKey{Cert: &zeroValue}
+	c.GetCert()
+	c = &ConnectionKey{}
+	c.GetCert()
+	c = nil
+	c.GetCert()
+}
+
+func TestConnectionKey_GetCurrent(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionKey{Current: &zeroValue}
+	c.GetCurrent()
+	c = &ConnectionKey{}
+	c.GetCurrent()
+	c = nil
+	c.GetCurrent()
+}
+
+func TestConnectionKey_GetCurrentSince(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionKey{CurrentSince: &zeroValue}
+	c.GetCurrentSince()
+	c = &ConnectionKey{}
+	c.GetCurrentSince()
+	c = nil
+	c.GetCurrentSince()
+}
+
+func TestConnectionKey_GetFingerprint(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionKey{Fingerprint: &zeroValue}
+	c.GetFingerprint()
+	c = &ConnectionKey{}
+	c.GetFingerprint()
+	c = nil
+	c.GetFingerprint()
+}
+
+func TestConnectionKey_GetKeyUse(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionKey{KeyUse: &zeroValue}
+	c.GetKeyUse()
+	c = &ConnectionKey{}
+	c.GetKeyUse()
+	c = nil
+	c.GetKeyUse()
+}
+
+func TestConnectionKey_GetKID(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionKey{KID: &zeroValue}
+	c.GetKID()
+	c = &ConnectionKey{}
+	c.GetKID()
+	c = nil
+	c.GetKID()
+}
+
+func TestConnectionKey_GetNext(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionKey{Next: &zeroValue}
+	c.GetNext()
+	c = &ConnectionKey{}
+	c.GetNext()
+	c = nil
+	c.GetNext()
+}
+
+func TestConnectionKey_GetPKCS(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionKey{PKCS: &zeroValue}
+	c.GetPKCS()
+	c = &ConnectionKey{}
+	c.GetPKCS()
+	c = nil
+	c.GetPKCS()
+}
+
+func TestConnectionKey_GetPrevious(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionKey{Previous: &zeroValue}
+	c.GetPrevious()
+	c = &ConnectionKey{}
+	c.GetPrevious()
+	c = nil
+	c.GetPrevious()
+}
+
+func TestConnectionKey_GetSubjectDN(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionKey{SubjectDN: &zeroValue}
+	c.GetSubjectDN()
+	c = &ConnectionKey{}
+	c.GetSubjectDN()
+	c = nil
+	c.GetSubjectDN()
+}
+
+func TestConnectionKey_GetThumbprint(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionKey{Thumbprint: &zeroValue}
+	c.GetThumbprint()
+	c = &ConnectionKey{}
+	c.GetThumbprint()
+	c = nil
+	c.GetThumbprint()
+}
+
+func TestConnectionKey_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionKey{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestConnectionList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionList{}
@@ -6376,6 +6504,26 @@ func TestConnectionOptionsOIDC_GetTokenEndpoint(tt *testing.T) {
 	c.GetTokenEndpoint()
 }
 
+func TestConnectionOptionsOIDC_GetTokenEndpointAuthMethod(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOIDC{TokenEndpointAuthMethod: &zeroValue}
+	c.GetTokenEndpointAuthMethod()
+	c = &ConnectionOptionsOIDC{}
+	c.GetTokenEndpointAuthMethod()
+	c = nil
+	c.GetTokenEndpointAuthMethod()
+}
+
+func TestConnectionOptionsOIDC_GetTokenEndpointAuthSigningAlg(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOIDC{TokenEndpointAuthSigningAlg: &zeroValue}
+	c.GetTokenEndpointAuthSigningAlg()
+	c = &ConnectionOptionsOIDC{}
+	c.GetTokenEndpointAuthSigningAlg()
+	c = nil
+	c.GetTokenEndpointAuthSigningAlg()
+}
+
 func TestConnectionOptionsOIDC_GetType(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOIDC{Type: &zeroValue}
@@ -6602,6 +6750,26 @@ func TestConnectionOptionsOkta_GetTokenEndpoint(tt *testing.T) {
 	c.GetTokenEndpoint()
 	c = nil
 	c.GetTokenEndpoint()
+}
+
+func TestConnectionOptionsOkta_GetTokenEndpointAuthMethod(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{TokenEndpointAuthMethod: &zeroValue}
+	c.GetTokenEndpointAuthMethod()
+	c = &ConnectionOptionsOkta{}
+	c.GetTokenEndpointAuthMethod()
+	c = nil
+	c.GetTokenEndpointAuthMethod()
+}
+
+func TestConnectionOptionsOkta_GetTokenEndpointAuthSigningAlg(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{TokenEndpointAuthSigningAlg: &zeroValue}
+	c.GetTokenEndpointAuthSigningAlg()
+	c = &ConnectionOptionsOkta{}
+	c.GetTokenEndpointAuthSigningAlg()
+	c = nil
+	c.GetTokenEndpointAuthSigningAlg()
 }
 
 func TestConnectionOptionsOkta_GetUpstreamParams(tt *testing.T) {

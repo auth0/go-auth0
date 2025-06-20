@@ -1,5 +1,14 @@
 # Change Log
 
+## [v1.23.0](https://github.com/auth0/go-auth0/tree/v1.23.0) (2025-06-19)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.22.2...v1.23.0)
+
+**Added**
+- docs: update comment to reflect DPoP support in `ResourceServerManager` [\#571](https://github.com/auth0/go-auth0/pull/571) ([developerkunal](https://github.com/developerkunal))
+- Add support for `ReadEnabledConnections` in ClientsManager [\#569](https://github.com/auth0/go-auth0/pull/569) ([developerkunal](https://github.com/developerkunal))
+- Add Patch method and corresponding tests for Network ACL [\#568](https://github.com/auth0/go-auth0/pull/568) ([developerkunal](https://github.com/developerkunal))
+- Add `ReadKeys` and `RotateKeys` methods and extend `ConnectionOptions` with `TokenEndpointAuthMethod` and `TokenEndpointAuthSigningAlg` in `ConnectionManager` [\#559](https://github.com/auth0/go-auth0/pull/559) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.22.2](https://github.com/auth0/go-auth0/tree/v1.22.2) (2025-06-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.22.1...v1.22.2)
 

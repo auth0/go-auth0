@@ -195,7 +195,8 @@ func redactSensitiveDataInConnectionSCIMToken(t *testing.T, i *cassette.Interact
 }
 
 func redactSensitiveDataInClient(t *testing.T, i *cassette.Interaction) {
-	isClientURL := strings.Contains(i.Request.URL, "https://"+domain+"/api/v2/clients")
+	isClientURL := strings.Contains(i.Request.URL, "https://"+domain+"/api/v2/clients") &&
+		!strings.Contains(i.Request.URL, "/connections")
 	create := isClientURL && i.Request.Method == http.MethodPost
 	read := isClientURL && i.Request.Method == http.MethodGet
 	update := isClientURL && i.Request.Method == http.MethodPatch

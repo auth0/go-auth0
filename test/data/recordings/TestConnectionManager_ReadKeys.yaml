@@ -1,0 +1,215 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 581
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test-OIDC-Connection-1748501008","strategy":"oidc","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":"https://www.paypalobjects.com/.well-known/openid-configuration","authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","type":"front_channel","userinfo_endpoint":null,"token_endpoint":null,"scope":"openid","upstream_params":{"screen_name":{"alias":"login_hint"}},"token_endpoint_auth_method":"private_key_jwt","token_endpoint_auth_signing_alg":"RS256","schema_version":"oidc-V4"}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.21.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"id":"con_9mTl0bS2gIuYLVgB","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":"https://www.paypalobjects.com/.well-known/openid-configuration","authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","type":"front_channel","userinfo_endpoint":"https://api.paypal.com/v1/oauth2/token/userinfo","token_endpoint":"https://api.paypal.com/v1/oauth2/token","scope":"openid","upstream_params":{"screen_name":{"alias":"login_hint"}},"token_endpoint_auth_method":"private_key_jwt","token_endpoint_auth_signing_alg":"RS256","oidc_metadata":{"issuer":"https://www.paypal.com","authorization_endpoint":"https://www.paypal.com/signin/authorize","registration_endpoint":"https://api.paypal.com/v1/oauth2/applications","token_endpoint":"https://api.paypal.com/v1/oauth2/token","userinfo_endpoint":"https://api.paypal.com/v1/oauth2/token/userinfo","jwks_uri":"https://api.paypal.com/v1/oauth2/certs","revocation_endpoint":"https://api.paypal.com/v1/oauth2/revoke","token_endpoint_auth_methods_supported":["client_secret_basic"],"response_types_supported":["code","code id_token"],"response_modes_supported":["query","form_post"],"grant_types_supported":["authorization_code","refresh_token"],"subject_types_supported":["pairwise"],"scopes_supported":["email","address","phone","openid","profile","https://uri.paypal.com/services/wallet/sendmoney","https://uri.paypal.com/services/payments/futurepayments","https://uri.paypal.com/services/expresscheckout"],"id_token_signing_alg_values_supported":["HS256","RS256"],"claims_supported":["aud","iss","iat","exp","auth_time","nonce","sessionIndex","user_id"],"code_challenge_methods_supported":["RS256","ES256","S256"],"claims_parameter_supported":false,"request_parameter_supported":false,"request_uri_parameter_supported":false,"require_request_uri_registration":false},"attribute_map":{"mapping_mode":"bind_all"},"connection_settings":{"pkce":"auto"}},"strategy":"oidc","name":"Test-OIDC-Connection-1748501008","is_domain_connection":false,"show_as_button":false,"display_name":"Test-OIDC-Connection-1748501008","enabled_clients":[],"realms":["Test-OIDC-Connection-1748501008"]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 1.105350209s
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.21.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_9mTl0bS2gIuYLVgB/keys
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"kid":"XIYi4DVLca2MJXzl6wz6VjcYuO5treSi6LrYrLyqUaA","algorithm":"RS256","key_use":"signing","subject_dn":"/CN=Test-OIDC-Connection-1748501008","cert":"-----BEGIN CERTIFICATE-----\r\nMIIDGTCCAgGgAwIBAgIJBFAuIozwDB+dMA0GCSqGSIb3DQEBCwUAMCoxKDAmBgNV\r\nBAMTH1Rlc3QtT0lEQy1Db25uZWN0aW9uLTE3NDg1MDEwMDgwHhcNMjUwNTI5MDY0\r\nMzI5WhcNMjYwNTI5MDY0MzI5WjAqMSgwJgYDVQQDEx9UZXN0LU9JREMtQ29ubmVj\r\ndGlvbi0xNzQ4NTAxMDA4MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA\r\nyO06Ig/XlTZMK2/G2Rv+00+v6EGtAIqcbG1T0l/5dvydVciYo7vjDphIKcMq3ZXy\r\nCEwo2CWJLFy2CPQtpVDE1o2CM3CKn0Ydw/NN/x6hiNEh6K1XyLsTbHZ2R5Tky3x9\r\nOucdZUoREJfuXKNIPs15NwhstbArh1AgtsKjtRNNQMBgRJ39XERP0OyULEgMH3sc\r\nwp6rivwS1J+klPjU760cOQfkaNQezuRxjbaBLUWOBAoEPyKGRrsMUyqZPmCnQRXi\r\naFWo6IvJoCv9ChoNYsMRE/erCKekVvsbWamTZom4omBiE5/0ZS8zGGFCn8c8u+0e\r\nfQwOmeRvFgDR81qvHXqYtQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1Ud\r\nDgQWBBQfrvI6noaYTHOieDg9EVVLwqGc0zAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZI\r\nhvcNAQELBQADggEBAJcchRBBs3A+mx6R4BTseRrdoDRi1QGUROvTjXKBFBXnG7mp\r\nJUMETUxQxND3sSsQZKjPhVGiddE5PKYff9NIPl+YHuitJYkSHOpNrA3vcL2vOEtl\r\nLaGYg+nqd8DbPa3nDO/FawWs+wvxVZOIiS4SRhY69ud11za+kzsms1Ai8TOPQ03W\r\nTC+JTOxYD2pfwNvjaneCLYk63brnfxxApBh6sKMvAQenEnt5uEf3kz8r6uyAZzNf\r\n1pZH2680y92sclL5cV+ttupUMvJ19b7+1AeGn4EAjVmYbZ+60PiF+fB7/a1NB2DE\r\n/5lj2NbuycPbqxtHrqv9c6jsVxuHVfwdXebq8tw=\r\n-----END CERTIFICATE-----\r\n","fingerprint":"EB:2C:20:03:DF:38:54:4F:0C:45:3C:9C:62:08:E3:07:AF:0E:0F:73","thumbprint":"EB2C2003DF38544F0C453C9C6208E307AF0E0F73","pkcs":"-----BEGIN PKCS7-----\r\nMIIDSAYJKoZIhvcNAQcCoIIDOTCCAzUCAQExADALBgkqhkiG9w0BBwGgggMdMIID\r\nGTCCAgGgAwIBAgIJBFAuIozwDB+dMA0GCSqGSIb3DQEBCwUAMCoxKDAmBgNVBAMT\r\nH1Rlc3QtT0lEQy1Db25uZWN0aW9uLTE3NDg1MDEwMDgwHhcNMjUwNTI5MDY0MzI5\r\nWhcNMjYwNTI5MDY0MzI5WjAqMSgwJgYDVQQDEx9UZXN0LU9JREMtQ29ubmVjdGlv\r\nbi0xNzQ4NTAxMDA4MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyO06\r\nIg/XlTZMK2/G2Rv+00+v6EGtAIqcbG1T0l/5dvydVciYo7vjDphIKcMq3ZXyCEwo\r\n2CWJLFy2CPQtpVDE1o2CM3CKn0Ydw/NN/x6hiNEh6K1XyLsTbHZ2R5Tky3x9Oucd\r\nZUoREJfuXKNIPs15NwhstbArh1AgtsKjtRNNQMBgRJ39XERP0OyULEgMH3scwp6r\r\nivwS1J+klPjU760cOQfkaNQezuRxjbaBLUWOBAoEPyKGRrsMUyqZPmCnQRXiaFWo\r\n6IvJoCv9ChoNYsMRE/erCKekVvsbWamTZom4omBiE5/0ZS8zGGFCn8c8u+0efQwO\r\nmeRvFgDR81qvHXqYtQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW\r\nBBQfrvI6noaYTHOieDg9EVVLwqGc0zAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcN\r\nAQELBQADggEBAJcchRBBs3A+mx6R4BTseRrdoDRi1QGUROvTjXKBFBXnG7mpJUME\r\nTUxQxND3sSsQZKjPhVGiddE5PKYff9NIPl+YHuitJYkSHOpNrA3vcL2vOEtlLaGY\r\ng+nqd8DbPa3nDO/FawWs+wvxVZOIiS4SRhY69ud11za+kzsms1Ai8TOPQ03WTC+J\r\nTOxYD2pfwNvjaneCLYk63brnfxxApBh6sKMvAQenEnt5uEf3kz8r6uyAZzNf1pZH\r\n2680y92sclL5cV+ttupUMvJ19b7+1AeGn4EAjVmYbZ+60PiF+fB7/a1NB2DE/5lj\r\n2NbuycPbqxtHrqv9c6jsVxuHVfwdXebq8twxAA==\r\n-----END PKCS7-----\r\n","current":true,"current_since":"2025-05-29T06:43:29.675Z"},{"kid":"fgZ5-Ll5T8mrnSyN64nHafyIqchbTRwPC8quPebbWIU","algorithm":"RS256","key_use":"signing","subject_dn":"/CN=Test-OIDC-Connection-1748501008","cert":"-----BEGIN CERTIFICATE-----\r\nMIIDGTCCAgGgAwIBAgIJBGsPJn9quDzIMA0GCSqGSIb3DQEBCwUAMCoxKDAmBgNV\r\nBAMTH1Rlc3QtT0lEQy1Db25uZWN0aW9uLTE3NDg1MDEwMDgwHhcNMjUwNTI5MDY0\r\nMzI5WhcNMjYwNTI5MDY0MzI5WjAqMSgwJgYDVQQDEx9UZXN0LU9JREMtQ29ubmVj\r\ndGlvbi0xNzQ4NTAxMDA4MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA\r\nu4aQwcc0l908AeDG6ehou1kfZwY4B+G43S85c0q6029lfv0QosOid+VBlCFeAK9j\r\n9f9jQa+5+5cziSGvuFnBklhr49WchHpGs8eea8vYRr3osvhisS6p9ak9PgFp7FpF\r\nFNmHA4TP49gtdTN9fHc3FRYYIPvO4CNq/iK+VI738dR0fRbdaCvbgvXIBha5tXBH\r\nKWBlw2m+AyHNihSH26VsaJ6e/YEw681VPZIVUYlr/+rwfwAjAOgxv3KAOhVFzHRL\r\nCBOQZljwD0ueJH5iNahVD7syGciu0vI7vMJpKRh5QdQRplgTshSesxSdGzrZLkXT\r\nLKpyvwHgdk1+w8631IYq1QIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1Ud\r\nDgQWBBQfrvI6noaYTHOieDg9EVVLwqGc0zAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZI\r\nhvcNAQELBQADggEBACZqGVqZyB3wBUmcMY2YXd8PFyBf6aC3tAjxZLUwWpcLeQIc\r\nQrzHBAByFxOkuXvvKq07e2FRdyIs3ApUJLHqFNzmz+K3xYrKRQsJK9VyceLuUBVp\r\nYcTcTvPud27q2JSea5lNn0HMP73aJ9J+tlFtpa+5v+03bQ6bOEpYpH1q98D/1MA/\r\ngI1gNZSIOffdjIuYj+3gzfVz20BkhpVwzVwPBih5drdigGh8pA5piWii4ceywmz0\r\npgH2f5mArHPU1p9b4B/ySyFapis++b12fYycJtEqqJw8L+aYUgPZUhdO0L3gzdtc\r\nwe7tik5fldZf459tCC782v+j0jmXRVuEPqTqOs4=\r\n-----END CERTIFICATE-----\r\n","fingerprint":"E9:34:29:7A:60:3B:72:7A:63:E2:C9:1F:13:77:35:0C:F9:3D:BE:BB","thumbprint":"E934297A603B727A63E2C91F1377350CF93DBEBB","pkcs":"-----BEGIN PKCS7-----\r\nMIIDSAYJKoZIhvcNAQcCoIIDOTCCAzUCAQExADALBgkqhkiG9w0BBwGgggMdMIID\r\nGTCCAgGgAwIBAgIJBGsPJn9quDzIMA0GCSqGSIb3DQEBCwUAMCoxKDAmBgNVBAMT\r\nH1Rlc3QtT0lEQy1Db25uZWN0aW9uLTE3NDg1MDEwMDgwHhcNMjUwNTI5MDY0MzI5\r\nWhcNMjYwNTI5MDY0MzI5WjAqMSgwJgYDVQQDEx9UZXN0LU9JREMtQ29ubmVjdGlv\r\nbi0xNzQ4NTAxMDA4MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu4aQ\r\nwcc0l908AeDG6ehou1kfZwY4B+G43S85c0q6029lfv0QosOid+VBlCFeAK9j9f9j\r\nQa+5+5cziSGvuFnBklhr49WchHpGs8eea8vYRr3osvhisS6p9ak9PgFp7FpFFNmH\r\nA4TP49gtdTN9fHc3FRYYIPvO4CNq/iK+VI738dR0fRbdaCvbgvXIBha5tXBHKWBl\r\nw2m+AyHNihSH26VsaJ6e/YEw681VPZIVUYlr/+rwfwAjAOgxv3KAOhVFzHRLCBOQ\r\nZljwD0ueJH5iNahVD7syGciu0vI7vMJpKRh5QdQRplgTshSesxSdGzrZLkXTLKpy\r\nvwHgdk1+w8631IYq1QIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW\r\nBBQfrvI6noaYTHOieDg9EVVLwqGc0zAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcN\r\nAQELBQADggEBACZqGVqZyB3wBUmcMY2YXd8PFyBf6aC3tAjxZLUwWpcLeQIcQrzH\r\nBAByFxOkuXvvKq07e2FRdyIs3ApUJLHqFNzmz+K3xYrKRQsJK9VyceLuUBVpYcTc\r\nTvPud27q2JSea5lNn0HMP73aJ9J+tlFtpa+5v+03bQ6bOEpYpH1q98D/1MA/gI1g\r\nNZSIOffdjIuYj+3gzfVz20BkhpVwzVwPBih5drdigGh8pA5piWii4ceywmz0pgH2\r\nf5mArHPU1p9b4B/ySyFapis++b12fYycJtEqqJw8L+aYUgPZUhdO0L3gzdtcwe7t\r\nik5fldZf459tCC782v+j0jmXRVuEPqTqOs4xAA==\r\n-----END PKCS7-----\r\n","next":true}]'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 341.85125ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.21.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_9mTl0bS2gIuYLVgB
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 41
+        uncompressed: false
+        body: '{"deleted_at":"2025-05-29T06:43:30.363Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 202 Accepted
+        code: 202
+        duration: 355.913625ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 504
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test-OKTA-Connection-1748501010","strategy":"okta","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","client_secret":"mySecret","domain":"domain.okta.com","authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","userinfo_endpoint":null,"token_endpoint":null,"scope":"openid","upstream_params":{"screen_name":{"alias":"login_hint"}},"token_endpoint_auth_method":"private_key_jwt","token_endpoint_auth_signing_alg":"RS256"}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.21.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"id":"con_ZB6OLcrv08RFSUAP","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","client_secret":"mySecret","domain":"domain.okta.com","authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","userinfo_endpoint":"https://domain.okta.com/oauth2/v1/userinfo","token_endpoint":"https://domain.okta.com/oauth2/v1/token","scope":"openid","upstream_params":{"screen_name":{"alias":"login_hint"}},"token_endpoint_auth_method":"private_key_jwt","token_endpoint_auth_signing_alg":"RS256","oidc_metadata":{"issuer":"https://domain.okta.com","authorization_endpoint":"https://domain.okta.com/oauth2/v1/authorize","token_endpoint":"https://domain.okta.com/oauth2/v1/token","userinfo_endpoint":"https://domain.okta.com/oauth2/v1/userinfo","registration_endpoint":"https://domain.okta.com/oauth2/v1/clients","jwks_uri":"https://domain.okta.com/oauth2/v1/keys","response_types_supported":["code","id_token","code id_token","code token","id_token token","code id_token token"],"response_modes_supported":["query","fragment","form_post","okta_post_message"],"grant_types_supported":["authorization_code","implicit","refresh_token","password","urn:ietf:params:oauth:grant-type:device_code","urn:openid:params:grant-type:ciba","urn:okta:params:oauth:grant-type:otp","http://auth0.com/oauth/grant-type/mfa-otp","urn:okta:params:oauth:grant-type:oob","http://auth0.com/oauth/grant-type/mfa-oob"],"subject_types_supported":["public"],"id_token_signing_alg_values_supported":["RS256"],"scopes_supported":["openid","email","profile","address","phone","offline_access","groups"],"token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post","client_secret_jwt","private_key_jwt","none"],"claims_supported":["iss","ver","sub","aud","iat","exp","jti","auth_time","amr","idp","nonce","name","nickname","preferred_username","given_name","middle_name","family_name","email","email_verified","profile","zoneinfo","locale","address","phone_number","picture","website","gender","birthdate","updated_at","at_hash","c_hash"],"code_challenge_methods_supported":["S256"],"introspection_endpoint":"https://domain.okta.com/oauth2/v1/introspect","introspection_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post","client_secret_jwt","private_key_jwt","none"],"revocation_endpoint":"https://domain.okta.com/oauth2/v1/revoke","revocation_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post","client_secret_jwt","private_key_jwt","none"],"end_session_endpoint":"https://domain.okta.com/oauth2/v1/logout","request_parameter_supported":true,"request_object_signing_alg_values_supported":["HS256","HS384","HS512","RS256","RS384","RS512","ES256","ES384","ES512"],"device_authorization_endpoint":"https://domain.okta.com/oauth2/v1/device/authorize","pushed_authorization_request_endpoint":"https://domain.okta.com/oauth2/v1/par","backchannel_token_delivery_modes_supported":["poll"],"backchannel_authentication_request_signing_alg_values_supported":["HS256","HS384","HS512","RS256","RS384","RS512","ES256","ES384","ES512"],"dpop_signing_alg_values_supported":["RS256","RS384","RS512","ES256","ES384","ES512"],"claims_parameter_supported":false,"request_uri_parameter_supported":false,"require_request_uri_registration":false},"type":"back_channel","attribute_map":{"mapping_mode":"basic_profile"},"connection_settings":{"pkce":"auto"}},"strategy":"okta","name":"Test-OKTA-Connection-1748501010","is_domain_connection":false,"show_as_button":false,"display_name":"Test-OKTA-Connection-1748501010","enabled_clients":[],"realms":["Test-OKTA-Connection-1748501010"]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 961.026375ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.21.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_ZB6OLcrv08RFSUAP/keys
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"kid":"wVKTV4-PyXstjNGq7oAHCrbik2-Ua6uwAt0jHdMuLQ4","algorithm":"RS256","key_use":"signing","subject_dn":"/CN=Test-OKTA-Connection-1748501010","cert":"-----BEGIN CERTIFICATE-----\r\nMIIDGTCCAgGgAwIBAgIJch/T3oKvYZrbMA0GCSqGSIb3DQEBCwUAMCoxKDAmBgNV\r\nBAMTH1Rlc3QtT0tUQS1Db25uZWN0aW9uLTE3NDg1MDEwMTAwHhcNMjUwNTI5MDY0\r\nMzMxWhcNMjYwNTI5MDY0MzMxWjAqMSgwJgYDVQQDEx9UZXN0LU9LVEEtQ29ubmVj\r\ndGlvbi0xNzQ4NTAxMDEwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA\r\nvdtqJ+ci2tkUhebhkrqcEowsVyA8aNTnLd3+0IdQ6O1T2oTBDn0XeDcE+YPIMI8D\r\nWfTvVn7isIF2I9JpPsxI0dt6QNcsXJSdNduPE5r98WyUaATAkfjb3n4lDBRf9uFl\r\nXqwuKyN0RipHyQVDzlNbId+g1+Fj5zuRKYmMQkjwZjbs8JN5pqyensSVMjAbe/Hb\r\nk+1H4P1QxJNx5kXfJgK9Yfra2Vep+g6Vmupf0pfMQZUoL2pY+hI7fE9qcoFqaRyO\r\n+ghqspWBJkZEcu6ym0HCfvjrB3pgmvCjZN+t/hod1dJairYpo+JdlXolSokRhZHe\r\n43kxrSyBWndUgXWA1bCQ4wIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1Ud\r\nDgQWBBRPLoo378k2JKpA90CpwrmhaY6SMTAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZI\r\nhvcNAQELBQADggEBAKfK6fXc98Eu6dbjqrXvM+D5bjnsbxooFMr28vdTvSnlD5vp\r\n+waqoKpMe1gRfSQEG7Y+0HXt0nGQrMAL1zzOvYeCjKIZ185qaRTkH02CA+fvC0lG\r\nHG+4VykVvV8FXkExuNYI7OilxFXoyawtUEPC+llnJd9xqjQZM6B9L/TcDHEZ/7Rg\r\nMPVYwZFcKQ7myKECj5wNiz9DWVO12YZjgbF/nKaEsmztJodpMMmeXuTO3dCFY7rm\r\nh+FoJF71ZzMDn52AMnoUJdq22WGnsoGzbvYBzlGa3iFr/yPkAYMGeUUV2nQfEto3\r\nmowGE7/9XvQtJ4PLHBwx1L0NiAu1lItaQrLiXE8=\r\n-----END CERTIFICATE-----\r\n","fingerprint":"3D:2C:A3:A3:23:F9:97:08:2C:66:8F:0B:EC:37:2E:E2:99:90:BE:AD","thumbprint":"3D2CA3A323F997082C668F0BEC372EE29990BEAD","pkcs":"-----BEGIN PKCS7-----\r\nMIIDSAYJKoZIhvcNAQcCoIIDOTCCAzUCAQExADALBgkqhkiG9w0BBwGgggMdMIID\r\nGTCCAgGgAwIBAgIJch/T3oKvYZrbMA0GCSqGSIb3DQEBCwUAMCoxKDAmBgNVBAMT\r\nH1Rlc3QtT0tUQS1Db25uZWN0aW9uLTE3NDg1MDEwMTAwHhcNMjUwNTI5MDY0MzMx\r\nWhcNMjYwNTI5MDY0MzMxWjAqMSgwJgYDVQQDEx9UZXN0LU9LVEEtQ29ubmVjdGlv\r\nbi0xNzQ4NTAxMDEwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvdtq\r\nJ+ci2tkUhebhkrqcEowsVyA8aNTnLd3+0IdQ6O1T2oTBDn0XeDcE+YPIMI8DWfTv\r\nVn7isIF2I9JpPsxI0dt6QNcsXJSdNduPE5r98WyUaATAkfjb3n4lDBRf9uFlXqwu\r\nKyN0RipHyQVDzlNbId+g1+Fj5zuRKYmMQkjwZjbs8JN5pqyensSVMjAbe/Hbk+1H\r\n4P1QxJNx5kXfJgK9Yfra2Vep+g6Vmupf0pfMQZUoL2pY+hI7fE9qcoFqaRyO+ghq\r\nspWBJkZEcu6ym0HCfvjrB3pgmvCjZN+t/hod1dJairYpo+JdlXolSokRhZHe43kx\r\nrSyBWndUgXWA1bCQ4wIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW\r\nBBRPLoo378k2JKpA90CpwrmhaY6SMTAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcN\r\nAQELBQADggEBAKfK6fXc98Eu6dbjqrXvM+D5bjnsbxooFMr28vdTvSnlD5vp+waq\r\noKpMe1gRfSQEG7Y+0HXt0nGQrMAL1zzOvYeCjKIZ185qaRTkH02CA+fvC0lGHG+4\r\nVykVvV8FXkExuNYI7OilxFXoyawtUEPC+llnJd9xqjQZM6B9L/TcDHEZ/7RgMPVY\r\nwZFcKQ7myKECj5wNiz9DWVO12YZjgbF/nKaEsmztJodpMMmeXuTO3dCFY7rmh+Fo\r\nJF71ZzMDn52AMnoUJdq22WGnsoGzbvYBzlGa3iFr/yPkAYMGeUUV2nQfEto3mowG\r\nE7/9XvQtJ4PLHBwx1L0NiAu1lItaQrLiXE8xAA==\r\n-----END PKCS7-----\r\n","current":true,"current_since":"2025-05-29T06:43:31.059Z"},{"kid":"iQnkSSWG-ycTKtSR7hdecoBK5PJ1XnJX--8cmUR5dQc","algorithm":"RS256","key_use":"signing","subject_dn":"/CN=Test-OKTA-Connection-1748501010","cert":"-----BEGIN CERTIFICATE-----\r\nMIIDGTCCAgGgAwIBAgIJbbkpsSWV1EFRMA0GCSqGSIb3DQEBCwUAMCoxKDAmBgNV\r\nBAMTH1Rlc3QtT0tUQS1Db25uZWN0aW9uLTE3NDg1MDEwMTAwHhcNMjUwNTI5MDY0\r\nMzMwWhcNMjYwNTI5MDY0MzMwWjAqMSgwJgYDVQQDEx9UZXN0LU9LVEEtQ29ubmVj\r\ndGlvbi0xNzQ4NTAxMDEwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA\r\nx35Ue3AqJFO/hKvB5kCJX4M9lkeLvv6QcfBorw3Q6kUlVhvLGqZ2pzAOqOKVJYqv\r\nMC/qCrGfObCtvXpp7ZZwC9JY3/HMqJzXmvA6et/XCFuCMWCbgPLzC4aAICJqCEFh\r\namV1pDeKcowl5tpikzUCbQSkbHEZb1LlWxE5VDBSHX6dedqtYBi68fqb+srMvGob\r\nTyp9u2V1SQbaVzwSfHz9epHKo/epwgrwfraIjw6Y3lwjwoqqhlAbnQrFbJkJeog4\r\n71n5iFzuYtHzUi1vwlUeqerPn2w3kEiawkgcC9CUsw4D/e7lcpBzcMu5bu29lKtw\r\ngmXKkBiRMOocZUyDx7Ba2wIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1Ud\r\nDgQWBBRPLoo378k2JKpA90CpwrmhaY6SMTAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZI\r\nhvcNAQELBQADggEBABpT5HFyp7lN/D1JBX6OwFq2z4r1wetET0Q7INMVi2FaQnen\r\nTqkNc9NI4rhTY2LyayOPojnbjDUnbWcsuc2NfHNNStMRIcBvk6FR0PyJHqdLAUus\r\nExdKNI5OJsbku2OYJx/qikaMBTkMYpVK7jDU9WWqRaFTZdBuPCrMVTw2QyTHzgbz\r\nkq1+AToZxW6s/E5zNLG88Y08W0TNA/mFwpRpb1O0HG7FpoHxlriRlMnibxcE29aU\r\nY53GNiQuRpEE7zPuu+a5TGsa/8EERU+XI6F44f2/zf1XfANgM5Lr0iyzHAiH0IUj\r\nW9QmN+/+j6BUMfwpKRk08QcKqVk+VtknZzoBRBY=\r\n-----END CERTIFICATE-----\r\n","fingerprint":"B1:47:F6:93:0A:5A:A9:C5:76:C6:A3:16:F1:A0:2B:D5:75:A6:9A:28","thumbprint":"B147F6930A5AA9C576C6A316F1A02BD575A69A28","pkcs":"-----BEGIN PKCS7-----\r\nMIIDSAYJKoZIhvcNAQcCoIIDOTCCAzUCAQExADALBgkqhkiG9w0BBwGgggMdMIID\r\nGTCCAgGgAwIBAgIJbbkpsSWV1EFRMA0GCSqGSIb3DQEBCwUAMCoxKDAmBgNVBAMT\r\nH1Rlc3QtT0tUQS1Db25uZWN0aW9uLTE3NDg1MDEwMTAwHhcNMjUwNTI5MDY0MzMw\r\nWhcNMjYwNTI5MDY0MzMwWjAqMSgwJgYDVQQDEx9UZXN0LU9LVEEtQ29ubmVjdGlv\r\nbi0xNzQ4NTAxMDEwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx35U\r\ne3AqJFO/hKvB5kCJX4M9lkeLvv6QcfBorw3Q6kUlVhvLGqZ2pzAOqOKVJYqvMC/q\r\nCrGfObCtvXpp7ZZwC9JY3/HMqJzXmvA6et/XCFuCMWCbgPLzC4aAICJqCEFhamV1\r\npDeKcowl5tpikzUCbQSkbHEZb1LlWxE5VDBSHX6dedqtYBi68fqb+srMvGobTyp9\r\nu2V1SQbaVzwSfHz9epHKo/epwgrwfraIjw6Y3lwjwoqqhlAbnQrFbJkJeog471n5\r\niFzuYtHzUi1vwlUeqerPn2w3kEiawkgcC9CUsw4D/e7lcpBzcMu5bu29lKtwgmXK\r\nkBiRMOocZUyDx7Ba2wIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW\r\nBBRPLoo378k2JKpA90CpwrmhaY6SMTAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcN\r\nAQELBQADggEBABpT5HFyp7lN/D1JBX6OwFq2z4r1wetET0Q7INMVi2FaQnenTqkN\r\nc9NI4rhTY2LyayOPojnbjDUnbWcsuc2NfHNNStMRIcBvk6FR0PyJHqdLAUusExdK\r\nNI5OJsbku2OYJx/qikaMBTkMYpVK7jDU9WWqRaFTZdBuPCrMVTw2QyTHzgbzkq1+\r\nAToZxW6s/E5zNLG88Y08W0TNA/mFwpRpb1O0HG7FpoHxlriRlMnibxcE29aUY53G\r\nNiQuRpEE7zPuu+a5TGsa/8EERU+XI6F44f2/zf1XfANgM5Lr0iyzHAiH0IUjW9Qm\r\nN+/+j6BUMfwpKRk08QcKqVk+VtknZzoBRBYxAA==\r\n-----END PKCS7-----\r\n","next":true}]'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 353.648875ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.21.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_ZB6OLcrv08RFSUAP
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 41
+        uncompressed: false
+        body: '{"deleted_at":"2025-05-29T06:43:32.042Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 202 Accepted
+        code: 202
+        duration: 366.317458ms
