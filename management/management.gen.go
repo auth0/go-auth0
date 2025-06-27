@@ -10024,6 +10024,14 @@ func (p *PromptRendering) GetDefaultHeadTagsDisabled() bool {
 	return *p.DefaultHeadTagsDisabled
 }
 
+// GetFilters returns the Filters field.
+func (p *PromptRendering) GetFilters() *PromptRenderingFilters {
+	if p == nil {
+		return nil
+	}
+	return p.Filters
+}
+
 // GetPrompt returns the Prompt field.
 func (p *PromptRendering) GetPrompt() *PromptType {
 	if p == nil {
@@ -10056,8 +10064,74 @@ func (p *PromptRendering) GetTenant() string {
 	return *p.Tenant
 }
 
+// GetUsePageTemplate returns the UsePageTemplate field if it's non-nil, zero value otherwise.
+func (p *PromptRendering) GetUsePageTemplate() bool {
+	if p == nil || p.UsePageTemplate == nil {
+		return false
+	}
+	return *p.UsePageTemplate
+}
+
 // String returns a string representation of PromptRendering.
 func (p *PromptRendering) String() string {
+	return Stringify(p)
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (p *PromptRenderingFilter) GetID() string {
+	if p == nil || p.ID == nil {
+		return ""
+	}
+	return *p.ID
+}
+
+// GetMetadata returns the Metadata field if it's non-nil, zero value otherwise.
+func (p *PromptRenderingFilter) GetMetadata() map[string]interface{} {
+	if p == nil || p.Metadata == nil {
+		return map[string]interface{}{}
+	}
+	return *p.Metadata
+}
+
+// String returns a string representation of PromptRenderingFilter.
+func (p *PromptRenderingFilter) String() string {
+	return Stringify(p)
+}
+
+// GetClients returns the Clients field if it's non-nil, zero value otherwise.
+func (p *PromptRenderingFilters) GetClients() []PromptRenderingFilter {
+	if p == nil || p.Clients == nil {
+		return nil
+	}
+	return *p.Clients
+}
+
+// GetDomains returns the Domains field if it's non-nil, zero value otherwise.
+func (p *PromptRenderingFilters) GetDomains() []PromptRenderingFilter {
+	if p == nil || p.Domains == nil {
+		return nil
+	}
+	return *p.Domains
+}
+
+// GetMatchType returns the MatchType field if it's non-nil, zero value otherwise.
+func (p *PromptRenderingFilters) GetMatchType() string {
+	if p == nil || p.MatchType == nil {
+		return ""
+	}
+	return *p.MatchType
+}
+
+// GetOrganizations returns the Organizations field if it's non-nil, zero value otherwise.
+func (p *PromptRenderingFilters) GetOrganizations() []PromptRenderingFilter {
+	if p == nil || p.Organizations == nil {
+		return nil
+	}
+	return *p.Organizations
+}
+
+// String returns a string representation of PromptRenderingFilters.
+func (p *PromptRenderingFilters) String() string {
 	return Stringify(p)
 }
 
