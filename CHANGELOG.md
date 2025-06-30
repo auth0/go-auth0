@@ -1,5 +1,11 @@
 # Change Log
 
+## [v1.24.0](https://github.com/auth0/go-auth0/tree/v1.24.0) (2025-06-30)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.23.0...v1.24.0)
+
+**Added**
+- feat(prompt): add Filters and UsePageTemplate support to PromptRendering [\#573](https://github.com/auth0/go-auth0/pull/573) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.23.0](https://github.com/auth0/go-auth0/tree/v1.23.0) (2025-06-19)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.22.2...v1.23.0)
 
