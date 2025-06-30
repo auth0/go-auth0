@@ -12572,6 +12572,13 @@ func TestPromptRendering_GetDefaultHeadTagsDisabled(tt *testing.T) {
 	p.GetDefaultHeadTagsDisabled()
 }
 
+func TestPromptRendering_GetFilters(tt *testing.T) {
+	p := &PromptRendering{}
+	p.GetFilters()
+	p = nil
+	p.GetFilters()
+}
+
 func TestPromptRendering_GetPrompt(tt *testing.T) {
 	p := &PromptRendering{}
 	p.GetPrompt()
@@ -12603,9 +12610,95 @@ func TestPromptRendering_GetTenant(tt *testing.T) {
 	p.GetTenant()
 }
 
+func TestPromptRendering_GetUsePageTemplate(tt *testing.T) {
+	var zeroValue bool
+	p := &PromptRendering{UsePageTemplate: &zeroValue}
+	p.GetUsePageTemplate()
+	p = &PromptRendering{}
+	p.GetUsePageTemplate()
+	p = nil
+	p.GetUsePageTemplate()
+}
+
 func TestPromptRendering_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &PromptRendering{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPromptRenderingFilter_GetID(tt *testing.T) {
+	var zeroValue string
+	p := &PromptRenderingFilter{ID: &zeroValue}
+	p.GetID()
+	p = &PromptRenderingFilter{}
+	p.GetID()
+	p = nil
+	p.GetID()
+}
+
+func TestPromptRenderingFilter_GetMetadata(tt *testing.T) {
+	var zeroValue map[string]interface{}
+	p := &PromptRenderingFilter{Metadata: &zeroValue}
+	p.GetMetadata()
+	p = &PromptRenderingFilter{}
+	p.GetMetadata()
+	p = nil
+	p.GetMetadata()
+}
+
+func TestPromptRenderingFilter_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PromptRenderingFilter{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPromptRenderingFilters_GetClients(tt *testing.T) {
+	var zeroValue []PromptRenderingFilter
+	p := &PromptRenderingFilters{Clients: &zeroValue}
+	p.GetClients()
+	p = &PromptRenderingFilters{}
+	p.GetClients()
+	p = nil
+	p.GetClients()
+}
+
+func TestPromptRenderingFilters_GetDomains(tt *testing.T) {
+	var zeroValue []PromptRenderingFilter
+	p := &PromptRenderingFilters{Domains: &zeroValue}
+	p.GetDomains()
+	p = &PromptRenderingFilters{}
+	p.GetDomains()
+	p = nil
+	p.GetDomains()
+}
+
+func TestPromptRenderingFilters_GetMatchType(tt *testing.T) {
+	var zeroValue string
+	p := &PromptRenderingFilters{MatchType: &zeroValue}
+	p.GetMatchType()
+	p = &PromptRenderingFilters{}
+	p.GetMatchType()
+	p = nil
+	p.GetMatchType()
+}
+
+func TestPromptRenderingFilters_GetOrganizations(tt *testing.T) {
+	var zeroValue []PromptRenderingFilter
+	p := &PromptRenderingFilters{Organizations: &zeroValue}
+	p.GetOrganizations()
+	p = &PromptRenderingFilters{}
+	p.GetOrganizations()
+	p = nil
+	p.GetOrganizations()
+}
+
+func TestPromptRenderingFilters_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PromptRenderingFilters{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
