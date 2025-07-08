@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-LogStream-1751988058","type":"splunk","isPriority":true,"pii_config":{"log_fields":["first_name"],"method":"mask","algorithm":"xxhash"},"sink":{"splunkDomain":"demo.splunk.com","splunkToken":"12a34ab5-c6d7-8901-23ef-456b7c89d0c1","splunkPort":"8080","splunkSecure":true}}
+            {"name":"Test-LogStream-1751995559","type":"splunk","isPriority":true,"pii_config":{"log_fields":["first_name"],"method":"mask","algorithm":"xxhash"},"sink":{"splunkDomain":"demo.splunk.com","splunkToken":"12a34ab5-c6d7-8901-23ef-456b7c89d0c1","splunkPort":"8080","splunkSecure":true}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.23.0
+                - Go-Auth0/1.24.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000000046","name":"Test-LogStream-1751988058","type":"splunk","status":"active","sink":{"splunkDomain":"demo.splunk.com","splunkPort":"8080","splunkToken":"12a34ab5-c6d7-8901-23ef-456b7c89d0c1","splunkSecure":true},"filters":[{"type":"category","name":"security"}],"isPriority":true,"pii_config":{"log_fields":["first_name"],"method":"mask","algorithm":"xxhash"}}'
+        body: '{"id":"lst_0000000000012792","name":"Test-LogStream-1751995559","type":"splunk","status":"active","sink":{"splunkDomain":"demo.splunk.com","splunkPort":"8080","splunkToken":"12a34ab5-c6d7-8901-23ef-456b7c89d0c1","splunkSecure":true},"filters":[{"type":"category","name":"security"}],"isPriority":true,"pii_config":{"log_fields":["first_name"],"method":"mask","algorithm":"xxhash"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 509.115584ms
+        duration: 3.388872542s
     - id: 1
       request:
         proto: HTTP/1.1
@@ -52,8 +52,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.23.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000000046
+                - Go-Auth0/1.24.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000012792
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -69,7 +69,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 350.695667ms
+        duration: 383.247209ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -85,8 +85,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.23.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000000046
+                - Go-Auth0/1.24.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000012792
         method: GET
       response:
         proto: HTTP/2.0
@@ -102,7 +102,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 404 Not Found
         code: 404
-        duration: 1.0065725s
+        duration: 359.960041ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -118,8 +118,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.23.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000000046
+                - Go-Auth0/1.24.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000012792
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -135,4 +135,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 589.4335ms
+        duration: 352.229916ms

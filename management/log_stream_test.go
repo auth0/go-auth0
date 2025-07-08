@@ -215,6 +215,13 @@ func TestLogStreamManager_Update(t *testing.T) {
 						"name": "auth.login.fail",
 					},
 				},
+				PIIConfig: &LogStreamPiiConfig{
+					LogFields: &[]string{
+						"last_name",
+					},
+					Method:    auth0.String("hash"),
+					Algorithm: auth0.String("xxhash"),
+				},
 			}
 
 			err := api.LogStream.Update(context.Background(), logStream.GetID(), updatedLogStream)
@@ -249,7 +256,26 @@ func TestLogStreamManager_Delete(t *testing.T) {
 func TestLogStreamManager_List(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	// There are no params we can add here, unfortunately.
+	givenALogStream(t, logStreamTestCase{
+		name: "DataDog LogStream",
+		logStream: LogStream{
+			Name:       auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
+			Type:       auth0.String(LogStreamTypeDatadog),
+			IsPriority: auth0.Bool(true),
+			Sink: &LogStreamSinkDatadog{
+				APIKey: auth0.String("121233123455"),
+				Region: auth0.String("us"),
+			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
+			},
+		},
+	})
+
 	logStreamList, err := api.LogStream.List(context.Background())
 	assert.NoError(t, err)
 	assert.GreaterOrEqual(t, len(logStreamList), 0)
