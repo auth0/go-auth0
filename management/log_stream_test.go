@@ -23,6 +23,13 @@ var logStreamTestCases = []logStreamTestCase{
 				AccountID: auth0.String("999999999999"),
 				Region:    auth0.String("us-west-2"),
 			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
+			},
 		},
 	},
 	// { // This test requires an active subscription.
@@ -49,6 +56,13 @@ var logStreamTestCases = []logStreamTestCase{
 				ContentFormat: auth0.String("JSONLINES"),
 				ContentType:   auth0.String("application/json"),
 			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
+			},
 		},
 	},
 	{
@@ -61,6 +75,13 @@ var logStreamTestCases = []logStreamTestCase{
 				APIKey: auth0.String("121233123455"),
 				Region: auth0.String("us"),
 			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
+			},
 		},
 	},
 	{
@@ -71,6 +92,13 @@ var logStreamTestCases = []logStreamTestCase{
 			IsPriority: auth0.Bool(true),
 			Sink: &LogStreamSinkSegment{
 				WriteKey: auth0.String("121233123455"),
+			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
 			},
 		},
 	},
@@ -86,6 +114,13 @@ var logStreamTestCases = []logStreamTestCase{
 				Secure: auth0.Bool(true),
 				Token:  auth0.String("12a34ab5-c6d7-8901-23ef-456b7c89d0c1"),
 			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
+			},
 		},
 	},
 	{
@@ -96,6 +131,13 @@ var logStreamTestCases = []logStreamTestCase{
 			IsPriority: auth0.Bool(true),
 			Sink: &LogStreamSinkSumo{
 				SourceAddress: auth0.String("https://example.com"),
+			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
 			},
 		},
 	},
@@ -110,6 +152,13 @@ var logStreamTestCases = []logStreamTestCase{
 				ProjectID:              auth0.String("123456789"),
 				ServiceAccountUsername: auth0.String("fake-account.123abc.mp-service-account"),
 				ServiceAccountPassword: auth0.String("8iwyKSzwV2brfakepassGGKhsZ3INozo"),
+			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
 			},
 		},
 	},

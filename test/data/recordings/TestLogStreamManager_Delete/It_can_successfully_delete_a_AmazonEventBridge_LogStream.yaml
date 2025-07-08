@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-LogStream-1732609495","type":"eventbridge","isPriority":true,"sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2"}}
+            {"name":"Test-LogStream-1732609495","type":"eventbridge","isPriority":true,"sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","pii_config":{"log_fields":["first_name"],"method":"mask","algorithm":"xxhash"}}}
         form: {}
         headers:
             Content-Type:
@@ -30,7 +30,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000002080","name":"Test-LogStream-1732609495","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-eefdf333-8cea-49d2-bf59-054e2adc3915/auth0.logs"},"filters":[{"type":"category","name":"security"}],"isPriority":true}'
+        body: '{"id":"lst_0000000000002080","name":"Test-LogStream-1732609495","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-eefdf333-8cea-49d2-bf59-054e2adc3915/auth0.logs"},"filters":[{"type":"category","name":"security"}],"isPriority":true,"pii_config":{"log_fields":["first_name"],"method":"mask","algorithm":"xxhash"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8

@@ -8581,6 +8581,14 @@ func (l *LogStream) GetName() string {
 	return *l.Name
 }
 
+// GetPIIConfig returns the PIIConfig field.
+func (l *LogStream) GetPIIConfig() *LogStreamPiiConfig {
+	if l == nil {
+		return nil
+	}
+	return l.PIIConfig
+}
+
 // GetStatus returns the Status field if it's non-nil, zero value otherwise.
 func (l *LogStream) GetStatus() string {
 	if l == nil || l.Status == nil {
@@ -8599,6 +8607,35 @@ func (l *LogStream) GetType() string {
 
 // String returns a string representation of LogStream.
 func (l *LogStream) String() string {
+	return Stringify(l)
+}
+
+// GetAlgorithm returns the Algorithm field if it's non-nil, zero value otherwise.
+func (l *LogStreamPiiConfig) GetAlgorithm() string {
+	if l == nil || l.Algorithm == nil {
+		return ""
+	}
+	return *l.Algorithm
+}
+
+// GetLogFields returns the LogFields field if it's non-nil, zero value otherwise.
+func (l *LogStreamPiiConfig) GetLogFields() []string {
+	if l == nil || l.LogFields == nil {
+		return nil
+	}
+	return *l.LogFields
+}
+
+// GetMethod returns the Method field if it's non-nil, zero value otherwise.
+func (l *LogStreamPiiConfig) GetMethod() string {
+	if l == nil || l.Method == nil {
+		return ""
+	}
+	return *l.Method
+}
+
+// String returns a string representation of LogStreamPiiConfig.
+func (l *LogStreamPiiConfig) String() string {
 	return Stringify(l)
 }
 
