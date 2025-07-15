@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 139
+        content_length: 219
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-LogStream-1732609495","type":"eventbridge","isPriority":true,"sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2"}}
+            {"name":"Test-LogStream-1751995559","type":"eventbridge","isPriority":true,"pii_config":{"log_fields":["first_name"],"method":"mask","algorithm":"xxhash"},"sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
+                - Go-Auth0/1.24.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000002066","name":"Test-LogStream-1732609495","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-e15f958a-fc65-492a-ad8c-e094ff013b07/auth0.logs"},"filters":[{"type":"category","name":"security"}],"isPriority":true}'
+        body: '{"id":"lst_0000000000012774","name":"Test-LogStream-1751995559","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-dc5d32f1-824f-4893-aee1-275cc5de44be/auth0.logs"},"filters":[{"type":"category","name":"security"}],"isPriority":true,"pii_config":{"log_fields":["first_name"],"method":"mask","algorithm":"xxhash"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 486.307458ms
+        duration: 842.8775ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -51,11 +51,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002066
+                - Go-Auth0/1.24.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000012774
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +63,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000002066","name":"Test-LogStream-1732609495","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-e15f958a-fc65-492a-ad8c-e094ff013b07/auth0.logs"},"filters":[{"type":"category","name":"security"}],"isPriority":true}'
+        body: '{"id":"lst_0000000000012774","name":"Test-LogStream-1751995559","type":"eventbridge","status":"active","sink":{"awsAccountId":"999999999999","awsRegion":"us-west-2","awsPartnerEventSource":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-dc5d32f1-824f-4893-aee1-275cc5de44be/auth0.logs"},"filters":[{"type":"category","name":"security"}],"isPriority":true,"pii_config":{"log_fields":["first_name"],"method":"mask","algorithm":"xxhash"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 377.186041ms
+        duration: 362.987417ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -86,11 +84,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002066
+                - Go-Auth0/1.24.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000012774
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -106,4 +102,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 426.736875ms
+        duration: 773.8025ms

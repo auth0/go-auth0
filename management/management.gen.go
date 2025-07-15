@@ -8663,6 +8663,14 @@ func (l *LogStream) GetName() string {
 	return *l.Name
 }
 
+// GetPIIConfig returns the PIIConfig field.
+func (l *LogStream) GetPIIConfig() *LogStreamPiiConfig {
+	if l == nil {
+		return nil
+	}
+	return l.PIIConfig
+}
+
 // GetStatus returns the Status field if it's non-nil, zero value otherwise.
 func (l *LogStream) GetStatus() string {
 	if l == nil || l.Status == nil {
@@ -8681,6 +8689,35 @@ func (l *LogStream) GetType() string {
 
 // String returns a string representation of LogStream.
 func (l *LogStream) String() string {
+	return Stringify(l)
+}
+
+// GetAlgorithm returns the Algorithm field if it's non-nil, zero value otherwise.
+func (l *LogStreamPiiConfig) GetAlgorithm() string {
+	if l == nil || l.Algorithm == nil {
+		return ""
+	}
+	return *l.Algorithm
+}
+
+// GetLogFields returns the LogFields field if it's non-nil, zero value otherwise.
+func (l *LogStreamPiiConfig) GetLogFields() []string {
+	if l == nil || l.LogFields == nil {
+		return nil
+	}
+	return *l.LogFields
+}
+
+// GetMethod returns the Method field if it's non-nil, zero value otherwise.
+func (l *LogStreamPiiConfig) GetMethod() string {
+	if l == nil || l.Method == nil {
+		return ""
+	}
+	return *l.Method
+}
+
+// String returns a string representation of LogStreamPiiConfig.
+func (l *LogStreamPiiConfig) String() string {
 	return Stringify(l)
 }
 
@@ -10106,6 +10143,14 @@ func (p *PromptRendering) GetDefaultHeadTagsDisabled() bool {
 	return *p.DefaultHeadTagsDisabled
 }
 
+// GetFilters returns the Filters field.
+func (p *PromptRendering) GetFilters() *PromptRenderingFilters {
+	if p == nil {
+		return nil
+	}
+	return p.Filters
+}
+
 // GetPrompt returns the Prompt field.
 func (p *PromptRendering) GetPrompt() *PromptType {
 	if p == nil {
@@ -10138,8 +10183,74 @@ func (p *PromptRendering) GetTenant() string {
 	return *p.Tenant
 }
 
+// GetUsePageTemplate returns the UsePageTemplate field if it's non-nil, zero value otherwise.
+func (p *PromptRendering) GetUsePageTemplate() bool {
+	if p == nil || p.UsePageTemplate == nil {
+		return false
+	}
+	return *p.UsePageTemplate
+}
+
 // String returns a string representation of PromptRendering.
 func (p *PromptRendering) String() string {
+	return Stringify(p)
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (p *PromptRenderingFilter) GetID() string {
+	if p == nil || p.ID == nil {
+		return ""
+	}
+	return *p.ID
+}
+
+// GetMetadata returns the Metadata field if it's non-nil, zero value otherwise.
+func (p *PromptRenderingFilter) GetMetadata() map[string]interface{} {
+	if p == nil || p.Metadata == nil {
+		return map[string]interface{}{}
+	}
+	return *p.Metadata
+}
+
+// String returns a string representation of PromptRenderingFilter.
+func (p *PromptRenderingFilter) String() string {
+	return Stringify(p)
+}
+
+// GetClients returns the Clients field if it's non-nil, zero value otherwise.
+func (p *PromptRenderingFilters) GetClients() []PromptRenderingFilter {
+	if p == nil || p.Clients == nil {
+		return nil
+	}
+	return *p.Clients
+}
+
+// GetDomains returns the Domains field if it's non-nil, zero value otherwise.
+func (p *PromptRenderingFilters) GetDomains() []PromptRenderingFilter {
+	if p == nil || p.Domains == nil {
+		return nil
+	}
+	return *p.Domains
+}
+
+// GetMatchType returns the MatchType field if it's non-nil, zero value otherwise.
+func (p *PromptRenderingFilters) GetMatchType() string {
+	if p == nil || p.MatchType == nil {
+		return ""
+	}
+	return *p.MatchType
+}
+
+// GetOrganizations returns the Organizations field if it's non-nil, zero value otherwise.
+func (p *PromptRenderingFilters) GetOrganizations() []PromptRenderingFilter {
+	if p == nil || p.Organizations == nil {
+		return nil
+	}
+	return *p.Organizations
+}
+
+// String returns a string representation of PromptRenderingFilters.
+func (p *PromptRenderingFilters) String() string {
 	return Stringify(p)
 }
 

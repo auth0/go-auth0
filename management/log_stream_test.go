@@ -23,6 +23,13 @@ var logStreamTestCases = []logStreamTestCase{
 				AccountID: auth0.String("999999999999"),
 				Region:    auth0.String("us-west-2"),
 			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
+			},
 		},
 	},
 	// { // This test requires an active subscription.
@@ -49,6 +56,13 @@ var logStreamTestCases = []logStreamTestCase{
 				ContentFormat: auth0.String("JSONLINES"),
 				ContentType:   auth0.String("application/json"),
 			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
+			},
 		},
 	},
 	{
@@ -61,6 +75,13 @@ var logStreamTestCases = []logStreamTestCase{
 				APIKey: auth0.String("121233123455"),
 				Region: auth0.String("us"),
 			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
+			},
 		},
 	},
 	{
@@ -71,6 +92,13 @@ var logStreamTestCases = []logStreamTestCase{
 			IsPriority: auth0.Bool(true),
 			Sink: &LogStreamSinkSegment{
 				WriteKey: auth0.String("121233123455"),
+			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
 			},
 		},
 	},
@@ -86,6 +114,13 @@ var logStreamTestCases = []logStreamTestCase{
 				Secure: auth0.Bool(true),
 				Token:  auth0.String("12a34ab5-c6d7-8901-23ef-456b7c89d0c1"),
 			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
+			},
 		},
 	},
 	{
@@ -96,6 +131,13 @@ var logStreamTestCases = []logStreamTestCase{
 			IsPriority: auth0.Bool(true),
 			Sink: &LogStreamSinkSumo{
 				SourceAddress: auth0.String("https://example.com"),
+			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
 			},
 		},
 	},
@@ -110,6 +152,13 @@ var logStreamTestCases = []logStreamTestCase{
 				ProjectID:              auth0.String("123456789"),
 				ServiceAccountUsername: auth0.String("fake-account.123abc.mp-service-account"),
 				ServiceAccountPassword: auth0.String("8iwyKSzwV2brfakepassGGKhsZ3INozo"),
+			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
 			},
 		},
 	},
@@ -166,6 +215,13 @@ func TestLogStreamManager_Update(t *testing.T) {
 						"name": "auth.login.fail",
 					},
 				},
+				PIIConfig: &LogStreamPiiConfig{
+					LogFields: &[]string{
+						"last_name",
+					},
+					Method:    auth0.String("hash"),
+					Algorithm: auth0.String("xxhash"),
+				},
 			}
 
 			err := api.LogStream.Update(context.Background(), logStream.GetID(), updatedLogStream)
@@ -200,10 +256,31 @@ func TestLogStreamManager_Delete(t *testing.T) {
 func TestLogStreamManager_List(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	// There are no params we can add here, unfortunately.
+	expected := givenALogStream(t, logStreamTestCase{
+		name: "DataDog LogStream",
+		logStream: LogStream{
+			Name:       auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
+			Type:       auth0.String(LogStreamTypeDatadog),
+			IsPriority: auth0.Bool(true),
+			Sink: &LogStreamSinkDatadog{
+				APIKey: auth0.String("121233123455"),
+				Region: auth0.String("us"),
+			},
+			PIIConfig: &LogStreamPiiConfig{
+				LogFields: &[]string{
+					"first_name",
+				},
+				Method:    auth0.String("mask"),
+				Algorithm: auth0.String("xxhash"),
+			},
+		},
+	})
+
 	logStreamList, err := api.LogStream.List(context.Background())
+
 	assert.NoError(t, err)
-	assert.GreaterOrEqual(t, len(logStreamList), 0)
+	assert.Greater(t, len(logStreamList), 0)
+	assert.Contains(t, logStreamList, expected)
 }
 
 func givenALogStream(t *testing.T, testCase logStreamTestCase) *LogStream {
