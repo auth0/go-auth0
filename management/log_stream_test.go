@@ -256,7 +256,7 @@ func TestLogStreamManager_Delete(t *testing.T) {
 func TestLogStreamManager_List(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	givenALogStream(t, logStreamTestCase{
+	expected := givenALogStream(t, logStreamTestCase{
 		name: "DataDog LogStream",
 		logStream: LogStream{
 			Name:       auth0.Stringf("Test-LogStream-%d", time.Now().Unix()),
@@ -277,8 +277,10 @@ func TestLogStreamManager_List(t *testing.T) {
 	})
 
 	logStreamList, err := api.LogStream.List(context.Background())
+
 	assert.NoError(t, err)
-	assert.GreaterOrEqual(t, len(logStreamList), 0)
+	assert.Greater(t, len(logStreamList), 0)
+	assert.Contains(t, logStreamList, expected)
 }
 
 func givenALogStream(t *testing.T, testCase logStreamTestCase) *LogStream {
