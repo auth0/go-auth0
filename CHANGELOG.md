@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.25.0](https://github.com/auth0/go-auth0/tree/v1.25.0) (2025-07-15)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.24.0...v1.25.0)
+
+**Added**
+- Add support for `domain metadata` in `CustomDomain` struct, implement `ListWithPagination` method, and update Management options with `WithCustomDomainHeader` [\#551](https://github.com/auth0/go-auth0/pull/551) ([developerkunal](https://github.com/developerkunal))
+- feat(logstreams): Add PIIConfig to LogStream struct for PII masking support [\#575](https://github.com/auth0/go-auth0/pull/575) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.24.0](https://github.com/auth0/go-auth0/tree/v1.24.0) (2025-06-30)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.23.0...v1.24.0)
 
