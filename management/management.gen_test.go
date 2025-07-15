@@ -10702,6 +10702,13 @@ func TestLogStream_GetName(tt *testing.T) {
 	l.GetName()
 }
 
+func TestLogStream_GetPIIConfig(tt *testing.T) {
+	l := &LogStream{}
+	l.GetPIIConfig()
+	l = nil
+	l.GetPIIConfig()
+}
+
 func TestLogStream_GetStatus(tt *testing.T) {
 	var zeroValue string
 	l := &LogStream{Status: &zeroValue}
@@ -10725,6 +10732,44 @@ func TestLogStream_GetType(tt *testing.T) {
 func TestLogStream_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &LogStream{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestLogStreamPiiConfig_GetAlgorithm(tt *testing.T) {
+	var zeroValue string
+	l := &LogStreamPiiConfig{Algorithm: &zeroValue}
+	l.GetAlgorithm()
+	l = &LogStreamPiiConfig{}
+	l.GetAlgorithm()
+	l = nil
+	l.GetAlgorithm()
+}
+
+func TestLogStreamPiiConfig_GetLogFields(tt *testing.T) {
+	var zeroValue []string
+	l := &LogStreamPiiConfig{LogFields: &zeroValue}
+	l.GetLogFields()
+	l = &LogStreamPiiConfig{}
+	l.GetLogFields()
+	l = nil
+	l.GetLogFields()
+}
+
+func TestLogStreamPiiConfig_GetMethod(tt *testing.T) {
+	var zeroValue string
+	l := &LogStreamPiiConfig{Method: &zeroValue}
+	l.GetMethod()
+	l = &LogStreamPiiConfig{}
+	l.GetMethod()
+	l = nil
+	l.GetMethod()
+}
+
+func TestLogStreamPiiConfig_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &LogStreamPiiConfig{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
