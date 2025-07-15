@@ -153,3 +153,10 @@ func WithNoRetries() Option {
 		m.retryStrategy = client.RetryOptions{}
 	}
 }
+
+// WithCustomDomainHeader sets the custom domain for the Management instance.
+func WithCustomDomainHeader(domain string) Option {
+	return func(m *Management) {
+		m.customDomainHeader = domain
+	}
+}
