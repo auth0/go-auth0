@@ -60,6 +60,7 @@ type LogStream struct {
 // LogStreamPiiConfig is used to configure the PII handling for the log stream.
 type LogStreamPiiConfig struct {
 	// LogFields is a list of fields that should be handled as PII.
+	// Allowed values: "first_name", "last_name", "username", "email", "phone", "address".
 	LogFields *[]string `json:"log_fields,omitempty"`
 	// Method is the method to use for handling PII. Can be "mask" or "hash".
 	Method *string `json:"method,omitempty"`
