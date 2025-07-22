@@ -14778,14 +14778,14 @@ func TestSessionTransfer_GetEnforceDeviceBinding(tt *testing.T) {
 	s.GetEnforceDeviceBinding()
 }
 
-func TestSessionTransfer_GetEnforceOnlineRefreshToken(tt *testing.T) {
+func TestSessionTransfer_GetEnforceOnlineRefreshTokens(tt *testing.T) {
 	var zeroValue bool
-	s := &SessionTransfer{EnforceOnlineRefreshToken: &zeroValue}
-	s.GetEnforceOnlineRefreshToken()
+	s := &SessionTransfer{EnforceOnlineRefreshTokens: &zeroValue}
+	s.GetEnforceOnlineRefreshTokens()
 	s = &SessionTransfer{}
-	s.GetEnforceOnlineRefreshToken()
+	s.GetEnforceOnlineRefreshTokens()
 	s = nil
-	s.GetEnforceOnlineRefreshToken()
+	s.GetEnforceOnlineRefreshTokens()
 }
 
 func TestSessionTransfer_String(t *testing.T) {

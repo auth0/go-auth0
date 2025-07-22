@@ -404,7 +404,7 @@ type SessionTransfer struct {
 	AllowedAuthenticationMethods  *[]string `json:"allowed_authentication_methods,omitempty"`
 	EnforceDeviceBinding          *string   `json:"enforce_device_binding,omitempty"`
 	AllowRefreshToken             *bool     `json:"allow_refresh_token,omitempty"`
-	EnforceOnlineRefreshToken     *bool     `json:"enforce_online_refresh_tokens,omitempty"`
+	EnforceOnlineRefreshTokens     *bool     `json:"enforce_online_refresh_tokens,omitempty"`
 	EnforceCascadeRevocation      *bool     `json:"enforce_cascade_revocation,omitempty"`
 }
 

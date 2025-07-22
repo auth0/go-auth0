@@ -11760,12 +11760,12 @@ func (s *SessionTransfer) GetEnforceDeviceBinding() string {
 	return *s.EnforceDeviceBinding
 }
 
-// GetEnforceOnlineRefreshToken returns the EnforceOnlineRefreshToken field if it's non-nil, zero value otherwise.
-func (s *SessionTransfer) GetEnforceOnlineRefreshToken() bool {
-	if s == nil || s.EnforceOnlineRefreshToken == nil {
+// GetEnforceOnlineRefreshTokens returns the EnforceOnlineRefreshTokens field if it's non-nil, zero value otherwise.
+func (s *SessionTransfer) GetEnforceOnlineRefreshTokens() bool {
+	if s == nil || s.EnforceOnlineRefreshTokens == nil {
 		return false
 	}
-	return *s.EnforceOnlineRefreshToken
+	return *s.EnforceOnlineRefreshTokens
 }
 
 // String returns a string representation of SessionTransfer.
