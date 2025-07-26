@@ -1949,6 +1949,44 @@ func TestBruteForceProtection_String(t *testing.T) {
 	}
 }
 
+func TestBulkRedeliverRequest_GetDateFrom(tt *testing.T) {
+	var zeroValue string
+	b := &BulkRedeliverRequest{DateFrom: &zeroValue}
+	b.GetDateFrom()
+	b = &BulkRedeliverRequest{}
+	b.GetDateFrom()
+	b = nil
+	b.GetDateFrom()
+}
+
+func TestBulkRedeliverRequest_GetDateTo(tt *testing.T) {
+	var zeroValue string
+	b := &BulkRedeliverRequest{DateTo: &zeroValue}
+	b.GetDateTo()
+	b = &BulkRedeliverRequest{}
+	b.GetDateTo()
+	b = nil
+	b.GetDateTo()
+}
+
+func TestBulkRedeliverRequest_GetEventTypes(tt *testing.T) {
+	var zeroValue []string
+	b := &BulkRedeliverRequest{EventTypes: &zeroValue}
+	b.GetEventTypes()
+	b = &BulkRedeliverRequest{}
+	b.GetEventTypes()
+	b = nil
+	b.GetEventTypes()
+}
+
+func TestBulkRedeliverRequest_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BulkRedeliverRequest{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestClient_GetAddons(tt *testing.T) {
 	c := &Client{}
 	c.GetAddons()
@@ -8709,6 +8747,152 @@ func TestDailyStat_String(t *testing.T) {
 	}
 }
 
+func TestDeliveryAttempt_GetDuration(tt *testing.T) {
+	var zeroValue float64
+	d := &DeliveryAttempt{Duration: &zeroValue}
+	d.GetDuration()
+	d = &DeliveryAttempt{}
+	d.GetDuration()
+	d = nil
+	d.GetDuration()
+}
+
+func TestDeliveryAttempt_GetErrorMessage(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryAttempt{ErrorMessage: &zeroValue}
+	d.GetErrorMessage()
+	d = &DeliveryAttempt{}
+	d.GetErrorMessage()
+	d = nil
+	d.GetErrorMessage()
+}
+
+func TestDeliveryAttempt_GetStatus(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryAttempt{Status: &zeroValue}
+	d.GetStatus()
+	d = &DeliveryAttempt{}
+	d.GetStatus()
+	d = nil
+	d.GetStatus()
+}
+
+func TestDeliveryAttempt_GetTimestamp(tt *testing.T) {
+	var zeroValue time.Time
+	d := &DeliveryAttempt{Timestamp: &zeroValue}
+	d.GetTimestamp()
+	d = &DeliveryAttempt{}
+	d.GetTimestamp()
+	d = nil
+	d.GetTimestamp()
+}
+
+func TestDeliveryAttempt_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &DeliveryAttempt{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestDeliveryEvent_GetA0Purpose(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{A0Purpose: &zeroValue}
+	d.GetA0Purpose()
+	d = &DeliveryEvent{}
+	d.GetA0Purpose()
+	d = nil
+	d.GetA0Purpose()
+}
+
+func TestDeliveryEvent_GetA0Stream(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{A0Stream: &zeroValue}
+	d.GetA0Stream()
+	d = &DeliveryEvent{}
+	d.GetA0Stream()
+	d = nil
+	d.GetA0Stream()
+}
+
+func TestDeliveryEvent_GetA0Tenant(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{A0Tenant: &zeroValue}
+	d.GetA0Tenant()
+	d = &DeliveryEvent{}
+	d.GetA0Tenant()
+	d = nil
+	d.GetA0Tenant()
+}
+
+func TestDeliveryEvent_GetData(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	d := &DeliveryEvent{Data: zeroValue}
+	d.GetData()
+	d = &DeliveryEvent{}
+	d.GetData()
+	d = nil
+	d.GetData()
+}
+
+func TestDeliveryEvent_GetID(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{ID: &zeroValue}
+	d.GetID()
+	d = &DeliveryEvent{}
+	d.GetID()
+	d = nil
+	d.GetID()
+}
+
+func TestDeliveryEvent_GetSource(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{Source: &zeroValue}
+	d.GetSource()
+	d = &DeliveryEvent{}
+	d.GetSource()
+	d = nil
+	d.GetSource()
+}
+
+func TestDeliveryEvent_GetSpecVersion(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{SpecVersion: &zeroValue}
+	d.GetSpecVersion()
+	d = &DeliveryEvent{}
+	d.GetSpecVersion()
+	d = nil
+	d.GetSpecVersion()
+}
+
+func TestDeliveryEvent_GetTime(tt *testing.T) {
+	var zeroValue time.Time
+	d := &DeliveryEvent{Time: &zeroValue}
+	d.GetTime()
+	d = &DeliveryEvent{}
+	d.GetTime()
+	d = nil
+	d.GetTime()
+}
+
+func TestDeliveryEvent_GetType(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{Type: &zeroValue}
+	d.GetType()
+	d = &DeliveryEvent{}
+	d.GetType()
+	d = nil
+	d.GetType()
+}
+
+func TestDeliveryEvent_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &DeliveryEvent{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestDeviceCredential_GetClientID(tt *testing.T) {
 	var zeroValue string
 	d := &DeviceCredential{ClientID: &zeroValue}
@@ -9508,6 +9692,137 @@ func TestEnrollmentTicket_String(t *testing.T) {
 	}
 }
 
+func TestEventDelivery_GetEvent(tt *testing.T) {
+	e := &EventDelivery{}
+	e.GetEvent()
+	e = nil
+	e.GetEvent()
+}
+
+func TestEventDelivery_GetEventStreamID(tt *testing.T) {
+	var zeroValue string
+	e := &EventDelivery{EventStreamID: &zeroValue}
+	e.GetEventStreamID()
+	e = &EventDelivery{}
+	e.GetEventStreamID()
+	e = nil
+	e.GetEventStreamID()
+}
+
+func TestEventDelivery_GetEventType(tt *testing.T) {
+	var zeroValue string
+	e := &EventDelivery{EventType: &zeroValue}
+	e.GetEventType()
+	e = &EventDelivery{}
+	e.GetEventType()
+	e = nil
+	e.GetEventType()
+}
+
+func TestEventDelivery_GetID(tt *testing.T) {
+	var zeroValue string
+	e := &EventDelivery{ID: &zeroValue}
+	e.GetID()
+	e = &EventDelivery{}
+	e.GetID()
+	e = nil
+	e.GetID()
+}
+
+func TestEventDelivery_GetStatus(tt *testing.T) {
+	var zeroValue string
+	e := &EventDelivery{Status: &zeroValue}
+	e.GetStatus()
+	e = &EventDelivery{}
+	e.GetStatus()
+	e = nil
+	e.GetStatus()
+}
+
+func TestEventDelivery_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventDelivery{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventDeliveryList_GetNextPageToken(tt *testing.T) {
+	var zeroValue string
+	e := &EventDeliveryList{NextPageToken: &zeroValue}
+	e.GetNextPageToken()
+	e = &EventDeliveryList{}
+	e.GetNextPageToken()
+	e = nil
+	e.GetNextPageToken()
+}
+
+func TestEventDeliveryList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventDeliveryList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventDeliveryListQueryParams_GetDateFrom(tt *testing.T) {
+	var zeroValue time.Time
+	e := &EventDeliveryListQueryParams{DateFrom: &zeroValue}
+	e.GetDateFrom()
+	e = &EventDeliveryListQueryParams{}
+	e.GetDateFrom()
+	e = nil
+	e.GetDateFrom()
+}
+
+func TestEventDeliveryListQueryParams_GetDateTo(tt *testing.T) {
+	var zeroValue time.Time
+	e := &EventDeliveryListQueryParams{DateTo: &zeroValue}
+	e.GetDateTo()
+	e = &EventDeliveryListQueryParams{}
+	e.GetDateTo()
+	e = nil
+	e.GetDateTo()
+}
+
+func TestEventDeliveryListQueryParams_GetEventTypes(tt *testing.T) {
+	var zeroValue []string
+	e := &EventDeliveryListQueryParams{EventTypes: &zeroValue}
+	e.GetEventTypes()
+	e = &EventDeliveryListQueryParams{}
+	e.GetEventTypes()
+	e = nil
+	e.GetEventTypes()
+}
+
+func TestEventDeliveryListQueryParams_GetFrom(tt *testing.T) {
+	var zeroValue string
+	e := &EventDeliveryListQueryParams{From: &zeroValue}
+	e.GetFrom()
+	e = &EventDeliveryListQueryParams{}
+	e.GetFrom()
+	e = nil
+	e.GetFrom()
+}
+
+func TestEventDeliveryListQueryParams_GetTake(tt *testing.T) {
+	var zeroValue int
+	e := &EventDeliveryListQueryParams{Take: &zeroValue}
+	e.GetTake()
+	e = &EventDeliveryListQueryParams{}
+	e.GetTake()
+	e = nil
+	e.GetTake()
+}
+
+func TestEventDeliveryListQueryParams_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventDeliveryListQueryParams{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestEventStream_GetCreatedAt(tt *testing.T) {
 	var zeroValue time.Time
 	e := &EventStream{CreatedAt: &zeroValue}
@@ -9614,6 +9929,41 @@ func TestEventStreamDestination_String(t *testing.T) {
 func TestEventStreamList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &EventStreamList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventStreamStats_GetID(tt *testing.T) {
+	var zeroValue string
+	e := &EventStreamStats{ID: &zeroValue}
+	e.GetID()
+	e = &EventStreamStats{}
+	e.GetID()
+	e = nil
+	e.GetID()
+}
+
+func TestEventStreamStats_GetName(tt *testing.T) {
+	var zeroValue string
+	e := &EventStreamStats{Name: &zeroValue}
+	e.GetName()
+	e = &EventStreamStats{}
+	e.GetName()
+	e = nil
+	e.GetName()
+}
+
+func TestEventStreamStats_GetWindow(tt *testing.T) {
+	e := &EventStreamStats{}
+	e.GetWindow()
+	e = nil
+	e.GetWindow()
+}
+
+func TestEventStreamStats_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventStreamStats{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -15166,6 +15516,97 @@ func TestStage_String(t *testing.T) {
 	}
 }
 
+func TestStatsInterval_GetScaleFactor(tt *testing.T) {
+	var zeroValue int
+	s := &StatsInterval{ScaleFactor: &zeroValue}
+	s.GetScaleFactor()
+	s = &StatsInterval{}
+	s.GetScaleFactor()
+	s = nil
+	s.GetScaleFactor()
+}
+
+func TestStatsInterval_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &StatsInterval{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestStatsMetric_GetName(tt *testing.T) {
+	var zeroValue string
+	s := &StatsMetric{Name: &zeroValue}
+	s.GetName()
+	s = &StatsMetric{}
+	s.GetName()
+	s = nil
+	s.GetName()
+}
+
+func TestStatsMetric_GetType(tt *testing.T) {
+	var zeroValue string
+	s := &StatsMetric{Type: &zeroValue}
+	s.GetType()
+	s = &StatsMetric{}
+	s.GetType()
+	s = nil
+	s.GetType()
+}
+
+func TestStatsMetric_GetWindowTotal(tt *testing.T) {
+	var zeroValue int
+	s := &StatsMetric{WindowTotal: &zeroValue}
+	s.GetWindowTotal()
+	s = &StatsMetric{}
+	s.GetWindowTotal()
+	s = nil
+	s.GetWindowTotal()
+}
+
+func TestStatsMetric_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &StatsMetric{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestStatsWindow_GetBucketInterval(tt *testing.T) {
+	s := &StatsWindow{}
+	s.GetBucketInterval()
+	s = nil
+	s.GetBucketInterval()
+}
+
+func TestStatsWindow_GetDateFrom(tt *testing.T) {
+	var zeroValue time.Time
+	s := &StatsWindow{DateFrom: &zeroValue}
+	s.GetDateFrom()
+	s = &StatsWindow{}
+	s.GetDateFrom()
+	s = nil
+	s.GetDateFrom()
+}
+
+func TestStatsWindow_GetDateTo(tt *testing.T) {
+	var zeroValue time.Time
+	s := &StatsWindow{DateTo: &zeroValue}
+	s.GetDateTo()
+	s = &StatsWindow{}
+	s.GetDateTo()
+	s = nil
+	s.GetDateTo()
+}
+
+func TestStatsWindow_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &StatsWindow{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestSuspiciousIPThrottling_GetAllowList(tt *testing.T) {
 	var zeroValue []string
 	s := &SuspiciousIPThrottling{AllowList: &zeroValue}
@@ -16015,6 +16456,71 @@ func TestTenantUniversalLoginColors_GetPrimary(tt *testing.T) {
 func TestTenantUniversalLoginColors_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TenantUniversalLoginColors{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTestEvent_GetData(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	t := &TestEvent{Data: zeroValue}
+	t.GetData()
+	t = &TestEvent{}
+	t.GetData()
+	t = nil
+	t.GetData()
+}
+
+func TestTestEvent_GetEvent(tt *testing.T) {
+	t := &TestEvent{}
+	t.GetEvent()
+	t = nil
+	t.GetEvent()
+}
+
+func TestTestEvent_GetEventStreamID(tt *testing.T) {
+	var zeroValue string
+	t := &TestEvent{EventStreamID: &zeroValue}
+	t.GetEventStreamID()
+	t = &TestEvent{}
+	t.GetEventStreamID()
+	t = nil
+	t.GetEventStreamID()
+}
+
+func TestTestEvent_GetEventType(tt *testing.T) {
+	var zeroValue string
+	t := &TestEvent{EventType: &zeroValue}
+	t.GetEventType()
+	t = &TestEvent{}
+	t.GetEventType()
+	t = nil
+	t.GetEventType()
+}
+
+func TestTestEvent_GetID(tt *testing.T) {
+	var zeroValue string
+	t := &TestEvent{ID: &zeroValue}
+	t.GetID()
+	t = &TestEvent{}
+	t.GetID()
+	t = nil
+	t.GetID()
+}
+
+func TestTestEvent_GetStatus(tt *testing.T) {
+	var zeroValue string
+	t := &TestEvent{Status: &zeroValue}
+	t.GetStatus()
+	t = &TestEvent{}
+	t.GetStatus()
+	t = nil
+	t.GetStatus()
+}
+
+func TestTestEvent_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TestEvent{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
