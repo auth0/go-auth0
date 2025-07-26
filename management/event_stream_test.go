@@ -226,6 +226,7 @@ func TestEventStreamIntegration(t *testing.T) {
 		for _, et := range eventTypes {
 			testEvent := &TestEvent{EventType: auth0.String(et)}
 			err := api.EventStream.Test(context.Background(), stream.GetID(), testEvent)
+
 			time.Sleep(1 * time.Second)
 			require.NoError(t, err)
 			require.Equal(t, "pending", testEvent.GetStatus())
@@ -264,6 +265,7 @@ func TestEventStreamIntegration(t *testing.T) {
 
 	t.Run("Check Stats After Redelivery", func(t *testing.T) {
 		time.Sleep(20 * time.Second) // let async delivery fail
+
 		stats, err := api.EventStream.Stats(context.Background(), stream.GetID())
 		require.NoError(t, err)
 		require.Equal(t, 8, stats.Metrics[1].GetWindowTotal())
