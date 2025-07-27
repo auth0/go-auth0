@@ -126,8 +126,13 @@ func TestNewRequest(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-		t.Run(testCase.name, func(t *testing.T) {
-			request, err := api.NewRequest(context.Background(), testCase.method, testCase.endpoint, testCase.payload, testCase.options...)
+		t.Run(testCase.name+"/Variadic", func(t *testing.T) {
+			request, err := api.NewRequest(
+				context.Background(),
+				testCase.method,
+				testCase.endpoint,
+				testCase.payload,
+				testCase.options...)
 
 			if testCase.expectedError != "" {
 				assert.EqualError(t, err, testCase.expectedError)
@@ -145,7 +150,51 @@ func TestNewRequest(t *testing.T) {
 			assert.Equal(t, testCase.expectedBody, string(requestBody))
 
 			if testCase.expectedBody != "" {
-				assert.Equal(t, "application/json", request.Header.Get("Content-Type"))
+				assert.Equal(
+					t,
+					"application/json",
+					request.Header.Get("Content-Type"),
+				)
+			} else {
+				assert.Empty(t, request.Header.Get("Content-Type"))
+			}
+		})
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name+"/Nil", func(t *testing.T) {
+			if testCase.options != nil {
+				return
+			}
+
+			request, err := api.NewRequest(
+				context.Background(),
+				testCase.method,
+				testCase.endpoint,
+				testCase.payload,
+				nil)
+
+			if testCase.expectedError != "" {
+				assert.EqualError(t, err, testCase.expectedError)
+				assert.Nil(t, request)
+
+				return
+			}
+
+			require.NoError(t, err)
+			require.NotNil(t, request)
+
+			requestBody, err := io.ReadAll(request.Body)
+			require.NoError(t, err)
+
+			assert.Equal(t, testCase.expectedBody, string(requestBody))
+
+			if testCase.expectedBody != "" {
+				assert.Equal(
+					t,
+					"application/json",
+					request.Header.Get("Content-Type"),
+				)
 			} else {
 				assert.Empty(t, request.Header.Get("Content-Type"))
 			}
