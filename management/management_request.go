@@ -131,7 +131,9 @@ func (m *Management) NewRequest(
 		if option == nil {
 			continue
 		}
+
 		option.apply(request)
+
 	}
 
 	return request, nil
