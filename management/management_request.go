@@ -257,7 +257,9 @@ func applyListDefaults(options []RequestOption) RequestOption {
 			if option == nil {
 				continue
 			}
+
 			option.apply(r)
+
 		}
 	})
 }
@@ -270,7 +272,9 @@ func applyListCheckpointDefaults(options []RequestOption) RequestOption {
 			if option == nil {
 				continue
 			}
+
 			option.apply(r)
+
 		}
 	})
 }
