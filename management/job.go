@@ -202,7 +202,12 @@ func (m *JobManager) ImportUsers(ctx context.Context, j *Job, opts ...RequestOpt
 	request.Header.Add("Content-Type", mp.FormDataContentType())
 
 	for _, option := range opts {
+		if option == nil {
+			continue
+		}
+
 		option.apply(request)
+
 	}
 
 	response, err := m.management.Do(request)

@@ -232,7 +232,9 @@ func applyActionsListDefaults(options []RequestOption) RequestOption {
 			if option == nil {
 				continue
 			}
+
 			option.apply(r)
+
 		}
 	})
 }

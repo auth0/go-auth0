@@ -50,7 +50,9 @@ func (a *Authentication) NewRequest(
 		if option == nil {
 			continue
 		}
+
 		option.apply(request, nil)
+
 	}
 
 	return request, nil
@@ -76,7 +78,9 @@ func (a *Authentication) NewFormRequest(
 		if option == nil {
 			continue
 		}
+
 		option.apply(request, payload)
+
 	}
 
 	body := strings.NewReader(payload.Encode())
