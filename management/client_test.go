@@ -147,7 +147,7 @@ func TestClient_SessionTransfer(t *testing.T) {
 			EnforceDeviceBinding:          auth0.String("ip"),
 			AllowRefreshToken:             auth0.Bool(true),
 			EnforceCascadeRevocation:      auth0.Bool(true),
-			EnforceOnlineRefreshTokens:     auth0.Bool(true),
+			EnforceOnlineRefreshTokens:    auth0.Bool(true),
 		},
 	}
 
@@ -172,7 +172,7 @@ func TestClient_SessionTransfer(t *testing.T) {
 		EnforceDeviceBinding:          auth0.String("none"),
 		AllowRefreshToken:             auth0.Bool(false),
 		EnforceCascadeRevocation:      auth0.Bool(false),
-		EnforceOnlineRefreshTokens:     auth0.Bool(false),
+		EnforceOnlineRefreshTokens:    auth0.Bool(false),
 	}
 
 	// Strip fields not allowed on update
