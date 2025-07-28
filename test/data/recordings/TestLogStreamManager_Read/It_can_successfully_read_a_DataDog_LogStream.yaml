@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 133
+        content_length: 213
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-LogStream-1732609495","type":"datadog","isPriority":true,"sink":{"datadogRegion":"us","datadogApiKey":"121233123455"}}
+            {"name":"Test-LogStream-1751995559","type":"datadog","isPriority":true,"pii_config":{"log_fields":["first_name"],"method":"mask","algorithm":"xxhash"},"sink":{"datadogRegion":"us","datadogApiKey":"121233123455"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
+                - Go-Auth0/1.24.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000002068","name":"Test-LogStream-1732609495","type":"datadog","status":"active","sink":{"datadogApiKey":"121233123455","datadogRegion":"us"},"filters":[{"type":"category","name":"security"}],"isPriority":true}'
+        body: '{"id":"lst_0000000000012776","name":"Test-LogStream-1751995559","type":"datadog","status":"active","sink":{"datadogApiKey":"121233123455","datadogRegion":"us"},"filters":[{"type":"category","name":"security"}],"isPriority":true,"pii_config":{"log_fields":["first_name"],"method":"mask","algorithm":"xxhash"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 370.935792ms
+        duration: 407.95525ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -51,11 +51,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002068
+                - Go-Auth0/1.24.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000012776
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +63,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"lst_0000000000002068","name":"Test-LogStream-1732609495","type":"datadog","status":"active","sink":{"datadogApiKey":"121233123455","datadogRegion":"us"},"filters":[{"type":"category","name":"security"}],"isPriority":true}'
+        body: '{"id":"lst_0000000000012776","name":"Test-LogStream-1751995559","type":"datadog","status":"active","sink":{"datadogApiKey":"121233123455","datadogRegion":"us"},"filters":[{"type":"category","name":"security"}],"isPriority":true,"pii_config":{"log_fields":["first_name"],"method":"mask","algorithm":"xxhash"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 370.296792ms
+        duration: 375.604917ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -86,11 +84,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000002068
+                - Go-Auth0/1.24.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/log-streams/lst_0000000000012776
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -106,4 +102,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 469.629208ms
+        duration: 403.427084ms
