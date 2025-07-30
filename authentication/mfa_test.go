@@ -210,6 +210,7 @@ func TestMFAAddAuthenticator(t *testing.T) {
 		assert.NotEmpty(t, response.RecoveryCodes)
 		assert.NotEmpty(t, response.BindingMethod)
 		assert.Equal(t, "oob", response.AuthenticatorType)
+		assert.Equal(t, "sms", response.OOBChannel)
 	})
 
 	t.Run("Should return response for OOB (Auth0 channel)", func(t *testing.T) {
@@ -230,6 +231,7 @@ func TestMFAAddAuthenticator(t *testing.T) {
 		assert.NotEmpty(t, response.OOBCode)
 		assert.NotEmpty(t, response.BarcodeURI)
 		assert.Equal(t, "oob", response.AuthenticatorType)
+		assert.Equal(t, "auth0", response.OOBChannel)
 	})
 
 	t.Run("Should return response for OTP", func(t *testing.T) {
