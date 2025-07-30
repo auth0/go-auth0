@@ -164,7 +164,7 @@ func (m *EventStreamManager) Redeliver(ctx context.Context, eventStreamID, event
 	return m.management.Request(ctx, "POST", m.management.URI("event-streams", eventStreamID, "redeliver", eventID), nil, opts...)
 }
 
-// - Filters are combined using AND logic.
+// RedeliverMany allow attempting delivery for failed events - Filters are combined using AND logic.
 func (m *EventStreamManager) RedeliverMany(ctx context.Context, eventStreamID string, req *BulkRedeliverRequest, opts ...RequestOption) error {
 	return m.management.Request(ctx, "POST", m.management.URI("event-streams", eventStreamID, "redeliver"), req, opts...)
 }
