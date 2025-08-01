@@ -218,6 +218,7 @@ func givenAFailingWebhookEventStream(t *testing.T) *EventStream {
 */
 
 func TestEventStreamManager_Integration(t *testing.T) {
+	configureHTTPTestRecordings(t)
 	stream := givenAFailingWebhookEventStream(t)
 
 	t.Run("Trigger Test Events", func(t *testing.T) {
