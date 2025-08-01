@@ -20,7 +20,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_tW75Q54Dc8F7NVaU9Qiura/redeliver
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/redeliver
         method: POST
       response:
         proto: HTTP/2.0
@@ -36,4 +36,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 472.025625ms
+        duration: 383.973958ms

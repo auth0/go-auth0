@@ -252,11 +252,7 @@ func TestEventStreamManager_Integration(t *testing.T) {
 		configureHTTPTestRecordings(t)
 		time.Sleep(20 * time.Second)
 
-		from := time.Now().Add(-10 * time.Minute)
-		to := time.Now().Add(10 * time.Minute)
-		opts := WithDateRange(from, to)
-
-		stats, err := api.EventStream.Stats(context.Background(), stream.GetID(), opts...)
+		stats, err := api.EventStream.Stats(context.Background(), stream.GetID())
 		require.NoError(t, err)
 		require.Equal(t, "auth0.event_streams.failed_deliveries", stats.Metrics[1].GetName())
 		require.Equal(t, 4, stats.Metrics[1].GetWindowTotal())

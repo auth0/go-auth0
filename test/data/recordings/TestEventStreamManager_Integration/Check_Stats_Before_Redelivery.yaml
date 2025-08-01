@@ -17,7 +17,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_tW75Q54Dc8F7NVaU9Qiura/stats?date_from=2025-08-01T12%3A08%3A29%2B05%3A30&date_to=2025-08-01T12%3A28%3A29%2B05%3A30
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/stats
         method: GET
       response:
         proto: HTTP/2.0
@@ -27,10 +27,10 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"est_tW75Q54Dc8F7NVaU9Qiura","name":"failing-webhook-test-stream","window":{"date_from":"2025-08-01T06:00:00.000Z","date_to":"2025-08-01T06:00:00.000Z","bucket_interval":{"scale_factor":3600}},"buckets":["2025-08-01T06:00:00.000Z"],"metrics":[{"name":"auth0.event_streams.successful_deliveries","window_total":0,"type":"sum","data":[0]},{"name":"auth0.event_streams.failed_deliveries","window_total":4,"type":"sum","data":[4]}]}'
+        body: '{"id":"est_iCyT3rLLXTowdhCgCJH6hX","name":"failing-webhook-test-stream","window":{"date_from":"2025-07-18T07:00:00.000Z","date_to":"2025-08-01T08:00:00.000Z","bucket_interval":{"scale_factor":86400}},"buckets":["2025-07-18T00:00:00.000Z","2025-07-19T00:00:00.000Z","2025-07-20T00:00:00.000Z","2025-07-21T00:00:00.000Z","2025-07-22T00:00:00.000Z","2025-07-23T00:00:00.000Z","2025-07-24T00:00:00.000Z","2025-07-25T00:00:00.000Z","2025-07-26T00:00:00.000Z","2025-07-27T00:00:00.000Z","2025-07-28T00:00:00.000Z","2025-07-29T00:00:00.000Z","2025-07-30T00:00:00.000Z","2025-07-31T00:00:00.000Z","2025-08-01T00:00:00.000Z"],"metrics":[{"name":"auth0.event_streams.successful_deliveries","window_total":0,"type":"sum","data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"auth0.event_streams.failed_deliveries","window_total":4,"type":"sum","data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,4]}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 364.068833ms
+        duration: 403.953083ms
