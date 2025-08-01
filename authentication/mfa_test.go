@@ -210,6 +210,7 @@ func TestMFAAddAuthenticator(t *testing.T) {
 		assert.NotEmpty(t, response.RecoveryCodes)
 		assert.NotEmpty(t, response.BindingMethod)
 		assert.Equal(t, "oob", response.AuthenticatorType)
+		assert.Equal(t, "sms", response.OOBChannel)
 	})
 
 	t.Run("Should return response for OOB (Auth0 channel)", func(t *testing.T) {
@@ -230,6 +231,7 @@ func TestMFAAddAuthenticator(t *testing.T) {
 		assert.NotEmpty(t, response.OOBCode)
 		assert.NotEmpty(t, response.BarcodeURI)
 		assert.Equal(t, "oob", response.AuthenticatorType)
+		assert.Equal(t, "auth0", response.OOBChannel)
 	})
 
 	t.Run("Should return response for OTP", func(t *testing.T) {
@@ -256,11 +258,29 @@ func TestMFAListAuthenticators(t *testing.T) {
 	skipE2E(t)
 	configureHTTPTestRecordings(t, authAPI)
 
-	authenticators, err := authAPI.MFA.ListAuthenticators(context.Background(),
-		"mfa-token",
-	)
+	authenticators, err := authAPI.MFA.ListAuthenticators(context.Background(), "mfa-token")
 	require.NoError(t, err)
 	assert.NotEmpty(t, authenticators)
+
+	for _, authenticator := range authenticators {
+		assert.NotEmpty(t, authenticator.ID)
+		assert.NotEmpty(t, authenticator.AuthenticatorType)
+		assert.NotNil(t, authenticator.Active)
+
+		// Conditionally assert only if fields are expected
+		if authenticator.AuthenticatorType == "oob" {
+			assert.NotEmpty(t, authenticator.OOBChannel)
+		}
+
+		if authenticator.AuthenticatorType == "oob" && authenticator.OOBChannel != "" {
+			assert.Contains(t, []string{"sms", "auth0", "email"}, authenticator.OOBChannel)
+		}
+
+		// Only assert Name if present
+		if authenticator.Name != "" {
+			assert.NotEmpty(t, authenticator.Name)
+		}
+	}
 }
 
 func TestMFADeleteAuthenticator(t *testing.T) {
