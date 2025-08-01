@@ -128,7 +128,12 @@ func (m *Management) NewRequest(
 	m.applyCustomDomainHeader(request, uri)
 
 	for _, option := range options {
+		if option == nil {
+			continue
+		}
+
 		option.apply(request)
+
 	}
 
 	return request, nil
@@ -251,7 +256,12 @@ func applyListDefaults(options []RequestOption) RequestOption {
 		IncludeTotals(true).apply(r)
 
 		for _, option := range options {
+			if option == nil {
+				continue
+			}
+
 			option.apply(r)
+
 		}
 	})
 }
@@ -261,7 +271,12 @@ func applyListCheckpointDefaults(options []RequestOption) RequestOption {
 		Take(50).apply(r)
 
 		for _, option := range options {
+			if option == nil {
+				continue
+			}
+
 			option.apply(r)
+
 		}
 	})
 }
