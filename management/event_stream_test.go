@@ -305,6 +305,7 @@ func TestEventStreamManager_Integration(t *testing.T) {
 	t.Run("Validate Delivery Attempts Increased", func(t *testing.T) {
 		configureHTTPTestRecordings(t)
 		time.Sleep(20 * time.Second)
+
 		ev, err := api.EventStream.ReadDelivery(context.Background(), stream.GetID(), updateUserEventID)
 		require.NoError(t, err)
 		require.GreaterOrEqual(t, len(ev.Attempts), 2)
