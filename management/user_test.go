@@ -562,6 +562,18 @@ func TestUserManager_DeleteRefreshTokens(t *testing.T) {
 	assert.Empty(t, tokensAfterDeletion.Next)
 }
 
+func TestUserManager_ClearRiskAssessmentAssessors(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	user := givenAUser(t)
+	Assessor := &UserRiskAssessmentAssessor{
+		Connection: auth0.String("Username-Password-Authentication"),
+		Assessors:  []string{"new-device"},
+	}
+
+	err := api.User.ClearRiskAssessmentAssessors(context.Background(), user.GetID(), Assessor)
+
+	require.NoError(t, err)
+}
 func givenAUser(t *testing.T) *User {
 	t.Helper()
 
