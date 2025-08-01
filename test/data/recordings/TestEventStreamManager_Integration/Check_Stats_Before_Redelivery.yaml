@@ -1,0 +1,36 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.25.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_dJXU7uQgcrX4mcsm9yX8ge/stats?date_from=2025-08-01T11%3A23%3A42%2B05%3A30&date_to=2025-08-01T11%3A43%3A42%2B05%3A30
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"id":"est_dJXU7uQgcrX4mcsm9yX8ge","name":"failing-webhook-test-stream","window":{"date_from":"2025-08-01T05:00:00.000Z","date_to":"2025-08-01T06:00:00.000Z","bucket_interval":{"scale_factor":3600}},"buckets":["2025-08-01T05:00:00.000Z","2025-08-01T06:00:00.000Z"],"metrics":[{"name":"auth0.event_streams.successful_deliveries","window_total":0,"type":"sum","data":[0,0]},{"name":"auth0.event_streams.failed_deliveries","window_total":4,"type":"sum","data":[0,4]}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 348.226292ms
