@@ -249,6 +249,7 @@ func TestEventStreamManager_Integration(t *testing.T) {
 
 	t.Run("Check Stats Before Redelivery", func(t *testing.T) {
 		configureHTTPTestRecordings(t)
+		time.Sleep(20 * time.Second)
 
 		from := time.Now().Add(-10 * time.Minute)
 		to := time.Now().Add(10 * time.Minute)
@@ -262,17 +263,16 @@ func TestEventStreamManager_Integration(t *testing.T) {
 
 	t.Run("Bulk Redelivery", func(t *testing.T) {
 		configureHTTPTestRecordings(t)
+		time.Sleep(20 * time.Second)
 
 		req := &BulkRedeliverRequest{}
 		err := api.EventStream.RedeliverMany(context.Background(), stream.GetID(), req)
 		require.NoError(t, err)
-
-		time.Sleep(20 * time.Second)
 	})
 
 	t.Run("Check Stats After Redelivery", func(t *testing.T) {
 		configureHTTPTestRecordings(t)
-		time.Sleep(20 * time.Second) // let async delivery fail
+		time.Sleep(20 * time.Second)
 
 		stats, err := api.EventStream.Stats(context.Background(), stream.GetID())
 		require.NoError(t, err)
@@ -283,6 +283,7 @@ func TestEventStreamManager_Integration(t *testing.T) {
 
 	t.Run("Find user.updated Event ID", func(t *testing.T) {
 		configureHTTPTestRecordings(t)
+		time.Sleep(20 * time.Second)
 
 		list, err := api.EventStream.ListDeliveries(
 			context.Background(),
@@ -295,12 +296,15 @@ func TestEventStreamManager_Integration(t *testing.T) {
 
 	t.Run("Single Redeliver", func(t *testing.T) {
 		configureHTTPTestRecordings(t)
+		time.Sleep(20 * time.Second)
 
 		err := api.EventStream.Redeliver(context.Background(), stream.GetID(), updateUserEventID)
 		require.NoError(t, err)
 	})
 
 	t.Run("Validate Delivery Attempts Increased", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+		time.Sleep(20 * time.Second)
 		ev, err := api.EventStream.ReadDelivery(context.Background(), stream.GetID(), updateUserEventID)
 		require.NoError(t, err)
 		require.GreaterOrEqual(t, len(ev.Attempts), 2)
