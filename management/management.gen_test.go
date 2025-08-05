@@ -9747,16 +9747,6 @@ func TestEventDelivery_String(t *testing.T) {
 	}
 }
 
-func TestEventDeliveryList_GetNextPageToken(tt *testing.T) {
-	var zeroValue string
-	e := &EventDeliveryList{NextPageToken: &zeroValue}
-	e.GetNextPageToken()
-	e = &EventDeliveryList{}
-	e.GetNextPageToken()
-	e = nil
-	e.GetNextPageToken()
-}
-
 func TestEventDeliveryList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &EventDeliveryList{}

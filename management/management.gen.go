@@ -7835,14 +7835,6 @@ func (e *EventDelivery) String() string {
 	return Stringify(e)
 }
 
-// GetNextPageToken returns the NextPageToken field if it's non-nil, zero value otherwise.
-func (e *EventDeliveryList) GetNextPageToken() string {
-	if e == nil || e.NextPageToken == nil {
-		return ""
-	}
-	return *e.NextPageToken
-}
-
 // String returns a string representation of EventDeliveryList.
 func (e *EventDeliveryList) String() string {
 	return Stringify(e)

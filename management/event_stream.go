@@ -96,8 +96,8 @@ type BulkRedeliverRequest struct {
 
 // EventDeliveryList represents the response from the /deliveries endpoint.
 type EventDeliveryList struct {
-	Deliveries    []*EventDelivery `json:"deliveries"`
-	NextPageToken *string          `json:"nextPageToken,omitempty"`
+	List
+	Deliveries []*EventDelivery `json:"deliveries"`
 }
 
 // EventDelivery represents an individual delivery object.
@@ -153,9 +153,9 @@ func (m *EventStreamManager) ReadDelivery(ctx context.Context, eventStreamID, ev
 //   - "date_from": Start datetime (ISO 8601)
 //   - "date_to": End datetime (ISO 8601)
 //   - "take": Max results per page (int)
-//   - "from": Pagination token
+//   - "from": Pagination token returned in `nextPageToken` via ListDeliveries call
 func (m *EventStreamManager) ListDeliveries(ctx context.Context, id string, opts ...RequestOption) (edl *EventDeliveryList, err error) {
-	err = m.management.Request(ctx, "GET", m.management.URI("event-streams", id, "deliveries"), &edl, opts...)
+	err = m.management.Request(ctx, "GET", m.management.URI("event-streams", id, "deliveries"), &edl, applyListCheckpointDefaults(opts))
 	return
 }
 
