@@ -8671,6 +8671,14 @@ func (l *LogStream) GetPIIConfig() *LogStreamPiiConfig {
 	return l.PIIConfig
 }
 
+// GetStartFrom returns the StartFrom field if it's non-nil, zero value otherwise.
+func (l *LogStream) GetStartFrom() string {
+	if l == nil || l.StartFrom == nil {
+		return ""
+	}
+	return *l.StartFrom
+}
+
 // GetStatus returns the Status field if it's non-nil, zero value otherwise.
 func (l *LogStream) GetStatus() string {
 	if l == nil || l.Status == nil {
