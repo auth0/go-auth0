@@ -141,6 +141,15 @@ type CreateEnrollmentTicket struct {
 	// SendMail indicates whether to send an email to the user to start the
 	// multi-factor authentication enrollment process.
 	SendMail bool `json:"send_mail,omitempty"`
+	// EmailLocale is used to specify the locale of the enrollment email. Used with send_email.
+	EmailLocale string `json:"email_locale,omitempty"`
+	// Factor specifies which factor the user must enroll with.
+	// Possible values: [push-notification, phone, email, otp, webauthn-roaming, webauthn-platform]
+	// Note: Parameter can only be used with Universal Login; it cannot be used with Classic Login or custom MFA pages.
+	Factor string `json:"factor,omitempty"`
+	// AllowMultipleEnrollments allows a user who has previously enrolled in MFA to enroll with additional factors.
+	// Note: Parameter can only be used with Universal Login; it cannot be used with Classic Login or custom MFA pages.
+	AllowMultipleEnrollments bool `json:"allow_multiple_enrollments,omitempty"`
 }
 
 // EnrollmentTicket holds information on the ticket ID and URL.
