@@ -25,6 +25,13 @@ type ClientGrant struct {
 	// Defines whether organizations can be used with client credentials exchanges for this grant.
 	// Can be one of `deny`, `allow`, or `require`. Defaults to `deny` when not defined.
 	OrganizationUsage *string `json:"organization_usage,omitempty"`
+
+	// SubjectType defines the type of subject for this grant.
+	// Can be one of `client` or `user`. Defaults to `client` when not defined.
+	SubjectType *string `json:"subject_type,omitempty"`
+
+	// AuthorizationDetailsTypes defines the types of authorization details allowed for this client grant.
+	AuthorizationDetailsTypes *[]string `json:"authorization_details_types,omitempty"`
 }
 
 // ClientGrantList is a list of ClientGrants.

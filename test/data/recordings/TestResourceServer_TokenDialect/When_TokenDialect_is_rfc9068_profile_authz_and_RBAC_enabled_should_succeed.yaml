@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 295
+        content_length: 486
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test Resource Server (Jun 11 20:49:32.913)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create Resource"}],"signing_alg":"HS256","token_lifetime":7200,"token_lifetime_for_web":3600,"enforce_policies":false,"token_dialect":"access_token"}
+            {"name":"Test Resource Server (Aug  7 19:00:03.780)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create Resource"},{"value":"create:organization_client_grants","description":"Create Org Client Grants"}],"signing_alg":"HS256","token_lifetime":7200,"token_lifetime_for_web":3600,"enforce_policies":false,"token_dialect":"access_token","subject_type_authorization":{"user":{"policy":"allow_all"},"client":{"policy":"require_client_grant"}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.6.0
+                - Go-Auth0/1.25.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers
         method: POST
       response:
@@ -28,35 +28,35 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 463
+        content_length: 654
         uncompressed: false
-        body: '{"id":"66686b0546c13758a7d42d8e","name":"Test Resource Server (Jun 11 20:49:32.913)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create Resource"}],"signing_alg":"HS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"enforce_policies":false,"token_dialect":"access_token"}'
+        body: '{"id":"6894aa5c03d3d1bcd51864f9","name":"Test Resource Server (Aug  7 19:00:03.780)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create Resource"},{"value":"create:organization_client_grants","description":"Create Org Client Grants"}],"signing_alg":"HS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"enforce_policies":false,"token_dialect":"access_token","subject_type_authorization":{"user":{"policy":"allow_all"},"client":{"policy":"require_client_grant"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 389.130333ms
+        duration: 403.771625ms
     - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 348
+        content_length: 539
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test Resource Server (Jun 11 20:49:32.913)","scopes":[{"value":"create:resource","description":"Create Resource"}],"signing_alg":"HS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"enforce_policies":true,"token_dialect":"rfc9068_profile_authz"}
+            {"name":"Test Resource Server (Aug  7 19:00:03.780)","scopes":[{"value":"create:resource","description":"Create Resource"},{"value":"create:organization_client_grants","description":"Create Org Client Grants"}],"signing_alg":"HS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"enforce_policies":true,"token_dialect":"rfc9068_profile_authz","subject_type_authorization":{"user":{"policy":"allow_all"},"client":{"policy":"require_client_grant"}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.6.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/66686b0546c13758a7d42d8e
+                - Go-Auth0/1.25.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/6894aa5c03d3d1bcd51864f9
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"66686b0546c13758a7d42d8e","name":"Test Resource Server (Jun 11 20:49:32.913)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create Resource"}],"signing_alg":"HS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"enforce_policies":true,"token_dialect":"rfc9068_profile_authz"}'
+        body: '{"id":"6894aa5c03d3d1bcd51864f9","name":"Test Resource Server (Aug  7 19:00:03.780)","identifier":"https://api.example.com/","scopes":[{"value":"create:resource","description":"Create Resource"},{"value":"create:organization_client_grants","description":"Create Org Client Grants"}],"signing_alg":"HS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"enforce_policies":true,"token_dialect":"rfc9068_profile_authz","subject_type_authorization":{"user":{"policy":"allow_all"},"client":{"policy":"require_client_grant"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 269.860166ms
+        duration: 366.780834ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -87,11 +87,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.6.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/66686b0546c13758a7d42d8e
+                - Go-Auth0/1.25.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/6894aa5c03d3d1bcd51864f9
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -107,4 +105,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 338.611875ms
+        duration: 367.916417ms
