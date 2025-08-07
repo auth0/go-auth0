@@ -234,7 +234,6 @@ func applyActionsListDefaults(options []RequestOption) RequestOption {
 			}
 
 			option.apply(r)
-
 		}
 	})
 }

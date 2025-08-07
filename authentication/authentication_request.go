@@ -52,7 +52,6 @@ func (a *Authentication) NewRequest(
 		}
 
 		option.apply(request, nil)
-
 	}
 
 	return request, nil
@@ -80,7 +79,6 @@ func (a *Authentication) NewFormRequest(
 		}
 
 		option.apply(request, payload)
-
 	}
 
 	body := strings.NewReader(payload.Encode())

@@ -133,7 +133,6 @@ func (m *Management) NewRequest(
 		}
 
 		option.apply(request)
-
 	}
 
 	return request, nil
@@ -261,7 +260,6 @@ func applyListDefaults(options []RequestOption) RequestOption {
 			}
 
 			option.apply(r)
-
 		}
 	})
 }
@@ -276,7 +274,6 @@ func applyListCheckpointDefaults(options []RequestOption) RequestOption {
 			}
 
 			option.apply(r)
-
 		}
 	})
 }

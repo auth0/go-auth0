@@ -207,7 +207,6 @@ func (m *JobManager) ImportUsers(ctx context.Context, j *Job, opts ...RequestOpt
 		}
 
 		option.apply(request)
-
 	}
 
 	response, err := m.management.Do(request)

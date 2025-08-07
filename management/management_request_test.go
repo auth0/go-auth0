@@ -187,7 +187,7 @@ func TestNewRequest(t *testing.T) {
 	}
 }
 
-// TestNilOptionsInHelperFunctions tests that helper functions handle nil options correctly
+// TestNilOptionsInHelperFunctions tests that helper functions handle nil options correctly.
 func TestNilOptionsInHelperFunctions(t *testing.T) {
 	t.Run("applyListDefaults with nil options", func(t *testing.T) {
 		req, err := http.NewRequest("GET", "https://example.com", nil)
