@@ -123,10 +123,35 @@ func TestNewRequest(t *testing.T) {
 			expectedError: "",
 			expectedBody:  `{"name":"TestClient","description":"Test description"}` + "\n",
 		},
+		{
+			name:     "Request with nil options mixed with valid options",
+			method:   http.MethodPost,
+			endpoint: api.URI("clients"),
+			payload:  nil,
+			options: []RequestOption{
+				nil,
+				Body([]byte(`{"test":"value"}`)),
+				nil,
+			},
+			expectedError: "",
+			expectedBody:  `{"test":"value"}`,
+		},
+		{
+			name:     "Request with all nil options",
+			method:   http.MethodPost,
+			endpoint: api.URI("clients"),
+			payload:  &Client{Name: auth0.String("TestClient")},
+			options: []RequestOption{
+				nil,
+				nil,
+			},
+			expectedError: "",
+			expectedBody:  `{"name":"TestClient"}` + "\n",
+		},
 	}
 
 	for _, testCase := range testCases {
-		t.Run(testCase.name+"/Variadic", func(t *testing.T) {
+		t.Run(testCase.name, func(t *testing.T) {
 			request, err := api.NewRequest(
 				context.Background(),
 				testCase.method,
@@ -160,44 +185,33 @@ func TestNewRequest(t *testing.T) {
 			}
 		})
 	}
+}
 
-	for _, testCase := range testCases {
-		t.Run(testCase.name+"/Nil", func(t *testing.T) {
-			if testCase.options != nil {
-				return
-			}
+// TestNilOptionsInHelperFunctions tests that helper functions handle nil options correctly
+func TestNilOptionsInHelperFunctions(t *testing.T) {
+	t.Run("applyListDefaults with nil options", func(t *testing.T) {
+		req, err := http.NewRequest("GET", "https://example.com", nil)
+		require.NoError(t, err)
 
-			request, err := api.NewRequest(
-				context.Background(),
-				testCase.method,
-				testCase.endpoint,
-				testCase.payload,
-				nil)
+		// Test with nil options mixed with valid ones
+		listDefaults := applyListDefaults([]RequestOption{nil, Page(2), nil})
+		listDefaults.apply(req)
 
-			if testCase.expectedError != "" {
-				assert.EqualError(t, err, testCase.expectedError)
-				assert.Nil(t, request)
+		query := req.URL.Query()
+		assert.Equal(t, "2", query.Get("page"))
+		assert.Equal(t, "50", query.Get("per_page"))         // default
+		assert.Equal(t, "true", query.Get("include_totals")) // default
+	})
 
-				return
-			}
+	t.Run("applyListCheckpointDefaults with nil options", func(t *testing.T) {
+		req, err := http.NewRequest("GET", "https://example.com", nil)
+		require.NoError(t, err)
 
-			require.NoError(t, err)
-			require.NotNil(t, request)
+		// Test with nil options mixed with valid ones
+		checkpointDefaults := applyListCheckpointDefaults([]RequestOption{nil, Take(25), nil})
+		checkpointDefaults.apply(req)
 
-			requestBody, err := io.ReadAll(request.Body)
-			require.NoError(t, err)
-
-			assert.Equal(t, testCase.expectedBody, string(requestBody))
-
-			if testCase.expectedBody != "" {
-				assert.Equal(
-					t,
-					"application/json",
-					request.Header.Get("Content-Type"),
-				)
-			} else {
-				assert.Empty(t, request.Header.Get("Content-Type"))
-			}
-		})
-	}
+		query := req.URL.Query()
+		assert.Equal(t, "25", query.Get("take"))
+	})
 }
