@@ -10812,6 +10812,16 @@ func TestLogStream_GetPIIConfig(tt *testing.T) {
 	l.GetPIIConfig()
 }
 
+func TestLogStream_GetStartFrom(tt *testing.T) {
+	var zeroValue string
+	l := &LogStream{StartFrom: &zeroValue}
+	l.GetStartFrom()
+	l = &LogStream{}
+	l.GetStartFrom()
+	l = nil
+	l.GetStartFrom()
+}
+
 func TestLogStream_GetStatus(tt *testing.T) {
 	var zeroValue string
 	l := &LogStream{Status: &zeroValue}

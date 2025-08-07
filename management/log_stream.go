@@ -55,6 +55,9 @@ type LogStream struct {
 
 	// PIIConfig is used to configure the PII handling for the log stream.
 	PIIConfig *LogStreamPiiConfig `json:"pii_config,omitempty"`
+
+	// StartFrom is the optional datetime (ISO 8601) to start streaming logs from
+	StartFrom *string `json:"startFrom,omitempty"`
 }
 
 // LogStreamPiiConfig is used to configure the PII handling for the log stream.
