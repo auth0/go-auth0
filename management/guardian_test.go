@@ -496,12 +496,11 @@ func TestGuardian(t *testing.T) {
 			user := givenAUser(t)
 
 			ticket := &CreateEnrollmentTicket{
-				user.GetID(),
-				"jon@example.com",
-				false,
-				"",
-				"Phone",
-				true,
+				UserID:                   user.GetID(),
+				Email:                    "jon@example.com",
+				SendMail:                 false,
+				Factor:                   "push-notification",
+				AllowMultipleEnrollments: true,
 			}
 
 			createdTicket, err := api.Guardian.Enrollment.CreateTicket(context.Background(), ticket)

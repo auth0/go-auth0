@@ -138,8 +138,8 @@ type CreateEnrollmentTicket struct {
 	// be sent. If empty, the email will be sent to the user's default email
 	// address.
 	Email string `json:"email,omitempty"`
-	// SendMail indicates whether to send an email to the user to start the
-	// multi-factor authentication enrollment process.
+	// SendMail indicates whether to email the user to start the
+	// multifactor authentication enrollment process.
 	SendMail bool `json:"send_mail,omitempty"`
 	// EmailLocale is used to specify the locale of the enrollment email. Used with send_email.
 	EmailLocale string `json:"email_locale,omitempty"`
