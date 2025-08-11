@@ -88,8 +88,11 @@ type AddAuthenticatorResponse struct {
 	Secret string `json:"secret,omitempty"`
 	// The type of authenticator added.
 	AuthenticatorType string `json:"authenticator_type,omitempty"`
+	// Deprecated: Use OOBChannel instead.
 	// The OOB channels supported by the authenticator.
 	OOBChannels string `json:"oob_channels,omitempty"`
+	// The OOB channel used for the authenticator.
+	OOBChannel string `json:"oob_channel,omitempty"`
 	// The binding method to use when verifying the authenticator.
 	BindingMethod string `json:"binding_method,omitempty"`
 }
@@ -98,7 +101,9 @@ type AddAuthenticatorResponse struct {
 type ListAuthenticatorsResponse struct {
 	ID                string `json:"id,omitempty"`
 	AuthenticatorType string `json:"authenticator_type,omitempty"`
-	OOBChannels       string `json:"oob_channels,omitempty"`
-	Name              string `json:"name,omitempty"`
-	Active            bool   `json:"active,omitempty"`
+	// Deprecated: Use OOBChannel instead.
+	OOBChannels string `json:"oob_channels,omitempty"`
+	OOBChannel  string `json:"oob_channel,omitempty"`
+	Name        string `json:"name,omitempty"`
+	Active      bool   `json:"active,omitempty"`
 }

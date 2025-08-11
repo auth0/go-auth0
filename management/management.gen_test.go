@@ -14942,6 +14942,16 @@ func TestSessionTransfer_GetCanCreateSessionTransferToken(tt *testing.T) {
 	s.GetCanCreateSessionTransferToken()
 }
 
+func TestSessionTransfer_GetEnforceCascadeRevocation(tt *testing.T) {
+	var zeroValue bool
+	s := &SessionTransfer{EnforceCascadeRevocation: &zeroValue}
+	s.GetEnforceCascadeRevocation()
+	s = &SessionTransfer{}
+	s.GetEnforceCascadeRevocation()
+	s = nil
+	s.GetEnforceCascadeRevocation()
+}
+
 func TestSessionTransfer_GetEnforceDeviceBinding(tt *testing.T) {
 	var zeroValue string
 	s := &SessionTransfer{EnforceDeviceBinding: &zeroValue}
@@ -14950,6 +14960,16 @@ func TestSessionTransfer_GetEnforceDeviceBinding(tt *testing.T) {
 	s.GetEnforceDeviceBinding()
 	s = nil
 	s.GetEnforceDeviceBinding()
+}
+
+func TestSessionTransfer_GetEnforceOnlineRefreshTokens(tt *testing.T) {
+	var zeroValue bool
+	s := &SessionTransfer{EnforceOnlineRefreshTokens: &zeroValue}
+	s.GetEnforceOnlineRefreshTokens()
+	s = &SessionTransfer{}
+	s.GetEnforceOnlineRefreshTokens()
+	s = nil
+	s.GetEnforceOnlineRefreshTokens()
 }
 
 func TestSessionTransfer_String(t *testing.T) {

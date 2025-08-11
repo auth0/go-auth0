@@ -11889,12 +11889,28 @@ func (s *SessionTransfer) GetCanCreateSessionTransferToken() bool {
 	return *s.CanCreateSessionTransferToken
 }
 
+// GetEnforceCascadeRevocation returns the EnforceCascadeRevocation field if it's non-nil, zero value otherwise.
+func (s *SessionTransfer) GetEnforceCascadeRevocation() bool {
+	if s == nil || s.EnforceCascadeRevocation == nil {
+		return false
+	}
+	return *s.EnforceCascadeRevocation
+}
+
 // GetEnforceDeviceBinding returns the EnforceDeviceBinding field if it's non-nil, zero value otherwise.
 func (s *SessionTransfer) GetEnforceDeviceBinding() string {
 	if s == nil || s.EnforceDeviceBinding == nil {
 		return ""
 	}
 	return *s.EnforceDeviceBinding
+}
+
+// GetEnforceOnlineRefreshTokens returns the EnforceOnlineRefreshTokens field if it's non-nil, zero value otherwise.
+func (s *SessionTransfer) GetEnforceOnlineRefreshTokens() bool {
+	if s == nil || s.EnforceOnlineRefreshTokens == nil {
+		return false
+	}
+	return *s.EnforceOnlineRefreshTokens
 }
 
 // String returns a string representation of SessionTransfer.
