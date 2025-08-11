@@ -133,6 +133,9 @@ type Management struct {
 	// NetworkACL manages Auth0 Network ACLs.
 	NetworkACL *NetworkACLManager
 
+	// RiskAssessment manages Auth0 Risk Assessment.
+	RiskAssessment *RiskAssessmentManager
+
 	url                *url.URL
 	basePath           string
 	userAgent          string
@@ -246,6 +249,7 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.RefreshToken = (*RefreshTokenManager)(&m.common)
 	m.Session = (*SessionManager)(&m.common)
 	m.NetworkACL = (*NetworkACLManager)(&m.common)
+	m.RiskAssessment = (*RiskAssessmentManager)(&m.common)
 
 	return m, nil
 }
