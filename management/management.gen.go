@@ -8687,6 +8687,14 @@ func (l *LogStream) GetPIIConfig() *LogStreamPiiConfig {
 	return l.PIIConfig
 }
 
+// GetStartFrom returns the StartFrom field if it's non-nil, zero value otherwise.
+func (l *LogStream) GetStartFrom() string {
+	if l == nil || l.StartFrom == nil {
+		return ""
+	}
+	return *l.StartFrom
+}
+
 // GetStatus returns the Status field if it's non-nil, zero value otherwise.
 func (l *LogStream) GetStatus() string {
 	if l == nil || l.Status == nil {
@@ -10763,6 +10771,32 @@ func (r *ResourceServerTokenEncryptionKey) String() string {
 
 // String returns a string representation of RetryStrategy.
 func (r *RetryStrategy) String() string {
+	return Stringify(r)
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (r *RiskAssessmentSettings) GetEnabled() bool {
+	if r == nil || r.Enabled == nil {
+		return false
+	}
+	return *r.Enabled
+}
+
+// String returns a string representation of RiskAssessmentSettings.
+func (r *RiskAssessmentSettings) String() string {
+	return Stringify(r)
+}
+
+// GetRememberFor returns the RememberFor field if it's non-nil, zero value otherwise.
+func (r *RiskAssessmentSettingsNewDevice) GetRememberFor() int {
+	if r == nil || r.RememberFor == nil {
+		return 0
+	}
+	return *r.RememberFor
+}
+
+// String returns a string representation of RiskAssessmentSettingsNewDevice.
+func (r *RiskAssessmentSettingsNewDevice) String() string {
 	return Stringify(r)
 }
 
@@ -13517,6 +13551,19 @@ func (u *UserRecoveryCode) GetRecoveryCode() string {
 
 // String returns a string representation of UserRecoveryCode.
 func (u *UserRecoveryCode) String() string {
+	return Stringify(u)
+}
+
+// GetConnection returns the Connection field if it's non-nil, zero value otherwise.
+func (u *UserRiskAssessmentAssessor) GetConnection() string {
+	if u == nil || u.Connection == nil {
+		return ""
+	}
+	return *u.Connection
+}
+
+// String returns a string representation of UserRiskAssessmentAssessor.
+func (u *UserRiskAssessmentAssessor) String() string {
 	return Stringify(u)
 }
 
