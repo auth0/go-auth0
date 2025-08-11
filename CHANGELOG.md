@@ -1,5 +1,17 @@
 # Change Log
 
+## [v1.26.0](https://github.com/auth0/go-auth0/tree/v1.26.0) (2025-08-11)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.25.0...v1.26.0)
+
+**Added**
+- feat: Add attribute `startFrom`  to Log Streams [\#584](https://github.com/auth0/go-auth0/pull/584) ([duedares-rvj](https://github.com/duedares-rvj))
+- feat: add missing mgmt api fields to guardian enrollment ticket structure [\#587](https://github.com/auth0/go-auth0/pull/587) ([JohnRoesler](https://github.com/JohnRoesler))
+- feat(risk-assessment): add `RiskAssessmentManager` for managing risk assessment settings and new device settings [\#582](https://github.com/auth0/go-auth0/pull/582) ([developerkunal](https://github.com/developerkunal))
+- feat: support online refresh token and cascade revocation in ClientManager’s N2W session transfer [\#576](https://github.com/auth0/go-auth0/pull/576) ([nelsonmaia](https://github.com/nelsonmaia))
+
+**Fixed**
+- fix(mfa): deprecate OOBChannels and add OOBChannel in authenticator responses; improve test validation [\#583](https://github.com/auth0/go-auth0/pull/583) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.25.0](https://github.com/auth0/go-auth0/tree/v1.25.0) (2025-07-15)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.24.0...v1.25.0)
 
