@@ -13424,6 +13424,42 @@ func TestRetryStrategy_String(t *testing.T) {
 	}
 }
 
+func TestRiskAssessmentSettings_GetEnabled(tt *testing.T) {
+	var zeroValue bool
+	r := &RiskAssessmentSettings{Enabled: &zeroValue}
+	r.GetEnabled()
+	r = &RiskAssessmentSettings{}
+	r.GetEnabled()
+	r = nil
+	r.GetEnabled()
+}
+
+func TestRiskAssessmentSettings_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &RiskAssessmentSettings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestRiskAssessmentSettingsNewDevice_GetRememberFor(tt *testing.T) {
+	var zeroValue int
+	r := &RiskAssessmentSettingsNewDevice{RememberFor: &zeroValue}
+	r.GetRememberFor()
+	r = &RiskAssessmentSettingsNewDevice{}
+	r.GetRememberFor()
+	r = nil
+	r.GetRememberFor()
+}
+
+func TestRiskAssessmentSettingsNewDevice_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &RiskAssessmentSettingsNewDevice{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestRMSClientAddon_GetURL(tt *testing.T) {
 	var zeroValue string
 	r := &RMSClientAddon{URL: &zeroValue}
@@ -16896,6 +16932,24 @@ func TestUserRecoveryCode_GetRecoveryCode(tt *testing.T) {
 func TestUserRecoveryCode_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &UserRecoveryCode{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserRiskAssessmentAssessor_GetConnection(tt *testing.T) {
+	var zeroValue string
+	u := &UserRiskAssessmentAssessor{Connection: &zeroValue}
+	u.GetConnection()
+	u = &UserRiskAssessmentAssessor{}
+	u.GetConnection()
+	u = nil
+	u.GetConnection()
+}
+
+func TestUserRiskAssessmentAssessor_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserRiskAssessmentAssessor{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
