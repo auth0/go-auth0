@@ -6,10 +6,10 @@ import "context"
 //
 // See https://auth0.com/docs/customize/email/email-templates
 type EmailTemplate struct {
-	// The template name. Can be one of "verify_email", "reset_email",
-	// "welcome_email", "blocked_account", "stolen_credentials",
-	// "enrollment_email", "change_password", "password_reset" or
-	// "mfa_oob_code".
+	// The template name. Can be one of "verify_email", "verify_email_by_code", "reset_email",
+	// "reset_email_by_code", "welcome_email", "blocked_account", "stolen_credentials",
+	// "enrollment_email", "mfa_oob_code", "user_invitation", "change_password",
+	// "password_reset", or "async_approval".
 	Template *string `json:"template,omitempty"`
 
 	// The body of the template.
