@@ -19,7 +19,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.15.0
+                - Go-Auth0/1.25.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams
         method: POST
       response:
@@ -28,15 +28,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 499
+        content_length: 498
         uncompressed: false
-        body: '{"id":"est_qHr8CeCCp9YpQoFoRzM6xg","status":"disabled","name":"eventbridge-example","subscriptions":[{"event_type":"user.created"},{"event_type":"user.deleted"}],"created_at":"2025-02-04T07:17:13.134Z","updated_at":"2025-02-04T07:17:13.134Z","destination":{"type":"eventbridge","configuration":{"aws_region":"us-east-2","aws_account_id":"242109005777","aws_partner_event_source":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-26d6c893-39b9-4910-a65a-0fd71d6e6580/auth0.events"}}}'
+        body: '{"id":"est_71tv5N87Pp6qDnynqDCJ7m","status":"enabled","name":"eventbridge-example","subscriptions":[{"event_type":"user.created"},{"event_type":"user.deleted"}],"created_at":"2025-07-29T04:20:27.246Z","updated_at":"2025-07-29T04:20:27.246Z","destination":{"type":"eventbridge","configuration":{"aws_region":"us-east-2","aws_account_id":"242109005777","aws_partner_event_source":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-b9f04bb6-3968-45f9-976a-d52b169c5ad1/auth0.events"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 1.415165375s
+        duration: 1.364284167s
     - id: 1
       request:
         proto: HTTP/1.1
@@ -51,10 +51,8 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.15.0
+                - Go-Auth0/1.25.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams
         method: GET
       response:
@@ -65,13 +63,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"eventStreams":[{"id":"est_qHr8CeCCp9YpQoFoRzM6xg","status":"disabled","name":"eventbridge-example","subscriptions":[{"event_type":"user.created"},{"event_type":"user.deleted"}],"created_at":"2025-02-04T07:17:13.134Z","updated_at":"2025-02-04T07:17:13.134Z","destination":{"type":"eventbridge","configuration":{"aws_region":"us-east-2","aws_account_id":"242109005777","aws_partner_event_source":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-26d6c893-39b9-4910-a65a-0fd71d6e6580/auth0.events"}}}]}'
+        body: '{"eventStreams":[{"id":"est_tDC5h6Ywj37t8HDZWgu2hp","status":"enabled","name":"webhook-test-live","subscriptions":[{"event_type":"user.created"},{"event_type":"user.updated"},{"event_type":"user.deleted"}],"created_at":"2025-07-26T05:34:09.261Z","updated_at":"2025-07-26T05:34:09.261Z","destination":{"type":"webhook","configuration":{"webhook_endpoint":"https://api.hooklistener.com/w/kjbsdkfgbsad-turquoise-mead-xb3v","webhook_authorization":{"method":"bearer"}}}},{"id":"est_71tv5N87Pp6qDnynqDCJ7m","status":"enabled","name":"eventbridge-example","subscriptions":[{"event_type":"user.created"},{"event_type":"user.deleted"}],"created_at":"2025-07-29T04:20:27.246Z","updated_at":"2025-07-29T04:20:27.246Z","destination":{"type":"eventbridge","configuration":{"aws_region":"us-east-2","aws_account_id":"242109005777","aws_partner_event_source":"aws.partner/auth0.com/go-auth0-dev.eu.auth0.com-b9f04bb6-3968-45f9-976a-d52b169c5ad1/auth0.events"}}}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 394.559084ms
+        duration: 330.588917ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -86,11 +84,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.15.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_qHr8CeCCp9YpQoFoRzM6xg
+                - Go-Auth0/1.25.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_71tv5N87Pp6qDnynqDCJ7m
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -106,4 +102,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 474.568292ms
+        duration: 445.527708ms
