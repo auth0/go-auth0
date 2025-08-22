@@ -574,6 +574,7 @@ func TestUserManager_ClearRiskAssessmentAssessors(t *testing.T) {
 
 	require.NoError(t, err)
 }
+
 func givenAUser(t *testing.T) *User {
 	t.Helper()
 

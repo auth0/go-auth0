@@ -2302,6 +2302,16 @@ func TestClient_GetRequirePushedAuthorizationRequests(tt *testing.T) {
 	c.GetRequirePushedAuthorizationRequests()
 }
 
+func TestClient_GetResourceServerIdentifier(tt *testing.T) {
+	var zeroValue string
+	c := &Client{ResourceServerIdentifier: &zeroValue}
+	c.GetResourceServerIdentifier()
+	c = &Client{}
+	c.GetResourceServerIdentifier()
+	c = nil
+	c.GetResourceServerIdentifier()
+}
+
 func TestClient_GetSessionTransfer(tt *testing.T) {
 	c := &Client{}
 	c.GetSessionTransfer()
@@ -13099,6 +13109,16 @@ func TestResourceServer_GetAuthorizationDetails(tt *testing.T) {
 	r.GetAuthorizationDetails()
 }
 
+func TestResourceServer_GetClientID(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServer{ClientID: &zeroValue}
+	r.GetClientID()
+	r = &ResourceServer{}
+	r.GetClientID()
+	r = nil
+	r.GetClientID()
+}
+
 func TestResourceServer_GetConsentPolicy(tt *testing.T) {
 	var zeroValue string
 	r := &ResourceServer{ConsentPolicy: &zeroValue}
@@ -16770,6 +16790,74 @@ func TestUserEnrollment_GetType(tt *testing.T) {
 func TestUserEnrollment_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &UserEnrollment{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserFederatedConnectionTokenSet_GetConnection(tt *testing.T) {
+	var zeroValue string
+	u := &UserFederatedConnectionTokenSet{Connection: &zeroValue}
+	u.GetConnection()
+	u = &UserFederatedConnectionTokenSet{}
+	u.GetConnection()
+	u = nil
+	u.GetConnection()
+}
+
+func TestUserFederatedConnectionTokenSet_GetExpiresAt(tt *testing.T) {
+	var zeroValue time.Time
+	u := &UserFederatedConnectionTokenSet{ExpiresAt: &zeroValue}
+	u.GetExpiresAt()
+	u = &UserFederatedConnectionTokenSet{}
+	u.GetExpiresAt()
+	u = nil
+	u.GetExpiresAt()
+}
+
+func TestUserFederatedConnectionTokenSet_GetID(tt *testing.T) {
+	var zeroValue string
+	u := &UserFederatedConnectionTokenSet{ID: &zeroValue}
+	u.GetID()
+	u = &UserFederatedConnectionTokenSet{}
+	u.GetID()
+	u = nil
+	u.GetID()
+}
+
+func TestUserFederatedConnectionTokenSet_GetIssuedAt(tt *testing.T) {
+	var zeroValue time.Time
+	u := &UserFederatedConnectionTokenSet{IssuedAt: &zeroValue}
+	u.GetIssuedAt()
+	u = &UserFederatedConnectionTokenSet{}
+	u.GetIssuedAt()
+	u = nil
+	u.GetIssuedAt()
+}
+
+func TestUserFederatedConnectionTokenSet_GetLastUsedAt(tt *testing.T) {
+	var zeroValue time.Time
+	u := &UserFederatedConnectionTokenSet{LastUsedAt: &zeroValue}
+	u.GetLastUsedAt()
+	u = &UserFederatedConnectionTokenSet{}
+	u.GetLastUsedAt()
+	u = nil
+	u.GetLastUsedAt()
+}
+
+func TestUserFederatedConnectionTokenSet_GetScope(tt *testing.T) {
+	var zeroValue string
+	u := &UserFederatedConnectionTokenSet{Scope: &zeroValue}
+	u.GetScope()
+	u = &UserFederatedConnectionTokenSet{}
+	u.GetScope()
+	u = nil
+	u.GetScope()
+}
+
+func TestUserFederatedConnectionTokenSet_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserFederatedConnectionTokenSet{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
