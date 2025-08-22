@@ -16795,69 +16795,69 @@ func TestUserEnrollment_String(t *testing.T) {
 	}
 }
 
-func TestUserFederatedConnectionTokenSet_GetConnection(tt *testing.T) {
+func TestUserFederatedConnectionsTokenSet_GetConnection(tt *testing.T) {
 	var zeroValue string
-	u := &UserFederatedConnectionTokenSet{Connection: &zeroValue}
+	u := &UserFederatedConnectionsTokenSet{Connection: &zeroValue}
 	u.GetConnection()
-	u = &UserFederatedConnectionTokenSet{}
+	u = &UserFederatedConnectionsTokenSet{}
 	u.GetConnection()
 	u = nil
 	u.GetConnection()
 }
 
-func TestUserFederatedConnectionTokenSet_GetExpiresAt(tt *testing.T) {
+func TestUserFederatedConnectionsTokenSet_GetExpiresAt(tt *testing.T) {
 	var zeroValue time.Time
-	u := &UserFederatedConnectionTokenSet{ExpiresAt: &zeroValue}
+	u := &UserFederatedConnectionsTokenSet{ExpiresAt: &zeroValue}
 	u.GetExpiresAt()
-	u = &UserFederatedConnectionTokenSet{}
+	u = &UserFederatedConnectionsTokenSet{}
 	u.GetExpiresAt()
 	u = nil
 	u.GetExpiresAt()
 }
 
-func TestUserFederatedConnectionTokenSet_GetID(tt *testing.T) {
+func TestUserFederatedConnectionsTokenSet_GetID(tt *testing.T) {
 	var zeroValue string
-	u := &UserFederatedConnectionTokenSet{ID: &zeroValue}
+	u := &UserFederatedConnectionsTokenSet{ID: &zeroValue}
 	u.GetID()
-	u = &UserFederatedConnectionTokenSet{}
+	u = &UserFederatedConnectionsTokenSet{}
 	u.GetID()
 	u = nil
 	u.GetID()
 }
 
-func TestUserFederatedConnectionTokenSet_GetIssuedAt(tt *testing.T) {
+func TestUserFederatedConnectionsTokenSet_GetIssuedAt(tt *testing.T) {
 	var zeroValue time.Time
-	u := &UserFederatedConnectionTokenSet{IssuedAt: &zeroValue}
+	u := &UserFederatedConnectionsTokenSet{IssuedAt: &zeroValue}
 	u.GetIssuedAt()
-	u = &UserFederatedConnectionTokenSet{}
+	u = &UserFederatedConnectionsTokenSet{}
 	u.GetIssuedAt()
 	u = nil
 	u.GetIssuedAt()
 }
 
-func TestUserFederatedConnectionTokenSet_GetLastUsedAt(tt *testing.T) {
+func TestUserFederatedConnectionsTokenSet_GetLastUsedAt(tt *testing.T) {
 	var zeroValue time.Time
-	u := &UserFederatedConnectionTokenSet{LastUsedAt: &zeroValue}
+	u := &UserFederatedConnectionsTokenSet{LastUsedAt: &zeroValue}
 	u.GetLastUsedAt()
-	u = &UserFederatedConnectionTokenSet{}
+	u = &UserFederatedConnectionsTokenSet{}
 	u.GetLastUsedAt()
 	u = nil
 	u.GetLastUsedAt()
 }
 
-func TestUserFederatedConnectionTokenSet_GetScope(tt *testing.T) {
+func TestUserFederatedConnectionsTokenSet_GetScope(tt *testing.T) {
 	var zeroValue string
-	u := &UserFederatedConnectionTokenSet{Scope: &zeroValue}
+	u := &UserFederatedConnectionsTokenSet{Scope: &zeroValue}
 	u.GetScope()
-	u = &UserFederatedConnectionTokenSet{}
+	u = &UserFederatedConnectionsTokenSet{}
 	u.GetScope()
 	u = nil
 	u.GetScope()
 }
 
-func TestUserFederatedConnectionTokenSet_String(t *testing.T) {
+func TestUserFederatedConnectionsTokenSet_String(t *testing.T) {
 	var rawJSON json.RawMessage
-	v := &UserFederatedConnectionTokenSet{}
+	v := &UserFederatedConnectionsTokenSet{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

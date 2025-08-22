@@ -13376,7 +13376,7 @@ func (u *UserEnrollment) String() string {
 }
 
 // GetConnection returns the Connection field if it's non-nil, zero value otherwise.
-func (u *UserFederatedConnectionTokenSet) GetConnection() string {
+func (u *UserFederatedConnectionsTokenSet) GetConnection() string {
 	if u == nil || u.Connection == nil {
 		return ""
 	}
@@ -13384,7 +13384,7 @@ func (u *UserFederatedConnectionTokenSet) GetConnection() string {
 }
 
 // GetExpiresAt returns the ExpiresAt field if it's non-nil, zero value otherwise.
-func (u *UserFederatedConnectionTokenSet) GetExpiresAt() time.Time {
+func (u *UserFederatedConnectionsTokenSet) GetExpiresAt() time.Time {
 	if u == nil || u.ExpiresAt == nil {
 		return time.Time{}
 	}
@@ -13392,7 +13392,7 @@ func (u *UserFederatedConnectionTokenSet) GetExpiresAt() time.Time {
 }
 
 // GetID returns the ID field if it's non-nil, zero value otherwise.
-func (u *UserFederatedConnectionTokenSet) GetID() string {
+func (u *UserFederatedConnectionsTokenSet) GetID() string {
 	if u == nil || u.ID == nil {
 		return ""
 	}
@@ -13400,7 +13400,7 @@ func (u *UserFederatedConnectionTokenSet) GetID() string {
 }
 
 // GetIssuedAt returns the IssuedAt field if it's non-nil, zero value otherwise.
-func (u *UserFederatedConnectionTokenSet) GetIssuedAt() time.Time {
+func (u *UserFederatedConnectionsTokenSet) GetIssuedAt() time.Time {
 	if u == nil || u.IssuedAt == nil {
 		return time.Time{}
 	}
@@ -13408,7 +13408,7 @@ func (u *UserFederatedConnectionTokenSet) GetIssuedAt() time.Time {
 }
 
 // GetLastUsedAt returns the LastUsedAt field if it's non-nil, zero value otherwise.
-func (u *UserFederatedConnectionTokenSet) GetLastUsedAt() time.Time {
+func (u *UserFederatedConnectionsTokenSet) GetLastUsedAt() time.Time {
 	if u == nil || u.LastUsedAt == nil {
 		return time.Time{}
 	}
@@ -13416,15 +13416,15 @@ func (u *UserFederatedConnectionTokenSet) GetLastUsedAt() time.Time {
 }
 
 // GetScope returns the Scope field if it's non-nil, zero value otherwise.
-func (u *UserFederatedConnectionTokenSet) GetScope() string {
+func (u *UserFederatedConnectionsTokenSet) GetScope() string {
 	if u == nil || u.Scope == nil {
 		return ""
 	}
 	return *u.Scope
 }
 
-// String returns a string representation of UserFederatedConnectionTokenSet.
-func (u *UserFederatedConnectionTokenSet) String() string {
+// String returns a string representation of UserFederatedConnectionsTokenSet.
+func (u *UserFederatedConnectionsTokenSet) String() string {
 	return Stringify(u)
 }
 

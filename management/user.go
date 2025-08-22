@@ -450,8 +450,8 @@ type UserRiskAssessmentAssessor struct {
 	Assessors []string `json:"assessors,omitempty"`
 }
 
-// UserFederatedConnectionTokenSet represents a single active token set issued to a user from a federated connection.
-type UserFederatedConnectionTokenSet struct {
+// UserFederatedConnectionsTokenSet represents a single active token set issued to a user from a federated connection.
+type UserFederatedConnectionsTokenSet struct {
 	// ID is the unique identifier for the token set.
 	ID *string `json:"id,omitempty"`
 	// Connection is the name of the connection containing the user whose tokens are being managed.
@@ -876,16 +876,16 @@ func (m *UserManager) ClearRiskAssessmentAssessors(ctx context.Context, userID s
 	return m.management.Request(ctx, "POST", uri, &ua, opts...)
 }
 
-// ListFederatedConnectionTokenSets retrieves the active federated connection token sets for a user.
-func (m *UserManager) ListFederatedConnectionTokenSets(ctx context.Context, userID string, opts ...RequestOption) (ufcts []*UserFederatedConnectionTokenSet, err error) {
-	uri := m.management.URI("users", userID, "federated-connection-tokensets")
+// ListFederatedConnectionsTokenSets retrieves the active federated connection token sets for a user.
+func (m *UserManager) ListFederatedConnectionsTokenSets(ctx context.Context, userID string, opts ...RequestOption) (ufcts []*UserFederatedConnectionsTokenSet, err error) {
+	uri := m.management.URI("users", userID, "federated-connections-tokensets")
 	err = m.management.Request(ctx, "GET", uri, &ufcts, opts...)
 
 	return
 }
 
-// DeleteFederatedConnectionTokenSet deletes a specific federated connection token set for a user.
-func (m *UserManager) DeleteFederatedConnectionTokenSet(ctx context.Context, userID, tokenSetID string, opts ...RequestOption) error {
-	uri := m.management.URI("users", userID, "federated-connection-tokensets", tokenSetID)
+// DeleteFederatedConnectionsTokenSet deletes a specific federated connection token set for a user.
+func (m *UserManager) DeleteFederatedConnectionsTokenSet(ctx context.Context, userID, tokenSetID string, opts ...RequestOption) error {
+	uri := m.management.URI("users", userID, "federated-connections-tokensets", tokenSetID)
 	return m.management.Request(ctx, "DELETE", uri, nil, opts...)
 }
