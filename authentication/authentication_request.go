@@ -47,6 +47,10 @@ func (a *Authentication) NewRequest(
 	request.Header.Add("Content-Type", "application/json")
 
 	for _, option := range opts {
+		if option == nil {
+			continue
+		}
+
 		option.apply(request, nil)
 	}
 
@@ -70,6 +74,10 @@ func (a *Authentication) NewFormRequest(
 	request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	for _, option := range opts {
+		if option == nil {
+			continue
+		}
+
 		option.apply(request, payload)
 	}
 
