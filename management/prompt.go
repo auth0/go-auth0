@@ -478,23 +478,6 @@ type PromptRenderingList struct {
 }
 
 // MarshalJSON implements a custom [json.Marshaler].
-func (c *PromptRendering) MarshalJSON() ([]byte, error) {
-	type RenderingSubSet struct {
-		RenderingMode           *RenderingMode `json:"rendering_mode,omitempty"`
-		ContextConfiguration    *[]string      `json:"context_configuration,omitempty"`
-		DefaultHeadTagsDisabled *bool          `json:"default_head_tags_disabled,omitempty"`
-		HeadTags                []interface{}  `json:"head_tags,omitempty"`
-	}
-
-	return json.Marshal(&RenderingSubSet{
-		RenderingMode:           c.RenderingMode,
-		ContextConfiguration:    c.ContextConfiguration,
-		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
-		HeadTags:                c.HeadTags,
-	})
-}
-
-// MarshalJSON implements a custom [json.Marshaler].
 func (c *PromptPartials) MarshalJSON() ([]byte, error) {
 	body := map[string]PromptPartials{
 		string(c.Prompt): *c,
@@ -660,6 +643,7 @@ func (m *PromptManager) ReadRendering(ctx context.Context, prompt PromptType, sc
 	err = m.management.Request(ctx, "GET", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), &c, opts...)
 	return
 }
+
 func (c *PromptRendering) cleanForPatch() *PromptRendering {
 	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
 		return &PromptRendering{
@@ -667,7 +651,13 @@ func (c *PromptRendering) cleanForPatch() *PromptRendering {
 		}
 	}
 
-	return c
+	return &PromptRendering{
+		RenderingMode:           c.RenderingMode,
+		ContextConfiguration:    c.ContextConfiguration,
+		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
+		HeadTags:                c.HeadTags,
+		Tenant:                  c.Tenant,
+	}
 }
 
 // UpdateRendering updates the settings for the ACUL.

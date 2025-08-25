@@ -160,6 +160,8 @@ func TestPromptManager_ListRendering(t *testing.T) {
 			*r.GetRenderingMode() == *expected.GetRenderingMode() &&
 			assert.Equal(t, expected.GetContextConfiguration(), r.GetContextConfiguration()) &&
 			assert.Equal(t, expected.GetDefaultHeadTagsDisabled(), r.GetDefaultHeadTagsDisabled()) &&
+			assert.Equal(t, expected.Screen, r.GetScreen()) &&
+			assert.Equal(t, expected.Prompt, r.GetPrompt()) &&
 			assert.Equal(t, expected.HeadTags, r.HeadTags) {
 			found = true
 			break
@@ -437,6 +439,9 @@ func givenAPromptRendering(t *testing.T, mode RenderingMode) *PromptRendering {
 	}
 
 	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, settings)
+	assert.NoError(t, err)
+
+	settings, _ = api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
 	assert.NoError(t, err)
 
 	return settings
