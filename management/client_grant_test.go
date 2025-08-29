@@ -16,9 +16,14 @@ func TestClientGrantManager_Create(t *testing.T) {
 	client := givenAClient(t)
 	resourceServer := givenAResourceServer(t)
 	expectedClientGrant := &ClientGrant{
-		ClientID: client.ClientID,
-		Audience: resourceServer.Identifier,
-		Scope:    &[]string{"create:resource"},
+		ClientID:    client.ClientID,
+		Audience:    resourceServer.Identifier,
+		Scope:       &[]string{"create:resource"},
+		SubjectType: auth0.String("user"),
+		AuthorizationDetailsTypes: &[]string{
+			"payment",
+			"shipping",
+		},
 	}
 
 	err := api.ClientGrant.Create(context.Background(), expectedClientGrant)
@@ -41,6 +46,9 @@ func TestClientGrantManager_Read(t *testing.T) {
 	assert.Equal(t, expectedClientGrant.GetID(), actualClientGrant.GetID())
 	assert.Equal(t, expectedClientGrant.GetClientID(), actualClientGrant.GetClientID())
 	assert.Equal(t, expectedClientGrant.GetAudience(), actualClientGrant.GetAudience())
+	assert.Equal(t, expectedClientGrant.GetSubjectType(), actualClientGrant.GetSubjectType())
+	assert.Equal(t, expectedClientGrant.GetScope(), actualClientGrant.GetScope())
+	assert.Equal(t, expectedClientGrant.GetAuthorizationDetailsTypes(), actualClientGrant.GetAuthorizationDetailsTypes())
 }
 
 func TestClientGrantManager_Update(t *testing.T) {
@@ -50,17 +58,20 @@ func TestClientGrantManager_Update(t *testing.T) {
 
 	clientGrantID := expectedClientGrant.GetID()
 
-	expectedClientGrant.ID = nil       // Read-Only: Additional properties not allowed.
-	expectedClientGrant.Audience = nil // Read-Only: Additional properties not allowed.
-	expectedClientGrant.ClientID = nil // Read-Only: Additional properties not allowed.
+	expectedClientGrant.ID = nil          // Read-Only: Additional properties not allowed.
+	expectedClientGrant.Audience = nil    // Read-Only: Additional properties not allowed.
+	expectedClientGrant.ClientID = nil    // Read-Only: Additional properties not allowed.
+	expectedClientGrant.SubjectType = nil // Read-Only: Additional properties not allowed.
 
 	scope := expectedClientGrant.GetScope()
 	scope = append(scope, "update:resource")
 	expectedClientGrant.Scope = &scope
+	expectedClientGrant.AuthorizationDetailsTypes = &[]string{}
 
 	err := api.ClientGrant.Update(context.Background(), clientGrantID, expectedClientGrant)
 	assert.NoError(t, err)
 	assert.Equal(t, len(expectedClientGrant.GetScope()), 2)
+	assert.Empty(t, expectedClientGrant.GetAuthorizationDetailsTypes())
 }
 
 func TestClientGrantManager_Delete(t *testing.T) {
@@ -111,14 +122,21 @@ func givenAClientGrant(t *testing.T, allowOrganizations bool) (clientGrant *Clie
 	resourceServer := givenAResourceServer(t)
 
 	clientGrant = &ClientGrant{
-		ClientID: client.ClientID,
-		Audience: resourceServer.Identifier,
-		Scope:    &[]string{"create:resource"},
+		ClientID:    client.ClientID,
+		Audience:    resourceServer.Identifier,
+		Scope:       &[]string{"create:resource"},
+		SubjectType: auth0.String("user"),
+		AuthorizationDetailsTypes: &[]string{
+			"payment",
+			"shipping",
+		},
 	}
 
 	if allowOrganizations {
+		clientGrant.SubjectType = auth0.String("client")
 		clientGrant.AllowAnyOrganization = auth0.Bool(true)
 		clientGrant.OrganizationUsage = auth0.String("allow")
+		clientGrant.AuthorizationDetailsTypes = nil // Authorization details are not supported with client subject type.
 	}
 
 	err := api.ClientGrant.Create(context.Background(), clientGrant)

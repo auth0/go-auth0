@@ -2666,6 +2666,16 @@ func TestClientGrant_GetAudience(tt *testing.T) {
 	c.GetAudience()
 }
 
+func TestClientGrant_GetAuthorizationDetailsTypes(tt *testing.T) {
+	var zeroValue []string
+	c := &ClientGrant{AuthorizationDetailsTypes: &zeroValue}
+	c.GetAuthorizationDetailsTypes()
+	c = &ClientGrant{}
+	c.GetAuthorizationDetailsTypes()
+	c = nil
+	c.GetAuthorizationDetailsTypes()
+}
+
 func TestClientGrant_GetClientID(tt *testing.T) {
 	var zeroValue string
 	c := &ClientGrant{ClientID: &zeroValue}
@@ -2704,6 +2714,16 @@ func TestClientGrant_GetScope(tt *testing.T) {
 	c.GetScope()
 	c = nil
 	c.GetScope()
+}
+
+func TestClientGrant_GetSubjectType(tt *testing.T) {
+	var zeroValue string
+	c := &ClientGrant{SubjectType: &zeroValue}
+	c.GetSubjectType()
+	c = &ClientGrant{}
+	c.GetSubjectType()
+	c = nil
+	c.GetSubjectType()
 }
 
 func TestClientGrant_String(t *testing.T) {
@@ -13206,6 +13226,13 @@ func TestResourceServer_GetSkipConsentForVerifiableFirstPartyClients(tt *testing
 	r.GetSkipConsentForVerifiableFirstPartyClients()
 }
 
+func TestResourceServer_GetSubjectTypeAuthorization(tt *testing.T) {
+	r := &ResourceServer{}
+	r.GetSubjectTypeAuthorization()
+	r = nil
+	r.GetSubjectTypeAuthorization()
+}
+
 func TestResourceServer_GetTokenDialect(tt *testing.T) {
 	var zeroValue string
 	r := &ResourceServer{TokenDialect: &zeroValue}
@@ -13338,6 +13365,64 @@ func TestResourceServerScope_GetValue(tt *testing.T) {
 func TestResourceServerScope_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ResourceServerScope{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestResourceServerSubjectTypeAuthorization_GetClient(tt *testing.T) {
+	r := &ResourceServerSubjectTypeAuthorization{}
+	r.GetClient()
+	r = nil
+	r.GetClient()
+}
+
+func TestResourceServerSubjectTypeAuthorization_GetUser(tt *testing.T) {
+	r := &ResourceServerSubjectTypeAuthorization{}
+	r.GetUser()
+	r = nil
+	r.GetUser()
+}
+
+func TestResourceServerSubjectTypeAuthorization_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ResourceServerSubjectTypeAuthorization{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestResourceServerSubjectTypeAuthorizationClient_GetPolicy(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServerSubjectTypeAuthorizationClient{Policy: &zeroValue}
+	r.GetPolicy()
+	r = &ResourceServerSubjectTypeAuthorizationClient{}
+	r.GetPolicy()
+	r = nil
+	r.GetPolicy()
+}
+
+func TestResourceServerSubjectTypeAuthorizationClient_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ResourceServerSubjectTypeAuthorizationClient{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestResourceServerSubjectTypeAuthorizationUser_GetPolicy(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServerSubjectTypeAuthorizationUser{Policy: &zeroValue}
+	r.GetPolicy()
+	r = &ResourceServerSubjectTypeAuthorizationUser{}
+	r.GetPolicy()
+	r = nil
+	r.GetPolicy()
+}
+
+func TestResourceServerSubjectTypeAuthorizationUser_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ResourceServerSubjectTypeAuthorizationUser{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

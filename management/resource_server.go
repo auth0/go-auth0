@@ -112,6 +112,39 @@ type ResourceServer struct {
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	ProofOfPossession *ResourceServerProofOfPossession `json:"proof_of_possession,omitempty"`
+
+	// SubjectTypeAuthorization defines the authorization policies for user and client flows.
+	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty"`
+}
+
+// ResourceServerSubjectTypeAuthorization defines the authorization policies for user and client flows.
+type ResourceServerSubjectTypeAuthorization struct {
+	// User authorization policies for the resource server.
+	User *ResourceServerSubjectTypeAuthorizationUser `json:"user,omitempty"`
+
+	// Client authorization policies for the resource server.
+	Client *ResourceServerSubjectTypeAuthorizationClient `json:"client,omitempty"`
+}
+
+// ResourceServerSubjectTypeAuthorizationUser defines the authorization policies for user-initiated flows.
+type ResourceServerSubjectTypeAuthorizationUser struct {
+	// Policy defines the user flows policy for the resource server.
+	//
+	// Available options:
+	//   - "allow_all": Allows all user-initiated flows.
+	//   - "deny_all": Denies all user-initiated flows.
+	//   - "require_client_grant": Requires a client grant for user-initiated flows.
+	Policy *string `json:"policy,omitempty"`
+}
+
+// ResourceServerSubjectTypeAuthorizationClient defines the authorization policies for client-initiated flows.
+type ResourceServerSubjectTypeAuthorizationClient struct {
+	// Policy defines the client flows policy for the resource server.
+	//
+	// Available options:
+	//   - "deny_all": Denies all client-initiated flows.
+	//   - "require_client_grant": Requires a client grant for client-initiated flows.
+	Policy *string `json:"policy,omitempty"`
 }
 
 // ResourceServerAuthorizationDetails specifies the authorization details for the resource server.
