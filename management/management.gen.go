@@ -2202,6 +2202,14 @@ func (c *ClientGrant) GetAudience() string {
 	return *c.Audience
 }
 
+// GetAuthorizationDetailsTypes returns the AuthorizationDetailsTypes field if it's non-nil, zero value otherwise.
+func (c *ClientGrant) GetAuthorizationDetailsTypes() []string {
+	if c == nil || c.AuthorizationDetailsTypes == nil {
+		return nil
+	}
+	return *c.AuthorizationDetailsTypes
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (c *ClientGrant) GetClientID() string {
 	if c == nil || c.ClientID == nil {
@@ -2232,6 +2240,14 @@ func (c *ClientGrant) GetScope() []string {
 		return nil
 	}
 	return *c.Scope
+}
+
+// GetSubjectType returns the SubjectType field if it's non-nil, zero value otherwise.
+func (c *ClientGrant) GetSubjectType() string {
+	if c == nil || c.SubjectType == nil {
+		return ""
+	}
+	return *c.SubjectType
 }
 
 // String returns a string representation of ClientGrant.
@@ -10535,6 +10551,14 @@ func (r *ResourceServer) GetSkipConsentForVerifiableFirstPartyClients() bool {
 	return *r.SkipConsentForVerifiableFirstPartyClients
 }
 
+// GetSubjectTypeAuthorization returns the SubjectTypeAuthorization field.
+func (r *ResourceServer) GetSubjectTypeAuthorization() *ResourceServerSubjectTypeAuthorization {
+	if r == nil {
+		return nil
+	}
+	return r.SubjectTypeAuthorization
+}
+
 // GetTokenDialect returns the TokenDialect field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetTokenDialect() string {
 	if r == nil || r.TokenDialect == nil {
@@ -10637,6 +10661,53 @@ func (r *ResourceServerScope) GetValue() string {
 
 // String returns a string representation of ResourceServerScope.
 func (r *ResourceServerScope) String() string {
+	return Stringify(r)
+}
+
+// GetClient returns the Client field.
+func (r *ResourceServerSubjectTypeAuthorization) GetClient() *ResourceServerSubjectTypeAuthorizationClient {
+	if r == nil {
+		return nil
+	}
+	return r.Client
+}
+
+// GetUser returns the User field.
+func (r *ResourceServerSubjectTypeAuthorization) GetUser() *ResourceServerSubjectTypeAuthorizationUser {
+	if r == nil {
+		return nil
+	}
+	return r.User
+}
+
+// String returns a string representation of ResourceServerSubjectTypeAuthorization.
+func (r *ResourceServerSubjectTypeAuthorization) String() string {
+	return Stringify(r)
+}
+
+// GetPolicy returns the Policy field if it's non-nil, zero value otherwise.
+func (r *ResourceServerSubjectTypeAuthorizationClient) GetPolicy() string {
+	if r == nil || r.Policy == nil {
+		return ""
+	}
+	return *r.Policy
+}
+
+// String returns a string representation of ResourceServerSubjectTypeAuthorizationClient.
+func (r *ResourceServerSubjectTypeAuthorizationClient) String() string {
+	return Stringify(r)
+}
+
+// GetPolicy returns the Policy field if it's non-nil, zero value otherwise.
+func (r *ResourceServerSubjectTypeAuthorizationUser) GetPolicy() string {
+	if r == nil || r.Policy == nil {
+		return ""
+	}
+	return *r.Policy
+}
+
+// String returns a string representation of ResourceServerSubjectTypeAuthorizationUser.
+func (r *ResourceServerSubjectTypeAuthorizationUser) String() string {
 	return Stringify(r)
 }
 
