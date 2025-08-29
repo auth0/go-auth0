@@ -574,6 +574,30 @@ func TestUserManager_ClearRiskAssessmentAssessors(t *testing.T) {
 
 	require.NoError(t, err)
 }
+
+func TestUserManager_ListFederatedConnectionTokenSets(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	user := givenAUser(t)
+	tokenSets, err := api.User.ListFederatedConnectionsTokenSets(context.Background(), user.GetID())
+	require.NoError(t, err)
+	assert.Len(t, tokenSets, 0, "Expected no federated connection token sets for the user")
+}
+
+// TestUserManager_DeleteFederatedConnectionTokenSet tests the DeleteFederatedConnectionTokenSet method of UserManager.
+// This E2E test is skipped because federatedconnectionTokenSet tokens cannot be created without UI interaction.
+func TestUserManager_DeleteFederatedConnectionTokenSet(t *testing.T) {
+	skipTestIfRunningE2E(t)
+	configureHTTPTestRecordings(t)
+	// RecordingNote: This test recording was manually generated to match these details.
+	// If any changes occur here, the test recording will need manual modification.
+
+	user := givenAUser(t)
+	// Attempt to delete a federated connection token set for the user.
+	// This should not return an error even if no token set exists.
+	err := api.User.DeleteFederatedConnectionsTokenSet(context.Background(), user.GetID(), "non-existent-token-set-id")
+	require.NoError(t, err, "Expected no error when deleting a non-existent federated connection token set")
+}
+
 func givenAUser(t *testing.T) *User {
 	t.Helper()
 

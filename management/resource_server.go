@@ -15,6 +15,10 @@ type ResourceServer struct {
 	// The identifier of the resource server.
 	Identifier *string `json:"identifier,omitempty"`
 
+	// ClientID is the identifier of the client that this resource server is linked to.
+	// This is a read-only value returned by the API.
+	ClientID *string `json:"client_id,omitempty"`
+
 	// Scopes supported by the resource server.
 	Scopes *[]ResourceServerScope `json:"scopes,omitempty"`
 
