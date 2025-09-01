@@ -15,12 +15,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/auth0/go-auth0/v2/management"
 	"github.com/joho/godotenv"
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwt"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/auth0/go-auth0/v2/management"
 
 	"github.com/auth0/go-auth0/v2"
 	"github.com/auth0/go-auth0/v2/authentication/database"
