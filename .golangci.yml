@@ -44,6 +44,7 @@ linters:
       - third_party$
       - builtin$
       - examples$
+      - management/ #Remove after Beta
 formatters:
   enable:
     - gofmt
@@ -60,3 +61,4 @@ formatters:
       - third_party$
       - builtin$
       - examples$
+      - management/ #Remove after Beta

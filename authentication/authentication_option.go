@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/auth0/go-auth0/internal/client"
+	"github.com/auth0/go-auth0/v2/internal/client"
 )
 
 // Option is used for passing options to the Authentication client.

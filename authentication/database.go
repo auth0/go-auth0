@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/auth0/go-auth0/authentication/database"
+	"github.com/auth0/go-auth0/v2/authentication/database"
 )
 
 // Database manager.

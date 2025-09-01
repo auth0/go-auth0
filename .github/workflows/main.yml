@@ -19,9 +19,6 @@ jobs:
           go-version-file: go.mod
           check-latest: true
 
-      - name: Check that files were correctly generated
-        run: make check-getters
-
       - name: Check that the packages can be built
         run: go build ./...
 

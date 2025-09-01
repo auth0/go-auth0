@@ -23,7 +23,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/auth0/go-auth0"
+	"github.com/auth0/go-auth0/v2"
 )
 
 func TestRetries(t *testing.T) {

@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/auth0/go-auth0/authentication/ciba"
+	"github.com/auth0/go-auth0/v2/authentication/ciba"
 )
 
 // CIBA manager.
