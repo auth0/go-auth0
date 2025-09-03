@@ -1,4 +1,4 @@
 package auth0
 
 // Version is the package version.
-var Version = "1.22.2"
+var Version = "1.27.0"

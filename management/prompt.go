@@ -469,6 +469,30 @@ type PromptRendering struct {
 	ContextConfiguration    *[]string      `json:"context_configuration,omitempty"`
 	DefaultHeadTagsDisabled *bool          `json:"default_head_tags_disabled,omitempty"`
 	HeadTags                []interface{}  `json:"head_tags,omitempty"`
+	// Filters are optional filters to apply rendering rules to specific entities.
+	Filters *PromptRenderingFilters `json:"filters,omitempty"`
+	// UsePageTemplate indicates whether to use the page template with ACUL.
+	UsePageTemplate *bool `json:"use_page_template,omitempty"`
+}
+
+// PromptRenderingFilters is used to filter rendering rules based on specific entities.
+type PromptRenderingFilters struct {
+	// MatchType defines the type of match to apply.
+	MatchType *string `json:"match_type,omitempty"`
+	// Clients is a list of client filters.
+	Clients *[]PromptRenderingFilter `json:"clients,omitempty"`
+	// Organizations is a list of organization filters.
+	Organizations *[]PromptRenderingFilter `json:"organizations,omitempty"`
+	// Domains is a list of domain filters.
+	Domains *[]PromptRenderingFilter `json:"domains,omitempty"`
+}
+
+// PromptRenderingFilter is used to filter rendering rules based on specific entities.
+type PromptRenderingFilter struct {
+	// ID is the identifier of the entity.
+	ID *string `json:"id,omitempty"`
+	// Metadata is the metadata associated with the entity.
+	Metadata *map[string]interface{} `json:"metadata,omitempty"`
 }
 
 // PromptRenderingList is a list of prompt rendering settings.
@@ -657,6 +681,8 @@ func (c *PromptRendering) cleanForPatch() *PromptRendering {
 		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
 		HeadTags:                c.HeadTags,
 		Tenant:                  c.Tenant,
+		Filters:                 c.Filters,
+		UsePageTemplate:         c.UsePageTemplate,
 	}
 }
 

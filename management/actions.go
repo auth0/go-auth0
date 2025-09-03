@@ -229,6 +229,10 @@ func applyActionsListDefaults(options []RequestOption) RequestOption {
 		PerPage(50).apply(r)
 
 		for _, option := range options {
+			if option == nil {
+				continue
+			}
+
 			option.apply(r)
 		}
 	})

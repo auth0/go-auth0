@@ -85,6 +85,30 @@ func TestClient_CreateWithClientRefreshToken(t *testing.T) {
 	})
 }
 
+func TestClientManager_ReadEnabledConnections(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedClient := givenAClient(t)
+	actualConnections, err := api.Client.ReadEnabledConnections(context.Background(), expectedClient.GetClientID())
+	assert.NoError(t, err)
+	assert.Equal(t, 0, len(actualConnections.Connections))
+
+	expectedConnection := givenAOktaConnection(t)
+	payload := []ConnectionEnabledClient{
+		{
+			ClientID: expectedClient.ClientID,
+			Status:   auth0.Bool(true),
+		},
+	}
+	err = api.Connection.UpdateEnabledClients(context.Background(), expectedConnection.GetID(), payload)
+
+	assert.NoError(t, err)
+	actualConnections, err = api.Client.ReadEnabledConnections(context.Background(), expectedClient.GetClientID())
+	assert.NoError(t, err)
+	assert.Equal(t, 1, len(actualConnections.Connections))
+	assert.Equal(t, expectedConnection.GetID(), actualConnections.Connections[0].GetID())
+}
+
 func TestClient_CreateWithTokenExchange(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -122,6 +146,8 @@ func TestClient_SessionTransfer(t *testing.T) {
 			AllowedAuthenticationMethods:  &[]string{"cookie", "query"},
 			EnforceDeviceBinding:          auth0.String("ip"),
 			AllowRefreshToken:             auth0.Bool(true),
+			EnforceCascadeRevocation:      auth0.Bool(true),
+			EnforceOnlineRefreshTokens:    auth0.Bool(true),
 		},
 	}
 
@@ -145,6 +171,8 @@ func TestClient_SessionTransfer(t *testing.T) {
 		AllowedAuthenticationMethods:  &[]string{"cookie"},
 		EnforceDeviceBinding:          auth0.String("none"),
 		AllowRefreshToken:             auth0.Bool(false),
+		EnforceCascadeRevocation:      auth0.Bool(false),
+		EnforceOnlineRefreshTokens:    auth0.Bool(false),
 	}
 
 	// Strip fields not allowed on update

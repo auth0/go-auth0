@@ -1,5 +1,49 @@
 # Change Log
 
+## [v1.27.0](https://github.com/auth0/go-auth0/tree/v1.27.0) (2025-08-29)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.26.0...v1.27.0)
+
+**Added**
+- feat: add `SubjectType` and `AuthorizationDetailsTypes` to ClientGrant & implement `SubjectTypeAuthorization` for ResourceServer [\#586](https://github.com/auth0/go-auth0/pull/586) ([developerkunal](https://github.com/developerkunal))
+- chore(email): expand EmailTemplate options with new templates [\#590](https://github.com/auth0/go-auth0/pull/590) ([developerkunal](https://github.com/developerkunal))
+
+**Fixed**
+- fix: skip nil RequestOptions to prevent nil pointer dereferences on `option.apply(r)` [\#591](https://github.com/auth0/go-auth0/pull/591) ([esotuvaka](https://github.com/esotuvaka))
+
+## [v1.26.0](https://github.com/auth0/go-auth0/tree/v1.26.0) (2025-08-11)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.25.0...v1.26.0)
+
+**Added**
+- feat: Add attribute `startFrom`  to Log Streams [\#584](https://github.com/auth0/go-auth0/pull/584) ([duedares-rvj](https://github.com/duedares-rvj))
+- feat: add missing mgmt api fields to guardian enrollment ticket structure [\#587](https://github.com/auth0/go-auth0/pull/587) ([JohnRoesler](https://github.com/JohnRoesler))
+- feat(risk-assessment): add `RiskAssessmentManager` for managing risk assessment settings and new device settings [\#582](https://github.com/auth0/go-auth0/pull/582) ([developerkunal](https://github.com/developerkunal))
+- feat: support online refresh token and cascade revocation in ClientManager’s N2W session transfer [\#576](https://github.com/auth0/go-auth0/pull/576) ([nelsonmaia](https://github.com/nelsonmaia))
+
+**Fixed**
+- fix(mfa): deprecate OOBChannels and add OOBChannel in authenticator responses; improve test validation [\#583](https://github.com/auth0/go-auth0/pull/583) ([developerkunal](https://github.com/developerkunal))
+
+## [v1.25.0](https://github.com/auth0/go-auth0/tree/v1.25.0) (2025-07-15)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.24.0...v1.25.0)
+
+**Added**
+- Add support for `domain metadata` in `CustomDomain` struct, implement `ListWithPagination` method, and update Management options with `WithCustomDomainHeader` [\#551](https://github.com/auth0/go-auth0/pull/551) ([developerkunal](https://github.com/developerkunal))
+- feat(logstreams): Add PIIConfig to LogStream struct for PII masking support [\#575](https://github.com/auth0/go-auth0/pull/575) ([developerkunal](https://github.com/developerkunal))
+
+## [v1.24.0](https://github.com/auth0/go-auth0/tree/v1.24.0) (2025-06-30)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.23.0...v1.24.0)
+
+**Added**
+- feat(prompt): add Filters and UsePageTemplate support to PromptRendering [\#573](https://github.com/auth0/go-auth0/pull/573) ([developerkunal](https://github.com/developerkunal))
+
+## [v1.23.0](https://github.com/auth0/go-auth0/tree/v1.23.0) (2025-06-19)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.22.2...v1.23.0)
+
+**Added**
+- docs: update comment to reflect DPoP support in `ResourceServerManager` [\#571](https://github.com/auth0/go-auth0/pull/571) ([developerkunal](https://github.com/developerkunal))
+- Add support for `ReadEnabledConnections` in ClientsManager [\#569](https://github.com/auth0/go-auth0/pull/569) ([developerkunal](https://github.com/developerkunal))
+- Add Patch method and corresponding tests for Network ACL [\#568](https://github.com/auth0/go-auth0/pull/568) ([developerkunal](https://github.com/developerkunal))
+- Add `ReadKeys` and `RotateKeys` methods and extend `ConnectionOptions` with `TokenEndpointAuthMethod` and `TokenEndpointAuthSigningAlg` in `ConnectionManager` [\#559](https://github.com/auth0/go-auth0/pull/559) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.22.2](https://github.com/auth0/go-auth0/tree/v1.22.2) (2025-06-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.22.1...v1.22.2)
 

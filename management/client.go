@@ -404,6 +404,8 @@ type SessionTransfer struct {
 	AllowedAuthenticationMethods  *[]string `json:"allowed_authentication_methods,omitempty"`
 	EnforceDeviceBinding          *string   `json:"enforce_device_binding,omitempty"`
 	AllowRefreshToken             *bool     `json:"allow_refresh_token,omitempty"`
+	EnforceOnlineRefreshTokens    *bool     `json:"enforce_online_refresh_tokens,omitempty"`
+	EnforceCascadeRevocation      *bool     `json:"enforce_cascade_revocation,omitempty"`
 }
 
 // ClientAddons defines the `addons` settings for a Client.
@@ -863,6 +865,12 @@ func (m *ClientManager) GetCredential(ctx context.Context, clientID string, cred
 // DeleteCredential deletes a client credentials object.
 func (m *ClientManager) DeleteCredential(ctx context.Context, clientID string, credentialID string, opts ...RequestOption) error {
 	return m.management.Request(ctx, "DELETE", m.management.URI("clients", clientID, "credentials", credentialID), nil, opts...)
+}
+
+// ReadEnabledConnections returns a list of enabled connections for a client.
+func (m *ClientManager) ReadEnabledConnections(ctx context.Context, clientID string, opts ...RequestOption) (c *ConnectionList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("clients", clientID, "connections"), &c, applyListCheckpointDefaults(opts))
+	return
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.

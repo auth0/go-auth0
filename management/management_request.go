@@ -8,9 +8,44 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strconv"
 	"strings"
 )
+
+var compiledWhitelistedPathRegexes = compileWhitelistedPathPatterns()
+
+func compileWhitelistedPathPatterns() []*regexp.Regexp {
+	patterns := []string{
+		`^/api/v2/jobs/verification-email$`,
+		`^/api/v2/tickets/email-verification$`,
+		`^/api/v2/tickets/password-change$`,
+		`^/api/v2/organizations/[^/]+/invitations$`,
+		`^/api/v2/users$`,
+		`^/api/v2/users/[^/]+$`,
+		`^/api/v2/guardian/enrollments/ticket$`,
+	}
+
+	compiled := make([]*regexp.Regexp, len(patterns))
+	for i, pattern := range patterns {
+		compiled[i] = regexp.MustCompile(pattern)
+	}
+
+	return compiled
+}
+
+// isCustomDomainPathWhitelisted checks if the given path is in the whitelist
+// for custom domain header application by matching it against predefined regex patterns.
+// Returns true if the path matches any of the whitelisted patterns, false otherwise.
+func isCustomDomainPathWhitelisted(path string) bool {
+	for _, r := range compiledWhitelistedPathRegexes {
+		if r.MatchString(path) {
+			return true
+		}
+	}
+
+	return false
+}
 
 // URI returns the absolute URL of the Management API with any path segments
 // appended to the end.
@@ -90,7 +125,13 @@ func (m *Management) NewRequest(
 		request.Header.Add("Content-Type", "application/json")
 	}
 
+	m.applyCustomDomainHeader(request, uri)
+
 	for _, option := range options {
+		if option == nil {
+			continue
+		}
+
 		option.apply(request)
 	}
 
@@ -113,6 +154,25 @@ func (m *Management) Do(req *http.Request) (*http.Response, error) {
 	}
 
 	return response, nil
+}
+
+// applyCustomDomainHeader adds the Auth0-Custom-Domain header to the given HTTP request
+// when the request URI path is in the whitelist for custom domains.
+//
+// If the customDomainHeader is not set or the URI cannot be parsed, this function does nothing.
+func (m *Management) applyCustomDomainHeader(request *http.Request, uri string) {
+	if m.customDomainHeader == "" {
+		return
+	}
+
+	parsedURL, err := url.Parse(uri)
+	if err != nil {
+		return
+	}
+
+	if isCustomDomainPathWhitelisted(parsedURL.Path) {
+		request.Header.Set("Auth0-Custom-Domain", m.customDomainHeader)
+	}
 }
 
 // Request combines NewRequest and Do, while also handling decoding of response payload.
@@ -195,6 +255,10 @@ func applyListDefaults(options []RequestOption) RequestOption {
 		IncludeTotals(true).apply(r)
 
 		for _, option := range options {
+			if option == nil {
+				continue
+			}
+
 			option.apply(r)
 		}
 	})
@@ -205,6 +269,10 @@ func applyListCheckpointDefaults(options []RequestOption) RequestOption {
 		Take(50).apply(r)
 
 		for _, option := range options {
+			if option == nil {
+				continue
+			}
+
 			option.apply(r)
 		}
 	})
@@ -339,5 +407,13 @@ func Sort(sort string) RequestOption {
 		q := r.URL.Query()
 		q.Set("sort", sort)
 		r.URL.RawQuery = q.Encode()
+	})
+}
+
+// CustomDomainHeader sets the 'Auth0-Custom-Domain' header for this request only,
+// overriding any global setting.
+func CustomDomainHeader(domain string) RequestOption {
+	return newRequestOption(func(r *http.Request) {
+		r.Header.Set("Auth0-Custom-Domain", domain)
 	})
 }
