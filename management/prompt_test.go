@@ -506,6 +506,7 @@ func givenAPromptRendering(t *testing.T, mode RenderingMode, clientID string) *P
 	assert.NoError(t, err)
 
 	settings, _ = api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
+
 	assert.NoError(t, err)
 
 	return settings
