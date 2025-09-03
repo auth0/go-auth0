@@ -108,8 +108,41 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 454.494375ms
-    - id: 3
+        duration: 928.915792ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ''
+        request_uri: ''
+        body: ''
+        form: {}
+        headers:
+          User-Agent:
+            - Go-Auth0/1.22.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/prompts/signup/screen/signup/rendering
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"tenant":"go-auth0-dev.eu.auth0.com","prompt":"signup","screen":"signup","rendering_mode":"standard","context_configuration":["branding.settings","branding.themes.default"],"default_head_tags_disabled":false,"head_tags":[{"tag":"script","content":"","attributes":{"src":"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js","async":true,"defer":true,"integrity":["sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="]}}],"filters":null,"use_page_template":false}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 385.340125ms
+    - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -120,14 +153,13 @@ interactions:
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            {"context_configuration":["branding.settings","branding.themes.default","client.logo_uri"],"default_head_tags_disabled":true}
+        body: '{"context_configuration":["branding.settings","branding.themes.default","client.logo_uri"],"default_head_tags_disabled":true}'
         form: {}
         headers:
-            Content-Type:
-                - application/json
-            User-Agent:
-                - Go-Auth0/1.13.0
+          Content-Type:
+            - application/json
+          User-Agent:
+            - Go-Auth0/1.22.2
         url: https://go-auth0-dev.eu.auth0.com/api/v2/prompts/signup/screen/signup/rendering
         method: PATCH
       response:
@@ -144,8 +176,8 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 425.653542ms
-    - id: 4
+        duration: 521.32575ms
+    - id: 3
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -159,10 +191,8 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
-            User-Agent:
-                - Go-Auth0/1.13.0
+          User-Agent:
+            - Go-Auth0/1.22.2
         url: https://go-auth0-dev.eu.auth0.com/api/v2/prompts/signup/screen/signup/rendering
         method: GET
       response:
@@ -173,13 +203,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"tenant":"go-auth0-dev.eu.auth0.com","prompt":"signup","screen":"signup","rendering_mode":"standard","context_configuration":["branding.settings","branding.themes.default","client.logo_uri"],"default_head_tags_disabled":true,"head_tags":[{"tag":"script","content":"","attributes":{"src":"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js","async":true,"defer":true,"integrity":["sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="]}}]}'
+        body: '{"tenant":"go-auth0-dev.eu.auth0.com","prompt":"signup","screen":"signup","rendering_mode":"standard","context_configuration":["branding.settings","branding.themes.default","client.logo_uri"],"default_head_tags_disabled":true,"head_tags":[{"tag":"script","content":"","attributes":{"src":"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js","async":true,"defer":true,"integrity":["sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="]}}],"filters":null,"use_page_template":false}'
         headers:
-            Content-Type:
-                - application/json; charset=utf-8
+          Content-Type:
+            - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 476.536875ms
+        duration: 373.416292ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -194,10 +224,10 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
-            User-Agent:
-                - Go-Auth0/1.13.0
+          Content-Type:
+            - application/json
+          User-Agent:
+            - Go-Auth0/1.13.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/branding/templates/universal-login
         method: DELETE
       response:
@@ -210,8 +240,8 @@ interactions:
         uncompressed: false
         body: ""
         headers:
-            Content-Type:
-                - application/json; charset=utf-8
+          Content-Type:
+            - application/json; charset=utf-8
         status: 204 No Content
         code: 204
         duration: 699.654875ms
