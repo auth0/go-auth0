@@ -1,76 +1,190 @@
 # Change Log
 
+## [v2.0.0-beta.0](https://github.com/auth0/go-auth0/tree/v2.0.0-beta.0) (2025-09-08)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.27.0...v2.0.0-beta.0)
+
+**⚠️ BREAKING CHANGES - Major Rewrite**
+
+This is a complete rewrite of the Auth0 Go SDK with significant breaking changes. Please review the [Migration Guide](./MIGRATION_GUIDE.md) for detailed upgrade instructions.
+
+**Added**
+
+- **New OpenAPI-generated SDK**: Complete rewrite generated from Auth0's OpenAPI specifications
+- **Hierarchical package structure**: Organized management APIs into logical subpackages
+- **Strongly typed interfaces**: Specific request/response types replace generic interfaces
+- **Enhanced type safety**: Enums and constants replace string literals
+- **Improved error handling**: Structured error types with better error messages
+- **Better IntelliSense support**: Improved code completion and documentation
+
+**Changed**
+
+- **BREAKING**: Module name changed from `github.com/auth0/go-auth0` to `github.com/auth0/go-auth0/v2`
+- **BREAKING**: Client initialization changed from `management.New()` to `client.New()` with new option pattern
+- **BREAKING**: Manager structure changed from flat (`mgmt.User`) to hierarchical (`mgmt.Users`)
+- **BREAKING**: All methods now require specific request objects instead of generic structs
+- **BREAKING**: Method signatures updated to return specific response types
+- **BREAKING**: Package organization changed from flat structure to organized subpackages
+- **BREAKING**: Configuration pattern changed to use `option.RequestOption` types
+
+**Migration Required**
+
+<details>
+<summary>Click to see migration examples</summary>
+
+**Before (v1):**
+
+```go
+import "github.com/auth0/go-auth0/management"
+
+mgmt, err := management.New(domain,
+    management.WithClientCredentials(ctx, clientID, clientSecret))
+
+client := &management.Client{
+    Name: auth0.String("My App"),
+    AppType: auth0.String("spa"),
+}
+err := mgmt.Client.Create(ctx, client)
+```
+
+**After (v2):**
+
+```go
+import (
+    "github.com/auth0/go-auth0/v2/management"
+    "github.com/auth0/go-auth0/v2/management/client"
+    "github.com/auth0/go-auth0/v2/option"
+)
+
+mgmt, err := client.New("your-domain.auth0.com",
+    option.WithClientCredentials(ctx, clientID, clientSecret))
+
+request := &management.CreateClientRequestContent{
+    Name: "My App",
+    AppType: &management.ClientAppTypeEnumSpa,
+}
+response, err := mgmt.Clients.Create(ctx, request)
+```
+
+**Key Migration Steps:**
+
+- Update imports to `github.com/auth0/go-auth0/v2`
+- Change `mgmt.User` → `mgmt.Users`, `mgmt.Client` → `mgmt.Clients`
+- Replace generic structs with specific request objects
+- Use typed enums instead of string literals
+- Handle specific response types
+
+</details>
+
+**Note**: The `authentication` package is NOT affected by these changes. Authentication APIs remain the same between V1 and V2.
+
+**Note**: This is a beta release. Minor API adjustments may occur before the final v2.0.0 release.
+
+## [v1.27.0](https://github.com/auth0/go-auth0/tree/v1.27.0) (2025-08-29)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.26.0...v1.27.0)
+
+**Added**
+
+- feat: add `SubjectType` and `AuthorizationDetailsTypes` to ClientGrant & implement `SubjectTypeAuthorization` for ResourceServer [\#586](https://github.com/auth0/go-auth0/pull/586) ([developerkunal](https://github.com/developerkunal))
+- chore(email): expand EmailTemplate options with new templates [\#590](https://github.com/auth0/go-auth0/pull/590) ([developerkunal](https://github.com/developerkunal))
+
+**Fixed**
+
+- fix: skip nil RequestOptions to prevent nil pointer dereferences on `option.apply(r)` [\#591](https://github.com/auth0/go-auth0/pull/591) ([esotuvaka](https://github.com/esotuvaka))
+
 ## [v1.26.0](https://github.com/auth0/go-auth0/tree/v1.26.0) (2025-08-11)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.25.0...v1.26.0)
 
 **Added**
-- feat: Add attribute `startFrom`  to Log Streams [\#584](https://github.com/auth0/go-auth0/pull/584) ([duedares-rvj](https://github.com/duedares-rvj))
+
+- feat: Add attribute `startFrom` to Log Streams [\#584](https://github.com/auth0/go-auth0/pull/584) ([duedares-rvj](https://github.com/duedares-rvj))
 - feat: add missing mgmt api fields to guardian enrollment ticket structure [\#587](https://github.com/auth0/go-auth0/pull/587) ([JohnRoesler](https://github.com/JohnRoesler))
 - feat(risk-assessment): add `RiskAssessmentManager` for managing risk assessment settings and new device settings [\#582](https://github.com/auth0/go-auth0/pull/582) ([developerkunal](https://github.com/developerkunal))
 - feat: support online refresh token and cascade revocation in ClientManager’s N2W session transfer [\#576](https://github.com/auth0/go-auth0/pull/576) ([nelsonmaia](https://github.com/nelsonmaia))
 
 **Fixed**
+
 - fix(mfa): deprecate OOBChannels and add OOBChannel in authenticator responses; improve test validation [\#583](https://github.com/auth0/go-auth0/pull/583) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.25.0](https://github.com/auth0/go-auth0/tree/v1.25.0) (2025-07-15)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.24.0...v1.25.0)
 
 **Added**
+
 - Add support for `domain metadata` in `CustomDomain` struct, implement `ListWithPagination` method, and update Management options with `WithCustomDomainHeader` [\#551](https://github.com/auth0/go-auth0/pull/551) ([developerkunal](https://github.com/developerkunal))
 - feat(logstreams): Add PIIConfig to LogStream struct for PII masking support [\#575](https://github.com/auth0/go-auth0/pull/575) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.24.0](https://github.com/auth0/go-auth0/tree/v1.24.0) (2025-06-30)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.23.0...v1.24.0)
 
 **Added**
+
 - feat(prompt): add Filters and UsePageTemplate support to PromptRendering [\#573](https://github.com/auth0/go-auth0/pull/573) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.23.0](https://github.com/auth0/go-auth0/tree/v1.23.0) (2025-06-19)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.22.2...v1.23.0)
 
 **Added**
+
 - docs: update comment to reflect DPoP support in `ResourceServerManager` [\#571](https://github.com/auth0/go-auth0/pull/571) ([developerkunal](https://github.com/developerkunal))
 - Add support for `ReadEnabledConnections` in ClientsManager [\#569](https://github.com/auth0/go-auth0/pull/569) ([developerkunal](https://github.com/developerkunal))
 - Add Patch method and corresponding tests for Network ACL [\#568](https://github.com/auth0/go-auth0/pull/568) ([developerkunal](https://github.com/developerkunal))
 - Add `ReadKeys` and `RotateKeys` methods and extend `ConnectionOptions` with `TokenEndpointAuthMethod` and `TokenEndpointAuthSigningAlg` in `ConnectionManager` [\#559](https://github.com/auth0/go-auth0/pull/559) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.22.2](https://github.com/auth0/go-auth0/tree/v1.22.2) (2025-06-09)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.22.1...v1.22.2)
 
 **Fixed**
+
 - Revert `DELETE` body restriction and fix `CleanForPatch` nil checks in Update methods [\#565](https://github.com/auth0/go-auth0/pull/565) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.22.1](https://github.com/auth0/go-auth0/tree/v1.22.1) (2025-06-03)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.22.0...v1.22.1)
 
 **Fixed**
+
 - Fix: Set Content-Type header to application/json for non-empty request bodies [\#562](https://github.com/auth0/go-auth0/pull/562) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.22.0](https://github.com/auth0/go-auth0/tree/v1.22.0) (2025-05-30)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.21.0...v1.22.0)
 
 **Added**
+
 - Add Support for Limiting M2M Usage via `Tenant-Wide` Defaults and `Client/Organization` Overrides [\#537](https://github.com/auth0/go-auth0/pull/537) ([developerkunal](https://github.com/developerkunal))
 
 **Fixed**
+
 - Fix: Prevent sending `{}` as body in requests for methods that don’t allow or expect a payload [\#546](https://github.com/auth0/go-auth0/pull/546) ([jeffmay](https://github.com/jeffmay))
 
 ## [v1.21.0](https://github.com/auth0/go-auth0/tree/v1.21.0) (2025-05-20)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.20.0...v1.21.0)
 
 **⚠️ BREAKING CHANGES**
+
 - Fix: Correct `CustomHeaders` type and JSON tag in `ConnectionOptionsOAuth2` within `ConnectionManager` [\#554](https://github.com/auth0/go-auth0/pull/554) ([developerkunal](https://github.com/developerkunal))
 
 **Added**
+
 - Add support for `FlexibleMappings` SAML2 mappings in SAML2ClientAddon and enhance serialization tests [\#555](https://github.com/auth0/go-auth0/pull/555) ([developerkunal](https://github.com/developerkunal))
 - Add `ReadEnabledClients` and `UpdateEnabledClients` methods; deprecate `EnabledClients` field in `Connection` struct of `ConnectionManager` [\#556](https://github.com/auth0/go-auth0/pull/556) ([ErwinSteffens](https://github.com/ErwinSteffens))
 - Add Support for `ListRendering` method and associated tests for `PromptManager` [\#552](https://github.com/auth0/go-auth0/pull/552) ([developerkunal](https://github.com/developerkunal))
-- Add `AllowRefreshToken` support to `SessionTransfer`  in `ClientManager` [\#557](https://github.com/auth0/go-auth0/pull/557) ([nelsonmaia](https://github.com/nelsonmaia))
+- Add `AllowRefreshToken` support to `SessionTransfer` in `ClientManager` [\#557](https://github.com/auth0/go-auth0/pull/557) ([nelsonmaia](https://github.com/nelsonmaia))
 
 ## [v1.20.0](https://github.com/auth0/go-auth0/tree/v1.20.0) (2025-05-05)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.19.0...v1.20.0)
 
 **Added**
+
 - Add support for setting per-attempt-timeout [\#539](https://github.com/auth0/go-auth0/pull/539) ([pete-woods](https://github.com/pete-woods))
 - Add 'mgmt_api_read' log type to enhance log categorization in `LogManager` [\#545](https://github.com/auth0/go-auth0/pull/545) ([developerkunal](https://github.com/developerkunal))
 - Adding support for Native to Web SSO - Session Transfer [\#536](https://github.com/auth0/go-auth0/pull/536) ([nelsonmaia](https://github.com/nelsonmaia))
@@ -79,108 +193,137 @@
 - Add Private Key JWT support for client credentials in Management API [\#528](https://github.com/auth0/go-auth0/pull/528) ([ErwinSteffens](https://github.com/ErwinSteffens))
 
 ## [v1.19.0](https://github.com/auth0/go-auth0/tree/v1.19.0) (2025-03-28)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.18.0...v1.19.0)
 
 **⚠️ BREAKING CHANGES**
+
 - Breaking Change: Migrate `custom_headers` from `map[string]string` to `*[]map[string]string` in `ConnectionOptionsOAuth2` [\#534](https://github.com/auth0/go-auth0/pull/534) ([developerkunal](https://github.com/developerkunal))
 
 **Added**
+
 - Add Support For Tenant ACL Endpoints to `NetworkACLManager` [\#504](https://github.com/auth0/go-auth0/pull/504) ([developerkunal](https://github.com/developerkunal))
 - Add Extended Support for `DomainAliasesConfig` and `ConnectionConfig` Enhancements in `SelfServiceProfileTicket` in `SelfServiceProfileManager` [\#509](https://github.com/auth0/go-auth0/pull/509) ([developerkunal](https://github.com/developerkunal))
 - Add Support for Breached Password Detection `(PreChangePassword)` Stage in `AttackProtectionManager` [\#499](https://github.com/auth0/go-auth0/pull/499) ([developerkunal](https://github.com/developerkunal))
 - Add support for `GetUserLogs` method to fetch user log events in `UserManager` [\#529](https://github.com/auth0/go-auth0/pull/529) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.18.0](https://github.com/auth0/go-auth0/tree/v1.18.0) (2025-03-11)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.17.0...v1.18.0)
 
 **Added**
+
 - Add tenant OIDC logout configuration [\#517](https://github.com/auth0/go-auth0/pull/517) ([ErwinSteffens](https://github.com/ErwinSteffens))
 - Add `custom_headers` Attribute to `ConnectionOptionsOAuth2` in `ConnectionManager` [\#522](https://github.com/auth0/go-auth0/pull/522) ([developerkunal](https://github.com/developerkunal))
 - Add Support for `FCMv1 Server Credentials` in `MultiFactorPush` Sub-Manager of `GuardianManager` [\#512](https://github.com/auth0/go-auth0/pull/512) ([chrisnellis](https://github.com/chrisnellis))
 
 **Changed**
+
 - Bump Go version to 1.23 and upgrade golang.org/x/oauth2 to v0.28.0 [\#518](https://github.com/auth0/go-auth0/pull/518) ([developerkunal](https://github.com/developerkunal))
 - refactor: use a single client assertion audience [\#513](https://github.com/auth0/go-auth0/pull/513) ([panva](https://github.com/panva))
 
 **Fixed**
+
 - [GH-501] Fix Retry Mechanism to Handle Burst Limit Due to Clock Skew Issue [\#523](https://github.com/auth0/go-auth0/pull/523) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.17.0](https://github.com/auth0/go-auth0/tree/v1.17.0) (2025-02-14)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.16.0...v1.17.0)
 
 **Added**
+
 - Add Support For Extensibility as Custom Provider in `BrandingManager` [\#495](https://github.com/auth0/go-auth0/pull/495) ([developerkunal](https://github.com/developerkunal))
 - Add Support for `form-content` Insertion Point For Prompt Partials in `PromptManager` [\#503](https://github.com/auth0/go-auth0/pull/503) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.16.0](https://github.com/auth0/go-auth0/tree/v1.16.0) (2025-02-06)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.15.0...v1.16.0)
 
 **Added**
+
 - Add Support For Event Streams with `EventStreamManager` [\#496](https://github.com/auth0/go-auth0/pull/496) ([duedares-rvj](https://github.com/duedares-rvj))
 - Add Support For Global Token Revocation To SAML Connections in `ConnectionManager` [\#491](https://github.com/auth0/go-auth0/pull/491) ([developerkunal](https://github.com/developerkunal))
 - Add Support For `Sign in With Google For Native Apps` in `ClientManager` [\#493](https://github.com/auth0/go-auth0/pull/493) ([developerkunal](https://github.com/developerkunal))
 - Add support for setting `captcha_widget_theme` in `BrandingTheme` Struct in `BrandingThemeManager` [\#492](https://github.com/auth0/go-auth0/pull/492) ([duedares-rvj](https://github.com/duedares-rvj))
 
 ## [v1.15.0](https://github.com/auth0/go-auth0/tree/v1.15.0) (2025-01-29)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.14.0...v1.15.0)
 
 **Added**
+
 - Add Support for Token Exchange Profile with `TokenExchangeProfileManager` [\#478](https://github.com/auth0/go-auth0/pull/478) ([developerkunal](https://github.com/developerkunal))
 - Add Support for Refresh Tokens and Sessions Endpoints [\#484](https://github.com/auth0/go-auth0/pull/484) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.14.0](https://github.com/auth0/go-auth0/tree/v1.14.0) (2025-01-08)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.13.1...v1.14.0)
 
 **Added**
+
 - Add Support for User sessions Endpoints in `UserManager` [\#482](https://github.com/auth0/go-auth0/pull/482) ([developerkunal](https://github.com/developerkunal))
-- Support for CIBA  [\#473](https://github.com/auth0/go-auth0/pull/473) ([duedares-rvj](https://github.com/duedares-rvj))
+- Support for CIBA [\#473](https://github.com/auth0/go-auth0/pull/473) ([duedares-rvj](https://github.com/duedares-rvj))
 - Add Support for `VerificationMethod` Attribute for Email-based Auth0 ConnectionOptions [\#481](https://github.com/auth0/go-auth0/pull/481) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.13.1](https://github.com/auth0/go-auth0/tree/v1.13.1) (2024-12-20)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.13.0...v1.13.1)
 
 **Fixed**
+
 - PATCH: Fix logic to handle the PATCH payload for `renderingMode` as standard [\#476](https://github.com/auth0/go-auth0/pull/476) ([ramya18101](https://github.com/ramya18101))
 
 ## [v1.13.0](https://github.com/auth0/go-auth0/tree/v1.13.0) (2024-12-06)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.12.0...v1.13.0)
 
 **Added**
+
 - Add support for ACUL Endpoints in `PromptManager` [\#458](https://github.com/auth0/go-auth0/pull/458) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.12.0](https://github.com/auth0/go-auth0/tree/v1.12.0) (2024-11-28)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.11.2...v1.12.0)
 
 **Added**
+
 - Add isPriority parameter to Log Streams [\#467](https://github.com/auth0/go-auth0/pull/467) ([duedares-rvj](https://github.com/duedares-rvj))
 - SSO v2 updates [\#457](https://github.com/auth0/go-auth0/pull/457) ([duedares-rvj](https://github.com/duedares-rvj))
 - Add `DeviceCredentialsManager` to manage device credentials [\#369](https://github.com/auth0/go-auth0/pull/369) ([Zarux](https://github.com/Zarux))
 
 ## [v1.11.2](https://github.com/auth0/go-auth0/tree/v1.11.2) (2024-10-14)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.11.1...v1.11.2)
 
 **Fixed**
+
 - PATCH: Rename `user_id_attribute` to `userid_attribute` in Azure Connection Options [\#454](https://github.com/auth0/go-auth0/pull/454) ([duedares-rvj](https://github.com/duedares-rvj))
 
 ## [v1.11.1](https://github.com/auth0/go-auth0/tree/v1.11.1) (2024-10-07)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.11.0...v1.11.1)
 
 **Added**
+
 - Add missing support for `Custom` email provider in EmailProviderManager [\#452](https://github.com/auth0/go-auth0/pull/452) ([duedares-rvj](https://github.com/duedares-rvj))
 
 ## [v1.11.0](https://github.com/auth0/go-auth0/tree/v1.11.0) (2024-09-27)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.10.0...v1.11.0)
 
 **Added**
+
 - Add support for `Form`, `Flow`, and `Flow Vault Connection` Managers [\#444](https://github.com/auth0/go-auth0/pull/444) ([kushalshit27](https://github.com/kushalshit27))
 - Add support for MFA Authentication Endpoints: Add, List, and Delete Authenticators [\#447](https://github.com/auth0/go-auth0/pull/447) ([developerkunal](https://github.com/developerkunal))
 - Add `user_id_attribute` support to AzureAD connection options in Connection Manager [\#445](https://github.com/auth0/go-auth0/pull/445) ([acwest](https://github.com/acwest))
 - Add `strategy_version` support to required connections in Connection Manager [\#443](https://github.com/auth0/go-auth0/pull/443) ([acwest](https://github.com/acwest))
 
 ## [v1.10.0](https://github.com/auth0/go-auth0/tree/v1.10.0) (2024-09-03)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.9.0...v1.10.0)
 
 **Added**
+
 - Add support for new Prompts and Screens for Prompt Partial [\#437](https://github.com/auth0/go-auth0/pull/437) ([developerkunal](https://github.com/developerkunal))
 - Add Organizations for Client Credentials [\#432](https://github.com/auth0/go-auth0/pull/432) ([duedares-rvj](https://github.com/duedares-rvj))
 - Add Support for Control Your Own Key (CYOK) and Bring Your Own Key (BYOK) Features with New `EncryptionKeyManager` [\#435](https://github.com/auth0/go-auth0/pull/435) ([developerkunal](https://github.com/developerkunal))
@@ -189,63 +332,80 @@
 > The methods `ReadPartials`, `CreatePartials`, and `UpdatePartials` are deprecated. Please use `GetPartials` and `SetPartials` instead for managing Prompt Partials.
 
 ## [v1.9.0](https://github.com/auth0/go-auth0/tree/v1.9.0) (2024-08-16)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.8.0...v1.9.0)
 
 **Added**
+
 - Add Support for Self Service Profiles [\#431](https://github.com/auth0/go-auth0/pull/431) ([duedares-rvj](https://github.com/duedares-rvj))
 - Add Support for HRI Features [\#429](https://github.com/auth0/go-auth0/pull/429) ([developerkunal](https://github.com/developerkunal))
 - Add Support for Flexible Identifiers on ConnectionOptions & `phone_number` to SignupRequest Struct [\#421](https://github.com/auth0/go-auth0/pull/421) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.8.0](https://github.com/auth0/go-auth0/tree/v1.8.0) (2024-07-09)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.7.0...v1.8.0)
 
 **Added**
+
 - Add support for managing a connection's SCIM (System for Cross-domain Identity Management) configuration [\#419](https://github.com/auth0/go-auth0/pull/419) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.7.0](https://github.com/auth0/go-auth0/tree/v1.7.0) (2024-06-14)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.6.0...v1.7.0)
 
 **Added**
+
 - Add is_signup_enabled field to OrganizationConnection [\#413](https://github.com/auth0/go-auth0/pull/413) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.6.0](https://github.com/auth0/go-auth0/tree/v1.6.0) (2024-05-09)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.5.0...v1.6.0)
 
 **Added**
+
 - [GH-380] - Add User Refresh Token Management Functionality to SDK [\#404](https://github.com/auth0/go-auth0/pull/404) ([developerkunal](https://github.com/developerkunal))
 - [GH-366] - Add support for enabled_connections field in CreateOrganizationConnections [\#394](https://github.com/auth0/go-auth0/pull/394) ([developerkunal](https://github.com/developerkunal))
 
 **Fixed**
+
 - [GH-372] Fix unmarshaling issue with Wordpress strategy connections [\#398](https://github.com/auth0/go-auth0/pull/398) ([developerkunal](https://github.com/developerkunal))
 - [GH-336] - Fix Unmarshal JSON error as string [\#393](https://github.com/auth0/go-auth0/pull/393) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.5.0](https://github.com/auth0/go-auth0/tree/v1.5.0) (2024-04-23)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.4.1...v1.5.0)
 
 **Added**
+
 - Send extra parameters with client credentials request [\#354](https://github.com/auth0/go-auth0/pull/354) ([weirdian2k3](https://github.com/weirdian2k3))
 - Add support for `oidc_logout` parameters [\#384](https://github.com/auth0/go-auth0/pull/384) ([developerkunal](https://github.com/developerkunal))
 - Add `show_as_button` field to Organization Enabled Connection [\#386](https://github.com/auth0/go-auth0/pull/386) ([developerkunal](https://github.com/developerkunal))
 
 **Fixed**
+
 - Fix sending unnecessary `null` body in requests [\#387](https://github.com/auth0/go-auth0/pull/387) ([developerkunal](https://github.com/developerkunal))
 
 ## [v1.4.1](https://github.com/auth0/go-auth0/tree/v1.4.1) (2024-02-28)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.4.0...v1.4.1)
 
 **Added**
+
 - feat: Add Prompt Partials Support [\#341](https://github.com/auth0/go-auth0/pull/341) ([m3talsmith](https://github.com/m3talsmith)) [#360](https://github.com/auth0/go-auth0/pull/360) ([sergiught](https://github.com/sergiught))
 
 ## [v1.4.0](https://github.com/auth0/go-auth0/tree/v1.4.0) (2023-12-14)
+
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.3.1...v1.4.0)
 
 **Added**
+
 - [SDK-4478] Support organization id when resetting a password [\#333](https://github.com/auth0/go-auth0/pull/333) ([ewanharris](https://github.com/ewanharris))
 - Implement MFA authentication APIs [\#331](https://github.com/auth0/go-auth0/pull/331) ([ewanharris](https://github.com/ewanharris))
 - Export an Authentication Error to allow type assertions [\#330](https://github.com/auth0/go-auth0/pull/330) ([ewanharris](https://github.com/ewanharris))
 - [SDK-4738] Add support for performing Pushed Authorization Requests [\#327](https://github.com/auth0/go-auth0/pull/327) ([ewanharris](https://github.com/ewanharris))
 
 **Removed**
+
 - [DXEX-3404] chore: revert actions log sessions [\#325](https://github.com/auth0/go-auth0/pull/325) ([johneke-auth0](https://github.com/johneke-auth0))
 
 <a name="v1.3.1"></a>
@@ -442,7 +602,6 @@ Please review the [migration guide](./MIGRATION_GUIDE.md) to understand the chan
 - Fixed issue when decoding `ConnectionOptionsGoogleOAuth2` with `allowed_audiences` set as an empty string ([#174](https://github.com/auth0/go-auth0/pull/174))
 - Fixed support for checkpoint pagination ([#179](https://github.com/auth0/go-auth0/pull/179))
 
-
 <a name="v0.15.1"></a>
 
 ## [v0.15.1](https://github.com/auth0/go-auth0/tree/v0.15.1) (2023-01-30)
@@ -456,12 +615,11 @@ Please review the [migration guide](./MIGRATION_GUIDE.md) to understand the chan
 
 ### Fixed
 
-- Fixed the `Connection.UnmarshalJSON()` for `ConnectionStrategyADFS`  ([#160](https://github.com/auth0/go-auth0/pull/160))
+- Fixed the `Connection.UnmarshalJSON()` for `ConnectionStrategyADFS` ([#160](https://github.com/auth0/go-auth0/pull/160))
 
 ### Changed
 
 - Changed the `CrossOriginAuth`'s json tag `cross_origin_auth` to `cross_origin_authentication` ([#159](https://github.com/auth0/go-auth0/pull/159))
-
 
 <a name="v0.15.0"></a>
 
@@ -474,7 +632,6 @@ Please review the [migration guide](./MIGRATION_GUIDE.md) to understand the chan
 - Added support for segment log stream type ([#151](https://github.com/auth0/go-auth0/pull/151))
 - Added `Stage` field to `BreachedPasswordDetection` ([#148](https://github.com/auth0/go-auth0/pull/148))
 - Added `LogoURL` field to `ConnectionOptionsOkta` ([#153](https://github.com/auth0/go-auth0/pull/153))
-
 
 <a name="v0.14.0"></a>
 
@@ -491,7 +648,6 @@ Please review the [migration guide](./MIGRATION_GUIDE.md) to understand the chan
 
 - Fixed import users job ([#139](https://github.com/auth0/go-auth0/pull/139))
 
-
 <a name="v0.13.1"></a>
 
 ## [v0.13.1](https://github.com/auth0/go-auth0/tree/v0.13.1) (2022-12-14)
@@ -502,7 +658,6 @@ Please review the [migration guide](./MIGRATION_GUIDE.md) to understand the chan
 
 - Added `Provider()` and `UpdateProvider()` to MFA Push ([#136](https://github.com/auth0/go-auth0/pull/136))
 - Added Mixpanel `LogStream` ([#133](https://github.com/auth0/go-auth0/pull/133))
-
 
 <a name="v0.13.0"></a>
 
@@ -519,7 +674,6 @@ Please review the [migration guide](./MIGRATION_GUIDE.md) to understand the chan
 ### Deprecated
 
 - Deprecated email manager ([#129](https://github.com/auth0/go-auth0/pull/129))
-
 
 <a name="v0.12.0"></a>
 
@@ -539,7 +693,6 @@ Please review the [migration guide](./MIGRATION_GUIDE.md) to understand the chan
 - Changed `ClientMetadata` to `*map[string]interface{}` in `Client` ([#120](https://github.com/auth0/go-auth0/pull/120))
 - Changed `BrandingTheme` fields from `int` to `float64` to increase precision ([#121](https://github.com/auth0/go-auth0/pull/121))
 
-
 <a name="v0.11.0"></a>
 
 ## [v0.11.0](https://github.com/auth0/go-auth0/tree/v0.11.0) (2022-10-07)
@@ -550,7 +703,8 @@ Please review the [migration guide](./MIGRATION_GUIDE.md) to understand the chan
 
 Please note that this version introduces many minor breaking changes. The intention with this release was to capture as many breaking changes into a single release to minimize future disruption.
 
-These changes were introduced for three primary reasons: 
+These changes were introduced for three primary reasons:
+
 - Decoupling from [Auth0 Terraform Provider](https://github.com/auth0/terraform-provider-auth0) implementation
 - More precise typing of struct properties for better DX
 - Enabling Auth0 Terraform provider to explicitly set empty values (see: [related Github issue](https://github.com/auth0/terraform-provider-auth0/issues/14))
@@ -585,8 +739,8 @@ Review the complete list below before upgrading.
   - `Realms` to `*[]string` type
   - `Metadata` to `*map[string]string` type
 - `ConnectionOptions` struct fields
- - `CustomScripts` to `*map[string]string` type
- - `Configuration` to `*map[string]string` type
+- `CustomScripts` to `*map[string]string` type
+- `Configuration` to `*map[string]string` type
 - `ConnectionOptionsGoogleOAuth2` struct field
   - `AllowedAudiences` to `*[]string` type
 - `ConnectionOptionsOIDC` struct field
