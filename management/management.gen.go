@@ -2231,6 +2231,14 @@ func (c *ClientGrant) GetAudience() string {
 	return *c.Audience
 }
 
+// GetAuthorizationDetailsTypes returns the AuthorizationDetailsTypes field if it's non-nil, zero value otherwise.
+func (c *ClientGrant) GetAuthorizationDetailsTypes() []string {
+	if c == nil || c.AuthorizationDetailsTypes == nil {
+		return nil
+	}
+	return *c.AuthorizationDetailsTypes
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (c *ClientGrant) GetClientID() string {
 	if c == nil || c.ClientID == nil {
@@ -2261,6 +2269,14 @@ func (c *ClientGrant) GetScope() []string {
 		return nil
 	}
 	return *c.Scope
+}
+
+// GetSubjectType returns the SubjectType field if it's non-nil, zero value otherwise.
+func (c *ClientGrant) GetSubjectType() string {
+	if c == nil || c.SubjectType == nil {
+		return ""
+	}
+	return *c.SubjectType
 }
 
 // String returns a string representation of ClientGrant.
@@ -8938,6 +8954,14 @@ func (l *LogStream) GetPIIConfig() *LogStreamPiiConfig {
 	return l.PIIConfig
 }
 
+// GetStartFrom returns the StartFrom field if it's non-nil, zero value otherwise.
+func (l *LogStream) GetStartFrom() string {
+	if l == nil || l.StartFrom == nil {
+		return ""
+	}
+	return *l.StartFrom
+}
+
 // GetStatus returns the Status field if it's non-nil, zero value otherwise.
 func (l *LogStream) GetStatus() string {
 	if l == nil || l.Status == nil {
@@ -10794,6 +10818,14 @@ func (r *ResourceServer) GetSkipConsentForVerifiableFirstPartyClients() bool {
 	return *r.SkipConsentForVerifiableFirstPartyClients
 }
 
+// GetSubjectTypeAuthorization returns the SubjectTypeAuthorization field.
+func (r *ResourceServer) GetSubjectTypeAuthorization() *ResourceServerSubjectTypeAuthorization {
+	if r == nil {
+		return nil
+	}
+	return r.SubjectTypeAuthorization
+}
+
 // GetTokenDialect returns the TokenDialect field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetTokenDialect() string {
 	if r == nil || r.TokenDialect == nil {
@@ -10899,6 +10931,53 @@ func (r *ResourceServerScope) String() string {
 	return Stringify(r)
 }
 
+// GetClient returns the Client field.
+func (r *ResourceServerSubjectTypeAuthorization) GetClient() *ResourceServerSubjectTypeAuthorizationClient {
+	if r == nil {
+		return nil
+	}
+	return r.Client
+}
+
+// GetUser returns the User field.
+func (r *ResourceServerSubjectTypeAuthorization) GetUser() *ResourceServerSubjectTypeAuthorizationUser {
+	if r == nil {
+		return nil
+	}
+	return r.User
+}
+
+// String returns a string representation of ResourceServerSubjectTypeAuthorization.
+func (r *ResourceServerSubjectTypeAuthorization) String() string {
+	return Stringify(r)
+}
+
+// GetPolicy returns the Policy field if it's non-nil, zero value otherwise.
+func (r *ResourceServerSubjectTypeAuthorizationClient) GetPolicy() string {
+	if r == nil || r.Policy == nil {
+		return ""
+	}
+	return *r.Policy
+}
+
+// String returns a string representation of ResourceServerSubjectTypeAuthorizationClient.
+func (r *ResourceServerSubjectTypeAuthorizationClient) String() string {
+	return Stringify(r)
+}
+
+// GetPolicy returns the Policy field if it's non-nil, zero value otherwise.
+func (r *ResourceServerSubjectTypeAuthorizationUser) GetPolicy() string {
+	if r == nil || r.Policy == nil {
+		return ""
+	}
+	return *r.Policy
+}
+
+// String returns a string representation of ResourceServerSubjectTypeAuthorizationUser.
+func (r *ResourceServerSubjectTypeAuthorizationUser) String() string {
+	return Stringify(r)
+}
+
 // GetEncryptionKey returns the EncryptionKey field.
 func (r *ResourceServerTokenEncryption) GetEncryptionKey() *ResourceServerTokenEncryptionKey {
 	if r == nil {
@@ -10959,6 +11038,32 @@ func (r *ResourceServerTokenEncryptionKey) String() string {
 
 // String returns a string representation of RetryStrategy.
 func (r *RetryStrategy) String() string {
+	return Stringify(r)
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (r *RiskAssessmentSettings) GetEnabled() bool {
+	if r == nil || r.Enabled == nil {
+		return false
+	}
+	return *r.Enabled
+}
+
+// String returns a string representation of RiskAssessmentSettings.
+func (r *RiskAssessmentSettings) String() string {
+	return Stringify(r)
+}
+
+// GetRememberFor returns the RememberFor field if it's non-nil, zero value otherwise.
+func (r *RiskAssessmentSettingsNewDevice) GetRememberFor() int {
+	if r == nil || r.RememberFor == nil {
+		return 0
+	}
+	return *r.RememberFor
+}
+
+// String returns a string representation of RiskAssessmentSettingsNewDevice.
+func (r *RiskAssessmentSettingsNewDevice) String() string {
 	return Stringify(r)
 }
 
@@ -13837,6 +13942,19 @@ func (u *UserRecoveryCode) GetRecoveryCode() string {
 
 // String returns a string representation of UserRecoveryCode.
 func (u *UserRecoveryCode) String() string {
+	return Stringify(u)
+}
+
+// GetConnection returns the Connection field if it's non-nil, zero value otherwise.
+func (u *UserRiskAssessmentAssessor) GetConnection() string {
+	if u == nil || u.Connection == nil {
+		return ""
+	}
+	return *u.Connection
+}
+
+// String returns a string representation of UserRiskAssessmentAssessor.
+func (u *UserRiskAssessmentAssessor) String() string {
 	return Stringify(u)
 }
 

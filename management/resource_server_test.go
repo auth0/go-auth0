@@ -64,6 +64,14 @@ aibASY5pIRiKENmbZELDtucCAwEAAQ==
 			Mechanism: auth0.String("mtls"),
 			Required:  auth0.Bool(true),
 		},
+		SubjectTypeAuthorization: &ResourceServerSubjectTypeAuthorization{
+			User: &ResourceServerSubjectTypeAuthorizationUser{
+				Policy: auth0.String("allow_all"),
+			},
+			Client: &ResourceServerSubjectTypeAuthorizationClient{
+				Policy: auth0.String("require_client_grant"),
+			},
+		},
 	}
 
 	err := api.ResourceServer.Create(context.Background(), expectedResourceServer)
@@ -109,7 +117,14 @@ func TestResourceServer_Update(t *testing.T) {
 	expectedResourceServer.Scopes = &scopes
 	expectedResourceServer.EnforcePolicies = auth0.Bool(true)
 	expectedResourceServer.TokenDialect = auth0.String("access_token_authz")
-
+	expectedResourceServer.SubjectTypeAuthorization = &ResourceServerSubjectTypeAuthorization{
+		User: &ResourceServerSubjectTypeAuthorizationUser{
+			Policy: auth0.String("deny_all"),
+		},
+		Client: &ResourceServerSubjectTypeAuthorizationClient{
+			Policy: auth0.String("deny_all"),
+		},
+	}
 	err := api.ResourceServer.Update(context.Background(), resourceServerID, expectedResourceServer)
 
 	assert.NoError(t, err)
@@ -118,9 +133,17 @@ func TestResourceServer_Update(t *testing.T) {
 	assert.Equal(t, expectedResourceServer.GetSkipConsentForVerifiableFirstPartyClients(), true)
 	assert.Equal(t, expectedResourceServer.GetTokenLifetime(), 7200)
 	assert.Equal(t, expectedResourceServer.GetTokenLifetimeForWeb(), 5400)
-	assert.Equal(t, len(expectedResourceServer.GetScopes()), 2)
+	assert.Equal(t, len(expectedResourceServer.GetScopes()), 3)
 	assert.Equal(t, expectedResourceServer.GetTokenDialect(), "access_token_authz")
 	assert.Equal(t, expectedResourceServer.GetEnforcePolicies(), true)
+	assert.Equal(t, expectedResourceServer.GetSubjectTypeAuthorization(), &ResourceServerSubjectTypeAuthorization{
+		User: &ResourceServerSubjectTypeAuthorizationUser{
+			Policy: auth0.String("deny_all"),
+		},
+		Client: &ResourceServerSubjectTypeAuthorizationClient{
+			Policy: auth0.String("deny_all"),
+		},
+	})
 }
 
 func TestResourceServer_TokenDialect(t *testing.T) {
@@ -246,6 +269,14 @@ func givenAResourceServer(t *testing.T) *ResourceServer {
 			{
 				Value:       auth0.String("create:organization_client_grants"),
 				Description: auth0.String("Create Org Client Grants"),
+			},
+		},
+		SubjectTypeAuthorization: &ResourceServerSubjectTypeAuthorization{
+			User: &ResourceServerSubjectTypeAuthorizationUser{
+				Policy: auth0.String("allow_all"),
+			},
+			Client: &ResourceServerSubjectTypeAuthorizationClient{
+				Policy: auth0.String("require_client_grant"),
 			},
 		},
 	}

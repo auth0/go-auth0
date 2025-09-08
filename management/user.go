@@ -442,6 +442,14 @@ type UserSessionAuthenticationMethod struct {
 	Type      *string `json:"type,omitempty"`
 }
 
+// UserRiskAssessmentAssessor is used to clear risk assessment assessors for a user.
+type UserRiskAssessmentAssessor struct {
+	// Connection is the name of the connection containing the user whose assessors should be cleared.
+	Connection *string `json:"connection,omitempty"`
+	// Assessors is a list of assessors to clear.
+	Assessors []string `json:"assessors,omitempty"`
+}
+
 // UserManager manages Auth0 User resources.
 type UserManager manager
 
@@ -844,4 +852,10 @@ func (m *UserManager) DeleteUserSessions(ctx context.Context, userID string, opt
 func (m *UserManager) GetUserLogs(ctx context.Context, userID string, opts ...RequestOption) (r []*Log, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("users", userID, "logs"), &r, opts...)
 	return
+}
+
+// ClearRiskAssessmentAssessors clears the risk assessment assessors for a specific user.
+func (m *UserManager) ClearRiskAssessmentAssessors(ctx context.Context, userID string, ua *UserRiskAssessmentAssessor, opts ...RequestOption) error {
+	uri := m.management.URI("users", userID, "risk-assessments", "clear")
+	return m.management.Request(ctx, "POST", uri, &ua, opts...)
 }
