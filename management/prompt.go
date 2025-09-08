@@ -680,7 +680,6 @@ func (c *PromptRendering) cleanForPatch() *PromptRendering {
 		ContextConfiguration:    c.ContextConfiguration,
 		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
 		HeadTags:                c.HeadTags,
-		Tenant:                  c.Tenant,
 		Filters:                 c.Filters,
 		UsePageTemplate:         c.UsePageTemplate,
 	}
