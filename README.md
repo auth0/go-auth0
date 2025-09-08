@@ -4,13 +4,13 @@
 
 [![GoDoc](https://pkg.go.dev/badge/github.com/auth0/go-auth0/v2.svg)](https://pkg.go.dev/github.com/auth0/go-auth0/v2)
 [![Go Report Card](https://goreportcard.com/badge/github.com/auth0/go-auth0/v2?style=flat-square)](https://goreportcard.com/report/github.com/auth0/go-auth0/v2)
-[![Release](https://img.shields.io/github/v/release/auth0/go-auth0?include_prereleases&style=flat-square)](https://github.com/auth0/go-auth0/v2/releases)
-[![License](https://img.shields.io/github/license/auth0/go-auth0.svg?style=flat-square)](https://github.com/auth0/go-auth0/v2/blob/main/LICENSE)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/auth0/go-auth0/main.yml?branch=main&style=flat-square)](https://github.com/auth0/go-auth0/v2/actions?query=branch%3Amain)
-[![Codecov](https://img.shields.io/codecov/c/github/auth0/go-auth0?style=flat-square)](https://codecov.io/gh/auth0/go-auth0)
+[![Release](https://img.shields.io/github/v/release/auth0/go-auth0?include_prereleases&style=flat-square)](https://github.com/auth0/go-auth0/releases)
+[![License](https://img.shields.io/github/license/auth0/go-auth0.svg?style=flat-square)](https://github.com/auth0/go-auth0/blob/v2/LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/auth0/go-auth0/main.yml?branch=v2&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Av2)
+[![Codecov](https://img.shields.io/codecov/c/github/auth0/go-auth0/v2?style=flat-square)](https://codecov.io/gh/auth0/go-auth0/tree/v2)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fauth0%2Fgo-auth0.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fauth0%2Fgo-auth0?ref=badge_shield)
 
-📚 [Documentation](#documentation) • 🚀 [Getting Started](#getting-started) • 💬 [Feedback](#feedback)
+📚 [Documentation](#documentation) • 🚀 [Getting started](#getting-started) • 💬 [Feedback](#feedback)
 
 </div>
 
@@ -21,6 +21,7 @@
 - [Godoc](https://pkg.go.dev/github.com/auth0/go-auth0/v2) - explore the Go SDK documentation.
 - [Docs site](https://www.auth0.com/docs) — explore our docs site and learn more about Auth0.
 - [Examples](./EXAMPLES.md) - Further examples around usage of the SDK.
+- [API Reference](./reference.md) - Complete API reference documentation.
 
 ## Getting started
 
@@ -28,7 +29,7 @@
 
 This library follows the [same support policy as Go](https://go.dev/doc/devel/release#policy). The last two major Go releases are actively supported and compatibility issues will be fixed. While you may find that older versions of Go may work, we will not actively test and fix compatibility issues with these versions.
 
-- Go 1.23+
+- Go 1.24+
 
 ### Installation
 
@@ -112,15 +113,14 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth0/go-auth0/v2"
-        "github.com/auth0/go-auth0/v2/management/options"
+	"github.com/auth0/go-auth0/v2/management/option"
 	management "github.com/auth0/go-auth0/v2/management/client"
 )
 
 func main() {
 	mgmt, err := management.New(
 		"{YOUR_TENANT_AND REGION}.auth0.com",
-		options.WithToken("{YOUR_API_V2_TOKEN}"),  // Replace with a Context that better suits your usage
+		option.WithToken("{YOUR_API_V2_TOKEN}"),  // Replace with a Context that better suits your usage
 	)
 }
 ```
@@ -134,14 +134,14 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth0/go-auth0/v2"
+	"github.com/auth0/go-auth0/v2/management/option"
 	management "github.com/auth0/go-auth0/v2/management/client"
 )
 
 func main() {
 	mgmt, err := management.New(
 		"{YOUR_TENANT_AND REGION}.auth0.com",
-		options.WithClientCredentials(context.TODO(), clientID, clientSecret),  // Replace with a Context that better suits your usage
+		option.WithClientCredentials(context.TODO(), clientID, clientSecret),  // Replace with a Context that better suits your usage
 	)
 }
 ```
@@ -158,7 +158,7 @@ We appreciate feedback and contribution to this repo! Before you get started, pl
 
 ### Raise an issue
 
-To provide feedback or report a bug, [please raise an issue on our issue tracker](https://github.com/auth0/go-auth0/v2/issues).
+To provide feedback or report a bug, [please raise an issue on our issue tracker](https://github.com/auth0/go-auth0/issues).
 
 ### Vulnerability Reporting
 
