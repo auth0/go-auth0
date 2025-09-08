@@ -2,6 +2,7 @@ package management
 
 import (
 	"context"
+	"net/http"
 	"strings"
 	"time"
 )
@@ -78,11 +79,11 @@ func WithEventTypes(types ...string) RequestOption {
 // WithDateRange returns a slice of RequestOptions that apply a `date_from` and `date_to`
 // range filter using RFC3339 timestamp format.
 // This is commonly used to limit responses to a specific time window for endpoints that support temporal filtering.
-func WithDateRange(from, to time.Time) []RequestOption {
-	return []RequestOption{
-		Parameter("date_from", from.Format(time.RFC3339)),
-		Parameter("date_to", to.Format(time.RFC3339)),
-	}
+func WithDateRange(from, to time.Time) RequestOption {
+	return newRequestOption(func(r *http.Request) {
+		Parameter("date_from", from.Format(time.RFC3339)).apply(r)
+		Parameter("date_to", to.Format(time.RFC3339)).apply(r)
+	})
 }
 
 /* ------------------------------------------------ DELIVERY ---------------------------------------------------------*/
