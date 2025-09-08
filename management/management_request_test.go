@@ -23,10 +23,13 @@ func TestNewRequest(t *testing.T) {
 		expectedBody  string
 	}{
 		{
-			name:          "Create client request",
-			method:        http.MethodPost,
-			endpoint:      api.URI("clients"),
-			payload:       &Client{Name: auth0.String("TestClient"), Description: auth0.String("Test description")},
+			name:     "Create client request",
+			method:   http.MethodPost,
+			endpoint: api.URI("clients"),
+			payload: &Client{
+				Name:        auth0.String("TestClient"),
+				Description: auth0.String("Test description"),
+			},
 			options:       nil,
 			expectedError: "",
 			expectedBody:  `{"name":"TestClient","description":"Test description"}` + "\n",
@@ -41,9 +44,12 @@ func TestNewRequest(t *testing.T) {
 			expectedBody:  "{}\n",
 		},
 		{
-			name:          "Read client request",
-			method:        http.MethodGet,
-			endpoint:      api.URI("clients", "c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX"),
+			name:   "Read client request",
+			method: http.MethodGet,
+			endpoint: api.URI(
+				"clients",
+				"c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX",
+			),
 			payload:       nil,
 			options:       nil,
 			expectedError: "",
@@ -68,18 +74,24 @@ func TestNewRequest(t *testing.T) {
 			expectedBody:  "",
 		},
 		{
-			name:          "Update client request",
-			method:        http.MethodPatch,
-			endpoint:      api.URI("clients", "c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX"),
+			name:   "Update client request",
+			method: http.MethodPatch,
+			endpoint: api.URI(
+				"clients",
+				"c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX",
+			),
 			payload:       &Client{Name: auth0.String("UpdatedTestClient")},
 			options:       nil,
 			expectedError: "",
 			expectedBody:  `{"name":"UpdatedTestClient"}` + "\n",
 		},
 		{
-			name:          "Delete client request",
-			method:        http.MethodDelete,
-			endpoint:      api.URI("clients", "c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX"),
+			name:   "Delete client request",
+			method: http.MethodDelete,
+			endpoint: api.URI(
+				"clients",
+				"c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX",
+			),
 			payload:       nil,
 			options:       nil,
 			expectedError: "",
@@ -115,19 +127,55 @@ func TestNewRequest(t *testing.T) {
 			expectedBody:  `{"custom":"data"}`,
 		},
 		{
-			name:          "Request with Delete with Body",
-			method:        http.MethodDelete,
-			endpoint:      api.URI("clients", "c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX"),
-			payload:       &Client{Name: auth0.String("TestClient"), Description: auth0.String("Test description")},
+			name:   "Request with Delete with Body",
+			method: http.MethodDelete,
+			endpoint: api.URI(
+				"clients",
+				"c4vFzE4qeMgIEzRryyCmHcxGBZqswlbX",
+			),
+			payload: &Client{
+				Name:        auth0.String("TestClient"),
+				Description: auth0.String("Test description"),
+			},
 			options:       nil,
 			expectedError: "",
 			expectedBody:  `{"name":"TestClient","description":"Test description"}` + "\n",
+		},
+		{
+			name:     "Request with nil options mixed with valid options",
+			method:   http.MethodPost,
+			endpoint: api.URI("clients"),
+			payload:  nil,
+			options: []RequestOption{
+				nil,
+				Body([]byte(`{"test":"value"}`)),
+				nil,
+			},
+			expectedError: "",
+			expectedBody:  `{"test":"value"}`,
+		},
+		{
+			name:     "Request with all nil options",
+			method:   http.MethodPost,
+			endpoint: api.URI("clients"),
+			payload:  &Client{Name: auth0.String("TestClient")},
+			options: []RequestOption{
+				nil,
+				nil,
+			},
+			expectedError: "",
+			expectedBody:  `{"name":"TestClient"}` + "\n",
 		},
 	}
 
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
-			request, err := api.NewRequest(context.Background(), testCase.method, testCase.endpoint, testCase.payload, testCase.options...)
+			request, err := api.NewRequest(
+				context.Background(),
+				testCase.method,
+				testCase.endpoint,
+				testCase.payload,
+				testCase.options...)
 
 			if testCase.expectedError != "" {
 				assert.EqualError(t, err, testCase.expectedError)
@@ -145,10 +193,46 @@ func TestNewRequest(t *testing.T) {
 			assert.Equal(t, testCase.expectedBody, string(requestBody))
 
 			if testCase.expectedBody != "" {
-				assert.Equal(t, "application/json", request.Header.Get("Content-Type"))
+				assert.Equal(
+					t,
+					"application/json",
+					request.Header.Get("Content-Type"),
+				)
 			} else {
 				assert.Empty(t, request.Header.Get("Content-Type"))
 			}
 		})
 	}
+}
+
+// TestNilOptionsInHelperFunctions tests that helper functions handle nil options correctly.
+func TestNilOptionsInHelperFunctions(t *testing.T) {
+	t.Run("applyListDefaults with nil options", func(t *testing.T) {
+		req, err := http.NewRequest("GET", "https://example.com", nil)
+		require.NoError(t, err)
+
+		// Test with nil options mixed with valid ones
+		listDefaults := applyListDefaults([]RequestOption{nil, Page(2), nil})
+		listDefaults.apply(req)
+
+		query := req.URL.Query()
+		assert.Equal(t, "2", query.Get("page"))
+		assert.Equal(t, "50", query.Get("per_page")) // default
+
+		assert.Equal(t, "true", query.Get("include_totals")) // default
+	})
+
+	t.Run("applyListCheckpointDefaults with nil options", func(t *testing.T) {
+		req, err := http.NewRequest("GET", "https://example.com", nil)
+		require.NoError(t, err)
+
+		// Test with nil options mixed with valid ones
+		checkpointDefaults := applyListCheckpointDefaults(
+			[]RequestOption{nil, Take(25), nil},
+		)
+		checkpointDefaults.apply(req)
+
+		query := req.URL.Query()
+		assert.Equal(t, "25", query.Get("take"))
+	})
 }

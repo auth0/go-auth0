@@ -49,6 +49,17 @@ func TestActionManager_Create(t *testing.T) {
 	})
 }
 
+// TestApplyActionsListDefaultsWithNilOptions tests that applyActionsListDefaults handles nil options correctly.
+func TestApplyActionsListDefaultsWithNilOptions(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	// This test exercises the nil option check in applyActionsListDefaults function
+	// by calling a method that uses it with a mix of nil and valid options
+	_, err := api.Action.List(context.Background(), nil, PerPage(10), nil)
+
+	assert.NoError(t, err)
+}
+
 func TestActionManager_CreateWithDeploy(t *testing.T) {
 	configureHTTPTestRecordings(t)
 

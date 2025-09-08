@@ -92,6 +92,38 @@ func TestJobManager_ImportUsers(t *testing.T) {
 	})
 }
 
+// TestJobManager_ImportUsersWithNilOptions tests that ImportUsers handles nil options correctly.
+func TestJobManager_ImportUsersWithNilOptions(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	conn, err := api.Connection.ReadByName(context.Background(), "Username-Password-Authentication")
+	require.NoError(t, err)
+
+	job := &Job{
+		ConnectionID:        conn.ID,
+		Upsert:              auth0.Bool(true),
+		SendCompletionEmail: auth0.Bool(false),
+		Users: []map[string]interface{}{
+			{
+				"email":          "niloptionstest@example.com",
+				"email_verified": true,
+			},
+		},
+	}
+
+	// Test with a mix of nil and valid options to exercise the nil check in ImportUsers
+	validOption := Parameter("test", "value")
+	err = api.Job.ImportUsers(context.Background(), job, validOption, nil, validOption)
+	assert.NoError(t, err)
+
+	t.Cleanup(func() {
+		users, err := api.User.ListByEmail(context.Background(), "niloptionstest@example.com")
+		if err == nil && len(users) > 0 {
+			cleanupUser(t, users[0].GetID())
+		}
+	})
+}
+
 func TestJobManager_ReadErrors(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
