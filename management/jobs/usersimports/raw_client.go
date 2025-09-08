@@ -5,13 +5,12 @@ package usersimports
 import (
 	context "context"
 	fmt "fmt"
-	http "net/http"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	jobs "github.com/auth0/go-auth0/v2/management/jobs"
 	option "github.com/auth0/go-auth0/v2/management/option"
+	http "net/http"
 )
 
 type RawClient struct {

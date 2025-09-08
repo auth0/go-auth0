@@ -5,7 +5,6 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 )
 
@@ -27,11 +26,12 @@ type CreateResourceServerRequestContent struct {
 	// Whether to skip user consent for applications flagged as first party (true) or not (false).
 	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"-"`
 	// Whether to enforce authorization policies (true) or to ignore them (false).
-	EnforcePolicies      *bool                            `json:"enforce_policies,omitempty" url:"-"`
-	TokenEncryption      *ResourceServerTokenEncryption   `json:"token_encryption,omitempty" url:"-"`
-	ConsentPolicy        *ResourceServerConsentPolicyEnum `json:"consent_policy,omitempty" url:"-"`
-	AuthorizationDetails []interface{}                    `json:"authorization_details,omitempty" url:"-"`
-	ProofOfPossession    *ResourceServerProofOfPossession `json:"proof_of_possession,omitempty" url:"-"`
+	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"-"`
+	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"-"`
+	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"-"`
+	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"-"`
+	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"-"`
+	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"-"`
 }
 
 type GetResourceServerRequestParameters struct {
@@ -75,12 +75,13 @@ type CreateResourceServerResponseContent struct {
 	// Expiration value (in seconds) for access tokens issued for this API via Implicit or Hybrid Flows. Cannot be greater than the `token_lifetime` value.
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
-	EnforcePolicies      *bool                                   `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
-	TokenDialect         *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
-	TokenEncryption      *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
-	ConsentPolicy        *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession    *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	TokenDialect             *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
+	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
+	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -205,6 +206,13 @@ func (c *CreateResourceServerResponseContent) GetProofOfPossession() *ResourceSe
 	return c.ProofOfPossession
 }
 
+func (c *CreateResourceServerResponseContent) GetSubjectTypeAuthorization() *ResourceServerSubjectTypeAuthorization {
+	if c == nil {
+		return nil
+	}
+	return c.SubjectTypeAuthorization
+}
+
 func (c *CreateResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
@@ -260,12 +268,13 @@ type GetResourceServerResponseContent struct {
 	// Expiration value (in seconds) for access tokens issued for this API via Implicit or Hybrid Flows. Cannot be greater than the `token_lifetime` value.
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
-	EnforcePolicies      *bool                                   `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
-	TokenDialect         *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
-	TokenEncryption      *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
-	ConsentPolicy        *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession    *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	TokenDialect             *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
+	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
+	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -388,6 +397,13 @@ func (g *GetResourceServerResponseContent) GetProofOfPossession() *ResourceServe
 		return nil
 	}
 	return g.ProofOfPossession
+}
+
+func (g *GetResourceServerResponseContent) GetSubjectTypeAuthorization() *ResourceServerSubjectTypeAuthorization {
+	if g == nil {
+		return nil
+	}
+	return g.SubjectTypeAuthorization
 }
 
 func (g *GetResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
@@ -515,12 +531,13 @@ type ResourceServer struct {
 	// Expiration value (in seconds) for access tokens issued for this API via Implicit or Hybrid Flows. Cannot be greater than the `token_lifetime` value.
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
-	EnforcePolicies      *bool                                   `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
-	TokenDialect         *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
-	TokenEncryption      *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
-	ConsentPolicy        *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession    *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	TokenDialect             *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
+	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
+	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -643,6 +660,13 @@ func (r *ResourceServer) GetProofOfPossession() *ResourceServerProofOfPossession
 		return nil
 	}
 	return r.ProofOfPossession
+}
+
+func (r *ResourceServer) GetSubjectTypeAuthorization() *ResourceServerSubjectTypeAuthorization {
+	if r == nil {
+		return nil
+	}
+	return r.SubjectTypeAuthorization
 }
 
 func (r *ResourceServer) GetExtraProperties() map[string]interface{} {
@@ -812,6 +836,234 @@ func (r *ResourceServerScope) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
+}
+
+// Defines application access permission for a resource server. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href="https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+type ResourceServerSubjectTypeAuthorization struct {
+	User   *ResourceServerSubjectTypeAuthorizationUser   `json:"user,omitempty" url:"user,omitempty"`
+	Client *ResourceServerSubjectTypeAuthorizationClient `json:"client,omitempty" url:"client,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *ResourceServerSubjectTypeAuthorization) GetUser() *ResourceServerSubjectTypeAuthorizationUser {
+	if r == nil {
+		return nil
+	}
+	return r.User
+}
+
+func (r *ResourceServerSubjectTypeAuthorization) GetClient() *ResourceServerSubjectTypeAuthorizationClient {
+	if r == nil {
+		return nil
+	}
+	return r.Client
+}
+
+func (r *ResourceServerSubjectTypeAuthorization) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *ResourceServerSubjectTypeAuthorization) UnmarshalJSON(data []byte) error {
+	type unmarshaler ResourceServerSubjectTypeAuthorization
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ResourceServerSubjectTypeAuthorization(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ResourceServerSubjectTypeAuthorization) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// Access Permissions for client flows
+type ResourceServerSubjectTypeAuthorizationClient struct {
+	Policy *ResourceServerSubjectTypeAuthorizationClientPolicyEnum `json:"policy,omitempty" url:"policy,omitempty"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationClient) GetPolicy() *ResourceServerSubjectTypeAuthorizationClientPolicyEnum {
+	if r == nil {
+		return nil
+	}
+	return r.Policy
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationClient) GetExtraProperties() map[string]interface{} {
+	return r.ExtraProperties
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationClient) UnmarshalJSON(data []byte) error {
+	type embed ResourceServerSubjectTypeAuthorizationClient
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*r = ResourceServerSubjectTypeAuthorizationClient(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.ExtraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationClient) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerSubjectTypeAuthorizationClient
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	return internal.MarshalJSONWithExtraProperties(marshaler, r.ExtraProperties)
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationClient) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// Defines the client flows policy for the resource server
+type ResourceServerSubjectTypeAuthorizationClientPolicyEnum string
+
+const (
+	ResourceServerSubjectTypeAuthorizationClientPolicyEnumDenyAll            ResourceServerSubjectTypeAuthorizationClientPolicyEnum = "deny_all"
+	ResourceServerSubjectTypeAuthorizationClientPolicyEnumRequireClientGrant ResourceServerSubjectTypeAuthorizationClientPolicyEnum = "require_client_grant"
+)
+
+func NewResourceServerSubjectTypeAuthorizationClientPolicyEnumFromString(s string) (ResourceServerSubjectTypeAuthorizationClientPolicyEnum, error) {
+	switch s {
+	case "deny_all":
+		return ResourceServerSubjectTypeAuthorizationClientPolicyEnumDenyAll, nil
+	case "require_client_grant":
+		return ResourceServerSubjectTypeAuthorizationClientPolicyEnumRequireClientGrant, nil
+	}
+	var t ResourceServerSubjectTypeAuthorizationClientPolicyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerSubjectTypeAuthorizationClientPolicyEnum) Ptr() *ResourceServerSubjectTypeAuthorizationClientPolicyEnum {
+	return &r
+}
+
+// Access Permissions for user flows
+type ResourceServerSubjectTypeAuthorizationUser struct {
+	Policy *ResourceServerSubjectTypeAuthorizationUserPolicyEnum `json:"policy,omitempty" url:"policy,omitempty"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationUser) GetPolicy() *ResourceServerSubjectTypeAuthorizationUserPolicyEnum {
+	if r == nil {
+		return nil
+	}
+	return r.Policy
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationUser) GetExtraProperties() map[string]interface{} {
+	return r.ExtraProperties
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationUser) UnmarshalJSON(data []byte) error {
+	type embed ResourceServerSubjectTypeAuthorizationUser
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*r = ResourceServerSubjectTypeAuthorizationUser(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.ExtraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationUser) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerSubjectTypeAuthorizationUser
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	return internal.MarshalJSONWithExtraProperties(marshaler, r.ExtraProperties)
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationUser) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// Defines the user flows policy for the resource server
+type ResourceServerSubjectTypeAuthorizationUserPolicyEnum string
+
+const (
+	ResourceServerSubjectTypeAuthorizationUserPolicyEnumAllowAll           ResourceServerSubjectTypeAuthorizationUserPolicyEnum = "allow_all"
+	ResourceServerSubjectTypeAuthorizationUserPolicyEnumDenyAll            ResourceServerSubjectTypeAuthorizationUserPolicyEnum = "deny_all"
+	ResourceServerSubjectTypeAuthorizationUserPolicyEnumRequireClientGrant ResourceServerSubjectTypeAuthorizationUserPolicyEnum = "require_client_grant"
+)
+
+func NewResourceServerSubjectTypeAuthorizationUserPolicyEnumFromString(s string) (ResourceServerSubjectTypeAuthorizationUserPolicyEnum, error) {
+	switch s {
+	case "allow_all":
+		return ResourceServerSubjectTypeAuthorizationUserPolicyEnumAllowAll, nil
+	case "deny_all":
+		return ResourceServerSubjectTypeAuthorizationUserPolicyEnumDenyAll, nil
+	case "require_client_grant":
+		return ResourceServerSubjectTypeAuthorizationUserPolicyEnumRequireClientGrant, nil
+	}
+	var t ResourceServerSubjectTypeAuthorizationUserPolicyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerSubjectTypeAuthorizationUserPolicyEnum) Ptr() *ResourceServerSubjectTypeAuthorizationUserPolicyEnum {
+	return &r
 }
 
 // Dialect of access tokens that should be issued. `access_token` is a JWT containing standard Auth0 claims; `rfc9068_profile` is a JWT conforming to the IETF JWT Access Token Profile. `access_token_authz` and `rfc9068_profile_authz` additionally include RBAC permissions claims.
@@ -1044,12 +1296,13 @@ type UpdateResourceServerResponseContent struct {
 	// Expiration value (in seconds) for access tokens issued for this API via Implicit or Hybrid Flows. Cannot be greater than the `token_lifetime` value.
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
-	EnforcePolicies      *bool                                   `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
-	TokenDialect         *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
-	TokenEncryption      *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
-	ConsentPolicy        *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession    *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	TokenDialect             *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
+	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
+	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1174,6 +1427,13 @@ func (u *UpdateResourceServerResponseContent) GetProofOfPossession() *ResourceSe
 	return u.ProofOfPossession
 }
 
+func (u *UpdateResourceServerResponseContent) GetSubjectTypeAuthorization() *ResourceServerSubjectTypeAuthorization {
+	if u == nil {
+		return nil
+	}
+	return u.SubjectTypeAuthorization
+}
+
 func (u *UpdateResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -1222,9 +1482,10 @@ type UpdateResourceServerRequestContent struct {
 	TokenLifetime *int                                  `json:"token_lifetime,omitempty" url:"-"`
 	TokenDialect  *ResourceServerTokenDialectSchemaEnum `json:"token_dialect,omitempty" url:"-"`
 	// Whether authorization policies are enforced (true) or not enforced (false).
-	EnforcePolicies      *bool                            `json:"enforce_policies,omitempty" url:"-"`
-	TokenEncryption      *ResourceServerTokenEncryption   `json:"token_encryption,omitempty" url:"-"`
-	ConsentPolicy        *ResourceServerConsentPolicyEnum `json:"consent_policy,omitempty" url:"-"`
-	AuthorizationDetails []interface{}                    `json:"authorization_details,omitempty" url:"-"`
-	ProofOfPossession    *ResourceServerProofOfPossession `json:"proof_of_possession,omitempty" url:"-"`
+	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"-"`
+	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"-"`
+	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"-"`
+	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"-"`
+	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"-"`
+	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"-"`
 }

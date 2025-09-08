@@ -4,7 +4,6 @@ package tokens
 
 import (
 	context "context"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	scimconfiguration "github.com/auth0/go-auth0/v2/management/connections/scimconfiguration"
 	core "github.com/auth0/go-auth0/v2/management/core"

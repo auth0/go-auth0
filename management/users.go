@@ -5,7 +5,6 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 )
 
@@ -704,6 +703,7 @@ func (r *RegenerateUsersRecoveryCodeResponseContent) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+// The version of the search engine
 type SearchEngineVersionsEnum string
 
 const (

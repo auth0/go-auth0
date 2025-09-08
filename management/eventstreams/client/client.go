@@ -4,7 +4,6 @@ package client
 
 import (
 	context "context"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	deliveries "github.com/auth0/go-auth0/v2/management/eventstreams/deliveries"
@@ -113,25 +112,6 @@ func (c *Client) Update(
 	opts ...option.RequestOption,
 ) (*management.UpdateEventStreamResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
-		ctx,
-		id,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-func (c *Client) GetStats(
-	ctx context.Context,
-	// Unique identifier for the event stream.
-	id string,
-	request *management.EventStreamsGetStatsRequest,
-	opts ...option.RequestOption,
-) (*management.GetEventStreamStatsResponseContent, error) {
-	response, err := c.WithRawResponse.GetStats(
 		ctx,
 		id,
 		request,

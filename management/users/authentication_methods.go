@@ -19,7 +19,7 @@ type CreateUserAuthenticationMethodRequestContent struct {
 	PreferredAuthenticationMethod *management.PreferredAuthenticationMethodEnum `json:"preferred_authentication_method,omitempty" url:"-"`
 	// Applies to webauthn authentication methods only. The id of the credential.
 	KeyID *string `json:"key_id,omitempty" url:"-"`
-	// Applies to webauthn authentication methods only. The public key.
+	// Applies to webauthn authentication methods only. The public key, which is encoded as base64.
 	PublicKey *string `json:"public_key,omitempty" url:"-"`
 	// Applies to webauthn authentication methods only. The relying party identifier.
 	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"-"`

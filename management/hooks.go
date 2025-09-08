@@ -5,7 +5,6 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 )
 
@@ -316,6 +315,7 @@ func (h *Hook) String() string {
 // Dependencies of this hook used by webtask server.
 type HookDependencies = map[string]interface{}
 
+// Retrieves hooks that match the trigger
 type HookTriggerIDEnum string
 
 const (

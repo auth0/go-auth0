@@ -5,7 +5,6 @@ package jobs
 import (
 	json "encoding/json"
 	fmt "fmt"
-
 	management "github.com/auth0/go-auth0/v2/management"
 )
 

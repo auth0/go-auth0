@@ -5,9 +5,8 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	time "time"
-
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	time "time"
 )
 
 type Action struct {
@@ -27,7 +26,7 @@ type Action struct {
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this action depends on.
 	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
-	// The Node runtime. For example: `node12`, defaults to `node12`
+	// The Node runtime. For example: `node22`, defaults to `node22`
 	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
 	// The list of secrets that are included in an action or a version of an action.
 	Secrets         []*ActionSecretResponse `json:"secrets,omitempty" url:"secrets,omitempty"`
@@ -672,9 +671,9 @@ type ActionDeployedVersion struct {
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this specific version depends on.
 	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
-	// Indicates if this speciic version is the currently one deployed.
+	// Indicates if this specific version is the currently one deployed.
 	Deployed *bool `json:"deployed,omitempty" url:"deployed,omitempty"`
-	// The Node runtime. For example: `node12`
+	// The Node runtime. For example: `node22`
 	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
 	// The list of secrets that are included in an action or a version of an action.
 	Secrets []*ActionSecretResponse       `json:"secrets,omitempty" url:"secrets,omitempty"`
@@ -1369,6 +1368,7 @@ func (a *ActionTriggerCompatibleTrigger) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+// An actions extensibility point.
 type ActionTriggerTypeEnum = string
 
 type ActionVersion struct {
@@ -1380,9 +1380,9 @@ type ActionVersion struct {
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this specific version depends on.
 	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
-	// Indicates if this speciic version is the currently one deployed.
+	// Indicates if this specific version is the currently one deployed.
 	Deployed *bool `json:"deployed,omitempty" url:"deployed,omitempty"`
-	// The Node runtime. For example: `node12`
+	// The Node runtime. For example: `node22`
 	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
 	// The list of secrets that are included in an action or a version of an action.
 	Secrets []*ActionSecretResponse       `json:"secrets,omitempty" url:"secrets,omitempty"`
@@ -1671,39 +1671,93 @@ func (a *ActionVersionDependency) String() string {
 
 // Client array filter items
 type AculClientFilter struct {
+	AculClientFilterByID       *AculClientFilterByID
+	AculClientFilterByMetadata *AculClientFilterByMetadata
+
+	typ string
+}
+
+func (a *AculClientFilter) GetAculClientFilterByID() *AculClientFilterByID {
+	if a == nil {
+		return nil
+	}
+	return a.AculClientFilterByID
+}
+
+func (a *AculClientFilter) GetAculClientFilterByMetadata() *AculClientFilterByMetadata {
+	if a == nil {
+		return nil
+	}
+	return a.AculClientFilterByMetadata
+}
+
+func (a *AculClientFilter) UnmarshalJSON(data []byte) error {
+	valueAculClientFilterByID := new(AculClientFilterByID)
+	if err := json.Unmarshal(data, &valueAculClientFilterByID); err == nil {
+		a.typ = "AculClientFilterByID"
+		a.AculClientFilterByID = valueAculClientFilterByID
+		return nil
+	}
+	valueAculClientFilterByMetadata := new(AculClientFilterByMetadata)
+	if err := json.Unmarshal(data, &valueAculClientFilterByMetadata); err == nil {
+		a.typ = "AculClientFilterByMetadata"
+		a.AculClientFilterByMetadata = valueAculClientFilterByMetadata
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, a)
+}
+
+func (a AculClientFilter) MarshalJSON() ([]byte, error) {
+	if a.typ == "AculClientFilterByID" || a.AculClientFilterByID != nil {
+		return json.Marshal(a.AculClientFilterByID)
+	}
+	if a.typ == "AculClientFilterByMetadata" || a.AculClientFilterByMetadata != nil {
+		return json.Marshal(a.AculClientFilterByMetadata)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+type AculClientFilterVisitor interface {
+	VisitAculClientFilterByID(*AculClientFilterByID) error
+	VisitAculClientFilterByMetadata(*AculClientFilterByMetadata) error
+}
+
+func (a *AculClientFilter) Accept(visitor AculClientFilterVisitor) error {
+	if a.typ == "AculClientFilterByID" || a.AculClientFilterByID != nil {
+		return visitor.VisitAculClientFilterByID(a.AculClientFilterByID)
+	}
+	if a.typ == "AculClientFilterByMetadata" || a.AculClientFilterByMetadata != nil {
+		return visitor.VisitAculClientFilterByMetadata(a.AculClientFilterByMetadata)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+type AculClientFilterByID struct {
 	// Client ID
-	ID       *string             `json:"id,omitempty" url:"id,omitempty"`
-	Metadata *AculClientMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
+	ID string `json:"id" url:"id"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (a *AculClientFilter) GetID() *string {
+func (a *AculClientFilterByID) GetID() string {
 	if a == nil {
-		return nil
+		return ""
 	}
 	return a.ID
 }
 
-func (a *AculClientFilter) GetMetadata() *AculClientMetadata {
-	if a == nil {
-		return nil
-	}
-	return a.Metadata
-}
-
-func (a *AculClientFilter) GetExtraProperties() map[string]interface{} {
+func (a *AculClientFilterByID) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
-func (a *AculClientFilter) UnmarshalJSON(data []byte) error {
-	type unmarshaler AculClientFilter
+func (a *AculClientFilterByID) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculClientFilterByID
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*a = AculClientFilter(value)
+	*a = AculClientFilterByID(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
@@ -1713,7 +1767,53 @@ func (a *AculClientFilter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AculClientFilter) String() string {
+func (a *AculClientFilterByID) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+type AculClientFilterByMetadata struct {
+	Metadata AculClientMetadata `json:"metadata" url:"metadata"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AculClientFilterByMetadata) GetMetadata() AculClientMetadata {
+	if a == nil {
+		return nil
+	}
+	return a.Metadata
+}
+
+func (a *AculClientFilterByMetadata) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *AculClientFilterByMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculClientFilterByMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AculClientFilterByMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculClientFilterByMetadata) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -1730,39 +1830,93 @@ type AculClientMetadata = map[string]interface{}
 
 // Domains array filter items
 type AculDomainFilter struct {
+	AculDomainFilterByID       *AculDomainFilterByID
+	AculDomainFilterByMetadata *AculDomainFilterByMetadata
+
+	typ string
+}
+
+func (a *AculDomainFilter) GetAculDomainFilterByID() *AculDomainFilterByID {
+	if a == nil {
+		return nil
+	}
+	return a.AculDomainFilterByID
+}
+
+func (a *AculDomainFilter) GetAculDomainFilterByMetadata() *AculDomainFilterByMetadata {
+	if a == nil {
+		return nil
+	}
+	return a.AculDomainFilterByMetadata
+}
+
+func (a *AculDomainFilter) UnmarshalJSON(data []byte) error {
+	valueAculDomainFilterByID := new(AculDomainFilterByID)
+	if err := json.Unmarshal(data, &valueAculDomainFilterByID); err == nil {
+		a.typ = "AculDomainFilterByID"
+		a.AculDomainFilterByID = valueAculDomainFilterByID
+		return nil
+	}
+	valueAculDomainFilterByMetadata := new(AculDomainFilterByMetadata)
+	if err := json.Unmarshal(data, &valueAculDomainFilterByMetadata); err == nil {
+		a.typ = "AculDomainFilterByMetadata"
+		a.AculDomainFilterByMetadata = valueAculDomainFilterByMetadata
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, a)
+}
+
+func (a AculDomainFilter) MarshalJSON() ([]byte, error) {
+	if a.typ == "AculDomainFilterByID" || a.AculDomainFilterByID != nil {
+		return json.Marshal(a.AculDomainFilterByID)
+	}
+	if a.typ == "AculDomainFilterByMetadata" || a.AculDomainFilterByMetadata != nil {
+		return json.Marshal(a.AculDomainFilterByMetadata)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+type AculDomainFilterVisitor interface {
+	VisitAculDomainFilterByID(*AculDomainFilterByID) error
+	VisitAculDomainFilterByMetadata(*AculDomainFilterByMetadata) error
+}
+
+func (a *AculDomainFilter) Accept(visitor AculDomainFilterVisitor) error {
+	if a.typ == "AculDomainFilterByID" || a.AculDomainFilterByID != nil {
+		return visitor.VisitAculDomainFilterByID(a.AculDomainFilterByID)
+	}
+	if a.typ == "AculDomainFilterByMetadata" || a.AculDomainFilterByMetadata != nil {
+		return visitor.VisitAculDomainFilterByMetadata(a.AculDomainFilterByMetadata)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+type AculDomainFilterByID struct {
 	// Domain ID
-	ID       *string             `json:"id,omitempty" url:"id,omitempty"`
-	Metadata *AculDomainMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
+	ID string `json:"id" url:"id"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (a *AculDomainFilter) GetID() *string {
+func (a *AculDomainFilterByID) GetID() string {
 	if a == nil {
-		return nil
+		return ""
 	}
 	return a.ID
 }
 
-func (a *AculDomainFilter) GetMetadata() *AculDomainMetadata {
-	if a == nil {
-		return nil
-	}
-	return a.Metadata
-}
-
-func (a *AculDomainFilter) GetExtraProperties() map[string]interface{} {
+func (a *AculDomainFilterByID) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
-func (a *AculDomainFilter) UnmarshalJSON(data []byte) error {
-	type unmarshaler AculDomainFilter
+func (a *AculDomainFilterByID) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculDomainFilterByID
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*a = AculDomainFilter(value)
+	*a = AculDomainFilterByID(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
@@ -1772,7 +1926,7 @@ func (a *AculDomainFilter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AculDomainFilter) String() string {
+func (a *AculDomainFilterByID) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -1784,7 +1938,53 @@ func (a *AculDomainFilter) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
-// Client metadata key/value pairs
+type AculDomainFilterByMetadata struct {
+	Metadata AculDomainMetadata `json:"metadata" url:"metadata"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AculDomainFilterByMetadata) GetMetadata() AculDomainMetadata {
+	if a == nil {
+		return nil
+	}
+	return a.Metadata
+}
+
+func (a *AculDomainFilterByMetadata) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *AculDomainFilterByMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculDomainFilterByMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AculDomainFilterByMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculDomainFilterByMetadata) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// Domain metadata key/value pairs
 type AculDomainMetadata = map[string]interface{}
 
 // Optional filters to apply rendering rules to specific entities
@@ -2028,39 +2228,93 @@ func (a AculMatchTypeEnum) Ptr() *AculMatchTypeEnum {
 
 // Organizations array filter items
 type AculOrganizationFilter struct {
+	AculOrganizationFilterByID       *AculOrganizationFilterByID
+	AculOrganizationFilterByMetadata *AculOrganizationFilterByMetadata
+
+	typ string
+}
+
+func (a *AculOrganizationFilter) GetAculOrganizationFilterByID() *AculOrganizationFilterByID {
+	if a == nil {
+		return nil
+	}
+	return a.AculOrganizationFilterByID
+}
+
+func (a *AculOrganizationFilter) GetAculOrganizationFilterByMetadata() *AculOrganizationFilterByMetadata {
+	if a == nil {
+		return nil
+	}
+	return a.AculOrganizationFilterByMetadata
+}
+
+func (a *AculOrganizationFilter) UnmarshalJSON(data []byte) error {
+	valueAculOrganizationFilterByID := new(AculOrganizationFilterByID)
+	if err := json.Unmarshal(data, &valueAculOrganizationFilterByID); err == nil {
+		a.typ = "AculOrganizationFilterByID"
+		a.AculOrganizationFilterByID = valueAculOrganizationFilterByID
+		return nil
+	}
+	valueAculOrganizationFilterByMetadata := new(AculOrganizationFilterByMetadata)
+	if err := json.Unmarshal(data, &valueAculOrganizationFilterByMetadata); err == nil {
+		a.typ = "AculOrganizationFilterByMetadata"
+		a.AculOrganizationFilterByMetadata = valueAculOrganizationFilterByMetadata
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, a)
+}
+
+func (a AculOrganizationFilter) MarshalJSON() ([]byte, error) {
+	if a.typ == "AculOrganizationFilterByID" || a.AculOrganizationFilterByID != nil {
+		return json.Marshal(a.AculOrganizationFilterByID)
+	}
+	if a.typ == "AculOrganizationFilterByMetadata" || a.AculOrganizationFilterByMetadata != nil {
+		return json.Marshal(a.AculOrganizationFilterByMetadata)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+type AculOrganizationFilterVisitor interface {
+	VisitAculOrganizationFilterByID(*AculOrganizationFilterByID) error
+	VisitAculOrganizationFilterByMetadata(*AculOrganizationFilterByMetadata) error
+}
+
+func (a *AculOrganizationFilter) Accept(visitor AculOrganizationFilterVisitor) error {
+	if a.typ == "AculOrganizationFilterByID" || a.AculOrganizationFilterByID != nil {
+		return visitor.VisitAculOrganizationFilterByID(a.AculOrganizationFilterByID)
+	}
+	if a.typ == "AculOrganizationFilterByMetadata" || a.AculOrganizationFilterByMetadata != nil {
+		return visitor.VisitAculOrganizationFilterByMetadata(a.AculOrganizationFilterByMetadata)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+type AculOrganizationFilterByID struct {
 	// Organization ID
-	ID       *string                   `json:"id,omitempty" url:"id,omitempty"`
-	Metadata *AculOrganizationMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
+	ID string `json:"id" url:"id"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (a *AculOrganizationFilter) GetID() *string {
+func (a *AculOrganizationFilterByID) GetID() string {
 	if a == nil {
-		return nil
+		return ""
 	}
 	return a.ID
 }
 
-func (a *AculOrganizationFilter) GetMetadata() *AculOrganizationMetadata {
-	if a == nil {
-		return nil
-	}
-	return a.Metadata
-}
-
-func (a *AculOrganizationFilter) GetExtraProperties() map[string]interface{} {
+func (a *AculOrganizationFilterByID) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
-func (a *AculOrganizationFilter) UnmarshalJSON(data []byte) error {
-	type unmarshaler AculOrganizationFilter
+func (a *AculOrganizationFilterByID) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculOrganizationFilterByID
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*a = AculOrganizationFilter(value)
+	*a = AculOrganizationFilterByID(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
@@ -2070,7 +2324,7 @@ func (a *AculOrganizationFilter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AculOrganizationFilter) String() string {
+func (a *AculOrganizationFilterByID) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -2082,9 +2336,56 @@ func (a *AculOrganizationFilter) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
-// Client metadata key/value pairs
+type AculOrganizationFilterByMetadata struct {
+	Metadata AculOrganizationMetadata `json:"metadata" url:"metadata"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AculOrganizationFilterByMetadata) GetMetadata() AculOrganizationMetadata {
+	if a == nil {
+		return nil
+	}
+	return a.Metadata
+}
+
+func (a *AculOrganizationFilterByMetadata) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *AculOrganizationFilterByMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculOrganizationFilterByMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AculOrganizationFilterByMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculOrganizationFilterByMetadata) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// Organization metadata key/value pairs
 type AculOrganizationMetadata = map[string]interface{}
 
+// Rendering mode to filter by
 type AculRenderingModeEnum string
 
 const (
@@ -2294,10 +2595,13 @@ func (a *AddOrganizationConnectionResponseContent) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+// IP address to check.
 type AnomalyIPFormat = string
 
 // Data related to the user that does affect the application's core functionality.
 type AppMetadata = map[string]interface{}
+
+type AssessorsTypeEnum = string
 
 type AssociateOrganizationClientGrantResponseContent struct {
 	// ID of the client grant.
@@ -5435,6 +5739,4491 @@ func (c *CreateExportUsersResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+type CreateFlowsVaultConnectionActivecampaign struct {
+	CreateFlowsVaultConnectionActivecampaignAPIKey        *CreateFlowsVaultConnectionActivecampaignAPIKey
+	CreateFlowsVaultConnectionActivecampaignUninitialized *CreateFlowsVaultConnectionActivecampaignUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaign) GetCreateFlowsVaultConnectionActivecampaignAPIKey() *CreateFlowsVaultConnectionActivecampaignAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionActivecampaignAPIKey
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaign) GetCreateFlowsVaultConnectionActivecampaignUninitialized() *CreateFlowsVaultConnectionActivecampaignUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionActivecampaignUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaign) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionActivecampaignAPIKey := new(CreateFlowsVaultConnectionActivecampaignAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionActivecampaignAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionActivecampaignAPIKey"
+		c.CreateFlowsVaultConnectionActivecampaignAPIKey = valueCreateFlowsVaultConnectionActivecampaignAPIKey
+		return nil
+	}
+	valueCreateFlowsVaultConnectionActivecampaignUninitialized := new(CreateFlowsVaultConnectionActivecampaignUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionActivecampaignUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionActivecampaignUninitialized"
+		c.CreateFlowsVaultConnectionActivecampaignUninitialized = valueCreateFlowsVaultConnectionActivecampaignUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionActivecampaign) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionActivecampaignAPIKey" || c.CreateFlowsVaultConnectionActivecampaignAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionActivecampaignAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionActivecampaignUninitialized" || c.CreateFlowsVaultConnectionActivecampaignUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionActivecampaignUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionActivecampaignVisitor interface {
+	VisitCreateFlowsVaultConnectionActivecampaignAPIKey(*CreateFlowsVaultConnectionActivecampaignAPIKey) error
+	VisitCreateFlowsVaultConnectionActivecampaignUninitialized(*CreateFlowsVaultConnectionActivecampaignUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaign) Accept(visitor CreateFlowsVaultConnectionActivecampaignVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionActivecampaignAPIKey" || c.CreateFlowsVaultConnectionActivecampaignAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionActivecampaignAPIKey(c.CreateFlowsVaultConnectionActivecampaignAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionActivecampaignUninitialized" || c.CreateFlowsVaultConnectionActivecampaignUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionActivecampaignUninitialized(c.CreateFlowsVaultConnectionActivecampaignUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionActivecampaignAPIKey struct {
+	// Flows Vault Connection name.
+	Name  string                                      `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDActivecampaignEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupAPIKeyWithBaseURL  `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) GetSetup() *FlowsVaultConnectioSetupAPIKeyWithBaseURL {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionActivecampaignAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionActivecampaignAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionActivecampaignUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                                      `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDActivecampaignEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaignUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaignUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaignUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionActivecampaignUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionActivecampaignUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionActivecampaignUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionAirtable struct {
+	CreateFlowsVaultConnectionAirtableAPIKey        *CreateFlowsVaultConnectionAirtableAPIKey
+	CreateFlowsVaultConnectionAirtableUninitialized *CreateFlowsVaultConnectionAirtableUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionAirtable) GetCreateFlowsVaultConnectionAirtableAPIKey() *CreateFlowsVaultConnectionAirtableAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionAirtableAPIKey
+}
+
+func (c *CreateFlowsVaultConnectionAirtable) GetCreateFlowsVaultConnectionAirtableUninitialized() *CreateFlowsVaultConnectionAirtableUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionAirtableUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionAirtable) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionAirtableAPIKey := new(CreateFlowsVaultConnectionAirtableAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAirtableAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionAirtableAPIKey"
+		c.CreateFlowsVaultConnectionAirtableAPIKey = valueCreateFlowsVaultConnectionAirtableAPIKey
+		return nil
+	}
+	valueCreateFlowsVaultConnectionAirtableUninitialized := new(CreateFlowsVaultConnectionAirtableUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAirtableUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionAirtableUninitialized"
+		c.CreateFlowsVaultConnectionAirtableUninitialized = valueCreateFlowsVaultConnectionAirtableUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionAirtable) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionAirtableAPIKey" || c.CreateFlowsVaultConnectionAirtableAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionAirtableAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionAirtableUninitialized" || c.CreateFlowsVaultConnectionAirtableUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionAirtableUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionAirtableVisitor interface {
+	VisitCreateFlowsVaultConnectionAirtableAPIKey(*CreateFlowsVaultConnectionAirtableAPIKey) error
+	VisitCreateFlowsVaultConnectionAirtableUninitialized(*CreateFlowsVaultConnectionAirtableUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionAirtable) Accept(visitor CreateFlowsVaultConnectionAirtableVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionAirtableAPIKey" || c.CreateFlowsVaultConnectionAirtableAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionAirtableAPIKey(c.CreateFlowsVaultConnectionAirtableAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionAirtableUninitialized" || c.CreateFlowsVaultConnectionAirtableUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionAirtableUninitialized(c.CreateFlowsVaultConnectionAirtableUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionAirtableAPIKey struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDAirtableEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupAPIKey       `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) GetSetup() *FlowsVaultConnectioSetupAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionAirtableAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionAirtableAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionAirtableUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDAirtableEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionAirtableUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionAirtableUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionAirtableUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionAirtableUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionAirtableUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionAirtableUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionAuth0 struct {
+	CreateFlowsVaultConnectionAuth0OauthApp      *CreateFlowsVaultConnectionAuth0OauthApp
+	CreateFlowsVaultConnectionAuth0Uninitialized *CreateFlowsVaultConnectionAuth0Uninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionAuth0) GetCreateFlowsVaultConnectionAuth0OauthApp() *CreateFlowsVaultConnectionAuth0OauthApp {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionAuth0OauthApp
+}
+
+func (c *CreateFlowsVaultConnectionAuth0) GetCreateFlowsVaultConnectionAuth0Uninitialized() *CreateFlowsVaultConnectionAuth0Uninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionAuth0Uninitialized
+}
+
+func (c *CreateFlowsVaultConnectionAuth0) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionAuth0OauthApp := new(CreateFlowsVaultConnectionAuth0OauthApp)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAuth0OauthApp); err == nil {
+		c.typ = "CreateFlowsVaultConnectionAuth0OauthApp"
+		c.CreateFlowsVaultConnectionAuth0OauthApp = valueCreateFlowsVaultConnectionAuth0OauthApp
+		return nil
+	}
+	valueCreateFlowsVaultConnectionAuth0Uninitialized := new(CreateFlowsVaultConnectionAuth0Uninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAuth0Uninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionAuth0Uninitialized"
+		c.CreateFlowsVaultConnectionAuth0Uninitialized = valueCreateFlowsVaultConnectionAuth0Uninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionAuth0) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionAuth0OauthApp" || c.CreateFlowsVaultConnectionAuth0OauthApp != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionAuth0OauthApp)
+	}
+	if c.typ == "CreateFlowsVaultConnectionAuth0Uninitialized" || c.CreateFlowsVaultConnectionAuth0Uninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionAuth0Uninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionAuth0Visitor interface {
+	VisitCreateFlowsVaultConnectionAuth0OauthApp(*CreateFlowsVaultConnectionAuth0OauthApp) error
+	VisitCreateFlowsVaultConnectionAuth0Uninitialized(*CreateFlowsVaultConnectionAuth0Uninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionAuth0) Accept(visitor CreateFlowsVaultConnectionAuth0Visitor) error {
+	if c.typ == "CreateFlowsVaultConnectionAuth0OauthApp" || c.CreateFlowsVaultConnectionAuth0OauthApp != nil {
+		return visitor.VisitCreateFlowsVaultConnectionAuth0OauthApp(c.CreateFlowsVaultConnectionAuth0OauthApp)
+	}
+	if c.typ == "CreateFlowsVaultConnectionAuth0Uninitialized" || c.CreateFlowsVaultConnectionAuth0Uninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionAuth0Uninitialized(c.CreateFlowsVaultConnectionAuth0Uninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionAuth0OauthApp struct {
+	// Flows Vault Connection name.
+	Name  string                             `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDAuth0Enum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupOauthApp  `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionAuth0OauthApp) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionAuth0OauthApp) GetSetup() *FlowsVaultConnectioSetupOauthApp {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionAuth0OauthApp) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionAuth0OauthApp) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionAuth0OauthApp
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionAuth0OauthApp(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionAuth0OauthApp) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionAuth0Uninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                             `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDAuth0Enum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionAuth0Uninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionAuth0Uninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionAuth0Uninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionAuth0Uninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionAuth0Uninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionAuth0Uninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionBigquery struct {
+	CreateFlowsVaultConnectionBigqueryJwt           *CreateFlowsVaultConnectionBigqueryJwt
+	CreateFlowsVaultConnectionBigqueryUninitialized *CreateFlowsVaultConnectionBigqueryUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionBigquery) GetCreateFlowsVaultConnectionBigqueryJwt() *CreateFlowsVaultConnectionBigqueryJwt {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionBigqueryJwt
+}
+
+func (c *CreateFlowsVaultConnectionBigquery) GetCreateFlowsVaultConnectionBigqueryUninitialized() *CreateFlowsVaultConnectionBigqueryUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionBigqueryUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionBigquery) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionBigqueryJwt := new(CreateFlowsVaultConnectionBigqueryJwt)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionBigqueryJwt); err == nil {
+		c.typ = "CreateFlowsVaultConnectionBigqueryJwt"
+		c.CreateFlowsVaultConnectionBigqueryJwt = valueCreateFlowsVaultConnectionBigqueryJwt
+		return nil
+	}
+	valueCreateFlowsVaultConnectionBigqueryUninitialized := new(CreateFlowsVaultConnectionBigqueryUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionBigqueryUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionBigqueryUninitialized"
+		c.CreateFlowsVaultConnectionBigqueryUninitialized = valueCreateFlowsVaultConnectionBigqueryUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionBigquery) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionBigqueryJwt" || c.CreateFlowsVaultConnectionBigqueryJwt != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionBigqueryJwt)
+	}
+	if c.typ == "CreateFlowsVaultConnectionBigqueryUninitialized" || c.CreateFlowsVaultConnectionBigqueryUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionBigqueryUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionBigqueryVisitor interface {
+	VisitCreateFlowsVaultConnectionBigqueryJwt(*CreateFlowsVaultConnectionBigqueryJwt) error
+	VisitCreateFlowsVaultConnectionBigqueryUninitialized(*CreateFlowsVaultConnectionBigqueryUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionBigquery) Accept(visitor CreateFlowsVaultConnectionBigqueryVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionBigqueryJwt" || c.CreateFlowsVaultConnectionBigqueryJwt != nil {
+		return visitor.VisitCreateFlowsVaultConnectionBigqueryJwt(c.CreateFlowsVaultConnectionBigqueryJwt)
+	}
+	if c.typ == "CreateFlowsVaultConnectionBigqueryUninitialized" || c.CreateFlowsVaultConnectionBigqueryUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionBigqueryUninitialized(c.CreateFlowsVaultConnectionBigqueryUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionBigqueryJwt struct {
+	// Flows Vault Connection name.
+	Name  string                                    `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDBigqueryEnum     `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupBigqueryOauthJwt `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionBigqueryJwt) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionBigqueryJwt) GetSetup() *FlowsVaultConnectioSetupBigqueryOauthJwt {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionBigqueryJwt) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionBigqueryJwt) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionBigqueryJwt
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionBigqueryJwt(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionBigqueryJwt) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionBigqueryUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDBigqueryEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionBigqueryUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionBigqueryUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionBigqueryUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionBigqueryUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionBigqueryUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionBigqueryUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionClearbit struct {
+	CreateFlowsVaultConnectionClearbitAPIKey        *CreateFlowsVaultConnectionClearbitAPIKey
+	CreateFlowsVaultConnectionClearbitUninitialized *CreateFlowsVaultConnectionClearbitUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionClearbit) GetCreateFlowsVaultConnectionClearbitAPIKey() *CreateFlowsVaultConnectionClearbitAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionClearbitAPIKey
+}
+
+func (c *CreateFlowsVaultConnectionClearbit) GetCreateFlowsVaultConnectionClearbitUninitialized() *CreateFlowsVaultConnectionClearbitUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionClearbitUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionClearbit) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionClearbitAPIKey := new(CreateFlowsVaultConnectionClearbitAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionClearbitAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionClearbitAPIKey"
+		c.CreateFlowsVaultConnectionClearbitAPIKey = valueCreateFlowsVaultConnectionClearbitAPIKey
+		return nil
+	}
+	valueCreateFlowsVaultConnectionClearbitUninitialized := new(CreateFlowsVaultConnectionClearbitUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionClearbitUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionClearbitUninitialized"
+		c.CreateFlowsVaultConnectionClearbitUninitialized = valueCreateFlowsVaultConnectionClearbitUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionClearbit) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionClearbitAPIKey" || c.CreateFlowsVaultConnectionClearbitAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionClearbitAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionClearbitUninitialized" || c.CreateFlowsVaultConnectionClearbitUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionClearbitUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionClearbitVisitor interface {
+	VisitCreateFlowsVaultConnectionClearbitAPIKey(*CreateFlowsVaultConnectionClearbitAPIKey) error
+	VisitCreateFlowsVaultConnectionClearbitUninitialized(*CreateFlowsVaultConnectionClearbitUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionClearbit) Accept(visitor CreateFlowsVaultConnectionClearbitVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionClearbitAPIKey" || c.CreateFlowsVaultConnectionClearbitAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionClearbitAPIKey(c.CreateFlowsVaultConnectionClearbitAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionClearbitUninitialized" || c.CreateFlowsVaultConnectionClearbitUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionClearbitUninitialized(c.CreateFlowsVaultConnectionClearbitUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionClearbitAPIKey struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDClearbitEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupSecretAPIKey `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) GetSetup() *FlowsVaultConnectioSetupSecretAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionClearbitAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionClearbitAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionClearbitUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDClearbitEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionClearbitUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionClearbitUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionClearbitUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionClearbitUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionClearbitUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionClearbitUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionDocusign struct {
+	CreateFlowsVaultConnectionDocusignOauthCode     *CreateFlowsVaultConnectionDocusignOauthCode
+	CreateFlowsVaultConnectionDocusignUninitialized *CreateFlowsVaultConnectionDocusignUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionDocusign) GetCreateFlowsVaultConnectionDocusignOauthCode() *CreateFlowsVaultConnectionDocusignOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionDocusignOauthCode
+}
+
+func (c *CreateFlowsVaultConnectionDocusign) GetCreateFlowsVaultConnectionDocusignUninitialized() *CreateFlowsVaultConnectionDocusignUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionDocusignUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionDocusign) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionDocusignOauthCode := new(CreateFlowsVaultConnectionDocusignOauthCode)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionDocusignOauthCode); err == nil {
+		c.typ = "CreateFlowsVaultConnectionDocusignOauthCode"
+		c.CreateFlowsVaultConnectionDocusignOauthCode = valueCreateFlowsVaultConnectionDocusignOauthCode
+		return nil
+	}
+	valueCreateFlowsVaultConnectionDocusignUninitialized := new(CreateFlowsVaultConnectionDocusignUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionDocusignUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionDocusignUninitialized"
+		c.CreateFlowsVaultConnectionDocusignUninitialized = valueCreateFlowsVaultConnectionDocusignUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionDocusign) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionDocusignOauthCode" || c.CreateFlowsVaultConnectionDocusignOauthCode != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionDocusignOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionDocusignUninitialized" || c.CreateFlowsVaultConnectionDocusignUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionDocusignUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionDocusignVisitor interface {
+	VisitCreateFlowsVaultConnectionDocusignOauthCode(*CreateFlowsVaultConnectionDocusignOauthCode) error
+	VisitCreateFlowsVaultConnectionDocusignUninitialized(*CreateFlowsVaultConnectionDocusignUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionDocusign) Accept(visitor CreateFlowsVaultConnectionDocusignVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionDocusignOauthCode" || c.CreateFlowsVaultConnectionDocusignOauthCode != nil {
+		return visitor.VisitCreateFlowsVaultConnectionDocusignOauthCode(c.CreateFlowsVaultConnectionDocusignOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionDocusignUninitialized" || c.CreateFlowsVaultConnectionDocusignUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionDocusignUninitialized(c.CreateFlowsVaultConnectionDocusignUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionDocusignOauthCode struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDDocusignEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupOauthCode    `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionDocusignOauthCode) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionDocusignOauthCode) GetSetup() *FlowsVaultConnectioSetupOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionDocusignOauthCode) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionDocusignOauthCode) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionDocusignOauthCode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionDocusignOauthCode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionDocusignOauthCode) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionDocusignUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDDocusignEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionDocusignUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionDocusignUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionDocusignUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionDocusignUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionDocusignUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionDocusignUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionGoogleSheets struct {
+	CreateFlowsVaultConnectionGoogleSheetsOauthCode     *CreateFlowsVaultConnectionGoogleSheetsOauthCode
+	CreateFlowsVaultConnectionGoogleSheetsUninitialized *CreateFlowsVaultConnectionGoogleSheetsUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheets) GetCreateFlowsVaultConnectionGoogleSheetsOauthCode() *CreateFlowsVaultConnectionGoogleSheetsOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionGoogleSheetsOauthCode
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheets) GetCreateFlowsVaultConnectionGoogleSheetsUninitialized() *CreateFlowsVaultConnectionGoogleSheetsUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionGoogleSheetsUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheets) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionGoogleSheetsOauthCode := new(CreateFlowsVaultConnectionGoogleSheetsOauthCode)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionGoogleSheetsOauthCode); err == nil {
+		c.typ = "CreateFlowsVaultConnectionGoogleSheetsOauthCode"
+		c.CreateFlowsVaultConnectionGoogleSheetsOauthCode = valueCreateFlowsVaultConnectionGoogleSheetsOauthCode
+		return nil
+	}
+	valueCreateFlowsVaultConnectionGoogleSheetsUninitialized := new(CreateFlowsVaultConnectionGoogleSheetsUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionGoogleSheetsUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionGoogleSheetsUninitialized"
+		c.CreateFlowsVaultConnectionGoogleSheetsUninitialized = valueCreateFlowsVaultConnectionGoogleSheetsUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionGoogleSheets) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionGoogleSheetsOauthCode" || c.CreateFlowsVaultConnectionGoogleSheetsOauthCode != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionGoogleSheetsOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionGoogleSheetsUninitialized" || c.CreateFlowsVaultConnectionGoogleSheetsUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionGoogleSheetsUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionGoogleSheetsVisitor interface {
+	VisitCreateFlowsVaultConnectionGoogleSheetsOauthCode(*CreateFlowsVaultConnectionGoogleSheetsOauthCode) error
+	VisitCreateFlowsVaultConnectionGoogleSheetsUninitialized(*CreateFlowsVaultConnectionGoogleSheetsUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheets) Accept(visitor CreateFlowsVaultConnectionGoogleSheetsVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionGoogleSheetsOauthCode" || c.CreateFlowsVaultConnectionGoogleSheetsOauthCode != nil {
+		return visitor.VisitCreateFlowsVaultConnectionGoogleSheetsOauthCode(c.CreateFlowsVaultConnectionGoogleSheetsOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionGoogleSheetsUninitialized" || c.CreateFlowsVaultConnectionGoogleSheetsUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionGoogleSheetsUninitialized(c.CreateFlowsVaultConnectionGoogleSheetsUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionGoogleSheetsOauthCode struct {
+	// Flows Vault Connection name.
+	Name  string                                    `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDGoogleSheetsEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupOauthCode        `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheetsOauthCode) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheetsOauthCode) GetSetup() *FlowsVaultConnectioSetupOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheetsOauthCode) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheetsOauthCode) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionGoogleSheetsOauthCode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionGoogleSheetsOauthCode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheetsOauthCode) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionGoogleSheetsUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                                    `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDGoogleSheetsEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheetsUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheetsUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheetsUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionGoogleSheetsUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionGoogleSheetsUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionGoogleSheetsUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionHTTP struct {
+	CreateFlowsVaultConnectionHTTPBearer        *CreateFlowsVaultConnectionHTTPBearer
+	CreateFlowsVaultConnectionHTTPUninitialized *CreateFlowsVaultConnectionHTTPUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionHTTP) GetCreateFlowsVaultConnectionHTTPBearer() *CreateFlowsVaultConnectionHTTPBearer {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionHTTPBearer
+}
+
+func (c *CreateFlowsVaultConnectionHTTP) GetCreateFlowsVaultConnectionHTTPUninitialized() *CreateFlowsVaultConnectionHTTPUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionHTTPUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionHTTP) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionHTTPBearer := new(CreateFlowsVaultConnectionHTTPBearer)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPBearer); err == nil {
+		c.typ = "CreateFlowsVaultConnectionHTTPBearer"
+		c.CreateFlowsVaultConnectionHTTPBearer = valueCreateFlowsVaultConnectionHTTPBearer
+		return nil
+	}
+	valueCreateFlowsVaultConnectionHTTPUninitialized := new(CreateFlowsVaultConnectionHTTPUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionHTTPUninitialized"
+		c.CreateFlowsVaultConnectionHTTPUninitialized = valueCreateFlowsVaultConnectionHTTPUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionHTTP) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionHTTPBearer" || c.CreateFlowsVaultConnectionHTTPBearer != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionHTTPBearer)
+	}
+	if c.typ == "CreateFlowsVaultConnectionHTTPUninitialized" || c.CreateFlowsVaultConnectionHTTPUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionHTTPUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionHTTPVisitor interface {
+	VisitCreateFlowsVaultConnectionHTTPBearer(*CreateFlowsVaultConnectionHTTPBearer) error
+	VisitCreateFlowsVaultConnectionHTTPUninitialized(*CreateFlowsVaultConnectionHTTPUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionHTTP) Accept(visitor CreateFlowsVaultConnectionHTTPVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionHTTPBearer" || c.CreateFlowsVaultConnectionHTTPBearer != nil {
+		return visitor.VisitCreateFlowsVaultConnectionHTTPBearer(c.CreateFlowsVaultConnectionHTTPBearer)
+	}
+	if c.typ == "CreateFlowsVaultConnectionHTTPUninitialized" || c.CreateFlowsVaultConnectionHTTPUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionHTTPUninitialized(c.CreateFlowsVaultConnectionHTTPUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionHTTPBearer struct {
+	// Flows Vault Connection name.
+	Name  string                              `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIdHttpEnum   `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupHTTPBearer `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionHTTPBearer) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionHTTPBearer) GetSetup() *FlowsVaultConnectioSetupHTTPBearer {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionHTTPBearer) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionHTTPBearer) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionHTTPBearer
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionHTTPBearer(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionHTTPBearer) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionHTTPUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                            `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIdHttpEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionHTTPUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionHTTPUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionHTTPUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionHTTPUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionHTTPUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionHTTPUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionHubspot struct {
+	CreateFlowsVaultConnectionHubspotAPIKey        *CreateFlowsVaultConnectionHubspotAPIKey
+	CreateFlowsVaultConnectionHubspotOauthCode     *CreateFlowsVaultConnectionHubspotOauthCode
+	CreateFlowsVaultConnectionHubspotUninitialized *CreateFlowsVaultConnectionHubspotUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionHubspot) GetCreateFlowsVaultConnectionHubspotAPIKey() *CreateFlowsVaultConnectionHubspotAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionHubspotAPIKey
+}
+
+func (c *CreateFlowsVaultConnectionHubspot) GetCreateFlowsVaultConnectionHubspotOauthCode() *CreateFlowsVaultConnectionHubspotOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionHubspotOauthCode
+}
+
+func (c *CreateFlowsVaultConnectionHubspot) GetCreateFlowsVaultConnectionHubspotUninitialized() *CreateFlowsVaultConnectionHubspotUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionHubspotUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionHubspot) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionHubspotAPIKey := new(CreateFlowsVaultConnectionHubspotAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspotAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionHubspotAPIKey"
+		c.CreateFlowsVaultConnectionHubspotAPIKey = valueCreateFlowsVaultConnectionHubspotAPIKey
+		return nil
+	}
+	valueCreateFlowsVaultConnectionHubspotOauthCode := new(CreateFlowsVaultConnectionHubspotOauthCode)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspotOauthCode); err == nil {
+		c.typ = "CreateFlowsVaultConnectionHubspotOauthCode"
+		c.CreateFlowsVaultConnectionHubspotOauthCode = valueCreateFlowsVaultConnectionHubspotOauthCode
+		return nil
+	}
+	valueCreateFlowsVaultConnectionHubspotUninitialized := new(CreateFlowsVaultConnectionHubspotUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspotUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionHubspotUninitialized"
+		c.CreateFlowsVaultConnectionHubspotUninitialized = valueCreateFlowsVaultConnectionHubspotUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionHubspot) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionHubspotAPIKey" || c.CreateFlowsVaultConnectionHubspotAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionHubspotAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionHubspotOauthCode" || c.CreateFlowsVaultConnectionHubspotOauthCode != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionHubspotOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionHubspotUninitialized" || c.CreateFlowsVaultConnectionHubspotUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionHubspotUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionHubspotVisitor interface {
+	VisitCreateFlowsVaultConnectionHubspotAPIKey(*CreateFlowsVaultConnectionHubspotAPIKey) error
+	VisitCreateFlowsVaultConnectionHubspotOauthCode(*CreateFlowsVaultConnectionHubspotOauthCode) error
+	VisitCreateFlowsVaultConnectionHubspotUninitialized(*CreateFlowsVaultConnectionHubspotUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionHubspot) Accept(visitor CreateFlowsVaultConnectionHubspotVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionHubspotAPIKey" || c.CreateFlowsVaultConnectionHubspotAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionHubspotAPIKey(c.CreateFlowsVaultConnectionHubspotAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionHubspotOauthCode" || c.CreateFlowsVaultConnectionHubspotOauthCode != nil {
+		return visitor.VisitCreateFlowsVaultConnectionHubspotOauthCode(c.CreateFlowsVaultConnectionHubspotOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionHubspotUninitialized" || c.CreateFlowsVaultConnectionHubspotUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionHubspotUninitialized(c.CreateFlowsVaultConnectionHubspotUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionHubspotAPIKey struct {
+	// Flows Vault Connection name.
+	Name  string                               `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDHubspotEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupAPIKey      `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) GetSetup() *FlowsVaultConnectioSetupAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionHubspotAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionHubspotAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionHubspotOauthCode struct {
+	// Flows Vault Connection name.
+	Name  string                               `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDHubspotEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupOauthCode   `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionHubspotOauthCode) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionHubspotOauthCode) GetSetup() *FlowsVaultConnectioSetupOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionHubspotOauthCode) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionHubspotOauthCode) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionHubspotOauthCode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionHubspotOauthCode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionHubspotOauthCode) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionHubspotUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                               `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDHubspotEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionHubspotUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionHubspotUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionHubspotUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionHubspotUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionHubspotUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionHubspotUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionJwt struct {
+	CreateFlowsVaultConnectionJwtJwt           *CreateFlowsVaultConnectionJwtJwt
+	CreateFlowsVaultConnectionJwtUninitialized *CreateFlowsVaultConnectionJwtUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionJwt) GetCreateFlowsVaultConnectionJwtJwt() *CreateFlowsVaultConnectionJwtJwt {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionJwtJwt
+}
+
+func (c *CreateFlowsVaultConnectionJwt) GetCreateFlowsVaultConnectionJwtUninitialized() *CreateFlowsVaultConnectionJwtUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionJwtUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionJwt) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionJwtJwt := new(CreateFlowsVaultConnectionJwtJwt)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionJwtJwt); err == nil {
+		c.typ = "CreateFlowsVaultConnectionJwtJwt"
+		c.CreateFlowsVaultConnectionJwtJwt = valueCreateFlowsVaultConnectionJwtJwt
+		return nil
+	}
+	valueCreateFlowsVaultConnectionJwtUninitialized := new(CreateFlowsVaultConnectionJwtUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionJwtUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionJwtUninitialized"
+		c.CreateFlowsVaultConnectionJwtUninitialized = valueCreateFlowsVaultConnectionJwtUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionJwt) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionJwtJwt" || c.CreateFlowsVaultConnectionJwtJwt != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionJwtJwt)
+	}
+	if c.typ == "CreateFlowsVaultConnectionJwtUninitialized" || c.CreateFlowsVaultConnectionJwtUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionJwtUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionJwtVisitor interface {
+	VisitCreateFlowsVaultConnectionJwtJwt(*CreateFlowsVaultConnectionJwtJwt) error
+	VisitCreateFlowsVaultConnectionJwtUninitialized(*CreateFlowsVaultConnectionJwtUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionJwt) Accept(visitor CreateFlowsVaultConnectionJwtVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionJwtJwt" || c.CreateFlowsVaultConnectionJwtJwt != nil {
+		return visitor.VisitCreateFlowsVaultConnectionJwtJwt(c.CreateFlowsVaultConnectionJwtJwt)
+	}
+	if c.typ == "CreateFlowsVaultConnectionJwtUninitialized" || c.CreateFlowsVaultConnectionJwtUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionJwtUninitialized(c.CreateFlowsVaultConnectionJwtUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionJwtJwt struct {
+	// Flows Vault Connection name.
+	Name  string                           `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDJwtEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupJwt     `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionJwtJwt) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionJwtJwt) GetSetup() *FlowsVaultConnectioSetupJwt {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionJwtJwt) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionJwtJwt) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionJwtJwt
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionJwtJwt(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionJwtJwt) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionJwtUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                           `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDJwtEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionJwtUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionJwtUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionJwtUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionJwtUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionJwtUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionJwtUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionMailchimp struct {
+	CreateFlowsVaultConnectionMailchimpAPIKey        *CreateFlowsVaultConnectionMailchimpAPIKey
+	CreateFlowsVaultConnectionMailchimpOauthCode     *CreateFlowsVaultConnectionMailchimpOauthCode
+	CreateFlowsVaultConnectionMailchimpUninitialized *CreateFlowsVaultConnectionMailchimpUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionMailchimp) GetCreateFlowsVaultConnectionMailchimpAPIKey() *CreateFlowsVaultConnectionMailchimpAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionMailchimpAPIKey
+}
+
+func (c *CreateFlowsVaultConnectionMailchimp) GetCreateFlowsVaultConnectionMailchimpOauthCode() *CreateFlowsVaultConnectionMailchimpOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionMailchimpOauthCode
+}
+
+func (c *CreateFlowsVaultConnectionMailchimp) GetCreateFlowsVaultConnectionMailchimpUninitialized() *CreateFlowsVaultConnectionMailchimpUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionMailchimpUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionMailchimp) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionMailchimpAPIKey := new(CreateFlowsVaultConnectionMailchimpAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimpAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionMailchimpAPIKey"
+		c.CreateFlowsVaultConnectionMailchimpAPIKey = valueCreateFlowsVaultConnectionMailchimpAPIKey
+		return nil
+	}
+	valueCreateFlowsVaultConnectionMailchimpOauthCode := new(CreateFlowsVaultConnectionMailchimpOauthCode)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimpOauthCode); err == nil {
+		c.typ = "CreateFlowsVaultConnectionMailchimpOauthCode"
+		c.CreateFlowsVaultConnectionMailchimpOauthCode = valueCreateFlowsVaultConnectionMailchimpOauthCode
+		return nil
+	}
+	valueCreateFlowsVaultConnectionMailchimpUninitialized := new(CreateFlowsVaultConnectionMailchimpUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimpUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionMailchimpUninitialized"
+		c.CreateFlowsVaultConnectionMailchimpUninitialized = valueCreateFlowsVaultConnectionMailchimpUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionMailchimp) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionMailchimpAPIKey" || c.CreateFlowsVaultConnectionMailchimpAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionMailchimpAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionMailchimpOauthCode" || c.CreateFlowsVaultConnectionMailchimpOauthCode != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionMailchimpOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionMailchimpUninitialized" || c.CreateFlowsVaultConnectionMailchimpUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionMailchimpUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionMailchimpVisitor interface {
+	VisitCreateFlowsVaultConnectionMailchimpAPIKey(*CreateFlowsVaultConnectionMailchimpAPIKey) error
+	VisitCreateFlowsVaultConnectionMailchimpOauthCode(*CreateFlowsVaultConnectionMailchimpOauthCode) error
+	VisitCreateFlowsVaultConnectionMailchimpUninitialized(*CreateFlowsVaultConnectionMailchimpUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionMailchimp) Accept(visitor CreateFlowsVaultConnectionMailchimpVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionMailchimpAPIKey" || c.CreateFlowsVaultConnectionMailchimpAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionMailchimpAPIKey(c.CreateFlowsVaultConnectionMailchimpAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionMailchimpOauthCode" || c.CreateFlowsVaultConnectionMailchimpOauthCode != nil {
+		return visitor.VisitCreateFlowsVaultConnectionMailchimpOauthCode(c.CreateFlowsVaultConnectionMailchimpOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionMailchimpUninitialized" || c.CreateFlowsVaultConnectionMailchimpUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionMailchimpUninitialized(c.CreateFlowsVaultConnectionMailchimpUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionMailchimpAPIKey struct {
+	// Flows Vault Connection name.
+	Name  string                                 `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDMailchimpEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupSecretAPIKey  `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) GetSetup() *FlowsVaultConnectioSetupSecretAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionMailchimpAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionMailchimpAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionMailchimpOauthCode struct {
+	// Flows Vault Connection name.
+	Name  string                                 `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDMailchimpEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupOauthCode     `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpOauthCode) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpOauthCode) GetSetup() *FlowsVaultConnectioSetupOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpOauthCode) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpOauthCode) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionMailchimpOauthCode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionMailchimpOauthCode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpOauthCode) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionMailchimpUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                                 `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDMailchimpEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionMailchimpUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionMailchimpUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionMailchimpUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionMailjet struct {
+	CreateFlowsVaultConnectionMailjetAPIKey        *CreateFlowsVaultConnectionMailjetAPIKey
+	CreateFlowsVaultConnectionMailjetUninitialized *CreateFlowsVaultConnectionMailjetUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionMailjet) GetCreateFlowsVaultConnectionMailjetAPIKey() *CreateFlowsVaultConnectionMailjetAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionMailjetAPIKey
+}
+
+func (c *CreateFlowsVaultConnectionMailjet) GetCreateFlowsVaultConnectionMailjetUninitialized() *CreateFlowsVaultConnectionMailjetUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionMailjetUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionMailjet) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionMailjetAPIKey := new(CreateFlowsVaultConnectionMailjetAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailjetAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionMailjetAPIKey"
+		c.CreateFlowsVaultConnectionMailjetAPIKey = valueCreateFlowsVaultConnectionMailjetAPIKey
+		return nil
+	}
+	valueCreateFlowsVaultConnectionMailjetUninitialized := new(CreateFlowsVaultConnectionMailjetUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailjetUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionMailjetUninitialized"
+		c.CreateFlowsVaultConnectionMailjetUninitialized = valueCreateFlowsVaultConnectionMailjetUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionMailjet) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionMailjetAPIKey" || c.CreateFlowsVaultConnectionMailjetAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionMailjetAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionMailjetUninitialized" || c.CreateFlowsVaultConnectionMailjetUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionMailjetUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionMailjetVisitor interface {
+	VisitCreateFlowsVaultConnectionMailjetAPIKey(*CreateFlowsVaultConnectionMailjetAPIKey) error
+	VisitCreateFlowsVaultConnectionMailjetUninitialized(*CreateFlowsVaultConnectionMailjetUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionMailjet) Accept(visitor CreateFlowsVaultConnectionMailjetVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionMailjetAPIKey" || c.CreateFlowsVaultConnectionMailjetAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionMailjetAPIKey(c.CreateFlowsVaultConnectionMailjetAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionMailjetUninitialized" || c.CreateFlowsVaultConnectionMailjetUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionMailjetUninitialized(c.CreateFlowsVaultConnectionMailjetUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionMailjetAPIKey struct {
+	// Flows Vault Connection name.
+	Name  string                                 `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDMailjetEnum   `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupMailjetAPIKey `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) GetSetup() *FlowsVaultConnectioSetupMailjetAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionMailjetAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionMailjetAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionMailjetUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                               `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDMailjetEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionMailjetUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionMailjetUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionMailjetUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionMailjetUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionMailjetUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionMailjetUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionPipedrive struct {
+	CreateFlowsVaultConnectionPipedriveToken         *CreateFlowsVaultConnectionPipedriveToken
+	CreateFlowsVaultConnectionPipedriveOauthCode     *CreateFlowsVaultConnectionPipedriveOauthCode
+	CreateFlowsVaultConnectionPipedriveUninitialized *CreateFlowsVaultConnectionPipedriveUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionPipedrive) GetCreateFlowsVaultConnectionPipedriveToken() *CreateFlowsVaultConnectionPipedriveToken {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionPipedriveToken
+}
+
+func (c *CreateFlowsVaultConnectionPipedrive) GetCreateFlowsVaultConnectionPipedriveOauthCode() *CreateFlowsVaultConnectionPipedriveOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionPipedriveOauthCode
+}
+
+func (c *CreateFlowsVaultConnectionPipedrive) GetCreateFlowsVaultConnectionPipedriveUninitialized() *CreateFlowsVaultConnectionPipedriveUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionPipedriveUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionPipedrive) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionPipedriveToken := new(CreateFlowsVaultConnectionPipedriveToken)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionPipedriveToken); err == nil {
+		c.typ = "CreateFlowsVaultConnectionPipedriveToken"
+		c.CreateFlowsVaultConnectionPipedriveToken = valueCreateFlowsVaultConnectionPipedriveToken
+		return nil
+	}
+	valueCreateFlowsVaultConnectionPipedriveOauthCode := new(CreateFlowsVaultConnectionPipedriveOauthCode)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionPipedriveOauthCode); err == nil {
+		c.typ = "CreateFlowsVaultConnectionPipedriveOauthCode"
+		c.CreateFlowsVaultConnectionPipedriveOauthCode = valueCreateFlowsVaultConnectionPipedriveOauthCode
+		return nil
+	}
+	valueCreateFlowsVaultConnectionPipedriveUninitialized := new(CreateFlowsVaultConnectionPipedriveUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionPipedriveUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionPipedriveUninitialized"
+		c.CreateFlowsVaultConnectionPipedriveUninitialized = valueCreateFlowsVaultConnectionPipedriveUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionPipedrive) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionPipedriveToken" || c.CreateFlowsVaultConnectionPipedriveToken != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionPipedriveToken)
+	}
+	if c.typ == "CreateFlowsVaultConnectionPipedriveOauthCode" || c.CreateFlowsVaultConnectionPipedriveOauthCode != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionPipedriveOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionPipedriveUninitialized" || c.CreateFlowsVaultConnectionPipedriveUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionPipedriveUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionPipedriveVisitor interface {
+	VisitCreateFlowsVaultConnectionPipedriveToken(*CreateFlowsVaultConnectionPipedriveToken) error
+	VisitCreateFlowsVaultConnectionPipedriveOauthCode(*CreateFlowsVaultConnectionPipedriveOauthCode) error
+	VisitCreateFlowsVaultConnectionPipedriveUninitialized(*CreateFlowsVaultConnectionPipedriveUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionPipedrive) Accept(visitor CreateFlowsVaultConnectionPipedriveVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionPipedriveToken" || c.CreateFlowsVaultConnectionPipedriveToken != nil {
+		return visitor.VisitCreateFlowsVaultConnectionPipedriveToken(c.CreateFlowsVaultConnectionPipedriveToken)
+	}
+	if c.typ == "CreateFlowsVaultConnectionPipedriveOauthCode" || c.CreateFlowsVaultConnectionPipedriveOauthCode != nil {
+		return visitor.VisitCreateFlowsVaultConnectionPipedriveOauthCode(c.CreateFlowsVaultConnectionPipedriveOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionPipedriveUninitialized" || c.CreateFlowsVaultConnectionPipedriveUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionPipedriveUninitialized(c.CreateFlowsVaultConnectionPipedriveUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionPipedriveOauthCode struct {
+	// Flows Vault Connection name.
+	Name  string                                 `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDPipedriveEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupOauthCode     `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveOauthCode) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveOauthCode) GetSetup() *FlowsVaultConnectioSetupOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveOauthCode) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveOauthCode) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionPipedriveOauthCode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionPipedriveOauthCode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveOauthCode) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionPipedriveToken struct {
+	// Flows Vault Connection name.
+	Name  string                                 `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDPipedriveEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupToken         `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveToken) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveToken) GetSetup() *FlowsVaultConnectioSetupToken {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveToken) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveToken) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionPipedriveToken
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionPipedriveToken(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveToken) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionPipedriveUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                                 `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDPipedriveEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionPipedriveUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionPipedriveUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionPipedriveUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionRequestContent struct {
+	CreateFlowsVaultConnectionActivecampaign *CreateFlowsVaultConnectionActivecampaign
+	CreateFlowsVaultConnectionAirtable       *CreateFlowsVaultConnectionAirtable
+	CreateFlowsVaultConnectionAuth0          *CreateFlowsVaultConnectionAuth0
+	CreateFlowsVaultConnectionBigquery       *CreateFlowsVaultConnectionBigquery
+	CreateFlowsVaultConnectionClearbit       *CreateFlowsVaultConnectionClearbit
+	CreateFlowsVaultConnectionDocusign       *CreateFlowsVaultConnectionDocusign
+	CreateFlowsVaultConnectionGoogleSheets   *CreateFlowsVaultConnectionGoogleSheets
+	CreateFlowsVaultConnectionHTTP           *CreateFlowsVaultConnectionHTTP
+	CreateFlowsVaultConnectionHubspot        *CreateFlowsVaultConnectionHubspot
+	CreateFlowsVaultConnectionJwt            *CreateFlowsVaultConnectionJwt
+	CreateFlowsVaultConnectionMailchimp      *CreateFlowsVaultConnectionMailchimp
+	CreateFlowsVaultConnectionMailjet        *CreateFlowsVaultConnectionMailjet
+	CreateFlowsVaultConnectionPipedrive      *CreateFlowsVaultConnectionPipedrive
+	CreateFlowsVaultConnectionSalesforce     *CreateFlowsVaultConnectionSalesforce
+	CreateFlowsVaultConnectionSendgrid       *CreateFlowsVaultConnectionSendgrid
+	CreateFlowsVaultConnectionSlack          *CreateFlowsVaultConnectionSlack
+	CreateFlowsVaultConnectionStripe         *CreateFlowsVaultConnectionStripe
+	CreateFlowsVaultConnectionTelegram       *CreateFlowsVaultConnectionTelegram
+	CreateFlowsVaultConnectionTwilio         *CreateFlowsVaultConnectionTwilio
+	CreateFlowsVaultConnectionWhatsapp       *CreateFlowsVaultConnectionWhatsapp
+	CreateFlowsVaultConnectionZapier         *CreateFlowsVaultConnectionZapier
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionActivecampaign() *CreateFlowsVaultConnectionActivecampaign {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionActivecampaign
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionAirtable() *CreateFlowsVaultConnectionAirtable {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionAirtable
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionAuth0() *CreateFlowsVaultConnectionAuth0 {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionAuth0
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionBigquery() *CreateFlowsVaultConnectionBigquery {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionBigquery
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionClearbit() *CreateFlowsVaultConnectionClearbit {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionClearbit
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionDocusign() *CreateFlowsVaultConnectionDocusign {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionDocusign
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionGoogleSheets() *CreateFlowsVaultConnectionGoogleSheets {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionGoogleSheets
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionHTTP() *CreateFlowsVaultConnectionHTTP {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionHTTP
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionHubspot() *CreateFlowsVaultConnectionHubspot {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionHubspot
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionJwt() *CreateFlowsVaultConnectionJwt {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionJwt
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionMailchimp() *CreateFlowsVaultConnectionMailchimp {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionMailchimp
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionMailjet() *CreateFlowsVaultConnectionMailjet {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionMailjet
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionPipedrive() *CreateFlowsVaultConnectionPipedrive {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionPipedrive
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionSalesforce() *CreateFlowsVaultConnectionSalesforce {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionSalesforce
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionSendgrid() *CreateFlowsVaultConnectionSendgrid {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionSendgrid
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionSlack() *CreateFlowsVaultConnectionSlack {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionSlack
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionStripe() *CreateFlowsVaultConnectionStripe {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionStripe
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionTelegram() *CreateFlowsVaultConnectionTelegram {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionTelegram
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionTwilio() *CreateFlowsVaultConnectionTwilio {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionTwilio
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionWhatsapp() *CreateFlowsVaultConnectionWhatsapp {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionWhatsapp
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionZapier() *CreateFlowsVaultConnectionZapier {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionZapier
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionActivecampaign := new(CreateFlowsVaultConnectionActivecampaign)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionActivecampaign); err == nil {
+		c.typ = "CreateFlowsVaultConnectionActivecampaign"
+		c.CreateFlowsVaultConnectionActivecampaign = valueCreateFlowsVaultConnectionActivecampaign
+		return nil
+	}
+	valueCreateFlowsVaultConnectionAirtable := new(CreateFlowsVaultConnectionAirtable)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAirtable); err == nil {
+		c.typ = "CreateFlowsVaultConnectionAirtable"
+		c.CreateFlowsVaultConnectionAirtable = valueCreateFlowsVaultConnectionAirtable
+		return nil
+	}
+	valueCreateFlowsVaultConnectionAuth0 := new(CreateFlowsVaultConnectionAuth0)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAuth0); err == nil {
+		c.typ = "CreateFlowsVaultConnectionAuth0"
+		c.CreateFlowsVaultConnectionAuth0 = valueCreateFlowsVaultConnectionAuth0
+		return nil
+	}
+	valueCreateFlowsVaultConnectionBigquery := new(CreateFlowsVaultConnectionBigquery)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionBigquery); err == nil {
+		c.typ = "CreateFlowsVaultConnectionBigquery"
+		c.CreateFlowsVaultConnectionBigquery = valueCreateFlowsVaultConnectionBigquery
+		return nil
+	}
+	valueCreateFlowsVaultConnectionClearbit := new(CreateFlowsVaultConnectionClearbit)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionClearbit); err == nil {
+		c.typ = "CreateFlowsVaultConnectionClearbit"
+		c.CreateFlowsVaultConnectionClearbit = valueCreateFlowsVaultConnectionClearbit
+		return nil
+	}
+	valueCreateFlowsVaultConnectionDocusign := new(CreateFlowsVaultConnectionDocusign)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionDocusign); err == nil {
+		c.typ = "CreateFlowsVaultConnectionDocusign"
+		c.CreateFlowsVaultConnectionDocusign = valueCreateFlowsVaultConnectionDocusign
+		return nil
+	}
+	valueCreateFlowsVaultConnectionGoogleSheets := new(CreateFlowsVaultConnectionGoogleSheets)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionGoogleSheets); err == nil {
+		c.typ = "CreateFlowsVaultConnectionGoogleSheets"
+		c.CreateFlowsVaultConnectionGoogleSheets = valueCreateFlowsVaultConnectionGoogleSheets
+		return nil
+	}
+	valueCreateFlowsVaultConnectionHTTP := new(CreateFlowsVaultConnectionHTTP)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTP); err == nil {
+		c.typ = "CreateFlowsVaultConnectionHTTP"
+		c.CreateFlowsVaultConnectionHTTP = valueCreateFlowsVaultConnectionHTTP
+		return nil
+	}
+	valueCreateFlowsVaultConnectionHubspot := new(CreateFlowsVaultConnectionHubspot)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspot); err == nil {
+		c.typ = "CreateFlowsVaultConnectionHubspot"
+		c.CreateFlowsVaultConnectionHubspot = valueCreateFlowsVaultConnectionHubspot
+		return nil
+	}
+	valueCreateFlowsVaultConnectionJwt := new(CreateFlowsVaultConnectionJwt)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionJwt); err == nil {
+		c.typ = "CreateFlowsVaultConnectionJwt"
+		c.CreateFlowsVaultConnectionJwt = valueCreateFlowsVaultConnectionJwt
+		return nil
+	}
+	valueCreateFlowsVaultConnectionMailchimp := new(CreateFlowsVaultConnectionMailchimp)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimp); err == nil {
+		c.typ = "CreateFlowsVaultConnectionMailchimp"
+		c.CreateFlowsVaultConnectionMailchimp = valueCreateFlowsVaultConnectionMailchimp
+		return nil
+	}
+	valueCreateFlowsVaultConnectionMailjet := new(CreateFlowsVaultConnectionMailjet)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailjet); err == nil {
+		c.typ = "CreateFlowsVaultConnectionMailjet"
+		c.CreateFlowsVaultConnectionMailjet = valueCreateFlowsVaultConnectionMailjet
+		return nil
+	}
+	valueCreateFlowsVaultConnectionPipedrive := new(CreateFlowsVaultConnectionPipedrive)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionPipedrive); err == nil {
+		c.typ = "CreateFlowsVaultConnectionPipedrive"
+		c.CreateFlowsVaultConnectionPipedrive = valueCreateFlowsVaultConnectionPipedrive
+		return nil
+	}
+	valueCreateFlowsVaultConnectionSalesforce := new(CreateFlowsVaultConnectionSalesforce)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSalesforce); err == nil {
+		c.typ = "CreateFlowsVaultConnectionSalesforce"
+		c.CreateFlowsVaultConnectionSalesforce = valueCreateFlowsVaultConnectionSalesforce
+		return nil
+	}
+	valueCreateFlowsVaultConnectionSendgrid := new(CreateFlowsVaultConnectionSendgrid)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSendgrid); err == nil {
+		c.typ = "CreateFlowsVaultConnectionSendgrid"
+		c.CreateFlowsVaultConnectionSendgrid = valueCreateFlowsVaultConnectionSendgrid
+		return nil
+	}
+	valueCreateFlowsVaultConnectionSlack := new(CreateFlowsVaultConnectionSlack)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSlack); err == nil {
+		c.typ = "CreateFlowsVaultConnectionSlack"
+		c.CreateFlowsVaultConnectionSlack = valueCreateFlowsVaultConnectionSlack
+		return nil
+	}
+	valueCreateFlowsVaultConnectionStripe := new(CreateFlowsVaultConnectionStripe)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionStripe); err == nil {
+		c.typ = "CreateFlowsVaultConnectionStripe"
+		c.CreateFlowsVaultConnectionStripe = valueCreateFlowsVaultConnectionStripe
+		return nil
+	}
+	valueCreateFlowsVaultConnectionTelegram := new(CreateFlowsVaultConnectionTelegram)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTelegram); err == nil {
+		c.typ = "CreateFlowsVaultConnectionTelegram"
+		c.CreateFlowsVaultConnectionTelegram = valueCreateFlowsVaultConnectionTelegram
+		return nil
+	}
+	valueCreateFlowsVaultConnectionTwilio := new(CreateFlowsVaultConnectionTwilio)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTwilio); err == nil {
+		c.typ = "CreateFlowsVaultConnectionTwilio"
+		c.CreateFlowsVaultConnectionTwilio = valueCreateFlowsVaultConnectionTwilio
+		return nil
+	}
+	valueCreateFlowsVaultConnectionWhatsapp := new(CreateFlowsVaultConnectionWhatsapp)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionWhatsapp); err == nil {
+		c.typ = "CreateFlowsVaultConnectionWhatsapp"
+		c.CreateFlowsVaultConnectionWhatsapp = valueCreateFlowsVaultConnectionWhatsapp
+		return nil
+	}
+	valueCreateFlowsVaultConnectionZapier := new(CreateFlowsVaultConnectionZapier)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionZapier); err == nil {
+		c.typ = "CreateFlowsVaultConnectionZapier"
+		c.CreateFlowsVaultConnectionZapier = valueCreateFlowsVaultConnectionZapier
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionRequestContent) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionActivecampaign" || c.CreateFlowsVaultConnectionActivecampaign != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionActivecampaign)
+	}
+	if c.typ == "CreateFlowsVaultConnectionAirtable" || c.CreateFlowsVaultConnectionAirtable != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionAirtable)
+	}
+	if c.typ == "CreateFlowsVaultConnectionAuth0" || c.CreateFlowsVaultConnectionAuth0 != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionAuth0)
+	}
+	if c.typ == "CreateFlowsVaultConnectionBigquery" || c.CreateFlowsVaultConnectionBigquery != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionBigquery)
+	}
+	if c.typ == "CreateFlowsVaultConnectionClearbit" || c.CreateFlowsVaultConnectionClearbit != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionClearbit)
+	}
+	if c.typ == "CreateFlowsVaultConnectionDocusign" || c.CreateFlowsVaultConnectionDocusign != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionDocusign)
+	}
+	if c.typ == "CreateFlowsVaultConnectionGoogleSheets" || c.CreateFlowsVaultConnectionGoogleSheets != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionGoogleSheets)
+	}
+	if c.typ == "CreateFlowsVaultConnectionHTTP" || c.CreateFlowsVaultConnectionHTTP != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionHTTP)
+	}
+	if c.typ == "CreateFlowsVaultConnectionHubspot" || c.CreateFlowsVaultConnectionHubspot != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionHubspot)
+	}
+	if c.typ == "CreateFlowsVaultConnectionJwt" || c.CreateFlowsVaultConnectionJwt != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionJwt)
+	}
+	if c.typ == "CreateFlowsVaultConnectionMailchimp" || c.CreateFlowsVaultConnectionMailchimp != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionMailchimp)
+	}
+	if c.typ == "CreateFlowsVaultConnectionMailjet" || c.CreateFlowsVaultConnectionMailjet != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionMailjet)
+	}
+	if c.typ == "CreateFlowsVaultConnectionPipedrive" || c.CreateFlowsVaultConnectionPipedrive != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionPipedrive)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSalesforce" || c.CreateFlowsVaultConnectionSalesforce != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionSalesforce)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSendgrid" || c.CreateFlowsVaultConnectionSendgrid != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionSendgrid)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSlack" || c.CreateFlowsVaultConnectionSlack != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionSlack)
+	}
+	if c.typ == "CreateFlowsVaultConnectionStripe" || c.CreateFlowsVaultConnectionStripe != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionStripe)
+	}
+	if c.typ == "CreateFlowsVaultConnectionTelegram" || c.CreateFlowsVaultConnectionTelegram != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionTelegram)
+	}
+	if c.typ == "CreateFlowsVaultConnectionTwilio" || c.CreateFlowsVaultConnectionTwilio != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionTwilio)
+	}
+	if c.typ == "CreateFlowsVaultConnectionWhatsapp" || c.CreateFlowsVaultConnectionWhatsapp != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionWhatsapp)
+	}
+	if c.typ == "CreateFlowsVaultConnectionZapier" || c.CreateFlowsVaultConnectionZapier != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionZapier)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionRequestContentVisitor interface {
+	VisitCreateFlowsVaultConnectionActivecampaign(*CreateFlowsVaultConnectionActivecampaign) error
+	VisitCreateFlowsVaultConnectionAirtable(*CreateFlowsVaultConnectionAirtable) error
+	VisitCreateFlowsVaultConnectionAuth0(*CreateFlowsVaultConnectionAuth0) error
+	VisitCreateFlowsVaultConnectionBigquery(*CreateFlowsVaultConnectionBigquery) error
+	VisitCreateFlowsVaultConnectionClearbit(*CreateFlowsVaultConnectionClearbit) error
+	VisitCreateFlowsVaultConnectionDocusign(*CreateFlowsVaultConnectionDocusign) error
+	VisitCreateFlowsVaultConnectionGoogleSheets(*CreateFlowsVaultConnectionGoogleSheets) error
+	VisitCreateFlowsVaultConnectionHTTP(*CreateFlowsVaultConnectionHTTP) error
+	VisitCreateFlowsVaultConnectionHubspot(*CreateFlowsVaultConnectionHubspot) error
+	VisitCreateFlowsVaultConnectionJwt(*CreateFlowsVaultConnectionJwt) error
+	VisitCreateFlowsVaultConnectionMailchimp(*CreateFlowsVaultConnectionMailchimp) error
+	VisitCreateFlowsVaultConnectionMailjet(*CreateFlowsVaultConnectionMailjet) error
+	VisitCreateFlowsVaultConnectionPipedrive(*CreateFlowsVaultConnectionPipedrive) error
+	VisitCreateFlowsVaultConnectionSalesforce(*CreateFlowsVaultConnectionSalesforce) error
+	VisitCreateFlowsVaultConnectionSendgrid(*CreateFlowsVaultConnectionSendgrid) error
+	VisitCreateFlowsVaultConnectionSlack(*CreateFlowsVaultConnectionSlack) error
+	VisitCreateFlowsVaultConnectionStripe(*CreateFlowsVaultConnectionStripe) error
+	VisitCreateFlowsVaultConnectionTelegram(*CreateFlowsVaultConnectionTelegram) error
+	VisitCreateFlowsVaultConnectionTwilio(*CreateFlowsVaultConnectionTwilio) error
+	VisitCreateFlowsVaultConnectionWhatsapp(*CreateFlowsVaultConnectionWhatsapp) error
+	VisitCreateFlowsVaultConnectionZapier(*CreateFlowsVaultConnectionZapier) error
+}
+
+func (c *CreateFlowsVaultConnectionRequestContent) Accept(visitor CreateFlowsVaultConnectionRequestContentVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionActivecampaign" || c.CreateFlowsVaultConnectionActivecampaign != nil {
+		return visitor.VisitCreateFlowsVaultConnectionActivecampaign(c.CreateFlowsVaultConnectionActivecampaign)
+	}
+	if c.typ == "CreateFlowsVaultConnectionAirtable" || c.CreateFlowsVaultConnectionAirtable != nil {
+		return visitor.VisitCreateFlowsVaultConnectionAirtable(c.CreateFlowsVaultConnectionAirtable)
+	}
+	if c.typ == "CreateFlowsVaultConnectionAuth0" || c.CreateFlowsVaultConnectionAuth0 != nil {
+		return visitor.VisitCreateFlowsVaultConnectionAuth0(c.CreateFlowsVaultConnectionAuth0)
+	}
+	if c.typ == "CreateFlowsVaultConnectionBigquery" || c.CreateFlowsVaultConnectionBigquery != nil {
+		return visitor.VisitCreateFlowsVaultConnectionBigquery(c.CreateFlowsVaultConnectionBigquery)
+	}
+	if c.typ == "CreateFlowsVaultConnectionClearbit" || c.CreateFlowsVaultConnectionClearbit != nil {
+		return visitor.VisitCreateFlowsVaultConnectionClearbit(c.CreateFlowsVaultConnectionClearbit)
+	}
+	if c.typ == "CreateFlowsVaultConnectionDocusign" || c.CreateFlowsVaultConnectionDocusign != nil {
+		return visitor.VisitCreateFlowsVaultConnectionDocusign(c.CreateFlowsVaultConnectionDocusign)
+	}
+	if c.typ == "CreateFlowsVaultConnectionGoogleSheets" || c.CreateFlowsVaultConnectionGoogleSheets != nil {
+		return visitor.VisitCreateFlowsVaultConnectionGoogleSheets(c.CreateFlowsVaultConnectionGoogleSheets)
+	}
+	if c.typ == "CreateFlowsVaultConnectionHTTP" || c.CreateFlowsVaultConnectionHTTP != nil {
+		return visitor.VisitCreateFlowsVaultConnectionHTTP(c.CreateFlowsVaultConnectionHTTP)
+	}
+	if c.typ == "CreateFlowsVaultConnectionHubspot" || c.CreateFlowsVaultConnectionHubspot != nil {
+		return visitor.VisitCreateFlowsVaultConnectionHubspot(c.CreateFlowsVaultConnectionHubspot)
+	}
+	if c.typ == "CreateFlowsVaultConnectionJwt" || c.CreateFlowsVaultConnectionJwt != nil {
+		return visitor.VisitCreateFlowsVaultConnectionJwt(c.CreateFlowsVaultConnectionJwt)
+	}
+	if c.typ == "CreateFlowsVaultConnectionMailchimp" || c.CreateFlowsVaultConnectionMailchimp != nil {
+		return visitor.VisitCreateFlowsVaultConnectionMailchimp(c.CreateFlowsVaultConnectionMailchimp)
+	}
+	if c.typ == "CreateFlowsVaultConnectionMailjet" || c.CreateFlowsVaultConnectionMailjet != nil {
+		return visitor.VisitCreateFlowsVaultConnectionMailjet(c.CreateFlowsVaultConnectionMailjet)
+	}
+	if c.typ == "CreateFlowsVaultConnectionPipedrive" || c.CreateFlowsVaultConnectionPipedrive != nil {
+		return visitor.VisitCreateFlowsVaultConnectionPipedrive(c.CreateFlowsVaultConnectionPipedrive)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSalesforce" || c.CreateFlowsVaultConnectionSalesforce != nil {
+		return visitor.VisitCreateFlowsVaultConnectionSalesforce(c.CreateFlowsVaultConnectionSalesforce)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSendgrid" || c.CreateFlowsVaultConnectionSendgrid != nil {
+		return visitor.VisitCreateFlowsVaultConnectionSendgrid(c.CreateFlowsVaultConnectionSendgrid)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSlack" || c.CreateFlowsVaultConnectionSlack != nil {
+		return visitor.VisitCreateFlowsVaultConnectionSlack(c.CreateFlowsVaultConnectionSlack)
+	}
+	if c.typ == "CreateFlowsVaultConnectionStripe" || c.CreateFlowsVaultConnectionStripe != nil {
+		return visitor.VisitCreateFlowsVaultConnectionStripe(c.CreateFlowsVaultConnectionStripe)
+	}
+	if c.typ == "CreateFlowsVaultConnectionTelegram" || c.CreateFlowsVaultConnectionTelegram != nil {
+		return visitor.VisitCreateFlowsVaultConnectionTelegram(c.CreateFlowsVaultConnectionTelegram)
+	}
+	if c.typ == "CreateFlowsVaultConnectionTwilio" || c.CreateFlowsVaultConnectionTwilio != nil {
+		return visitor.VisitCreateFlowsVaultConnectionTwilio(c.CreateFlowsVaultConnectionTwilio)
+	}
+	if c.typ == "CreateFlowsVaultConnectionWhatsapp" || c.CreateFlowsVaultConnectionWhatsapp != nil {
+		return visitor.VisitCreateFlowsVaultConnectionWhatsapp(c.CreateFlowsVaultConnectionWhatsapp)
+	}
+	if c.typ == "CreateFlowsVaultConnectionZapier" || c.CreateFlowsVaultConnectionZapier != nil {
+		return visitor.VisitCreateFlowsVaultConnectionZapier(c.CreateFlowsVaultConnectionZapier)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionResponseContent struct {
+	// Flows Vault Connection identifier.
+	ID string `json:"id" url:"id"`
+	// Flows Vault Connection app identifier.
+	AppID string `json:"app_id" url:"app_id"`
+	// Flows Vault Connection environment.
+	Environment *string `json:"environment,omitempty" url:"environment,omitempty"`
+	// Flows Vault Connection name.
+	Name string `json:"name" url:"name"`
+	// Flows Vault Connection custom account name.
+	AccountName *string `json:"account_name,omitempty" url:"account_name,omitempty"`
+	// Whether the Flows Vault Connection is configured.
+	Ready bool `json:"ready" url:"ready"`
+	// The ISO 8601 formatted date when this Flows Vault Connection was created.
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// The ISO 8601 formatted date when this Flows Vault Connection was updated.
+	UpdatedAt time.Time `json:"updated_at" url:"updated_at"`
+	// The ISO 8601 formatted date when this Flows Vault Connection was refreshed.
+	RefreshedAt *time.Time `json:"refreshed_at,omitempty" url:"refreshed_at,omitempty"`
+	Fingerprint string     `json:"fingerprint" url:"fingerprint"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) GetAppID() string {
+	if c == nil {
+		return ""
+	}
+	return c.AppID
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) GetEnvironment() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Environment
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) GetAccountName() *string {
+	if c == nil {
+		return nil
+	}
+	return c.AccountName
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) GetReady() bool {
+	if c == nil {
+		return false
+	}
+	return c.Ready
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) GetCreatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.CreatedAt
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) GetUpdatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.UpdatedAt
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) GetRefreshedAt() *time.Time {
+	if c == nil {
+		return nil
+	}
+	return c.RefreshedAt
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) GetFingerprint() string {
+	if c == nil {
+		return ""
+	}
+	return c.Fingerprint
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateFlowsVaultConnectionResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt   *internal.DateTime `json:"created_at"`
+		UpdatedAt   *internal.DateTime `json:"updated_at"`
+		RefreshedAt *internal.DateTime `json:"refreshed_at,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.Time()
+	c.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	c.RefreshedAt = unmarshaler.RefreshedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateFlowsVaultConnectionResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt   *internal.DateTime `json:"created_at"`
+		UpdatedAt   *internal.DateTime `json:"updated_at"`
+		RefreshedAt *internal.DateTime `json:"refreshed_at,omitempty"`
+	}{
+		embed:       embed(*c),
+		CreatedAt:   internal.NewDateTime(c.CreatedAt),
+		UpdatedAt:   internal.NewDateTime(c.UpdatedAt),
+		RefreshedAt: internal.NewOptionalDateTime(c.RefreshedAt),
+	}
+	return json.Marshal(marshaler)
+}
+
+func (c *CreateFlowsVaultConnectionResponseContent) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionSalesforce struct {
+	CreateFlowsVaultConnectionSalesforceOauthCode     *CreateFlowsVaultConnectionSalesforceOauthCode
+	CreateFlowsVaultConnectionSalesforceUninitialized *CreateFlowsVaultConnectionSalesforceUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionSalesforce) GetCreateFlowsVaultConnectionSalesforceOauthCode() *CreateFlowsVaultConnectionSalesforceOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionSalesforceOauthCode
+}
+
+func (c *CreateFlowsVaultConnectionSalesforce) GetCreateFlowsVaultConnectionSalesforceUninitialized() *CreateFlowsVaultConnectionSalesforceUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionSalesforceUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionSalesforce) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionSalesforceOauthCode := new(CreateFlowsVaultConnectionSalesforceOauthCode)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSalesforceOauthCode); err == nil {
+		c.typ = "CreateFlowsVaultConnectionSalesforceOauthCode"
+		c.CreateFlowsVaultConnectionSalesforceOauthCode = valueCreateFlowsVaultConnectionSalesforceOauthCode
+		return nil
+	}
+	valueCreateFlowsVaultConnectionSalesforceUninitialized := new(CreateFlowsVaultConnectionSalesforceUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSalesforceUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionSalesforceUninitialized"
+		c.CreateFlowsVaultConnectionSalesforceUninitialized = valueCreateFlowsVaultConnectionSalesforceUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionSalesforce) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionSalesforceOauthCode" || c.CreateFlowsVaultConnectionSalesforceOauthCode != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionSalesforceOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSalesforceUninitialized" || c.CreateFlowsVaultConnectionSalesforceUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionSalesforceUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionSalesforceVisitor interface {
+	VisitCreateFlowsVaultConnectionSalesforceOauthCode(*CreateFlowsVaultConnectionSalesforceOauthCode) error
+	VisitCreateFlowsVaultConnectionSalesforceUninitialized(*CreateFlowsVaultConnectionSalesforceUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionSalesforce) Accept(visitor CreateFlowsVaultConnectionSalesforceVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionSalesforceOauthCode" || c.CreateFlowsVaultConnectionSalesforceOauthCode != nil {
+		return visitor.VisitCreateFlowsVaultConnectionSalesforceOauthCode(c.CreateFlowsVaultConnectionSalesforceOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSalesforceUninitialized" || c.CreateFlowsVaultConnectionSalesforceUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionSalesforceUninitialized(c.CreateFlowsVaultConnectionSalesforceUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionSalesforceOauthCode struct {
+	// Flows Vault Connection name.
+	Name  string                                  `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDSalesforceEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupOauthCode      `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionSalesforceOauthCode) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionSalesforceOauthCode) GetSetup() *FlowsVaultConnectioSetupOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionSalesforceOauthCode) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionSalesforceOauthCode) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionSalesforceOauthCode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionSalesforceOauthCode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionSalesforceOauthCode) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionSalesforceUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                                  `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDSalesforceEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionSalesforceUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionSalesforceUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionSalesforceUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionSalesforceUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionSalesforceUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionSalesforceUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionSendgrid struct {
+	CreateFlowsVaultConnectionSendgridAPIKey        *CreateFlowsVaultConnectionSendgridAPIKey
+	CreateFlowsVaultConnectionSendgridUninitialized *CreateFlowsVaultConnectionSendgridUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionSendgrid) GetCreateFlowsVaultConnectionSendgridAPIKey() *CreateFlowsVaultConnectionSendgridAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionSendgridAPIKey
+}
+
+func (c *CreateFlowsVaultConnectionSendgrid) GetCreateFlowsVaultConnectionSendgridUninitialized() *CreateFlowsVaultConnectionSendgridUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionSendgridUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionSendgrid) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionSendgridAPIKey := new(CreateFlowsVaultConnectionSendgridAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSendgridAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionSendgridAPIKey"
+		c.CreateFlowsVaultConnectionSendgridAPIKey = valueCreateFlowsVaultConnectionSendgridAPIKey
+		return nil
+	}
+	valueCreateFlowsVaultConnectionSendgridUninitialized := new(CreateFlowsVaultConnectionSendgridUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSendgridUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionSendgridUninitialized"
+		c.CreateFlowsVaultConnectionSendgridUninitialized = valueCreateFlowsVaultConnectionSendgridUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionSendgrid) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionSendgridAPIKey" || c.CreateFlowsVaultConnectionSendgridAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionSendgridAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSendgridUninitialized" || c.CreateFlowsVaultConnectionSendgridUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionSendgridUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionSendgridVisitor interface {
+	VisitCreateFlowsVaultConnectionSendgridAPIKey(*CreateFlowsVaultConnectionSendgridAPIKey) error
+	VisitCreateFlowsVaultConnectionSendgridUninitialized(*CreateFlowsVaultConnectionSendgridUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionSendgrid) Accept(visitor CreateFlowsVaultConnectionSendgridVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionSendgridAPIKey" || c.CreateFlowsVaultConnectionSendgridAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionSendgridAPIKey(c.CreateFlowsVaultConnectionSendgridAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSendgridUninitialized" || c.CreateFlowsVaultConnectionSendgridUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionSendgridUninitialized(c.CreateFlowsVaultConnectionSendgridUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionSendgridAPIKey struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDSendgridEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupAPIKey       `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) GetSetup() *FlowsVaultConnectioSetupAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionSendgridAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionSendgridAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionSendgridUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDSendgridEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionSendgridUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionSendgridUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionSendgridUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionSendgridUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionSendgridUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionSendgridUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionSlack struct {
+	CreateFlowsVaultConnectionSlackWebhook       *CreateFlowsVaultConnectionSlackWebhook
+	CreateFlowsVaultConnectionSlackOauthCode     *CreateFlowsVaultConnectionSlackOauthCode
+	CreateFlowsVaultConnectionSlackUninitialized *CreateFlowsVaultConnectionSlackUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionSlack) GetCreateFlowsVaultConnectionSlackWebhook() *CreateFlowsVaultConnectionSlackWebhook {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionSlackWebhook
+}
+
+func (c *CreateFlowsVaultConnectionSlack) GetCreateFlowsVaultConnectionSlackOauthCode() *CreateFlowsVaultConnectionSlackOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionSlackOauthCode
+}
+
+func (c *CreateFlowsVaultConnectionSlack) GetCreateFlowsVaultConnectionSlackUninitialized() *CreateFlowsVaultConnectionSlackUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionSlackUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionSlack) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionSlackWebhook := new(CreateFlowsVaultConnectionSlackWebhook)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSlackWebhook); err == nil {
+		c.typ = "CreateFlowsVaultConnectionSlackWebhook"
+		c.CreateFlowsVaultConnectionSlackWebhook = valueCreateFlowsVaultConnectionSlackWebhook
+		return nil
+	}
+	valueCreateFlowsVaultConnectionSlackOauthCode := new(CreateFlowsVaultConnectionSlackOauthCode)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSlackOauthCode); err == nil {
+		c.typ = "CreateFlowsVaultConnectionSlackOauthCode"
+		c.CreateFlowsVaultConnectionSlackOauthCode = valueCreateFlowsVaultConnectionSlackOauthCode
+		return nil
+	}
+	valueCreateFlowsVaultConnectionSlackUninitialized := new(CreateFlowsVaultConnectionSlackUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSlackUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionSlackUninitialized"
+		c.CreateFlowsVaultConnectionSlackUninitialized = valueCreateFlowsVaultConnectionSlackUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionSlack) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionSlackWebhook" || c.CreateFlowsVaultConnectionSlackWebhook != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionSlackWebhook)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSlackOauthCode" || c.CreateFlowsVaultConnectionSlackOauthCode != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionSlackOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSlackUninitialized" || c.CreateFlowsVaultConnectionSlackUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionSlackUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionSlackVisitor interface {
+	VisitCreateFlowsVaultConnectionSlackWebhook(*CreateFlowsVaultConnectionSlackWebhook) error
+	VisitCreateFlowsVaultConnectionSlackOauthCode(*CreateFlowsVaultConnectionSlackOauthCode) error
+	VisitCreateFlowsVaultConnectionSlackUninitialized(*CreateFlowsVaultConnectionSlackUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionSlack) Accept(visitor CreateFlowsVaultConnectionSlackVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionSlackWebhook" || c.CreateFlowsVaultConnectionSlackWebhook != nil {
+		return visitor.VisitCreateFlowsVaultConnectionSlackWebhook(c.CreateFlowsVaultConnectionSlackWebhook)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSlackOauthCode" || c.CreateFlowsVaultConnectionSlackOauthCode != nil {
+		return visitor.VisitCreateFlowsVaultConnectionSlackOauthCode(c.CreateFlowsVaultConnectionSlackOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionSlackUninitialized" || c.CreateFlowsVaultConnectionSlackUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionSlackUninitialized(c.CreateFlowsVaultConnectionSlackUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionSlackOauthCode struct {
+	// Flows Vault Connection name.
+	Name  string                             `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDSlackEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupOauthCode `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionSlackOauthCode) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionSlackOauthCode) GetSetup() *FlowsVaultConnectioSetupOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionSlackOauthCode) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionSlackOauthCode) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionSlackOauthCode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionSlackOauthCode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionSlackOauthCode) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionSlackUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                             `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDSlackEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionSlackUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionSlackUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionSlackUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionSlackUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionSlackUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionSlackUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionSlackWebhook struct {
+	// Flows Vault Connection name.
+	Name  string                             `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDSlackEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupWebhook   `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionSlackWebhook) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionSlackWebhook) GetSetup() *FlowsVaultConnectioSetupWebhook {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionSlackWebhook) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionSlackWebhook) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionSlackWebhook
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionSlackWebhook(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionSlackWebhook) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionStripe struct {
+	CreateFlowsVaultConnectionStripeKeyPair       *CreateFlowsVaultConnectionStripeKeyPair
+	CreateFlowsVaultConnectionStripeOauthCode     *CreateFlowsVaultConnectionStripeOauthCode
+	CreateFlowsVaultConnectionStripeUninitialized *CreateFlowsVaultConnectionStripeUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionStripe) GetCreateFlowsVaultConnectionStripeKeyPair() *CreateFlowsVaultConnectionStripeKeyPair {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionStripeKeyPair
+}
+
+func (c *CreateFlowsVaultConnectionStripe) GetCreateFlowsVaultConnectionStripeOauthCode() *CreateFlowsVaultConnectionStripeOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionStripeOauthCode
+}
+
+func (c *CreateFlowsVaultConnectionStripe) GetCreateFlowsVaultConnectionStripeUninitialized() *CreateFlowsVaultConnectionStripeUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionStripeUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionStripe) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionStripeKeyPair := new(CreateFlowsVaultConnectionStripeKeyPair)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionStripeKeyPair); err == nil {
+		c.typ = "CreateFlowsVaultConnectionStripeKeyPair"
+		c.CreateFlowsVaultConnectionStripeKeyPair = valueCreateFlowsVaultConnectionStripeKeyPair
+		return nil
+	}
+	valueCreateFlowsVaultConnectionStripeOauthCode := new(CreateFlowsVaultConnectionStripeOauthCode)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionStripeOauthCode); err == nil {
+		c.typ = "CreateFlowsVaultConnectionStripeOauthCode"
+		c.CreateFlowsVaultConnectionStripeOauthCode = valueCreateFlowsVaultConnectionStripeOauthCode
+		return nil
+	}
+	valueCreateFlowsVaultConnectionStripeUninitialized := new(CreateFlowsVaultConnectionStripeUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionStripeUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionStripeUninitialized"
+		c.CreateFlowsVaultConnectionStripeUninitialized = valueCreateFlowsVaultConnectionStripeUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionStripe) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionStripeKeyPair" || c.CreateFlowsVaultConnectionStripeKeyPair != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionStripeKeyPair)
+	}
+	if c.typ == "CreateFlowsVaultConnectionStripeOauthCode" || c.CreateFlowsVaultConnectionStripeOauthCode != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionStripeOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionStripeUninitialized" || c.CreateFlowsVaultConnectionStripeUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionStripeUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionStripeVisitor interface {
+	VisitCreateFlowsVaultConnectionStripeKeyPair(*CreateFlowsVaultConnectionStripeKeyPair) error
+	VisitCreateFlowsVaultConnectionStripeOauthCode(*CreateFlowsVaultConnectionStripeOauthCode) error
+	VisitCreateFlowsVaultConnectionStripeUninitialized(*CreateFlowsVaultConnectionStripeUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionStripe) Accept(visitor CreateFlowsVaultConnectionStripeVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionStripeKeyPair" || c.CreateFlowsVaultConnectionStripeKeyPair != nil {
+		return visitor.VisitCreateFlowsVaultConnectionStripeKeyPair(c.CreateFlowsVaultConnectionStripeKeyPair)
+	}
+	if c.typ == "CreateFlowsVaultConnectionStripeOauthCode" || c.CreateFlowsVaultConnectionStripeOauthCode != nil {
+		return visitor.VisitCreateFlowsVaultConnectionStripeOauthCode(c.CreateFlowsVaultConnectionStripeOauthCode)
+	}
+	if c.typ == "CreateFlowsVaultConnectionStripeUninitialized" || c.CreateFlowsVaultConnectionStripeUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionStripeUninitialized(c.CreateFlowsVaultConnectionStripeUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionStripeKeyPair struct {
+	// Flows Vault Connection name.
+	Name  string                                 `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDStripeEnum    `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupStripeKeyPair `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionStripeKeyPair) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionStripeKeyPair) GetSetup() *FlowsVaultConnectioSetupStripeKeyPair {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionStripeKeyPair) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionStripeKeyPair) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionStripeKeyPair
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionStripeKeyPair(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionStripeKeyPair) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionStripeOauthCode struct {
+	// Flows Vault Connection name.
+	Name  string                              `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDStripeEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupOauthCode  `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionStripeOauthCode) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionStripeOauthCode) GetSetup() *FlowsVaultConnectioSetupOauthCode {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionStripeOauthCode) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionStripeOauthCode) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionStripeOauthCode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionStripeOauthCode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionStripeOauthCode) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionStripeUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                              `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDStripeEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionStripeUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionStripeUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionStripeUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionStripeUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionStripeUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionStripeUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionTelegram struct {
+	CreateFlowsVaultConnectionTelegramToken         *CreateFlowsVaultConnectionTelegramToken
+	CreateFlowsVaultConnectionTelegramUninitialized *CreateFlowsVaultConnectionTelegramUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionTelegram) GetCreateFlowsVaultConnectionTelegramToken() *CreateFlowsVaultConnectionTelegramToken {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionTelegramToken
+}
+
+func (c *CreateFlowsVaultConnectionTelegram) GetCreateFlowsVaultConnectionTelegramUninitialized() *CreateFlowsVaultConnectionTelegramUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionTelegramUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionTelegram) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionTelegramToken := new(CreateFlowsVaultConnectionTelegramToken)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTelegramToken); err == nil {
+		c.typ = "CreateFlowsVaultConnectionTelegramToken"
+		c.CreateFlowsVaultConnectionTelegramToken = valueCreateFlowsVaultConnectionTelegramToken
+		return nil
+	}
+	valueCreateFlowsVaultConnectionTelegramUninitialized := new(CreateFlowsVaultConnectionTelegramUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTelegramUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionTelegramUninitialized"
+		c.CreateFlowsVaultConnectionTelegramUninitialized = valueCreateFlowsVaultConnectionTelegramUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionTelegram) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionTelegramToken" || c.CreateFlowsVaultConnectionTelegramToken != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionTelegramToken)
+	}
+	if c.typ == "CreateFlowsVaultConnectionTelegramUninitialized" || c.CreateFlowsVaultConnectionTelegramUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionTelegramUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionTelegramVisitor interface {
+	VisitCreateFlowsVaultConnectionTelegramToken(*CreateFlowsVaultConnectionTelegramToken) error
+	VisitCreateFlowsVaultConnectionTelegramUninitialized(*CreateFlowsVaultConnectionTelegramUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionTelegram) Accept(visitor CreateFlowsVaultConnectionTelegramVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionTelegramToken" || c.CreateFlowsVaultConnectionTelegramToken != nil {
+		return visitor.VisitCreateFlowsVaultConnectionTelegramToken(c.CreateFlowsVaultConnectionTelegramToken)
+	}
+	if c.typ == "CreateFlowsVaultConnectionTelegramUninitialized" || c.CreateFlowsVaultConnectionTelegramUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionTelegramUninitialized(c.CreateFlowsVaultConnectionTelegramUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionTelegramToken struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDTelegramEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupToken        `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionTelegramToken) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionTelegramToken) GetSetup() *FlowsVaultConnectioSetupToken {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionTelegramToken) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionTelegramToken) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionTelegramToken
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionTelegramToken(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionTelegramToken) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionTelegramUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDTelegramEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionTelegramUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionTelegramUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionTelegramUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionTelegramUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionTelegramUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionTelegramUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionTwilio struct {
+	CreateFlowsVaultConnectionTwilioAPIKey        *CreateFlowsVaultConnectionTwilioAPIKey
+	CreateFlowsVaultConnectionTwilioUninitialized *CreateFlowsVaultConnectionTwilioUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionTwilio) GetCreateFlowsVaultConnectionTwilioAPIKey() *CreateFlowsVaultConnectionTwilioAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionTwilioAPIKey
+}
+
+func (c *CreateFlowsVaultConnectionTwilio) GetCreateFlowsVaultConnectionTwilioUninitialized() *CreateFlowsVaultConnectionTwilioUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionTwilioUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionTwilio) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionTwilioAPIKey := new(CreateFlowsVaultConnectionTwilioAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTwilioAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionTwilioAPIKey"
+		c.CreateFlowsVaultConnectionTwilioAPIKey = valueCreateFlowsVaultConnectionTwilioAPIKey
+		return nil
+	}
+	valueCreateFlowsVaultConnectionTwilioUninitialized := new(CreateFlowsVaultConnectionTwilioUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTwilioUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionTwilioUninitialized"
+		c.CreateFlowsVaultConnectionTwilioUninitialized = valueCreateFlowsVaultConnectionTwilioUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionTwilio) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionTwilioAPIKey" || c.CreateFlowsVaultConnectionTwilioAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionTwilioAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionTwilioUninitialized" || c.CreateFlowsVaultConnectionTwilioUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionTwilioUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionTwilioVisitor interface {
+	VisitCreateFlowsVaultConnectionTwilioAPIKey(*CreateFlowsVaultConnectionTwilioAPIKey) error
+	VisitCreateFlowsVaultConnectionTwilioUninitialized(*CreateFlowsVaultConnectionTwilioUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionTwilio) Accept(visitor CreateFlowsVaultConnectionTwilioVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionTwilioAPIKey" || c.CreateFlowsVaultConnectionTwilioAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionTwilioAPIKey(c.CreateFlowsVaultConnectionTwilioAPIKey)
+	}
+	if c.typ == "CreateFlowsVaultConnectionTwilioUninitialized" || c.CreateFlowsVaultConnectionTwilioUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionTwilioUninitialized(c.CreateFlowsVaultConnectionTwilioUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionTwilioAPIKey struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDTwilioEnum   `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupTwilioAPIKey `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) GetSetup() *FlowsVaultConnectioSetupTwilioAPIKey {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionTwilioAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionTwilioAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionTwilioUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                              `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDTwilioEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionTwilioUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionTwilioUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionTwilioUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionTwilioUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionTwilioUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionTwilioUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionWhatsapp struct {
+	CreateFlowsVaultConnectionWhatsappToken         *CreateFlowsVaultConnectionWhatsappToken
+	CreateFlowsVaultConnectionWhatsappUninitialized *CreateFlowsVaultConnectionWhatsappUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionWhatsapp) GetCreateFlowsVaultConnectionWhatsappToken() *CreateFlowsVaultConnectionWhatsappToken {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionWhatsappToken
+}
+
+func (c *CreateFlowsVaultConnectionWhatsapp) GetCreateFlowsVaultConnectionWhatsappUninitialized() *CreateFlowsVaultConnectionWhatsappUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionWhatsappUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionWhatsapp) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionWhatsappToken := new(CreateFlowsVaultConnectionWhatsappToken)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionWhatsappToken); err == nil {
+		c.typ = "CreateFlowsVaultConnectionWhatsappToken"
+		c.CreateFlowsVaultConnectionWhatsappToken = valueCreateFlowsVaultConnectionWhatsappToken
+		return nil
+	}
+	valueCreateFlowsVaultConnectionWhatsappUninitialized := new(CreateFlowsVaultConnectionWhatsappUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionWhatsappUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionWhatsappUninitialized"
+		c.CreateFlowsVaultConnectionWhatsappUninitialized = valueCreateFlowsVaultConnectionWhatsappUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionWhatsapp) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionWhatsappToken" || c.CreateFlowsVaultConnectionWhatsappToken != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionWhatsappToken)
+	}
+	if c.typ == "CreateFlowsVaultConnectionWhatsappUninitialized" || c.CreateFlowsVaultConnectionWhatsappUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionWhatsappUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionWhatsappVisitor interface {
+	VisitCreateFlowsVaultConnectionWhatsappToken(*CreateFlowsVaultConnectionWhatsappToken) error
+	VisitCreateFlowsVaultConnectionWhatsappUninitialized(*CreateFlowsVaultConnectionWhatsappUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionWhatsapp) Accept(visitor CreateFlowsVaultConnectionWhatsappVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionWhatsappToken" || c.CreateFlowsVaultConnectionWhatsappToken != nil {
+		return visitor.VisitCreateFlowsVaultConnectionWhatsappToken(c.CreateFlowsVaultConnectionWhatsappToken)
+	}
+	if c.typ == "CreateFlowsVaultConnectionWhatsappUninitialized" || c.CreateFlowsVaultConnectionWhatsappUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionWhatsappUninitialized(c.CreateFlowsVaultConnectionWhatsappUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionWhatsappToken struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDWhatsappEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupToken        `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionWhatsappToken) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionWhatsappToken) GetSetup() *FlowsVaultConnectioSetupToken {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionWhatsappToken) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionWhatsappToken) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionWhatsappToken
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionWhatsappToken(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionWhatsappToken) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionWhatsappUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                                `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDWhatsappEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionWhatsappUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionWhatsappUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionWhatsappUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionWhatsappUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionWhatsappUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionWhatsappUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionZapier struct {
+	CreateFlowsVaultConnectionZapierWebhook       *CreateFlowsVaultConnectionZapierWebhook
+	CreateFlowsVaultConnectionZapierUninitialized *CreateFlowsVaultConnectionZapierUninitialized
+
+	typ string
+}
+
+func (c *CreateFlowsVaultConnectionZapier) GetCreateFlowsVaultConnectionZapierWebhook() *CreateFlowsVaultConnectionZapierWebhook {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionZapierWebhook
+}
+
+func (c *CreateFlowsVaultConnectionZapier) GetCreateFlowsVaultConnectionZapierUninitialized() *CreateFlowsVaultConnectionZapierUninitialized {
+	if c == nil {
+		return nil
+	}
+	return c.CreateFlowsVaultConnectionZapierUninitialized
+}
+
+func (c *CreateFlowsVaultConnectionZapier) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionZapierWebhook := new(CreateFlowsVaultConnectionZapierWebhook)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionZapierWebhook); err == nil {
+		c.typ = "CreateFlowsVaultConnectionZapierWebhook"
+		c.CreateFlowsVaultConnectionZapierWebhook = valueCreateFlowsVaultConnectionZapierWebhook
+		return nil
+	}
+	valueCreateFlowsVaultConnectionZapierUninitialized := new(CreateFlowsVaultConnectionZapierUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionZapierUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionZapierUninitialized"
+		c.CreateFlowsVaultConnectionZapierUninitialized = valueCreateFlowsVaultConnectionZapierUninitialized
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
+}
+
+func (c CreateFlowsVaultConnectionZapier) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionZapierWebhook" || c.CreateFlowsVaultConnectionZapierWebhook != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionZapierWebhook)
+	}
+	if c.typ == "CreateFlowsVaultConnectionZapierUninitialized" || c.CreateFlowsVaultConnectionZapierUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionZapierUninitialized)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionZapierVisitor interface {
+	VisitCreateFlowsVaultConnectionZapierWebhook(*CreateFlowsVaultConnectionZapierWebhook) error
+	VisitCreateFlowsVaultConnectionZapierUninitialized(*CreateFlowsVaultConnectionZapierUninitialized) error
+}
+
+func (c *CreateFlowsVaultConnectionZapier) Accept(visitor CreateFlowsVaultConnectionZapierVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionZapierWebhook" || c.CreateFlowsVaultConnectionZapierWebhook != nil {
+		return visitor.VisitCreateFlowsVaultConnectionZapierWebhook(c.CreateFlowsVaultConnectionZapierWebhook)
+	}
+	if c.typ == "CreateFlowsVaultConnectionZapierUninitialized" || c.CreateFlowsVaultConnectionZapierUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionZapierUninitialized(c.CreateFlowsVaultConnectionZapierUninitialized)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+type CreateFlowsVaultConnectionZapierUninitialized struct {
+	// Flows Vault Connection name.
+	Name  string                              `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDZapierEnum `json:"app_id" url:"app_id"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionZapierUninitialized) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionZapierUninitialized) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionZapierUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionZapierUninitialized
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionZapierUninitialized(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionZapierUninitialized) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateFlowsVaultConnectionZapierWebhook struct {
+	// Flows Vault Connection name.
+	Name  string                              `json:"name" url:"name"`
+	AppID FlowsVaultConnectionAppIDZapierEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupWebhook    `json:"setup" url:"setup"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFlowsVaultConnectionZapierWebhook) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFlowsVaultConnectionZapierWebhook) GetSetup() *FlowsVaultConnectioSetupWebhook {
+	if c == nil {
+		return nil
+	}
+	return c.Setup
+}
+
+func (c *CreateFlowsVaultConnectionZapierWebhook) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateFlowsVaultConnectionZapierWebhook) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionZapierWebhook
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateFlowsVaultConnectionZapierWebhook(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFlowsVaultConnectionZapierWebhook) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 type CreateGuardianEnrollmentTicketResponseContent struct {
 	// The ticket_id used to identify the enrollment
 	TicketID *string `json:"ticket_id,omitempty" url:"ticket_id,omitempty"`
@@ -5990,6 +10779,62 @@ func (c *CreatePhoneTemplateTestNotificationResponseContent) MarshalJSON() ([]by
 }
 
 func (c *CreatePhoneTemplateTestNotificationResponseContent) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateSCIMConfigurationRequestContent struct {
+	// User ID attribute for generating unique user ids
+	UserIDAttribute *string `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
+	// The mapping between auth0 and SCIM
+	Mapping []*SCIMMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateSCIMConfigurationRequestContent) GetUserIDAttribute() *string {
+	if c == nil {
+		return nil
+	}
+	return c.UserIDAttribute
+}
+
+func (c *CreateSCIMConfigurationRequestContent) GetMapping() []*SCIMMappingItem {
+	if c == nil {
+		return nil
+	}
+	return c.Mapping
+}
+
+func (c *CreateSCIMConfigurationRequestContent) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateSCIMConfigurationRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateSCIMConfigurationRequestContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateSCIMConfigurationRequestContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateSCIMConfigurationRequestContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -7323,9 +12168,9 @@ type DeployActionVersionResponseContent struct {
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this specific version depends on.
 	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
-	// Indicates if this speciic version is the currently one deployed.
+	// Indicates if this specific version is the currently one deployed.
 	Deployed *bool `json:"deployed,omitempty" url:"deployed,omitempty"`
-	// The Node runtime. For example: `node12`
+	// The Node runtime. For example: `node22`
 	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
 	// The list of secrets that are included in an action or a version of an action.
 	Secrets []*ActionSecretResponse       `json:"secrets,omitempty" url:"secrets,omitempty"`
@@ -9118,6 +13963,996 @@ func (f *FlowExecutionSummary) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+type FlowsVaultConnectioSetupAPIKey struct {
+	Type   FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
+	APIKey string                                 `json:"api_key" url:"api_key"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupAPIKey) GetAPIKey() string {
+	if f == nil {
+		return ""
+	}
+	return f.APIKey
+}
+
+func (f *FlowsVaultConnectioSetupAPIKey) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FlowsVaultConnectioSetupAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupAPIKey) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FlowsVaultConnectioSetupAPIKeyWithBaseURL struct {
+	Type    FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
+	APIKey  string                                 `json:"api_key" url:"api_key"`
+	BaseURL *string                                `json:"base_url,omitempty" url:"base_url,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetAPIKey() string {
+	if f == nil {
+		return ""
+	}
+	return f.APIKey
+}
+
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetBaseURL() *string {
+	if f == nil {
+		return nil
+	}
+	return f.BaseURL
+}
+
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupAPIKeyWithBaseURL
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupAPIKeyWithBaseURL(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FlowsVaultConnectioSetupBigqueryOauthJwt struct {
+	Type        *FlowsVaultConnectioSetupTypeOauthJwtEnum `json:"type,omitempty" url:"type,omitempty"`
+	ProjectID   *string                                   `json:"project_id,omitempty" url:"project_id,omitempty"`
+	PrivateKey  *string                                   `json:"private_key,omitempty" url:"private_key,omitempty"`
+	ClientEmail *string                                   `json:"client_email,omitempty" url:"client_email,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) GetProjectID() *string {
+	if f == nil {
+		return nil
+	}
+	return f.ProjectID
+}
+
+func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) GetPrivateKey() *string {
+	if f == nil {
+		return nil
+	}
+	return f.PrivateKey
+}
+
+func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) GetClientEmail() *string {
+	if f == nil {
+		return nil
+	}
+	return f.ClientEmail
+}
+
+func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupBigqueryOauthJwt
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupBigqueryOauthJwt(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FlowsVaultConnectioSetupHTTPBearer struct {
+	Type  FlowsVaultConnectioSetupTypeBearerEnum `json:"type" url:"type"`
+	Token string                                 `json:"token" url:"token"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupHTTPBearer) GetToken() string {
+	if f == nil {
+		return ""
+	}
+	return f.Token
+}
+
+func (f *FlowsVaultConnectioSetupHTTPBearer) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FlowsVaultConnectioSetupHTTPBearer) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupHTTPBearer
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupHTTPBearer(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupHTTPBearer) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FlowsVaultConnectioSetupJwt struct {
+	Type      FlowsVaultConnectioSetupTypeJwtEnum      `json:"type" url:"type"`
+	Algorithm FlowsVaultConnectioSetupJwtAlgorithmEnum `json:"algorithm" url:"algorithm"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupJwt) GetAlgorithm() FlowsVaultConnectioSetupJwtAlgorithmEnum {
+	if f == nil {
+		return ""
+	}
+	return f.Algorithm
+}
+
+func (f *FlowsVaultConnectioSetupJwt) GetExtraProperties() map[string]interface{} {
+	return f.ExtraProperties
+}
+
+func (f *FlowsVaultConnectioSetupJwt) UnmarshalJSON(data []byte) error {
+	type embed FlowsVaultConnectioSetupJwt
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupJwt(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.ExtraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupJwt) MarshalJSON() ([]byte, error) {
+	type embed FlowsVaultConnectioSetupJwt
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	return internal.MarshalJSONWithExtraProperties(marshaler, f.ExtraProperties)
+}
+
+func (f *FlowsVaultConnectioSetupJwt) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FlowsVaultConnectioSetupJwtAlgorithmEnum string
+
+const (
+	FlowsVaultConnectioSetupJwtAlgorithmEnumHs256 FlowsVaultConnectioSetupJwtAlgorithmEnum = "HS256"
+	FlowsVaultConnectioSetupJwtAlgorithmEnumHs384 FlowsVaultConnectioSetupJwtAlgorithmEnum = "HS384"
+	FlowsVaultConnectioSetupJwtAlgorithmEnumHs512 FlowsVaultConnectioSetupJwtAlgorithmEnum = "HS512"
+	FlowsVaultConnectioSetupJwtAlgorithmEnumRs256 FlowsVaultConnectioSetupJwtAlgorithmEnum = "RS256"
+	FlowsVaultConnectioSetupJwtAlgorithmEnumRs384 FlowsVaultConnectioSetupJwtAlgorithmEnum = "RS384"
+	FlowsVaultConnectioSetupJwtAlgorithmEnumRs512 FlowsVaultConnectioSetupJwtAlgorithmEnum = "RS512"
+	FlowsVaultConnectioSetupJwtAlgorithmEnumEs256 FlowsVaultConnectioSetupJwtAlgorithmEnum = "ES256"
+	FlowsVaultConnectioSetupJwtAlgorithmEnumEs384 FlowsVaultConnectioSetupJwtAlgorithmEnum = "ES384"
+	FlowsVaultConnectioSetupJwtAlgorithmEnumEs512 FlowsVaultConnectioSetupJwtAlgorithmEnum = "ES512"
+	FlowsVaultConnectioSetupJwtAlgorithmEnumPs256 FlowsVaultConnectioSetupJwtAlgorithmEnum = "PS256"
+	FlowsVaultConnectioSetupJwtAlgorithmEnumPs384 FlowsVaultConnectioSetupJwtAlgorithmEnum = "PS384"
+	FlowsVaultConnectioSetupJwtAlgorithmEnumPs512 FlowsVaultConnectioSetupJwtAlgorithmEnum = "PS512"
+)
+
+func NewFlowsVaultConnectioSetupJwtAlgorithmEnumFromString(s string) (FlowsVaultConnectioSetupJwtAlgorithmEnum, error) {
+	switch s {
+	case "HS256":
+		return FlowsVaultConnectioSetupJwtAlgorithmEnumHs256, nil
+	case "HS384":
+		return FlowsVaultConnectioSetupJwtAlgorithmEnumHs384, nil
+	case "HS512":
+		return FlowsVaultConnectioSetupJwtAlgorithmEnumHs512, nil
+	case "RS256":
+		return FlowsVaultConnectioSetupJwtAlgorithmEnumRs256, nil
+	case "RS384":
+		return FlowsVaultConnectioSetupJwtAlgorithmEnumRs384, nil
+	case "RS512":
+		return FlowsVaultConnectioSetupJwtAlgorithmEnumRs512, nil
+	case "ES256":
+		return FlowsVaultConnectioSetupJwtAlgorithmEnumEs256, nil
+	case "ES384":
+		return FlowsVaultConnectioSetupJwtAlgorithmEnumEs384, nil
+	case "ES512":
+		return FlowsVaultConnectioSetupJwtAlgorithmEnumEs512, nil
+	case "PS256":
+		return FlowsVaultConnectioSetupJwtAlgorithmEnumPs256, nil
+	case "PS384":
+		return FlowsVaultConnectioSetupJwtAlgorithmEnumPs384, nil
+	case "PS512":
+		return FlowsVaultConnectioSetupJwtAlgorithmEnumPs512, nil
+	}
+	var t FlowsVaultConnectioSetupJwtAlgorithmEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FlowsVaultConnectioSetupJwtAlgorithmEnum) Ptr() *FlowsVaultConnectioSetupJwtAlgorithmEnum {
+	return &f
+}
+
+type FlowsVaultConnectioSetupMailjetAPIKey struct {
+	Type      FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
+	APIKey    string                                 `json:"api_key" url:"api_key"`
+	SecretKey string                                 `json:"secret_key" url:"secret_key"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) GetAPIKey() string {
+	if f == nil {
+		return ""
+	}
+	return f.APIKey
+}
+
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) GetSecretKey() string {
+	if f == nil {
+		return ""
+	}
+	return f.SecretKey
+}
+
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupMailjetAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupMailjetAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FlowsVaultConnectioSetupOauthApp struct {
+	Type         FlowsVaultConnectioSetupTypeOauthAppEnum `json:"type" url:"type"`
+	ClientID     string                                   `json:"client_id" url:"client_id"`
+	ClientSecret string                                   `json:"client_secret" url:"client_secret"`
+	Domain       string                                   `json:"domain" url:"domain"`
+	Audience     *string                                  `json:"audience,omitempty" url:"audience,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupOauthApp) GetClientID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ClientID
+}
+
+func (f *FlowsVaultConnectioSetupOauthApp) GetClientSecret() string {
+	if f == nil {
+		return ""
+	}
+	return f.ClientSecret
+}
+
+func (f *FlowsVaultConnectioSetupOauthApp) GetDomain() string {
+	if f == nil {
+		return ""
+	}
+	return f.Domain
+}
+
+func (f *FlowsVaultConnectioSetupOauthApp) GetAudience() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Audience
+}
+
+func (f *FlowsVaultConnectioSetupOauthApp) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FlowsVaultConnectioSetupOauthApp) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupOauthApp
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupOauthApp(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupOauthApp) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FlowsVaultConnectioSetupOauthCode struct {
+	Type *FlowsVaultConnectioSetupTypeOauthCodeEnum `json:"type,omitempty" url:"type,omitempty"`
+	Code *string                                    `json:"code,omitempty" url:"code,omitempty"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupOauthCode) GetCode() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Code
+}
+
+func (f *FlowsVaultConnectioSetupOauthCode) GetExtraProperties() map[string]interface{} {
+	return f.ExtraProperties
+}
+
+func (f *FlowsVaultConnectioSetupOauthCode) UnmarshalJSON(data []byte) error {
+	type embed FlowsVaultConnectioSetupOauthCode
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupOauthCode(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.ExtraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupOauthCode) MarshalJSON() ([]byte, error) {
+	type embed FlowsVaultConnectioSetupOauthCode
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	return internal.MarshalJSONWithExtraProperties(marshaler, f.ExtraProperties)
+}
+
+func (f *FlowsVaultConnectioSetupOauthCode) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FlowsVaultConnectioSetupSecretAPIKey struct {
+	Type      FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
+	SecretKey string                                 `json:"secret_key" url:"secret_key"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupSecretAPIKey) GetSecretKey() string {
+	if f == nil {
+		return ""
+	}
+	return f.SecretKey
+}
+
+func (f *FlowsVaultConnectioSetupSecretAPIKey) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FlowsVaultConnectioSetupSecretAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupSecretAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupSecretAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupSecretAPIKey) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FlowsVaultConnectioSetupStripeKeyPair struct {
+	Type       FlowsVaultConnectioSetupTypeKeyPairEnum `json:"type" url:"type"`
+	PrivateKey string                                  `json:"private_key" url:"private_key"`
+	PublicKey  string                                  `json:"public_key" url:"public_key"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupStripeKeyPair) GetPrivateKey() string {
+	if f == nil {
+		return ""
+	}
+	return f.PrivateKey
+}
+
+func (f *FlowsVaultConnectioSetupStripeKeyPair) GetPublicKey() string {
+	if f == nil {
+		return ""
+	}
+	return f.PublicKey
+}
+
+func (f *FlowsVaultConnectioSetupStripeKeyPair) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FlowsVaultConnectioSetupStripeKeyPair) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupStripeKeyPair
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupStripeKeyPair(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupStripeKeyPair) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FlowsVaultConnectioSetupToken struct {
+	Type  FlowsVaultConnectioSetupTypeTokenEnum `json:"type" url:"type"`
+	Token string                                `json:"token" url:"token"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupToken) GetToken() string {
+	if f == nil {
+		return ""
+	}
+	return f.Token
+}
+
+func (f *FlowsVaultConnectioSetupToken) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FlowsVaultConnectioSetupToken) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupToken
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupToken(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupToken) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FlowsVaultConnectioSetupTwilioAPIKey struct {
+	Type      FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
+	AccountID string                                 `json:"account_id" url:"account_id"`
+	APIKey    string                                 `json:"api_key" url:"api_key"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) GetAccountID() string {
+	if f == nil {
+		return ""
+	}
+	return f.AccountID
+}
+
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) GetAPIKey() string {
+	if f == nil {
+		return ""
+	}
+	return f.APIKey
+}
+
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupTwilioAPIKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupTwilioAPIKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FlowsVaultConnectioSetupTypeAPIKeyEnum = string
+
+type FlowsVaultConnectioSetupTypeBearerEnum = string
+
+type FlowsVaultConnectioSetupTypeJwtEnum = string
+
+type FlowsVaultConnectioSetupTypeKeyPairEnum = string
+
+type FlowsVaultConnectioSetupTypeOauthAppEnum = string
+
+type FlowsVaultConnectioSetupTypeOauthCodeEnum = string
+
+type FlowsVaultConnectioSetupTypeOauthJwtEnum = string
+
+type FlowsVaultConnectioSetupTypeTokenEnum = string
+
+type FlowsVaultConnectioSetupTypeWebhookEnum = string
+
+type FlowsVaultConnectioSetupWebhook struct {
+	Type FlowsVaultConnectioSetupTypeWebhookEnum `json:"type" url:"type"`
+	URL  string                                  `json:"url" url:"url"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlowsVaultConnectioSetupWebhook) GetURL() string {
+	if f == nil {
+		return ""
+	}
+	return f.URL
+}
+
+func (f *FlowsVaultConnectioSetupWebhook) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FlowsVaultConnectioSetupWebhook) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupWebhook
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectioSetupWebhook(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectioSetupWebhook) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDActivecampaignEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDAirtableEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDAuth0Enum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDBigqueryEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDClearbitEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDDocusignEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDGoogleSheetsEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIdHttpEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDHubspotEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDJwtEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDMailchimpEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDMailjetEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDPipedriveEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDSalesforceEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDSendgridEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDSlackEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDStripeEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDTelegramEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDTwilioEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDWhatsappEnum = string
+
+// Flows Vault Connection app identifier.
+type FlowsVaultConnectionAppIDZapierEnum = string
+
+type FlowsVaultConnectionSummary struct {
+	// Flows Vault Connection identifier.
+	ID string `json:"id" url:"id"`
+	// Flows Vault Connection app identifier.
+	AppID string `json:"app_id" url:"app_id"`
+	// Flows Vault Connection name.
+	Name string `json:"name" url:"name"`
+	// Flows Vault Connection custom account name.
+	AccountName *string `json:"account_name,omitempty" url:"account_name,omitempty"`
+	// Whether the Flows Vault Connection is configured.
+	Ready bool `json:"ready" url:"ready"`
+	// The ISO 8601 formatted date when this Flows Vault Connection was created.
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// The ISO 8601 formatted date when this Flows Vault Connection was updated.
+	UpdatedAt time.Time `json:"updated_at" url:"updated_at"`
+	// The ISO 8601 formatted date when this Flows Vault Connection was refreshed.
+	RefreshedAt *time.Time `json:"refreshed_at,omitempty" url:"refreshed_at,omitempty"`
+	Fingerprint string     `json:"fingerprint" url:"fingerprint"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FlowsVaultConnectionSummary) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowsVaultConnectionSummary) GetAppID() string {
+	if f == nil {
+		return ""
+	}
+	return f.AppID
+}
+
+func (f *FlowsVaultConnectionSummary) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *FlowsVaultConnectionSummary) GetAccountName() *string {
+	if f == nil {
+		return nil
+	}
+	return f.AccountName
+}
+
+func (f *FlowsVaultConnectionSummary) GetReady() bool {
+	if f == nil {
+		return false
+	}
+	return f.Ready
+}
+
+func (f *FlowsVaultConnectionSummary) GetCreatedAt() time.Time {
+	if f == nil {
+		return time.Time{}
+	}
+	return f.CreatedAt
+}
+
+func (f *FlowsVaultConnectionSummary) GetUpdatedAt() time.Time {
+	if f == nil {
+		return time.Time{}
+	}
+	return f.UpdatedAt
+}
+
+func (f *FlowsVaultConnectionSummary) GetRefreshedAt() *time.Time {
+	if f == nil {
+		return nil
+	}
+	return f.RefreshedAt
+}
+
+func (f *FlowsVaultConnectionSummary) GetFingerprint() string {
+	if f == nil {
+		return ""
+	}
+	return f.Fingerprint
+}
+
+func (f *FlowsVaultConnectionSummary) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FlowsVaultConnectionSummary) UnmarshalJSON(data []byte) error {
+	type embed FlowsVaultConnectionSummary
+	var unmarshaler = struct {
+		embed
+		CreatedAt   *internal.DateTime `json:"created_at"`
+		UpdatedAt   *internal.DateTime `json:"updated_at"`
+		RefreshedAt *internal.DateTime `json:"refreshed_at,omitempty"`
+	}{
+		embed: embed(*f),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*f = FlowsVaultConnectionSummary(unmarshaler.embed)
+	f.CreatedAt = unmarshaler.CreatedAt.Time()
+	f.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	f.RefreshedAt = unmarshaler.RefreshedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FlowsVaultConnectionSummary) MarshalJSON() ([]byte, error) {
+	type embed FlowsVaultConnectionSummary
+	var marshaler = struct {
+		embed
+		CreatedAt   *internal.DateTime `json:"created_at"`
+		UpdatedAt   *internal.DateTime `json:"updated_at"`
+		RefreshedAt *internal.DateTime `json:"refreshed_at,omitempty"`
+	}{
+		embed:       embed(*f),
+		CreatedAt:   internal.NewDateTime(f.CreatedAt),
+		UpdatedAt:   internal.NewDateTime(f.UpdatedAt),
+		RefreshedAt: internal.NewOptionalDateTime(f.RefreshedAt),
+	}
+	return json.Marshal(marshaler)
+}
+
+func (f *FlowsVaultConnectionSummary) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
 // The result of a specific execution of a trigger.
 type GetActionExecutionResponseContent struct {
 	// ID identifies this specific execution simulation. These IDs would resemble real executions in production.
@@ -9239,9 +15074,9 @@ type GetActionVersionResponseContent struct {
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this specific version depends on.
 	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
-	// Indicates if this speciic version is the currently one deployed.
+	// Indicates if this specific version is the currently one deployed.
 	Deployed *bool `json:"deployed,omitempty" url:"deployed,omitempty"`
-	// The Node runtime. For example: `node12`
+	// The Node runtime. For example: `node22`
 	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
 	// The list of secrets that are included in an action or a version of an action.
 	Secrets []*ActionSecretResponse       `json:"secrets,omitempty" url:"secrets,omitempty"`
@@ -10801,6 +16636,159 @@ func (g *GetFlowExecutionResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+type GetFlowsVaultConnectionResponseContent struct {
+	// Flows Vault Connection identifier.
+	ID string `json:"id" url:"id"`
+	// Flows Vault Connection app identifier.
+	AppID string `json:"app_id" url:"app_id"`
+	// Flows Vault Connection environment.
+	Environment *string `json:"environment,omitempty" url:"environment,omitempty"`
+	// Flows Vault Connection name.
+	Name string `json:"name" url:"name"`
+	// Flows Vault Connection custom account name.
+	AccountName *string `json:"account_name,omitempty" url:"account_name,omitempty"`
+	// Whether the Flows Vault Connection is configured.
+	Ready bool `json:"ready" url:"ready"`
+	// The ISO 8601 formatted date when this Flows Vault Connection was created.
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// The ISO 8601 formatted date when this Flows Vault Connection was updated.
+	UpdatedAt time.Time `json:"updated_at" url:"updated_at"`
+	// The ISO 8601 formatted date when this Flows Vault Connection was refreshed.
+	RefreshedAt *time.Time `json:"refreshed_at,omitempty" url:"refreshed_at,omitempty"`
+	Fingerprint string     `json:"fingerprint" url:"fingerprint"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) GetID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ID
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) GetAppID() string {
+	if g == nil {
+		return ""
+	}
+	return g.AppID
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) GetEnvironment() *string {
+	if g == nil {
+		return nil
+	}
+	return g.Environment
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) GetName() string {
+	if g == nil {
+		return ""
+	}
+	return g.Name
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) GetAccountName() *string {
+	if g == nil {
+		return nil
+	}
+	return g.AccountName
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) GetReady() bool {
+	if g == nil {
+		return false
+	}
+	return g.Ready
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) GetCreatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.CreatedAt
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) GetUpdatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.UpdatedAt
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) GetRefreshedAt() *time.Time {
+	if g == nil {
+		return nil
+	}
+	return g.RefreshedAt
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) GetFingerprint() string {
+	if g == nil {
+		return ""
+	}
+	return g.Fingerprint
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetFlowsVaultConnectionResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt   *internal.DateTime `json:"created_at"`
+		UpdatedAt   *internal.DateTime `json:"updated_at"`
+		RefreshedAt *internal.DateTime `json:"refreshed_at,omitempty"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetFlowsVaultConnectionResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.Time()
+	g.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	g.RefreshedAt = unmarshaler.RefreshedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetFlowsVaultConnectionResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt   *internal.DateTime `json:"created_at"`
+		UpdatedAt   *internal.DateTime `json:"updated_at"`
+		RefreshedAt *internal.DateTime `json:"refreshed_at,omitempty"`
+	}{
+		embed:       embed(*g),
+		CreatedAt:   internal.NewDateTime(g.CreatedAt),
+		UpdatedAt:   internal.NewDateTime(g.UpdatedAt),
+		RefreshedAt: internal.NewOptionalDateTime(g.RefreshedAt),
+	}
+	return json.Marshal(marshaler)
+}
+
+func (g *GetFlowsVaultConnectionResponseContent) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
 type GetGuardianEnrollmentResponseContent struct {
 	// ID for this enrollment.
 	ID     string                    `json:"id" url:"id"`
@@ -12136,6 +18124,100 @@ func (g *GetPhoneTemplateResponseContent) UnmarshalJSON(data []byte) error {
 }
 
 func (g *GetPhoneTemplateResponseContent) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+type GetRiskAssessmentsSettingsNewDeviceResponseContent struct {
+	// Length of time to remember devices for, in days.
+	RememberFor int `json:"remember_for" url:"remember_for"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetRiskAssessmentsSettingsNewDeviceResponseContent) GetRememberFor() int {
+	if g == nil {
+		return 0
+	}
+	return g.RememberFor
+}
+
+func (g *GetRiskAssessmentsSettingsNewDeviceResponseContent) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
+}
+
+func (g *GetRiskAssessmentsSettingsNewDeviceResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetRiskAssessmentsSettingsNewDeviceResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetRiskAssessmentsSettingsNewDeviceResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetRiskAssessmentsSettingsNewDeviceResponseContent) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+type GetRiskAssessmentsSettingsResponseContent struct {
+	// Whether or not risk assessment is enabled.
+	Enabled bool `json:"enabled" url:"enabled"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetRiskAssessmentsSettingsResponseContent) GetEnabled() bool {
+	if g == nil {
+		return false
+	}
+	return g.Enabled
+}
+
+func (g *GetRiskAssessmentsSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
+}
+
+func (g *GetRiskAssessmentsSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetRiskAssessmentsSettingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetRiskAssessmentsSettingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetRiskAssessmentsSettingsResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -15100,6 +21182,76 @@ func (l *ListFlowExecutionsPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+type ListFlowsVaultConnectionsOffsetPaginatedResponseContent struct {
+	Start       *float64                       `json:"start,omitempty" url:"start,omitempty"`
+	Limit       *float64                       `json:"limit,omitempty" url:"limit,omitempty"`
+	Total       *float64                       `json:"total,omitempty" url:"total,omitempty"`
+	Connections []*FlowsVaultConnectionSummary `json:"connections,omitempty" url:"connections,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListFlowsVaultConnectionsOffsetPaginatedResponseContent) GetStart() *float64 {
+	if l == nil {
+		return nil
+	}
+	return l.Start
+}
+
+func (l *ListFlowsVaultConnectionsOffsetPaginatedResponseContent) GetLimit() *float64 {
+	if l == nil {
+		return nil
+	}
+	return l.Limit
+}
+
+func (l *ListFlowsVaultConnectionsOffsetPaginatedResponseContent) GetTotal() *float64 {
+	if l == nil {
+		return nil
+	}
+	return l.Total
+}
+
+func (l *ListFlowsVaultConnectionsOffsetPaginatedResponseContent) GetConnections() []*FlowsVaultConnectionSummary {
+	if l == nil {
+		return nil
+	}
+	return l.Connections
+}
+
+func (l *ListFlowsVaultConnectionsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	return l.extraProperties
+}
+
+func (l *ListFlowsVaultConnectionsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListFlowsVaultConnectionsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListFlowsVaultConnectionsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListFlowsVaultConnectionsOffsetPaginatedResponseContent) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
 type ListGuardianPoliciesResponseContent = []MfaPolicyEnum
 
 type ListOrganizationClientGrantsOffsetPaginatedResponseContent struct {
@@ -17161,6 +23313,8 @@ const (
 	OauthScopeReadGrants OauthScope = "read:grants"
 	// Delete Grants
 	OauthScopeDeleteGrants OauthScope = "delete:grants"
+	// Read Groups
+	OauthScopeReadGroups OauthScope = "read:groups"
 	// Create Guardian Enrollment Tickets
 	OauthScopeCreateGuardianEnrollmentTickets OauthScope = "create:guardian_enrollment_tickets"
 	// Read Guardian Enrollments
@@ -17263,14 +23417,18 @@ const (
 	OauthScopeDeleteOrganizationClientGrants OauthScope = "delete:organization_client_grants"
 	// Read Organization Connections
 	OauthScopeReadOrganizationConnections OauthScope = "read:organization_connections"
-	// Create Organization Discovery Domains
-	OauthScopeCreateOrganizationDiscoveryDomains OauthScope = "create:organization_discovery_domains"
-	// Update Organization Discovery Domains
-	OauthScopeUpdateOrganizationDiscoveryDomains OauthScope = "update:organization_discovery_domains"
 	// Update Organization Connections
 	OauthScopeUpdateOrganizationConnections OauthScope = "update:organization_connections"
 	// Delete Organization Connections
 	OauthScopeDeleteOrganizationConnections OauthScope = "delete:organization_connections"
+	// Read Organization Discovery Domains
+	OauthScopeReadOrganizationDiscoveryDomains OauthScope = "read:organization_discovery_domains"
+	// Create Organization Discovery Domains
+	OauthScopeCreateOrganizationDiscoveryDomains OauthScope = "create:organization_discovery_domains"
+	// Update Organization Discovery Domains
+	OauthScopeUpdateOrganizationDiscoveryDomains OauthScope = "update:organization_discovery_domains"
+	// Delete Organization Discovery Domains
+	OauthScopeDeleteOrganizationDiscoveryDomains OauthScope = "delete:organization_discovery_domains"
 	// Read Organization Invitations
 	OauthScopeReadOrganizationInvitations OauthScope = "read:organization_invitations"
 	// Create Organization Invitations
@@ -17643,6 +23801,8 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeReadGrants, nil
 	case "delete:grants":
 		return OauthScopeDeleteGrants, nil
+	case "read:groups":
+		return OauthScopeReadGroups, nil
 	case "create:guardian_enrollment_tickets":
 		return OauthScopeCreateGuardianEnrollmentTickets, nil
 	case "read:guardian_enrollments":
@@ -17745,14 +23905,18 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeDeleteOrganizationClientGrants, nil
 	case "read:organization_connections":
 		return OauthScopeReadOrganizationConnections, nil
-	case "create:organization_discovery_domains":
-		return OauthScopeCreateOrganizationDiscoveryDomains, nil
-	case "update:organization_discovery_domains":
-		return OauthScopeUpdateOrganizationDiscoveryDomains, nil
 	case "update:organization_connections":
 		return OauthScopeUpdateOrganizationConnections, nil
 	case "delete:organization_connections":
 		return OauthScopeDeleteOrganizationConnections, nil
+	case "read:organization_discovery_domains":
+		return OauthScopeReadOrganizationDiscoveryDomains, nil
+	case "create:organization_discovery_domains":
+		return OauthScopeCreateOrganizationDiscoveryDomains, nil
+	case "update:organization_discovery_domains":
+		return OauthScopeUpdateOrganizationDiscoveryDomains, nil
+	case "delete:organization_discovery_domains":
+		return OauthScopeDeleteOrganizationDiscoveryDomains, nil
 	case "read:organization_invitations":
 		return OauthScopeReadOrganizationInvitations, nil
 	case "create:organization_invitations":
@@ -18034,35 +24198,6 @@ func (o *Organization) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// Access level for the organization (e.g., "none", "full").
-type OrganizationAccessLevelEnum string
-
-const (
-	OrganizationAccessLevelEnumNone     OrganizationAccessLevelEnum = "none"
-	OrganizationAccessLevelEnumReadonly OrganizationAccessLevelEnum = "readonly"
-	OrganizationAccessLevelEnumLimited  OrganizationAccessLevelEnum = "limited"
-	OrganizationAccessLevelEnumFull     OrganizationAccessLevelEnum = "full"
-)
-
-func NewOrganizationAccessLevelEnumFromString(s string) (OrganizationAccessLevelEnum, error) {
-	switch s {
-	case "none":
-		return OrganizationAccessLevelEnumNone, nil
-	case "readonly":
-		return OrganizationAccessLevelEnumReadonly, nil
-	case "limited":
-		return OrganizationAccessLevelEnumLimited, nil
-	case "full":
-		return OrganizationAccessLevelEnumFull, nil
-	}
-	var t OrganizationAccessLevelEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (o OrganizationAccessLevelEnum) Ptr() *OrganizationAccessLevelEnum {
-	return &o
-}
-
 // Theme defines how to style the login pages.
 type OrganizationBranding struct {
 	// URL of logo to display on login page.
@@ -18270,18 +24405,13 @@ func (o *OrganizationClientGrant) String() string {
 type OrganizationConnection struct {
 	// ID of the connection.
 	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
-	// Name of the connection in the scope of this organization.
-	OrganizationConnectionName *string `json:"organization_connection_name,omitempty" url:"organization_connection_name,omitempty"`
 	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
 	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
 	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-	IsSignupEnabled         *bool                              `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
-	Connection              *OrganizationConnectionInformation `json:"connection,omitempty" url:"connection,omitempty"`
-	OrganizationAccessLevel *OrganizationAccessLevelEnum       `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
-	// Whether the connection is enabled for the organization.
-	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
+	IsSignupEnabled *bool                              `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	Connection      *OrganizationConnectionInformation `json:"connection,omitempty" url:"connection,omitempty"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -18292,13 +24422,6 @@ func (o *OrganizationConnection) GetConnectionID() *string {
 		return nil
 	}
 	return o.ConnectionID
-}
-
-func (o *OrganizationConnection) GetOrganizationConnectionName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.OrganizationConnectionName
 }
 
 func (o *OrganizationConnection) GetAssignMembershipOnLogin() *bool {
@@ -18327,20 +24450,6 @@ func (o *OrganizationConnection) GetConnection() *OrganizationConnectionInformat
 		return nil
 	}
 	return o.Connection
-}
-
-func (o *OrganizationConnection) GetOrganizationAccessLevel() *OrganizationAccessLevelEnum {
-	if o == nil {
-		return nil
-	}
-	return o.OrganizationAccessLevel
-}
-
-func (o *OrganizationConnection) GetIsEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IsEnabled
 }
 
 func (o *OrganizationConnection) GetExtraProperties() map[string]interface{} {
@@ -18880,6 +24989,7 @@ func (o OrganizationUsageEnum) Ptr() *OrganizationUsageEnum {
 	return &o
 }
 
+// Name of the prompt.
 type PartialGroupsEnum string
 
 const (
@@ -19975,6 +26085,7 @@ func (p PreferredAuthenticationMethodEnum) Ptr() *PreferredAuthenticationMethodE
 	return &p
 }
 
+// Name of the prompt.
 type PromptGroupNameEnum string
 
 const (
@@ -20096,6 +26207,7 @@ func (p PromptGroupNameEnum) Ptr() *PromptGroupNameEnum {
 	return &p
 }
 
+// Language to update.
 type PromptLanguageEnum string
 
 const (
@@ -21532,6 +27644,7 @@ func (s *SCIMTokenItem) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// Name of the screen
 type ScreenGroupNameEnum string
 
 const (
@@ -21611,6 +27724,7 @@ const (
 	ScreenGroupNameEnumEmailOtpChallenge                         ScreenGroupNameEnum = "email-otp-challenge"
 	ScreenGroupNameEnumOrganizationSelection                     ScreenGroupNameEnum = "organization-selection"
 	ScreenGroupNameEnumOrganizationPicker                        ScreenGroupNameEnum = "organization-picker"
+	ScreenGroupNameEnumPreLoginOrganizationPicker                ScreenGroupNameEnum = "pre-login-organization-picker"
 	ScreenGroupNameEnumAcceptInvitation                          ScreenGroupNameEnum = "accept-invitation"
 	ScreenGroupNameEnumRedeemTicket                              ScreenGroupNameEnum = "redeem-ticket"
 	ScreenGroupNameEnumPasskeyEnrollment                         ScreenGroupNameEnum = "passkey-enrollment"
@@ -21775,6 +27889,8 @@ func NewScreenGroupNameEnumFromString(s string) (ScreenGroupNameEnum, error) {
 		return ScreenGroupNameEnumOrganizationSelection, nil
 	case "organization-picker":
 		return ScreenGroupNameEnumOrganizationPicker, nil
+	case "pre-login-organization-picker":
+		return ScreenGroupNameEnumPreLoginOrganizationPicker, nil
 	case "accept-invitation":
 		return ScreenGroupNameEnumAcceptInvitation, nil
 	case "redeem-ticket":
@@ -21800,8 +27916,10 @@ func (s ScreenGroupNameEnum) Ptr() *ScreenGroupNameEnum {
 	return &s
 }
 
+// The language of the custom text.
 type SelfServiceProfileCustomTextLanguageEnum = string
 
+// The page where the custom text is shown.
 type SelfServiceProfileCustomTextPageEnum = string
 
 // If provided, this will create a new connection for the SSO flow with the given configuration
@@ -26566,6 +32684,453 @@ func (u *UpdateEnabledClientConnectionsRequestContentItem) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+type UpdateFlowsVaultConnectionResponseContent struct {
+	// Flows Vault Connection identifier.
+	ID string `json:"id" url:"id"`
+	// Flows Vault Connection app identifier.
+	AppID string `json:"app_id" url:"app_id"`
+	// Flows Vault Connection environment.
+	Environment *string `json:"environment,omitempty" url:"environment,omitempty"`
+	// Flows Vault Connection name.
+	Name string `json:"name" url:"name"`
+	// Flows Vault Connection custom account name.
+	AccountName *string `json:"account_name,omitempty" url:"account_name,omitempty"`
+	// Whether the Flows Vault Connection is configured.
+	Ready bool `json:"ready" url:"ready"`
+	// The ISO 8601 formatted date when this Flows Vault Connection was created.
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// The ISO 8601 formatted date when this Flows Vault Connection was updated.
+	UpdatedAt time.Time `json:"updated_at" url:"updated_at"`
+	// The ISO 8601 formatted date when this Flows Vault Connection was refreshed.
+	RefreshedAt *time.Time `json:"refreshed_at,omitempty" url:"refreshed_at,omitempty"`
+	Fingerprint string     `json:"fingerprint" url:"fingerprint"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) GetID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ID
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) GetAppID() string {
+	if u == nil {
+		return ""
+	}
+	return u.AppID
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) GetEnvironment() *string {
+	if u == nil {
+		return nil
+	}
+	return u.Environment
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) GetAccountName() *string {
+	if u == nil {
+		return nil
+	}
+	return u.AccountName
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) GetReady() bool {
+	if u == nil {
+		return false
+	}
+	return u.Ready
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) GetCreatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.CreatedAt
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) GetUpdatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.UpdatedAt
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) GetRefreshedAt() *time.Time {
+	if u == nil {
+		return nil
+	}
+	return u.RefreshedAt
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) GetFingerprint() string {
+	if u == nil {
+		return ""
+	}
+	return u.Fingerprint
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateFlowsVaultConnectionResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt   *internal.DateTime `json:"created_at"`
+		UpdatedAt   *internal.DateTime `json:"updated_at"`
+		RefreshedAt *internal.DateTime `json:"refreshed_at,omitempty"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateFlowsVaultConnectionResponseContent(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.Time()
+	u.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	u.RefreshedAt = unmarshaler.RefreshedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateFlowsVaultConnectionResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt   *internal.DateTime `json:"created_at"`
+		UpdatedAt   *internal.DateTime `json:"updated_at"`
+		RefreshedAt *internal.DateTime `json:"refreshed_at,omitempty"`
+	}{
+		embed:       embed(*u),
+		CreatedAt:   internal.NewDateTime(u.CreatedAt),
+		UpdatedAt:   internal.NewDateTime(u.UpdatedAt),
+		RefreshedAt: internal.NewOptionalDateTime(u.RefreshedAt),
+	}
+	return json.Marshal(marshaler)
+}
+
+func (u *UpdateFlowsVaultConnectionResponseContent) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// Flows Vault Connection configuration.
+type UpdateFlowsVaultConnectionSetup struct {
+	FlowsVaultConnectioSetupAPIKeyWithBaseURL *FlowsVaultConnectioSetupAPIKeyWithBaseURL
+	FlowsVaultConnectioSetupAPIKey            *FlowsVaultConnectioSetupAPIKey
+	FlowsVaultConnectioSetupOauthApp          *FlowsVaultConnectioSetupOauthApp
+	FlowsVaultConnectioSetupBigqueryOauthJwt  *FlowsVaultConnectioSetupBigqueryOauthJwt
+	FlowsVaultConnectioSetupSecretAPIKey      *FlowsVaultConnectioSetupSecretAPIKey
+	FlowsVaultConnectioSetupHTTPBearer        *FlowsVaultConnectioSetupHTTPBearer
+	FlowsVaultConnectioSetupJwt               *FlowsVaultConnectioSetupJwt
+	FlowsVaultConnectioSetupMailjetAPIKey     *FlowsVaultConnectioSetupMailjetAPIKey
+	FlowsVaultConnectioSetupToken             *FlowsVaultConnectioSetupToken
+	FlowsVaultConnectioSetupWebhook           *FlowsVaultConnectioSetupWebhook
+	FlowsVaultConnectioSetupStripeKeyPair     *FlowsVaultConnectioSetupStripeKeyPair
+	FlowsVaultConnectioSetupOauthCode         *FlowsVaultConnectioSetupOauthCode
+	FlowsVaultConnectioSetupTwilioAPIKey      *FlowsVaultConnectioSetupTwilioAPIKey
+
+	typ string
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupAPIKeyWithBaseURL() *FlowsVaultConnectioSetupAPIKeyWithBaseURL {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupAPIKeyWithBaseURL
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupAPIKey() *FlowsVaultConnectioSetupAPIKey {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupAPIKey
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupOauthApp() *FlowsVaultConnectioSetupOauthApp {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupOauthApp
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupBigqueryOauthJwt() *FlowsVaultConnectioSetupBigqueryOauthJwt {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupBigqueryOauthJwt
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupSecretAPIKey() *FlowsVaultConnectioSetupSecretAPIKey {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupSecretAPIKey
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupHTTPBearer() *FlowsVaultConnectioSetupHTTPBearer {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupHTTPBearer
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupJwt() *FlowsVaultConnectioSetupJwt {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupJwt
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupMailjetAPIKey() *FlowsVaultConnectioSetupMailjetAPIKey {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupMailjetAPIKey
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupToken() *FlowsVaultConnectioSetupToken {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupToken
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupWebhook() *FlowsVaultConnectioSetupWebhook {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupWebhook
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupStripeKeyPair() *FlowsVaultConnectioSetupStripeKeyPair {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupStripeKeyPair
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupOauthCode() *FlowsVaultConnectioSetupOauthCode {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupOauthCode
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupTwilioAPIKey() *FlowsVaultConnectioSetupTwilioAPIKey {
+	if u == nil {
+		return nil
+	}
+	return u.FlowsVaultConnectioSetupTwilioAPIKey
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) UnmarshalJSON(data []byte) error {
+	valueFlowsVaultConnectioSetupAPIKeyWithBaseURL := new(FlowsVaultConnectioSetupAPIKeyWithBaseURL)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupAPIKeyWithBaseURL); err == nil {
+		u.typ = "FlowsVaultConnectioSetupAPIKeyWithBaseURL"
+		u.FlowsVaultConnectioSetupAPIKeyWithBaseURL = valueFlowsVaultConnectioSetupAPIKeyWithBaseURL
+		return nil
+	}
+	valueFlowsVaultConnectioSetupAPIKey := new(FlowsVaultConnectioSetupAPIKey)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupAPIKey); err == nil {
+		u.typ = "FlowsVaultConnectioSetupAPIKey"
+		u.FlowsVaultConnectioSetupAPIKey = valueFlowsVaultConnectioSetupAPIKey
+		return nil
+	}
+	valueFlowsVaultConnectioSetupOauthApp := new(FlowsVaultConnectioSetupOauthApp)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupOauthApp); err == nil {
+		u.typ = "FlowsVaultConnectioSetupOauthApp"
+		u.FlowsVaultConnectioSetupOauthApp = valueFlowsVaultConnectioSetupOauthApp
+		return nil
+	}
+	valueFlowsVaultConnectioSetupBigqueryOauthJwt := new(FlowsVaultConnectioSetupBigqueryOauthJwt)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupBigqueryOauthJwt); err == nil {
+		u.typ = "FlowsVaultConnectioSetupBigqueryOauthJwt"
+		u.FlowsVaultConnectioSetupBigqueryOauthJwt = valueFlowsVaultConnectioSetupBigqueryOauthJwt
+		return nil
+	}
+	valueFlowsVaultConnectioSetupSecretAPIKey := new(FlowsVaultConnectioSetupSecretAPIKey)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupSecretAPIKey); err == nil {
+		u.typ = "FlowsVaultConnectioSetupSecretAPIKey"
+		u.FlowsVaultConnectioSetupSecretAPIKey = valueFlowsVaultConnectioSetupSecretAPIKey
+		return nil
+	}
+	valueFlowsVaultConnectioSetupHTTPBearer := new(FlowsVaultConnectioSetupHTTPBearer)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupHTTPBearer); err == nil {
+		u.typ = "FlowsVaultConnectioSetupHTTPBearer"
+		u.FlowsVaultConnectioSetupHTTPBearer = valueFlowsVaultConnectioSetupHTTPBearer
+		return nil
+	}
+	valueFlowsVaultConnectioSetupJwt := new(FlowsVaultConnectioSetupJwt)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupJwt); err == nil {
+		u.typ = "FlowsVaultConnectioSetupJwt"
+		u.FlowsVaultConnectioSetupJwt = valueFlowsVaultConnectioSetupJwt
+		return nil
+	}
+	valueFlowsVaultConnectioSetupMailjetAPIKey := new(FlowsVaultConnectioSetupMailjetAPIKey)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupMailjetAPIKey); err == nil {
+		u.typ = "FlowsVaultConnectioSetupMailjetAPIKey"
+		u.FlowsVaultConnectioSetupMailjetAPIKey = valueFlowsVaultConnectioSetupMailjetAPIKey
+		return nil
+	}
+	valueFlowsVaultConnectioSetupToken := new(FlowsVaultConnectioSetupToken)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupToken); err == nil {
+		u.typ = "FlowsVaultConnectioSetupToken"
+		u.FlowsVaultConnectioSetupToken = valueFlowsVaultConnectioSetupToken
+		return nil
+	}
+	valueFlowsVaultConnectioSetupWebhook := new(FlowsVaultConnectioSetupWebhook)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupWebhook); err == nil {
+		u.typ = "FlowsVaultConnectioSetupWebhook"
+		u.FlowsVaultConnectioSetupWebhook = valueFlowsVaultConnectioSetupWebhook
+		return nil
+	}
+	valueFlowsVaultConnectioSetupStripeKeyPair := new(FlowsVaultConnectioSetupStripeKeyPair)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupStripeKeyPair); err == nil {
+		u.typ = "FlowsVaultConnectioSetupStripeKeyPair"
+		u.FlowsVaultConnectioSetupStripeKeyPair = valueFlowsVaultConnectioSetupStripeKeyPair
+		return nil
+	}
+	valueFlowsVaultConnectioSetupOauthCode := new(FlowsVaultConnectioSetupOauthCode)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupOauthCode); err == nil {
+		u.typ = "FlowsVaultConnectioSetupOauthCode"
+		u.FlowsVaultConnectioSetupOauthCode = valueFlowsVaultConnectioSetupOauthCode
+		return nil
+	}
+	valueFlowsVaultConnectioSetupTwilioAPIKey := new(FlowsVaultConnectioSetupTwilioAPIKey)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupTwilioAPIKey); err == nil {
+		u.typ = "FlowsVaultConnectioSetupTwilioAPIKey"
+		u.FlowsVaultConnectioSetupTwilioAPIKey = valueFlowsVaultConnectioSetupTwilioAPIKey
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UpdateFlowsVaultConnectionSetup) MarshalJSON() ([]byte, error) {
+	if u.typ == "FlowsVaultConnectioSetupAPIKeyWithBaseURL" || u.FlowsVaultConnectioSetupAPIKeyWithBaseURL != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupAPIKeyWithBaseURL)
+	}
+	if u.typ == "FlowsVaultConnectioSetupAPIKey" || u.FlowsVaultConnectioSetupAPIKey != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupAPIKey)
+	}
+	if u.typ == "FlowsVaultConnectioSetupOauthApp" || u.FlowsVaultConnectioSetupOauthApp != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupOauthApp)
+	}
+	if u.typ == "FlowsVaultConnectioSetupBigqueryOauthJwt" || u.FlowsVaultConnectioSetupBigqueryOauthJwt != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupBigqueryOauthJwt)
+	}
+	if u.typ == "FlowsVaultConnectioSetupSecretAPIKey" || u.FlowsVaultConnectioSetupSecretAPIKey != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupSecretAPIKey)
+	}
+	if u.typ == "FlowsVaultConnectioSetupHTTPBearer" || u.FlowsVaultConnectioSetupHTTPBearer != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupHTTPBearer)
+	}
+	if u.typ == "FlowsVaultConnectioSetupJwt" || u.FlowsVaultConnectioSetupJwt != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupJwt)
+	}
+	if u.typ == "FlowsVaultConnectioSetupMailjetAPIKey" || u.FlowsVaultConnectioSetupMailjetAPIKey != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupMailjetAPIKey)
+	}
+	if u.typ == "FlowsVaultConnectioSetupToken" || u.FlowsVaultConnectioSetupToken != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupToken)
+	}
+	if u.typ == "FlowsVaultConnectioSetupWebhook" || u.FlowsVaultConnectioSetupWebhook != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupWebhook)
+	}
+	if u.typ == "FlowsVaultConnectioSetupStripeKeyPair" || u.FlowsVaultConnectioSetupStripeKeyPair != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupStripeKeyPair)
+	}
+	if u.typ == "FlowsVaultConnectioSetupOauthCode" || u.FlowsVaultConnectioSetupOauthCode != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupOauthCode)
+	}
+	if u.typ == "FlowsVaultConnectioSetupTwilioAPIKey" || u.FlowsVaultConnectioSetupTwilioAPIKey != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupTwilioAPIKey)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UpdateFlowsVaultConnectionSetupVisitor interface {
+	VisitFlowsVaultConnectioSetupAPIKeyWithBaseURL(*FlowsVaultConnectioSetupAPIKeyWithBaseURL) error
+	VisitFlowsVaultConnectioSetupAPIKey(*FlowsVaultConnectioSetupAPIKey) error
+	VisitFlowsVaultConnectioSetupOauthApp(*FlowsVaultConnectioSetupOauthApp) error
+	VisitFlowsVaultConnectioSetupBigqueryOauthJwt(*FlowsVaultConnectioSetupBigqueryOauthJwt) error
+	VisitFlowsVaultConnectioSetupSecretAPIKey(*FlowsVaultConnectioSetupSecretAPIKey) error
+	VisitFlowsVaultConnectioSetupHTTPBearer(*FlowsVaultConnectioSetupHTTPBearer) error
+	VisitFlowsVaultConnectioSetupJwt(*FlowsVaultConnectioSetupJwt) error
+	VisitFlowsVaultConnectioSetupMailjetAPIKey(*FlowsVaultConnectioSetupMailjetAPIKey) error
+	VisitFlowsVaultConnectioSetupToken(*FlowsVaultConnectioSetupToken) error
+	VisitFlowsVaultConnectioSetupWebhook(*FlowsVaultConnectioSetupWebhook) error
+	VisitFlowsVaultConnectioSetupStripeKeyPair(*FlowsVaultConnectioSetupStripeKeyPair) error
+	VisitFlowsVaultConnectioSetupOauthCode(*FlowsVaultConnectioSetupOauthCode) error
+	VisitFlowsVaultConnectioSetupTwilioAPIKey(*FlowsVaultConnectioSetupTwilioAPIKey) error
+}
+
+func (u *UpdateFlowsVaultConnectionSetup) Accept(visitor UpdateFlowsVaultConnectionSetupVisitor) error {
+	if u.typ == "FlowsVaultConnectioSetupAPIKeyWithBaseURL" || u.FlowsVaultConnectioSetupAPIKeyWithBaseURL != nil {
+		return visitor.VisitFlowsVaultConnectioSetupAPIKeyWithBaseURL(u.FlowsVaultConnectioSetupAPIKeyWithBaseURL)
+	}
+	if u.typ == "FlowsVaultConnectioSetupAPIKey" || u.FlowsVaultConnectioSetupAPIKey != nil {
+		return visitor.VisitFlowsVaultConnectioSetupAPIKey(u.FlowsVaultConnectioSetupAPIKey)
+	}
+	if u.typ == "FlowsVaultConnectioSetupOauthApp" || u.FlowsVaultConnectioSetupOauthApp != nil {
+		return visitor.VisitFlowsVaultConnectioSetupOauthApp(u.FlowsVaultConnectioSetupOauthApp)
+	}
+	if u.typ == "FlowsVaultConnectioSetupBigqueryOauthJwt" || u.FlowsVaultConnectioSetupBigqueryOauthJwt != nil {
+		return visitor.VisitFlowsVaultConnectioSetupBigqueryOauthJwt(u.FlowsVaultConnectioSetupBigqueryOauthJwt)
+	}
+	if u.typ == "FlowsVaultConnectioSetupSecretAPIKey" || u.FlowsVaultConnectioSetupSecretAPIKey != nil {
+		return visitor.VisitFlowsVaultConnectioSetupSecretAPIKey(u.FlowsVaultConnectioSetupSecretAPIKey)
+	}
+	if u.typ == "FlowsVaultConnectioSetupHTTPBearer" || u.FlowsVaultConnectioSetupHTTPBearer != nil {
+		return visitor.VisitFlowsVaultConnectioSetupHTTPBearer(u.FlowsVaultConnectioSetupHTTPBearer)
+	}
+	if u.typ == "FlowsVaultConnectioSetupJwt" || u.FlowsVaultConnectioSetupJwt != nil {
+		return visitor.VisitFlowsVaultConnectioSetupJwt(u.FlowsVaultConnectioSetupJwt)
+	}
+	if u.typ == "FlowsVaultConnectioSetupMailjetAPIKey" || u.FlowsVaultConnectioSetupMailjetAPIKey != nil {
+		return visitor.VisitFlowsVaultConnectioSetupMailjetAPIKey(u.FlowsVaultConnectioSetupMailjetAPIKey)
+	}
+	if u.typ == "FlowsVaultConnectioSetupToken" || u.FlowsVaultConnectioSetupToken != nil {
+		return visitor.VisitFlowsVaultConnectioSetupToken(u.FlowsVaultConnectioSetupToken)
+	}
+	if u.typ == "FlowsVaultConnectioSetupWebhook" || u.FlowsVaultConnectioSetupWebhook != nil {
+		return visitor.VisitFlowsVaultConnectioSetupWebhook(u.FlowsVaultConnectioSetupWebhook)
+	}
+	if u.typ == "FlowsVaultConnectioSetupStripeKeyPair" || u.FlowsVaultConnectioSetupStripeKeyPair != nil {
+		return visitor.VisitFlowsVaultConnectioSetupStripeKeyPair(u.FlowsVaultConnectioSetupStripeKeyPair)
+	}
+	if u.typ == "FlowsVaultConnectioSetupOauthCode" || u.FlowsVaultConnectioSetupOauthCode != nil {
+		return visitor.VisitFlowsVaultConnectioSetupOauthCode(u.FlowsVaultConnectioSetupOauthCode)
+	}
+	if u.typ == "FlowsVaultConnectioSetupTwilioAPIKey" || u.FlowsVaultConnectioSetupTwilioAPIKey != nil {
+		return visitor.VisitFlowsVaultConnectioSetupTwilioAPIKey(u.FlowsVaultConnectioSetupTwilioAPIKey)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
 type UpdateGuardianFactorDuoSettingsResponseContent struct {
 	Ikey *string `json:"ikey,omitempty" url:"ikey,omitempty"`
 	Skey *string `json:"skey,omitempty" url:"skey,omitempty"`
@@ -26875,6 +33440,100 @@ func (u *UpdatePhoneTemplateResponseContent) UnmarshalJSON(data []byte) error {
 }
 
 func (u *UpdatePhoneTemplateResponseContent) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UpdateRiskAssessmentsSettingsNewDeviceResponseContent struct {
+	// Length of time to remember devices for, in days.
+	RememberFor int `json:"remember_for" url:"remember_for"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateRiskAssessmentsSettingsNewDeviceResponseContent) GetRememberFor() int {
+	if u == nil {
+		return 0
+	}
+	return u.RememberFor
+}
+
+func (u *UpdateRiskAssessmentsSettingsNewDeviceResponseContent) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UpdateRiskAssessmentsSettingsNewDeviceResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateRiskAssessmentsSettingsNewDeviceResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateRiskAssessmentsSettingsNewDeviceResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateRiskAssessmentsSettingsNewDeviceResponseContent) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UpdateRiskAssessmentsSettingsResponseContent struct {
+	// Whether or not risk assessment is enabled.
+	Enabled bool `json:"enabled" url:"enabled"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateRiskAssessmentsSettingsResponseContent) GetEnabled() bool {
+	if u == nil {
+		return false
+	}
+	return u.Enabled
+}
+
+func (u *UpdateRiskAssessmentsSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UpdateRiskAssessmentsSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateRiskAssessmentsSettingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateRiskAssessmentsSettingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateRiskAssessmentsSettingsResponseContent) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -28210,28 +34869,28 @@ func (u UserEnrollmentStatusEnum) Ptr() *UserEnrollmentStatusEnum {
 }
 
 // user_id of the secondary user account being linked.
-type UserIDEnum struct {
+type UserID struct {
 	String  string
 	Integer int
 
 	typ string
 }
 
-func (u *UserIDEnum) GetString() string {
+func (u *UserID) GetString() string {
 	if u == nil {
 		return ""
 	}
 	return u.String
 }
 
-func (u *UserIDEnum) GetInteger() int {
+func (u *UserID) GetInteger() int {
 	if u == nil {
 		return 0
 	}
 	return u.Integer
 }
 
-func (u *UserIDEnum) UnmarshalJSON(data []byte) error {
+func (u *UserID) UnmarshalJSON(data []byte) error {
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
 		u.typ = "String"
@@ -28247,7 +34906,7 @@ func (u *UserIDEnum) UnmarshalJSON(data []byte) error {
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
 }
 
-func (u UserIDEnum) MarshalJSON() ([]byte, error) {
+func (u UserID) MarshalJSON() ([]byte, error) {
 	if u.typ == "String" || u.String != "" {
 		return json.Marshal(u.String)
 	}
@@ -28257,12 +34916,12 @@ func (u UserIDEnum) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
-type UserIDEnumVisitor interface {
+type UserIDVisitor interface {
 	VisitString(string) error
 	VisitInteger(int) error
 }
 
-func (u *UserIDEnum) Accept(visitor UserIDEnumVisitor) error {
+func (u *UserID) Accept(visitor UserIDVisitor) error {
 	if u.typ == "String" || u.String != "" {
 		return visitor.VisitString(u.String)
 	}
@@ -28274,8 +34933,8 @@ func (u *UserIDEnum) Accept(visitor UserIDEnumVisitor) error {
 
 type UserIdentity struct {
 	// Connection name of this identity.
-	Connection string      `json:"connection" url:"connection"`
-	UserID     *UserIDEnum `json:"user_id" url:"user_id"`
+	Connection string  `json:"connection" url:"connection"`
+	UserID     *UserID `json:"user_id" url:"user_id"`
 	// Type of identity provider.
 	Provider    string           `json:"provider" url:"provider"`
 	ProfileData *UserProfileData `json:"profileData,omitempty" url:"profileData,omitempty"`
@@ -28299,7 +34958,7 @@ func (u *UserIdentity) GetConnection() string {
 	return u.Connection
 }
 
-func (u *UserIdentity) GetUserID() *UserIDEnum {
+func (u *UserIdentity) GetUserID() *UserID {
 	if u == nil {
 		return nil
 	}
@@ -28664,6 +35323,7 @@ func (u *UserListLogOffsetPaginatedResponseContent) String() string {
 // Data related to the user that does not affect the application's core functionality.
 type UserMetadata = map[string]interface{}
 
+// The multi-factor provider. Supported values 'duo' or 'google-authenticator'
 type UserMultifactorProviderEnum string
 
 const (

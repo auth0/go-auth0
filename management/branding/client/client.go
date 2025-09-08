@@ -4,7 +4,6 @@ package client
 
 import (
 	context "context"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/branding/phone/client"
 	templates "github.com/auth0/go-auth0/v2/management/branding/templates"

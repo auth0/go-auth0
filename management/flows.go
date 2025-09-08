@@ -5,9 +5,8 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	time "time"
-
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	time "time"
 )
 
 type CreateFlowRequestContent struct {

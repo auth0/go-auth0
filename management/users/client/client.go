@@ -5,9 +5,6 @@ package client
 import (
 	context "context"
 	fmt "fmt"
-	http "net/http"
-	strconv "strconv"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
@@ -22,8 +19,11 @@ import (
 	organizations "github.com/auth0/go-auth0/v2/management/users/organizations"
 	permissions "github.com/auth0/go-auth0/v2/management/users/permissions"
 	refreshtoken "github.com/auth0/go-auth0/v2/management/users/refreshtoken"
+	riskassessments "github.com/auth0/go-auth0/v2/management/users/riskassessments"
 	roles "github.com/auth0/go-auth0/v2/management/users/roles"
 	sessions "github.com/auth0/go-auth0/v2/management/users/sessions"
+	http "net/http"
+	strconv "strconv"
 )
 
 type Client struct {
@@ -37,6 +37,7 @@ type Client struct {
 	Multifactor                   *multifactor.Client
 	Organizations                 *organizations.Client
 	Permissions                   *permissions.Client
+	RiskAssessments               *riskassessments.Client
 	Roles                         *roles.Client
 	RefreshToken                  *refreshtoken.Client
 	Sessions                      *sessions.Client
@@ -57,6 +58,7 @@ func NewClient(options *core.RequestOptions) *Client {
 		Multifactor:                   multifactor.NewClient(options),
 		Organizations:                 organizations.NewClient(options),
 		Permissions:                   permissions.NewClient(options),
+		RiskAssessments:               riskassessments.NewClient(options),
 		Roles:                         roles.NewClient(options),
 		RefreshToken:                  refreshtoken.NewClient(options),
 		Sessions:                      sessions.NewClient(options),

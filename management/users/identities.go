@@ -9,8 +9,8 @@ import (
 type LinkUserIdentityRequestContent struct {
 	Provider *management.UserIdentityProviderEnum `json:"provider,omitempty" url:"-"`
 	// connection_id of the secondary user account being linked when more than one `auth0` database provider exists.
-	ConnectionID *string                `json:"connection_id,omitempty" url:"-"`
-	UserID       *management.UserIDEnum `json:"user_id,omitempty" url:"-"`
+	ConnectionID *string            `json:"connection_id,omitempty" url:"-"`
+	UserID       *management.UserID `json:"user_id,omitempty" url:"-"`
 	// JWT for the secondary account being linked. If sending this parameter, `provider`, `user_id`, and `connection_id` must not be sent.
 	LinkWith *string `json:"link_with,omitempty" url:"-"`
 }

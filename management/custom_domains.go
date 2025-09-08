@@ -5,7 +5,6 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 )
 
@@ -24,9 +23,10 @@ type CreateCustomDomainResponseContent struct {
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
-	Primary      bool                 `json:"primary" url:"primary"`
-	Type         CustomDomainTypeEnum `json:"type" url:"type"`
-	Verification *DomainVerification  `json:"verification" url:"verification"`
+	Primary      bool                         `json:"primary" url:"primary"`
+	Status       CustomDomainStatusFilterEnum `json:"status" url:"status"`
+	Type         CustomDomainTypeEnum         `json:"type" url:"type"`
+	Verification *DomainVerification          `json:"verification" url:"verification"`
 	// The HTTP header to fetch the client's IP address
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
@@ -55,6 +55,13 @@ func (c *CreateCustomDomainResponseContent) GetPrimary() bool {
 		return false
 	}
 	return c.Primary
+}
+
+func (c *CreateCustomDomainResponseContent) GetStatus() CustomDomainStatusFilterEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Status
 }
 
 func (c *CreateCustomDomainResponseContent) GetType() CustomDomainTypeEnum {
@@ -123,8 +130,9 @@ type CustomDomain struct {
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
-	Primary bool                 `json:"primary" url:"primary"`
-	Type    CustomDomainTypeEnum `json:"type" url:"type"`
+	Primary bool                         `json:"primary" url:"primary"`
+	Status  CustomDomainStatusFilterEnum `json:"status" url:"status"`
+	Type    CustomDomainTypeEnum         `json:"type" url:"type"`
 	// Intermediate address.
 	OriginDomainName *string             `json:"origin_domain_name,omitempty" url:"origin_domain_name,omitempty"`
 	Verification     *DomainVerification `json:"verification,omitempty" url:"verification,omitempty"`
@@ -156,6 +164,13 @@ func (c *CustomDomain) GetPrimary() bool {
 		return false
 	}
 	return c.Primary
+}
+
+func (c *CustomDomain) GetStatus() CustomDomainStatusFilterEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Status
 }
 
 func (c *CustomDomain) GetType() CustomDomainTypeEnum {
@@ -279,6 +294,32 @@ func NewCustomDomainProvisioningTypeEnumFromString(s string) (CustomDomainProvis
 }
 
 func (c CustomDomainProvisioningTypeEnum) Ptr() *CustomDomainProvisioningTypeEnum {
+	return &c
+}
+
+// Custom domain configuration status. Can be `failed`, `pending_verification`, or `ready`.
+type CustomDomainStatusFilterEnum string
+
+const (
+	CustomDomainStatusFilterEnumPendingVerification CustomDomainStatusFilterEnum = "pending_verification"
+	CustomDomainStatusFilterEnumReady               CustomDomainStatusFilterEnum = "ready"
+	CustomDomainStatusFilterEnumFailed              CustomDomainStatusFilterEnum = "failed"
+)
+
+func NewCustomDomainStatusFilterEnumFromString(s string) (CustomDomainStatusFilterEnum, error) {
+	switch s {
+	case "pending_verification":
+		return CustomDomainStatusFilterEnumPendingVerification, nil
+	case "ready":
+		return CustomDomainStatusFilterEnumReady, nil
+	case "failed":
+		return CustomDomainStatusFilterEnumFailed, nil
+	}
+	var t CustomDomainStatusFilterEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CustomDomainStatusFilterEnum) Ptr() *CustomDomainStatusFilterEnum {
 	return &c
 }
 
@@ -452,8 +493,9 @@ type GetCustomDomainResponseContent struct {
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
-	Primary bool                 `json:"primary" url:"primary"`
-	Type    CustomDomainTypeEnum `json:"type" url:"type"`
+	Primary bool                         `json:"primary" url:"primary"`
+	Status  CustomDomainStatusFilterEnum `json:"status" url:"status"`
+	Type    CustomDomainTypeEnum         `json:"type" url:"type"`
 	// Intermediate address.
 	OriginDomainName *string             `json:"origin_domain_name,omitempty" url:"origin_domain_name,omitempty"`
 	Verification     *DomainVerification `json:"verification,omitempty" url:"verification,omitempty"`
@@ -485,6 +527,13 @@ func (g *GetCustomDomainResponseContent) GetPrimary() bool {
 		return false
 	}
 	return g.Primary
+}
+
+func (g *GetCustomDomainResponseContent) GetStatus() CustomDomainStatusFilterEnum {
+	if g == nil {
+		return ""
+	}
+	return g.Status
 }
 
 func (g *GetCustomDomainResponseContent) GetType() CustomDomainTypeEnum {
@@ -618,9 +667,10 @@ type UpdateCustomDomainResponseContent struct {
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
-	Primary      bool                 `json:"primary" url:"primary"`
-	Type         CustomDomainTypeEnum `json:"type" url:"type"`
-	Verification *DomainVerification  `json:"verification" url:"verification"`
+	Primary      bool                         `json:"primary" url:"primary"`
+	Status       CustomDomainStatusFilterEnum `json:"status" url:"status"`
+	Type         CustomDomainTypeEnum         `json:"type" url:"type"`
+	Verification *DomainVerification          `json:"verification" url:"verification"`
 	// The HTTP header to fetch the client's IP address
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
@@ -649,6 +699,13 @@ func (u *UpdateCustomDomainResponseContent) GetPrimary() bool {
 		return false
 	}
 	return u.Primary
+}
+
+func (u *UpdateCustomDomainResponseContent) GetStatus() CustomDomainStatusFilterEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Status
 }
 
 func (u *UpdateCustomDomainResponseContent) GetType() CustomDomainTypeEnum {
@@ -717,8 +774,9 @@ type VerifyCustomDomainResponseContent struct {
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
-	Primary bool                 `json:"primary" url:"primary"`
-	Type    CustomDomainTypeEnum `json:"type" url:"type"`
+	Primary bool                         `json:"primary" url:"primary"`
+	Status  CustomDomainStatusFilterEnum `json:"status" url:"status"`
+	Type    CustomDomainTypeEnum         `json:"type" url:"type"`
 	// CNAME API key header.
 	CnameAPIKey *string `json:"cname_api_key,omitempty" url:"cname_api_key,omitempty"`
 	// Intermediate address.
@@ -752,6 +810,13 @@ func (v *VerifyCustomDomainResponseContent) GetPrimary() bool {
 		return false
 	}
 	return v.Primary
+}
+
+func (v *VerifyCustomDomainResponseContent) GetStatus() CustomDomainStatusFilterEnum {
+	if v == nil {
+		return ""
+	}
+	return v.Status
 }
 
 func (v *VerifyCustomDomainResponseContent) GetType() CustomDomainTypeEnum {

@@ -4,13 +4,12 @@ package client
 
 import (
 	context "context"
-	http "net/http"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	connections "github.com/auth0/go-auth0/v2/management/connections"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
+	http "net/http"
 )
 
 type RawClient struct {
@@ -93,7 +92,7 @@ func (r *RawClient) Create(
 	ctx context.Context,
 	// The id of the connection to create its SCIM configuration
 	id string,
-	request *connections.CreateSCIMConfigurationRequestContent,
+	request *management.CreateSCIMConfigurationRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.CreateSCIMConfigurationResponseContent], error) {
 	options := core.NewRequestOptions(opts...)

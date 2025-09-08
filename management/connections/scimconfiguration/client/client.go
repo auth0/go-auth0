@@ -4,7 +4,6 @@ package client
 
 import (
 	context "context"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	connections "github.com/auth0/go-auth0/v2/management/connections"
 	tokens "github.com/auth0/go-auth0/v2/management/connections/scimconfiguration/tokens"
@@ -60,7 +59,7 @@ func (c *Client) Create(
 	ctx context.Context,
 	// The id of the connection to create its SCIM configuration
 	id string,
-	request *connections.CreateSCIMConfigurationRequestContent,
+	request *management.CreateSCIMConfigurationRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateSCIMConfigurationResponseContent, error) {
 	response, err := c.WithRawResponse.Create(

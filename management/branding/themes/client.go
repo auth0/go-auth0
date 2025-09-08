@@ -4,7 +4,6 @@ package themes
 
 import (
 	context "context"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	branding "github.com/auth0/go-auth0/v2/management/branding"
 	core "github.com/auth0/go-auth0/v2/management/core"

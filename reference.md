@@ -183,7 +183,7 @@ client.Actions.Create(
 <dl>
 <dd>
 
-**runtime:** `*string` — The Node runtime. For example: `node12`, defaults to `node12`
+**runtime:** `*string` — The Node runtime. For example: `node22`, defaults to `node22`
     
 </dd>
 </dl>
@@ -423,7 +423,7 @@ client.Actions.Update(
 <dl>
 <dd>
 
-**runtime:** `*string` — The Node runtime. For example: `node12`, defaults to `node12`
+**runtime:** `*string` — The Node runtime. For example: `node22`, defaults to `node22`
     
 </dd>
 </dl>
@@ -780,6 +780,14 @@ client.ClientGrants.List(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**subjectType:** `*management.ClientGrantSubjectTypeEnum` — The type of application access the client grant allows. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href="https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -873,6 +881,22 @@ client.ClientGrants.Create(
 <dd>
 
 **scope:** `[]string` — Scopes allowed for this client grant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subjectType:** `*management.ClientGrantSubjectTypeEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authorizationDetailsTypes:** `[]string` — Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
     
 </dd>
 </dl>
@@ -1014,6 +1038,14 @@ client.ClientGrants.Update(
 <dd>
 
 **allowAnyOrganization:** `*bool` — Controls allowing any organization to be used with this grant
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authorizationDetailsTypes:** `[]string` — Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
     
 </dd>
 </dl>
@@ -4257,67 +4289,6 @@ client.EventStreams.Update(
 <dd>
 
 **status:** `*management.EventStreamStatusEnum` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.EventStreams.GetStats(ID) -> *management.GetEventStreamStatsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.EventStreams.GetStats(
-        context.TODO(),
-        "id",
-        &management.EventStreamsGetStatsRequest{},
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Unique identifier for the event stream.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dateFrom:** `*string` — The RFC3339 start date for the stats query.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dateTo:** `*string` — The RFC3339 end date for the stats query.
     
 </dd>
 </dl>
@@ -8011,6 +7982,14 @@ client.ResourceServers.Create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**subjectTypeAuthorization:** `*management.ResourceServerSubjectTypeAuthorization` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -8296,6 +8275,14 @@ client.ResourceServers.Update(
 <dd>
 
 **proofOfPossession:** `*management.ResourceServerProofOfPossession` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subjectTypeAuthorization:** `*management.ResourceServerSubjectTypeAuthorization` 
     
 </dd>
 </dl>
@@ -15200,7 +15187,7 @@ client.Connections.SCIMConfiguration.Create(
 <dl>
 <dd>
 
-**request:** `*connections.CreateSCIMConfigurationRequestContent` 
+**request:** `*management.CreateSCIMConfigurationRequestContent` 
     
 </dd>
 </dl>
@@ -16499,6 +16486,269 @@ client.Flows.Executions.Delete(
 <dd>
 
 **executionID:** `string` — Flow execution identifier
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Flows Vault Connections
+<details><summary><code>client.Flows.Vault.Connections.List() -> *management.ListFlowsVaultConnectionsOffsetPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Flows.Vault.Connections.List(
+        context.TODO(),
+        &vault.ListFlowsVaultConnectionsRequestParameters{},
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Flows.Vault.Connections.Create(request) -> *management.CreateFlowsVaultConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Flows.Vault.Connections.Create(
+        context.TODO(),
+        &management.CreateFlowsVaultConnectionRequestContent{
+            CreateFlowsVaultConnectionActivecampaign: &management.CreateFlowsVaultConnectionActivecampaign{
+                CreateFlowsVaultConnectionActivecampaignAPIKey: &management.CreateFlowsVaultConnectionActivecampaignAPIKey{
+                    Name: "name",
+                    Setup: &management.FlowsVaultConnectioSetupAPIKeyWithBaseURL{
+                        APIKey: "api_key",
+                    },
+                },
+            },
+        },
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*management.CreateFlowsVaultConnectionRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Flows.Vault.Connections.Get(ID) -> *management.GetFlowsVaultConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Flows.Vault.Connections.Get(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Flows Vault connection ID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Flows.Vault.Connections.Delete(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Flows.Vault.Connections.Delete(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Vault connection id
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Flows.Vault.Connections.Update(ID, request) -> *management.UpdateFlowsVaultConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Flows.Vault.Connections.Update(
+        context.TODO(),
+        "id",
+        &vault.UpdateFlowsVaultConnectionRequestContent{},
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Flows Vault connection ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — Flows Vault Connection name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**setup:** `*management.UpdateFlowsVaultConnectionSetup` 
     
 </dd>
 </dl>
@@ -21848,6 +22098,212 @@ client.Prompts.Partials.Set(
 </dl>
 </details>
 
+## RiskAssessments Settings
+<details><summary><code>client.RiskAssessments.Settings.Get() -> *management.GetRiskAssessmentsSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets the tenant settings for risk assessments
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.RiskAssessments.Settings.Get(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.RiskAssessments.Settings.Update(request) -> *management.UpdateRiskAssessmentsSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the tenant settings for risk assessments
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.RiskAssessments.Settings.Update(
+        context.TODO(),
+        &riskassessments.UpdateRiskAssessmentsSettingsRequestContent{
+            Enabled: true,
+        },
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**enabled:** `bool` — Whether or not risk assessment is enabled.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## RiskAssessments Settings NewDevice
+<details><summary><code>client.RiskAssessments.Settings.NewDevice.Get() -> *management.GetRiskAssessmentsSettingsNewDeviceResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets the risk assessment settings for the new device assessor
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.RiskAssessments.Settings.NewDevice.Get(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.RiskAssessments.Settings.NewDevice.Update(request) -> *management.UpdateRiskAssessmentsSettingsNewDeviceResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the risk assessment settings for the new device assessor
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.RiskAssessments.Settings.NewDevice.Update(
+        context.TODO(),
+        &settings.UpdateRiskAssessmentsSettingsNewDeviceRequestContent{
+            RememberFor: 1,
+        },
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**rememberFor:** `int` — Length of time to remember devices for, in days.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Roles Permissions
 <details><summary><code>client.Roles.Permissions.List(ID) -> *management.ListRolePermissionsOffsetPaginatedResponseContent</code></summary>
 <dl>
@@ -23145,7 +23601,7 @@ client.Users.AuthenticationMethods.Create(
 <dl>
 <dd>
 
-**publicKey:** `*string` — Applies to webauthn authentication methods only. The public key.
+**publicKey:** `*string` — Applies to webauthn authentication methods only. The public key, which is encoded as base64.
     
 </dd>
 </dl>
@@ -23829,7 +24285,7 @@ client.Users.Identities.Link(
 <dl>
 <dd>
 
-**userID:** `*management.UserIDEnum` 
+**userID:** `*management.UserID` 
     
 </dd>
 </dl>
@@ -24456,6 +24912,85 @@ client.Users.Permissions.Delete(
 <dd>
 
 **permissions:** `[]*management.PermissionRequestPayload` — List of permissions to remove from this user.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Users RiskAssessments
+<details><summary><code>client.Users.RiskAssessments.Clear(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Clear risk assessment assessors for a specific user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Users.RiskAssessments.Clear(
+        context.TODO(),
+        "id",
+        &users.ClearAssessorsRequestContent{
+            Connection: "connection",
+            Assessors: []management.AssessorsTypeEnum{},
+        },
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to clear assessors for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connection:** `string` — The name of the connection containing the user whose assessors should be cleared.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assessors:** `[]management.AssessorsTypeEnum` — List of assessors to clear.
     
 </dd>
 </dl>

@@ -5,9 +5,8 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	time "time"
-
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	time "time"
 )
 
 type CreateClientRequestContent struct {
@@ -122,9 +121,8 @@ type Client struct {
 	// Whether this is your global 'All Applications' client representing legacy tenant settings (true) or a regular client (false).
 	Global *bool `json:"global,omitempty" url:"global,omitempty"`
 	// Client secret (which you must not make public).
-	ClientSecret *string `json:"client_secret,omitempty" url:"client_secret,omitempty"`
-	// Type of client used to determine which settings are applicable. Can be `spa`, `native`, `non_interactive`, or `regular_web`.
-	AppType *string `json:"app_type,omitempty" url:"app_type,omitempty"`
+	ClientSecret *string            `json:"client_secret,omitempty" url:"client_secret,omitempty"`
+	AppType      *ClientAppTypeEnum `json:"app_type,omitempty" url:"app_type,omitempty"`
 	// URL of the logo to display for this client. Recommended size is 150x150 pixels.
 	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client a first party client (true) or not (false).
@@ -234,7 +232,7 @@ func (c *Client) GetClientSecret() *string {
 	return c.ClientSecret
 }
 
-func (c *Client) GetAppType() *string {
+func (c *Client) GetAppType() *ClientAppTypeEnum {
 	if c == nil {
 		return nil
 	}
@@ -2955,7 +2953,7 @@ func (c *ClientAddons) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Type of client used to determine which settings are applicable. Can be `spa`, `native`, `non_interactive`, `regular_web` or `resource_server`.
+// The type of application this client represents
 type ClientAppTypeEnum string
 
 const (
@@ -3857,11 +3855,75 @@ func (c ClientOidcBackchannelLogoutInitiatorsModeEnum) Ptr() *ClientOidcBackchan
 	return &c
 }
 
+// Controls whether session metadata is included in the logout token. Default value is null.
+type ClientOidcBackchannelLogoutSessionMetadata struct {
+	// The `include` property determines whether session metadata is included in the logout token.
+	Include *bool `json:"include,omitempty" url:"include,omitempty"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *ClientOidcBackchannelLogoutSessionMetadata) GetInclude() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.Include
+}
+
+func (c *ClientOidcBackchannelLogoutSessionMetadata) GetExtraProperties() map[string]interface{} {
+	return c.ExtraProperties
+}
+
+func (c *ClientOidcBackchannelLogoutSessionMetadata) UnmarshalJSON(data []byte) error {
+	type embed ClientOidcBackchannelLogoutSessionMetadata
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ClientOidcBackchannelLogoutSessionMetadata(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientOidcBackchannelLogoutSessionMetadata) MarshalJSON() ([]byte, error) {
+	type embed ClientOidcBackchannelLogoutSessionMetadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	return internal.MarshalJSONWithExtraProperties(marshaler, c.ExtraProperties)
+}
+
+func (c *ClientOidcBackchannelLogoutSessionMetadata) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 // Configuration for OIDC backchannel logout
 type ClientOidcBackchannelLogoutSettings struct {
 	// Comma-separated list of URLs that are valid to call back from Auth0 for OIDC backchannel logout. Currently only one URL is allowed.
-	BackchannelLogoutURLs       []string                               `json:"backchannel_logout_urls,omitempty" url:"backchannel_logout_urls,omitempty"`
-	BackchannelLogoutInitiators *ClientOidcBackchannelLogoutInitiators `json:"backchannel_logout_initiators,omitempty" url:"backchannel_logout_initiators,omitempty"`
+	BackchannelLogoutURLs            []string                                    `json:"backchannel_logout_urls,omitempty" url:"backchannel_logout_urls,omitempty"`
+	BackchannelLogoutInitiators      *ClientOidcBackchannelLogoutInitiators      `json:"backchannel_logout_initiators,omitempty" url:"backchannel_logout_initiators,omitempty"`
+	BackchannelLogoutSessionMetadata *ClientOidcBackchannelLogoutSessionMetadata `json:"backchannel_logout_session_metadata,omitempty" url:"backchannel_logout_session_metadata,omitempty"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
@@ -3880,6 +3942,13 @@ func (c *ClientOidcBackchannelLogoutSettings) GetBackchannelLogoutInitiators() *
 		return nil
 	}
 	return c.BackchannelLogoutInitiators
+}
+
+func (c *ClientOidcBackchannelLogoutSettings) GetBackchannelLogoutSessionMetadata() *ClientOidcBackchannelLogoutSessionMetadata {
+	if c == nil {
+		return nil
+	}
+	return c.BackchannelLogoutSessionMetadata
 }
 
 func (c *ClientOidcBackchannelLogoutSettings) GetExtraProperties() map[string]interface{} {
@@ -4462,9 +4531,8 @@ type CreateClientResponseContent struct {
 	// Whether this is your global 'All Applications' client representing legacy tenant settings (true) or a regular client (false).
 	Global *bool `json:"global,omitempty" url:"global,omitempty"`
 	// Client secret (which you must not make public).
-	ClientSecret *string `json:"client_secret,omitempty" url:"client_secret,omitempty"`
-	// Type of client used to determine which settings are applicable. Can be `spa`, `native`, `non_interactive`, or `regular_web`.
-	AppType *string `json:"app_type,omitempty" url:"app_type,omitempty"`
+	ClientSecret *string            `json:"client_secret,omitempty" url:"client_secret,omitempty"`
+	AppType      *ClientAppTypeEnum `json:"app_type,omitempty" url:"app_type,omitempty"`
 	// URL of the logo to display for this client. Recommended size is 150x150 pixels.
 	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client a first party client (true) or not (false).
@@ -4574,7 +4642,7 @@ func (c *CreateClientResponseContent) GetClientSecret() *string {
 	return c.ClientSecret
 }
 
-func (c *CreateClientResponseContent) GetAppType() *string {
+func (c *CreateClientResponseContent) GetAppType() *ClientAppTypeEnum {
 	if c == nil {
 		return nil
 	}
@@ -4959,9 +5027,8 @@ type GetClientResponseContent struct {
 	// Whether this is your global 'All Applications' client representing legacy tenant settings (true) or a regular client (false).
 	Global *bool `json:"global,omitempty" url:"global,omitempty"`
 	// Client secret (which you must not make public).
-	ClientSecret *string `json:"client_secret,omitempty" url:"client_secret,omitempty"`
-	// Type of client used to determine which settings are applicable. Can be `spa`, `native`, `non_interactive`, or `regular_web`.
-	AppType *string `json:"app_type,omitempty" url:"app_type,omitempty"`
+	ClientSecret *string            `json:"client_secret,omitempty" url:"client_secret,omitempty"`
+	AppType      *ClientAppTypeEnum `json:"app_type,omitempty" url:"app_type,omitempty"`
 	// URL of the logo to display for this client. Recommended size is 150x150 pixels.
 	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client a first party client (true) or not (false).
@@ -5071,7 +5138,7 @@ func (g *GetClientResponseContent) GetClientSecret() *string {
 	return g.ClientSecret
 }
 
-func (g *GetClientResponseContent) GetAppType() *string {
+func (g *GetClientResponseContent) GetAppType() *ClientAppTypeEnum {
 	if g == nil {
 		return nil
 	}
@@ -5886,9 +5953,8 @@ type RotateClientSecretResponseContent struct {
 	// Whether this is your global 'All Applications' client representing legacy tenant settings (true) or a regular client (false).
 	Global *bool `json:"global,omitempty" url:"global,omitempty"`
 	// Client secret (which you must not make public).
-	ClientSecret *string `json:"client_secret,omitempty" url:"client_secret,omitempty"`
-	// Type of client used to determine which settings are applicable. Can be `spa`, `native`, `non_interactive`, or `regular_web`.
-	AppType *string `json:"app_type,omitempty" url:"app_type,omitempty"`
+	ClientSecret *string            `json:"client_secret,omitempty" url:"client_secret,omitempty"`
+	AppType      *ClientAppTypeEnum `json:"app_type,omitempty" url:"app_type,omitempty"`
 	// URL of the logo to display for this client. Recommended size is 150x150 pixels.
 	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client a first party client (true) or not (false).
@@ -5998,7 +6064,7 @@ func (r *RotateClientSecretResponseContent) GetClientSecret() *string {
 	return r.ClientSecret
 }
 
-func (r *RotateClientSecretResponseContent) GetAppType() *string {
+func (r *RotateClientSecretResponseContent) GetAppType() *ClientAppTypeEnum {
 	if r == nil {
 		return nil
 	}
@@ -6336,9 +6402,8 @@ type UpdateClientResponseContent struct {
 	// Whether this is your global 'All Applications' client representing legacy tenant settings (true) or a regular client (false).
 	Global *bool `json:"global,omitempty" url:"global,omitempty"`
 	// Client secret (which you must not make public).
-	ClientSecret *string `json:"client_secret,omitempty" url:"client_secret,omitempty"`
-	// Type of client used to determine which settings are applicable. Can be `spa`, `native`, `non_interactive`, or `regular_web`.
-	AppType *string `json:"app_type,omitempty" url:"app_type,omitempty"`
+	ClientSecret *string            `json:"client_secret,omitempty" url:"client_secret,omitempty"`
+	AppType      *ClientAppTypeEnum `json:"app_type,omitempty" url:"app_type,omitempty"`
 	// URL of the logo to display for this client. Recommended size is 150x150 pixels.
 	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client a first party client (true) or not (false).
@@ -6448,7 +6513,7 @@ func (u *UpdateClientResponseContent) GetClientSecret() *string {
 	return u.ClientSecret
 }
 
-func (u *UpdateClientResponseContent) GetAppType() *string {
+func (u *UpdateClientResponseContent) GetAppType() *ClientAppTypeEnum {
 	if u == nil {
 		return nil
 	}

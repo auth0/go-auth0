@@ -4,7 +4,6 @@ package management
 
 import (
 	json "encoding/json"
-
 	core "github.com/auth0/go-auth0/v2/management/core"
 )
 

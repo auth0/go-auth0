@@ -5,14 +5,13 @@ package authenticationmethods
 import (
 	context "context"
 	fmt "fmt"
-	http "net/http"
-	strconv "strconv"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	users "github.com/auth0/go-auth0/v2/management/users"
+	http "net/http"
+	strconv "strconv"
 )
 
 type Client struct {

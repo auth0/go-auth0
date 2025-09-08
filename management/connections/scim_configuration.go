@@ -3,68 +3,8 @@
 package connections
 
 import (
-	json "encoding/json"
-	fmt "fmt"
-
 	management "github.com/auth0/go-auth0/v2/management"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
 )
-
-type CreateSCIMConfigurationRequestContent struct {
-	// User ID attribute for generating unique user ids
-	UserIDAttribute *string `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
-	// The mapping between auth0 and SCIM
-	Mapping []*management.SCIMMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (c *CreateSCIMConfigurationRequestContent) GetUserIDAttribute() *string {
-	if c == nil {
-		return nil
-	}
-	return c.UserIDAttribute
-}
-
-func (c *CreateSCIMConfigurationRequestContent) GetMapping() []*management.SCIMMappingItem {
-	if c == nil {
-		return nil
-	}
-	return c.Mapping
-}
-
-func (c *CreateSCIMConfigurationRequestContent) GetExtraProperties() map[string]interface{} {
-	return c.extraProperties
-}
-
-func (c *CreateSCIMConfigurationRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateSCIMConfigurationRequestContent
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = CreateSCIMConfigurationRequestContent(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	c.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (c *CreateSCIMConfigurationRequestContent) String() string {
-	if len(c.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
 
 type UpdateSCIMConfigurationRequestContent struct {
 	// User ID attribute for generating unique user ids

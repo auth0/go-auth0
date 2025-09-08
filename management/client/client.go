@@ -31,6 +31,7 @@ import (
 	promptsclient "github.com/auth0/go-auth0/v2/management/prompts/client"
 	refreshtokens "github.com/auth0/go-auth0/v2/management/refreshtokens"
 	resourceservers "github.com/auth0/go-auth0/v2/management/resourceservers"
+	riskassessmentsclient "github.com/auth0/go-auth0/v2/management/riskassessments/client"
 	rolesclient "github.com/auth0/go-auth0/v2/management/roles/client"
 	rules "github.com/auth0/go-auth0/v2/management/rules"
 	rulesconfigs "github.com/auth0/go-auth0/v2/management/rulesconfigs"
@@ -85,6 +86,7 @@ type Management struct {
 	Emails                *emailsclient.Client
 	Guardian              *guardianclient.Client
 	Keys                  *keysclient.Client
+	RiskAssessments       *riskassessmentsclient.Client
 	Tenants               *tenantsclient.Client
 	VerifiableCredentials *verifiablecredentialsclient.Client
 
@@ -133,6 +135,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		Emails:                emailsclient.NewClient(options),
 		Guardian:              guardianclient.NewClient(options),
 		Keys:                  keysclient.NewClient(options),
+		RiskAssessments:       riskassessmentsclient.NewClient(options),
 		Tenants:               tenantsclient.NewClient(options),
 		VerifiableCredentials: verifiablecredentialsclient.NewClient(options),
 		options:               options,

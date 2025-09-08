@@ -5,7 +5,6 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 )
 
@@ -18,7 +17,10 @@ type CreateClientGrantRequestContent struct {
 	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
 	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"-"`
 	// Scopes allowed for this client grant.
-	Scope []string `json:"scope,omitempty" url:"-"`
+	Scope       []string                    `json:"scope,omitempty" url:"-"`
+	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"-"`
+	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"-"`
 }
 
 type ListClientGrantsRequestParameters struct {
@@ -32,8 +34,11 @@ type ListClientGrantsRequestParameters struct {
 	ClientID *string `json:"-" url:"client_id,omitempty"`
 	// Optional filter on allow_any_organization.
 	AllowAnyOrganization *ClientGrantAllowAnyOrganizationEnum `json:"-" url:"allow_any_organization,omitempty"`
+	// The type of application access the client grant allows. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href="https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+	SubjectType *ClientGrantSubjectTypeEnum `json:"-" url:"subject_type,omitempty"`
 }
 
+// Optional filter on allow_any_organization.
 type ClientGrantAllowAnyOrganizationEnum = bool
 
 // Controls how organizations may be used with this grant
@@ -78,7 +83,10 @@ type ClientGrantResponseContent struct {
 	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
 	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
 	// If enabled, this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
-	IsSystem *bool `json:"is_system,omitempty" url:"is_system,omitempty"`
+	IsSystem    *bool                       `json:"is_system,omitempty" url:"is_system,omitempty"`
+	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
+	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -133,6 +141,20 @@ func (c *ClientGrantResponseContent) GetIsSystem() *bool {
 	return c.IsSystem
 }
 
+func (c *ClientGrantResponseContent) GetSubjectType() *ClientGrantSubjectTypeEnum {
+	if c == nil {
+		return nil
+	}
+	return c.SubjectType
+}
+
+func (c *ClientGrantResponseContent) GetAuthorizationDetailsTypes() []string {
+	if c == nil {
+		return nil
+	}
+	return c.AuthorizationDetailsTypes
+}
+
 func (c *ClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
@@ -165,6 +187,29 @@ func (c *ClientGrantResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// The type of application access the client grant allows. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href="https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+type ClientGrantSubjectTypeEnum string
+
+const (
+	ClientGrantSubjectTypeEnumClient ClientGrantSubjectTypeEnum = "client"
+	ClientGrantSubjectTypeEnumUser   ClientGrantSubjectTypeEnum = "user"
+)
+
+func NewClientGrantSubjectTypeEnumFromString(s string) (ClientGrantSubjectTypeEnum, error) {
+	switch s {
+	case "client":
+		return ClientGrantSubjectTypeEnumClient, nil
+	case "user":
+		return ClientGrantSubjectTypeEnumUser, nil
+	}
+	var t ClientGrantSubjectTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientGrantSubjectTypeEnum) Ptr() *ClientGrantSubjectTypeEnum {
+	return &c
+}
+
 type CreateClientGrantResponseContent struct {
 	// ID of the client grant.
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -178,7 +223,10 @@ type CreateClientGrantResponseContent struct {
 	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
 	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
 	// If enabled, this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
-	IsSystem *bool `json:"is_system,omitempty" url:"is_system,omitempty"`
+	IsSystem    *bool                       `json:"is_system,omitempty" url:"is_system,omitempty"`
+	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
+	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -231,6 +279,20 @@ func (c *CreateClientGrantResponseContent) GetIsSystem() *bool {
 		return nil
 	}
 	return c.IsSystem
+}
+
+func (c *CreateClientGrantResponseContent) GetSubjectType() *ClientGrantSubjectTypeEnum {
+	if c == nil {
+		return nil
+	}
+	return c.SubjectType
+}
+
+func (c *CreateClientGrantResponseContent) GetAuthorizationDetailsTypes() []string {
+	if c == nil {
+		return nil
+	}
+	return c.AuthorizationDetailsTypes
 }
 
 func (c *CreateClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
@@ -333,7 +395,10 @@ type UpdateClientGrantResponseContent struct {
 	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
 	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
 	// If enabled, this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
-	IsSystem *bool `json:"is_system,omitempty" url:"is_system,omitempty"`
+	IsSystem    *bool                       `json:"is_system,omitempty" url:"is_system,omitempty"`
+	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
+	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -388,6 +453,20 @@ func (u *UpdateClientGrantResponseContent) GetIsSystem() *bool {
 	return u.IsSystem
 }
 
+func (u *UpdateClientGrantResponseContent) GetSubjectType() *ClientGrantSubjectTypeEnum {
+	if u == nil {
+		return nil
+	}
+	return u.SubjectType
+}
+
+func (u *UpdateClientGrantResponseContent) GetAuthorizationDetailsTypes() []string {
+	if u == nil {
+		return nil
+	}
+	return u.AuthorizationDetailsTypes
+}
+
 func (u *UpdateClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
@@ -426,4 +505,6 @@ type UpdateClientGrantRequestContent struct {
 	OrganizationUsage *ClientGrantOrganizationNullableUsageEnum `json:"organization_usage,omitempty" url:"-"`
 	// Controls allowing any organization to be used with this grant
 	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"-"`
+	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"-"`
 }

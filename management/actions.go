@@ -5,9 +5,8 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	time "time"
-
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	time "time"
 )
 
 type CreateActionRequestContent struct {
@@ -19,7 +18,7 @@ type CreateActionRequestContent struct {
 	Code *string `json:"code,omitempty" url:"-"`
 	// The list of third party npm modules, and their versions, that this action depends on.
 	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"-"`
-	// The Node runtime. For example: `node12`, defaults to `node12`
+	// The Node runtime. For example: `node22`, defaults to `node22`
 	Runtime *string `json:"runtime,omitempty" url:"-"`
 	// The list of secrets that are included in an action or a version of an action.
 	Secrets []*ActionSecretRequest `json:"secrets,omitempty" url:"-"`
@@ -68,7 +67,7 @@ type CreateActionResponseContent struct {
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this action depends on.
 	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
-	// The Node runtime. For example: `node12`, defaults to `node12`
+	// The Node runtime. For example: `node22`, defaults to `node22`
 	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
 	// The list of secrets that are included in an action or a version of an action.
 	Secrets         []*ActionSecretResponse `json:"secrets,omitempty" url:"secrets,omitempty"`
@@ -265,9 +264,9 @@ type DeployActionResponseContent struct {
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this specific version depends on.
 	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
-	// Indicates if this speciic version is the currently one deployed.
+	// Indicates if this specific version is the currently one deployed.
 	Deployed *bool `json:"deployed,omitempty" url:"deployed,omitempty"`
-	// The Node runtime. For example: `node12`
+	// The Node runtime. For example: `node22`
 	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
 	// The list of secrets that are included in an action or a version of an action.
 	Secrets []*ActionSecretResponse       `json:"secrets,omitempty" url:"secrets,omitempty"`
@@ -470,7 +469,7 @@ type GetActionResponseContent struct {
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this action depends on.
 	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
-	// The Node runtime. For example: `node12`, defaults to `node12`
+	// The Node runtime. For example: `node22`, defaults to `node22`
 	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
 	// The list of secrets that are included in an action or a version of an action.
 	Secrets         []*ActionSecretResponse `json:"secrets,omitempty" url:"secrets,omitempty"`
@@ -801,7 +800,7 @@ type UpdateActionResponseContent struct {
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this action depends on.
 	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
-	// The Node runtime. For example: `node12`, defaults to `node12`
+	// The Node runtime. For example: `node22`, defaults to `node22`
 	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
 	// The list of secrets that are included in an action or a version of an action.
 	Secrets         []*ActionSecretResponse `json:"secrets,omitempty" url:"secrets,omitempty"`
@@ -998,7 +997,7 @@ type UpdateActionRequestContent struct {
 	Code *string `json:"code,omitempty" url:"-"`
 	// The list of third party npm modules, and their versions, that this action depends on.
 	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"-"`
-	// The Node runtime. For example: `node12`, defaults to `node12`
+	// The Node runtime. For example: `node22`, defaults to `node22`
 	Runtime *string `json:"runtime,omitempty" url:"-"`
 	// The list of secrets that are included in an action or a version of an action.
 	Secrets []*ActionSecretRequest `json:"secrets,omitempty" url:"-"`

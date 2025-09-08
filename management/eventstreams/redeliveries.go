@@ -4,10 +4,9 @@ package eventstreams
 
 import (
 	json "encoding/json"
-	time "time"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	time "time"
 )
 
 type CreateEventStreamRedeliveryRequestContent struct {

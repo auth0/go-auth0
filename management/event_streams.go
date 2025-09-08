@@ -5,17 +5,9 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	time "time"
-
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	time "time"
 )
-
-type EventStreamsGetStatsRequest struct {
-	// The RFC3339 start date for the stats query.
-	DateFrom *string `json:"-" url:"date_from,omitempty"`
-	// The RFC3339 end date for the stats query.
-	DateTo *string `json:"-" url:"date_to,omitempty"`
-}
 
 type ListEventStreamsRequestParameters struct {
 	// Optional Id from which to start selection.
@@ -629,53 +621,6 @@ func (e *EventStreamActionResponseContent) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-type EventStreamBucketInterval struct {
-	// Time interval in seconds for each bucket.
-	ScaleFactor int `json:"scale_factor" url:"scale_factor"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (e *EventStreamBucketInterval) GetScaleFactor() int {
-	if e == nil {
-		return 0
-	}
-	return e.ScaleFactor
-}
-
-func (e *EventStreamBucketInterval) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *EventStreamBucketInterval) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamBucketInterval
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = EventStreamBucketInterval(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-	e.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (e *EventStreamBucketInterval) String() string {
-	if len(e.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
 type EventStreamDestinationPatch struct {
 	EventStreamWebhookDestination *EventStreamWebhookDestination
 	EventStreamActionDestination  *EventStreamActionDestination
@@ -1048,80 +993,6 @@ func (e *EventStreamEventBridgeResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamEventBridgeResponseContent) String() string {
-	if len(e.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-type EventStreamMetric struct {
-	// Name of the metric.
-	Name string `json:"name" url:"name"`
-	// Total count for the entire window.
-	WindowTotal float64 `json:"window_total" url:"window_total"`
-	// Type of metric.
-	Type string `json:"type" url:"type"`
-	// Array of metric values for each bucket.
-	Data []float64 `json:"data" url:"data"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (e *EventStreamMetric) GetName() string {
-	if e == nil {
-		return ""
-	}
-	return e.Name
-}
-
-func (e *EventStreamMetric) GetWindowTotal() float64 {
-	if e == nil {
-		return 0
-	}
-	return e.WindowTotal
-}
-
-func (e *EventStreamMetric) GetType() string {
-	if e == nil {
-		return ""
-	}
-	return e.Type
-}
-
-func (e *EventStreamMetric) GetData() []float64 {
-	if e == nil {
-		return nil
-	}
-	return e.Data
-}
-
-func (e *EventStreamMetric) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *EventStreamMetric) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamMetric
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = EventStreamMetric(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-	e.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (e *EventStreamMetric) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -1725,92 +1596,6 @@ func (e *EventStreamWebhookResponseContent) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-type EventStreamWindow struct {
-	// Start date of the time window.
-	DateFrom time.Time `json:"date_from" url:"date_from"`
-	// End date of the time window.
-	DateTo         time.Time                  `json:"date_to" url:"date_to"`
-	BucketInterval *EventStreamBucketInterval `json:"bucket_interval" url:"bucket_interval"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (e *EventStreamWindow) GetDateFrom() time.Time {
-	if e == nil {
-		return time.Time{}
-	}
-	return e.DateFrom
-}
-
-func (e *EventStreamWindow) GetDateTo() time.Time {
-	if e == nil {
-		return time.Time{}
-	}
-	return e.DateTo
-}
-
-func (e *EventStreamWindow) GetBucketInterval() *EventStreamBucketInterval {
-	if e == nil {
-		return nil
-	}
-	return e.BucketInterval
-}
-
-func (e *EventStreamWindow) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *EventStreamWindow) UnmarshalJSON(data []byte) error {
-	type embed EventStreamWindow
-	var unmarshaler = struct {
-		embed
-		DateFrom *internal.DateTime `json:"date_from"`
-		DateTo   *internal.DateTime `json:"date_to"`
-	}{
-		embed: embed(*e),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	*e = EventStreamWindow(unmarshaler.embed)
-	e.DateFrom = unmarshaler.DateFrom.Time()
-	e.DateTo = unmarshaler.DateTo.Time()
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-	e.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (e *EventStreamWindow) MarshalJSON() ([]byte, error) {
-	type embed EventStreamWindow
-	var marshaler = struct {
-		embed
-		DateFrom *internal.DateTime `json:"date_from"`
-		DateTo   *internal.DateTime `json:"date_to"`
-	}{
-		embed:    embed(*e),
-		DateFrom: internal.NewDateTime(e.DateFrom),
-		DateTo:   internal.NewDateTime(e.DateTo),
-	}
-	return json.Marshal(marshaler)
-}
-
-func (e *EventStreamWindow) String() string {
-	if len(e.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
 type GetEventStreamResponseContent struct {
 	EventStreamWebhookResponseContent     *EventStreamWebhookResponseContent
 	EventStreamEventBridgeResponseContent *EventStreamEventBridgeResponseContent
@@ -1892,88 +1677,6 @@ func (g *GetEventStreamResponseContent) Accept(visitor GetEventStreamResponseCon
 		return visitor.VisitEventStreamActionResponseContent(g.EventStreamActionResponseContent)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", g)
-}
-
-type GetEventStreamStatsResponseContent struct {
-	// Unique identifier for the event stream.
-	ID string `json:"id" url:"id"`
-	// Name of the event stream.
-	Name   string             `json:"name" url:"name"`
-	Window *EventStreamWindow `json:"window" url:"window"`
-	// Array of timestamp strings representing bucket boundaries.
-	Buckets []time.Time `json:"buckets" url:"buckets"`
-	// Array of metrics for the event stream.
-	Metrics []*EventStreamMetric `json:"metrics" url:"metrics"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (g *GetEventStreamStatsResponseContent) GetID() string {
-	if g == nil {
-		return ""
-	}
-	return g.ID
-}
-
-func (g *GetEventStreamStatsResponseContent) GetName() string {
-	if g == nil {
-		return ""
-	}
-	return g.Name
-}
-
-func (g *GetEventStreamStatsResponseContent) GetWindow() *EventStreamWindow {
-	if g == nil {
-		return nil
-	}
-	return g.Window
-}
-
-func (g *GetEventStreamStatsResponseContent) GetBuckets() []time.Time {
-	if g == nil {
-		return nil
-	}
-	return g.Buckets
-}
-
-func (g *GetEventStreamStatsResponseContent) GetMetrics() []*EventStreamMetric {
-	if g == nil {
-		return nil
-	}
-	return g.Metrics
-}
-
-func (g *GetEventStreamStatsResponseContent) GetExtraProperties() map[string]interface{} {
-	return g.extraProperties
-}
-
-func (g *GetEventStreamStatsResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler GetEventStreamStatsResponseContent
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*g = GetEventStreamStatsResponseContent(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *g)
-	if err != nil {
-		return err
-	}
-	g.extraProperties = extraProperties
-	g.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (g *GetEventStreamStatsResponseContent) String() string {
-	if len(g.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(g); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", g)
 }
 
 // The raw payload of the test event.

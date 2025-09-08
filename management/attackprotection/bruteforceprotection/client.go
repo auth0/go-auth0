@@ -4,7 +4,6 @@ package bruteforceprotection
 
 import (
 	context "context"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	attackprotection "github.com/auth0/go-auth0/v2/management/attackprotection"
 	core "github.com/auth0/go-auth0/v2/management/core"

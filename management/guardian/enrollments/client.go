@@ -4,7 +4,6 @@ package enrollments
 
 import (
 	context "context"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	guardian "github.com/auth0/go-auth0/v2/management/guardian"

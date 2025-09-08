@@ -5,7 +5,6 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 )
 
@@ -196,6 +195,7 @@ func (d *DeviceCredential) String() string {
 // Type of credential. Must be `public_key`.
 type DeviceCredentialPublicKeyTypeEnum = string
 
+// Type of credentials to retrieve. Must be `public_key`, `refresh_token` or `rotating_refresh_token`. The property will default to `refresh_token` when paging is requested
 type DeviceCredentialTypeEnum string
 
 const (
