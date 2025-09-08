@@ -19,7 +19,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.25.0
+                - Go-Auth0/1.27.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 423
         uncompressed: false
-        body: '{"id":"est_iCyT3rLLXTowdhCgCJH6hX","status":"enabled","name":"failing-webhook-test-stream","subscriptions":[{"event_type":"user.created"},{"event_type":"user.updated"}],"created_at":"2025-08-01T07:06:00.936Z","updated_at":"2025-08-01T07:06:00.936Z","destination":{"type":"webhook","configuration":{"webhook_endpoint":"https://api.hooklistener.com/w/random-turquoise-mead-xb3v","webhook_authorization":{"method":"bearer"}}}}'
+        body: '{"id":"est_aD5AUDqZbHFcMoEx2LxAk9","status":"enabled","name":"failing-webhook-test-stream","subscriptions":[{"event_type":"user.created"},{"event_type":"user.updated"}],"created_at":"2025-09-08T06:34:34.198Z","updated_at":"2025-09-08T06:34:34.198Z","destination":{"type":"webhook","configuration":{"webhook_endpoint":"https://api.hooklistener.com/w/random-turquoise-mead-xb3v","webhook_authorization":{"method":"bearer"}}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 1.1243465s
+        duration: 1.244733791s
     - id: 1
       request:
         proto: HTTP/1.1
@@ -55,8 +55,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/test
+                - Go-Auth0/1.27.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_aD5AUDqZbHFcMoEx2LxAk9/test
         method: POST
       response:
         proto: HTTP/2.0
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"id":"evt_rqY7Kw1fw2kebAMSiX8SGa","event_stream_id":"est_iCyT3rLLXTowdhCgCJH6hX","event_type":"user.created","status":"pending","attempts":[],"event":{"specversion":"1.0","id":"evt_rqY7Kw1fw2kebAMSiX8SGa","source":"urn:auth0:go-auth0-dev.eu.auth0.com.sus.auth0.com","type":"user.created","time":"2025-08-01T07:06:01.353Z","data":{"object":{"user_id":"auth0|507f1f77bcf86cd799439020","email":"john.doe@gmail.com","email_verified":false,"username":"johndoe","phone_number":"+15555555555","phone_verified":false,"created_at":"2025-02-01T12:34:56Z","updated_at":"2025-02-01T12:34:56Z","identities":[{"provider":"auth0","isSocial":false,"connection":"Username-Password-Authentication","user_id":"507f1f77bcf86cd799439020","profileData":{"email":"john.doe@gmail.com","email_verified":false,"name":"John Doe","username":"johndoe","given_name":"John","family_name":"Doe","phone_number":"+15555555555","phone_verified":false}}],"app_metadata":{"plan":"pro"},"user_metadata":{"hobby":"skydiving"},"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","name":"John Doe","nickname":"John Doe","multifactor":["sample"],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"blocked":false,"given_name":"John","family_name":"Doe"}},"a0purpose":"test","a0stream":"est_iCyT3rLLXTowdhCgCJH6hX","a0tenant":"go-auth0-dev.eu.auth0.com"}}'
+        body: '{"id":"evt_7PhFNYbTW8At5NiLxgUn4D","event_stream_id":"est_aD5AUDqZbHFcMoEx2LxAk9","event_type":"user.created","status":"pending","attempts":[],"event":{"specversion":"1.0","id":"evt_7PhFNYbTW8At5NiLxgUn4D","source":"urn:auth0:go-auth0-dev.eu.auth0.com.sus.auth0.com","type":"user.created","time":"2025-09-08T06:34:34.645Z","data":{"object":{"user_id":"auth0|507f1f77bcf86cd799439020","email":"john.doe@gmail.com","email_verified":false,"username":"johndoe","phone_number":"+15555555555","phone_verified":false,"created_at":"2025-02-01T12:34:56Z","updated_at":"2025-02-01T12:34:56Z","identities":[{"provider":"auth0","isSocial":false,"connection":"Username-Password-Authentication","user_id":"507f1f77bcf86cd799439020","profileData":{"email":"john.doe@gmail.com","email_verified":false,"name":"John Doe","username":"johndoe","given_name":"John","family_name":"Doe","phone_number":"+15555555555","phone_verified":false}}],"app_metadata":{"plan":"pro"},"user_metadata":{"hobby":"skydiving"},"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","name":"John Doe","nickname":"John Doe","multifactor":["sample"],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"blocked":false,"given_name":"John","family_name":"Doe"}},"a0purpose":"test","a0stream":"est_aD5AUDqZbHFcMoEx2LxAk9","a0tenant":"go-auth0-dev.eu.auth0.com"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 408.712083ms
+        duration: 504.894584ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -91,8 +91,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/test
+                - Go-Auth0/1.27.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_aD5AUDqZbHFcMoEx2LxAk9/test
         method: POST
       response:
         proto: HTTP/2.0
@@ -102,13 +102,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"id":"evt_hFcEcsho73hdf9JAQEgqbM","event_stream_id":"est_iCyT3rLLXTowdhCgCJH6hX","event_type":"user.created","status":"pending","attempts":[],"event":{"specversion":"1.0","id":"evt_hFcEcsho73hdf9JAQEgqbM","source":"urn:auth0:go-auth0-dev.eu.auth0.com.sus.auth0.com","type":"user.created","time":"2025-08-01T07:06:02.715Z","data":{"object":{"user_id":"auth0|507f1f77bcf86cd799439020","email":"john.doe@gmail.com","email_verified":false,"username":"johndoe","phone_number":"+15555555555","phone_verified":false,"created_at":"2025-02-01T12:34:56Z","updated_at":"2025-02-01T12:34:56Z","identities":[{"provider":"auth0","isSocial":false,"connection":"Username-Password-Authentication","user_id":"507f1f77bcf86cd799439020","profileData":{"email":"john.doe@gmail.com","email_verified":false,"name":"John Doe","username":"johndoe","given_name":"John","family_name":"Doe","phone_number":"+15555555555","phone_verified":false}}],"app_metadata":{"plan":"pro"},"user_metadata":{"hobby":"skydiving"},"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","name":"John Doe","nickname":"John Doe","multifactor":["sample"],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"blocked":false,"given_name":"John","family_name":"Doe"}},"a0purpose":"test","a0stream":"est_iCyT3rLLXTowdhCgCJH6hX","a0tenant":"go-auth0-dev.eu.auth0.com"}}'
+        body: '{"id":"evt_mkAFk7L2eV2QwAftmoL5i6","event_stream_id":"est_aD5AUDqZbHFcMoEx2LxAk9","event_type":"user.created","status":"pending","attempts":[],"event":{"specversion":"1.0","id":"evt_mkAFk7L2eV2QwAftmoL5i6","source":"urn:auth0:go-auth0-dev.eu.auth0.com.sus.auth0.com","type":"user.created","time":"2025-09-08T06:34:36.032Z","data":{"object":{"user_id":"auth0|507f1f77bcf86cd799439020","email":"john.doe@gmail.com","email_verified":false,"username":"johndoe","phone_number":"+15555555555","phone_verified":false,"created_at":"2025-02-01T12:34:56Z","updated_at":"2025-02-01T12:34:56Z","identities":[{"provider":"auth0","isSocial":false,"connection":"Username-Password-Authentication","user_id":"507f1f77bcf86cd799439020","profileData":{"email":"john.doe@gmail.com","email_verified":false,"name":"John Doe","username":"johndoe","given_name":"John","family_name":"Doe","phone_number":"+15555555555","phone_verified":false}}],"app_metadata":{"plan":"pro"},"user_metadata":{"hobby":"skydiving"},"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","name":"John Doe","nickname":"John Doe","multifactor":["sample"],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"blocked":false,"given_name":"John","family_name":"Doe"}},"a0purpose":"test","a0stream":"est_aD5AUDqZbHFcMoEx2LxAk9","a0tenant":"go-auth0-dev.eu.auth0.com"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 357.902125ms
+        duration: 317.751042ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -127,8 +127,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/test
+                - Go-Auth0/1.27.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_aD5AUDqZbHFcMoEx2LxAk9/test
         method: POST
       response:
         proto: HTTP/2.0
@@ -138,13 +138,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"id":"evt_eFgyG4ctJ4RAu2A5UaR2Yv","event_stream_id":"est_iCyT3rLLXTowdhCgCJH6hX","event_type":"user.created","status":"pending","attempts":[],"event":{"specversion":"1.0","id":"evt_eFgyG4ctJ4RAu2A5UaR2Yv","source":"urn:auth0:go-auth0-dev.eu.auth0.com.sus.auth0.com","type":"user.created","time":"2025-08-01T07:06:04.068Z","data":{"object":{"user_id":"auth0|507f1f77bcf86cd799439020","email":"john.doe@gmail.com","email_verified":false,"username":"johndoe","phone_number":"+15555555555","phone_verified":false,"created_at":"2025-02-01T12:34:56Z","updated_at":"2025-02-01T12:34:56Z","identities":[{"provider":"auth0","isSocial":false,"connection":"Username-Password-Authentication","user_id":"507f1f77bcf86cd799439020","profileData":{"email":"john.doe@gmail.com","email_verified":false,"name":"John Doe","username":"johndoe","given_name":"John","family_name":"Doe","phone_number":"+15555555555","phone_verified":false}}],"app_metadata":{"plan":"pro"},"user_metadata":{"hobby":"skydiving"},"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","name":"John Doe","nickname":"John Doe","multifactor":["sample"],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"blocked":false,"given_name":"John","family_name":"Doe"}},"a0purpose":"test","a0stream":"est_iCyT3rLLXTowdhCgCJH6hX","a0tenant":"go-auth0-dev.eu.auth0.com"}}'
+        body: '{"id":"evt_mo5fABu7URqmYatLBejFxa","event_stream_id":"est_aD5AUDqZbHFcMoEx2LxAk9","event_type":"user.created","status":"pending","attempts":[],"event":{"specversion":"1.0","id":"evt_mo5fABu7URqmYatLBejFxa","source":"urn:auth0:go-auth0-dev.eu.auth0.com.sus.auth0.com","type":"user.created","time":"2025-09-08T06:34:37.345Z","data":{"object":{"user_id":"auth0|507f1f77bcf86cd799439020","email":"john.doe@gmail.com","email_verified":false,"username":"johndoe","phone_number":"+15555555555","phone_verified":false,"created_at":"2025-02-01T12:34:56Z","updated_at":"2025-02-01T12:34:56Z","identities":[{"provider":"auth0","isSocial":false,"connection":"Username-Password-Authentication","user_id":"507f1f77bcf86cd799439020","profileData":{"email":"john.doe@gmail.com","email_verified":false,"name":"John Doe","username":"johndoe","given_name":"John","family_name":"Doe","phone_number":"+15555555555","phone_verified":false}}],"app_metadata":{"plan":"pro"},"user_metadata":{"hobby":"skydiving"},"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","name":"John Doe","nickname":"John Doe","multifactor":["sample"],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"blocked":false,"given_name":"John","family_name":"Doe"}},"a0purpose":"test","a0stream":"est_aD5AUDqZbHFcMoEx2LxAk9","a0tenant":"go-auth0-dev.eu.auth0.com"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 368.022ms
+        duration: 310.132333ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -163,8 +163,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/test
+                - Go-Auth0/1.27.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_aD5AUDqZbHFcMoEx2LxAk9/test
         method: POST
       response:
         proto: HTTP/2.0
@@ -174,13 +174,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"id":"evt_248hCPsVtmMBUeBMJ6iesd","event_stream_id":"est_iCyT3rLLXTowdhCgCJH6hX","event_type":"user.updated","status":"pending","attempts":[],"event":{"specversion":"1.0","id":"evt_248hCPsVtmMBUeBMJ6iesd","source":"urn:auth0:go-auth0-dev.eu.auth0.com.sus.auth0.com","type":"user.updated","time":"2025-08-01T07:06:05.434Z","data":{"object":{"user_id":"auth0|507f1f77bcf86cd799439020","email":"john.doe@gmail.com","email_verified":false,"username":"johndoe","phone_number":"+15555555555","phone_verified":false,"created_at":"2025-02-01T12:34:56Z","updated_at":"2025-02-01T12:34:56Z","identities":[{"provider":"auth0","isSocial":false,"connection":"Username-Password-Authentication","user_id":"507f1f77bcf86cd799439020","profileData":{"email":"john.doe@gmail.com","email_verified":false,"name":"John Doe","username":"johndoe","given_name":"John","family_name":"Doe","phone_number":"+15555555555","phone_verified":false}}],"app_metadata":{"plan":"pro"},"user_metadata":{"hobby":"skydiving"},"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","name":"John Doe","nickname":"John Doe","multifactor":["sample"],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"blocked":false,"given_name":"John","family_name":"Doe"}},"a0purpose":"test","a0stream":"est_iCyT3rLLXTowdhCgCJH6hX","a0tenant":"go-auth0-dev.eu.auth0.com"}}'
+        body: '{"id":"evt_q273LFcsfrNovuzswy8qBz","event_stream_id":"est_aD5AUDqZbHFcMoEx2LxAk9","event_type":"user.updated","status":"pending","attempts":[],"event":{"specversion":"1.0","id":"evt_q273LFcsfrNovuzswy8qBz","source":"urn:auth0:go-auth0-dev.eu.auth0.com.sus.auth0.com","type":"user.updated","time":"2025-09-08T06:34:38.679Z","data":{"object":{"user_id":"auth0|507f1f77bcf86cd799439020","email":"john.doe@gmail.com","email_verified":false,"username":"johndoe","phone_number":"+15555555555","phone_verified":false,"created_at":"2025-02-01T12:34:56Z","updated_at":"2025-02-01T12:34:56Z","identities":[{"provider":"auth0","isSocial":false,"connection":"Username-Password-Authentication","user_id":"507f1f77bcf86cd799439020","profileData":{"email":"john.doe@gmail.com","email_verified":false,"name":"John Doe","username":"johndoe","given_name":"John","family_name":"Doe","phone_number":"+15555555555","phone_verified":false}}],"app_metadata":{"plan":"pro"},"user_metadata":{"hobby":"skydiving"},"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","name":"John Doe","nickname":"John Doe","multifactor":["sample"],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"blocked":false,"given_name":"John","family_name":"Doe"}},"a0purpose":"test","a0stream":"est_aD5AUDqZbHFcMoEx2LxAk9","a0tenant":"go-auth0-dev.eu.auth0.com"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 342.627666ms
+        duration: 333.190042ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -196,8 +196,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/deliveries?event_types=user.created%2Cuser.updated
+                - Go-Auth0/1.27.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_aD5AUDqZbHFcMoEx2LxAk9/deliveries?event_types=user.created%2Cuser.updated&take=50
         method: GET
       response:
         proto: HTTP/2.0
@@ -207,13 +207,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"deliveries":[{"id":"evt_rqY7Kw1fw2kebAMSiX8SGa","event_stream_id":"est_iCyT3rLLXTowdhCgCJH6hX","event_type":"user.created","status":"failed","attempts":[{"status":"failed","error_message":"404 - {\"error\":\"Debug endpoint not found\"}","timestamp":"2025-08-01T07:06:18.666Z","duration":215.420972}],"event":{"id":"evt_rqY7Kw1fw2kebAMSiX8SGa","source":"urn:auth0:","specversion":"1.0","type":"user.created","time":"2025-08-01T07:06:01.353Z","data":{"object":{"app_metadata":{"plan":"pro"},"blocked":false,"created_at":"2025-02-01T12:34:56Z","email":"john.doe@gmail.com","email_verified":false,"family_name":"Doe","given_name":"John","identities":[{"connection":"Username-Password-Authentication","provider":"auth0","user_id":"507f1f77bcf86cd799439020"}],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"name":"John Doe","nickname":"John Doe","phone_number":"+15555555555","phone_verified":false,"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","updated_at":"2025-02-01T12:34:56Z","user_id":"auth0|507f1f77bcf86cd799439020","user_metadata":{"hobby":"skydiving"},"username":"johndoe"}},"a0tenant":"go-auth0-dev.eu.auth0.com","a0stream":"est_iCyT3rLLXTowdhCgCJH6hX"}},{"id":"evt_hFcEcsho73hdf9JAQEgqbM","event_stream_id":"est_iCyT3rLLXTowdhCgCJH6hX","event_type":"user.created","status":"failed","attempts":[{"status":"failed","error_message":"404 - {\"error\":\"Debug endpoint not found\"}","timestamp":"2025-08-01T07:06:18.855Z","duration":182.831871}],"event":{"id":"evt_hFcEcsho73hdf9JAQEgqbM","source":"urn:auth0:","specversion":"1.0","type":"user.created","time":"2025-08-01T07:06:02.715Z","data":{"object":{"app_metadata":{"plan":"pro"},"blocked":false,"created_at":"2025-02-01T12:34:56Z","email":"john.doe@gmail.com","email_verified":false,"family_name":"Doe","given_name":"John","identities":[{"connection":"Username-Password-Authentication","provider":"auth0","user_id":"507f1f77bcf86cd799439020"}],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"name":"John Doe","nickname":"John Doe","phone_number":"+15555555555","phone_verified":false,"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","updated_at":"2025-02-01T12:34:56Z","user_id":"auth0|507f1f77bcf86cd799439020","user_metadata":{"hobby":"skydiving"},"username":"johndoe"}},"a0tenant":"go-auth0-dev.eu.auth0.com","a0stream":"est_iCyT3rLLXTowdhCgCJH6hX"}},{"id":"evt_eFgyG4ctJ4RAu2A5UaR2Yv","event_stream_id":"est_iCyT3rLLXTowdhCgCJH6hX","event_type":"user.created","status":"failed","attempts":[{"status":"failed","error_message":"404 - {\"error\":\"Debug endpoint not found\"}","timestamp":"2025-08-01T07:06:19.044Z","duration":184.216622}],"event":{"id":"evt_eFgyG4ctJ4RAu2A5UaR2Yv","source":"urn:auth0:","specversion":"1.0","type":"user.created","time":"2025-08-01T07:06:04.068Z","data":{"object":{"app_metadata":{"plan":"pro"},"blocked":false,"created_at":"2025-02-01T12:34:56Z","email":"john.doe@gmail.com","email_verified":false,"family_name":"Doe","given_name":"John","identities":[{"connection":"Username-Password-Authentication","provider":"auth0","user_id":"507f1f77bcf86cd799439020"}],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"name":"John Doe","nickname":"John Doe","phone_number":"+15555555555","phone_verified":false,"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","updated_at":"2025-02-01T12:34:56Z","user_id":"auth0|507f1f77bcf86cd799439020","user_metadata":{"hobby":"skydiving"},"username":"johndoe"}},"a0tenant":"go-auth0-dev.eu.auth0.com","a0stream":"est_iCyT3rLLXTowdhCgCJH6hX"}},{"id":"evt_248hCPsVtmMBUeBMJ6iesd","event_stream_id":"est_iCyT3rLLXTowdhCgCJH6hX","event_type":"user.updated","status":"failed","attempts":[{"status":"failed","error_message":"404 - {\"error\":\"Debug endpoint not found\"}","timestamp":"2025-08-01T07:06:19.225Z","duration":175.813604}],"event":{"id":"evt_248hCPsVtmMBUeBMJ6iesd","source":"urn:auth0:","specversion":"1.0","type":"user.updated","time":"2025-08-01T07:06:05.434Z","data":{"object":{"app_metadata":{"plan":"pro"},"blocked":false,"created_at":"2025-02-01T12:34:56Z","email":"john.doe@gmail.com","email_verified":false,"family_name":"Doe","given_name":"John","identities":[{"connection":"Username-Password-Authentication","provider":"auth0","user_id":"507f1f77bcf86cd799439020"}],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"name":"John Doe","nickname":"John Doe","phone_number":"+15555555555","phone_verified":false,"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","updated_at":"2025-02-01T12:34:56Z","user_id":"auth0|507f1f77bcf86cd799439020","user_metadata":{"hobby":"skydiving"},"username":"johndoe"}},"a0tenant":"go-auth0-dev.eu.auth0.com","a0stream":"est_iCyT3rLLXTowdhCgCJH6hX"}}],"nextPageToken":"6tmpbIw-ObJVB6mexY09mIQvcDBGRO9EK1fS0OyJ8SoU1YczqjRJVFPaxA"}'
+        body: '{"deliveries":[{"id":"evt_7PhFNYbTW8At5NiLxgUn4D","event_stream_id":"est_aD5AUDqZbHFcMoEx2LxAk9","event_type":"user.created","status":"failed","attempts":[{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:34:56.383Z","duration":27.042698},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:34:57.404Z","duration":20.530268},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:34:59.427Z","duration":21.675832},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:03.448Z","duration":19.882221}],"event":{"id":"evt_7PhFNYbTW8At5NiLxgUn4D","source":"urn:auth0:","specversion":"1.0","type":"user.created","time":"2025-09-08T06:34:34.645Z","data":{"object":{"app_metadata":{"plan":"pro"},"blocked":false,"created_at":"2025-02-01T12:34:56Z","email":"john.doe@gmail.com","email_verified":false,"family_name":"Doe","given_name":"John","identities":[{"connection":"Username-Password-Authentication","provider":"auth0","user_id":"507f1f77bcf86cd799439020"}],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"name":"John Doe","nickname":"John Doe","phone_number":"+15555555555","phone_verified":false,"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","updated_at":"2025-02-01T12:34:56Z","user_id":"auth0|507f1f77bcf86cd799439020","user_metadata":{"hobby":"skydiving"},"username":"johndoe"}},"a0tenant":"go-auth0-dev.eu.auth0.com","a0stream":"est_aD5AUDqZbHFcMoEx2LxAk9"}},{"id":"evt_mkAFk7L2eV2QwAftmoL5i6","event_stream_id":"est_aD5AUDqZbHFcMoEx2LxAk9","event_type":"user.created","status":"failed","attempts":[{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:03.475Z","duration":19.515108},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:04.496Z","duration":19.902565},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:06.517Z","duration":21.132065},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:10.539Z","duration":21.462112}],"event":{"id":"evt_mkAFk7L2eV2QwAftmoL5i6","source":"urn:auth0:","specversion":"1.0","type":"user.created","time":"2025-09-08T06:34:36.032Z","data":{"object":{"app_metadata":{"plan":"pro"},"blocked":false,"created_at":"2025-02-01T12:34:56Z","email":"john.doe@gmail.com","email_verified":false,"family_name":"Doe","given_name":"John","identities":[{"connection":"Username-Password-Authentication","provider":"auth0","user_id":"507f1f77bcf86cd799439020"}],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"name":"John Doe","nickname":"John Doe","phone_number":"+15555555555","phone_verified":false,"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","updated_at":"2025-02-01T12:34:56Z","user_id":"auth0|507f1f77bcf86cd799439020","user_metadata":{"hobby":"skydiving"},"username":"johndoe"}},"a0tenant":"go-auth0-dev.eu.auth0.com","a0stream":"est_aD5AUDqZbHFcMoEx2LxAk9"}},{"id":"evt_mo5fABu7URqmYatLBejFxa","event_stream_id":"est_aD5AUDqZbHFcMoEx2LxAk9","event_type":"user.created","status":"failed","attempts":[{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:10.565Z","duration":19.823485},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:11.589Z","duration":22.535675},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:13.610Z","duration":19.792394},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:17.635Z","duration":25.185865}],"event":{"id":"evt_mo5fABu7URqmYatLBejFxa","source":"urn:auth0:","specversion":"1.0","type":"user.created","time":"2025-09-08T06:34:37.345Z","data":{"object":{"app_metadata":{"plan":"pro"},"blocked":false,"created_at":"2025-02-01T12:34:56Z","email":"john.doe@gmail.com","email_verified":false,"family_name":"Doe","given_name":"John","identities":[{"connection":"Username-Password-Authentication","provider":"auth0","user_id":"507f1f77bcf86cd799439020"}],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"name":"John Doe","nickname":"John Doe","phone_number":"+15555555555","phone_verified":false,"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","updated_at":"2025-02-01T12:34:56Z","user_id":"auth0|507f1f77bcf86cd799439020","user_metadata":{"hobby":"skydiving"},"username":"johndoe"}},"a0tenant":"go-auth0-dev.eu.auth0.com","a0stream":"est_aD5AUDqZbHFcMoEx2LxAk9"}},{"id":"evt_q273LFcsfrNovuzswy8qBz","event_stream_id":"est_aD5AUDqZbHFcMoEx2LxAk9","event_type":"user.updated","status":"failed","attempts":[{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:17.662Z","duration":19.970573},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:18.683Z","duration":20.467875},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:20.707Z","duration":23.130877},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:24.727Z","duration":19.514394}],"event":{"id":"evt_q273LFcsfrNovuzswy8qBz","source":"urn:auth0:","specversion":"1.0","type":"user.updated","time":"2025-09-08T06:34:38.679Z","data":{"object":{"app_metadata":{"plan":"pro"},"blocked":false,"created_at":"2025-02-01T12:34:56Z","email":"john.doe@gmail.com","email_verified":false,"family_name":"Doe","given_name":"John","identities":[{"connection":"Username-Password-Authentication","provider":"auth0","user_id":"507f1f77bcf86cd799439020"}],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"name":"John Doe","nickname":"John Doe","phone_number":"+15555555555","phone_verified":false,"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","updated_at":"2025-02-01T12:34:56Z","user_id":"auth0|507f1f77bcf86cd799439020","user_metadata":{"hobby":"skydiving"},"username":"johndoe"}},"a0tenant":"go-auth0-dev.eu.auth0.com","a0stream":"est_aD5AUDqZbHFcMoEx2LxAk9"}}],"next":"Gm-VVbE2J2BXhB0tPQsbpCm701Fini2nuhQbH3JplgWMe8dfjkEsTmFeiw"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 332.77875ms
+        duration: 433.624042ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -229,8 +229,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/stats
+                - Go-Auth0/1.27.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_aD5AUDqZbHFcMoEx2LxAk9/stats
         method: GET
       response:
         proto: HTTP/2.0
@@ -240,13 +240,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"est_iCyT3rLLXTowdhCgCJH6hX","name":"failing-webhook-test-stream","window":{"date_from":"2025-07-18T07:00:00.000Z","date_to":"2025-08-01T08:00:00.000Z","bucket_interval":{"scale_factor":86400}},"buckets":["2025-07-18T00:00:00.000Z","2025-07-19T00:00:00.000Z","2025-07-20T00:00:00.000Z","2025-07-21T00:00:00.000Z","2025-07-22T00:00:00.000Z","2025-07-23T00:00:00.000Z","2025-07-24T00:00:00.000Z","2025-07-25T00:00:00.000Z","2025-07-26T00:00:00.000Z","2025-07-27T00:00:00.000Z","2025-07-28T00:00:00.000Z","2025-07-29T00:00:00.000Z","2025-07-30T00:00:00.000Z","2025-07-31T00:00:00.000Z","2025-08-01T00:00:00.000Z"],"metrics":[{"name":"auth0.event_streams.successful_deliveries","window_total":0,"type":"sum","data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"auth0.event_streams.failed_deliveries","window_total":4,"type":"sum","data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,4]}]}'
+        body: '{"id":"est_aD5AUDqZbHFcMoEx2LxAk9","name":"failing-webhook-test-stream","window":{"date_from":"2025-08-25T06:00:00.000Z","date_to":"2025-09-08T07:00:00.000Z","bucket_interval":{"scale_factor":86400}},"buckets":["2025-08-25T00:00:00.000Z","2025-08-26T00:00:00.000Z","2025-08-27T00:00:00.000Z","2025-08-28T00:00:00.000Z","2025-08-29T00:00:00.000Z","2025-08-30T00:00:00.000Z","2025-08-31T00:00:00.000Z","2025-09-01T00:00:00.000Z","2025-09-02T00:00:00.000Z","2025-09-03T00:00:00.000Z","2025-09-04T00:00:00.000Z","2025-09-05T00:00:00.000Z","2025-09-06T00:00:00.000Z","2025-09-07T00:00:00.000Z","2025-09-08T00:00:00.000Z"],"metrics":[{"name":"auth0.event_streams.successful_deliveries","window_total":0,"type":"sum","data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"auth0.event_streams.failed_deliveries","window_total":4,"type":"sum","data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,4]}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 403.673709ms
+        duration: 432.079916ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -265,8 +265,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/redeliver
+                - Go-Auth0/1.27.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_aD5AUDqZbHFcMoEx2LxAk9/redeliver
         method: POST
       response:
         proto: HTTP/2.0
@@ -282,7 +282,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 383.779916ms
+        duration: 341.117917ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -298,8 +298,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/stats
+                - Go-Auth0/1.27.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_aD5AUDqZbHFcMoEx2LxAk9/stats
         method: GET
       response:
         proto: HTTP/2.0
@@ -309,13 +309,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"est_iCyT3rLLXTowdhCgCJH6hX","name":"failing-webhook-test-stream","window":{"date_from":"2025-07-18T07:00:00.000Z","date_to":"2025-08-01T08:00:00.000Z","bucket_interval":{"scale_factor":86400}},"buckets":["2025-07-18T00:00:00.000Z","2025-07-19T00:00:00.000Z","2025-07-20T00:00:00.000Z","2025-07-21T00:00:00.000Z","2025-07-22T00:00:00.000Z","2025-07-23T00:00:00.000Z","2025-07-24T00:00:00.000Z","2025-07-25T00:00:00.000Z","2025-07-26T00:00:00.000Z","2025-07-27T00:00:00.000Z","2025-07-28T00:00:00.000Z","2025-07-29T00:00:00.000Z","2025-07-30T00:00:00.000Z","2025-07-31T00:00:00.000Z","2025-08-01T00:00:00.000Z"],"metrics":[{"name":"auth0.event_streams.successful_deliveries","window_total":0,"type":"sum","data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"auth0.event_streams.failed_deliveries","window_total":8,"type":"sum","data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,8]}]}'
+        body: '{"id":"est_aD5AUDqZbHFcMoEx2LxAk9","name":"failing-webhook-test-stream","window":{"date_from":"2025-08-25T06:00:00.000Z","date_to":"2025-09-08T07:00:00.000Z","bucket_interval":{"scale_factor":86400}},"buckets":["2025-08-25T00:00:00.000Z","2025-08-26T00:00:00.000Z","2025-08-27T00:00:00.000Z","2025-08-28T00:00:00.000Z","2025-08-29T00:00:00.000Z","2025-08-30T00:00:00.000Z","2025-08-31T00:00:00.000Z","2025-09-01T00:00:00.000Z","2025-09-02T00:00:00.000Z","2025-09-03T00:00:00.000Z","2025-09-04T00:00:00.000Z","2025-09-05T00:00:00.000Z","2025-09-06T00:00:00.000Z","2025-09-07T00:00:00.000Z","2025-09-08T00:00:00.000Z"],"metrics":[{"name":"auth0.event_streams.successful_deliveries","window_total":0,"type":"sum","data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"auth0.event_streams.failed_deliveries","window_total":6,"type":"sum","data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,6]}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 418.027042ms
+        duration: 524.43375ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -331,8 +331,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/deliveries?event_types=user.updated
+                - Go-Auth0/1.27.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_aD5AUDqZbHFcMoEx2LxAk9/deliveries?event_types=user.updated&take=50
         method: GET
       response:
         proto: HTTP/2.0
@@ -342,13 +342,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"deliveries":[{"id":"evt_248hCPsVtmMBUeBMJ6iesd","event_stream_id":"est_iCyT3rLLXTowdhCgCJH6hX","event_type":"user.updated","status":"failed","attempts":[{"status":"failed","error_message":"404 - {\"error\":\"Debug endpoint not found\"}","timestamp":"2025-08-01T07:06:19.225Z","duration":175.813604},{"status":"retrying","timestamp":"2025-08-01T07:07:07.570Z"},{"status":"failed","error_message":"404 - {\"error\":\"Debug endpoint not found\"}","timestamp":"2025-08-01T07:07:16.196Z","duration":176.454236}],"event":{"id":"evt_248hCPsVtmMBUeBMJ6iesd","source":"urn:auth0:","specversion":"1.0","type":"user.updated","time":"2025-08-01T07:06:05.434Z","data":{"object":{"app_metadata":{"plan":"pro"},"blocked":false,"created_at":"2025-02-01T12:34:56Z","email":"john.doe@gmail.com","email_verified":false,"family_name":"Doe","given_name":"John","identities":[{"connection":"Username-Password-Authentication","provider":"auth0","user_id":"507f1f77bcf86cd799439020"}],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"name":"John Doe","nickname":"John Doe","phone_number":"+15555555555","phone_verified":false,"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","updated_at":"2025-02-01T12:34:56Z","user_id":"auth0|507f1f77bcf86cd799439020","user_metadata":{"hobby":"skydiving"},"username":"johndoe"}},"a0tenant":"go-auth0-dev.eu.auth0.com","a0stream":"est_iCyT3rLLXTowdhCgCJH6hX"}}],"nextPageToken":"SPAEJE19e-XsZUAU7FwKnj5a3AN-jgfvQNUaUL1FEwhyLXxRcIQ_HbqByQ"}'
+        body: '{"deliveries":[{"id":"evt_q273LFcsfrNovuzswy8qBz","event_stream_id":"est_aD5AUDqZbHFcMoEx2LxAk9","event_type":"user.updated","status":"failed","attempts":[{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:17.662Z","duration":19.970573},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:18.683Z","duration":20.467875},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:20.707Z","duration":23.130877},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:24.727Z","duration":19.514394},{"status":"retrying","timestamp":"2025-09-08T06:36:20.898Z"},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:36:43.426Z","duration":19.137579},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:36:44.446Z","duration":18.25496},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:36:46.465Z","duration":18.778636},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:36:50.487Z","duration":21.526609}],"event":{"id":"evt_q273LFcsfrNovuzswy8qBz","source":"urn:auth0:","specversion":"1.0","type":"user.updated","time":"2025-09-08T06:34:38.679Z","data":{"object":{"app_metadata":{"plan":"pro"},"blocked":false,"created_at":"2025-02-01T12:34:56Z","email":"john.doe@gmail.com","email_verified":false,"family_name":"Doe","given_name":"John","identities":[{"connection":"Username-Password-Authentication","provider":"auth0","user_id":"507f1f77bcf86cd799439020"}],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"name":"John Doe","nickname":"John Doe","phone_number":"+15555555555","phone_verified":false,"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","updated_at":"2025-02-01T12:34:56Z","user_id":"auth0|507f1f77bcf86cd799439020","user_metadata":{"hobby":"skydiving"},"username":"johndoe"}},"a0tenant":"go-auth0-dev.eu.auth0.com","a0stream":"est_aD5AUDqZbHFcMoEx2LxAk9"}}],"next":"dwGTZ-DIzL9htpQR06Yu0l-EzkYv6NCHnkLcleERMsJ6m05CBcM9eXbTBg"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 437.570667ms
+        duration: 317.5635ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -364,8 +364,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/redeliver/evt_248hCPsVtmMBUeBMJ6iesd
+                - Go-Auth0/1.27.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_aD5AUDqZbHFcMoEx2LxAk9/redeliver/evt_q273LFcsfrNovuzswy8qBz
         method: POST
       response:
         proto: HTTP/2.0
@@ -381,7 +381,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 363.610042ms
+        duration: 324.79225ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -397,8 +397,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX/deliveries/evt_248hCPsVtmMBUeBMJ6iesd
+                - Go-Auth0/1.27.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_aD5AUDqZbHFcMoEx2LxAk9/deliveries/evt_q273LFcsfrNovuzswy8qBz
         method: GET
       response:
         proto: HTTP/2.0
@@ -408,13 +408,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"evt_248hCPsVtmMBUeBMJ6iesd","event_stream_id":"est_iCyT3rLLXTowdhCgCJH6hX","event_type":"user.updated","status":"failed","attempts":[{"status":"failed","error_message":"404 - {\"error\":\"Debug endpoint not found\"}","timestamp":"2025-08-01T07:06:19.225Z","duration":175.813604},{"status":"retrying","timestamp":"2025-08-01T07:07:07.570Z"},{"status":"failed","error_message":"404 - {\"error\":\"Debug endpoint not found\"}","timestamp":"2025-08-01T07:07:16.196Z","duration":176.454236},{"status":"retrying","timestamp":"2025-08-01T07:08:08.808Z"},{"status":"failed","error_message":"404 - {\"error\":\"Debug endpoint not found\"}","timestamp":"2025-08-01T07:08:18.719Z","duration":184.116362}],"event":{"id":"evt_248hCPsVtmMBUeBMJ6iesd","source":"urn:auth0:","specversion":"1.0","type":"user.updated","time":"2025-08-01T07:06:05.434Z","data":{"object":{"app_metadata":{"plan":"pro"},"blocked":false,"created_at":"2025-02-01T12:34:56Z","email":"john.doe@gmail.com","email_verified":false,"family_name":"Doe","given_name":"John","identities":[{"connection":"Username-Password-Authentication","provider":"auth0","user_id":"507f1f77bcf86cd799439020"}],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"name":"John Doe","nickname":"John Doe","phone_number":"+15555555555","phone_verified":false,"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","updated_at":"2025-02-01T12:34:56Z","user_id":"auth0|507f1f77bcf86cd799439020","user_metadata":{"hobby":"skydiving"},"username":"johndoe"}},"a0tenant":"go-auth0-dev.eu.auth0.com","a0stream":"est_iCyT3rLLXTowdhCgCJH6hX"}}'
+        body: '{"id":"evt_q273LFcsfrNovuzswy8qBz","event_stream_id":"est_aD5AUDqZbHFcMoEx2LxAk9","event_type":"user.updated","status":"failed","attempts":[{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:17.662Z","duration":19.970573},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:18.683Z","duration":20.467875},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:20.707Z","duration":23.130877},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:35:24.727Z","duration":19.514394},{"status":"retrying","timestamp":"2025-09-08T06:36:20.898Z"},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:36:43.426Z","duration":19.137579},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:36:44.446Z","duration":18.25496},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:36:46.465Z","duration":18.778636},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:36:50.487Z","duration":21.526609},{"status":"retrying","timestamp":"2025-09-08T06:37:22.060Z"},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:37:28.440Z","duration":20.070609},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:37:29.461Z","duration":19.580129},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:37:31.481Z","duration":19.836076},{"status":"failed","error_message":"Post \"https://api.hooklistener.com/w/random-turquo ...","timestamp":"2025-09-08T06:37:35.501Z","duration":19.608502}],"event":{"id":"evt_q273LFcsfrNovuzswy8qBz","source":"urn:auth0:","specversion":"1.0","type":"user.updated","time":"2025-09-08T06:34:38.679Z","data":{"object":{"app_metadata":{"plan":"pro"},"blocked":false,"created_at":"2025-02-01T12:34:56Z","email":"john.doe@gmail.com","email_verified":false,"family_name":"Doe","given_name":"John","identities":[{"connection":"Username-Password-Authentication","provider":"auth0","user_id":"507f1f77bcf86cd799439020"}],"last_ip":"10.0.0.1","last_login":"2025-02-01T12:34:56Z","logins_count":42,"name":"John Doe","nickname":"John Doe","phone_number":"+15555555555","phone_verified":false,"picture":"https://secure.gravatar.com/avatar/15626c5e0c749cb912f9d1ad48dba440?s=480&r=pg&d=https%3A%2F%2Fssl.gstatic.com%2Fs2%2Fprofiles%2Fimages%2Fsilhouette80.png","updated_at":"2025-02-01T12:34:56Z","user_id":"auth0|507f1f77bcf86cd799439020","user_metadata":{"hobby":"skydiving"},"username":"johndoe"}},"a0tenant":"go-auth0-dev.eu.auth0.com","a0stream":"est_aD5AUDqZbHFcMoEx2LxAk9"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 372.236084ms
+        duration: 399.450875ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -430,8 +430,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.25.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_iCyT3rLLXTowdhCgCJH6hX
+                - Go-Auth0/1.27.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/event-streams/est_aD5AUDqZbHFcMoEx2LxAk9
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -447,4 +447,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 381.088166ms
+        duration: 310.613833ms
