@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
           check-latest: true
@@ -28,7 +28,7 @@ jobs:
           AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
 
       - name: Update codecov report
-        uses: codecov/codecov-action@fdcc8476540edceab3de004e990f80d881c6cc00 # pin@5.5.0
+        uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7 # pin@5.5.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage.out
