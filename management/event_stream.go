@@ -2,7 +2,6 @@ package management
 
 import (
 	"context"
-	"net/http"
 	"strings"
 	"time"
 )
@@ -74,16 +73,6 @@ func (m *EventStreamManager) Delete(ctx context.Context, id string, opts ...Requ
 // This is useful for filtering results by multiple event types in endpoints like /deliveries.
 func WithEventTypes(types ...string) RequestOption {
 	return Parameter("event_types", strings.Join(types, ","))
-}
-
-// WithDateRange returns a slice of RequestOptions that apply a `date_from` and `date_to`
-// range filter using RFC3339 timestamp format.
-// This is commonly used to limit responses to a specific time window for endpoints that support temporal filtering.
-func WithDateRange(from, to time.Time) RequestOption {
-	return newRequestOption(func(r *http.Request) {
-		Parameter("date_from", from.Format(time.RFC3339)).apply(r)
-		Parameter("date_to", to.Format(time.RFC3339)).apply(r)
-	})
 }
 
 /* ------------------------------------------------ DELIVERY ---------------------------------------------------------*/
@@ -225,8 +214,6 @@ type StatsMetric struct {
 // Stats retrieves statistics for the specified event stream, including metrics such as
 // deliveries over a given time window. Optional query parameters like `date_from` and
 // `date_to` can be passed using RequestOptions.
-//
-// For example, use WithDateRange or other filters to control the time window and granularity.
 func (m *EventStreamManager) Stats(ctx context.Context, id string, opts ...RequestOption) (stats *EventStreamStats, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("event-streams", id, "stats"), &stats, opts...)
 	return
