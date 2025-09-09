@@ -27,7 +27,13 @@ type Client struct {
 	// The client secret, it must not be public.
 	ClientSecret *string `json:"client_secret,omitempty"`
 
-	// The type of application this client represents.
+	// AppType defines the type of client, which determines which settings apply.
+	//
+	// Standard values: "spa", "native", "non_interactive", "regular_web", "resource_server".
+	// Additional possible values: "rms", "box", "cloudbees", "concur", "dropbox",
+	// "mscrm", "echosign", "egnyte", "newrelic", "office365", "salesforce",
+	// "sentry", "sharepoint", "slack", "springcm", "zendesk", "zoom",
+	// "sso_integration", "oag".
 	AppType *string `json:"app_type,omitempty"`
 
 	// The URL of the client logo (recommended size: 150x150).
@@ -159,6 +165,9 @@ type Client struct {
 
 	// Session Transfer settings for the client - Allows Native to Web SSO
 	SessionTransfer *SessionTransfer `json:"session_transfer,omitempty"`
+
+	// ResourceServerIdentifier is the identifier of the resource server that this client is associated with.
+	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty"`
 }
 
 // ClientTokenExchange allows configuration for token exchange.
