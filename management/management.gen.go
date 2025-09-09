@@ -1859,6 +1859,14 @@ func (c *Client) GetRequirePushedAuthorizationRequests() bool {
 	return *c.RequirePushedAuthorizationRequests
 }
 
+// GetResourceServerIdentifier returns the ResourceServerIdentifier field if it's non-nil, zero value otherwise.
+func (c *Client) GetResourceServerIdentifier() string {
+	if c == nil || c.ResourceServerIdentifier == nil {
+		return ""
+	}
+	return *c.ResourceServerIdentifier
+}
+
 // GetSessionTransfer returns the SessionTransfer field.
 func (c *Client) GetSessionTransfer() *SessionTransfer {
 	if c == nil {
@@ -10730,6 +10738,14 @@ func (r *ResourceServer) GetAuthorizationDetails() []ResourceServerAuthorization
 	return *r.AuthorizationDetails
 }
 
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetClientID() string {
+	if r == nil || r.ClientID == nil {
+		return ""
+	}
+	return *r.ClientID
+}
+
 // GetConsentPolicy returns the ConsentPolicy field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetConsentPolicy() string {
 	if r == nil || r.ConsentPolicy == nil {
@@ -13818,6 +13834,59 @@ func (u *UserEnrollment) GetType() string {
 
 // String returns a string representation of UserEnrollment.
 func (u *UserEnrollment) String() string {
+	return Stringify(u)
+}
+
+// GetConnection returns the Connection field if it's non-nil, zero value otherwise.
+func (u *UserFederatedConnectionsTokenSet) GetConnection() string {
+	if u == nil || u.Connection == nil {
+		return ""
+	}
+	return *u.Connection
+}
+
+// GetExpiresAt returns the ExpiresAt field if it's non-nil, zero value otherwise.
+func (u *UserFederatedConnectionsTokenSet) GetExpiresAt() time.Time {
+	if u == nil || u.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *u.ExpiresAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (u *UserFederatedConnectionsTokenSet) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+// GetIssuedAt returns the IssuedAt field if it's non-nil, zero value otherwise.
+func (u *UserFederatedConnectionsTokenSet) GetIssuedAt() time.Time {
+	if u == nil || u.IssuedAt == nil {
+		return time.Time{}
+	}
+	return *u.IssuedAt
+}
+
+// GetLastUsedAt returns the LastUsedAt field if it's non-nil, zero value otherwise.
+func (u *UserFederatedConnectionsTokenSet) GetLastUsedAt() time.Time {
+	if u == nil || u.LastUsedAt == nil {
+		return time.Time{}
+	}
+	return *u.LastUsedAt
+}
+
+// GetScope returns the Scope field if it's non-nil, zero value otherwise.
+func (u *UserFederatedConnectionsTokenSet) GetScope() string {
+	if u == nil || u.Scope == nil {
+		return ""
+	}
+	return *u.Scope
+}
+
+// String returns a string representation of UserFederatedConnectionsTokenSet.
+func (u *UserFederatedConnectionsTokenSet) String() string {
 	return Stringify(u)
 }
 

@@ -30,6 +30,28 @@ func TestClient_Create(t *testing.T) {
 	})
 }
 
+func TestClient_CreateLinkedToResourceServer(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	resourceServer := givenAResourceServer(t)
+	expectedClient := &Client{
+		Name:                     auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
+		Description:              auth0.String("This is just a test client."),
+		AppType:                  auth0.String("resource_server"),
+		ResourceServerIdentifier: auth0.String(resourceServer.GetIdentifier()),
+	}
+
+	err := api.Client.Create(context.Background(), expectedClient)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedClient.GetClientID())
+
+	updatedResourceServer, err := api.ResourceServer.Read(context.Background(), resourceServer.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedClient.GetClientID(), updatedResourceServer.GetClientID())
+	t.Cleanup(func() {
+		cleanupClient(t, expectedClient.GetClientID())
+	})
+}
+
 func TestClient_CreateWithClientRefreshToken(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
