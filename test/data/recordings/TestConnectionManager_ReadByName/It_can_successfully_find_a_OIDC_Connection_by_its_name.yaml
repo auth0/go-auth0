@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 465
+        content_length: 1190
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-OIDC-Connection-1747381016","strategy":"oidc","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":"https://www.paypalobjects.com/.well-known/openid-configuration","authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","type":"front_channel","userinfo_endpoint":null,"token_endpoint":null,"scope":"openid","upstream_params":{"screen_name":{"alias":"login_hint"}}}}
+            {"name":"Test-OIDC-Connection-1757701028","strategy":"oidc","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":"https://example.com/.well-known/openid-configuration","authorization_endpoint":"https://example.com/authorize","issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","type":"front_channel","userinfo_endpoint":null,"token_endpoint":null,"scope":"openid profile email","upstream_params":{"screen_name":{"alias":"login_hint"}},"oidc_metadata":{"authorization_endpoint":"https://example.com/authorize","claims_supported":["sub","iss","aud","exp","iat","name","email"],"grant_types_supported":["authorization_code","implicit","refresh_token"],"id_token_signing_alg_values_supported":["RS256"],"issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","response_types_supported":["code","id_token","token","code id_token"],"scopes_supported":["openid","profile","email"],"subject_types_supported":["public"],"token_endpoint":"https://example.com/oauth/token","token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post"],"userinfo_endpoint":"https://example.com/userinfo"}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.20.0
+                - Go-Auth0/1.28.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"id":"con_BnVHMnUyxqCIdYgF","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":"https://www.paypalobjects.com/.well-known/openid-configuration","authorization_endpoint":"https://example.com","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","type":"front_channel","userinfo_endpoint":null,"token_endpoint":null,"scope":"openid","upstream_params":{"screen_name":{"alias":"login_hint"}},"oidc_metadata":{"issuer":"https://www.paypal.com","authorization_endpoint":"https://www.paypal.com/signin/authorize","registration_endpoint":"https://api.paypal.com/v1/oauth2/applications","token_endpoint":"https://api.paypal.com/v1/oauth2/token","userinfo_endpoint":"https://api.paypal.com/v1/oauth2/token/userinfo","jwks_uri":"https://api.paypal.com/v1/oauth2/certs","revocation_endpoint":"https://api.paypal.com/v1/oauth2/revoke","token_endpoint_auth_methods_supported":["client_secret_basic"],"response_types_supported":["code","code id_token"],"response_modes_supported":["query","form_post"],"grant_types_supported":["authorization_code","refresh_token"],"subject_types_supported":["pairwise"],"scopes_supported":["email","address","phone","openid","profile","https://uri.paypal.com/services/wallet/sendmoney","https://uri.paypal.com/services/payments/futurepayments","https://uri.paypal.com/services/expresscheckout"],"id_token_signing_alg_values_supported":["HS256","RS256"],"claims_supported":["aud","iss","iat","exp","auth_time","nonce","sessionIndex","user_id"],"code_challenge_methods_supported":["RS256","ES256","S256"]}},"strategy":"oidc","name":"Test-OIDC-Connection-1747381016","is_domain_connection":false,"show_as_button":false,"enabled_clients":[],"realms":["Test-OIDC-Connection-1747381016"]}'
+        body: '{"id":"con_HaCSVXif6iANDgUH","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":"https://example.com/.well-known/openid-configuration","authorization_endpoint":"https://example.com/authorize","issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","type":"front_channel","userinfo_endpoint":"https://example.com/userinfo","token_endpoint":"https://example.com/oauth/token","scope":"openid profile email","upstream_params":{"screen_name":{"alias":"login_hint"}},"oidc_metadata":{"authorization_endpoint":"https://example.com/authorize","claims_supported":["sub","iss","aud","exp","iat","name","email"],"grant_types_supported":["authorization_code","implicit","refresh_token"],"id_token_signing_alg_values_supported":["RS256"],"issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","response_types_supported":["code","id_token","token","code id_token"],"scopes_supported":["openid","profile","email"],"subject_types_supported":["public"],"token_endpoint":"https://example.com/oauth/token","token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post"],"userinfo_endpoint":"https://example.com/userinfo","claims_parameter_supported":false,"request_parameter_supported":false,"request_uri_parameter_supported":false,"require_request_uri_registration":false},"schema_version":"oidc-V4","attribute_map":{"mapping_mode":"bind_all"},"connection_settings":{"pkce":"auto"}},"strategy":"oidc","name":"Test-OIDC-Connection-1757701028","is_domain_connection":false,"show_as_button":false,"display_name":"Test-OIDC-Connection-1757701028","enabled_clients":[],"realms":["Test-OIDC-Connection-1757701028"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 444.838292ms
+        duration: 920.668125ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -51,11 +51,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.20.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?include_totals=true&name=Test-OIDC-Connection-1747381016&per_page=50
+                - Go-Auth0/1.28.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?include_totals=true&name=Test-OIDC-Connection-1757701028&per_page=50
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +63,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"total":1,"start":0,"limit":50,"connections":[{"id":"con_BnVHMnUyxqCIdYgF","options":{"type":"front_channel","scope":"openid","issuer":"https://example.com","jwks_uri":"https://example.com/jwks","client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":"https://www.paypalobjects.com/.well-known/openid-configuration","oidc_metadata":{"issuer":"https://www.paypal.com","jwks_uri":"https://api.paypal.com/v1/oauth2/certs","token_endpoint":"https://api.paypal.com/v1/oauth2/token","claims_supported":["aud","iss","iat","exp","auth_time","nonce","sessionIndex","user_id"],"scopes_supported":["email","address","phone","openid","profile","https://uri.paypal.com/services/wallet/sendmoney","https://uri.paypal.com/services/payments/futurepayments","https://uri.paypal.com/services/expresscheckout"],"userinfo_endpoint":"https://api.paypal.com/v1/oauth2/token/userinfo","revocation_endpoint":"https://api.paypal.com/v1/oauth2/revoke","grant_types_supported":["authorization_code","refresh_token"],"registration_endpoint":"https://api.paypal.com/v1/oauth2/applications","authorization_endpoint":"https://www.paypal.com/signin/authorize","subject_types_supported":["pairwise"],"response_modes_supported":["query","form_post"],"response_types_supported":["code","code id_token"],"code_challenge_methods_supported":["RS256","ES256","S256"],"id_token_signing_alg_values_supported":["HS256","RS256"],"token_endpoint_auth_methods_supported":["client_secret_basic"]},"token_endpoint":null,"upstream_params":{"screen_name":{"alias":"login_hint"}},"userinfo_endpoint":null,"authorization_endpoint":"https://example.com"},"strategy":"oidc","name":"Test-OIDC-Connection-1747381016","is_domain_connection":false,"show_as_button":false,"realms":["Test-OIDC-Connection-1747381016"],"enabled_clients":[]}]}'
+        body: '{"total":1,"start":0,"limit":50,"connections":[{"id":"con_HaCSVXif6iANDgUH","options":{"type":"front_channel","scope":"openid profile email","issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","attribute_map":{"mapping_mode":"bind_all"},"discovery_url":"https://example.com/.well-known/openid-configuration","oidc_metadata":{"issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","token_endpoint":"https://example.com/oauth/token","claims_supported":["sub","iss","aud","exp","iat","name","email"],"scopes_supported":["openid","profile","email"],"userinfo_endpoint":"https://example.com/userinfo","grant_types_supported":["authorization_code","implicit","refresh_token"],"authorization_endpoint":"https://example.com/authorize","subject_types_supported":["public"],"response_types_supported":["code","id_token","token","code id_token"],"claims_parameter_supported":false,"request_parameter_supported":false,"request_uri_parameter_supported":false,"require_request_uri_registration":false,"id_token_signing_alg_values_supported":["RS256"],"token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post"]},"schema_version":"oidc-V4","token_endpoint":"https://example.com/oauth/token","upstream_params":{"screen_name":{"alias":"login_hint"}},"userinfo_endpoint":"https://example.com/userinfo","connection_settings":{"pkce":"auto"},"authorization_endpoint":"https://example.com/authorize"},"strategy":"oidc","name":"Test-OIDC-Connection-1757701028","is_domain_connection":false,"show_as_button":false,"display_name":"Test-OIDC-Connection-1757701028","realms":["Test-OIDC-Connection-1757701028"],"enabled_clients":[]}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 364.241ms
+        duration: 358.448791ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -86,11 +84,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.20.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_BnVHMnUyxqCIdYgF
+                - Go-Auth0/1.28.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_HaCSVXif6iANDgUH
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -100,13 +96,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2025-05-16T07:38:10.519Z"}'
+        body: '{"deleted_at":"2025-09-12T18:17:09.835Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 370.151416ms
+        duration: 395.462208ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -121,11 +117,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.20.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_BnVHMnUyxqCIdYgF
+                - Go-Auth0/1.28.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_HaCSVXif6iANDgUH
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -133,12 +127,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 0
+        content_length: 41
         uncompressed: false
-        body: ""
+        body: '{"deleted_at":"2025-09-12T18:17:09.835Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 204 No Content
-        code: 204
-        duration: 343.160959ms
+        status: 202 Accepted
+        code: 202
+        duration: 325.434459ms

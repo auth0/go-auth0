@@ -5284,6 +5284,14 @@ func (c *ConnectionOptionsOIDC) GetNonPersistentAttrs() []string {
 	return *c.NonPersistentAttrs
 }
 
+// GetOIDCMetadata returns the OIDCMetadata map if it's non-nil, an empty map otherwise.
+func (c *ConnectionOptionsOIDC) GetOIDCMetadata() map[string]interface{} {
+	if c == nil || c.OIDCMetadata == nil {
+		return map[string]interface{}{}
+	}
+	return c.OIDCMetadata
+}
+
 // GetScope returns the Scope field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOIDC) GetScope() string {
 	if c == nil || c.Scope == nil {
