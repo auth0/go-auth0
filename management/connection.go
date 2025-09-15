@@ -567,6 +567,7 @@ type ConnectionOptionsEmailAttribute struct {
 	ProfileRequired    *bool                                              `json:"profile_required,omitempty"`
 	Signup             *ConnectionOptionsAttributeSignup                  `json:"signup,omitempty"`
 	VerificationMethod *ConnectionOptionsEmailAttributeVerificationMethod `json:"verification_method,omitempty"`
+	Unique             *bool                                              `json:"unique,omitempty"`
 }
 
 // ConnectionOptionsUsernameAttribute defines configuration settings for username attributes.

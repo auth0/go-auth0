@@ -3908,6 +3908,14 @@ func (c *ConnectionOptionsEmailAttribute) GetSignup() *ConnectionOptionsAttribut
 	return c.Signup
 }
 
+// GetUnique returns the Unique field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsEmailAttribute) GetUnique() bool {
+	if c == nil || c.Unique == nil {
+		return false
+	}
+	return *c.Unique
+}
+
 // GetVerificationMethod returns the VerificationMethod field.
 func (c *ConnectionOptionsEmailAttribute) GetVerificationMethod() *ConnectionOptionsEmailAttributeVerificationMethod {
 	if c == nil {
