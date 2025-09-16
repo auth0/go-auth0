@@ -1487,7 +1487,7 @@ type ConnectionOptionsSAML struct {
 	SignOutEndpoint    *string                             `json:"signOutEndpoint,omitempty"`
 	DisableSignOut     *bool                               `json:"disableSignout,omitempty"`
 	SignatureAlgorithm *string                             `json:"signatureAlgorithm,omitempty"`
-	DigestAglorithm    *string                             `json:"digestAlgorithm,omitempty"`
+	DigestAlgorithm    *string                             `json:"digestAlgorithm,omitempty"`
 	MetadataXML        *string                             `json:"metadataXml,omitempty"`
 	MetadataURL        *string                             `json:"metadataUrl,omitempty"`
 	FieldsMap          map[string]interface{}              `json:"fieldsMap,omitempty"`

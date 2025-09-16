@@ -6028,12 +6028,12 @@ func (c *ConnectionOptionsSAML) GetDecryptionKey() *ConnectionOptionsSAMLDecrypt
 	return c.DecryptionKey
 }
 
-// GetDigestAglorithm returns the DigestAglorithm field if it's non-nil, zero value otherwise.
-func (c *ConnectionOptionsSAML) GetDigestAglorithm() string {
-	if c == nil || c.DigestAglorithm == nil {
+// GetDigestAlgorithm returns the DigestAlgorithm field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetDigestAlgorithm() string {
+	if c == nil || c.DigestAlgorithm == nil {
 		return ""
 	}
-	return *c.DigestAglorithm
+	return *c.DigestAlgorithm
 }
 
 // GetDisableSignOut returns the DisableSignOut field if it's non-nil, zero value otherwise.

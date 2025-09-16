@@ -7452,14 +7452,14 @@ func TestConnectionOptionsSAML_GetDecryptionKey(tt *testing.T) {
 	c.GetDecryptionKey()
 }
 
-func TestConnectionOptionsSAML_GetDigestAglorithm(tt *testing.T) {
+func TestConnectionOptionsSAML_GetDigestAlgorithm(tt *testing.T) {
 	var zeroValue string
-	c := &ConnectionOptionsSAML{DigestAglorithm: &zeroValue}
-	c.GetDigestAglorithm()
+	c := &ConnectionOptionsSAML{DigestAlgorithm: &zeroValue}
+	c.GetDigestAlgorithm()
 	c = &ConnectionOptionsSAML{}
-	c.GetDigestAglorithm()
+	c.GetDigestAlgorithm()
 	c = nil
-	c.GetDigestAglorithm()
+	c.GetDigestAlgorithm()
 }
 
 func TestConnectionOptionsSAML_GetDisableSignOut(tt *testing.T) {
