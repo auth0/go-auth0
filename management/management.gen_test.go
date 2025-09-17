@@ -6542,6 +6542,16 @@ func TestConnectionOptionsOIDC_GetNonPersistentAttrs(tt *testing.T) {
 	c.GetNonPersistentAttrs()
 }
 
+func TestConnectionOptionsOIDC_GetOIDCMetadata(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsOIDC{OIDCMetadata: zeroValue}
+	c.GetOIDCMetadata()
+	c = &ConnectionOptionsOIDC{}
+	c.GetOIDCMetadata()
+	c = nil
+	c.GetOIDCMetadata()
+}
+
 func TestConnectionOptionsOIDC_GetScope(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOIDC{Scope: &zeroValue}
