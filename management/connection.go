@@ -157,6 +157,22 @@ type Connection struct {
 	// ShowAsButton Display connection as a button.
 	// Enable showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to false.)
 	ShowAsButton *bool `json:"show_as_button,omitempty"`
+
+	// Authentication is used for configuring the purpose of a Connection for login with Universal Login and displaying the connection.
+	Authentication *Authentication `json:"authentication,omitempty"`
+
+	// ConnectedAccounts is used for configuring the purpose of a connection to be used for connected accounts and Token Vault.
+	ConnectedAccounts *ConnectedAccounts `json:"connected_accounts,omitempty"`
+}
+
+// Authentication is used for configuring the purpose of a Connection for login with Universal Login and displaying the connection.
+type Authentication struct {
+	Active *bool `json:"active,omitempty"`
+}
+
+// ConnectedAccounts is used for configuring the purpose of a connection to be used for connected accounts and Token Vault.
+type ConnectedAccounts struct {
+	Active *bool `json:"active,omitempty"`
 }
 
 // ConnectionKey is used to fetch public keys for a connection.
