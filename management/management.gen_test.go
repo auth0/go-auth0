@@ -4807,6 +4807,16 @@ func TestConnectionOptionsEmailAttribute_GetSignup(tt *testing.T) {
 	c.GetSignup()
 }
 
+func TestConnectionOptionsEmailAttribute_GetUnique(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsEmailAttribute{Unique: &zeroValue}
+	c.GetUnique()
+	c = &ConnectionOptionsEmailAttribute{}
+	c.GetUnique()
+	c = nil
+	c.GetUnique()
+}
+
 func TestConnectionOptionsEmailAttribute_GetVerificationMethod(tt *testing.T) {
 	c := &ConnectionOptionsEmailAttribute{}
 	c.GetVerificationMethod()
