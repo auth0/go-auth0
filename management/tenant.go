@@ -133,6 +133,19 @@ type Tenant struct {
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	DefaultTokenQuota *TenantDefaultTokenQuota `json:"default_token_quota,omitempty"`
+
+	// SkipNonVerifiableCallbackURIConfirmationPrompt controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/tenants/settings
+	// {
+	//   "skip_non_verifiable_callback_uri_confirmation_prompt": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 }
 
 // TenantDefaultTokenQuota holds settings for the default token quota.

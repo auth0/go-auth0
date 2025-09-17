@@ -2364,6 +2364,16 @@ func TestClient_GetSignedRequestObject(tt *testing.T) {
 	c.GetSignedRequestObject()
 }
 
+func TestClient_GetSkipNonVerifiableCallbackURIConfirmationPrompt(tt *testing.T) {
+	var zeroValue bool
+	c := &Client{SkipNonVerifiableCallbackURIConfirmationPrompt: &zeroValue}
+	c.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+	c = &Client{}
+	c.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+	c = nil
+	c.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+}
+
 func TestClient_GetSSO(tt *testing.T) {
 	var zeroValue bool
 	c := &Client{SSO: &zeroValue}
@@ -16051,6 +16061,16 @@ func TestTenant_GetSessions(tt *testing.T) {
 	t.GetSessions()
 	t = nil
 	t.GetSessions()
+}
+
+func TestTenant_GetSkipNonVerifiableCallbackURIConfirmationPrompt(tt *testing.T) {
+	var zeroValue bool
+	t := &Tenant{SkipNonVerifiableCallbackURIConfirmationPrompt: &zeroValue}
+	t.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+	t = &Tenant{}
+	t.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+	t = nil
+	t.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
 }
 
 func TestTenant_GetSupportEmail(tt *testing.T) {

@@ -168,6 +168,18 @@ type Client struct {
 
 	// ResourceServerIdentifier is the identifier of the resource server that this client is associated with.
 	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty"`
+
+	// SkipNonVerifiableCallbackURIConfirmationPrompt controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	// PATCH /api/v2/clients/{id}
+	// {
+	//	 "skip_non_verifiable_callback_uri_confirmation_prompt": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 }
 
 // ClientTokenExchange allows configuration for token exchange.

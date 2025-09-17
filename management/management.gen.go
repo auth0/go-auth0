@@ -1883,6 +1883,14 @@ func (c *Client) GetSignedRequestObject() *ClientSignedRequestObject {
 	return c.SignedRequestObject
 }
 
+// GetSkipNonVerifiableCallbackURIConfirmationPrompt returns the SkipNonVerifiableCallbackURIConfirmationPrompt field if it's non-nil, zero value otherwise.
+func (c *Client) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if c == nil || c.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *c.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
 // GetSSO returns the SSO field if it's non-nil, zero value otherwise.
 func (c *Client) GetSSO() bool {
 	if c == nil || c.SSO == nil {
@@ -12792,6 +12800,14 @@ func (t *Tenant) GetSessions() *TenantSessions {
 		return nil
 	}
 	return t.Sessions
+}
+
+// GetSkipNonVerifiableCallbackURIConfirmationPrompt returns the SkipNonVerifiableCallbackURIConfirmationPrompt field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if t == nil || t.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *t.SkipNonVerifiableCallbackURIConfirmationPrompt
 }
 
 // GetSupportEmail returns the SupportEmail field if it's non-nil, zero value otherwise.
