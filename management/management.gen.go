@@ -11829,6 +11829,14 @@ func (s *SelfServiceProfileTicket) GetEnabledClients() []string {
 	return *s.EnabledClients
 }
 
+// GetProvisioningConfig returns the ProvisioningConfig field.
+func (s *SelfServiceProfileTicket) GetProvisioningConfig() *SelfServiceProfileTicketProvisioningConfig {
+	if s == nil {
+		return nil
+	}
+	return s.ProvisioningConfig
+}
+
 // GetTicket returns the Ticket field if it's non-nil, zero value otherwise.
 func (s *SelfServiceProfileTicket) GetTicket() string {
 	if s == nil || s.Ticket == nil {
@@ -12000,6 +12008,27 @@ func (s *SelfServiceProfileTicketEnabledOrganizations) GetShowAsButton() bool {
 
 // String returns a string representation of SelfServiceProfileTicketEnabledOrganizations.
 func (s *SelfServiceProfileTicketEnabledOrganizations) String() string {
+	return Stringify(s)
+}
+
+// GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketProvisioningConfig) GetScopes() []string {
+	if s == nil || s.Scopes == nil {
+		return nil
+	}
+	return *s.Scopes
+}
+
+// GetTokenLifetime returns the TokenLifetime field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketProvisioningConfig) GetTokenLifetime() int {
+	if s == nil || s.TokenLifetime == nil {
+		return 0
+	}
+	return *s.TokenLifetime
+}
+
+// String returns a string representation of SelfServiceProfileTicketProvisioningConfig.
+func (s *SelfServiceProfileTicketProvisioningConfig) String() string {
 	return Stringify(s)
 }
 

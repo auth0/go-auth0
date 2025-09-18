@@ -14857,6 +14857,13 @@ func TestSelfServiceProfileTicket_GetEnabledClients(tt *testing.T) {
 	s.GetEnabledClients()
 }
 
+func TestSelfServiceProfileTicket_GetProvisioningConfig(tt *testing.T) {
+	s := &SelfServiceProfileTicket{}
+	s.GetProvisioningConfig()
+	s = nil
+	s.GetProvisioningConfig()
+}
+
 func TestSelfServiceProfileTicket_GetTicket(tt *testing.T) {
 	var zeroValue string
 	s := &SelfServiceProfileTicket{Ticket: &zeroValue}
@@ -15074,6 +15081,34 @@ func TestSelfServiceProfileTicketEnabledOrganizations_GetShowAsButton(tt *testin
 func TestSelfServiceProfileTicketEnabledOrganizations_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SelfServiceProfileTicketEnabledOrganizations{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileTicketProvisioningConfig_GetScopes(tt *testing.T) {
+	var zeroValue []string
+	s := &SelfServiceProfileTicketProvisioningConfig{Scopes: &zeroValue}
+	s.GetScopes()
+	s = &SelfServiceProfileTicketProvisioningConfig{}
+	s.GetScopes()
+	s = nil
+	s.GetScopes()
+}
+
+func TestSelfServiceProfileTicketProvisioningConfig_GetTokenLifetime(tt *testing.T) {
+	var zeroValue int
+	s := &SelfServiceProfileTicketProvisioningConfig{TokenLifetime: &zeroValue}
+	s.GetTokenLifetime()
+	s = &SelfServiceProfileTicketProvisioningConfig{}
+	s.GetTokenLifetime()
+	s = nil
+	s.GetTokenLifetime()
+}
+
+func TestSelfServiceProfileTicketProvisioningConfig_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicketProvisioningConfig{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

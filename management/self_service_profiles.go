@@ -80,6 +80,9 @@ type SelfServiceProfileTicket struct {
 
 	// The ticket that is generated.
 	Ticket *string `json:"ticket,omitempty"`
+
+	// Configuration for the setup of Provisioning in the self-service flow.
+	ProvisioningConfig *SelfServiceProfileTicketProvisioningConfig `json:"provisioning_config,omitempty"`
 }
 
 // SelfServiceProfileTicketDomainAliasesConfig is the configuration for domain aliases.
@@ -130,6 +133,14 @@ type SelfServiceProfileTicketEnabledOrganizations struct {
 	OrganizationID          *string `json:"organization_id,omitempty"`
 	AssignMembershipOnLogin *bool   `json:"assign_membership_on_login,omitempty"`
 	ShowAsButton            *bool   `json:"show_as_button,omitempty"`
+}
+
+// SelfServiceProfileTicketProvisioningConfig is the configuration for the setup of Provisioning in the self-service flow.
+type SelfServiceProfileTicketProvisioningConfig struct {
+	// The scopes of the SCIM tokens generated during the self-service flow.
+	Scopes *[]string `json:"scopes,omitempty"`
+	// Lifetime of the tokens in seconds. Must be greater than 900. If not provided, the tokens don't expire.
+	TokenLifetime *int `json:"token_lifetime,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaller interface.
