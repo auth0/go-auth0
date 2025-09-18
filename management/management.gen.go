@@ -13755,6 +13755,296 @@ func (u *User) String() string {
 	return Stringify(u)
 }
 
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfile) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfile) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+// GetUserAttributes returns the UserAttributes field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfile) GetUserAttributes() map[string]UserAttributeProfileUserAttributes {
+	if u == nil || u.UserAttributes == nil {
+		return map[string]UserAttributeProfileUserAttributes{}
+	}
+	return *u.UserAttributes
+}
+
+// GetUserID returns the UserID field.
+func (u *UserAttributeProfile) GetUserID() *UserAttributeProfileUserID {
+	if u == nil {
+		return nil
+	}
+	return u.UserID
+}
+
+// String returns a string representation of UserAttributeProfile.
+func (u *UserAttributeProfile) String() string {
+	return Stringify(u)
+}
+
+// String returns a string representation of UserAttributeProfileList.
+func (u *UserAttributeProfileList) String() string {
+	return Stringify(u)
+}
+
+// GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileOIDCMapping) GetDisplayName() string {
+	if u == nil || u.DisplayName == nil {
+		return ""
+	}
+	return *u.DisplayName
+}
+
+// GetMapping returns the Mapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileOIDCMapping) GetMapping() string {
+	if u == nil || u.Mapping == nil {
+		return ""
+	}
+	return *u.Mapping
+}
+
+// String returns a string representation of UserAttributeProfileOIDCMapping.
+func (u *UserAttributeProfileOIDCMapping) String() string {
+	return Stringify(u)
+}
+
+// GetOIDCMapping returns the OIDCMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileStrategyOverrides) GetOIDCMapping() string {
+	if u == nil || u.OIDCMapping == nil {
+		return ""
+	}
+	return *u.OIDCMapping
+}
+
+// GetSAMLMapping returns the SAMLMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileStrategyOverrides) GetSAMLMapping() []string {
+	if u == nil || u.SAMLMapping == nil {
+		return nil
+	}
+	return *u.SAMLMapping
+}
+
+// GetSCIMMapping returns the SCIMMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileStrategyOverrides) GetSCIMMapping() string {
+	if u == nil || u.SCIMMapping == nil {
+		return ""
+	}
+	return *u.SCIMMapping
+}
+
+// String returns a string representation of UserAttributeProfileStrategyOverrides.
+func (u *UserAttributeProfileStrategyOverrides) String() string {
+	return Stringify(u)
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileTemplate) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+// GetUserAttributes returns the UserAttributes field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileTemplate) GetUserAttributes() map[string]UserAttributeProfileUserAttributes {
+	if u == nil || u.UserAttributes == nil {
+		return map[string]UserAttributeProfileUserAttributes{}
+	}
+	return *u.UserAttributes
+}
+
+// GetUserID returns the UserID field.
+func (u *UserAttributeProfileTemplate) GetUserID() *UserAttributeProfileUserID {
+	if u == nil {
+		return nil
+	}
+	return u.UserID
+}
+
+// String returns a string representation of UserAttributeProfileTemplate.
+func (u *UserAttributeProfileTemplate) String() string {
+	return Stringify(u)
+}
+
+// GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileTemplateItem) GetDisplayName() string {
+	if u == nil || u.DisplayName == nil {
+		return ""
+	}
+	return *u.DisplayName
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileTemplateItem) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+// GetTemplate returns the Template field.
+func (u *UserAttributeProfileTemplateItem) GetTemplate() *UserAttributeProfileTemplate {
+	if u == nil {
+		return nil
+	}
+	return u.Template
+}
+
+// String returns a string representation of UserAttributeProfileTemplateItem.
+func (u *UserAttributeProfileTemplateItem) String() string {
+	return Stringify(u)
+}
+
+// String returns a string representation of UserAttributeProfileTemplateList.
+func (u *UserAttributeProfileTemplateList) String() string {
+	return Stringify(u)
+}
+
+// GetAuth0Mapping returns the Auth0Mapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetAuth0Mapping() string {
+	if u == nil || u.Auth0Mapping == nil {
+		return ""
+	}
+	return *u.Auth0Mapping
+}
+
+// GetDescription returns the Description field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+// GetLabel returns the Label field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetLabel() string {
+	if u == nil || u.Label == nil {
+		return ""
+	}
+	return *u.Label
+}
+
+// GetOIDCMapping returns the OIDCMapping field.
+func (u *UserAttributeProfileUserAttributes) GetOIDCMapping() *UserAttributeProfileOIDCMapping {
+	if u == nil {
+		return nil
+	}
+	return u.OIDCMapping
+}
+
+// GetProfileRequired returns the ProfileRequired field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetProfileRequired() bool {
+	if u == nil || u.ProfileRequired == nil {
+		return false
+	}
+	return *u.ProfileRequired
+}
+
+// GetSAMLMapping returns the SAMLMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetSAMLMapping() []string {
+	if u == nil || u.SAMLMapping == nil {
+		return nil
+	}
+	return *u.SAMLMapping
+}
+
+// GetSCIMMapping returns the SCIMMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetSCIMMapping() string {
+	if u == nil || u.SCIMMapping == nil {
+		return ""
+	}
+	return *u.SCIMMapping
+}
+
+// GetStrategyOverrides returns the StrategyOverrides field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetStrategyOverrides() map[string]UserAttributesStrategyOverride {
+	if u == nil || u.StrategyOverrides == nil {
+		return map[string]UserAttributesStrategyOverride{}
+	}
+	return *u.StrategyOverrides
+}
+
+// String returns a string representation of UserAttributeProfileUserAttributes.
+func (u *UserAttributeProfileUserAttributes) String() string {
+	return Stringify(u)
+}
+
+// GetOIDCMapping returns the OIDCMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserID) GetOIDCMapping() string {
+	if u == nil || u.OIDCMapping == nil {
+		return ""
+	}
+	return *u.OIDCMapping
+}
+
+// GetSAMLMapping returns the SAMLMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserID) GetSAMLMapping() []string {
+	if u == nil || u.SAMLMapping == nil {
+		return nil
+	}
+	return *u.SAMLMapping
+}
+
+// GetSCIMMapping returns the SCIMMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserID) GetSCIMMapping() string {
+	if u == nil || u.SCIMMapping == nil {
+		return ""
+	}
+	return *u.SCIMMapping
+}
+
+// GetStrategyOverrides returns the StrategyOverrides field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserID) GetStrategyOverrides() map[string]UserAttributeProfileStrategyOverrides {
+	if u == nil || u.StrategyOverrides == nil {
+		return map[string]UserAttributeProfileStrategyOverrides{}
+	}
+	return *u.StrategyOverrides
+}
+
+// String returns a string representation of UserAttributeProfileUserID.
+func (u *UserAttributeProfileUserID) String() string {
+	return Stringify(u)
+}
+
+// GetOIDCMapping returns the OIDCMapping field.
+func (u *UserAttributesStrategyOverride) GetOIDCMapping() *UserAttributeProfileOIDCMapping {
+	if u == nil {
+		return nil
+	}
+	return u.OIDCMapping
+}
+
+// GetSAMLMapping returns the SAMLMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributesStrategyOverride) GetSAMLMapping() []string {
+	if u == nil || u.SAMLMapping == nil {
+		return nil
+	}
+	return *u.SAMLMapping
+}
+
+// GetSCIMMapping returns the SCIMMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributesStrategyOverride) GetSCIMMapping() string {
+	if u == nil || u.SCIMMapping == nil {
+		return ""
+	}
+	return *u.SCIMMapping
+}
+
+// String returns a string representation of UserAttributesStrategyOverride.
+func (u *UserAttributesStrategyOverride) String() string {
+	return Stringify(u)
+}
+
 // GetIdentifier returns the Identifier field if it's non-nil, zero value otherwise.
 func (u *UserBlock) GetIdentifier() string {
 	if u == nil || u.Identifier == nil {
