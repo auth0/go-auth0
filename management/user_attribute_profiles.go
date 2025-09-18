@@ -139,7 +139,7 @@ func (m *UserAttributeProfileManager) ListTemplates(ctx context.Context, opts ..
 }
 
 // GetTemplate retrieves a single Template by its ID.
-func (m *UserAttributeProfileManager) GetTemplate(ctx context.Context, id string, opts ...RequestOption) (u *UserAttributeProfileTemplate, err error) {
+func (m *UserAttributeProfileManager) GetTemplate(ctx context.Context, id string, opts ...RequestOption) (u *UserAttributeProfileTemplateItem, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("user-attribute-profiles", "templates", id), &u, opts...)
 	return
 }

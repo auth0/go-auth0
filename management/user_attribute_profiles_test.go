@@ -146,7 +146,7 @@ func TestUserAttributeProfileManager_GetTemplate(t *testing.T) {
 	template, err := api.UserAttributeProfile.GetTemplate(context.Background(), templateID)
 	assert.NoError(t, err)
 	assert.NotNil(t, template)
-	assert.NotEmpty(t, template.GetName())
+	assert.NotEmpty(t, template.GetDisplayName())
 }
 
 // Helper function to create a user attribute profile for testing.
