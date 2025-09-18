@@ -3,6 +3,7 @@ package management
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"time"
 )
 
@@ -29,6 +30,8 @@ type SelfServiceProfile struct {
 
 	// Branding scheme for the profile.
 	Branding *Branding `json:"branding,omitempty"`
+
+	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty"`
 }
 
 // SelfServiceProfileUserAttributes is used to determine optional attributes.
@@ -77,6 +80,9 @@ type SelfServiceProfileTicket struct {
 
 	// The ticket that is generated.
 	Ticket *string `json:"ticket,omitempty"`
+
+	// Configuration for the setup of Provisioning in the self-service flow.
+	ProvisioningConfig *SelfServiceProfileTicketProvisioningConfig `json:"provisioning_config,omitempty"`
 }
 
 // SelfServiceProfileTicketDomainAliasesConfig is the configuration for domain aliases.
@@ -129,22 +135,36 @@ type SelfServiceProfileTicketEnabledOrganizations struct {
 	ShowAsButton            *bool   `json:"show_as_button,omitempty"`
 }
 
+// SelfServiceProfileTicketProvisioningConfig is the configuration for the setup of Provisioning in the self-service flow.
+type SelfServiceProfileTicketProvisioningConfig struct {
+	// The scopes of the SCIM tokens generated during the self-service flow.
+	Scopes *[]string `json:"scopes,omitempty"`
+	// Lifetime of the tokens in seconds. Must be greater than 900. If not provided, the tokens don't expire.
+	TokenLifetime *int `json:"token_lifetime,omitempty"`
+}
+
 // MarshalJSON implements the json.Marshaller interface.
 func (ssp *SelfServiceProfile) MarshalJSON() ([]byte, error) {
 	type SelfServiceProfileSubset struct {
-		Name              *string                             `json:"name,omitempty"`
-		Description       *string                             `json:"description,omitempty"`
-		AllowedStrategies *[]string                           `json:"allowed_strategies,omitempty"`
-		UserAttributes    []*SelfServiceProfileUserAttributes `json:"user_attributes,omitempty"`
-		Branding          *Branding                           `json:"branding,omitempty"`
+		Name                   *string                             `json:"name,omitempty"`
+		Description            *string                             `json:"description,omitempty"`
+		AllowedStrategies      *[]string                           `json:"allowed_strategies,omitempty"`
+		UserAttributes         []*SelfServiceProfileUserAttributes `json:"user_attributes,omitempty"`
+		Branding               *Branding                           `json:"branding,omitempty"`
+		UserAttributeProfileID *string                             `json:"user_attribute_profile_id,omitempty"`
+	}
+
+	if len(ssp.UserAttributes) != 0 && ssp.UserAttributeProfileID != nil {
+		return nil, errors.New("only one of UserAttributes or UserAttributeProfileID can be set on SelfServiceProfile")
 	}
 
 	return json.Marshal(&SelfServiceProfileSubset{
-		Name:              ssp.Name,
-		Description:       ssp.Description,
-		AllowedStrategies: ssp.AllowedStrategies,
-		UserAttributes:    ssp.UserAttributes,
-		Branding:          ssp.Branding,
+		Name:                   ssp.Name,
+		Description:            ssp.Description,
+		AllowedStrategies:      ssp.AllowedStrategies,
+		UserAttributes:         ssp.UserAttributes,
+		Branding:               ssp.Branding,
+		UserAttributeProfileID: ssp.UserAttributeProfileID,
 	})
 }
 
