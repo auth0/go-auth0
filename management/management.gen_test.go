@@ -14797,6 +14797,16 @@ func TestSelfServiceProfile_GetUpdatedAt(tt *testing.T) {
 	s.GetUpdatedAt()
 }
 
+func TestSelfServiceProfile_GetUserAttributeProfileID(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfile{UserAttributeProfileID: &zeroValue}
+	s.GetUserAttributeProfileID()
+	s = &SelfServiceProfile{}
+	s.GetUserAttributeProfileID()
+	s = nil
+	s.GetUserAttributeProfileID()
+}
+
 func TestSelfServiceProfile_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SelfServiceProfile{}

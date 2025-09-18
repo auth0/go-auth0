@@ -11779,6 +11779,14 @@ func (s *SelfServiceProfile) GetUpdatedAt() time.Time {
 	return *s.UpdatedAt
 }
 
+// GetUserAttributeProfileID returns the UserAttributeProfileID field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetUserAttributeProfileID() string {
+	if s == nil || s.UserAttributeProfileID == nil {
+		return ""
+	}
+	return *s.UserAttributeProfileID
+}
+
 // String returns a string representation of SelfServiceProfile.
 func (s *SelfServiceProfile) String() string {
 	return Stringify(s)

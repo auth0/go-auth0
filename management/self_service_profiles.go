@@ -3,6 +3,7 @@ package management
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"time"
 )
 
@@ -29,6 +30,8 @@ type SelfServiceProfile struct {
 
 	// Branding scheme for the profile.
 	Branding *Branding `json:"branding,omitempty"`
+
+	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty"`
 }
 
 // SelfServiceProfileUserAttributes is used to determine optional attributes.
@@ -132,19 +135,25 @@ type SelfServiceProfileTicketEnabledOrganizations struct {
 // MarshalJSON implements the json.Marshaller interface.
 func (ssp *SelfServiceProfile) MarshalJSON() ([]byte, error) {
 	type SelfServiceProfileSubset struct {
-		Name              *string                             `json:"name,omitempty"`
-		Description       *string                             `json:"description,omitempty"`
-		AllowedStrategies *[]string                           `json:"allowed_strategies,omitempty"`
-		UserAttributes    []*SelfServiceProfileUserAttributes `json:"user_attributes,omitempty"`
-		Branding          *Branding                           `json:"branding,omitempty"`
+		Name                   *string                             `json:"name,omitempty"`
+		Description            *string                             `json:"description,omitempty"`
+		AllowedStrategies      *[]string                           `json:"allowed_strategies,omitempty"`
+		UserAttributes         []*SelfServiceProfileUserAttributes `json:"user_attributes,omitempty"`
+		Branding               *Branding                           `json:"branding,omitempty"`
+		UserAttributeProfileID *string                             `json:"user_attribute_profile_id,omitempty"`
+	}
+
+	if len(ssp.UserAttributes) != 0 && ssp.UserAttributeProfileID != nil {
+		return nil, errors.New("only one of UserAttributes or UserAttributeProfileID can be set on SelfServiceProfile")
 	}
 
 	return json.Marshal(&SelfServiceProfileSubset{
-		Name:              ssp.Name,
-		Description:       ssp.Description,
-		AllowedStrategies: ssp.AllowedStrategies,
-		UserAttributes:    ssp.UserAttributes,
-		Branding:          ssp.Branding,
+		Name:                   ssp.Name,
+		Description:            ssp.Description,
+		AllowedStrategies:      ssp.AllowedStrategies,
+		UserAttributes:         ssp.UserAttributes,
+		Branding:               ssp.Branding,
+		UserAttributeProfileID: ssp.UserAttributeProfileID,
 	})
 }
 

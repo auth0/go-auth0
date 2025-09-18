@@ -16,33 +16,66 @@ import (
 func TestSelfServiceProfileManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	ssop := &SelfServiceProfile{
-		Name:              auth0.String("Sample Self Service Profile"),
-		Description:       auth0.String("Sample Desc"),
-		AllowedStrategies: &[]string{"oidc"},
-		Branding: &Branding{
-			LogoURL: auth0.String("https://example.com/logo.png"),
-			Colors: &BrandingColors{
-				Primary: auth0.String("#334455"),
+	cases := []struct {
+		name  string
+		setup func(t *testing.T) *SelfServiceProfile
+	}{
+		{
+			name: "can create a self service profile",
+			setup: func(_ *testing.T) *SelfServiceProfile {
+				return &SelfServiceProfile{
+					Name:              auth0.String("Sample Self Service Profile"),
+					Description:       auth0.String("Sample Desc"),
+					AllowedStrategies: &[]string{"oidc"},
+					Branding: &Branding{
+						LogoURL: auth0.String("https://example.com/logo.png"),
+						Colors: &BrandingColors{
+							Primary: auth0.String("#334455"),
+						},
+					},
+					UserAttributes: []*SelfServiceProfileUserAttributes{
+						{
+							Name:        auth0.String("some-name-here"),
+							Description: auth0.String("some-description"),
+							IsOptional:  auth0.Bool(true),
+						},
+					},
+				}
 			},
 		},
-		UserAttributes: []*SelfServiceProfileUserAttributes{
-			{
-				Name:        auth0.String("some-name-here"),
-				Description: auth0.String("some-description"),
-				IsOptional:  auth0.Bool(true),
+		{
+			name: "can create a self service profile with user attribute profile ID",
+			setup: func(t *testing.T) *SelfServiceProfile {
+				userAttributeProfile := givenAUserAttributeProfile(t)
+				return &SelfServiceProfile{
+					Name:                   auth0.String("Sample Self Service Profile"),
+					Description:            auth0.String("Sample Desc"),
+					AllowedStrategies:      &[]string{"oidc"},
+					UserAttributeProfileID: auth0.String(userAttributeProfile.GetID()),
+					Branding: &Branding{
+						LogoURL: auth0.String("https://example.com/logo.png"),
+						Colors: &BrandingColors{
+							Primary: auth0.String("#334455"),
+						},
+					},
+				}
 			},
 		},
 	}
 
-	err := api.SelfServiceProfile.Create(context.Background(), ssop)
-	assert.NoError(t, err)
-	assert.NotEmpty(t, ssop.GetID())
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			ssop := tc.setup(t)
+			err := api.SelfServiceProfile.Create(context.Background(), ssop)
+			assert.NoError(t, err)
+			assert.NotEmpty(t, ssop.GetID())
 
-	ssopRetrieved, err := api.SelfServiceProfile.Read(context.Background(), ssop.GetID())
-	assert.NoError(t, err)
-	assert.Equal(t, ssopRetrieved, ssop)
-	cleanSelfServiceProfile(t, ssop.GetID())
+			ssopRetrieved, err := api.SelfServiceProfile.Read(context.Background(), ssop.GetID())
+			assert.NoError(t, err)
+			assert.Equal(t, ssopRetrieved, ssop)
+			cleanSelfServiceProfile(t, ssop.GetID())
+		})
+	}
 }
 
 func TestSelfServiceProfileManager_List(t *testing.T) {
@@ -192,6 +225,21 @@ func TestSelfServiceProfileManager_MarshalJSON(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected, string(payload))
 	}
+
+	t.Run("doesn't allow both UserAttributes and UserAttributeProfileID to be set", func(t *testing.T) {
+		ssp := &SelfServiceProfile{
+			UserAttributes: []*SelfServiceProfileUserAttributes{
+				{
+					Name:        auth0.String("some-name"),
+					Description: auth0.String("some-desc"),
+					IsOptional:  auth0.Bool(true),
+				},
+			},
+			UserAttributeProfileID: auth0.String("some-id"),
+		}
+		_, err := json.Marshal(ssp)
+		assert.Error(t, err)
+	})
 }
 
 func givenASelfServiceProfile(t *testing.T) *SelfServiceProfile {
