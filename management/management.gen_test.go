@@ -17345,6 +17345,13 @@ func TestUserAttributeProfile_GetUserAttributes(tt *testing.T) {
 	u.GetUserAttributes()
 }
 
+func TestUserAttributeProfile_GetUserID(tt *testing.T) {
+	u := &UserAttributeProfile{}
+	u.GetUserID()
+	u = nil
+	u.GetUserID()
+}
+
 func TestUserAttributeProfile_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &UserAttributeProfile{}

@@ -13816,6 +13816,14 @@ func (u *UserAttributeProfile) GetUserAttributes() map[string]UserAttributeProfi
 	return *u.UserAttributes
 }
 
+// GetUserID returns the UserID field.
+func (u *UserAttributeProfile) GetUserID() *UserAttributeProfileUserID {
+	if u == nil {
+		return nil
+	}
+	return u.UserID
+}
+
 // String returns a string representation of UserAttributeProfile.
 func (u *UserAttributeProfile) String() string {
 	return Stringify(u)

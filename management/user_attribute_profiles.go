@@ -12,7 +12,7 @@ type UserAttributeProfile struct {
 	// Name is the name of the User Attribute Profile.
 	Name *string `json:"name,omitempty"`
 	// UserID is the User ID mapping configuration
-	UserID UserAttributeProfileUserID `json:"user_id"`
+	UserID *UserAttributeProfileUserID `json:"user_id,omitempty"`
 	// UserAttributes User attributes configuration map. Keys are attribute names, values are the mapping configuration for each attribute.
 	UserAttributes *map[string]UserAttributeProfileUserAttributes `json:"user_attributes,omitempty"`
 }
@@ -104,7 +104,7 @@ type UserAttributeProfileTemplateList struct {
 func (u *UserAttributeProfile) MarshalJSON() ([]byte, error) {
 	type UserAttributeProfileSubset struct {
 		Name           *string                                        `json:"name,omitempty"`
-		UserID         UserAttributeProfileUserID                     `json:"user_id"`
+		UserID         *UserAttributeProfileUserID                    `json:"user_id,omitempty"`
 		UserAttributes *map[string]UserAttributeProfileUserAttributes `json:"user_attributes,omitempty"`
 	}
 
@@ -136,9 +136,23 @@ func (m *UserAttributeProfileManager) Read(ctx context.Context, id string, opts 
 	return
 }
 
+// cleanForPatch ensure that the `UserID` field is set to an empty object if nil to allow resetting to defaults.
+func (u *UserAttributeProfile) cleanForPatch() *UserAttributeProfile {
+	if u.UserID == nil {
+		u.UserID = &UserAttributeProfileUserID{}
+	}
+
+	return u
+}
+
 // Update an existing User Attribute Profile.
 func (m *UserAttributeProfileManager) Update(ctx context.Context, id string, u *UserAttributeProfile, opts ...RequestOption) (err error) {
+	if u != nil {
+		u = u.cleanForPatch()
+	}
+
 	err = m.management.Request(ctx, "PATCH", m.management.URI("user-attribute-profiles", id), &u, opts...)
+
 	return
 }
 

@@ -17,7 +17,7 @@ func TestUserAttributeProfileManager_Create(t *testing.T) {
 	t.Run("all fields", func(t *testing.T) {
 		expectedUserAttributeProfile := &UserAttributeProfile{
 			Name: auth0.Stringf("Test User Attribute Profile (%s)", time.Now().Format(time.StampMilli)),
-			UserID: UserAttributeProfileUserID{
+			UserID: &UserAttributeProfileUserID{
 				OIDCMapping: auth0.String("sub"),
 				SAMLMapping: &[]string{"urn:oid:0.9.2342.19200300.100.1.1"},
 				SCIMMapping: auth0.String("userName"),
@@ -88,24 +88,60 @@ func TestUserAttributeProfileManager_Read(t *testing.T) {
 func TestUserAttributeProfileManager_Update(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	expectedUserAttributeProfile := givenAUserAttributeProfile(t)
+	t.Run("supports updating user_id", func(t *testing.T) {
+		expectedUserAttributeProfile := givenAUserAttributeProfile(t)
 
-	userAttributeProfileID := expectedUserAttributeProfile.GetID()
+		userAttributeProfileID := expectedUserAttributeProfile.GetID()
 
-	expectedName := "Updated User Attribute Profile Name"
-	expectedUserAttributeProfile.Name = &expectedName
-	// doesn't clear the value but instead resets to defaults
-	expectedUserAttributeProfile.UserID = UserAttributeProfileUserID{}
+		expectedName := "Updated User Attribute Profile Name"
+		expectedUserAttributeProfile.Name = &expectedName
+		// SAMLMapping should remain the default
+		expectedUserAttributeProfile.UserID = &UserAttributeProfileUserID{
+			OIDCMapping: auth0.String("sub"),
+			SCIMMapping: auth0.String("userName"),
+		}
 
-	err := api.UserAttributeProfile.Update(context.Background(), userAttributeProfileID, expectedUserAttributeProfile)
-	assert.NoError(t, err)
-	assert.Equal(t, expectedName, expectedUserAttributeProfile.GetName())
+		err := api.UserAttributeProfile.Update(context.Background(), userAttributeProfileID, expectedUserAttributeProfile)
+		assert.NoError(t, err)
+		assert.Equal(t, expectedName, expectedUserAttributeProfile.GetName())
 
-	// Verify the update was applied
-	updatedProfile, err := api.UserAttributeProfile.Read(context.Background(), userAttributeProfileID)
-	assert.NoError(t, err)
-	assert.Equal(t, expectedName, updatedProfile.GetName())
-	assert.Equal(t, "sub", updatedProfile.UserID.GetOIDCMapping())
+		// Verify the update was applied
+		updatedProfile, err := api.UserAttributeProfile.Read(context.Background(), userAttributeProfileID)
+		assert.NoError(t, err)
+		assert.Equal(t, expectedName, updatedProfile.GetName())
+
+		userID := updatedProfile.GetUserID()
+		assert.NotNil(t, userID)
+		assert.Equal(t, "sub", userID.GetOIDCMapping())
+		assert.Equal(t, "userName", userID.GetSCIMMapping())
+		assert.Len(t, userID.GetSAMLMapping(), 3)
+	})
+
+	t.Run("supports setting user_id to defaults", func(t *testing.T) {
+		expectedUserAttributeProfile := givenAUserAttributeProfile(t)
+
+		userAttributeProfileID := expectedUserAttributeProfile.GetID()
+
+		expectedName := "Updated User Attribute Profile Name"
+		expectedUserAttributeProfile.Name = &expectedName
+		// doesn't clear the value but instead resets to defaults
+		expectedUserAttributeProfile.UserID = nil
+
+		err := api.UserAttributeProfile.Update(context.Background(), userAttributeProfileID, expectedUserAttributeProfile)
+		assert.NoError(t, err)
+		assert.Equal(t, expectedName, expectedUserAttributeProfile.GetName())
+
+		// Verify the update was applied
+		updatedProfile, err := api.UserAttributeProfile.Read(context.Background(), userAttributeProfileID)
+		assert.NoError(t, err)
+		assert.Equal(t, expectedName, updatedProfile.GetName())
+
+		userID := updatedProfile.GetUserID()
+		assert.NotNil(t, userID)
+		assert.Equal(t, "sub", userID.GetOIDCMapping())
+		assert.Equal(t, "externalId", userID.GetSCIMMapping())
+		assert.Len(t, userID.GetSAMLMapping(), 3)
+	})
 }
 
 func TestUserAttributeProfileManager_Delete(t *testing.T) {
@@ -184,9 +220,9 @@ func givenAUserAttributeProfile(t *testing.T) *UserAttributeProfile {
 
 	userAttributeProfile := &UserAttributeProfile{
 		Name: auth0.Stringf("Test User Attribute Profile (%s)", time.Now().Format(time.StampMilli)),
-		UserID: UserAttributeProfileUserID{
+		UserID: &UserAttributeProfileUserID{
 			OIDCMapping: auth0.String("sub"),
-			SAMLMapping: &[]string{"urn:oid:0.9.2342.19200300.100.1.1"},
+			SAMLMapping: &[]string{"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"},
 			SCIMMapping: auth0.String("userName"),
 		},
 		UserAttributes: &map[string]UserAttributeProfileUserAttributes{

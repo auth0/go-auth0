@@ -6,14 +6,14 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 791
+        content_length: 824
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test User Attribute Profile (Sep 23 08:48:05.073)","user_id":{"oidc_mapping":"sub","saml_mapping":["urn:oid:0.9.2342.19200300.100.1.1"],"scim_mapping":"userName"},"user_attributes":{"email":{"description":"User's email address","label":"Email","profile_required":true,"auth0_mapping":"email","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"emails[primary eq true].value"},"name":{"description":"User's full name","label":"Name","profile_required":false,"auth0_mapping":"name","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"displayName","strategy_overrides":{"oidc":{"scim_mapping":"name.givenName"}}}}}
+            {"name":"Test User Attribute Profile (Sep 23 14:59:16.373)","user_id":{"oidc_mapping":"sub","saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"userName"},"user_attributes":{"email":{"description":"User's email address","label":"Email","profile_required":true,"auth0_mapping":"email","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"emails[primary eq true].value"},"name":{"description":"User's full name","label":"Name","profile_required":false,"auth0_mapping":"name","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"displayName","strategy_overrides":{"oidc":{"scim_mapping":"name.givenName"}}}}}
         form: {}
         headers:
             Content-Type:
@@ -28,15 +28,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 824
+        content_length: 857
         uncompressed: false
-        body: '{"id":"uap_1cspXRSuV87CRf3UBcNrGD","name":"Test User Attribute Profile (Sep 23 08:48:05.073)","user_id":{"oidc_mapping":"sub","saml_mapping":["urn:oid:0.9.2342.19200300.100.1.1"],"scim_mapping":"userName"},"user_attributes":{"name":{"label":"Name","description":"User''s full name","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"displayName","auth0_mapping":"name","profile_required":false,"strategy_overrides":{"oidc":{"scim_mapping":"name.givenName"}}},"email":{"label":"Email","description":"User''s email address","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"emails[primary eq true].value","auth0_mapping":"email","profile_required":true}}}'
+        body: '{"id":"uap_1csqsazuYYJRAXLDR6kwrN","name":"Test User Attribute Profile (Sep 23 14:59:16.373)","user_id":{"oidc_mapping":"sub","saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"userName"},"user_attributes":{"name":{"label":"Name","description":"User''s full name","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"displayName","auth0_mapping":"name","profile_required":false,"strategy_overrides":{"oidc":{"scim_mapping":"name.givenName"}}},"email":{"label":"Email","description":"User''s email address","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"emails[primary eq true].value","auth0_mapping":"email","profile_required":true}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 300.861375ms
+        duration: 230.1005ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -53,7 +53,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/user-attribute-profiles/uap_1cspXRSuV87CRf3UBcNrGD
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/user-attribute-profiles/uap_1csqsazuYYJRAXLDR6kwrN
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -69,7 +69,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 169.430708ms
+        duration: 152.235042ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -86,7 +86,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/user-attribute-profiles/uap_1cspXRSuV87CRf3UBcNrGD
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/user-attribute-profiles/uap_1csqsazuYYJRAXLDR6kwrN
         method: GET
       response:
         proto: HTTP/2.0
@@ -102,7 +102,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 404 Not Found
         code: 404
-        duration: 171.846542ms
+        duration: 164.592292ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -119,7 +119,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/user-attribute-profiles/uap_1cspXRSuV87CRf3UBcNrGD
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/user-attribute-profiles/uap_1csqsazuYYJRAXLDR6kwrN
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -135,4 +135,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 170.258208ms
+        duration: 171.367166ms
