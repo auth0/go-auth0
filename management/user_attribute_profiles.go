@@ -2,6 +2,7 @@ package management
 
 import (
 	"context"
+	"encoding/json"
 )
 
 // UserAttributeProfile represents a User Attribute Profile object.
@@ -11,7 +12,7 @@ type UserAttributeProfile struct {
 	// Name is the name of the User Attribute Profile.
 	Name *string `json:"name,omitempty"`
 	// UserID is the User ID mapping configuration
-	UserID *UserAttributeProfileUserID `json:"user_id,omitempty"`
+	UserID UserAttributeProfileUserID `json:"user_id"`
 	// UserAttributes User attributes configuration map. Keys are attribute names, values are the mapping configuration for each attribute.
 	UserAttributes *map[string]UserAttributeProfileUserAttributes `json:"user_attributes,omitempty"`
 }
@@ -58,7 +59,7 @@ type UserAttributeProfileUserAttributes struct {
 	// Auth0Mapping is the Auth0 mapping for the user attribute.
 	Auth0Mapping *string `json:"auth0_mapping,omitempty"`
 	// OIDCMapping is the OIDC mapping for the user attribute.
-	OIDCMapping *UserAttributeProfileOIDCMapping `json:"oidc_mapping,omitempty"` // TODO: needs to be an interface and handle both string and an object
+	OIDCMapping *UserAttributeProfileOIDCMapping `json:"oidc_mapping,omitempty"`
 	// SAMLMapping is the SAML mapping for the user attribute.
 	SAMLMapping *[]string `json:"saml_mapping,omitempty"`
 	// SCIMMapping is the SCIM mapping for the user attribute.
@@ -97,6 +98,21 @@ type UserAttributeProfileTemplate struct {
 // UserAttributeProfileTemplateList is a list of User Attribute Profile Templates.
 type UserAttributeProfileTemplateList struct {
 	UserAttributeProfileTemplates []*UserAttributeProfileTemplateItem `json:"user_attribute_profile_templates"`
+}
+
+// MarshalJSON ensures that we don't send the ID field when marshaling a UserAttributeProfile.
+func (u *UserAttributeProfile) MarshalJSON() ([]byte, error) {
+	type UserAttributeProfileSubset struct {
+		Name           *string                                        `json:"name,omitempty"`
+		UserID         UserAttributeProfileUserID                     `json:"user_id"`
+		UserAttributes *map[string]UserAttributeProfileUserAttributes `json:"user_attributes,omitempty"`
+	}
+
+	return json.Marshal(&UserAttributeProfileSubset{
+		Name:           u.Name,
+		UserID:         u.UserID,
+		UserAttributes: u.UserAttributes,
+	})
 }
 
 // UserAttributeProfileManager manages Auth0 User Attribute Profile resources.

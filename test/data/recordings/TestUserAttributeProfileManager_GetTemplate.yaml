@@ -33,7 +33,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 158.451334ms
+        duration: 153.143042ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -66,4 +66,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 166.332791ms
+        duration: 151.3045ms
