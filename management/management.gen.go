@@ -13808,14 +13808,6 @@ func (u *UserAttributeProfile) GetName() string {
 	return *u.Name
 }
 
-// GetUserAttributes returns the UserAttributes field if it's non-nil, zero value otherwise.
-func (u *UserAttributeProfile) GetUserAttributes() map[string]UserAttributeProfileUserAttributes {
-	if u == nil || u.UserAttributes == nil {
-		return map[string]UserAttributeProfileUserAttributes{}
-	}
-	return *u.UserAttributes
-}
-
 // GetUserID returns the UserID field.
 func (u *UserAttributeProfile) GetUserID() *UserAttributeProfileUserID {
 	if u == nil {
@@ -13890,14 +13882,6 @@ func (u *UserAttributeProfileTemplate) GetName() string {
 		return ""
 	}
 	return *u.Name
-}
-
-// GetUserAttributes returns the UserAttributes field if it's non-nil, zero value otherwise.
-func (u *UserAttributeProfileTemplate) GetUserAttributes() map[string]UserAttributeProfileUserAttributes {
-	if u == nil || u.UserAttributes == nil {
-		return map[string]UserAttributeProfileUserAttributes{}
-	}
-	return *u.UserAttributes
 }
 
 // GetUserID returns the UserID field.
@@ -14003,14 +13987,6 @@ func (u *UserAttributeProfileUserAttributes) GetSCIMMapping() string {
 	return *u.SCIMMapping
 }
 
-// GetStrategyOverrides returns the StrategyOverrides field if it's non-nil, zero value otherwise.
-func (u *UserAttributeProfileUserAttributes) GetStrategyOverrides() map[string]UserAttributesStrategyOverride {
-	if u == nil || u.StrategyOverrides == nil {
-		return map[string]UserAttributesStrategyOverride{}
-	}
-	return *u.StrategyOverrides
-}
-
 // String returns a string representation of UserAttributeProfileUserAttributes.
 func (u *UserAttributeProfileUserAttributes) String() string {
 	return Stringify(u)
@@ -14038,14 +14014,6 @@ func (u *UserAttributeProfileUserID) GetSCIMMapping() string {
 		return ""
 	}
 	return *u.SCIMMapping
-}
-
-// GetStrategyOverrides returns the StrategyOverrides field if it's non-nil, zero value otherwise.
-func (u *UserAttributeProfileUserID) GetStrategyOverrides() map[string]UserAttributeProfileStrategyOverrides {
-	if u == nil || u.StrategyOverrides == nil {
-		return map[string]UserAttributeProfileStrategyOverrides{}
-	}
-	return *u.StrategyOverrides
 }
 
 // String returns a string representation of UserAttributeProfileUserID.

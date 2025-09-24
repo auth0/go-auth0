@@ -22,7 +22,7 @@ func TestUserAttributeProfileManager_Create(t *testing.T) {
 				SAMLMapping: &[]string{"urn:oid:0.9.2342.19200300.100.1.1"},
 				SCIMMapping: auth0.String("userName"),
 			},
-			UserAttributes: &map[string]UserAttributeProfileUserAttributes{
+			UserAttributes: map[string]*UserAttributeProfileUserAttributes{
 				"email": {
 					Description:     auth0.String("User's email address"),
 					Label:           auth0.String("Email"),
@@ -49,7 +49,7 @@ func TestUserAttributeProfileManager_Create(t *testing.T) {
 	t.Run("only required fields", func(t *testing.T) {
 		expectedUserAttributeProfile := &UserAttributeProfile{
 			Name: auth0.Stringf("Test User Attribute Profile (%s)", time.Now().Format(time.StampMilli)),
-			UserAttributes: &map[string]UserAttributeProfileUserAttributes{
+			UserAttributes: map[string]*UserAttributeProfileUserAttributes{
 				"email": {
 					Description:     auth0.String("User's email address"),
 					Label:           auth0.String("Email"),
@@ -225,7 +225,7 @@ func givenAUserAttributeProfile(t *testing.T) *UserAttributeProfile {
 			SAMLMapping: &[]string{"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"},
 			SCIMMapping: auth0.String("userName"),
 		},
-		UserAttributes: &map[string]UserAttributeProfileUserAttributes{
+		UserAttributes: map[string]*UserAttributeProfileUserAttributes{
 			"email": {
 				Description:     auth0.String("User's email address"),
 				Label:           auth0.String("Email"),
@@ -247,7 +247,7 @@ func givenAUserAttributeProfile(t *testing.T) *UserAttributeProfile {
 				},
 				SAMLMapping: &[]string{"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"},
 				SCIMMapping: auth0.String("displayName"),
-				StrategyOverrides: &map[string]UserAttributesStrategyOverride{
+				StrategyOverrides: map[string]*UserAttributesStrategyOverride{
 					"oidc": {
 						SCIMMapping: auth0.String("name.givenName"),
 					},

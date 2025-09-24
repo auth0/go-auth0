@@ -14,7 +14,7 @@ type UserAttributeProfile struct {
 	// UserID is the User ID mapping configuration
 	UserID *UserAttributeProfileUserID `json:"user_id,omitempty"`
 	// UserAttributes User attributes configuration map. Keys are attribute names, values are the mapping configuration for each attribute.
-	UserAttributes *map[string]UserAttributeProfileUserAttributes `json:"user_attributes,omitempty"`
+	UserAttributes map[string]*UserAttributeProfileUserAttributes `json:"user_attributes,omitempty"`
 }
 
 // UserAttributeProfileUserID represents the configuration for the user ID mapping.
@@ -27,7 +27,7 @@ type UserAttributeProfileUserID struct {
 	SCIMMapping *string `json:"scim_mapping,omitempty"`
 	// StrategyOverrides is a map of strategy names to their respective overrides for the User ID.
 	// Supported strategies are: "ad", "adfs", "google-apps", "oidc", "okta", "pingfederate", "samlp", "waad"
-	StrategyOverrides *map[string]UserAttributeProfileStrategyOverrides `json:"strategy_overrides,omitempty"`
+	StrategyOverrides map[string]*UserAttributeProfileStrategyOverrides `json:"strategy_overrides,omitempty"`
 }
 
 // UserAttributeProfileOIDCMapping represents the OIDC mapping configuration.
@@ -65,7 +65,7 @@ type UserAttributeProfileUserAttributes struct {
 	// SCIMMapping is the SCIM mapping for the user attribute.
 	SCIMMapping *string `json:"scim_mapping,omitempty"`
 	// StrategyOverrides is a map of strategy names to their respective overrides for the user attribute.
-	StrategyOverrides *map[string]UserAttributesStrategyOverride `json:"strategy_overrides,omitempty"`
+	StrategyOverrides map[string]*UserAttributesStrategyOverride `json:"strategy_overrides,omitempty"`
 }
 
 // UserAttributesStrategyOverride represents strategy-specific overrides for user attribute mappings.
@@ -92,7 +92,7 @@ type UserAttributeProfileTemplateItem struct {
 type UserAttributeProfileTemplate struct {
 	Name           *string                                        `json:"name,omitempty"`
 	UserID         *UserAttributeProfileUserID                    `json:"user_id,omitempty"`
-	UserAttributes *map[string]UserAttributeProfileUserAttributes `json:"user_attributes,omitempty"`
+	UserAttributes map[string]*UserAttributeProfileUserAttributes `json:"user_attributes,omitempty"`
 }
 
 // UserAttributeProfileTemplateList is a list of User Attribute Profile Templates.
@@ -105,7 +105,7 @@ func (u *UserAttributeProfile) MarshalJSON() ([]byte, error) {
 	type UserAttributeProfileSubset struct {
 		Name           *string                                        `json:"name,omitempty"`
 		UserID         *UserAttributeProfileUserID                    `json:"user_id,omitempty"`
-		UserAttributes *map[string]UserAttributeProfileUserAttributes `json:"user_attributes,omitempty"`
+		UserAttributes map[string]*UserAttributeProfileUserAttributes `json:"user_attributes,omitempty"`
 	}
 
 	return json.Marshal(&UserAttributeProfileSubset{

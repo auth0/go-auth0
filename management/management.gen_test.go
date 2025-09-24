@@ -17335,16 +17335,6 @@ func TestUserAttributeProfile_GetName(tt *testing.T) {
 	u.GetName()
 }
 
-func TestUserAttributeProfile_GetUserAttributes(tt *testing.T) {
-	var zeroValue map[string]UserAttributeProfileUserAttributes
-	u := &UserAttributeProfile{UserAttributes: &zeroValue}
-	u.GetUserAttributes()
-	u = &UserAttributeProfile{}
-	u.GetUserAttributes()
-	u = nil
-	u.GetUserAttributes()
-}
-
 func TestUserAttributeProfile_GetUserID(tt *testing.T) {
 	u := &UserAttributeProfile{}
 	u.GetUserID()
@@ -17442,16 +17432,6 @@ func TestUserAttributeProfileTemplate_GetName(tt *testing.T) {
 	u.GetName()
 	u = nil
 	u.GetName()
-}
-
-func TestUserAttributeProfileTemplate_GetUserAttributes(tt *testing.T) {
-	var zeroValue map[string]UserAttributeProfileUserAttributes
-	u := &UserAttributeProfileTemplate{UserAttributes: &zeroValue}
-	u.GetUserAttributes()
-	u = &UserAttributeProfileTemplate{}
-	u.GetUserAttributes()
-	u = nil
-	u.GetUserAttributes()
 }
 
 func TestUserAttributeProfileTemplate_GetUserID(tt *testing.T) {
@@ -17579,16 +17559,6 @@ func TestUserAttributeProfileUserAttributes_GetSCIMMapping(tt *testing.T) {
 	u.GetSCIMMapping()
 }
 
-func TestUserAttributeProfileUserAttributes_GetStrategyOverrides(tt *testing.T) {
-	var zeroValue map[string]UserAttributesStrategyOverride
-	u := &UserAttributeProfileUserAttributes{StrategyOverrides: &zeroValue}
-	u.GetStrategyOverrides()
-	u = &UserAttributeProfileUserAttributes{}
-	u.GetStrategyOverrides()
-	u = nil
-	u.GetStrategyOverrides()
-}
-
 func TestUserAttributeProfileUserAttributes_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &UserAttributeProfileUserAttributes{}
@@ -17625,16 +17595,6 @@ func TestUserAttributeProfileUserID_GetSCIMMapping(tt *testing.T) {
 	u.GetSCIMMapping()
 	u = nil
 	u.GetSCIMMapping()
-}
-
-func TestUserAttributeProfileUserID_GetStrategyOverrides(tt *testing.T) {
-	var zeroValue map[string]UserAttributeProfileStrategyOverrides
-	u := &UserAttributeProfileUserID{StrategyOverrides: &zeroValue}
-	u.GetStrategyOverrides()
-	u = &UserAttributeProfileUserID{}
-	u.GetStrategyOverrides()
-	u = nil
-	u.GetStrategyOverrides()
 }
 
 func TestUserAttributeProfileUserID_String(t *testing.T) {
