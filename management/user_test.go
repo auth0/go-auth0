@@ -598,6 +598,15 @@ func TestUserManager_DeleteFederatedConnectionTokenSet(t *testing.T) {
 	require.NoError(t, err, "Expected no error when deleting a non-existent federated connection token set")
 }
 
+func TestUserManager_ListConnectedAccounts(t *testing.T) {
+	configureHTTPTestRecordings(t)
+	user := givenAUser(t)
+	connectedAccounts, err := api.User.ListConnectedAccounts(context.Background(), user.GetID())
+	require.NoError(t, err)
+	assert.NotEmpty(t, connectedAccounts.ConnectedAccounts)
+	assert.Greater(t, len(connectedAccounts.ConnectedAccounts), 0, "Expected no connected accounts for the user")
+}
+
 func givenAUser(t *testing.T) *User {
 	t.Helper()
 

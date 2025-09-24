@@ -466,6 +466,38 @@ type UserFederatedConnectionsTokenSet struct {
 	LastUsedAt *time.Time `json:"last_used_at,omitempty"`
 }
 
+// UserConnectedAccountAccessType represents the access type for a connected account.
+type UserConnectedAccountAccessType string
+
+const (
+	// UserConnectedAccountAccessTypeOffline represents offline access to the connected account.
+	UserConnectedAccountAccessTypeOffline UserConnectedAccountAccessType = "offline"
+)
+
+// UserConnectedAccountList is an envelope struct that is used when calling GetConnectedAccounts().
+//
+// It holds metadata for checkpoint pagination, such as next.
+type UserConnectedAccountList struct {
+	List
+	ConnectedAccounts []*UserConnectedAccount `json:"connected_accounts"`
+}
+
+// UserConnectedAccount represents a single connected account for a user.
+type UserConnectedAccount struct {
+	// ID is the unique identifier for the connected account.
+	ID *string `json:"id,omitempty"`
+	// Connection is the name of the connection associated with the account.
+	Connection *string `json:"connection,omitempty"`
+	// AccessType is the access type for to the connected account.
+	AccessType *UserConnectedAccountAccessType `json:"access_type,omitempty"`
+	// Scopes are the scopes granted for this connected account.
+	Scopes *[]string `json:"scopes,omitempty"`
+	// CreatedAt is the ISO 8601 timestamp when the connected account was created.
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+	// ExpiresAt is the ISO 8601 timestamp when the connected account expires.
+	ExpiresAt *time.Time `json:"expires_at,omitempty"`
+}
+
 // UserManager manages Auth0 User resources.
 type UserManager manager
 
@@ -888,4 +920,12 @@ func (m *UserManager) ListFederatedConnectionsTokenSets(ctx context.Context, use
 func (m *UserManager) DeleteFederatedConnectionsTokenSet(ctx context.Context, userID, tokenSetID string, opts ...RequestOption) error {
 	uri := m.management.URI("users", userID, "federated-connections-tokensets", tokenSetID)
 	return m.management.Request(ctx, "DELETE", uri, nil, opts...)
+}
+
+// ListConnectedAccounts retrieves the connected accounts for a user.
+func (m *UserManager) ListConnectedAccounts(ctx context.Context, userID string, opts ...RequestOption) (cal *UserConnectedAccountList, err error) {
+	uri := m.management.URI("users", userID, "connected-accounts")
+	err = m.management.Request(ctx, "GET", uri, &cal, applyListCheckpointDefaults(opts))
+
+	return
 }

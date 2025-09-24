@@ -17298,6 +17298,79 @@ func TestUserBlock_String(t *testing.T) {
 	}
 }
 
+func TestUserConnectedAccount_GetAccessType(tt *testing.T) {
+	u := &UserConnectedAccount{}
+	u.GetAccessType()
+	u = nil
+	u.GetAccessType()
+}
+
+func TestUserConnectedAccount_GetConnection(tt *testing.T) {
+	var zeroValue string
+	u := &UserConnectedAccount{Connection: &zeroValue}
+	u.GetConnection()
+	u = &UserConnectedAccount{}
+	u.GetConnection()
+	u = nil
+	u.GetConnection()
+}
+
+func TestUserConnectedAccount_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	u := &UserConnectedAccount{CreatedAt: &zeroValue}
+	u.GetCreatedAt()
+	u = &UserConnectedAccount{}
+	u.GetCreatedAt()
+	u = nil
+	u.GetCreatedAt()
+}
+
+func TestUserConnectedAccount_GetExpiresAt(tt *testing.T) {
+	var zeroValue time.Time
+	u := &UserConnectedAccount{ExpiresAt: &zeroValue}
+	u.GetExpiresAt()
+	u = &UserConnectedAccount{}
+	u.GetExpiresAt()
+	u = nil
+	u.GetExpiresAt()
+}
+
+func TestUserConnectedAccount_GetID(tt *testing.T) {
+	var zeroValue string
+	u := &UserConnectedAccount{ID: &zeroValue}
+	u.GetID()
+	u = &UserConnectedAccount{}
+	u.GetID()
+	u = nil
+	u.GetID()
+}
+
+func TestUserConnectedAccount_GetScopes(tt *testing.T) {
+	var zeroValue []string
+	u := &UserConnectedAccount{Scopes: &zeroValue}
+	u.GetScopes()
+	u = &UserConnectedAccount{}
+	u.GetScopes()
+	u = nil
+	u.GetScopes()
+}
+
+func TestUserConnectedAccount_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserConnectedAccount{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserConnectedAccountList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserConnectedAccountList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestUserEnrollment_GetAuthMethod(tt *testing.T) {
 	var zeroValue string
 	u := &UserEnrollment{AuthMethod: &zeroValue}
