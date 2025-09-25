@@ -150,6 +150,39 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+          User-Agent:
+            - Go-Auth0/1.22.2
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/prompts/signup/screen/signup/rendering
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"tenant":"go-auth0-dev.eu.auth0.com","prompt":"signup","screen":"signup","rendering_mode":"advanced","context_configuration":["branding.settings","branding.themes.default","client.logo_uri"],"default_head_tags_disabled":true,"head_tags":[{"tag":"script","content":"","attributes":{"src":"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js","async":true,"defer":true,"integrity":["sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="]}}],"filters":null,"use_page_template":false}'
+        headers:
+          Content-Type:
+            - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 458.20775ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
         content_length: 30
         transfer_encoding: []
         trailer: {}

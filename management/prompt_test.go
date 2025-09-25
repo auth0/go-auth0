@@ -163,6 +163,8 @@ func TestPromptManager_ListRendering(t *testing.T) {
 	for _, r := range actual.PromptRenderings {
 		if r.RenderingMode != nil && expected.RenderingMode != nil &&
 			*r.GetRenderingMode() == *expected.GetRenderingMode() &&
+			*r.GetScreen() == *expected.Screen &&
+			*r.GetPrompt() == *expected.GetPrompt() &&
 			assert.Equal(t, expected.GetContextConfiguration(), r.GetContextConfiguration()) &&
 			assert.Equal(t, expected.GetDefaultHeadTagsDisabled(), r.GetDefaultHeadTagsDisabled()) &&
 			assert.Equal(t, expected.GetFilters(), r.GetFilters()) &&
@@ -501,6 +503,9 @@ func givenAPromptRendering(t *testing.T, mode RenderingMode, clientID string) *P
 	}
 
 	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, settings)
+	assert.NoError(t, err)
+
+	settings, err = api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
 	assert.NoError(t, err)
 
 	return settings
