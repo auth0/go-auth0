@@ -836,12 +836,27 @@ type ConnectionOptionsFacebook struct {
 
 // Scopes returns the scopes for ConnectionOptionsFacebook.
 func (c *ConnectionOptionsFacebook) Scopes() []string {
-	return tag.Scopes(c)
+	return strings.Fields(c.GetScope())
 }
 
 // SetScopes sets the scopes for ConnectionOptionsFacebook.
 func (c *ConnectionOptionsFacebook) SetScopes(enable bool, scopes ...string) {
-	tag.SetScopes(c, enable, scopes...)
+	scopeMap := make(map[string]bool)
+	for _, scope := range c.Scopes() {
+		scopeMap[scope] = true
+	}
+	for _, scope := range scopes {
+		scopeMap[scope] = enable
+	}
+	scopeSlice := make([]string, 0, len(scopeMap))
+	for scope, enabled := range scopeMap {
+		if enabled {
+			scopeSlice = append(scopeSlice, scope)
+		}
+	}
+	sort.Strings(scopeSlice)
+	scope := strings.Join(scopeSlice, " ")
+	c.Scope = &scope
 }
 
 // ConnectionOptionsApple is used to configure an Apple Connection.
@@ -864,12 +879,27 @@ type ConnectionOptionsApple struct {
 
 // Scopes returns the scopes for ConnectionOptionsApple.
 func (c *ConnectionOptionsApple) Scopes() []string {
-	return tag.Scopes(c)
+	return strings.Fields(c.GetScope())
 }
 
 // SetScopes sets the scopes for ConnectionOptionsApple.
 func (c *ConnectionOptionsApple) SetScopes(enable bool, scopes ...string) {
-	tag.SetScopes(c, enable, scopes...)
+	scopeMap := make(map[string]bool)
+	for _, scope := range c.Scopes() {
+		scopeMap[scope] = true
+	}
+	for _, scope := range scopes {
+		scopeMap[scope] = enable
+	}
+	scopeSlice := make([]string, 0, len(scopeMap))
+	for scope, enabled := range scopeMap {
+		if enabled {
+			scopeSlice = append(scopeSlice, scope)
+		}
+	}
+	sort.Strings(scopeSlice)
+	scope := strings.Join(scopeSlice, " ")
+	c.Scope = &scope
 }
 
 // ConnectionOptionsLinkedin is used to configure a Linkedin Connection.
