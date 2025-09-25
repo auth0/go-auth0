@@ -19,7 +19,7 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
+                - Go-Auth0/1.28.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 394
         uncompressed: false
-        body: '{"id":"ssp_rRN6NKjp1Xk3SoghgjovRx","name":"Sample Self Service Profile","description":"Sample Desc","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"allowed_strategies":["oidc"],"created_at":"2024-11-06T19:41:31.394Z","updated_at":"2024-11-06T19:41:31.394Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
+        body: '{"id":"ssp_hDgf8a1FRBvXMQuH9fbPfg","name":"Sample Self Service Profile","description":"Sample Desc","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"allowed_strategies":["oidc"],"created_at":"2025-09-18T12:39:11.749Z","updated_at":"2025-09-18T12:39:11.749Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 1.290922208s
+        duration: 551.49125ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -51,11 +51,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_rRN6NKjp1Xk3SoghgjovRx
+                - Go-Auth0/1.28.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_hDgf8a1FRBvXMQuH9fbPfg
         method: GET
       response:
         proto: HTTP/2.0
@@ -65,13 +63,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"ssp_rRN6NKjp1Xk3SoghgjovRx","name":"Sample Self Service Profile","description":"Sample Desc","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"allowed_strategies":["oidc"],"created_at":"2024-11-06T19:41:31.394Z","updated_at":"2024-11-06T19:41:31.394Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
+        body: '{"id":"ssp_hDgf8a1FRBvXMQuH9fbPfg","name":"Sample Self Service Profile","description":"Sample Desc","user_attributes":[{"name":"some-name-here","description":"some-description","is_optional":true}],"allowed_strategies":["oidc"],"created_at":"2025-09-18T12:39:11.749Z","updated_at":"2025-09-18T12:39:11.749Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 437.787458ms
+        duration: 241.484625ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -86,11 +84,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.11.2
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_rRN6NKjp1Xk3SoghgjovRx
+                - Go-Auth0/1.28.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_hDgf8a1FRBvXMQuH9fbPfg
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -106,4 +102,175 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 364.379833ms
+        duration: 185.700625ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 791
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test User Attribute Profile (Sep 18 13:39:12.137)","user_id":{"oidc_mapping":"sub","saml_mapping":["urn:oid:0.9.2342.19200300.100.1.1"],"scim_mapping":"userName"},"user_attributes":{"email":{"description":"User's email address","label":"Email","profile_required":true,"auth0_mapping":"email","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"emails[primary eq true].value"},"name":{"description":"User's full name","label":"Name","profile_required":false,"auth0_mapping":"name","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"displayName","strategy_overrides":{"oidc":{"scim_mapping":"name.givenName"}}}}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.28.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/user-attribute-profiles
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 824
+        uncompressed: false
+        body: '{"id":"uap_1csfT1TgWaaPSFxyZge1mF","name":"Test User Attribute Profile (Sep 18 13:39:12.137)","user_id":{"oidc_mapping":"sub","saml_mapping":["urn:oid:0.9.2342.19200300.100.1.1"],"scim_mapping":"userName"},"user_attributes":{"name":{"label":"Name","description":"User''s full name","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"displayName","auth0_mapping":"name","profile_required":false,"strategy_overrides":{"oidc":{"scim_mapping":"name.givenName"}}},"email":{"label":"Email","description":"User''s email address","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"emails[primary eq true].value","auth0_mapping":"email","profile_required":true}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 658.11625ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 240
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Sample Self Service Profile","description":"Sample Desc","allowed_strategies":["oidc"],"branding":{"colors":{"primary":"#334455"},"logo_url":"https://example.com/logo.png"},"user_attribute_profile_id":"uap_1csfT1TgWaaPSFxyZge1mF"}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.28.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 374
+        uncompressed: false
+        body: '{"id":"ssp_rXQdsQbLubmRG2g3QvVGBd","name":"Sample Self Service Profile","description":"Sample Desc","user_attributes":[],"allowed_strategies":["oidc"],"created_at":"2025-09-18T12:39:13.083Z","updated_at":"2025-09-18T12:39:13.083Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}},"user_attribute_profile_id":"uap_1csfT1TgWaaPSFxyZge1mF"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 244.099083ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.28.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_rXQdsQbLubmRG2g3QvVGBd
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"id":"ssp_rXQdsQbLubmRG2g3QvVGBd","name":"Sample Self Service Profile","description":"Sample Desc","user_attributes":[],"allowed_strategies":["oidc"],"created_at":"2025-09-18T12:39:13.083Z","updated_at":"2025-09-18T12:39:13.083Z","branding":{"logo_url":"https://example.com/logo.png","colors":{"primary":"#334455"}},"user_attribute_profile_id":"uap_1csfT1TgWaaPSFxyZge1mF"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 183.195ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.28.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/self-service-profiles/ssp_rXQdsQbLubmRG2g3QvVGBd
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 293.659625ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.28.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/user-attribute-profiles/uap_1csfT1TgWaaPSFxyZge1mF
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 595.402209ms
