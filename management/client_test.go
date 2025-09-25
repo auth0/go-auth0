@@ -19,6 +19,7 @@ func TestClient_Create(t *testing.T) {
 	expectedClient := &Client{
 		Name:        auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
 		Description: auth0.String("This is just a test client."),
+		SkipNonVerifiableCallbackURIConfirmationPrompt: auth0.Bool(true),
 	}
 
 	err := api.Client.Create(context.Background(), expectedClient)
