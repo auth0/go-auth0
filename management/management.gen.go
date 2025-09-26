@@ -1819,6 +1819,14 @@ func (c *Client) GetOIDCLogout() *OIDCLogout {
 	return c.OIDCLogout
 }
 
+// GetOrganizationDiscoveryMethods returns the OrganizationDiscoveryMethods field if it's non-nil, zero value otherwise.
+func (c *Client) GetOrganizationDiscoveryMethods() []string {
+	if c == nil || c.OrganizationDiscoveryMethods == nil {
+		return nil
+	}
+	return *c.OrganizationDiscoveryMethods
+}
+
 // GetOrganizationRequireBehavior returns the OrganizationRequireBehavior field if it's non-nil, zero value otherwise.
 func (c *Client) GetOrganizationRequireBehavior() string {
 	if c == nil || c.OrganizationRequireBehavior == nil {
