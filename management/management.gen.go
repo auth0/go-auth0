@@ -7294,6 +7294,11 @@ func (d *DeviceCredentialList) String() string {
 	return Stringify(d)
 }
 
+// String returns a string representation of DiscoveryDomainList.
+func (d *DiscoveryDomainList) String() string {
+	return Stringify(d)
+}
+
 // String returns a string representation of DropboxClientAddon.
 func (d *DropboxClientAddon) String() string {
 	return Stringify(d)
@@ -10006,6 +10011,51 @@ func (o *OrganizationConnectionDetails) String() string {
 
 // String returns a string representation of OrganizationConnectionList.
 func (o *OrganizationConnectionList) String() string {
+	return Stringify(o)
+}
+
+// GetDomain returns the Domain field if it's non-nil, zero value otherwise.
+func (o *OrganizationDiscoveryDomain) GetDomain() string {
+	if o == nil || o.Domain == nil {
+		return ""
+	}
+	return *o.Domain
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (o *OrganizationDiscoveryDomain) GetID() string {
+	if o == nil || o.ID == nil {
+		return ""
+	}
+	return *o.ID
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (o *OrganizationDiscoveryDomain) GetStatus() string {
+	if o == nil || o.Status == nil {
+		return ""
+	}
+	return *o.Status
+}
+
+// GetVerificationHost returns the VerificationHost field if it's non-nil, zero value otherwise.
+func (o *OrganizationDiscoveryDomain) GetVerificationHost() string {
+	if o == nil || o.VerificationHost == nil {
+		return ""
+	}
+	return *o.VerificationHost
+}
+
+// GetVerificationTXT returns the VerificationTXT field if it's non-nil, zero value otherwise.
+func (o *OrganizationDiscoveryDomain) GetVerificationTXT() string {
+	if o == nil || o.VerificationTXT == nil {
+		return ""
+	}
+	return *o.VerificationTXT
+}
+
+// String returns a string representation of OrganizationDiscoveryDomain.
+func (o *OrganizationDiscoveryDomain) String() string {
 	return Stringify(o)
 }
 
