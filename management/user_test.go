@@ -602,9 +602,14 @@ func TestUserManager_ListConnectedAccounts(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	user := givenAUser(t)
 	connectedAccounts, err := api.User.ListConnectedAccounts(context.Background(), user.GetID())
+
 	require.NoError(t, err)
-	assert.NotEmpty(t, connectedAccounts.ConnectedAccounts)
-	assert.Greater(t, len(connectedAccounts.ConnectedAccounts), 0, "Expected no connected accounts for the user")
+	assert.Empty(t, connectedAccounts.ConnectedAccounts)
+	// We expect no connected accounts for a newly created user.
+	// In a real-world scenario, connected accounts would be added through user actions.
+	// Users need to connect accounts using `/me/v1/connected-accounts/connect` endpoint.
+	// Hence, we assert that the list is empty.
+	assert.Equal(t, len(connectedAccounts.ConnectedAccounts), 0, "Expected no connected accounts for the user")
 }
 
 func givenAUser(t *testing.T) *User {
