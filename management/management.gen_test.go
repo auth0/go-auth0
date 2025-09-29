@@ -2364,6 +2364,16 @@ func TestClient_GetSignedRequestObject(tt *testing.T) {
 	c.GetSignedRequestObject()
 }
 
+func TestClient_GetSkipNonVerifiableCallbackURIConfirmationPrompt(tt *testing.T) {
+	var zeroValue bool
+	c := &Client{SkipNonVerifiableCallbackURIConfirmationPrompt: &zeroValue}
+	c.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+	c = &Client{}
+	c.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+	c = nil
+	c.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+}
+
 func TestClient_GetSSO(tt *testing.T) {
 	var zeroValue bool
 	c := &Client{SSO: &zeroValue}
@@ -14797,6 +14807,16 @@ func TestSelfServiceProfile_GetUpdatedAt(tt *testing.T) {
 	s.GetUpdatedAt()
 }
 
+func TestSelfServiceProfile_GetUserAttributeProfileID(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfile{UserAttributeProfileID: &zeroValue}
+	s.GetUserAttributeProfileID()
+	s = &SelfServiceProfile{}
+	s.GetUserAttributeProfileID()
+	s = nil
+	s.GetUserAttributeProfileID()
+}
+
 func TestSelfServiceProfile_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SelfServiceProfile{}
@@ -14845,6 +14865,13 @@ func TestSelfServiceProfileTicket_GetEnabledClients(tt *testing.T) {
 	s.GetEnabledClients()
 	s = nil
 	s.GetEnabledClients()
+}
+
+func TestSelfServiceProfileTicket_GetProvisioningConfig(tt *testing.T) {
+	s := &SelfServiceProfileTicket{}
+	s.GetProvisioningConfig()
+	s = nil
+	s.GetProvisioningConfig()
 }
 
 func TestSelfServiceProfileTicket_GetTicket(tt *testing.T) {
@@ -15064,6 +15091,34 @@ func TestSelfServiceProfileTicketEnabledOrganizations_GetShowAsButton(tt *testin
 func TestSelfServiceProfileTicketEnabledOrganizations_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SelfServiceProfileTicketEnabledOrganizations{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileTicketProvisioningConfig_GetScopes(tt *testing.T) {
+	var zeroValue []string
+	s := &SelfServiceProfileTicketProvisioningConfig{Scopes: &zeroValue}
+	s.GetScopes()
+	s = &SelfServiceProfileTicketProvisioningConfig{}
+	s.GetScopes()
+	s = nil
+	s.GetScopes()
+}
+
+func TestSelfServiceProfileTicketProvisioningConfig_GetTokenLifetime(tt *testing.T) {
+	var zeroValue int
+	s := &SelfServiceProfileTicketProvisioningConfig{TokenLifetime: &zeroValue}
+	s.GetTokenLifetime()
+	s = &SelfServiceProfileTicketProvisioningConfig{}
+	s.GetTokenLifetime()
+	s = nil
+	s.GetTokenLifetime()
+}
+
+func TestSelfServiceProfileTicketProvisioningConfig_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicketProvisioningConfig{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -16051,6 +16106,16 @@ func TestTenant_GetSessions(tt *testing.T) {
 	t.GetSessions()
 	t = nil
 	t.GetSessions()
+}
+
+func TestTenant_GetSkipNonVerifiableCallbackURIConfirmationPrompt(tt *testing.T) {
+	var zeroValue bool
+	t := &Tenant{SkipNonVerifiableCallbackURIConfirmationPrompt: &zeroValue}
+	t.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+	t = &Tenant{}
+	t.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+	t = nil
+	t.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
 }
 
 func TestTenant_GetSupportEmail(tt *testing.T) {
@@ -17265,6 +17330,331 @@ func TestUser_GetVerifyEmail(tt *testing.T) {
 func TestUser_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &User{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfile_GetID(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfile{ID: &zeroValue}
+	u.GetID()
+	u = &UserAttributeProfile{}
+	u.GetID()
+	u = nil
+	u.GetID()
+}
+
+func TestUserAttributeProfile_GetName(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfile{Name: &zeroValue}
+	u.GetName()
+	u = &UserAttributeProfile{}
+	u.GetName()
+	u = nil
+	u.GetName()
+}
+
+func TestUserAttributeProfile_GetUserID(tt *testing.T) {
+	u := &UserAttributeProfile{}
+	u.GetUserID()
+	u = nil
+	u.GetUserID()
+}
+
+func TestUserAttributeProfile_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfile{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileOIDCMapping_GetDisplayName(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileOIDCMapping{DisplayName: &zeroValue}
+	u.GetDisplayName()
+	u = &UserAttributeProfileOIDCMapping{}
+	u.GetDisplayName()
+	u = nil
+	u.GetDisplayName()
+}
+
+func TestUserAttributeProfileOIDCMapping_GetMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileOIDCMapping{Mapping: &zeroValue}
+	u.GetMapping()
+	u = &UserAttributeProfileOIDCMapping{}
+	u.GetMapping()
+	u = nil
+	u.GetMapping()
+}
+
+func TestUserAttributeProfileOIDCMapping_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileOIDCMapping{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileStrategyOverrides_GetOIDCMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileStrategyOverrides{OIDCMapping: &zeroValue}
+	u.GetOIDCMapping()
+	u = &UserAttributeProfileStrategyOverrides{}
+	u.GetOIDCMapping()
+	u = nil
+	u.GetOIDCMapping()
+}
+
+func TestUserAttributeProfileStrategyOverrides_GetSAMLMapping(tt *testing.T) {
+	var zeroValue []string
+	u := &UserAttributeProfileStrategyOverrides{SAMLMapping: &zeroValue}
+	u.GetSAMLMapping()
+	u = &UserAttributeProfileStrategyOverrides{}
+	u.GetSAMLMapping()
+	u = nil
+	u.GetSAMLMapping()
+}
+
+func TestUserAttributeProfileStrategyOverrides_GetSCIMMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileStrategyOverrides{SCIMMapping: &zeroValue}
+	u.GetSCIMMapping()
+	u = &UserAttributeProfileStrategyOverrides{}
+	u.GetSCIMMapping()
+	u = nil
+	u.GetSCIMMapping()
+}
+
+func TestUserAttributeProfileStrategyOverrides_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileStrategyOverrides{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileTemplate_GetName(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileTemplate{Name: &zeroValue}
+	u.GetName()
+	u = &UserAttributeProfileTemplate{}
+	u.GetName()
+	u = nil
+	u.GetName()
+}
+
+func TestUserAttributeProfileTemplate_GetUserID(tt *testing.T) {
+	u := &UserAttributeProfileTemplate{}
+	u.GetUserID()
+	u = nil
+	u.GetUserID()
+}
+
+func TestUserAttributeProfileTemplate_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileTemplate{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileTemplateItem_GetDisplayName(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileTemplateItem{DisplayName: &zeroValue}
+	u.GetDisplayName()
+	u = &UserAttributeProfileTemplateItem{}
+	u.GetDisplayName()
+	u = nil
+	u.GetDisplayName()
+}
+
+func TestUserAttributeProfileTemplateItem_GetID(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileTemplateItem{ID: &zeroValue}
+	u.GetID()
+	u = &UserAttributeProfileTemplateItem{}
+	u.GetID()
+	u = nil
+	u.GetID()
+}
+
+func TestUserAttributeProfileTemplateItem_GetTemplate(tt *testing.T) {
+	u := &UserAttributeProfileTemplateItem{}
+	u.GetTemplate()
+	u = nil
+	u.GetTemplate()
+}
+
+func TestUserAttributeProfileTemplateItem_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileTemplateItem{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileTemplateList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileTemplateList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileUserAttributes_GetAuth0Mapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileUserAttributes{Auth0Mapping: &zeroValue}
+	u.GetAuth0Mapping()
+	u = &UserAttributeProfileUserAttributes{}
+	u.GetAuth0Mapping()
+	u = nil
+	u.GetAuth0Mapping()
+}
+
+func TestUserAttributeProfileUserAttributes_GetDescription(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileUserAttributes{Description: &zeroValue}
+	u.GetDescription()
+	u = &UserAttributeProfileUserAttributes{}
+	u.GetDescription()
+	u = nil
+	u.GetDescription()
+}
+
+func TestUserAttributeProfileUserAttributes_GetLabel(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileUserAttributes{Label: &zeroValue}
+	u.GetLabel()
+	u = &UserAttributeProfileUserAttributes{}
+	u.GetLabel()
+	u = nil
+	u.GetLabel()
+}
+
+func TestUserAttributeProfileUserAttributes_GetOIDCMapping(tt *testing.T) {
+	u := &UserAttributeProfileUserAttributes{}
+	u.GetOIDCMapping()
+	u = nil
+	u.GetOIDCMapping()
+}
+
+func TestUserAttributeProfileUserAttributes_GetProfileRequired(tt *testing.T) {
+	var zeroValue bool
+	u := &UserAttributeProfileUserAttributes{ProfileRequired: &zeroValue}
+	u.GetProfileRequired()
+	u = &UserAttributeProfileUserAttributes{}
+	u.GetProfileRequired()
+	u = nil
+	u.GetProfileRequired()
+}
+
+func TestUserAttributeProfileUserAttributes_GetSAMLMapping(tt *testing.T) {
+	var zeroValue []string
+	u := &UserAttributeProfileUserAttributes{SAMLMapping: &zeroValue}
+	u.GetSAMLMapping()
+	u = &UserAttributeProfileUserAttributes{}
+	u.GetSAMLMapping()
+	u = nil
+	u.GetSAMLMapping()
+}
+
+func TestUserAttributeProfileUserAttributes_GetSCIMMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileUserAttributes{SCIMMapping: &zeroValue}
+	u.GetSCIMMapping()
+	u = &UserAttributeProfileUserAttributes{}
+	u.GetSCIMMapping()
+	u = nil
+	u.GetSCIMMapping()
+}
+
+func TestUserAttributeProfileUserAttributes_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileUserAttributes{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileUserID_GetOIDCMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileUserID{OIDCMapping: &zeroValue}
+	u.GetOIDCMapping()
+	u = &UserAttributeProfileUserID{}
+	u.GetOIDCMapping()
+	u = nil
+	u.GetOIDCMapping()
+}
+
+func TestUserAttributeProfileUserID_GetSAMLMapping(tt *testing.T) {
+	var zeroValue []string
+	u := &UserAttributeProfileUserID{SAMLMapping: &zeroValue}
+	u.GetSAMLMapping()
+	u = &UserAttributeProfileUserID{}
+	u.GetSAMLMapping()
+	u = nil
+	u.GetSAMLMapping()
+}
+
+func TestUserAttributeProfileUserID_GetSCIMMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileUserID{SCIMMapping: &zeroValue}
+	u.GetSCIMMapping()
+	u = &UserAttributeProfileUserID{}
+	u.GetSCIMMapping()
+	u = nil
+	u.GetSCIMMapping()
+}
+
+func TestUserAttributeProfileUserID_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileUserID{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributesStrategyOverride_GetOIDCMapping(tt *testing.T) {
+	u := &UserAttributesStrategyOverride{}
+	u.GetOIDCMapping()
+	u = nil
+	u.GetOIDCMapping()
+}
+
+func TestUserAttributesStrategyOverride_GetSAMLMapping(tt *testing.T) {
+	var zeroValue []string
+	u := &UserAttributesStrategyOverride{SAMLMapping: &zeroValue}
+	u.GetSAMLMapping()
+	u = &UserAttributesStrategyOverride{}
+	u.GetSAMLMapping()
+	u = nil
+	u.GetSAMLMapping()
+}
+
+func TestUserAttributesStrategyOverride_GetSCIMMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributesStrategyOverride{SCIMMapping: &zeroValue}
+	u.GetSCIMMapping()
+	u = &UserAttributesStrategyOverride{}
+	u.GetSCIMMapping()
+	u = nil
+	u.GetSCIMMapping()
+}
+
+func TestUserAttributesStrategyOverride_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributesStrategyOverride{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
