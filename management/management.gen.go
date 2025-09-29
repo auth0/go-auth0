@@ -14087,6 +14087,64 @@ func (u *UserBlock) String() string {
 	return Stringify(u)
 }
 
+// GetAccessType returns the AccessType field.
+func (u *UserConnectedAccount) GetAccessType() *UserConnectedAccountAccessType {
+	if u == nil {
+		return nil
+	}
+	return u.AccessType
+}
+
+// GetConnection returns the Connection field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetConnection() string {
+	if u == nil || u.Connection == nil {
+		return ""
+	}
+	return *u.Connection
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetCreatedAt() time.Time {
+	if u == nil || u.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.CreatedAt
+}
+
+// GetExpiresAt returns the ExpiresAt field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetExpiresAt() time.Time {
+	if u == nil || u.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *u.ExpiresAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+// GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetScopes() []string {
+	if u == nil || u.Scopes == nil {
+		return nil
+	}
+	return *u.Scopes
+}
+
+// String returns a string representation of UserConnectedAccount.
+func (u *UserConnectedAccount) String() string {
+	return Stringify(u)
+}
+
+// String returns a string representation of UserConnectedAccountList.
+func (u *UserConnectedAccountList) String() string {
+	return Stringify(u)
+}
+
 // GetAuthMethod returns the AuthMethod field if it's non-nil, zero value otherwise.
 func (u *UserEnrollment) GetAuthMethod() string {
 	if u == nil || u.AuthMethod == nil {
