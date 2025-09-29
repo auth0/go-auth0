@@ -16,33 +16,66 @@ import (
 func TestSelfServiceProfileManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
-	ssop := &SelfServiceProfile{
-		Name:              auth0.String("Sample Self Service Profile"),
-		Description:       auth0.String("Sample Desc"),
-		AllowedStrategies: &[]string{"oidc"},
-		Branding: &Branding{
-			LogoURL: auth0.String("https://example.com/logo.png"),
-			Colors: &BrandingColors{
-				Primary: auth0.String("#334455"),
+	cases := []struct {
+		name  string
+		setup func(t *testing.T) *SelfServiceProfile
+	}{
+		{
+			name: "can create a self service profile",
+			setup: func(_ *testing.T) *SelfServiceProfile {
+				return &SelfServiceProfile{
+					Name:              auth0.String("Sample Self Service Profile"),
+					Description:       auth0.String("Sample Desc"),
+					AllowedStrategies: &[]string{"oidc"},
+					Branding: &Branding{
+						LogoURL: auth0.String("https://example.com/logo.png"),
+						Colors: &BrandingColors{
+							Primary: auth0.String("#334455"),
+						},
+					},
+					UserAttributes: []*SelfServiceProfileUserAttributes{
+						{
+							Name:        auth0.String("some-name-here"),
+							Description: auth0.String("some-description"),
+							IsOptional:  auth0.Bool(true),
+						},
+					},
+				}
 			},
 		},
-		UserAttributes: []*SelfServiceProfileUserAttributes{
-			{
-				Name:        auth0.String("some-name-here"),
-				Description: auth0.String("some-description"),
-				IsOptional:  auth0.Bool(true),
+		{
+			name: "can create a self service profile with user attribute profile ID",
+			setup: func(t *testing.T) *SelfServiceProfile {
+				userAttributeProfile := givenAUserAttributeProfile(t)
+				return &SelfServiceProfile{
+					Name:                   auth0.String("Sample Self Service Profile"),
+					Description:            auth0.String("Sample Desc"),
+					AllowedStrategies:      &[]string{"oidc"},
+					UserAttributeProfileID: auth0.String(userAttributeProfile.GetID()),
+					Branding: &Branding{
+						LogoURL: auth0.String("https://example.com/logo.png"),
+						Colors: &BrandingColors{
+							Primary: auth0.String("#334455"),
+						},
+					},
+				}
 			},
 		},
 	}
 
-	err := api.SelfServiceProfile.Create(context.Background(), ssop)
-	assert.NoError(t, err)
-	assert.NotEmpty(t, ssop.GetID())
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			ssop := tc.setup(t)
+			err := api.SelfServiceProfile.Create(context.Background(), ssop)
+			assert.NoError(t, err)
+			assert.NotEmpty(t, ssop.GetID())
 
-	ssopRetrieved, err := api.SelfServiceProfile.Read(context.Background(), ssop.GetID())
-	assert.NoError(t, err)
-	assert.Equal(t, ssopRetrieved, ssop)
-	cleanSelfServiceProfile(t, ssop.GetID())
+			ssopRetrieved, err := api.SelfServiceProfile.Read(context.Background(), ssop.GetID())
+			assert.NoError(t, err)
+			assert.Equal(t, ssopRetrieved, ssop)
+			cleanSelfServiceProfile(t, ssop.GetID())
+		})
+	}
 }
 
 func TestSelfServiceProfileManager_List(t *testing.T) {
@@ -112,56 +145,113 @@ func TestSelfServiceProfileManager_SetGetCustomText(t *testing.T) {
 
 func TestSelfServiceProfileManager_CreateAndRevokeTicket(t *testing.T) {
 	configureHTTPTestRecordings(t)
-	ssop := givenASelfServiceProfile(t)
 	client := givenAClient(t)
 	org := givenAnOrganization(t)
 
-	ticket := &SelfServiceProfileTicket{
-		ConnectionConfig: &SelfServiceProfileTicketConnectionConfig{
-			Name:               auth0.String("sso-generated-ticket"),
-			DisplayName:        auth0.String("sso-generated-ticket-display-name"),
-			IsDomainConnection: auth0.Bool(true),
-			ShowAsButton:       auth0.Bool(true),
-			Metadata: &map[string]interface{}{
-				"key1": "value1",
-				"key2": "value2",
-			},
-			Options: &SelfServiceProfileTicketConnectionConfigOptions{
-				IconURL:       auth0.String("https://metabox.com/my_icon.jpeg"),
-				DomainAliases: &[]string{"okta.com"},
-				IDPInitiated: &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{
-					Enabled:              auth0.Bool(true),
-					ClientID:             auth0.String(client.GetClientID()),
-					ClientProtocol:       auth0.String("oauth2"),
-					ClientAuthorizeQuery: auth0.String("scope=openid,profile,email"),
+	cases := []struct {
+		name               string
+		selfServiceProfile *SelfServiceProfile
+		ticket             *SelfServiceProfileTicket
+	}{
+		{
+			name:               "can create and revoke a ticket",
+			selfServiceProfile: givenASelfServiceProfile(t),
+			ticket: &SelfServiceProfileTicket{
+				ConnectionConfig: &SelfServiceProfileTicketConnectionConfig{
+					Name:               auth0.String("sso-generated-ticket"),
+					DisplayName:        auth0.String("sso-generated-ticket-display-name"),
+					IsDomainConnection: auth0.Bool(true),
+					ShowAsButton:       auth0.Bool(true),
+					Metadata: &map[string]interface{}{
+						"key1": "value1",
+						"key2": "value2",
+					},
+					Options: &SelfServiceProfileTicketConnectionConfigOptions{
+						IconURL:       auth0.String("https://metabox.com/my_icon.jpeg"),
+						DomainAliases: &[]string{"okta.com"},
+						IDPInitiated: &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{
+							Enabled:              auth0.Bool(true),
+							ClientID:             auth0.String(client.GetClientID()),
+							ClientProtocol:       auth0.String("oauth2"),
+							ClientAuthorizeQuery: auth0.String("scope=openid,profile,email"),
+						},
+					},
+				},
+				EnabledClients: &[]string{client.GetClientID()},
+				EnabledOrganizations: []*SelfServiceProfileTicketEnabledOrganizations{
+					{
+						AssignMembershipOnLogin: auth0.Bool(true),
+						ShowAsButton:            auth0.Bool(true),
+						OrganizationID:          auth0.String(org.GetID()),
+					},
+				},
+				DomainAliasesConfig: &SelfServiceProfileTicketDomainAliasesConfig{
+					DomainVerification: auth0.String("none"),
 				},
 			},
 		},
-		EnabledClients: &[]string{client.GetClientID()},
-		EnabledOrganizations: []*SelfServiceProfileTicketEnabledOrganizations{
-			{
-				AssignMembershipOnLogin: auth0.Bool(true),
-				ShowAsButton:            auth0.Bool(true),
-				OrganizationID:          auth0.String(org.GetID()),
+		{
+			name:               "supports setting provisioning config",
+			selfServiceProfile: givenASelfServiceProfileWitUserAttributeProfileID(t),
+			ticket: &SelfServiceProfileTicket{
+				ConnectionConfig: &SelfServiceProfileTicketConnectionConfig{
+					Name:               auth0.String("sso-generated-ticket"),
+					DisplayName:        auth0.String("sso-generated-ticket-display-name"),
+					IsDomainConnection: auth0.Bool(true),
+					ShowAsButton:       auth0.Bool(true),
+					Metadata: &map[string]interface{}{
+						"key1": "value1",
+						"key2": "value2",
+					},
+					Options: &SelfServiceProfileTicketConnectionConfigOptions{
+						IconURL:       auth0.String("https://metabox.com/my_icon.jpeg"),
+						DomainAliases: &[]string{"okta.com"},
+						IDPInitiated: &SelfServiceProfileTicketConnectionConfigOptionsIDPInitiated{
+							Enabled:              auth0.Bool(true),
+							ClientID:             auth0.String(client.GetClientID()),
+							ClientProtocol:       auth0.String("oauth2"),
+							ClientAuthorizeQuery: auth0.String("scope=openid,profile,email"),
+						},
+					},
+				},
+				EnabledClients: &[]string{client.GetClientID()},
+				EnabledOrganizations: []*SelfServiceProfileTicketEnabledOrganizations{
+					{
+						AssignMembershipOnLogin: auth0.Bool(true),
+						ShowAsButton:            auth0.Bool(true),
+						OrganizationID:          auth0.String(org.GetID()),
+					},
+				},
+				DomainAliasesConfig: &SelfServiceProfileTicketDomainAliasesConfig{
+					DomainVerification: auth0.String("none"),
+				},
+				ProvisioningConfig: &SelfServiceProfileTicketProvisioningConfig{
+					Scopes:        &[]string{"get:users"},
+					TokenLifetime: auth0.Int(3600),
+				},
 			},
 		},
-		DomainAliasesConfig: &SelfServiceProfileTicketDomainAliasesConfig{
-			DomainVerification: auth0.String("none"),
-		},
-	}
-	err := api.SelfServiceProfile.CreateTicket(context.Background(), ssop.GetID(), ticket)
-	assert.NoError(t, err)
-	assert.NotEmpty(t, ticket.GetTicket())
-
-	ticketURL := ticket.GetTicket()
-
-	ticketIDMap, err := url.ParseQuery(ticketURL)
-	if err != nil {
-		ticketID := ticketIDMap["ticketId"][0]
-		err = api.SelfServiceProfile.RevokeTicket(context.Background(), ssop.GetID(), ticketID)
 	}
 
-	assert.NoError(t, err)
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			ticket := tc.ticket
+			ssop := tc.selfServiceProfile
+			err := api.SelfServiceProfile.CreateTicket(context.Background(), ssop.GetID(), ticket)
+			assert.NoError(t, err)
+			assert.NotEmpty(t, ticket.GetTicket())
+
+			ticketURL := ticket.GetTicket()
+
+			ticketIDMap, err := url.ParseQuery(ticketURL)
+			if err != nil {
+				ticketID := ticketIDMap["ticketId"][0]
+				err = api.SelfServiceProfile.RevokeTicket(context.Background(), ssop.GetID(), ticketID)
+			}
+
+			assert.NoError(t, err)
+		})
+	}
 }
 
 func TestSelfServiceProfileManager_MarshalJSON(t *testing.T) {
@@ -192,6 +282,21 @@ func TestSelfServiceProfileManager_MarshalJSON(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected, string(payload))
 	}
+
+	t.Run("doesn't allow both UserAttributes and UserAttributeProfileID to be set", func(t *testing.T) {
+		ssp := &SelfServiceProfile{
+			UserAttributes: []*SelfServiceProfileUserAttributes{
+				{
+					Name:        auth0.String("some-name"),
+					Description: auth0.String("some-desc"),
+					IsOptional:  auth0.Bool(true),
+				},
+			},
+			UserAttributeProfileID: auth0.String("some-id"),
+		}
+		_, err := json.Marshal(ssp)
+		assert.Error(t, err)
+	})
 }
 
 func givenASelfServiceProfile(t *testing.T) *SelfServiceProfile {
@@ -214,6 +319,32 @@ func givenASelfServiceProfile(t *testing.T) *SelfServiceProfile {
 				IsOptional:  auth0.Bool(true),
 			},
 		},
+	}
+
+	err := api.SelfServiceProfile.Create(context.Background(), ssop)
+	assert.NoError(t, err)
+	t.Cleanup(func() {
+		cleanSelfServiceProfile(t, ssop.GetID())
+	})
+
+	return ssop
+}
+
+func givenASelfServiceProfileWitUserAttributeProfileID(t *testing.T) *SelfServiceProfile {
+	t.Helper()
+	userAttributeProfile := givenAUserAttributeProfile(t)
+
+	ssop := &SelfServiceProfile{
+		Name:              auth0.String("Sample Self Service Profile"),
+		Description:       auth0.String("Sample Desc"),
+		AllowedStrategies: &[]string{"oidc"},
+		Branding: &Branding{
+			LogoURL: auth0.String("https://example.com/logo.png"),
+			Colors: &BrandingColors{
+				Primary: auth0.String("#334455"),
+			},
+		},
+		UserAttributeProfileID: auth0.String(userAttributeProfile.GetID()),
 	}
 
 	err := api.SelfServiceProfile.Create(context.Background(), ssop)
