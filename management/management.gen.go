@@ -12727,6 +12727,14 @@ func (t *Tenant) GetEnabledLocales() []string {
 	return *t.EnabledLocales
 }
 
+// GetEphemeralSessionLifetime returns the EphemeralSessionLifetime field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetEphemeralSessionLifetime() float64 {
+	if t == nil || t.EphemeralSessionLifetime == nil {
+		return 0
+	}
+	return *t.EphemeralSessionLifetime
+}
+
 // GetErrorPage returns the ErrorPage field.
 func (t *Tenant) GetErrorPage() *TenantErrorPage {
 	if t == nil {
@@ -12757,6 +12765,14 @@ func (t *Tenant) GetGuardianMFAPage() *TenantGuardianMFAPage {
 		return nil
 	}
 	return t.GuardianMFAPage
+}
+
+// GetIdleEphemeralSessionLifetime returns the IdleEphemeralSessionLifetime field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetIdleEphemeralSessionLifetime() float64 {
+	if t == nil || t.IdleEphemeralSessionLifetime == nil {
+		return 0
+	}
+	return *t.IdleEphemeralSessionLifetime
 }
 
 // GetIdleSessionLifetime returns the IdleSessionLifetime field if it's non-nil, zero value otherwise.
