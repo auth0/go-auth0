@@ -80,14 +80,7 @@ func (c *Client) List(
 		"https://%7BTENANT%7D.auth0.com/api/v2",
 	)
 	endpointURL := baseURL + "/logs"
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -95,28 +88,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -134,7 +105,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -147,7 +118,7 @@ func (c *Client) List(
 
 	readPageResponse := func(response *management.ListLogOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.Log] {
 		next += 1
-		results := response.GetLogs()
+		results := response.Logs
 		return &internal.PageResponse[*int, *management.Log]{
 			Next:    &next,
 			Results: results,

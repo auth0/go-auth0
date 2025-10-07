@@ -6,61 +6,81 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type CreateRoleRequestContent struct {
-	// Name of the role.
-	Name string `json:"name" url:"-"`
-	// Description of the role.
-	Description *string `json:"description,omitempty" url:"-"`
-}
-
-type ListRolesRequestParameters struct {
-	// Number of results per page. Defaults to 50.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Optional filter on name (case-insensitive).
-	NameFilter *string `json:"-" url:"name_filter,omitempty"`
-}
+var (
+	createRoleResponseContentFieldId          = big.NewInt(1 << 0)
+	createRoleResponseContentFieldName        = big.NewInt(1 << 1)
+	createRoleResponseContentFieldDescription = big.NewInt(1 << 2)
+)
 
 type CreateRoleResponseContent struct {
 	// ID for this role.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Description of this role.
 	Description *string `json:"description,omitempty" url:"description,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateRoleResponseContent) GetID() *string {
-	if c == nil {
-		return nil
+func (c *CreateRoleResponseContent) GetId() string {
+	if c == nil || c.Id == nil {
+		return ""
 	}
-	return c.ID
+	return *c.Id
 }
 
-func (c *CreateRoleResponseContent) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateRoleResponseContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateRoleResponseContent) GetDescription() *string {
-	if c == nil {
-		return nil
+func (c *CreateRoleResponseContent) GetDescription() string {
+	if c == nil || c.Description == nil {
+		return ""
 	}
-	return c.Description
+	return *c.Description
 }
 
 func (c *CreateRoleResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateRoleResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRoleResponseContent) SetId(id *string) {
+	c.Id = id
+	c.require(createRoleResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRoleResponseContent) SetName(name *string) {
+	c.Name = name
+	c.require(createRoleResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRoleResponseContent) SetDescription(description *string) {
+	c.Description = description
+	c.require(createRoleResponseContentFieldDescription)
 }
 
 func (c *CreateRoleResponseContent) UnmarshalJSON(data []byte) error {
@@ -79,6 +99,17 @@ func (c *CreateRoleResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateRoleResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateRoleResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateRoleResponseContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -91,41 +122,78 @@ func (c *CreateRoleResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	getRoleResponseContentFieldId          = big.NewInt(1 << 0)
+	getRoleResponseContentFieldName        = big.NewInt(1 << 1)
+	getRoleResponseContentFieldDescription = big.NewInt(1 << 2)
+)
+
 type GetRoleResponseContent struct {
 	// ID for this role.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Description of this role.
 	Description *string `json:"description,omitempty" url:"description,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (g *GetRoleResponseContent) GetID() *string {
-	if g == nil {
-		return nil
+func (g *GetRoleResponseContent) GetId() string {
+	if g == nil || g.Id == nil {
+		return ""
 	}
-	return g.ID
+	return *g.Id
 }
 
-func (g *GetRoleResponseContent) GetName() *string {
-	if g == nil {
-		return nil
+func (g *GetRoleResponseContent) GetName() string {
+	if g == nil || g.Name == nil {
+		return ""
 	}
-	return g.Name
+	return *g.Name
 }
 
-func (g *GetRoleResponseContent) GetDescription() *string {
-	if g == nil {
-		return nil
+func (g *GetRoleResponseContent) GetDescription() string {
+	if g == nil || g.Description == nil {
+		return ""
 	}
-	return g.Description
+	return *g.Description
 }
 
 func (g *GetRoleResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
+}
+
+func (g *GetRoleResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRoleResponseContent) SetId(id *string) {
+	g.Id = id
+	g.require(getRoleResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRoleResponseContent) SetName(name *string) {
+	g.Name = name
+	g.require(getRoleResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRoleResponseContent) SetDescription(description *string) {
+	g.Description = description
+	g.require(getRoleResponseContentFieldDescription)
 }
 
 func (g *GetRoleResponseContent) UnmarshalJSON(data []byte) error {
@@ -144,6 +212,17 @@ func (g *GetRoleResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (g *GetRoleResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetRoleResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (g *GetRoleResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
@@ -156,39 +235,49 @@ func (g *GetRoleResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	listRolesOffsetPaginatedResponseContentFieldStart = big.NewInt(1 << 0)
+	listRolesOffsetPaginatedResponseContentFieldLimit = big.NewInt(1 << 1)
+	listRolesOffsetPaginatedResponseContentFieldTotal = big.NewInt(1 << 2)
+	listRolesOffsetPaginatedResponseContentFieldRoles = big.NewInt(1 << 3)
+)
+
 type ListRolesOffsetPaginatedResponseContent struct {
 	Start *float64 `json:"start,omitempty" url:"start,omitempty"`
 	Limit *float64 `json:"limit,omitempty" url:"limit,omitempty"`
 	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
 	Roles []*Role  `json:"roles,omitempty" url:"roles,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListRolesOffsetPaginatedResponseContent) GetStart() *float64 {
-	if l == nil {
-		return nil
+func (l *ListRolesOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
 	}
-	return l.Start
+	return *l.Start
 }
 
-func (l *ListRolesOffsetPaginatedResponseContent) GetLimit() *float64 {
-	if l == nil {
-		return nil
+func (l *ListRolesOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
 	}
-	return l.Limit
+	return *l.Limit
 }
 
-func (l *ListRolesOffsetPaginatedResponseContent) GetTotal() *float64 {
-	if l == nil {
-		return nil
+func (l *ListRolesOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
 	}
-	return l.Total
+	return *l.Total
 }
 
 func (l *ListRolesOffsetPaginatedResponseContent) GetRoles() []*Role {
-	if l == nil {
+	if l == nil || l.Roles == nil {
 		return nil
 	}
 	return l.Roles
@@ -196,6 +285,41 @@ func (l *ListRolesOffsetPaginatedResponseContent) GetRoles() []*Role {
 
 func (l *ListRolesOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListRolesOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolesOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listRolesOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolesOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listRolesOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolesOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listRolesOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolesOffsetPaginatedResponseContent) SetRoles(roles []*Role) {
+	l.Roles = roles
+	l.require(listRolesOffsetPaginatedResponseContentFieldRoles)
 }
 
 func (l *ListRolesOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
@@ -214,6 +338,17 @@ func (l *ListRolesOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) err
 	return nil
 }
 
+func (l *ListRolesOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListRolesOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListRolesOffsetPaginatedResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -226,41 +361,78 @@ func (l *ListRolesOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	updateRoleResponseContentFieldId          = big.NewInt(1 << 0)
+	updateRoleResponseContentFieldName        = big.NewInt(1 << 1)
+	updateRoleResponseContentFieldDescription = big.NewInt(1 << 2)
+)
+
 type UpdateRoleResponseContent struct {
 	// ID for this role.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Description of this role.
 	Description *string `json:"description,omitempty" url:"description,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateRoleResponseContent) GetID() *string {
-	if u == nil {
-		return nil
+func (u *UpdateRoleResponseContent) GetId() string {
+	if u == nil || u.Id == nil {
+		return ""
 	}
-	return u.ID
+	return *u.Id
 }
 
-func (u *UpdateRoleResponseContent) GetName() *string {
-	if u == nil {
-		return nil
+func (u *UpdateRoleResponseContent) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
 	}
-	return u.Name
+	return *u.Name
 }
 
-func (u *UpdateRoleResponseContent) GetDescription() *string {
-	if u == nil {
-		return nil
+func (u *UpdateRoleResponseContent) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
 	}
-	return u.Description
+	return *u.Description
 }
 
 func (u *UpdateRoleResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UpdateRoleResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRoleResponseContent) SetId(id *string) {
+	u.Id = id
+	u.require(updateRoleResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRoleResponseContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateRoleResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRoleResponseContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(updateRoleResponseContentFieldDescription)
 }
 
 func (u *UpdateRoleResponseContent) UnmarshalJSON(data []byte) error {
@@ -279,6 +451,17 @@ func (u *UpdateRoleResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UpdateRoleResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateRoleResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UpdateRoleResponseContent) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -289,11 +472,4 @@ func (u *UpdateRoleResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateRoleRequestContent struct {
-	// Name of this role.
-	Name *string `json:"name,omitempty" url:"-"`
-	// Description of this role.
-	Description *string `json:"description,omitempty" url:"-"`
 }

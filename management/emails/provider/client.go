@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	emails "github.com/auth0/go-auth0/v2/management/emails"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 )
@@ -36,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // Retrieve details of the <a href="https://auth0.com/docs/customize/email/smtp-email-providers">email provider configuration</a> in your tenant. A list of fields to include or exclude may also be specified.
 func (c *Client) Get(
 	ctx context.Context,
-	request *emails.GetEmailProviderRequestParameters,
+	request *management.GetEmailProviderRequestParameters,
 	opts ...option.RequestOption,
 ) (*management.GetEmailProviderResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
@@ -98,7 +97,7 @@ func (c *Client) Get(
 // </ul>
 func (c *Client) Create(
 	ctx context.Context,
-	request *emails.CreateEmailProviderRequestContent,
+	request *management.CreateEmailProviderRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateEmailProviderResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
@@ -173,7 +172,7 @@ func (c *Client) Delete(
 // </ul>
 func (c *Client) Update(
 	ctx context.Context,
-	request *emails.UpdateEmailProviderRequestContent,
+	request *management.UpdateEmailProviderRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateEmailProviderResponseContent, error) {
 	response, err := c.WithRawResponse.Update(

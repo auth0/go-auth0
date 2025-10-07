@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	settings "github.com/auth0/go-auth0/v2/management/riskassessments/settings"
 )
 
 type Client struct {
@@ -51,7 +50,7 @@ func (c *Client) Get(
 // Updates the risk assessment settings for the new device assessor
 func (c *Client) Update(
 	ctx context.Context,
-	request *settings.UpdateRiskAssessmentsSettingsNewDeviceRequestContent,
+	request *management.UpdateRiskAssessmentsSettingsNewDeviceRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateRiskAssessmentsSettingsNewDeviceResponseContent, error) {
 	response, err := c.WithRawResponse.Update(

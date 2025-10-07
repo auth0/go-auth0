@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) Delete(
 	ctx context.Context,
 	// ID of the user to get sessions for
-	userID string,
+	userId string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,39 +44,12 @@ func (r *RawClient) Delete(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v/sessions",
-		userID,
+		userId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -87,7 +60,7 @@ func (r *RawClient) Delete(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

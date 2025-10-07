@@ -6,46 +6,23 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type CreateRuleRequestContent struct {
-	// Name of this rule.
-	Name string `json:"name" url:"-"`
-	// Code to be executed when this rule runs.
-	Script string `json:"script" url:"-"`
-	// Order that this rule should execute in relative to other rules. Lower-valued rules execute first.
-	Order *float64 `json:"order,omitempty" url:"-"`
-	// Whether the rule is enabled (true), or disabled (false).
-	Enabled *bool `json:"enabled,omitempty" url:"-"`
-}
-
-type GetRuleRequestParameters struct {
-	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-}
-
-type ListRulesRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Optional filter on whether a rule is enabled (true) or disabled (false).
-	Enabled *bool `json:"-" url:"enabled,omitempty"`
-	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-}
+var (
+	createRuleResponseContentFieldName    = big.NewInt(1 << 0)
+	createRuleResponseContentFieldId      = big.NewInt(1 << 1)
+	createRuleResponseContentFieldEnabled = big.NewInt(1 << 2)
+	createRuleResponseContentFieldScript  = big.NewInt(1 << 3)
+	createRuleResponseContentFieldOrder   = big.NewInt(1 << 4)
+	createRuleResponseContentFieldStage   = big.NewInt(1 << 5)
+)
 
 type CreateRuleResponseContent struct {
 	// Name of this rule.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// ID of this rule.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Whether the rule is enabled (true), or disabled (false).
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Code to be executed when this rule runs.
@@ -55,54 +32,106 @@ type CreateRuleResponseContent struct {
 	// Execution stage of this rule. Can be `login_success`, `login_failure`, or `pre_authorize`.
 	Stage *string `json:"stage,omitempty" url:"stage,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateRuleResponseContent) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateRuleResponseContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateRuleResponseContent) GetID() *string {
-	if c == nil {
-		return nil
+func (c *CreateRuleResponseContent) GetId() string {
+	if c == nil || c.Id == nil {
+		return ""
 	}
-	return c.ID
+	return *c.Id
 }
 
-func (c *CreateRuleResponseContent) GetEnabled() *bool {
-	if c == nil {
-		return nil
+func (c *CreateRuleResponseContent) GetEnabled() bool {
+	if c == nil || c.Enabled == nil {
+		return false
 	}
-	return c.Enabled
+	return *c.Enabled
 }
 
-func (c *CreateRuleResponseContent) GetScript() *string {
-	if c == nil {
-		return nil
+func (c *CreateRuleResponseContent) GetScript() string {
+	if c == nil || c.Script == nil {
+		return ""
 	}
-	return c.Script
+	return *c.Script
 }
 
-func (c *CreateRuleResponseContent) GetOrder() *float64 {
-	if c == nil {
-		return nil
+func (c *CreateRuleResponseContent) GetOrder() float64 {
+	if c == nil || c.Order == nil {
+		return 0
 	}
-	return c.Order
+	return *c.Order
 }
 
-func (c *CreateRuleResponseContent) GetStage() *string {
-	if c == nil {
-		return nil
+func (c *CreateRuleResponseContent) GetStage() string {
+	if c == nil || c.Stage == nil {
+		return ""
 	}
-	return c.Stage
+	return *c.Stage
 }
 
 func (c *CreateRuleResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateRuleResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRuleResponseContent) SetName(name *string) {
+	c.Name = name
+	c.require(createRuleResponseContentFieldName)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRuleResponseContent) SetId(id *string) {
+	c.Id = id
+	c.require(createRuleResponseContentFieldId)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRuleResponseContent) SetEnabled(enabled *bool) {
+	c.Enabled = enabled
+	c.require(createRuleResponseContentFieldEnabled)
+}
+
+// SetScript sets the Script field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRuleResponseContent) SetScript(script *string) {
+	c.Script = script
+	c.require(createRuleResponseContentFieldScript)
+}
+
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRuleResponseContent) SetOrder(order *float64) {
+	c.Order = order
+	c.require(createRuleResponseContentFieldOrder)
+}
+
+// SetStage sets the Stage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRuleResponseContent) SetStage(stage *string) {
+	c.Stage = stage
+	c.require(createRuleResponseContentFieldStage)
 }
 
 func (c *CreateRuleResponseContent) UnmarshalJSON(data []byte) error {
@@ -121,6 +150,17 @@ func (c *CreateRuleResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateRuleResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateRuleResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateRuleResponseContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -133,11 +173,20 @@ func (c *CreateRuleResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	getRuleResponseContentFieldName    = big.NewInt(1 << 0)
+	getRuleResponseContentFieldId      = big.NewInt(1 << 1)
+	getRuleResponseContentFieldEnabled = big.NewInt(1 << 2)
+	getRuleResponseContentFieldScript  = big.NewInt(1 << 3)
+	getRuleResponseContentFieldOrder   = big.NewInt(1 << 4)
+	getRuleResponseContentFieldStage   = big.NewInt(1 << 5)
+)
+
 type GetRuleResponseContent struct {
 	// Name of this rule.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// ID of this rule.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Whether the rule is enabled (true), or disabled (false).
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Code to be executed when this rule runs.
@@ -147,54 +196,106 @@ type GetRuleResponseContent struct {
 	// Execution stage of this rule. Can be `login_success`, `login_failure`, or `pre_authorize`.
 	Stage *string `json:"stage,omitempty" url:"stage,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (g *GetRuleResponseContent) GetName() *string {
-	if g == nil {
-		return nil
+func (g *GetRuleResponseContent) GetName() string {
+	if g == nil || g.Name == nil {
+		return ""
 	}
-	return g.Name
+	return *g.Name
 }
 
-func (g *GetRuleResponseContent) GetID() *string {
-	if g == nil {
-		return nil
+func (g *GetRuleResponseContent) GetId() string {
+	if g == nil || g.Id == nil {
+		return ""
 	}
-	return g.ID
+	return *g.Id
 }
 
-func (g *GetRuleResponseContent) GetEnabled() *bool {
-	if g == nil {
-		return nil
+func (g *GetRuleResponseContent) GetEnabled() bool {
+	if g == nil || g.Enabled == nil {
+		return false
 	}
-	return g.Enabled
+	return *g.Enabled
 }
 
-func (g *GetRuleResponseContent) GetScript() *string {
-	if g == nil {
-		return nil
+func (g *GetRuleResponseContent) GetScript() string {
+	if g == nil || g.Script == nil {
+		return ""
 	}
-	return g.Script
+	return *g.Script
 }
 
-func (g *GetRuleResponseContent) GetOrder() *float64 {
-	if g == nil {
-		return nil
+func (g *GetRuleResponseContent) GetOrder() float64 {
+	if g == nil || g.Order == nil {
+		return 0
 	}
-	return g.Order
+	return *g.Order
 }
 
-func (g *GetRuleResponseContent) GetStage() *string {
-	if g == nil {
-		return nil
+func (g *GetRuleResponseContent) GetStage() string {
+	if g == nil || g.Stage == nil {
+		return ""
 	}
-	return g.Stage
+	return *g.Stage
 }
 
 func (g *GetRuleResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
+}
+
+func (g *GetRuleResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRuleResponseContent) SetName(name *string) {
+	g.Name = name
+	g.require(getRuleResponseContentFieldName)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRuleResponseContent) SetId(id *string) {
+	g.Id = id
+	g.require(getRuleResponseContentFieldId)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRuleResponseContent) SetEnabled(enabled *bool) {
+	g.Enabled = enabled
+	g.require(getRuleResponseContentFieldEnabled)
+}
+
+// SetScript sets the Script field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRuleResponseContent) SetScript(script *string) {
+	g.Script = script
+	g.require(getRuleResponseContentFieldScript)
+}
+
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRuleResponseContent) SetOrder(order *float64) {
+	g.Order = order
+	g.require(getRuleResponseContentFieldOrder)
+}
+
+// SetStage sets the Stage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRuleResponseContent) SetStage(stage *string) {
+	g.Stage = stage
+	g.require(getRuleResponseContentFieldStage)
 }
 
 func (g *GetRuleResponseContent) UnmarshalJSON(data []byte) error {
@@ -213,6 +314,17 @@ func (g *GetRuleResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (g *GetRuleResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetRuleResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (g *GetRuleResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
@@ -225,39 +337,49 @@ func (g *GetRuleResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	listRulesOffsetPaginatedResponseContentFieldStart = big.NewInt(1 << 0)
+	listRulesOffsetPaginatedResponseContentFieldLimit = big.NewInt(1 << 1)
+	listRulesOffsetPaginatedResponseContentFieldTotal = big.NewInt(1 << 2)
+	listRulesOffsetPaginatedResponseContentFieldRules = big.NewInt(1 << 3)
+)
+
 type ListRulesOffsetPaginatedResponseContent struct {
 	Start *float64 `json:"start,omitempty" url:"start,omitempty"`
 	Limit *float64 `json:"limit,omitempty" url:"limit,omitempty"`
 	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
 	Rules []*Rule  `json:"rules,omitempty" url:"rules,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListRulesOffsetPaginatedResponseContent) GetStart() *float64 {
-	if l == nil {
-		return nil
+func (l *ListRulesOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
 	}
-	return l.Start
+	return *l.Start
 }
 
-func (l *ListRulesOffsetPaginatedResponseContent) GetLimit() *float64 {
-	if l == nil {
-		return nil
+func (l *ListRulesOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
 	}
-	return l.Limit
+	return *l.Limit
 }
 
-func (l *ListRulesOffsetPaginatedResponseContent) GetTotal() *float64 {
-	if l == nil {
-		return nil
+func (l *ListRulesOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
 	}
-	return l.Total
+	return *l.Total
 }
 
 func (l *ListRulesOffsetPaginatedResponseContent) GetRules() []*Rule {
-	if l == nil {
+	if l == nil || l.Rules == nil {
 		return nil
 	}
 	return l.Rules
@@ -265,6 +387,41 @@ func (l *ListRulesOffsetPaginatedResponseContent) GetRules() []*Rule {
 
 func (l *ListRulesOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListRulesOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRulesOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listRulesOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRulesOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listRulesOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRulesOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listRulesOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetRules sets the Rules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRulesOffsetPaginatedResponseContent) SetRules(rules []*Rule) {
+	l.Rules = rules
+	l.require(listRulesOffsetPaginatedResponseContentFieldRules)
 }
 
 func (l *ListRulesOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
@@ -283,6 +440,17 @@ func (l *ListRulesOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) err
 	return nil
 }
 
+func (l *ListRulesOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListRulesOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListRulesOffsetPaginatedResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -295,11 +463,20 @@ func (l *ListRulesOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	ruleFieldName    = big.NewInt(1 << 0)
+	ruleFieldId      = big.NewInt(1 << 1)
+	ruleFieldEnabled = big.NewInt(1 << 2)
+	ruleFieldScript  = big.NewInt(1 << 3)
+	ruleFieldOrder   = big.NewInt(1 << 4)
+	ruleFieldStage   = big.NewInt(1 << 5)
+)
+
 type Rule struct {
 	// Name of this rule.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// ID of this rule.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Whether the rule is enabled (true), or disabled (false).
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Code to be executed when this rule runs.
@@ -309,54 +486,106 @@ type Rule struct {
 	// Execution stage of this rule. Can be `login_success`, `login_failure`, or `pre_authorize`.
 	Stage *string `json:"stage,omitempty" url:"stage,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (r *Rule) GetName() *string {
-	if r == nil {
-		return nil
+func (r *Rule) GetName() string {
+	if r == nil || r.Name == nil {
+		return ""
 	}
-	return r.Name
+	return *r.Name
 }
 
-func (r *Rule) GetID() *string {
-	if r == nil {
-		return nil
+func (r *Rule) GetId() string {
+	if r == nil || r.Id == nil {
+		return ""
 	}
-	return r.ID
+	return *r.Id
 }
 
-func (r *Rule) GetEnabled() *bool {
-	if r == nil {
-		return nil
+func (r *Rule) GetEnabled() bool {
+	if r == nil || r.Enabled == nil {
+		return false
 	}
-	return r.Enabled
+	return *r.Enabled
 }
 
-func (r *Rule) GetScript() *string {
-	if r == nil {
-		return nil
+func (r *Rule) GetScript() string {
+	if r == nil || r.Script == nil {
+		return ""
 	}
-	return r.Script
+	return *r.Script
 }
 
-func (r *Rule) GetOrder() *float64 {
-	if r == nil {
-		return nil
+func (r *Rule) GetOrder() float64 {
+	if r == nil || r.Order == nil {
+		return 0
 	}
-	return r.Order
+	return *r.Order
 }
 
-func (r *Rule) GetStage() *string {
-	if r == nil {
-		return nil
+func (r *Rule) GetStage() string {
+	if r == nil || r.Stage == nil {
+		return ""
 	}
-	return r.Stage
+	return *r.Stage
 }
 
 func (r *Rule) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
+}
+
+func (r *Rule) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Rule) SetName(name *string) {
+	r.Name = name
+	r.require(ruleFieldName)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Rule) SetId(id *string) {
+	r.Id = id
+	r.require(ruleFieldId)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Rule) SetEnabled(enabled *bool) {
+	r.Enabled = enabled
+	r.require(ruleFieldEnabled)
+}
+
+// SetScript sets the Script field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Rule) SetScript(script *string) {
+	r.Script = script
+	r.require(ruleFieldScript)
+}
+
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Rule) SetOrder(order *float64) {
+	r.Order = order
+	r.require(ruleFieldOrder)
+}
+
+// SetStage sets the Stage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Rule) SetStage(stage *string) {
+	r.Stage = stage
+	r.require(ruleFieldStage)
 }
 
 func (r *Rule) UnmarshalJSON(data []byte) error {
@@ -375,6 +604,17 @@ func (r *Rule) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *Rule) MarshalJSON() ([]byte, error) {
+	type embed Rule
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *Rule) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -387,11 +627,20 @@ func (r *Rule) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	updateRuleResponseContentFieldName    = big.NewInt(1 << 0)
+	updateRuleResponseContentFieldId      = big.NewInt(1 << 1)
+	updateRuleResponseContentFieldEnabled = big.NewInt(1 << 2)
+	updateRuleResponseContentFieldScript  = big.NewInt(1 << 3)
+	updateRuleResponseContentFieldOrder   = big.NewInt(1 << 4)
+	updateRuleResponseContentFieldStage   = big.NewInt(1 << 5)
+)
+
 type UpdateRuleResponseContent struct {
 	// Name of this rule.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// ID of this rule.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Whether the rule is enabled (true), or disabled (false).
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Code to be executed when this rule runs.
@@ -401,54 +650,106 @@ type UpdateRuleResponseContent struct {
 	// Execution stage of this rule. Can be `login_success`, `login_failure`, or `pre_authorize`.
 	Stage *string `json:"stage,omitempty" url:"stage,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateRuleResponseContent) GetName() *string {
-	if u == nil {
-		return nil
+func (u *UpdateRuleResponseContent) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
 	}
-	return u.Name
+	return *u.Name
 }
 
-func (u *UpdateRuleResponseContent) GetID() *string {
-	if u == nil {
-		return nil
+func (u *UpdateRuleResponseContent) GetId() string {
+	if u == nil || u.Id == nil {
+		return ""
 	}
-	return u.ID
+	return *u.Id
 }
 
-func (u *UpdateRuleResponseContent) GetEnabled() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateRuleResponseContent) GetEnabled() bool {
+	if u == nil || u.Enabled == nil {
+		return false
 	}
-	return u.Enabled
+	return *u.Enabled
 }
 
-func (u *UpdateRuleResponseContent) GetScript() *string {
-	if u == nil {
-		return nil
+func (u *UpdateRuleResponseContent) GetScript() string {
+	if u == nil || u.Script == nil {
+		return ""
 	}
-	return u.Script
+	return *u.Script
 }
 
-func (u *UpdateRuleResponseContent) GetOrder() *float64 {
-	if u == nil {
-		return nil
+func (u *UpdateRuleResponseContent) GetOrder() float64 {
+	if u == nil || u.Order == nil {
+		return 0
 	}
-	return u.Order
+	return *u.Order
 }
 
-func (u *UpdateRuleResponseContent) GetStage() *string {
-	if u == nil {
-		return nil
+func (u *UpdateRuleResponseContent) GetStage() string {
+	if u == nil || u.Stage == nil {
+		return ""
 	}
-	return u.Stage
+	return *u.Stage
 }
 
 func (u *UpdateRuleResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UpdateRuleResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRuleResponseContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateRuleResponseContentFieldName)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRuleResponseContent) SetId(id *string) {
+	u.Id = id
+	u.require(updateRuleResponseContentFieldId)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRuleResponseContent) SetEnabled(enabled *bool) {
+	u.Enabled = enabled
+	u.require(updateRuleResponseContentFieldEnabled)
+}
+
+// SetScript sets the Script field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRuleResponseContent) SetScript(script *string) {
+	u.Script = script
+	u.require(updateRuleResponseContentFieldScript)
+}
+
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRuleResponseContent) SetOrder(order *float64) {
+	u.Order = order
+	u.require(updateRuleResponseContentFieldOrder)
+}
+
+// SetStage sets the Stage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRuleResponseContent) SetStage(stage *string) {
+	u.Stage = stage
+	u.require(updateRuleResponseContentFieldStage)
 }
 
 func (u *UpdateRuleResponseContent) UnmarshalJSON(data []byte) error {
@@ -467,6 +768,17 @@ func (u *UpdateRuleResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UpdateRuleResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateRuleResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UpdateRuleResponseContent) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -477,15 +789,4 @@ func (u *UpdateRuleResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateRuleRequestContent struct {
-	// Code to be executed when this rule runs.
-	Script *string `json:"script,omitempty" url:"-"`
-	// Name of this rule.
-	Name *string `json:"name,omitempty" url:"-"`
-	// Order that this rule should execute in relative to other rules. Lower-valued rules execute first.
-	Order *float64 `json:"order,omitempty" url:"-"`
-	// Whether the rule is enabled (true), or disabled (false).
-	Enabled *bool `json:"enabled,omitempty" url:"-"`
 }

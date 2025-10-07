@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	users "github.com/auth0/go-auth0/v2/management/users"
 )
 
 type Client struct {
@@ -67,7 +66,7 @@ func (c *Client) Link(
 	ctx context.Context,
 	// ID of the primary user account to link a second user account to.
 	id string,
-	request *users.LinkUserIdentityRequestContent,
+	request *management.LinkUserIdentityRequestContent,
 	opts ...option.RequestOption,
 ) ([]*management.UserIdentity, error) {
 	response, err := c.WithRawResponse.Link(
@@ -92,14 +91,14 @@ func (c *Client) Delete(
 	// Identity provider name of the secondary linked account (e.g. `google-oauth2`).
 	provider *management.UserIdentityProviderEnum,
 	// ID of the secondary linked account (e.g. `123456789081523216417` part after the `|` in `google-oauth2|123456789081523216417`).
-	userID string,
+	userId string,
 	opts ...option.RequestOption,
 ) (management.DeleteUserIdentityResponseContent, error) {
 	response, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
 		provider,
-		userID,
+		userId,
 		opts...,
 	)
 	if err != nil {

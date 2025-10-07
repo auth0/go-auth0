@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	flows "github.com/auth0/go-auth0/v2/management/flows"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	http "net/http"
@@ -37,8 +36,8 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) List(
 	ctx context.Context,
 	// Flow id
-	flowID string,
-	request *flows.ExecutionsListRequest,
+	flowId string,
+	request *management.ExecutionsListRequest,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.FlowExecutionSummary], error) {
 	options := core.NewRequestOptions(opts...)
@@ -49,14 +48,9 @@ func (c *Client) List(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/flows/%v/executions",
-		flowID,
+		flowId,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"take": 50,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -64,28 +58,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
@@ -103,13 +75,13 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	readPageResponse := func(response *management.ListFlowExecutionsPaginatedResponseContent) *internal.PageResponse[*string, *management.FlowExecutionSummary] {
 		var zeroValue *string
-		next := response.GetNext()
-		results := response.GetExecutions()
+		next := response.Next
+		results := response.Executions
 		return &internal.PageResponse[*string, *management.FlowExecutionSummary]{
 			Next:    next,
 			Results: results,
@@ -127,16 +99,16 @@ func (c *Client) List(
 func (c *Client) Get(
 	ctx context.Context,
 	// Flow id
-	flowID string,
+	flowId string,
 	// Flow execution id
-	executionID string,
-	request *flows.ExecutionsGetRequest,
+	executionId string,
+	request *management.ExecutionsGetRequest,
 	opts ...option.RequestOption,
 ) (*management.GetFlowExecutionResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
-		flowID,
-		executionID,
+		flowId,
+		executionId,
 		request,
 		opts...,
 	)
@@ -149,15 +121,15 @@ func (c *Client) Get(
 func (c *Client) Delete(
 	ctx context.Context,
 	// Flows id
-	flowID string,
+	flowId string,
 	// Flow execution identifier
-	executionID string,
+	executionId string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
-		flowID,
-		executionID,
+		flowId,
+		executionId,
 		opts...,
 	)
 	if err != nil {

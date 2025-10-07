@@ -45,23 +45,6 @@ func (r *RawClient) GetSettings(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetSettingsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -74,7 +57,7 @@ func (r *RawClient) GetSettings(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -104,28 +87,6 @@ func (r *RawClient) UpdateSettings(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.UpdateSettingsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -139,7 +100,7 @@ func (r *RawClient) UpdateSettings(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

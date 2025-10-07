@@ -6,37 +6,26 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type DeleteUserBlocksByIdentifierRequestParameters struct {
-	// Should be any of a username, phone number, or email.
-	Identifier string `json:"-" url:"identifier"`
-}
-
-type ListUserBlocksRequestParameters struct {
-	//	If true and Brute Force Protection is enabled and configured to block logins, will return a list of blocked IP addresses.
-	//	If true and Brute Force Protection is disabled, will return an empty list.
-	ConsiderBruteForceEnablement *bool `json:"-" url:"consider_brute_force_enablement,omitempty"`
-}
-
-type ListUserBlocksByIdentifierRequestParameters struct {
-	// Should be any of a username, phone number, or email.
-	Identifier string `json:"-" url:"identifier"`
-	//	If true and Brute Force Protection is enabled and configured to block logins, will return a list of blocked IP addresses.
-	//	If true and Brute Force Protection is disabled, will return an empty list.
-	ConsiderBruteForceEnablement *bool `json:"-" url:"consider_brute_force_enablement,omitempty"`
-}
+var (
+	listUserBlocksByIdentifierResponseContentFieldBlockedFor = big.NewInt(1 << 0)
+)
 
 type ListUserBlocksByIdentifierResponseContent struct {
 	// Array of identifier + IP address pairs.  IP address is optional, and may be omitted in certain circumstances (such as Account Lockout mode).
 	BlockedFor []*UserBlockIdentifier `json:"blocked_for,omitempty" url:"blocked_for,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
 func (l *ListUserBlocksByIdentifierResponseContent) GetBlockedFor() []*UserBlockIdentifier {
-	if l == nil {
+	if l == nil || l.BlockedFor == nil {
 		return nil
 	}
 	return l.BlockedFor
@@ -44,6 +33,20 @@ func (l *ListUserBlocksByIdentifierResponseContent) GetBlockedFor() []*UserBlock
 
 func (l *ListUserBlocksByIdentifierResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListUserBlocksByIdentifierResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetBlockedFor sets the BlockedFor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserBlocksByIdentifierResponseContent) SetBlockedFor(blockedFor []*UserBlockIdentifier) {
+	l.BlockedFor = blockedFor
+	l.require(listUserBlocksByIdentifierResponseContentFieldBlockedFor)
 }
 
 func (l *ListUserBlocksByIdentifierResponseContent) UnmarshalJSON(data []byte) error {
@@ -62,6 +65,17 @@ func (l *ListUserBlocksByIdentifierResponseContent) UnmarshalJSON(data []byte) e
 	return nil
 }
 
+func (l *ListUserBlocksByIdentifierResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserBlocksByIdentifierResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListUserBlocksByIdentifierResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -74,16 +88,23 @@ func (l *ListUserBlocksByIdentifierResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	listUserBlocksResponseContentFieldBlockedFor = big.NewInt(1 << 0)
+)
+
 type ListUserBlocksResponseContent struct {
 	// Array of identifier + IP address pairs.  IP address is optional, and may be omitted in certain circumstances (such as Account Lockout mode).
 	BlockedFor []*UserBlockIdentifier `json:"blocked_for,omitempty" url:"blocked_for,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
 func (l *ListUserBlocksResponseContent) GetBlockedFor() []*UserBlockIdentifier {
-	if l == nil {
+	if l == nil || l.BlockedFor == nil {
 		return nil
 	}
 	return l.BlockedFor
@@ -91,6 +112,20 @@ func (l *ListUserBlocksResponseContent) GetBlockedFor() []*UserBlockIdentifier {
 
 func (l *ListUserBlocksResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListUserBlocksResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetBlockedFor sets the BlockedFor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserBlocksResponseContent) SetBlockedFor(blockedFor []*UserBlockIdentifier) {
+	l.BlockedFor = blockedFor
+	l.require(listUserBlocksResponseContentFieldBlockedFor)
 }
 
 func (l *ListUserBlocksResponseContent) UnmarshalJSON(data []byte) error {
@@ -109,6 +144,17 @@ func (l *ListUserBlocksResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (l *ListUserBlocksResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserBlocksResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListUserBlocksResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -121,42 +167,79 @@ func (l *ListUserBlocksResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	userBlockIdentifierFieldIdentifier = big.NewInt(1 << 0)
+	userBlockIdentifierFieldIp         = big.NewInt(1 << 1)
+	userBlockIdentifierFieldConnection = big.NewInt(1 << 2)
+)
+
 type UserBlockIdentifier struct {
 	// Identifier (should be any of an `email`, `username`, or `phone_number`)
 	Identifier *string `json:"identifier,omitempty" url:"identifier,omitempty"`
 	// IP Address
-	IP *string `json:"ip,omitempty" url:"ip,omitempty"`
+	Ip *string `json:"ip,omitempty" url:"ip,omitempty"`
 	// Connection identifier
 	Connection *string `json:"connection,omitempty" url:"connection,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (u *UserBlockIdentifier) GetIdentifier() *string {
-	if u == nil {
-		return nil
+func (u *UserBlockIdentifier) GetIdentifier() string {
+	if u == nil || u.Identifier == nil {
+		return ""
 	}
-	return u.Identifier
+	return *u.Identifier
 }
 
-func (u *UserBlockIdentifier) GetIP() *string {
-	if u == nil {
-		return nil
+func (u *UserBlockIdentifier) GetIp() string {
+	if u == nil || u.Ip == nil {
+		return ""
 	}
-	return u.IP
+	return *u.Ip
 }
 
-func (u *UserBlockIdentifier) GetConnection() *string {
-	if u == nil {
-		return nil
+func (u *UserBlockIdentifier) GetConnection() string {
+	if u == nil || u.Connection == nil {
+		return ""
 	}
-	return u.Connection
+	return *u.Connection
 }
 
 func (u *UserBlockIdentifier) GetExtraProperties() map[string]interface{} {
 	return u.ExtraProperties
+}
+
+func (u *UserBlockIdentifier) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetIdentifier sets the Identifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserBlockIdentifier) SetIdentifier(identifier *string) {
+	u.Identifier = identifier
+	u.require(userBlockIdentifierFieldIdentifier)
+}
+
+// SetIp sets the Ip field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserBlockIdentifier) SetIp(ip *string) {
+	u.Ip = ip
+	u.require(userBlockIdentifierFieldIp)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserBlockIdentifier) SetConnection(connection *string) {
+	u.Connection = connection
+	u.require(userBlockIdentifierFieldConnection)
 }
 
 func (u *UserBlockIdentifier) UnmarshalJSON(data []byte) error {
@@ -186,7 +269,8 @@ func (u *UserBlockIdentifier) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*u),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
 }
 
 func (u *UserBlockIdentifier) String() string {

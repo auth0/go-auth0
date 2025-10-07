@@ -6,31 +6,48 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type SetRulesConfigRequestContent struct {
-	// Value for a rules config variable.
-	Value string `json:"value" url:"-"`
-}
+var (
+	rulesConfigFieldKey = big.NewInt(1 << 0)
+)
 
 type RulesConfig struct {
 	// Key for a rules config variable.
 	Key *string `json:"key,omitempty" url:"key,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (r *RulesConfig) GetKey() *string {
-	if r == nil {
-		return nil
+func (r *RulesConfig) GetKey() string {
+	if r == nil || r.Key == nil {
+		return ""
 	}
-	return r.Key
+	return *r.Key
 }
 
 func (r *RulesConfig) GetExtraProperties() map[string]interface{} {
 	return r.ExtraProperties
+}
+
+func (r *RulesConfig) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetKey sets the Key field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RulesConfig) SetKey(key *string) {
+	r.Key = key
+	r.require(rulesConfigFieldKey)
 }
 
 func (r *RulesConfig) UnmarshalJSON(data []byte) error {
@@ -60,7 +77,8 @@ func (r *RulesConfig) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*r),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, r.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, r.ExtraProperties)
 }
 
 func (r *RulesConfig) String() string {
@@ -75,11 +93,19 @@ func (r *RulesConfig) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	setRulesConfigResponseContentFieldKey   = big.NewInt(1 << 0)
+	setRulesConfigResponseContentFieldValue = big.NewInt(1 << 1)
+)
+
 type SetRulesConfigResponseContent struct {
 	// Key for a rules config variable.
 	Key string `json:"key" url:"key"`
 	// Value for a rules config variable.
 	Value string `json:"value" url:"value"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
@@ -102,6 +128,27 @@ func (s *SetRulesConfigResponseContent) GetValue() string {
 
 func (s *SetRulesConfigResponseContent) GetExtraProperties() map[string]interface{} {
 	return s.ExtraProperties
+}
+
+func (s *SetRulesConfigResponseContent) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetKey sets the Key field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetRulesConfigResponseContent) SetKey(key string) {
+	s.Key = key
+	s.require(setRulesConfigResponseContentFieldKey)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetRulesConfigResponseContent) SetValue(value string) {
+	s.Value = value
+	s.require(setRulesConfigResponseContentFieldValue)
 }
 
 func (s *SetRulesConfigResponseContent) UnmarshalJSON(data []byte) error {
@@ -131,7 +178,8 @@ func (s *SetRulesConfigResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*s),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, s.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, s.ExtraProperties)
 }
 
 func (s *SetRulesConfigResponseContent) String() string {

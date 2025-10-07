@@ -6,20 +6,16 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 	time "time"
 )
 
-type ListEventStreamsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-}
-
-type CreateEventStreamTestEventRequestContent struct {
-	EventType EventStreamTestEventTypeEnum `json:"event_type" url:"-"`
-	Data      *TestEventDataContent        `json:"data,omitempty" url:"-"`
-}
+var (
+	createEventStreamActionRequestContentFieldName          = big.NewInt(1 << 0)
+	createEventStreamActionRequestContentFieldSubscriptions = big.NewInt(1 << 1)
+	createEventStreamActionRequestContentFieldDestination   = big.NewInt(1 << 2)
+	createEventStreamActionRequestContentFieldStatus        = big.NewInt(1 << 3)
+)
 
 type CreateEventStreamActionRequestContent struct {
 	// Name of the event stream.
@@ -29,19 +25,22 @@ type CreateEventStreamActionRequestContent struct {
 	Destination   *EventStreamActionDestination `json:"destination" url:"destination"`
 	Status        *EventStreamStatusEnum        `json:"status,omitempty" url:"status,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateEventStreamActionRequestContent) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateEventStreamActionRequestContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
 func (c *CreateEventStreamActionRequestContent) GetSubscriptions() []*EventStreamSubscription {
-	if c == nil {
+	if c == nil || c.Subscriptions == nil {
 		return nil
 	}
 	return c.Subscriptions
@@ -54,15 +53,50 @@ func (c *CreateEventStreamActionRequestContent) GetDestination() *EventStreamAct
 	return c.Destination
 }
 
-func (c *CreateEventStreamActionRequestContent) GetStatus() *EventStreamStatusEnum {
-	if c == nil {
-		return nil
+func (c *CreateEventStreamActionRequestContent) GetStatus() EventStreamStatusEnum {
+	if c == nil || c.Status == nil {
+		return ""
 	}
-	return c.Status
+	return *c.Status
 }
 
 func (c *CreateEventStreamActionRequestContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateEventStreamActionRequestContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamActionRequestContent) SetName(name *string) {
+	c.Name = name
+	c.require(createEventStreamActionRequestContentFieldName)
+}
+
+// SetSubscriptions sets the Subscriptions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamActionRequestContent) SetSubscriptions(subscriptions []*EventStreamSubscription) {
+	c.Subscriptions = subscriptions
+	c.require(createEventStreamActionRequestContentFieldSubscriptions)
+}
+
+// SetDestination sets the Destination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamActionRequestContent) SetDestination(destination *EventStreamActionDestination) {
+	c.Destination = destination
+	c.require(createEventStreamActionRequestContentFieldDestination)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamActionRequestContent) SetStatus(status *EventStreamStatusEnum) {
+	c.Status = status
+	c.require(createEventStreamActionRequestContentFieldStatus)
 }
 
 func (c *CreateEventStreamActionRequestContent) UnmarshalJSON(data []byte) error {
@@ -81,6 +115,17 @@ func (c *CreateEventStreamActionRequestContent) UnmarshalJSON(data []byte) error
 	return nil
 }
 
+func (c *CreateEventStreamActionRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateEventStreamActionRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateEventStreamActionRequestContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -93,6 +138,13 @@ func (c *CreateEventStreamActionRequestContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	createEventStreamEventBridgeRequestContentFieldName          = big.NewInt(1 << 0)
+	createEventStreamEventBridgeRequestContentFieldSubscriptions = big.NewInt(1 << 1)
+	createEventStreamEventBridgeRequestContentFieldDestination   = big.NewInt(1 << 2)
+	createEventStreamEventBridgeRequestContentFieldStatus        = big.NewInt(1 << 3)
+)
+
 type CreateEventStreamEventBridgeRequestContent struct {
 	// Name of the event stream.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -101,19 +153,22 @@ type CreateEventStreamEventBridgeRequestContent struct {
 	Destination   *EventStreamEventBridgeDestination `json:"destination" url:"destination"`
 	Status        *EventStreamStatusEnum             `json:"status,omitempty" url:"status,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateEventStreamEventBridgeRequestContent) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateEventStreamEventBridgeRequestContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
 func (c *CreateEventStreamEventBridgeRequestContent) GetSubscriptions() []*EventStreamSubscription {
-	if c == nil {
+	if c == nil || c.Subscriptions == nil {
 		return nil
 	}
 	return c.Subscriptions
@@ -126,15 +181,50 @@ func (c *CreateEventStreamEventBridgeRequestContent) GetDestination() *EventStre
 	return c.Destination
 }
 
-func (c *CreateEventStreamEventBridgeRequestContent) GetStatus() *EventStreamStatusEnum {
-	if c == nil {
-		return nil
+func (c *CreateEventStreamEventBridgeRequestContent) GetStatus() EventStreamStatusEnum {
+	if c == nil || c.Status == nil {
+		return ""
 	}
-	return c.Status
+	return *c.Status
 }
 
 func (c *CreateEventStreamEventBridgeRequestContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateEventStreamEventBridgeRequestContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamEventBridgeRequestContent) SetName(name *string) {
+	c.Name = name
+	c.require(createEventStreamEventBridgeRequestContentFieldName)
+}
+
+// SetSubscriptions sets the Subscriptions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamEventBridgeRequestContent) SetSubscriptions(subscriptions []*EventStreamSubscription) {
+	c.Subscriptions = subscriptions
+	c.require(createEventStreamEventBridgeRequestContentFieldSubscriptions)
+}
+
+// SetDestination sets the Destination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamEventBridgeRequestContent) SetDestination(destination *EventStreamEventBridgeDestination) {
+	c.Destination = destination
+	c.require(createEventStreamEventBridgeRequestContentFieldDestination)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamEventBridgeRequestContent) SetStatus(status *EventStreamStatusEnum) {
+	c.Status = status
+	c.require(createEventStreamEventBridgeRequestContentFieldStatus)
 }
 
 func (c *CreateEventStreamEventBridgeRequestContent) UnmarshalJSON(data []byte) error {
@@ -151,6 +241,17 @@ func (c *CreateEventStreamEventBridgeRequestContent) UnmarshalJSON(data []byte) 
 	c.extraProperties = extraProperties
 	c.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (c *CreateEventStreamEventBridgeRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateEventStreamEventBridgeRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (c *CreateEventStreamEventBridgeRequestContent) String() string {
@@ -249,33 +350,45 @@ func (c *CreateEventStreamResponseContent) Accept(visitor CreateEventStreamRespo
 }
 
 // Metadata about a specific attempt to deliver an event
+var (
+	createEventStreamTestEventResponseContentFieldId            = big.NewInt(1 << 0)
+	createEventStreamTestEventResponseContentFieldEventStreamId = big.NewInt(1 << 1)
+	createEventStreamTestEventResponseContentFieldStatus        = big.NewInt(1 << 2)
+	createEventStreamTestEventResponseContentFieldEventType     = big.NewInt(1 << 3)
+	createEventStreamTestEventResponseContentFieldAttempts      = big.NewInt(1 << 4)
+	createEventStreamTestEventResponseContentFieldEvent         = big.NewInt(1 << 5)
+)
+
 type CreateEventStreamTestEventResponseContent struct {
 	// Unique identifier for the delivery
-	ID string `json:"id" url:"id"`
+	Id string `json:"id" url:"id"`
 	// Unique identifier for the event stream.
-	EventStreamID string                           `json:"event_stream_id" url:"event_stream_id"`
+	EventStreamId string                           `json:"event_stream_id" url:"event_stream_id"`
 	Status        EventStreamDeliveryStatusEnum    `json:"status" url:"status"`
 	EventType     EventStreamDeliveryEventTypeEnum `json:"event_type" url:"event_type"`
 	// Results of delivery attempts
 	Attempts []*EventStreamDeliveryAttempt `json:"attempts" url:"attempts"`
 	Event    *EventStreamCloudEvent        `json:"event,omitempty" url:"event,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateEventStreamTestEventResponseContent) GetID() string {
+func (c *CreateEventStreamTestEventResponseContent) GetId() string {
 	if c == nil {
 		return ""
 	}
-	return c.ID
+	return c.Id
 }
 
-func (c *CreateEventStreamTestEventResponseContent) GetEventStreamID() string {
+func (c *CreateEventStreamTestEventResponseContent) GetEventStreamId() string {
 	if c == nil {
 		return ""
 	}
-	return c.EventStreamID
+	return c.EventStreamId
 }
 
 func (c *CreateEventStreamTestEventResponseContent) GetEventType() EventStreamDeliveryEventTypeEnum {
@@ -292,15 +405,64 @@ func (c *CreateEventStreamTestEventResponseContent) GetAttempts() []*EventStream
 	return c.Attempts
 }
 
-func (c *CreateEventStreamTestEventResponseContent) GetEvent() *EventStreamCloudEvent {
-	if c == nil {
-		return nil
+func (c *CreateEventStreamTestEventResponseContent) GetEvent() EventStreamCloudEvent {
+	if c == nil || c.Event == nil {
+		return EventStreamCloudEvent{}
 	}
-	return c.Event
+	return *c.Event
 }
 
 func (c *CreateEventStreamTestEventResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateEventStreamTestEventResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamTestEventResponseContent) SetId(id string) {
+	c.Id = id
+	c.require(createEventStreamTestEventResponseContentFieldId)
+}
+
+// SetEventStreamId sets the EventStreamId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamTestEventResponseContent) SetEventStreamId(eventStreamId string) {
+	c.EventStreamId = eventStreamId
+	c.require(createEventStreamTestEventResponseContentFieldEventStreamId)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamTestEventResponseContent) SetStatus(status EventStreamDeliveryStatusEnum) {
+	c.Status = status
+	c.require(createEventStreamTestEventResponseContentFieldStatus)
+}
+
+// SetEventType sets the EventType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamTestEventResponseContent) SetEventType(eventType EventStreamDeliveryEventTypeEnum) {
+	c.EventType = eventType
+	c.require(createEventStreamTestEventResponseContentFieldEventType)
+}
+
+// SetAttempts sets the Attempts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamTestEventResponseContent) SetAttempts(attempts []*EventStreamDeliveryAttempt) {
+	c.Attempts = attempts
+	c.require(createEventStreamTestEventResponseContentFieldAttempts)
+}
+
+// SetEvent sets the Event field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamTestEventResponseContent) SetEvent(event *EventStreamCloudEvent) {
+	c.Event = event
+	c.require(createEventStreamTestEventResponseContentFieldEvent)
 }
 
 func (c *CreateEventStreamTestEventResponseContent) UnmarshalJSON(data []byte) error {
@@ -319,6 +481,17 @@ func (c *CreateEventStreamTestEventResponseContent) UnmarshalJSON(data []byte) e
 	return nil
 }
 
+func (c *CreateEventStreamTestEventResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateEventStreamTestEventResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateEventStreamTestEventResponseContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -331,6 +504,13 @@ func (c *CreateEventStreamTestEventResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	createEventStreamWebHookRequestContentFieldName          = big.NewInt(1 << 0)
+	createEventStreamWebHookRequestContentFieldSubscriptions = big.NewInt(1 << 1)
+	createEventStreamWebHookRequestContentFieldDestination   = big.NewInt(1 << 2)
+	createEventStreamWebHookRequestContentFieldStatus        = big.NewInt(1 << 3)
+)
+
 type CreateEventStreamWebHookRequestContent struct {
 	// Name of the event stream.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -339,19 +519,22 @@ type CreateEventStreamWebHookRequestContent struct {
 	Destination   *EventStreamWebhookDestination `json:"destination" url:"destination"`
 	Status        *EventStreamStatusEnum         `json:"status,omitempty" url:"status,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateEventStreamWebHookRequestContent) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateEventStreamWebHookRequestContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
 func (c *CreateEventStreamWebHookRequestContent) GetSubscriptions() []*EventStreamSubscription {
-	if c == nil {
+	if c == nil || c.Subscriptions == nil {
 		return nil
 	}
 	return c.Subscriptions
@@ -364,15 +547,50 @@ func (c *CreateEventStreamWebHookRequestContent) GetDestination() *EventStreamWe
 	return c.Destination
 }
 
-func (c *CreateEventStreamWebHookRequestContent) GetStatus() *EventStreamStatusEnum {
-	if c == nil {
-		return nil
+func (c *CreateEventStreamWebHookRequestContent) GetStatus() EventStreamStatusEnum {
+	if c == nil || c.Status == nil {
+		return ""
 	}
-	return c.Status
+	return *c.Status
 }
 
 func (c *CreateEventStreamWebHookRequestContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateEventStreamWebHookRequestContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamWebHookRequestContent) SetName(name *string) {
+	c.Name = name
+	c.require(createEventStreamWebHookRequestContentFieldName)
+}
+
+// SetSubscriptions sets the Subscriptions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamWebHookRequestContent) SetSubscriptions(subscriptions []*EventStreamSubscription) {
+	c.Subscriptions = subscriptions
+	c.require(createEventStreamWebHookRequestContentFieldSubscriptions)
+}
+
+// SetDestination sets the Destination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamWebHookRequestContent) SetDestination(destination *EventStreamWebhookDestination) {
+	c.Destination = destination
+	c.require(createEventStreamWebHookRequestContentFieldDestination)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamWebHookRequestContent) SetStatus(status *EventStreamStatusEnum) {
+	c.Status = status
+	c.require(createEventStreamWebHookRequestContentFieldStatus)
 }
 
 func (c *CreateEventStreamWebHookRequestContent) UnmarshalJSON(data []byte) error {
@@ -391,6 +609,17 @@ func (c *CreateEventStreamWebHookRequestContent) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
+func (c *CreateEventStreamWebHookRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateEventStreamWebHookRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateEventStreamWebHookRequestContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -404,23 +633,44 @@ func (c *CreateEventStreamWebHookRequestContent) String() string {
 }
 
 // Configuration specific to an action destination.
+var (
+	eventStreamActionConfigurationFieldActionId = big.NewInt(1 << 0)
+)
+
 type EventStreamActionConfiguration struct {
 	// Action ID for the action destination.
-	ActionID string `json:"action_id" url:"action_id"`
+	ActionId string `json:"action_id" url:"action_id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamActionConfiguration) GetActionID() string {
+func (e *EventStreamActionConfiguration) GetActionId() string {
 	if e == nil {
 		return ""
 	}
-	return e.ActionID
+	return e.ActionId
 }
 
 func (e *EventStreamActionConfiguration) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
+}
+
+func (e *EventStreamActionConfiguration) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetActionId sets the ActionId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamActionConfiguration) SetActionId(actionId string) {
+	e.ActionId = actionId
+	e.require(eventStreamActionConfigurationFieldActionId)
 }
 
 func (e *EventStreamActionConfiguration) UnmarshalJSON(data []byte) error {
@@ -439,6 +689,17 @@ func (e *EventStreamActionConfiguration) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (e *EventStreamActionConfiguration) MarshalJSON() ([]byte, error) {
+	type embed EventStreamActionConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (e *EventStreamActionConfiguration) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -451,9 +712,17 @@ func (e *EventStreamActionConfiguration) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+var (
+	eventStreamActionDestinationFieldType          = big.NewInt(1 << 0)
+	eventStreamActionDestinationFieldConfiguration = big.NewInt(1 << 1)
+)
+
 type EventStreamActionDestination struct {
 	Type          EventStreamActionDestinationTypeEnum `json:"type" url:"type"`
 	Configuration *EventStreamActionConfiguration      `json:"configuration" url:"configuration"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -468,6 +737,27 @@ func (e *EventStreamActionDestination) GetConfiguration() *EventStreamActionConf
 
 func (e *EventStreamActionDestination) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
+}
+
+func (e *EventStreamActionDestination) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamActionDestination) SetType(type_ EventStreamActionDestinationTypeEnum) {
+	e.Type = type_
+	e.require(eventStreamActionDestinationFieldType)
+}
+
+// SetConfiguration sets the Configuration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamActionDestination) SetConfiguration(configuration *EventStreamActionConfiguration) {
+	e.Configuration = configuration
+	e.require(eventStreamActionDestinationFieldConfiguration)
 }
 
 func (e *EventStreamActionDestination) UnmarshalJSON(data []byte) error {
@@ -486,6 +776,17 @@ func (e *EventStreamActionDestination) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (e *EventStreamActionDestination) MarshalJSON() ([]byte, error) {
+	type embed EventStreamActionDestination
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (e *EventStreamActionDestination) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -500,9 +801,19 @@ func (e *EventStreamActionDestination) String() string {
 
 type EventStreamActionDestinationTypeEnum = string
 
+var (
+	eventStreamActionResponseContentFieldId            = big.NewInt(1 << 0)
+	eventStreamActionResponseContentFieldName          = big.NewInt(1 << 1)
+	eventStreamActionResponseContentFieldSubscriptions = big.NewInt(1 << 2)
+	eventStreamActionResponseContentFieldDestination   = big.NewInt(1 << 3)
+	eventStreamActionResponseContentFieldStatus        = big.NewInt(1 << 4)
+	eventStreamActionResponseContentFieldCreatedAt     = big.NewInt(1 << 5)
+	eventStreamActionResponseContentFieldUpdatedAt     = big.NewInt(1 << 6)
+)
+
 type EventStreamActionResponseContent struct {
 	// Unique identifier for the event stream.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of the event stream.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// List of event types subscribed to in this stream.
@@ -514,61 +825,120 @@ type EventStreamActionResponseContent struct {
 	// Timestamp when the event stream was last updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamActionResponseContent) GetID() *string {
-	if e == nil {
-		return nil
+func (e *EventStreamActionResponseContent) GetId() string {
+	if e == nil || e.Id == nil {
+		return ""
 	}
-	return e.ID
+	return *e.Id
 }
 
-func (e *EventStreamActionResponseContent) GetName() *string {
-	if e == nil {
-		return nil
+func (e *EventStreamActionResponseContent) GetName() string {
+	if e == nil || e.Name == nil {
+		return ""
 	}
-	return e.Name
+	return *e.Name
 }
 
 func (e *EventStreamActionResponseContent) GetSubscriptions() []*EventStreamSubscription {
-	if e == nil {
+	if e == nil || e.Subscriptions == nil {
 		return nil
 	}
 	return e.Subscriptions
 }
 
-func (e *EventStreamActionResponseContent) GetDestination() *EventStreamActionDestination {
-	if e == nil {
-		return nil
+func (e *EventStreamActionResponseContent) GetDestination() EventStreamActionDestination {
+	if e == nil || e.Destination == nil {
+		return EventStreamActionDestination{}
 	}
-	return e.Destination
+	return *e.Destination
 }
 
-func (e *EventStreamActionResponseContent) GetStatus() *EventStreamStatusEnum {
-	if e == nil {
-		return nil
+func (e *EventStreamActionResponseContent) GetStatus() EventStreamStatusEnum {
+	if e == nil || e.Status == nil {
+		return ""
 	}
-	return e.Status
+	return *e.Status
 }
 
-func (e *EventStreamActionResponseContent) GetCreatedAt() *time.Time {
-	if e == nil {
-		return nil
+func (e *EventStreamActionResponseContent) GetCreatedAt() time.Time {
+	if e == nil || e.CreatedAt == nil {
+		return time.Time{}
 	}
-	return e.CreatedAt
+	return *e.CreatedAt
 }
 
-func (e *EventStreamActionResponseContent) GetUpdatedAt() *time.Time {
-	if e == nil {
-		return nil
+func (e *EventStreamActionResponseContent) GetUpdatedAt() time.Time {
+	if e == nil || e.UpdatedAt == nil {
+		return time.Time{}
 	}
-	return e.UpdatedAt
+	return *e.UpdatedAt
 }
 
 func (e *EventStreamActionResponseContent) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
+}
+
+func (e *EventStreamActionResponseContent) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamActionResponseContent) SetId(id *string) {
+	e.Id = id
+	e.require(eventStreamActionResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamActionResponseContent) SetName(name *string) {
+	e.Name = name
+	e.require(eventStreamActionResponseContentFieldName)
+}
+
+// SetSubscriptions sets the Subscriptions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamActionResponseContent) SetSubscriptions(subscriptions []*EventStreamSubscription) {
+	e.Subscriptions = subscriptions
+	e.require(eventStreamActionResponseContentFieldSubscriptions)
+}
+
+// SetDestination sets the Destination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamActionResponseContent) SetDestination(destination *EventStreamActionDestination) {
+	e.Destination = destination
+	e.require(eventStreamActionResponseContentFieldDestination)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamActionResponseContent) SetStatus(status *EventStreamStatusEnum) {
+	e.Status = status
+	e.require(eventStreamActionResponseContentFieldStatus)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamActionResponseContent) SetCreatedAt(createdAt *time.Time) {
+	e.CreatedAt = createdAt
+	e.require(eventStreamActionResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamActionResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	e.UpdatedAt = updatedAt
+	e.require(eventStreamActionResponseContentFieldUpdatedAt)
 }
 
 func (e *EventStreamActionResponseContent) UnmarshalJSON(data []byte) error {
@@ -606,7 +976,8 @@ func (e *EventStreamActionResponseContent) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewOptionalDateTime(e.CreatedAt),
 		UpdatedAt: internal.NewOptionalDateTime(e.UpdatedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *EventStreamActionResponseContent) String() string {
@@ -687,22 +1058,35 @@ func (e *EventStreamDestinationPatch) Accept(visitor EventStreamDestinationPatch
 type EventStreamEventBridgeAwsRegionEnum string
 
 const (
+	EventStreamEventBridgeAwsRegionEnumAfSouth1     EventStreamEventBridgeAwsRegionEnum = "af-south-1"
 	EventStreamEventBridgeAwsRegionEnumApEast1      EventStreamEventBridgeAwsRegionEnum = "ap-east-1"
+	EventStreamEventBridgeAwsRegionEnumApEast2      EventStreamEventBridgeAwsRegionEnum = "ap-east-2"
 	EventStreamEventBridgeAwsRegionEnumApNortheast1 EventStreamEventBridgeAwsRegionEnum = "ap-northeast-1"
 	EventStreamEventBridgeAwsRegionEnumApNortheast2 EventStreamEventBridgeAwsRegionEnum = "ap-northeast-2"
 	EventStreamEventBridgeAwsRegionEnumApNortheast3 EventStreamEventBridgeAwsRegionEnum = "ap-northeast-3"
 	EventStreamEventBridgeAwsRegionEnumApSouth1     EventStreamEventBridgeAwsRegionEnum = "ap-south-1"
+	EventStreamEventBridgeAwsRegionEnumApSouth2     EventStreamEventBridgeAwsRegionEnum = "ap-south-2"
 	EventStreamEventBridgeAwsRegionEnumApSoutheast1 EventStreamEventBridgeAwsRegionEnum = "ap-southeast-1"
 	EventStreamEventBridgeAwsRegionEnumApSoutheast2 EventStreamEventBridgeAwsRegionEnum = "ap-southeast-2"
+	EventStreamEventBridgeAwsRegionEnumApSoutheast3 EventStreamEventBridgeAwsRegionEnum = "ap-southeast-3"
+	EventStreamEventBridgeAwsRegionEnumApSoutheast4 EventStreamEventBridgeAwsRegionEnum = "ap-southeast-4"
+	EventStreamEventBridgeAwsRegionEnumApSoutheast5 EventStreamEventBridgeAwsRegionEnum = "ap-southeast-5"
+	EventStreamEventBridgeAwsRegionEnumApSoutheast6 EventStreamEventBridgeAwsRegionEnum = "ap-southeast-6"
+	EventStreamEventBridgeAwsRegionEnumApSoutheast7 EventStreamEventBridgeAwsRegionEnum = "ap-southeast-7"
 	EventStreamEventBridgeAwsRegionEnumCaCentral1   EventStreamEventBridgeAwsRegionEnum = "ca-central-1"
-	EventStreamEventBridgeAwsRegionEnumCnNorth1     EventStreamEventBridgeAwsRegionEnum = "cn-north-1"
-	EventStreamEventBridgeAwsRegionEnumCnNorthwest1 EventStreamEventBridgeAwsRegionEnum = "cn-northwest-1"
+	EventStreamEventBridgeAwsRegionEnumCaWest1      EventStreamEventBridgeAwsRegionEnum = "ca-west-1"
 	EventStreamEventBridgeAwsRegionEnumEuCentral1   EventStreamEventBridgeAwsRegionEnum = "eu-central-1"
+	EventStreamEventBridgeAwsRegionEnumEuCentral2   EventStreamEventBridgeAwsRegionEnum = "eu-central-2"
 	EventStreamEventBridgeAwsRegionEnumEuNorth1     EventStreamEventBridgeAwsRegionEnum = "eu-north-1"
+	EventStreamEventBridgeAwsRegionEnumEuSouth1     EventStreamEventBridgeAwsRegionEnum = "eu-south-1"
+	EventStreamEventBridgeAwsRegionEnumEuSouth2     EventStreamEventBridgeAwsRegionEnum = "eu-south-2"
 	EventStreamEventBridgeAwsRegionEnumEuWest1      EventStreamEventBridgeAwsRegionEnum = "eu-west-1"
 	EventStreamEventBridgeAwsRegionEnumEuWest2      EventStreamEventBridgeAwsRegionEnum = "eu-west-2"
 	EventStreamEventBridgeAwsRegionEnumEuWest3      EventStreamEventBridgeAwsRegionEnum = "eu-west-3"
+	EventStreamEventBridgeAwsRegionEnumIlCentral1   EventStreamEventBridgeAwsRegionEnum = "il-central-1"
+	EventStreamEventBridgeAwsRegionEnumMeCentral1   EventStreamEventBridgeAwsRegionEnum = "me-central-1"
 	EventStreamEventBridgeAwsRegionEnumMeSouth1     EventStreamEventBridgeAwsRegionEnum = "me-south-1"
+	EventStreamEventBridgeAwsRegionEnumMxCentral1   EventStreamEventBridgeAwsRegionEnum = "mx-central-1"
 	EventStreamEventBridgeAwsRegionEnumSaEast1      EventStreamEventBridgeAwsRegionEnum = "sa-east-1"
 	EventStreamEventBridgeAwsRegionEnumUsGovEast1   EventStreamEventBridgeAwsRegionEnum = "us-gov-east-1"
 	EventStreamEventBridgeAwsRegionEnumUsGovWest1   EventStreamEventBridgeAwsRegionEnum = "us-gov-west-1"
@@ -714,8 +1098,12 @@ const (
 
 func NewEventStreamEventBridgeAwsRegionEnumFromString(s string) (EventStreamEventBridgeAwsRegionEnum, error) {
 	switch s {
+	case "af-south-1":
+		return EventStreamEventBridgeAwsRegionEnumAfSouth1, nil
 	case "ap-east-1":
 		return EventStreamEventBridgeAwsRegionEnumApEast1, nil
+	case "ap-east-2":
+		return EventStreamEventBridgeAwsRegionEnumApEast2, nil
 	case "ap-northeast-1":
 		return EventStreamEventBridgeAwsRegionEnumApNortheast1, nil
 	case "ap-northeast-2":
@@ -724,28 +1112,50 @@ func NewEventStreamEventBridgeAwsRegionEnumFromString(s string) (EventStreamEven
 		return EventStreamEventBridgeAwsRegionEnumApNortheast3, nil
 	case "ap-south-1":
 		return EventStreamEventBridgeAwsRegionEnumApSouth1, nil
+	case "ap-south-2":
+		return EventStreamEventBridgeAwsRegionEnumApSouth2, nil
 	case "ap-southeast-1":
 		return EventStreamEventBridgeAwsRegionEnumApSoutheast1, nil
 	case "ap-southeast-2":
 		return EventStreamEventBridgeAwsRegionEnumApSoutheast2, nil
+	case "ap-southeast-3":
+		return EventStreamEventBridgeAwsRegionEnumApSoutheast3, nil
+	case "ap-southeast-4":
+		return EventStreamEventBridgeAwsRegionEnumApSoutheast4, nil
+	case "ap-southeast-5":
+		return EventStreamEventBridgeAwsRegionEnumApSoutheast5, nil
+	case "ap-southeast-6":
+		return EventStreamEventBridgeAwsRegionEnumApSoutheast6, nil
+	case "ap-southeast-7":
+		return EventStreamEventBridgeAwsRegionEnumApSoutheast7, nil
 	case "ca-central-1":
 		return EventStreamEventBridgeAwsRegionEnumCaCentral1, nil
-	case "cn-north-1":
-		return EventStreamEventBridgeAwsRegionEnumCnNorth1, nil
-	case "cn-northwest-1":
-		return EventStreamEventBridgeAwsRegionEnumCnNorthwest1, nil
+	case "ca-west-1":
+		return EventStreamEventBridgeAwsRegionEnumCaWest1, nil
 	case "eu-central-1":
 		return EventStreamEventBridgeAwsRegionEnumEuCentral1, nil
+	case "eu-central-2":
+		return EventStreamEventBridgeAwsRegionEnumEuCentral2, nil
 	case "eu-north-1":
 		return EventStreamEventBridgeAwsRegionEnumEuNorth1, nil
+	case "eu-south-1":
+		return EventStreamEventBridgeAwsRegionEnumEuSouth1, nil
+	case "eu-south-2":
+		return EventStreamEventBridgeAwsRegionEnumEuSouth2, nil
 	case "eu-west-1":
 		return EventStreamEventBridgeAwsRegionEnumEuWest1, nil
 	case "eu-west-2":
 		return EventStreamEventBridgeAwsRegionEnumEuWest2, nil
 	case "eu-west-3":
 		return EventStreamEventBridgeAwsRegionEnumEuWest3, nil
+	case "il-central-1":
+		return EventStreamEventBridgeAwsRegionEnumIlCentral1, nil
+	case "me-central-1":
+		return EventStreamEventBridgeAwsRegionEnumMeCentral1, nil
 	case "me-south-1":
 		return EventStreamEventBridgeAwsRegionEnumMeSouth1, nil
+	case "mx-central-1":
+		return EventStreamEventBridgeAwsRegionEnumMxCentral1, nil
 	case "sa-east-1":
 		return EventStreamEventBridgeAwsRegionEnumSaEast1, nil
 	case "us-gov-east-1":
@@ -770,22 +1180,31 @@ func (e EventStreamEventBridgeAwsRegionEnum) Ptr() *EventStreamEventBridgeAwsReg
 }
 
 // Configuration specific to an eventbridge destination.
+var (
+	eventStreamEventBridgeConfigurationFieldAwsAccountId          = big.NewInt(1 << 0)
+	eventStreamEventBridgeConfigurationFieldAwsRegion             = big.NewInt(1 << 1)
+	eventStreamEventBridgeConfigurationFieldAwsPartnerEventSource = big.NewInt(1 << 2)
+)
+
 type EventStreamEventBridgeConfiguration struct {
 	// AWS Account ID for EventBridge destination.
-	AwsAccountID string                              `json:"aws_account_id" url:"aws_account_id"`
+	AwsAccountId string                              `json:"aws_account_id" url:"aws_account_id"`
 	AwsRegion    EventStreamEventBridgeAwsRegionEnum `json:"aws_region" url:"aws_region"`
 	// AWS Partner Event Source for EventBridge destination.
 	AwsPartnerEventSource *string `json:"aws_partner_event_source,omitempty" url:"aws_partner_event_source,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamEventBridgeConfiguration) GetAwsAccountID() string {
+func (e *EventStreamEventBridgeConfiguration) GetAwsAccountId() string {
 	if e == nil {
 		return ""
 	}
-	return e.AwsAccountID
+	return e.AwsAccountId
 }
 
 func (e *EventStreamEventBridgeConfiguration) GetAwsRegion() EventStreamEventBridgeAwsRegionEnum {
@@ -795,15 +1214,43 @@ func (e *EventStreamEventBridgeConfiguration) GetAwsRegion() EventStreamEventBri
 	return e.AwsRegion
 }
 
-func (e *EventStreamEventBridgeConfiguration) GetAwsPartnerEventSource() *string {
-	if e == nil {
-		return nil
+func (e *EventStreamEventBridgeConfiguration) GetAwsPartnerEventSource() string {
+	if e == nil || e.AwsPartnerEventSource == nil {
+		return ""
 	}
-	return e.AwsPartnerEventSource
+	return *e.AwsPartnerEventSource
 }
 
 func (e *EventStreamEventBridgeConfiguration) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
+}
+
+func (e *EventStreamEventBridgeConfiguration) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetAwsAccountId sets the AwsAccountId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamEventBridgeConfiguration) SetAwsAccountId(awsAccountId string) {
+	e.AwsAccountId = awsAccountId
+	e.require(eventStreamEventBridgeConfigurationFieldAwsAccountId)
+}
+
+// SetAwsRegion sets the AwsRegion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamEventBridgeConfiguration) SetAwsRegion(awsRegion EventStreamEventBridgeAwsRegionEnum) {
+	e.AwsRegion = awsRegion
+	e.require(eventStreamEventBridgeConfigurationFieldAwsRegion)
+}
+
+// SetAwsPartnerEventSource sets the AwsPartnerEventSource field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamEventBridgeConfiguration) SetAwsPartnerEventSource(awsPartnerEventSource *string) {
+	e.AwsPartnerEventSource = awsPartnerEventSource
+	e.require(eventStreamEventBridgeConfigurationFieldAwsPartnerEventSource)
 }
 
 func (e *EventStreamEventBridgeConfiguration) UnmarshalJSON(data []byte) error {
@@ -822,6 +1269,17 @@ func (e *EventStreamEventBridgeConfiguration) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (e *EventStreamEventBridgeConfiguration) MarshalJSON() ([]byte, error) {
+	type embed EventStreamEventBridgeConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (e *EventStreamEventBridgeConfiguration) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -834,9 +1292,17 @@ func (e *EventStreamEventBridgeConfiguration) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+var (
+	eventStreamEventBridgeDestinationFieldType          = big.NewInt(1 << 0)
+	eventStreamEventBridgeDestinationFieldConfiguration = big.NewInt(1 << 1)
+)
+
 type EventStreamEventBridgeDestination struct {
 	Type          EventStreamEventBridgeDestinationTypeEnum `json:"type" url:"type"`
 	Configuration *EventStreamEventBridgeConfiguration      `json:"configuration" url:"configuration"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -851,6 +1317,27 @@ func (e *EventStreamEventBridgeDestination) GetConfiguration() *EventStreamEvent
 
 func (e *EventStreamEventBridgeDestination) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
+}
+
+func (e *EventStreamEventBridgeDestination) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamEventBridgeDestination) SetType(type_ EventStreamEventBridgeDestinationTypeEnum) {
+	e.Type = type_
+	e.require(eventStreamEventBridgeDestinationFieldType)
+}
+
+// SetConfiguration sets the Configuration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamEventBridgeDestination) SetConfiguration(configuration *EventStreamEventBridgeConfiguration) {
+	e.Configuration = configuration
+	e.require(eventStreamEventBridgeDestinationFieldConfiguration)
 }
 
 func (e *EventStreamEventBridgeDestination) UnmarshalJSON(data []byte) error {
@@ -869,6 +1356,17 @@ func (e *EventStreamEventBridgeDestination) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (e *EventStreamEventBridgeDestination) MarshalJSON() ([]byte, error) {
+	type embed EventStreamEventBridgeDestination
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (e *EventStreamEventBridgeDestination) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -883,9 +1381,19 @@ func (e *EventStreamEventBridgeDestination) String() string {
 
 type EventStreamEventBridgeDestinationTypeEnum = string
 
+var (
+	eventStreamEventBridgeResponseContentFieldId            = big.NewInt(1 << 0)
+	eventStreamEventBridgeResponseContentFieldName          = big.NewInt(1 << 1)
+	eventStreamEventBridgeResponseContentFieldSubscriptions = big.NewInt(1 << 2)
+	eventStreamEventBridgeResponseContentFieldDestination   = big.NewInt(1 << 3)
+	eventStreamEventBridgeResponseContentFieldStatus        = big.NewInt(1 << 4)
+	eventStreamEventBridgeResponseContentFieldCreatedAt     = big.NewInt(1 << 5)
+	eventStreamEventBridgeResponseContentFieldUpdatedAt     = big.NewInt(1 << 6)
+)
+
 type EventStreamEventBridgeResponseContent struct {
 	// Unique identifier for the event stream.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of the event stream.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// List of event types subscribed to in this stream.
@@ -897,61 +1405,120 @@ type EventStreamEventBridgeResponseContent struct {
 	// Timestamp when the event stream was last updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamEventBridgeResponseContent) GetID() *string {
-	if e == nil {
-		return nil
+func (e *EventStreamEventBridgeResponseContent) GetId() string {
+	if e == nil || e.Id == nil {
+		return ""
 	}
-	return e.ID
+	return *e.Id
 }
 
-func (e *EventStreamEventBridgeResponseContent) GetName() *string {
-	if e == nil {
-		return nil
+func (e *EventStreamEventBridgeResponseContent) GetName() string {
+	if e == nil || e.Name == nil {
+		return ""
 	}
-	return e.Name
+	return *e.Name
 }
 
 func (e *EventStreamEventBridgeResponseContent) GetSubscriptions() []*EventStreamSubscription {
-	if e == nil {
+	if e == nil || e.Subscriptions == nil {
 		return nil
 	}
 	return e.Subscriptions
 }
 
-func (e *EventStreamEventBridgeResponseContent) GetDestination() *EventStreamEventBridgeDestination {
-	if e == nil {
-		return nil
+func (e *EventStreamEventBridgeResponseContent) GetDestination() EventStreamEventBridgeDestination {
+	if e == nil || e.Destination == nil {
+		return EventStreamEventBridgeDestination{}
 	}
-	return e.Destination
+	return *e.Destination
 }
 
-func (e *EventStreamEventBridgeResponseContent) GetStatus() *EventStreamStatusEnum {
-	if e == nil {
-		return nil
+func (e *EventStreamEventBridgeResponseContent) GetStatus() EventStreamStatusEnum {
+	if e == nil || e.Status == nil {
+		return ""
 	}
-	return e.Status
+	return *e.Status
 }
 
-func (e *EventStreamEventBridgeResponseContent) GetCreatedAt() *time.Time {
-	if e == nil {
-		return nil
+func (e *EventStreamEventBridgeResponseContent) GetCreatedAt() time.Time {
+	if e == nil || e.CreatedAt == nil {
+		return time.Time{}
 	}
-	return e.CreatedAt
+	return *e.CreatedAt
 }
 
-func (e *EventStreamEventBridgeResponseContent) GetUpdatedAt() *time.Time {
-	if e == nil {
-		return nil
+func (e *EventStreamEventBridgeResponseContent) GetUpdatedAt() time.Time {
+	if e == nil || e.UpdatedAt == nil {
+		return time.Time{}
 	}
-	return e.UpdatedAt
+	return *e.UpdatedAt
 }
 
 func (e *EventStreamEventBridgeResponseContent) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
+}
+
+func (e *EventStreamEventBridgeResponseContent) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamEventBridgeResponseContent) SetId(id *string) {
+	e.Id = id
+	e.require(eventStreamEventBridgeResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamEventBridgeResponseContent) SetName(name *string) {
+	e.Name = name
+	e.require(eventStreamEventBridgeResponseContentFieldName)
+}
+
+// SetSubscriptions sets the Subscriptions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamEventBridgeResponseContent) SetSubscriptions(subscriptions []*EventStreamSubscription) {
+	e.Subscriptions = subscriptions
+	e.require(eventStreamEventBridgeResponseContentFieldSubscriptions)
+}
+
+// SetDestination sets the Destination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamEventBridgeResponseContent) SetDestination(destination *EventStreamEventBridgeDestination) {
+	e.Destination = destination
+	e.require(eventStreamEventBridgeResponseContentFieldDestination)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamEventBridgeResponseContent) SetStatus(status *EventStreamStatusEnum) {
+	e.Status = status
+	e.require(eventStreamEventBridgeResponseContentFieldStatus)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamEventBridgeResponseContent) SetCreatedAt(createdAt *time.Time) {
+	e.CreatedAt = createdAt
+	e.require(eventStreamEventBridgeResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamEventBridgeResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	e.UpdatedAt = updatedAt
+	e.require(eventStreamEventBridgeResponseContentFieldUpdatedAt)
 }
 
 func (e *EventStreamEventBridgeResponseContent) UnmarshalJSON(data []byte) error {
@@ -989,7 +1556,8 @@ func (e *EventStreamEventBridgeResponseContent) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewOptionalDateTime(e.CreatedAt),
 		UpdatedAt: internal.NewOptionalDateTime(e.UpdatedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *EventStreamEventBridgeResponseContent) String() string {
@@ -1111,22 +1679,43 @@ func (e EventStreamStatusEnum) Ptr() *EventStreamStatusEnum {
 }
 
 // Event types
+var (
+	eventStreamSubscriptionFieldEventType = big.NewInt(1 << 0)
+)
+
 type EventStreamSubscription struct {
 	EventType *string `json:"event_type,omitempty" url:"event_type,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamSubscription) GetEventType() *string {
-	if e == nil {
-		return nil
+func (e *EventStreamSubscription) GetEventType() string {
+	if e == nil || e.EventType == nil {
+		return ""
 	}
-	return e.EventType
+	return *e.EventType
 }
 
 func (e *EventStreamSubscription) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
+}
+
+func (e *EventStreamSubscription) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetEventType sets the EventType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamSubscription) SetEventType(eventType *string) {
+	e.EventType = eventType
+	e.require(eventStreamSubscriptionFieldEventType)
 }
 
 func (e *EventStreamSubscription) UnmarshalJSON(data []byte) error {
@@ -1143,6 +1732,17 @@ func (e *EventStreamSubscription) UnmarshalJSON(data []byte) error {
 	e.extraProperties = extraProperties
 	e.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (e *EventStreamSubscription) MarshalJSON() ([]byte, error) {
+	type embed EventStreamSubscription
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *EventStreamSubscription) String() string {
@@ -1276,10 +1876,18 @@ func (e *EventStreamWebhookAuthorizationResponse) Accept(visitor EventStreamWebh
 }
 
 // Basic Authorization for HTTP requests (e.g., 'Basic credentials').
+var (
+	eventStreamWebhookBasicAuthFieldMethod   = big.NewInt(1 << 0)
+	eventStreamWebhookBasicAuthFieldUsername = big.NewInt(1 << 1)
+)
+
 type EventStreamWebhookBasicAuth struct {
 	Method EventStreamWebhookBasicAuthMethodEnum `json:"method" url:"method"`
 	// Username
 	Username string `json:"username" url:"username"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1294,6 +1902,27 @@ func (e *EventStreamWebhookBasicAuth) GetUsername() string {
 
 func (e *EventStreamWebhookBasicAuth) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
+}
+
+func (e *EventStreamWebhookBasicAuth) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetMethod sets the Method field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookBasicAuth) SetMethod(method EventStreamWebhookBasicAuthMethodEnum) {
+	e.Method = method
+	e.require(eventStreamWebhookBasicAuthFieldMethod)
+}
+
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookBasicAuth) SetUsername(username string) {
+	e.Username = username
+	e.require(eventStreamWebhookBasicAuthFieldUsername)
 }
 
 func (e *EventStreamWebhookBasicAuth) UnmarshalJSON(data []byte) error {
@@ -1312,6 +1941,17 @@ func (e *EventStreamWebhookBasicAuth) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (e *EventStreamWebhookBasicAuth) MarshalJSON() ([]byte, error) {
+	type embed EventStreamWebhookBasicAuth
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (e *EventStreamWebhookBasicAuth) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -1328,8 +1968,15 @@ func (e *EventStreamWebhookBasicAuth) String() string {
 type EventStreamWebhookBasicAuthMethodEnum = string
 
 // Bearer Authorization for HTTP requests (e.g., 'Bearer token').
+var (
+	eventStreamWebhookBearerAuthFieldMethod = big.NewInt(1 << 0)
+)
+
 type EventStreamWebhookBearerAuth struct {
 	Method EventStreamWebhookBearerAuthMethodEnum `json:"method" url:"method"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1337,6 +1984,20 @@ type EventStreamWebhookBearerAuth struct {
 
 func (e *EventStreamWebhookBearerAuth) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
+}
+
+func (e *EventStreamWebhookBearerAuth) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetMethod sets the Method field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookBearerAuth) SetMethod(method EventStreamWebhookBearerAuthMethodEnum) {
+	e.Method = method
+	e.require(eventStreamWebhookBearerAuthFieldMethod)
 }
 
 func (e *EventStreamWebhookBearerAuth) UnmarshalJSON(data []byte) error {
@@ -1355,6 +2016,17 @@ func (e *EventStreamWebhookBearerAuth) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (e *EventStreamWebhookBearerAuth) MarshalJSON() ([]byte, error) {
+	type embed EventStreamWebhookBearerAuth
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (e *EventStreamWebhookBearerAuth) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -1371,10 +2043,18 @@ func (e *EventStreamWebhookBearerAuth) String() string {
 type EventStreamWebhookBearerAuthMethodEnum = string
 
 // Configuration specific to a webhook destination.
+var (
+	eventStreamWebhookConfigurationFieldWebhookEndpoint      = big.NewInt(1 << 0)
+	eventStreamWebhookConfigurationFieldWebhookAuthorization = big.NewInt(1 << 1)
+)
+
 type EventStreamWebhookConfiguration struct {
 	// Target HTTP endpoint URL.
 	WebhookEndpoint      string                                   `json:"webhook_endpoint" url:"webhook_endpoint"`
 	WebhookAuthorization *EventStreamWebhookAuthorizationResponse `json:"webhook_authorization" url:"webhook_authorization"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1398,6 +2078,27 @@ func (e *EventStreamWebhookConfiguration) GetExtraProperties() map[string]interf
 	return e.extraProperties
 }
 
+func (e *EventStreamWebhookConfiguration) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetWebhookEndpoint sets the WebhookEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookConfiguration) SetWebhookEndpoint(webhookEndpoint string) {
+	e.WebhookEndpoint = webhookEndpoint
+	e.require(eventStreamWebhookConfigurationFieldWebhookEndpoint)
+}
+
+// SetWebhookAuthorization sets the WebhookAuthorization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookConfiguration) SetWebhookAuthorization(webhookAuthorization *EventStreamWebhookAuthorizationResponse) {
+	e.WebhookAuthorization = webhookAuthorization
+	e.require(eventStreamWebhookConfigurationFieldWebhookAuthorization)
+}
+
 func (e *EventStreamWebhookConfiguration) UnmarshalJSON(data []byte) error {
 	type unmarshaler EventStreamWebhookConfiguration
 	var value unmarshaler
@@ -1414,6 +2115,17 @@ func (e *EventStreamWebhookConfiguration) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (e *EventStreamWebhookConfiguration) MarshalJSON() ([]byte, error) {
+	type embed EventStreamWebhookConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (e *EventStreamWebhookConfiguration) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -1426,9 +2138,17 @@ func (e *EventStreamWebhookConfiguration) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+var (
+	eventStreamWebhookDestinationFieldType          = big.NewInt(1 << 0)
+	eventStreamWebhookDestinationFieldConfiguration = big.NewInt(1 << 1)
+)
+
 type EventStreamWebhookDestination struct {
 	Type          EventStreamWebhookDestinationTypeEnum `json:"type" url:"type"`
 	Configuration *EventStreamWebhookConfiguration      `json:"configuration" url:"configuration"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1443,6 +2163,27 @@ func (e *EventStreamWebhookDestination) GetConfiguration() *EventStreamWebhookCo
 
 func (e *EventStreamWebhookDestination) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
+}
+
+func (e *EventStreamWebhookDestination) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookDestination) SetType(type_ EventStreamWebhookDestinationTypeEnum) {
+	e.Type = type_
+	e.require(eventStreamWebhookDestinationFieldType)
+}
+
+// SetConfiguration sets the Configuration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookDestination) SetConfiguration(configuration *EventStreamWebhookConfiguration) {
+	e.Configuration = configuration
+	e.require(eventStreamWebhookDestinationFieldConfiguration)
 }
 
 func (e *EventStreamWebhookDestination) UnmarshalJSON(data []byte) error {
@@ -1461,6 +2202,17 @@ func (e *EventStreamWebhookDestination) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (e *EventStreamWebhookDestination) MarshalJSON() ([]byte, error) {
+	type embed EventStreamWebhookDestination
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (e *EventStreamWebhookDestination) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
@@ -1475,9 +2227,19 @@ func (e *EventStreamWebhookDestination) String() string {
 
 type EventStreamWebhookDestinationTypeEnum = string
 
+var (
+	eventStreamWebhookResponseContentFieldId            = big.NewInt(1 << 0)
+	eventStreamWebhookResponseContentFieldName          = big.NewInt(1 << 1)
+	eventStreamWebhookResponseContentFieldSubscriptions = big.NewInt(1 << 2)
+	eventStreamWebhookResponseContentFieldDestination   = big.NewInt(1 << 3)
+	eventStreamWebhookResponseContentFieldStatus        = big.NewInt(1 << 4)
+	eventStreamWebhookResponseContentFieldCreatedAt     = big.NewInt(1 << 5)
+	eventStreamWebhookResponseContentFieldUpdatedAt     = big.NewInt(1 << 6)
+)
+
 type EventStreamWebhookResponseContent struct {
 	// Unique identifier for the event stream.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of the event stream.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// List of event types subscribed to in this stream.
@@ -1489,61 +2251,120 @@ type EventStreamWebhookResponseContent struct {
 	// Timestamp when the event stream was last updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamWebhookResponseContent) GetID() *string {
-	if e == nil {
-		return nil
+func (e *EventStreamWebhookResponseContent) GetId() string {
+	if e == nil || e.Id == nil {
+		return ""
 	}
-	return e.ID
+	return *e.Id
 }
 
-func (e *EventStreamWebhookResponseContent) GetName() *string {
-	if e == nil {
-		return nil
+func (e *EventStreamWebhookResponseContent) GetName() string {
+	if e == nil || e.Name == nil {
+		return ""
 	}
-	return e.Name
+	return *e.Name
 }
 
 func (e *EventStreamWebhookResponseContent) GetSubscriptions() []*EventStreamSubscription {
-	if e == nil {
+	if e == nil || e.Subscriptions == nil {
 		return nil
 	}
 	return e.Subscriptions
 }
 
-func (e *EventStreamWebhookResponseContent) GetDestination() *EventStreamWebhookDestination {
-	if e == nil {
-		return nil
+func (e *EventStreamWebhookResponseContent) GetDestination() EventStreamWebhookDestination {
+	if e == nil || e.Destination == nil {
+		return EventStreamWebhookDestination{}
 	}
-	return e.Destination
+	return *e.Destination
 }
 
-func (e *EventStreamWebhookResponseContent) GetStatus() *EventStreamStatusEnum {
-	if e == nil {
-		return nil
+func (e *EventStreamWebhookResponseContent) GetStatus() EventStreamStatusEnum {
+	if e == nil || e.Status == nil {
+		return ""
 	}
-	return e.Status
+	return *e.Status
 }
 
-func (e *EventStreamWebhookResponseContent) GetCreatedAt() *time.Time {
-	if e == nil {
-		return nil
+func (e *EventStreamWebhookResponseContent) GetCreatedAt() time.Time {
+	if e == nil || e.CreatedAt == nil {
+		return time.Time{}
 	}
-	return e.CreatedAt
+	return *e.CreatedAt
 }
 
-func (e *EventStreamWebhookResponseContent) GetUpdatedAt() *time.Time {
-	if e == nil {
-		return nil
+func (e *EventStreamWebhookResponseContent) GetUpdatedAt() time.Time {
+	if e == nil || e.UpdatedAt == nil {
+		return time.Time{}
 	}
-	return e.UpdatedAt
+	return *e.UpdatedAt
 }
 
 func (e *EventStreamWebhookResponseContent) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
+}
+
+func (e *EventStreamWebhookResponseContent) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookResponseContent) SetId(id *string) {
+	e.Id = id
+	e.require(eventStreamWebhookResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookResponseContent) SetName(name *string) {
+	e.Name = name
+	e.require(eventStreamWebhookResponseContentFieldName)
+}
+
+// SetSubscriptions sets the Subscriptions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookResponseContent) SetSubscriptions(subscriptions []*EventStreamSubscription) {
+	e.Subscriptions = subscriptions
+	e.require(eventStreamWebhookResponseContentFieldSubscriptions)
+}
+
+// SetDestination sets the Destination field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookResponseContent) SetDestination(destination *EventStreamWebhookDestination) {
+	e.Destination = destination
+	e.require(eventStreamWebhookResponseContentFieldDestination)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookResponseContent) SetStatus(status *EventStreamStatusEnum) {
+	e.Status = status
+	e.require(eventStreamWebhookResponseContentFieldStatus)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookResponseContent) SetCreatedAt(createdAt *time.Time) {
+	e.CreatedAt = createdAt
+	e.require(eventStreamWebhookResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	e.UpdatedAt = updatedAt
+	e.require(eventStreamWebhookResponseContentFieldUpdatedAt)
 }
 
 func (e *EventStreamWebhookResponseContent) UnmarshalJSON(data []byte) error {
@@ -1581,7 +2402,8 @@ func (e *EventStreamWebhookResponseContent) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewOptionalDateTime(e.CreatedAt),
 		UpdatedAt: internal.NewOptionalDateTime(e.UpdatedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *EventStreamWebhookResponseContent) String() string {
@@ -1846,13 +2668,4 @@ func (e *EventStreamsCreateRequest) Accept(visitor EventStreamsCreateRequestVisi
 		return visitor.VisitCreateEventStreamActionRequestContent(e.CreateEventStreamActionRequestContent)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-type UpdateEventStreamRequestContent struct {
-	// Name of the event stream.
-	Name *string `json:"name,omitempty" url:"-"`
-	// List of event types subscribed to in this stream.
-	Subscriptions []*EventStreamSubscription   `json:"subscriptions,omitempty" url:"-"`
-	Destination   *EventStreamDestinationPatch `json:"destination,omitempty" url:"-"`
-	Status        *EventStreamStatusEnum       `json:"status,omitempty" url:"-"`
 }

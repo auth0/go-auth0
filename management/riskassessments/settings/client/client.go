@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	riskassessments "github.com/auth0/go-auth0/v2/management/riskassessments"
 	newdevice "github.com/auth0/go-auth0/v2/management/riskassessments/settings/newdevice"
 )
 
@@ -54,7 +53,7 @@ func (c *Client) Get(
 // Updates the tenant settings for risk assessments
 func (c *Client) Update(
 	ctx context.Context,
-	request *riskassessments.UpdateRiskAssessmentsSettingsRequestContent,
+	request *management.UpdateRiskAssessmentsSettingsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateRiskAssessmentsSettingsResponseContent, error) {
 	response, err := c.WithRawResponse.Update(

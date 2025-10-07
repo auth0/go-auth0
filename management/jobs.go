@@ -6,6 +6,20 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
+)
+
+var (
+	getJobResponseContentFieldStatus          = big.NewInt(1 << 0)
+	getJobResponseContentFieldType            = big.NewInt(1 << 1)
+	getJobResponseContentFieldCreatedAt       = big.NewInt(1 << 2)
+	getJobResponseContentFieldId              = big.NewInt(1 << 3)
+	getJobResponseContentFieldConnectionId    = big.NewInt(1 << 4)
+	getJobResponseContentFieldLocation        = big.NewInt(1 << 5)
+	getJobResponseContentFieldPercentageDone  = big.NewInt(1 << 6)
+	getJobResponseContentFieldTimeLeftSeconds = big.NewInt(1 << 7)
+	getJobResponseContentFieldFormat          = big.NewInt(1 << 8)
+	getJobResponseContentFieldStatusDetails   = big.NewInt(1 << 9)
 )
 
 type GetJobResponseContent struct {
@@ -16,9 +30,9 @@ type GetJobResponseContent struct {
 	// When this job was created.
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// ID of this job.
-	ID string `json:"id" url:"id"`
+	Id string `json:"id" url:"id"`
 	// connection_id of the connection this job uses.
-	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// URL to download the result of this job.
 	Location *string `json:"location,omitempty" url:"location,omitempty"`
 	// Completion percentage of this job.
@@ -28,6 +42,9 @@ type GetJobResponseContent struct {
 	Format          *JobFileFormatEnum `json:"format,omitempty" url:"format,omitempty"`
 	// Status details.
 	StatusDetails *string `json:"status_details,omitempty" url:"status_details,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
@@ -48,64 +65,141 @@ func (g *GetJobResponseContent) GetType() string {
 	return g.Type
 }
 
-func (g *GetJobResponseContent) GetCreatedAt() *string {
-	if g == nil {
-		return nil
+func (g *GetJobResponseContent) GetCreatedAt() string {
+	if g == nil || g.CreatedAt == nil {
+		return ""
 	}
-	return g.CreatedAt
+	return *g.CreatedAt
 }
 
-func (g *GetJobResponseContent) GetID() string {
+func (g *GetJobResponseContent) GetId() string {
 	if g == nil {
 		return ""
 	}
-	return g.ID
+	return g.Id
 }
 
-func (g *GetJobResponseContent) GetConnectionID() *string {
-	if g == nil {
-		return nil
+func (g *GetJobResponseContent) GetConnectionId() string {
+	if g == nil || g.ConnectionId == nil {
+		return ""
 	}
-	return g.ConnectionID
+	return *g.ConnectionId
 }
 
-func (g *GetJobResponseContent) GetLocation() *string {
-	if g == nil {
-		return nil
+func (g *GetJobResponseContent) GetLocation() string {
+	if g == nil || g.Location == nil {
+		return ""
 	}
-	return g.Location
+	return *g.Location
 }
 
-func (g *GetJobResponseContent) GetPercentageDone() *int {
-	if g == nil {
-		return nil
+func (g *GetJobResponseContent) GetPercentageDone() int {
+	if g == nil || g.PercentageDone == nil {
+		return 0
 	}
-	return g.PercentageDone
+	return *g.PercentageDone
 }
 
-func (g *GetJobResponseContent) GetTimeLeftSeconds() *int {
-	if g == nil {
-		return nil
+func (g *GetJobResponseContent) GetTimeLeftSeconds() int {
+	if g == nil || g.TimeLeftSeconds == nil {
+		return 0
 	}
-	return g.TimeLeftSeconds
+	return *g.TimeLeftSeconds
 }
 
-func (g *GetJobResponseContent) GetFormat() *JobFileFormatEnum {
-	if g == nil {
-		return nil
+func (g *GetJobResponseContent) GetFormat() JobFileFormatEnum {
+	if g == nil || g.Format == nil {
+		return ""
 	}
-	return g.Format
+	return *g.Format
 }
 
-func (g *GetJobResponseContent) GetStatusDetails() *string {
-	if g == nil {
-		return nil
+func (g *GetJobResponseContent) GetStatusDetails() string {
+	if g == nil || g.StatusDetails == nil {
+		return ""
 	}
-	return g.StatusDetails
+	return *g.StatusDetails
 }
 
 func (g *GetJobResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.ExtraProperties
+}
+
+func (g *GetJobResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobResponseContent) SetStatus(status string) {
+	g.Status = status
+	g.require(getJobResponseContentFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobResponseContent) SetType(type_ string) {
+	g.Type = type_
+	g.require(getJobResponseContentFieldType)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobResponseContent) SetCreatedAt(createdAt *string) {
+	g.CreatedAt = createdAt
+	g.require(getJobResponseContentFieldCreatedAt)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobResponseContent) SetId(id string) {
+	g.Id = id
+	g.require(getJobResponseContentFieldId)
+}
+
+// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobResponseContent) SetConnectionId(connectionId *string) {
+	g.ConnectionId = connectionId
+	g.require(getJobResponseContentFieldConnectionId)
+}
+
+// SetLocation sets the Location field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobResponseContent) SetLocation(location *string) {
+	g.Location = location
+	g.require(getJobResponseContentFieldLocation)
+}
+
+// SetPercentageDone sets the PercentageDone field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobResponseContent) SetPercentageDone(percentageDone *int) {
+	g.PercentageDone = percentageDone
+	g.require(getJobResponseContentFieldPercentageDone)
+}
+
+// SetTimeLeftSeconds sets the TimeLeftSeconds field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobResponseContent) SetTimeLeftSeconds(timeLeftSeconds *int) {
+	g.TimeLeftSeconds = timeLeftSeconds
+	g.require(getJobResponseContentFieldTimeLeftSeconds)
+}
+
+// SetFormat sets the Format field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobResponseContent) SetFormat(format *JobFileFormatEnum) {
+	g.Format = format
+	g.require(getJobResponseContentFieldFormat)
+}
+
+// SetStatusDetails sets the StatusDetails field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobResponseContent) SetStatusDetails(statusDetails *string) {
+	g.StatusDetails = statusDetails
+	g.require(getJobResponseContentFieldStatusDetails)
 }
 
 func (g *GetJobResponseContent) UnmarshalJSON(data []byte) error {
@@ -135,7 +229,8 @@ func (g *GetJobResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*g),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, g.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *GetJobResponseContent) String() string {

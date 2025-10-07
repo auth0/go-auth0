@@ -48,34 +48,33 @@ func (c *Client) GetUniversalLogin(
 
 // Update the Universal Login branding template.
 //
-// <p>When <code>content-type</code> header is set to <code>application/json</code>, the expected body must be JSON:</p>
+// <p>When <code>content-type</code> header is set to <code>application/json</code>:</p>
 // <pre>
 //
 //	{
-//	  "template": "&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;{%- auth0:head -%}&lt;/head&gt;&lt;body&gt;{%- auth0:widget -%}&lt;/body&gt;&lt;/html&gt;"
+//	  "template": "&lt;!DOCTYPE html&gt;{% assign resolved_dir = dir | default: "auto" %}&lt;html lang="{{locale}}" dir="{{resolved_dir}}"&gt;&lt;head&gt;{%- auth0:head -%}&lt;/head&gt;&lt;body class="_widget-auto-layout"&gt;{%- auth0:widget -%}&lt;/body&gt;&lt;/html&gt;"
 //	}
 //
 // </pre>
 //
 // <p>
 //
-//	When <code>content-type</code> header is set to <code>text/html</code>, the expected body must be the HTML template:
+//	When <code>content-type</code> header is set to <code>text/html</code>:
 //
 // </p>
 // <pre>
 // &lt!DOCTYPE html&gt;
-// &lt;code&gt;
+// {% assign resolved_dir = dir | default: "auto" %}
+// &lt;html lang="{{locale}}" dir="{{resolved_dir}}"&gt;
 //
-//	&lt;html&gt;
-//	  &lt;head&gt;
-//	   {%- auth0:head -%}
-//	  &lt;/head&gt;
-//	  &lt;body&gt;
-//	    {%- auth0:widget -%}
-//	  &lt;/body&gt;
-//	&lt;/html&gt;
+//	&lt;head&gt;
+//	  {%- auth0:head -%}
+//	&lt;/head&gt;
+//	&lt;body class="_widget-auto-layout"&gt;
+//	  {%- auth0:widget -%}
+//	&lt;/body&gt;
 //
-// &lt;/code&gt;
+// &lt;/html&gt;
 // </pre>
 func (c *Client) UpdateUniversalLogin(
 	ctx context.Context,

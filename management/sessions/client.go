@@ -68,6 +68,26 @@ func (c *Client) Delete(
 	return nil
 }
 
+// Update session information.
+func (c *Client) Update(
+	ctx context.Context,
+	// ID of the session to update.
+	id string,
+	request *management.UpdateSessionRequestContent,
+	opts ...option.RequestOption,
+) (*management.UpdateSessionResponseContent, error) {
+	response, err := c.WithRawResponse.Update(
+		ctx,
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // Revokes a session by ID and all associated refresh tokens.
 func (c *Client) Revoke(
 	ctx context.Context,

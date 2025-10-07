@@ -6,6 +6,17 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
+)
+
+var (
+	createLogStreamDatadogRequestBodyFieldName       = big.NewInt(1 << 0)
+	createLogStreamDatadogRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamDatadogRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamDatadogRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamDatadogRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamDatadogRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamDatadogRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
 )
 
 type CreateLogStreamDatadogRequestBody struct {
@@ -21,36 +32,39 @@ type CreateLogStreamDatadogRequestBody struct {
 	// The optional datetime (ISO 8601) to start streaming logs from
 	StartFrom *string `json:"startFrom,omitempty" url:"startFrom,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateLogStreamDatadogRequestBody) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamDatadogRequestBody) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateLogStreamDatadogRequestBody) GetIsPriority() *bool {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamDatadogRequestBody) GetIsPriority() bool {
+	if c == nil || c.IsPriority == nil {
+		return false
 	}
-	return c.IsPriority
+	return *c.IsPriority
 }
 
 func (c *CreateLogStreamDatadogRequestBody) GetFilters() []*LogStreamFilter {
-	if c == nil {
+	if c == nil || c.Filters == nil {
 		return nil
 	}
 	return c.Filters
 }
 
-func (c *CreateLogStreamDatadogRequestBody) GetPiiConfig() *LogStreamPiiConfig {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamDatadogRequestBody) GetPiiConfig() LogStreamPiiConfig {
+	if c == nil || c.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return c.PiiConfig
+	return *c.PiiConfig
 }
 
 func (c *CreateLogStreamDatadogRequestBody) GetSink() *LogStreamDatadogSink {
@@ -60,15 +74,71 @@ func (c *CreateLogStreamDatadogRequestBody) GetSink() *LogStreamDatadogSink {
 	return c.Sink
 }
 
-func (c *CreateLogStreamDatadogRequestBody) GetStartFrom() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamDatadogRequestBody) GetStartFrom() string {
+	if c == nil || c.StartFrom == nil {
+		return ""
 	}
-	return c.StartFrom
+	return *c.StartFrom
 }
 
 func (c *CreateLogStreamDatadogRequestBody) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateLogStreamDatadogRequestBody) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamDatadogRequestBody) SetName(name *string) {
+	c.Name = name
+	c.require(createLogStreamDatadogRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamDatadogRequestBody) SetType(type_ LogStreamDatadogEnum) {
+	c.Type = type_
+	c.require(createLogStreamDatadogRequestBodyFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamDatadogRequestBody) SetIsPriority(isPriority *bool) {
+	c.IsPriority = isPriority
+	c.require(createLogStreamDatadogRequestBodyFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamDatadogRequestBody) SetFilters(filters []*LogStreamFilter) {
+	c.Filters = filters
+	c.require(createLogStreamDatadogRequestBodyFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamDatadogRequestBody) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	c.PiiConfig = piiConfig
+	c.require(createLogStreamDatadogRequestBodyFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamDatadogRequestBody) SetSink(sink *LogStreamDatadogSink) {
+	c.Sink = sink
+	c.require(createLogStreamDatadogRequestBodyFieldSink)
+}
+
+// SetStartFrom sets the StartFrom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamDatadogRequestBody) SetStartFrom(startFrom *string) {
+	c.StartFrom = startFrom
+	c.require(createLogStreamDatadogRequestBodyFieldStartFrom)
 }
 
 func (c *CreateLogStreamDatadogRequestBody) UnmarshalJSON(data []byte) error {
@@ -87,6 +157,17 @@ func (c *CreateLogStreamDatadogRequestBody) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateLogStreamDatadogRequestBody) MarshalJSON() ([]byte, error) {
+	type embed CreateLogStreamDatadogRequestBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateLogStreamDatadogRequestBody) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -98,6 +179,16 @@ func (c *CreateLogStreamDatadogRequestBody) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+var (
+	createLogStreamEventBridgeRequestBodyFieldName       = big.NewInt(1 << 0)
+	createLogStreamEventBridgeRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamEventBridgeRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamEventBridgeRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamEventBridgeRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamEventBridgeRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamEventBridgeRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
+)
 
 type CreateLogStreamEventBridgeRequestBody struct {
 	// log stream name
@@ -112,36 +203,39 @@ type CreateLogStreamEventBridgeRequestBody struct {
 	// The optional datetime (ISO 8601) to start streaming logs from
 	StartFrom *string `json:"startFrom,omitempty" url:"startFrom,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateLogStreamEventBridgeRequestBody) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamEventBridgeRequestBody) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateLogStreamEventBridgeRequestBody) GetIsPriority() *bool {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamEventBridgeRequestBody) GetIsPriority() bool {
+	if c == nil || c.IsPriority == nil {
+		return false
 	}
-	return c.IsPriority
+	return *c.IsPriority
 }
 
 func (c *CreateLogStreamEventBridgeRequestBody) GetFilters() []*LogStreamFilter {
-	if c == nil {
+	if c == nil || c.Filters == nil {
 		return nil
 	}
 	return c.Filters
 }
 
-func (c *CreateLogStreamEventBridgeRequestBody) GetPiiConfig() *LogStreamPiiConfig {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamEventBridgeRequestBody) GetPiiConfig() LogStreamPiiConfig {
+	if c == nil || c.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return c.PiiConfig
+	return *c.PiiConfig
 }
 
 func (c *CreateLogStreamEventBridgeRequestBody) GetSink() *LogStreamEventBridgeSink {
@@ -151,15 +245,71 @@ func (c *CreateLogStreamEventBridgeRequestBody) GetSink() *LogStreamEventBridgeS
 	return c.Sink
 }
 
-func (c *CreateLogStreamEventBridgeRequestBody) GetStartFrom() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamEventBridgeRequestBody) GetStartFrom() string {
+	if c == nil || c.StartFrom == nil {
+		return ""
 	}
-	return c.StartFrom
+	return *c.StartFrom
 }
 
 func (c *CreateLogStreamEventBridgeRequestBody) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateLogStreamEventBridgeRequestBody) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventBridgeRequestBody) SetName(name *string) {
+	c.Name = name
+	c.require(createLogStreamEventBridgeRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventBridgeRequestBody) SetType(type_ LogStreamEventBridgeEnum) {
+	c.Type = type_
+	c.require(createLogStreamEventBridgeRequestBodyFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventBridgeRequestBody) SetIsPriority(isPriority *bool) {
+	c.IsPriority = isPriority
+	c.require(createLogStreamEventBridgeRequestBodyFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventBridgeRequestBody) SetFilters(filters []*LogStreamFilter) {
+	c.Filters = filters
+	c.require(createLogStreamEventBridgeRequestBodyFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventBridgeRequestBody) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	c.PiiConfig = piiConfig
+	c.require(createLogStreamEventBridgeRequestBodyFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventBridgeRequestBody) SetSink(sink *LogStreamEventBridgeSink) {
+	c.Sink = sink
+	c.require(createLogStreamEventBridgeRequestBodyFieldSink)
+}
+
+// SetStartFrom sets the StartFrom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventBridgeRequestBody) SetStartFrom(startFrom *string) {
+	c.StartFrom = startFrom
+	c.require(createLogStreamEventBridgeRequestBodyFieldStartFrom)
 }
 
 func (c *CreateLogStreamEventBridgeRequestBody) UnmarshalJSON(data []byte) error {
@@ -178,6 +328,17 @@ func (c *CreateLogStreamEventBridgeRequestBody) UnmarshalJSON(data []byte) error
 	return nil
 }
 
+func (c *CreateLogStreamEventBridgeRequestBody) MarshalJSON() ([]byte, error) {
+	type embed CreateLogStreamEventBridgeRequestBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateLogStreamEventBridgeRequestBody) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -189,6 +350,16 @@ func (c *CreateLogStreamEventBridgeRequestBody) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+var (
+	createLogStreamEventGridRequestBodyFieldName       = big.NewInt(1 << 0)
+	createLogStreamEventGridRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamEventGridRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamEventGridRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamEventGridRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamEventGridRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamEventGridRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
+)
 
 type CreateLogStreamEventGridRequestBody struct {
 	// log stream name
@@ -203,36 +374,39 @@ type CreateLogStreamEventGridRequestBody struct {
 	// The optional datetime (ISO 8601) to start streaming logs from
 	StartFrom *string `json:"startFrom,omitempty" url:"startFrom,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateLogStreamEventGridRequestBody) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamEventGridRequestBody) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateLogStreamEventGridRequestBody) GetIsPriority() *bool {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamEventGridRequestBody) GetIsPriority() bool {
+	if c == nil || c.IsPriority == nil {
+		return false
 	}
-	return c.IsPriority
+	return *c.IsPriority
 }
 
 func (c *CreateLogStreamEventGridRequestBody) GetFilters() []*LogStreamFilter {
-	if c == nil {
+	if c == nil || c.Filters == nil {
 		return nil
 	}
 	return c.Filters
 }
 
-func (c *CreateLogStreamEventGridRequestBody) GetPiiConfig() *LogStreamPiiConfig {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamEventGridRequestBody) GetPiiConfig() LogStreamPiiConfig {
+	if c == nil || c.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return c.PiiConfig
+	return *c.PiiConfig
 }
 
 func (c *CreateLogStreamEventGridRequestBody) GetSink() *LogStreamEventGridSink {
@@ -242,15 +416,71 @@ func (c *CreateLogStreamEventGridRequestBody) GetSink() *LogStreamEventGridSink 
 	return c.Sink
 }
 
-func (c *CreateLogStreamEventGridRequestBody) GetStartFrom() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamEventGridRequestBody) GetStartFrom() string {
+	if c == nil || c.StartFrom == nil {
+		return ""
 	}
-	return c.StartFrom
+	return *c.StartFrom
 }
 
 func (c *CreateLogStreamEventGridRequestBody) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateLogStreamEventGridRequestBody) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventGridRequestBody) SetName(name *string) {
+	c.Name = name
+	c.require(createLogStreamEventGridRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventGridRequestBody) SetType(type_ LogStreamEventGridEnum) {
+	c.Type = type_
+	c.require(createLogStreamEventGridRequestBodyFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventGridRequestBody) SetIsPriority(isPriority *bool) {
+	c.IsPriority = isPriority
+	c.require(createLogStreamEventGridRequestBodyFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventGridRequestBody) SetFilters(filters []*LogStreamFilter) {
+	c.Filters = filters
+	c.require(createLogStreamEventGridRequestBodyFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventGridRequestBody) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	c.PiiConfig = piiConfig
+	c.require(createLogStreamEventGridRequestBodyFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventGridRequestBody) SetSink(sink *LogStreamEventGridSink) {
+	c.Sink = sink
+	c.require(createLogStreamEventGridRequestBodyFieldSink)
+}
+
+// SetStartFrom sets the StartFrom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventGridRequestBody) SetStartFrom(startFrom *string) {
+	c.StartFrom = startFrom
+	c.require(createLogStreamEventGridRequestBodyFieldStartFrom)
 }
 
 func (c *CreateLogStreamEventGridRequestBody) UnmarshalJSON(data []byte) error {
@@ -269,6 +499,17 @@ func (c *CreateLogStreamEventGridRequestBody) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateLogStreamEventGridRequestBody) MarshalJSON() ([]byte, error) {
+	type embed CreateLogStreamEventGridRequestBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateLogStreamEventGridRequestBody) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -281,76 +522,145 @@ func (c *CreateLogStreamEventGridRequestBody) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-type CreateLogStreamHTTPRequestBody struct {
+var (
+	createLogStreamHttpRequestBodyFieldName       = big.NewInt(1 << 0)
+	createLogStreamHttpRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamHttpRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamHttpRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamHttpRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamHttpRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamHttpRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
+)
+
+type CreateLogStreamHttpRequestBody struct {
 	// log stream name
 	Name *string           `json:"name,omitempty" url:"name,omitempty"`
-	Type LogStreamHTTPEnum `json:"type" url:"type"`
+	Type LogStreamHttpEnum `json:"type" url:"type"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
 	Filters   []*LogStreamFilter  `json:"filters,omitempty" url:"filters,omitempty"`
 	PiiConfig *LogStreamPiiConfig `json:"pii_config,omitempty" url:"pii_config,omitempty"`
-	Sink      *LogStreamHTTPSink  `json:"sink" url:"sink"`
+	Sink      *LogStreamHttpSink  `json:"sink" url:"sink"`
 	// The optional datetime (ISO 8601) to start streaming logs from
 	StartFrom *string `json:"startFrom,omitempty" url:"startFrom,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateLogStreamHTTPRequestBody) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamHttpRequestBody) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateLogStreamHTTPRequestBody) GetIsPriority() *bool {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamHttpRequestBody) GetIsPriority() bool {
+	if c == nil || c.IsPriority == nil {
+		return false
 	}
-	return c.IsPriority
+	return *c.IsPriority
 }
 
-func (c *CreateLogStreamHTTPRequestBody) GetFilters() []*LogStreamFilter {
-	if c == nil {
+func (c *CreateLogStreamHttpRequestBody) GetFilters() []*LogStreamFilter {
+	if c == nil || c.Filters == nil {
 		return nil
 	}
 	return c.Filters
 }
 
-func (c *CreateLogStreamHTTPRequestBody) GetPiiConfig() *LogStreamPiiConfig {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamHttpRequestBody) GetPiiConfig() LogStreamPiiConfig {
+	if c == nil || c.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return c.PiiConfig
+	return *c.PiiConfig
 }
 
-func (c *CreateLogStreamHTTPRequestBody) GetSink() *LogStreamHTTPSink {
+func (c *CreateLogStreamHttpRequestBody) GetSink() *LogStreamHttpSink {
 	if c == nil {
 		return nil
 	}
 	return c.Sink
 }
 
-func (c *CreateLogStreamHTTPRequestBody) GetStartFrom() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamHttpRequestBody) GetStartFrom() string {
+	if c == nil || c.StartFrom == nil {
+		return ""
 	}
-	return c.StartFrom
+	return *c.StartFrom
 }
 
-func (c *CreateLogStreamHTTPRequestBody) GetExtraProperties() map[string]interface{} {
+func (c *CreateLogStreamHttpRequestBody) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateLogStreamHTTPRequestBody) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateLogStreamHTTPRequestBody
+func (c *CreateLogStreamHttpRequestBody) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamHttpRequestBody) SetName(name *string) {
+	c.Name = name
+	c.require(createLogStreamHttpRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamHttpRequestBody) SetType(type_ LogStreamHttpEnum) {
+	c.Type = type_
+	c.require(createLogStreamHttpRequestBodyFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamHttpRequestBody) SetIsPriority(isPriority *bool) {
+	c.IsPriority = isPriority
+	c.require(createLogStreamHttpRequestBodyFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamHttpRequestBody) SetFilters(filters []*LogStreamFilter) {
+	c.Filters = filters
+	c.require(createLogStreamHttpRequestBodyFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamHttpRequestBody) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	c.PiiConfig = piiConfig
+	c.require(createLogStreamHttpRequestBodyFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamHttpRequestBody) SetSink(sink *LogStreamHttpSink) {
+	c.Sink = sink
+	c.require(createLogStreamHttpRequestBodyFieldSink)
+}
+
+// SetStartFrom sets the StartFrom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamHttpRequestBody) SetStartFrom(startFrom *string) {
+	c.StartFrom = startFrom
+	c.require(createLogStreamHttpRequestBodyFieldStartFrom)
+}
+
+func (c *CreateLogStreamHttpRequestBody) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateLogStreamHttpRequestBody
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateLogStreamHTTPRequestBody(value)
+	*c = CreateLogStreamHttpRequestBody(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -360,7 +670,18 @@ func (c *CreateLogStreamHTTPRequestBody) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (c *CreateLogStreamHTTPRequestBody) String() string {
+func (c *CreateLogStreamHttpRequestBody) MarshalJSON() ([]byte, error) {
+	type embed CreateLogStreamHttpRequestBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateLogStreamHttpRequestBody) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -371,6 +692,16 @@ func (c *CreateLogStreamHTTPRequestBody) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+var (
+	createLogStreamMixpanelRequestBodyFieldName       = big.NewInt(1 << 0)
+	createLogStreamMixpanelRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamMixpanelRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamMixpanelRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamMixpanelRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamMixpanelRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamMixpanelRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
+)
 
 type CreateLogStreamMixpanelRequestBody struct {
 	// log stream name
@@ -385,36 +716,39 @@ type CreateLogStreamMixpanelRequestBody struct {
 	// The optional datetime (ISO 8601) to start streaming logs from
 	StartFrom *string `json:"startFrom,omitempty" url:"startFrom,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateLogStreamMixpanelRequestBody) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamMixpanelRequestBody) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateLogStreamMixpanelRequestBody) GetIsPriority() *bool {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamMixpanelRequestBody) GetIsPriority() bool {
+	if c == nil || c.IsPriority == nil {
+		return false
 	}
-	return c.IsPriority
+	return *c.IsPriority
 }
 
 func (c *CreateLogStreamMixpanelRequestBody) GetFilters() []*LogStreamFilter {
-	if c == nil {
+	if c == nil || c.Filters == nil {
 		return nil
 	}
 	return c.Filters
 }
 
-func (c *CreateLogStreamMixpanelRequestBody) GetPiiConfig() *LogStreamPiiConfig {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamMixpanelRequestBody) GetPiiConfig() LogStreamPiiConfig {
+	if c == nil || c.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return c.PiiConfig
+	return *c.PiiConfig
 }
 
 func (c *CreateLogStreamMixpanelRequestBody) GetSink() *LogStreamMixpanelSink {
@@ -424,15 +758,71 @@ func (c *CreateLogStreamMixpanelRequestBody) GetSink() *LogStreamMixpanelSink {
 	return c.Sink
 }
 
-func (c *CreateLogStreamMixpanelRequestBody) GetStartFrom() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamMixpanelRequestBody) GetStartFrom() string {
+	if c == nil || c.StartFrom == nil {
+		return ""
 	}
-	return c.StartFrom
+	return *c.StartFrom
 }
 
 func (c *CreateLogStreamMixpanelRequestBody) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateLogStreamMixpanelRequestBody) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamMixpanelRequestBody) SetName(name *string) {
+	c.Name = name
+	c.require(createLogStreamMixpanelRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamMixpanelRequestBody) SetType(type_ LogStreamMixpanelEnum) {
+	c.Type = type_
+	c.require(createLogStreamMixpanelRequestBodyFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamMixpanelRequestBody) SetIsPriority(isPriority *bool) {
+	c.IsPriority = isPriority
+	c.require(createLogStreamMixpanelRequestBodyFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamMixpanelRequestBody) SetFilters(filters []*LogStreamFilter) {
+	c.Filters = filters
+	c.require(createLogStreamMixpanelRequestBodyFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamMixpanelRequestBody) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	c.PiiConfig = piiConfig
+	c.require(createLogStreamMixpanelRequestBodyFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamMixpanelRequestBody) SetSink(sink *LogStreamMixpanelSink) {
+	c.Sink = sink
+	c.require(createLogStreamMixpanelRequestBodyFieldSink)
+}
+
+// SetStartFrom sets the StartFrom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamMixpanelRequestBody) SetStartFrom(startFrom *string) {
+	c.StartFrom = startFrom
+	c.require(createLogStreamMixpanelRequestBodyFieldStartFrom)
 }
 
 func (c *CreateLogStreamMixpanelRequestBody) UnmarshalJSON(data []byte) error {
@@ -451,6 +841,17 @@ func (c *CreateLogStreamMixpanelRequestBody) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateLogStreamMixpanelRequestBody) MarshalJSON() ([]byte, error) {
+	type embed CreateLogStreamMixpanelRequestBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateLogStreamMixpanelRequestBody) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -464,7 +865,7 @@ func (c *CreateLogStreamMixpanelRequestBody) String() string {
 }
 
 type CreateLogStreamRequestContent struct {
-	CreateLogStreamHTTPRequestBody        *CreateLogStreamHTTPRequestBody
+	CreateLogStreamHttpRequestBody        *CreateLogStreamHttpRequestBody
 	CreateLogStreamEventBridgeRequestBody *CreateLogStreamEventBridgeRequestBody
 	CreateLogStreamEventGridRequestBody   *CreateLogStreamEventGridRequestBody
 	CreateLogStreamDatadogRequestBody     *CreateLogStreamDatadogRequestBody
@@ -476,11 +877,11 @@ type CreateLogStreamRequestContent struct {
 	typ string
 }
 
-func (c *CreateLogStreamRequestContent) GetCreateLogStreamHTTPRequestBody() *CreateLogStreamHTTPRequestBody {
+func (c *CreateLogStreamRequestContent) GetCreateLogStreamHttpRequestBody() *CreateLogStreamHttpRequestBody {
 	if c == nil {
 		return nil
 	}
-	return c.CreateLogStreamHTTPRequestBody
+	return c.CreateLogStreamHttpRequestBody
 }
 
 func (c *CreateLogStreamRequestContent) GetCreateLogStreamEventBridgeRequestBody() *CreateLogStreamEventBridgeRequestBody {
@@ -533,10 +934,10 @@ func (c *CreateLogStreamRequestContent) GetCreateLogStreamMixpanelRequestBody() 
 }
 
 func (c *CreateLogStreamRequestContent) UnmarshalJSON(data []byte) error {
-	valueCreateLogStreamHTTPRequestBody := new(CreateLogStreamHTTPRequestBody)
-	if err := json.Unmarshal(data, &valueCreateLogStreamHTTPRequestBody); err == nil {
-		c.typ = "CreateLogStreamHTTPRequestBody"
-		c.CreateLogStreamHTTPRequestBody = valueCreateLogStreamHTTPRequestBody
+	valueCreateLogStreamHttpRequestBody := new(CreateLogStreamHttpRequestBody)
+	if err := json.Unmarshal(data, &valueCreateLogStreamHttpRequestBody); err == nil {
+		c.typ = "CreateLogStreamHttpRequestBody"
+		c.CreateLogStreamHttpRequestBody = valueCreateLogStreamHttpRequestBody
 		return nil
 	}
 	valueCreateLogStreamEventBridgeRequestBody := new(CreateLogStreamEventBridgeRequestBody)
@@ -585,8 +986,8 @@ func (c *CreateLogStreamRequestContent) UnmarshalJSON(data []byte) error {
 }
 
 func (c CreateLogStreamRequestContent) MarshalJSON() ([]byte, error) {
-	if c.typ == "CreateLogStreamHTTPRequestBody" || c.CreateLogStreamHTTPRequestBody != nil {
-		return json.Marshal(c.CreateLogStreamHTTPRequestBody)
+	if c.typ == "CreateLogStreamHttpRequestBody" || c.CreateLogStreamHttpRequestBody != nil {
+		return json.Marshal(c.CreateLogStreamHttpRequestBody)
 	}
 	if c.typ == "CreateLogStreamEventBridgeRequestBody" || c.CreateLogStreamEventBridgeRequestBody != nil {
 		return json.Marshal(c.CreateLogStreamEventBridgeRequestBody)
@@ -613,7 +1014,7 @@ func (c CreateLogStreamRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 type CreateLogStreamRequestContentVisitor interface {
-	VisitCreateLogStreamHTTPRequestBody(*CreateLogStreamHTTPRequestBody) error
+	VisitCreateLogStreamHttpRequestBody(*CreateLogStreamHttpRequestBody) error
 	VisitCreateLogStreamEventBridgeRequestBody(*CreateLogStreamEventBridgeRequestBody) error
 	VisitCreateLogStreamEventGridRequestBody(*CreateLogStreamEventGridRequestBody) error
 	VisitCreateLogStreamDatadogRequestBody(*CreateLogStreamDatadogRequestBody) error
@@ -624,8 +1025,8 @@ type CreateLogStreamRequestContentVisitor interface {
 }
 
 func (c *CreateLogStreamRequestContent) Accept(visitor CreateLogStreamRequestContentVisitor) error {
-	if c.typ == "CreateLogStreamHTTPRequestBody" || c.CreateLogStreamHTTPRequestBody != nil {
-		return visitor.VisitCreateLogStreamHTTPRequestBody(c.CreateLogStreamHTTPRequestBody)
+	if c.typ == "CreateLogStreamHttpRequestBody" || c.CreateLogStreamHttpRequestBody != nil {
+		return visitor.VisitCreateLogStreamHttpRequestBody(c.CreateLogStreamHttpRequestBody)
 	}
 	if c.typ == "CreateLogStreamEventBridgeRequestBody" || c.CreateLogStreamEventBridgeRequestBody != nil {
 		return visitor.VisitCreateLogStreamEventBridgeRequestBody(c.CreateLogStreamEventBridgeRequestBody)
@@ -652,7 +1053,7 @@ func (c *CreateLogStreamRequestContent) Accept(visitor CreateLogStreamRequestCon
 }
 
 type CreateLogStreamResponseContent struct {
-	LogStreamHTTPResponseSchema        *LogStreamHTTPResponseSchema
+	LogStreamHttpResponseSchema        *LogStreamHttpResponseSchema
 	LogStreamEventBridgeResponseSchema *LogStreamEventBridgeResponseSchema
 	LogStreamEventGridResponseSchema   *LogStreamEventGridResponseSchema
 	LogStreamDatadogResponseSchema     *LogStreamDatadogResponseSchema
@@ -664,11 +1065,11 @@ type CreateLogStreamResponseContent struct {
 	typ string
 }
 
-func (c *CreateLogStreamResponseContent) GetLogStreamHTTPResponseSchema() *LogStreamHTTPResponseSchema {
+func (c *CreateLogStreamResponseContent) GetLogStreamHttpResponseSchema() *LogStreamHttpResponseSchema {
 	if c == nil {
 		return nil
 	}
-	return c.LogStreamHTTPResponseSchema
+	return c.LogStreamHttpResponseSchema
 }
 
 func (c *CreateLogStreamResponseContent) GetLogStreamEventBridgeResponseSchema() *LogStreamEventBridgeResponseSchema {
@@ -721,10 +1122,10 @@ func (c *CreateLogStreamResponseContent) GetLogStreamMixpanelResponseSchema() *L
 }
 
 func (c *CreateLogStreamResponseContent) UnmarshalJSON(data []byte) error {
-	valueLogStreamHTTPResponseSchema := new(LogStreamHTTPResponseSchema)
-	if err := json.Unmarshal(data, &valueLogStreamHTTPResponseSchema); err == nil {
-		c.typ = "LogStreamHTTPResponseSchema"
-		c.LogStreamHTTPResponseSchema = valueLogStreamHTTPResponseSchema
+	valueLogStreamHttpResponseSchema := new(LogStreamHttpResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamHttpResponseSchema); err == nil {
+		c.typ = "LogStreamHttpResponseSchema"
+		c.LogStreamHttpResponseSchema = valueLogStreamHttpResponseSchema
 		return nil
 	}
 	valueLogStreamEventBridgeResponseSchema := new(LogStreamEventBridgeResponseSchema)
@@ -773,8 +1174,8 @@ func (c *CreateLogStreamResponseContent) UnmarshalJSON(data []byte) error {
 }
 
 func (c CreateLogStreamResponseContent) MarshalJSON() ([]byte, error) {
-	if c.typ == "LogStreamHTTPResponseSchema" || c.LogStreamHTTPResponseSchema != nil {
-		return json.Marshal(c.LogStreamHTTPResponseSchema)
+	if c.typ == "LogStreamHttpResponseSchema" || c.LogStreamHttpResponseSchema != nil {
+		return json.Marshal(c.LogStreamHttpResponseSchema)
 	}
 	if c.typ == "LogStreamEventBridgeResponseSchema" || c.LogStreamEventBridgeResponseSchema != nil {
 		return json.Marshal(c.LogStreamEventBridgeResponseSchema)
@@ -801,7 +1202,7 @@ func (c CreateLogStreamResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 type CreateLogStreamResponseContentVisitor interface {
-	VisitLogStreamHTTPResponseSchema(*LogStreamHTTPResponseSchema) error
+	VisitLogStreamHttpResponseSchema(*LogStreamHttpResponseSchema) error
 	VisitLogStreamEventBridgeResponseSchema(*LogStreamEventBridgeResponseSchema) error
 	VisitLogStreamEventGridResponseSchema(*LogStreamEventGridResponseSchema) error
 	VisitLogStreamDatadogResponseSchema(*LogStreamDatadogResponseSchema) error
@@ -812,8 +1213,8 @@ type CreateLogStreamResponseContentVisitor interface {
 }
 
 func (c *CreateLogStreamResponseContent) Accept(visitor CreateLogStreamResponseContentVisitor) error {
-	if c.typ == "LogStreamHTTPResponseSchema" || c.LogStreamHTTPResponseSchema != nil {
-		return visitor.VisitLogStreamHTTPResponseSchema(c.LogStreamHTTPResponseSchema)
+	if c.typ == "LogStreamHttpResponseSchema" || c.LogStreamHttpResponseSchema != nil {
+		return visitor.VisitLogStreamHttpResponseSchema(c.LogStreamHttpResponseSchema)
 	}
 	if c.typ == "LogStreamEventBridgeResponseSchema" || c.LogStreamEventBridgeResponseSchema != nil {
 		return visitor.VisitLogStreamEventBridgeResponseSchema(c.LogStreamEventBridgeResponseSchema)
@@ -839,6 +1240,16 @@ func (c *CreateLogStreamResponseContent) Accept(visitor CreateLogStreamResponseC
 	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
+var (
+	createLogStreamSegmentRequestBodyFieldName       = big.NewInt(1 << 0)
+	createLogStreamSegmentRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamSegmentRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamSegmentRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamSegmentRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamSegmentRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamSegmentRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
+)
+
 type CreateLogStreamSegmentRequestBody struct {
 	// log stream name
 	Name *string              `json:"name,omitempty" url:"name,omitempty"`
@@ -852,36 +1263,39 @@ type CreateLogStreamSegmentRequestBody struct {
 	// The optional datetime (ISO 8601) to start streaming logs from
 	StartFrom *string `json:"startFrom,omitempty" url:"startFrom,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateLogStreamSegmentRequestBody) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamSegmentRequestBody) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateLogStreamSegmentRequestBody) GetIsPriority() *bool {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamSegmentRequestBody) GetIsPriority() bool {
+	if c == nil || c.IsPriority == nil {
+		return false
 	}
-	return c.IsPriority
+	return *c.IsPriority
 }
 
 func (c *CreateLogStreamSegmentRequestBody) GetFilters() []*LogStreamFilter {
-	if c == nil {
+	if c == nil || c.Filters == nil {
 		return nil
 	}
 	return c.Filters
 }
 
-func (c *CreateLogStreamSegmentRequestBody) GetPiiConfig() *LogStreamPiiConfig {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamSegmentRequestBody) GetPiiConfig() LogStreamPiiConfig {
+	if c == nil || c.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return c.PiiConfig
+	return *c.PiiConfig
 }
 
 func (c *CreateLogStreamSegmentRequestBody) GetSink() *LogStreamSegmentSinkWriteKey {
@@ -891,15 +1305,71 @@ func (c *CreateLogStreamSegmentRequestBody) GetSink() *LogStreamSegmentSinkWrite
 	return c.Sink
 }
 
-func (c *CreateLogStreamSegmentRequestBody) GetStartFrom() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamSegmentRequestBody) GetStartFrom() string {
+	if c == nil || c.StartFrom == nil {
+		return ""
 	}
-	return c.StartFrom
+	return *c.StartFrom
 }
 
 func (c *CreateLogStreamSegmentRequestBody) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateLogStreamSegmentRequestBody) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSegmentRequestBody) SetName(name *string) {
+	c.Name = name
+	c.require(createLogStreamSegmentRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSegmentRequestBody) SetType(type_ LogStreamSegmentEnum) {
+	c.Type = type_
+	c.require(createLogStreamSegmentRequestBodyFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSegmentRequestBody) SetIsPriority(isPriority *bool) {
+	c.IsPriority = isPriority
+	c.require(createLogStreamSegmentRequestBodyFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSegmentRequestBody) SetFilters(filters []*LogStreamFilter) {
+	c.Filters = filters
+	c.require(createLogStreamSegmentRequestBodyFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSegmentRequestBody) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	c.PiiConfig = piiConfig
+	c.require(createLogStreamSegmentRequestBodyFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSegmentRequestBody) SetSink(sink *LogStreamSegmentSinkWriteKey) {
+	c.Sink = sink
+	c.require(createLogStreamSegmentRequestBodyFieldSink)
+}
+
+// SetStartFrom sets the StartFrom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSegmentRequestBody) SetStartFrom(startFrom *string) {
+	c.StartFrom = startFrom
+	c.require(createLogStreamSegmentRequestBodyFieldStartFrom)
 }
 
 func (c *CreateLogStreamSegmentRequestBody) UnmarshalJSON(data []byte) error {
@@ -918,6 +1388,17 @@ func (c *CreateLogStreamSegmentRequestBody) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateLogStreamSegmentRequestBody) MarshalJSON() ([]byte, error) {
+	type embed CreateLogStreamSegmentRequestBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateLogStreamSegmentRequestBody) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -929,6 +1410,16 @@ func (c *CreateLogStreamSegmentRequestBody) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+var (
+	createLogStreamSplunkRequestBodyFieldName       = big.NewInt(1 << 0)
+	createLogStreamSplunkRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamSplunkRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamSplunkRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamSplunkRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamSplunkRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamSplunkRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
+)
 
 type CreateLogStreamSplunkRequestBody struct {
 	// log stream name
@@ -943,36 +1434,39 @@ type CreateLogStreamSplunkRequestBody struct {
 	// The optional datetime (ISO 8601) to start streaming logs from
 	StartFrom *string `json:"startFrom,omitempty" url:"startFrom,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateLogStreamSplunkRequestBody) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamSplunkRequestBody) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateLogStreamSplunkRequestBody) GetIsPriority() *bool {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamSplunkRequestBody) GetIsPriority() bool {
+	if c == nil || c.IsPriority == nil {
+		return false
 	}
-	return c.IsPriority
+	return *c.IsPriority
 }
 
 func (c *CreateLogStreamSplunkRequestBody) GetFilters() []*LogStreamFilter {
-	if c == nil {
+	if c == nil || c.Filters == nil {
 		return nil
 	}
 	return c.Filters
 }
 
-func (c *CreateLogStreamSplunkRequestBody) GetPiiConfig() *LogStreamPiiConfig {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamSplunkRequestBody) GetPiiConfig() LogStreamPiiConfig {
+	if c == nil || c.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return c.PiiConfig
+	return *c.PiiConfig
 }
 
 func (c *CreateLogStreamSplunkRequestBody) GetSink() *LogStreamSplunkSink {
@@ -982,15 +1476,71 @@ func (c *CreateLogStreamSplunkRequestBody) GetSink() *LogStreamSplunkSink {
 	return c.Sink
 }
 
-func (c *CreateLogStreamSplunkRequestBody) GetStartFrom() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamSplunkRequestBody) GetStartFrom() string {
+	if c == nil || c.StartFrom == nil {
+		return ""
 	}
-	return c.StartFrom
+	return *c.StartFrom
 }
 
 func (c *CreateLogStreamSplunkRequestBody) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateLogStreamSplunkRequestBody) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSplunkRequestBody) SetName(name *string) {
+	c.Name = name
+	c.require(createLogStreamSplunkRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSplunkRequestBody) SetType(type_ LogStreamSplunkEnum) {
+	c.Type = type_
+	c.require(createLogStreamSplunkRequestBodyFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSplunkRequestBody) SetIsPriority(isPriority *bool) {
+	c.IsPriority = isPriority
+	c.require(createLogStreamSplunkRequestBodyFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSplunkRequestBody) SetFilters(filters []*LogStreamFilter) {
+	c.Filters = filters
+	c.require(createLogStreamSplunkRequestBodyFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSplunkRequestBody) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	c.PiiConfig = piiConfig
+	c.require(createLogStreamSplunkRequestBodyFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSplunkRequestBody) SetSink(sink *LogStreamSplunkSink) {
+	c.Sink = sink
+	c.require(createLogStreamSplunkRequestBodyFieldSink)
+}
+
+// SetStartFrom sets the StartFrom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSplunkRequestBody) SetStartFrom(startFrom *string) {
+	c.StartFrom = startFrom
+	c.require(createLogStreamSplunkRequestBodyFieldStartFrom)
 }
 
 func (c *CreateLogStreamSplunkRequestBody) UnmarshalJSON(data []byte) error {
@@ -1009,6 +1559,17 @@ func (c *CreateLogStreamSplunkRequestBody) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateLogStreamSplunkRequestBody) MarshalJSON() ([]byte, error) {
+	type embed CreateLogStreamSplunkRequestBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateLogStreamSplunkRequestBody) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -1020,6 +1581,16 @@ func (c *CreateLogStreamSplunkRequestBody) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+var (
+	createLogStreamSumoRequestBodyFieldName       = big.NewInt(1 << 0)
+	createLogStreamSumoRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamSumoRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamSumoRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamSumoRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamSumoRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamSumoRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
+)
 
 type CreateLogStreamSumoRequestBody struct {
 	// log stream name
@@ -1034,36 +1605,39 @@ type CreateLogStreamSumoRequestBody struct {
 	// The optional datetime (ISO 8601) to start streaming logs from
 	StartFrom *string `json:"startFrom,omitempty" url:"startFrom,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateLogStreamSumoRequestBody) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamSumoRequestBody) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateLogStreamSumoRequestBody) GetIsPriority() *bool {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamSumoRequestBody) GetIsPriority() bool {
+	if c == nil || c.IsPriority == nil {
+		return false
 	}
-	return c.IsPriority
+	return *c.IsPriority
 }
 
 func (c *CreateLogStreamSumoRequestBody) GetFilters() []*LogStreamFilter {
-	if c == nil {
+	if c == nil || c.Filters == nil {
 		return nil
 	}
 	return c.Filters
 }
 
-func (c *CreateLogStreamSumoRequestBody) GetPiiConfig() *LogStreamPiiConfig {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamSumoRequestBody) GetPiiConfig() LogStreamPiiConfig {
+	if c == nil || c.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return c.PiiConfig
+	return *c.PiiConfig
 }
 
 func (c *CreateLogStreamSumoRequestBody) GetSink() *LogStreamSumoSink {
@@ -1073,15 +1647,71 @@ func (c *CreateLogStreamSumoRequestBody) GetSink() *LogStreamSumoSink {
 	return c.Sink
 }
 
-func (c *CreateLogStreamSumoRequestBody) GetStartFrom() *string {
-	if c == nil {
-		return nil
+func (c *CreateLogStreamSumoRequestBody) GetStartFrom() string {
+	if c == nil || c.StartFrom == nil {
+		return ""
 	}
-	return c.StartFrom
+	return *c.StartFrom
 }
 
 func (c *CreateLogStreamSumoRequestBody) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateLogStreamSumoRequestBody) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSumoRequestBody) SetName(name *string) {
+	c.Name = name
+	c.require(createLogStreamSumoRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSumoRequestBody) SetType(type_ LogStreamSumoEnum) {
+	c.Type = type_
+	c.require(createLogStreamSumoRequestBodyFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSumoRequestBody) SetIsPriority(isPriority *bool) {
+	c.IsPriority = isPriority
+	c.require(createLogStreamSumoRequestBodyFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSumoRequestBody) SetFilters(filters []*LogStreamFilter) {
+	c.Filters = filters
+	c.require(createLogStreamSumoRequestBodyFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSumoRequestBody) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	c.PiiConfig = piiConfig
+	c.require(createLogStreamSumoRequestBodyFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSumoRequestBody) SetSink(sink *LogStreamSumoSink) {
+	c.Sink = sink
+	c.require(createLogStreamSumoRequestBodyFieldSink)
+}
+
+// SetStartFrom sets the StartFrom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSumoRequestBody) SetStartFrom(startFrom *string) {
+	c.StartFrom = startFrom
+	c.require(createLogStreamSumoRequestBodyFieldStartFrom)
 }
 
 func (c *CreateLogStreamSumoRequestBody) UnmarshalJSON(data []byte) error {
@@ -1100,6 +1730,17 @@ func (c *CreateLogStreamSumoRequestBody) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateLogStreamSumoRequestBody) MarshalJSON() ([]byte, error) {
+	type embed CreateLogStreamSumoRequestBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateLogStreamSumoRequestBody) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -1113,7 +1754,7 @@ func (c *CreateLogStreamSumoRequestBody) String() string {
 }
 
 type GetLogStreamResponseContent struct {
-	LogStreamHTTPResponseSchema        *LogStreamHTTPResponseSchema
+	LogStreamHttpResponseSchema        *LogStreamHttpResponseSchema
 	LogStreamEventBridgeResponseSchema *LogStreamEventBridgeResponseSchema
 	LogStreamEventGridResponseSchema   *LogStreamEventGridResponseSchema
 	LogStreamDatadogResponseSchema     *LogStreamDatadogResponseSchema
@@ -1125,11 +1766,11 @@ type GetLogStreamResponseContent struct {
 	typ string
 }
 
-func (g *GetLogStreamResponseContent) GetLogStreamHTTPResponseSchema() *LogStreamHTTPResponseSchema {
+func (g *GetLogStreamResponseContent) GetLogStreamHttpResponseSchema() *LogStreamHttpResponseSchema {
 	if g == nil {
 		return nil
 	}
-	return g.LogStreamHTTPResponseSchema
+	return g.LogStreamHttpResponseSchema
 }
 
 func (g *GetLogStreamResponseContent) GetLogStreamEventBridgeResponseSchema() *LogStreamEventBridgeResponseSchema {
@@ -1182,10 +1823,10 @@ func (g *GetLogStreamResponseContent) GetLogStreamMixpanelResponseSchema() *LogS
 }
 
 func (g *GetLogStreamResponseContent) UnmarshalJSON(data []byte) error {
-	valueLogStreamHTTPResponseSchema := new(LogStreamHTTPResponseSchema)
-	if err := json.Unmarshal(data, &valueLogStreamHTTPResponseSchema); err == nil {
-		g.typ = "LogStreamHTTPResponseSchema"
-		g.LogStreamHTTPResponseSchema = valueLogStreamHTTPResponseSchema
+	valueLogStreamHttpResponseSchema := new(LogStreamHttpResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamHttpResponseSchema); err == nil {
+		g.typ = "LogStreamHttpResponseSchema"
+		g.LogStreamHttpResponseSchema = valueLogStreamHttpResponseSchema
 		return nil
 	}
 	valueLogStreamEventBridgeResponseSchema := new(LogStreamEventBridgeResponseSchema)
@@ -1234,8 +1875,8 @@ func (g *GetLogStreamResponseContent) UnmarshalJSON(data []byte) error {
 }
 
 func (g GetLogStreamResponseContent) MarshalJSON() ([]byte, error) {
-	if g.typ == "LogStreamHTTPResponseSchema" || g.LogStreamHTTPResponseSchema != nil {
-		return json.Marshal(g.LogStreamHTTPResponseSchema)
+	if g.typ == "LogStreamHttpResponseSchema" || g.LogStreamHttpResponseSchema != nil {
+		return json.Marshal(g.LogStreamHttpResponseSchema)
 	}
 	if g.typ == "LogStreamEventBridgeResponseSchema" || g.LogStreamEventBridgeResponseSchema != nil {
 		return json.Marshal(g.LogStreamEventBridgeResponseSchema)
@@ -1262,7 +1903,7 @@ func (g GetLogStreamResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 type GetLogStreamResponseContentVisitor interface {
-	VisitLogStreamHTTPResponseSchema(*LogStreamHTTPResponseSchema) error
+	VisitLogStreamHttpResponseSchema(*LogStreamHttpResponseSchema) error
 	VisitLogStreamEventBridgeResponseSchema(*LogStreamEventBridgeResponseSchema) error
 	VisitLogStreamEventGridResponseSchema(*LogStreamEventGridResponseSchema) error
 	VisitLogStreamDatadogResponseSchema(*LogStreamDatadogResponseSchema) error
@@ -1273,8 +1914,8 @@ type GetLogStreamResponseContentVisitor interface {
 }
 
 func (g *GetLogStreamResponseContent) Accept(visitor GetLogStreamResponseContentVisitor) error {
-	if g.typ == "LogStreamHTTPResponseSchema" || g.LogStreamHTTPResponseSchema != nil {
-		return visitor.VisitLogStreamHTTPResponseSchema(g.LogStreamHTTPResponseSchema)
+	if g.typ == "LogStreamHttpResponseSchema" || g.LogStreamHttpResponseSchema != nil {
+		return visitor.VisitLogStreamHttpResponseSchema(g.LogStreamHttpResponseSchema)
 	}
 	if g.typ == "LogStreamEventBridgeResponseSchema" || g.LogStreamEventBridgeResponseSchema != nil {
 		return visitor.VisitLogStreamEventBridgeResponseSchema(g.LogStreamEventBridgeResponseSchema)
@@ -1300,37 +1941,66 @@ func (g *GetLogStreamResponseContent) Accept(visitor GetLogStreamResponseContent
 	return fmt.Errorf("type %T does not include a non-empty union type", g)
 }
 
-type HTTPCustomHeader struct {
+var (
+	httpCustomHeaderFieldHeader = big.NewInt(1 << 0)
+	httpCustomHeaderFieldValue  = big.NewInt(1 << 1)
+)
+
+type HttpCustomHeader struct {
 	// HTTP header name
 	Header *string `json:"header,omitempty" url:"header,omitempty"`
 	// HTTP header value
 	Value *string `json:"value,omitempty" url:"value,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (h *HTTPCustomHeader) GetHeader() *string {
-	if h == nil {
-		return nil
+func (h *HttpCustomHeader) GetHeader() string {
+	if h == nil || h.Header == nil {
+		return ""
 	}
-	return h.Header
+	return *h.Header
 }
 
-func (h *HTTPCustomHeader) GetValue() *string {
-	if h == nil {
-		return nil
+func (h *HttpCustomHeader) GetValue() string {
+	if h == nil || h.Value == nil {
+		return ""
 	}
-	return h.Value
+	return *h.Value
 }
 
-func (h *HTTPCustomHeader) GetExtraProperties() map[string]interface{} {
+func (h *HttpCustomHeader) GetExtraProperties() map[string]interface{} {
 	return h.ExtraProperties
 }
 
-func (h *HTTPCustomHeader) UnmarshalJSON(data []byte) error {
-	type embed HTTPCustomHeader
+func (h *HttpCustomHeader) require(field *big.Int) {
+	if h.explicitFields == nil {
+		h.explicitFields = big.NewInt(0)
+	}
+	h.explicitFields.Or(h.explicitFields, field)
+}
+
+// SetHeader sets the Header field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (h *HttpCustomHeader) SetHeader(header *string) {
+	h.Header = header
+	h.require(httpCustomHeaderFieldHeader)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (h *HttpCustomHeader) SetValue(value *string) {
+	h.Value = value
+	h.require(httpCustomHeaderFieldValue)
+}
+
+func (h *HttpCustomHeader) UnmarshalJSON(data []byte) error {
+	type embed HttpCustomHeader
 	var unmarshaler = struct {
 		embed
 	}{
@@ -1339,7 +2009,7 @@ func (h *HTTPCustomHeader) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*h = HTTPCustomHeader(unmarshaler.embed)
+	*h = HttpCustomHeader(unmarshaler.embed)
 	extraProperties, err := internal.ExtractExtraProperties(data, *h)
 	if err != nil {
 		return err
@@ -1349,17 +2019,18 @@ func (h *HTTPCustomHeader) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (h *HTTPCustomHeader) MarshalJSON() ([]byte, error) {
-	type embed HTTPCustomHeader
+func (h *HttpCustomHeader) MarshalJSON() ([]byte, error) {
+	type embed HttpCustomHeader
 	var marshaler = struct {
 		embed
 	}{
 		embed: embed(*h),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, h.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, h.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, h.ExtraProperties)
 }
 
-func (h *HTTPCustomHeader) String() string {
+func (h *HttpCustomHeader) String() string {
 	if len(h.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(h.rawJSON); err == nil {
 			return value
@@ -1402,9 +2073,20 @@ func (l LogStreamDatadogRegionEnum) Ptr() *LogStreamDatadogRegionEnum {
 	return &l
 }
 
+var (
+	logStreamDatadogResponseSchemaFieldId         = big.NewInt(1 << 0)
+	logStreamDatadogResponseSchemaFieldName       = big.NewInt(1 << 1)
+	logStreamDatadogResponseSchemaFieldStatus     = big.NewInt(1 << 2)
+	logStreamDatadogResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamDatadogResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamDatadogResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamDatadogResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamDatadogResponseSchemaFieldSink       = big.NewInt(1 << 7)
+)
+
 type LogStreamDatadogResponseSchema struct {
 	// The id of the log stream
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
 	Name   *string               `json:"name,omitempty" url:"name,omitempty"`
 	Status *LogStreamStatusEnum  `json:"status,omitempty" url:"status,omitempty"`
@@ -1416,62 +2098,128 @@ type LogStreamDatadogResponseSchema struct {
 	PiiConfig *LogStreamPiiConfig   `json:"pii_config,omitempty" url:"pii_config,omitempty"`
 	Sink      *LogStreamDatadogSink `json:"sink,omitempty" url:"sink,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (l *LogStreamDatadogResponseSchema) GetID() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamDatadogResponseSchema) GetId() string {
+	if l == nil || l.Id == nil {
+		return ""
 	}
-	return l.ID
+	return *l.Id
 }
 
-func (l *LogStreamDatadogResponseSchema) GetName() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamDatadogResponseSchema) GetName() string {
+	if l == nil || l.Name == nil {
+		return ""
 	}
-	return l.Name
+	return *l.Name
 }
 
-func (l *LogStreamDatadogResponseSchema) GetStatus() *LogStreamStatusEnum {
-	if l == nil {
-		return nil
+func (l *LogStreamDatadogResponseSchema) GetStatus() LogStreamStatusEnum {
+	if l == nil || l.Status == nil {
+		return ""
 	}
-	return l.Status
+	return *l.Status
 }
 
-func (l *LogStreamDatadogResponseSchema) GetIsPriority() *bool {
-	if l == nil {
-		return nil
+func (l *LogStreamDatadogResponseSchema) GetIsPriority() bool {
+	if l == nil || l.IsPriority == nil {
+		return false
 	}
-	return l.IsPriority
+	return *l.IsPriority
 }
 
 func (l *LogStreamDatadogResponseSchema) GetFilters() []*LogStreamFilter {
-	if l == nil {
+	if l == nil || l.Filters == nil {
 		return nil
 	}
 	return l.Filters
 }
 
-func (l *LogStreamDatadogResponseSchema) GetPiiConfig() *LogStreamPiiConfig {
-	if l == nil {
-		return nil
+func (l *LogStreamDatadogResponseSchema) GetPiiConfig() LogStreamPiiConfig {
+	if l == nil || l.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return l.PiiConfig
+	return *l.PiiConfig
 }
 
-func (l *LogStreamDatadogResponseSchema) GetSink() *LogStreamDatadogSink {
-	if l == nil {
-		return nil
+func (l *LogStreamDatadogResponseSchema) GetSink() LogStreamDatadogSink {
+	if l == nil || l.Sink == nil {
+		return LogStreamDatadogSink{}
 	}
-	return l.Sink
+	return *l.Sink
 }
 
 func (l *LogStreamDatadogResponseSchema) GetExtraProperties() map[string]interface{} {
 	return l.ExtraProperties
+}
+
+func (l *LogStreamDatadogResponseSchema) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamDatadogResponseSchema) SetId(id *string) {
+	l.Id = id
+	l.require(logStreamDatadogResponseSchemaFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamDatadogResponseSchema) SetName(name *string) {
+	l.Name = name
+	l.require(logStreamDatadogResponseSchemaFieldName)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamDatadogResponseSchema) SetStatus(status *LogStreamStatusEnum) {
+	l.Status = status
+	l.require(logStreamDatadogResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamDatadogResponseSchema) SetType(type_ *LogStreamDatadogEnum) {
+	l.Type = type_
+	l.require(logStreamDatadogResponseSchemaFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamDatadogResponseSchema) SetIsPriority(isPriority *bool) {
+	l.IsPriority = isPriority
+	l.require(logStreamDatadogResponseSchemaFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamDatadogResponseSchema) SetFilters(filters []*LogStreamFilter) {
+	l.Filters = filters
+	l.require(logStreamDatadogResponseSchemaFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamDatadogResponseSchema) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	l.PiiConfig = piiConfig
+	l.require(logStreamDatadogResponseSchemaFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamDatadogResponseSchema) SetSink(sink *LogStreamDatadogSink) {
+	l.Sink = sink
+	l.require(logStreamDatadogResponseSchemaFieldSink)
 }
 
 func (l *LogStreamDatadogResponseSchema) UnmarshalJSON(data []byte) error {
@@ -1501,7 +2249,8 @@ func (l *LogStreamDatadogResponseSchema) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*l),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, l.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
 }
 
 func (l *LogStreamDatadogResponseSchema) String() string {
@@ -1516,20 +2265,28 @@ func (l *LogStreamDatadogResponseSchema) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	logStreamDatadogSinkFieldDatadogApiKey = big.NewInt(1 << 0)
+	logStreamDatadogSinkFieldDatadogRegion = big.NewInt(1 << 1)
+)
+
 type LogStreamDatadogSink struct {
 	// Datadog API Key
-	DatadogAPIKey string                     `json:"datadogApiKey" url:"datadogApiKey"`
+	DatadogApiKey string                     `json:"datadogApiKey" url:"datadogApiKey"`
 	DatadogRegion LogStreamDatadogRegionEnum `json:"datadogRegion" url:"datadogRegion"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *LogStreamDatadogSink) GetDatadogAPIKey() string {
+func (l *LogStreamDatadogSink) GetDatadogApiKey() string {
 	if l == nil {
 		return ""
 	}
-	return l.DatadogAPIKey
+	return l.DatadogApiKey
 }
 
 func (l *LogStreamDatadogSink) GetDatadogRegion() LogStreamDatadogRegionEnum {
@@ -1541,6 +2298,27 @@ func (l *LogStreamDatadogSink) GetDatadogRegion() LogStreamDatadogRegionEnum {
 
 func (l *LogStreamDatadogSink) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *LogStreamDatadogSink) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetDatadogApiKey sets the DatadogApiKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamDatadogSink) SetDatadogApiKey(datadogApiKey string) {
+	l.DatadogApiKey = datadogApiKey
+	l.require(logStreamDatadogSinkFieldDatadogApiKey)
+}
+
+// SetDatadogRegion sets the DatadogRegion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamDatadogSink) SetDatadogRegion(datadogRegion LogStreamDatadogRegionEnum) {
+	l.DatadogRegion = datadogRegion
+	l.require(logStreamDatadogSinkFieldDatadogRegion)
 }
 
 func (l *LogStreamDatadogSink) UnmarshalJSON(data []byte) error {
@@ -1559,6 +2337,17 @@ func (l *LogStreamDatadogSink) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (l *LogStreamDatadogSink) MarshalJSON() ([]byte, error) {
+	type embed LogStreamDatadogSink
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *LogStreamDatadogSink) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -1573,9 +2362,20 @@ func (l *LogStreamDatadogSink) String() string {
 
 type LogStreamEventBridgeEnum = string
 
+var (
+	logStreamEventBridgeResponseSchemaFieldId         = big.NewInt(1 << 0)
+	logStreamEventBridgeResponseSchemaFieldName       = big.NewInt(1 << 1)
+	logStreamEventBridgeResponseSchemaFieldStatus     = big.NewInt(1 << 2)
+	logStreamEventBridgeResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamEventBridgeResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamEventBridgeResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamEventBridgeResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamEventBridgeResponseSchemaFieldSink       = big.NewInt(1 << 7)
+)
+
 type LogStreamEventBridgeResponseSchema struct {
 	// The id of the log stream
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
 	Name   *string                   `json:"name,omitempty" url:"name,omitempty"`
 	Status *LogStreamStatusEnum      `json:"status,omitempty" url:"status,omitempty"`
@@ -1587,62 +2387,128 @@ type LogStreamEventBridgeResponseSchema struct {
 	PiiConfig *LogStreamPiiConfig       `json:"pii_config,omitempty" url:"pii_config,omitempty"`
 	Sink      *LogStreamEventBridgeSink `json:"sink,omitempty" url:"sink,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (l *LogStreamEventBridgeResponseSchema) GetID() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamEventBridgeResponseSchema) GetId() string {
+	if l == nil || l.Id == nil {
+		return ""
 	}
-	return l.ID
+	return *l.Id
 }
 
-func (l *LogStreamEventBridgeResponseSchema) GetName() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamEventBridgeResponseSchema) GetName() string {
+	if l == nil || l.Name == nil {
+		return ""
 	}
-	return l.Name
+	return *l.Name
 }
 
-func (l *LogStreamEventBridgeResponseSchema) GetStatus() *LogStreamStatusEnum {
-	if l == nil {
-		return nil
+func (l *LogStreamEventBridgeResponseSchema) GetStatus() LogStreamStatusEnum {
+	if l == nil || l.Status == nil {
+		return ""
 	}
-	return l.Status
+	return *l.Status
 }
 
-func (l *LogStreamEventBridgeResponseSchema) GetIsPriority() *bool {
-	if l == nil {
-		return nil
+func (l *LogStreamEventBridgeResponseSchema) GetIsPriority() bool {
+	if l == nil || l.IsPriority == nil {
+		return false
 	}
-	return l.IsPriority
+	return *l.IsPriority
 }
 
 func (l *LogStreamEventBridgeResponseSchema) GetFilters() []*LogStreamFilter {
-	if l == nil {
+	if l == nil || l.Filters == nil {
 		return nil
 	}
 	return l.Filters
 }
 
-func (l *LogStreamEventBridgeResponseSchema) GetPiiConfig() *LogStreamPiiConfig {
-	if l == nil {
-		return nil
+func (l *LogStreamEventBridgeResponseSchema) GetPiiConfig() LogStreamPiiConfig {
+	if l == nil || l.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return l.PiiConfig
+	return *l.PiiConfig
 }
 
-func (l *LogStreamEventBridgeResponseSchema) GetSink() *LogStreamEventBridgeSink {
-	if l == nil {
-		return nil
+func (l *LogStreamEventBridgeResponseSchema) GetSink() LogStreamEventBridgeSink {
+	if l == nil || l.Sink == nil {
+		return LogStreamEventBridgeSink{}
 	}
-	return l.Sink
+	return *l.Sink
 }
 
 func (l *LogStreamEventBridgeResponseSchema) GetExtraProperties() map[string]interface{} {
 	return l.ExtraProperties
+}
+
+func (l *LogStreamEventBridgeResponseSchema) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventBridgeResponseSchema) SetId(id *string) {
+	l.Id = id
+	l.require(logStreamEventBridgeResponseSchemaFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventBridgeResponseSchema) SetName(name *string) {
+	l.Name = name
+	l.require(logStreamEventBridgeResponseSchemaFieldName)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventBridgeResponseSchema) SetStatus(status *LogStreamStatusEnum) {
+	l.Status = status
+	l.require(logStreamEventBridgeResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventBridgeResponseSchema) SetType(type_ *LogStreamEventBridgeEnum) {
+	l.Type = type_
+	l.require(logStreamEventBridgeResponseSchemaFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventBridgeResponseSchema) SetIsPriority(isPriority *bool) {
+	l.IsPriority = isPriority
+	l.require(logStreamEventBridgeResponseSchemaFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventBridgeResponseSchema) SetFilters(filters []*LogStreamFilter) {
+	l.Filters = filters
+	l.require(logStreamEventBridgeResponseSchemaFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventBridgeResponseSchema) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	l.PiiConfig = piiConfig
+	l.require(logStreamEventBridgeResponseSchemaFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventBridgeResponseSchema) SetSink(sink *LogStreamEventBridgeSink) {
+	l.Sink = sink
+	l.require(logStreamEventBridgeResponseSchemaFieldSink)
 }
 
 func (l *LogStreamEventBridgeResponseSchema) UnmarshalJSON(data []byte) error {
@@ -1672,7 +2538,8 @@ func (l *LogStreamEventBridgeResponseSchema) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*l),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, l.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
 }
 
 func (l *LogStreamEventBridgeResponseSchema) String() string {
@@ -1687,22 +2554,31 @@ func (l *LogStreamEventBridgeResponseSchema) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	logStreamEventBridgeSinkFieldAwsAccountId          = big.NewInt(1 << 0)
+	logStreamEventBridgeSinkFieldAwsRegion             = big.NewInt(1 << 1)
+	logStreamEventBridgeSinkFieldAwsPartnerEventSource = big.NewInt(1 << 2)
+)
+
 type LogStreamEventBridgeSink struct {
 	// AWS account ID
-	AwsAccountID string                             `json:"awsAccountId" url:"awsAccountId"`
+	AwsAccountId string                             `json:"awsAccountId" url:"awsAccountId"`
 	AwsRegion    LogStreamEventBridgeSinkRegionEnum `json:"awsRegion" url:"awsRegion"`
 	// AWS EventBridge partner event source
 	AwsPartnerEventSource *string `json:"awsPartnerEventSource,omitempty" url:"awsPartnerEventSource,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *LogStreamEventBridgeSink) GetAwsAccountID() string {
+func (l *LogStreamEventBridgeSink) GetAwsAccountId() string {
 	if l == nil {
 		return ""
 	}
-	return l.AwsAccountID
+	return l.AwsAccountId
 }
 
 func (l *LogStreamEventBridgeSink) GetAwsRegion() LogStreamEventBridgeSinkRegionEnum {
@@ -1712,15 +2588,43 @@ func (l *LogStreamEventBridgeSink) GetAwsRegion() LogStreamEventBridgeSinkRegion
 	return l.AwsRegion
 }
 
-func (l *LogStreamEventBridgeSink) GetAwsPartnerEventSource() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamEventBridgeSink) GetAwsPartnerEventSource() string {
+	if l == nil || l.AwsPartnerEventSource == nil {
+		return ""
 	}
-	return l.AwsPartnerEventSource
+	return *l.AwsPartnerEventSource
 }
 
 func (l *LogStreamEventBridgeSink) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *LogStreamEventBridgeSink) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetAwsAccountId sets the AwsAccountId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventBridgeSink) SetAwsAccountId(awsAccountId string) {
+	l.AwsAccountId = awsAccountId
+	l.require(logStreamEventBridgeSinkFieldAwsAccountId)
+}
+
+// SetAwsRegion sets the AwsRegion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventBridgeSink) SetAwsRegion(awsRegion LogStreamEventBridgeSinkRegionEnum) {
+	l.AwsRegion = awsRegion
+	l.require(logStreamEventBridgeSinkFieldAwsRegion)
+}
+
+// SetAwsPartnerEventSource sets the AwsPartnerEventSource field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventBridgeSink) SetAwsPartnerEventSource(awsPartnerEventSource *string) {
+	l.AwsPartnerEventSource = awsPartnerEventSource
+	l.require(logStreamEventBridgeSinkFieldAwsPartnerEventSource)
 }
 
 func (l *LogStreamEventBridgeSink) UnmarshalJSON(data []byte) error {
@@ -1739,6 +2643,17 @@ func (l *LogStreamEventBridgeSink) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (l *LogStreamEventBridgeSink) MarshalJSON() ([]byte, error) {
+	type embed LogStreamEventBridgeSink
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *LogStreamEventBridgeSink) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -1755,20 +2670,35 @@ func (l *LogStreamEventBridgeSink) String() string {
 type LogStreamEventBridgeSinkRegionEnum string
 
 const (
+	LogStreamEventBridgeSinkRegionEnumAfSouth1     LogStreamEventBridgeSinkRegionEnum = "af-south-1"
 	LogStreamEventBridgeSinkRegionEnumApEast1      LogStreamEventBridgeSinkRegionEnum = "ap-east-1"
+	LogStreamEventBridgeSinkRegionEnumApEast2      LogStreamEventBridgeSinkRegionEnum = "ap-east-2"
 	LogStreamEventBridgeSinkRegionEnumApNortheast1 LogStreamEventBridgeSinkRegionEnum = "ap-northeast-1"
 	LogStreamEventBridgeSinkRegionEnumApNortheast2 LogStreamEventBridgeSinkRegionEnum = "ap-northeast-2"
 	LogStreamEventBridgeSinkRegionEnumApNortheast3 LogStreamEventBridgeSinkRegionEnum = "ap-northeast-3"
 	LogStreamEventBridgeSinkRegionEnumApSouth1     LogStreamEventBridgeSinkRegionEnum = "ap-south-1"
+	LogStreamEventBridgeSinkRegionEnumApSouth2     LogStreamEventBridgeSinkRegionEnum = "ap-south-2"
 	LogStreamEventBridgeSinkRegionEnumApSoutheast1 LogStreamEventBridgeSinkRegionEnum = "ap-southeast-1"
 	LogStreamEventBridgeSinkRegionEnumApSoutheast2 LogStreamEventBridgeSinkRegionEnum = "ap-southeast-2"
+	LogStreamEventBridgeSinkRegionEnumApSoutheast3 LogStreamEventBridgeSinkRegionEnum = "ap-southeast-3"
+	LogStreamEventBridgeSinkRegionEnumApSoutheast4 LogStreamEventBridgeSinkRegionEnum = "ap-southeast-4"
+	LogStreamEventBridgeSinkRegionEnumApSoutheast5 LogStreamEventBridgeSinkRegionEnum = "ap-southeast-5"
+	LogStreamEventBridgeSinkRegionEnumApSoutheast6 LogStreamEventBridgeSinkRegionEnum = "ap-southeast-6"
+	LogStreamEventBridgeSinkRegionEnumApSoutheast7 LogStreamEventBridgeSinkRegionEnum = "ap-southeast-7"
 	LogStreamEventBridgeSinkRegionEnumCaCentral1   LogStreamEventBridgeSinkRegionEnum = "ca-central-1"
+	LogStreamEventBridgeSinkRegionEnumCaWest1      LogStreamEventBridgeSinkRegionEnum = "ca-west-1"
 	LogStreamEventBridgeSinkRegionEnumEuCentral1   LogStreamEventBridgeSinkRegionEnum = "eu-central-1"
+	LogStreamEventBridgeSinkRegionEnumEuCentral2   LogStreamEventBridgeSinkRegionEnum = "eu-central-2"
 	LogStreamEventBridgeSinkRegionEnumEuNorth1     LogStreamEventBridgeSinkRegionEnum = "eu-north-1"
+	LogStreamEventBridgeSinkRegionEnumEuSouth1     LogStreamEventBridgeSinkRegionEnum = "eu-south-1"
+	LogStreamEventBridgeSinkRegionEnumEuSouth2     LogStreamEventBridgeSinkRegionEnum = "eu-south-2"
 	LogStreamEventBridgeSinkRegionEnumEuWest1      LogStreamEventBridgeSinkRegionEnum = "eu-west-1"
 	LogStreamEventBridgeSinkRegionEnumEuWest2      LogStreamEventBridgeSinkRegionEnum = "eu-west-2"
 	LogStreamEventBridgeSinkRegionEnumEuWest3      LogStreamEventBridgeSinkRegionEnum = "eu-west-3"
+	LogStreamEventBridgeSinkRegionEnumIlCentral1   LogStreamEventBridgeSinkRegionEnum = "il-central-1"
+	LogStreamEventBridgeSinkRegionEnumMeCentral1   LogStreamEventBridgeSinkRegionEnum = "me-central-1"
 	LogStreamEventBridgeSinkRegionEnumMeSouth1     LogStreamEventBridgeSinkRegionEnum = "me-south-1"
+	LogStreamEventBridgeSinkRegionEnumMxCentral1   LogStreamEventBridgeSinkRegionEnum = "mx-central-1"
 	LogStreamEventBridgeSinkRegionEnumSaEast1      LogStreamEventBridgeSinkRegionEnum = "sa-east-1"
 	LogStreamEventBridgeSinkRegionEnumUsGovEast1   LogStreamEventBridgeSinkRegionEnum = "us-gov-east-1"
 	LogStreamEventBridgeSinkRegionEnumUsGovWest1   LogStreamEventBridgeSinkRegionEnum = "us-gov-west-1"
@@ -1780,8 +2710,12 @@ const (
 
 func NewLogStreamEventBridgeSinkRegionEnumFromString(s string) (LogStreamEventBridgeSinkRegionEnum, error) {
 	switch s {
+	case "af-south-1":
+		return LogStreamEventBridgeSinkRegionEnumAfSouth1, nil
 	case "ap-east-1":
 		return LogStreamEventBridgeSinkRegionEnumApEast1, nil
+	case "ap-east-2":
+		return LogStreamEventBridgeSinkRegionEnumApEast2, nil
 	case "ap-northeast-1":
 		return LogStreamEventBridgeSinkRegionEnumApNortheast1, nil
 	case "ap-northeast-2":
@@ -1790,24 +2724,50 @@ func NewLogStreamEventBridgeSinkRegionEnumFromString(s string) (LogStreamEventBr
 		return LogStreamEventBridgeSinkRegionEnumApNortheast3, nil
 	case "ap-south-1":
 		return LogStreamEventBridgeSinkRegionEnumApSouth1, nil
+	case "ap-south-2":
+		return LogStreamEventBridgeSinkRegionEnumApSouth2, nil
 	case "ap-southeast-1":
 		return LogStreamEventBridgeSinkRegionEnumApSoutheast1, nil
 	case "ap-southeast-2":
 		return LogStreamEventBridgeSinkRegionEnumApSoutheast2, nil
+	case "ap-southeast-3":
+		return LogStreamEventBridgeSinkRegionEnumApSoutheast3, nil
+	case "ap-southeast-4":
+		return LogStreamEventBridgeSinkRegionEnumApSoutheast4, nil
+	case "ap-southeast-5":
+		return LogStreamEventBridgeSinkRegionEnumApSoutheast5, nil
+	case "ap-southeast-6":
+		return LogStreamEventBridgeSinkRegionEnumApSoutheast6, nil
+	case "ap-southeast-7":
+		return LogStreamEventBridgeSinkRegionEnumApSoutheast7, nil
 	case "ca-central-1":
 		return LogStreamEventBridgeSinkRegionEnumCaCentral1, nil
+	case "ca-west-1":
+		return LogStreamEventBridgeSinkRegionEnumCaWest1, nil
 	case "eu-central-1":
 		return LogStreamEventBridgeSinkRegionEnumEuCentral1, nil
+	case "eu-central-2":
+		return LogStreamEventBridgeSinkRegionEnumEuCentral2, nil
 	case "eu-north-1":
 		return LogStreamEventBridgeSinkRegionEnumEuNorth1, nil
+	case "eu-south-1":
+		return LogStreamEventBridgeSinkRegionEnumEuSouth1, nil
+	case "eu-south-2":
+		return LogStreamEventBridgeSinkRegionEnumEuSouth2, nil
 	case "eu-west-1":
 		return LogStreamEventBridgeSinkRegionEnumEuWest1, nil
 	case "eu-west-2":
 		return LogStreamEventBridgeSinkRegionEnumEuWest2, nil
 	case "eu-west-3":
 		return LogStreamEventBridgeSinkRegionEnumEuWest3, nil
+	case "il-central-1":
+		return LogStreamEventBridgeSinkRegionEnumIlCentral1, nil
+	case "me-central-1":
+		return LogStreamEventBridgeSinkRegionEnumMeCentral1, nil
 	case "me-south-1":
 		return LogStreamEventBridgeSinkRegionEnumMeSouth1, nil
+	case "mx-central-1":
+		return LogStreamEventBridgeSinkRegionEnumMxCentral1, nil
 	case "sa-east-1":
 		return LogStreamEventBridgeSinkRegionEnumSaEast1, nil
 	case "us-gov-east-1":
@@ -1952,9 +2912,20 @@ func (l LogStreamEventGridRegionEnum) Ptr() *LogStreamEventGridRegionEnum {
 	return &l
 }
 
+var (
+	logStreamEventGridResponseSchemaFieldId         = big.NewInt(1 << 0)
+	logStreamEventGridResponseSchemaFieldName       = big.NewInt(1 << 1)
+	logStreamEventGridResponseSchemaFieldStatus     = big.NewInt(1 << 2)
+	logStreamEventGridResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamEventGridResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamEventGridResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamEventGridResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamEventGridResponseSchemaFieldSink       = big.NewInt(1 << 7)
+)
+
 type LogStreamEventGridResponseSchema struct {
 	// The id of the log stream
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
 	Name   *string                 `json:"name,omitempty" url:"name,omitempty"`
 	Status *LogStreamStatusEnum    `json:"status,omitempty" url:"status,omitempty"`
@@ -1966,62 +2937,128 @@ type LogStreamEventGridResponseSchema struct {
 	PiiConfig *LogStreamPiiConfig     `json:"pii_config,omitempty" url:"pii_config,omitempty"`
 	Sink      *LogStreamEventGridSink `json:"sink,omitempty" url:"sink,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (l *LogStreamEventGridResponseSchema) GetID() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamEventGridResponseSchema) GetId() string {
+	if l == nil || l.Id == nil {
+		return ""
 	}
-	return l.ID
+	return *l.Id
 }
 
-func (l *LogStreamEventGridResponseSchema) GetName() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamEventGridResponseSchema) GetName() string {
+	if l == nil || l.Name == nil {
+		return ""
 	}
-	return l.Name
+	return *l.Name
 }
 
-func (l *LogStreamEventGridResponseSchema) GetStatus() *LogStreamStatusEnum {
-	if l == nil {
-		return nil
+func (l *LogStreamEventGridResponseSchema) GetStatus() LogStreamStatusEnum {
+	if l == nil || l.Status == nil {
+		return ""
 	}
-	return l.Status
+	return *l.Status
 }
 
-func (l *LogStreamEventGridResponseSchema) GetIsPriority() *bool {
-	if l == nil {
-		return nil
+func (l *LogStreamEventGridResponseSchema) GetIsPriority() bool {
+	if l == nil || l.IsPriority == nil {
+		return false
 	}
-	return l.IsPriority
+	return *l.IsPriority
 }
 
 func (l *LogStreamEventGridResponseSchema) GetFilters() []*LogStreamFilter {
-	if l == nil {
+	if l == nil || l.Filters == nil {
 		return nil
 	}
 	return l.Filters
 }
 
-func (l *LogStreamEventGridResponseSchema) GetPiiConfig() *LogStreamPiiConfig {
-	if l == nil {
-		return nil
+func (l *LogStreamEventGridResponseSchema) GetPiiConfig() LogStreamPiiConfig {
+	if l == nil || l.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return l.PiiConfig
+	return *l.PiiConfig
 }
 
-func (l *LogStreamEventGridResponseSchema) GetSink() *LogStreamEventGridSink {
-	if l == nil {
-		return nil
+func (l *LogStreamEventGridResponseSchema) GetSink() LogStreamEventGridSink {
+	if l == nil || l.Sink == nil {
+		return LogStreamEventGridSink{}
 	}
-	return l.Sink
+	return *l.Sink
 }
 
 func (l *LogStreamEventGridResponseSchema) GetExtraProperties() map[string]interface{} {
 	return l.ExtraProperties
+}
+
+func (l *LogStreamEventGridResponseSchema) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridResponseSchema) SetId(id *string) {
+	l.Id = id
+	l.require(logStreamEventGridResponseSchemaFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridResponseSchema) SetName(name *string) {
+	l.Name = name
+	l.require(logStreamEventGridResponseSchemaFieldName)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridResponseSchema) SetStatus(status *LogStreamStatusEnum) {
+	l.Status = status
+	l.require(logStreamEventGridResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridResponseSchema) SetType(type_ *LogStreamEventGridEnum) {
+	l.Type = type_
+	l.require(logStreamEventGridResponseSchemaFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridResponseSchema) SetIsPriority(isPriority *bool) {
+	l.IsPriority = isPriority
+	l.require(logStreamEventGridResponseSchemaFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridResponseSchema) SetFilters(filters []*LogStreamFilter) {
+	l.Filters = filters
+	l.require(logStreamEventGridResponseSchemaFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridResponseSchema) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	l.PiiConfig = piiConfig
+	l.require(logStreamEventGridResponseSchemaFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridResponseSchema) SetSink(sink *LogStreamEventGridSink) {
+	l.Sink = sink
+	l.require(logStreamEventGridResponseSchemaFieldSink)
 }
 
 func (l *LogStreamEventGridResponseSchema) UnmarshalJSON(data []byte) error {
@@ -2051,7 +3088,8 @@ func (l *LogStreamEventGridResponseSchema) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*l),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, l.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
 }
 
 func (l *LogStreamEventGridResponseSchema) String() string {
@@ -2066,24 +3104,34 @@ func (l *LogStreamEventGridResponseSchema) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	logStreamEventGridSinkFieldAzureSubscriptionId = big.NewInt(1 << 0)
+	logStreamEventGridSinkFieldAzureRegion         = big.NewInt(1 << 1)
+	logStreamEventGridSinkFieldAzureResourceGroup  = big.NewInt(1 << 2)
+	logStreamEventGridSinkFieldAzurePartnerTopic   = big.NewInt(1 << 3)
+)
+
 type LogStreamEventGridSink struct {
 	// Subscription ID
-	AzureSubscriptionID string                       `json:"azureSubscriptionId" url:"azureSubscriptionId"`
+	AzureSubscriptionId string                       `json:"azureSubscriptionId" url:"azureSubscriptionId"`
 	AzureRegion         LogStreamEventGridRegionEnum `json:"azureRegion" url:"azureRegion"`
 	// Resource Group
 	AzureResourceGroup string `json:"azureResourceGroup" url:"azureResourceGroup"`
 	// Partner Topic
 	AzurePartnerTopic *string `json:"azurePartnerTopic,omitempty" url:"azurePartnerTopic,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *LogStreamEventGridSink) GetAzureSubscriptionID() string {
+func (l *LogStreamEventGridSink) GetAzureSubscriptionId() string {
 	if l == nil {
 		return ""
 	}
-	return l.AzureSubscriptionID
+	return l.AzureSubscriptionId
 }
 
 func (l *LogStreamEventGridSink) GetAzureRegion() LogStreamEventGridRegionEnum {
@@ -2100,15 +3148,50 @@ func (l *LogStreamEventGridSink) GetAzureResourceGroup() string {
 	return l.AzureResourceGroup
 }
 
-func (l *LogStreamEventGridSink) GetAzurePartnerTopic() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamEventGridSink) GetAzurePartnerTopic() string {
+	if l == nil || l.AzurePartnerTopic == nil {
+		return ""
 	}
-	return l.AzurePartnerTopic
+	return *l.AzurePartnerTopic
 }
 
 func (l *LogStreamEventGridSink) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *LogStreamEventGridSink) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetAzureSubscriptionId sets the AzureSubscriptionId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridSink) SetAzureSubscriptionId(azureSubscriptionId string) {
+	l.AzureSubscriptionId = azureSubscriptionId
+	l.require(logStreamEventGridSinkFieldAzureSubscriptionId)
+}
+
+// SetAzureRegion sets the AzureRegion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridSink) SetAzureRegion(azureRegion LogStreamEventGridRegionEnum) {
+	l.AzureRegion = azureRegion
+	l.require(logStreamEventGridSinkFieldAzureRegion)
+}
+
+// SetAzureResourceGroup sets the AzureResourceGroup field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridSink) SetAzureResourceGroup(azureResourceGroup string) {
+	l.AzureResourceGroup = azureResourceGroup
+	l.require(logStreamEventGridSinkFieldAzureResourceGroup)
+}
+
+// SetAzurePartnerTopic sets the AzurePartnerTopic field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridSink) SetAzurePartnerTopic(azurePartnerTopic *string) {
+	l.AzurePartnerTopic = azurePartnerTopic
+	l.require(logStreamEventGridSinkFieldAzurePartnerTopic)
 }
 
 func (l *LogStreamEventGridSink) UnmarshalJSON(data []byte) error {
@@ -2127,6 +3210,17 @@ func (l *LogStreamEventGridSink) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (l *LogStreamEventGridSink) MarshalJSON() ([]byte, error) {
+	type embed LogStreamEventGridSink
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *LogStreamEventGridSink) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -2139,24 +3233,53 @@ func (l *LogStreamEventGridSink) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	logStreamFilterFieldType = big.NewInt(1 << 0)
+	logStreamFilterFieldName = big.NewInt(1 << 1)
+)
+
 type LogStreamFilter struct {
 	Type *LogStreamFilterTypeEnum      `json:"type,omitempty" url:"type,omitempty"`
 	Name *LogStreamFilterGroupNameEnum `json:"name,omitempty" url:"name,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (l *LogStreamFilter) GetName() *LogStreamFilterGroupNameEnum {
-	if l == nil {
-		return nil
+func (l *LogStreamFilter) GetName() LogStreamFilterGroupNameEnum {
+	if l == nil || l.Name == nil {
+		return ""
 	}
-	return l.Name
+	return *l.Name
 }
 
 func (l *LogStreamFilter) GetExtraProperties() map[string]interface{} {
 	return l.ExtraProperties
+}
+
+func (l *LogStreamFilter) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamFilter) SetType(type_ *LogStreamFilterTypeEnum) {
+	l.Type = type_
+	l.require(logStreamFilterFieldType)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamFilter) SetName(name *LogStreamFilterGroupNameEnum) {
+	l.Name = name
+	l.require(logStreamFilterFieldName)
 }
 
 func (l *LogStreamFilter) UnmarshalJSON(data []byte) error {
@@ -2186,7 +3309,8 @@ func (l *LogStreamFilter) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*l),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, l.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
 }
 
 func (l *LogStreamFilter) String() string {
@@ -2218,7 +3342,7 @@ const (
 	LogStreamFilterGroupNameEnumAuthTokenExchangeSuccess LogStreamFilterGroupNameEnum = "auth.token_exchange.success"
 	LogStreamFilterGroupNameEnumManagementFail           LogStreamFilterGroupNameEnum = "management.fail"
 	LogStreamFilterGroupNameEnumManagementSuccess        LogStreamFilterGroupNameEnum = "management.success"
-	LogStreamFilterGroupNameEnumSCIMEvent                LogStreamFilterGroupNameEnum = "scim.event"
+	LogStreamFilterGroupNameEnumScimEvent                LogStreamFilterGroupNameEnum = "scim.event"
 	LogStreamFilterGroupNameEnumSystemNotification       LogStreamFilterGroupNameEnum = "system.notification"
 	LogStreamFilterGroupNameEnumUserFail                 LogStreamFilterGroupNameEnum = "user.fail"
 	LogStreamFilterGroupNameEnumUserNotification         LogStreamFilterGroupNameEnum = "user.notification"
@@ -2256,7 +3380,7 @@ func NewLogStreamFilterGroupNameEnumFromString(s string) (LogStreamFilterGroupNa
 	case "management.success":
 		return LogStreamFilterGroupNameEnumManagementSuccess, nil
 	case "scim.event":
-		return LogStreamFilterGroupNameEnumSCIMEvent, nil
+		return LogStreamFilterGroupNameEnumScimEvent, nil
 	case "system.notification":
 		return LogStreamFilterGroupNameEnumSystemNotification, nil
 	case "user.fail":
@@ -2282,107 +3406,184 @@ func (l LogStreamFilterGroupNameEnum) Ptr() *LogStreamFilterGroupNameEnum {
 type LogStreamFilterTypeEnum = string
 
 // HTTP JSON format
-type LogStreamHTTPContentFormatEnum string
+type LogStreamHttpContentFormatEnum string
 
 const (
-	LogStreamHTTPContentFormatEnumJsonarray  LogStreamHTTPContentFormatEnum = "JSONARRAY"
-	LogStreamHTTPContentFormatEnumJsonlines  LogStreamHTTPContentFormatEnum = "JSONLINES"
-	LogStreamHTTPContentFormatEnumJsonobject LogStreamHTTPContentFormatEnum = "JSONOBJECT"
+	LogStreamHttpContentFormatEnumJsonarray  LogStreamHttpContentFormatEnum = "JSONARRAY"
+	LogStreamHttpContentFormatEnumJsonlines  LogStreamHttpContentFormatEnum = "JSONLINES"
+	LogStreamHttpContentFormatEnumJsonobject LogStreamHttpContentFormatEnum = "JSONOBJECT"
 )
 
-func NewLogStreamHTTPContentFormatEnumFromString(s string) (LogStreamHTTPContentFormatEnum, error) {
+func NewLogStreamHttpContentFormatEnumFromString(s string) (LogStreamHttpContentFormatEnum, error) {
 	switch s {
 	case "JSONARRAY":
-		return LogStreamHTTPContentFormatEnumJsonarray, nil
+		return LogStreamHttpContentFormatEnumJsonarray, nil
 	case "JSONLINES":
-		return LogStreamHTTPContentFormatEnumJsonlines, nil
+		return LogStreamHttpContentFormatEnumJsonlines, nil
 	case "JSONOBJECT":
-		return LogStreamHTTPContentFormatEnumJsonobject, nil
+		return LogStreamHttpContentFormatEnumJsonobject, nil
 	}
-	var t LogStreamHTTPContentFormatEnum
+	var t LogStreamHttpContentFormatEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (l LogStreamHTTPContentFormatEnum) Ptr() *LogStreamHTTPContentFormatEnum {
+func (l LogStreamHttpContentFormatEnum) Ptr() *LogStreamHttpContentFormatEnum {
 	return &l
 }
 
-type LogStreamHTTPEnum = string
+type LogStreamHttpEnum = string
 
-type LogStreamHTTPResponseSchema struct {
+var (
+	logStreamHttpResponseSchemaFieldId         = big.NewInt(1 << 0)
+	logStreamHttpResponseSchemaFieldName       = big.NewInt(1 << 1)
+	logStreamHttpResponseSchemaFieldStatus     = big.NewInt(1 << 2)
+	logStreamHttpResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamHttpResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamHttpResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamHttpResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamHttpResponseSchemaFieldSink       = big.NewInt(1 << 7)
+)
+
+type LogStreamHttpResponseSchema struct {
 	// The id of the log stream
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
 	Name   *string              `json:"name,omitempty" url:"name,omitempty"`
 	Status *LogStreamStatusEnum `json:"status,omitempty" url:"status,omitempty"`
-	Type   *LogStreamHTTPEnum   `json:"type,omitempty" url:"type,omitempty"`
+	Type   *LogStreamHttpEnum   `json:"type,omitempty" url:"type,omitempty"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
 	Filters   []*LogStreamFilter  `json:"filters,omitempty" url:"filters,omitempty"`
 	PiiConfig *LogStreamPiiConfig `json:"pii_config,omitempty" url:"pii_config,omitempty"`
-	Sink      *LogStreamHTTPSink  `json:"sink,omitempty" url:"sink,omitempty"`
+	Sink      *LogStreamHttpSink  `json:"sink,omitempty" url:"sink,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (l *LogStreamHTTPResponseSchema) GetID() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamHttpResponseSchema) GetId() string {
+	if l == nil || l.Id == nil {
+		return ""
 	}
-	return l.ID
+	return *l.Id
 }
 
-func (l *LogStreamHTTPResponseSchema) GetName() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamHttpResponseSchema) GetName() string {
+	if l == nil || l.Name == nil {
+		return ""
 	}
-	return l.Name
+	return *l.Name
 }
 
-func (l *LogStreamHTTPResponseSchema) GetStatus() *LogStreamStatusEnum {
-	if l == nil {
-		return nil
+func (l *LogStreamHttpResponseSchema) GetStatus() LogStreamStatusEnum {
+	if l == nil || l.Status == nil {
+		return ""
 	}
-	return l.Status
+	return *l.Status
 }
 
-func (l *LogStreamHTTPResponseSchema) GetIsPriority() *bool {
-	if l == nil {
-		return nil
+func (l *LogStreamHttpResponseSchema) GetIsPriority() bool {
+	if l == nil || l.IsPriority == nil {
+		return false
 	}
-	return l.IsPriority
+	return *l.IsPriority
 }
 
-func (l *LogStreamHTTPResponseSchema) GetFilters() []*LogStreamFilter {
-	if l == nil {
+func (l *LogStreamHttpResponseSchema) GetFilters() []*LogStreamFilter {
+	if l == nil || l.Filters == nil {
 		return nil
 	}
 	return l.Filters
 }
 
-func (l *LogStreamHTTPResponseSchema) GetPiiConfig() *LogStreamPiiConfig {
-	if l == nil {
-		return nil
+func (l *LogStreamHttpResponseSchema) GetPiiConfig() LogStreamPiiConfig {
+	if l == nil || l.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return l.PiiConfig
+	return *l.PiiConfig
 }
 
-func (l *LogStreamHTTPResponseSchema) GetSink() *LogStreamHTTPSink {
-	if l == nil {
-		return nil
+func (l *LogStreamHttpResponseSchema) GetSink() LogStreamHttpSink {
+	if l == nil || l.Sink == nil {
+		return LogStreamHttpSink{}
 	}
-	return l.Sink
+	return *l.Sink
 }
 
-func (l *LogStreamHTTPResponseSchema) GetExtraProperties() map[string]interface{} {
+func (l *LogStreamHttpResponseSchema) GetExtraProperties() map[string]interface{} {
 	return l.ExtraProperties
 }
 
-func (l *LogStreamHTTPResponseSchema) UnmarshalJSON(data []byte) error {
-	type embed LogStreamHTTPResponseSchema
+func (l *LogStreamHttpResponseSchema) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpResponseSchema) SetId(id *string) {
+	l.Id = id
+	l.require(logStreamHttpResponseSchemaFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpResponseSchema) SetName(name *string) {
+	l.Name = name
+	l.require(logStreamHttpResponseSchemaFieldName)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpResponseSchema) SetStatus(status *LogStreamStatusEnum) {
+	l.Status = status
+	l.require(logStreamHttpResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpResponseSchema) SetType(type_ *LogStreamHttpEnum) {
+	l.Type = type_
+	l.require(logStreamHttpResponseSchemaFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpResponseSchema) SetIsPriority(isPriority *bool) {
+	l.IsPriority = isPriority
+	l.require(logStreamHttpResponseSchemaFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpResponseSchema) SetFilters(filters []*LogStreamFilter) {
+	l.Filters = filters
+	l.require(logStreamHttpResponseSchemaFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpResponseSchema) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	l.PiiConfig = piiConfig
+	l.require(logStreamHttpResponseSchemaFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpResponseSchema) SetSink(sink *LogStreamHttpSink) {
+	l.Sink = sink
+	l.require(logStreamHttpResponseSchemaFieldSink)
+}
+
+func (l *LogStreamHttpResponseSchema) UnmarshalJSON(data []byte) error {
+	type embed LogStreamHttpResponseSchema
 	var unmarshaler = struct {
 		embed
 	}{
@@ -2391,7 +3592,7 @@ func (l *LogStreamHTTPResponseSchema) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*l = LogStreamHTTPResponseSchema(unmarshaler.embed)
+	*l = LogStreamHttpResponseSchema(unmarshaler.embed)
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
@@ -2401,17 +3602,18 @@ func (l *LogStreamHTTPResponseSchema) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (l *LogStreamHTTPResponseSchema) MarshalJSON() ([]byte, error) {
-	type embed LogStreamHTTPResponseSchema
+func (l *LogStreamHttpResponseSchema) MarshalJSON() ([]byte, error) {
+	type embed LogStreamHttpResponseSchema
 	var marshaler = struct {
 		embed
 	}{
 		embed: embed(*l),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, l.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
 }
 
-func (l *LogStreamHTTPResponseSchema) String() string {
+func (l *LogStreamHttpResponseSchema) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -2423,67 +3625,120 @@ func (l *LogStreamHTTPResponseSchema) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
-type LogStreamHTTPSink struct {
+var (
+	logStreamHttpSinkFieldHttpAuthorization = big.NewInt(1 << 0)
+	logStreamHttpSinkFieldHttpContentFormat = big.NewInt(1 << 1)
+	logStreamHttpSinkFieldHttpContentType   = big.NewInt(1 << 2)
+	logStreamHttpSinkFieldHttpEndpoint      = big.NewInt(1 << 3)
+	logStreamHttpSinkFieldHttpCustomHeaders = big.NewInt(1 << 4)
+)
+
+type LogStreamHttpSink struct {
 	// HTTP Authorization header
-	HTTPAuthorization *string                         `json:"httpAuthorization,omitempty" url:"httpAuthorization,omitempty"`
-	HTTPContentFormat *LogStreamHTTPContentFormatEnum `json:"httpContentFormat,omitempty" url:"httpContentFormat,omitempty"`
+	HttpAuthorization *string                         `json:"httpAuthorization,omitempty" url:"httpAuthorization,omitempty"`
+	HttpContentFormat *LogStreamHttpContentFormatEnum `json:"httpContentFormat,omitempty" url:"httpContentFormat,omitempty"`
 	// HTTP Content-Type header
-	HTTPContentType *string `json:"httpContentType,omitempty" url:"httpContentType,omitempty"`
+	HttpContentType *string `json:"httpContentType,omitempty" url:"httpContentType,omitempty"`
 	// HTTP endpoint
-	HTTPEndpoint string `json:"httpEndpoint" url:"httpEndpoint"`
+	HttpEndpoint string `json:"httpEndpoint" url:"httpEndpoint"`
 	// custom HTTP headers
-	HTTPCustomHeaders []*HTTPCustomHeader `json:"httpCustomHeaders,omitempty" url:"httpCustomHeaders,omitempty"`
+	HttpCustomHeaders []*HttpCustomHeader `json:"httpCustomHeaders,omitempty" url:"httpCustomHeaders,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *LogStreamHTTPSink) GetHTTPAuthorization() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamHttpSink) GetHttpAuthorization() string {
+	if l == nil || l.HttpAuthorization == nil {
+		return ""
 	}
-	return l.HTTPAuthorization
+	return *l.HttpAuthorization
 }
 
-func (l *LogStreamHTTPSink) GetHTTPContentFormat() *LogStreamHTTPContentFormatEnum {
-	if l == nil {
-		return nil
+func (l *LogStreamHttpSink) GetHttpContentFormat() LogStreamHttpContentFormatEnum {
+	if l == nil || l.HttpContentFormat == nil {
+		return ""
 	}
-	return l.HTTPContentFormat
+	return *l.HttpContentFormat
 }
 
-func (l *LogStreamHTTPSink) GetHTTPContentType() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamHttpSink) GetHttpContentType() string {
+	if l == nil || l.HttpContentType == nil {
+		return ""
 	}
-	return l.HTTPContentType
+	return *l.HttpContentType
 }
 
-func (l *LogStreamHTTPSink) GetHTTPEndpoint() string {
+func (l *LogStreamHttpSink) GetHttpEndpoint() string {
 	if l == nil {
 		return ""
 	}
-	return l.HTTPEndpoint
+	return l.HttpEndpoint
 }
 
-func (l *LogStreamHTTPSink) GetHTTPCustomHeaders() []*HTTPCustomHeader {
-	if l == nil {
+func (l *LogStreamHttpSink) GetHttpCustomHeaders() []*HttpCustomHeader {
+	if l == nil || l.HttpCustomHeaders == nil {
 		return nil
 	}
-	return l.HTTPCustomHeaders
+	return l.HttpCustomHeaders
 }
 
-func (l *LogStreamHTTPSink) GetExtraProperties() map[string]interface{} {
+func (l *LogStreamHttpSink) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
 }
 
-func (l *LogStreamHTTPSink) UnmarshalJSON(data []byte) error {
-	type unmarshaler LogStreamHTTPSink
+func (l *LogStreamHttpSink) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetHttpAuthorization sets the HttpAuthorization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpSink) SetHttpAuthorization(httpAuthorization *string) {
+	l.HttpAuthorization = httpAuthorization
+	l.require(logStreamHttpSinkFieldHttpAuthorization)
+}
+
+// SetHttpContentFormat sets the HttpContentFormat field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpSink) SetHttpContentFormat(httpContentFormat *LogStreamHttpContentFormatEnum) {
+	l.HttpContentFormat = httpContentFormat
+	l.require(logStreamHttpSinkFieldHttpContentFormat)
+}
+
+// SetHttpContentType sets the HttpContentType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpSink) SetHttpContentType(httpContentType *string) {
+	l.HttpContentType = httpContentType
+	l.require(logStreamHttpSinkFieldHttpContentType)
+}
+
+// SetHttpEndpoint sets the HttpEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpSink) SetHttpEndpoint(httpEndpoint string) {
+	l.HttpEndpoint = httpEndpoint
+	l.require(logStreamHttpSinkFieldHttpEndpoint)
+}
+
+// SetHttpCustomHeaders sets the HttpCustomHeaders field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHttpSink) SetHttpCustomHeaders(httpCustomHeaders []*HttpCustomHeader) {
+	l.HttpCustomHeaders = httpCustomHeaders
+	l.require(logStreamHttpSinkFieldHttpCustomHeaders)
+}
+
+func (l *LogStreamHttpSink) UnmarshalJSON(data []byte) error {
+	type unmarshaler LogStreamHttpSink
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*l = LogStreamHTTPSink(value)
+	*l = LogStreamHttpSink(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
@@ -2493,7 +3748,18 @@ func (l *LogStreamHTTPSink) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (l *LogStreamHTTPSink) String() string {
+func (l *LogStreamHttpSink) MarshalJSON() ([]byte, error) {
+	type embed LogStreamHttpSink
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *LogStreamHttpSink) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -2530,9 +3796,20 @@ func (l LogStreamMixpanelRegionEnum) Ptr() *LogStreamMixpanelRegionEnum {
 	return &l
 }
 
+var (
+	logStreamMixpanelResponseSchemaFieldId         = big.NewInt(1 << 0)
+	logStreamMixpanelResponseSchemaFieldName       = big.NewInt(1 << 1)
+	logStreamMixpanelResponseSchemaFieldStatus     = big.NewInt(1 << 2)
+	logStreamMixpanelResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamMixpanelResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamMixpanelResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamMixpanelResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamMixpanelResponseSchemaFieldSink       = big.NewInt(1 << 7)
+)
+
 type LogStreamMixpanelResponseSchema struct {
 	// The id of the log stream
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
 	Name   *string                `json:"name,omitempty" url:"name,omitempty"`
 	Status *LogStreamStatusEnum   `json:"status,omitempty" url:"status,omitempty"`
@@ -2544,62 +3821,128 @@ type LogStreamMixpanelResponseSchema struct {
 	PiiConfig *LogStreamPiiConfig    `json:"pii_config,omitempty" url:"pii_config,omitempty"`
 	Sink      *LogStreamMixpanelSink `json:"sink,omitempty" url:"sink,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (l *LogStreamMixpanelResponseSchema) GetID() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamMixpanelResponseSchema) GetId() string {
+	if l == nil || l.Id == nil {
+		return ""
 	}
-	return l.ID
+	return *l.Id
 }
 
-func (l *LogStreamMixpanelResponseSchema) GetName() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamMixpanelResponseSchema) GetName() string {
+	if l == nil || l.Name == nil {
+		return ""
 	}
-	return l.Name
+	return *l.Name
 }
 
-func (l *LogStreamMixpanelResponseSchema) GetStatus() *LogStreamStatusEnum {
-	if l == nil {
-		return nil
+func (l *LogStreamMixpanelResponseSchema) GetStatus() LogStreamStatusEnum {
+	if l == nil || l.Status == nil {
+		return ""
 	}
-	return l.Status
+	return *l.Status
 }
 
-func (l *LogStreamMixpanelResponseSchema) GetIsPriority() *bool {
-	if l == nil {
-		return nil
+func (l *LogStreamMixpanelResponseSchema) GetIsPriority() bool {
+	if l == nil || l.IsPriority == nil {
+		return false
 	}
-	return l.IsPriority
+	return *l.IsPriority
 }
 
 func (l *LogStreamMixpanelResponseSchema) GetFilters() []*LogStreamFilter {
-	if l == nil {
+	if l == nil || l.Filters == nil {
 		return nil
 	}
 	return l.Filters
 }
 
-func (l *LogStreamMixpanelResponseSchema) GetPiiConfig() *LogStreamPiiConfig {
-	if l == nil {
-		return nil
+func (l *LogStreamMixpanelResponseSchema) GetPiiConfig() LogStreamPiiConfig {
+	if l == nil || l.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return l.PiiConfig
+	return *l.PiiConfig
 }
 
-func (l *LogStreamMixpanelResponseSchema) GetSink() *LogStreamMixpanelSink {
-	if l == nil {
-		return nil
+func (l *LogStreamMixpanelResponseSchema) GetSink() LogStreamMixpanelSink {
+	if l == nil || l.Sink == nil {
+		return LogStreamMixpanelSink{}
 	}
-	return l.Sink
+	return *l.Sink
 }
 
 func (l *LogStreamMixpanelResponseSchema) GetExtraProperties() map[string]interface{} {
 	return l.ExtraProperties
+}
+
+func (l *LogStreamMixpanelResponseSchema) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelResponseSchema) SetId(id *string) {
+	l.Id = id
+	l.require(logStreamMixpanelResponseSchemaFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelResponseSchema) SetName(name *string) {
+	l.Name = name
+	l.require(logStreamMixpanelResponseSchemaFieldName)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelResponseSchema) SetStatus(status *LogStreamStatusEnum) {
+	l.Status = status
+	l.require(logStreamMixpanelResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelResponseSchema) SetType(type_ *LogStreamMixpanelEnum) {
+	l.Type = type_
+	l.require(logStreamMixpanelResponseSchemaFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelResponseSchema) SetIsPriority(isPriority *bool) {
+	l.IsPriority = isPriority
+	l.require(logStreamMixpanelResponseSchemaFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelResponseSchema) SetFilters(filters []*LogStreamFilter) {
+	l.Filters = filters
+	l.require(logStreamMixpanelResponseSchemaFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelResponseSchema) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	l.PiiConfig = piiConfig
+	l.require(logStreamMixpanelResponseSchemaFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelResponseSchema) SetSink(sink *LogStreamMixpanelSink) {
+	l.Sink = sink
+	l.require(logStreamMixpanelResponseSchemaFieldSink)
 }
 
 func (l *LogStreamMixpanelResponseSchema) UnmarshalJSON(data []byte) error {
@@ -2629,7 +3972,8 @@ func (l *LogStreamMixpanelResponseSchema) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*l),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, l.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
 }
 
 func (l *LogStreamMixpanelResponseSchema) String() string {
@@ -2644,14 +3988,24 @@ func (l *LogStreamMixpanelResponseSchema) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	logStreamMixpanelSinkFieldMixpanelRegion                 = big.NewInt(1 << 0)
+	logStreamMixpanelSinkFieldMixpanelProjectId              = big.NewInt(1 << 1)
+	logStreamMixpanelSinkFieldMixpanelServiceAccountUsername = big.NewInt(1 << 2)
+	logStreamMixpanelSinkFieldMixpanelServiceAccountPassword = big.NewInt(1 << 3)
+)
+
 type LogStreamMixpanelSink struct {
 	MixpanelRegion LogStreamMixpanelRegionEnum `json:"mixpanelRegion" url:"mixpanelRegion"`
 	// Mixpanel Project Id
-	MixpanelProjectID string `json:"mixpanelProjectId" url:"mixpanelProjectId"`
+	MixpanelProjectId string `json:"mixpanelProjectId" url:"mixpanelProjectId"`
 	// Mixpanel Service Account Username
 	MixpanelServiceAccountUsername string `json:"mixpanelServiceAccountUsername" url:"mixpanelServiceAccountUsername"`
 	// Mixpanel Service Account Password
 	MixpanelServiceAccountPassword string `json:"mixpanelServiceAccountPassword" url:"mixpanelServiceAccountPassword"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -2664,11 +4018,11 @@ func (l *LogStreamMixpanelSink) GetMixpanelRegion() LogStreamMixpanelRegionEnum 
 	return l.MixpanelRegion
 }
 
-func (l *LogStreamMixpanelSink) GetMixpanelProjectID() string {
+func (l *LogStreamMixpanelSink) GetMixpanelProjectId() string {
 	if l == nil {
 		return ""
 	}
-	return l.MixpanelProjectID
+	return l.MixpanelProjectId
 }
 
 func (l *LogStreamMixpanelSink) GetMixpanelServiceAccountUsername() string {
@@ -2689,6 +4043,41 @@ func (l *LogStreamMixpanelSink) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
 }
 
+func (l *LogStreamMixpanelSink) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetMixpanelRegion sets the MixpanelRegion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelSink) SetMixpanelRegion(mixpanelRegion LogStreamMixpanelRegionEnum) {
+	l.MixpanelRegion = mixpanelRegion
+	l.require(logStreamMixpanelSinkFieldMixpanelRegion)
+}
+
+// SetMixpanelProjectId sets the MixpanelProjectId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelSink) SetMixpanelProjectId(mixpanelProjectId string) {
+	l.MixpanelProjectId = mixpanelProjectId
+	l.require(logStreamMixpanelSinkFieldMixpanelProjectId)
+}
+
+// SetMixpanelServiceAccountUsername sets the MixpanelServiceAccountUsername field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelSink) SetMixpanelServiceAccountUsername(mixpanelServiceAccountUsername string) {
+	l.MixpanelServiceAccountUsername = mixpanelServiceAccountUsername
+	l.require(logStreamMixpanelSinkFieldMixpanelServiceAccountUsername)
+}
+
+// SetMixpanelServiceAccountPassword sets the MixpanelServiceAccountPassword field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelSink) SetMixpanelServiceAccountPassword(mixpanelServiceAccountPassword string) {
+	l.MixpanelServiceAccountPassword = mixpanelServiceAccountPassword
+	l.require(logStreamMixpanelSinkFieldMixpanelServiceAccountPassword)
+}
+
 func (l *LogStreamMixpanelSink) UnmarshalJSON(data []byte) error {
 	type unmarshaler LogStreamMixpanelSink
 	var value unmarshaler
@@ -2705,6 +4094,17 @@ func (l *LogStreamMixpanelSink) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (l *LogStreamMixpanelSink) MarshalJSON() ([]byte, error) {
+	type embed LogStreamMixpanelSink
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *LogStreamMixpanelSink) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -2717,14 +4117,24 @@ func (l *LogStreamMixpanelSink) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	logStreamMixpanelSinkPatchFieldMixpanelRegion                 = big.NewInt(1 << 0)
+	logStreamMixpanelSinkPatchFieldMixpanelProjectId              = big.NewInt(1 << 1)
+	logStreamMixpanelSinkPatchFieldMixpanelServiceAccountUsername = big.NewInt(1 << 2)
+	logStreamMixpanelSinkPatchFieldMixpanelServiceAccountPassword = big.NewInt(1 << 3)
+)
+
 type LogStreamMixpanelSinkPatch struct {
 	MixpanelRegion LogStreamMixpanelRegionEnum `json:"mixpanelRegion" url:"mixpanelRegion"`
 	// Mixpanel Project Id
-	MixpanelProjectID string `json:"mixpanelProjectId" url:"mixpanelProjectId"`
+	MixpanelProjectId string `json:"mixpanelProjectId" url:"mixpanelProjectId"`
 	// Mixpanel Service Account Username
 	MixpanelServiceAccountUsername string `json:"mixpanelServiceAccountUsername" url:"mixpanelServiceAccountUsername"`
 	// Mixpanel Service Account Password
 	MixpanelServiceAccountPassword *string `json:"mixpanelServiceAccountPassword,omitempty" url:"mixpanelServiceAccountPassword,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -2737,11 +4147,11 @@ func (l *LogStreamMixpanelSinkPatch) GetMixpanelRegion() LogStreamMixpanelRegion
 	return l.MixpanelRegion
 }
 
-func (l *LogStreamMixpanelSinkPatch) GetMixpanelProjectID() string {
+func (l *LogStreamMixpanelSinkPatch) GetMixpanelProjectId() string {
 	if l == nil {
 		return ""
 	}
-	return l.MixpanelProjectID
+	return l.MixpanelProjectId
 }
 
 func (l *LogStreamMixpanelSinkPatch) GetMixpanelServiceAccountUsername() string {
@@ -2751,15 +4161,50 @@ func (l *LogStreamMixpanelSinkPatch) GetMixpanelServiceAccountUsername() string 
 	return l.MixpanelServiceAccountUsername
 }
 
-func (l *LogStreamMixpanelSinkPatch) GetMixpanelServiceAccountPassword() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamMixpanelSinkPatch) GetMixpanelServiceAccountPassword() string {
+	if l == nil || l.MixpanelServiceAccountPassword == nil {
+		return ""
 	}
-	return l.MixpanelServiceAccountPassword
+	return *l.MixpanelServiceAccountPassword
 }
 
 func (l *LogStreamMixpanelSinkPatch) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *LogStreamMixpanelSinkPatch) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetMixpanelRegion sets the MixpanelRegion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelSinkPatch) SetMixpanelRegion(mixpanelRegion LogStreamMixpanelRegionEnum) {
+	l.MixpanelRegion = mixpanelRegion
+	l.require(logStreamMixpanelSinkPatchFieldMixpanelRegion)
+}
+
+// SetMixpanelProjectId sets the MixpanelProjectId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelSinkPatch) SetMixpanelProjectId(mixpanelProjectId string) {
+	l.MixpanelProjectId = mixpanelProjectId
+	l.require(logStreamMixpanelSinkPatchFieldMixpanelProjectId)
+}
+
+// SetMixpanelServiceAccountUsername sets the MixpanelServiceAccountUsername field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelSinkPatch) SetMixpanelServiceAccountUsername(mixpanelServiceAccountUsername string) {
+	l.MixpanelServiceAccountUsername = mixpanelServiceAccountUsername
+	l.require(logStreamMixpanelSinkPatchFieldMixpanelServiceAccountUsername)
+}
+
+// SetMixpanelServiceAccountPassword sets the MixpanelServiceAccountPassword field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelSinkPatch) SetMixpanelServiceAccountPassword(mixpanelServiceAccountPassword *string) {
+	l.MixpanelServiceAccountPassword = mixpanelServiceAccountPassword
+	l.require(logStreamMixpanelSinkPatchFieldMixpanelServiceAccountPassword)
 }
 
 func (l *LogStreamMixpanelSinkPatch) UnmarshalJSON(data []byte) error {
@@ -2778,6 +4223,17 @@ func (l *LogStreamMixpanelSinkPatch) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (l *LogStreamMixpanelSinkPatch) MarshalJSON() ([]byte, error) {
+	type embed LogStreamMixpanelSinkPatch
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *LogStreamMixpanelSinkPatch) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -2792,10 +4248,19 @@ func (l *LogStreamMixpanelSinkPatch) String() string {
 
 type LogStreamPiiAlgorithmEnum = string
 
+var (
+	logStreamPiiConfigFieldLogFields = big.NewInt(1 << 0)
+	logStreamPiiConfigFieldMethod    = big.NewInt(1 << 1)
+	logStreamPiiConfigFieldAlgorithm = big.NewInt(1 << 2)
+)
+
 type LogStreamPiiConfig struct {
 	LogFields []LogStreamPiiLogFieldsEnum `json:"log_fields" url:"log_fields"`
 	Method    *LogStreamPiiMethodEnum     `json:"method,omitempty" url:"method,omitempty"`
 	Algorithm *LogStreamPiiAlgorithmEnum  `json:"algorithm,omitempty" url:"algorithm,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -2808,15 +4273,43 @@ func (l *LogStreamPiiConfig) GetLogFields() []LogStreamPiiLogFieldsEnum {
 	return l.LogFields
 }
 
-func (l *LogStreamPiiConfig) GetMethod() *LogStreamPiiMethodEnum {
-	if l == nil {
-		return nil
+func (l *LogStreamPiiConfig) GetMethod() LogStreamPiiMethodEnum {
+	if l == nil || l.Method == nil {
+		return ""
 	}
-	return l.Method
+	return *l.Method
 }
 
 func (l *LogStreamPiiConfig) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *LogStreamPiiConfig) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetLogFields sets the LogFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamPiiConfig) SetLogFields(logFields []LogStreamPiiLogFieldsEnum) {
+	l.LogFields = logFields
+	l.require(logStreamPiiConfigFieldLogFields)
+}
+
+// SetMethod sets the Method field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamPiiConfig) SetMethod(method *LogStreamPiiMethodEnum) {
+	l.Method = method
+	l.require(logStreamPiiConfigFieldMethod)
+}
+
+// SetAlgorithm sets the Algorithm field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamPiiConfig) SetAlgorithm(algorithm *LogStreamPiiAlgorithmEnum) {
+	l.Algorithm = algorithm
+	l.require(logStreamPiiConfigFieldAlgorithm)
 }
 
 func (l *LogStreamPiiConfig) UnmarshalJSON(data []byte) error {
@@ -2833,6 +4326,17 @@ func (l *LogStreamPiiConfig) UnmarshalJSON(data []byte) error {
 	l.extraProperties = extraProperties
 	l.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (l *LogStreamPiiConfig) MarshalJSON() ([]byte, error) {
+	type embed LogStreamPiiConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (l *LogStreamPiiConfig) String() string {
@@ -2904,7 +4408,7 @@ func (l LogStreamPiiMethodEnum) Ptr() *LogStreamPiiMethodEnum {
 }
 
 type LogStreamResponseSchema struct {
-	LogStreamHTTPResponseSchema        *LogStreamHTTPResponseSchema
+	LogStreamHttpResponseSchema        *LogStreamHttpResponseSchema
 	LogStreamEventBridgeResponseSchema *LogStreamEventBridgeResponseSchema
 	LogStreamEventGridResponseSchema   *LogStreamEventGridResponseSchema
 	LogStreamDatadogResponseSchema     *LogStreamDatadogResponseSchema
@@ -2916,11 +4420,11 @@ type LogStreamResponseSchema struct {
 	typ string
 }
 
-func (l *LogStreamResponseSchema) GetLogStreamHTTPResponseSchema() *LogStreamHTTPResponseSchema {
+func (l *LogStreamResponseSchema) GetLogStreamHttpResponseSchema() *LogStreamHttpResponseSchema {
 	if l == nil {
 		return nil
 	}
-	return l.LogStreamHTTPResponseSchema
+	return l.LogStreamHttpResponseSchema
 }
 
 func (l *LogStreamResponseSchema) GetLogStreamEventBridgeResponseSchema() *LogStreamEventBridgeResponseSchema {
@@ -2973,10 +4477,10 @@ func (l *LogStreamResponseSchema) GetLogStreamMixpanelResponseSchema() *LogStrea
 }
 
 func (l *LogStreamResponseSchema) UnmarshalJSON(data []byte) error {
-	valueLogStreamHTTPResponseSchema := new(LogStreamHTTPResponseSchema)
-	if err := json.Unmarshal(data, &valueLogStreamHTTPResponseSchema); err == nil {
-		l.typ = "LogStreamHTTPResponseSchema"
-		l.LogStreamHTTPResponseSchema = valueLogStreamHTTPResponseSchema
+	valueLogStreamHttpResponseSchema := new(LogStreamHttpResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamHttpResponseSchema); err == nil {
+		l.typ = "LogStreamHttpResponseSchema"
+		l.LogStreamHttpResponseSchema = valueLogStreamHttpResponseSchema
 		return nil
 	}
 	valueLogStreamEventBridgeResponseSchema := new(LogStreamEventBridgeResponseSchema)
@@ -3025,8 +4529,8 @@ func (l *LogStreamResponseSchema) UnmarshalJSON(data []byte) error {
 }
 
 func (l LogStreamResponseSchema) MarshalJSON() ([]byte, error) {
-	if l.typ == "LogStreamHTTPResponseSchema" || l.LogStreamHTTPResponseSchema != nil {
-		return json.Marshal(l.LogStreamHTTPResponseSchema)
+	if l.typ == "LogStreamHttpResponseSchema" || l.LogStreamHttpResponseSchema != nil {
+		return json.Marshal(l.LogStreamHttpResponseSchema)
 	}
 	if l.typ == "LogStreamEventBridgeResponseSchema" || l.LogStreamEventBridgeResponseSchema != nil {
 		return json.Marshal(l.LogStreamEventBridgeResponseSchema)
@@ -3053,7 +4557,7 @@ func (l LogStreamResponseSchema) MarshalJSON() ([]byte, error) {
 }
 
 type LogStreamResponseSchemaVisitor interface {
-	VisitLogStreamHTTPResponseSchema(*LogStreamHTTPResponseSchema) error
+	VisitLogStreamHttpResponseSchema(*LogStreamHttpResponseSchema) error
 	VisitLogStreamEventBridgeResponseSchema(*LogStreamEventBridgeResponseSchema) error
 	VisitLogStreamEventGridResponseSchema(*LogStreamEventGridResponseSchema) error
 	VisitLogStreamDatadogResponseSchema(*LogStreamDatadogResponseSchema) error
@@ -3064,8 +4568,8 @@ type LogStreamResponseSchemaVisitor interface {
 }
 
 func (l *LogStreamResponseSchema) Accept(visitor LogStreamResponseSchemaVisitor) error {
-	if l.typ == "LogStreamHTTPResponseSchema" || l.LogStreamHTTPResponseSchema != nil {
-		return visitor.VisitLogStreamHTTPResponseSchema(l.LogStreamHTTPResponseSchema)
+	if l.typ == "LogStreamHttpResponseSchema" || l.LogStreamHttpResponseSchema != nil {
+		return visitor.VisitLogStreamHttpResponseSchema(l.LogStreamHttpResponseSchema)
 	}
 	if l.typ == "LogStreamEventBridgeResponseSchema" || l.LogStreamEventBridgeResponseSchema != nil {
 		return visitor.VisitLogStreamEventBridgeResponseSchema(l.LogStreamEventBridgeResponseSchema)
@@ -3093,9 +4597,20 @@ func (l *LogStreamResponseSchema) Accept(visitor LogStreamResponseSchemaVisitor)
 
 type LogStreamSegmentEnum = string
 
+var (
+	logStreamSegmentResponseSchemaFieldId         = big.NewInt(1 << 0)
+	logStreamSegmentResponseSchemaFieldName       = big.NewInt(1 << 1)
+	logStreamSegmentResponseSchemaFieldStatus     = big.NewInt(1 << 2)
+	logStreamSegmentResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamSegmentResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamSegmentResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamSegmentResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamSegmentResponseSchemaFieldSink       = big.NewInt(1 << 7)
+)
+
 type LogStreamSegmentResponseSchema struct {
 	// The id of the log stream
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
 	Name   *string               `json:"name,omitempty" url:"name,omitempty"`
 	Status *LogStreamStatusEnum  `json:"status,omitempty" url:"status,omitempty"`
@@ -3107,62 +4622,128 @@ type LogStreamSegmentResponseSchema struct {
 	PiiConfig *LogStreamPiiConfig           `json:"pii_config,omitempty" url:"pii_config,omitempty"`
 	Sink      *LogStreamSegmentSinkWriteKey `json:"sink,omitempty" url:"sink,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (l *LogStreamSegmentResponseSchema) GetID() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamSegmentResponseSchema) GetId() string {
+	if l == nil || l.Id == nil {
+		return ""
 	}
-	return l.ID
+	return *l.Id
 }
 
-func (l *LogStreamSegmentResponseSchema) GetName() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamSegmentResponseSchema) GetName() string {
+	if l == nil || l.Name == nil {
+		return ""
 	}
-	return l.Name
+	return *l.Name
 }
 
-func (l *LogStreamSegmentResponseSchema) GetStatus() *LogStreamStatusEnum {
-	if l == nil {
-		return nil
+func (l *LogStreamSegmentResponseSchema) GetStatus() LogStreamStatusEnum {
+	if l == nil || l.Status == nil {
+		return ""
 	}
-	return l.Status
+	return *l.Status
 }
 
-func (l *LogStreamSegmentResponseSchema) GetIsPriority() *bool {
-	if l == nil {
-		return nil
+func (l *LogStreamSegmentResponseSchema) GetIsPriority() bool {
+	if l == nil || l.IsPriority == nil {
+		return false
 	}
-	return l.IsPriority
+	return *l.IsPriority
 }
 
 func (l *LogStreamSegmentResponseSchema) GetFilters() []*LogStreamFilter {
-	if l == nil {
+	if l == nil || l.Filters == nil {
 		return nil
 	}
 	return l.Filters
 }
 
-func (l *LogStreamSegmentResponseSchema) GetPiiConfig() *LogStreamPiiConfig {
-	if l == nil {
-		return nil
+func (l *LogStreamSegmentResponseSchema) GetPiiConfig() LogStreamPiiConfig {
+	if l == nil || l.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return l.PiiConfig
+	return *l.PiiConfig
 }
 
-func (l *LogStreamSegmentResponseSchema) GetSink() *LogStreamSegmentSinkWriteKey {
-	if l == nil {
-		return nil
+func (l *LogStreamSegmentResponseSchema) GetSink() LogStreamSegmentSinkWriteKey {
+	if l == nil || l.Sink == nil {
+		return LogStreamSegmentSinkWriteKey{}
 	}
-	return l.Sink
+	return *l.Sink
 }
 
 func (l *LogStreamSegmentResponseSchema) GetExtraProperties() map[string]interface{} {
 	return l.ExtraProperties
+}
+
+func (l *LogStreamSegmentResponseSchema) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSegmentResponseSchema) SetId(id *string) {
+	l.Id = id
+	l.require(logStreamSegmentResponseSchemaFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSegmentResponseSchema) SetName(name *string) {
+	l.Name = name
+	l.require(logStreamSegmentResponseSchemaFieldName)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSegmentResponseSchema) SetStatus(status *LogStreamStatusEnum) {
+	l.Status = status
+	l.require(logStreamSegmentResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSegmentResponseSchema) SetType(type_ *LogStreamSegmentEnum) {
+	l.Type = type_
+	l.require(logStreamSegmentResponseSchemaFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSegmentResponseSchema) SetIsPriority(isPriority *bool) {
+	l.IsPriority = isPriority
+	l.require(logStreamSegmentResponseSchemaFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSegmentResponseSchema) SetFilters(filters []*LogStreamFilter) {
+	l.Filters = filters
+	l.require(logStreamSegmentResponseSchemaFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSegmentResponseSchema) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	l.PiiConfig = piiConfig
+	l.require(logStreamSegmentResponseSchemaFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSegmentResponseSchema) SetSink(sink *LogStreamSegmentSinkWriteKey) {
+	l.Sink = sink
+	l.require(logStreamSegmentResponseSchemaFieldSink)
 }
 
 func (l *LogStreamSegmentResponseSchema) UnmarshalJSON(data []byte) error {
@@ -3192,7 +4773,8 @@ func (l *LogStreamSegmentResponseSchema) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*l),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, l.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
 }
 
 func (l *LogStreamSegmentResponseSchema) String() string {
@@ -3207,23 +4789,44 @@ func (l *LogStreamSegmentResponseSchema) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	logStreamSegmentSinkFieldSegmentWriteKey = big.NewInt(1 << 0)
+)
+
 type LogStreamSegmentSink struct {
 	// Segment write key
 	SegmentWriteKey *string `json:"segmentWriteKey,omitempty" url:"segmentWriteKey,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *LogStreamSegmentSink) GetSegmentWriteKey() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamSegmentSink) GetSegmentWriteKey() string {
+	if l == nil || l.SegmentWriteKey == nil {
+		return ""
 	}
-	return l.SegmentWriteKey
+	return *l.SegmentWriteKey
 }
 
 func (l *LogStreamSegmentSink) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *LogStreamSegmentSink) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetSegmentWriteKey sets the SegmentWriteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSegmentSink) SetSegmentWriteKey(segmentWriteKey *string) {
+	l.SegmentWriteKey = segmentWriteKey
+	l.require(logStreamSegmentSinkFieldSegmentWriteKey)
 }
 
 func (l *LogStreamSegmentSink) UnmarshalJSON(data []byte) error {
@@ -3242,6 +4845,17 @@ func (l *LogStreamSegmentSink) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (l *LogStreamSegmentSink) MarshalJSON() ([]byte, error) {
+	type embed LogStreamSegmentSink
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *LogStreamSegmentSink) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -3254,9 +4868,16 @@ func (l *LogStreamSegmentSink) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	logStreamSegmentSinkWriteKeyFieldSegmentWriteKey = big.NewInt(1 << 0)
+)
+
 type LogStreamSegmentSinkWriteKey struct {
 	// Segment write key
 	SegmentWriteKey string `json:"segmentWriteKey" url:"segmentWriteKey"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -3271,6 +4892,20 @@ func (l *LogStreamSegmentSinkWriteKey) GetSegmentWriteKey() string {
 
 func (l *LogStreamSegmentSinkWriteKey) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *LogStreamSegmentSinkWriteKey) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetSegmentWriteKey sets the SegmentWriteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSegmentSinkWriteKey) SetSegmentWriteKey(segmentWriteKey string) {
+	l.SegmentWriteKey = segmentWriteKey
+	l.require(logStreamSegmentSinkWriteKeyFieldSegmentWriteKey)
 }
 
 func (l *LogStreamSegmentSinkWriteKey) UnmarshalJSON(data []byte) error {
@@ -3289,6 +4924,17 @@ func (l *LogStreamSegmentSinkWriteKey) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (l *LogStreamSegmentSinkWriteKey) MarshalJSON() ([]byte, error) {
+	type embed LogStreamSegmentSinkWriteKey
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *LogStreamSegmentSinkWriteKey) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -3302,7 +4948,7 @@ func (l *LogStreamSegmentSinkWriteKey) String() string {
 }
 
 type LogStreamSinkPatch struct {
-	LogStreamHTTPSink          *LogStreamHTTPSink
+	LogStreamHttpSink          *LogStreamHttpSink
 	LogStreamDatadogSink       *LogStreamDatadogSink
 	LogStreamSplunkSink        *LogStreamSplunkSink
 	LogStreamSumoSink          *LogStreamSumoSink
@@ -3312,11 +4958,11 @@ type LogStreamSinkPatch struct {
 	typ string
 }
 
-func (l *LogStreamSinkPatch) GetLogStreamHTTPSink() *LogStreamHTTPSink {
+func (l *LogStreamSinkPatch) GetLogStreamHttpSink() *LogStreamHttpSink {
 	if l == nil {
 		return nil
 	}
-	return l.LogStreamHTTPSink
+	return l.LogStreamHttpSink
 }
 
 func (l *LogStreamSinkPatch) GetLogStreamDatadogSink() *LogStreamDatadogSink {
@@ -3355,10 +5001,10 @@ func (l *LogStreamSinkPatch) GetLogStreamMixpanelSinkPatch() *LogStreamMixpanelS
 }
 
 func (l *LogStreamSinkPatch) UnmarshalJSON(data []byte) error {
-	valueLogStreamHTTPSink := new(LogStreamHTTPSink)
-	if err := json.Unmarshal(data, &valueLogStreamHTTPSink); err == nil {
-		l.typ = "LogStreamHTTPSink"
-		l.LogStreamHTTPSink = valueLogStreamHTTPSink
+	valueLogStreamHttpSink := new(LogStreamHttpSink)
+	if err := json.Unmarshal(data, &valueLogStreamHttpSink); err == nil {
+		l.typ = "LogStreamHttpSink"
+		l.LogStreamHttpSink = valueLogStreamHttpSink
 		return nil
 	}
 	valueLogStreamDatadogSink := new(LogStreamDatadogSink)
@@ -3395,8 +5041,8 @@ func (l *LogStreamSinkPatch) UnmarshalJSON(data []byte) error {
 }
 
 func (l LogStreamSinkPatch) MarshalJSON() ([]byte, error) {
-	if l.typ == "LogStreamHTTPSink" || l.LogStreamHTTPSink != nil {
-		return json.Marshal(l.LogStreamHTTPSink)
+	if l.typ == "LogStreamHttpSink" || l.LogStreamHttpSink != nil {
+		return json.Marshal(l.LogStreamHttpSink)
 	}
 	if l.typ == "LogStreamDatadogSink" || l.LogStreamDatadogSink != nil {
 		return json.Marshal(l.LogStreamDatadogSink)
@@ -3417,7 +5063,7 @@ func (l LogStreamSinkPatch) MarshalJSON() ([]byte, error) {
 }
 
 type LogStreamSinkPatchVisitor interface {
-	VisitLogStreamHTTPSink(*LogStreamHTTPSink) error
+	VisitLogStreamHttpSink(*LogStreamHttpSink) error
 	VisitLogStreamDatadogSink(*LogStreamDatadogSink) error
 	VisitLogStreamSplunkSink(*LogStreamSplunkSink) error
 	VisitLogStreamSumoSink(*LogStreamSumoSink) error
@@ -3426,8 +5072,8 @@ type LogStreamSinkPatchVisitor interface {
 }
 
 func (l *LogStreamSinkPatch) Accept(visitor LogStreamSinkPatchVisitor) error {
-	if l.typ == "LogStreamHTTPSink" || l.LogStreamHTTPSink != nil {
-		return visitor.VisitLogStreamHTTPSink(l.LogStreamHTTPSink)
+	if l.typ == "LogStreamHttpSink" || l.LogStreamHttpSink != nil {
+		return visitor.VisitLogStreamHttpSink(l.LogStreamHttpSink)
 	}
 	if l.typ == "LogStreamDatadogSink" || l.LogStreamDatadogSink != nil {
 		return visitor.VisitLogStreamDatadogSink(l.LogStreamDatadogSink)
@@ -3449,9 +5095,20 @@ func (l *LogStreamSinkPatch) Accept(visitor LogStreamSinkPatchVisitor) error {
 
 type LogStreamSplunkEnum = string
 
+var (
+	logStreamSplunkResponseSchemaFieldId         = big.NewInt(1 << 0)
+	logStreamSplunkResponseSchemaFieldName       = big.NewInt(1 << 1)
+	logStreamSplunkResponseSchemaFieldStatus     = big.NewInt(1 << 2)
+	logStreamSplunkResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamSplunkResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamSplunkResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamSplunkResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamSplunkResponseSchemaFieldSink       = big.NewInt(1 << 7)
+)
+
 type LogStreamSplunkResponseSchema struct {
 	// The id of the log stream
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
 	Name   *string              `json:"name,omitempty" url:"name,omitempty"`
 	Status *LogStreamStatusEnum `json:"status,omitempty" url:"status,omitempty"`
@@ -3463,62 +5120,128 @@ type LogStreamSplunkResponseSchema struct {
 	PiiConfig *LogStreamPiiConfig  `json:"pii_config,omitempty" url:"pii_config,omitempty"`
 	Sink      *LogStreamSplunkSink `json:"sink,omitempty" url:"sink,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (l *LogStreamSplunkResponseSchema) GetID() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamSplunkResponseSchema) GetId() string {
+	if l == nil || l.Id == nil {
+		return ""
 	}
-	return l.ID
+	return *l.Id
 }
 
-func (l *LogStreamSplunkResponseSchema) GetName() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamSplunkResponseSchema) GetName() string {
+	if l == nil || l.Name == nil {
+		return ""
 	}
-	return l.Name
+	return *l.Name
 }
 
-func (l *LogStreamSplunkResponseSchema) GetStatus() *LogStreamStatusEnum {
-	if l == nil {
-		return nil
+func (l *LogStreamSplunkResponseSchema) GetStatus() LogStreamStatusEnum {
+	if l == nil || l.Status == nil {
+		return ""
 	}
-	return l.Status
+	return *l.Status
 }
 
-func (l *LogStreamSplunkResponseSchema) GetIsPriority() *bool {
-	if l == nil {
-		return nil
+func (l *LogStreamSplunkResponseSchema) GetIsPriority() bool {
+	if l == nil || l.IsPriority == nil {
+		return false
 	}
-	return l.IsPriority
+	return *l.IsPriority
 }
 
 func (l *LogStreamSplunkResponseSchema) GetFilters() []*LogStreamFilter {
-	if l == nil {
+	if l == nil || l.Filters == nil {
 		return nil
 	}
 	return l.Filters
 }
 
-func (l *LogStreamSplunkResponseSchema) GetPiiConfig() *LogStreamPiiConfig {
-	if l == nil {
-		return nil
+func (l *LogStreamSplunkResponseSchema) GetPiiConfig() LogStreamPiiConfig {
+	if l == nil || l.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return l.PiiConfig
+	return *l.PiiConfig
 }
 
-func (l *LogStreamSplunkResponseSchema) GetSink() *LogStreamSplunkSink {
-	if l == nil {
-		return nil
+func (l *LogStreamSplunkResponseSchema) GetSink() LogStreamSplunkSink {
+	if l == nil || l.Sink == nil {
+		return LogStreamSplunkSink{}
 	}
-	return l.Sink
+	return *l.Sink
 }
 
 func (l *LogStreamSplunkResponseSchema) GetExtraProperties() map[string]interface{} {
 	return l.ExtraProperties
+}
+
+func (l *LogStreamSplunkResponseSchema) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkResponseSchema) SetId(id *string) {
+	l.Id = id
+	l.require(logStreamSplunkResponseSchemaFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkResponseSchema) SetName(name *string) {
+	l.Name = name
+	l.require(logStreamSplunkResponseSchemaFieldName)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkResponseSchema) SetStatus(status *LogStreamStatusEnum) {
+	l.Status = status
+	l.require(logStreamSplunkResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkResponseSchema) SetType(type_ *LogStreamSplunkEnum) {
+	l.Type = type_
+	l.require(logStreamSplunkResponseSchemaFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkResponseSchema) SetIsPriority(isPriority *bool) {
+	l.IsPriority = isPriority
+	l.require(logStreamSplunkResponseSchemaFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkResponseSchema) SetFilters(filters []*LogStreamFilter) {
+	l.Filters = filters
+	l.require(logStreamSplunkResponseSchemaFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkResponseSchema) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	l.PiiConfig = piiConfig
+	l.require(logStreamSplunkResponseSchemaFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkResponseSchema) SetSink(sink *LogStreamSplunkSink) {
+	l.Sink = sink
+	l.require(logStreamSplunkResponseSchemaFieldSink)
 }
 
 func (l *LogStreamSplunkResponseSchema) UnmarshalJSON(data []byte) error {
@@ -3548,7 +5271,8 @@ func (l *LogStreamSplunkResponseSchema) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*l),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, l.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
 }
 
 func (l *LogStreamSplunkResponseSchema) String() string {
@@ -3563,6 +5287,13 @@ func (l *LogStreamSplunkResponseSchema) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	logStreamSplunkSinkFieldSplunkDomain = big.NewInt(1 << 0)
+	logStreamSplunkSinkFieldSplunkPort   = big.NewInt(1 << 1)
+	logStreamSplunkSinkFieldSplunkToken  = big.NewInt(1 << 2)
+	logStreamSplunkSinkFieldSplunkSecure = big.NewInt(1 << 3)
+)
+
 type LogStreamSplunkSink struct {
 	// Splunk URL Endpoint
 	SplunkDomain string `json:"splunkDomain" url:"splunkDomain"`
@@ -3572,6 +5303,9 @@ type LogStreamSplunkSink struct {
 	SplunkToken string `json:"splunkToken" url:"splunkToken"`
 	// Verify TLS certificate
 	SplunkSecure bool `json:"splunkSecure" url:"splunkSecure"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -3609,6 +5343,41 @@ func (l *LogStreamSplunkSink) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
 }
 
+func (l *LogStreamSplunkSink) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetSplunkDomain sets the SplunkDomain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkSink) SetSplunkDomain(splunkDomain string) {
+	l.SplunkDomain = splunkDomain
+	l.require(logStreamSplunkSinkFieldSplunkDomain)
+}
+
+// SetSplunkPort sets the SplunkPort field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkSink) SetSplunkPort(splunkPort string) {
+	l.SplunkPort = splunkPort
+	l.require(logStreamSplunkSinkFieldSplunkPort)
+}
+
+// SetSplunkToken sets the SplunkToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkSink) SetSplunkToken(splunkToken string) {
+	l.SplunkToken = splunkToken
+	l.require(logStreamSplunkSinkFieldSplunkToken)
+}
+
+// SetSplunkSecure sets the SplunkSecure field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkSink) SetSplunkSecure(splunkSecure bool) {
+	l.SplunkSecure = splunkSecure
+	l.require(logStreamSplunkSinkFieldSplunkSecure)
+}
+
 func (l *LogStreamSplunkSink) UnmarshalJSON(data []byte) error {
 	type unmarshaler LogStreamSplunkSink
 	var value unmarshaler
@@ -3623,6 +5392,17 @@ func (l *LogStreamSplunkSink) UnmarshalJSON(data []byte) error {
 	l.extraProperties = extraProperties
 	l.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (l *LogStreamSplunkSink) MarshalJSON() ([]byte, error) {
+	type embed LogStreamSplunkSink
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (l *LogStreamSplunkSink) String() string {
@@ -3665,9 +5445,20 @@ func (l LogStreamStatusEnum) Ptr() *LogStreamStatusEnum {
 
 type LogStreamSumoEnum = string
 
+var (
+	logStreamSumoResponseSchemaFieldId         = big.NewInt(1 << 0)
+	logStreamSumoResponseSchemaFieldName       = big.NewInt(1 << 1)
+	logStreamSumoResponseSchemaFieldStatus     = big.NewInt(1 << 2)
+	logStreamSumoResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamSumoResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamSumoResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamSumoResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamSumoResponseSchemaFieldSink       = big.NewInt(1 << 7)
+)
+
 type LogStreamSumoResponseSchema struct {
 	// The id of the log stream
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
 	Name   *string              `json:"name,omitempty" url:"name,omitempty"`
 	Status *LogStreamStatusEnum `json:"status,omitempty" url:"status,omitempty"`
@@ -3679,62 +5470,128 @@ type LogStreamSumoResponseSchema struct {
 	PiiConfig *LogStreamPiiConfig `json:"pii_config,omitempty" url:"pii_config,omitempty"`
 	Sink      *LogStreamSumoSink  `json:"sink,omitempty" url:"sink,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (l *LogStreamSumoResponseSchema) GetID() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamSumoResponseSchema) GetId() string {
+	if l == nil || l.Id == nil {
+		return ""
 	}
-	return l.ID
+	return *l.Id
 }
 
-func (l *LogStreamSumoResponseSchema) GetName() *string {
-	if l == nil {
-		return nil
+func (l *LogStreamSumoResponseSchema) GetName() string {
+	if l == nil || l.Name == nil {
+		return ""
 	}
-	return l.Name
+	return *l.Name
 }
 
-func (l *LogStreamSumoResponseSchema) GetStatus() *LogStreamStatusEnum {
-	if l == nil {
-		return nil
+func (l *LogStreamSumoResponseSchema) GetStatus() LogStreamStatusEnum {
+	if l == nil || l.Status == nil {
+		return ""
 	}
-	return l.Status
+	return *l.Status
 }
 
-func (l *LogStreamSumoResponseSchema) GetIsPriority() *bool {
-	if l == nil {
-		return nil
+func (l *LogStreamSumoResponseSchema) GetIsPriority() bool {
+	if l == nil || l.IsPriority == nil {
+		return false
 	}
-	return l.IsPriority
+	return *l.IsPriority
 }
 
 func (l *LogStreamSumoResponseSchema) GetFilters() []*LogStreamFilter {
-	if l == nil {
+	if l == nil || l.Filters == nil {
 		return nil
 	}
 	return l.Filters
 }
 
-func (l *LogStreamSumoResponseSchema) GetPiiConfig() *LogStreamPiiConfig {
-	if l == nil {
-		return nil
+func (l *LogStreamSumoResponseSchema) GetPiiConfig() LogStreamPiiConfig {
+	if l == nil || l.PiiConfig == nil {
+		return LogStreamPiiConfig{}
 	}
-	return l.PiiConfig
+	return *l.PiiConfig
 }
 
-func (l *LogStreamSumoResponseSchema) GetSink() *LogStreamSumoSink {
-	if l == nil {
-		return nil
+func (l *LogStreamSumoResponseSchema) GetSink() LogStreamSumoSink {
+	if l == nil || l.Sink == nil {
+		return LogStreamSumoSink{}
 	}
-	return l.Sink
+	return *l.Sink
 }
 
 func (l *LogStreamSumoResponseSchema) GetExtraProperties() map[string]interface{} {
 	return l.ExtraProperties
+}
+
+func (l *LogStreamSumoResponseSchema) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSumoResponseSchema) SetId(id *string) {
+	l.Id = id
+	l.require(logStreamSumoResponseSchemaFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSumoResponseSchema) SetName(name *string) {
+	l.Name = name
+	l.require(logStreamSumoResponseSchemaFieldName)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSumoResponseSchema) SetStatus(status *LogStreamStatusEnum) {
+	l.Status = status
+	l.require(logStreamSumoResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSumoResponseSchema) SetType(type_ *LogStreamSumoEnum) {
+	l.Type = type_
+	l.require(logStreamSumoResponseSchemaFieldType)
+}
+
+// SetIsPriority sets the IsPriority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSumoResponseSchema) SetIsPriority(isPriority *bool) {
+	l.IsPriority = isPriority
+	l.require(logStreamSumoResponseSchemaFieldIsPriority)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSumoResponseSchema) SetFilters(filters []*LogStreamFilter) {
+	l.Filters = filters
+	l.require(logStreamSumoResponseSchemaFieldFilters)
+}
+
+// SetPiiConfig sets the PiiConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSumoResponseSchema) SetPiiConfig(piiConfig *LogStreamPiiConfig) {
+	l.PiiConfig = piiConfig
+	l.require(logStreamSumoResponseSchemaFieldPiiConfig)
+}
+
+// SetSink sets the Sink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSumoResponseSchema) SetSink(sink *LogStreamSumoSink) {
+	l.Sink = sink
+	l.require(logStreamSumoResponseSchemaFieldSink)
 }
 
 func (l *LogStreamSumoResponseSchema) UnmarshalJSON(data []byte) error {
@@ -3764,7 +5621,8 @@ func (l *LogStreamSumoResponseSchema) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*l),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, l.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
 }
 
 func (l *LogStreamSumoResponseSchema) String() string {
@@ -3779,9 +5637,16 @@ func (l *LogStreamSumoResponseSchema) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	logStreamSumoSinkFieldSumoSourceAddress = big.NewInt(1 << 0)
+)
+
 type LogStreamSumoSink struct {
 	// HTTP Source Address
 	SumoSourceAddress string `json:"sumoSourceAddress" url:"sumoSourceAddress"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -3796,6 +5661,20 @@ func (l *LogStreamSumoSink) GetSumoSourceAddress() string {
 
 func (l *LogStreamSumoSink) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *LogStreamSumoSink) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetSumoSourceAddress sets the SumoSourceAddress field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSumoSink) SetSumoSourceAddress(sumoSourceAddress string) {
+	l.SumoSourceAddress = sumoSourceAddress
+	l.require(logStreamSumoSinkFieldSumoSourceAddress)
 }
 
 func (l *LogStreamSumoSink) UnmarshalJSON(data []byte) error {
@@ -3814,6 +5693,17 @@ func (l *LogStreamSumoSink) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (l *LogStreamSumoSink) MarshalJSON() ([]byte, error) {
+	type embed LogStreamSumoSink
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *LogStreamSumoSink) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -3827,7 +5717,7 @@ func (l *LogStreamSumoSink) String() string {
 }
 
 type UpdateLogStreamResponseContent struct {
-	LogStreamHTTPResponseSchema        *LogStreamHTTPResponseSchema
+	LogStreamHttpResponseSchema        *LogStreamHttpResponseSchema
 	LogStreamEventBridgeResponseSchema *LogStreamEventBridgeResponseSchema
 	LogStreamEventGridResponseSchema   *LogStreamEventGridResponseSchema
 	LogStreamDatadogResponseSchema     *LogStreamDatadogResponseSchema
@@ -3839,11 +5729,11 @@ type UpdateLogStreamResponseContent struct {
 	typ string
 }
 
-func (u *UpdateLogStreamResponseContent) GetLogStreamHTTPResponseSchema() *LogStreamHTTPResponseSchema {
+func (u *UpdateLogStreamResponseContent) GetLogStreamHttpResponseSchema() *LogStreamHttpResponseSchema {
 	if u == nil {
 		return nil
 	}
-	return u.LogStreamHTTPResponseSchema
+	return u.LogStreamHttpResponseSchema
 }
 
 func (u *UpdateLogStreamResponseContent) GetLogStreamEventBridgeResponseSchema() *LogStreamEventBridgeResponseSchema {
@@ -3896,10 +5786,10 @@ func (u *UpdateLogStreamResponseContent) GetLogStreamMixpanelResponseSchema() *L
 }
 
 func (u *UpdateLogStreamResponseContent) UnmarshalJSON(data []byte) error {
-	valueLogStreamHTTPResponseSchema := new(LogStreamHTTPResponseSchema)
-	if err := json.Unmarshal(data, &valueLogStreamHTTPResponseSchema); err == nil {
-		u.typ = "LogStreamHTTPResponseSchema"
-		u.LogStreamHTTPResponseSchema = valueLogStreamHTTPResponseSchema
+	valueLogStreamHttpResponseSchema := new(LogStreamHttpResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamHttpResponseSchema); err == nil {
+		u.typ = "LogStreamHttpResponseSchema"
+		u.LogStreamHttpResponseSchema = valueLogStreamHttpResponseSchema
 		return nil
 	}
 	valueLogStreamEventBridgeResponseSchema := new(LogStreamEventBridgeResponseSchema)
@@ -3948,8 +5838,8 @@ func (u *UpdateLogStreamResponseContent) UnmarshalJSON(data []byte) error {
 }
 
 func (u UpdateLogStreamResponseContent) MarshalJSON() ([]byte, error) {
-	if u.typ == "LogStreamHTTPResponseSchema" || u.LogStreamHTTPResponseSchema != nil {
-		return json.Marshal(u.LogStreamHTTPResponseSchema)
+	if u.typ == "LogStreamHttpResponseSchema" || u.LogStreamHttpResponseSchema != nil {
+		return json.Marshal(u.LogStreamHttpResponseSchema)
 	}
 	if u.typ == "LogStreamEventBridgeResponseSchema" || u.LogStreamEventBridgeResponseSchema != nil {
 		return json.Marshal(u.LogStreamEventBridgeResponseSchema)
@@ -3976,7 +5866,7 @@ func (u UpdateLogStreamResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 type UpdateLogStreamResponseContentVisitor interface {
-	VisitLogStreamHTTPResponseSchema(*LogStreamHTTPResponseSchema) error
+	VisitLogStreamHttpResponseSchema(*LogStreamHttpResponseSchema) error
 	VisitLogStreamEventBridgeResponseSchema(*LogStreamEventBridgeResponseSchema) error
 	VisitLogStreamEventGridResponseSchema(*LogStreamEventGridResponseSchema) error
 	VisitLogStreamDatadogResponseSchema(*LogStreamDatadogResponseSchema) error
@@ -3987,8 +5877,8 @@ type UpdateLogStreamResponseContentVisitor interface {
 }
 
 func (u *UpdateLogStreamResponseContent) Accept(visitor UpdateLogStreamResponseContentVisitor) error {
-	if u.typ == "LogStreamHTTPResponseSchema" || u.LogStreamHTTPResponseSchema != nil {
-		return visitor.VisitLogStreamHTTPResponseSchema(u.LogStreamHTTPResponseSchema)
+	if u.typ == "LogStreamHttpResponseSchema" || u.LogStreamHttpResponseSchema != nil {
+		return visitor.VisitLogStreamHttpResponseSchema(u.LogStreamHttpResponseSchema)
 	}
 	if u.typ == "LogStreamEventBridgeResponseSchema" || u.LogStreamEventBridgeResponseSchema != nil {
 		return visitor.VisitLogStreamEventBridgeResponseSchema(u.LogStreamEventBridgeResponseSchema)
@@ -4012,16 +5902,4 @@ func (u *UpdateLogStreamResponseContent) Accept(visitor UpdateLogStreamResponseC
 		return visitor.VisitLogStreamMixpanelResponseSchema(u.LogStreamMixpanelResponseSchema)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
-}
-
-type UpdateLogStreamRequestContent struct {
-	// log stream name
-	Name   *string              `json:"name,omitempty" url:"-"`
-	Status *LogStreamStatusEnum `json:"status,omitempty" url:"-"`
-	// True for priority log streams, false for non-priority
-	IsPriority *bool `json:"isPriority,omitempty" url:"-"`
-	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
-	Filters   []*LogStreamFilter  `json:"filters,omitempty" url:"-"`
-	PiiConfig *LogStreamPiiConfig `json:"pii_config,omitempty" url:"-"`
-	Sink      *LogStreamSinkPatch `json:"sink,omitempty" url:"-"`
 }

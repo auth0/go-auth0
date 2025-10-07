@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	eventstreams "github.com/auth0/go-auth0/v2/management/eventstreams"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	http "net/http"
@@ -35,7 +34,7 @@ func (r *RawClient) List(
 	ctx context.Context,
 	// Unique identifier for the event stream.
 	id string,
-	request *eventstreams.ListEventStreamDeliveriesRequestParameters,
+	request *management.ListEventStreamDeliveriesRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*management.EventStreamDelivery], error) {
 	options := core.NewRequestOptions(opts...)
@@ -48,12 +47,7 @@ func (r *RawClient) List(
 		baseURL+"/event-streams/%v/deliveries",
 		id,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"take": 50,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -64,33 +58,6 @@ func (r *RawClient) List(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response []*management.EventStreamDelivery
 	raw, err := r.caller.Call(
 		ctx,
@@ -103,7 +70,7 @@ func (r *RawClient) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -121,7 +88,7 @@ func (r *RawClient) GetHistory(
 	// Unique identifier for the event stream.
 	id string,
 	// Unique identifier for the event
-	eventID string,
+	eventId string,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetEventStreamDeliveryHistoryResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -133,34 +100,12 @@ func (r *RawClient) GetHistory(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/event-streams/%v/deliveries/%v",
 		id,
-		eventID,
+		eventId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetEventStreamDeliveryHistoryResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -173,7 +118,7 @@ func (r *RawClient) GetHistory(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

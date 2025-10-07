@@ -5,7 +5,6 @@ package organizations
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	clientgrants "github.com/auth0/go-auth0/v2/management/clientgrants"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -38,7 +37,7 @@ func (c *Client) List(
 	ctx context.Context,
 	// ID of the client grant
 	id string,
-	request *clientgrants.ListClientGrantOrganizationsRequestParameters,
+	request *management.ListClientGrantOrganizationsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.Organization], error) {
 	options := core.NewRequestOptions(opts...)
@@ -51,12 +50,7 @@ func (c *Client) List(
 		baseURL+"/client-grants/%v/organizations",
 		id,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"take": 50,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -64,28 +58,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
@@ -103,13 +75,13 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	readPageResponse := func(response *management.ListClientGrantOrganizationsPaginatedResponseContent) *internal.PageResponse[*string, *management.Organization] {
 		var zeroValue *string
-		next := response.GetNext()
-		results := response.GetOrganizations()
+		next := response.Next
+		results := response.Organizations
 		return &internal.PageResponse[*string, *management.Organization]{
 			Next:    next,
 			Results: results,

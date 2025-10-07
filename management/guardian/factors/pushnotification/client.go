@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	factors "github.com/auth0/go-auth0/v2/management/guardian/factors"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 )
@@ -117,7 +116,7 @@ func (c *Client) GetSnsProvider(
 // Configure the <a href="https://auth0.com/docs/multifactor-authentication/developer/sns-configuration">AWS SNS push notification provider configuration</a> (subscription required).
 func (c *Client) SetSnsProvider(
 	ctx context.Context,
-	request *factors.SetGuardianFactorsProviderPushNotificationSnsRequestContent,
+	request *management.SetGuardianFactorsProviderPushNotificationSnsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetGuardianFactorsProviderPushNotificationSnsResponseContent, error) {
 	response, err := c.WithRawResponse.SetSnsProvider(
@@ -134,7 +133,7 @@ func (c *Client) SetSnsProvider(
 // Configure the <a href="https://auth0.com/docs/multifactor-authentication/developer/sns-configuration">AWS SNS push notification provider configuration</a> (subscription required).
 func (c *Client) UpdateSnsProvider(
 	ctx context.Context,
-	request *factors.UpdateGuardianFactorsProviderPushNotificationSnsRequestContent,
+	request *management.UpdateGuardianFactorsProviderPushNotificationSnsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateGuardianFactorsProviderPushNotificationSnsResponseContent, error) {
 	response, err := c.WithRawResponse.UpdateSnsProvider(
@@ -166,7 +165,7 @@ func (c *Client) GetSelectedProvider(
 // Modify the push notification provider configured for your tenant. For more information, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa">Configure Push Notifications for MFA</a>.
 func (c *Client) SetProvider(
 	ctx context.Context,
-	request *factors.SetGuardianFactorsProviderPushNotificationRequestContent,
+	request *management.SetGuardianFactorsProviderPushNotificationRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetGuardianFactorsProviderPushNotificationResponseContent, error) {
 	response, err := c.WithRawResponse.SetProvider(

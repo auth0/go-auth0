@@ -6,24 +6,32 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type ListLogsRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page. Paging is disabled if parameter not sent. Default: <code>50</code>. Max value: <code>100</code>
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Field to use for sorting appended with <code>:1</code>  for ascending and <code>:-1</code> for descending. e.g. <code>date:-1</code>
-	Sort *string `json:"-" url:"sort,omitempty"`
-	// Comma-separated list of fields to include or exclude (based on value provided for <code>include_fields</code>) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (<code>true</code>) or excluded (<code>false</code>)
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-	// Return results as an array when false (default). Return results inside an object that also contains a total result count when true.
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Query in <a target='_new' href ='http://www.lucenetutorial.com/lucene-query-syntax.html'>Lucene query string syntax</a>.
-	Q *string `json:"-" url:"q,omitempty"`
-}
+var (
+	getLogResponseContentFieldDate            = big.NewInt(1 << 0)
+	getLogResponseContentFieldType            = big.NewInt(1 << 1)
+	getLogResponseContentFieldDescription     = big.NewInt(1 << 2)
+	getLogResponseContentFieldConnection      = big.NewInt(1 << 3)
+	getLogResponseContentFieldConnectionId    = big.NewInt(1 << 4)
+	getLogResponseContentFieldClientId        = big.NewInt(1 << 5)
+	getLogResponseContentFieldClientName      = big.NewInt(1 << 6)
+	getLogResponseContentFieldIp              = big.NewInt(1 << 7)
+	getLogResponseContentFieldHostname        = big.NewInt(1 << 8)
+	getLogResponseContentFieldUserId          = big.NewInt(1 << 9)
+	getLogResponseContentFieldUserName        = big.NewInt(1 << 10)
+	getLogResponseContentFieldAudience        = big.NewInt(1 << 11)
+	getLogResponseContentFieldScope           = big.NewInt(1 << 12)
+	getLogResponseContentFieldStrategy        = big.NewInt(1 << 13)
+	getLogResponseContentFieldStrategyType    = big.NewInt(1 << 14)
+	getLogResponseContentFieldLogId           = big.NewInt(1 << 15)
+	getLogResponseContentFieldIsMobile        = big.NewInt(1 << 16)
+	getLogResponseContentFieldDetails         = big.NewInt(1 << 17)
+	getLogResponseContentFieldUserAgent       = big.NewInt(1 << 18)
+	getLogResponseContentFieldSecurityContext = big.NewInt(1 << 19)
+	getLogResponseContentFieldLocationInfo    = big.NewInt(1 << 20)
+)
 
 type GetLogResponseContent struct {
 	Date *LogDate `json:"date,omitempty" url:"date,omitempty"`
@@ -34,17 +42,17 @@ type GetLogResponseContent struct {
 	// Name of the connection the event relates to.
 	Connection *string `json:"connection,omitempty" url:"connection,omitempty"`
 	// ID of the connection the event relates to.
-	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// ID of the client (application).
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// Name of the client (application).
 	ClientName *string `json:"client_name,omitempty" url:"client_name,omitempty"`
 	// IP address of the log event source.
-	IP *string `json:"ip,omitempty" url:"ip,omitempty"`
+	Ip *string `json:"ip,omitempty" url:"ip,omitempty"`
 	// Hostname the event applies to.
 	Hostname *string `json:"hostname,omitempty" url:"hostname,omitempty"`
 	// ID of the user involved in the event.
-	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Name of the user involved in the event.
 	UserName *string `json:"user_name,omitempty" url:"user_name,omitempty"`
 	// API audience the event applies to.
@@ -56,7 +64,7 @@ type GetLogResponseContent struct {
 	// Type of strategy involved in the event.
 	StrategyType *string `json:"strategy_type,omitempty" url:"strategy_type,omitempty"`
 	// Unique ID of the event.
-	LogID *string `json:"log_id,omitempty" url:"log_id,omitempty"`
+	LogId *string `json:"log_id,omitempty" url:"log_id,omitempty"`
 	// Whether the client was a mobile device (true) or desktop/laptop/server (false).
 	IsMobile *bool       `json:"isMobile,omitempty" url:"isMobile,omitempty"`
 	Details  *LogDetails `json:"details,omitempty" url:"details,omitempty"`
@@ -65,160 +73,317 @@ type GetLogResponseContent struct {
 	SecurityContext *LogSecurityContext `json:"security_context,omitempty" url:"security_context,omitempty"`
 	LocationInfo    *LogLocationInfo    `json:"location_info,omitempty" url:"location_info,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (g *GetLogResponseContent) GetDate() *LogDate {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetDate() LogDate {
+	if g == nil || g.Date == nil {
+		return LogDate{}
 	}
-	return g.Date
+	return *g.Date
 }
 
-func (g *GetLogResponseContent) GetType() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetType() string {
+	if g == nil || g.Type == nil {
+		return ""
 	}
-	return g.Type
+	return *g.Type
 }
 
-func (g *GetLogResponseContent) GetDescription() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetDescription() string {
+	if g == nil || g.Description == nil {
+		return ""
 	}
-	return g.Description
+	return *g.Description
 }
 
-func (g *GetLogResponseContent) GetConnection() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetConnection() string {
+	if g == nil || g.Connection == nil {
+		return ""
 	}
-	return g.Connection
+	return *g.Connection
 }
 
-func (g *GetLogResponseContent) GetConnectionID() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetConnectionId() string {
+	if g == nil || g.ConnectionId == nil {
+		return ""
 	}
-	return g.ConnectionID
+	return *g.ConnectionId
 }
 
-func (g *GetLogResponseContent) GetClientID() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetClientId() string {
+	if g == nil || g.ClientId == nil {
+		return ""
 	}
-	return g.ClientID
+	return *g.ClientId
 }
 
-func (g *GetLogResponseContent) GetClientName() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetClientName() string {
+	if g == nil || g.ClientName == nil {
+		return ""
 	}
-	return g.ClientName
+	return *g.ClientName
 }
 
-func (g *GetLogResponseContent) GetIP() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetIp() string {
+	if g == nil || g.Ip == nil {
+		return ""
 	}
-	return g.IP
+	return *g.Ip
 }
 
-func (g *GetLogResponseContent) GetHostname() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetHostname() string {
+	if g == nil || g.Hostname == nil {
+		return ""
 	}
-	return g.Hostname
+	return *g.Hostname
 }
 
-func (g *GetLogResponseContent) GetUserID() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetUserId() string {
+	if g == nil || g.UserId == nil {
+		return ""
 	}
-	return g.UserID
+	return *g.UserId
 }
 
-func (g *GetLogResponseContent) GetUserName() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetUserName() string {
+	if g == nil || g.UserName == nil {
+		return ""
 	}
-	return g.UserName
+	return *g.UserName
 }
 
-func (g *GetLogResponseContent) GetAudience() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetAudience() string {
+	if g == nil || g.Audience == nil {
+		return ""
 	}
-	return g.Audience
+	return *g.Audience
 }
 
-func (g *GetLogResponseContent) GetScope() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetScope() string {
+	if g == nil || g.Scope == nil {
+		return ""
 	}
-	return g.Scope
+	return *g.Scope
 }
 
-func (g *GetLogResponseContent) GetStrategy() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetStrategy() string {
+	if g == nil || g.Strategy == nil {
+		return ""
 	}
-	return g.Strategy
+	return *g.Strategy
 }
 
-func (g *GetLogResponseContent) GetStrategyType() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetStrategyType() string {
+	if g == nil || g.StrategyType == nil {
+		return ""
 	}
-	return g.StrategyType
+	return *g.StrategyType
 }
 
-func (g *GetLogResponseContent) GetLogID() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetLogId() string {
+	if g == nil || g.LogId == nil {
+		return ""
 	}
-	return g.LogID
+	return *g.LogId
 }
 
-func (g *GetLogResponseContent) GetIsMobile() *bool {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetIsMobile() bool {
+	if g == nil || g.IsMobile == nil {
+		return false
 	}
-	return g.IsMobile
+	return *g.IsMobile
 }
 
-func (g *GetLogResponseContent) GetDetails() *LogDetails {
-	if g == nil {
+func (g *GetLogResponseContent) GetDetails() LogDetails {
+	if g == nil || g.Details == nil {
 		return nil
 	}
-	return g.Details
+	return *g.Details
 }
 
-func (g *GetLogResponseContent) GetUserAgent() *string {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetUserAgent() string {
+	if g == nil || g.UserAgent == nil {
+		return ""
 	}
-	return g.UserAgent
+	return *g.UserAgent
 }
 
-func (g *GetLogResponseContent) GetSecurityContext() *LogSecurityContext {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetSecurityContext() LogSecurityContext {
+	if g == nil || g.SecurityContext == nil {
+		return LogSecurityContext{}
 	}
-	return g.SecurityContext
+	return *g.SecurityContext
 }
 
-func (g *GetLogResponseContent) GetLocationInfo() *LogLocationInfo {
-	if g == nil {
-		return nil
+func (g *GetLogResponseContent) GetLocationInfo() LogLocationInfo {
+	if g == nil || g.LocationInfo == nil {
+		return LogLocationInfo{}
 	}
-	return g.LocationInfo
+	return *g.LocationInfo
 }
 
 func (g *GetLogResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.ExtraProperties
+}
+
+func (g *GetLogResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetDate sets the Date field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetDate(date *LogDate) {
+	g.Date = date
+	g.require(getLogResponseContentFieldDate)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetType(type_ *string) {
+	g.Type = type_
+	g.require(getLogResponseContentFieldType)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetDescription(description *string) {
+	g.Description = description
+	g.require(getLogResponseContentFieldDescription)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetConnection(connection *string) {
+	g.Connection = connection
+	g.require(getLogResponseContentFieldConnection)
+}
+
+// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetConnectionId(connectionId *string) {
+	g.ConnectionId = connectionId
+	g.require(getLogResponseContentFieldConnectionId)
+}
+
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetClientId(clientId *string) {
+	g.ClientId = clientId
+	g.require(getLogResponseContentFieldClientId)
+}
+
+// SetClientName sets the ClientName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetClientName(clientName *string) {
+	g.ClientName = clientName
+	g.require(getLogResponseContentFieldClientName)
+}
+
+// SetIp sets the Ip field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetIp(ip *string) {
+	g.Ip = ip
+	g.require(getLogResponseContentFieldIp)
+}
+
+// SetHostname sets the Hostname field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetHostname(hostname *string) {
+	g.Hostname = hostname
+	g.require(getLogResponseContentFieldHostname)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetUserId(userId *string) {
+	g.UserId = userId
+	g.require(getLogResponseContentFieldUserId)
+}
+
+// SetUserName sets the UserName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetUserName(userName *string) {
+	g.UserName = userName
+	g.require(getLogResponseContentFieldUserName)
+}
+
+// SetAudience sets the Audience field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetAudience(audience *string) {
+	g.Audience = audience
+	g.require(getLogResponseContentFieldAudience)
+}
+
+// SetScope sets the Scope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetScope(scope *string) {
+	g.Scope = scope
+	g.require(getLogResponseContentFieldScope)
+}
+
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetStrategy(strategy *string) {
+	g.Strategy = strategy
+	g.require(getLogResponseContentFieldStrategy)
+}
+
+// SetStrategyType sets the StrategyType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetStrategyType(strategyType *string) {
+	g.StrategyType = strategyType
+	g.require(getLogResponseContentFieldStrategyType)
+}
+
+// SetLogId sets the LogId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetLogId(logId *string) {
+	g.LogId = logId
+	g.require(getLogResponseContentFieldLogId)
+}
+
+// SetIsMobile sets the IsMobile field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetIsMobile(isMobile *bool) {
+	g.IsMobile = isMobile
+	g.require(getLogResponseContentFieldIsMobile)
+}
+
+// SetDetails sets the Details field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetDetails(details *LogDetails) {
+	g.Details = details
+	g.require(getLogResponseContentFieldDetails)
+}
+
+// SetUserAgent sets the UserAgent field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetUserAgent(userAgent *string) {
+	g.UserAgent = userAgent
+	g.require(getLogResponseContentFieldUserAgent)
+}
+
+// SetSecurityContext sets the SecurityContext field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetSecurityContext(securityContext *LogSecurityContext) {
+	g.SecurityContext = securityContext
+	g.require(getLogResponseContentFieldSecurityContext)
+}
+
+// SetLocationInfo sets the LocationInfo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetLogResponseContent) SetLocationInfo(locationInfo *LogLocationInfo) {
+	g.LocationInfo = locationInfo
+	g.require(getLogResponseContentFieldLocationInfo)
 }
 
 func (g *GetLogResponseContent) UnmarshalJSON(data []byte) error {
@@ -248,7 +413,8 @@ func (g *GetLogResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*g),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, g.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *GetLogResponseContent) String() string {
@@ -263,6 +429,14 @@ func (g *GetLogResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	listLogOffsetPaginatedResponseContentFieldStart  = big.NewInt(1 << 0)
+	listLogOffsetPaginatedResponseContentFieldLimit  = big.NewInt(1 << 1)
+	listLogOffsetPaginatedResponseContentFieldLength = big.NewInt(1 << 2)
+	listLogOffsetPaginatedResponseContentFieldTotal  = big.NewInt(1 << 3)
+	listLogOffsetPaginatedResponseContentFieldLogs   = big.NewInt(1 << 4)
+)
+
 type ListLogOffsetPaginatedResponseContent struct {
 	Start  *float64 `json:"start,omitempty" url:"start,omitempty"`
 	Limit  *float64 `json:"limit,omitempty" url:"limit,omitempty"`
@@ -270,40 +444,43 @@ type ListLogOffsetPaginatedResponseContent struct {
 	Total  *float64 `json:"total,omitempty" url:"total,omitempty"`
 	Logs   []*Log   `json:"logs,omitempty" url:"logs,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListLogOffsetPaginatedResponseContent) GetStart() *float64 {
-	if l == nil {
-		return nil
+func (l *ListLogOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
 	}
-	return l.Start
+	return *l.Start
 }
 
-func (l *ListLogOffsetPaginatedResponseContent) GetLimit() *float64 {
-	if l == nil {
-		return nil
+func (l *ListLogOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
 	}
-	return l.Limit
+	return *l.Limit
 }
 
-func (l *ListLogOffsetPaginatedResponseContent) GetLength() *float64 {
-	if l == nil {
-		return nil
+func (l *ListLogOffsetPaginatedResponseContent) GetLength() float64 {
+	if l == nil || l.Length == nil {
+		return 0
 	}
-	return l.Length
+	return *l.Length
 }
 
-func (l *ListLogOffsetPaginatedResponseContent) GetTotal() *float64 {
-	if l == nil {
-		return nil
+func (l *ListLogOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
 	}
-	return l.Total
+	return *l.Total
 }
 
 func (l *ListLogOffsetPaginatedResponseContent) GetLogs() []*Log {
-	if l == nil {
+	if l == nil || l.Logs == nil {
 		return nil
 	}
 	return l.Logs
@@ -311,6 +488,48 @@ func (l *ListLogOffsetPaginatedResponseContent) GetLogs() []*Log {
 
 func (l *ListLogOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListLogOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListLogOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listLogOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListLogOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listLogOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetLength sets the Length field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListLogOffsetPaginatedResponseContent) SetLength(length *float64) {
+	l.Length = length
+	l.require(listLogOffsetPaginatedResponseContentFieldLength)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListLogOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listLogOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetLogs sets the Logs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListLogOffsetPaginatedResponseContent) SetLogs(logs []*Log) {
+	l.Logs = logs
+	l.require(listLogOffsetPaginatedResponseContentFieldLogs)
 }
 
 func (l *ListLogOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
@@ -327,6 +546,17 @@ func (l *ListLogOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error
 	l.extraProperties = extraProperties
 	l.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (l *ListLogOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListLogOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (l *ListLogOffsetPaginatedResponseContent) String() string {

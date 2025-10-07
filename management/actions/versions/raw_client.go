@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) Get(
 	ctx context.Context,
 	// The ID of the action.
-	actionID string,
+	actionId string,
 	// The ID of the action version.
 	id string,
 	opts ...option.RequestOption,
@@ -46,40 +46,13 @@ func (r *RawClient) Get(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/actions/actions/%v/versions/%v",
-		actionID,
+		actionId,
 		id,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetActionVersionResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -92,7 +65,7 @@ func (r *RawClient) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -107,10 +80,10 @@ func (r *RawClient) Get(
 
 func (r *RawClient) Deploy(
 	ctx context.Context,
+	// The ID of an action.
+	actionId string,
 	// The ID of an action version.
 	id string,
-	// The ID of an action.
-	actionID string,
 	request *management.DeployActionVersionRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.DeployActionVersionResponseContent], error) {
@@ -122,35 +95,13 @@ func (r *RawClient) Deploy(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/actions/actions/%v/versions/%v/deploy",
+		actionId,
 		id,
-		actionID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.DeployActionVersionResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -164,7 +115,7 @@ func (r *RawClient) Deploy(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

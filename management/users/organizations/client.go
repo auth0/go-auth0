@@ -9,7 +9,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	users "github.com/auth0/go-auth0/v2/management/users"
 	http "net/http"
 	strconv "strconv"
 )
@@ -41,7 +40,7 @@ func (c *Client) List(
 	ctx context.Context,
 	// ID of the user to retrieve the organizations for.
 	id string,
-	request *users.ListUserOrganizationsRequestParameters,
+	request *management.ListUserOrganizationsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.Organization], error) {
 	options := core.NewRequestOptions(opts...)
@@ -54,14 +53,7 @@ func (c *Client) List(
 		baseURL+"/users/%v/organizations",
 		id,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -69,23 +61,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -103,7 +78,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -116,7 +91,7 @@ func (c *Client) List(
 
 	readPageResponse := func(response *management.ListUserOrganizationsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.Organization] {
 		next += 1
-		results := response.GetOrganizations()
+		results := response.Organizations
 		return &internal.PageResponse[*int, *management.Organization]{
 			Next:    &next,
 			Results: results,

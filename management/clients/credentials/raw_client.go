@@ -5,7 +5,6 @@ package credentials
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	clients "github.com/auth0/go-auth0/v2/management/clients"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -34,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) List(
 	ctx context.Context,
 	// ID of the client.
-	clientID string,
+	clientId string,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*management.ClientCredential], error) {
 	options := core.NewRequestOptions(opts...)
@@ -45,34 +44,12 @@ func (r *RawClient) List(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/clients/%v/credentials",
-		clientID,
+		clientId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response []*management.ClientCredential
 	raw, err := r.caller.Call(
 		ctx,
@@ -85,7 +62,7 @@ func (r *RawClient) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -101,8 +78,8 @@ func (r *RawClient) List(
 func (r *RawClient) Create(
 	ctx context.Context,
 	// ID of the client.
-	clientID string,
-	request *clients.PostClientCredentialRequestContent,
+	clientId string,
+	request *management.PostClientCredentialRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.PostClientCredentialResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -113,40 +90,13 @@ func (r *RawClient) Create(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/clients/%v/credentials",
-		clientID,
+		clientId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.PostClientCredentialResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -160,7 +110,7 @@ func (r *RawClient) Create(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -176,9 +126,9 @@ func (r *RawClient) Create(
 func (r *RawClient) Get(
 	ctx context.Context,
 	// ID of the client.
-	clientID string,
+	clientId string,
 	// ID of the credential.
-	credentialID string,
+	credentialId string,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetClientCredentialResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -189,35 +139,13 @@ func (r *RawClient) Get(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/clients/%v/credentials/%v",
-		clientID,
-		credentialID,
+		clientId,
+		credentialId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetClientCredentialResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -230,7 +158,7 @@ func (r *RawClient) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -246,9 +174,9 @@ func (r *RawClient) Get(
 func (r *RawClient) Delete(
 	ctx context.Context,
 	// ID of the client.
-	clientID string,
+	clientId string,
 	// ID of the credential to delete.
-	credentialID string,
+	credentialId string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -259,35 +187,13 @@ func (r *RawClient) Delete(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/clients/%v/credentials/%v",
-		clientID,
-		credentialID,
+		clientId,
+		credentialId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -298,7 +204,7 @@ func (r *RawClient) Delete(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -314,10 +220,10 @@ func (r *RawClient) Delete(
 func (r *RawClient) Update(
 	ctx context.Context,
 	// ID of the client.
-	clientID string,
+	clientId string,
 	// ID of the credential.
-	credentialID string,
-	request *clients.PatchClientCredentialRequestContent,
+	credentialId string,
+	request *management.PatchClientCredentialRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.PatchClientCredentialResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -328,41 +234,14 @@ func (r *RawClient) Update(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/clients/%v/credentials/%v",
-		clientID,
-		credentialID,
+		clientId,
+		credentialId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.PatchClientCredentialResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -376,7 +255,7 @@ func (r *RawClient) Update(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

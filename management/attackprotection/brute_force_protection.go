@@ -12,14 +12,14 @@ import (
 type UpdateBruteForceSettingsRequestContentMode string
 
 const (
-	UpdateBruteForceSettingsRequestContentModeCountPerIdentifierAndIP UpdateBruteForceSettingsRequestContentMode = "count_per_identifier_and_ip"
+	UpdateBruteForceSettingsRequestContentModeCountPerIdentifierAndIp UpdateBruteForceSettingsRequestContentMode = "count_per_identifier_and_ip"
 	UpdateBruteForceSettingsRequestContentModeCountPerIdentifier      UpdateBruteForceSettingsRequestContentMode = "count_per_identifier"
 )
 
 func NewUpdateBruteForceSettingsRequestContentModeFromString(s string) (UpdateBruteForceSettingsRequestContentMode, error) {
 	switch s {
 	case "count_per_identifier_and_ip":
-		return UpdateBruteForceSettingsRequestContentModeCountPerIdentifierAndIP, nil
+		return UpdateBruteForceSettingsRequestContentModeCountPerIdentifierAndIp, nil
 	case "count_per_identifier":
 		return UpdateBruteForceSettingsRequestContentModeCountPerIdentifier, nil
 	}
@@ -51,21 +51,4 @@ func NewUpdateBruteForceSettingsRequestContentShieldsItemFromString(s string) (U
 
 func (u UpdateBruteForceSettingsRequestContentShieldsItem) Ptr() *UpdateBruteForceSettingsRequestContentShieldsItem {
 	return &u
-}
-
-type UpdateBruteForceSettingsRequestContent struct {
-	// Whether or not brute force attack protections are active.
-	Enabled *bool `json:"enabled,omitempty" url:"-"`
-	// Action to take when a brute force protection threshold is violated.
-	//
-	//	Possible values: <code>block</code>, <code>user_notification</code>.
-	Shields []UpdateBruteForceSettingsRequestContentShieldsItem `json:"shields,omitempty" url:"-"`
-	// List of trusted IP addresses that will not have attack protection enforced against them.
-	Allowlist []string `json:"allowlist,omitempty" url:"-"`
-	// Account Lockout: Determines whether or not IP address is used when counting failed attempts.
-	//
-	//	Possible values: <code>count_per_identifier_and_ip</code>, <code>count_per_identifier</code>.
-	Mode *UpdateBruteForceSettingsRequestContentMode `json:"mode,omitempty" url:"-"`
-	// Maximum number of unsuccessful attempts.
-	MaxAttempts *int `json:"max_attempts,omitempty" url:"-"`
 }

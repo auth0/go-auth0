@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Retrieve a list of <a href="https://auth0.com/docs/api-auth/grant/client-credentials">client grants</a>, including the scopes associated with the application/API pair.
+// Retrieve a list of <a href="https://auth0.com/docs/get-started/applications/application-access-to-apis-client-grants">client grants</a>, including the scopes associated with the application/API pair.
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListClientGrantsRequestParameters,
@@ -49,12 +49,7 @@ func (c *Client) List(
 		"https://%7BTENANT%7D.auth0.com/api/v2",
 	)
 	endpointURL := baseURL + "/client-grants"
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"take": 50,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -62,23 +57,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
@@ -96,13 +74,13 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	readPageResponse := func(response *management.ListClientGrantPaginatedResponseContent) *internal.PageResponse[*string, *management.ClientGrantResponseContent] {
 		var zeroValue *string
-		next := response.GetNext()
-		results := response.GetClientGrants()
+		next := response.Next
+		results := response.ClientGrants
 		return &internal.PageResponse[*string, *management.ClientGrantResponseContent]{
 			Next:    next,
 			Results: results,

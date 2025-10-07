@@ -5,7 +5,6 @@ package client
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	connections "github.com/auth0/go-auth0/v2/management/connections"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -36,7 +35,7 @@ func (r *RawClient) Get(
 	// The id of the connection to retrieve its SCIM configuration
 	id string,
 	opts ...option.RequestOption,
-) (*core.Response[*management.GetSCIMConfigurationResponseContent], error) {
+) (*core.Response[*management.GetScimConfigurationResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -51,19 +50,7 @@ func (r *RawClient) Get(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
-	var response *management.GetSCIMConfigurationResponseContent
+	var response *management.GetScimConfigurationResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -75,13 +62,13 @@ func (r *RawClient) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.GetSCIMConfigurationResponseContent]{
+	return &core.Response[*management.GetScimConfigurationResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -92,9 +79,9 @@ func (r *RawClient) Create(
 	ctx context.Context,
 	// The id of the connection to create its SCIM configuration
 	id string,
-	request *management.CreateSCIMConfigurationRequestContent,
+	request *management.CreateScimConfigurationRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.CreateSCIMConfigurationResponseContent], error) {
+) (*core.Response[*management.CreateScimConfigurationResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -109,19 +96,7 @@ func (r *RawClient) Create(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
-	var response *management.CreateSCIMConfigurationResponseContent
+	var response *management.CreateScimConfigurationResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -134,13 +109,13 @@ func (r *RawClient) Create(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.CreateSCIMConfigurationResponseContent]{
+	return &core.Response[*management.CreateScimConfigurationResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -167,18 +142,6 @@ func (r *RawClient) Delete(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -189,7 +152,7 @@ func (r *RawClient) Delete(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -206,9 +169,9 @@ func (r *RawClient) Update(
 	ctx context.Context,
 	// The id of the connection to update its SCIM configuration
 	id string,
-	request *connections.UpdateSCIMConfigurationRequestContent,
+	request *management.UpdateScimConfigurationRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.UpdateSCIMConfigurationResponseContent], error) {
+) (*core.Response[*management.UpdateScimConfigurationResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -224,19 +187,7 @@ func (r *RawClient) Update(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
-	var response *management.UpdateSCIMConfigurationResponseContent
+	var response *management.UpdateScimConfigurationResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -249,13 +200,13 @@ func (r *RawClient) Update(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.UpdateSCIMConfigurationResponseContent]{
+	return &core.Response[*management.UpdateScimConfigurationResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -267,7 +218,7 @@ func (r *RawClient) GetDefaultMapping(
 	// The id of the connection to retrieve its default SCIM mapping
 	id string,
 	opts ...option.RequestOption,
-) (*core.Response[*management.GetSCIMConfigurationDefaultMappingResponseContent], error) {
+) (*core.Response[*management.GetScimConfigurationDefaultMappingResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -282,19 +233,7 @@ func (r *RawClient) GetDefaultMapping(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
-	var response *management.GetSCIMConfigurationDefaultMappingResponseContent
+	var response *management.GetScimConfigurationDefaultMappingResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -306,13 +245,13 @@ func (r *RawClient) GetDefaultMapping(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.GetSCIMConfigurationDefaultMappingResponseContent]{
+	return &core.Response[*management.GetScimConfigurationDefaultMappingResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

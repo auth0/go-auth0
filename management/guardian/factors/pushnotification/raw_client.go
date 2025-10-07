@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	factors "github.com/auth0/go-auth0/v2/management/guardian/factors"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	http "net/http"
@@ -46,23 +45,6 @@ func (r *RawClient) GetApnsProvider(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetGuardianFactorsProviderApnsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -75,7 +57,7 @@ func (r *RawClient) GetApnsProvider(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -104,23 +86,6 @@ func (r *RawClient) SetApnsProvider(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.SetGuardianFactorsProviderPushNotificationApnsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -134,7 +99,7 @@ func (r *RawClient) SetApnsProvider(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -163,23 +128,6 @@ func (r *RawClient) SetFcmProvider(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response management.SetGuardianFactorsProviderPushNotificationFcmResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -193,7 +141,7 @@ func (r *RawClient) SetFcmProvider(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -222,23 +170,6 @@ func (r *RawClient) SetFcmv1Provider(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response management.SetGuardianFactorsProviderPushNotificationFcmv1ResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -252,7 +183,7 @@ func (r *RawClient) SetFcmv1Provider(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -280,23 +211,6 @@ func (r *RawClient) GetSnsProvider(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetGuardianFactorsProviderSnsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -309,7 +223,7 @@ func (r *RawClient) GetSnsProvider(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -324,7 +238,7 @@ func (r *RawClient) GetSnsProvider(
 
 func (r *RawClient) SetSnsProvider(
 	ctx context.Context,
-	request *factors.SetGuardianFactorsProviderPushNotificationSnsRequestContent,
+	request *management.SetGuardianFactorsProviderPushNotificationSnsRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.SetGuardianFactorsProviderPushNotificationSnsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -339,23 +253,6 @@ func (r *RawClient) SetSnsProvider(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.SetGuardianFactorsProviderPushNotificationSnsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -369,7 +266,7 @@ func (r *RawClient) SetSnsProvider(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -384,7 +281,7 @@ func (r *RawClient) SetSnsProvider(
 
 func (r *RawClient) UpdateSnsProvider(
 	ctx context.Context,
-	request *factors.UpdateGuardianFactorsProviderPushNotificationSnsRequestContent,
+	request *management.UpdateGuardianFactorsProviderPushNotificationSnsRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.UpdateGuardianFactorsProviderPushNotificationSnsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -399,23 +296,6 @@ func (r *RawClient) UpdateSnsProvider(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.UpdateGuardianFactorsProviderPushNotificationSnsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -429,7 +309,7 @@ func (r *RawClient) UpdateSnsProvider(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -457,23 +337,6 @@ func (r *RawClient) GetSelectedProvider(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetGuardianFactorsProviderPushNotificationResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -486,7 +349,7 @@ func (r *RawClient) GetSelectedProvider(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -501,7 +364,7 @@ func (r *RawClient) GetSelectedProvider(
 
 func (r *RawClient) SetProvider(
 	ctx context.Context,
-	request *factors.SetGuardianFactorsProviderPushNotificationRequestContent,
+	request *management.SetGuardianFactorsProviderPushNotificationRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.SetGuardianFactorsProviderPushNotificationResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -516,23 +379,6 @@ func (r *RawClient) SetProvider(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.SetGuardianFactorsProviderPushNotificationResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -546,7 +392,7 @@ func (r *RawClient) SetProvider(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

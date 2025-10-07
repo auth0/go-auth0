@@ -7,7 +7,6 @@ import (
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
-	jobs "github.com/auth0/go-auth0/v2/management/jobs"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	http "net/http"
 )
@@ -33,7 +32,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Create(
 	ctx context.Context,
-	request *jobs.CreateVerificationEmailRequestContent,
+	request *management.CreateVerificationEmailRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.CreateVerificationEmailResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -48,28 +47,6 @@ func (r *RawClient) Create(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.CreateVerificationEmailResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -83,7 +60,7 @@ func (r *RawClient) Create(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

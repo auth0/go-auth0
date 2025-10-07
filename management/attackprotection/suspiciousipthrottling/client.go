@@ -5,7 +5,6 @@ package suspiciousipthrottling
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	attackprotection "github.com/auth0/go-auth0/v2/management/attackprotection"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -37,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*management.GetSuspiciousIPThrottlingSettingsResponseContent, error) {
+) (*management.GetSuspiciousIpThrottlingSettingsResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		opts...,
@@ -51,9 +50,9 @@ func (c *Client) Get(
 // Update the details of the Suspicious IP Throttling configuration of your tenant.
 func (c *Client) Update(
 	ctx context.Context,
-	request *attackprotection.UpdateSuspiciousIPThrottlingSettingsRequestContent,
+	request *management.UpdateSuspiciousIpThrottlingSettingsRequestContent,
 	opts ...option.RequestOption,
-) (*management.UpdateSuspiciousIPThrottlingSettingsResponseContent, error) {
+) (*management.UpdateSuspiciousIpThrottlingSettingsResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
 		request,

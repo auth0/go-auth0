@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	eventstreams "github.com/auth0/go-auth0/v2/management/eventstreams"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 )
@@ -37,7 +36,7 @@ func (c *Client) Create(
 	ctx context.Context,
 	// Unique identifier for the event stream.
 	id string,
-	request *eventstreams.CreateEventStreamRedeliveryRequestContent,
+	request *management.CreateEventStreamRedeliveryRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateEventStreamRedeliveryResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
@@ -52,18 +51,18 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-func (c *Client) CreateByID(
+func (c *Client) CreateById(
 	ctx context.Context,
 	// Unique identifier for the event stream.
 	id string,
 	// Unique identifier for the event
-	eventID string,
+	eventId string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.CreateByID(
+	_, err := c.WithRawResponse.CreateById(
 		ctx,
 		id,
-		eventID,
+		eventId,
 		opts...,
 	)
 	if err != nil {

@@ -7,7 +7,6 @@ import (
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
-	jobs "github.com/auth0/go-auth0/v2/management/jobs"
 	option "github.com/auth0/go-auth0/v2/management/option"
 )
 
@@ -38,7 +37,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // Note: You must have the `Status` toggle enabled for the verification email template for the email to be sent.
 func (c *Client) Create(
 	ctx context.Context,
-	request *jobs.CreateVerificationEmailRequestContent,
+	request *management.CreateVerificationEmailRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateVerificationEmailResponseContent, error) {
 	response, err := c.WithRawResponse.Create(

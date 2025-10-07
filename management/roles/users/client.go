@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	roles "github.com/auth0/go-auth0/v2/management/roles"
 	http "net/http"
 )
 
@@ -57,7 +56,7 @@ func (c *Client) List(
 	ctx context.Context,
 	// ID of the role to retrieve a list of users associated with.
 	id string,
-	request *roles.ListRoleUsersRequestParameters,
+	request *management.ListRoleUsersRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.RoleUser], error) {
 	options := core.NewRequestOptions(opts...)
@@ -70,12 +69,7 @@ func (c *Client) List(
 		baseURL+"/roles/%v/users",
 		id,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"take": 50,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -83,33 +77,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
@@ -127,13 +94,13 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	readPageResponse := func(response *management.ListRoleUsersPaginatedResponseContent) *internal.PageResponse[*string, *management.RoleUser] {
 		var zeroValue *string
-		next := response.GetNext()
-		results := response.GetUsers()
+		next := response.Next
+		results := response.Users
 		return &internal.PageResponse[*string, *management.RoleUser]{
 			Next:    next,
 			Results: results,
@@ -155,7 +122,7 @@ func (c *Client) Assign(
 	ctx context.Context,
 	// ID of the role to assign users to.
 	id string,
-	request *roles.AssignRoleUsersRequestContent,
+	request *management.AssignRoleUsersRequestContent,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Assign(

@@ -42,6 +42,7 @@ import (
 	tenantsclient "github.com/auth0/go-auth0/v2/management/tenants/client"
 	tickets "github.com/auth0/go-auth0/v2/management/tickets"
 	tokenexchangeprofiles "github.com/auth0/go-auth0/v2/management/tokenexchangeprofiles"
+	userattributeprofiles "github.com/auth0/go-auth0/v2/management/userattributeprofiles"
 	userblocks "github.com/auth0/go-auth0/v2/management/userblocks"
 	usergrants "github.com/auth0/go-auth0/v2/management/usergrants"
 	usersclient "github.com/auth0/go-auth0/v2/management/users/client"
@@ -65,7 +66,7 @@ type Management struct {
 	Jobs                  *jobsclient.Client
 	LogStreams            *logstreams.Client
 	Logs                  *logs.Client
-	NetworkACLs           *networkacls.Client
+	NetworkAcls           *networkacls.Client
 	Organizations         *organizationsclient.Client
 	Prompts               *promptsclient.Client
 	RefreshTokens         *refreshtokens.Client
@@ -79,6 +80,7 @@ type Management struct {
 	SupplementalSignals   *supplementalsignals.Client
 	Tickets               *tickets.Client
 	TokenExchangeProfiles *tokenexchangeprofiles.Client
+	UserAttributeProfiles *userattributeprofiles.Client
 	UserBlocks            *userblocks.Client
 	Users                 *usersclient.Client
 	Anomaly               *anomalyclient.Client
@@ -114,7 +116,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		Jobs:                  jobsclient.NewClient(options),
 		LogStreams:            logstreams.NewClient(options),
 		Logs:                  logs.NewClient(options),
-		NetworkACLs:           networkacls.NewClient(options),
+		NetworkAcls:           networkacls.NewClient(options),
 		Organizations:         organizationsclient.NewClient(options),
 		Prompts:               promptsclient.NewClient(options),
 		RefreshTokens:         refreshtokens.NewClient(options),
@@ -128,6 +130,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		SupplementalSignals:   supplementalsignals.NewClient(options),
 		Tickets:               tickets.NewClient(options),
 		TokenExchangeProfiles: tokenexchangeprofiles.NewClient(options),
+		UserAttributeProfiles: userattributeprofiles.NewClient(options),
 		UserBlocks:            userblocks.NewClient(options),
 		Users:                 usersclient.NewClient(options),
 		Anomaly:               anomalyclient.NewClient(options),

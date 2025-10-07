@@ -5,7 +5,6 @@ package providers
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	phone "github.com/auth0/go-auth0/v2/management/branding/phone"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -36,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // Retrieve a list of <a href="https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers">phone providers</a> details set for a Tenant. A list of fields to include or exclude may also be specified.
 func (c *Client) List(
 	ctx context.Context,
-	request *phone.ListBrandingPhoneProvidersRequestParameters,
+	request *management.ListBrandingPhoneProvidersRequestParameters,
 	opts ...option.RequestOption,
 ) (*management.ListBrandingPhoneProvidersResponseContent, error) {
 	response, err := c.WithRawResponse.List(
@@ -54,7 +53,7 @@ func (c *Client) List(
 // The <code>credentials</code> object requires different properties depending on the phone provider (which is specified using the <code>name</code> property).
 func (c *Client) Create(
 	ctx context.Context,
-	request *phone.CreateBrandingPhoneProviderRequestContent,
+	request *management.CreateBrandingPhoneProviderRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateBrandingPhoneProviderResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
@@ -107,7 +106,7 @@ func (c *Client) Delete(
 func (c *Client) Update(
 	ctx context.Context,
 	id string,
-	request *phone.UpdateBrandingPhoneProviderRequestContent,
+	request *management.UpdateBrandingPhoneProviderRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateBrandingPhoneProviderResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
@@ -125,7 +124,7 @@ func (c *Client) Update(
 func (c *Client) Test(
 	ctx context.Context,
 	id string,
-	request *phone.CreatePhoneProviderSendTestRequestContent,
+	request *management.CreatePhoneProviderSendTestRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreatePhoneProviderSendTestResponseContent, error) {
 	response, err := c.WithRawResponse.Test(

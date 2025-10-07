@@ -5,7 +5,6 @@ package breachedpassworddetection
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	attackprotection "github.com/auth0/go-auth0/v2/management/attackprotection"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -51,7 +50,7 @@ func (c *Client) Get(
 // Update details of the Breached Password Detection configuration of your tenant.
 func (c *Client) Update(
 	ctx context.Context,
-	request *attackprotection.UpdateBreachedPasswordDetectionSettingsRequestContent,
+	request *management.UpdateBreachedPasswordDetectionSettingsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateBreachedPasswordDetectionSettingsResponseContent, error) {
 	response, err := c.WithRawResponse.Update(

@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	duo "github.com/auth0/go-auth0/v2/management/guardian/factors/duo"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 )
@@ -51,7 +50,7 @@ func (c *Client) Get(
 // Set the DUO account configuration and other properties specific to this factor.
 func (c *Client) Set(
 	ctx context.Context,
-	request *duo.SetGuardianFactorDuoSettingsRequestContent,
+	request *management.SetGuardianFactorDuoSettingsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetGuardianFactorDuoSettingsResponseContent, error) {
 	response, err := c.WithRawResponse.Set(
@@ -67,7 +66,7 @@ func (c *Client) Set(
 
 func (c *Client) Update(
 	ctx context.Context,
-	request *duo.UpdateGuardianFactorDuoSettingsRequestContent,
+	request *management.UpdateGuardianFactorDuoSettingsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateGuardianFactorDuoSettingsResponseContent, error) {
 	response, err := c.WithRawResponse.Update(

@@ -6,13 +6,30 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
+)
+
+var (
+	getSessionResponseContentFieldId               = big.NewInt(1 << 0)
+	getSessionResponseContentFieldUserId           = big.NewInt(1 << 1)
+	getSessionResponseContentFieldCreatedAt        = big.NewInt(1 << 2)
+	getSessionResponseContentFieldUpdatedAt        = big.NewInt(1 << 3)
+	getSessionResponseContentFieldAuthenticatedAt  = big.NewInt(1 << 4)
+	getSessionResponseContentFieldIdleExpiresAt    = big.NewInt(1 << 5)
+	getSessionResponseContentFieldExpiresAt        = big.NewInt(1 << 6)
+	getSessionResponseContentFieldLastInteractedAt = big.NewInt(1 << 7)
+	getSessionResponseContentFieldDevice           = big.NewInt(1 << 8)
+	getSessionResponseContentFieldClients          = big.NewInt(1 << 9)
+	getSessionResponseContentFieldAuthentication   = big.NewInt(1 << 10)
+	getSessionResponseContentFieldCookie           = big.NewInt(1 << 11)
+	getSessionResponseContentFieldSessionMetadata  = big.NewInt(1 << 12)
 )
 
 type GetSessionResponseContent struct {
 	// The ID of the session
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the user which can be used when interacting with other APIs.
-	UserID           *string                `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserId           *string                `json:"user_id,omitempty" url:"user_id,omitempty"`
 	CreatedAt        *SessionDate           `json:"created_at,omitempty" url:"created_at,omitempty"`
 	UpdatedAt        *SessionDate           `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	AuthenticatedAt  *SessionDate           `json:"authenticated_at,omitempty" url:"authenticated_at,omitempty"`
@@ -21,101 +38,210 @@ type GetSessionResponseContent struct {
 	LastInteractedAt *SessionDate           `json:"last_interacted_at,omitempty" url:"last_interacted_at,omitempty"`
 	Device           *SessionDeviceMetadata `json:"device,omitempty" url:"device,omitempty"`
 	// List of client details for the session
-	Clients        []*SessionClientMetadata      `json:"clients,omitempty" url:"clients,omitempty"`
-	Authentication *SessionAuthenticationSignals `json:"authentication,omitempty" url:"authentication,omitempty"`
-	Cookie         *SessionCookieMetadata        `json:"cookie,omitempty" url:"cookie,omitempty"`
+	Clients         []*SessionClientMetadata      `json:"clients,omitempty" url:"clients,omitempty"`
+	Authentication  *SessionAuthenticationSignals `json:"authentication,omitempty" url:"authentication,omitempty"`
+	Cookie          *SessionCookieMetadata        `json:"cookie,omitempty" url:"cookie,omitempty"`
+	SessionMetadata *SessionMetadata              `json:"session_metadata,omitempty" url:"session_metadata,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (g *GetSessionResponseContent) GetID() *string {
-	if g == nil {
-		return nil
+func (g *GetSessionResponseContent) GetId() string {
+	if g == nil || g.Id == nil {
+		return ""
 	}
-	return g.ID
+	return *g.Id
 }
 
-func (g *GetSessionResponseContent) GetUserID() *string {
-	if g == nil {
-		return nil
+func (g *GetSessionResponseContent) GetUserId() string {
+	if g == nil || g.UserId == nil {
+		return ""
 	}
-	return g.UserID
+	return *g.UserId
 }
 
-func (g *GetSessionResponseContent) GetCreatedAt() *SessionDate {
-	if g == nil {
-		return nil
+func (g *GetSessionResponseContent) GetCreatedAt() SessionDate {
+	if g == nil || g.CreatedAt == nil {
+		return SessionDate{}
 	}
-	return g.CreatedAt
+	return *g.CreatedAt
 }
 
-func (g *GetSessionResponseContent) GetUpdatedAt() *SessionDate {
-	if g == nil {
-		return nil
+func (g *GetSessionResponseContent) GetUpdatedAt() SessionDate {
+	if g == nil || g.UpdatedAt == nil {
+		return SessionDate{}
 	}
-	return g.UpdatedAt
+	return *g.UpdatedAt
 }
 
-func (g *GetSessionResponseContent) GetAuthenticatedAt() *SessionDate {
-	if g == nil {
-		return nil
+func (g *GetSessionResponseContent) GetAuthenticatedAt() SessionDate {
+	if g == nil || g.AuthenticatedAt == nil {
+		return SessionDate{}
 	}
-	return g.AuthenticatedAt
+	return *g.AuthenticatedAt
 }
 
-func (g *GetSessionResponseContent) GetIdleExpiresAt() *SessionDate {
-	if g == nil {
-		return nil
+func (g *GetSessionResponseContent) GetIdleExpiresAt() SessionDate {
+	if g == nil || g.IdleExpiresAt == nil {
+		return SessionDate{}
 	}
-	return g.IdleExpiresAt
+	return *g.IdleExpiresAt
 }
 
-func (g *GetSessionResponseContent) GetExpiresAt() *SessionDate {
-	if g == nil {
-		return nil
+func (g *GetSessionResponseContent) GetExpiresAt() SessionDate {
+	if g == nil || g.ExpiresAt == nil {
+		return SessionDate{}
 	}
-	return g.ExpiresAt
+	return *g.ExpiresAt
 }
 
-func (g *GetSessionResponseContent) GetLastInteractedAt() *SessionDate {
-	if g == nil {
-		return nil
+func (g *GetSessionResponseContent) GetLastInteractedAt() SessionDate {
+	if g == nil || g.LastInteractedAt == nil {
+		return SessionDate{}
 	}
-	return g.LastInteractedAt
+	return *g.LastInteractedAt
 }
 
-func (g *GetSessionResponseContent) GetDevice() *SessionDeviceMetadata {
-	if g == nil {
-		return nil
+func (g *GetSessionResponseContent) GetDevice() SessionDeviceMetadata {
+	if g == nil || g.Device == nil {
+		return SessionDeviceMetadata{}
 	}
-	return g.Device
+	return *g.Device
 }
 
 func (g *GetSessionResponseContent) GetClients() []*SessionClientMetadata {
-	if g == nil {
+	if g == nil || g.Clients == nil {
 		return nil
 	}
 	return g.Clients
 }
 
-func (g *GetSessionResponseContent) GetAuthentication() *SessionAuthenticationSignals {
-	if g == nil {
-		return nil
+func (g *GetSessionResponseContent) GetAuthentication() SessionAuthenticationSignals {
+	if g == nil || g.Authentication == nil {
+		return SessionAuthenticationSignals{}
 	}
-	return g.Authentication
+	return *g.Authentication
 }
 
-func (g *GetSessionResponseContent) GetCookie() *SessionCookieMetadata {
-	if g == nil {
+func (g *GetSessionResponseContent) GetCookie() SessionCookieMetadata {
+	if g == nil || g.Cookie == nil {
+		return SessionCookieMetadata{}
+	}
+	return *g.Cookie
+}
+
+func (g *GetSessionResponseContent) GetSessionMetadata() SessionMetadata {
+	if g == nil || g.SessionMetadata == nil {
 		return nil
 	}
-	return g.Cookie
+	return *g.SessionMetadata
 }
 
 func (g *GetSessionResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.ExtraProperties
+}
+
+func (g *GetSessionResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetId(id *string) {
+	g.Id = id
+	g.require(getSessionResponseContentFieldId)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetUserId(userId *string) {
+	g.UserId = userId
+	g.require(getSessionResponseContentFieldUserId)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetCreatedAt(createdAt *SessionDate) {
+	g.CreatedAt = createdAt
+	g.require(getSessionResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetUpdatedAt(updatedAt *SessionDate) {
+	g.UpdatedAt = updatedAt
+	g.require(getSessionResponseContentFieldUpdatedAt)
+}
+
+// SetAuthenticatedAt sets the AuthenticatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetAuthenticatedAt(authenticatedAt *SessionDate) {
+	g.AuthenticatedAt = authenticatedAt
+	g.require(getSessionResponseContentFieldAuthenticatedAt)
+}
+
+// SetIdleExpiresAt sets the IdleExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetIdleExpiresAt(idleExpiresAt *SessionDate) {
+	g.IdleExpiresAt = idleExpiresAt
+	g.require(getSessionResponseContentFieldIdleExpiresAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetExpiresAt(expiresAt *SessionDate) {
+	g.ExpiresAt = expiresAt
+	g.require(getSessionResponseContentFieldExpiresAt)
+}
+
+// SetLastInteractedAt sets the LastInteractedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetLastInteractedAt(lastInteractedAt *SessionDate) {
+	g.LastInteractedAt = lastInteractedAt
+	g.require(getSessionResponseContentFieldLastInteractedAt)
+}
+
+// SetDevice sets the Device field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetDevice(device *SessionDeviceMetadata) {
+	g.Device = device
+	g.require(getSessionResponseContentFieldDevice)
+}
+
+// SetClients sets the Clients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetClients(clients []*SessionClientMetadata) {
+	g.Clients = clients
+	g.require(getSessionResponseContentFieldClients)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetAuthentication(authentication *SessionAuthenticationSignals) {
+	g.Authentication = authentication
+	g.require(getSessionResponseContentFieldAuthentication)
+}
+
+// SetCookie sets the Cookie field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetCookie(cookie *SessionCookieMetadata) {
+	g.Cookie = cookie
+	g.require(getSessionResponseContentFieldCookie)
+}
+
+// SetSessionMetadata sets the SessionMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetSessionMetadata(sessionMetadata *SessionMetadata) {
+	g.SessionMetadata = sessionMetadata
+	g.require(getSessionResponseContentFieldSessionMetadata)
 }
 
 func (g *GetSessionResponseContent) UnmarshalJSON(data []byte) error {
@@ -145,7 +271,8 @@ func (g *GetSessionResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*g),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, g.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *GetSessionResponseContent) String() string {
@@ -158,4 +285,282 @@ func (g *GetSessionResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	updateSessionResponseContentFieldId               = big.NewInt(1 << 0)
+	updateSessionResponseContentFieldUserId           = big.NewInt(1 << 1)
+	updateSessionResponseContentFieldCreatedAt        = big.NewInt(1 << 2)
+	updateSessionResponseContentFieldUpdatedAt        = big.NewInt(1 << 3)
+	updateSessionResponseContentFieldAuthenticatedAt  = big.NewInt(1 << 4)
+	updateSessionResponseContentFieldIdleExpiresAt    = big.NewInt(1 << 5)
+	updateSessionResponseContentFieldExpiresAt        = big.NewInt(1 << 6)
+	updateSessionResponseContentFieldLastInteractedAt = big.NewInt(1 << 7)
+	updateSessionResponseContentFieldDevice           = big.NewInt(1 << 8)
+	updateSessionResponseContentFieldClients          = big.NewInt(1 << 9)
+	updateSessionResponseContentFieldAuthentication   = big.NewInt(1 << 10)
+	updateSessionResponseContentFieldCookie           = big.NewInt(1 << 11)
+	updateSessionResponseContentFieldSessionMetadata  = big.NewInt(1 << 12)
+)
+
+type UpdateSessionResponseContent struct {
+	// The ID of the session
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	// ID of the user which can be used when interacting with other APIs.
+	UserId           *string                `json:"user_id,omitempty" url:"user_id,omitempty"`
+	CreatedAt        *SessionDate           `json:"created_at,omitempty" url:"created_at,omitempty"`
+	UpdatedAt        *SessionDate           `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	AuthenticatedAt  *SessionDate           `json:"authenticated_at,omitempty" url:"authenticated_at,omitempty"`
+	IdleExpiresAt    *SessionDate           `json:"idle_expires_at,omitempty" url:"idle_expires_at,omitempty"`
+	ExpiresAt        *SessionDate           `json:"expires_at,omitempty" url:"expires_at,omitempty"`
+	LastInteractedAt *SessionDate           `json:"last_interacted_at,omitempty" url:"last_interacted_at,omitempty"`
+	Device           *SessionDeviceMetadata `json:"device,omitempty" url:"device,omitempty"`
+	// List of client details for the session
+	Clients         []*SessionClientMetadata      `json:"clients,omitempty" url:"clients,omitempty"`
+	Authentication  *SessionAuthenticationSignals `json:"authentication,omitempty" url:"authentication,omitempty"`
+	Cookie          *SessionCookieMetadata        `json:"cookie,omitempty" url:"cookie,omitempty"`
+	SessionMetadata *SessionMetadata              `json:"session_metadata,omitempty" url:"session_metadata,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (u *UpdateSessionResponseContent) GetId() string {
+	if u == nil || u.Id == nil {
+		return ""
+	}
+	return *u.Id
+}
+
+func (u *UpdateSessionResponseContent) GetUserId() string {
+	if u == nil || u.UserId == nil {
+		return ""
+	}
+	return *u.UserId
+}
+
+func (u *UpdateSessionResponseContent) GetCreatedAt() SessionDate {
+	if u == nil || u.CreatedAt == nil {
+		return SessionDate{}
+	}
+	return *u.CreatedAt
+}
+
+func (u *UpdateSessionResponseContent) GetUpdatedAt() SessionDate {
+	if u == nil || u.UpdatedAt == nil {
+		return SessionDate{}
+	}
+	return *u.UpdatedAt
+}
+
+func (u *UpdateSessionResponseContent) GetAuthenticatedAt() SessionDate {
+	if u == nil || u.AuthenticatedAt == nil {
+		return SessionDate{}
+	}
+	return *u.AuthenticatedAt
+}
+
+func (u *UpdateSessionResponseContent) GetIdleExpiresAt() SessionDate {
+	if u == nil || u.IdleExpiresAt == nil {
+		return SessionDate{}
+	}
+	return *u.IdleExpiresAt
+}
+
+func (u *UpdateSessionResponseContent) GetExpiresAt() SessionDate {
+	if u == nil || u.ExpiresAt == nil {
+		return SessionDate{}
+	}
+	return *u.ExpiresAt
+}
+
+func (u *UpdateSessionResponseContent) GetLastInteractedAt() SessionDate {
+	if u == nil || u.LastInteractedAt == nil {
+		return SessionDate{}
+	}
+	return *u.LastInteractedAt
+}
+
+func (u *UpdateSessionResponseContent) GetDevice() SessionDeviceMetadata {
+	if u == nil || u.Device == nil {
+		return SessionDeviceMetadata{}
+	}
+	return *u.Device
+}
+
+func (u *UpdateSessionResponseContent) GetClients() []*SessionClientMetadata {
+	if u == nil || u.Clients == nil {
+		return nil
+	}
+	return u.Clients
+}
+
+func (u *UpdateSessionResponseContent) GetAuthentication() SessionAuthenticationSignals {
+	if u == nil || u.Authentication == nil {
+		return SessionAuthenticationSignals{}
+	}
+	return *u.Authentication
+}
+
+func (u *UpdateSessionResponseContent) GetCookie() SessionCookieMetadata {
+	if u == nil || u.Cookie == nil {
+		return SessionCookieMetadata{}
+	}
+	return *u.Cookie
+}
+
+func (u *UpdateSessionResponseContent) GetSessionMetadata() SessionMetadata {
+	if u == nil || u.SessionMetadata == nil {
+		return nil
+	}
+	return *u.SessionMetadata
+}
+
+func (u *UpdateSessionResponseContent) GetExtraProperties() map[string]interface{} {
+	return u.ExtraProperties
+}
+
+func (u *UpdateSessionResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetId(id *string) {
+	u.Id = id
+	u.require(updateSessionResponseContentFieldId)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetUserId(userId *string) {
+	u.UserId = userId
+	u.require(updateSessionResponseContentFieldUserId)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetCreatedAt(createdAt *SessionDate) {
+	u.CreatedAt = createdAt
+	u.require(updateSessionResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetUpdatedAt(updatedAt *SessionDate) {
+	u.UpdatedAt = updatedAt
+	u.require(updateSessionResponseContentFieldUpdatedAt)
+}
+
+// SetAuthenticatedAt sets the AuthenticatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetAuthenticatedAt(authenticatedAt *SessionDate) {
+	u.AuthenticatedAt = authenticatedAt
+	u.require(updateSessionResponseContentFieldAuthenticatedAt)
+}
+
+// SetIdleExpiresAt sets the IdleExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetIdleExpiresAt(idleExpiresAt *SessionDate) {
+	u.IdleExpiresAt = idleExpiresAt
+	u.require(updateSessionResponseContentFieldIdleExpiresAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetExpiresAt(expiresAt *SessionDate) {
+	u.ExpiresAt = expiresAt
+	u.require(updateSessionResponseContentFieldExpiresAt)
+}
+
+// SetLastInteractedAt sets the LastInteractedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetLastInteractedAt(lastInteractedAt *SessionDate) {
+	u.LastInteractedAt = lastInteractedAt
+	u.require(updateSessionResponseContentFieldLastInteractedAt)
+}
+
+// SetDevice sets the Device field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetDevice(device *SessionDeviceMetadata) {
+	u.Device = device
+	u.require(updateSessionResponseContentFieldDevice)
+}
+
+// SetClients sets the Clients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetClients(clients []*SessionClientMetadata) {
+	u.Clients = clients
+	u.require(updateSessionResponseContentFieldClients)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetAuthentication(authentication *SessionAuthenticationSignals) {
+	u.Authentication = authentication
+	u.require(updateSessionResponseContentFieldAuthentication)
+}
+
+// SetCookie sets the Cookie field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetCookie(cookie *SessionCookieMetadata) {
+	u.Cookie = cookie
+	u.require(updateSessionResponseContentFieldCookie)
+}
+
+// SetSessionMetadata sets the SessionMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetSessionMetadata(sessionMetadata *SessionMetadata) {
+	u.SessionMetadata = sessionMetadata
+	u.require(updateSessionResponseContentFieldSessionMetadata)
+}
+
+func (u *UpdateSessionResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateSessionResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateSessionResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.ExtraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateSessionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateSessionResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
+}
+
+func (u *UpdateSessionResponseContent) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }

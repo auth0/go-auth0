@@ -6,31 +6,48 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type UpdateSupplementalSignalsRequestContent struct {
-	// Indicates if incoming Akamai Headers should be processed
-	AkamaiEnabled bool `json:"akamai_enabled" url:"-"`
-}
+var (
+	getSupplementalSignalsResponseContentFieldAkamaiEnabled = big.NewInt(1 << 0)
+)
 
 type GetSupplementalSignalsResponseContent struct {
 	// Indicates if incoming Akamai Headers should be processed
 	AkamaiEnabled *bool `json:"akamai_enabled,omitempty" url:"akamai_enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (g *GetSupplementalSignalsResponseContent) GetAkamaiEnabled() *bool {
-	if g == nil {
-		return nil
+func (g *GetSupplementalSignalsResponseContent) GetAkamaiEnabled() bool {
+	if g == nil || g.AkamaiEnabled == nil {
+		return false
 	}
-	return g.AkamaiEnabled
+	return *g.AkamaiEnabled
 }
 
 func (g *GetSupplementalSignalsResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.ExtraProperties
+}
+
+func (g *GetSupplementalSignalsResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetAkamaiEnabled sets the AkamaiEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSupplementalSignalsResponseContent) SetAkamaiEnabled(akamaiEnabled *bool) {
+	g.AkamaiEnabled = akamaiEnabled
+	g.require(getSupplementalSignalsResponseContentFieldAkamaiEnabled)
 }
 
 func (g *GetSupplementalSignalsResponseContent) UnmarshalJSON(data []byte) error {
@@ -60,7 +77,8 @@ func (g *GetSupplementalSignalsResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*g),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, g.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *GetSupplementalSignalsResponseContent) String() string {
@@ -75,24 +93,45 @@ func (g *GetSupplementalSignalsResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	patchSupplementalSignalsResponseContentFieldAkamaiEnabled = big.NewInt(1 << 0)
+)
+
 type PatchSupplementalSignalsResponseContent struct {
 	// Indicates if incoming Akamai Headers should be processed
 	AkamaiEnabled *bool `json:"akamai_enabled,omitempty" url:"akamai_enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (p *PatchSupplementalSignalsResponseContent) GetAkamaiEnabled() *bool {
-	if p == nil {
-		return nil
+func (p *PatchSupplementalSignalsResponseContent) GetAkamaiEnabled() bool {
+	if p == nil || p.AkamaiEnabled == nil {
+		return false
 	}
-	return p.AkamaiEnabled
+	return *p.AkamaiEnabled
 }
 
 func (p *PatchSupplementalSignalsResponseContent) GetExtraProperties() map[string]interface{} {
 	return p.ExtraProperties
+}
+
+func (p *PatchSupplementalSignalsResponseContent) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetAkamaiEnabled sets the AkamaiEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PatchSupplementalSignalsResponseContent) SetAkamaiEnabled(akamaiEnabled *bool) {
+	p.AkamaiEnabled = akamaiEnabled
+	p.require(patchSupplementalSignalsResponseContentFieldAkamaiEnabled)
 }
 
 func (p *PatchSupplementalSignalsResponseContent) UnmarshalJSON(data []byte) error {
@@ -122,7 +161,8 @@ func (p *PatchSupplementalSignalsResponseContent) MarshalJSON() ([]byte, error) 
 	}{
 		embed: embed(*p),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, p.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, p.ExtraProperties)
 }
 
 func (p *PatchSupplementalSignalsResponseContent) String() string {

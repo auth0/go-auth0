@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	duo "github.com/auth0/go-auth0/v2/management/guardian/factors/duo"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	http "net/http"
@@ -46,23 +45,6 @@ func (r *RawClient) Get(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetGuardianFactorDuoSettingsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -75,7 +57,7 @@ func (r *RawClient) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -90,7 +72,7 @@ func (r *RawClient) Get(
 
 func (r *RawClient) Set(
 	ctx context.Context,
-	request *duo.SetGuardianFactorDuoSettingsRequestContent,
+	request *management.SetGuardianFactorDuoSettingsRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.SetGuardianFactorDuoSettingsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -105,23 +87,6 @@ func (r *RawClient) Set(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.SetGuardianFactorDuoSettingsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -135,7 +100,7 @@ func (r *RawClient) Set(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -150,7 +115,7 @@ func (r *RawClient) Set(
 
 func (r *RawClient) Update(
 	ctx context.Context,
-	request *duo.UpdateGuardianFactorDuoSettingsRequestContent,
+	request *management.UpdateGuardianFactorDuoSettingsRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.UpdateGuardianFactorDuoSettingsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -165,23 +130,6 @@ func (r *RawClient) Update(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.UpdateGuardianFactorDuoSettingsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -195,7 +143,7 @@ func (r *RawClient) Update(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

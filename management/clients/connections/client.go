@@ -5,7 +5,6 @@ package connections
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	clients "github.com/auth0/go-auth0/v2/management/clients"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -49,7 +48,7 @@ func (c *Client) Get(
 	ctx context.Context,
 	// ID of the client for which to retrieve enabled connections.
 	id string,
-	request *clients.ConnectionsGetRequest,
+	request *management.ConnectionsGetRequest,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.ConnectionForList], error) {
 	options := core.NewRequestOptions(opts...)
@@ -62,12 +61,7 @@ func (c *Client) Get(
 		baseURL+"/clients/%v/connections",
 		id,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"take": 50,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -75,33 +69,6 @@ func (c *Client) Get(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
@@ -119,13 +86,13 @@ func (c *Client) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	readPageResponse := func(response *management.ListClientConnectionsResponseContent) *internal.PageResponse[*string, *management.ConnectionForList] {
 		var zeroValue *string
-		next := response.GetNext()
-		results := response.GetConnections()
+		next := response.Next
+		results := response.Connections
 		return &internal.PageResponse[*string, *management.ConnectionForList]{
 			Next:    next,
 			Results: results,

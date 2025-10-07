@@ -4,7 +4,7 @@ package users
 
 import (
 	context "context"
-	connections "github.com/auth0/go-auth0/v2/management/connections"
+	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -37,7 +37,7 @@ func (c *Client) DeleteByEmail(
 	ctx context.Context,
 	// The id of the connection (currently only database connections are supported)
 	id string,
-	request *connections.DeleteConnectionUsersByEmailQueryParameters,
+	request *management.DeleteConnectionUsersByEmailQueryParameters,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.DeleteByEmail(

@@ -6,27 +6,15 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type DeleteUserGrantByUserIDRequestParameters struct {
-	// user_id of the grant to delete.
-	UserID string `json:"-" url:"user_id"`
-}
-
-type ListUserGrantsRequestParameters struct {
-	// Number of results per page.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// user_id of the grants to retrieve.
-	UserID *string `json:"-" url:"user_id,omitempty"`
-	// client_id of the grants to retrieve.
-	ClientID *string `json:"-" url:"client_id,omitempty"`
-	// audience of the grants to retrieve.
-	Audience *string `json:"-" url:"audience,omitempty"`
-}
+var (
+	listUserGrantsOffsetPaginatedResponseContentFieldStart  = big.NewInt(1 << 0)
+	listUserGrantsOffsetPaginatedResponseContentFieldLimit  = big.NewInt(1 << 1)
+	listUserGrantsOffsetPaginatedResponseContentFieldTotal  = big.NewInt(1 << 2)
+	listUserGrantsOffsetPaginatedResponseContentFieldGrants = big.NewInt(1 << 3)
+)
 
 type ListUserGrantsOffsetPaginatedResponseContent struct {
 	Start  *float64     `json:"start,omitempty" url:"start,omitempty"`
@@ -34,33 +22,36 @@ type ListUserGrantsOffsetPaginatedResponseContent struct {
 	Total  *float64     `json:"total,omitempty" url:"total,omitempty"`
 	Grants []*UserGrant `json:"grants,omitempty" url:"grants,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListUserGrantsOffsetPaginatedResponseContent) GetStart() *float64 {
-	if l == nil {
-		return nil
+func (l *ListUserGrantsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
 	}
-	return l.Start
+	return *l.Start
 }
 
-func (l *ListUserGrantsOffsetPaginatedResponseContent) GetLimit() *float64 {
-	if l == nil {
-		return nil
+func (l *ListUserGrantsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
 	}
-	return l.Limit
+	return *l.Limit
 }
 
-func (l *ListUserGrantsOffsetPaginatedResponseContent) GetTotal() *float64 {
-	if l == nil {
-		return nil
+func (l *ListUserGrantsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
 	}
-	return l.Total
+	return *l.Total
 }
 
 func (l *ListUserGrantsOffsetPaginatedResponseContent) GetGrants() []*UserGrant {
-	if l == nil {
+	if l == nil || l.Grants == nil {
 		return nil
 	}
 	return l.Grants
@@ -68,6 +59,41 @@ func (l *ListUserGrantsOffsetPaginatedResponseContent) GetGrants() []*UserGrant 
 
 func (l *ListUserGrantsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListUserGrantsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserGrantsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listUserGrantsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserGrantsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listUserGrantsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserGrantsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listUserGrantsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetGrants sets the Grants field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserGrantsOffsetPaginatedResponseContent) SetGrants(grants []*UserGrant) {
+	l.Grants = grants
+	l.require(listUserGrantsOffsetPaginatedResponseContentFieldGrants)
 }
 
 func (l *ListUserGrantsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
@@ -86,6 +112,17 @@ func (l *ListUserGrantsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte
 	return nil
 }
 
+func (l *ListUserGrantsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserGrantsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListUserGrantsOffsetPaginatedResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -98,52 +135,63 @@ func (l *ListUserGrantsOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	userGrantFieldId       = big.NewInt(1 << 0)
+	userGrantFieldClientId = big.NewInt(1 << 1)
+	userGrantFieldUserId   = big.NewInt(1 << 2)
+	userGrantFieldAudience = big.NewInt(1 << 3)
+	userGrantFieldScope    = big.NewInt(1 << 4)
+)
+
 type UserGrant struct {
 	// ID of the grant.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the client.
-	ClientID *string `json:"clientID,omitempty" url:"clientID,omitempty"`
+	ClientId *string `json:"clientID,omitempty" url:"clientID,omitempty"`
 	// ID of the user.
-	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Audience of the grant.
 	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
 	// Scopes included in this grant.
 	Scope []string `json:"scope,omitempty" url:"scope,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UserGrant) GetID() *string {
-	if u == nil {
-		return nil
+func (u *UserGrant) GetId() string {
+	if u == nil || u.Id == nil {
+		return ""
 	}
-	return u.ID
+	return *u.Id
 }
 
-func (u *UserGrant) GetClientID() *string {
-	if u == nil {
-		return nil
+func (u *UserGrant) GetClientId() string {
+	if u == nil || u.ClientId == nil {
+		return ""
 	}
-	return u.ClientID
+	return *u.ClientId
 }
 
-func (u *UserGrant) GetUserID() *string {
-	if u == nil {
-		return nil
+func (u *UserGrant) GetUserId() string {
+	if u == nil || u.UserId == nil {
+		return ""
 	}
-	return u.UserID
+	return *u.UserId
 }
 
-func (u *UserGrant) GetAudience() *string {
-	if u == nil {
-		return nil
+func (u *UserGrant) GetAudience() string {
+	if u == nil || u.Audience == nil {
+		return ""
 	}
-	return u.Audience
+	return *u.Audience
 }
 
 func (u *UserGrant) GetScope() []string {
-	if u == nil {
+	if u == nil || u.Scope == nil {
 		return nil
 	}
 	return u.Scope
@@ -151,6 +199,48 @@ func (u *UserGrant) GetScope() []string {
 
 func (u *UserGrant) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UserGrant) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGrant) SetId(id *string) {
+	u.Id = id
+	u.require(userGrantFieldId)
+}
+
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGrant) SetClientId(clientId *string) {
+	u.ClientId = clientId
+	u.require(userGrantFieldClientId)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGrant) SetUserId(userId *string) {
+	u.UserId = userId
+	u.require(userGrantFieldUserId)
+}
+
+// SetAudience sets the Audience field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGrant) SetAudience(audience *string) {
+	u.Audience = audience
+	u.require(userGrantFieldAudience)
+}
+
+// SetScope sets the Scope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGrant) SetScope(scope []string) {
+	u.Scope = scope
+	u.require(userGrantFieldScope)
 }
 
 func (u *UserGrant) UnmarshalJSON(data []byte) error {
@@ -167,6 +257,17 @@ func (u *UserGrant) UnmarshalJSON(data []byte) error {
 	u.extraProperties = extraProperties
 	u.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (u *UserGrant) MarshalJSON() ([]byte, error) {
+	type embed UserGrant
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *UserGrant) String() string {

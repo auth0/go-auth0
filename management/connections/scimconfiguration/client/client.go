@@ -5,7 +5,6 @@ package client
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	connections "github.com/auth0/go-auth0/v2/management/connections"
 	tokens "github.com/auth0/go-auth0/v2/management/connections/scimconfiguration/tokens"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
@@ -42,7 +41,7 @@ func (c *Client) Get(
 	// The id of the connection to retrieve its SCIM configuration
 	id string,
 	opts ...option.RequestOption,
-) (*management.GetSCIMConfigurationResponseContent, error) {
+) (*management.GetScimConfigurationResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
@@ -59,9 +58,9 @@ func (c *Client) Create(
 	ctx context.Context,
 	// The id of the connection to create its SCIM configuration
 	id string,
-	request *management.CreateSCIMConfigurationRequestContent,
+	request *management.CreateScimConfigurationRequestContent,
 	opts ...option.RequestOption,
-) (*management.CreateSCIMConfigurationResponseContent, error) {
+) (*management.CreateScimConfigurationResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
 		ctx,
 		id,
@@ -97,9 +96,9 @@ func (c *Client) Update(
 	ctx context.Context,
 	// The id of the connection to update its SCIM configuration
 	id string,
-	request *connections.UpdateSCIMConfigurationRequestContent,
+	request *management.UpdateScimConfigurationRequestContent,
 	opts ...option.RequestOption,
-) (*management.UpdateSCIMConfigurationResponseContent, error) {
+) (*management.UpdateScimConfigurationResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
 		id,
@@ -118,7 +117,7 @@ func (c *Client) GetDefaultMapping(
 	// The id of the connection to retrieve its default SCIM mapping
 	id string,
 	opts ...option.RequestOption,
-) (*management.GetSCIMConfigurationDefaultMappingResponseContent, error) {
+) (*management.GetScimConfigurationDefaultMappingResponseContent, error) {
 	response, err := c.WithRawResponse.GetDefaultMapping(
 		ctx,
 		id,

@@ -6,43 +6,37 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
-
-type CreateClientGrantRequestContent struct {
-	// ID of the client.
-	ClientID string `json:"client_id" url:"-"`
-	// The audience (API identifier) of this client grant
-	Audience          string                            `json:"audience" url:"-"`
-	OrganizationUsage *ClientGrantOrganizationUsageEnum `json:"organization_usage,omitempty" url:"-"`
-	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
-	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"-"`
-	// Scopes allowed for this client grant.
-	Scope       []string                    `json:"scope,omitempty" url:"-"`
-	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"-"`
-	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
-	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"-"`
-}
-
-type ListClientGrantsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-	// Optional filter on audience.
-	Audience *string `json:"-" url:"audience,omitempty"`
-	// Optional filter on client_id.
-	ClientID *string `json:"-" url:"client_id,omitempty"`
-	// Optional filter on allow_any_organization.
-	AllowAnyOrganization *ClientGrantAllowAnyOrganizationEnum `json:"-" url:"allow_any_organization,omitempty"`
-	// The type of application access the client grant allows. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href="https://www.okta.com/legal/"> Master Subscription Agreement.</a>
-	SubjectType *ClientGrantSubjectTypeEnum `json:"-" url:"subject_type,omitempty"`
-}
 
 // Optional filter on allow_any_organization.
 type ClientGrantAllowAnyOrganizationEnum = bool
 
 // Controls how organizations may be used with this grant
-type ClientGrantOrganizationNullableUsageEnum = *string
+type ClientGrantOrganizationNullableUsageEnum string
+
+const (
+	ClientGrantOrganizationNullableUsageEnumDeny    ClientGrantOrganizationNullableUsageEnum = "deny"
+	ClientGrantOrganizationNullableUsageEnumAllow   ClientGrantOrganizationNullableUsageEnum = "allow"
+	ClientGrantOrganizationNullableUsageEnumRequire ClientGrantOrganizationNullableUsageEnum = "require"
+)
+
+func NewClientGrantOrganizationNullableUsageEnumFromString(s string) (ClientGrantOrganizationNullableUsageEnum, error) {
+	switch s {
+	case "deny":
+		return ClientGrantOrganizationNullableUsageEnumDeny, nil
+	case "allow":
+		return ClientGrantOrganizationNullableUsageEnumAllow, nil
+	case "require":
+		return ClientGrantOrganizationNullableUsageEnumRequire, nil
+	}
+	var t ClientGrantOrganizationNullableUsageEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientGrantOrganizationNullableUsageEnum) Ptr() *ClientGrantOrganizationNullableUsageEnum {
+	return &c
+}
 
 // Defines whether organizations can be used with client credentials exchanges for this grant.
 type ClientGrantOrganizationUsageEnum string
@@ -70,11 +64,23 @@ func (c ClientGrantOrganizationUsageEnum) Ptr() *ClientGrantOrganizationUsageEnu
 	return &c
 }
 
+var (
+	clientGrantResponseContentFieldId                        = big.NewInt(1 << 0)
+	clientGrantResponseContentFieldClientId                  = big.NewInt(1 << 1)
+	clientGrantResponseContentFieldAudience                  = big.NewInt(1 << 2)
+	clientGrantResponseContentFieldScope                     = big.NewInt(1 << 3)
+	clientGrantResponseContentFieldOrganizationUsage         = big.NewInt(1 << 4)
+	clientGrantResponseContentFieldAllowAnyOrganization      = big.NewInt(1 << 5)
+	clientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 6)
+	clientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 7)
+	clientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 8)
+)
+
 type ClientGrantResponseContent struct {
 	// ID of the client grant.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the client.
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// The audience (API identifier) of this client grant.
 	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
 	// Scopes allowed for this client grant.
@@ -88,68 +94,71 @@ type ClientGrantResponseContent struct {
 	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
 	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *ClientGrantResponseContent) GetID() *string {
-	if c == nil {
-		return nil
+func (c *ClientGrantResponseContent) GetId() string {
+	if c == nil || c.Id == nil {
+		return ""
 	}
-	return c.ID
+	return *c.Id
 }
 
-func (c *ClientGrantResponseContent) GetClientID() *string {
-	if c == nil {
-		return nil
+func (c *ClientGrantResponseContent) GetClientId() string {
+	if c == nil || c.ClientId == nil {
+		return ""
 	}
-	return c.ClientID
+	return *c.ClientId
 }
 
-func (c *ClientGrantResponseContent) GetAudience() *string {
-	if c == nil {
-		return nil
+func (c *ClientGrantResponseContent) GetAudience() string {
+	if c == nil || c.Audience == nil {
+		return ""
 	}
-	return c.Audience
+	return *c.Audience
 }
 
 func (c *ClientGrantResponseContent) GetScope() []string {
-	if c == nil {
+	if c == nil || c.Scope == nil {
 		return nil
 	}
 	return c.Scope
 }
 
-func (c *ClientGrantResponseContent) GetOrganizationUsage() *ClientGrantOrganizationUsageEnum {
-	if c == nil {
-		return nil
+func (c *ClientGrantResponseContent) GetOrganizationUsage() ClientGrantOrganizationUsageEnum {
+	if c == nil || c.OrganizationUsage == nil {
+		return ""
 	}
-	return c.OrganizationUsage
+	return *c.OrganizationUsage
 }
 
-func (c *ClientGrantResponseContent) GetAllowAnyOrganization() *bool {
-	if c == nil {
-		return nil
+func (c *ClientGrantResponseContent) GetAllowAnyOrganization() bool {
+	if c == nil || c.AllowAnyOrganization == nil {
+		return false
 	}
-	return c.AllowAnyOrganization
+	return *c.AllowAnyOrganization
 }
 
-func (c *ClientGrantResponseContent) GetIsSystem() *bool {
-	if c == nil {
-		return nil
+func (c *ClientGrantResponseContent) GetIsSystem() bool {
+	if c == nil || c.IsSystem == nil {
+		return false
 	}
-	return c.IsSystem
+	return *c.IsSystem
 }
 
-func (c *ClientGrantResponseContent) GetSubjectType() *ClientGrantSubjectTypeEnum {
-	if c == nil {
-		return nil
+func (c *ClientGrantResponseContent) GetSubjectType() ClientGrantSubjectTypeEnum {
+	if c == nil || c.SubjectType == nil {
+		return ""
 	}
-	return c.SubjectType
+	return *c.SubjectType
 }
 
 func (c *ClientGrantResponseContent) GetAuthorizationDetailsTypes() []string {
-	if c == nil {
+	if c == nil || c.AuthorizationDetailsTypes == nil {
 		return nil
 	}
 	return c.AuthorizationDetailsTypes
@@ -157,6 +166,76 @@ func (c *ClientGrantResponseContent) GetAuthorizationDetailsTypes() []string {
 
 func (c *ClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *ClientGrantResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientGrantResponseContent) SetId(id *string) {
+	c.Id = id
+	c.require(clientGrantResponseContentFieldId)
+}
+
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientGrantResponseContent) SetClientId(clientId *string) {
+	c.ClientId = clientId
+	c.require(clientGrantResponseContentFieldClientId)
+}
+
+// SetAudience sets the Audience field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientGrantResponseContent) SetAudience(audience *string) {
+	c.Audience = audience
+	c.require(clientGrantResponseContentFieldAudience)
+}
+
+// SetScope sets the Scope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientGrantResponseContent) SetScope(scope []string) {
+	c.Scope = scope
+	c.require(clientGrantResponseContentFieldScope)
+}
+
+// SetOrganizationUsage sets the OrganizationUsage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientGrantResponseContent) SetOrganizationUsage(organizationUsage *ClientGrantOrganizationUsageEnum) {
+	c.OrganizationUsage = organizationUsage
+	c.require(clientGrantResponseContentFieldOrganizationUsage)
+}
+
+// SetAllowAnyOrganization sets the AllowAnyOrganization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientGrantResponseContent) SetAllowAnyOrganization(allowAnyOrganization *bool) {
+	c.AllowAnyOrganization = allowAnyOrganization
+	c.require(clientGrantResponseContentFieldAllowAnyOrganization)
+}
+
+// SetIsSystem sets the IsSystem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientGrantResponseContent) SetIsSystem(isSystem *bool) {
+	c.IsSystem = isSystem
+	c.require(clientGrantResponseContentFieldIsSystem)
+}
+
+// SetSubjectType sets the SubjectType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientGrantResponseContent) SetSubjectType(subjectType *ClientGrantSubjectTypeEnum) {
+	c.SubjectType = subjectType
+	c.require(clientGrantResponseContentFieldSubjectType)
+}
+
+// SetAuthorizationDetailsTypes sets the AuthorizationDetailsTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientGrantResponseContent) SetAuthorizationDetailsTypes(authorizationDetailsTypes []string) {
+	c.AuthorizationDetailsTypes = authorizationDetailsTypes
+	c.require(clientGrantResponseContentFieldAuthorizationDetailsTypes)
 }
 
 func (c *ClientGrantResponseContent) UnmarshalJSON(data []byte) error {
@@ -173,6 +252,17 @@ func (c *ClientGrantResponseContent) UnmarshalJSON(data []byte) error {
 	c.extraProperties = extraProperties
 	c.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (c *ClientGrantResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ClientGrantResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (c *ClientGrantResponseContent) String() string {
@@ -210,11 +300,23 @@ func (c ClientGrantSubjectTypeEnum) Ptr() *ClientGrantSubjectTypeEnum {
 	return &c
 }
 
+var (
+	createClientGrantResponseContentFieldId                        = big.NewInt(1 << 0)
+	createClientGrantResponseContentFieldClientId                  = big.NewInt(1 << 1)
+	createClientGrantResponseContentFieldAudience                  = big.NewInt(1 << 2)
+	createClientGrantResponseContentFieldScope                     = big.NewInt(1 << 3)
+	createClientGrantResponseContentFieldOrganizationUsage         = big.NewInt(1 << 4)
+	createClientGrantResponseContentFieldAllowAnyOrganization      = big.NewInt(1 << 5)
+	createClientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 6)
+	createClientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 7)
+	createClientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 8)
+)
+
 type CreateClientGrantResponseContent struct {
 	// ID of the client grant.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the client.
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// The audience (API identifier) of this client grant.
 	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
 	// Scopes allowed for this client grant.
@@ -228,68 +330,71 @@ type CreateClientGrantResponseContent struct {
 	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
 	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateClientGrantResponseContent) GetID() *string {
-	if c == nil {
-		return nil
+func (c *CreateClientGrantResponseContent) GetId() string {
+	if c == nil || c.Id == nil {
+		return ""
 	}
-	return c.ID
+	return *c.Id
 }
 
-func (c *CreateClientGrantResponseContent) GetClientID() *string {
-	if c == nil {
-		return nil
+func (c *CreateClientGrantResponseContent) GetClientId() string {
+	if c == nil || c.ClientId == nil {
+		return ""
 	}
-	return c.ClientID
+	return *c.ClientId
 }
 
-func (c *CreateClientGrantResponseContent) GetAudience() *string {
-	if c == nil {
-		return nil
+func (c *CreateClientGrantResponseContent) GetAudience() string {
+	if c == nil || c.Audience == nil {
+		return ""
 	}
-	return c.Audience
+	return *c.Audience
 }
 
 func (c *CreateClientGrantResponseContent) GetScope() []string {
-	if c == nil {
+	if c == nil || c.Scope == nil {
 		return nil
 	}
 	return c.Scope
 }
 
-func (c *CreateClientGrantResponseContent) GetOrganizationUsage() *ClientGrantOrganizationUsageEnum {
-	if c == nil {
-		return nil
+func (c *CreateClientGrantResponseContent) GetOrganizationUsage() ClientGrantOrganizationUsageEnum {
+	if c == nil || c.OrganizationUsage == nil {
+		return ""
 	}
-	return c.OrganizationUsage
+	return *c.OrganizationUsage
 }
 
-func (c *CreateClientGrantResponseContent) GetAllowAnyOrganization() *bool {
-	if c == nil {
-		return nil
+func (c *CreateClientGrantResponseContent) GetAllowAnyOrganization() bool {
+	if c == nil || c.AllowAnyOrganization == nil {
+		return false
 	}
-	return c.AllowAnyOrganization
+	return *c.AllowAnyOrganization
 }
 
-func (c *CreateClientGrantResponseContent) GetIsSystem() *bool {
-	if c == nil {
-		return nil
+func (c *CreateClientGrantResponseContent) GetIsSystem() bool {
+	if c == nil || c.IsSystem == nil {
+		return false
 	}
-	return c.IsSystem
+	return *c.IsSystem
 }
 
-func (c *CreateClientGrantResponseContent) GetSubjectType() *ClientGrantSubjectTypeEnum {
-	if c == nil {
-		return nil
+func (c *CreateClientGrantResponseContent) GetSubjectType() ClientGrantSubjectTypeEnum {
+	if c == nil || c.SubjectType == nil {
+		return ""
 	}
-	return c.SubjectType
+	return *c.SubjectType
 }
 
 func (c *CreateClientGrantResponseContent) GetAuthorizationDetailsTypes() []string {
-	if c == nil {
+	if c == nil || c.AuthorizationDetailsTypes == nil {
 		return nil
 	}
 	return c.AuthorizationDetailsTypes
@@ -297,6 +402,76 @@ func (c *CreateClientGrantResponseContent) GetAuthorizationDetailsTypes() []stri
 
 func (c *CreateClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateClientGrantResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientGrantResponseContent) SetId(id *string) {
+	c.Id = id
+	c.require(createClientGrantResponseContentFieldId)
+}
+
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientGrantResponseContent) SetClientId(clientId *string) {
+	c.ClientId = clientId
+	c.require(createClientGrantResponseContentFieldClientId)
+}
+
+// SetAudience sets the Audience field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientGrantResponseContent) SetAudience(audience *string) {
+	c.Audience = audience
+	c.require(createClientGrantResponseContentFieldAudience)
+}
+
+// SetScope sets the Scope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientGrantResponseContent) SetScope(scope []string) {
+	c.Scope = scope
+	c.require(createClientGrantResponseContentFieldScope)
+}
+
+// SetOrganizationUsage sets the OrganizationUsage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientGrantResponseContent) SetOrganizationUsage(organizationUsage *ClientGrantOrganizationUsageEnum) {
+	c.OrganizationUsage = organizationUsage
+	c.require(createClientGrantResponseContentFieldOrganizationUsage)
+}
+
+// SetAllowAnyOrganization sets the AllowAnyOrganization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientGrantResponseContent) SetAllowAnyOrganization(allowAnyOrganization *bool) {
+	c.AllowAnyOrganization = allowAnyOrganization
+	c.require(createClientGrantResponseContentFieldAllowAnyOrganization)
+}
+
+// SetIsSystem sets the IsSystem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientGrantResponseContent) SetIsSystem(isSystem *bool) {
+	c.IsSystem = isSystem
+	c.require(createClientGrantResponseContentFieldIsSystem)
+}
+
+// SetSubjectType sets the SubjectType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientGrantResponseContent) SetSubjectType(subjectType *ClientGrantSubjectTypeEnum) {
+	c.SubjectType = subjectType
+	c.require(createClientGrantResponseContentFieldSubjectType)
+}
+
+// SetAuthorizationDetailsTypes sets the AuthorizationDetailsTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientGrantResponseContent) SetAuthorizationDetailsTypes(authorizationDetailsTypes []string) {
+	c.AuthorizationDetailsTypes = authorizationDetailsTypes
+	c.require(createClientGrantResponseContentFieldAuthorizationDetailsTypes)
 }
 
 func (c *CreateClientGrantResponseContent) UnmarshalJSON(data []byte) error {
@@ -315,6 +490,17 @@ func (c *CreateClientGrantResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateClientGrantResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateClientGrantResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateClientGrantResponseContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -327,24 +513,32 @@ func (c *CreateClientGrantResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	listClientGrantPaginatedResponseContentFieldNext         = big.NewInt(1 << 0)
+	listClientGrantPaginatedResponseContentFieldClientGrants = big.NewInt(1 << 1)
+)
+
 type ListClientGrantPaginatedResponseContent struct {
 	// Opaque identifier for use with the <i>from</i> query parameter for the next page of results.<br/>This identifier is valid for 24 hours.
 	Next         *string                       `json:"next,omitempty" url:"next,omitempty"`
 	ClientGrants []*ClientGrantResponseContent `json:"client_grants,omitempty" url:"client_grants,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListClientGrantPaginatedResponseContent) GetNext() *string {
-	if l == nil {
-		return nil
+func (l *ListClientGrantPaginatedResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
 	}
-	return l.Next
+	return *l.Next
 }
 
 func (l *ListClientGrantPaginatedResponseContent) GetClientGrants() []*ClientGrantResponseContent {
-	if l == nil {
+	if l == nil || l.ClientGrants == nil {
 		return nil
 	}
 	return l.ClientGrants
@@ -352,6 +546,27 @@ func (l *ListClientGrantPaginatedResponseContent) GetClientGrants() []*ClientGra
 
 func (l *ListClientGrantPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListClientGrantPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientGrantPaginatedResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listClientGrantPaginatedResponseContentFieldNext)
+}
+
+// SetClientGrants sets the ClientGrants field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientGrantPaginatedResponseContent) SetClientGrants(clientGrants []*ClientGrantResponseContent) {
+	l.ClientGrants = clientGrants
+	l.require(listClientGrantPaginatedResponseContentFieldClientGrants)
 }
 
 func (l *ListClientGrantPaginatedResponseContent) UnmarshalJSON(data []byte) error {
@@ -370,6 +585,17 @@ func (l *ListClientGrantPaginatedResponseContent) UnmarshalJSON(data []byte) err
 	return nil
 }
 
+func (l *ListClientGrantPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListClientGrantPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListClientGrantPaginatedResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -382,11 +608,23 @@ func (l *ListClientGrantPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	updateClientGrantResponseContentFieldId                        = big.NewInt(1 << 0)
+	updateClientGrantResponseContentFieldClientId                  = big.NewInt(1 << 1)
+	updateClientGrantResponseContentFieldAudience                  = big.NewInt(1 << 2)
+	updateClientGrantResponseContentFieldScope                     = big.NewInt(1 << 3)
+	updateClientGrantResponseContentFieldOrganizationUsage         = big.NewInt(1 << 4)
+	updateClientGrantResponseContentFieldAllowAnyOrganization      = big.NewInt(1 << 5)
+	updateClientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 6)
+	updateClientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 7)
+	updateClientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 8)
+)
+
 type UpdateClientGrantResponseContent struct {
 	// ID of the client grant.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the client.
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// The audience (API identifier) of this client grant.
 	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
 	// Scopes allowed for this client grant.
@@ -400,68 +638,71 @@ type UpdateClientGrantResponseContent struct {
 	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
 	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateClientGrantResponseContent) GetID() *string {
-	if u == nil {
-		return nil
+func (u *UpdateClientGrantResponseContent) GetId() string {
+	if u == nil || u.Id == nil {
+		return ""
 	}
-	return u.ID
+	return *u.Id
 }
 
-func (u *UpdateClientGrantResponseContent) GetClientID() *string {
-	if u == nil {
-		return nil
+func (u *UpdateClientGrantResponseContent) GetClientId() string {
+	if u == nil || u.ClientId == nil {
+		return ""
 	}
-	return u.ClientID
+	return *u.ClientId
 }
 
-func (u *UpdateClientGrantResponseContent) GetAudience() *string {
-	if u == nil {
-		return nil
+func (u *UpdateClientGrantResponseContent) GetAudience() string {
+	if u == nil || u.Audience == nil {
+		return ""
 	}
-	return u.Audience
+	return *u.Audience
 }
 
 func (u *UpdateClientGrantResponseContent) GetScope() []string {
-	if u == nil {
+	if u == nil || u.Scope == nil {
 		return nil
 	}
 	return u.Scope
 }
 
-func (u *UpdateClientGrantResponseContent) GetOrganizationUsage() *ClientGrantOrganizationUsageEnum {
-	if u == nil {
-		return nil
+func (u *UpdateClientGrantResponseContent) GetOrganizationUsage() ClientGrantOrganizationUsageEnum {
+	if u == nil || u.OrganizationUsage == nil {
+		return ""
 	}
-	return u.OrganizationUsage
+	return *u.OrganizationUsage
 }
 
-func (u *UpdateClientGrantResponseContent) GetAllowAnyOrganization() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateClientGrantResponseContent) GetAllowAnyOrganization() bool {
+	if u == nil || u.AllowAnyOrganization == nil {
+		return false
 	}
-	return u.AllowAnyOrganization
+	return *u.AllowAnyOrganization
 }
 
-func (u *UpdateClientGrantResponseContent) GetIsSystem() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateClientGrantResponseContent) GetIsSystem() bool {
+	if u == nil || u.IsSystem == nil {
+		return false
 	}
-	return u.IsSystem
+	return *u.IsSystem
 }
 
-func (u *UpdateClientGrantResponseContent) GetSubjectType() *ClientGrantSubjectTypeEnum {
-	if u == nil {
-		return nil
+func (u *UpdateClientGrantResponseContent) GetSubjectType() ClientGrantSubjectTypeEnum {
+	if u == nil || u.SubjectType == nil {
+		return ""
 	}
-	return u.SubjectType
+	return *u.SubjectType
 }
 
 func (u *UpdateClientGrantResponseContent) GetAuthorizationDetailsTypes() []string {
-	if u == nil {
+	if u == nil || u.AuthorizationDetailsTypes == nil {
 		return nil
 	}
 	return u.AuthorizationDetailsTypes
@@ -469,6 +710,76 @@ func (u *UpdateClientGrantResponseContent) GetAuthorizationDetailsTypes() []stri
 
 func (u *UpdateClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UpdateClientGrantResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientGrantResponseContent) SetId(id *string) {
+	u.Id = id
+	u.require(updateClientGrantResponseContentFieldId)
+}
+
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientGrantResponseContent) SetClientId(clientId *string) {
+	u.ClientId = clientId
+	u.require(updateClientGrantResponseContentFieldClientId)
+}
+
+// SetAudience sets the Audience field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientGrantResponseContent) SetAudience(audience *string) {
+	u.Audience = audience
+	u.require(updateClientGrantResponseContentFieldAudience)
+}
+
+// SetScope sets the Scope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientGrantResponseContent) SetScope(scope []string) {
+	u.Scope = scope
+	u.require(updateClientGrantResponseContentFieldScope)
+}
+
+// SetOrganizationUsage sets the OrganizationUsage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientGrantResponseContent) SetOrganizationUsage(organizationUsage *ClientGrantOrganizationUsageEnum) {
+	u.OrganizationUsage = organizationUsage
+	u.require(updateClientGrantResponseContentFieldOrganizationUsage)
+}
+
+// SetAllowAnyOrganization sets the AllowAnyOrganization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientGrantResponseContent) SetAllowAnyOrganization(allowAnyOrganization *bool) {
+	u.AllowAnyOrganization = allowAnyOrganization
+	u.require(updateClientGrantResponseContentFieldAllowAnyOrganization)
+}
+
+// SetIsSystem sets the IsSystem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientGrantResponseContent) SetIsSystem(isSystem *bool) {
+	u.IsSystem = isSystem
+	u.require(updateClientGrantResponseContentFieldIsSystem)
+}
+
+// SetSubjectType sets the SubjectType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientGrantResponseContent) SetSubjectType(subjectType *ClientGrantSubjectTypeEnum) {
+	u.SubjectType = subjectType
+	u.require(updateClientGrantResponseContentFieldSubjectType)
+}
+
+// SetAuthorizationDetailsTypes sets the AuthorizationDetailsTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientGrantResponseContent) SetAuthorizationDetailsTypes(authorizationDetailsTypes []string) {
+	u.AuthorizationDetailsTypes = authorizationDetailsTypes
+	u.require(updateClientGrantResponseContentFieldAuthorizationDetailsTypes)
 }
 
 func (u *UpdateClientGrantResponseContent) UnmarshalJSON(data []byte) error {
@@ -487,6 +798,17 @@ func (u *UpdateClientGrantResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UpdateClientGrantResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateClientGrantResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UpdateClientGrantResponseContent) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -497,14 +819,4 @@ func (u *UpdateClientGrantResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateClientGrantRequestContent struct {
-	// Scopes allowed for this client grant.
-	Scope             []string                                  `json:"scope,omitempty" url:"-"`
-	OrganizationUsage *ClientGrantOrganizationNullableUsageEnum `json:"organization_usage,omitempty" url:"-"`
-	// Controls allowing any organization to be used with this grant
-	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"-"`
-	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
-	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"-"`
 }

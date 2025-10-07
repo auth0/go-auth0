@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	members "github.com/auth0/go-auth0/v2/management/organizations/members"
 	http "net/http"
 )
 
@@ -36,8 +35,8 @@ func (r *RawClient) Assign(
 	// Organization identifier.
 	id string,
 	// ID of the user to associate roles with.
-	userID string,
-	request *members.AssignOrganizationMemberRolesRequestContent,
+	userId string,
+	request *management.AssignOrganizationMemberRolesRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -49,40 +48,13 @@ func (r *RawClient) Assign(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/members/%v/roles",
 		id,
-		userID,
+		userId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		409: func(apiError *core.APIError) error {
-			return &management.ConflictError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -94,7 +66,7 @@ func (r *RawClient) Assign(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -112,8 +84,8 @@ func (r *RawClient) Delete(
 	// Organization identifier.
 	id string,
 	// User ID of the organization member to remove roles from.
-	userID string,
-	request *members.DeleteOrganizationMemberRolesRequestContent,
+	userId string,
+	request *management.DeleteOrganizationMemberRolesRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -125,35 +97,13 @@ func (r *RawClient) Delete(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/members/%v/roles",
 		id,
-		userID,
+		userId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -165,7 +115,7 @@ func (r *RawClient) Delete(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

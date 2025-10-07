@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	selfserviceprofiles "github.com/auth0/go-auth0/v2/management/selfserviceprofiles"
 	http "net/http"
 )
 
@@ -35,9 +34,9 @@ func (r *RawClient) Create(
 	ctx context.Context,
 	// The id of the self-service profile to retrieve
 	id string,
-	request *selfserviceprofiles.CreateSelfServiceProfileSSOTicketRequestContent,
+	request *management.CreateSelfServiceProfileSsoTicketRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.CreateSelfServiceProfileSSOTicketResponseContent], error) {
+) (*core.Response[*management.CreateSelfServiceProfileSsoTicketResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -53,29 +52,7 @@ func (r *RawClient) Create(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
-	var response *management.CreateSelfServiceProfileSSOTicketResponseContent
+	var response *management.CreateSelfServiceProfileSsoTicketResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -88,13 +65,13 @@ func (r *RawClient) Create(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.CreateSelfServiceProfileSSOTicketResponseContent]{
+	return &core.Response[*management.CreateSelfServiceProfileSsoTicketResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -104,7 +81,7 @@ func (r *RawClient) Create(
 func (r *RawClient) Revoke(
 	ctx context.Context,
 	// The id of the self-service profile
-	profileID string,
+	profileId string,
 	// The id of the ticket to revoke
 	id string,
 	opts ...option.RequestOption,
@@ -117,30 +94,13 @@ func (r *RawClient) Revoke(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/self-service-profiles/%v/sso-ticket/%v/revoke",
-		profileID,
+		profileId,
 		id,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -151,7 +111,7 @@ func (r *RawClient) Revoke(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

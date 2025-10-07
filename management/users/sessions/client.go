@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	users "github.com/auth0/go-auth0/v2/management/users"
 	http "net/http"
 )
 
@@ -38,8 +37,8 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the user to get sessions for
-	userID string,
-	request *users.ListUserSessionsRequestParameters,
+	userId string,
+	request *management.ListUserSessionsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.SessionResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -50,14 +49,9 @@ func (c *Client) List(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v/sessions",
-		userID,
+		userId,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"take": 50,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -65,28 +59,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
@@ -104,13 +76,13 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	readPageResponse := func(response *management.ListUserSessionsPaginatedResponseContent) *internal.PageResponse[*string, *management.SessionResponseContent] {
 		var zeroValue *string
-		next := response.GetNext()
-		results := response.GetSessions()
+		next := response.Next
+		results := response.Sessions
 		return &internal.PageResponse[*string, *management.SessionResponseContent]{
 			Next:    next,
 			Results: results,
@@ -129,12 +101,12 @@ func (c *Client) List(
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the user to get sessions for
-	userID string,
+	userId string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
-		userID,
+		userId,
 		opts...,
 	)
 	if err != nil {

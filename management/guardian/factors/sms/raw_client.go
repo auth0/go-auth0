@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	factors "github.com/auth0/go-auth0/v2/management/guardian/factors"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	http "net/http"
@@ -46,23 +45,6 @@ func (r *RawClient) GetTwilioProvider(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetGuardianFactorsProviderSmsTwilioResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -75,7 +57,7 @@ func (r *RawClient) GetTwilioProvider(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -90,7 +72,7 @@ func (r *RawClient) GetTwilioProvider(
 
 func (r *RawClient) SetTwilioProvider(
 	ctx context.Context,
-	request *factors.SetGuardianFactorsProviderSmsTwilioRequestContent,
+	request *management.SetGuardianFactorsProviderSmsTwilioRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.SetGuardianFactorsProviderSmsTwilioResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -105,23 +87,6 @@ func (r *RawClient) SetTwilioProvider(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.SetGuardianFactorsProviderSmsTwilioResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -135,7 +100,7 @@ func (r *RawClient) SetTwilioProvider(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -163,23 +128,6 @@ func (r *RawClient) GetSelectedProvider(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetGuardianFactorsProviderSmsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -192,7 +140,7 @@ func (r *RawClient) GetSelectedProvider(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -207,7 +155,7 @@ func (r *RawClient) GetSelectedProvider(
 
 func (r *RawClient) SetProvider(
 	ctx context.Context,
-	request *factors.SetGuardianFactorsProviderSmsRequestContent,
+	request *management.SetGuardianFactorsProviderSmsRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.SetGuardianFactorsProviderSmsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -222,23 +170,6 @@ func (r *RawClient) SetProvider(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.SetGuardianFactorsProviderSmsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -252,7 +183,7 @@ func (r *RawClient) SetProvider(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -280,23 +211,6 @@ func (r *RawClient) GetTemplates(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetGuardianFactorSmsTemplatesResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -309,7 +223,7 @@ func (r *RawClient) GetTemplates(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -324,7 +238,7 @@ func (r *RawClient) GetTemplates(
 
 func (r *RawClient) SetTemplates(
 	ctx context.Context,
-	request *factors.SetGuardianFactorSmsTemplatesRequestContent,
+	request *management.SetGuardianFactorSmsTemplatesRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.SetGuardianFactorSmsTemplatesResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -339,23 +253,6 @@ func (r *RawClient) SetTemplates(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.SetGuardianFactorSmsTemplatesResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -369,7 +266,7 @@ func (r *RawClient) SetTemplates(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

@@ -6,53 +6,32 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 	time "time"
 )
 
-type CreateActionRequestContent struct {
-	// The name of an action.
-	Name string `json:"name" url:"-"`
-	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
-	SupportedTriggers []*ActionTrigger `json:"supported_triggers,omitempty" url:"-"`
-	// The source code of the action.
-	Code *string `json:"code,omitempty" url:"-"`
-	// The list of third party npm modules, and their versions, that this action depends on.
-	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"-"`
-	// The Node runtime. For example: `node22`, defaults to `node22`
-	Runtime *string `json:"runtime,omitempty" url:"-"`
-	// The list of secrets that are included in an action or a version of an action.
-	Secrets []*ActionSecretRequest `json:"secrets,omitempty" url:"-"`
-	// True if the action should be deployed after creation.
-	Deploy *bool `json:"deploy,omitempty" url:"-"`
-}
-
-type DeleteActionRequestParameters struct {
-	// Force action deletion detaching bindings
-	Force *bool `json:"-" url:"force,omitempty"`
-}
-
-type ListActionsRequestParameters struct {
-	// An actions extensibility point.
-	TriggerID *ActionTriggerTypeEnum `json:"-" url:"triggerId,omitempty"`
-	// The name of the action to retrieve.
-	ActionName *string `json:"-" url:"actionName,omitempty"`
-	// Optional filter to only retrieve actions that are deployed.
-	Deployed *bool `json:"-" url:"deployed,omitempty"`
-	// Use this field to request a specific page of the list results.
-	Page *int `json:"-" url:"page,omitempty"`
-	// The maximum number of results to be returned by the server in single response. 20 by default
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Optional. When true, return only installed actions. When false, return only custom actions. Returns all actions by default.
-	Installed *bool `json:"-" url:"installed,omitempty"`
-}
-
-type TestActionRequestContent struct {
-	Payload TestActionPayload `json:"payload,omitempty" url:"-"`
-}
+var (
+	createActionResponseContentFieldId                     = big.NewInt(1 << 0)
+	createActionResponseContentFieldName                   = big.NewInt(1 << 1)
+	createActionResponseContentFieldSupportedTriggers      = big.NewInt(1 << 2)
+	createActionResponseContentFieldAllChangesDeployed     = big.NewInt(1 << 3)
+	createActionResponseContentFieldCreatedAt              = big.NewInt(1 << 4)
+	createActionResponseContentFieldUpdatedAt              = big.NewInt(1 << 5)
+	createActionResponseContentFieldCode                   = big.NewInt(1 << 6)
+	createActionResponseContentFieldDependencies           = big.NewInt(1 << 7)
+	createActionResponseContentFieldRuntime                = big.NewInt(1 << 8)
+	createActionResponseContentFieldSecrets                = big.NewInt(1 << 9)
+	createActionResponseContentFieldDeployedVersion        = big.NewInt(1 << 10)
+	createActionResponseContentFieldInstalledIntegrationId = big.NewInt(1 << 11)
+	createActionResponseContentFieldIntegration            = big.NewInt(1 << 12)
+	createActionResponseContentFieldStatus                 = big.NewInt(1 << 13)
+	createActionResponseContentFieldBuiltAt                = big.NewInt(1 << 14)
+	createActionResponseContentFieldDeploy                 = big.NewInt(1 << 15)
+)
 
 type CreateActionResponseContent struct {
 	// The unique ID of the action.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of an action.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
@@ -73,7 +52,7 @@ type CreateActionResponseContent struct {
 	Secrets         []*ActionSecretResponse `json:"secrets,omitempty" url:"secrets,omitempty"`
 	DeployedVersion *ActionDeployedVersion  `json:"deployed_version,omitempty" url:"deployed_version,omitempty"`
 	// installed_integration_id is the fk reference to the InstalledIntegration entity.
-	InstalledIntegrationID *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
+	InstalledIntegrationId *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
 	Integration            *Integration           `json:"integration,omitempty" url:"integration,omitempty"`
 	Status                 *ActionBuildStatusEnum `json:"status,omitempty" url:"status,omitempty"`
 	// The time when this action was built successfully.
@@ -81,124 +60,246 @@ type CreateActionResponseContent struct {
 	// True if the action should be deployed after creation.
 	Deploy *bool `json:"deploy,omitempty" url:"deploy,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateActionResponseContent) GetID() *string {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetId() string {
+	if c == nil || c.Id == nil {
+		return ""
 	}
-	return c.ID
+	return *c.Id
 }
 
-func (c *CreateActionResponseContent) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
 func (c *CreateActionResponseContent) GetSupportedTriggers() []*ActionTrigger {
-	if c == nil {
+	if c == nil || c.SupportedTriggers == nil {
 		return nil
 	}
 	return c.SupportedTriggers
 }
 
-func (c *CreateActionResponseContent) GetAllChangesDeployed() *bool {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetAllChangesDeployed() bool {
+	if c == nil || c.AllChangesDeployed == nil {
+		return false
 	}
-	return c.AllChangesDeployed
+	return *c.AllChangesDeployed
 }
 
-func (c *CreateActionResponseContent) GetCreatedAt() *time.Time {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
 	}
-	return c.CreatedAt
+	return *c.CreatedAt
 }
 
-func (c *CreateActionResponseContent) GetUpdatedAt() *time.Time {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetUpdatedAt() time.Time {
+	if c == nil || c.UpdatedAt == nil {
+		return time.Time{}
 	}
-	return c.UpdatedAt
+	return *c.UpdatedAt
 }
 
-func (c *CreateActionResponseContent) GetCode() *string {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetCode() string {
+	if c == nil || c.Code == nil {
+		return ""
 	}
-	return c.Code
+	return *c.Code
 }
 
 func (c *CreateActionResponseContent) GetDependencies() []*ActionVersionDependency {
-	if c == nil {
+	if c == nil || c.Dependencies == nil {
 		return nil
 	}
 	return c.Dependencies
 }
 
-func (c *CreateActionResponseContent) GetRuntime() *string {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetRuntime() string {
+	if c == nil || c.Runtime == nil {
+		return ""
 	}
-	return c.Runtime
+	return *c.Runtime
 }
 
 func (c *CreateActionResponseContent) GetSecrets() []*ActionSecretResponse {
-	if c == nil {
+	if c == nil || c.Secrets == nil {
 		return nil
 	}
 	return c.Secrets
 }
 
-func (c *CreateActionResponseContent) GetDeployedVersion() *ActionDeployedVersion {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetDeployedVersion() ActionDeployedVersion {
+	if c == nil || c.DeployedVersion == nil {
+		return ActionDeployedVersion{}
 	}
-	return c.DeployedVersion
+	return *c.DeployedVersion
 }
 
-func (c *CreateActionResponseContent) GetInstalledIntegrationID() *string {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetInstalledIntegrationId() string {
+	if c == nil || c.InstalledIntegrationId == nil {
+		return ""
 	}
-	return c.InstalledIntegrationID
+	return *c.InstalledIntegrationId
 }
 
-func (c *CreateActionResponseContent) GetIntegration() *Integration {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetIntegration() Integration {
+	if c == nil || c.Integration == nil {
+		return Integration{}
 	}
-	return c.Integration
+	return *c.Integration
 }
 
-func (c *CreateActionResponseContent) GetStatus() *ActionBuildStatusEnum {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetStatus() ActionBuildStatusEnum {
+	if c == nil || c.Status == nil {
+		return ""
 	}
-	return c.Status
+	return *c.Status
 }
 
-func (c *CreateActionResponseContent) GetBuiltAt() *time.Time {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetBuiltAt() time.Time {
+	if c == nil || c.BuiltAt == nil {
+		return time.Time{}
 	}
-	return c.BuiltAt
+	return *c.BuiltAt
 }
 
-func (c *CreateActionResponseContent) GetDeploy() *bool {
-	if c == nil {
-		return nil
+func (c *CreateActionResponseContent) GetDeploy() bool {
+	if c == nil || c.Deploy == nil {
+		return false
 	}
-	return c.Deploy
+	return *c.Deploy
 }
 
 func (c *CreateActionResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateActionResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetId(id *string) {
+	c.Id = id
+	c.require(createActionResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetName(name *string) {
+	c.Name = name
+	c.require(createActionResponseContentFieldName)
+}
+
+// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
+	c.SupportedTriggers = supportedTriggers
+	c.require(createActionResponseContentFieldSupportedTriggers)
+}
+
+// SetAllChangesDeployed sets the AllChangesDeployed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetAllChangesDeployed(allChangesDeployed *bool) {
+	c.AllChangesDeployed = allChangesDeployed
+	c.require(createActionResponseContentFieldAllChangesDeployed)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetCreatedAt(createdAt *time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createActionResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(createActionResponseContentFieldUpdatedAt)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetCode(code *string) {
+	c.Code = code
+	c.require(createActionResponseContentFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetDependencies(dependencies []*ActionVersionDependency) {
+	c.Dependencies = dependencies
+	c.require(createActionResponseContentFieldDependencies)
+}
+
+// SetRuntime sets the Runtime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetRuntime(runtime *string) {
+	c.Runtime = runtime
+	c.require(createActionResponseContentFieldRuntime)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetSecrets(secrets []*ActionSecretResponse) {
+	c.Secrets = secrets
+	c.require(createActionResponseContentFieldSecrets)
+}
+
+// SetDeployedVersion sets the DeployedVersion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetDeployedVersion(deployedVersion *ActionDeployedVersion) {
+	c.DeployedVersion = deployedVersion
+	c.require(createActionResponseContentFieldDeployedVersion)
+}
+
+// SetInstalledIntegrationId sets the InstalledIntegrationId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetInstalledIntegrationId(installedIntegrationId *string) {
+	c.InstalledIntegrationId = installedIntegrationId
+	c.require(createActionResponseContentFieldInstalledIntegrationId)
+}
+
+// SetIntegration sets the Integration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetIntegration(integration *Integration) {
+	c.Integration = integration
+	c.require(createActionResponseContentFieldIntegration)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetStatus(status *ActionBuildStatusEnum) {
+	c.Status = status
+	c.require(createActionResponseContentFieldStatus)
+}
+
+// SetBuiltAt sets the BuiltAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetBuiltAt(builtAt *time.Time) {
+	c.BuiltAt = builtAt
+	c.require(createActionResponseContentFieldBuiltAt)
+}
+
+// SetDeploy sets the Deploy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetDeploy(deploy *bool) {
+	c.Deploy = deploy
+	c.require(createActionResponseContentFieldDeploy)
 }
 
 func (c *CreateActionResponseContent) UnmarshalJSON(data []byte) error {
@@ -240,7 +341,8 @@ func (c *CreateActionResponseContent) MarshalJSON() ([]byte, error) {
 		UpdatedAt: internal.NewOptionalDateTime(c.UpdatedAt),
 		BuiltAt:   internal.NewOptionalDateTime(c.BuiltAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (c *CreateActionResponseContent) String() string {
@@ -255,11 +357,29 @@ func (c *CreateActionResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	deployActionResponseContentFieldId                = big.NewInt(1 << 0)
+	deployActionResponseContentFieldActionId          = big.NewInt(1 << 1)
+	deployActionResponseContentFieldCode              = big.NewInt(1 << 2)
+	deployActionResponseContentFieldDependencies      = big.NewInt(1 << 3)
+	deployActionResponseContentFieldDeployed          = big.NewInt(1 << 4)
+	deployActionResponseContentFieldRuntime           = big.NewInt(1 << 5)
+	deployActionResponseContentFieldSecrets           = big.NewInt(1 << 6)
+	deployActionResponseContentFieldStatus            = big.NewInt(1 << 7)
+	deployActionResponseContentFieldNumber            = big.NewInt(1 << 8)
+	deployActionResponseContentFieldErrors            = big.NewInt(1 << 9)
+	deployActionResponseContentFieldAction            = big.NewInt(1 << 10)
+	deployActionResponseContentFieldBuiltAt           = big.NewInt(1 << 11)
+	deployActionResponseContentFieldCreatedAt         = big.NewInt(1 << 12)
+	deployActionResponseContentFieldUpdatedAt         = big.NewInt(1 << 13)
+	deployActionResponseContentFieldSupportedTriggers = big.NewInt(1 << 14)
+)
+
 type DeployActionResponseContent struct {
 	// The unique id of an action version.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// The id of the action to which this version belongs.
-	ActionID *string `json:"action_id,omitempty" url:"action_id,omitempty"`
+	ActionId *string `json:"action_id,omitempty" url:"action_id,omitempty"`
 	// The source code of this specific version of the action.
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this specific version depends on.
@@ -285,110 +405,113 @@ type DeployActionResponseContent struct {
 	// The list of triggers that this version supports. At this time, a version can only target a single trigger at a time.
 	SupportedTriggers []*ActionTrigger `json:"supported_triggers,omitempty" url:"supported_triggers,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (d *DeployActionResponseContent) GetID() *string {
-	if d == nil {
-		return nil
+func (d *DeployActionResponseContent) GetId() string {
+	if d == nil || d.Id == nil {
+		return ""
 	}
-	return d.ID
+	return *d.Id
 }
 
-func (d *DeployActionResponseContent) GetActionID() *string {
-	if d == nil {
-		return nil
+func (d *DeployActionResponseContent) GetActionId() string {
+	if d == nil || d.ActionId == nil {
+		return ""
 	}
-	return d.ActionID
+	return *d.ActionId
 }
 
-func (d *DeployActionResponseContent) GetCode() *string {
-	if d == nil {
-		return nil
+func (d *DeployActionResponseContent) GetCode() string {
+	if d == nil || d.Code == nil {
+		return ""
 	}
-	return d.Code
+	return *d.Code
 }
 
 func (d *DeployActionResponseContent) GetDependencies() []*ActionVersionDependency {
-	if d == nil {
+	if d == nil || d.Dependencies == nil {
 		return nil
 	}
 	return d.Dependencies
 }
 
-func (d *DeployActionResponseContent) GetDeployed() *bool {
-	if d == nil {
-		return nil
+func (d *DeployActionResponseContent) GetDeployed() bool {
+	if d == nil || d.Deployed == nil {
+		return false
 	}
-	return d.Deployed
+	return *d.Deployed
 }
 
-func (d *DeployActionResponseContent) GetRuntime() *string {
-	if d == nil {
-		return nil
+func (d *DeployActionResponseContent) GetRuntime() string {
+	if d == nil || d.Runtime == nil {
+		return ""
 	}
-	return d.Runtime
+	return *d.Runtime
 }
 
 func (d *DeployActionResponseContent) GetSecrets() []*ActionSecretResponse {
-	if d == nil {
+	if d == nil || d.Secrets == nil {
 		return nil
 	}
 	return d.Secrets
 }
 
-func (d *DeployActionResponseContent) GetStatus() *ActionVersionBuildStatusEnum {
-	if d == nil {
-		return nil
+func (d *DeployActionResponseContent) GetStatus() ActionVersionBuildStatusEnum {
+	if d == nil || d.Status == nil {
+		return ""
 	}
-	return d.Status
+	return *d.Status
 }
 
-func (d *DeployActionResponseContent) GetNumber() *float64 {
-	if d == nil {
-		return nil
+func (d *DeployActionResponseContent) GetNumber() float64 {
+	if d == nil || d.Number == nil {
+		return 0
 	}
-	return d.Number
+	return *d.Number
 }
 
 func (d *DeployActionResponseContent) GetErrors() []*ActionError {
-	if d == nil {
+	if d == nil || d.Errors == nil {
 		return nil
 	}
 	return d.Errors
 }
 
-func (d *DeployActionResponseContent) GetAction() *ActionBase {
-	if d == nil {
-		return nil
+func (d *DeployActionResponseContent) GetAction() ActionBase {
+	if d == nil || d.Action == nil {
+		return ActionBase{}
 	}
-	return d.Action
+	return *d.Action
 }
 
-func (d *DeployActionResponseContent) GetBuiltAt() *time.Time {
-	if d == nil {
-		return nil
+func (d *DeployActionResponseContent) GetBuiltAt() time.Time {
+	if d == nil || d.BuiltAt == nil {
+		return time.Time{}
 	}
-	return d.BuiltAt
+	return *d.BuiltAt
 }
 
-func (d *DeployActionResponseContent) GetCreatedAt() *time.Time {
-	if d == nil {
-		return nil
+func (d *DeployActionResponseContent) GetCreatedAt() time.Time {
+	if d == nil || d.CreatedAt == nil {
+		return time.Time{}
 	}
-	return d.CreatedAt
+	return *d.CreatedAt
 }
 
-func (d *DeployActionResponseContent) GetUpdatedAt() *time.Time {
-	if d == nil {
-		return nil
+func (d *DeployActionResponseContent) GetUpdatedAt() time.Time {
+	if d == nil || d.UpdatedAt == nil {
+		return time.Time{}
 	}
-	return d.UpdatedAt
+	return *d.UpdatedAt
 }
 
 func (d *DeployActionResponseContent) GetSupportedTriggers() []*ActionTrigger {
-	if d == nil {
+	if d == nil || d.SupportedTriggers == nil {
 		return nil
 	}
 	return d.SupportedTriggers
@@ -396,6 +519,118 @@ func (d *DeployActionResponseContent) GetSupportedTriggers() []*ActionTrigger {
 
 func (d *DeployActionResponseContent) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
+}
+
+func (d *DeployActionResponseContent) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetId(id *string) {
+	d.Id = id
+	d.require(deployActionResponseContentFieldId)
+}
+
+// SetActionId sets the ActionId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetActionId(actionId *string) {
+	d.ActionId = actionId
+	d.require(deployActionResponseContentFieldActionId)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetCode(code *string) {
+	d.Code = code
+	d.require(deployActionResponseContentFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetDependencies(dependencies []*ActionVersionDependency) {
+	d.Dependencies = dependencies
+	d.require(deployActionResponseContentFieldDependencies)
+}
+
+// SetDeployed sets the Deployed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetDeployed(deployed *bool) {
+	d.Deployed = deployed
+	d.require(deployActionResponseContentFieldDeployed)
+}
+
+// SetRuntime sets the Runtime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetRuntime(runtime *string) {
+	d.Runtime = runtime
+	d.require(deployActionResponseContentFieldRuntime)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetSecrets(secrets []*ActionSecretResponse) {
+	d.Secrets = secrets
+	d.require(deployActionResponseContentFieldSecrets)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetStatus(status *ActionVersionBuildStatusEnum) {
+	d.Status = status
+	d.require(deployActionResponseContentFieldStatus)
+}
+
+// SetNumber sets the Number field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetNumber(number *float64) {
+	d.Number = number
+	d.require(deployActionResponseContentFieldNumber)
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetErrors(errors []*ActionError) {
+	d.Errors = errors
+	d.require(deployActionResponseContentFieldErrors)
+}
+
+// SetAction sets the Action field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetAction(action *ActionBase) {
+	d.Action = action
+	d.require(deployActionResponseContentFieldAction)
+}
+
+// SetBuiltAt sets the BuiltAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetBuiltAt(builtAt *time.Time) {
+	d.BuiltAt = builtAt
+	d.require(deployActionResponseContentFieldBuiltAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetCreatedAt(createdAt *time.Time) {
+	d.CreatedAt = createdAt
+	d.require(deployActionResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	d.UpdatedAt = updatedAt
+	d.require(deployActionResponseContentFieldUpdatedAt)
+}
+
+// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
+	d.SupportedTriggers = supportedTriggers
+	d.require(deployActionResponseContentFieldSupportedTriggers)
 }
 
 func (d *DeployActionResponseContent) UnmarshalJSON(data []byte) error {
@@ -437,7 +672,8 @@ func (d *DeployActionResponseContent) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewOptionalDateTime(d.CreatedAt),
 		UpdatedAt: internal.NewOptionalDateTime(d.UpdatedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (d *DeployActionResponseContent) String() string {
@@ -452,9 +688,28 @@ func (d *DeployActionResponseContent) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+var (
+	getActionResponseContentFieldId                     = big.NewInt(1 << 0)
+	getActionResponseContentFieldName                   = big.NewInt(1 << 1)
+	getActionResponseContentFieldSupportedTriggers      = big.NewInt(1 << 2)
+	getActionResponseContentFieldAllChangesDeployed     = big.NewInt(1 << 3)
+	getActionResponseContentFieldCreatedAt              = big.NewInt(1 << 4)
+	getActionResponseContentFieldUpdatedAt              = big.NewInt(1 << 5)
+	getActionResponseContentFieldCode                   = big.NewInt(1 << 6)
+	getActionResponseContentFieldDependencies           = big.NewInt(1 << 7)
+	getActionResponseContentFieldRuntime                = big.NewInt(1 << 8)
+	getActionResponseContentFieldSecrets                = big.NewInt(1 << 9)
+	getActionResponseContentFieldDeployedVersion        = big.NewInt(1 << 10)
+	getActionResponseContentFieldInstalledIntegrationId = big.NewInt(1 << 11)
+	getActionResponseContentFieldIntegration            = big.NewInt(1 << 12)
+	getActionResponseContentFieldStatus                 = big.NewInt(1 << 13)
+	getActionResponseContentFieldBuiltAt                = big.NewInt(1 << 14)
+	getActionResponseContentFieldDeploy                 = big.NewInt(1 << 15)
+)
+
 type GetActionResponseContent struct {
 	// The unique ID of the action.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of an action.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
@@ -475,7 +730,7 @@ type GetActionResponseContent struct {
 	Secrets         []*ActionSecretResponse `json:"secrets,omitempty" url:"secrets,omitempty"`
 	DeployedVersion *ActionDeployedVersion  `json:"deployed_version,omitempty" url:"deployed_version,omitempty"`
 	// installed_integration_id is the fk reference to the InstalledIntegration entity.
-	InstalledIntegrationID *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
+	InstalledIntegrationId *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
 	Integration            *Integration           `json:"integration,omitempty" url:"integration,omitempty"`
 	Status                 *ActionBuildStatusEnum `json:"status,omitempty" url:"status,omitempty"`
 	// The time when this action was built successfully.
@@ -483,124 +738,246 @@ type GetActionResponseContent struct {
 	// True if the action should be deployed after creation.
 	Deploy *bool `json:"deploy,omitempty" url:"deploy,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (g *GetActionResponseContent) GetID() *string {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetId() string {
+	if g == nil || g.Id == nil {
+		return ""
 	}
-	return g.ID
+	return *g.Id
 }
 
-func (g *GetActionResponseContent) GetName() *string {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetName() string {
+	if g == nil || g.Name == nil {
+		return ""
 	}
-	return g.Name
+	return *g.Name
 }
 
 func (g *GetActionResponseContent) GetSupportedTriggers() []*ActionTrigger {
-	if g == nil {
+	if g == nil || g.SupportedTriggers == nil {
 		return nil
 	}
 	return g.SupportedTriggers
 }
 
-func (g *GetActionResponseContent) GetAllChangesDeployed() *bool {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetAllChangesDeployed() bool {
+	if g == nil || g.AllChangesDeployed == nil {
+		return false
 	}
-	return g.AllChangesDeployed
+	return *g.AllChangesDeployed
 }
 
-func (g *GetActionResponseContent) GetCreatedAt() *time.Time {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetCreatedAt() time.Time {
+	if g == nil || g.CreatedAt == nil {
+		return time.Time{}
 	}
-	return g.CreatedAt
+	return *g.CreatedAt
 }
 
-func (g *GetActionResponseContent) GetUpdatedAt() *time.Time {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetUpdatedAt() time.Time {
+	if g == nil || g.UpdatedAt == nil {
+		return time.Time{}
 	}
-	return g.UpdatedAt
+	return *g.UpdatedAt
 }
 
-func (g *GetActionResponseContent) GetCode() *string {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetCode() string {
+	if g == nil || g.Code == nil {
+		return ""
 	}
-	return g.Code
+	return *g.Code
 }
 
 func (g *GetActionResponseContent) GetDependencies() []*ActionVersionDependency {
-	if g == nil {
+	if g == nil || g.Dependencies == nil {
 		return nil
 	}
 	return g.Dependencies
 }
 
-func (g *GetActionResponseContent) GetRuntime() *string {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetRuntime() string {
+	if g == nil || g.Runtime == nil {
+		return ""
 	}
-	return g.Runtime
+	return *g.Runtime
 }
 
 func (g *GetActionResponseContent) GetSecrets() []*ActionSecretResponse {
-	if g == nil {
+	if g == nil || g.Secrets == nil {
 		return nil
 	}
 	return g.Secrets
 }
 
-func (g *GetActionResponseContent) GetDeployedVersion() *ActionDeployedVersion {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetDeployedVersion() ActionDeployedVersion {
+	if g == nil || g.DeployedVersion == nil {
+		return ActionDeployedVersion{}
 	}
-	return g.DeployedVersion
+	return *g.DeployedVersion
 }
 
-func (g *GetActionResponseContent) GetInstalledIntegrationID() *string {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetInstalledIntegrationId() string {
+	if g == nil || g.InstalledIntegrationId == nil {
+		return ""
 	}
-	return g.InstalledIntegrationID
+	return *g.InstalledIntegrationId
 }
 
-func (g *GetActionResponseContent) GetIntegration() *Integration {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetIntegration() Integration {
+	if g == nil || g.Integration == nil {
+		return Integration{}
 	}
-	return g.Integration
+	return *g.Integration
 }
 
-func (g *GetActionResponseContent) GetStatus() *ActionBuildStatusEnum {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetStatus() ActionBuildStatusEnum {
+	if g == nil || g.Status == nil {
+		return ""
 	}
-	return g.Status
+	return *g.Status
 }
 
-func (g *GetActionResponseContent) GetBuiltAt() *time.Time {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetBuiltAt() time.Time {
+	if g == nil || g.BuiltAt == nil {
+		return time.Time{}
 	}
-	return g.BuiltAt
+	return *g.BuiltAt
 }
 
-func (g *GetActionResponseContent) GetDeploy() *bool {
-	if g == nil {
-		return nil
+func (g *GetActionResponseContent) GetDeploy() bool {
+	if g == nil || g.Deploy == nil {
+		return false
 	}
-	return g.Deploy
+	return *g.Deploy
 }
 
 func (g *GetActionResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
+}
+
+func (g *GetActionResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetId(id *string) {
+	g.Id = id
+	g.require(getActionResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetName(name *string) {
+	g.Name = name
+	g.require(getActionResponseContentFieldName)
+}
+
+// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
+	g.SupportedTriggers = supportedTriggers
+	g.require(getActionResponseContentFieldSupportedTriggers)
+}
+
+// SetAllChangesDeployed sets the AllChangesDeployed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetAllChangesDeployed(allChangesDeployed *bool) {
+	g.AllChangesDeployed = allChangesDeployed
+	g.require(getActionResponseContentFieldAllChangesDeployed)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetCreatedAt(createdAt *time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getActionResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getActionResponseContentFieldUpdatedAt)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetCode(code *string) {
+	g.Code = code
+	g.require(getActionResponseContentFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetDependencies(dependencies []*ActionVersionDependency) {
+	g.Dependencies = dependencies
+	g.require(getActionResponseContentFieldDependencies)
+}
+
+// SetRuntime sets the Runtime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetRuntime(runtime *string) {
+	g.Runtime = runtime
+	g.require(getActionResponseContentFieldRuntime)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetSecrets(secrets []*ActionSecretResponse) {
+	g.Secrets = secrets
+	g.require(getActionResponseContentFieldSecrets)
+}
+
+// SetDeployedVersion sets the DeployedVersion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetDeployedVersion(deployedVersion *ActionDeployedVersion) {
+	g.DeployedVersion = deployedVersion
+	g.require(getActionResponseContentFieldDeployedVersion)
+}
+
+// SetInstalledIntegrationId sets the InstalledIntegrationId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetInstalledIntegrationId(installedIntegrationId *string) {
+	g.InstalledIntegrationId = installedIntegrationId
+	g.require(getActionResponseContentFieldInstalledIntegrationId)
+}
+
+// SetIntegration sets the Integration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetIntegration(integration *Integration) {
+	g.Integration = integration
+	g.require(getActionResponseContentFieldIntegration)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetStatus(status *ActionBuildStatusEnum) {
+	g.Status = status
+	g.require(getActionResponseContentFieldStatus)
+}
+
+// SetBuiltAt sets the BuiltAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetBuiltAt(builtAt *time.Time) {
+	g.BuiltAt = builtAt
+	g.require(getActionResponseContentFieldBuiltAt)
+}
+
+// SetDeploy sets the Deploy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetDeploy(deploy *bool) {
+	g.Deploy = deploy
+	g.require(getActionResponseContentFieldDeploy)
 }
 
 func (g *GetActionResponseContent) UnmarshalJSON(data []byte) error {
@@ -642,7 +1019,8 @@ func (g *GetActionResponseContent) MarshalJSON() ([]byte, error) {
 		UpdatedAt: internal.NewOptionalDateTime(g.UpdatedAt),
 		BuiltAt:   internal.NewOptionalDateTime(g.BuiltAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (g *GetActionResponseContent) String() string {
@@ -657,6 +1035,13 @@ func (g *GetActionResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	listActionsPaginatedResponseContentFieldTotal   = big.NewInt(1 << 0)
+	listActionsPaginatedResponseContentFieldPage    = big.NewInt(1 << 1)
+	listActionsPaginatedResponseContentFieldPerPage = big.NewInt(1 << 2)
+	listActionsPaginatedResponseContentFieldActions = big.NewInt(1 << 3)
+)
+
 type ListActionsPaginatedResponseContent struct {
 	// The total result count.
 	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
@@ -667,33 +1052,36 @@ type ListActionsPaginatedResponseContent struct {
 	// The list of actions.
 	Actions []*Action `json:"actions,omitempty" url:"actions,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListActionsPaginatedResponseContent) GetTotal() *float64 {
-	if l == nil {
-		return nil
+func (l *ListActionsPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
 	}
-	return l.Total
+	return *l.Total
 }
 
-func (l *ListActionsPaginatedResponseContent) GetPage() *float64 {
-	if l == nil {
-		return nil
+func (l *ListActionsPaginatedResponseContent) GetPage() float64 {
+	if l == nil || l.Page == nil {
+		return 0
 	}
-	return l.Page
+	return *l.Page
 }
 
-func (l *ListActionsPaginatedResponseContent) GetPerPage() *float64 {
-	if l == nil {
-		return nil
+func (l *ListActionsPaginatedResponseContent) GetPerPage() float64 {
+	if l == nil || l.PerPage == nil {
+		return 0
 	}
-	return l.PerPage
+	return *l.PerPage
 }
 
 func (l *ListActionsPaginatedResponseContent) GetActions() []*Action {
-	if l == nil {
+	if l == nil || l.Actions == nil {
 		return nil
 	}
 	return l.Actions
@@ -701,6 +1089,41 @@ func (l *ListActionsPaginatedResponseContent) GetActions() []*Action {
 
 func (l *ListActionsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListActionsPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionsPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listActionsPaginatedResponseContentFieldTotal)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionsPaginatedResponseContent) SetPage(page *float64) {
+	l.Page = page
+	l.require(listActionsPaginatedResponseContentFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionsPaginatedResponseContent) SetPerPage(perPage *float64) {
+	l.PerPage = perPage
+	l.require(listActionsPaginatedResponseContentFieldPerPage)
+}
+
+// SetActions sets the Actions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionsPaginatedResponseContent) SetActions(actions []*Action) {
+	l.Actions = actions
+	l.require(listActionsPaginatedResponseContentFieldActions)
 }
 
 func (l *ListActionsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
@@ -719,6 +1142,17 @@ func (l *ListActionsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (l *ListActionsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListActionsPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListActionsPaginatedResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -734,22 +1168,43 @@ func (l *ListActionsPaginatedResponseContent) String() string {
 // The payload for the action.
 type TestActionPayload = map[string]interface{}
 
+var (
+	testActionResponseContentFieldPayload = big.NewInt(1 << 0)
+)
+
 type TestActionResponseContent struct {
 	Payload *TestActionResultPayload `json:"payload,omitempty" url:"payload,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (t *TestActionResponseContent) GetPayload() *TestActionResultPayload {
-	if t == nil {
+func (t *TestActionResponseContent) GetPayload() TestActionResultPayload {
+	if t == nil || t.Payload == nil {
 		return nil
 	}
-	return t.Payload
+	return *t.Payload
 }
 
 func (t *TestActionResponseContent) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
+}
+
+func (t *TestActionResponseContent) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetPayload sets the Payload field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TestActionResponseContent) SetPayload(payload *TestActionResultPayload) {
+	t.Payload = payload
+	t.require(testActionResponseContentFieldPayload)
 }
 
 func (t *TestActionResponseContent) UnmarshalJSON(data []byte) error {
@@ -768,6 +1223,17 @@ func (t *TestActionResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (t *TestActionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed TestActionResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (t *TestActionResponseContent) String() string {
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
@@ -783,9 +1249,28 @@ func (t *TestActionResponseContent) String() string {
 // The resulting payload after an action was executed.
 type TestActionResultPayload = map[string]interface{}
 
+var (
+	updateActionResponseContentFieldId                     = big.NewInt(1 << 0)
+	updateActionResponseContentFieldName                   = big.NewInt(1 << 1)
+	updateActionResponseContentFieldSupportedTriggers      = big.NewInt(1 << 2)
+	updateActionResponseContentFieldAllChangesDeployed     = big.NewInt(1 << 3)
+	updateActionResponseContentFieldCreatedAt              = big.NewInt(1 << 4)
+	updateActionResponseContentFieldUpdatedAt              = big.NewInt(1 << 5)
+	updateActionResponseContentFieldCode                   = big.NewInt(1 << 6)
+	updateActionResponseContentFieldDependencies           = big.NewInt(1 << 7)
+	updateActionResponseContentFieldRuntime                = big.NewInt(1 << 8)
+	updateActionResponseContentFieldSecrets                = big.NewInt(1 << 9)
+	updateActionResponseContentFieldDeployedVersion        = big.NewInt(1 << 10)
+	updateActionResponseContentFieldInstalledIntegrationId = big.NewInt(1 << 11)
+	updateActionResponseContentFieldIntegration            = big.NewInt(1 << 12)
+	updateActionResponseContentFieldStatus                 = big.NewInt(1 << 13)
+	updateActionResponseContentFieldBuiltAt                = big.NewInt(1 << 14)
+	updateActionResponseContentFieldDeploy                 = big.NewInt(1 << 15)
+)
+
 type UpdateActionResponseContent struct {
 	// The unique ID of the action.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of an action.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
@@ -806,7 +1291,7 @@ type UpdateActionResponseContent struct {
 	Secrets         []*ActionSecretResponse `json:"secrets,omitempty" url:"secrets,omitempty"`
 	DeployedVersion *ActionDeployedVersion  `json:"deployed_version,omitempty" url:"deployed_version,omitempty"`
 	// installed_integration_id is the fk reference to the InstalledIntegration entity.
-	InstalledIntegrationID *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
+	InstalledIntegrationId *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
 	Integration            *Integration           `json:"integration,omitempty" url:"integration,omitempty"`
 	Status                 *ActionBuildStatusEnum `json:"status,omitempty" url:"status,omitempty"`
 	// The time when this action was built successfully.
@@ -814,124 +1299,246 @@ type UpdateActionResponseContent struct {
 	// True if the action should be deployed after creation.
 	Deploy *bool `json:"deploy,omitempty" url:"deploy,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateActionResponseContent) GetID() *string {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetId() string {
+	if u == nil || u.Id == nil {
+		return ""
 	}
-	return u.ID
+	return *u.Id
 }
 
-func (u *UpdateActionResponseContent) GetName() *string {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
 	}
-	return u.Name
+	return *u.Name
 }
 
 func (u *UpdateActionResponseContent) GetSupportedTriggers() []*ActionTrigger {
-	if u == nil {
+	if u == nil || u.SupportedTriggers == nil {
 		return nil
 	}
 	return u.SupportedTriggers
 }
 
-func (u *UpdateActionResponseContent) GetAllChangesDeployed() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetAllChangesDeployed() bool {
+	if u == nil || u.AllChangesDeployed == nil {
+		return false
 	}
-	return u.AllChangesDeployed
+	return *u.AllChangesDeployed
 }
 
-func (u *UpdateActionResponseContent) GetCreatedAt() *time.Time {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetCreatedAt() time.Time {
+	if u == nil || u.CreatedAt == nil {
+		return time.Time{}
 	}
-	return u.CreatedAt
+	return *u.CreatedAt
 }
 
-func (u *UpdateActionResponseContent) GetUpdatedAt() *time.Time {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetUpdatedAt() time.Time {
+	if u == nil || u.UpdatedAt == nil {
+		return time.Time{}
 	}
-	return u.UpdatedAt
+	return *u.UpdatedAt
 }
 
-func (u *UpdateActionResponseContent) GetCode() *string {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetCode() string {
+	if u == nil || u.Code == nil {
+		return ""
 	}
-	return u.Code
+	return *u.Code
 }
 
 func (u *UpdateActionResponseContent) GetDependencies() []*ActionVersionDependency {
-	if u == nil {
+	if u == nil || u.Dependencies == nil {
 		return nil
 	}
 	return u.Dependencies
 }
 
-func (u *UpdateActionResponseContent) GetRuntime() *string {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetRuntime() string {
+	if u == nil || u.Runtime == nil {
+		return ""
 	}
-	return u.Runtime
+	return *u.Runtime
 }
 
 func (u *UpdateActionResponseContent) GetSecrets() []*ActionSecretResponse {
-	if u == nil {
+	if u == nil || u.Secrets == nil {
 		return nil
 	}
 	return u.Secrets
 }
 
-func (u *UpdateActionResponseContent) GetDeployedVersion() *ActionDeployedVersion {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetDeployedVersion() ActionDeployedVersion {
+	if u == nil || u.DeployedVersion == nil {
+		return ActionDeployedVersion{}
 	}
-	return u.DeployedVersion
+	return *u.DeployedVersion
 }
 
-func (u *UpdateActionResponseContent) GetInstalledIntegrationID() *string {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetInstalledIntegrationId() string {
+	if u == nil || u.InstalledIntegrationId == nil {
+		return ""
 	}
-	return u.InstalledIntegrationID
+	return *u.InstalledIntegrationId
 }
 
-func (u *UpdateActionResponseContent) GetIntegration() *Integration {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetIntegration() Integration {
+	if u == nil || u.Integration == nil {
+		return Integration{}
 	}
-	return u.Integration
+	return *u.Integration
 }
 
-func (u *UpdateActionResponseContent) GetStatus() *ActionBuildStatusEnum {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetStatus() ActionBuildStatusEnum {
+	if u == nil || u.Status == nil {
+		return ""
 	}
-	return u.Status
+	return *u.Status
 }
 
-func (u *UpdateActionResponseContent) GetBuiltAt() *time.Time {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetBuiltAt() time.Time {
+	if u == nil || u.BuiltAt == nil {
+		return time.Time{}
 	}
-	return u.BuiltAt
+	return *u.BuiltAt
 }
 
-func (u *UpdateActionResponseContent) GetDeploy() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateActionResponseContent) GetDeploy() bool {
+	if u == nil || u.Deploy == nil {
+		return false
 	}
-	return u.Deploy
+	return *u.Deploy
 }
 
 func (u *UpdateActionResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UpdateActionResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetId(id *string) {
+	u.Id = id
+	u.require(updateActionResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateActionResponseContentFieldName)
+}
+
+// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
+	u.SupportedTriggers = supportedTriggers
+	u.require(updateActionResponseContentFieldSupportedTriggers)
+}
+
+// SetAllChangesDeployed sets the AllChangesDeployed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetAllChangesDeployed(allChangesDeployed *bool) {
+	u.AllChangesDeployed = allChangesDeployed
+	u.require(updateActionResponseContentFieldAllChangesDeployed)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetCreatedAt(createdAt *time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateActionResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(updateActionResponseContentFieldUpdatedAt)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetCode(code *string) {
+	u.Code = code
+	u.require(updateActionResponseContentFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetDependencies(dependencies []*ActionVersionDependency) {
+	u.Dependencies = dependencies
+	u.require(updateActionResponseContentFieldDependencies)
+}
+
+// SetRuntime sets the Runtime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetRuntime(runtime *string) {
+	u.Runtime = runtime
+	u.require(updateActionResponseContentFieldRuntime)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetSecrets(secrets []*ActionSecretResponse) {
+	u.Secrets = secrets
+	u.require(updateActionResponseContentFieldSecrets)
+}
+
+// SetDeployedVersion sets the DeployedVersion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetDeployedVersion(deployedVersion *ActionDeployedVersion) {
+	u.DeployedVersion = deployedVersion
+	u.require(updateActionResponseContentFieldDeployedVersion)
+}
+
+// SetInstalledIntegrationId sets the InstalledIntegrationId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetInstalledIntegrationId(installedIntegrationId *string) {
+	u.InstalledIntegrationId = installedIntegrationId
+	u.require(updateActionResponseContentFieldInstalledIntegrationId)
+}
+
+// SetIntegration sets the Integration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetIntegration(integration *Integration) {
+	u.Integration = integration
+	u.require(updateActionResponseContentFieldIntegration)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetStatus(status *ActionBuildStatusEnum) {
+	u.Status = status
+	u.require(updateActionResponseContentFieldStatus)
+}
+
+// SetBuiltAt sets the BuiltAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetBuiltAt(builtAt *time.Time) {
+	u.BuiltAt = builtAt
+	u.require(updateActionResponseContentFieldBuiltAt)
+}
+
+// SetDeploy sets the Deploy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetDeploy(deploy *bool) {
+	u.Deploy = deploy
+	u.require(updateActionResponseContentFieldDeploy)
 }
 
 func (u *UpdateActionResponseContent) UnmarshalJSON(data []byte) error {
@@ -973,7 +1580,8 @@ func (u *UpdateActionResponseContent) MarshalJSON() ([]byte, error) {
 		UpdatedAt: internal.NewOptionalDateTime(u.UpdatedAt),
 		BuiltAt:   internal.NewOptionalDateTime(u.BuiltAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *UpdateActionResponseContent) String() string {
@@ -986,19 +1594,4 @@ func (u *UpdateActionResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateActionRequestContent struct {
-	// The name of an action.
-	Name *string `json:"name,omitempty" url:"-"`
-	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
-	SupportedTriggers []*ActionTrigger `json:"supported_triggers,omitempty" url:"-"`
-	// The source code of the action.
-	Code *string `json:"code,omitempty" url:"-"`
-	// The list of third party npm modules, and their versions, that this action depends on.
-	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"-"`
-	// The Node runtime. For example: `node22`, defaults to `node22`
-	Runtime *string `json:"runtime,omitempty" url:"-"`
-	// The list of secrets that are included in an action or a version of an action.
-	Secrets []*ActionSecretRequest `json:"secrets,omitempty" url:"-"`
 }

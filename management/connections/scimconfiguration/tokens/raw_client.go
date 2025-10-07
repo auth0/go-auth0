@@ -5,7 +5,6 @@ package tokens
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	scimconfiguration "github.com/auth0/go-auth0/v2/management/connections/scimconfiguration"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -36,7 +35,7 @@ func (r *RawClient) Get(
 	// The id of the connection to retrieve its SCIM configuration
 	id string,
 	opts ...option.RequestOption,
-) (*core.Response[management.GetSCIMTokensResponseContent], error) {
+) (*core.Response[management.GetScimTokensResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -51,19 +50,7 @@ func (r *RawClient) Get(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
-	var response management.GetSCIMTokensResponseContent
+	var response management.GetScimTokensResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -75,13 +62,13 @@ func (r *RawClient) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[management.GetSCIMTokensResponseContent]{
+	return &core.Response[management.GetScimTokensResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -92,9 +79,9 @@ func (r *RawClient) Create(
 	ctx context.Context,
 	// The id of the connection to create its SCIM token
 	id string,
-	request *scimconfiguration.CreateSCIMTokenRequestContent,
+	request *management.CreateScimTokenRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.CreateSCIMTokenResponseContent], error) {
+) (*core.Response[*management.CreateScimTokenResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -110,24 +97,7 @@ func (r *RawClient) Create(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		409: func(apiError *core.APIError) error {
-			return &management.ConflictError{
-				APIError: apiError,
-			}
-		},
-	}
-	var response *management.CreateSCIMTokenResponseContent
+	var response *management.CreateScimTokenResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -140,13 +110,13 @@ func (r *RawClient) Create(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.CreateSCIMTokenResponseContent]{
+	return &core.Response[*management.CreateScimTokenResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -158,7 +128,7 @@ func (r *RawClient) Delete(
 	// The connection id that owns the SCIM token to delete
 	id string,
 	// The id of the scim token to delete
-	tokenID string,
+	tokenId string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -170,24 +140,12 @@ func (r *RawClient) Delete(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/connections/%v/scim-configuration/tokens/%v",
 		id,
-		tokenID,
+		tokenId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -198,7 +156,7 @@ func (r *RawClient) Delete(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

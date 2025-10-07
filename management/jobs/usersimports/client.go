@@ -7,7 +7,6 @@ import (
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
-	jobs "github.com/auth0/go-auth0/v2/management/jobs"
 	option "github.com/auth0/go-auth0/v2/management/option"
 )
 
@@ -36,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // Import users from a <a href="https://auth0.com/docs/users/references/bulk-import-database-schema-examples">formatted file</a> into a connection via a long-running job. When importing users, with or without upsert, the `email_verified` is set to `false` when the email address is added or updated. Users must verify their email address. To avoid this behavior, set `email_verified` to `true` in the imported data.
 func (c *Client) Create(
 	ctx context.Context,
-	request *jobs.CreateImportUsersRequestContent,
+	request *management.CreateImportUsersRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateImportUsersResponseContent, error) {
 	response, err := c.WithRawResponse.Create(

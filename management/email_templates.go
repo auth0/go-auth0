@@ -6,47 +6,20 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type CreateEmailTemplateRequestContent struct {
-	Template EmailTemplateNameEnum `json:"template" url:"-"`
-	// Body of the email template.
-	Body *string `json:"body,omitempty" url:"-"`
-	// Senders `from` email address.
-	From *string `json:"from,omitempty" url:"-"`
-	// URL to redirect the user to after a successful action.
-	ResultURL *string `json:"resultUrl,omitempty" url:"-"`
-	// Subject line of the email.
-	Subject *string `json:"subject,omitempty" url:"-"`
-	// Syntax of the template body.
-	Syntax *string `json:"syntax,omitempty" url:"-"`
-	// Lifetime in seconds that the link within the email will be valid for.
-	URLLifetimeInSeconds *float64 `json:"urlLifetimeInSeconds,omitempty" url:"-"`
-	// Whether the `reset_email` and `verify_email` templates should include the user's email address as the `email` parameter in the returnUrl (true) or whether no email address should be included in the redirect (false). Defaults to true.
-	IncludeEmailInRedirect *bool `json:"includeEmailInRedirect,omitempty" url:"-"`
-	// Whether the template is enabled (true) or disabled (false).
-	Enabled *bool `json:"enabled,omitempty" url:"-"`
-}
-
-type SetEmailTemplateRequestContent struct {
-	Template EmailTemplateNameEnum `json:"template" url:"-"`
-	// Body of the email template.
-	Body *string `json:"body,omitempty" url:"-"`
-	// Senders `from` email address.
-	From *string `json:"from,omitempty" url:"-"`
-	// URL to redirect the user to after a successful action.
-	ResultURL *string `json:"resultUrl,omitempty" url:"-"`
-	// Subject line of the email.
-	Subject *string `json:"subject,omitempty" url:"-"`
-	// Syntax of the template body.
-	Syntax *string `json:"syntax,omitempty" url:"-"`
-	// Lifetime in seconds that the link within the email will be valid for.
-	URLLifetimeInSeconds *float64 `json:"urlLifetimeInSeconds,omitempty" url:"-"`
-	// Whether the `reset_email` and `verify_email` templates should include the user's email address as the `email` parameter in the returnUrl (true) or whether no email address should be included in the redirect (false). Defaults to true.
-	IncludeEmailInRedirect *bool `json:"includeEmailInRedirect,omitempty" url:"-"`
-	// Whether the template is enabled (true) or disabled (false).
-	Enabled *bool `json:"enabled,omitempty" url:"-"`
-}
+var (
+	createEmailTemplateResponseContentFieldTemplate               = big.NewInt(1 << 0)
+	createEmailTemplateResponseContentFieldBody                   = big.NewInt(1 << 1)
+	createEmailTemplateResponseContentFieldFrom                   = big.NewInt(1 << 2)
+	createEmailTemplateResponseContentFieldResultUrl              = big.NewInt(1 << 3)
+	createEmailTemplateResponseContentFieldSubject                = big.NewInt(1 << 4)
+	createEmailTemplateResponseContentFieldSyntax                 = big.NewInt(1 << 5)
+	createEmailTemplateResponseContentFieldUrlLifetimeInSeconds   = big.NewInt(1 << 6)
+	createEmailTemplateResponseContentFieldIncludeEmailInRedirect = big.NewInt(1 << 7)
+	createEmailTemplateResponseContentFieldEnabled                = big.NewInt(1 << 8)
+)
 
 type CreateEmailTemplateResponseContent struct {
 	Template EmailTemplateNameEnum `json:"template" url:"template"`
@@ -55,17 +28,20 @@ type CreateEmailTemplateResponseContent struct {
 	// Senders `from` email address.
 	From *string `json:"from,omitempty" url:"from,omitempty"`
 	// URL to redirect the user to after a successful action.
-	ResultURL *string `json:"resultUrl,omitempty" url:"resultUrl,omitempty"`
+	ResultUrl *string `json:"resultUrl,omitempty" url:"resultUrl,omitempty"`
 	// Subject line of the email.
 	Subject *string `json:"subject,omitempty" url:"subject,omitempty"`
 	// Syntax of the template body.
 	Syntax *string `json:"syntax,omitempty" url:"syntax,omitempty"`
 	// Lifetime in seconds that the link within the email will be valid for.
-	URLLifetimeInSeconds *float64 `json:"urlLifetimeInSeconds,omitempty" url:"urlLifetimeInSeconds,omitempty"`
+	UrlLifetimeInSeconds *float64 `json:"urlLifetimeInSeconds,omitempty" url:"urlLifetimeInSeconds,omitempty"`
 	// Whether the `reset_email` and `verify_email` templates should include the user's email address as the `email` parameter in the returnUrl (true) or whether no email address should be included in the redirect (false). Defaults to true.
 	IncludeEmailInRedirect *bool `json:"includeEmailInRedirect,omitempty" url:"includeEmailInRedirect,omitempty"`
 	// Whether the template is enabled (true) or disabled (false).
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -78,64 +54,134 @@ func (c *CreateEmailTemplateResponseContent) GetTemplate() EmailTemplateNameEnum
 	return c.Template
 }
 
-func (c *CreateEmailTemplateResponseContent) GetBody() *string {
-	if c == nil {
-		return nil
+func (c *CreateEmailTemplateResponseContent) GetBody() string {
+	if c == nil || c.Body == nil {
+		return ""
 	}
-	return c.Body
+	return *c.Body
 }
 
-func (c *CreateEmailTemplateResponseContent) GetFrom() *string {
-	if c == nil {
-		return nil
+func (c *CreateEmailTemplateResponseContent) GetFrom() string {
+	if c == nil || c.From == nil {
+		return ""
 	}
-	return c.From
+	return *c.From
 }
 
-func (c *CreateEmailTemplateResponseContent) GetResultURL() *string {
-	if c == nil {
-		return nil
+func (c *CreateEmailTemplateResponseContent) GetResultUrl() string {
+	if c == nil || c.ResultUrl == nil {
+		return ""
 	}
-	return c.ResultURL
+	return *c.ResultUrl
 }
 
-func (c *CreateEmailTemplateResponseContent) GetSubject() *string {
-	if c == nil {
-		return nil
+func (c *CreateEmailTemplateResponseContent) GetSubject() string {
+	if c == nil || c.Subject == nil {
+		return ""
 	}
-	return c.Subject
+	return *c.Subject
 }
 
-func (c *CreateEmailTemplateResponseContent) GetSyntax() *string {
-	if c == nil {
-		return nil
+func (c *CreateEmailTemplateResponseContent) GetSyntax() string {
+	if c == nil || c.Syntax == nil {
+		return ""
 	}
-	return c.Syntax
+	return *c.Syntax
 }
 
-func (c *CreateEmailTemplateResponseContent) GetURLLifetimeInSeconds() *float64 {
-	if c == nil {
-		return nil
+func (c *CreateEmailTemplateResponseContent) GetUrlLifetimeInSeconds() float64 {
+	if c == nil || c.UrlLifetimeInSeconds == nil {
+		return 0
 	}
-	return c.URLLifetimeInSeconds
+	return *c.UrlLifetimeInSeconds
 }
 
-func (c *CreateEmailTemplateResponseContent) GetIncludeEmailInRedirect() *bool {
-	if c == nil {
-		return nil
+func (c *CreateEmailTemplateResponseContent) GetIncludeEmailInRedirect() bool {
+	if c == nil || c.IncludeEmailInRedirect == nil {
+		return false
 	}
-	return c.IncludeEmailInRedirect
+	return *c.IncludeEmailInRedirect
 }
 
-func (c *CreateEmailTemplateResponseContent) GetEnabled() *bool {
-	if c == nil {
-		return nil
+func (c *CreateEmailTemplateResponseContent) GetEnabled() bool {
+	if c == nil || c.Enabled == nil {
+		return false
 	}
-	return c.Enabled
+	return *c.Enabled
 }
 
 func (c *CreateEmailTemplateResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateEmailTemplateResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetTemplate sets the Template field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailTemplateResponseContent) SetTemplate(template EmailTemplateNameEnum) {
+	c.Template = template
+	c.require(createEmailTemplateResponseContentFieldTemplate)
+}
+
+// SetBody sets the Body field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailTemplateResponseContent) SetBody(body *string) {
+	c.Body = body
+	c.require(createEmailTemplateResponseContentFieldBody)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailTemplateResponseContent) SetFrom(from *string) {
+	c.From = from
+	c.require(createEmailTemplateResponseContentFieldFrom)
+}
+
+// SetResultUrl sets the ResultUrl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailTemplateResponseContent) SetResultUrl(resultUrl *string) {
+	c.ResultUrl = resultUrl
+	c.require(createEmailTemplateResponseContentFieldResultUrl)
+}
+
+// SetSubject sets the Subject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailTemplateResponseContent) SetSubject(subject *string) {
+	c.Subject = subject
+	c.require(createEmailTemplateResponseContentFieldSubject)
+}
+
+// SetSyntax sets the Syntax field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailTemplateResponseContent) SetSyntax(syntax *string) {
+	c.Syntax = syntax
+	c.require(createEmailTemplateResponseContentFieldSyntax)
+}
+
+// SetUrlLifetimeInSeconds sets the UrlLifetimeInSeconds field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailTemplateResponseContent) SetUrlLifetimeInSeconds(urlLifetimeInSeconds *float64) {
+	c.UrlLifetimeInSeconds = urlLifetimeInSeconds
+	c.require(createEmailTemplateResponseContentFieldUrlLifetimeInSeconds)
+}
+
+// SetIncludeEmailInRedirect sets the IncludeEmailInRedirect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailTemplateResponseContent) SetIncludeEmailInRedirect(includeEmailInRedirect *bool) {
+	c.IncludeEmailInRedirect = includeEmailInRedirect
+	c.require(createEmailTemplateResponseContentFieldIncludeEmailInRedirect)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailTemplateResponseContent) SetEnabled(enabled *bool) {
+	c.Enabled = enabled
+	c.require(createEmailTemplateResponseContentFieldEnabled)
 }
 
 func (c *CreateEmailTemplateResponseContent) UnmarshalJSON(data []byte) error {
@@ -152,6 +198,17 @@ func (c *CreateEmailTemplateResponseContent) UnmarshalJSON(data []byte) error {
 	c.extraProperties = extraProperties
 	c.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (c *CreateEmailTemplateResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateEmailTemplateResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (c *CreateEmailTemplateResponseContent) String() string {
@@ -222,6 +279,18 @@ func (e EmailTemplateNameEnum) Ptr() *EmailTemplateNameEnum {
 	return &e
 }
 
+var (
+	getEmailTemplateResponseContentFieldTemplate               = big.NewInt(1 << 0)
+	getEmailTemplateResponseContentFieldBody                   = big.NewInt(1 << 1)
+	getEmailTemplateResponseContentFieldFrom                   = big.NewInt(1 << 2)
+	getEmailTemplateResponseContentFieldResultUrl              = big.NewInt(1 << 3)
+	getEmailTemplateResponseContentFieldSubject                = big.NewInt(1 << 4)
+	getEmailTemplateResponseContentFieldSyntax                 = big.NewInt(1 << 5)
+	getEmailTemplateResponseContentFieldUrlLifetimeInSeconds   = big.NewInt(1 << 6)
+	getEmailTemplateResponseContentFieldIncludeEmailInRedirect = big.NewInt(1 << 7)
+	getEmailTemplateResponseContentFieldEnabled                = big.NewInt(1 << 8)
+)
+
 type GetEmailTemplateResponseContent struct {
 	Template *EmailTemplateNameEnum `json:"template,omitempty" url:"template,omitempty"`
 	// Body of the email template.
@@ -229,87 +298,160 @@ type GetEmailTemplateResponseContent struct {
 	// Senders `from` email address.
 	From *string `json:"from,omitempty" url:"from,omitempty"`
 	// URL to redirect the user to after a successful action.
-	ResultURL *string `json:"resultUrl,omitempty" url:"resultUrl,omitempty"`
+	ResultUrl *string `json:"resultUrl,omitempty" url:"resultUrl,omitempty"`
 	// Subject line of the email.
 	Subject *string `json:"subject,omitempty" url:"subject,omitempty"`
 	// Syntax of the template body.
 	Syntax *string `json:"syntax,omitempty" url:"syntax,omitempty"`
 	// Lifetime in seconds that the link within the email will be valid for.
-	URLLifetimeInSeconds *float64 `json:"urlLifetimeInSeconds,omitempty" url:"urlLifetimeInSeconds,omitempty"`
+	UrlLifetimeInSeconds *float64 `json:"urlLifetimeInSeconds,omitempty" url:"urlLifetimeInSeconds,omitempty"`
 	// Whether the `reset_email` and `verify_email` templates should include the user's email address as the `email` parameter in the returnUrl (true) or whether no email address should be included in the redirect (false). Defaults to true.
 	IncludeEmailInRedirect *bool `json:"includeEmailInRedirect,omitempty" url:"includeEmailInRedirect,omitempty"`
 	// Whether the template is enabled (true) or disabled (false).
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (g *GetEmailTemplateResponseContent) GetTemplate() *EmailTemplateNameEnum {
-	if g == nil {
-		return nil
+func (g *GetEmailTemplateResponseContent) GetTemplate() EmailTemplateNameEnum {
+	if g == nil || g.Template == nil {
+		return ""
 	}
-	return g.Template
+	return *g.Template
 }
 
-func (g *GetEmailTemplateResponseContent) GetBody() *string {
-	if g == nil {
-		return nil
+func (g *GetEmailTemplateResponseContent) GetBody() string {
+	if g == nil || g.Body == nil {
+		return ""
 	}
-	return g.Body
+	return *g.Body
 }
 
-func (g *GetEmailTemplateResponseContent) GetFrom() *string {
-	if g == nil {
-		return nil
+func (g *GetEmailTemplateResponseContent) GetFrom() string {
+	if g == nil || g.From == nil {
+		return ""
 	}
-	return g.From
+	return *g.From
 }
 
-func (g *GetEmailTemplateResponseContent) GetResultURL() *string {
-	if g == nil {
-		return nil
+func (g *GetEmailTemplateResponseContent) GetResultUrl() string {
+	if g == nil || g.ResultUrl == nil {
+		return ""
 	}
-	return g.ResultURL
+	return *g.ResultUrl
 }
 
-func (g *GetEmailTemplateResponseContent) GetSubject() *string {
-	if g == nil {
-		return nil
+func (g *GetEmailTemplateResponseContent) GetSubject() string {
+	if g == nil || g.Subject == nil {
+		return ""
 	}
-	return g.Subject
+	return *g.Subject
 }
 
-func (g *GetEmailTemplateResponseContent) GetSyntax() *string {
-	if g == nil {
-		return nil
+func (g *GetEmailTemplateResponseContent) GetSyntax() string {
+	if g == nil || g.Syntax == nil {
+		return ""
 	}
-	return g.Syntax
+	return *g.Syntax
 }
 
-func (g *GetEmailTemplateResponseContent) GetURLLifetimeInSeconds() *float64 {
-	if g == nil {
-		return nil
+func (g *GetEmailTemplateResponseContent) GetUrlLifetimeInSeconds() float64 {
+	if g == nil || g.UrlLifetimeInSeconds == nil {
+		return 0
 	}
-	return g.URLLifetimeInSeconds
+	return *g.UrlLifetimeInSeconds
 }
 
-func (g *GetEmailTemplateResponseContent) GetIncludeEmailInRedirect() *bool {
-	if g == nil {
-		return nil
+func (g *GetEmailTemplateResponseContent) GetIncludeEmailInRedirect() bool {
+	if g == nil || g.IncludeEmailInRedirect == nil {
+		return false
 	}
-	return g.IncludeEmailInRedirect
+	return *g.IncludeEmailInRedirect
 }
 
-func (g *GetEmailTemplateResponseContent) GetEnabled() *bool {
-	if g == nil {
-		return nil
+func (g *GetEmailTemplateResponseContent) GetEnabled() bool {
+	if g == nil || g.Enabled == nil {
+		return false
 	}
-	return g.Enabled
+	return *g.Enabled
 }
 
 func (g *GetEmailTemplateResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
+}
+
+func (g *GetEmailTemplateResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetTemplate sets the Template field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailTemplateResponseContent) SetTemplate(template *EmailTemplateNameEnum) {
+	g.Template = template
+	g.require(getEmailTemplateResponseContentFieldTemplate)
+}
+
+// SetBody sets the Body field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailTemplateResponseContent) SetBody(body *string) {
+	g.Body = body
+	g.require(getEmailTemplateResponseContentFieldBody)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailTemplateResponseContent) SetFrom(from *string) {
+	g.From = from
+	g.require(getEmailTemplateResponseContentFieldFrom)
+}
+
+// SetResultUrl sets the ResultUrl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailTemplateResponseContent) SetResultUrl(resultUrl *string) {
+	g.ResultUrl = resultUrl
+	g.require(getEmailTemplateResponseContentFieldResultUrl)
+}
+
+// SetSubject sets the Subject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailTemplateResponseContent) SetSubject(subject *string) {
+	g.Subject = subject
+	g.require(getEmailTemplateResponseContentFieldSubject)
+}
+
+// SetSyntax sets the Syntax field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailTemplateResponseContent) SetSyntax(syntax *string) {
+	g.Syntax = syntax
+	g.require(getEmailTemplateResponseContentFieldSyntax)
+}
+
+// SetUrlLifetimeInSeconds sets the UrlLifetimeInSeconds field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailTemplateResponseContent) SetUrlLifetimeInSeconds(urlLifetimeInSeconds *float64) {
+	g.UrlLifetimeInSeconds = urlLifetimeInSeconds
+	g.require(getEmailTemplateResponseContentFieldUrlLifetimeInSeconds)
+}
+
+// SetIncludeEmailInRedirect sets the IncludeEmailInRedirect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailTemplateResponseContent) SetIncludeEmailInRedirect(includeEmailInRedirect *bool) {
+	g.IncludeEmailInRedirect = includeEmailInRedirect
+	g.require(getEmailTemplateResponseContentFieldIncludeEmailInRedirect)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailTemplateResponseContent) SetEnabled(enabled *bool) {
+	g.Enabled = enabled
+	g.require(getEmailTemplateResponseContentFieldEnabled)
 }
 
 func (g *GetEmailTemplateResponseContent) UnmarshalJSON(data []byte) error {
@@ -328,6 +470,17 @@ func (g *GetEmailTemplateResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (g *GetEmailTemplateResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetEmailTemplateResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (g *GetEmailTemplateResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
@@ -340,6 +493,18 @@ func (g *GetEmailTemplateResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	setEmailTemplateResponseContentFieldTemplate               = big.NewInt(1 << 0)
+	setEmailTemplateResponseContentFieldBody                   = big.NewInt(1 << 1)
+	setEmailTemplateResponseContentFieldFrom                   = big.NewInt(1 << 2)
+	setEmailTemplateResponseContentFieldResultUrl              = big.NewInt(1 << 3)
+	setEmailTemplateResponseContentFieldSubject                = big.NewInt(1 << 4)
+	setEmailTemplateResponseContentFieldSyntax                 = big.NewInt(1 << 5)
+	setEmailTemplateResponseContentFieldUrlLifetimeInSeconds   = big.NewInt(1 << 6)
+	setEmailTemplateResponseContentFieldIncludeEmailInRedirect = big.NewInt(1 << 7)
+	setEmailTemplateResponseContentFieldEnabled                = big.NewInt(1 << 8)
+)
+
 type SetEmailTemplateResponseContent struct {
 	Template EmailTemplateNameEnum `json:"template" url:"template"`
 	// Body of the email template.
@@ -347,17 +512,20 @@ type SetEmailTemplateResponseContent struct {
 	// Senders `from` email address.
 	From *string `json:"from,omitempty" url:"from,omitempty"`
 	// URL to redirect the user to after a successful action.
-	ResultURL *string `json:"resultUrl,omitempty" url:"resultUrl,omitempty"`
+	ResultUrl *string `json:"resultUrl,omitempty" url:"resultUrl,omitempty"`
 	// Subject line of the email.
 	Subject *string `json:"subject,omitempty" url:"subject,omitempty"`
 	// Syntax of the template body.
 	Syntax *string `json:"syntax,omitempty" url:"syntax,omitempty"`
 	// Lifetime in seconds that the link within the email will be valid for.
-	URLLifetimeInSeconds *float64 `json:"urlLifetimeInSeconds,omitempty" url:"urlLifetimeInSeconds,omitempty"`
+	UrlLifetimeInSeconds *float64 `json:"urlLifetimeInSeconds,omitempty" url:"urlLifetimeInSeconds,omitempty"`
 	// Whether the `reset_email` and `verify_email` templates should include the user's email address as the `email` parameter in the returnUrl (true) or whether no email address should be included in the redirect (false). Defaults to true.
 	IncludeEmailInRedirect *bool `json:"includeEmailInRedirect,omitempty" url:"includeEmailInRedirect,omitempty"`
 	// Whether the template is enabled (true) or disabled (false).
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -370,64 +538,134 @@ func (s *SetEmailTemplateResponseContent) GetTemplate() EmailTemplateNameEnum {
 	return s.Template
 }
 
-func (s *SetEmailTemplateResponseContent) GetBody() *string {
-	if s == nil {
-		return nil
+func (s *SetEmailTemplateResponseContent) GetBody() string {
+	if s == nil || s.Body == nil {
+		return ""
 	}
-	return s.Body
+	return *s.Body
 }
 
-func (s *SetEmailTemplateResponseContent) GetFrom() *string {
-	if s == nil {
-		return nil
+func (s *SetEmailTemplateResponseContent) GetFrom() string {
+	if s == nil || s.From == nil {
+		return ""
 	}
-	return s.From
+	return *s.From
 }
 
-func (s *SetEmailTemplateResponseContent) GetResultURL() *string {
-	if s == nil {
-		return nil
+func (s *SetEmailTemplateResponseContent) GetResultUrl() string {
+	if s == nil || s.ResultUrl == nil {
+		return ""
 	}
-	return s.ResultURL
+	return *s.ResultUrl
 }
 
-func (s *SetEmailTemplateResponseContent) GetSubject() *string {
-	if s == nil {
-		return nil
+func (s *SetEmailTemplateResponseContent) GetSubject() string {
+	if s == nil || s.Subject == nil {
+		return ""
 	}
-	return s.Subject
+	return *s.Subject
 }
 
-func (s *SetEmailTemplateResponseContent) GetSyntax() *string {
-	if s == nil {
-		return nil
+func (s *SetEmailTemplateResponseContent) GetSyntax() string {
+	if s == nil || s.Syntax == nil {
+		return ""
 	}
-	return s.Syntax
+	return *s.Syntax
 }
 
-func (s *SetEmailTemplateResponseContent) GetURLLifetimeInSeconds() *float64 {
-	if s == nil {
-		return nil
+func (s *SetEmailTemplateResponseContent) GetUrlLifetimeInSeconds() float64 {
+	if s == nil || s.UrlLifetimeInSeconds == nil {
+		return 0
 	}
-	return s.URLLifetimeInSeconds
+	return *s.UrlLifetimeInSeconds
 }
 
-func (s *SetEmailTemplateResponseContent) GetIncludeEmailInRedirect() *bool {
-	if s == nil {
-		return nil
+func (s *SetEmailTemplateResponseContent) GetIncludeEmailInRedirect() bool {
+	if s == nil || s.IncludeEmailInRedirect == nil {
+		return false
 	}
-	return s.IncludeEmailInRedirect
+	return *s.IncludeEmailInRedirect
 }
 
-func (s *SetEmailTemplateResponseContent) GetEnabled() *bool {
-	if s == nil {
-		return nil
+func (s *SetEmailTemplateResponseContent) GetEnabled() bool {
+	if s == nil || s.Enabled == nil {
+		return false
 	}
-	return s.Enabled
+	return *s.Enabled
 }
 
 func (s *SetEmailTemplateResponseContent) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
+}
+
+func (s *SetEmailTemplateResponseContent) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetTemplate sets the Template field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetEmailTemplateResponseContent) SetTemplate(template EmailTemplateNameEnum) {
+	s.Template = template
+	s.require(setEmailTemplateResponseContentFieldTemplate)
+}
+
+// SetBody sets the Body field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetEmailTemplateResponseContent) SetBody(body *string) {
+	s.Body = body
+	s.require(setEmailTemplateResponseContentFieldBody)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetEmailTemplateResponseContent) SetFrom(from *string) {
+	s.From = from
+	s.require(setEmailTemplateResponseContentFieldFrom)
+}
+
+// SetResultUrl sets the ResultUrl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetEmailTemplateResponseContent) SetResultUrl(resultUrl *string) {
+	s.ResultUrl = resultUrl
+	s.require(setEmailTemplateResponseContentFieldResultUrl)
+}
+
+// SetSubject sets the Subject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetEmailTemplateResponseContent) SetSubject(subject *string) {
+	s.Subject = subject
+	s.require(setEmailTemplateResponseContentFieldSubject)
+}
+
+// SetSyntax sets the Syntax field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetEmailTemplateResponseContent) SetSyntax(syntax *string) {
+	s.Syntax = syntax
+	s.require(setEmailTemplateResponseContentFieldSyntax)
+}
+
+// SetUrlLifetimeInSeconds sets the UrlLifetimeInSeconds field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetEmailTemplateResponseContent) SetUrlLifetimeInSeconds(urlLifetimeInSeconds *float64) {
+	s.UrlLifetimeInSeconds = urlLifetimeInSeconds
+	s.require(setEmailTemplateResponseContentFieldUrlLifetimeInSeconds)
+}
+
+// SetIncludeEmailInRedirect sets the IncludeEmailInRedirect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetEmailTemplateResponseContent) SetIncludeEmailInRedirect(includeEmailInRedirect *bool) {
+	s.IncludeEmailInRedirect = includeEmailInRedirect
+	s.require(setEmailTemplateResponseContentFieldIncludeEmailInRedirect)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetEmailTemplateResponseContent) SetEnabled(enabled *bool) {
+	s.Enabled = enabled
+	s.require(setEmailTemplateResponseContentFieldEnabled)
 }
 
 func (s *SetEmailTemplateResponseContent) UnmarshalJSON(data []byte) error {
@@ -446,6 +684,17 @@ func (s *SetEmailTemplateResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (s *SetEmailTemplateResponseContent) MarshalJSON() ([]byte, error) {
+	type embed SetEmailTemplateResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (s *SetEmailTemplateResponseContent) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -458,6 +707,18 @@ func (s *SetEmailTemplateResponseContent) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+var (
+	updateEmailTemplateResponseContentFieldTemplate               = big.NewInt(1 << 0)
+	updateEmailTemplateResponseContentFieldBody                   = big.NewInt(1 << 1)
+	updateEmailTemplateResponseContentFieldFrom                   = big.NewInt(1 << 2)
+	updateEmailTemplateResponseContentFieldResultUrl              = big.NewInt(1 << 3)
+	updateEmailTemplateResponseContentFieldSubject                = big.NewInt(1 << 4)
+	updateEmailTemplateResponseContentFieldSyntax                 = big.NewInt(1 << 5)
+	updateEmailTemplateResponseContentFieldUrlLifetimeInSeconds   = big.NewInt(1 << 6)
+	updateEmailTemplateResponseContentFieldIncludeEmailInRedirect = big.NewInt(1 << 7)
+	updateEmailTemplateResponseContentFieldEnabled                = big.NewInt(1 << 8)
+)
+
 type UpdateEmailTemplateResponseContent struct {
 	Template *EmailTemplateNameEnum `json:"template,omitempty" url:"template,omitempty"`
 	// Body of the email template.
@@ -465,87 +726,160 @@ type UpdateEmailTemplateResponseContent struct {
 	// Senders `from` email address.
 	From *string `json:"from,omitempty" url:"from,omitempty"`
 	// URL to redirect the user to after a successful action.
-	ResultURL *string `json:"resultUrl,omitempty" url:"resultUrl,omitempty"`
+	ResultUrl *string `json:"resultUrl,omitempty" url:"resultUrl,omitempty"`
 	// Subject line of the email.
 	Subject *string `json:"subject,omitempty" url:"subject,omitempty"`
 	// Syntax of the template body.
 	Syntax *string `json:"syntax,omitempty" url:"syntax,omitempty"`
 	// Lifetime in seconds that the link within the email will be valid for.
-	URLLifetimeInSeconds *float64 `json:"urlLifetimeInSeconds,omitempty" url:"urlLifetimeInSeconds,omitempty"`
+	UrlLifetimeInSeconds *float64 `json:"urlLifetimeInSeconds,omitempty" url:"urlLifetimeInSeconds,omitempty"`
 	// Whether the `reset_email` and `verify_email` templates should include the user's email address as the `email` parameter in the returnUrl (true) or whether no email address should be included in the redirect (false). Defaults to true.
 	IncludeEmailInRedirect *bool `json:"includeEmailInRedirect,omitempty" url:"includeEmailInRedirect,omitempty"`
 	// Whether the template is enabled (true) or disabled (false).
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateEmailTemplateResponseContent) GetTemplate() *EmailTemplateNameEnum {
-	if u == nil {
-		return nil
+func (u *UpdateEmailTemplateResponseContent) GetTemplate() EmailTemplateNameEnum {
+	if u == nil || u.Template == nil {
+		return ""
 	}
-	return u.Template
+	return *u.Template
 }
 
-func (u *UpdateEmailTemplateResponseContent) GetBody() *string {
-	if u == nil {
-		return nil
+func (u *UpdateEmailTemplateResponseContent) GetBody() string {
+	if u == nil || u.Body == nil {
+		return ""
 	}
-	return u.Body
+	return *u.Body
 }
 
-func (u *UpdateEmailTemplateResponseContent) GetFrom() *string {
-	if u == nil {
-		return nil
+func (u *UpdateEmailTemplateResponseContent) GetFrom() string {
+	if u == nil || u.From == nil {
+		return ""
 	}
-	return u.From
+	return *u.From
 }
 
-func (u *UpdateEmailTemplateResponseContent) GetResultURL() *string {
-	if u == nil {
-		return nil
+func (u *UpdateEmailTemplateResponseContent) GetResultUrl() string {
+	if u == nil || u.ResultUrl == nil {
+		return ""
 	}
-	return u.ResultURL
+	return *u.ResultUrl
 }
 
-func (u *UpdateEmailTemplateResponseContent) GetSubject() *string {
-	if u == nil {
-		return nil
+func (u *UpdateEmailTemplateResponseContent) GetSubject() string {
+	if u == nil || u.Subject == nil {
+		return ""
 	}
-	return u.Subject
+	return *u.Subject
 }
 
-func (u *UpdateEmailTemplateResponseContent) GetSyntax() *string {
-	if u == nil {
-		return nil
+func (u *UpdateEmailTemplateResponseContent) GetSyntax() string {
+	if u == nil || u.Syntax == nil {
+		return ""
 	}
-	return u.Syntax
+	return *u.Syntax
 }
 
-func (u *UpdateEmailTemplateResponseContent) GetURLLifetimeInSeconds() *float64 {
-	if u == nil {
-		return nil
+func (u *UpdateEmailTemplateResponseContent) GetUrlLifetimeInSeconds() float64 {
+	if u == nil || u.UrlLifetimeInSeconds == nil {
+		return 0
 	}
-	return u.URLLifetimeInSeconds
+	return *u.UrlLifetimeInSeconds
 }
 
-func (u *UpdateEmailTemplateResponseContent) GetIncludeEmailInRedirect() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateEmailTemplateResponseContent) GetIncludeEmailInRedirect() bool {
+	if u == nil || u.IncludeEmailInRedirect == nil {
+		return false
 	}
-	return u.IncludeEmailInRedirect
+	return *u.IncludeEmailInRedirect
 }
 
-func (u *UpdateEmailTemplateResponseContent) GetEnabled() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateEmailTemplateResponseContent) GetEnabled() bool {
+	if u == nil || u.Enabled == nil {
+		return false
 	}
-	return u.Enabled
+	return *u.Enabled
 }
 
 func (u *UpdateEmailTemplateResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UpdateEmailTemplateResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetTemplate sets the Template field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateEmailTemplateResponseContent) SetTemplate(template *EmailTemplateNameEnum) {
+	u.Template = template
+	u.require(updateEmailTemplateResponseContentFieldTemplate)
+}
+
+// SetBody sets the Body field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateEmailTemplateResponseContent) SetBody(body *string) {
+	u.Body = body
+	u.require(updateEmailTemplateResponseContentFieldBody)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateEmailTemplateResponseContent) SetFrom(from *string) {
+	u.From = from
+	u.require(updateEmailTemplateResponseContentFieldFrom)
+}
+
+// SetResultUrl sets the ResultUrl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateEmailTemplateResponseContent) SetResultUrl(resultUrl *string) {
+	u.ResultUrl = resultUrl
+	u.require(updateEmailTemplateResponseContentFieldResultUrl)
+}
+
+// SetSubject sets the Subject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateEmailTemplateResponseContent) SetSubject(subject *string) {
+	u.Subject = subject
+	u.require(updateEmailTemplateResponseContentFieldSubject)
+}
+
+// SetSyntax sets the Syntax field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateEmailTemplateResponseContent) SetSyntax(syntax *string) {
+	u.Syntax = syntax
+	u.require(updateEmailTemplateResponseContentFieldSyntax)
+}
+
+// SetUrlLifetimeInSeconds sets the UrlLifetimeInSeconds field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateEmailTemplateResponseContent) SetUrlLifetimeInSeconds(urlLifetimeInSeconds *float64) {
+	u.UrlLifetimeInSeconds = urlLifetimeInSeconds
+	u.require(updateEmailTemplateResponseContentFieldUrlLifetimeInSeconds)
+}
+
+// SetIncludeEmailInRedirect sets the IncludeEmailInRedirect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateEmailTemplateResponseContent) SetIncludeEmailInRedirect(includeEmailInRedirect *bool) {
+	u.IncludeEmailInRedirect = includeEmailInRedirect
+	u.require(updateEmailTemplateResponseContentFieldIncludeEmailInRedirect)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateEmailTemplateResponseContent) SetEnabled(enabled *bool) {
+	u.Enabled = enabled
+	u.require(updateEmailTemplateResponseContentFieldEnabled)
 }
 
 func (u *UpdateEmailTemplateResponseContent) UnmarshalJSON(data []byte) error {
@@ -564,6 +898,17 @@ func (u *UpdateEmailTemplateResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UpdateEmailTemplateResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateEmailTemplateResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UpdateEmailTemplateResponseContent) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -574,24 +919,4 @@ func (u *UpdateEmailTemplateResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateEmailTemplateRequestContent struct {
-	Template *EmailTemplateNameEnum `json:"template,omitempty" url:"-"`
-	// Body of the email template.
-	Body *string `json:"body,omitempty" url:"-"`
-	// Senders `from` email address.
-	From *string `json:"from,omitempty" url:"-"`
-	// URL to redirect the user to after a successful action.
-	ResultURL *string `json:"resultUrl,omitempty" url:"-"`
-	// Subject line of the email.
-	Subject *string `json:"subject,omitempty" url:"-"`
-	// Syntax of the template body.
-	Syntax *string `json:"syntax,omitempty" url:"-"`
-	// Lifetime in seconds that the link within the email will be valid for.
-	URLLifetimeInSeconds *float64 `json:"urlLifetimeInSeconds,omitempty" url:"-"`
-	// Whether the `reset_email` and `verify_email` templates should include the user's email address as the `email` parameter in the returnUrl (true) or whether no email address should be included in the redirect (false). Defaults to true.
-	IncludeEmailInRedirect *bool `json:"includeEmailInRedirect,omitempty" url:"-"`
-	// Whether the template is enabled (true) or disabled (false).
-	Enabled *bool `json:"enabled,omitempty" url:"-"`
 }

@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	guardian "github.com/auth0/go-auth0/v2/management/guardian"
 	client "github.com/auth0/go-auth0/v2/management/guardian/factors/duo/client"
 	phone "github.com/auth0/go-auth0/v2/management/guardian/factors/phone"
 	pushnotification "github.com/auth0/go-auth0/v2/management/guardian/factors/pushnotification"
@@ -65,7 +64,7 @@ func (c *Client) Set(
 	ctx context.Context,
 	// Factor name. Can be `sms`, `push-notification`, `email`, `duo` `otp` `webauthn-roaming`, `webauthn-platform`, or `recovery-code`.
 	name *management.GuardianFactorNameEnum,
-	request *guardian.SetGuardianFactorRequestContent,
+	request *management.SetGuardianFactorRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetGuardianFactorResponseContent, error) {
 	response, err := c.WithRawResponse.Set(

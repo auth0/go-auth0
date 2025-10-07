@@ -4,10 +4,10 @@ package riskassessments
 
 import (
 	context "context"
+	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	users "github.com/auth0/go-auth0/v2/management/users"
 )
 
 type Client struct {
@@ -37,7 +37,7 @@ func (c *Client) Clear(
 	ctx context.Context,
 	// ID of the user to clear assessors for.
 	id string,
-	request *users.ClearAssessorsRequestContent,
+	request *management.ClearAssessorsRequestContent,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Clear(

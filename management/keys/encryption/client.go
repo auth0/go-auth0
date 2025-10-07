@@ -8,7 +8,6 @@ import (
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
-	keys "github.com/auth0/go-auth0/v2/management/keys"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	http "net/http"
 	strconv "strconv"
@@ -39,7 +38,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // Retrieve details of all the encryption keys associated with your tenant.
 func (c *Client) List(
 	ctx context.Context,
-	request *keys.ListEncryptionKeysRequestParameters,
+	request *management.ListEncryptionKeysRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.EncryptionKey], error) {
 	options := core.NewRequestOptions(opts...)
@@ -49,14 +48,7 @@ func (c *Client) List(
 		"https://%7BTENANT%7D.auth0.com/api/v2",
 	)
 	endpointURL := baseURL + "/keys/encryption"
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -64,28 +56,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -103,7 +73,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -116,7 +86,7 @@ func (c *Client) List(
 
 	readPageResponse := func(response *management.ListEncryptionKeyOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.EncryptionKey] {
 		next += 1
-		results := response.GetKeys()
+		results := response.Keys
 		return &internal.PageResponse[*int, *management.EncryptionKey]{
 			Next:    &next,
 			Results: results,
@@ -133,7 +103,7 @@ func (c *Client) List(
 // Create the new, pre-activated encryption key, without the key material.
 func (c *Client) Create(
 	ctx context.Context,
-	request *keys.CreateEncryptionKeyRequestContent,
+	request *management.CreateEncryptionKeyRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateEncryptionKeyResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
@@ -185,7 +155,7 @@ func (c *Client) Import(
 	ctx context.Context,
 	// Encryption key ID
 	kid string,
-	request *keys.ImportEncryptionKeyRequestContent,
+	request *management.ImportEncryptionKeyRequestContent,
 	opts ...option.RequestOption,
 ) (*management.ImportEncryptionKeyResponseContent, error) {
 	response, err := c.WithRawResponse.Import(

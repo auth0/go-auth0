@@ -6,7 +6,6 @@ import (
 	context "context"
 	fmt "fmt"
 	management "github.com/auth0/go-auth0/v2/management"
-	triggers "github.com/auth0/go-auth0/v2/management/actions/triggers"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -40,8 +39,8 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) List(
 	ctx context.Context,
 	// An actions extensibility point.
-	triggerID management.ActionTriggerTypeEnum,
-	request *triggers.ListActionTriggerBindingsRequestParameters,
+	triggerId management.ActionTriggerTypeEnum,
+	request *management.ListActionTriggerBindingsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.ActionBinding], error) {
 	options := core.NewRequestOptions(opts...)
@@ -52,15 +51,9 @@ func (c *Client) List(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/actions/triggers/%v/bindings",
-		triggerID,
+		triggerId,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":     0,
-			"per_page": 50,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -68,28 +61,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -107,7 +78,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -120,7 +91,7 @@ func (c *Client) List(
 
 	readPageResponse := func(response *management.ListActionBindingsPaginatedResponseContent) *internal.PageResponse[*int, *management.ActionBinding] {
 		next += 1
-		results := response.GetBindings()
+		results := response.Bindings
 		return &internal.PageResponse[*int, *management.ActionBinding]{
 			Next:    &next,
 			Results: results,
@@ -138,13 +109,13 @@ func (c *Client) List(
 func (c *Client) UpdateMany(
 	ctx context.Context,
 	// An actions extensibility point.
-	triggerID management.ActionTriggerTypeEnum,
-	request *triggers.UpdateActionBindingsRequestContent,
+	triggerId management.ActionTriggerTypeEnum,
+	request *management.UpdateActionBindingsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateActionBindingsResponseContent, error) {
 	response, err := c.WithRawResponse.UpdateMany(
 		ctx,
-		triggerID,
+		triggerId,
 		request,
 		opts...,
 	)

@@ -6,14 +6,17 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type GetDailyStatsRequestParameters struct {
-	// Optional first day of the date range (inclusive) in YYYYMMDD format.
-	From *string `json:"-" url:"from,omitempty"`
-	// Optional last day of the date range (inclusive) in YYYYMMDD format.
-	To *string `json:"-" url:"to,omitempty"`
-}
+var (
+	dailyStatsFieldDate            = big.NewInt(1 << 0)
+	dailyStatsFieldLogins          = big.NewInt(1 << 1)
+	dailyStatsFieldSignups         = big.NewInt(1 << 2)
+	dailyStatsFieldLeakedPasswords = big.NewInt(1 << 3)
+	dailyStatsFieldUpdatedAt       = big.NewInt(1 << 4)
+	dailyStatsFieldCreatedAt       = big.NewInt(1 << 5)
+)
 
 type DailyStats struct {
 	// Date these events occurred in ISO 8601 format.
@@ -29,55 +32,107 @@ type DailyStats struct {
 	// Approximate date and time the first event occurred in ISO 8601 format.
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (d *DailyStats) GetDate() *string {
-	if d == nil {
-		return nil
+func (d *DailyStats) GetDate() string {
+	if d == nil || d.Date == nil {
+		return ""
 	}
-	return d.Date
+	return *d.Date
 }
 
-func (d *DailyStats) GetLogins() *int {
-	if d == nil {
-		return nil
+func (d *DailyStats) GetLogins() int {
+	if d == nil || d.Logins == nil {
+		return 0
 	}
-	return d.Logins
+	return *d.Logins
 }
 
-func (d *DailyStats) GetSignups() *int {
-	if d == nil {
-		return nil
+func (d *DailyStats) GetSignups() int {
+	if d == nil || d.Signups == nil {
+		return 0
 	}
-	return d.Signups
+	return *d.Signups
 }
 
-func (d *DailyStats) GetLeakedPasswords() *int {
-	if d == nil {
-		return nil
+func (d *DailyStats) GetLeakedPasswords() int {
+	if d == nil || d.LeakedPasswords == nil {
+		return 0
 	}
-	return d.LeakedPasswords
+	return *d.LeakedPasswords
 }
 
-func (d *DailyStats) GetUpdatedAt() *string {
-	if d == nil {
-		return nil
+func (d *DailyStats) GetUpdatedAt() string {
+	if d == nil || d.UpdatedAt == nil {
+		return ""
 	}
-	return d.UpdatedAt
+	return *d.UpdatedAt
 }
 
-func (d *DailyStats) GetCreatedAt() *string {
-	if d == nil {
-		return nil
+func (d *DailyStats) GetCreatedAt() string {
+	if d == nil || d.CreatedAt == nil {
+		return ""
 	}
-	return d.CreatedAt
+	return *d.CreatedAt
 }
 
 func (d *DailyStats) GetExtraProperties() map[string]interface{} {
 	return d.ExtraProperties
+}
+
+func (d *DailyStats) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetDate sets the Date field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DailyStats) SetDate(date *string) {
+	d.Date = date
+	d.require(dailyStatsFieldDate)
+}
+
+// SetLogins sets the Logins field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DailyStats) SetLogins(logins *int) {
+	d.Logins = logins
+	d.require(dailyStatsFieldLogins)
+}
+
+// SetSignups sets the Signups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DailyStats) SetSignups(signups *int) {
+	d.Signups = signups
+	d.require(dailyStatsFieldSignups)
+}
+
+// SetLeakedPasswords sets the LeakedPasswords field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DailyStats) SetLeakedPasswords(leakedPasswords *int) {
+	d.LeakedPasswords = leakedPasswords
+	d.require(dailyStatsFieldLeakedPasswords)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DailyStats) SetUpdatedAt(updatedAt *string) {
+	d.UpdatedAt = updatedAt
+	d.require(dailyStatsFieldUpdatedAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DailyStats) SetCreatedAt(createdAt *string) {
+	d.CreatedAt = createdAt
+	d.require(dailyStatsFieldCreatedAt)
 }
 
 func (d *DailyStats) UnmarshalJSON(data []byte) error {
@@ -107,7 +162,8 @@ func (d *DailyStats) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*d),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, d.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, d.ExtraProperties)
 }
 
 func (d *DailyStats) String() string {

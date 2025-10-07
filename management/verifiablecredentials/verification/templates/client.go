@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	verification "github.com/auth0/go-auth0/v2/management/verifiablecredentials/verification"
 	http "net/http"
 )
 
@@ -37,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // List a verifiable credential templates.
 func (c *Client) List(
 	ctx context.Context,
-	request *verification.ListVerifiableCredentialTemplatesRequestParameters,
+	request *management.ListVerifiableCredentialTemplatesRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.VerifiableCredentialTemplateResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -47,12 +46,7 @@ func (c *Client) List(
 		"https://%7BTENANT%7D.auth0.com/api/v2",
 	)
 	endpointURL := baseURL + "/verifiable-credentials/verification/templates"
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"take": 50,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -60,28 +54,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
@@ -99,13 +71,13 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	readPageResponse := func(response *management.ListVerifiableCredentialTemplatesPaginatedResponseContent) *internal.PageResponse[*string, *management.VerifiableCredentialTemplateResponse] {
 		var zeroValue *string
-		next := response.GetNext()
-		results := response.GetTemplates()
+		next := response.Next
+		results := response.Templates
 		return &internal.PageResponse[*string, *management.VerifiableCredentialTemplateResponse]{
 			Next:    next,
 			Results: results,
@@ -123,7 +95,7 @@ func (c *Client) List(
 // Create a verifiable credential template.
 func (c *Client) Create(
 	ctx context.Context,
-	request *verification.CreateVerifiableCredentialTemplateRequestContent,
+	request *management.CreateVerifiableCredentialTemplateRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateVerifiableCredentialTemplateResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
@@ -178,7 +150,7 @@ func (c *Client) Update(
 	ctx context.Context,
 	// ID of the template to retrieve.
 	id string,
-	request *verification.UpdateVerifiableCredentialTemplateRequestContent,
+	request *management.UpdateVerifiableCredentialTemplateRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateVerifiableCredentialTemplateResponseContent, error) {
 	response, err := c.WithRawResponse.Update(

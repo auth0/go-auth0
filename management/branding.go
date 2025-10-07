@@ -6,34 +6,64 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
 // Custom color settings.
+var (
+	brandingColorsFieldPrimary        = big.NewInt(1 << 0)
+	brandingColorsFieldPageBackground = big.NewInt(1 << 1)
+)
+
 type BrandingColors struct {
 	// Accent color.
 	Primary        *string                 `json:"primary,omitempty" url:"primary,omitempty"`
 	PageBackground *BrandingPageBackground `json:"page_background,omitempty" url:"page_background,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (b *BrandingColors) GetPrimary() *string {
-	if b == nil {
-		return nil
+func (b *BrandingColors) GetPrimary() string {
+	if b == nil || b.Primary == nil {
+		return ""
 	}
-	return b.Primary
+	return *b.Primary
 }
 
-func (b *BrandingColors) GetPageBackground() *BrandingPageBackground {
-	if b == nil {
-		return nil
+func (b *BrandingColors) GetPageBackground() BrandingPageBackground {
+	if b == nil || b.PageBackground == nil {
+		return BrandingPageBackground{}
 	}
-	return b.PageBackground
+	return *b.PageBackground
 }
 
 func (b *BrandingColors) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
+}
+
+func (b *BrandingColors) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetPrimary sets the Primary field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingColors) SetPrimary(primary *string) {
+	b.Primary = primary
+	b.require(brandingColorsFieldPrimary)
+}
+
+// SetPageBackground sets the PageBackground field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingColors) SetPageBackground(pageBackground *BrandingPageBackground) {
+	b.PageBackground = pageBackground
+	b.require(brandingColorsFieldPageBackground)
 }
 
 func (b *BrandingColors) UnmarshalJSON(data []byte) error {
@@ -52,6 +82,17 @@ func (b *BrandingColors) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (b *BrandingColors) MarshalJSON() ([]byte, error) {
+	type embed BrandingColors
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (b *BrandingColors) String() string {
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
@@ -65,23 +106,44 @@ func (b *BrandingColors) String() string {
 }
 
 // Custom font settings.
+var (
+	brandingFontFieldUrl = big.NewInt(1 << 0)
+)
+
 type BrandingFont struct {
 	// URL for the custom font. The URL must point to a font file and not a stylesheet. Must use HTTPS.
-	URL *string `json:"url,omitempty" url:"url,omitempty"`
+	Url *string `json:"url,omitempty" url:"url,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (b *BrandingFont) GetURL() *string {
-	if b == nil {
-		return nil
+func (b *BrandingFont) GetUrl() string {
+	if b == nil || b.Url == nil {
+		return ""
 	}
-	return b.URL
+	return *b.Url
 }
 
 func (b *BrandingFont) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
+}
+
+func (b *BrandingFont) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetUrl sets the Url field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingFont) SetUrl(url *string) {
+	b.Url = url
+	b.require(brandingFontFieldUrl)
 }
 
 func (b *BrandingFont) UnmarshalJSON(data []byte) error {
@@ -98,6 +160,17 @@ func (b *BrandingFont) UnmarshalJSON(data []byte) error {
 	b.extraProperties = extraProperties
 	b.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (b *BrandingFont) MarshalJSON() ([]byte, error) {
+	type embed BrandingFont
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (b *BrandingFont) String() string {
@@ -132,15 +205,15 @@ type BrandingPageBackground struct {
 	typ string
 }
 
-func (b *BrandingPageBackground) GetStringOptional() *string {
-	if b == nil {
-		return nil
+func (b *BrandingPageBackground) GetStringOptional() string {
+	if b == nil || b.StringOptional == nil {
+		return ""
 	}
-	return b.StringOptional
+	return *b.StringOptional
 }
 
 func (b *BrandingPageBackground) GetStringUnknownMapOptional() map[string]interface{} {
-	if b == nil {
+	if b == nil || b.StringUnknownMapOptional == nil {
 		return nil
 	}
 	return b.StringUnknownMapOptional
@@ -187,49 +260,94 @@ func (b *BrandingPageBackground) Accept(visitor BrandingPageBackgroundVisitor) e
 	return fmt.Errorf("type %T does not include a non-empty union type", b)
 }
 
+var (
+	getBrandingResponseContentFieldColors     = big.NewInt(1 << 0)
+	getBrandingResponseContentFieldFaviconUrl = big.NewInt(1 << 1)
+	getBrandingResponseContentFieldLogoUrl    = big.NewInt(1 << 2)
+	getBrandingResponseContentFieldFont       = big.NewInt(1 << 3)
+)
+
 type GetBrandingResponseContent struct {
 	Colors *BrandingColors `json:"colors,omitempty" url:"colors,omitempty"`
 	// URL for the favicon. Must use HTTPS.
-	FaviconURL *string `json:"favicon_url,omitempty" url:"favicon_url,omitempty"`
+	FaviconUrl *string `json:"favicon_url,omitempty" url:"favicon_url,omitempty"`
 	// URL for the logo. Must use HTTPS.
-	LogoURL *string       `json:"logo_url,omitempty" url:"logo_url,omitempty"`
+	LogoUrl *string       `json:"logo_url,omitempty" url:"logo_url,omitempty"`
 	Font    *BrandingFont `json:"font,omitempty" url:"font,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (g *GetBrandingResponseContent) GetColors() *BrandingColors {
-	if g == nil {
-		return nil
+func (g *GetBrandingResponseContent) GetColors() BrandingColors {
+	if g == nil || g.Colors == nil {
+		return BrandingColors{}
 	}
-	return g.Colors
+	return *g.Colors
 }
 
-func (g *GetBrandingResponseContent) GetFaviconURL() *string {
-	if g == nil {
-		return nil
+func (g *GetBrandingResponseContent) GetFaviconUrl() string {
+	if g == nil || g.FaviconUrl == nil {
+		return ""
 	}
-	return g.FaviconURL
+	return *g.FaviconUrl
 }
 
-func (g *GetBrandingResponseContent) GetLogoURL() *string {
-	if g == nil {
-		return nil
+func (g *GetBrandingResponseContent) GetLogoUrl() string {
+	if g == nil || g.LogoUrl == nil {
+		return ""
 	}
-	return g.LogoURL
+	return *g.LogoUrl
 }
 
-func (g *GetBrandingResponseContent) GetFont() *BrandingFont {
-	if g == nil {
-		return nil
+func (g *GetBrandingResponseContent) GetFont() BrandingFont {
+	if g == nil || g.Font == nil {
+		return BrandingFont{}
 	}
-	return g.Font
+	return *g.Font
 }
 
 func (g *GetBrandingResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.ExtraProperties
+}
+
+func (g *GetBrandingResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetColors sets the Colors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingResponseContent) SetColors(colors *BrandingColors) {
+	g.Colors = colors
+	g.require(getBrandingResponseContentFieldColors)
+}
+
+// SetFaviconUrl sets the FaviconUrl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingResponseContent) SetFaviconUrl(faviconUrl *string) {
+	g.FaviconUrl = faviconUrl
+	g.require(getBrandingResponseContentFieldFaviconUrl)
+}
+
+// SetLogoUrl sets the LogoUrl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingResponseContent) SetLogoUrl(logoUrl *string) {
+	g.LogoUrl = logoUrl
+	g.require(getBrandingResponseContentFieldLogoUrl)
+}
+
+// SetFont sets the Font field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingResponseContent) SetFont(font *BrandingFont) {
+	g.Font = font
+	g.require(getBrandingResponseContentFieldFont)
 }
 
 func (g *GetBrandingResponseContent) UnmarshalJSON(data []byte) error {
@@ -259,7 +377,8 @@ func (g *GetBrandingResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*g),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, g.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *GetBrandingResponseContent) String() string {
@@ -275,31 +394,60 @@ func (g *GetBrandingResponseContent) String() string {
 }
 
 // Custom color settings.
+var (
+	updateBrandingColorsFieldPrimary        = big.NewInt(1 << 0)
+	updateBrandingColorsFieldPageBackground = big.NewInt(1 << 1)
+)
+
 type UpdateBrandingColors struct {
 	// Accent color.
 	Primary        *string                       `json:"primary,omitempty" url:"primary,omitempty"`
 	PageBackground *UpdateBrandingPageBackground `json:"page_background,omitempty" url:"page_background,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateBrandingColors) GetPrimary() *string {
-	if u == nil {
-		return nil
+func (u *UpdateBrandingColors) GetPrimary() string {
+	if u == nil || u.Primary == nil {
+		return ""
 	}
-	return u.Primary
+	return *u.Primary
 }
 
-func (u *UpdateBrandingColors) GetPageBackground() *UpdateBrandingPageBackground {
-	if u == nil {
-		return nil
+func (u *UpdateBrandingColors) GetPageBackground() UpdateBrandingPageBackground {
+	if u == nil || u.PageBackground == nil {
+		return UpdateBrandingPageBackground{}
 	}
-	return u.PageBackground
+	return *u.PageBackground
 }
 
 func (u *UpdateBrandingColors) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UpdateBrandingColors) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetPrimary sets the Primary field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingColors) SetPrimary(primary *string) {
+	u.Primary = primary
+	u.require(updateBrandingColorsFieldPrimary)
+}
+
+// SetPageBackground sets the PageBackground field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingColors) SetPageBackground(pageBackground *UpdateBrandingPageBackground) {
+	u.PageBackground = pageBackground
+	u.require(updateBrandingColorsFieldPageBackground)
 }
 
 func (u *UpdateBrandingColors) UnmarshalJSON(data []byte) error {
@@ -318,6 +466,17 @@ func (u *UpdateBrandingColors) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UpdateBrandingColors) MarshalJSON() ([]byte, error) {
+	type embed UpdateBrandingColors
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UpdateBrandingColors) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -331,23 +490,44 @@ func (u *UpdateBrandingColors) String() string {
 }
 
 // Custom font settings.
+var (
+	updateBrandingFontFieldUrl = big.NewInt(1 << 0)
+)
+
 type UpdateBrandingFont struct {
 	// URL for the custom font. The URL must point to a font file and not a stylesheet. Must use HTTPS.
-	URL *string `json:"url,omitempty" url:"url,omitempty"`
+	Url *string `json:"url,omitempty" url:"url,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateBrandingFont) GetURL() *string {
-	if u == nil {
-		return nil
+func (u *UpdateBrandingFont) GetUrl() string {
+	if u == nil || u.Url == nil {
+		return ""
 	}
-	return u.URL
+	return *u.Url
 }
 
 func (u *UpdateBrandingFont) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UpdateBrandingFont) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetUrl sets the Url field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingFont) SetUrl(url *string) {
+	u.Url = url
+	u.require(updateBrandingFontFieldUrl)
 }
 
 func (u *UpdateBrandingFont) UnmarshalJSON(data []byte) error {
@@ -364,6 +544,17 @@ func (u *UpdateBrandingFont) UnmarshalJSON(data []byte) error {
 	u.extraProperties = extraProperties
 	u.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (u *UpdateBrandingFont) MarshalJSON() ([]byte, error) {
+	type embed UpdateBrandingFont
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *UpdateBrandingFont) String() string {
@@ -398,15 +589,15 @@ type UpdateBrandingPageBackground struct {
 	typ string
 }
 
-func (u *UpdateBrandingPageBackground) GetStringOptional() *string {
-	if u == nil {
-		return nil
+func (u *UpdateBrandingPageBackground) GetStringOptional() string {
+	if u == nil || u.StringOptional == nil {
+		return ""
 	}
-	return u.StringOptional
+	return *u.StringOptional
 }
 
 func (u *UpdateBrandingPageBackground) GetStringUnknownMapOptional() map[string]interface{} {
-	if u == nil {
+	if u == nil || u.StringUnknownMapOptional == nil {
 		return nil
 	}
 	return u.StringUnknownMapOptional
@@ -453,49 +644,94 @@ func (u *UpdateBrandingPageBackground) Accept(visitor UpdateBrandingPageBackgrou
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
+var (
+	updateBrandingResponseContentFieldColors     = big.NewInt(1 << 0)
+	updateBrandingResponseContentFieldFaviconUrl = big.NewInt(1 << 1)
+	updateBrandingResponseContentFieldLogoUrl    = big.NewInt(1 << 2)
+	updateBrandingResponseContentFieldFont       = big.NewInt(1 << 3)
+)
+
 type UpdateBrandingResponseContent struct {
 	Colors *BrandingColors `json:"colors,omitempty" url:"colors,omitempty"`
 	// URL for the favicon. Must use HTTPS.
-	FaviconURL *string `json:"favicon_url,omitempty" url:"favicon_url,omitempty"`
+	FaviconUrl *string `json:"favicon_url,omitempty" url:"favicon_url,omitempty"`
 	// URL for the logo. Must use HTTPS.
-	LogoURL *string       `json:"logo_url,omitempty" url:"logo_url,omitempty"`
+	LogoUrl *string       `json:"logo_url,omitempty" url:"logo_url,omitempty"`
 	Font    *BrandingFont `json:"font,omitempty" url:"font,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (u *UpdateBrandingResponseContent) GetColors() *BrandingColors {
-	if u == nil {
-		return nil
+func (u *UpdateBrandingResponseContent) GetColors() BrandingColors {
+	if u == nil || u.Colors == nil {
+		return BrandingColors{}
 	}
-	return u.Colors
+	return *u.Colors
 }
 
-func (u *UpdateBrandingResponseContent) GetFaviconURL() *string {
-	if u == nil {
-		return nil
+func (u *UpdateBrandingResponseContent) GetFaviconUrl() string {
+	if u == nil || u.FaviconUrl == nil {
+		return ""
 	}
-	return u.FaviconURL
+	return *u.FaviconUrl
 }
 
-func (u *UpdateBrandingResponseContent) GetLogoURL() *string {
-	if u == nil {
-		return nil
+func (u *UpdateBrandingResponseContent) GetLogoUrl() string {
+	if u == nil || u.LogoUrl == nil {
+		return ""
 	}
-	return u.LogoURL
+	return *u.LogoUrl
 }
 
-func (u *UpdateBrandingResponseContent) GetFont() *BrandingFont {
-	if u == nil {
-		return nil
+func (u *UpdateBrandingResponseContent) GetFont() BrandingFont {
+	if u == nil || u.Font == nil {
+		return BrandingFont{}
 	}
-	return u.Font
+	return *u.Font
 }
 
 func (u *UpdateBrandingResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.ExtraProperties
+}
+
+func (u *UpdateBrandingResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetColors sets the Colors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingResponseContent) SetColors(colors *BrandingColors) {
+	u.Colors = colors
+	u.require(updateBrandingResponseContentFieldColors)
+}
+
+// SetFaviconUrl sets the FaviconUrl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingResponseContent) SetFaviconUrl(faviconUrl *string) {
+	u.FaviconUrl = faviconUrl
+	u.require(updateBrandingResponseContentFieldFaviconUrl)
+}
+
+// SetLogoUrl sets the LogoUrl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingResponseContent) SetLogoUrl(logoUrl *string) {
+	u.LogoUrl = logoUrl
+	u.require(updateBrandingResponseContentFieldLogoUrl)
+}
+
+// SetFont sets the Font field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingResponseContent) SetFont(font *BrandingFont) {
+	u.Font = font
+	u.require(updateBrandingResponseContentFieldFont)
 }
 
 func (u *UpdateBrandingResponseContent) UnmarshalJSON(data []byte) error {
@@ -525,7 +761,8 @@ func (u *UpdateBrandingResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*u),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
 }
 
 func (u *UpdateBrandingResponseContent) String() string {
@@ -538,13 +775,4 @@ func (u *UpdateBrandingResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateBrandingRequestContent struct {
-	Colors *UpdateBrandingColors `json:"colors,omitempty" url:"-"`
-	// URL for the favicon. Must use HTTPS.
-	FaviconURL *string `json:"favicon_url,omitempty" url:"-"`
-	// URL for the logo. Must use HTTPS.
-	LogoURL *string             `json:"logo_url,omitempty" url:"-"`
-	Font    *UpdateBrandingFont `json:"font,omitempty" url:"-"`
 }

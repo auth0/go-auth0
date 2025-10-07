@@ -6,7 +6,6 @@ import (
 	context "context"
 	fmt "fmt"
 	management "github.com/auth0/go-auth0/v2/management"
-	actions "github.com/auth0/go-auth0/v2/management/actions"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -40,8 +39,8 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) List(
 	ctx context.Context,
 	// The ID of the action.
-	actionID string,
-	request *actions.ListActionVersionsRequestParameters,
+	actionId string,
+	request *management.ListActionVersionsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.ActionVersion], error) {
 	options := core.NewRequestOptions(opts...)
@@ -52,15 +51,9 @@ func (c *Client) List(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/actions/actions/%v/versions",
-		actionID,
+		actionId,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":     0,
-			"per_page": 50,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -68,28 +61,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -107,7 +78,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -120,7 +91,7 @@ func (c *Client) List(
 
 	readPageResponse := func(response *management.ListActionVersionsPaginatedResponseContent) *internal.PageResponse[*int, *management.ActionVersion] {
 		next += 1
-		results := response.GetVersions()
+		results := response.Versions
 		return &internal.PageResponse[*int, *management.ActionVersion]{
 			Next:    &next,
 			Results: results,
@@ -138,14 +109,14 @@ func (c *Client) List(
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the action.
-	actionID string,
+	actionId string,
 	// The ID of the action version.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetActionVersionResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
-		actionID,
+		actionId,
 		id,
 		opts...,
 	)
@@ -158,17 +129,17 @@ func (c *Client) Get(
 // Performs the equivalent of a roll-back of an action to an earlier, specified version. Creates a new, deployed action version that is identical to the specified version. If this action is currently bound to a trigger, the system will begin executing the newly-created version immediately.
 func (c *Client) Deploy(
 	ctx context.Context,
+	// The ID of an action.
+	actionId string,
 	// The ID of an action version.
 	id string,
-	// The ID of an action.
-	actionID string,
 	request *management.DeployActionVersionRequestContent,
 	opts ...option.RequestOption,
 ) (*management.DeployActionVersionResponseContent, error) {
 	response, err := c.WithRawResponse.Deploy(
 		ctx,
+		actionId,
 		id,
-		actionID,
 		request,
 		opts...,
 	)

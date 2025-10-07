@@ -19,7 +19,7 @@ type Client struct {
 	WithRawResponse   *RawClient
 	Clients           *clients.Client
 	Keys              *keys.Client
-	SCIMConfiguration *client.Client
+	ScimConfiguration *client.Client
 	Users             *users.Client
 
 	options *core.RequestOptions
@@ -31,7 +31,7 @@ func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		Clients:           clients.NewClient(options),
 		Keys:              keys.NewClient(options),
-		SCIMConfiguration: client.NewClient(options),
+		ScimConfiguration: client.NewClient(options),
 		Users:             users.NewClient(options),
 		WithRawResponse:   NewRawClient(options),
 		options:           options,
@@ -76,12 +76,7 @@ func (c *Client) List(
 		"https://%7BTENANT%7D.auth0.com/api/v2",
 	)
 	endpointURL := baseURL + "/connections"
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"take": 50,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -89,28 +84,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
@@ -128,13 +101,13 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	readPageResponse := func(response *management.ListConnectionsCheckpointPaginatedResponseContent) *internal.PageResponse[*string, *management.ConnectionForList] {
 		var zeroValue *string
-		next := response.GetNext()
-		results := response.GetConnections()
+		next := response.Next
+		results := response.Connections
 		return &internal.PageResponse[*string, *management.ConnectionForList]{
 			Next:    next,
 			Results: results,

@@ -6,33 +6,20 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type CreateOrganizationRequestContent struct {
-	// The name of this organization.
-	Name string `json:"name" url:"-"`
-	// Friendly name of this organization.
-	DisplayName *string               `json:"display_name,omitempty" url:"-"`
-	Branding    *OrganizationBranding `json:"branding,omitempty" url:"-"`
-	Metadata    *OrganizationMetadata `json:"metadata,omitempty" url:"-"`
-	// Connections that will be enabled for this organization. See POST enabled_connections endpoint for the object format. (Max of 10 connections allowed)
-	EnabledConnections []*ConnectionForOrganization `json:"enabled_connections,omitempty" url:"-"`
-	TokenQuota         *CreateTokenQuota            `json:"token_quota,omitempty" url:"-"`
-}
-
-type ListOrganizationsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-	// Field to sort by. Use <code>field:order</code> where order is <code>1</code> for ascending and <code>-1</code> for descending. e.g. <code>created_at:1</code>. We currently support sorting by the following fields: <code>name</code>, <code>display_name</code> and <code>created_at</code>.
-	Sort *string `json:"-" url:"sort,omitempty"`
-}
-
 // Connection to be added to the organization.
+var (
+	connectionForOrganizationFieldConnectionId            = big.NewInt(1 << 0)
+	connectionForOrganizationFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
+	connectionForOrganizationFieldShowAsButton            = big.NewInt(1 << 2)
+	connectionForOrganizationFieldIsSignupEnabled         = big.NewInt(1 << 3)
+)
+
 type ConnectionForOrganization struct {
 	// ID of the connection.
-	ConnectionID string `json:"connection_id" url:"connection_id"`
+	ConnectionId string `json:"connection_id" url:"connection_id"`
 	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
 	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
@@ -40,40 +27,78 @@ type ConnectionForOrganization struct {
 	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
 	IsSignupEnabled *bool `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *ConnectionForOrganization) GetConnectionID() string {
+func (c *ConnectionForOrganization) GetConnectionId() string {
 	if c == nil {
 		return ""
 	}
-	return c.ConnectionID
+	return c.ConnectionId
 }
 
-func (c *ConnectionForOrganization) GetAssignMembershipOnLogin() *bool {
-	if c == nil {
-		return nil
+func (c *ConnectionForOrganization) GetAssignMembershipOnLogin() bool {
+	if c == nil || c.AssignMembershipOnLogin == nil {
+		return false
 	}
-	return c.AssignMembershipOnLogin
+	return *c.AssignMembershipOnLogin
 }
 
-func (c *ConnectionForOrganization) GetShowAsButton() *bool {
-	if c == nil {
-		return nil
+func (c *ConnectionForOrganization) GetShowAsButton() bool {
+	if c == nil || c.ShowAsButton == nil {
+		return false
 	}
-	return c.ShowAsButton
+	return *c.ShowAsButton
 }
 
-func (c *ConnectionForOrganization) GetIsSignupEnabled() *bool {
-	if c == nil {
-		return nil
+func (c *ConnectionForOrganization) GetIsSignupEnabled() bool {
+	if c == nil || c.IsSignupEnabled == nil {
+		return false
 	}
-	return c.IsSignupEnabled
+	return *c.IsSignupEnabled
 }
 
 func (c *ConnectionForOrganization) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *ConnectionForOrganization) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionForOrganization) SetConnectionId(connectionId string) {
+	c.ConnectionId = connectionId
+	c.require(connectionForOrganizationFieldConnectionId)
+}
+
+// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionForOrganization) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+	c.AssignMembershipOnLogin = assignMembershipOnLogin
+	c.require(connectionForOrganizationFieldAssignMembershipOnLogin)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionForOrganization) SetShowAsButton(showAsButton *bool) {
+	c.ShowAsButton = showAsButton
+	c.require(connectionForOrganizationFieldShowAsButton)
+}
+
+// SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionForOrganization) SetIsSignupEnabled(isSignupEnabled *bool) {
+	c.IsSignupEnabled = isSignupEnabled
+	c.require(connectionForOrganizationFieldIsSignupEnabled)
 }
 
 func (c *ConnectionForOrganization) UnmarshalJSON(data []byte) error {
@@ -92,6 +117,17 @@ func (c *ConnectionForOrganization) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *ConnectionForOrganization) MarshalJSON() ([]byte, error) {
+	type embed ConnectionForOrganization
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *ConnectionForOrganization) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -104,9 +140,19 @@ func (c *ConnectionForOrganization) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	createOrganizationResponseContentFieldId                 = big.NewInt(1 << 0)
+	createOrganizationResponseContentFieldName               = big.NewInt(1 << 1)
+	createOrganizationResponseContentFieldDisplayName        = big.NewInt(1 << 2)
+	createOrganizationResponseContentFieldBranding           = big.NewInt(1 << 3)
+	createOrganizationResponseContentFieldMetadata           = big.NewInt(1 << 4)
+	createOrganizationResponseContentFieldTokenQuota         = big.NewInt(1 << 5)
+	createOrganizationResponseContentFieldEnabledConnections = big.NewInt(1 << 6)
+)
+
 type CreateOrganizationResponseContent struct {
 	// Organization identifier.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
@@ -116,55 +162,58 @@ type CreateOrganizationResponseContent struct {
 	TokenQuota         *TokenQuota                      `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	EnabledConnections []*OrganizationEnabledConnection `json:"enabled_connections,omitempty" url:"enabled_connections,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (c *CreateOrganizationResponseContent) GetID() *string {
-	if c == nil {
-		return nil
+func (c *CreateOrganizationResponseContent) GetId() string {
+	if c == nil || c.Id == nil {
+		return ""
 	}
-	return c.ID
+	return *c.Id
 }
 
-func (c *CreateOrganizationResponseContent) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateOrganizationResponseContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateOrganizationResponseContent) GetDisplayName() *string {
-	if c == nil {
-		return nil
+func (c *CreateOrganizationResponseContent) GetDisplayName() string {
+	if c == nil || c.DisplayName == nil {
+		return ""
 	}
-	return c.DisplayName
+	return *c.DisplayName
 }
 
-func (c *CreateOrganizationResponseContent) GetBranding() *OrganizationBranding {
-	if c == nil {
-		return nil
+func (c *CreateOrganizationResponseContent) GetBranding() OrganizationBranding {
+	if c == nil || c.Branding == nil {
+		return OrganizationBranding{}
 	}
-	return c.Branding
+	return *c.Branding
 }
 
-func (c *CreateOrganizationResponseContent) GetMetadata() *OrganizationMetadata {
-	if c == nil {
+func (c *CreateOrganizationResponseContent) GetMetadata() OrganizationMetadata {
+	if c == nil || c.Metadata == nil {
 		return nil
 	}
-	return c.Metadata
+	return *c.Metadata
 }
 
-func (c *CreateOrganizationResponseContent) GetTokenQuota() *TokenQuota {
-	if c == nil {
-		return nil
+func (c *CreateOrganizationResponseContent) GetTokenQuota() TokenQuota {
+	if c == nil || c.TokenQuota == nil {
+		return TokenQuota{}
 	}
-	return c.TokenQuota
+	return *c.TokenQuota
 }
 
 func (c *CreateOrganizationResponseContent) GetEnabledConnections() []*OrganizationEnabledConnection {
-	if c == nil {
+	if c == nil || c.EnabledConnections == nil {
 		return nil
 	}
 	return c.EnabledConnections
@@ -172,6 +221,62 @@ func (c *CreateOrganizationResponseContent) GetEnabledConnections() []*Organizat
 
 func (c *CreateOrganizationResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.ExtraProperties
+}
+
+func (c *CreateOrganizationResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationResponseContent) SetId(id *string) {
+	c.Id = id
+	c.require(createOrganizationResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationResponseContent) SetName(name *string) {
+	c.Name = name
+	c.require(createOrganizationResponseContentFieldName)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationResponseContent) SetDisplayName(displayName *string) {
+	c.DisplayName = displayName
+	c.require(createOrganizationResponseContentFieldDisplayName)
+}
+
+// SetBranding sets the Branding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationResponseContent) SetBranding(branding *OrganizationBranding) {
+	c.Branding = branding
+	c.require(createOrganizationResponseContentFieldBranding)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationResponseContent) SetMetadata(metadata *OrganizationMetadata) {
+	c.Metadata = metadata
+	c.require(createOrganizationResponseContentFieldMetadata)
+}
+
+// SetTokenQuota sets the TokenQuota field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
+	c.TokenQuota = tokenQuota
+	c.require(createOrganizationResponseContentFieldTokenQuota)
+}
+
+// SetEnabledConnections sets the EnabledConnections field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationResponseContent) SetEnabledConnections(enabledConnections []*OrganizationEnabledConnection) {
+	c.EnabledConnections = enabledConnections
+	c.require(createOrganizationResponseContentFieldEnabledConnections)
 }
 
 func (c *CreateOrganizationResponseContent) UnmarshalJSON(data []byte) error {
@@ -201,7 +306,8 @@ func (c *CreateOrganizationResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*c),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, c.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
 }
 
 func (c *CreateOrganizationResponseContent) String() string {
@@ -216,9 +322,18 @@ func (c *CreateOrganizationResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	getOrganizationByNameResponseContentFieldId          = big.NewInt(1 << 0)
+	getOrganizationByNameResponseContentFieldName        = big.NewInt(1 << 1)
+	getOrganizationByNameResponseContentFieldDisplayName = big.NewInt(1 << 2)
+	getOrganizationByNameResponseContentFieldBranding    = big.NewInt(1 << 3)
+	getOrganizationByNameResponseContentFieldMetadata    = big.NewInt(1 << 4)
+	getOrganizationByNameResponseContentFieldTokenQuota  = big.NewInt(1 << 5)
+)
+
 type GetOrganizationByNameResponseContent struct {
 	// Organization identifier.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
@@ -227,55 +342,107 @@ type GetOrganizationByNameResponseContent struct {
 	Metadata    *OrganizationMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
 	TokenQuota  *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (g *GetOrganizationByNameResponseContent) GetID() *string {
-	if g == nil {
-		return nil
+func (g *GetOrganizationByNameResponseContent) GetId() string {
+	if g == nil || g.Id == nil {
+		return ""
 	}
-	return g.ID
+	return *g.Id
 }
 
-func (g *GetOrganizationByNameResponseContent) GetName() *string {
-	if g == nil {
-		return nil
+func (g *GetOrganizationByNameResponseContent) GetName() string {
+	if g == nil || g.Name == nil {
+		return ""
 	}
-	return g.Name
+	return *g.Name
 }
 
-func (g *GetOrganizationByNameResponseContent) GetDisplayName() *string {
-	if g == nil {
-		return nil
+func (g *GetOrganizationByNameResponseContent) GetDisplayName() string {
+	if g == nil || g.DisplayName == nil {
+		return ""
 	}
-	return g.DisplayName
+	return *g.DisplayName
 }
 
-func (g *GetOrganizationByNameResponseContent) GetBranding() *OrganizationBranding {
-	if g == nil {
-		return nil
+func (g *GetOrganizationByNameResponseContent) GetBranding() OrganizationBranding {
+	if g == nil || g.Branding == nil {
+		return OrganizationBranding{}
 	}
-	return g.Branding
+	return *g.Branding
 }
 
-func (g *GetOrganizationByNameResponseContent) GetMetadata() *OrganizationMetadata {
-	if g == nil {
+func (g *GetOrganizationByNameResponseContent) GetMetadata() OrganizationMetadata {
+	if g == nil || g.Metadata == nil {
 		return nil
 	}
-	return g.Metadata
+	return *g.Metadata
 }
 
-func (g *GetOrganizationByNameResponseContent) GetTokenQuota() *TokenQuota {
-	if g == nil {
-		return nil
+func (g *GetOrganizationByNameResponseContent) GetTokenQuota() TokenQuota {
+	if g == nil || g.TokenQuota == nil {
+		return TokenQuota{}
 	}
-	return g.TokenQuota
+	return *g.TokenQuota
 }
 
 func (g *GetOrganizationByNameResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.ExtraProperties
+}
+
+func (g *GetOrganizationByNameResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationByNameResponseContent) SetId(id *string) {
+	g.Id = id
+	g.require(getOrganizationByNameResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationByNameResponseContent) SetName(name *string) {
+	g.Name = name
+	g.require(getOrganizationByNameResponseContentFieldName)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationByNameResponseContent) SetDisplayName(displayName *string) {
+	g.DisplayName = displayName
+	g.require(getOrganizationByNameResponseContentFieldDisplayName)
+}
+
+// SetBranding sets the Branding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationByNameResponseContent) SetBranding(branding *OrganizationBranding) {
+	g.Branding = branding
+	g.require(getOrganizationByNameResponseContentFieldBranding)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationByNameResponseContent) SetMetadata(metadata *OrganizationMetadata) {
+	g.Metadata = metadata
+	g.require(getOrganizationByNameResponseContentFieldMetadata)
+}
+
+// SetTokenQuota sets the TokenQuota field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationByNameResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
+	g.TokenQuota = tokenQuota
+	g.require(getOrganizationByNameResponseContentFieldTokenQuota)
 }
 
 func (g *GetOrganizationByNameResponseContent) UnmarshalJSON(data []byte) error {
@@ -305,7 +472,8 @@ func (g *GetOrganizationByNameResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*g),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, g.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *GetOrganizationByNameResponseContent) String() string {
@@ -320,9 +488,18 @@ func (g *GetOrganizationByNameResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	getOrganizationResponseContentFieldId          = big.NewInt(1 << 0)
+	getOrganizationResponseContentFieldName        = big.NewInt(1 << 1)
+	getOrganizationResponseContentFieldDisplayName = big.NewInt(1 << 2)
+	getOrganizationResponseContentFieldBranding    = big.NewInt(1 << 3)
+	getOrganizationResponseContentFieldMetadata    = big.NewInt(1 << 4)
+	getOrganizationResponseContentFieldTokenQuota  = big.NewInt(1 << 5)
+)
+
 type GetOrganizationResponseContent struct {
 	// Organization identifier.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
@@ -331,55 +508,107 @@ type GetOrganizationResponseContent struct {
 	Metadata    *OrganizationMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
 	TokenQuota  *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (g *GetOrganizationResponseContent) GetID() *string {
-	if g == nil {
-		return nil
+func (g *GetOrganizationResponseContent) GetId() string {
+	if g == nil || g.Id == nil {
+		return ""
 	}
-	return g.ID
+	return *g.Id
 }
 
-func (g *GetOrganizationResponseContent) GetName() *string {
-	if g == nil {
-		return nil
+func (g *GetOrganizationResponseContent) GetName() string {
+	if g == nil || g.Name == nil {
+		return ""
 	}
-	return g.Name
+	return *g.Name
 }
 
-func (g *GetOrganizationResponseContent) GetDisplayName() *string {
-	if g == nil {
-		return nil
+func (g *GetOrganizationResponseContent) GetDisplayName() string {
+	if g == nil || g.DisplayName == nil {
+		return ""
 	}
-	return g.DisplayName
+	return *g.DisplayName
 }
 
-func (g *GetOrganizationResponseContent) GetBranding() *OrganizationBranding {
-	if g == nil {
-		return nil
+func (g *GetOrganizationResponseContent) GetBranding() OrganizationBranding {
+	if g == nil || g.Branding == nil {
+		return OrganizationBranding{}
 	}
-	return g.Branding
+	return *g.Branding
 }
 
-func (g *GetOrganizationResponseContent) GetMetadata() *OrganizationMetadata {
-	if g == nil {
+func (g *GetOrganizationResponseContent) GetMetadata() OrganizationMetadata {
+	if g == nil || g.Metadata == nil {
 		return nil
 	}
-	return g.Metadata
+	return *g.Metadata
 }
 
-func (g *GetOrganizationResponseContent) GetTokenQuota() *TokenQuota {
-	if g == nil {
-		return nil
+func (g *GetOrganizationResponseContent) GetTokenQuota() TokenQuota {
+	if g == nil || g.TokenQuota == nil {
+		return TokenQuota{}
 	}
-	return g.TokenQuota
+	return *g.TokenQuota
 }
 
 func (g *GetOrganizationResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.ExtraProperties
+}
+
+func (g *GetOrganizationResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationResponseContent) SetId(id *string) {
+	g.Id = id
+	g.require(getOrganizationResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationResponseContent) SetName(name *string) {
+	g.Name = name
+	g.require(getOrganizationResponseContentFieldName)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationResponseContent) SetDisplayName(displayName *string) {
+	g.DisplayName = displayName
+	g.require(getOrganizationResponseContentFieldDisplayName)
+}
+
+// SetBranding sets the Branding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationResponseContent) SetBranding(branding *OrganizationBranding) {
+	g.Branding = branding
+	g.require(getOrganizationResponseContentFieldBranding)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationResponseContent) SetMetadata(metadata *OrganizationMetadata) {
+	g.Metadata = metadata
+	g.require(getOrganizationResponseContentFieldMetadata)
+}
+
+// SetTokenQuota sets the TokenQuota field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
+	g.TokenQuota = tokenQuota
+	g.require(getOrganizationResponseContentFieldTokenQuota)
 }
 
 func (g *GetOrganizationResponseContent) UnmarshalJSON(data []byte) error {
@@ -409,7 +638,8 @@ func (g *GetOrganizationResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*g),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, g.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *GetOrganizationResponseContent) String() string {
@@ -424,23 +654,31 @@ func (g *GetOrganizationResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	listOrganizationsPaginatedResponseContentFieldNext          = big.NewInt(1 << 0)
+	listOrganizationsPaginatedResponseContentFieldOrganizations = big.NewInt(1 << 1)
+)
+
 type ListOrganizationsPaginatedResponseContent struct {
 	Next          *string         `json:"next,omitempty" url:"next,omitempty"`
 	Organizations []*Organization `json:"organizations,omitempty" url:"organizations,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListOrganizationsPaginatedResponseContent) GetNext() *string {
-	if l == nil {
-		return nil
+func (l *ListOrganizationsPaginatedResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
 	}
-	return l.Next
+	return *l.Next
 }
 
 func (l *ListOrganizationsPaginatedResponseContent) GetOrganizations() []*Organization {
-	if l == nil {
+	if l == nil || l.Organizations == nil {
 		return nil
 	}
 	return l.Organizations
@@ -448,6 +686,27 @@ func (l *ListOrganizationsPaginatedResponseContent) GetOrganizations() []*Organi
 
 func (l *ListOrganizationsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListOrganizationsPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationsPaginatedResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listOrganizationsPaginatedResponseContentFieldNext)
+}
+
+// SetOrganizations sets the Organizations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationsPaginatedResponseContent) SetOrganizations(organizations []*Organization) {
+	l.Organizations = organizations
+	l.require(listOrganizationsPaginatedResponseContentFieldOrganizations)
 }
 
 func (l *ListOrganizationsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
@@ -466,6 +725,17 @@ func (l *ListOrganizationsPaginatedResponseContent) UnmarshalJSON(data []byte) e
 	return nil
 }
 
+func (l *ListOrganizationsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationsPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListOrganizationsPaginatedResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -478,9 +748,17 @@ func (l *ListOrganizationsPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	organizationEnabledConnectionFieldConnectionId            = big.NewInt(1 << 0)
+	organizationEnabledConnectionFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
+	organizationEnabledConnectionFieldShowAsButton            = big.NewInt(1 << 2)
+	organizationEnabledConnectionFieldIsSignupEnabled         = big.NewInt(1 << 3)
+	organizationEnabledConnectionFieldConnection              = big.NewInt(1 << 4)
+)
+
 type OrganizationEnabledConnection struct {
 	// ID of the connection.
-	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
 	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
@@ -489,48 +767,93 @@ type OrganizationEnabledConnection struct {
 	IsSignupEnabled *bool                              `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
 	Connection      *OrganizationConnectionInformation `json:"connection,omitempty" url:"connection,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (o *OrganizationEnabledConnection) GetConnectionID() *string {
-	if o == nil {
-		return nil
+func (o *OrganizationEnabledConnection) GetConnectionId() string {
+	if o == nil || o.ConnectionId == nil {
+		return ""
 	}
-	return o.ConnectionID
+	return *o.ConnectionId
 }
 
-func (o *OrganizationEnabledConnection) GetAssignMembershipOnLogin() *bool {
-	if o == nil {
-		return nil
+func (o *OrganizationEnabledConnection) GetAssignMembershipOnLogin() bool {
+	if o == nil || o.AssignMembershipOnLogin == nil {
+		return false
 	}
-	return o.AssignMembershipOnLogin
+	return *o.AssignMembershipOnLogin
 }
 
-func (o *OrganizationEnabledConnection) GetShowAsButton() *bool {
-	if o == nil {
-		return nil
+func (o *OrganizationEnabledConnection) GetShowAsButton() bool {
+	if o == nil || o.ShowAsButton == nil {
+		return false
 	}
-	return o.ShowAsButton
+	return *o.ShowAsButton
 }
 
-func (o *OrganizationEnabledConnection) GetIsSignupEnabled() *bool {
-	if o == nil {
-		return nil
+func (o *OrganizationEnabledConnection) GetIsSignupEnabled() bool {
+	if o == nil || o.IsSignupEnabled == nil {
+		return false
 	}
-	return o.IsSignupEnabled
+	return *o.IsSignupEnabled
 }
 
-func (o *OrganizationEnabledConnection) GetConnection() *OrganizationConnectionInformation {
-	if o == nil {
-		return nil
+func (o *OrganizationEnabledConnection) GetConnection() OrganizationConnectionInformation {
+	if o == nil || o.Connection == nil {
+		return OrganizationConnectionInformation{}
 	}
-	return o.Connection
+	return *o.Connection
 }
 
 func (o *OrganizationEnabledConnection) GetExtraProperties() map[string]interface{} {
 	return o.ExtraProperties
+}
+
+func (o *OrganizationEnabledConnection) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationEnabledConnection) SetConnectionId(connectionId *string) {
+	o.ConnectionId = connectionId
+	o.require(organizationEnabledConnectionFieldConnectionId)
+}
+
+// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationEnabledConnection) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+	o.AssignMembershipOnLogin = assignMembershipOnLogin
+	o.require(organizationEnabledConnectionFieldAssignMembershipOnLogin)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationEnabledConnection) SetShowAsButton(showAsButton *bool) {
+	o.ShowAsButton = showAsButton
+	o.require(organizationEnabledConnectionFieldShowAsButton)
+}
+
+// SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationEnabledConnection) SetIsSignupEnabled(isSignupEnabled *bool) {
+	o.IsSignupEnabled = isSignupEnabled
+	o.require(organizationEnabledConnectionFieldIsSignupEnabled)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationEnabledConnection) SetConnection(connection *OrganizationConnectionInformation) {
+	o.Connection = connection
+	o.require(organizationEnabledConnectionFieldConnection)
 }
 
 func (o *OrganizationEnabledConnection) UnmarshalJSON(data []byte) error {
@@ -560,7 +883,8 @@ func (o *OrganizationEnabledConnection) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*o),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, o.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, o.ExtraProperties)
 }
 
 func (o *OrganizationEnabledConnection) String() string {
@@ -575,9 +899,18 @@ func (o *OrganizationEnabledConnection) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+var (
+	updateOrganizationResponseContentFieldId          = big.NewInt(1 << 0)
+	updateOrganizationResponseContentFieldName        = big.NewInt(1 << 1)
+	updateOrganizationResponseContentFieldDisplayName = big.NewInt(1 << 2)
+	updateOrganizationResponseContentFieldBranding    = big.NewInt(1 << 3)
+	updateOrganizationResponseContentFieldMetadata    = big.NewInt(1 << 4)
+	updateOrganizationResponseContentFieldTokenQuota  = big.NewInt(1 << 5)
+)
+
 type UpdateOrganizationResponseContent struct {
 	// Organization identifier.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
@@ -586,55 +919,107 @@ type UpdateOrganizationResponseContent struct {
 	Metadata    *OrganizationMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
 	TokenQuota  *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (u *UpdateOrganizationResponseContent) GetID() *string {
-	if u == nil {
-		return nil
+func (u *UpdateOrganizationResponseContent) GetId() string {
+	if u == nil || u.Id == nil {
+		return ""
 	}
-	return u.ID
+	return *u.Id
 }
 
-func (u *UpdateOrganizationResponseContent) GetName() *string {
-	if u == nil {
-		return nil
+func (u *UpdateOrganizationResponseContent) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
 	}
-	return u.Name
+	return *u.Name
 }
 
-func (u *UpdateOrganizationResponseContent) GetDisplayName() *string {
-	if u == nil {
-		return nil
+func (u *UpdateOrganizationResponseContent) GetDisplayName() string {
+	if u == nil || u.DisplayName == nil {
+		return ""
 	}
-	return u.DisplayName
+	return *u.DisplayName
 }
 
-func (u *UpdateOrganizationResponseContent) GetBranding() *OrganizationBranding {
-	if u == nil {
-		return nil
+func (u *UpdateOrganizationResponseContent) GetBranding() OrganizationBranding {
+	if u == nil || u.Branding == nil {
+		return OrganizationBranding{}
 	}
-	return u.Branding
+	return *u.Branding
 }
 
-func (u *UpdateOrganizationResponseContent) GetMetadata() *OrganizationMetadata {
-	if u == nil {
+func (u *UpdateOrganizationResponseContent) GetMetadata() OrganizationMetadata {
+	if u == nil || u.Metadata == nil {
 		return nil
 	}
-	return u.Metadata
+	return *u.Metadata
 }
 
-func (u *UpdateOrganizationResponseContent) GetTokenQuota() *TokenQuota {
-	if u == nil {
-		return nil
+func (u *UpdateOrganizationResponseContent) GetTokenQuota() TokenQuota {
+	if u == nil || u.TokenQuota == nil {
+		return TokenQuota{}
 	}
-	return u.TokenQuota
+	return *u.TokenQuota
 }
 
 func (u *UpdateOrganizationResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.ExtraProperties
+}
+
+func (u *UpdateOrganizationResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationResponseContent) SetId(id *string) {
+	u.Id = id
+	u.require(updateOrganizationResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationResponseContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateOrganizationResponseContentFieldName)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationResponseContent) SetDisplayName(displayName *string) {
+	u.DisplayName = displayName
+	u.require(updateOrganizationResponseContentFieldDisplayName)
+}
+
+// SetBranding sets the Branding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationResponseContent) SetBranding(branding *OrganizationBranding) {
+	u.Branding = branding
+	u.require(updateOrganizationResponseContentFieldBranding)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationResponseContent) SetMetadata(metadata *OrganizationMetadata) {
+	u.Metadata = metadata
+	u.require(updateOrganizationResponseContentFieldMetadata)
+}
+
+// SetTokenQuota sets the TokenQuota field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
+	u.TokenQuota = tokenQuota
+	u.require(updateOrganizationResponseContentFieldTokenQuota)
 }
 
 func (u *UpdateOrganizationResponseContent) UnmarshalJSON(data []byte) error {
@@ -664,7 +1049,8 @@ func (u *UpdateOrganizationResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*u),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
 }
 
 func (u *UpdateOrganizationResponseContent) String() string {
@@ -677,14 +1063,4 @@ func (u *UpdateOrganizationResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateOrganizationRequestContent struct {
-	// Friendly name of this organization.
-	DisplayName *string `json:"display_name,omitempty" url:"-"`
-	// The name of this organization.
-	Name       *string               `json:"name,omitempty" url:"-"`
-	Branding   *OrganizationBranding `json:"branding,omitempty" url:"-"`
-	Metadata   *OrganizationMetadata `json:"metadata,omitempty" url:"-"`
-	TokenQuota *UpdateTokenQuota     `json:"token_quota,omitempty" url:"-"`
 }

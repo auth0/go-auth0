@@ -6,6 +6,13 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
+)
+
+var (
+	getSettingsResponseContentFieldUniversalLoginExperience    = big.NewInt(1 << 0)
+	getSettingsResponseContentFieldIdentifierFirst             = big.NewInt(1 << 1)
+	getSettingsResponseContentFieldWebauthnPlatformFirstFactor = big.NewInt(1 << 2)
 )
 
 type GetSettingsResponseContent struct {
@@ -15,34 +22,65 @@ type GetSettingsResponseContent struct {
 	// Use WebAuthn with Device Biometrics as the first authentication factor
 	WebauthnPlatformFirstFactor *bool `json:"webauthn_platform_first_factor,omitempty" url:"webauthn_platform_first_factor,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (g *GetSettingsResponseContent) GetUniversalLoginExperience() *UniversalLoginExperienceEnum {
-	if g == nil {
-		return nil
+func (g *GetSettingsResponseContent) GetUniversalLoginExperience() UniversalLoginExperienceEnum {
+	if g == nil || g.UniversalLoginExperience == nil {
+		return ""
 	}
-	return g.UniversalLoginExperience
+	return *g.UniversalLoginExperience
 }
 
-func (g *GetSettingsResponseContent) GetIdentifierFirst() *bool {
-	if g == nil {
-		return nil
+func (g *GetSettingsResponseContent) GetIdentifierFirst() bool {
+	if g == nil || g.IdentifierFirst == nil {
+		return false
 	}
-	return g.IdentifierFirst
+	return *g.IdentifierFirst
 }
 
-func (g *GetSettingsResponseContent) GetWebauthnPlatformFirstFactor() *bool {
-	if g == nil {
-		return nil
+func (g *GetSettingsResponseContent) GetWebauthnPlatformFirstFactor() bool {
+	if g == nil || g.WebauthnPlatformFirstFactor == nil {
+		return false
 	}
-	return g.WebauthnPlatformFirstFactor
+	return *g.WebauthnPlatformFirstFactor
 }
 
 func (g *GetSettingsResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.ExtraProperties
+}
+
+func (g *GetSettingsResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetUniversalLoginExperience sets the UniversalLoginExperience field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSettingsResponseContent) SetUniversalLoginExperience(universalLoginExperience *UniversalLoginExperienceEnum) {
+	g.UniversalLoginExperience = universalLoginExperience
+	g.require(getSettingsResponseContentFieldUniversalLoginExperience)
+}
+
+// SetIdentifierFirst sets the IdentifierFirst field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSettingsResponseContent) SetIdentifierFirst(identifierFirst *bool) {
+	g.IdentifierFirst = identifierFirst
+	g.require(getSettingsResponseContentFieldIdentifierFirst)
+}
+
+// SetWebauthnPlatformFirstFactor sets the WebauthnPlatformFirstFactor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSettingsResponseContent) SetWebauthnPlatformFirstFactor(webauthnPlatformFirstFactor *bool) {
+	g.WebauthnPlatformFirstFactor = webauthnPlatformFirstFactor
+	g.require(getSettingsResponseContentFieldWebauthnPlatformFirstFactor)
 }
 
 func (g *GetSettingsResponseContent) UnmarshalJSON(data []byte) error {
@@ -72,7 +110,8 @@ func (g *GetSettingsResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*g),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, g.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *GetSettingsResponseContent) String() string {
@@ -110,6 +149,12 @@ func (u UniversalLoginExperienceEnum) Ptr() *UniversalLoginExperienceEnum {
 	return &u
 }
 
+var (
+	updateSettingsResponseContentFieldUniversalLoginExperience    = big.NewInt(1 << 0)
+	updateSettingsResponseContentFieldIdentifierFirst             = big.NewInt(1 << 1)
+	updateSettingsResponseContentFieldWebauthnPlatformFirstFactor = big.NewInt(1 << 2)
+)
+
 type UpdateSettingsResponseContent struct {
 	UniversalLoginExperience *UniversalLoginExperienceEnum `json:"universal_login_experience,omitempty" url:"universal_login_experience,omitempty"`
 	// Whether identifier first is enabled or not
@@ -117,34 +162,65 @@ type UpdateSettingsResponseContent struct {
 	// Use WebAuthn with Device Biometrics as the first authentication factor
 	WebauthnPlatformFirstFactor *bool `json:"webauthn_platform_first_factor,omitempty" url:"webauthn_platform_first_factor,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (u *UpdateSettingsResponseContent) GetUniversalLoginExperience() *UniversalLoginExperienceEnum {
-	if u == nil {
-		return nil
+func (u *UpdateSettingsResponseContent) GetUniversalLoginExperience() UniversalLoginExperienceEnum {
+	if u == nil || u.UniversalLoginExperience == nil {
+		return ""
 	}
-	return u.UniversalLoginExperience
+	return *u.UniversalLoginExperience
 }
 
-func (u *UpdateSettingsResponseContent) GetIdentifierFirst() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateSettingsResponseContent) GetIdentifierFirst() bool {
+	if u == nil || u.IdentifierFirst == nil {
+		return false
 	}
-	return u.IdentifierFirst
+	return *u.IdentifierFirst
 }
 
-func (u *UpdateSettingsResponseContent) GetWebauthnPlatformFirstFactor() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateSettingsResponseContent) GetWebauthnPlatformFirstFactor() bool {
+	if u == nil || u.WebauthnPlatformFirstFactor == nil {
+		return false
 	}
-	return u.WebauthnPlatformFirstFactor
+	return *u.WebauthnPlatformFirstFactor
 }
 
 func (u *UpdateSettingsResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.ExtraProperties
+}
+
+func (u *UpdateSettingsResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetUniversalLoginExperience sets the UniversalLoginExperience field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSettingsResponseContent) SetUniversalLoginExperience(universalLoginExperience *UniversalLoginExperienceEnum) {
+	u.UniversalLoginExperience = universalLoginExperience
+	u.require(updateSettingsResponseContentFieldUniversalLoginExperience)
+}
+
+// SetIdentifierFirst sets the IdentifierFirst field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSettingsResponseContent) SetIdentifierFirst(identifierFirst *bool) {
+	u.IdentifierFirst = identifierFirst
+	u.require(updateSettingsResponseContentFieldIdentifierFirst)
+}
+
+// SetWebauthnPlatformFirstFactor sets the WebauthnPlatformFirstFactor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSettingsResponseContent) SetWebauthnPlatformFirstFactor(webauthnPlatformFirstFactor *bool) {
+	u.WebauthnPlatformFirstFactor = webauthnPlatformFirstFactor
+	u.require(updateSettingsResponseContentFieldWebauthnPlatformFirstFactor)
 }
 
 func (u *UpdateSettingsResponseContent) UnmarshalJSON(data []byte) error {
@@ -174,7 +250,8 @@ func (u *UpdateSettingsResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*u),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
 }
 
 func (u *UpdateSettingsResponseContent) String() string {
@@ -187,12 +264,4 @@ func (u *UpdateSettingsResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateSettingsRequestContent struct {
-	UniversalLoginExperience *UniversalLoginExperienceEnum `json:"universal_login_experience,omitempty" url:"-"`
-	// Whether identifier first is enabled or not
-	IdentifierFirst *bool `json:"identifier_first,omitempty" url:"-"`
-	// Use WebAuthn with Device Biometrics as the first authentication factor
-	WebauthnPlatformFirstFactor *bool `json:"webauthn_platform_first_factor,omitempty" url:"-"`
 }

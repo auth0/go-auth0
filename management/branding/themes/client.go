@@ -5,7 +5,6 @@ package themes
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	branding "github.com/auth0/go-auth0/v2/management/branding"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -36,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // Create branding theme.
 func (c *Client) Create(
 	ctx context.Context,
-	request *branding.CreateBrandingThemeRequestContent,
+	request *management.CreateBrandingThemeRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateBrandingThemeResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
@@ -69,12 +68,12 @@ func (c *Client) GetDefault(
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the theme
-	themeID string,
+	themeId string,
 	opts ...option.RequestOption,
 ) (*management.GetBrandingThemeResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
-		themeID,
+		themeId,
 		opts...,
 	)
 	if err != nil {
@@ -87,12 +86,12 @@ func (c *Client) Get(
 func (c *Client) Delete(
 	ctx context.Context,
 	// The ID of the theme
-	themeID string,
+	themeId string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
-		themeID,
+		themeId,
 		opts...,
 	)
 	if err != nil {
@@ -105,13 +104,13 @@ func (c *Client) Delete(
 func (c *Client) Update(
 	ctx context.Context,
 	// The ID of the theme
-	themeID string,
-	request *branding.UpdateBrandingThemeRequestContent,
+	themeId string,
+	request *management.UpdateBrandingThemeRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateBrandingThemeResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
-		themeID,
+		themeId,
 		request,
 		opts...,
 	)

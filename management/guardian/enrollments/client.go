@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	guardian "github.com/auth0/go-auth0/v2/management/guardian"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 )
@@ -39,7 +38,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // Note: Users cannot enroll in Email as a factor through custom enrollment tickets.
 func (c *Client) CreateTicket(
 	ctx context.Context,
-	request *guardian.CreateGuardianEnrollmentTicketRequestContent,
+	request *management.CreateGuardianEnrollmentTicketRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateGuardianEnrollmentTicketResponseContent, error) {
 	response, err := c.WithRawResponse.CreateTicket(

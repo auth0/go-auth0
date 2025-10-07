@@ -7,7 +7,6 @@ import (
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
-	keys "github.com/auth0/go-auth0/v2/management/keys"
 	option "github.com/auth0/go-auth0/v2/management/option"
 )
 
@@ -51,7 +50,7 @@ func (c *Client) Get(
 // Create or replace entire jwks representation of custom signing keys.
 func (c *Client) Set(
 	ctx context.Context,
-	request *keys.SetCustomSigningKeysRequestContent,
+	request *management.SetCustomSigningKeysRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetCustomSigningKeysResponseContent, error) {
 	response, err := c.WithRawResponse.Set(

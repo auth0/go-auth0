@@ -8,7 +8,6 @@ import (
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
-	jobs "github.com/auth0/go-auth0/v2/management/jobs"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	http "net/http"
 )
@@ -34,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Create(
 	ctx context.Context,
-	request *jobs.CreateImportUsersRequestContent,
+	request *management.CreateImportUsersRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.CreateImportUsersResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -48,43 +47,11 @@ func (r *RawClient) Create(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		413: func(apiError *core.APIError) error {
-			return &management.ContentTooLargeError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-		500: func(apiError *core.APIError) error {
-			return &management.InternalServerError{
-				APIError: apiError,
-			}
-		},
-	}
 	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("users", request.Users); err != nil {
 		return nil, err
 	}
-	if err := writer.WriteField("connection_id", request.ConnectionID); err != nil {
+	if err := writer.WriteField("connection_id", request.ConnectionId); err != nil {
 		return nil, err
 	}
 	if request.Upsert != nil {
@@ -92,8 +59,8 @@ func (r *RawClient) Create(
 			return nil, err
 		}
 	}
-	if request.ExternalID != nil {
-		if err := writer.WriteField("external_id", *request.ExternalID); err != nil {
+	if request.ExternalId != nil {
+		if err := writer.WriteField("external_id", *request.ExternalId); err != nil {
 			return nil, err
 		}
 	}
@@ -120,7 +87,7 @@ func (r *RawClient) Create(
 			Client:          options.HTTPClient,
 			Request:         writer.Buffer(),
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

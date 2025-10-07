@@ -6,20 +6,23 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type CreateCustomDomainRequestContent struct {
-	// Domain name.
-	Domain               string                              `json:"domain" url:"-"`
-	Type                 CustomDomainProvisioningTypeEnum    `json:"type" url:"-"`
-	VerificationMethod   *CustomDomainVerificationMethodEnum `json:"verification_method,omitempty" url:"-"`
-	TLSPolicy            *CustomDomainTLSPolicyEnum          `json:"tls_policy,omitempty" url:"-"`
-	CustomClientIPHeader *CustomDomainCustomClientIPHeader   `json:"custom_client_ip_header,omitempty" url:"-"`
-}
+var (
+	createCustomDomainResponseContentFieldCustomDomainId       = big.NewInt(1 << 0)
+	createCustomDomainResponseContentFieldDomain               = big.NewInt(1 << 1)
+	createCustomDomainResponseContentFieldPrimary              = big.NewInt(1 << 2)
+	createCustomDomainResponseContentFieldStatus               = big.NewInt(1 << 3)
+	createCustomDomainResponseContentFieldType                 = big.NewInt(1 << 4)
+	createCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 5)
+	createCustomDomainResponseContentFieldCustomClientIpHeader = big.NewInt(1 << 6)
+	createCustomDomainResponseContentFieldTlsPolicy            = big.NewInt(1 << 7)
+)
 
 type CreateCustomDomainResponseContent struct {
 	// ID of the custom domain.
-	CustomDomainID string `json:"custom_domain_id" url:"custom_domain_id"`
+	CustomDomainId string `json:"custom_domain_id" url:"custom_domain_id"`
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
@@ -28,19 +31,22 @@ type CreateCustomDomainResponseContent struct {
 	Type         CustomDomainTypeEnum         `json:"type" url:"type"`
 	Verification *DomainVerification          `json:"verification" url:"verification"`
 	// The HTTP header to fetch the client's IP address
-	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
+	CustomClientIpHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	TlsPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateCustomDomainResponseContent) GetCustomDomainID() string {
+func (c *CreateCustomDomainResponseContent) GetCustomDomainId() string {
 	if c == nil {
 		return ""
 	}
-	return c.CustomDomainID
+	return c.CustomDomainId
 }
 
 func (c *CreateCustomDomainResponseContent) GetDomain() string {
@@ -78,22 +84,85 @@ func (c *CreateCustomDomainResponseContent) GetVerification() *DomainVerificatio
 	return c.Verification
 }
 
-func (c *CreateCustomDomainResponseContent) GetCustomClientIPHeader() *string {
-	if c == nil {
-		return nil
+func (c *CreateCustomDomainResponseContent) GetCustomClientIpHeader() string {
+	if c == nil || c.CustomClientIpHeader == nil {
+		return ""
 	}
-	return c.CustomClientIPHeader
+	return *c.CustomClientIpHeader
 }
 
-func (c *CreateCustomDomainResponseContent) GetTLSPolicy() *string {
-	if c == nil {
-		return nil
+func (c *CreateCustomDomainResponseContent) GetTlsPolicy() string {
+	if c == nil || c.TlsPolicy == nil {
+		return ""
 	}
-	return c.TLSPolicy
+	return *c.TlsPolicy
 }
 
 func (c *CreateCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateCustomDomainResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetCustomDomainId sets the CustomDomainId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainResponseContent) SetCustomDomainId(customDomainId string) {
+	c.CustomDomainId = customDomainId
+	c.require(createCustomDomainResponseContentFieldCustomDomainId)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainResponseContent) SetDomain(domain string) {
+	c.Domain = domain
+	c.require(createCustomDomainResponseContentFieldDomain)
+}
+
+// SetPrimary sets the Primary field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainResponseContent) SetPrimary(primary bool) {
+	c.Primary = primary
+	c.require(createCustomDomainResponseContentFieldPrimary)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainResponseContent) SetStatus(status CustomDomainStatusFilterEnum) {
+	c.Status = status
+	c.require(createCustomDomainResponseContentFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainResponseContent) SetType(type_ CustomDomainTypeEnum) {
+	c.Type = type_
+	c.require(createCustomDomainResponseContentFieldType)
+}
+
+// SetVerification sets the Verification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainResponseContent) SetVerification(verification *DomainVerification) {
+	c.Verification = verification
+	c.require(createCustomDomainResponseContentFieldVerification)
+}
+
+// SetCustomClientIpHeader sets the CustomClientIpHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainResponseContent) SetCustomClientIpHeader(customClientIpHeader *string) {
+	c.CustomClientIpHeader = customClientIpHeader
+	c.require(createCustomDomainResponseContentFieldCustomClientIpHeader)
+}
+
+// SetTlsPolicy sets the TlsPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainResponseContent) SetTlsPolicy(tlsPolicy *string) {
+	c.TlsPolicy = tlsPolicy
+	c.require(createCustomDomainResponseContentFieldTlsPolicy)
 }
 
 func (c *CreateCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
@@ -112,6 +181,17 @@ func (c *CreateCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateCustomDomainResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateCustomDomainResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateCustomDomainResponseContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -124,9 +204,21 @@ func (c *CreateCustomDomainResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	customDomainFieldCustomDomainId       = big.NewInt(1 << 0)
+	customDomainFieldDomain               = big.NewInt(1 << 1)
+	customDomainFieldPrimary              = big.NewInt(1 << 2)
+	customDomainFieldStatus               = big.NewInt(1 << 3)
+	customDomainFieldType                 = big.NewInt(1 << 4)
+	customDomainFieldOriginDomainName     = big.NewInt(1 << 5)
+	customDomainFieldVerification         = big.NewInt(1 << 6)
+	customDomainFieldCustomClientIpHeader = big.NewInt(1 << 7)
+	customDomainFieldTlsPolicy            = big.NewInt(1 << 8)
+)
+
 type CustomDomain struct {
 	// ID of the custom domain.
-	CustomDomainID string `json:"custom_domain_id" url:"custom_domain_id"`
+	CustomDomainId string `json:"custom_domain_id" url:"custom_domain_id"`
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
@@ -137,19 +229,22 @@ type CustomDomain struct {
 	OriginDomainName *string             `json:"origin_domain_name,omitempty" url:"origin_domain_name,omitempty"`
 	Verification     *DomainVerification `json:"verification,omitempty" url:"verification,omitempty"`
 	// The HTTP header to fetch the client's IP address
-	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
+	CustomClientIpHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	TlsPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CustomDomain) GetCustomDomainID() string {
+func (c *CustomDomain) GetCustomDomainId() string {
 	if c == nil {
 		return ""
 	}
-	return c.CustomDomainID
+	return c.CustomDomainId
 }
 
 func (c *CustomDomain) GetDomain() string {
@@ -180,36 +275,106 @@ func (c *CustomDomain) GetType() CustomDomainTypeEnum {
 	return c.Type
 }
 
-func (c *CustomDomain) GetOriginDomainName() *string {
-	if c == nil {
-		return nil
+func (c *CustomDomain) GetOriginDomainName() string {
+	if c == nil || c.OriginDomainName == nil {
+		return ""
 	}
-	return c.OriginDomainName
+	return *c.OriginDomainName
 }
 
-func (c *CustomDomain) GetVerification() *DomainVerification {
-	if c == nil {
-		return nil
+func (c *CustomDomain) GetVerification() DomainVerification {
+	if c == nil || c.Verification == nil {
+		return DomainVerification{}
 	}
-	return c.Verification
+	return *c.Verification
 }
 
-func (c *CustomDomain) GetCustomClientIPHeader() *string {
-	if c == nil {
-		return nil
+func (c *CustomDomain) GetCustomClientIpHeader() string {
+	if c == nil || c.CustomClientIpHeader == nil {
+		return ""
 	}
-	return c.CustomClientIPHeader
+	return *c.CustomClientIpHeader
 }
 
-func (c *CustomDomain) GetTLSPolicy() *string {
-	if c == nil {
-		return nil
+func (c *CustomDomain) GetTlsPolicy() string {
+	if c == nil || c.TlsPolicy == nil {
+		return ""
 	}
-	return c.TLSPolicy
+	return *c.TlsPolicy
 }
 
 func (c *CustomDomain) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CustomDomain) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetCustomDomainId sets the CustomDomainId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetCustomDomainId(customDomainId string) {
+	c.CustomDomainId = customDomainId
+	c.require(customDomainFieldCustomDomainId)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetDomain(domain string) {
+	c.Domain = domain
+	c.require(customDomainFieldDomain)
+}
+
+// SetPrimary sets the Primary field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetPrimary(primary bool) {
+	c.Primary = primary
+	c.require(customDomainFieldPrimary)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetStatus(status CustomDomainStatusFilterEnum) {
+	c.Status = status
+	c.require(customDomainFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetType(type_ CustomDomainTypeEnum) {
+	c.Type = type_
+	c.require(customDomainFieldType)
+}
+
+// SetOriginDomainName sets the OriginDomainName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetOriginDomainName(originDomainName *string) {
+	c.OriginDomainName = originDomainName
+	c.require(customDomainFieldOriginDomainName)
+}
+
+// SetVerification sets the Verification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetVerification(verification *DomainVerification) {
+	c.Verification = verification
+	c.require(customDomainFieldVerification)
+}
+
+// SetCustomClientIpHeader sets the CustomClientIpHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetCustomClientIpHeader(customClientIpHeader *string) {
+	c.CustomClientIpHeader = customClientIpHeader
+	c.require(customDomainFieldCustomClientIpHeader)
+}
+
+// SetTlsPolicy sets the TlsPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetTlsPolicy(tlsPolicy *string) {
+	c.TlsPolicy = tlsPolicy
+	c.require(customDomainFieldTlsPolicy)
 }
 
 func (c *CustomDomain) UnmarshalJSON(data []byte) error {
@@ -228,6 +393,17 @@ func (c *CustomDomain) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CustomDomain) MarshalJSON() ([]byte, error) {
+	type embed CustomDomain
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CustomDomain) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -240,37 +416,37 @@ func (c *CustomDomain) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-type CustomDomainCustomClientIPHeader = *CustomDomainCustomClientIPHeaderEnum
+type CustomDomainCustomClientIpHeader = *CustomDomainCustomClientIpHeaderEnum
 
 // The HTTP header to fetch the client's IP address
-type CustomDomainCustomClientIPHeaderEnum string
+type CustomDomainCustomClientIpHeaderEnum string
 
 const (
-	CustomDomainCustomClientIPHeaderEnumTrueClientIP   CustomDomainCustomClientIPHeaderEnum = "true-client-ip"
-	CustomDomainCustomClientIPHeaderEnumCfConnectingIP CustomDomainCustomClientIPHeaderEnum = "cf-connecting-ip"
-	CustomDomainCustomClientIPHeaderEnumXForwardedFor  CustomDomainCustomClientIPHeaderEnum = "x-forwarded-for"
-	CustomDomainCustomClientIPHeaderEnumXAzureClientip CustomDomainCustomClientIPHeaderEnum = "x-azure-clientip"
-	CustomDomainCustomClientIPHeaderEnumEmpty          CustomDomainCustomClientIPHeaderEnum = ""
+	CustomDomainCustomClientIpHeaderEnumTrueClientIp   CustomDomainCustomClientIpHeaderEnum = "true-client-ip"
+	CustomDomainCustomClientIpHeaderEnumCfConnectingIp CustomDomainCustomClientIpHeaderEnum = "cf-connecting-ip"
+	CustomDomainCustomClientIpHeaderEnumXForwardedFor  CustomDomainCustomClientIpHeaderEnum = "x-forwarded-for"
+	CustomDomainCustomClientIpHeaderEnumXAzureClientip CustomDomainCustomClientIpHeaderEnum = "x-azure-clientip"
+	CustomDomainCustomClientIpHeaderEnumEmpty          CustomDomainCustomClientIpHeaderEnum = ""
 )
 
-func NewCustomDomainCustomClientIPHeaderEnumFromString(s string) (CustomDomainCustomClientIPHeaderEnum, error) {
+func NewCustomDomainCustomClientIpHeaderEnumFromString(s string) (CustomDomainCustomClientIpHeaderEnum, error) {
 	switch s {
 	case "true-client-ip":
-		return CustomDomainCustomClientIPHeaderEnumTrueClientIP, nil
+		return CustomDomainCustomClientIpHeaderEnumTrueClientIp, nil
 	case "cf-connecting-ip":
-		return CustomDomainCustomClientIPHeaderEnumCfConnectingIP, nil
+		return CustomDomainCustomClientIpHeaderEnumCfConnectingIp, nil
 	case "x-forwarded-for":
-		return CustomDomainCustomClientIPHeaderEnumXForwardedFor, nil
+		return CustomDomainCustomClientIpHeaderEnumXForwardedFor, nil
 	case "x-azure-clientip":
-		return CustomDomainCustomClientIPHeaderEnumXAzureClientip, nil
+		return CustomDomainCustomClientIpHeaderEnumXAzureClientip, nil
 	case "":
-		return CustomDomainCustomClientIPHeaderEnumEmpty, nil
+		return CustomDomainCustomClientIpHeaderEnumEmpty, nil
 	}
-	var t CustomDomainCustomClientIPHeaderEnum
+	var t CustomDomainCustomClientIpHeaderEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (c CustomDomainCustomClientIPHeaderEnum) Ptr() *CustomDomainCustomClientIPHeaderEnum {
+func (c CustomDomainCustomClientIpHeaderEnum) Ptr() *CustomDomainCustomClientIpHeaderEnum {
 	return &c
 }
 
@@ -324,7 +500,7 @@ func (c CustomDomainStatusFilterEnum) Ptr() *CustomDomainStatusFilterEnum {
 }
 
 // Custom domain TLS policy. Must be `recommended`, includes TLS 1.2.
-type CustomDomainTLSPolicyEnum = string
+type CustomDomainTlsPolicyEnum = string
 
 // Custom domain provisioning type. Can be `auth0_managed_certs` or `self_managed_certs`.
 type CustomDomainTypeEnum string
@@ -353,16 +529,23 @@ func (c CustomDomainTypeEnum) Ptr() *CustomDomainTypeEnum {
 type CustomDomainVerificationMethodEnum = string
 
 // Domain verification settings.
+var (
+	domainVerificationFieldMethods = big.NewInt(1 << 0)
+)
+
 type DomainVerification struct {
 	// Domain verification methods.
 	Methods []*DomainVerificationMethod `json:"methods,omitempty" url:"methods,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
 func (d *DomainVerification) GetMethods() []*DomainVerificationMethod {
-	if d == nil {
+	if d == nil || d.Methods == nil {
 		return nil
 	}
 	return d.Methods
@@ -370,6 +553,20 @@ func (d *DomainVerification) GetMethods() []*DomainVerificationMethod {
 
 func (d *DomainVerification) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
+}
+
+func (d *DomainVerification) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetMethods sets the Methods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DomainVerification) SetMethods(methods []*DomainVerificationMethod) {
+	d.Methods = methods
+	d.require(domainVerificationFieldMethods)
 }
 
 func (d *DomainVerification) UnmarshalJSON(data []byte) error {
@@ -388,6 +585,17 @@ func (d *DomainVerification) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (d *DomainVerification) MarshalJSON() ([]byte, error) {
+	type embed DomainVerification
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (d *DomainVerification) String() string {
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
@@ -400,12 +608,21 @@ func (d *DomainVerification) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+var (
+	domainVerificationMethodFieldName   = big.NewInt(1 << 0)
+	domainVerificationMethodFieldRecord = big.NewInt(1 << 1)
+	domainVerificationMethodFieldDomain = big.NewInt(1 << 2)
+)
+
 type DomainVerificationMethod struct {
 	Name DomainVerificationMethodNameEnum `json:"name" url:"name"`
 	// Value used to verify the domain.
 	Record string `json:"record" url:"record"`
 	// The name of the txt record for verification
 	Domain *string `json:"domain,omitempty" url:"domain,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -425,15 +642,43 @@ func (d *DomainVerificationMethod) GetRecord() string {
 	return d.Record
 }
 
-func (d *DomainVerificationMethod) GetDomain() *string {
-	if d == nil {
-		return nil
+func (d *DomainVerificationMethod) GetDomain() string {
+	if d == nil || d.Domain == nil {
+		return ""
 	}
-	return d.Domain
+	return *d.Domain
 }
 
 func (d *DomainVerificationMethod) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
+}
+
+func (d *DomainVerificationMethod) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DomainVerificationMethod) SetName(name DomainVerificationMethodNameEnum) {
+	d.Name = name
+	d.require(domainVerificationMethodFieldName)
+}
+
+// SetRecord sets the Record field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DomainVerificationMethod) SetRecord(record string) {
+	d.Record = record
+	d.require(domainVerificationMethodFieldRecord)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DomainVerificationMethod) SetDomain(domain *string) {
+	d.Domain = domain
+	d.require(domainVerificationMethodFieldDomain)
 }
 
 func (d *DomainVerificationMethod) UnmarshalJSON(data []byte) error {
@@ -450,6 +695,17 @@ func (d *DomainVerificationMethod) UnmarshalJSON(data []byte) error {
 	d.extraProperties = extraProperties
 	d.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (d *DomainVerificationMethod) MarshalJSON() ([]byte, error) {
+	type embed DomainVerificationMethod
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (d *DomainVerificationMethod) String() string {
@@ -487,9 +743,21 @@ func (d DomainVerificationMethodNameEnum) Ptr() *DomainVerificationMethodNameEnu
 	return &d
 }
 
+var (
+	getCustomDomainResponseContentFieldCustomDomainId       = big.NewInt(1 << 0)
+	getCustomDomainResponseContentFieldDomain               = big.NewInt(1 << 1)
+	getCustomDomainResponseContentFieldPrimary              = big.NewInt(1 << 2)
+	getCustomDomainResponseContentFieldStatus               = big.NewInt(1 << 3)
+	getCustomDomainResponseContentFieldType                 = big.NewInt(1 << 4)
+	getCustomDomainResponseContentFieldOriginDomainName     = big.NewInt(1 << 5)
+	getCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 6)
+	getCustomDomainResponseContentFieldCustomClientIpHeader = big.NewInt(1 << 7)
+	getCustomDomainResponseContentFieldTlsPolicy            = big.NewInt(1 << 8)
+)
+
 type GetCustomDomainResponseContent struct {
 	// ID of the custom domain.
-	CustomDomainID string `json:"custom_domain_id" url:"custom_domain_id"`
+	CustomDomainId string `json:"custom_domain_id" url:"custom_domain_id"`
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
@@ -500,19 +768,22 @@ type GetCustomDomainResponseContent struct {
 	OriginDomainName *string             `json:"origin_domain_name,omitempty" url:"origin_domain_name,omitempty"`
 	Verification     *DomainVerification `json:"verification,omitempty" url:"verification,omitempty"`
 	// The HTTP header to fetch the client's IP address
-	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
+	CustomClientIpHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	TlsPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (g *GetCustomDomainResponseContent) GetCustomDomainID() string {
+func (g *GetCustomDomainResponseContent) GetCustomDomainId() string {
 	if g == nil {
 		return ""
 	}
-	return g.CustomDomainID
+	return g.CustomDomainId
 }
 
 func (g *GetCustomDomainResponseContent) GetDomain() string {
@@ -543,36 +814,106 @@ func (g *GetCustomDomainResponseContent) GetType() CustomDomainTypeEnum {
 	return g.Type
 }
 
-func (g *GetCustomDomainResponseContent) GetOriginDomainName() *string {
-	if g == nil {
-		return nil
+func (g *GetCustomDomainResponseContent) GetOriginDomainName() string {
+	if g == nil || g.OriginDomainName == nil {
+		return ""
 	}
-	return g.OriginDomainName
+	return *g.OriginDomainName
 }
 
-func (g *GetCustomDomainResponseContent) GetVerification() *DomainVerification {
-	if g == nil {
-		return nil
+func (g *GetCustomDomainResponseContent) GetVerification() DomainVerification {
+	if g == nil || g.Verification == nil {
+		return DomainVerification{}
 	}
-	return g.Verification
+	return *g.Verification
 }
 
-func (g *GetCustomDomainResponseContent) GetCustomClientIPHeader() *string {
-	if g == nil {
-		return nil
+func (g *GetCustomDomainResponseContent) GetCustomClientIpHeader() string {
+	if g == nil || g.CustomClientIpHeader == nil {
+		return ""
 	}
-	return g.CustomClientIPHeader
+	return *g.CustomClientIpHeader
 }
 
-func (g *GetCustomDomainResponseContent) GetTLSPolicy() *string {
-	if g == nil {
-		return nil
+func (g *GetCustomDomainResponseContent) GetTlsPolicy() string {
+	if g == nil || g.TlsPolicy == nil {
+		return ""
 	}
-	return g.TLSPolicy
+	return *g.TlsPolicy
 }
 
 func (g *GetCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
+}
+
+func (g *GetCustomDomainResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetCustomDomainId sets the CustomDomainId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetCustomDomainId(customDomainId string) {
+	g.CustomDomainId = customDomainId
+	g.require(getCustomDomainResponseContentFieldCustomDomainId)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetDomain(domain string) {
+	g.Domain = domain
+	g.require(getCustomDomainResponseContentFieldDomain)
+}
+
+// SetPrimary sets the Primary field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetPrimary(primary bool) {
+	g.Primary = primary
+	g.require(getCustomDomainResponseContentFieldPrimary)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetStatus(status CustomDomainStatusFilterEnum) {
+	g.Status = status
+	g.require(getCustomDomainResponseContentFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetType(type_ CustomDomainTypeEnum) {
+	g.Type = type_
+	g.require(getCustomDomainResponseContentFieldType)
+}
+
+// SetOriginDomainName sets the OriginDomainName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetOriginDomainName(originDomainName *string) {
+	g.OriginDomainName = originDomainName
+	g.require(getCustomDomainResponseContentFieldOriginDomainName)
+}
+
+// SetVerification sets the Verification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetVerification(verification *DomainVerification) {
+	g.Verification = verification
+	g.require(getCustomDomainResponseContentFieldVerification)
+}
+
+// SetCustomClientIpHeader sets the CustomClientIpHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetCustomClientIpHeader(customClientIpHeader *string) {
+	g.CustomClientIpHeader = customClientIpHeader
+	g.require(getCustomDomainResponseContentFieldCustomClientIpHeader)
+}
+
+// SetTlsPolicy sets the TlsPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetTlsPolicy(tlsPolicy *string) {
+	g.TlsPolicy = tlsPolicy
+	g.require(getCustomDomainResponseContentFieldTlsPolicy)
 }
 
 func (g *GetCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
@@ -591,6 +932,17 @@ func (g *GetCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (g *GetCustomDomainResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetCustomDomainResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (g *GetCustomDomainResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
@@ -605,11 +957,19 @@ func (g *GetCustomDomainResponseContent) String() string {
 
 type ListCustomDomainsResponseContent = []*CustomDomain
 
+var (
+	testCustomDomainResponseContentFieldSuccess = big.NewInt(1 << 0)
+	testCustomDomainResponseContentFieldMessage = big.NewInt(1 << 1)
+)
+
 type TestCustomDomainResponseContent struct {
 	// Result of the operation.
 	Success bool `json:"success" url:"success"`
 	// Message describing the operation status.
 	Message *string `json:"message,omitempty" url:"message,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -622,15 +982,36 @@ func (t *TestCustomDomainResponseContent) GetSuccess() bool {
 	return t.Success
 }
 
-func (t *TestCustomDomainResponseContent) GetMessage() *string {
-	if t == nil {
-		return nil
+func (t *TestCustomDomainResponseContent) GetMessage() string {
+	if t == nil || t.Message == nil {
+		return ""
 	}
-	return t.Message
+	return *t.Message
 }
 
 func (t *TestCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
 	return t.extraProperties
+}
+
+func (t *TestCustomDomainResponseContent) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TestCustomDomainResponseContent) SetSuccess(success bool) {
+	t.Success = success
+	t.require(testCustomDomainResponseContentFieldSuccess)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TestCustomDomainResponseContent) SetMessage(message *string) {
+	t.Message = message
+	t.require(testCustomDomainResponseContentFieldMessage)
 }
 
 func (t *TestCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
@@ -649,6 +1030,17 @@ func (t *TestCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (t *TestCustomDomainResponseContent) MarshalJSON() ([]byte, error) {
+	type embed TestCustomDomainResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (t *TestCustomDomainResponseContent) String() string {
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
@@ -661,9 +1053,20 @@ func (t *TestCustomDomainResponseContent) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
+var (
+	updateCustomDomainResponseContentFieldCustomDomainId       = big.NewInt(1 << 0)
+	updateCustomDomainResponseContentFieldDomain               = big.NewInt(1 << 1)
+	updateCustomDomainResponseContentFieldPrimary              = big.NewInt(1 << 2)
+	updateCustomDomainResponseContentFieldStatus               = big.NewInt(1 << 3)
+	updateCustomDomainResponseContentFieldType                 = big.NewInt(1 << 4)
+	updateCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 5)
+	updateCustomDomainResponseContentFieldCustomClientIpHeader = big.NewInt(1 << 6)
+	updateCustomDomainResponseContentFieldTlsPolicy            = big.NewInt(1 << 7)
+)
+
 type UpdateCustomDomainResponseContent struct {
 	// ID of the custom domain.
-	CustomDomainID string `json:"custom_domain_id" url:"custom_domain_id"`
+	CustomDomainId string `json:"custom_domain_id" url:"custom_domain_id"`
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
@@ -672,19 +1075,22 @@ type UpdateCustomDomainResponseContent struct {
 	Type         CustomDomainTypeEnum         `json:"type" url:"type"`
 	Verification *DomainVerification          `json:"verification" url:"verification"`
 	// The HTTP header to fetch the client's IP address
-	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
+	CustomClientIpHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	TlsPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateCustomDomainResponseContent) GetCustomDomainID() string {
+func (u *UpdateCustomDomainResponseContent) GetCustomDomainId() string {
 	if u == nil {
 		return ""
 	}
-	return u.CustomDomainID
+	return u.CustomDomainId
 }
 
 func (u *UpdateCustomDomainResponseContent) GetDomain() string {
@@ -722,22 +1128,85 @@ func (u *UpdateCustomDomainResponseContent) GetVerification() *DomainVerificatio
 	return u.Verification
 }
 
-func (u *UpdateCustomDomainResponseContent) GetCustomClientIPHeader() *string {
-	if u == nil {
-		return nil
+func (u *UpdateCustomDomainResponseContent) GetCustomClientIpHeader() string {
+	if u == nil || u.CustomClientIpHeader == nil {
+		return ""
 	}
-	return u.CustomClientIPHeader
+	return *u.CustomClientIpHeader
 }
 
-func (u *UpdateCustomDomainResponseContent) GetTLSPolicy() *string {
-	if u == nil {
-		return nil
+func (u *UpdateCustomDomainResponseContent) GetTlsPolicy() string {
+	if u == nil || u.TlsPolicy == nil {
+		return ""
 	}
-	return u.TLSPolicy
+	return *u.TlsPolicy
 }
 
 func (u *UpdateCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UpdateCustomDomainResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetCustomDomainId sets the CustomDomainId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainResponseContent) SetCustomDomainId(customDomainId string) {
+	u.CustomDomainId = customDomainId
+	u.require(updateCustomDomainResponseContentFieldCustomDomainId)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainResponseContent) SetDomain(domain string) {
+	u.Domain = domain
+	u.require(updateCustomDomainResponseContentFieldDomain)
+}
+
+// SetPrimary sets the Primary field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainResponseContent) SetPrimary(primary bool) {
+	u.Primary = primary
+	u.require(updateCustomDomainResponseContentFieldPrimary)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainResponseContent) SetStatus(status CustomDomainStatusFilterEnum) {
+	u.Status = status
+	u.require(updateCustomDomainResponseContentFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainResponseContent) SetType(type_ CustomDomainTypeEnum) {
+	u.Type = type_
+	u.require(updateCustomDomainResponseContentFieldType)
+}
+
+// SetVerification sets the Verification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainResponseContent) SetVerification(verification *DomainVerification) {
+	u.Verification = verification
+	u.require(updateCustomDomainResponseContentFieldVerification)
+}
+
+// SetCustomClientIpHeader sets the CustomClientIpHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainResponseContent) SetCustomClientIpHeader(customClientIpHeader *string) {
+	u.CustomClientIpHeader = customClientIpHeader
+	u.require(updateCustomDomainResponseContentFieldCustomClientIpHeader)
+}
+
+// SetTlsPolicy sets the TlsPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainResponseContent) SetTlsPolicy(tlsPolicy *string) {
+	u.TlsPolicy = tlsPolicy
+	u.require(updateCustomDomainResponseContentFieldTlsPolicy)
 }
 
 func (u *UpdateCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
@@ -756,6 +1225,17 @@ func (u *UpdateCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UpdateCustomDomainResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateCustomDomainResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UpdateCustomDomainResponseContent) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -768,9 +1248,22 @@ func (u *UpdateCustomDomainResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	verifyCustomDomainResponseContentFieldCustomDomainId       = big.NewInt(1 << 0)
+	verifyCustomDomainResponseContentFieldDomain               = big.NewInt(1 << 1)
+	verifyCustomDomainResponseContentFieldPrimary              = big.NewInt(1 << 2)
+	verifyCustomDomainResponseContentFieldStatus               = big.NewInt(1 << 3)
+	verifyCustomDomainResponseContentFieldType                 = big.NewInt(1 << 4)
+	verifyCustomDomainResponseContentFieldCnameApiKey          = big.NewInt(1 << 5)
+	verifyCustomDomainResponseContentFieldOriginDomainName     = big.NewInt(1 << 6)
+	verifyCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 7)
+	verifyCustomDomainResponseContentFieldCustomClientIpHeader = big.NewInt(1 << 8)
+	verifyCustomDomainResponseContentFieldTlsPolicy            = big.NewInt(1 << 9)
+)
+
 type VerifyCustomDomainResponseContent struct {
 	// ID of the custom domain.
-	CustomDomainID string `json:"custom_domain_id" url:"custom_domain_id"`
+	CustomDomainId string `json:"custom_domain_id" url:"custom_domain_id"`
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
@@ -778,24 +1271,27 @@ type VerifyCustomDomainResponseContent struct {
 	Status  CustomDomainStatusFilterEnum `json:"status" url:"status"`
 	Type    CustomDomainTypeEnum         `json:"type" url:"type"`
 	// CNAME API key header.
-	CnameAPIKey *string `json:"cname_api_key,omitempty" url:"cname_api_key,omitempty"`
+	CnameApiKey *string `json:"cname_api_key,omitempty" url:"cname_api_key,omitempty"`
 	// Intermediate address.
 	OriginDomainName *string             `json:"origin_domain_name,omitempty" url:"origin_domain_name,omitempty"`
 	Verification     *DomainVerification `json:"verification,omitempty" url:"verification,omitempty"`
 	// The HTTP header to fetch the client's IP address
-	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
+	CustomClientIpHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	TlsPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (v *VerifyCustomDomainResponseContent) GetCustomDomainID() string {
+func (v *VerifyCustomDomainResponseContent) GetCustomDomainId() string {
 	if v == nil {
 		return ""
 	}
-	return v.CustomDomainID
+	return v.CustomDomainId
 }
 
 func (v *VerifyCustomDomainResponseContent) GetDomain() string {
@@ -826,43 +1322,120 @@ func (v *VerifyCustomDomainResponseContent) GetType() CustomDomainTypeEnum {
 	return v.Type
 }
 
-func (v *VerifyCustomDomainResponseContent) GetCnameAPIKey() *string {
-	if v == nil {
-		return nil
+func (v *VerifyCustomDomainResponseContent) GetCnameApiKey() string {
+	if v == nil || v.CnameApiKey == nil {
+		return ""
 	}
-	return v.CnameAPIKey
+	return *v.CnameApiKey
 }
 
-func (v *VerifyCustomDomainResponseContent) GetOriginDomainName() *string {
-	if v == nil {
-		return nil
+func (v *VerifyCustomDomainResponseContent) GetOriginDomainName() string {
+	if v == nil || v.OriginDomainName == nil {
+		return ""
 	}
-	return v.OriginDomainName
+	return *v.OriginDomainName
 }
 
-func (v *VerifyCustomDomainResponseContent) GetVerification() *DomainVerification {
-	if v == nil {
-		return nil
+func (v *VerifyCustomDomainResponseContent) GetVerification() DomainVerification {
+	if v == nil || v.Verification == nil {
+		return DomainVerification{}
 	}
-	return v.Verification
+	return *v.Verification
 }
 
-func (v *VerifyCustomDomainResponseContent) GetCustomClientIPHeader() *string {
-	if v == nil {
-		return nil
+func (v *VerifyCustomDomainResponseContent) GetCustomClientIpHeader() string {
+	if v == nil || v.CustomClientIpHeader == nil {
+		return ""
 	}
-	return v.CustomClientIPHeader
+	return *v.CustomClientIpHeader
 }
 
-func (v *VerifyCustomDomainResponseContent) GetTLSPolicy() *string {
-	if v == nil {
-		return nil
+func (v *VerifyCustomDomainResponseContent) GetTlsPolicy() string {
+	if v == nil || v.TlsPolicy == nil {
+		return ""
 	}
-	return v.TLSPolicy
+	return *v.TlsPolicy
 }
 
 func (v *VerifyCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
 	return v.extraProperties
+}
+
+func (v *VerifyCustomDomainResponseContent) require(field *big.Int) {
+	if v.explicitFields == nil {
+		v.explicitFields = big.NewInt(0)
+	}
+	v.explicitFields.Or(v.explicitFields, field)
+}
+
+// SetCustomDomainId sets the CustomDomainId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyCustomDomainResponseContent) SetCustomDomainId(customDomainId string) {
+	v.CustomDomainId = customDomainId
+	v.require(verifyCustomDomainResponseContentFieldCustomDomainId)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyCustomDomainResponseContent) SetDomain(domain string) {
+	v.Domain = domain
+	v.require(verifyCustomDomainResponseContentFieldDomain)
+}
+
+// SetPrimary sets the Primary field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyCustomDomainResponseContent) SetPrimary(primary bool) {
+	v.Primary = primary
+	v.require(verifyCustomDomainResponseContentFieldPrimary)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyCustomDomainResponseContent) SetStatus(status CustomDomainStatusFilterEnum) {
+	v.Status = status
+	v.require(verifyCustomDomainResponseContentFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyCustomDomainResponseContent) SetType(type_ CustomDomainTypeEnum) {
+	v.Type = type_
+	v.require(verifyCustomDomainResponseContentFieldType)
+}
+
+// SetCnameApiKey sets the CnameApiKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyCustomDomainResponseContent) SetCnameApiKey(cnameApiKey *string) {
+	v.CnameApiKey = cnameApiKey
+	v.require(verifyCustomDomainResponseContentFieldCnameApiKey)
+}
+
+// SetOriginDomainName sets the OriginDomainName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyCustomDomainResponseContent) SetOriginDomainName(originDomainName *string) {
+	v.OriginDomainName = originDomainName
+	v.require(verifyCustomDomainResponseContentFieldOriginDomainName)
+}
+
+// SetVerification sets the Verification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyCustomDomainResponseContent) SetVerification(verification *DomainVerification) {
+	v.Verification = verification
+	v.require(verifyCustomDomainResponseContentFieldVerification)
+}
+
+// SetCustomClientIpHeader sets the CustomClientIpHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyCustomDomainResponseContent) SetCustomClientIpHeader(customClientIpHeader *string) {
+	v.CustomClientIpHeader = customClientIpHeader
+	v.require(verifyCustomDomainResponseContentFieldCustomClientIpHeader)
+}
+
+// SetTlsPolicy sets the TlsPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyCustomDomainResponseContent) SetTlsPolicy(tlsPolicy *string) {
+	v.TlsPolicy = tlsPolicy
+	v.require(verifyCustomDomainResponseContentFieldTlsPolicy)
 }
 
 func (v *VerifyCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
@@ -881,6 +1454,17 @@ func (v *VerifyCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (v *VerifyCustomDomainResponseContent) MarshalJSON() ([]byte, error) {
+	type embed VerifyCustomDomainResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*v),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, v.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (v *VerifyCustomDomainResponseContent) String() string {
 	if len(v.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
@@ -891,9 +1475,4 @@ func (v *VerifyCustomDomainResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", v)
-}
-
-type UpdateCustomDomainRequestContent struct {
-	TLSPolicy            *CustomDomainTLSPolicyEnum        `json:"tls_policy,omitempty" url:"-"`
-	CustomClientIPHeader *CustomDomainCustomClientIPHeader `json:"custom_client_ip_header,omitempty" url:"-"`
 }

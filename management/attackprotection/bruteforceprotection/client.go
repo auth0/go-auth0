@@ -5,7 +5,6 @@ package bruteforceprotection
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	attackprotection "github.com/auth0/go-auth0/v2/management/attackprotection"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -51,7 +50,7 @@ func (c *Client) Get(
 // Update the Brute-force Protection configuration of your tenant.
 func (c *Client) Update(
 	ctx context.Context,
-	request *attackprotection.UpdateBruteForceSettingsRequestContent,
+	request *management.UpdateBruteForceSettingsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateBruteForceSettingsResponseContent, error) {
 	response, err := c.WithRawResponse.Update(

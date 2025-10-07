@@ -9,7 +9,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	members "github.com/auth0/go-auth0/v2/management/organizations/members"
 	http "net/http"
 	strconv "strconv"
 )
@@ -44,8 +43,8 @@ func (c *Client) List(
 	// Organization identifier.
 	id string,
 	// ID of the user to associate roles with.
-	userID string,
-	request *members.ListOrganizationMemberRolesRequestParameters,
+	userId string,
+	request *management.ListOrganizationMemberRolesRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.Role], error) {
 	options := core.NewRequestOptions(opts...)
@@ -57,16 +56,9 @@ func (c *Client) List(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/members/%v/roles",
 		id,
-		userID,
+		userId,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -74,28 +66,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -113,7 +83,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -126,7 +96,7 @@ func (c *Client) List(
 
 	readPageResponse := func(response *management.ListOrganizationMemberRolesOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.Role] {
 		next += 1
-		results := response.GetRoles()
+		results := response.Roles
 		return &internal.PageResponse[*int, *management.Role]{
 			Next:    &next,
 			Results: results,
@@ -148,14 +118,14 @@ func (c *Client) Assign(
 	// Organization identifier.
 	id string,
 	// ID of the user to associate roles with.
-	userID string,
-	request *members.AssignOrganizationMemberRolesRequestContent,
+	userId string,
+	request *management.AssignOrganizationMemberRolesRequestContent,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Assign(
 		ctx,
 		id,
-		userID,
+		userId,
 		request,
 		opts...,
 	)
@@ -173,14 +143,14 @@ func (c *Client) Delete(
 	// Organization identifier.
 	id string,
 	// User ID of the organization member to remove roles from.
-	userID string,
-	request *members.DeleteOrganizationMemberRolesRequestContent,
+	userId string,
+	request *management.DeleteOrganizationMemberRolesRequestContent,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
-		userID,
+		userId,
 		request,
 		opts...,
 	)

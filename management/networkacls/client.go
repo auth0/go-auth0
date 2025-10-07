@@ -38,9 +38,9 @@ func NewClient(options *core.RequestOptions) *Client {
 // Get all access control list entries for your client.
 func (c *Client) List(
 	ctx context.Context,
-	request *management.ListNetworkACLsRequestParameters,
+	request *management.ListNetworkAclsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.NetworkACLsResponseContent], error) {
+) (*core.Page[*management.NetworkAclsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -48,14 +48,7 @@ func (c *Client) List(
 		"https://%7BTENANT%7D.auth0.com/api/v2",
 	)
 	endpointURL := baseURL + "/network-acls"
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -63,28 +56,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -102,7 +73,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -113,10 +84,10 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListNetworkACLsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.NetworkACLsResponseContent] {
+	readPageResponse := func(response *management.ListNetworkAclsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.NetworkAclsResponseContent] {
 		next += 1
-		results := response.GetNetworkACLs()
-		return &internal.PageResponse[*int, *management.NetworkACLsResponseContent]{
+		results := response.NetworkAcls
+		return &internal.PageResponse[*int, *management.NetworkAclsResponseContent]{
 			Next:    &next,
 			Results: results,
 		}
@@ -132,7 +103,7 @@ func (c *Client) List(
 // Create a new access control list for your client.
 func (c *Client) Create(
 	ctx context.Context,
-	request *management.CreateNetworkACLRequestContent,
+	request *management.CreateNetworkAclRequestContent,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Create(
@@ -152,7 +123,7 @@ func (c *Client) Get(
 	// The id of the access control list to retrieve.
 	id string,
 	opts ...option.RequestOption,
-) (*management.GetNetworkACLsResponseContent, error) {
+) (*management.GetNetworkAclsResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
@@ -169,9 +140,9 @@ func (c *Client) Set(
 	ctx context.Context,
 	// The id of the ACL to update.
 	id string,
-	request *management.SetNetworkACLRequestContent,
+	request *management.SetNetworkAclRequestContent,
 	opts ...option.RequestOption,
-) (*management.SetNetworkACLsResponseContent, error) {
+) (*management.SetNetworkAclsResponseContent, error) {
 	response, err := c.WithRawResponse.Set(
 		ctx,
 		id,
@@ -207,9 +178,9 @@ func (c *Client) Update(
 	ctx context.Context,
 	// The id of the ACL to update.
 	id string,
-	request *management.UpdateNetworkACLRequestContent,
+	request *management.UpdateNetworkAclRequestContent,
 	opts ...option.RequestOption,
-) (*management.UpdateNetworkACLResponseContent, error) {
+) (*management.UpdateNetworkAclResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
 		id,

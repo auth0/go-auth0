@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	organizations "github.com/auth0/go-auth0/v2/management/organizations"
 	http "net/http"
 )
 
@@ -35,7 +34,7 @@ func (r *RawClient) Add(
 	ctx context.Context,
 	// Organization identifier.
 	id string,
-	request *organizations.AddOrganizationConnectionRequestContent,
+	request *management.AddOrganizationConnectionRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.AddOrganizationConnectionResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -53,28 +52,6 @@ func (r *RawClient) Add(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.AddOrganizationConnectionResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -88,7 +65,7 @@ func (r *RawClient) Add(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -106,7 +83,7 @@ func (r *RawClient) Get(
 	// Organization identifier.
 	id string,
 	// Connection identifier.
-	connectionID string,
+	connectionId string,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetOrganizationConnectionResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -118,29 +95,12 @@ func (r *RawClient) Get(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/enabled_connections/%v",
 		id,
-		connectionID,
+		connectionId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetOrganizationConnectionResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -153,7 +113,7 @@ func (r *RawClient) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -171,7 +131,7 @@ func (r *RawClient) Delete(
 	// Organization identifier.
 	id string,
 	// Connection identifier.
-	connectionID string,
+	connectionId string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -183,34 +143,12 @@ func (r *RawClient) Delete(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/enabled_connections/%v",
 		id,
-		connectionID,
+		connectionId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -221,7 +159,7 @@ func (r *RawClient) Delete(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -239,8 +177,8 @@ func (r *RawClient) Update(
 	// Organization identifier.
 	id string,
 	// Connection identifier.
-	connectionID string,
-	request *organizations.UpdateOrganizationConnectionRequestContent,
+	connectionId string,
+	request *management.UpdateOrganizationConnectionRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.UpdateOrganizationConnectionResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -252,35 +190,13 @@ func (r *RawClient) Update(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/enabled_connections/%v",
 		id,
-		connectionID,
+		connectionId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.UpdateOrganizationConnectionResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -294,7 +210,7 @@ func (r *RawClient) Update(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

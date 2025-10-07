@@ -5,7 +5,6 @@ package tokens
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	scimconfiguration "github.com/auth0/go-auth0/v2/management/connections/scimconfiguration"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -39,7 +38,7 @@ func (c *Client) Get(
 	// The id of the connection to retrieve its SCIM configuration
 	id string,
 	opts ...option.RequestOption,
-) (management.GetSCIMTokensResponseContent, error) {
+) (management.GetScimTokensResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
@@ -56,9 +55,9 @@ func (c *Client) Create(
 	ctx context.Context,
 	// The id of the connection to create its SCIM token
 	id string,
-	request *scimconfiguration.CreateSCIMTokenRequestContent,
+	request *management.CreateScimTokenRequestContent,
 	opts ...option.RequestOption,
-) (*management.CreateSCIMTokenResponseContent, error) {
+) (*management.CreateScimTokenResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
 		ctx,
 		id,
@@ -77,13 +76,13 @@ func (c *Client) Delete(
 	// The connection id that owns the SCIM token to delete
 	id string,
 	// The id of the scim token to delete
-	tokenID string,
+	tokenId string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
-		tokenID,
+		tokenId,
 		opts...,
 	)
 	if err != nil {

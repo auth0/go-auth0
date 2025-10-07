@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	organizations "github.com/auth0/go-auth0/v2/management/organizations"
 	http "net/http"
 )
 
@@ -35,7 +34,7 @@ func (r *RawClient) Create(
 	ctx context.Context,
 	// Organization identifier.
 	id string,
-	request *organizations.CreateOrganizationInvitationRequestContent,
+	request *management.CreateOrganizationInvitationRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.CreateOrganizationInvitationResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -53,33 +52,6 @@ func (r *RawClient) Create(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.CreateOrganizationInvitationResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -93,7 +65,7 @@ func (r *RawClient) Create(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -111,8 +83,8 @@ func (r *RawClient) Get(
 	// Organization identifier.
 	id string,
 	// The id of the user invitation.
-	invitationID string,
-	request *organizations.GetOrganizationInvitationRequestParameters,
+	invitationId string,
+	request *management.GetOrganizationInvitationRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetOrganizationInvitationResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -124,7 +96,7 @@ func (r *RawClient) Get(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/invitations/%v",
 		id,
-		invitationID,
+		invitationId,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
@@ -137,33 +109,6 @@ func (r *RawClient) Get(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *management.GetOrganizationInvitationResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -176,7 +121,7 @@ func (r *RawClient) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -194,7 +139,7 @@ func (r *RawClient) Delete(
 	// Organization identifier.
 	id string,
 	// The id of the user invitation.
-	invitationID string,
+	invitationId string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -206,34 +151,12 @@ func (r *RawClient) Delete(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/invitations/%v",
 		id,
-		invitationID,
+		invitationId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -244,7 +167,7 @@ func (r *RawClient) Delete(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

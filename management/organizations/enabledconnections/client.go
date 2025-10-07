@@ -9,7 +9,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	organizations "github.com/auth0/go-auth0/v2/management/organizations"
 	http "net/http"
 	strconv "strconv"
 )
@@ -41,7 +40,7 @@ func (c *Client) List(
 	ctx context.Context,
 	// Organization identifier.
 	id string,
-	request *organizations.ListOrganizationConnectionsRequestParameters,
+	request *management.ListOrganizationConnectionsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.OrganizationConnection], error) {
 	options := core.NewRequestOptions(opts...)
@@ -54,14 +53,7 @@ func (c *Client) List(
 		baseURL+"/organizations/%v/enabled_connections",
 		id,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -69,28 +61,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -108,7 +78,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -121,7 +91,7 @@ func (c *Client) List(
 
 	readPageResponse := func(response *management.ListOrganizationConnectionsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.OrganizationConnection] {
 		next += 1
-		results := response.GetEnabledConnections()
+		results := response.EnabledConnections
 		return &internal.PageResponse[*int, *management.OrganizationConnection]{
 			Next:    &next,
 			Results: results,
@@ -142,7 +112,7 @@ func (c *Client) Add(
 	ctx context.Context,
 	// Organization identifier.
 	id string,
-	request *organizations.AddOrganizationConnectionRequestContent,
+	request *management.AddOrganizationConnectionRequestContent,
 	opts ...option.RequestOption,
 ) (*management.AddOrganizationConnectionResponseContent, error) {
 	response, err := c.WithRawResponse.Add(
@@ -163,13 +133,13 @@ func (c *Client) Get(
 	// Organization identifier.
 	id string,
 	// Connection identifier.
-	connectionID string,
+	connectionId string,
 	opts ...option.RequestOption,
 ) (*management.GetOrganizationConnectionResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
-		connectionID,
+		connectionId,
 		opts...,
 	)
 	if err != nil {
@@ -186,13 +156,13 @@ func (c *Client) Delete(
 	// Organization identifier.
 	id string,
 	// Connection identifier.
-	connectionID string,
+	connectionId string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
-		connectionID,
+		connectionId,
 		opts...,
 	)
 	if err != nil {
@@ -207,14 +177,14 @@ func (c *Client) Update(
 	// Organization identifier.
 	id string,
 	// Connection identifier.
-	connectionID string,
-	request *organizations.UpdateOrganizationConnectionRequestContent,
+	connectionId string,
+	request *management.UpdateOrganizationConnectionRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateOrganizationConnectionResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
 		id,
-		connectionID,
+		connectionId,
 		request,
 		opts...,
 	)

@@ -6,55 +6,34 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type CreateResourceServerRequestContent struct {
-	// Friendly name for this resource server. Can not contain `<` or `>` characters.
-	Name *string `json:"name,omitempty" url:"-"`
-	// Unique identifier for the API used as the audience parameter on authorization calls. Can not be changed once set.
-	Identifier string `json:"identifier" url:"-"`
-	// List of permissions (scopes) that this API uses.
-	Scopes     []*ResourceServerScope `json:"scopes,omitempty" url:"-"`
-	SigningAlg *SigningAlgorithmEnum  `json:"signing_alg,omitempty" url:"-"`
-	// Secret used to sign tokens when using symmetric algorithms (HS256).
-	SigningSecret *string `json:"signing_secret,omitempty" url:"-"`
-	// Whether refresh tokens can be issued for this API (true) or not (false).
-	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"-"`
-	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
-	TokenLifetime *int                                  `json:"token_lifetime,omitempty" url:"-"`
-	TokenDialect  *ResourceServerTokenDialectSchemaEnum `json:"token_dialect,omitempty" url:"-"`
-	// Whether to skip user consent for applications flagged as first party (true) or not (false).
-	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"-"`
-	// Whether to enforce authorization policies (true) or to ignore them (false).
-	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"-"`
-	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"-"`
-	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"-"`
-	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"-"`
-	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"-"`
-	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"-"`
-}
-
-type GetResourceServerRequestParameters struct {
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-}
-
-type ListResourceServerRequestParameters struct {
-	// An optional filter on the resource server identifier. Must be URL encoded and may be specified multiple times (max 10).<br /><b>e.g.</b> <i>../resource-servers?identifiers=id1&identifiers=id2</i>
-	Identifiers []*string `json:"-" url:"identifiers,omitempty"`
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-}
+var (
+	createResourceServerResponseContentFieldId                                        = big.NewInt(1 << 0)
+	createResourceServerResponseContentFieldName                                      = big.NewInt(1 << 1)
+	createResourceServerResponseContentFieldIsSystem                                  = big.NewInt(1 << 2)
+	createResourceServerResponseContentFieldIdentifier                                = big.NewInt(1 << 3)
+	createResourceServerResponseContentFieldScopes                                    = big.NewInt(1 << 4)
+	createResourceServerResponseContentFieldSigningAlg                                = big.NewInt(1 << 5)
+	createResourceServerResponseContentFieldSigningSecret                             = big.NewInt(1 << 6)
+	createResourceServerResponseContentFieldAllowOfflineAccess                        = big.NewInt(1 << 7)
+	createResourceServerResponseContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 8)
+	createResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 9)
+	createResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 10)
+	createResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 11)
+	createResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 12)
+	createResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 13)
+	createResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 14)
+	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 15)
+	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 16)
+	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 17)
+	createResourceServerResponseContentFieldClientId                                  = big.NewInt(1 << 18)
+)
 
 type CreateResourceServerResponseContent struct {
 	// ID of the API (resource server).
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Friendly name for this resource server. Can not contain `<` or `>` characters.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this is an Auth0 system API (true) or a custom API (false).
@@ -82,139 +61,284 @@ type CreateResourceServerResponseContent struct {
 	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	// The client ID of the client that this resource server is linked to
+	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateResourceServerResponseContent) GetID() *string {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetId() string {
+	if c == nil || c.Id == nil {
+		return ""
 	}
-	return c.ID
+	return *c.Id
 }
 
-func (c *CreateResourceServerResponseContent) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateResourceServerResponseContent) GetIsSystem() *bool {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetIsSystem() bool {
+	if c == nil || c.IsSystem == nil {
+		return false
 	}
-	return c.IsSystem
+	return *c.IsSystem
 }
 
-func (c *CreateResourceServerResponseContent) GetIdentifier() *string {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetIdentifier() string {
+	if c == nil || c.Identifier == nil {
+		return ""
 	}
-	return c.Identifier
+	return *c.Identifier
 }
 
 func (c *CreateResourceServerResponseContent) GetScopes() []*ResourceServerScope {
-	if c == nil {
+	if c == nil || c.Scopes == nil {
 		return nil
 	}
 	return c.Scopes
 }
 
-func (c *CreateResourceServerResponseContent) GetSigningAlg() *SigningAlgorithmEnum {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetSigningAlg() SigningAlgorithmEnum {
+	if c == nil || c.SigningAlg == nil {
+		return ""
 	}
-	return c.SigningAlg
+	return *c.SigningAlg
 }
 
-func (c *CreateResourceServerResponseContent) GetSigningSecret() *string {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetSigningSecret() string {
+	if c == nil || c.SigningSecret == nil {
+		return ""
 	}
-	return c.SigningSecret
+	return *c.SigningSecret
 }
 
-func (c *CreateResourceServerResponseContent) GetAllowOfflineAccess() *bool {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetAllowOfflineAccess() bool {
+	if c == nil || c.AllowOfflineAccess == nil {
+		return false
 	}
-	return c.AllowOfflineAccess
+	return *c.AllowOfflineAccess
 }
 
-func (c *CreateResourceServerResponseContent) GetSkipConsentForVerifiableFirstPartyClients() *bool {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetSkipConsentForVerifiableFirstPartyClients() bool {
+	if c == nil || c.SkipConsentForVerifiableFirstPartyClients == nil {
+		return false
 	}
-	return c.SkipConsentForVerifiableFirstPartyClients
+	return *c.SkipConsentForVerifiableFirstPartyClients
 }
 
-func (c *CreateResourceServerResponseContent) GetTokenLifetime() *int {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetTokenLifetime() int {
+	if c == nil || c.TokenLifetime == nil {
+		return 0
 	}
-	return c.TokenLifetime
+	return *c.TokenLifetime
 }
 
-func (c *CreateResourceServerResponseContent) GetTokenLifetimeForWeb() *int {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetTokenLifetimeForWeb() int {
+	if c == nil || c.TokenLifetimeForWeb == nil {
+		return 0
 	}
-	return c.TokenLifetimeForWeb
+	return *c.TokenLifetimeForWeb
 }
 
-func (c *CreateResourceServerResponseContent) GetEnforcePolicies() *bool {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetEnforcePolicies() bool {
+	if c == nil || c.EnforcePolicies == nil {
+		return false
 	}
-	return c.EnforcePolicies
+	return *c.EnforcePolicies
 }
 
-func (c *CreateResourceServerResponseContent) GetTokenDialect() *ResourceServerTokenDialectResponseEnum {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetTokenDialect() ResourceServerTokenDialectResponseEnum {
+	if c == nil || c.TokenDialect == nil {
+		return ""
 	}
-	return c.TokenDialect
+	return *c.TokenDialect
 }
 
-func (c *CreateResourceServerResponseContent) GetTokenEncryption() *ResourceServerTokenEncryption {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetTokenEncryption() ResourceServerTokenEncryption {
+	if c == nil || c.TokenEncryption == nil {
+		return ResourceServerTokenEncryption{}
 	}
-	return c.TokenEncryption
-}
-
-func (c *CreateResourceServerResponseContent) GetConsentPolicy() *ResourceServerConsentPolicyEnum {
-	if c == nil {
-		return nil
-	}
-	return c.ConsentPolicy
+	return *c.TokenEncryption
 }
 
 func (c *CreateResourceServerResponseContent) GetAuthorizationDetails() []interface{} {
-	if c == nil {
+	if c == nil || c.AuthorizationDetails == nil {
 		return nil
 	}
 	return c.AuthorizationDetails
 }
 
-func (c *CreateResourceServerResponseContent) GetProofOfPossession() *ResourceServerProofOfPossession {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetProofOfPossession() ResourceServerProofOfPossession {
+	if c == nil || c.ProofOfPossession == nil {
+		return ResourceServerProofOfPossession{}
 	}
-	return c.ProofOfPossession
+	return *c.ProofOfPossession
 }
 
-func (c *CreateResourceServerResponseContent) GetSubjectTypeAuthorization() *ResourceServerSubjectTypeAuthorization {
-	if c == nil {
-		return nil
+func (c *CreateResourceServerResponseContent) GetSubjectTypeAuthorization() ResourceServerSubjectTypeAuthorization {
+	if c == nil || c.SubjectTypeAuthorization == nil {
+		return ResourceServerSubjectTypeAuthorization{}
 	}
-	return c.SubjectTypeAuthorization
+	return *c.SubjectTypeAuthorization
+}
+
+func (c *CreateResourceServerResponseContent) GetClientId() string {
+	if c == nil || c.ClientId == nil {
+		return ""
+	}
+	return *c.ClientId
 }
 
 func (c *CreateResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateResourceServerResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetId(id *string) {
+	c.Id = id
+	c.require(createResourceServerResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetName(name *string) {
+	c.Name = name
+	c.require(createResourceServerResponseContentFieldName)
+}
+
+// SetIsSystem sets the IsSystem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetIsSystem(isSystem *bool) {
+	c.IsSystem = isSystem
+	c.require(createResourceServerResponseContentFieldIsSystem)
+}
+
+// SetIdentifier sets the Identifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetIdentifier(identifier *string) {
+	c.Identifier = identifier
+	c.require(createResourceServerResponseContentFieldIdentifier)
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetScopes(scopes []*ResourceServerScope) {
+	c.Scopes = scopes
+	c.require(createResourceServerResponseContentFieldScopes)
+}
+
+// SetSigningAlg sets the SigningAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetSigningAlg(signingAlg *SigningAlgorithmEnum) {
+	c.SigningAlg = signingAlg
+	c.require(createResourceServerResponseContentFieldSigningAlg)
+}
+
+// SetSigningSecret sets the SigningSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetSigningSecret(signingSecret *string) {
+	c.SigningSecret = signingSecret
+	c.require(createResourceServerResponseContentFieldSigningSecret)
+}
+
+// SetAllowOfflineAccess sets the AllowOfflineAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetAllowOfflineAccess(allowOfflineAccess *bool) {
+	c.AllowOfflineAccess = allowOfflineAccess
+	c.require(createResourceServerResponseContentFieldAllowOfflineAccess)
+}
+
+// SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetSkipConsentForVerifiableFirstPartyClients(skipConsentForVerifiableFirstPartyClients *bool) {
+	c.SkipConsentForVerifiableFirstPartyClients = skipConsentForVerifiableFirstPartyClients
+	c.require(createResourceServerResponseContentFieldSkipConsentForVerifiableFirstPartyClients)
+}
+
+// SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetTokenLifetime(tokenLifetime *int) {
+	c.TokenLifetime = tokenLifetime
+	c.require(createResourceServerResponseContentFieldTokenLifetime)
+}
+
+// SetTokenLifetimeForWeb sets the TokenLifetimeForWeb field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetTokenLifetimeForWeb(tokenLifetimeForWeb *int) {
+	c.TokenLifetimeForWeb = tokenLifetimeForWeb
+	c.require(createResourceServerResponseContentFieldTokenLifetimeForWeb)
+}
+
+// SetEnforcePolicies sets the EnforcePolicies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetEnforcePolicies(enforcePolicies *bool) {
+	c.EnforcePolicies = enforcePolicies
+	c.require(createResourceServerResponseContentFieldEnforcePolicies)
+}
+
+// SetTokenDialect sets the TokenDialect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
+	c.TokenDialect = tokenDialect
+	c.require(createResourceServerResponseContentFieldTokenDialect)
+}
+
+// SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetTokenEncryption(tokenEncryption *ResourceServerTokenEncryption) {
+	c.TokenEncryption = tokenEncryption
+	c.require(createResourceServerResponseContentFieldTokenEncryption)
+}
+
+// SetConsentPolicy sets the ConsentPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
+	c.ConsentPolicy = consentPolicy
+	c.require(createResourceServerResponseContentFieldConsentPolicy)
+}
+
+// SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetAuthorizationDetails(authorizationDetails []interface{}) {
+	c.AuthorizationDetails = authorizationDetails
+	c.require(createResourceServerResponseContentFieldAuthorizationDetails)
+}
+
+// SetProofOfPossession sets the ProofOfPossession field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetProofOfPossession(proofOfPossession *ResourceServerProofOfPossession) {
+	c.ProofOfPossession = proofOfPossession
+	c.require(createResourceServerResponseContentFieldProofOfPossession)
+}
+
+// SetSubjectTypeAuthorization sets the SubjectTypeAuthorization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetSubjectTypeAuthorization(subjectTypeAuthorization *ResourceServerSubjectTypeAuthorization) {
+	c.SubjectTypeAuthorization = subjectTypeAuthorization
+	c.require(createResourceServerResponseContentFieldSubjectTypeAuthorization)
+}
+
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetClientId(clientId *string) {
+	c.ClientId = clientId
+	c.require(createResourceServerResponseContentFieldClientId)
 }
 
 func (c *CreateResourceServerResponseContent) UnmarshalJSON(data []byte) error {
@@ -233,6 +357,17 @@ func (c *CreateResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateResourceServerResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateResourceServerResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateResourceServerResponseContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -245,9 +380,31 @@ func (c *CreateResourceServerResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	getResourceServerResponseContentFieldId                                        = big.NewInt(1 << 0)
+	getResourceServerResponseContentFieldName                                      = big.NewInt(1 << 1)
+	getResourceServerResponseContentFieldIsSystem                                  = big.NewInt(1 << 2)
+	getResourceServerResponseContentFieldIdentifier                                = big.NewInt(1 << 3)
+	getResourceServerResponseContentFieldScopes                                    = big.NewInt(1 << 4)
+	getResourceServerResponseContentFieldSigningAlg                                = big.NewInt(1 << 5)
+	getResourceServerResponseContentFieldSigningSecret                             = big.NewInt(1 << 6)
+	getResourceServerResponseContentFieldAllowOfflineAccess                        = big.NewInt(1 << 7)
+	getResourceServerResponseContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 8)
+	getResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 9)
+	getResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 10)
+	getResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 11)
+	getResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 12)
+	getResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 13)
+	getResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 14)
+	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 15)
+	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 16)
+	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 17)
+	getResourceServerResponseContentFieldClientId                                  = big.NewInt(1 << 18)
+)
+
 type GetResourceServerResponseContent struct {
 	// ID of the API (resource server).
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Friendly name for this resource server. Can not contain `<` or `>` characters.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this is an Auth0 system API (true) or a custom API (false).
@@ -275,139 +432,284 @@ type GetResourceServerResponseContent struct {
 	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	// The client ID of the client that this resource server is linked to
+	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (g *GetResourceServerResponseContent) GetID() *string {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetId() string {
+	if g == nil || g.Id == nil {
+		return ""
 	}
-	return g.ID
+	return *g.Id
 }
 
-func (g *GetResourceServerResponseContent) GetName() *string {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetName() string {
+	if g == nil || g.Name == nil {
+		return ""
 	}
-	return g.Name
+	return *g.Name
 }
 
-func (g *GetResourceServerResponseContent) GetIsSystem() *bool {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetIsSystem() bool {
+	if g == nil || g.IsSystem == nil {
+		return false
 	}
-	return g.IsSystem
+	return *g.IsSystem
 }
 
-func (g *GetResourceServerResponseContent) GetIdentifier() *string {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetIdentifier() string {
+	if g == nil || g.Identifier == nil {
+		return ""
 	}
-	return g.Identifier
+	return *g.Identifier
 }
 
 func (g *GetResourceServerResponseContent) GetScopes() []*ResourceServerScope {
-	if g == nil {
+	if g == nil || g.Scopes == nil {
 		return nil
 	}
 	return g.Scopes
 }
 
-func (g *GetResourceServerResponseContent) GetSigningAlg() *SigningAlgorithmEnum {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetSigningAlg() SigningAlgorithmEnum {
+	if g == nil || g.SigningAlg == nil {
+		return ""
 	}
-	return g.SigningAlg
+	return *g.SigningAlg
 }
 
-func (g *GetResourceServerResponseContent) GetSigningSecret() *string {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetSigningSecret() string {
+	if g == nil || g.SigningSecret == nil {
+		return ""
 	}
-	return g.SigningSecret
+	return *g.SigningSecret
 }
 
-func (g *GetResourceServerResponseContent) GetAllowOfflineAccess() *bool {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetAllowOfflineAccess() bool {
+	if g == nil || g.AllowOfflineAccess == nil {
+		return false
 	}
-	return g.AllowOfflineAccess
+	return *g.AllowOfflineAccess
 }
 
-func (g *GetResourceServerResponseContent) GetSkipConsentForVerifiableFirstPartyClients() *bool {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetSkipConsentForVerifiableFirstPartyClients() bool {
+	if g == nil || g.SkipConsentForVerifiableFirstPartyClients == nil {
+		return false
 	}
-	return g.SkipConsentForVerifiableFirstPartyClients
+	return *g.SkipConsentForVerifiableFirstPartyClients
 }
 
-func (g *GetResourceServerResponseContent) GetTokenLifetime() *int {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetTokenLifetime() int {
+	if g == nil || g.TokenLifetime == nil {
+		return 0
 	}
-	return g.TokenLifetime
+	return *g.TokenLifetime
 }
 
-func (g *GetResourceServerResponseContent) GetTokenLifetimeForWeb() *int {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetTokenLifetimeForWeb() int {
+	if g == nil || g.TokenLifetimeForWeb == nil {
+		return 0
 	}
-	return g.TokenLifetimeForWeb
+	return *g.TokenLifetimeForWeb
 }
 
-func (g *GetResourceServerResponseContent) GetEnforcePolicies() *bool {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetEnforcePolicies() bool {
+	if g == nil || g.EnforcePolicies == nil {
+		return false
 	}
-	return g.EnforcePolicies
+	return *g.EnforcePolicies
 }
 
-func (g *GetResourceServerResponseContent) GetTokenDialect() *ResourceServerTokenDialectResponseEnum {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetTokenDialect() ResourceServerTokenDialectResponseEnum {
+	if g == nil || g.TokenDialect == nil {
+		return ""
 	}
-	return g.TokenDialect
+	return *g.TokenDialect
 }
 
-func (g *GetResourceServerResponseContent) GetTokenEncryption() *ResourceServerTokenEncryption {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetTokenEncryption() ResourceServerTokenEncryption {
+	if g == nil || g.TokenEncryption == nil {
+		return ResourceServerTokenEncryption{}
 	}
-	return g.TokenEncryption
-}
-
-func (g *GetResourceServerResponseContent) GetConsentPolicy() *ResourceServerConsentPolicyEnum {
-	if g == nil {
-		return nil
-	}
-	return g.ConsentPolicy
+	return *g.TokenEncryption
 }
 
 func (g *GetResourceServerResponseContent) GetAuthorizationDetails() []interface{} {
-	if g == nil {
+	if g == nil || g.AuthorizationDetails == nil {
 		return nil
 	}
 	return g.AuthorizationDetails
 }
 
-func (g *GetResourceServerResponseContent) GetProofOfPossession() *ResourceServerProofOfPossession {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetProofOfPossession() ResourceServerProofOfPossession {
+	if g == nil || g.ProofOfPossession == nil {
+		return ResourceServerProofOfPossession{}
 	}
-	return g.ProofOfPossession
+	return *g.ProofOfPossession
 }
 
-func (g *GetResourceServerResponseContent) GetSubjectTypeAuthorization() *ResourceServerSubjectTypeAuthorization {
-	if g == nil {
-		return nil
+func (g *GetResourceServerResponseContent) GetSubjectTypeAuthorization() ResourceServerSubjectTypeAuthorization {
+	if g == nil || g.SubjectTypeAuthorization == nil {
+		return ResourceServerSubjectTypeAuthorization{}
 	}
-	return g.SubjectTypeAuthorization
+	return *g.SubjectTypeAuthorization
+}
+
+func (g *GetResourceServerResponseContent) GetClientId() string {
+	if g == nil || g.ClientId == nil {
+		return ""
+	}
+	return *g.ClientId
 }
 
 func (g *GetResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
+}
+
+func (g *GetResourceServerResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetId(id *string) {
+	g.Id = id
+	g.require(getResourceServerResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetName(name *string) {
+	g.Name = name
+	g.require(getResourceServerResponseContentFieldName)
+}
+
+// SetIsSystem sets the IsSystem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetIsSystem(isSystem *bool) {
+	g.IsSystem = isSystem
+	g.require(getResourceServerResponseContentFieldIsSystem)
+}
+
+// SetIdentifier sets the Identifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetIdentifier(identifier *string) {
+	g.Identifier = identifier
+	g.require(getResourceServerResponseContentFieldIdentifier)
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetScopes(scopes []*ResourceServerScope) {
+	g.Scopes = scopes
+	g.require(getResourceServerResponseContentFieldScopes)
+}
+
+// SetSigningAlg sets the SigningAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetSigningAlg(signingAlg *SigningAlgorithmEnum) {
+	g.SigningAlg = signingAlg
+	g.require(getResourceServerResponseContentFieldSigningAlg)
+}
+
+// SetSigningSecret sets the SigningSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetSigningSecret(signingSecret *string) {
+	g.SigningSecret = signingSecret
+	g.require(getResourceServerResponseContentFieldSigningSecret)
+}
+
+// SetAllowOfflineAccess sets the AllowOfflineAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetAllowOfflineAccess(allowOfflineAccess *bool) {
+	g.AllowOfflineAccess = allowOfflineAccess
+	g.require(getResourceServerResponseContentFieldAllowOfflineAccess)
+}
+
+// SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetSkipConsentForVerifiableFirstPartyClients(skipConsentForVerifiableFirstPartyClients *bool) {
+	g.SkipConsentForVerifiableFirstPartyClients = skipConsentForVerifiableFirstPartyClients
+	g.require(getResourceServerResponseContentFieldSkipConsentForVerifiableFirstPartyClients)
+}
+
+// SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetTokenLifetime(tokenLifetime *int) {
+	g.TokenLifetime = tokenLifetime
+	g.require(getResourceServerResponseContentFieldTokenLifetime)
+}
+
+// SetTokenLifetimeForWeb sets the TokenLifetimeForWeb field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetTokenLifetimeForWeb(tokenLifetimeForWeb *int) {
+	g.TokenLifetimeForWeb = tokenLifetimeForWeb
+	g.require(getResourceServerResponseContentFieldTokenLifetimeForWeb)
+}
+
+// SetEnforcePolicies sets the EnforcePolicies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetEnforcePolicies(enforcePolicies *bool) {
+	g.EnforcePolicies = enforcePolicies
+	g.require(getResourceServerResponseContentFieldEnforcePolicies)
+}
+
+// SetTokenDialect sets the TokenDialect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
+	g.TokenDialect = tokenDialect
+	g.require(getResourceServerResponseContentFieldTokenDialect)
+}
+
+// SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetTokenEncryption(tokenEncryption *ResourceServerTokenEncryption) {
+	g.TokenEncryption = tokenEncryption
+	g.require(getResourceServerResponseContentFieldTokenEncryption)
+}
+
+// SetConsentPolicy sets the ConsentPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
+	g.ConsentPolicy = consentPolicy
+	g.require(getResourceServerResponseContentFieldConsentPolicy)
+}
+
+// SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetAuthorizationDetails(authorizationDetails []interface{}) {
+	g.AuthorizationDetails = authorizationDetails
+	g.require(getResourceServerResponseContentFieldAuthorizationDetails)
+}
+
+// SetProofOfPossession sets the ProofOfPossession field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetProofOfPossession(proofOfPossession *ResourceServerProofOfPossession) {
+	g.ProofOfPossession = proofOfPossession
+	g.require(getResourceServerResponseContentFieldProofOfPossession)
+}
+
+// SetSubjectTypeAuthorization sets the SubjectTypeAuthorization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetSubjectTypeAuthorization(subjectTypeAuthorization *ResourceServerSubjectTypeAuthorization) {
+	g.SubjectTypeAuthorization = subjectTypeAuthorization
+	g.require(getResourceServerResponseContentFieldSubjectTypeAuthorization)
+}
+
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetClientId(clientId *string) {
+	g.ClientId = clientId
+	g.require(getResourceServerResponseContentFieldClientId)
 }
 
 func (g *GetResourceServerResponseContent) UnmarshalJSON(data []byte) error {
@@ -426,6 +728,17 @@ func (g *GetResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (g *GetResourceServerResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetResourceServerResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (g *GetResourceServerResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
@@ -438,39 +751,49 @@ func (g *GetResourceServerResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	listResourceServerOffsetPaginatedResponseContentFieldStart           = big.NewInt(1 << 0)
+	listResourceServerOffsetPaginatedResponseContentFieldLimit           = big.NewInt(1 << 1)
+	listResourceServerOffsetPaginatedResponseContentFieldTotal           = big.NewInt(1 << 2)
+	listResourceServerOffsetPaginatedResponseContentFieldResourceServers = big.NewInt(1 << 3)
+)
+
 type ListResourceServerOffsetPaginatedResponseContent struct {
 	Start           *float64          `json:"start,omitempty" url:"start,omitempty"`
 	Limit           *float64          `json:"limit,omitempty" url:"limit,omitempty"`
 	Total           *float64          `json:"total,omitempty" url:"total,omitempty"`
 	ResourceServers []*ResourceServer `json:"resource_servers,omitempty" url:"resource_servers,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListResourceServerOffsetPaginatedResponseContent) GetStart() *float64 {
-	if l == nil {
-		return nil
+func (l *ListResourceServerOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
 	}
-	return l.Start
+	return *l.Start
 }
 
-func (l *ListResourceServerOffsetPaginatedResponseContent) GetLimit() *float64 {
-	if l == nil {
-		return nil
+func (l *ListResourceServerOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
 	}
-	return l.Limit
+	return *l.Limit
 }
 
-func (l *ListResourceServerOffsetPaginatedResponseContent) GetTotal() *float64 {
-	if l == nil {
-		return nil
+func (l *ListResourceServerOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
 	}
-	return l.Total
+	return *l.Total
 }
 
 func (l *ListResourceServerOffsetPaginatedResponseContent) GetResourceServers() []*ResourceServer {
-	if l == nil {
+	if l == nil || l.ResourceServers == nil {
 		return nil
 	}
 	return l.ResourceServers
@@ -478,6 +801,41 @@ func (l *ListResourceServerOffsetPaginatedResponseContent) GetResourceServers() 
 
 func (l *ListResourceServerOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListResourceServerOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListResourceServerOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listResourceServerOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListResourceServerOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listResourceServerOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListResourceServerOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listResourceServerOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetResourceServers sets the ResourceServers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListResourceServerOffsetPaginatedResponseContent) SetResourceServers(resourceServers []*ResourceServer) {
+	l.ResourceServers = resourceServers
+	l.require(listResourceServerOffsetPaginatedResponseContentFieldResourceServers)
 }
 
 func (l *ListResourceServerOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
@@ -496,6 +854,17 @@ func (l *ListResourceServerOffsetPaginatedResponseContent) UnmarshalJSON(data []
 	return nil
 }
 
+func (l *ListResourceServerOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListResourceServerOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListResourceServerOffsetPaginatedResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -508,9 +877,31 @@ func (l *ListResourceServerOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	resourceServerFieldId                                        = big.NewInt(1 << 0)
+	resourceServerFieldName                                      = big.NewInt(1 << 1)
+	resourceServerFieldIsSystem                                  = big.NewInt(1 << 2)
+	resourceServerFieldIdentifier                                = big.NewInt(1 << 3)
+	resourceServerFieldScopes                                    = big.NewInt(1 << 4)
+	resourceServerFieldSigningAlg                                = big.NewInt(1 << 5)
+	resourceServerFieldSigningSecret                             = big.NewInt(1 << 6)
+	resourceServerFieldAllowOfflineAccess                        = big.NewInt(1 << 7)
+	resourceServerFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 8)
+	resourceServerFieldTokenLifetime                             = big.NewInt(1 << 9)
+	resourceServerFieldTokenLifetimeForWeb                       = big.NewInt(1 << 10)
+	resourceServerFieldEnforcePolicies                           = big.NewInt(1 << 11)
+	resourceServerFieldTokenDialect                              = big.NewInt(1 << 12)
+	resourceServerFieldTokenEncryption                           = big.NewInt(1 << 13)
+	resourceServerFieldConsentPolicy                             = big.NewInt(1 << 14)
+	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 15)
+	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 16)
+	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 17)
+	resourceServerFieldClientId                                  = big.NewInt(1 << 18)
+)
+
 type ResourceServer struct {
 	// ID of the API (resource server).
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Friendly name for this resource server. Can not contain `<` or `>` characters.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this is an Auth0 system API (true) or a custom API (false).
@@ -538,139 +929,284 @@ type ResourceServer struct {
 	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	// The client ID of the client that this resource server is linked to
+	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (r *ResourceServer) GetID() *string {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetId() string {
+	if r == nil || r.Id == nil {
+		return ""
 	}
-	return r.ID
+	return *r.Id
 }
 
-func (r *ResourceServer) GetName() *string {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetName() string {
+	if r == nil || r.Name == nil {
+		return ""
 	}
-	return r.Name
+	return *r.Name
 }
 
-func (r *ResourceServer) GetIsSystem() *bool {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetIsSystem() bool {
+	if r == nil || r.IsSystem == nil {
+		return false
 	}
-	return r.IsSystem
+	return *r.IsSystem
 }
 
-func (r *ResourceServer) GetIdentifier() *string {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetIdentifier() string {
+	if r == nil || r.Identifier == nil {
+		return ""
 	}
-	return r.Identifier
+	return *r.Identifier
 }
 
 func (r *ResourceServer) GetScopes() []*ResourceServerScope {
-	if r == nil {
+	if r == nil || r.Scopes == nil {
 		return nil
 	}
 	return r.Scopes
 }
 
-func (r *ResourceServer) GetSigningAlg() *SigningAlgorithmEnum {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetSigningAlg() SigningAlgorithmEnum {
+	if r == nil || r.SigningAlg == nil {
+		return ""
 	}
-	return r.SigningAlg
+	return *r.SigningAlg
 }
 
-func (r *ResourceServer) GetSigningSecret() *string {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetSigningSecret() string {
+	if r == nil || r.SigningSecret == nil {
+		return ""
 	}
-	return r.SigningSecret
+	return *r.SigningSecret
 }
 
-func (r *ResourceServer) GetAllowOfflineAccess() *bool {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetAllowOfflineAccess() bool {
+	if r == nil || r.AllowOfflineAccess == nil {
+		return false
 	}
-	return r.AllowOfflineAccess
+	return *r.AllowOfflineAccess
 }
 
-func (r *ResourceServer) GetSkipConsentForVerifiableFirstPartyClients() *bool {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetSkipConsentForVerifiableFirstPartyClients() bool {
+	if r == nil || r.SkipConsentForVerifiableFirstPartyClients == nil {
+		return false
 	}
-	return r.SkipConsentForVerifiableFirstPartyClients
+	return *r.SkipConsentForVerifiableFirstPartyClients
 }
 
-func (r *ResourceServer) GetTokenLifetime() *int {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetTokenLifetime() int {
+	if r == nil || r.TokenLifetime == nil {
+		return 0
 	}
-	return r.TokenLifetime
+	return *r.TokenLifetime
 }
 
-func (r *ResourceServer) GetTokenLifetimeForWeb() *int {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetTokenLifetimeForWeb() int {
+	if r == nil || r.TokenLifetimeForWeb == nil {
+		return 0
 	}
-	return r.TokenLifetimeForWeb
+	return *r.TokenLifetimeForWeb
 }
 
-func (r *ResourceServer) GetEnforcePolicies() *bool {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetEnforcePolicies() bool {
+	if r == nil || r.EnforcePolicies == nil {
+		return false
 	}
-	return r.EnforcePolicies
+	return *r.EnforcePolicies
 }
 
-func (r *ResourceServer) GetTokenDialect() *ResourceServerTokenDialectResponseEnum {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetTokenDialect() ResourceServerTokenDialectResponseEnum {
+	if r == nil || r.TokenDialect == nil {
+		return ""
 	}
-	return r.TokenDialect
+	return *r.TokenDialect
 }
 
-func (r *ResourceServer) GetTokenEncryption() *ResourceServerTokenEncryption {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetTokenEncryption() ResourceServerTokenEncryption {
+	if r == nil || r.TokenEncryption == nil {
+		return ResourceServerTokenEncryption{}
 	}
-	return r.TokenEncryption
-}
-
-func (r *ResourceServer) GetConsentPolicy() *ResourceServerConsentPolicyEnum {
-	if r == nil {
-		return nil
-	}
-	return r.ConsentPolicy
+	return *r.TokenEncryption
 }
 
 func (r *ResourceServer) GetAuthorizationDetails() []interface{} {
-	if r == nil {
+	if r == nil || r.AuthorizationDetails == nil {
 		return nil
 	}
 	return r.AuthorizationDetails
 }
 
-func (r *ResourceServer) GetProofOfPossession() *ResourceServerProofOfPossession {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetProofOfPossession() ResourceServerProofOfPossession {
+	if r == nil || r.ProofOfPossession == nil {
+		return ResourceServerProofOfPossession{}
 	}
-	return r.ProofOfPossession
+	return *r.ProofOfPossession
 }
 
-func (r *ResourceServer) GetSubjectTypeAuthorization() *ResourceServerSubjectTypeAuthorization {
-	if r == nil {
-		return nil
+func (r *ResourceServer) GetSubjectTypeAuthorization() ResourceServerSubjectTypeAuthorization {
+	if r == nil || r.SubjectTypeAuthorization == nil {
+		return ResourceServerSubjectTypeAuthorization{}
 	}
-	return r.SubjectTypeAuthorization
+	return *r.SubjectTypeAuthorization
+}
+
+func (r *ResourceServer) GetClientId() string {
+	if r == nil || r.ClientId == nil {
+		return ""
+	}
+	return *r.ClientId
 }
 
 func (r *ResourceServer) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
+}
+
+func (r *ResourceServer) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetId(id *string) {
+	r.Id = id
+	r.require(resourceServerFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetName(name *string) {
+	r.Name = name
+	r.require(resourceServerFieldName)
+}
+
+// SetIsSystem sets the IsSystem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetIsSystem(isSystem *bool) {
+	r.IsSystem = isSystem
+	r.require(resourceServerFieldIsSystem)
+}
+
+// SetIdentifier sets the Identifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetIdentifier(identifier *string) {
+	r.Identifier = identifier
+	r.require(resourceServerFieldIdentifier)
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetScopes(scopes []*ResourceServerScope) {
+	r.Scopes = scopes
+	r.require(resourceServerFieldScopes)
+}
+
+// SetSigningAlg sets the SigningAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetSigningAlg(signingAlg *SigningAlgorithmEnum) {
+	r.SigningAlg = signingAlg
+	r.require(resourceServerFieldSigningAlg)
+}
+
+// SetSigningSecret sets the SigningSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetSigningSecret(signingSecret *string) {
+	r.SigningSecret = signingSecret
+	r.require(resourceServerFieldSigningSecret)
+}
+
+// SetAllowOfflineAccess sets the AllowOfflineAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetAllowOfflineAccess(allowOfflineAccess *bool) {
+	r.AllowOfflineAccess = allowOfflineAccess
+	r.require(resourceServerFieldAllowOfflineAccess)
+}
+
+// SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetSkipConsentForVerifiableFirstPartyClients(skipConsentForVerifiableFirstPartyClients *bool) {
+	r.SkipConsentForVerifiableFirstPartyClients = skipConsentForVerifiableFirstPartyClients
+	r.require(resourceServerFieldSkipConsentForVerifiableFirstPartyClients)
+}
+
+// SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetTokenLifetime(tokenLifetime *int) {
+	r.TokenLifetime = tokenLifetime
+	r.require(resourceServerFieldTokenLifetime)
+}
+
+// SetTokenLifetimeForWeb sets the TokenLifetimeForWeb field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetTokenLifetimeForWeb(tokenLifetimeForWeb *int) {
+	r.TokenLifetimeForWeb = tokenLifetimeForWeb
+	r.require(resourceServerFieldTokenLifetimeForWeb)
+}
+
+// SetEnforcePolicies sets the EnforcePolicies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetEnforcePolicies(enforcePolicies *bool) {
+	r.EnforcePolicies = enforcePolicies
+	r.require(resourceServerFieldEnforcePolicies)
+}
+
+// SetTokenDialect sets the TokenDialect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
+	r.TokenDialect = tokenDialect
+	r.require(resourceServerFieldTokenDialect)
+}
+
+// SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetTokenEncryption(tokenEncryption *ResourceServerTokenEncryption) {
+	r.TokenEncryption = tokenEncryption
+	r.require(resourceServerFieldTokenEncryption)
+}
+
+// SetConsentPolicy sets the ConsentPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
+	r.ConsentPolicy = consentPolicy
+	r.require(resourceServerFieldConsentPolicy)
+}
+
+// SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetAuthorizationDetails(authorizationDetails []interface{}) {
+	r.AuthorizationDetails = authorizationDetails
+	r.require(resourceServerFieldAuthorizationDetails)
+}
+
+// SetProofOfPossession sets the ProofOfPossession field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetProofOfPossession(proofOfPossession *ResourceServerProofOfPossession) {
+	r.ProofOfPossession = proofOfPossession
+	r.require(resourceServerFieldProofOfPossession)
+}
+
+// SetSubjectTypeAuthorization sets the SubjectTypeAuthorization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetSubjectTypeAuthorization(subjectTypeAuthorization *ResourceServerSubjectTypeAuthorization) {
+	r.SubjectTypeAuthorization = subjectTypeAuthorization
+	r.require(resourceServerFieldSubjectTypeAuthorization)
+}
+
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetClientId(clientId *string) {
+	r.ClientId = clientId
+	r.require(resourceServerFieldClientId)
 }
 
 func (r *ResourceServer) UnmarshalJSON(data []byte) error {
@@ -689,6 +1225,17 @@ func (r *ResourceServer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *ResourceServer) MarshalJSON() ([]byte, error) {
+	type embed ResourceServer
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *ResourceServer) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -704,10 +1251,18 @@ func (r *ResourceServer) String() string {
 type ResourceServerConsentPolicyEnum = *string
 
 // Proof-of-Possession configuration for access tokens
+var (
+	resourceServerProofOfPossessionFieldMechanism = big.NewInt(1 << 0)
+	resourceServerProofOfPossessionFieldRequired  = big.NewInt(1 << 1)
+)
+
 type ResourceServerProofOfPossession struct {
 	Mechanism ResourceServerProofOfPossessionMechanismEnum `json:"mechanism" url:"mechanism"`
 	// Whether the use of Proof-of-Possession is required for the resource server
 	Required bool `json:"required" url:"required"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -731,6 +1286,27 @@ func (r *ResourceServerProofOfPossession) GetExtraProperties() map[string]interf
 	return r.extraProperties
 }
 
+func (r *ResourceServerProofOfPossession) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetMechanism sets the Mechanism field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerProofOfPossession) SetMechanism(mechanism ResourceServerProofOfPossessionMechanismEnum) {
+	r.Mechanism = mechanism
+	r.require(resourceServerProofOfPossessionFieldMechanism)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerProofOfPossession) SetRequired(required bool) {
+	r.Required = required
+	r.require(resourceServerProofOfPossessionFieldRequired)
+}
+
 func (r *ResourceServerProofOfPossession) UnmarshalJSON(data []byte) error {
 	type unmarshaler ResourceServerProofOfPossession
 	var value unmarshaler
@@ -745,6 +1321,17 @@ func (r *ResourceServerProofOfPossession) UnmarshalJSON(data []byte) error {
 	r.extraProperties = extraProperties
 	r.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (r *ResourceServerProofOfPossession) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerProofOfPossession
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (r *ResourceServerProofOfPossession) String() string {
@@ -782,11 +1369,19 @@ func (r ResourceServerProofOfPossessionMechanismEnum) Ptr() *ResourceServerProof
 	return &r
 }
 
+var (
+	resourceServerScopeFieldValue       = big.NewInt(1 << 0)
+	resourceServerScopeFieldDescription = big.NewInt(1 << 1)
+)
+
 type ResourceServerScope struct {
 	// Value of this scope.
 	Value string `json:"value" url:"value"`
 	// User-friendly description of this scope.
 	Description *string `json:"description,omitempty" url:"description,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -799,15 +1394,36 @@ func (r *ResourceServerScope) GetValue() string {
 	return r.Value
 }
 
-func (r *ResourceServerScope) GetDescription() *string {
-	if r == nil {
-		return nil
+func (r *ResourceServerScope) GetDescription() string {
+	if r == nil || r.Description == nil {
+		return ""
 	}
-	return r.Description
+	return *r.Description
 }
 
 func (r *ResourceServerScope) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
+}
+
+func (r *ResourceServerScope) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerScope) SetValue(value string) {
+	r.Value = value
+	r.require(resourceServerScopeFieldValue)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerScope) SetDescription(description *string) {
+	r.Description = description
+	r.require(resourceServerScopeFieldDescription)
 }
 
 func (r *ResourceServerScope) UnmarshalJSON(data []byte) error {
@@ -826,6 +1442,17 @@ func (r *ResourceServerScope) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *ResourceServerScope) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerScope
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *ResourceServerScope) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -839,30 +1466,59 @@ func (r *ResourceServerScope) String() string {
 }
 
 // Defines application access permission for a resource server. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href="https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+var (
+	resourceServerSubjectTypeAuthorizationFieldUser   = big.NewInt(1 << 0)
+	resourceServerSubjectTypeAuthorizationFieldClient = big.NewInt(1 << 1)
+)
+
 type ResourceServerSubjectTypeAuthorization struct {
 	User   *ResourceServerSubjectTypeAuthorizationUser   `json:"user,omitempty" url:"user,omitempty"`
 	Client *ResourceServerSubjectTypeAuthorizationClient `json:"client,omitempty" url:"client,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (r *ResourceServerSubjectTypeAuthorization) GetUser() *ResourceServerSubjectTypeAuthorizationUser {
-	if r == nil {
-		return nil
+func (r *ResourceServerSubjectTypeAuthorization) GetUser() ResourceServerSubjectTypeAuthorizationUser {
+	if r == nil || r.User == nil {
+		return ResourceServerSubjectTypeAuthorizationUser{}
 	}
-	return r.User
+	return *r.User
 }
 
-func (r *ResourceServerSubjectTypeAuthorization) GetClient() *ResourceServerSubjectTypeAuthorizationClient {
-	if r == nil {
-		return nil
+func (r *ResourceServerSubjectTypeAuthorization) GetClient() ResourceServerSubjectTypeAuthorizationClient {
+	if r == nil || r.Client == nil {
+		return ResourceServerSubjectTypeAuthorizationClient{}
 	}
-	return r.Client
+	return *r.Client
 }
 
 func (r *ResourceServerSubjectTypeAuthorization) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
+}
+
+func (r *ResourceServerSubjectTypeAuthorization) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetUser sets the User field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSubjectTypeAuthorization) SetUser(user *ResourceServerSubjectTypeAuthorizationUser) {
+	r.User = user
+	r.require(resourceServerSubjectTypeAuthorizationFieldUser)
+}
+
+// SetClient sets the Client field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSubjectTypeAuthorization) SetClient(client *ResourceServerSubjectTypeAuthorizationClient) {
+	r.Client = client
+	r.require(resourceServerSubjectTypeAuthorizationFieldClient)
 }
 
 func (r *ResourceServerSubjectTypeAuthorization) UnmarshalJSON(data []byte) error {
@@ -881,6 +1537,17 @@ func (r *ResourceServerSubjectTypeAuthorization) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
+func (r *ResourceServerSubjectTypeAuthorization) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerSubjectTypeAuthorization
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *ResourceServerSubjectTypeAuthorization) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -894,23 +1561,44 @@ func (r *ResourceServerSubjectTypeAuthorization) String() string {
 }
 
 // Access Permissions for client flows
+var (
+	resourceServerSubjectTypeAuthorizationClientFieldPolicy = big.NewInt(1 << 0)
+)
+
 type ResourceServerSubjectTypeAuthorizationClient struct {
 	Policy *ResourceServerSubjectTypeAuthorizationClientPolicyEnum `json:"policy,omitempty" url:"policy,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (r *ResourceServerSubjectTypeAuthorizationClient) GetPolicy() *ResourceServerSubjectTypeAuthorizationClientPolicyEnum {
-	if r == nil {
-		return nil
+func (r *ResourceServerSubjectTypeAuthorizationClient) GetPolicy() ResourceServerSubjectTypeAuthorizationClientPolicyEnum {
+	if r == nil || r.Policy == nil {
+		return ""
 	}
-	return r.Policy
+	return *r.Policy
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationClient) GetExtraProperties() map[string]interface{} {
 	return r.ExtraProperties
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationClient) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetPolicy sets the Policy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSubjectTypeAuthorizationClient) SetPolicy(policy *ResourceServerSubjectTypeAuthorizationClientPolicyEnum) {
+	r.Policy = policy
+	r.require(resourceServerSubjectTypeAuthorizationClientFieldPolicy)
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationClient) UnmarshalJSON(data []byte) error {
@@ -940,7 +1628,8 @@ func (r *ResourceServerSubjectTypeAuthorizationClient) MarshalJSON() ([]byte, er
 	}{
 		embed: embed(*r),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, r.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, r.ExtraProperties)
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationClient) String() string {
@@ -979,23 +1668,44 @@ func (r ResourceServerSubjectTypeAuthorizationClientPolicyEnum) Ptr() *ResourceS
 }
 
 // Access Permissions for user flows
+var (
+	resourceServerSubjectTypeAuthorizationUserFieldPolicy = big.NewInt(1 << 0)
+)
+
 type ResourceServerSubjectTypeAuthorizationUser struct {
 	Policy *ResourceServerSubjectTypeAuthorizationUserPolicyEnum `json:"policy,omitempty" url:"policy,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (r *ResourceServerSubjectTypeAuthorizationUser) GetPolicy() *ResourceServerSubjectTypeAuthorizationUserPolicyEnum {
-	if r == nil {
-		return nil
+func (r *ResourceServerSubjectTypeAuthorizationUser) GetPolicy() ResourceServerSubjectTypeAuthorizationUserPolicyEnum {
+	if r == nil || r.Policy == nil {
+		return ""
 	}
-	return r.Policy
+	return *r.Policy
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationUser) GetExtraProperties() map[string]interface{} {
 	return r.ExtraProperties
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationUser) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetPolicy sets the Policy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSubjectTypeAuthorizationUser) SetPolicy(policy *ResourceServerSubjectTypeAuthorizationUserPolicyEnum) {
+	r.Policy = policy
+	r.require(resourceServerSubjectTypeAuthorizationUserFieldPolicy)
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationUser) UnmarshalJSON(data []byte) error {
@@ -1025,7 +1735,8 @@ func (r *ResourceServerSubjectTypeAuthorizationUser) MarshalJSON() ([]byte, erro
 	}{
 		embed: embed(*r),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, r.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, r.ExtraProperties)
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationUser) String() string {
@@ -1124,9 +1835,17 @@ func (r ResourceServerTokenDialectSchemaEnum) Ptr() *ResourceServerTokenDialectS
 	return &r
 }
 
+var (
+	resourceServerTokenEncryptionFieldFormat        = big.NewInt(1 << 0)
+	resourceServerTokenEncryptionFieldEncryptionKey = big.NewInt(1 << 1)
+)
+
 type ResourceServerTokenEncryption struct {
 	Format        ResourceServerTokenEncryptionFormatEnum `json:"format" url:"format"`
 	EncryptionKey *ResourceServerTokenEncryptionKey       `json:"encryption_key" url:"encryption_key"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1143,6 +1862,27 @@ func (r *ResourceServerTokenEncryption) GetExtraProperties() map[string]interfac
 	return r.extraProperties
 }
 
+func (r *ResourceServerTokenEncryption) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetFormat sets the Format field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerTokenEncryption) SetFormat(format ResourceServerTokenEncryptionFormatEnum) {
+	r.Format = format
+	r.require(resourceServerTokenEncryptionFieldFormat)
+}
+
+// SetEncryptionKey sets the EncryptionKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerTokenEncryption) SetEncryptionKey(encryptionKey *ResourceServerTokenEncryptionKey) {
+	r.EncryptionKey = encryptionKey
+	r.require(resourceServerTokenEncryptionFieldEncryptionKey)
+}
+
 func (r *ResourceServerTokenEncryption) UnmarshalJSON(data []byte) error {
 	type unmarshaler ResourceServerTokenEncryption
 	var value unmarshaler
@@ -1157,6 +1897,17 @@ func (r *ResourceServerTokenEncryption) UnmarshalJSON(data []byte) error {
 	r.extraProperties = extraProperties
 	r.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (r *ResourceServerTokenEncryption) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerTokenEncryption
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (r *ResourceServerTokenEncryption) String() string {
@@ -1200,6 +1951,13 @@ func (r ResourceServerTokenEncryptionAlgorithmEnum) Ptr() *ResourceServerTokenEn
 // Format of the encrypted JWT payload.
 type ResourceServerTokenEncryptionFormatEnum = string
 
+var (
+	resourceServerTokenEncryptionKeyFieldName = big.NewInt(1 << 0)
+	resourceServerTokenEncryptionKeyFieldAlg  = big.NewInt(1 << 1)
+	resourceServerTokenEncryptionKeyFieldKid  = big.NewInt(1 << 2)
+	resourceServerTokenEncryptionKeyFieldPem  = big.NewInt(1 << 3)
+)
+
 type ResourceServerTokenEncryptionKey struct {
 	// Name of the encryption key.
 	Name *string                                    `json:"name,omitempty" url:"name,omitempty"`
@@ -1209,15 +1967,18 @@ type ResourceServerTokenEncryptionKey struct {
 	// PEM-formatted public key. Must be JSON escaped.
 	Pem string `json:"pem" url:"pem"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (r *ResourceServerTokenEncryptionKey) GetName() *string {
-	if r == nil {
-		return nil
+func (r *ResourceServerTokenEncryptionKey) GetName() string {
+	if r == nil || r.Name == nil {
+		return ""
 	}
-	return r.Name
+	return *r.Name
 }
 
 func (r *ResourceServerTokenEncryptionKey) GetAlg() ResourceServerTokenEncryptionAlgorithmEnum {
@@ -1227,11 +1988,11 @@ func (r *ResourceServerTokenEncryptionKey) GetAlg() ResourceServerTokenEncryptio
 	return r.Alg
 }
 
-func (r *ResourceServerTokenEncryptionKey) GetKid() *string {
-	if r == nil {
-		return nil
+func (r *ResourceServerTokenEncryptionKey) GetKid() string {
+	if r == nil || r.Kid == nil {
+		return ""
 	}
-	return r.Kid
+	return *r.Kid
 }
 
 func (r *ResourceServerTokenEncryptionKey) GetPem() string {
@@ -1243,6 +2004,41 @@ func (r *ResourceServerTokenEncryptionKey) GetPem() string {
 
 func (r *ResourceServerTokenEncryptionKey) GetExtraProperties() map[string]interface{} {
 	return r.extraProperties
+}
+
+func (r *ResourceServerTokenEncryptionKey) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerTokenEncryptionKey) SetName(name *string) {
+	r.Name = name
+	r.require(resourceServerTokenEncryptionKeyFieldName)
+}
+
+// SetAlg sets the Alg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerTokenEncryptionKey) SetAlg(alg ResourceServerTokenEncryptionAlgorithmEnum) {
+	r.Alg = alg
+	r.require(resourceServerTokenEncryptionKeyFieldAlg)
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerTokenEncryptionKey) SetKid(kid *string) {
+	r.Kid = kid
+	r.require(resourceServerTokenEncryptionKeyFieldKid)
+}
+
+// SetPem sets the Pem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerTokenEncryptionKey) SetPem(pem string) {
+	r.Pem = pem
+	r.require(resourceServerTokenEncryptionKeyFieldPem)
 }
 
 func (r *ResourceServerTokenEncryptionKey) UnmarshalJSON(data []byte) error {
@@ -1261,6 +2057,17 @@ func (r *ResourceServerTokenEncryptionKey) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (r *ResourceServerTokenEncryptionKey) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerTokenEncryptionKey
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (r *ResourceServerTokenEncryptionKey) String() string {
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
@@ -1273,9 +2080,31 @@ func (r *ResourceServerTokenEncryptionKey) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+var (
+	updateResourceServerResponseContentFieldId                                        = big.NewInt(1 << 0)
+	updateResourceServerResponseContentFieldName                                      = big.NewInt(1 << 1)
+	updateResourceServerResponseContentFieldIsSystem                                  = big.NewInt(1 << 2)
+	updateResourceServerResponseContentFieldIdentifier                                = big.NewInt(1 << 3)
+	updateResourceServerResponseContentFieldScopes                                    = big.NewInt(1 << 4)
+	updateResourceServerResponseContentFieldSigningAlg                                = big.NewInt(1 << 5)
+	updateResourceServerResponseContentFieldSigningSecret                             = big.NewInt(1 << 6)
+	updateResourceServerResponseContentFieldAllowOfflineAccess                        = big.NewInt(1 << 7)
+	updateResourceServerResponseContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 8)
+	updateResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 9)
+	updateResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 10)
+	updateResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 11)
+	updateResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 12)
+	updateResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 13)
+	updateResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 14)
+	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 15)
+	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 16)
+	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 17)
+	updateResourceServerResponseContentFieldClientId                                  = big.NewInt(1 << 18)
+)
+
 type UpdateResourceServerResponseContent struct {
 	// ID of the API (resource server).
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Friendly name for this resource server. Can not contain `<` or `>` characters.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this is an Auth0 system API (true) or a custom API (false).
@@ -1303,139 +2132,284 @@ type UpdateResourceServerResponseContent struct {
 	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	// The client ID of the client that this resource server is linked to
+	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateResourceServerResponseContent) GetID() *string {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetId() string {
+	if u == nil || u.Id == nil {
+		return ""
 	}
-	return u.ID
+	return *u.Id
 }
 
-func (u *UpdateResourceServerResponseContent) GetName() *string {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
 	}
-	return u.Name
+	return *u.Name
 }
 
-func (u *UpdateResourceServerResponseContent) GetIsSystem() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetIsSystem() bool {
+	if u == nil || u.IsSystem == nil {
+		return false
 	}
-	return u.IsSystem
+	return *u.IsSystem
 }
 
-func (u *UpdateResourceServerResponseContent) GetIdentifier() *string {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetIdentifier() string {
+	if u == nil || u.Identifier == nil {
+		return ""
 	}
-	return u.Identifier
+	return *u.Identifier
 }
 
 func (u *UpdateResourceServerResponseContent) GetScopes() []*ResourceServerScope {
-	if u == nil {
+	if u == nil || u.Scopes == nil {
 		return nil
 	}
 	return u.Scopes
 }
 
-func (u *UpdateResourceServerResponseContent) GetSigningAlg() *SigningAlgorithmEnum {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetSigningAlg() SigningAlgorithmEnum {
+	if u == nil || u.SigningAlg == nil {
+		return ""
 	}
-	return u.SigningAlg
+	return *u.SigningAlg
 }
 
-func (u *UpdateResourceServerResponseContent) GetSigningSecret() *string {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetSigningSecret() string {
+	if u == nil || u.SigningSecret == nil {
+		return ""
 	}
-	return u.SigningSecret
+	return *u.SigningSecret
 }
 
-func (u *UpdateResourceServerResponseContent) GetAllowOfflineAccess() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetAllowOfflineAccess() bool {
+	if u == nil || u.AllowOfflineAccess == nil {
+		return false
 	}
-	return u.AllowOfflineAccess
+	return *u.AllowOfflineAccess
 }
 
-func (u *UpdateResourceServerResponseContent) GetSkipConsentForVerifiableFirstPartyClients() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetSkipConsentForVerifiableFirstPartyClients() bool {
+	if u == nil || u.SkipConsentForVerifiableFirstPartyClients == nil {
+		return false
 	}
-	return u.SkipConsentForVerifiableFirstPartyClients
+	return *u.SkipConsentForVerifiableFirstPartyClients
 }
 
-func (u *UpdateResourceServerResponseContent) GetTokenLifetime() *int {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetTokenLifetime() int {
+	if u == nil || u.TokenLifetime == nil {
+		return 0
 	}
-	return u.TokenLifetime
+	return *u.TokenLifetime
 }
 
-func (u *UpdateResourceServerResponseContent) GetTokenLifetimeForWeb() *int {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetTokenLifetimeForWeb() int {
+	if u == nil || u.TokenLifetimeForWeb == nil {
+		return 0
 	}
-	return u.TokenLifetimeForWeb
+	return *u.TokenLifetimeForWeb
 }
 
-func (u *UpdateResourceServerResponseContent) GetEnforcePolicies() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetEnforcePolicies() bool {
+	if u == nil || u.EnforcePolicies == nil {
+		return false
 	}
-	return u.EnforcePolicies
+	return *u.EnforcePolicies
 }
 
-func (u *UpdateResourceServerResponseContent) GetTokenDialect() *ResourceServerTokenDialectResponseEnum {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetTokenDialect() ResourceServerTokenDialectResponseEnum {
+	if u == nil || u.TokenDialect == nil {
+		return ""
 	}
-	return u.TokenDialect
+	return *u.TokenDialect
 }
 
-func (u *UpdateResourceServerResponseContent) GetTokenEncryption() *ResourceServerTokenEncryption {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetTokenEncryption() ResourceServerTokenEncryption {
+	if u == nil || u.TokenEncryption == nil {
+		return ResourceServerTokenEncryption{}
 	}
-	return u.TokenEncryption
-}
-
-func (u *UpdateResourceServerResponseContent) GetConsentPolicy() *ResourceServerConsentPolicyEnum {
-	if u == nil {
-		return nil
-	}
-	return u.ConsentPolicy
+	return *u.TokenEncryption
 }
 
 func (u *UpdateResourceServerResponseContent) GetAuthorizationDetails() []interface{} {
-	if u == nil {
+	if u == nil || u.AuthorizationDetails == nil {
 		return nil
 	}
 	return u.AuthorizationDetails
 }
 
-func (u *UpdateResourceServerResponseContent) GetProofOfPossession() *ResourceServerProofOfPossession {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetProofOfPossession() ResourceServerProofOfPossession {
+	if u == nil || u.ProofOfPossession == nil {
+		return ResourceServerProofOfPossession{}
 	}
-	return u.ProofOfPossession
+	return *u.ProofOfPossession
 }
 
-func (u *UpdateResourceServerResponseContent) GetSubjectTypeAuthorization() *ResourceServerSubjectTypeAuthorization {
-	if u == nil {
-		return nil
+func (u *UpdateResourceServerResponseContent) GetSubjectTypeAuthorization() ResourceServerSubjectTypeAuthorization {
+	if u == nil || u.SubjectTypeAuthorization == nil {
+		return ResourceServerSubjectTypeAuthorization{}
 	}
-	return u.SubjectTypeAuthorization
+	return *u.SubjectTypeAuthorization
+}
+
+func (u *UpdateResourceServerResponseContent) GetClientId() string {
+	if u == nil || u.ClientId == nil {
+		return ""
+	}
+	return *u.ClientId
 }
 
 func (u *UpdateResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UpdateResourceServerResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetId(id *string) {
+	u.Id = id
+	u.require(updateResourceServerResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateResourceServerResponseContentFieldName)
+}
+
+// SetIsSystem sets the IsSystem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetIsSystem(isSystem *bool) {
+	u.IsSystem = isSystem
+	u.require(updateResourceServerResponseContentFieldIsSystem)
+}
+
+// SetIdentifier sets the Identifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetIdentifier(identifier *string) {
+	u.Identifier = identifier
+	u.require(updateResourceServerResponseContentFieldIdentifier)
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetScopes(scopes []*ResourceServerScope) {
+	u.Scopes = scopes
+	u.require(updateResourceServerResponseContentFieldScopes)
+}
+
+// SetSigningAlg sets the SigningAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetSigningAlg(signingAlg *SigningAlgorithmEnum) {
+	u.SigningAlg = signingAlg
+	u.require(updateResourceServerResponseContentFieldSigningAlg)
+}
+
+// SetSigningSecret sets the SigningSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetSigningSecret(signingSecret *string) {
+	u.SigningSecret = signingSecret
+	u.require(updateResourceServerResponseContentFieldSigningSecret)
+}
+
+// SetAllowOfflineAccess sets the AllowOfflineAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetAllowOfflineAccess(allowOfflineAccess *bool) {
+	u.AllowOfflineAccess = allowOfflineAccess
+	u.require(updateResourceServerResponseContentFieldAllowOfflineAccess)
+}
+
+// SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetSkipConsentForVerifiableFirstPartyClients(skipConsentForVerifiableFirstPartyClients *bool) {
+	u.SkipConsentForVerifiableFirstPartyClients = skipConsentForVerifiableFirstPartyClients
+	u.require(updateResourceServerResponseContentFieldSkipConsentForVerifiableFirstPartyClients)
+}
+
+// SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetTokenLifetime(tokenLifetime *int) {
+	u.TokenLifetime = tokenLifetime
+	u.require(updateResourceServerResponseContentFieldTokenLifetime)
+}
+
+// SetTokenLifetimeForWeb sets the TokenLifetimeForWeb field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetTokenLifetimeForWeb(tokenLifetimeForWeb *int) {
+	u.TokenLifetimeForWeb = tokenLifetimeForWeb
+	u.require(updateResourceServerResponseContentFieldTokenLifetimeForWeb)
+}
+
+// SetEnforcePolicies sets the EnforcePolicies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetEnforcePolicies(enforcePolicies *bool) {
+	u.EnforcePolicies = enforcePolicies
+	u.require(updateResourceServerResponseContentFieldEnforcePolicies)
+}
+
+// SetTokenDialect sets the TokenDialect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
+	u.TokenDialect = tokenDialect
+	u.require(updateResourceServerResponseContentFieldTokenDialect)
+}
+
+// SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetTokenEncryption(tokenEncryption *ResourceServerTokenEncryption) {
+	u.TokenEncryption = tokenEncryption
+	u.require(updateResourceServerResponseContentFieldTokenEncryption)
+}
+
+// SetConsentPolicy sets the ConsentPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
+	u.ConsentPolicy = consentPolicy
+	u.require(updateResourceServerResponseContentFieldConsentPolicy)
+}
+
+// SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetAuthorizationDetails(authorizationDetails []interface{}) {
+	u.AuthorizationDetails = authorizationDetails
+	u.require(updateResourceServerResponseContentFieldAuthorizationDetails)
+}
+
+// SetProofOfPossession sets the ProofOfPossession field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetProofOfPossession(proofOfPossession *ResourceServerProofOfPossession) {
+	u.ProofOfPossession = proofOfPossession
+	u.require(updateResourceServerResponseContentFieldProofOfPossession)
+}
+
+// SetSubjectTypeAuthorization sets the SubjectTypeAuthorization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetSubjectTypeAuthorization(subjectTypeAuthorization *ResourceServerSubjectTypeAuthorization) {
+	u.SubjectTypeAuthorization = subjectTypeAuthorization
+	u.require(updateResourceServerResponseContentFieldSubjectTypeAuthorization)
+}
+
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetClientId(clientId *string) {
+	u.ClientId = clientId
+	u.require(updateResourceServerResponseContentFieldClientId)
 }
 
 func (u *UpdateResourceServerResponseContent) UnmarshalJSON(data []byte) error {
@@ -1454,6 +2428,17 @@ func (u *UpdateResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UpdateResourceServerResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateResourceServerResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UpdateResourceServerResponseContent) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -1464,28 +2449,4 @@ func (u *UpdateResourceServerResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateResourceServerRequestContent struct {
-	// Friendly name for this resource server. Can not contain `<` or `>` characters.
-	Name *string `json:"name,omitempty" url:"-"`
-	// List of permissions (scopes) that this API uses.
-	Scopes     []*ResourceServerScope `json:"scopes,omitempty" url:"-"`
-	SigningAlg *SigningAlgorithmEnum  `json:"signing_alg,omitempty" url:"-"`
-	// Secret used to sign tokens when using symmetric algorithms (HS256).
-	SigningSecret *string `json:"signing_secret,omitempty" url:"-"`
-	// Whether to skip user consent for applications flagged as first party (true) or not (false).
-	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"-"`
-	// Whether refresh tokens can be issued for this API (true) or not (false).
-	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"-"`
-	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
-	TokenLifetime *int                                  `json:"token_lifetime,omitempty" url:"-"`
-	TokenDialect  *ResourceServerTokenDialectSchemaEnum `json:"token_dialect,omitempty" url:"-"`
-	// Whether authorization policies are enforced (true) or not enforced (false).
-	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"-"`
-	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"-"`
-	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"-"`
-	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"-"`
-	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"-"`
-	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"-"`
 }

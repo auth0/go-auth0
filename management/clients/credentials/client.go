@@ -5,7 +5,6 @@ package credentials
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	clients "github.com/auth0/go-auth0/v2/management/clients"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -39,12 +38,12 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the client.
-	clientID string,
+	clientId string,
 	opts ...option.RequestOption,
 ) ([]*management.ClientCredential, error) {
 	response, err := c.WithRawResponse.List(
 		ctx,
-		clientID,
+		clientId,
 		opts...,
 	)
 	if err != nil {
@@ -94,13 +93,13 @@ func (c *Client) List(
 func (c *Client) Create(
 	ctx context.Context,
 	// ID of the client.
-	clientID string,
-	request *clients.PostClientCredentialRequestContent,
+	clientId string,
+	request *management.PostClientCredentialRequestContent,
 	opts ...option.RequestOption,
 ) (*management.PostClientCredentialResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
 		ctx,
-		clientID,
+		clientId,
 		request,
 		opts...,
 	)
@@ -116,15 +115,15 @@ func (c *Client) Create(
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the client.
-	clientID string,
+	clientId string,
 	// ID of the credential.
-	credentialID string,
+	credentialId string,
 	opts ...option.RequestOption,
 ) (*management.GetClientCredentialResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
-		clientID,
-		credentialID,
+		clientId,
+		credentialId,
 		opts...,
 	)
 	if err != nil {
@@ -137,15 +136,15 @@ func (c *Client) Get(
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the client.
-	clientID string,
+	clientId string,
 	// ID of the credential to delete.
-	credentialID string,
+	credentialId string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
-		clientID,
-		credentialID,
+		clientId,
+		credentialId,
 		opts...,
 	)
 	if err != nil {
@@ -158,16 +157,16 @@ func (c *Client) Delete(
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the client.
-	clientID string,
+	clientId string,
 	// ID of the credential.
-	credentialID string,
-	request *clients.PatchClientCredentialRequestContent,
+	credentialId string,
+	request *management.PatchClientCredentialRequestContent,
 	opts ...option.RequestOption,
 ) (*management.PatchClientCredentialResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
-		clientID,
-		credentialID,
+		clientId,
+		credentialId,
 		request,
 		opts...,
 	)

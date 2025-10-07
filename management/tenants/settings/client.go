@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	tenants "github.com/auth0/go-auth0/v2/management/tenants"
 )
 
 type Client struct {
@@ -36,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // Retrieve tenant settings. A list of fields to include or exclude may also be specified.
 func (c *Client) Get(
 	ctx context.Context,
-	request *tenants.GetTenantSettingsRequestParameters,
+	request *management.GetTenantSettingsRequestParameters,
 	opts ...option.RequestOption,
 ) (*management.GetTenantSettingsResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
@@ -53,7 +52,7 @@ func (c *Client) Get(
 // Update settings for a tenant.
 func (c *Client) Update(
 	ctx context.Context,
-	request *tenants.UpdateTenantSettingsRequestContent,
+	request *management.UpdateTenantSettingsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateTenantSettingsResponseContent, error) {
 	response, err := c.WithRawResponse.Update(

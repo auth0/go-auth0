@@ -9,7 +9,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	users "github.com/auth0/go-auth0/v2/management/users"
 	http "net/http"
 	strconv "strconv"
 )
@@ -47,7 +46,7 @@ func (c *Client) List(
 	ctx context.Context,
 	// ID of the user of the logs to retrieve
 	id string,
-	request *users.ListUserLogsRequestParameters,
+	request *management.ListUserLogsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.Log], error) {
 	options := core.NewRequestOptions(opts...)
@@ -60,14 +59,7 @@ func (c *Client) List(
 		baseURL+"/users/%v/logs",
 		id,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -75,28 +67,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -114,7 +84,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -127,7 +97,7 @@ func (c *Client) List(
 
 	readPageResponse := func(response *management.UserListLogOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.Log] {
 		next += 1
-		results := response.GetLogs()
+		results := response.Logs
 		return &internal.PageResponse[*int, *management.Log]{
 			Next:    &next,
 			Results: results,

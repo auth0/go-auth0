@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	selfserviceprofiles "github.com/auth0/go-auth0/v2/management/selfserviceprofiles"
 )
 
 type Client struct {
@@ -38,9 +37,9 @@ func (c *Client) Create(
 	ctx context.Context,
 	// The id of the self-service profile to retrieve
 	id string,
-	request *selfserviceprofiles.CreateSelfServiceProfileSSOTicketRequestContent,
+	request *management.CreateSelfServiceProfileSsoTicketRequestContent,
 	opts ...option.RequestOption,
-) (*management.CreateSelfServiceProfileSSOTicketResponseContent, error) {
+) (*management.CreateSelfServiceProfileSsoTicketResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
 		ctx,
 		id,
@@ -58,14 +57,14 @@ func (c *Client) Create(
 func (c *Client) Revoke(
 	ctx context.Context,
 	// The id of the self-service profile
-	profileID string,
+	profileId string,
 	// The id of the ticket to revoke
 	id string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Revoke(
 		ctx,
-		profileID,
+		profileId,
 		id,
 		opts...,
 	)

@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	factors "github.com/auth0/go-auth0/v2/management/guardian/factors"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 )
@@ -55,7 +54,7 @@ func (c *Client) GetTwilioProvider(
 //	<b>Previous functionality</b>: Update the Twilio SMS provider configuration.
 func (c *Client) SetTwilioProvider(
 	ctx context.Context,
-	request *factors.SetGuardianFactorsProviderSmsTwilioRequestContent,
+	request *management.SetGuardianFactorsProviderSmsTwilioRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetGuardianFactorsProviderSmsTwilioResponseContent, error) {
 	response, err := c.WithRawResponse.SetTwilioProvider(
@@ -91,7 +90,7 @@ func (c *Client) GetSelectedProvider(
 //	<b>Previous functionality</b>: Update the multi-factor authentication SMS provider configuration in your tenant.
 func (c *Client) SetProvider(
 	ctx context.Context,
-	request *factors.SetGuardianFactorsProviderSmsRequestContent,
+	request *management.SetGuardianFactorsProviderSmsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetGuardianFactorsProviderSmsResponseContent, error) {
 	response, err := c.WithRawResponse.SetProvider(
@@ -127,7 +126,7 @@ func (c *Client) GetTemplates(
 //	<b>Previous functionality</b>: Customize the messages sent to complete SMS enrollment and verification.
 func (c *Client) SetTemplates(
 	ctx context.Context,
-	request *factors.SetGuardianFactorSmsTemplatesRequestContent,
+	request *management.SetGuardianFactorSmsTemplatesRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetGuardianFactorSmsTemplatesResponseContent, error) {
 	response, err := c.WithRawResponse.SetTemplates(

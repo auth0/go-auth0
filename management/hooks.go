@@ -6,44 +6,23 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type CreateHookRequestContent struct {
-	// Name of this hook.
-	Name string `json:"name" url:"-"`
-	// Code to be executed when this hook runs.
-	Script string `json:"script" url:"-"`
-	// Whether this hook will be executed (true) or ignored (false).
-	Enabled      *bool             `json:"enabled,omitempty" url:"-"`
-	Dependencies *HookDependencies `json:"dependencies,omitempty" url:"-"`
-	TriggerID    HookTriggerIDEnum `json:"triggerId" url:"-"`
-}
-
-type GetHookRequestParameters struct {
-	// Comma-separated list of fields to include in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-}
-
-type ListHooksRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Optional filter on whether a hook is enabled (true) or disabled (false).
-	Enabled *bool `json:"-" url:"enabled,omitempty"`
-	// Comma-separated list of fields to include in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Retrieves hooks that match the trigger
-	TriggerID *HookTriggerIDEnum `json:"-" url:"triggerId,omitempty"`
-}
+var (
+	createHookResponseContentFieldTriggerId    = big.NewInt(1 << 0)
+	createHookResponseContentFieldId           = big.NewInt(1 << 1)
+	createHookResponseContentFieldName         = big.NewInt(1 << 2)
+	createHookResponseContentFieldEnabled      = big.NewInt(1 << 3)
+	createHookResponseContentFieldScript       = big.NewInt(1 << 4)
+	createHookResponseContentFieldDependencies = big.NewInt(1 << 5)
+)
 
 type CreateHookResponseContent struct {
 	// Trigger ID
-	TriggerID *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
+	TriggerId *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
 	// ID of this hook.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this hook.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this hook will be executed (true) or ignored (false).
@@ -52,54 +31,106 @@ type CreateHookResponseContent struct {
 	Script       *string           `json:"script,omitempty" url:"script,omitempty"`
 	Dependencies *HookDependencies `json:"dependencies,omitempty" url:"dependencies,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateHookResponseContent) GetTriggerID() *string {
-	if c == nil {
-		return nil
+func (c *CreateHookResponseContent) GetTriggerId() string {
+	if c == nil || c.TriggerId == nil {
+		return ""
 	}
-	return c.TriggerID
+	return *c.TriggerId
 }
 
-func (c *CreateHookResponseContent) GetID() *string {
-	if c == nil {
-		return nil
+func (c *CreateHookResponseContent) GetId() string {
+	if c == nil || c.Id == nil {
+		return ""
 	}
-	return c.ID
+	return *c.Id
 }
 
-func (c *CreateHookResponseContent) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateHookResponseContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateHookResponseContent) GetEnabled() *bool {
-	if c == nil {
-		return nil
+func (c *CreateHookResponseContent) GetEnabled() bool {
+	if c == nil || c.Enabled == nil {
+		return false
 	}
-	return c.Enabled
+	return *c.Enabled
 }
 
-func (c *CreateHookResponseContent) GetScript() *string {
-	if c == nil {
-		return nil
+func (c *CreateHookResponseContent) GetScript() string {
+	if c == nil || c.Script == nil {
+		return ""
 	}
-	return c.Script
+	return *c.Script
 }
 
-func (c *CreateHookResponseContent) GetDependencies() *HookDependencies {
-	if c == nil {
+func (c *CreateHookResponseContent) GetDependencies() HookDependencies {
+	if c == nil || c.Dependencies == nil {
 		return nil
 	}
-	return c.Dependencies
+	return *c.Dependencies
 }
 
 func (c *CreateHookResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateHookResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetTriggerId sets the TriggerId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateHookResponseContent) SetTriggerId(triggerId *string) {
+	c.TriggerId = triggerId
+	c.require(createHookResponseContentFieldTriggerId)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateHookResponseContent) SetId(id *string) {
+	c.Id = id
+	c.require(createHookResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateHookResponseContent) SetName(name *string) {
+	c.Name = name
+	c.require(createHookResponseContentFieldName)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateHookResponseContent) SetEnabled(enabled *bool) {
+	c.Enabled = enabled
+	c.require(createHookResponseContentFieldEnabled)
+}
+
+// SetScript sets the Script field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateHookResponseContent) SetScript(script *string) {
+	c.Script = script
+	c.require(createHookResponseContentFieldScript)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateHookResponseContent) SetDependencies(dependencies *HookDependencies) {
+	c.Dependencies = dependencies
+	c.require(createHookResponseContentFieldDependencies)
 }
 
 func (c *CreateHookResponseContent) UnmarshalJSON(data []byte) error {
@@ -118,6 +149,17 @@ func (c *CreateHookResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *CreateHookResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateHookResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *CreateHookResponseContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -130,11 +172,20 @@ func (c *CreateHookResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	getHookResponseContentFieldTriggerId    = big.NewInt(1 << 0)
+	getHookResponseContentFieldId           = big.NewInt(1 << 1)
+	getHookResponseContentFieldName         = big.NewInt(1 << 2)
+	getHookResponseContentFieldEnabled      = big.NewInt(1 << 3)
+	getHookResponseContentFieldScript       = big.NewInt(1 << 4)
+	getHookResponseContentFieldDependencies = big.NewInt(1 << 5)
+)
+
 type GetHookResponseContent struct {
 	// Trigger ID
-	TriggerID *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
+	TriggerId *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
 	// ID of this hook.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this hook.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this hook will be executed (true) or ignored (false).
@@ -143,54 +194,106 @@ type GetHookResponseContent struct {
 	Script       *string           `json:"script,omitempty" url:"script,omitempty"`
 	Dependencies *HookDependencies `json:"dependencies,omitempty" url:"dependencies,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (g *GetHookResponseContent) GetTriggerID() *string {
-	if g == nil {
-		return nil
+func (g *GetHookResponseContent) GetTriggerId() string {
+	if g == nil || g.TriggerId == nil {
+		return ""
 	}
-	return g.TriggerID
+	return *g.TriggerId
 }
 
-func (g *GetHookResponseContent) GetID() *string {
-	if g == nil {
-		return nil
+func (g *GetHookResponseContent) GetId() string {
+	if g == nil || g.Id == nil {
+		return ""
 	}
-	return g.ID
+	return *g.Id
 }
 
-func (g *GetHookResponseContent) GetName() *string {
-	if g == nil {
-		return nil
+func (g *GetHookResponseContent) GetName() string {
+	if g == nil || g.Name == nil {
+		return ""
 	}
-	return g.Name
+	return *g.Name
 }
 
-func (g *GetHookResponseContent) GetEnabled() *bool {
-	if g == nil {
-		return nil
+func (g *GetHookResponseContent) GetEnabled() bool {
+	if g == nil || g.Enabled == nil {
+		return false
 	}
-	return g.Enabled
+	return *g.Enabled
 }
 
-func (g *GetHookResponseContent) GetScript() *string {
-	if g == nil {
-		return nil
+func (g *GetHookResponseContent) GetScript() string {
+	if g == nil || g.Script == nil {
+		return ""
 	}
-	return g.Script
+	return *g.Script
 }
 
-func (g *GetHookResponseContent) GetDependencies() *HookDependencies {
-	if g == nil {
+func (g *GetHookResponseContent) GetDependencies() HookDependencies {
+	if g == nil || g.Dependencies == nil {
 		return nil
 	}
-	return g.Dependencies
+	return *g.Dependencies
 }
 
 func (g *GetHookResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
+}
+
+func (g *GetHookResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetTriggerId sets the TriggerId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetHookResponseContent) SetTriggerId(triggerId *string) {
+	g.TriggerId = triggerId
+	g.require(getHookResponseContentFieldTriggerId)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetHookResponseContent) SetId(id *string) {
+	g.Id = id
+	g.require(getHookResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetHookResponseContent) SetName(name *string) {
+	g.Name = name
+	g.require(getHookResponseContentFieldName)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetHookResponseContent) SetEnabled(enabled *bool) {
+	g.Enabled = enabled
+	g.require(getHookResponseContentFieldEnabled)
+}
+
+// SetScript sets the Script field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetHookResponseContent) SetScript(script *string) {
+	g.Script = script
+	g.require(getHookResponseContentFieldScript)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetHookResponseContent) SetDependencies(dependencies *HookDependencies) {
+	g.Dependencies = dependencies
+	g.require(getHookResponseContentFieldDependencies)
 }
 
 func (g *GetHookResponseContent) UnmarshalJSON(data []byte) error {
@@ -209,6 +312,17 @@ func (g *GetHookResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (g *GetHookResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetHookResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (g *GetHookResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
@@ -221,11 +335,20 @@ func (g *GetHookResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	hookFieldTriggerId    = big.NewInt(1 << 0)
+	hookFieldId           = big.NewInt(1 << 1)
+	hookFieldName         = big.NewInt(1 << 2)
+	hookFieldEnabled      = big.NewInt(1 << 3)
+	hookFieldScript       = big.NewInt(1 << 4)
+	hookFieldDependencies = big.NewInt(1 << 5)
+)
+
 type Hook struct {
 	// Trigger ID
-	TriggerID *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
+	TriggerId *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
 	// ID of this hook.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this hook.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this hook will be executed (true) or ignored (false).
@@ -234,54 +357,106 @@ type Hook struct {
 	Script       *string           `json:"script,omitempty" url:"script,omitempty"`
 	Dependencies *HookDependencies `json:"dependencies,omitempty" url:"dependencies,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (h *Hook) GetTriggerID() *string {
-	if h == nil {
-		return nil
+func (h *Hook) GetTriggerId() string {
+	if h == nil || h.TriggerId == nil {
+		return ""
 	}
-	return h.TriggerID
+	return *h.TriggerId
 }
 
-func (h *Hook) GetID() *string {
-	if h == nil {
-		return nil
+func (h *Hook) GetId() string {
+	if h == nil || h.Id == nil {
+		return ""
 	}
-	return h.ID
+	return *h.Id
 }
 
-func (h *Hook) GetName() *string {
-	if h == nil {
-		return nil
+func (h *Hook) GetName() string {
+	if h == nil || h.Name == nil {
+		return ""
 	}
-	return h.Name
+	return *h.Name
 }
 
-func (h *Hook) GetEnabled() *bool {
-	if h == nil {
-		return nil
+func (h *Hook) GetEnabled() bool {
+	if h == nil || h.Enabled == nil {
+		return false
 	}
-	return h.Enabled
+	return *h.Enabled
 }
 
-func (h *Hook) GetScript() *string {
-	if h == nil {
-		return nil
+func (h *Hook) GetScript() string {
+	if h == nil || h.Script == nil {
+		return ""
 	}
-	return h.Script
+	return *h.Script
 }
 
-func (h *Hook) GetDependencies() *HookDependencies {
-	if h == nil {
+func (h *Hook) GetDependencies() HookDependencies {
+	if h == nil || h.Dependencies == nil {
 		return nil
 	}
-	return h.Dependencies
+	return *h.Dependencies
 }
 
 func (h *Hook) GetExtraProperties() map[string]interface{} {
 	return h.extraProperties
+}
+
+func (h *Hook) require(field *big.Int) {
+	if h.explicitFields == nil {
+		h.explicitFields = big.NewInt(0)
+	}
+	h.explicitFields.Or(h.explicitFields, field)
+}
+
+// SetTriggerId sets the TriggerId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (h *Hook) SetTriggerId(triggerId *string) {
+	h.TriggerId = triggerId
+	h.require(hookFieldTriggerId)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (h *Hook) SetId(id *string) {
+	h.Id = id
+	h.require(hookFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (h *Hook) SetName(name *string) {
+	h.Name = name
+	h.require(hookFieldName)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (h *Hook) SetEnabled(enabled *bool) {
+	h.Enabled = enabled
+	h.require(hookFieldEnabled)
+}
+
+// SetScript sets the Script field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (h *Hook) SetScript(script *string) {
+	h.Script = script
+	h.require(hookFieldScript)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (h *Hook) SetDependencies(dependencies *HookDependencies) {
+	h.Dependencies = dependencies
+	h.require(hookFieldDependencies)
 }
 
 func (h *Hook) UnmarshalJSON(data []byte) error {
@@ -300,6 +475,17 @@ func (h *Hook) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (h *Hook) MarshalJSON() ([]byte, error) {
+	type embed Hook
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*h),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, h.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (h *Hook) String() string {
 	if len(h.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(h.rawJSON); err == nil {
@@ -313,39 +499,46 @@ func (h *Hook) String() string {
 }
 
 // Dependencies of this hook used by webtask server.
-type HookDependencies = map[string]interface{}
+type HookDependencies = map[string]string
 
 // Retrieves hooks that match the trigger
-type HookTriggerIDEnum string
+type HookTriggerIdEnum string
 
 const (
-	HookTriggerIDEnumCredentialsExchange  HookTriggerIDEnum = "credentials-exchange"
-	HookTriggerIDEnumPreUserRegistration  HookTriggerIDEnum = "pre-user-registration"
-	HookTriggerIDEnumPostUserRegistration HookTriggerIDEnum = "post-user-registration"
-	HookTriggerIDEnumPostChangePassword   HookTriggerIDEnum = "post-change-password"
-	HookTriggerIDEnumSendPhoneMessage     HookTriggerIDEnum = "send-phone-message"
+	HookTriggerIdEnumCredentialsExchange  HookTriggerIdEnum = "credentials-exchange"
+	HookTriggerIdEnumPreUserRegistration  HookTriggerIdEnum = "pre-user-registration"
+	HookTriggerIdEnumPostUserRegistration HookTriggerIdEnum = "post-user-registration"
+	HookTriggerIdEnumPostChangePassword   HookTriggerIdEnum = "post-change-password"
+	HookTriggerIdEnumSendPhoneMessage     HookTriggerIdEnum = "send-phone-message"
 )
 
-func NewHookTriggerIDEnumFromString(s string) (HookTriggerIDEnum, error) {
+func NewHookTriggerIdEnumFromString(s string) (HookTriggerIdEnum, error) {
 	switch s {
 	case "credentials-exchange":
-		return HookTriggerIDEnumCredentialsExchange, nil
+		return HookTriggerIdEnumCredentialsExchange, nil
 	case "pre-user-registration":
-		return HookTriggerIDEnumPreUserRegistration, nil
+		return HookTriggerIdEnumPreUserRegistration, nil
 	case "post-user-registration":
-		return HookTriggerIDEnumPostUserRegistration, nil
+		return HookTriggerIdEnumPostUserRegistration, nil
 	case "post-change-password":
-		return HookTriggerIDEnumPostChangePassword, nil
+		return HookTriggerIdEnumPostChangePassword, nil
 	case "send-phone-message":
-		return HookTriggerIDEnumSendPhoneMessage, nil
+		return HookTriggerIdEnumSendPhoneMessage, nil
 	}
-	var t HookTriggerIDEnum
+	var t HookTriggerIdEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (h HookTriggerIDEnum) Ptr() *HookTriggerIDEnum {
+func (h HookTriggerIdEnum) Ptr() *HookTriggerIdEnum {
 	return &h
 }
+
+var (
+	listHooksOffsetPaginatedResponseContentFieldStart = big.NewInt(1 << 0)
+	listHooksOffsetPaginatedResponseContentFieldLimit = big.NewInt(1 << 1)
+	listHooksOffsetPaginatedResponseContentFieldTotal = big.NewInt(1 << 2)
+	listHooksOffsetPaginatedResponseContentFieldHooks = big.NewInt(1 << 3)
+)
 
 type ListHooksOffsetPaginatedResponseContent struct {
 	Start *float64 `json:"start,omitempty" url:"start,omitempty"`
@@ -353,33 +546,36 @@ type ListHooksOffsetPaginatedResponseContent struct {
 	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
 	Hooks []*Hook  `json:"hooks,omitempty" url:"hooks,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListHooksOffsetPaginatedResponseContent) GetStart() *float64 {
-	if l == nil {
-		return nil
+func (l *ListHooksOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
 	}
-	return l.Start
+	return *l.Start
 }
 
-func (l *ListHooksOffsetPaginatedResponseContent) GetLimit() *float64 {
-	if l == nil {
-		return nil
+func (l *ListHooksOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
 	}
-	return l.Limit
+	return *l.Limit
 }
 
-func (l *ListHooksOffsetPaginatedResponseContent) GetTotal() *float64 {
-	if l == nil {
-		return nil
+func (l *ListHooksOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
 	}
-	return l.Total
+	return *l.Total
 }
 
 func (l *ListHooksOffsetPaginatedResponseContent) GetHooks() []*Hook {
-	if l == nil {
+	if l == nil || l.Hooks == nil {
 		return nil
 	}
 	return l.Hooks
@@ -387,6 +583,41 @@ func (l *ListHooksOffsetPaginatedResponseContent) GetHooks() []*Hook {
 
 func (l *ListHooksOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListHooksOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListHooksOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listHooksOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListHooksOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listHooksOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListHooksOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listHooksOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetHooks sets the Hooks field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListHooksOffsetPaginatedResponseContent) SetHooks(hooks []*Hook) {
+	l.Hooks = hooks
+	l.require(listHooksOffsetPaginatedResponseContentFieldHooks)
 }
 
 func (l *ListHooksOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
@@ -405,6 +636,17 @@ func (l *ListHooksOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) err
 	return nil
 }
 
+func (l *ListHooksOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListHooksOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListHooksOffsetPaginatedResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -417,11 +659,20 @@ func (l *ListHooksOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	updateHookResponseContentFieldTriggerId    = big.NewInt(1 << 0)
+	updateHookResponseContentFieldId           = big.NewInt(1 << 1)
+	updateHookResponseContentFieldName         = big.NewInt(1 << 2)
+	updateHookResponseContentFieldEnabled      = big.NewInt(1 << 3)
+	updateHookResponseContentFieldScript       = big.NewInt(1 << 4)
+	updateHookResponseContentFieldDependencies = big.NewInt(1 << 5)
+)
+
 type UpdateHookResponseContent struct {
 	// Trigger ID
-	TriggerID *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
+	TriggerId *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
 	// ID of this hook.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this hook.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this hook will be executed (true) or ignored (false).
@@ -430,54 +681,106 @@ type UpdateHookResponseContent struct {
 	Script       *string           `json:"script,omitempty" url:"script,omitempty"`
 	Dependencies *HookDependencies `json:"dependencies,omitempty" url:"dependencies,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateHookResponseContent) GetTriggerID() *string {
-	if u == nil {
-		return nil
+func (u *UpdateHookResponseContent) GetTriggerId() string {
+	if u == nil || u.TriggerId == nil {
+		return ""
 	}
-	return u.TriggerID
+	return *u.TriggerId
 }
 
-func (u *UpdateHookResponseContent) GetID() *string {
-	if u == nil {
-		return nil
+func (u *UpdateHookResponseContent) GetId() string {
+	if u == nil || u.Id == nil {
+		return ""
 	}
-	return u.ID
+	return *u.Id
 }
 
-func (u *UpdateHookResponseContent) GetName() *string {
-	if u == nil {
-		return nil
+func (u *UpdateHookResponseContent) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
 	}
-	return u.Name
+	return *u.Name
 }
 
-func (u *UpdateHookResponseContent) GetEnabled() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateHookResponseContent) GetEnabled() bool {
+	if u == nil || u.Enabled == nil {
+		return false
 	}
-	return u.Enabled
+	return *u.Enabled
 }
 
-func (u *UpdateHookResponseContent) GetScript() *string {
-	if u == nil {
-		return nil
+func (u *UpdateHookResponseContent) GetScript() string {
+	if u == nil || u.Script == nil {
+		return ""
 	}
-	return u.Script
+	return *u.Script
 }
 
-func (u *UpdateHookResponseContent) GetDependencies() *HookDependencies {
-	if u == nil {
+func (u *UpdateHookResponseContent) GetDependencies() HookDependencies {
+	if u == nil || u.Dependencies == nil {
 		return nil
 	}
-	return u.Dependencies
+	return *u.Dependencies
 }
 
 func (u *UpdateHookResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UpdateHookResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetTriggerId sets the TriggerId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateHookResponseContent) SetTriggerId(triggerId *string) {
+	u.TriggerId = triggerId
+	u.require(updateHookResponseContentFieldTriggerId)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateHookResponseContent) SetId(id *string) {
+	u.Id = id
+	u.require(updateHookResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateHookResponseContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateHookResponseContentFieldName)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateHookResponseContent) SetEnabled(enabled *bool) {
+	u.Enabled = enabled
+	u.require(updateHookResponseContentFieldEnabled)
+}
+
+// SetScript sets the Script field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateHookResponseContent) SetScript(script *string) {
+	u.Script = script
+	u.require(updateHookResponseContentFieldScript)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateHookResponseContent) SetDependencies(dependencies *HookDependencies) {
+	u.Dependencies = dependencies
+	u.require(updateHookResponseContentFieldDependencies)
 }
 
 func (u *UpdateHookResponseContent) UnmarshalJSON(data []byte) error {
@@ -496,6 +799,17 @@ func (u *UpdateHookResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UpdateHookResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateHookResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UpdateHookResponseContent) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -506,14 +820,4 @@ func (u *UpdateHookResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateHookRequestContent struct {
-	// Name of this hook.
-	Name *string `json:"name,omitempty" url:"-"`
-	// Code to be executed when this hook runs.
-	Script *string `json:"script,omitempty" url:"-"`
-	// Whether this hook will be executed (true) or ignored (false).
-	Enabled      *bool             `json:"enabled,omitempty" url:"-"`
-	Dependencies *HookDependencies `json:"dependencies,omitempty" url:"-"`
 }

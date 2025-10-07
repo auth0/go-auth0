@@ -8,7 +8,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	users "github.com/auth0/go-auth0/v2/management/users"
 	http "net/http"
 )
 
@@ -35,7 +34,7 @@ func (r *RawClient) Link(
 	ctx context.Context,
 	// ID of the primary user account to link a second user account to.
 	id string,
-	request *users.LinkUserIdentityRequestContent,
+	request *management.LinkUserIdentityRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*management.UserIdentity], error) {
 	options := core.NewRequestOptions(opts...)
@@ -53,33 +52,6 @@ func (r *RawClient) Link(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		409: func(apiError *core.APIError) error {
-			return &management.ConflictError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response []*management.UserIdentity
 	raw, err := r.caller.Call(
 		ctx,
@@ -93,7 +65,7 @@ func (r *RawClient) Link(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -113,7 +85,7 @@ func (r *RawClient) Delete(
 	// Identity provider name of the secondary linked account (e.g. `google-oauth2`).
 	provider *management.UserIdentityProviderEnum,
 	// ID of the secondary linked account (e.g. `123456789081523216417` part after the `|` in `google-oauth2|123456789081523216417`).
-	userID string,
+	userId string,
 	opts ...option.RequestOption,
 ) (*core.Response[management.DeleteUserIdentityResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -126,34 +98,12 @@ func (r *RawClient) Delete(
 		baseURL+"/users/%v/identities/%v/%v",
 		id,
 		provider,
-		userID,
+		userId,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response management.DeleteUserIdentityResponseContent
 	raw, err := r.caller.Call(
 		ctx,
@@ -166,7 +116,7 @@ func (r *RawClient) Delete(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

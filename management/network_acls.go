@@ -6,106 +6,149 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type CreateNetworkACLRequestContent struct {
-	Description string `json:"description" url:"-"`
-	// Indicates whether or not this access control list is actively being used
-	Active bool `json:"active" url:"-"`
-	// Indicates the order in which the ACL will be evaluated relative to other ACL rules.
-	Priority float64         `json:"priority" url:"-"`
-	Rule     *NetworkACLRule `json:"rule,omitempty" url:"-"`
-}
+var (
+	getNetworkAclsResponseContentFieldId          = big.NewInt(1 << 0)
+	getNetworkAclsResponseContentFieldDescription = big.NewInt(1 << 1)
+	getNetworkAclsResponseContentFieldActive      = big.NewInt(1 << 2)
+	getNetworkAclsResponseContentFieldPriority    = big.NewInt(1 << 3)
+	getNetworkAclsResponseContentFieldRule        = big.NewInt(1 << 4)
+	getNetworkAclsResponseContentFieldCreatedAt   = big.NewInt(1 << 5)
+	getNetworkAclsResponseContentFieldUpdatedAt   = big.NewInt(1 << 6)
+)
 
-type ListNetworkACLsRequestParameters struct {
-	// Use this field to request a specific page of the list results.
-	Page *int `json:"-" url:"page,omitempty"`
-	// The amount of results per page.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-}
-
-type SetNetworkACLRequestContent struct {
-	Description string `json:"description" url:"-"`
-	// Indicates whether or not this access control list is actively being used
-	Active bool `json:"active" url:"-"`
-	// Indicates the order in which the ACL will be evaluated relative to other ACL rules.
-	Priority float64         `json:"priority" url:"-"`
-	Rule     *NetworkACLRule `json:"rule,omitempty" url:"-"`
-}
-
-type GetNetworkACLsResponseContent struct {
-	ID          *string         `json:"id,omitempty" url:"id,omitempty"`
+type GetNetworkAclsResponseContent struct {
+	Id          *string         `json:"id,omitempty" url:"id,omitempty"`
 	Description *string         `json:"description,omitempty" url:"description,omitempty"`
 	Active      *bool           `json:"active,omitempty" url:"active,omitempty"`
 	Priority    *float64        `json:"priority,omitempty" url:"priority,omitempty"`
-	Rule        *NetworkACLRule `json:"rule,omitempty" url:"rule,omitempty"`
+	Rule        *NetworkAclRule `json:"rule,omitempty" url:"rule,omitempty"`
 	// The timestamp when the Network ACL Configuration was created
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The timestamp when the Network ACL Configuration was last updated
 	UpdatedAt *string `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (g *GetNetworkACLsResponseContent) GetID() *string {
-	if g == nil {
-		return nil
+func (g *GetNetworkAclsResponseContent) GetId() string {
+	if g == nil || g.Id == nil {
+		return ""
 	}
-	return g.ID
+	return *g.Id
 }
 
-func (g *GetNetworkACLsResponseContent) GetDescription() *string {
-	if g == nil {
-		return nil
+func (g *GetNetworkAclsResponseContent) GetDescription() string {
+	if g == nil || g.Description == nil {
+		return ""
 	}
-	return g.Description
+	return *g.Description
 }
 
-func (g *GetNetworkACLsResponseContent) GetActive() *bool {
-	if g == nil {
-		return nil
+func (g *GetNetworkAclsResponseContent) GetActive() bool {
+	if g == nil || g.Active == nil {
+		return false
 	}
-	return g.Active
+	return *g.Active
 }
 
-func (g *GetNetworkACLsResponseContent) GetPriority() *float64 {
-	if g == nil {
-		return nil
+func (g *GetNetworkAclsResponseContent) GetPriority() float64 {
+	if g == nil || g.Priority == nil {
+		return 0
 	}
-	return g.Priority
+	return *g.Priority
 }
 
-func (g *GetNetworkACLsResponseContent) GetRule() *NetworkACLRule {
-	if g == nil {
-		return nil
+func (g *GetNetworkAclsResponseContent) GetRule() NetworkAclRule {
+	if g == nil || g.Rule == nil {
+		return NetworkAclRule{}
 	}
-	return g.Rule
+	return *g.Rule
 }
 
-func (g *GetNetworkACLsResponseContent) GetCreatedAt() *string {
-	if g == nil {
-		return nil
+func (g *GetNetworkAclsResponseContent) GetCreatedAt() string {
+	if g == nil || g.CreatedAt == nil {
+		return ""
 	}
-	return g.CreatedAt
+	return *g.CreatedAt
 }
 
-func (g *GetNetworkACLsResponseContent) GetUpdatedAt() *string {
-	if g == nil {
-		return nil
+func (g *GetNetworkAclsResponseContent) GetUpdatedAt() string {
+	if g == nil || g.UpdatedAt == nil {
+		return ""
 	}
-	return g.UpdatedAt
+	return *g.UpdatedAt
 }
 
-func (g *GetNetworkACLsResponseContent) GetExtraProperties() map[string]interface{} {
+func (g *GetNetworkAclsResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.ExtraProperties
 }
 
-func (g *GetNetworkACLsResponseContent) UnmarshalJSON(data []byte) error {
-	type embed GetNetworkACLsResponseContent
+func (g *GetNetworkAclsResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetNetworkAclsResponseContent) SetId(id *string) {
+	g.Id = id
+	g.require(getNetworkAclsResponseContentFieldId)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetNetworkAclsResponseContent) SetDescription(description *string) {
+	g.Description = description
+	g.require(getNetworkAclsResponseContentFieldDescription)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetNetworkAclsResponseContent) SetActive(active *bool) {
+	g.Active = active
+	g.require(getNetworkAclsResponseContentFieldActive)
+}
+
+// SetPriority sets the Priority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetNetworkAclsResponseContent) SetPriority(priority *float64) {
+	g.Priority = priority
+	g.require(getNetworkAclsResponseContentFieldPriority)
+}
+
+// SetRule sets the Rule field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetNetworkAclsResponseContent) SetRule(rule *NetworkAclRule) {
+	g.Rule = rule
+	g.require(getNetworkAclsResponseContentFieldRule)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetNetworkAclsResponseContent) SetCreatedAt(createdAt *string) {
+	g.CreatedAt = createdAt
+	g.require(getNetworkAclsResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetNetworkAclsResponseContent) SetUpdatedAt(updatedAt *string) {
+	g.UpdatedAt = updatedAt
+	g.require(getNetworkAclsResponseContentFieldUpdatedAt)
+}
+
+func (g *GetNetworkAclsResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetNetworkAclsResponseContent
 	var unmarshaler = struct {
 		embed
 	}{
@@ -114,7 +157,7 @@ func (g *GetNetworkACLsResponseContent) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*g = GetNetworkACLsResponseContent(unmarshaler.embed)
+	*g = GetNetworkAclsResponseContent(unmarshaler.embed)
 	extraProperties, err := internal.ExtractExtraProperties(data, *g)
 	if err != nil {
 		return err
@@ -124,17 +167,18 @@ func (g *GetNetworkACLsResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (g *GetNetworkACLsResponseContent) MarshalJSON() ([]byte, error) {
-	type embed GetNetworkACLsResponseContent
+func (g *GetNetworkAclsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetNetworkAclsResponseContent
 	var marshaler = struct {
 		embed
 	}{
 		embed: embed(*g),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, g.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
-func (g *GetNetworkACLsResponseContent) String() string {
+func (g *GetNetworkAclsResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -146,55 +190,100 @@ func (g *GetNetworkACLsResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
-type ListNetworkACLsOffsetPaginatedResponseContent struct {
-	NetworkACLs []*NetworkACLsResponseContent `json:"network_acls,omitempty" url:"network_acls,omitempty"`
+var (
+	listNetworkAclsOffsetPaginatedResponseContentFieldNetworkAcls = big.NewInt(1 << 0)
+	listNetworkAclsOffsetPaginatedResponseContentFieldStart       = big.NewInt(1 << 1)
+	listNetworkAclsOffsetPaginatedResponseContentFieldLimit       = big.NewInt(1 << 2)
+	listNetworkAclsOffsetPaginatedResponseContentFieldTotal       = big.NewInt(1 << 3)
+)
+
+type ListNetworkAclsOffsetPaginatedResponseContent struct {
+	NetworkAcls []*NetworkAclsResponseContent `json:"network_acls,omitempty" url:"network_acls,omitempty"`
 	Start       *float64                      `json:"start,omitempty" url:"start,omitempty"`
 	Limit       *float64                      `json:"limit,omitempty" url:"limit,omitempty"`
 	Total       *float64                      `json:"total,omitempty" url:"total,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListNetworkACLsOffsetPaginatedResponseContent) GetNetworkACLs() []*NetworkACLsResponseContent {
-	if l == nil {
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) GetNetworkAcls() []*NetworkAclsResponseContent {
+	if l == nil || l.NetworkAcls == nil {
 		return nil
 	}
-	return l.NetworkACLs
+	return l.NetworkAcls
 }
 
-func (l *ListNetworkACLsOffsetPaginatedResponseContent) GetStart() *float64 {
-	if l == nil {
-		return nil
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
 	}
-	return l.Start
+	return *l.Start
 }
 
-func (l *ListNetworkACLsOffsetPaginatedResponseContent) GetLimit() *float64 {
-	if l == nil {
-		return nil
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
 	}
-	return l.Limit
+	return *l.Limit
 }
 
-func (l *ListNetworkACLsOffsetPaginatedResponseContent) GetTotal() *float64 {
-	if l == nil {
-		return nil
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
 	}
-	return l.Total
+	return *l.Total
 }
 
-func (l *ListNetworkACLsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
 }
 
-func (l *ListNetworkACLsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler ListNetworkACLsOffsetPaginatedResponseContent
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNetworkAcls sets the NetworkAcls field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) SetNetworkAcls(networkAcls []*NetworkAclsResponseContent) {
+	l.NetworkAcls = networkAcls
+	l.require(listNetworkAclsOffsetPaginatedResponseContentFieldNetworkAcls)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listNetworkAclsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listNetworkAclsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listNetworkAclsOffsetPaginatedResponseContentFieldTotal)
+}
+
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListNetworkAclsOffsetPaginatedResponseContent
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*l = ListNetworkACLsOffsetPaginatedResponseContent(value)
+	*l = ListNetworkAclsOffsetPaginatedResponseContent(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
@@ -204,7 +293,18 @@ func (l *ListNetworkACLsOffsetPaginatedResponseContent) UnmarshalJSON(data []byt
 	return nil
 }
 
-func (l *ListNetworkACLsOffsetPaginatedResponseContent) String() string {
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListNetworkAclsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListNetworkAclsOffsetPaginatedResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -216,64 +316,117 @@ func (l *ListNetworkACLsOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
-type NetworkACLAction struct {
-	Block    *NetworkACLActionBlockEnum    `json:"block,omitempty" url:"block,omitempty"`
-	Allow    *NetworkACLActionAllowEnum    `json:"allow,omitempty" url:"allow,omitempty"`
-	Log      *NetworkACLActionLogEnum      `json:"log,omitempty" url:"log,omitempty"`
-	Redirect *NetworkACLActionRedirectEnum `json:"redirect,omitempty" url:"redirect,omitempty"`
+var (
+	networkAclActionFieldBlock       = big.NewInt(1 << 0)
+	networkAclActionFieldAllow       = big.NewInt(1 << 1)
+	networkAclActionFieldLog         = big.NewInt(1 << 2)
+	networkAclActionFieldRedirect    = big.NewInt(1 << 3)
+	networkAclActionFieldRedirectUri = big.NewInt(1 << 4)
+)
+
+type NetworkAclAction struct {
+	Block    *NetworkAclActionBlockEnum    `json:"block,omitempty" url:"block,omitempty"`
+	Allow    *NetworkAclActionAllowEnum    `json:"allow,omitempty" url:"allow,omitempty"`
+	Log      *NetworkAclActionLogEnum      `json:"log,omitempty" url:"log,omitempty"`
+	Redirect *NetworkAclActionRedirectEnum `json:"redirect,omitempty" url:"redirect,omitempty"`
 	// The URI to which the match or not_match requests will be routed
-	RedirectURI *string `json:"redirect_uri,omitempty" url:"redirect_uri,omitempty"`
+	RedirectUri *string `json:"redirect_uri,omitempty" url:"redirect_uri,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (n *NetworkACLAction) GetBlock() *NetworkACLActionBlockEnum {
-	if n == nil {
-		return nil
+func (n *NetworkAclAction) GetBlock() NetworkAclActionBlockEnum {
+	if n == nil || n.Block == nil {
+		return false
 	}
-	return n.Block
+	return *n.Block
 }
 
-func (n *NetworkACLAction) GetAllow() *NetworkACLActionAllowEnum {
-	if n == nil {
-		return nil
+func (n *NetworkAclAction) GetAllow() NetworkAclActionAllowEnum {
+	if n == nil || n.Allow == nil {
+		return false
 	}
-	return n.Allow
+	return *n.Allow
 }
 
-func (n *NetworkACLAction) GetLog() *NetworkACLActionLogEnum {
-	if n == nil {
-		return nil
+func (n *NetworkAclAction) GetLog() NetworkAclActionLogEnum {
+	if n == nil || n.Log == nil {
+		return false
 	}
-	return n.Log
+	return *n.Log
 }
 
-func (n *NetworkACLAction) GetRedirect() *NetworkACLActionRedirectEnum {
-	if n == nil {
-		return nil
+func (n *NetworkAclAction) GetRedirect() NetworkAclActionRedirectEnum {
+	if n == nil || n.Redirect == nil {
+		return false
 	}
-	return n.Redirect
+	return *n.Redirect
 }
 
-func (n *NetworkACLAction) GetRedirectURI() *string {
-	if n == nil {
-		return nil
+func (n *NetworkAclAction) GetRedirectUri() string {
+	if n == nil || n.RedirectUri == nil {
+		return ""
 	}
-	return n.RedirectURI
+	return *n.RedirectUri
 }
 
-func (n *NetworkACLAction) GetExtraProperties() map[string]interface{} {
+func (n *NetworkAclAction) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
-func (n *NetworkACLAction) UnmarshalJSON(data []byte) error {
-	type unmarshaler NetworkACLAction
+func (n *NetworkAclAction) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetBlock sets the Block field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclAction) SetBlock(block *NetworkAclActionBlockEnum) {
+	n.Block = block
+	n.require(networkAclActionFieldBlock)
+}
+
+// SetAllow sets the Allow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclAction) SetAllow(allow *NetworkAclActionAllowEnum) {
+	n.Allow = allow
+	n.require(networkAclActionFieldAllow)
+}
+
+// SetLog sets the Log field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclAction) SetLog(log *NetworkAclActionLogEnum) {
+	n.Log = log
+	n.require(networkAclActionFieldLog)
+}
+
+// SetRedirect sets the Redirect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclAction) SetRedirect(redirect *NetworkAclActionRedirectEnum) {
+	n.Redirect = redirect
+	n.require(networkAclActionFieldRedirect)
+}
+
+// SetRedirectUri sets the RedirectUri field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclAction) SetRedirectUri(redirectUri *string) {
+	n.RedirectUri = redirectUri
+	n.require(networkAclActionFieldRedirectUri)
+}
+
+func (n *NetworkAclAction) UnmarshalJSON(data []byte) error {
+	type unmarshaler NetworkAclAction
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*n = NetworkACLAction(value)
+	*n = NetworkAclAction(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
@@ -283,7 +436,18 @@ func (n *NetworkACLAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (n *NetworkACLAction) String() string {
+func (n *NetworkAclAction) MarshalJSON() ([]byte, error) {
+	type embed NetworkAclAction
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NetworkAclAction) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -296,98 +460,175 @@ func (n *NetworkACLAction) String() string {
 }
 
 // Indicates the rule will allow requests that either match or not_match specific criteria
-type NetworkACLActionAllowEnum = bool
+type NetworkAclActionAllowEnum = bool
 
 // Indicates the rule will block requests that either match or not_match specific criteria
-type NetworkACLActionBlockEnum = bool
+type NetworkAclActionBlockEnum = bool
 
 // Indicates the rule will log requests that either match or not_match specific criteria
-type NetworkACLActionLogEnum = bool
+type NetworkAclActionLogEnum = bool
 
 // Indicates the rule will redirect requests that either match or not_match specific criteria
-type NetworkACLActionRedirectEnum = bool
+type NetworkAclActionRedirectEnum = bool
 
-type NetworkACLMatch struct {
+var (
+	networkAclMatchFieldAsns                = big.NewInt(1 << 0)
+	networkAclMatchFieldGeoCountryCodes     = big.NewInt(1 << 1)
+	networkAclMatchFieldGeoSubdivisionCodes = big.NewInt(1 << 2)
+	networkAclMatchFieldIpv4Cidrs           = big.NewInt(1 << 3)
+	networkAclMatchFieldIpv6Cidrs           = big.NewInt(1 << 4)
+	networkAclMatchFieldJa3Fingerprints     = big.NewInt(1 << 5)
+	networkAclMatchFieldJa4Fingerprints     = big.NewInt(1 << 6)
+	networkAclMatchFieldUserAgents          = big.NewInt(1 << 7)
+)
+
+type NetworkAclMatch struct {
 	Asns                []int                     `json:"asns,omitempty" url:"asns,omitempty"`
 	GeoCountryCodes     []string                  `json:"geo_country_codes,omitempty" url:"geo_country_codes,omitempty"`
 	GeoSubdivisionCodes []string                  `json:"geo_subdivision_codes,omitempty" url:"geo_subdivision_codes,omitempty"`
-	Ipv4Cidrs           []NetworkACLMatchIpv4Cidr `json:"ipv4_cidrs,omitempty" url:"ipv4_cidrs,omitempty"`
-	Ipv6Cidrs           []NetworkACLMatchIpv6Cidr `json:"ipv6_cidrs,omitempty" url:"ipv6_cidrs,omitempty"`
+	Ipv4Cidrs           []NetworkAclMatchIpv4Cidr `json:"ipv4_cidrs,omitempty" url:"ipv4_cidrs,omitempty"`
+	Ipv6Cidrs           []NetworkAclMatchIpv6Cidr `json:"ipv6_cidrs,omitempty" url:"ipv6_cidrs,omitempty"`
 	Ja3Fingerprints     []string                  `json:"ja3_fingerprints,omitempty" url:"ja3_fingerprints,omitempty"`
 	Ja4Fingerprints     []string                  `json:"ja4_fingerprints,omitempty" url:"ja4_fingerprints,omitempty"`
 	UserAgents          []string                  `json:"user_agents,omitempty" url:"user_agents,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (n *NetworkACLMatch) GetAsns() []int {
-	if n == nil {
+func (n *NetworkAclMatch) GetAsns() []int {
+	if n == nil || n.Asns == nil {
 		return nil
 	}
 	return n.Asns
 }
 
-func (n *NetworkACLMatch) GetGeoCountryCodes() []string {
-	if n == nil {
+func (n *NetworkAclMatch) GetGeoCountryCodes() []string {
+	if n == nil || n.GeoCountryCodes == nil {
 		return nil
 	}
 	return n.GeoCountryCodes
 }
 
-func (n *NetworkACLMatch) GetGeoSubdivisionCodes() []string {
-	if n == nil {
+func (n *NetworkAclMatch) GetGeoSubdivisionCodes() []string {
+	if n == nil || n.GeoSubdivisionCodes == nil {
 		return nil
 	}
 	return n.GeoSubdivisionCodes
 }
 
-func (n *NetworkACLMatch) GetIpv4Cidrs() []NetworkACLMatchIpv4Cidr {
-	if n == nil {
+func (n *NetworkAclMatch) GetIpv4Cidrs() []NetworkAclMatchIpv4Cidr {
+	if n == nil || n.Ipv4Cidrs == nil {
 		return nil
 	}
 	return n.Ipv4Cidrs
 }
 
-func (n *NetworkACLMatch) GetIpv6Cidrs() []NetworkACLMatchIpv6Cidr {
-	if n == nil {
+func (n *NetworkAclMatch) GetIpv6Cidrs() []NetworkAclMatchIpv6Cidr {
+	if n == nil || n.Ipv6Cidrs == nil {
 		return nil
 	}
 	return n.Ipv6Cidrs
 }
 
-func (n *NetworkACLMatch) GetJa3Fingerprints() []string {
-	if n == nil {
+func (n *NetworkAclMatch) GetJa3Fingerprints() []string {
+	if n == nil || n.Ja3Fingerprints == nil {
 		return nil
 	}
 	return n.Ja3Fingerprints
 }
 
-func (n *NetworkACLMatch) GetJa4Fingerprints() []string {
-	if n == nil {
+func (n *NetworkAclMatch) GetJa4Fingerprints() []string {
+	if n == nil || n.Ja4Fingerprints == nil {
 		return nil
 	}
 	return n.Ja4Fingerprints
 }
 
-func (n *NetworkACLMatch) GetUserAgents() []string {
-	if n == nil {
+func (n *NetworkAclMatch) GetUserAgents() []string {
+	if n == nil || n.UserAgents == nil {
 		return nil
 	}
 	return n.UserAgents
 }
 
-func (n *NetworkACLMatch) GetExtraProperties() map[string]interface{} {
+func (n *NetworkAclMatch) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
-func (n *NetworkACLMatch) UnmarshalJSON(data []byte) error {
-	type unmarshaler NetworkACLMatch
+func (n *NetworkAclMatch) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetAsns sets the Asns field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclMatch) SetAsns(asns []int) {
+	n.Asns = asns
+	n.require(networkAclMatchFieldAsns)
+}
+
+// SetGeoCountryCodes sets the GeoCountryCodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclMatch) SetGeoCountryCodes(geoCountryCodes []string) {
+	n.GeoCountryCodes = geoCountryCodes
+	n.require(networkAclMatchFieldGeoCountryCodes)
+}
+
+// SetGeoSubdivisionCodes sets the GeoSubdivisionCodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclMatch) SetGeoSubdivisionCodes(geoSubdivisionCodes []string) {
+	n.GeoSubdivisionCodes = geoSubdivisionCodes
+	n.require(networkAclMatchFieldGeoSubdivisionCodes)
+}
+
+// SetIpv4Cidrs sets the Ipv4Cidrs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclMatch) SetIpv4Cidrs(ipv4Cidrs []NetworkAclMatchIpv4Cidr) {
+	n.Ipv4Cidrs = ipv4Cidrs
+	n.require(networkAclMatchFieldIpv4Cidrs)
+}
+
+// SetIpv6Cidrs sets the Ipv6Cidrs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclMatch) SetIpv6Cidrs(ipv6Cidrs []NetworkAclMatchIpv6Cidr) {
+	n.Ipv6Cidrs = ipv6Cidrs
+	n.require(networkAclMatchFieldIpv6Cidrs)
+}
+
+// SetJa3Fingerprints sets the Ja3Fingerprints field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclMatch) SetJa3Fingerprints(ja3Fingerprints []string) {
+	n.Ja3Fingerprints = ja3Fingerprints
+	n.require(networkAclMatchFieldJa3Fingerprints)
+}
+
+// SetJa4Fingerprints sets the Ja4Fingerprints field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclMatch) SetJa4Fingerprints(ja4Fingerprints []string) {
+	n.Ja4Fingerprints = ja4Fingerprints
+	n.require(networkAclMatchFieldJa4Fingerprints)
+}
+
+// SetUserAgents sets the UserAgents field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclMatch) SetUserAgents(userAgents []string) {
+	n.UserAgents = userAgents
+	n.require(networkAclMatchFieldUserAgents)
+}
+
+func (n *NetworkAclMatch) UnmarshalJSON(data []byte) error {
+	type unmarshaler NetworkAclMatch
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*n = NetworkACLMatch(value)
+	*n = NetworkAclMatch(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
@@ -397,7 +638,18 @@ func (n *NetworkACLMatch) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (n *NetworkACLMatch) String() string {
+func (n *NetworkAclMatch) MarshalJSON() ([]byte, error) {
+	type embed NetworkAclMatch
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NetworkAclMatch) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -409,59 +661,104 @@ func (n *NetworkACLMatch) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-type NetworkACLMatchIpv4Cidr = string
+type NetworkAclMatchIpv4Cidr = string
 
-type NetworkACLMatchIpv6Cidr = string
+type NetworkAclMatchIpv6Cidr = string
 
-type NetworkACLRule struct {
-	Action   *NetworkACLAction       `json:"action" url:"action"`
-	Match    *NetworkACLMatch        `json:"match,omitempty" url:"match,omitempty"`
-	NotMatch *NetworkACLMatch        `json:"not_match,omitempty" url:"not_match,omitempty"`
-	Scope    NetworkACLRuleScopeEnum `json:"scope" url:"scope"`
+var (
+	networkAclRuleFieldAction   = big.NewInt(1 << 0)
+	networkAclRuleFieldMatch    = big.NewInt(1 << 1)
+	networkAclRuleFieldNotMatch = big.NewInt(1 << 2)
+	networkAclRuleFieldScope    = big.NewInt(1 << 3)
+)
+
+type NetworkAclRule struct {
+	Action   *NetworkAclAction       `json:"action" url:"action"`
+	Match    *NetworkAclMatch        `json:"match,omitempty" url:"match,omitempty"`
+	NotMatch *NetworkAclMatch        `json:"not_match,omitempty" url:"not_match,omitempty"`
+	Scope    NetworkAclRuleScopeEnum `json:"scope" url:"scope"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (n *NetworkACLRule) GetAction() *NetworkACLAction {
+func (n *NetworkAclRule) GetAction() *NetworkAclAction {
 	if n == nil {
 		return nil
 	}
 	return n.Action
 }
 
-func (n *NetworkACLRule) GetMatch() *NetworkACLMatch {
-	if n == nil {
-		return nil
+func (n *NetworkAclRule) GetMatch() NetworkAclMatch {
+	if n == nil || n.Match == nil {
+		return NetworkAclMatch{}
 	}
-	return n.Match
+	return *n.Match
 }
 
-func (n *NetworkACLRule) GetNotMatch() *NetworkACLMatch {
-	if n == nil {
-		return nil
+func (n *NetworkAclRule) GetNotMatch() NetworkAclMatch {
+	if n == nil || n.NotMatch == nil {
+		return NetworkAclMatch{}
 	}
-	return n.NotMatch
+	return *n.NotMatch
 }
 
-func (n *NetworkACLRule) GetScope() NetworkACLRuleScopeEnum {
+func (n *NetworkAclRule) GetScope() NetworkAclRuleScopeEnum {
 	if n == nil {
 		return ""
 	}
 	return n.Scope
 }
 
-func (n *NetworkACLRule) GetExtraProperties() map[string]interface{} {
+func (n *NetworkAclRule) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
-func (n *NetworkACLRule) UnmarshalJSON(data []byte) error {
-	type unmarshaler NetworkACLRule
+func (n *NetworkAclRule) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetAction sets the Action field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclRule) SetAction(action *NetworkAclAction) {
+	n.Action = action
+	n.require(networkAclRuleFieldAction)
+}
+
+// SetMatch sets the Match field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclRule) SetMatch(match *NetworkAclMatch) {
+	n.Match = match
+	n.require(networkAclRuleFieldMatch)
+}
+
+// SetNotMatch sets the NotMatch field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclRule) SetNotMatch(notMatch *NetworkAclMatch) {
+	n.NotMatch = notMatch
+	n.require(networkAclRuleFieldNotMatch)
+}
+
+// SetScope sets the Scope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclRule) SetScope(scope NetworkAclRuleScopeEnum) {
+	n.Scope = scope
+	n.require(networkAclRuleFieldScope)
+}
+
+func (n *NetworkAclRule) UnmarshalJSON(data []byte) error {
+	type unmarshaler NetworkAclRule
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*n = NetworkACLRule(value)
+	*n = NetworkAclRule(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
@@ -471,7 +768,18 @@ func (n *NetworkACLRule) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (n *NetworkACLRule) String() string {
+func (n *NetworkAclRule) MarshalJSON() ([]byte, error) {
+	type embed NetworkAclRule
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NetworkAclRule) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -484,102 +792,171 @@ func (n *NetworkACLRule) String() string {
 }
 
 // Identifies the origin of the request as the Management API (management), Authentication API (authentication), or either (tenant)
-type NetworkACLRuleScopeEnum string
+type NetworkAclRuleScopeEnum string
 
 const (
-	NetworkACLRuleScopeEnumManagement     NetworkACLRuleScopeEnum = "management"
-	NetworkACLRuleScopeEnumAuthentication NetworkACLRuleScopeEnum = "authentication"
-	NetworkACLRuleScopeEnumTenant         NetworkACLRuleScopeEnum = "tenant"
+	NetworkAclRuleScopeEnumManagement     NetworkAclRuleScopeEnum = "management"
+	NetworkAclRuleScopeEnumAuthentication NetworkAclRuleScopeEnum = "authentication"
+	NetworkAclRuleScopeEnumTenant         NetworkAclRuleScopeEnum = "tenant"
 )
 
-func NewNetworkACLRuleScopeEnumFromString(s string) (NetworkACLRuleScopeEnum, error) {
+func NewNetworkAclRuleScopeEnumFromString(s string) (NetworkAclRuleScopeEnum, error) {
 	switch s {
 	case "management":
-		return NetworkACLRuleScopeEnumManagement, nil
+		return NetworkAclRuleScopeEnumManagement, nil
 	case "authentication":
-		return NetworkACLRuleScopeEnumAuthentication, nil
+		return NetworkAclRuleScopeEnumAuthentication, nil
 	case "tenant":
-		return NetworkACLRuleScopeEnumTenant, nil
+		return NetworkAclRuleScopeEnumTenant, nil
 	}
-	var t NetworkACLRuleScopeEnum
+	var t NetworkAclRuleScopeEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (n NetworkACLRuleScopeEnum) Ptr() *NetworkACLRuleScopeEnum {
+func (n NetworkAclRuleScopeEnum) Ptr() *NetworkAclRuleScopeEnum {
 	return &n
 }
 
-type NetworkACLsResponseContent struct {
-	ID          *string         `json:"id,omitempty" url:"id,omitempty"`
+var (
+	networkAclsResponseContentFieldId          = big.NewInt(1 << 0)
+	networkAclsResponseContentFieldDescription = big.NewInt(1 << 1)
+	networkAclsResponseContentFieldActive      = big.NewInt(1 << 2)
+	networkAclsResponseContentFieldPriority    = big.NewInt(1 << 3)
+	networkAclsResponseContentFieldRule        = big.NewInt(1 << 4)
+	networkAclsResponseContentFieldCreatedAt   = big.NewInt(1 << 5)
+	networkAclsResponseContentFieldUpdatedAt   = big.NewInt(1 << 6)
+)
+
+type NetworkAclsResponseContent struct {
+	Id          *string         `json:"id,omitempty" url:"id,omitempty"`
 	Description *string         `json:"description,omitempty" url:"description,omitempty"`
 	Active      *bool           `json:"active,omitempty" url:"active,omitempty"`
 	Priority    *float64        `json:"priority,omitempty" url:"priority,omitempty"`
-	Rule        *NetworkACLRule `json:"rule,omitempty" url:"rule,omitempty"`
+	Rule        *NetworkAclRule `json:"rule,omitempty" url:"rule,omitempty"`
 	// The timestamp when the Network ACL Configuration was created
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The timestamp when the Network ACL Configuration was last updated
 	UpdatedAt *string `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (n *NetworkACLsResponseContent) GetID() *string {
-	if n == nil {
-		return nil
+func (n *NetworkAclsResponseContent) GetId() string {
+	if n == nil || n.Id == nil {
+		return ""
 	}
-	return n.ID
+	return *n.Id
 }
 
-func (n *NetworkACLsResponseContent) GetDescription() *string {
-	if n == nil {
-		return nil
+func (n *NetworkAclsResponseContent) GetDescription() string {
+	if n == nil || n.Description == nil {
+		return ""
 	}
-	return n.Description
+	return *n.Description
 }
 
-func (n *NetworkACLsResponseContent) GetActive() *bool {
-	if n == nil {
-		return nil
+func (n *NetworkAclsResponseContent) GetActive() bool {
+	if n == nil || n.Active == nil {
+		return false
 	}
-	return n.Active
+	return *n.Active
 }
 
-func (n *NetworkACLsResponseContent) GetPriority() *float64 {
-	if n == nil {
-		return nil
+func (n *NetworkAclsResponseContent) GetPriority() float64 {
+	if n == nil || n.Priority == nil {
+		return 0
 	}
-	return n.Priority
+	return *n.Priority
 }
 
-func (n *NetworkACLsResponseContent) GetRule() *NetworkACLRule {
-	if n == nil {
-		return nil
+func (n *NetworkAclsResponseContent) GetRule() NetworkAclRule {
+	if n == nil || n.Rule == nil {
+		return NetworkAclRule{}
 	}
-	return n.Rule
+	return *n.Rule
 }
 
-func (n *NetworkACLsResponseContent) GetCreatedAt() *string {
-	if n == nil {
-		return nil
+func (n *NetworkAclsResponseContent) GetCreatedAt() string {
+	if n == nil || n.CreatedAt == nil {
+		return ""
 	}
-	return n.CreatedAt
+	return *n.CreatedAt
 }
 
-func (n *NetworkACLsResponseContent) GetUpdatedAt() *string {
-	if n == nil {
-		return nil
+func (n *NetworkAclsResponseContent) GetUpdatedAt() string {
+	if n == nil || n.UpdatedAt == nil {
+		return ""
 	}
-	return n.UpdatedAt
+	return *n.UpdatedAt
 }
 
-func (n *NetworkACLsResponseContent) GetExtraProperties() map[string]interface{} {
+func (n *NetworkAclsResponseContent) GetExtraProperties() map[string]interface{} {
 	return n.ExtraProperties
 }
 
-func (n *NetworkACLsResponseContent) UnmarshalJSON(data []byte) error {
-	type embed NetworkACLsResponseContent
+func (n *NetworkAclsResponseContent) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclsResponseContent) SetId(id *string) {
+	n.Id = id
+	n.require(networkAclsResponseContentFieldId)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclsResponseContent) SetDescription(description *string) {
+	n.Description = description
+	n.require(networkAclsResponseContentFieldDescription)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclsResponseContent) SetActive(active *bool) {
+	n.Active = active
+	n.require(networkAclsResponseContentFieldActive)
+}
+
+// SetPriority sets the Priority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclsResponseContent) SetPriority(priority *float64) {
+	n.Priority = priority
+	n.require(networkAclsResponseContentFieldPriority)
+}
+
+// SetRule sets the Rule field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclsResponseContent) SetRule(rule *NetworkAclRule) {
+	n.Rule = rule
+	n.require(networkAclsResponseContentFieldRule)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclsResponseContent) SetCreatedAt(createdAt *string) {
+	n.CreatedAt = createdAt
+	n.require(networkAclsResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclsResponseContent) SetUpdatedAt(updatedAt *string) {
+	n.UpdatedAt = updatedAt
+	n.require(networkAclsResponseContentFieldUpdatedAt)
+}
+
+func (n *NetworkAclsResponseContent) UnmarshalJSON(data []byte) error {
+	type embed NetworkAclsResponseContent
 	var unmarshaler = struct {
 		embed
 	}{
@@ -588,7 +965,7 @@ func (n *NetworkACLsResponseContent) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*n = NetworkACLsResponseContent(unmarshaler.embed)
+	*n = NetworkAclsResponseContent(unmarshaler.embed)
 	extraProperties, err := internal.ExtractExtraProperties(data, *n)
 	if err != nil {
 		return err
@@ -598,17 +975,18 @@ func (n *NetworkACLsResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (n *NetworkACLsResponseContent) MarshalJSON() ([]byte, error) {
-	type embed NetworkACLsResponseContent
+func (n *NetworkAclsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed NetworkAclsResponseContent
 	var marshaler = struct {
 		embed
 	}{
 		embed: embed(*n),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, n.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, n.ExtraProperties)
 }
 
-func (n *NetworkACLsResponseContent) String() string {
+func (n *NetworkAclsResponseContent) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -620,77 +998,146 @@ func (n *NetworkACLsResponseContent) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-type SetNetworkACLsResponseContent struct {
-	ID          *string         `json:"id,omitempty" url:"id,omitempty"`
+var (
+	setNetworkAclsResponseContentFieldId          = big.NewInt(1 << 0)
+	setNetworkAclsResponseContentFieldDescription = big.NewInt(1 << 1)
+	setNetworkAclsResponseContentFieldActive      = big.NewInt(1 << 2)
+	setNetworkAclsResponseContentFieldPriority    = big.NewInt(1 << 3)
+	setNetworkAclsResponseContentFieldRule        = big.NewInt(1 << 4)
+	setNetworkAclsResponseContentFieldCreatedAt   = big.NewInt(1 << 5)
+	setNetworkAclsResponseContentFieldUpdatedAt   = big.NewInt(1 << 6)
+)
+
+type SetNetworkAclsResponseContent struct {
+	Id          *string         `json:"id,omitempty" url:"id,omitempty"`
 	Description *string         `json:"description,omitempty" url:"description,omitempty"`
 	Active      *bool           `json:"active,omitempty" url:"active,omitempty"`
 	Priority    *float64        `json:"priority,omitempty" url:"priority,omitempty"`
-	Rule        *NetworkACLRule `json:"rule,omitempty" url:"rule,omitempty"`
+	Rule        *NetworkAclRule `json:"rule,omitempty" url:"rule,omitempty"`
 	// The timestamp when the Network ACL Configuration was created
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The timestamp when the Network ACL Configuration was last updated
 	UpdatedAt *string `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (s *SetNetworkACLsResponseContent) GetID() *string {
-	if s == nil {
-		return nil
+func (s *SetNetworkAclsResponseContent) GetId() string {
+	if s == nil || s.Id == nil {
+		return ""
 	}
-	return s.ID
+	return *s.Id
 }
 
-func (s *SetNetworkACLsResponseContent) GetDescription() *string {
-	if s == nil {
-		return nil
+func (s *SetNetworkAclsResponseContent) GetDescription() string {
+	if s == nil || s.Description == nil {
+		return ""
 	}
-	return s.Description
+	return *s.Description
 }
 
-func (s *SetNetworkACLsResponseContent) GetActive() *bool {
-	if s == nil {
-		return nil
+func (s *SetNetworkAclsResponseContent) GetActive() bool {
+	if s == nil || s.Active == nil {
+		return false
 	}
-	return s.Active
+	return *s.Active
 }
 
-func (s *SetNetworkACLsResponseContent) GetPriority() *float64 {
-	if s == nil {
-		return nil
+func (s *SetNetworkAclsResponseContent) GetPriority() float64 {
+	if s == nil || s.Priority == nil {
+		return 0
 	}
-	return s.Priority
+	return *s.Priority
 }
 
-func (s *SetNetworkACLsResponseContent) GetRule() *NetworkACLRule {
-	if s == nil {
-		return nil
+func (s *SetNetworkAclsResponseContent) GetRule() NetworkAclRule {
+	if s == nil || s.Rule == nil {
+		return NetworkAclRule{}
 	}
-	return s.Rule
+	return *s.Rule
 }
 
-func (s *SetNetworkACLsResponseContent) GetCreatedAt() *string {
-	if s == nil {
-		return nil
+func (s *SetNetworkAclsResponseContent) GetCreatedAt() string {
+	if s == nil || s.CreatedAt == nil {
+		return ""
 	}
-	return s.CreatedAt
+	return *s.CreatedAt
 }
 
-func (s *SetNetworkACLsResponseContent) GetUpdatedAt() *string {
-	if s == nil {
-		return nil
+func (s *SetNetworkAclsResponseContent) GetUpdatedAt() string {
+	if s == nil || s.UpdatedAt == nil {
+		return ""
 	}
-	return s.UpdatedAt
+	return *s.UpdatedAt
 }
 
-func (s *SetNetworkACLsResponseContent) GetExtraProperties() map[string]interface{} {
+func (s *SetNetworkAclsResponseContent) GetExtraProperties() map[string]interface{} {
 	return s.ExtraProperties
 }
 
-func (s *SetNetworkACLsResponseContent) UnmarshalJSON(data []byte) error {
-	type embed SetNetworkACLsResponseContent
+func (s *SetNetworkAclsResponseContent) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetNetworkAclsResponseContent) SetId(id *string) {
+	s.Id = id
+	s.require(setNetworkAclsResponseContentFieldId)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetNetworkAclsResponseContent) SetDescription(description *string) {
+	s.Description = description
+	s.require(setNetworkAclsResponseContentFieldDescription)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetNetworkAclsResponseContent) SetActive(active *bool) {
+	s.Active = active
+	s.require(setNetworkAclsResponseContentFieldActive)
+}
+
+// SetPriority sets the Priority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetNetworkAclsResponseContent) SetPriority(priority *float64) {
+	s.Priority = priority
+	s.require(setNetworkAclsResponseContentFieldPriority)
+}
+
+// SetRule sets the Rule field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetNetworkAclsResponseContent) SetRule(rule *NetworkAclRule) {
+	s.Rule = rule
+	s.require(setNetworkAclsResponseContentFieldRule)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetNetworkAclsResponseContent) SetCreatedAt(createdAt *string) {
+	s.CreatedAt = createdAt
+	s.require(setNetworkAclsResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetNetworkAclsResponseContent) SetUpdatedAt(updatedAt *string) {
+	s.UpdatedAt = updatedAt
+	s.require(setNetworkAclsResponseContentFieldUpdatedAt)
+}
+
+func (s *SetNetworkAclsResponseContent) UnmarshalJSON(data []byte) error {
+	type embed SetNetworkAclsResponseContent
 	var unmarshaler = struct {
 		embed
 	}{
@@ -699,7 +1146,7 @@ func (s *SetNetworkACLsResponseContent) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*s = SetNetworkACLsResponseContent(unmarshaler.embed)
+	*s = SetNetworkAclsResponseContent(unmarshaler.embed)
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
@@ -709,17 +1156,18 @@ func (s *SetNetworkACLsResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (s *SetNetworkACLsResponseContent) MarshalJSON() ([]byte, error) {
-	type embed SetNetworkACLsResponseContent
+func (s *SetNetworkAclsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed SetNetworkAclsResponseContent
 	var marshaler = struct {
 		embed
 	}{
 		embed: embed(*s),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, s.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, s.ExtraProperties)
 }
 
-func (s *SetNetworkACLsResponseContent) String() string {
+func (s *SetNetworkAclsResponseContent) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -731,77 +1179,146 @@ func (s *SetNetworkACLsResponseContent) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
-type UpdateNetworkACLResponseContent struct {
-	ID          *string         `json:"id,omitempty" url:"id,omitempty"`
+var (
+	updateNetworkAclResponseContentFieldId          = big.NewInt(1 << 0)
+	updateNetworkAclResponseContentFieldDescription = big.NewInt(1 << 1)
+	updateNetworkAclResponseContentFieldActive      = big.NewInt(1 << 2)
+	updateNetworkAclResponseContentFieldPriority    = big.NewInt(1 << 3)
+	updateNetworkAclResponseContentFieldRule        = big.NewInt(1 << 4)
+	updateNetworkAclResponseContentFieldCreatedAt   = big.NewInt(1 << 5)
+	updateNetworkAclResponseContentFieldUpdatedAt   = big.NewInt(1 << 6)
+)
+
+type UpdateNetworkAclResponseContent struct {
+	Id          *string         `json:"id,omitempty" url:"id,omitempty"`
 	Description *string         `json:"description,omitempty" url:"description,omitempty"`
 	Active      *bool           `json:"active,omitempty" url:"active,omitempty"`
 	Priority    *float64        `json:"priority,omitempty" url:"priority,omitempty"`
-	Rule        *NetworkACLRule `json:"rule,omitempty" url:"rule,omitempty"`
+	Rule        *NetworkAclRule `json:"rule,omitempty" url:"rule,omitempty"`
 	// The timestamp when the Network ACL Configuration was created
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The timestamp when the Network ACL Configuration was last updated
 	UpdatedAt *string `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (u *UpdateNetworkACLResponseContent) GetID() *string {
-	if u == nil {
-		return nil
+func (u *UpdateNetworkAclResponseContent) GetId() string {
+	if u == nil || u.Id == nil {
+		return ""
 	}
-	return u.ID
+	return *u.Id
 }
 
-func (u *UpdateNetworkACLResponseContent) GetDescription() *string {
-	if u == nil {
-		return nil
+func (u *UpdateNetworkAclResponseContent) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
 	}
-	return u.Description
+	return *u.Description
 }
 
-func (u *UpdateNetworkACLResponseContent) GetActive() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateNetworkAclResponseContent) GetActive() bool {
+	if u == nil || u.Active == nil {
+		return false
 	}
-	return u.Active
+	return *u.Active
 }
 
-func (u *UpdateNetworkACLResponseContent) GetPriority() *float64 {
-	if u == nil {
-		return nil
+func (u *UpdateNetworkAclResponseContent) GetPriority() float64 {
+	if u == nil || u.Priority == nil {
+		return 0
 	}
-	return u.Priority
+	return *u.Priority
 }
 
-func (u *UpdateNetworkACLResponseContent) GetRule() *NetworkACLRule {
-	if u == nil {
-		return nil
+func (u *UpdateNetworkAclResponseContent) GetRule() NetworkAclRule {
+	if u == nil || u.Rule == nil {
+		return NetworkAclRule{}
 	}
-	return u.Rule
+	return *u.Rule
 }
 
-func (u *UpdateNetworkACLResponseContent) GetCreatedAt() *string {
-	if u == nil {
-		return nil
+func (u *UpdateNetworkAclResponseContent) GetCreatedAt() string {
+	if u == nil || u.CreatedAt == nil {
+		return ""
 	}
-	return u.CreatedAt
+	return *u.CreatedAt
 }
 
-func (u *UpdateNetworkACLResponseContent) GetUpdatedAt() *string {
-	if u == nil {
-		return nil
+func (u *UpdateNetworkAclResponseContent) GetUpdatedAt() string {
+	if u == nil || u.UpdatedAt == nil {
+		return ""
 	}
-	return u.UpdatedAt
+	return *u.UpdatedAt
 }
 
-func (u *UpdateNetworkACLResponseContent) GetExtraProperties() map[string]interface{} {
+func (u *UpdateNetworkAclResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.ExtraProperties
 }
 
-func (u *UpdateNetworkACLResponseContent) UnmarshalJSON(data []byte) error {
-	type embed UpdateNetworkACLResponseContent
+func (u *UpdateNetworkAclResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateNetworkAclResponseContent) SetId(id *string) {
+	u.Id = id
+	u.require(updateNetworkAclResponseContentFieldId)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateNetworkAclResponseContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(updateNetworkAclResponseContentFieldDescription)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateNetworkAclResponseContent) SetActive(active *bool) {
+	u.Active = active
+	u.require(updateNetworkAclResponseContentFieldActive)
+}
+
+// SetPriority sets the Priority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateNetworkAclResponseContent) SetPriority(priority *float64) {
+	u.Priority = priority
+	u.require(updateNetworkAclResponseContentFieldPriority)
+}
+
+// SetRule sets the Rule field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateNetworkAclResponseContent) SetRule(rule *NetworkAclRule) {
+	u.Rule = rule
+	u.require(updateNetworkAclResponseContentFieldRule)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateNetworkAclResponseContent) SetCreatedAt(createdAt *string) {
+	u.CreatedAt = createdAt
+	u.require(updateNetworkAclResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateNetworkAclResponseContent) SetUpdatedAt(updatedAt *string) {
+	u.UpdatedAt = updatedAt
+	u.require(updateNetworkAclResponseContentFieldUpdatedAt)
+}
+
+func (u *UpdateNetworkAclResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateNetworkAclResponseContent
 	var unmarshaler = struct {
 		embed
 	}{
@@ -810,7 +1327,7 @@ func (u *UpdateNetworkACLResponseContent) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*u = UpdateNetworkACLResponseContent(unmarshaler.embed)
+	*u = UpdateNetworkAclResponseContent(unmarshaler.embed)
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
@@ -820,17 +1337,18 @@ func (u *UpdateNetworkACLResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (u *UpdateNetworkACLResponseContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateNetworkACLResponseContent
+func (u *UpdateNetworkAclResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateNetworkAclResponseContent
 	var marshaler = struct {
 		embed
 	}{
 		embed: embed(*u),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
 }
 
-func (u *UpdateNetworkACLResponseContent) String() string {
+func (u *UpdateNetworkAclResponseContent) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -840,13 +1358,4 @@ func (u *UpdateNetworkACLResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateNetworkACLRequestContent struct {
-	Description *string `json:"description,omitempty" url:"-"`
-	// Indicates whether or not this access control list is actively being used
-	Active *bool `json:"active,omitempty" url:"-"`
-	// Indicates the order in which the ACL will be evaluated relative to other ACL rules.
-	Priority *float64        `json:"priority,omitempty" url:"-"`
-	Rule     *NetworkACLRule `json:"rule,omitempty" url:"-"`
 }

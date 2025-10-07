@@ -6,92 +6,36 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type CreateUserRequestContent struct {
-	// The user's email.
-	Email *string `json:"email,omitempty" url:"-"`
-	// The user's phone number (following the E.164 recommendation).
-	PhoneNumber  *string       `json:"phone_number,omitempty" url:"-"`
-	UserMetadata *UserMetadata `json:"user_metadata,omitempty" url:"-"`
-	// Whether this user was blocked by an administrator (true) or not (false).
-	Blocked *bool `json:"blocked,omitempty" url:"-"`
-	// Whether this email address is verified (true) or unverified (false). User will receive a verification email after creation if `email_verified` is false or not specified
-	EmailVerified *bool `json:"email_verified,omitempty" url:"-"`
-	// Whether this phone number has been verified (true) or not (false).
-	PhoneVerified *bool        `json:"phone_verified,omitempty" url:"-"`
-	AppMetadata   *AppMetadata `json:"app_metadata,omitempty" url:"-"`
-	// The user's given name(s).
-	GivenName *string `json:"given_name,omitempty" url:"-"`
-	// The user's family name(s).
-	FamilyName *string `json:"family_name,omitempty" url:"-"`
-	// The user's full name.
-	Name *string `json:"name,omitempty" url:"-"`
-	// The user's nickname.
-	Nickname *string `json:"nickname,omitempty" url:"-"`
-	// A URI pointing to the user's picture.
-	Picture *string `json:"picture,omitempty" url:"-"`
-	// The external user's id provided by the identity provider.
-	UserID *string `json:"user_id,omitempty" url:"-"`
-	// Name of the connection this user should be created in.
-	Connection string `json:"connection" url:"-"`
-	// Initial password for this user. Only valid for auth0 connection strategy.
-	Password *string `json:"password,omitempty" url:"-"`
-	// Whether the user will receive a verification email after creation (true) or no email (false). Overrides behavior of `email_verified` parameter.
-	VerifyEmail *bool `json:"verify_email,omitempty" url:"-"`
-	// The user's username. Only valid if the connection requires a username.
-	Username *string `json:"username,omitempty" url:"-"`
-}
-
-type GetUserRequestParameters struct {
-	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-}
-
-type ListUsersRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Field to sort by. Use <code>field:order</code> where order is <code>1</code> for ascending and <code>-1</code> for descending. e.g. <code>created_at:1</code>
-	Sort *string `json:"-" url:"sort,omitempty"`
-	// Connection filter. Only applies when using <code>search_engine=v1</code>. To filter by connection with <code>search_engine=v2|v3</code>, use <code>q=identities.connection:"connection_name"</code>
-	Connection *string `json:"-" url:"connection,omitempty"`
-	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-	// Query in <a target='_new' href ='http://www.lucenetutorial.com/lucene-query-syntax.html'>Lucene query string syntax</a>. Some query types cannot be used on metadata fields, for details see <a href='https://auth0.com/docs/users/search/v3/query-syntax#searchable-fields'>Searchable Fields</a>.
-	Q *string `json:"-" url:"q,omitempty"`
-	// The version of the search engine
-	SearchEngine *SearchEngineVersionsEnum `json:"-" url:"search_engine,omitempty"`
-	// If true (default), results are returned in a deterministic order. If false, results may be returned in a non-deterministic order, which can enhance performance for complex queries targeting a small number of users. Set to false only when consistent ordering and pagination is not required.
-	PrimaryOrder *bool `json:"-" url:"primary_order,omitempty"`
-}
-
-type ListUsersByEmailRequestParameters struct {
-	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false). Defaults to true.
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-	// Email address to search for (case-sensitive).
-	Email string `json:"-" url:"email"`
-}
-
-type RevokeUserAccessRequestContent struct {
-	// ID of the session to revoke.
-	SessionID *string `json:"session_id,omitempty" url:"-"`
-	// Whether to preserve the refresh tokens associated with the session.
-	PreserveRefreshTokens *bool `json:"preserve_refresh_tokens,omitempty" url:"-"`
-}
+var (
+	createUserResponseContentFieldUserId        = big.NewInt(1 << 0)
+	createUserResponseContentFieldEmail         = big.NewInt(1 << 1)
+	createUserResponseContentFieldEmailVerified = big.NewInt(1 << 2)
+	createUserResponseContentFieldUsername      = big.NewInt(1 << 3)
+	createUserResponseContentFieldPhoneNumber   = big.NewInt(1 << 4)
+	createUserResponseContentFieldPhoneVerified = big.NewInt(1 << 5)
+	createUserResponseContentFieldCreatedAt     = big.NewInt(1 << 6)
+	createUserResponseContentFieldUpdatedAt     = big.NewInt(1 << 7)
+	createUserResponseContentFieldIdentities    = big.NewInt(1 << 8)
+	createUserResponseContentFieldAppMetadata   = big.NewInt(1 << 9)
+	createUserResponseContentFieldUserMetadata  = big.NewInt(1 << 10)
+	createUserResponseContentFieldPicture       = big.NewInt(1 << 11)
+	createUserResponseContentFieldName          = big.NewInt(1 << 12)
+	createUserResponseContentFieldNickname      = big.NewInt(1 << 13)
+	createUserResponseContentFieldMultifactor   = big.NewInt(1 << 14)
+	createUserResponseContentFieldLastIp        = big.NewInt(1 << 15)
+	createUserResponseContentFieldLastLogin     = big.NewInt(1 << 16)
+	createUserResponseContentFieldLoginsCount   = big.NewInt(1 << 17)
+	createUserResponseContentFieldBlocked       = big.NewInt(1 << 18)
+	createUserResponseContentFieldGivenName     = big.NewInt(1 << 19)
+	createUserResponseContentFieldFamilyName    = big.NewInt(1 << 20)
+)
 
 type CreateUserResponseContent struct {
 	// ID of the user which can be used when interacting with other APIs.
-	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 	// Whether this email address is verified (true) or unverified (false).
@@ -117,7 +61,7 @@ type CreateUserResponseContent struct {
 	// List of multi-factor authentication providers with which this user has enrolled.
 	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIP    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastIp    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
 	LastLogin *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
@@ -128,160 +72,317 @@ type CreateUserResponseContent struct {
 	// Family name/last name/surname of this user.
 	FamilyName *string `json:"family_name,omitempty" url:"family_name,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (c *CreateUserResponseContent) GetUserID() *string {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetUserId() string {
+	if c == nil || c.UserId == nil {
+		return ""
 	}
-	return c.UserID
+	return *c.UserId
 }
 
-func (c *CreateUserResponseContent) GetEmail() *string {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetEmail() string {
+	if c == nil || c.Email == nil {
+		return ""
 	}
-	return c.Email
+	return *c.Email
 }
 
-func (c *CreateUserResponseContent) GetEmailVerified() *bool {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetEmailVerified() bool {
+	if c == nil || c.EmailVerified == nil {
+		return false
 	}
-	return c.EmailVerified
+	return *c.EmailVerified
 }
 
-func (c *CreateUserResponseContent) GetUsername() *string {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetUsername() string {
+	if c == nil || c.Username == nil {
+		return ""
 	}
-	return c.Username
+	return *c.Username
 }
 
-func (c *CreateUserResponseContent) GetPhoneNumber() *string {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetPhoneNumber() string {
+	if c == nil || c.PhoneNumber == nil {
+		return ""
 	}
-	return c.PhoneNumber
+	return *c.PhoneNumber
 }
 
-func (c *CreateUserResponseContent) GetPhoneVerified() *bool {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetPhoneVerified() bool {
+	if c == nil || c.PhoneVerified == nil {
+		return false
 	}
-	return c.PhoneVerified
+	return *c.PhoneVerified
 }
 
-func (c *CreateUserResponseContent) GetCreatedAt() *UserDateSchema {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetCreatedAt() UserDateSchema {
+	if c == nil || c.CreatedAt == nil {
+		return UserDateSchema{}
 	}
-	return c.CreatedAt
+	return *c.CreatedAt
 }
 
-func (c *CreateUserResponseContent) GetUpdatedAt() *UserDateSchema {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetUpdatedAt() UserDateSchema {
+	if c == nil || c.UpdatedAt == nil {
+		return UserDateSchema{}
 	}
-	return c.UpdatedAt
+	return *c.UpdatedAt
 }
 
 func (c *CreateUserResponseContent) GetIdentities() []*UserIdentitySchema {
-	if c == nil {
+	if c == nil || c.Identities == nil {
 		return nil
 	}
 	return c.Identities
 }
 
-func (c *CreateUserResponseContent) GetAppMetadata() *UserAppMetadataSchema {
-	if c == nil {
+func (c *CreateUserResponseContent) GetAppMetadata() UserAppMetadataSchema {
+	if c == nil || c.AppMetadata == nil {
 		return nil
 	}
-	return c.AppMetadata
+	return *c.AppMetadata
 }
 
-func (c *CreateUserResponseContent) GetUserMetadata() *UserMetadataSchema {
-	if c == nil {
+func (c *CreateUserResponseContent) GetUserMetadata() UserMetadataSchema {
+	if c == nil || c.UserMetadata == nil {
 		return nil
 	}
-	return c.UserMetadata
+	return *c.UserMetadata
 }
 
-func (c *CreateUserResponseContent) GetPicture() *string {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetPicture() string {
+	if c == nil || c.Picture == nil {
+		return ""
 	}
-	return c.Picture
+	return *c.Picture
 }
 
-func (c *CreateUserResponseContent) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateUserResponseContent) GetNickname() *string {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetNickname() string {
+	if c == nil || c.Nickname == nil {
+		return ""
 	}
-	return c.Nickname
+	return *c.Nickname
 }
 
 func (c *CreateUserResponseContent) GetMultifactor() []string {
-	if c == nil {
+	if c == nil || c.Multifactor == nil {
 		return nil
 	}
 	return c.Multifactor
 }
 
-func (c *CreateUserResponseContent) GetLastIP() *string {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetLastIp() string {
+	if c == nil || c.LastIp == nil {
+		return ""
 	}
-	return c.LastIP
+	return *c.LastIp
 }
 
-func (c *CreateUserResponseContent) GetLastLogin() *UserDateSchema {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetLastLogin() UserDateSchema {
+	if c == nil || c.LastLogin == nil {
+		return UserDateSchema{}
 	}
-	return c.LastLogin
+	return *c.LastLogin
 }
 
-func (c *CreateUserResponseContent) GetLoginsCount() *int {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetLoginsCount() int {
+	if c == nil || c.LoginsCount == nil {
+		return 0
 	}
-	return c.LoginsCount
+	return *c.LoginsCount
 }
 
-func (c *CreateUserResponseContent) GetBlocked() *bool {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetBlocked() bool {
+	if c == nil || c.Blocked == nil {
+		return false
 	}
-	return c.Blocked
+	return *c.Blocked
 }
 
-func (c *CreateUserResponseContent) GetGivenName() *string {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetGivenName() string {
+	if c == nil || c.GivenName == nil {
+		return ""
 	}
-	return c.GivenName
+	return *c.GivenName
 }
 
-func (c *CreateUserResponseContent) GetFamilyName() *string {
-	if c == nil {
-		return nil
+func (c *CreateUserResponseContent) GetFamilyName() string {
+	if c == nil || c.FamilyName == nil {
+		return ""
 	}
-	return c.FamilyName
+	return *c.FamilyName
 }
 
 func (c *CreateUserResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.ExtraProperties
+}
+
+func (c *CreateUserResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetUserId(userId *string) {
+	c.UserId = userId
+	c.require(createUserResponseContentFieldUserId)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetEmail(email *string) {
+	c.Email = email
+	c.require(createUserResponseContentFieldEmail)
+}
+
+// SetEmailVerified sets the EmailVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetEmailVerified(emailVerified *bool) {
+	c.EmailVerified = emailVerified
+	c.require(createUserResponseContentFieldEmailVerified)
+}
+
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetUsername(username *string) {
+	c.Username = username
+	c.require(createUserResponseContentFieldUsername)
+}
+
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetPhoneNumber(phoneNumber *string) {
+	c.PhoneNumber = phoneNumber
+	c.require(createUserResponseContentFieldPhoneNumber)
+}
+
+// SetPhoneVerified sets the PhoneVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetPhoneVerified(phoneVerified *bool) {
+	c.PhoneVerified = phoneVerified
+	c.require(createUserResponseContentFieldPhoneVerified)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetCreatedAt(createdAt *UserDateSchema) {
+	c.CreatedAt = createdAt
+	c.require(createUserResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetUpdatedAt(updatedAt *UserDateSchema) {
+	c.UpdatedAt = updatedAt
+	c.require(createUserResponseContentFieldUpdatedAt)
+}
+
+// SetIdentities sets the Identities field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetIdentities(identities []*UserIdentitySchema) {
+	c.Identities = identities
+	c.require(createUserResponseContentFieldIdentities)
+}
+
+// SetAppMetadata sets the AppMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetAppMetadata(appMetadata *UserAppMetadataSchema) {
+	c.AppMetadata = appMetadata
+	c.require(createUserResponseContentFieldAppMetadata)
+}
+
+// SetUserMetadata sets the UserMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetUserMetadata(userMetadata *UserMetadataSchema) {
+	c.UserMetadata = userMetadata
+	c.require(createUserResponseContentFieldUserMetadata)
+}
+
+// SetPicture sets the Picture field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetPicture(picture *string) {
+	c.Picture = picture
+	c.require(createUserResponseContentFieldPicture)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetName(name *string) {
+	c.Name = name
+	c.require(createUserResponseContentFieldName)
+}
+
+// SetNickname sets the Nickname field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetNickname(nickname *string) {
+	c.Nickname = nickname
+	c.require(createUserResponseContentFieldNickname)
+}
+
+// SetMultifactor sets the Multifactor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetMultifactor(multifactor []string) {
+	c.Multifactor = multifactor
+	c.require(createUserResponseContentFieldMultifactor)
+}
+
+// SetLastIp sets the LastIp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetLastIp(lastIp *string) {
+	c.LastIp = lastIp
+	c.require(createUserResponseContentFieldLastIp)
+}
+
+// SetLastLogin sets the LastLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetLastLogin(lastLogin *UserDateSchema) {
+	c.LastLogin = lastLogin
+	c.require(createUserResponseContentFieldLastLogin)
+}
+
+// SetLoginsCount sets the LoginsCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetLoginsCount(loginsCount *int) {
+	c.LoginsCount = loginsCount
+	c.require(createUserResponseContentFieldLoginsCount)
+}
+
+// SetBlocked sets the Blocked field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetBlocked(blocked *bool) {
+	c.Blocked = blocked
+	c.require(createUserResponseContentFieldBlocked)
+}
+
+// SetGivenName sets the GivenName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetGivenName(givenName *string) {
+	c.GivenName = givenName
+	c.require(createUserResponseContentFieldGivenName)
+}
+
+// SetFamilyName sets the FamilyName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetFamilyName(familyName *string) {
+	c.FamilyName = familyName
+	c.require(createUserResponseContentFieldFamilyName)
 }
 
 func (c *CreateUserResponseContent) UnmarshalJSON(data []byte) error {
@@ -311,7 +412,8 @@ func (c *CreateUserResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*c),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, c.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
 }
 
 func (c *CreateUserResponseContent) String() string {
@@ -326,9 +428,33 @@ func (c *CreateUserResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	getUserResponseContentFieldUserId        = big.NewInt(1 << 0)
+	getUserResponseContentFieldEmail         = big.NewInt(1 << 1)
+	getUserResponseContentFieldEmailVerified = big.NewInt(1 << 2)
+	getUserResponseContentFieldUsername      = big.NewInt(1 << 3)
+	getUserResponseContentFieldPhoneNumber   = big.NewInt(1 << 4)
+	getUserResponseContentFieldPhoneVerified = big.NewInt(1 << 5)
+	getUserResponseContentFieldCreatedAt     = big.NewInt(1 << 6)
+	getUserResponseContentFieldUpdatedAt     = big.NewInt(1 << 7)
+	getUserResponseContentFieldIdentities    = big.NewInt(1 << 8)
+	getUserResponseContentFieldAppMetadata   = big.NewInt(1 << 9)
+	getUserResponseContentFieldUserMetadata  = big.NewInt(1 << 10)
+	getUserResponseContentFieldPicture       = big.NewInt(1 << 11)
+	getUserResponseContentFieldName          = big.NewInt(1 << 12)
+	getUserResponseContentFieldNickname      = big.NewInt(1 << 13)
+	getUserResponseContentFieldMultifactor   = big.NewInt(1 << 14)
+	getUserResponseContentFieldLastIp        = big.NewInt(1 << 15)
+	getUserResponseContentFieldLastLogin     = big.NewInt(1 << 16)
+	getUserResponseContentFieldLoginsCount   = big.NewInt(1 << 17)
+	getUserResponseContentFieldBlocked       = big.NewInt(1 << 18)
+	getUserResponseContentFieldGivenName     = big.NewInt(1 << 19)
+	getUserResponseContentFieldFamilyName    = big.NewInt(1 << 20)
+)
+
 type GetUserResponseContent struct {
 	// ID of the user which can be used when interacting with other APIs.
-	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 	// Whether this email address is verified (true) or unverified (false).
@@ -354,7 +480,7 @@ type GetUserResponseContent struct {
 	// List of multi-factor authentication providers with which this user has enrolled.
 	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIP    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastIp    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
 	LastLogin *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
@@ -365,160 +491,317 @@ type GetUserResponseContent struct {
 	// Family name/last name/surname of this user.
 	FamilyName *string `json:"family_name,omitempty" url:"family_name,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (g *GetUserResponseContent) GetUserID() *string {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetUserId() string {
+	if g == nil || g.UserId == nil {
+		return ""
 	}
-	return g.UserID
+	return *g.UserId
 }
 
-func (g *GetUserResponseContent) GetEmail() *string {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetEmail() string {
+	if g == nil || g.Email == nil {
+		return ""
 	}
-	return g.Email
+	return *g.Email
 }
 
-func (g *GetUserResponseContent) GetEmailVerified() *bool {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetEmailVerified() bool {
+	if g == nil || g.EmailVerified == nil {
+		return false
 	}
-	return g.EmailVerified
+	return *g.EmailVerified
 }
 
-func (g *GetUserResponseContent) GetUsername() *string {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetUsername() string {
+	if g == nil || g.Username == nil {
+		return ""
 	}
-	return g.Username
+	return *g.Username
 }
 
-func (g *GetUserResponseContent) GetPhoneNumber() *string {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetPhoneNumber() string {
+	if g == nil || g.PhoneNumber == nil {
+		return ""
 	}
-	return g.PhoneNumber
+	return *g.PhoneNumber
 }
 
-func (g *GetUserResponseContent) GetPhoneVerified() *bool {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetPhoneVerified() bool {
+	if g == nil || g.PhoneVerified == nil {
+		return false
 	}
-	return g.PhoneVerified
+	return *g.PhoneVerified
 }
 
-func (g *GetUserResponseContent) GetCreatedAt() *UserDateSchema {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetCreatedAt() UserDateSchema {
+	if g == nil || g.CreatedAt == nil {
+		return UserDateSchema{}
 	}
-	return g.CreatedAt
+	return *g.CreatedAt
 }
 
-func (g *GetUserResponseContent) GetUpdatedAt() *UserDateSchema {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetUpdatedAt() UserDateSchema {
+	if g == nil || g.UpdatedAt == nil {
+		return UserDateSchema{}
 	}
-	return g.UpdatedAt
+	return *g.UpdatedAt
 }
 
 func (g *GetUserResponseContent) GetIdentities() []*UserIdentitySchema {
-	if g == nil {
+	if g == nil || g.Identities == nil {
 		return nil
 	}
 	return g.Identities
 }
 
-func (g *GetUserResponseContent) GetAppMetadata() *UserAppMetadataSchema {
-	if g == nil {
+func (g *GetUserResponseContent) GetAppMetadata() UserAppMetadataSchema {
+	if g == nil || g.AppMetadata == nil {
 		return nil
 	}
-	return g.AppMetadata
+	return *g.AppMetadata
 }
 
-func (g *GetUserResponseContent) GetUserMetadata() *UserMetadataSchema {
-	if g == nil {
+func (g *GetUserResponseContent) GetUserMetadata() UserMetadataSchema {
+	if g == nil || g.UserMetadata == nil {
 		return nil
 	}
-	return g.UserMetadata
+	return *g.UserMetadata
 }
 
-func (g *GetUserResponseContent) GetPicture() *string {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetPicture() string {
+	if g == nil || g.Picture == nil {
+		return ""
 	}
-	return g.Picture
+	return *g.Picture
 }
 
-func (g *GetUserResponseContent) GetName() *string {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetName() string {
+	if g == nil || g.Name == nil {
+		return ""
 	}
-	return g.Name
+	return *g.Name
 }
 
-func (g *GetUserResponseContent) GetNickname() *string {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetNickname() string {
+	if g == nil || g.Nickname == nil {
+		return ""
 	}
-	return g.Nickname
+	return *g.Nickname
 }
 
 func (g *GetUserResponseContent) GetMultifactor() []string {
-	if g == nil {
+	if g == nil || g.Multifactor == nil {
 		return nil
 	}
 	return g.Multifactor
 }
 
-func (g *GetUserResponseContent) GetLastIP() *string {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetLastIp() string {
+	if g == nil || g.LastIp == nil {
+		return ""
 	}
-	return g.LastIP
+	return *g.LastIp
 }
 
-func (g *GetUserResponseContent) GetLastLogin() *UserDateSchema {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetLastLogin() UserDateSchema {
+	if g == nil || g.LastLogin == nil {
+		return UserDateSchema{}
 	}
-	return g.LastLogin
+	return *g.LastLogin
 }
 
-func (g *GetUserResponseContent) GetLoginsCount() *int {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetLoginsCount() int {
+	if g == nil || g.LoginsCount == nil {
+		return 0
 	}
-	return g.LoginsCount
+	return *g.LoginsCount
 }
 
-func (g *GetUserResponseContent) GetBlocked() *bool {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetBlocked() bool {
+	if g == nil || g.Blocked == nil {
+		return false
 	}
-	return g.Blocked
+	return *g.Blocked
 }
 
-func (g *GetUserResponseContent) GetGivenName() *string {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetGivenName() string {
+	if g == nil || g.GivenName == nil {
+		return ""
 	}
-	return g.GivenName
+	return *g.GivenName
 }
 
-func (g *GetUserResponseContent) GetFamilyName() *string {
-	if g == nil {
-		return nil
+func (g *GetUserResponseContent) GetFamilyName() string {
+	if g == nil || g.FamilyName == nil {
+		return ""
 	}
-	return g.FamilyName
+	return *g.FamilyName
 }
 
 func (g *GetUserResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.ExtraProperties
+}
+
+func (g *GetUserResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetUserId(userId *string) {
+	g.UserId = userId
+	g.require(getUserResponseContentFieldUserId)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetEmail(email *string) {
+	g.Email = email
+	g.require(getUserResponseContentFieldEmail)
+}
+
+// SetEmailVerified sets the EmailVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetEmailVerified(emailVerified *bool) {
+	g.EmailVerified = emailVerified
+	g.require(getUserResponseContentFieldEmailVerified)
+}
+
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetUsername(username *string) {
+	g.Username = username
+	g.require(getUserResponseContentFieldUsername)
+}
+
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetPhoneNumber(phoneNumber *string) {
+	g.PhoneNumber = phoneNumber
+	g.require(getUserResponseContentFieldPhoneNumber)
+}
+
+// SetPhoneVerified sets the PhoneVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetPhoneVerified(phoneVerified *bool) {
+	g.PhoneVerified = phoneVerified
+	g.require(getUserResponseContentFieldPhoneVerified)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetCreatedAt(createdAt *UserDateSchema) {
+	g.CreatedAt = createdAt
+	g.require(getUserResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetUpdatedAt(updatedAt *UserDateSchema) {
+	g.UpdatedAt = updatedAt
+	g.require(getUserResponseContentFieldUpdatedAt)
+}
+
+// SetIdentities sets the Identities field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetIdentities(identities []*UserIdentitySchema) {
+	g.Identities = identities
+	g.require(getUserResponseContentFieldIdentities)
+}
+
+// SetAppMetadata sets the AppMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetAppMetadata(appMetadata *UserAppMetadataSchema) {
+	g.AppMetadata = appMetadata
+	g.require(getUserResponseContentFieldAppMetadata)
+}
+
+// SetUserMetadata sets the UserMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetUserMetadata(userMetadata *UserMetadataSchema) {
+	g.UserMetadata = userMetadata
+	g.require(getUserResponseContentFieldUserMetadata)
+}
+
+// SetPicture sets the Picture field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetPicture(picture *string) {
+	g.Picture = picture
+	g.require(getUserResponseContentFieldPicture)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetName(name *string) {
+	g.Name = name
+	g.require(getUserResponseContentFieldName)
+}
+
+// SetNickname sets the Nickname field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetNickname(nickname *string) {
+	g.Nickname = nickname
+	g.require(getUserResponseContentFieldNickname)
+}
+
+// SetMultifactor sets the Multifactor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetMultifactor(multifactor []string) {
+	g.Multifactor = multifactor
+	g.require(getUserResponseContentFieldMultifactor)
+}
+
+// SetLastIp sets the LastIp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetLastIp(lastIp *string) {
+	g.LastIp = lastIp
+	g.require(getUserResponseContentFieldLastIp)
+}
+
+// SetLastLogin sets the LastLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetLastLogin(lastLogin *UserDateSchema) {
+	g.LastLogin = lastLogin
+	g.require(getUserResponseContentFieldLastLogin)
+}
+
+// SetLoginsCount sets the LoginsCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetLoginsCount(loginsCount *int) {
+	g.LoginsCount = loginsCount
+	g.require(getUserResponseContentFieldLoginsCount)
+}
+
+// SetBlocked sets the Blocked field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetBlocked(blocked *bool) {
+	g.Blocked = blocked
+	g.require(getUserResponseContentFieldBlocked)
+}
+
+// SetGivenName sets the GivenName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetGivenName(givenName *string) {
+	g.GivenName = givenName
+	g.require(getUserResponseContentFieldGivenName)
+}
+
+// SetFamilyName sets the FamilyName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetFamilyName(familyName *string) {
+	g.FamilyName = familyName
+	g.require(getUserResponseContentFieldFamilyName)
 }
 
 func (g *GetUserResponseContent) UnmarshalJSON(data []byte) error {
@@ -548,7 +831,8 @@ func (g *GetUserResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*g),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, g.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *GetUserResponseContent) String() string {
@@ -563,6 +847,14 @@ func (g *GetUserResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	listUsersOffsetPaginatedResponseContentFieldStart  = big.NewInt(1 << 0)
+	listUsersOffsetPaginatedResponseContentFieldLimit  = big.NewInt(1 << 1)
+	listUsersOffsetPaginatedResponseContentFieldLength = big.NewInt(1 << 2)
+	listUsersOffsetPaginatedResponseContentFieldTotal  = big.NewInt(1 << 3)
+	listUsersOffsetPaginatedResponseContentFieldUsers  = big.NewInt(1 << 4)
+)
+
 type ListUsersOffsetPaginatedResponseContent struct {
 	Start  *float64              `json:"start,omitempty" url:"start,omitempty"`
 	Limit  *float64              `json:"limit,omitempty" url:"limit,omitempty"`
@@ -570,40 +862,43 @@ type ListUsersOffsetPaginatedResponseContent struct {
 	Total  *float64              `json:"total,omitempty" url:"total,omitempty"`
 	Users  []*UserResponseSchema `json:"users,omitempty" url:"users,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListUsersOffsetPaginatedResponseContent) GetStart() *float64 {
-	if l == nil {
-		return nil
+func (l *ListUsersOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
 	}
-	return l.Start
+	return *l.Start
 }
 
-func (l *ListUsersOffsetPaginatedResponseContent) GetLimit() *float64 {
-	if l == nil {
-		return nil
+func (l *ListUsersOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
 	}
-	return l.Limit
+	return *l.Limit
 }
 
-func (l *ListUsersOffsetPaginatedResponseContent) GetLength() *float64 {
-	if l == nil {
-		return nil
+func (l *ListUsersOffsetPaginatedResponseContent) GetLength() float64 {
+	if l == nil || l.Length == nil {
+		return 0
 	}
-	return l.Length
+	return *l.Length
 }
 
-func (l *ListUsersOffsetPaginatedResponseContent) GetTotal() *float64 {
-	if l == nil {
-		return nil
+func (l *ListUsersOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
 	}
-	return l.Total
+	return *l.Total
 }
 
 func (l *ListUsersOffsetPaginatedResponseContent) GetUsers() []*UserResponseSchema {
-	if l == nil {
+	if l == nil || l.Users == nil {
 		return nil
 	}
 	return l.Users
@@ -611,6 +906,48 @@ func (l *ListUsersOffsetPaginatedResponseContent) GetUsers() []*UserResponseSche
 
 func (l *ListUsersOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListUsersOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listUsersOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listUsersOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetLength sets the Length field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOffsetPaginatedResponseContent) SetLength(length *float64) {
+	l.Length = length
+	l.require(listUsersOffsetPaginatedResponseContentFieldLength)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listUsersOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetUsers sets the Users field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOffsetPaginatedResponseContent) SetUsers(users []*UserResponseSchema) {
+	l.Users = users
+	l.require(listUsersOffsetPaginatedResponseContentFieldUsers)
 }
 
 func (l *ListUsersOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
@@ -629,6 +966,17 @@ func (l *ListUsersOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) err
 	return nil
 }
 
+func (l *ListUsersOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUsersOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListUsersOffsetPaginatedResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -641,24 +989,45 @@ func (l *ListUsersOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	regenerateUsersRecoveryCodeResponseContentFieldRecoveryCode = big.NewInt(1 << 0)
+)
+
 type RegenerateUsersRecoveryCodeResponseContent struct {
 	// New account recovery code.
 	RecoveryCode *string `json:"recovery_code,omitempty" url:"recovery_code,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (r *RegenerateUsersRecoveryCodeResponseContent) GetRecoveryCode() *string {
-	if r == nil {
-		return nil
+func (r *RegenerateUsersRecoveryCodeResponseContent) GetRecoveryCode() string {
+	if r == nil || r.RecoveryCode == nil {
+		return ""
 	}
-	return r.RecoveryCode
+	return *r.RecoveryCode
 }
 
 func (r *RegenerateUsersRecoveryCodeResponseContent) GetExtraProperties() map[string]interface{} {
 	return r.ExtraProperties
+}
+
+func (r *RegenerateUsersRecoveryCodeResponseContent) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetRecoveryCode sets the RecoveryCode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RegenerateUsersRecoveryCodeResponseContent) SetRecoveryCode(recoveryCode *string) {
+	r.RecoveryCode = recoveryCode
+	r.require(regenerateUsersRecoveryCodeResponseContentFieldRecoveryCode)
 }
 
 func (r *RegenerateUsersRecoveryCodeResponseContent) UnmarshalJSON(data []byte) error {
@@ -688,7 +1057,8 @@ func (r *RegenerateUsersRecoveryCodeResponseContent) MarshalJSON() ([]byte, erro
 	}{
 		embed: embed(*r),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, r.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, r.ExtraProperties)
 }
 
 func (r *RegenerateUsersRecoveryCodeResponseContent) String() string {
@@ -729,9 +1099,33 @@ func (s SearchEngineVersionsEnum) Ptr() *SearchEngineVersionsEnum {
 	return &s
 }
 
+var (
+	updateUserResponseContentFieldUserId        = big.NewInt(1 << 0)
+	updateUserResponseContentFieldEmail         = big.NewInt(1 << 1)
+	updateUserResponseContentFieldEmailVerified = big.NewInt(1 << 2)
+	updateUserResponseContentFieldUsername      = big.NewInt(1 << 3)
+	updateUserResponseContentFieldPhoneNumber   = big.NewInt(1 << 4)
+	updateUserResponseContentFieldPhoneVerified = big.NewInt(1 << 5)
+	updateUserResponseContentFieldCreatedAt     = big.NewInt(1 << 6)
+	updateUserResponseContentFieldUpdatedAt     = big.NewInt(1 << 7)
+	updateUserResponseContentFieldIdentities    = big.NewInt(1 << 8)
+	updateUserResponseContentFieldAppMetadata   = big.NewInt(1 << 9)
+	updateUserResponseContentFieldUserMetadata  = big.NewInt(1 << 10)
+	updateUserResponseContentFieldPicture       = big.NewInt(1 << 11)
+	updateUserResponseContentFieldName          = big.NewInt(1 << 12)
+	updateUserResponseContentFieldNickname      = big.NewInt(1 << 13)
+	updateUserResponseContentFieldMultifactor   = big.NewInt(1 << 14)
+	updateUserResponseContentFieldLastIp        = big.NewInt(1 << 15)
+	updateUserResponseContentFieldLastLogin     = big.NewInt(1 << 16)
+	updateUserResponseContentFieldLoginsCount   = big.NewInt(1 << 17)
+	updateUserResponseContentFieldBlocked       = big.NewInt(1 << 18)
+	updateUserResponseContentFieldGivenName     = big.NewInt(1 << 19)
+	updateUserResponseContentFieldFamilyName    = big.NewInt(1 << 20)
+)
+
 type UpdateUserResponseContent struct {
 	// ID of the user which can be used when interacting with other APIs.
-	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 	// Whether this email address is verified (true) or unverified (false).
@@ -757,7 +1151,7 @@ type UpdateUserResponseContent struct {
 	// List of multi-factor authentication providers with which this user has enrolled.
 	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIP    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastIp    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
 	LastLogin *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
@@ -768,160 +1162,317 @@ type UpdateUserResponseContent struct {
 	// Family name/last name/surname of this user.
 	FamilyName *string `json:"family_name,omitempty" url:"family_name,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (u *UpdateUserResponseContent) GetUserID() *string {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetUserId() string {
+	if u == nil || u.UserId == nil {
+		return ""
 	}
-	return u.UserID
+	return *u.UserId
 }
 
-func (u *UpdateUserResponseContent) GetEmail() *string {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetEmail() string {
+	if u == nil || u.Email == nil {
+		return ""
 	}
-	return u.Email
+	return *u.Email
 }
 
-func (u *UpdateUserResponseContent) GetEmailVerified() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetEmailVerified() bool {
+	if u == nil || u.EmailVerified == nil {
+		return false
 	}
-	return u.EmailVerified
+	return *u.EmailVerified
 }
 
-func (u *UpdateUserResponseContent) GetUsername() *string {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetUsername() string {
+	if u == nil || u.Username == nil {
+		return ""
 	}
-	return u.Username
+	return *u.Username
 }
 
-func (u *UpdateUserResponseContent) GetPhoneNumber() *string {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetPhoneNumber() string {
+	if u == nil || u.PhoneNumber == nil {
+		return ""
 	}
-	return u.PhoneNumber
+	return *u.PhoneNumber
 }
 
-func (u *UpdateUserResponseContent) GetPhoneVerified() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetPhoneVerified() bool {
+	if u == nil || u.PhoneVerified == nil {
+		return false
 	}
-	return u.PhoneVerified
+	return *u.PhoneVerified
 }
 
-func (u *UpdateUserResponseContent) GetCreatedAt() *UserDateSchema {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetCreatedAt() UserDateSchema {
+	if u == nil || u.CreatedAt == nil {
+		return UserDateSchema{}
 	}
-	return u.CreatedAt
+	return *u.CreatedAt
 }
 
-func (u *UpdateUserResponseContent) GetUpdatedAt() *UserDateSchema {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetUpdatedAt() UserDateSchema {
+	if u == nil || u.UpdatedAt == nil {
+		return UserDateSchema{}
 	}
-	return u.UpdatedAt
+	return *u.UpdatedAt
 }
 
 func (u *UpdateUserResponseContent) GetIdentities() []*UserIdentitySchema {
-	if u == nil {
+	if u == nil || u.Identities == nil {
 		return nil
 	}
 	return u.Identities
 }
 
-func (u *UpdateUserResponseContent) GetAppMetadata() *UserAppMetadataSchema {
-	if u == nil {
+func (u *UpdateUserResponseContent) GetAppMetadata() UserAppMetadataSchema {
+	if u == nil || u.AppMetadata == nil {
 		return nil
 	}
-	return u.AppMetadata
+	return *u.AppMetadata
 }
 
-func (u *UpdateUserResponseContent) GetUserMetadata() *UserMetadataSchema {
-	if u == nil {
+func (u *UpdateUserResponseContent) GetUserMetadata() UserMetadataSchema {
+	if u == nil || u.UserMetadata == nil {
 		return nil
 	}
-	return u.UserMetadata
+	return *u.UserMetadata
 }
 
-func (u *UpdateUserResponseContent) GetPicture() *string {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetPicture() string {
+	if u == nil || u.Picture == nil {
+		return ""
 	}
-	return u.Picture
+	return *u.Picture
 }
 
-func (u *UpdateUserResponseContent) GetName() *string {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
 	}
-	return u.Name
+	return *u.Name
 }
 
-func (u *UpdateUserResponseContent) GetNickname() *string {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetNickname() string {
+	if u == nil || u.Nickname == nil {
+		return ""
 	}
-	return u.Nickname
+	return *u.Nickname
 }
 
 func (u *UpdateUserResponseContent) GetMultifactor() []string {
-	if u == nil {
+	if u == nil || u.Multifactor == nil {
 		return nil
 	}
 	return u.Multifactor
 }
 
-func (u *UpdateUserResponseContent) GetLastIP() *string {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetLastIp() string {
+	if u == nil || u.LastIp == nil {
+		return ""
 	}
-	return u.LastIP
+	return *u.LastIp
 }
 
-func (u *UpdateUserResponseContent) GetLastLogin() *UserDateSchema {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetLastLogin() UserDateSchema {
+	if u == nil || u.LastLogin == nil {
+		return UserDateSchema{}
 	}
-	return u.LastLogin
+	return *u.LastLogin
 }
 
-func (u *UpdateUserResponseContent) GetLoginsCount() *int {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetLoginsCount() int {
+	if u == nil || u.LoginsCount == nil {
+		return 0
 	}
-	return u.LoginsCount
+	return *u.LoginsCount
 }
 
-func (u *UpdateUserResponseContent) GetBlocked() *bool {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetBlocked() bool {
+	if u == nil || u.Blocked == nil {
+		return false
 	}
-	return u.Blocked
+	return *u.Blocked
 }
 
-func (u *UpdateUserResponseContent) GetGivenName() *string {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetGivenName() string {
+	if u == nil || u.GivenName == nil {
+		return ""
 	}
-	return u.GivenName
+	return *u.GivenName
 }
 
-func (u *UpdateUserResponseContent) GetFamilyName() *string {
-	if u == nil {
-		return nil
+func (u *UpdateUserResponseContent) GetFamilyName() string {
+	if u == nil || u.FamilyName == nil {
+		return ""
 	}
-	return u.FamilyName
+	return *u.FamilyName
 }
 
 func (u *UpdateUserResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.ExtraProperties
+}
+
+func (u *UpdateUserResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetUserId(userId *string) {
+	u.UserId = userId
+	u.require(updateUserResponseContentFieldUserId)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetEmail(email *string) {
+	u.Email = email
+	u.require(updateUserResponseContentFieldEmail)
+}
+
+// SetEmailVerified sets the EmailVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetEmailVerified(emailVerified *bool) {
+	u.EmailVerified = emailVerified
+	u.require(updateUserResponseContentFieldEmailVerified)
+}
+
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetUsername(username *string) {
+	u.Username = username
+	u.require(updateUserResponseContentFieldUsername)
+}
+
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetPhoneNumber(phoneNumber *string) {
+	u.PhoneNumber = phoneNumber
+	u.require(updateUserResponseContentFieldPhoneNumber)
+}
+
+// SetPhoneVerified sets the PhoneVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetPhoneVerified(phoneVerified *bool) {
+	u.PhoneVerified = phoneVerified
+	u.require(updateUserResponseContentFieldPhoneVerified)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetCreatedAt(createdAt *UserDateSchema) {
+	u.CreatedAt = createdAt
+	u.require(updateUserResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetUpdatedAt(updatedAt *UserDateSchema) {
+	u.UpdatedAt = updatedAt
+	u.require(updateUserResponseContentFieldUpdatedAt)
+}
+
+// SetIdentities sets the Identities field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetIdentities(identities []*UserIdentitySchema) {
+	u.Identities = identities
+	u.require(updateUserResponseContentFieldIdentities)
+}
+
+// SetAppMetadata sets the AppMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetAppMetadata(appMetadata *UserAppMetadataSchema) {
+	u.AppMetadata = appMetadata
+	u.require(updateUserResponseContentFieldAppMetadata)
+}
+
+// SetUserMetadata sets the UserMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetUserMetadata(userMetadata *UserMetadataSchema) {
+	u.UserMetadata = userMetadata
+	u.require(updateUserResponseContentFieldUserMetadata)
+}
+
+// SetPicture sets the Picture field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetPicture(picture *string) {
+	u.Picture = picture
+	u.require(updateUserResponseContentFieldPicture)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateUserResponseContentFieldName)
+}
+
+// SetNickname sets the Nickname field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetNickname(nickname *string) {
+	u.Nickname = nickname
+	u.require(updateUserResponseContentFieldNickname)
+}
+
+// SetMultifactor sets the Multifactor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetMultifactor(multifactor []string) {
+	u.Multifactor = multifactor
+	u.require(updateUserResponseContentFieldMultifactor)
+}
+
+// SetLastIp sets the LastIp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetLastIp(lastIp *string) {
+	u.LastIp = lastIp
+	u.require(updateUserResponseContentFieldLastIp)
+}
+
+// SetLastLogin sets the LastLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetLastLogin(lastLogin *UserDateSchema) {
+	u.LastLogin = lastLogin
+	u.require(updateUserResponseContentFieldLastLogin)
+}
+
+// SetLoginsCount sets the LoginsCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetLoginsCount(loginsCount *int) {
+	u.LoginsCount = loginsCount
+	u.require(updateUserResponseContentFieldLoginsCount)
+}
+
+// SetBlocked sets the Blocked field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetBlocked(blocked *bool) {
+	u.Blocked = blocked
+	u.require(updateUserResponseContentFieldBlocked)
+}
+
+// SetGivenName sets the GivenName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetGivenName(givenName *string) {
+	u.GivenName = givenName
+	u.require(updateUserResponseContentFieldGivenName)
+}
+
+// SetFamilyName sets the FamilyName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetFamilyName(familyName *string) {
+	u.FamilyName = familyName
+	u.require(updateUserResponseContentFieldFamilyName)
 }
 
 func (u *UpdateUserResponseContent) UnmarshalJSON(data []byte) error {
@@ -951,7 +1502,8 @@ func (u *UpdateUserResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*u),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
 }
 
 func (u *UpdateUserResponseContent) String() string {
@@ -1033,11 +1585,22 @@ func (u *UserDateSchema) Accept(visitor UserDateSchemaVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
+var (
+	userIdentitySchemaFieldConnection        = big.NewInt(1 << 0)
+	userIdentitySchemaFieldUserId            = big.NewInt(1 << 1)
+	userIdentitySchemaFieldProvider          = big.NewInt(1 << 2)
+	userIdentitySchemaFieldIsSocial          = big.NewInt(1 << 3)
+	userIdentitySchemaFieldAccessToken       = big.NewInt(1 << 4)
+	userIdentitySchemaFieldAccessTokenSecret = big.NewInt(1 << 5)
+	userIdentitySchemaFieldRefreshToken      = big.NewInt(1 << 6)
+	userIdentitySchemaFieldProfileData       = big.NewInt(1 << 7)
+)
+
 type UserIdentitySchema struct {
 	// Name of the connection containing this identity.
 	Connection *string `json:"connection,omitempty" url:"connection,omitempty"`
 	// Unique identifier of the user user for this identity.
-	UserID   *string                   `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserId   *string                   `json:"user_id,omitempty" url:"user_id,omitempty"`
 	Provider *UserIdentityProviderEnum `json:"provider,omitempty" url:"provider,omitempty"`
 	// Whether this identity is from a social provider (true) or not (false).
 	IsSocial *bool `json:"isSocial,omitempty" url:"isSocial,omitempty"`
@@ -1049,68 +1612,134 @@ type UserIdentitySchema struct {
 	RefreshToken *string          `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 	ProfileData  *UserProfileData `json:"profileData,omitempty" url:"profileData,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UserIdentitySchema) GetConnection() *string {
-	if u == nil {
-		return nil
+func (u *UserIdentitySchema) GetConnection() string {
+	if u == nil || u.Connection == nil {
+		return ""
 	}
-	return u.Connection
+	return *u.Connection
 }
 
-func (u *UserIdentitySchema) GetUserID() *string {
-	if u == nil {
-		return nil
+func (u *UserIdentitySchema) GetUserId() string {
+	if u == nil || u.UserId == nil {
+		return ""
 	}
-	return u.UserID
+	return *u.UserId
 }
 
-func (u *UserIdentitySchema) GetProvider() *UserIdentityProviderEnum {
-	if u == nil {
-		return nil
+func (u *UserIdentitySchema) GetProvider() UserIdentityProviderEnum {
+	if u == nil || u.Provider == nil {
+		return ""
 	}
-	return u.Provider
+	return *u.Provider
 }
 
-func (u *UserIdentitySchema) GetIsSocial() *bool {
-	if u == nil {
-		return nil
+func (u *UserIdentitySchema) GetIsSocial() bool {
+	if u == nil || u.IsSocial == nil {
+		return false
 	}
-	return u.IsSocial
+	return *u.IsSocial
 }
 
-func (u *UserIdentitySchema) GetAccessToken() *string {
-	if u == nil {
-		return nil
+func (u *UserIdentitySchema) GetAccessToken() string {
+	if u == nil || u.AccessToken == nil {
+		return ""
 	}
-	return u.AccessToken
+	return *u.AccessToken
 }
 
-func (u *UserIdentitySchema) GetAccessTokenSecret() *string {
-	if u == nil {
-		return nil
+func (u *UserIdentitySchema) GetAccessTokenSecret() string {
+	if u == nil || u.AccessTokenSecret == nil {
+		return ""
 	}
-	return u.AccessTokenSecret
+	return *u.AccessTokenSecret
 }
 
-func (u *UserIdentitySchema) GetRefreshToken() *string {
-	if u == nil {
-		return nil
+func (u *UserIdentitySchema) GetRefreshToken() string {
+	if u == nil || u.RefreshToken == nil {
+		return ""
 	}
-	return u.RefreshToken
+	return *u.RefreshToken
 }
 
-func (u *UserIdentitySchema) GetProfileData() *UserProfileData {
-	if u == nil {
-		return nil
+func (u *UserIdentitySchema) GetProfileData() UserProfileData {
+	if u == nil || u.ProfileData == nil {
+		return UserProfileData{}
 	}
-	return u.ProfileData
+	return *u.ProfileData
 }
 
 func (u *UserIdentitySchema) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UserIdentitySchema) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentitySchema) SetConnection(connection *string) {
+	u.Connection = connection
+	u.require(userIdentitySchemaFieldConnection)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentitySchema) SetUserId(userId *string) {
+	u.UserId = userId
+	u.require(userIdentitySchemaFieldUserId)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentitySchema) SetProvider(provider *UserIdentityProviderEnum) {
+	u.Provider = provider
+	u.require(userIdentitySchemaFieldProvider)
+}
+
+// SetIsSocial sets the IsSocial field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentitySchema) SetIsSocial(isSocial *bool) {
+	u.IsSocial = isSocial
+	u.require(userIdentitySchemaFieldIsSocial)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentitySchema) SetAccessToken(accessToken *string) {
+	u.AccessToken = accessToken
+	u.require(userIdentitySchemaFieldAccessToken)
+}
+
+// SetAccessTokenSecret sets the AccessTokenSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentitySchema) SetAccessTokenSecret(accessTokenSecret *string) {
+	u.AccessTokenSecret = accessTokenSecret
+	u.require(userIdentitySchemaFieldAccessTokenSecret)
+}
+
+// SetRefreshToken sets the RefreshToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentitySchema) SetRefreshToken(refreshToken *string) {
+	u.RefreshToken = refreshToken
+	u.require(userIdentitySchemaFieldRefreshToken)
+}
+
+// SetProfileData sets the ProfileData field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentitySchema) SetProfileData(profileData *UserProfileData) {
+	u.ProfileData = profileData
+	u.require(userIdentitySchemaFieldProfileData)
 }
 
 func (u *UserIdentitySchema) UnmarshalJSON(data []byte) error {
@@ -1129,6 +1758,17 @@ func (u *UserIdentitySchema) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (u *UserIdentitySchema) MarshalJSON() ([]byte, error) {
+	type embed UserIdentitySchema
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (u *UserIdentitySchema) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
@@ -1144,9 +1784,33 @@ func (u *UserIdentitySchema) String() string {
 // User metadata to which this user has read/write access.
 type UserMetadataSchema = map[string]interface{}
 
+var (
+	userResponseSchemaFieldUserId        = big.NewInt(1 << 0)
+	userResponseSchemaFieldEmail         = big.NewInt(1 << 1)
+	userResponseSchemaFieldEmailVerified = big.NewInt(1 << 2)
+	userResponseSchemaFieldUsername      = big.NewInt(1 << 3)
+	userResponseSchemaFieldPhoneNumber   = big.NewInt(1 << 4)
+	userResponseSchemaFieldPhoneVerified = big.NewInt(1 << 5)
+	userResponseSchemaFieldCreatedAt     = big.NewInt(1 << 6)
+	userResponseSchemaFieldUpdatedAt     = big.NewInt(1 << 7)
+	userResponseSchemaFieldIdentities    = big.NewInt(1 << 8)
+	userResponseSchemaFieldAppMetadata   = big.NewInt(1 << 9)
+	userResponseSchemaFieldUserMetadata  = big.NewInt(1 << 10)
+	userResponseSchemaFieldPicture       = big.NewInt(1 << 11)
+	userResponseSchemaFieldName          = big.NewInt(1 << 12)
+	userResponseSchemaFieldNickname      = big.NewInt(1 << 13)
+	userResponseSchemaFieldMultifactor   = big.NewInt(1 << 14)
+	userResponseSchemaFieldLastIp        = big.NewInt(1 << 15)
+	userResponseSchemaFieldLastLogin     = big.NewInt(1 << 16)
+	userResponseSchemaFieldLoginsCount   = big.NewInt(1 << 17)
+	userResponseSchemaFieldBlocked       = big.NewInt(1 << 18)
+	userResponseSchemaFieldGivenName     = big.NewInt(1 << 19)
+	userResponseSchemaFieldFamilyName    = big.NewInt(1 << 20)
+)
+
 type UserResponseSchema struct {
 	// ID of the user which can be used when interacting with other APIs.
-	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 	// Whether this email address is verified (true) or unverified (false).
@@ -1172,7 +1836,7 @@ type UserResponseSchema struct {
 	// List of multi-factor authentication providers with which this user has enrolled.
 	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIP    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastIp    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
 	LastLogin *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
@@ -1183,160 +1847,317 @@ type UserResponseSchema struct {
 	// Family name/last name/surname of this user.
 	FamilyName *string `json:"family_name,omitempty" url:"family_name,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (u *UserResponseSchema) GetUserID() *string {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetUserId() string {
+	if u == nil || u.UserId == nil {
+		return ""
 	}
-	return u.UserID
+	return *u.UserId
 }
 
-func (u *UserResponseSchema) GetEmail() *string {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetEmail() string {
+	if u == nil || u.Email == nil {
+		return ""
 	}
-	return u.Email
+	return *u.Email
 }
 
-func (u *UserResponseSchema) GetEmailVerified() *bool {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetEmailVerified() bool {
+	if u == nil || u.EmailVerified == nil {
+		return false
 	}
-	return u.EmailVerified
+	return *u.EmailVerified
 }
 
-func (u *UserResponseSchema) GetUsername() *string {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetUsername() string {
+	if u == nil || u.Username == nil {
+		return ""
 	}
-	return u.Username
+	return *u.Username
 }
 
-func (u *UserResponseSchema) GetPhoneNumber() *string {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetPhoneNumber() string {
+	if u == nil || u.PhoneNumber == nil {
+		return ""
 	}
-	return u.PhoneNumber
+	return *u.PhoneNumber
 }
 
-func (u *UserResponseSchema) GetPhoneVerified() *bool {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetPhoneVerified() bool {
+	if u == nil || u.PhoneVerified == nil {
+		return false
 	}
-	return u.PhoneVerified
+	return *u.PhoneVerified
 }
 
-func (u *UserResponseSchema) GetCreatedAt() *UserDateSchema {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetCreatedAt() UserDateSchema {
+	if u == nil || u.CreatedAt == nil {
+		return UserDateSchema{}
 	}
-	return u.CreatedAt
+	return *u.CreatedAt
 }
 
-func (u *UserResponseSchema) GetUpdatedAt() *UserDateSchema {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetUpdatedAt() UserDateSchema {
+	if u == nil || u.UpdatedAt == nil {
+		return UserDateSchema{}
 	}
-	return u.UpdatedAt
+	return *u.UpdatedAt
 }
 
 func (u *UserResponseSchema) GetIdentities() []*UserIdentitySchema {
-	if u == nil {
+	if u == nil || u.Identities == nil {
 		return nil
 	}
 	return u.Identities
 }
 
-func (u *UserResponseSchema) GetAppMetadata() *UserAppMetadataSchema {
-	if u == nil {
+func (u *UserResponseSchema) GetAppMetadata() UserAppMetadataSchema {
+	if u == nil || u.AppMetadata == nil {
 		return nil
 	}
-	return u.AppMetadata
+	return *u.AppMetadata
 }
 
-func (u *UserResponseSchema) GetUserMetadata() *UserMetadataSchema {
-	if u == nil {
+func (u *UserResponseSchema) GetUserMetadata() UserMetadataSchema {
+	if u == nil || u.UserMetadata == nil {
 		return nil
 	}
-	return u.UserMetadata
+	return *u.UserMetadata
 }
 
-func (u *UserResponseSchema) GetPicture() *string {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetPicture() string {
+	if u == nil || u.Picture == nil {
+		return ""
 	}
-	return u.Picture
+	return *u.Picture
 }
 
-func (u *UserResponseSchema) GetName() *string {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
 	}
-	return u.Name
+	return *u.Name
 }
 
-func (u *UserResponseSchema) GetNickname() *string {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetNickname() string {
+	if u == nil || u.Nickname == nil {
+		return ""
 	}
-	return u.Nickname
+	return *u.Nickname
 }
 
 func (u *UserResponseSchema) GetMultifactor() []string {
-	if u == nil {
+	if u == nil || u.Multifactor == nil {
 		return nil
 	}
 	return u.Multifactor
 }
 
-func (u *UserResponseSchema) GetLastIP() *string {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetLastIp() string {
+	if u == nil || u.LastIp == nil {
+		return ""
 	}
-	return u.LastIP
+	return *u.LastIp
 }
 
-func (u *UserResponseSchema) GetLastLogin() *UserDateSchema {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetLastLogin() UserDateSchema {
+	if u == nil || u.LastLogin == nil {
+		return UserDateSchema{}
 	}
-	return u.LastLogin
+	return *u.LastLogin
 }
 
-func (u *UserResponseSchema) GetLoginsCount() *int {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetLoginsCount() int {
+	if u == nil || u.LoginsCount == nil {
+		return 0
 	}
-	return u.LoginsCount
+	return *u.LoginsCount
 }
 
-func (u *UserResponseSchema) GetBlocked() *bool {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetBlocked() bool {
+	if u == nil || u.Blocked == nil {
+		return false
 	}
-	return u.Blocked
+	return *u.Blocked
 }
 
-func (u *UserResponseSchema) GetGivenName() *string {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetGivenName() string {
+	if u == nil || u.GivenName == nil {
+		return ""
 	}
-	return u.GivenName
+	return *u.GivenName
 }
 
-func (u *UserResponseSchema) GetFamilyName() *string {
-	if u == nil {
-		return nil
+func (u *UserResponseSchema) GetFamilyName() string {
+	if u == nil || u.FamilyName == nil {
+		return ""
 	}
-	return u.FamilyName
+	return *u.FamilyName
 }
 
 func (u *UserResponseSchema) GetExtraProperties() map[string]interface{} {
 	return u.ExtraProperties
+}
+
+func (u *UserResponseSchema) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetUserId(userId *string) {
+	u.UserId = userId
+	u.require(userResponseSchemaFieldUserId)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetEmail(email *string) {
+	u.Email = email
+	u.require(userResponseSchemaFieldEmail)
+}
+
+// SetEmailVerified sets the EmailVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetEmailVerified(emailVerified *bool) {
+	u.EmailVerified = emailVerified
+	u.require(userResponseSchemaFieldEmailVerified)
+}
+
+// SetUsername sets the Username field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetUsername(username *string) {
+	u.Username = username
+	u.require(userResponseSchemaFieldUsername)
+}
+
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetPhoneNumber(phoneNumber *string) {
+	u.PhoneNumber = phoneNumber
+	u.require(userResponseSchemaFieldPhoneNumber)
+}
+
+// SetPhoneVerified sets the PhoneVerified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetPhoneVerified(phoneVerified *bool) {
+	u.PhoneVerified = phoneVerified
+	u.require(userResponseSchemaFieldPhoneVerified)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetCreatedAt(createdAt *UserDateSchema) {
+	u.CreatedAt = createdAt
+	u.require(userResponseSchemaFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetUpdatedAt(updatedAt *UserDateSchema) {
+	u.UpdatedAt = updatedAt
+	u.require(userResponseSchemaFieldUpdatedAt)
+}
+
+// SetIdentities sets the Identities field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetIdentities(identities []*UserIdentitySchema) {
+	u.Identities = identities
+	u.require(userResponseSchemaFieldIdentities)
+}
+
+// SetAppMetadata sets the AppMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetAppMetadata(appMetadata *UserAppMetadataSchema) {
+	u.AppMetadata = appMetadata
+	u.require(userResponseSchemaFieldAppMetadata)
+}
+
+// SetUserMetadata sets the UserMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetUserMetadata(userMetadata *UserMetadataSchema) {
+	u.UserMetadata = userMetadata
+	u.require(userResponseSchemaFieldUserMetadata)
+}
+
+// SetPicture sets the Picture field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetPicture(picture *string) {
+	u.Picture = picture
+	u.require(userResponseSchemaFieldPicture)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetName(name *string) {
+	u.Name = name
+	u.require(userResponseSchemaFieldName)
+}
+
+// SetNickname sets the Nickname field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetNickname(nickname *string) {
+	u.Nickname = nickname
+	u.require(userResponseSchemaFieldNickname)
+}
+
+// SetMultifactor sets the Multifactor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetMultifactor(multifactor []string) {
+	u.Multifactor = multifactor
+	u.require(userResponseSchemaFieldMultifactor)
+}
+
+// SetLastIp sets the LastIp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetLastIp(lastIp *string) {
+	u.LastIp = lastIp
+	u.require(userResponseSchemaFieldLastIp)
+}
+
+// SetLastLogin sets the LastLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetLastLogin(lastLogin *UserDateSchema) {
+	u.LastLogin = lastLogin
+	u.require(userResponseSchemaFieldLastLogin)
+}
+
+// SetLoginsCount sets the LoginsCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetLoginsCount(loginsCount *int) {
+	u.LoginsCount = loginsCount
+	u.require(userResponseSchemaFieldLoginsCount)
+}
+
+// SetBlocked sets the Blocked field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetBlocked(blocked *bool) {
+	u.Blocked = blocked
+	u.require(userResponseSchemaFieldBlocked)
+}
+
+// SetGivenName sets the GivenName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetGivenName(givenName *string) {
+	u.GivenName = givenName
+	u.require(userResponseSchemaFieldGivenName)
+}
+
+// SetFamilyName sets the FamilyName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetFamilyName(familyName *string) {
+	u.FamilyName = familyName
+	u.require(userResponseSchemaFieldFamilyName)
 }
 
 func (u *UserResponseSchema) UnmarshalJSON(data []byte) error {
@@ -1366,7 +2187,8 @@ func (u *UserResponseSchema) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*u),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
 }
 
 func (u *UserResponseSchema) String() string {
@@ -1379,41 +2201,4 @@ func (u *UserResponseSchema) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateUserRequestContent struct {
-	// Whether this user was blocked by an administrator (true) or not (false).
-	Blocked *bool `json:"blocked,omitempty" url:"-"`
-	// Whether this email address is verified (true) or unverified (false). If set to false the user will not receive a verification email unless `verify_email` is set to true.
-	EmailVerified *bool `json:"email_verified,omitempty" url:"-"`
-	// Email address of this user.
-	Email *string `json:"email,omitempty" url:"-"`
-	// The user's phone number (following the E.164 recommendation).
-	PhoneNumber *string `json:"phone_number,omitempty" url:"-"`
-	// Whether this phone number has been verified (true) or not (false).
-	PhoneVerified *bool         `json:"phone_verified,omitempty" url:"-"`
-	UserMetadata  *UserMetadata `json:"user_metadata,omitempty" url:"-"`
-	AppMetadata   *AppMetadata  `json:"app_metadata,omitempty" url:"-"`
-	// Given name/first name/forename of this user.
-	GivenName *string `json:"given_name,omitempty" url:"-"`
-	// Family name/last name/surname of this user.
-	FamilyName *string `json:"family_name,omitempty" url:"-"`
-	// Name of this user.
-	Name *string `json:"name,omitempty" url:"-"`
-	// Preferred nickname or alias of this user.
-	Nickname *string `json:"nickname,omitempty" url:"-"`
-	// URL to picture, photo, or avatar of this user.
-	Picture *string `json:"picture,omitempty" url:"-"`
-	// Whether this user will receive a verification email after creation (true) or no email (false). Overrides behavior of `email_verified` parameter.
-	VerifyEmail *bool `json:"verify_email,omitempty" url:"-"`
-	// Whether this user will receive a text after changing the phone number (true) or no text (false). Only valid when changing phone number for SMS connections.
-	VerifyPhoneNumber *bool `json:"verify_phone_number,omitempty" url:"-"`
-	// New password for this user. Only valid for database connections.
-	Password *string `json:"password,omitempty" url:"-"`
-	// Name of the connection to target for this user update.
-	Connection *string `json:"connection,omitempty" url:"-"`
-	// Auth0 client ID. Only valid when updating email address.
-	ClientID *string `json:"client_id,omitempty" url:"-"`
-	// The user's username. Only valid if the connection requires a username.
-	Username *string `json:"username,omitempty" url:"-"`
 }

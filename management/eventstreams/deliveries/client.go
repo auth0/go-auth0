@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	eventstreams "github.com/auth0/go-auth0/v2/management/eventstreams"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 )
@@ -37,7 +36,7 @@ func (c *Client) List(
 	ctx context.Context,
 	// Unique identifier for the event stream.
 	id string,
-	request *eventstreams.ListEventStreamDeliveriesRequestParameters,
+	request *management.ListEventStreamDeliveriesRequestParameters,
 	opts ...option.RequestOption,
 ) ([]*management.EventStreamDelivery, error) {
 	response, err := c.WithRawResponse.List(
@@ -57,13 +56,13 @@ func (c *Client) GetHistory(
 	// Unique identifier for the event stream.
 	id string,
 	// Unique identifier for the event
-	eventID string,
+	eventId string,
 	opts ...option.RequestOption,
 ) (*management.GetEventStreamDeliveryHistoryResponseContent, error) {
 	response, err := c.WithRawResponse.GetHistory(
 		ctx,
 		id,
-		eventID,
+		eventId,
 		opts...,
 	)
 	if err != nil {

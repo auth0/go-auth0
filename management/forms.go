@@ -6,38 +6,28 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 	time "time"
 )
 
-type CreateFormRequestContent struct {
-	Name         string            `json:"name" url:"-"`
-	Messages     *FormMessages     `json:"messages,omitempty" url:"-"`
-	Languages    *FormLanguages    `json:"languages,omitempty" url:"-"`
-	Translations *FormTranslations `json:"translations,omitempty" url:"-"`
-	Nodes        *FormNodeList     `json:"nodes,omitempty" url:"-"`
-	Start        *FormStartNode    `json:"start,omitempty" url:"-"`
-	Ending       *FormEndingNode   `json:"ending,omitempty" url:"-"`
-	Style        *FormStyle        `json:"style,omitempty" url:"-"`
-}
-
-type GetFormRequestParameters struct {
-	// Query parameter to hydrate the response with additional data
-	Hydrate []*FormsRequestParametersHydrateEnum `json:"-" url:"hydrate,omitempty"`
-}
-
-type ListFormsRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page. Defaults to 50.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Query parameter to hydrate the response with additional data
-	Hydrate []*FormsRequestParametersHydrateEnum `json:"-" url:"hydrate,omitempty"`
-}
+var (
+	createFormResponseContentFieldId           = big.NewInt(1 << 0)
+	createFormResponseContentFieldName         = big.NewInt(1 << 1)
+	createFormResponseContentFieldMessages     = big.NewInt(1 << 2)
+	createFormResponseContentFieldLanguages    = big.NewInt(1 << 3)
+	createFormResponseContentFieldTranslations = big.NewInt(1 << 4)
+	createFormResponseContentFieldNodes        = big.NewInt(1 << 5)
+	createFormResponseContentFieldStart        = big.NewInt(1 << 6)
+	createFormResponseContentFieldEnding       = big.NewInt(1 << 7)
+	createFormResponseContentFieldStyle        = big.NewInt(1 << 8)
+	createFormResponseContentFieldCreatedAt    = big.NewInt(1 << 9)
+	createFormResponseContentFieldUpdatedAt    = big.NewInt(1 << 10)
+	createFormResponseContentFieldEmbeddedAt   = big.NewInt(1 << 11)
+	createFormResponseContentFieldSubmittedAt  = big.NewInt(1 << 12)
+)
 
 type CreateFormResponseContent struct {
-	ID           string            `json:"id" url:"id"`
+	Id           string            `json:"id" url:"id"`
 	Name         string            `json:"name" url:"name"`
 	Messages     *FormMessages     `json:"messages,omitempty" url:"messages,omitempty"`
 	Languages    *FormLanguages    `json:"languages,omitempty" url:"languages,omitempty"`
@@ -51,15 +41,18 @@ type CreateFormResponseContent struct {
 	EmbeddedAt   *string           `json:"embedded_at,omitempty" url:"embedded_at,omitempty"`
 	SubmittedAt  *string           `json:"submitted_at,omitempty" url:"submitted_at,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateFormResponseContent) GetID() string {
+func (c *CreateFormResponseContent) GetId() string {
 	if c == nil {
 		return ""
 	}
-	return c.ID
+	return c.Id
 }
 
 func (c *CreateFormResponseContent) GetName() string {
@@ -69,53 +62,53 @@ func (c *CreateFormResponseContent) GetName() string {
 	return c.Name
 }
 
-func (c *CreateFormResponseContent) GetMessages() *FormMessages {
-	if c == nil {
-		return nil
+func (c *CreateFormResponseContent) GetMessages() FormMessages {
+	if c == nil || c.Messages == nil {
+		return FormMessages{}
 	}
-	return c.Messages
+	return *c.Messages
 }
 
-func (c *CreateFormResponseContent) GetLanguages() *FormLanguages {
-	if c == nil {
-		return nil
+func (c *CreateFormResponseContent) GetLanguages() FormLanguages {
+	if c == nil || c.Languages == nil {
+		return FormLanguages{}
 	}
-	return c.Languages
+	return *c.Languages
 }
 
-func (c *CreateFormResponseContent) GetTranslations() *FormTranslations {
-	if c == nil {
+func (c *CreateFormResponseContent) GetTranslations() FormTranslations {
+	if c == nil || c.Translations == nil {
 		return nil
 	}
-	return c.Translations
+	return *c.Translations
 }
 
-func (c *CreateFormResponseContent) GetNodes() *FormNodeList {
-	if c == nil {
+func (c *CreateFormResponseContent) GetNodes() FormNodeList {
+	if c == nil || c.Nodes == nil {
 		return nil
 	}
-	return c.Nodes
+	return *c.Nodes
 }
 
-func (c *CreateFormResponseContent) GetStart() *FormStartNode {
-	if c == nil {
-		return nil
+func (c *CreateFormResponseContent) GetStart() FormStartNode {
+	if c == nil || c.Start == nil {
+		return FormStartNode{}
 	}
-	return c.Start
+	return *c.Start
 }
 
-func (c *CreateFormResponseContent) GetEnding() *FormEndingNode {
-	if c == nil {
-		return nil
+func (c *CreateFormResponseContent) GetEnding() FormEndingNode {
+	if c == nil || c.Ending == nil {
+		return FormEndingNode{}
 	}
-	return c.Ending
+	return *c.Ending
 }
 
-func (c *CreateFormResponseContent) GetStyle() *FormStyle {
-	if c == nil {
-		return nil
+func (c *CreateFormResponseContent) GetStyle() FormStyle {
+	if c == nil || c.Style == nil {
+		return FormStyle{}
 	}
-	return c.Style
+	return *c.Style
 }
 
 func (c *CreateFormResponseContent) GetCreatedAt() time.Time {
@@ -132,22 +125,120 @@ func (c *CreateFormResponseContent) GetUpdatedAt() time.Time {
 	return c.UpdatedAt
 }
 
-func (c *CreateFormResponseContent) GetEmbeddedAt() *string {
-	if c == nil {
-		return nil
+func (c *CreateFormResponseContent) GetEmbeddedAt() string {
+	if c == nil || c.EmbeddedAt == nil {
+		return ""
 	}
-	return c.EmbeddedAt
+	return *c.EmbeddedAt
 }
 
-func (c *CreateFormResponseContent) GetSubmittedAt() *string {
-	if c == nil {
-		return nil
+func (c *CreateFormResponseContent) GetSubmittedAt() string {
+	if c == nil || c.SubmittedAt == nil {
+		return ""
 	}
-	return c.SubmittedAt
+	return *c.SubmittedAt
 }
 
 func (c *CreateFormResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *CreateFormResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetId(id string) {
+	c.Id = id
+	c.require(createFormResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetName(name string) {
+	c.Name = name
+	c.require(createFormResponseContentFieldName)
+}
+
+// SetMessages sets the Messages field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetMessages(messages *FormMessages) {
+	c.Messages = messages
+	c.require(createFormResponseContentFieldMessages)
+}
+
+// SetLanguages sets the Languages field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetLanguages(languages *FormLanguages) {
+	c.Languages = languages
+	c.require(createFormResponseContentFieldLanguages)
+}
+
+// SetTranslations sets the Translations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetTranslations(translations *FormTranslations) {
+	c.Translations = translations
+	c.require(createFormResponseContentFieldTranslations)
+}
+
+// SetNodes sets the Nodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetNodes(nodes *FormNodeList) {
+	c.Nodes = nodes
+	c.require(createFormResponseContentFieldNodes)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetStart(start *FormStartNode) {
+	c.Start = start
+	c.require(createFormResponseContentFieldStart)
+}
+
+// SetEnding sets the Ending field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetEnding(ending *FormEndingNode) {
+	c.Ending = ending
+	c.require(createFormResponseContentFieldEnding)
+}
+
+// SetStyle sets the Style field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetStyle(style *FormStyle) {
+	c.Style = style
+	c.require(createFormResponseContentFieldStyle)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetCreatedAt(createdAt time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createFormResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(createFormResponseContentFieldUpdatedAt)
+}
+
+// SetEmbeddedAt sets the EmbeddedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetEmbeddedAt(embeddedAt *string) {
+	c.EmbeddedAt = embeddedAt
+	c.require(createFormResponseContentFieldEmbeddedAt)
+}
+
+// SetSubmittedAt sets the SubmittedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormResponseContent) SetSubmittedAt(submittedAt *string) {
+	c.SubmittedAt = submittedAt
+	c.require(createFormResponseContentFieldSubmittedAt)
 }
 
 func (c *CreateFormResponseContent) UnmarshalJSON(data []byte) error {
@@ -185,7 +276,8 @@ func (c *CreateFormResponseContent) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewDateTime(c.CreatedAt),
 		UpdatedAt: internal.NewDateTime(c.UpdatedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (c *CreateFormResponseContent) String() string {
@@ -202,7 +294,7 @@ func (c *CreateFormResponseContent) String() string {
 
 type FormBlock struct {
 	FormBlockDivider        *FormBlockDivider
-	FormBlockHTML           *FormBlockHTML
+	FormBlockHtml           *FormBlockHtml
 	FormBlockImage          *FormBlockImage
 	FormBlockJumpButton     *FormBlockJumpButton
 	FormBlockResendButton   *FormBlockResendButton
@@ -220,11 +312,11 @@ func (f *FormBlock) GetFormBlockDivider() *FormBlockDivider {
 	return f.FormBlockDivider
 }
 
-func (f *FormBlock) GetFormBlockHTML() *FormBlockHTML {
+func (f *FormBlock) GetFormBlockHtml() *FormBlockHtml {
 	if f == nil {
 		return nil
 	}
-	return f.FormBlockHTML
+	return f.FormBlockHtml
 }
 
 func (f *FormBlock) GetFormBlockImage() *FormBlockImage {
@@ -276,10 +368,10 @@ func (f *FormBlock) UnmarshalJSON(data []byte) error {
 		f.FormBlockDivider = valueFormBlockDivider
 		return nil
 	}
-	valueFormBlockHTML := new(FormBlockHTML)
-	if err := json.Unmarshal(data, &valueFormBlockHTML); err == nil {
-		f.typ = "FormBlockHTML"
-		f.FormBlockHTML = valueFormBlockHTML
+	valueFormBlockHtml := new(FormBlockHtml)
+	if err := json.Unmarshal(data, &valueFormBlockHtml); err == nil {
+		f.typ = "FormBlockHtml"
+		f.FormBlockHtml = valueFormBlockHtml
 		return nil
 	}
 	valueFormBlockImage := new(FormBlockImage)
@@ -325,8 +417,8 @@ func (f FormBlock) MarshalJSON() ([]byte, error) {
 	if f.typ == "FormBlockDivider" || f.FormBlockDivider != nil {
 		return json.Marshal(f.FormBlockDivider)
 	}
-	if f.typ == "FormBlockHTML" || f.FormBlockHTML != nil {
-		return json.Marshal(f.FormBlockHTML)
+	if f.typ == "FormBlockHtml" || f.FormBlockHtml != nil {
+		return json.Marshal(f.FormBlockHtml)
 	}
 	if f.typ == "FormBlockImage" || f.FormBlockImage != nil {
 		return json.Marshal(f.FormBlockImage)
@@ -351,7 +443,7 @@ func (f FormBlock) MarshalJSON() ([]byte, error) {
 
 type FormBlockVisitor interface {
 	VisitFormBlockDivider(*FormBlockDivider) error
-	VisitFormBlockHTML(*FormBlockHTML) error
+	VisitFormBlockHtml(*FormBlockHtml) error
 	VisitFormBlockImage(*FormBlockImage) error
 	VisitFormBlockJumpButton(*FormBlockJumpButton) error
 	VisitFormBlockResendButton(*FormBlockResendButton) error
@@ -364,8 +456,8 @@ func (f *FormBlock) Accept(visitor FormBlockVisitor) error {
 	if f.typ == "FormBlockDivider" || f.FormBlockDivider != nil {
 		return visitor.VisitFormBlockDivider(f.FormBlockDivider)
 	}
-	if f.typ == "FormBlockHTML" || f.FormBlockHTML != nil {
-		return visitor.VisitFormBlockHTML(f.FormBlockHTML)
+	if f.typ == "FormBlockHtml" || f.FormBlockHtml != nil {
+		return visitor.VisitFormBlockHtml(f.FormBlockHtml)
 	}
 	if f.typ == "FormBlockImage" || f.FormBlockImage != nil {
 		return visitor.VisitFormBlockImage(f.FormBlockImage)
@@ -388,32 +480,77 @@ func (f *FormBlock) Accept(visitor FormBlockVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
+var (
+	formBlockDividerFieldId       = big.NewInt(1 << 0)
+	formBlockDividerFieldCategory = big.NewInt(1 << 1)
+	formBlockDividerFieldType     = big.NewInt(1 << 2)
+	formBlockDividerFieldConfig   = big.NewInt(1 << 3)
+)
+
 type FormBlockDivider struct {
-	ID       string                          `json:"id" url:"id"`
+	Id       string                          `json:"id" url:"id"`
 	Category FormComponentCategoryBlockConst `json:"category" url:"category"`
 	Type     FormBlockTypeDividerConst       `json:"type" url:"type"`
 	Config   *FormBlockDividerConfig         `json:"config,omitempty" url:"config,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormBlockDivider) GetID() string {
+func (f *FormBlockDivider) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormBlockDivider) GetConfig() *FormBlockDividerConfig {
-	if f == nil {
-		return nil
+func (f *FormBlockDivider) GetConfig() FormBlockDividerConfig {
+	if f == nil || f.Config == nil {
+		return FormBlockDividerConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
 func (f *FormBlockDivider) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockDivider) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockDivider) SetId(id string) {
+	f.Id = id
+	f.require(formBlockDividerFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockDivider) SetCategory(category FormComponentCategoryBlockConst) {
+	f.Category = category
+	f.require(formBlockDividerFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockDivider) SetType(type_ FormBlockTypeDividerConst) {
+	f.Type = type_
+	f.require(formBlockDividerFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockDivider) SetConfig(config *FormBlockDividerConfig) {
+	f.Config = config
+	f.require(formBlockDividerFieldConfig)
 }
 
 func (f *FormBlockDivider) UnmarshalJSON(data []byte) error {
@@ -432,6 +569,17 @@ func (f *FormBlockDivider) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockDivider) MarshalJSON() ([]byte, error) {
+	type embed FormBlockDivider
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockDivider) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -444,22 +592,43 @@ func (f *FormBlockDivider) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formBlockDividerConfigFieldText = big.NewInt(1 << 0)
+)
+
 type FormBlockDividerConfig struct {
 	Text *string `json:"text,omitempty" url:"text,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormBlockDividerConfig) GetText() *string {
-	if f == nil {
-		return nil
+func (f *FormBlockDividerConfig) GetText() string {
+	if f == nil || f.Text == nil {
+		return ""
 	}
-	return f.Text
+	return *f.Text
 }
 
 func (f *FormBlockDividerConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockDividerConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetText sets the Text field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockDividerConfig) SetText(text *string) {
+	f.Text = text
+	f.require(formBlockDividerConfigFieldText)
 }
 
 func (f *FormBlockDividerConfig) UnmarshalJSON(data []byte) error {
@@ -478,6 +647,17 @@ func (f *FormBlockDividerConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockDividerConfig) MarshalJSON() ([]byte, error) {
+	type embed FormBlockDividerConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockDividerConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -490,41 +670,86 @@ func (f *FormBlockDividerConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormBlockHTML struct {
-	ID       string                          `json:"id" url:"id"`
+var (
+	formBlockHtmlFieldId       = big.NewInt(1 << 0)
+	formBlockHtmlFieldCategory = big.NewInt(1 << 1)
+	formBlockHtmlFieldType     = big.NewInt(1 << 2)
+	formBlockHtmlFieldConfig   = big.NewInt(1 << 3)
+)
+
+type FormBlockHtml struct {
+	Id       string                          `json:"id" url:"id"`
 	Category FormComponentCategoryBlockConst `json:"category" url:"category"`
-	Type     FormBlockTypeHTMLConst          `json:"type" url:"type"`
-	Config   *FormBlockHTMLConfig            `json:"config,omitempty" url:"config,omitempty"`
+	Type     FormBlockTypeHtmlConst          `json:"type" url:"type"`
+	Config   *FormBlockHtmlConfig            `json:"config,omitempty" url:"config,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormBlockHTML) GetID() string {
+func (f *FormBlockHtml) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormBlockHTML) GetConfig() *FormBlockHTMLConfig {
-	if f == nil {
-		return nil
+func (f *FormBlockHtml) GetConfig() FormBlockHtmlConfig {
+	if f == nil || f.Config == nil {
+		return FormBlockHtmlConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
-func (f *FormBlockHTML) GetExtraProperties() map[string]interface{} {
+func (f *FormBlockHtml) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
-func (f *FormBlockHTML) UnmarshalJSON(data []byte) error {
-	type unmarshaler FormBlockHTML
+func (f *FormBlockHtml) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockHtml) SetId(id string) {
+	f.Id = id
+	f.require(formBlockHtmlFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockHtml) SetCategory(category FormComponentCategoryBlockConst) {
+	f.Category = category
+	f.require(formBlockHtmlFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockHtml) SetType(type_ FormBlockTypeHtmlConst) {
+	f.Type = type_
+	f.require(formBlockHtmlFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockHtml) SetConfig(config *FormBlockHtmlConfig) {
+	f.Config = config
+	f.require(formBlockHtmlFieldConfig)
+}
+
+func (f *FormBlockHtml) UnmarshalJSON(data []byte) error {
+	type unmarshaler FormBlockHtml
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*f = FormBlockHTML(value)
+	*f = FormBlockHtml(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
@@ -534,7 +759,18 @@ func (f *FormBlockHTML) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (f *FormBlockHTML) String() string {
+func (f *FormBlockHtml) MarshalJSON() ([]byte, error) {
+	type embed FormBlockHtml
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FormBlockHtml) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -546,31 +782,52 @@ func (f *FormBlockHTML) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormBlockHTMLConfig struct {
+var (
+	formBlockHtmlConfigFieldContent = big.NewInt(1 << 0)
+)
+
+type FormBlockHtmlConfig struct {
 	Content *string `json:"content,omitempty" url:"content,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormBlockHTMLConfig) GetContent() *string {
-	if f == nil {
-		return nil
+func (f *FormBlockHtmlConfig) GetContent() string {
+	if f == nil || f.Content == nil {
+		return ""
 	}
-	return f.Content
+	return *f.Content
 }
 
-func (f *FormBlockHTMLConfig) GetExtraProperties() map[string]interface{} {
+func (f *FormBlockHtmlConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
-func (f *FormBlockHTMLConfig) UnmarshalJSON(data []byte) error {
-	type unmarshaler FormBlockHTMLConfig
+func (f *FormBlockHtmlConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockHtmlConfig) SetContent(content *string) {
+	f.Content = content
+	f.require(formBlockHtmlConfigFieldContent)
+}
+
+func (f *FormBlockHtmlConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler FormBlockHtmlConfig
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*f = FormBlockHTMLConfig(value)
+	*f = FormBlockHtmlConfig(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
@@ -580,7 +837,18 @@ func (f *FormBlockHTMLConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (f *FormBlockHTMLConfig) String() string {
+func (f *FormBlockHtmlConfig) MarshalJSON() ([]byte, error) {
+	type embed FormBlockHtmlConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FormBlockHtmlConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -592,32 +860,77 @@ func (f *FormBlockHTMLConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formBlockImageFieldId       = big.NewInt(1 << 0)
+	formBlockImageFieldCategory = big.NewInt(1 << 1)
+	formBlockImageFieldType     = big.NewInt(1 << 2)
+	formBlockImageFieldConfig   = big.NewInt(1 << 3)
+)
+
 type FormBlockImage struct {
-	ID       string                          `json:"id" url:"id"`
+	Id       string                          `json:"id" url:"id"`
 	Category FormComponentCategoryBlockConst `json:"category" url:"category"`
 	Type     FormBlockTypeImageConst         `json:"type" url:"type"`
 	Config   *FormBlockImageConfig           `json:"config,omitempty" url:"config,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormBlockImage) GetID() string {
+func (f *FormBlockImage) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormBlockImage) GetConfig() *FormBlockImageConfig {
-	if f == nil {
-		return nil
+func (f *FormBlockImage) GetConfig() FormBlockImageConfig {
+	if f == nil || f.Config == nil {
+		return FormBlockImageConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
 func (f *FormBlockImage) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockImage) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockImage) SetId(id string) {
+	f.Id = id
+	f.require(formBlockImageFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockImage) SetCategory(category FormComponentCategoryBlockConst) {
+	f.Category = category
+	f.require(formBlockImageFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockImage) SetType(type_ FormBlockTypeImageConst) {
+	f.Type = type_
+	f.require(formBlockImageFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockImage) SetConfig(config *FormBlockImageConfig) {
+	f.Config = config
+	f.require(formBlockImageFieldConfig)
 }
 
 func (f *FormBlockImage) UnmarshalJSON(data []byte) error {
@@ -636,6 +949,17 @@ func (f *FormBlockImage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockImage) MarshalJSON() ([]byte, error) {
+	type embed FormBlockImage
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockImage) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -648,10 +972,19 @@ func (f *FormBlockImage) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formBlockImageConfigFieldSrc      = big.NewInt(1 << 0)
+	formBlockImageConfigFieldPosition = big.NewInt(1 << 1)
+	formBlockImageConfigFieldHeight   = big.NewInt(1 << 2)
+)
+
 type FormBlockImageConfig struct {
 	Src      string                            `json:"src" url:"src"`
 	Position *FormBlockImageConfigPositionEnum `json:"position,omitempty" url:"position,omitempty"`
 	Height   *float64                          `json:"height,omitempty" url:"height,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -664,22 +997,50 @@ func (f *FormBlockImageConfig) GetSrc() string {
 	return f.Src
 }
 
-func (f *FormBlockImageConfig) GetPosition() *FormBlockImageConfigPositionEnum {
-	if f == nil {
-		return nil
+func (f *FormBlockImageConfig) GetPosition() FormBlockImageConfigPositionEnum {
+	if f == nil || f.Position == nil {
+		return ""
 	}
-	return f.Position
+	return *f.Position
 }
 
-func (f *FormBlockImageConfig) GetHeight() *float64 {
-	if f == nil {
-		return nil
+func (f *FormBlockImageConfig) GetHeight() float64 {
+	if f == nil || f.Height == nil {
+		return 0
 	}
-	return f.Height
+	return *f.Height
 }
 
 func (f *FormBlockImageConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockImageConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetSrc sets the Src field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockImageConfig) SetSrc(src string) {
+	f.Src = src
+	f.require(formBlockImageConfigFieldSrc)
+}
+
+// SetPosition sets the Position field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockImageConfig) SetPosition(position *FormBlockImageConfigPositionEnum) {
+	f.Position = position
+	f.require(formBlockImageConfigFieldPosition)
+}
+
+// SetHeight sets the Height field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockImageConfig) SetHeight(height *float64) {
+	f.Height = height
+	f.require(formBlockImageConfigFieldHeight)
 }
 
 func (f *FormBlockImageConfig) UnmarshalJSON(data []byte) error {
@@ -696,6 +1057,17 @@ func (f *FormBlockImageConfig) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FormBlockImageConfig) MarshalJSON() ([]byte, error) {
+	type embed FormBlockImageConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FormBlockImageConfig) String() string {
@@ -735,21 +1107,31 @@ func (f FormBlockImageConfigPositionEnum) Ptr() *FormBlockImageConfigPositionEnu
 	return &f
 }
 
+var (
+	formBlockJumpButtonFieldId       = big.NewInt(1 << 0)
+	formBlockJumpButtonFieldCategory = big.NewInt(1 << 1)
+	formBlockJumpButtonFieldType     = big.NewInt(1 << 2)
+	formBlockJumpButtonFieldConfig   = big.NewInt(1 << 3)
+)
+
 type FormBlockJumpButton struct {
-	ID       string                          `json:"id" url:"id"`
+	Id       string                          `json:"id" url:"id"`
 	Category FormComponentCategoryBlockConst `json:"category" url:"category"`
 	Type     FormBlockTypeJumpButtonConst    `json:"type" url:"type"`
 	Config   *FormBlockJumpButtonConfig      `json:"config" url:"config"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormBlockJumpButton) GetID() string {
+func (f *FormBlockJumpButton) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormBlockJumpButton) GetConfig() *FormBlockJumpButtonConfig {
@@ -761,6 +1143,41 @@ func (f *FormBlockJumpButton) GetConfig() *FormBlockJumpButtonConfig {
 
 func (f *FormBlockJumpButton) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockJumpButton) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockJumpButton) SetId(id string) {
+	f.Id = id
+	f.require(formBlockJumpButtonFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockJumpButton) SetCategory(category FormComponentCategoryBlockConst) {
+	f.Category = category
+	f.require(formBlockJumpButtonFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockJumpButton) SetType(type_ FormBlockTypeJumpButtonConst) {
+	f.Type = type_
+	f.require(formBlockJumpButtonFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockJumpButton) SetConfig(config *FormBlockJumpButtonConfig) {
+	f.Config = config
+	f.require(formBlockJumpButtonFieldConfig)
 }
 
 func (f *FormBlockJumpButton) UnmarshalJSON(data []byte) error {
@@ -779,6 +1196,17 @@ func (f *FormBlockJumpButton) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockJumpButton) MarshalJSON() ([]byte, error) {
+	type embed FormBlockJumpButton
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockJumpButton) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -791,10 +1219,19 @@ func (f *FormBlockJumpButton) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formBlockJumpButtonConfigFieldText     = big.NewInt(1 << 0)
+	formBlockJumpButtonConfigFieldNextNode = big.NewInt(1 << 1)
+	formBlockJumpButtonConfigFieldStyle    = big.NewInt(1 << 2)
+)
+
 type FormBlockJumpButtonConfig struct {
 	Text     string                          `json:"text" url:"text"`
 	NextNode *FormNodePointer                `json:"next_node" url:"next_node"`
 	Style    *FormBlockJumpButtonConfigStyle `json:"style,omitempty" url:"style,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -814,15 +1251,43 @@ func (f *FormBlockJumpButtonConfig) GetNextNode() *FormNodePointer {
 	return f.NextNode
 }
 
-func (f *FormBlockJumpButtonConfig) GetStyle() *FormBlockJumpButtonConfigStyle {
-	if f == nil {
-		return nil
+func (f *FormBlockJumpButtonConfig) GetStyle() FormBlockJumpButtonConfigStyle {
+	if f == nil || f.Style == nil {
+		return FormBlockJumpButtonConfigStyle{}
 	}
-	return f.Style
+	return *f.Style
 }
 
 func (f *FormBlockJumpButtonConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockJumpButtonConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetText sets the Text field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockJumpButtonConfig) SetText(text string) {
+	f.Text = text
+	f.require(formBlockJumpButtonConfigFieldText)
+}
+
+// SetNextNode sets the NextNode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockJumpButtonConfig) SetNextNode(nextNode *FormNodePointer) {
+	f.NextNode = nextNode
+	f.require(formBlockJumpButtonConfigFieldNextNode)
+}
+
+// SetStyle sets the Style field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockJumpButtonConfig) SetStyle(style *FormBlockJumpButtonConfigStyle) {
+	f.Style = style
+	f.require(formBlockJumpButtonConfigFieldStyle)
 }
 
 func (f *FormBlockJumpButtonConfig) UnmarshalJSON(data []byte) error {
@@ -841,6 +1306,17 @@ func (f *FormBlockJumpButtonConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockJumpButtonConfig) MarshalJSON() ([]byte, error) {
+	type embed FormBlockJumpButtonConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockJumpButtonConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -853,22 +1329,43 @@ func (f *FormBlockJumpButtonConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formBlockJumpButtonConfigStyleFieldBackgroundColor = big.NewInt(1 << 0)
+)
+
 type FormBlockJumpButtonConfigStyle struct {
 	BackgroundColor *string `json:"background_color,omitempty" url:"background_color,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormBlockJumpButtonConfigStyle) GetBackgroundColor() *string {
-	if f == nil {
-		return nil
+func (f *FormBlockJumpButtonConfigStyle) GetBackgroundColor() string {
+	if f == nil || f.BackgroundColor == nil {
+		return ""
 	}
-	return f.BackgroundColor
+	return *f.BackgroundColor
 }
 
 func (f *FormBlockJumpButtonConfigStyle) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockJumpButtonConfigStyle) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetBackgroundColor sets the BackgroundColor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockJumpButtonConfigStyle) SetBackgroundColor(backgroundColor *string) {
+	f.BackgroundColor = backgroundColor
+	f.require(formBlockJumpButtonConfigStyleFieldBackgroundColor)
 }
 
 func (f *FormBlockJumpButtonConfigStyle) UnmarshalJSON(data []byte) error {
@@ -887,6 +1384,17 @@ func (f *FormBlockJumpButtonConfigStyle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockJumpButtonConfigStyle) MarshalJSON() ([]byte, error) {
+	type embed FormBlockJumpButtonConfigStyle
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockJumpButtonConfigStyle) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -899,21 +1407,31 @@ func (f *FormBlockJumpButtonConfigStyle) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formBlockNextButtonFieldId       = big.NewInt(1 << 0)
+	formBlockNextButtonFieldCategory = big.NewInt(1 << 1)
+	formBlockNextButtonFieldType     = big.NewInt(1 << 2)
+	formBlockNextButtonFieldConfig   = big.NewInt(1 << 3)
+)
+
 type FormBlockNextButton struct {
-	ID       string                          `json:"id" url:"id"`
+	Id       string                          `json:"id" url:"id"`
 	Category FormComponentCategoryBlockConst `json:"category" url:"category"`
 	Type     FormBlockTypeNextButtonConst    `json:"type" url:"type"`
 	Config   *FormBlockNextButtonConfig      `json:"config" url:"config"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormBlockNextButton) GetID() string {
+func (f *FormBlockNextButton) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormBlockNextButton) GetConfig() *FormBlockNextButtonConfig {
@@ -925,6 +1443,41 @@ func (f *FormBlockNextButton) GetConfig() *FormBlockNextButtonConfig {
 
 func (f *FormBlockNextButton) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockNextButton) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockNextButton) SetId(id string) {
+	f.Id = id
+	f.require(formBlockNextButtonFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockNextButton) SetCategory(category FormComponentCategoryBlockConst) {
+	f.Category = category
+	f.require(formBlockNextButtonFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockNextButton) SetType(type_ FormBlockTypeNextButtonConst) {
+	f.Type = type_
+	f.require(formBlockNextButtonFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockNextButton) SetConfig(config *FormBlockNextButtonConfig) {
+	f.Config = config
+	f.require(formBlockNextButtonFieldConfig)
 }
 
 func (f *FormBlockNextButton) UnmarshalJSON(data []byte) error {
@@ -943,6 +1496,17 @@ func (f *FormBlockNextButton) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockNextButton) MarshalJSON() ([]byte, error) {
+	type embed FormBlockNextButton
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockNextButton) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -955,8 +1519,15 @@ func (f *FormBlockNextButton) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formBlockNextButtonConfigFieldText = big.NewInt(1 << 0)
+)
+
 type FormBlockNextButtonConfig struct {
 	Text string `json:"text" url:"text"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -971,6 +1542,20 @@ func (f *FormBlockNextButtonConfig) GetText() string {
 
 func (f *FormBlockNextButtonConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockNextButtonConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetText sets the Text field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockNextButtonConfig) SetText(text string) {
+	f.Text = text
+	f.require(formBlockNextButtonConfigFieldText)
 }
 
 func (f *FormBlockNextButtonConfig) UnmarshalJSON(data []byte) error {
@@ -989,6 +1574,17 @@ func (f *FormBlockNextButtonConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockNextButtonConfig) MarshalJSON() ([]byte, error) {
+	type embed FormBlockNextButtonConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockNextButtonConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -1001,21 +1597,31 @@ func (f *FormBlockNextButtonConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formBlockPreviousButtonFieldId       = big.NewInt(1 << 0)
+	formBlockPreviousButtonFieldCategory = big.NewInt(1 << 1)
+	formBlockPreviousButtonFieldType     = big.NewInt(1 << 2)
+	formBlockPreviousButtonFieldConfig   = big.NewInt(1 << 3)
+)
+
 type FormBlockPreviousButton struct {
-	ID       string                           `json:"id" url:"id"`
+	Id       string                           `json:"id" url:"id"`
 	Category FormComponentCategoryBlockConst  `json:"category" url:"category"`
 	Type     FormBlockTypePreviousButtonConst `json:"type" url:"type"`
 	Config   *FormBlockPreviousButtonConfig   `json:"config" url:"config"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormBlockPreviousButton) GetID() string {
+func (f *FormBlockPreviousButton) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormBlockPreviousButton) GetConfig() *FormBlockPreviousButtonConfig {
@@ -1027,6 +1633,41 @@ func (f *FormBlockPreviousButton) GetConfig() *FormBlockPreviousButtonConfig {
 
 func (f *FormBlockPreviousButton) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockPreviousButton) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockPreviousButton) SetId(id string) {
+	f.Id = id
+	f.require(formBlockPreviousButtonFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockPreviousButton) SetCategory(category FormComponentCategoryBlockConst) {
+	f.Category = category
+	f.require(formBlockPreviousButtonFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockPreviousButton) SetType(type_ FormBlockTypePreviousButtonConst) {
+	f.Type = type_
+	f.require(formBlockPreviousButtonFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockPreviousButton) SetConfig(config *FormBlockPreviousButtonConfig) {
+	f.Config = config
+	f.require(formBlockPreviousButtonFieldConfig)
 }
 
 func (f *FormBlockPreviousButton) UnmarshalJSON(data []byte) error {
@@ -1045,6 +1686,17 @@ func (f *FormBlockPreviousButton) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockPreviousButton) MarshalJSON() ([]byte, error) {
+	type embed FormBlockPreviousButton
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockPreviousButton) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -1057,8 +1709,15 @@ func (f *FormBlockPreviousButton) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formBlockPreviousButtonConfigFieldText = big.NewInt(1 << 0)
+)
+
 type FormBlockPreviousButtonConfig struct {
 	Text string `json:"text" url:"text"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1073,6 +1732,20 @@ func (f *FormBlockPreviousButtonConfig) GetText() string {
 
 func (f *FormBlockPreviousButtonConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockPreviousButtonConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetText sets the Text field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockPreviousButtonConfig) SetText(text string) {
+	f.Text = text
+	f.require(formBlockPreviousButtonConfigFieldText)
 }
 
 func (f *FormBlockPreviousButtonConfig) UnmarshalJSON(data []byte) error {
@@ -1091,6 +1764,17 @@ func (f *FormBlockPreviousButtonConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockPreviousButtonConfig) MarshalJSON() ([]byte, error) {
+	type embed FormBlockPreviousButtonConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockPreviousButtonConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -1103,21 +1787,31 @@ func (f *FormBlockPreviousButtonConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formBlockResendButtonFieldId       = big.NewInt(1 << 0)
+	formBlockResendButtonFieldCategory = big.NewInt(1 << 1)
+	formBlockResendButtonFieldType     = big.NewInt(1 << 2)
+	formBlockResendButtonFieldConfig   = big.NewInt(1 << 3)
+)
+
 type FormBlockResendButton struct {
-	ID       string                          `json:"id" url:"id"`
+	Id       string                          `json:"id" url:"id"`
 	Category FormComponentCategoryBlockConst `json:"category" url:"category"`
 	Type     FormBlockTypeResendButtonConst  `json:"type" url:"type"`
 	Config   *FormBlockResendButtonConfig    `json:"config" url:"config"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormBlockResendButton) GetID() string {
+func (f *FormBlockResendButton) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormBlockResendButton) GetConfig() *FormBlockResendButtonConfig {
@@ -1129,6 +1823,41 @@ func (f *FormBlockResendButton) GetConfig() *FormBlockResendButtonConfig {
 
 func (f *FormBlockResendButton) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockResendButton) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockResendButton) SetId(id string) {
+	f.Id = id
+	f.require(formBlockResendButtonFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockResendButton) SetCategory(category FormComponentCategoryBlockConst) {
+	f.Category = category
+	f.require(formBlockResendButtonFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockResendButton) SetType(type_ FormBlockTypeResendButtonConst) {
+	f.Type = type_
+	f.require(formBlockResendButtonFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockResendButton) SetConfig(config *FormBlockResendButtonConfig) {
+	f.Config = config
+	f.require(formBlockResendButtonFieldConfig)
 }
 
 func (f *FormBlockResendButton) UnmarshalJSON(data []byte) error {
@@ -1147,6 +1876,17 @@ func (f *FormBlockResendButton) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockResendButton) MarshalJSON() ([]byte, error) {
+	type embed FormBlockResendButton
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockResendButton) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -1159,14 +1899,27 @@ func (f *FormBlockResendButton) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formBlockResendButtonConfigFieldActiveText    = big.NewInt(1 << 0)
+	formBlockResendButtonConfigFieldButtonText    = big.NewInt(1 << 1)
+	formBlockResendButtonConfigFieldWaitingText   = big.NewInt(1 << 2)
+	formBlockResendButtonConfigFieldTextAlignment = big.NewInt(1 << 3)
+	formBlockResendButtonConfigFieldFlowId        = big.NewInt(1 << 4)
+	formBlockResendButtonConfigFieldMaxAttempts   = big.NewInt(1 << 5)
+	formBlockResendButtonConfigFieldWaitingTime   = big.NewInt(1 << 6)
+)
+
 type FormBlockResendButtonConfig struct {
 	ActiveText    string                                        `json:"active_text" url:"active_text"`
 	ButtonText    string                                        `json:"button_text" url:"button_text"`
 	WaitingText   string                                        `json:"waiting_text" url:"waiting_text"`
 	TextAlignment *FormBlockResendButtonConfigTextAlignmentEnum `json:"text_alignment,omitempty" url:"text_alignment,omitempty"`
-	FlowID        string                                        `json:"flow_id" url:"flow_id"`
+	FlowId        string                                        `json:"flow_id" url:"flow_id"`
 	MaxAttempts   *float64                                      `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
 	WaitingTime   *float64                                      `json:"waiting_time,omitempty" url:"waiting_time,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -1193,36 +1946,92 @@ func (f *FormBlockResendButtonConfig) GetWaitingText() string {
 	return f.WaitingText
 }
 
-func (f *FormBlockResendButtonConfig) GetTextAlignment() *FormBlockResendButtonConfigTextAlignmentEnum {
-	if f == nil {
-		return nil
+func (f *FormBlockResendButtonConfig) GetTextAlignment() FormBlockResendButtonConfigTextAlignmentEnum {
+	if f == nil || f.TextAlignment == nil {
+		return ""
 	}
-	return f.TextAlignment
+	return *f.TextAlignment
 }
 
-func (f *FormBlockResendButtonConfig) GetFlowID() string {
+func (f *FormBlockResendButtonConfig) GetFlowId() string {
 	if f == nil {
 		return ""
 	}
-	return f.FlowID
+	return f.FlowId
 }
 
-func (f *FormBlockResendButtonConfig) GetMaxAttempts() *float64 {
-	if f == nil {
-		return nil
+func (f *FormBlockResendButtonConfig) GetMaxAttempts() float64 {
+	if f == nil || f.MaxAttempts == nil {
+		return 0
 	}
-	return f.MaxAttempts
+	return *f.MaxAttempts
 }
 
-func (f *FormBlockResendButtonConfig) GetWaitingTime() *float64 {
-	if f == nil {
-		return nil
+func (f *FormBlockResendButtonConfig) GetWaitingTime() float64 {
+	if f == nil || f.WaitingTime == nil {
+		return 0
 	}
-	return f.WaitingTime
+	return *f.WaitingTime
 }
 
 func (f *FormBlockResendButtonConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockResendButtonConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetActiveText sets the ActiveText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockResendButtonConfig) SetActiveText(activeText string) {
+	f.ActiveText = activeText
+	f.require(formBlockResendButtonConfigFieldActiveText)
+}
+
+// SetButtonText sets the ButtonText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockResendButtonConfig) SetButtonText(buttonText string) {
+	f.ButtonText = buttonText
+	f.require(formBlockResendButtonConfigFieldButtonText)
+}
+
+// SetWaitingText sets the WaitingText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockResendButtonConfig) SetWaitingText(waitingText string) {
+	f.WaitingText = waitingText
+	f.require(formBlockResendButtonConfigFieldWaitingText)
+}
+
+// SetTextAlignment sets the TextAlignment field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockResendButtonConfig) SetTextAlignment(textAlignment *FormBlockResendButtonConfigTextAlignmentEnum) {
+	f.TextAlignment = textAlignment
+	f.require(formBlockResendButtonConfigFieldTextAlignment)
+}
+
+// SetFlowId sets the FlowId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockResendButtonConfig) SetFlowId(flowId string) {
+	f.FlowId = flowId
+	f.require(formBlockResendButtonConfigFieldFlowId)
+}
+
+// SetMaxAttempts sets the MaxAttempts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockResendButtonConfig) SetMaxAttempts(maxAttempts *float64) {
+	f.MaxAttempts = maxAttempts
+	f.require(formBlockResendButtonConfigFieldMaxAttempts)
+}
+
+// SetWaitingTime sets the WaitingTime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockResendButtonConfig) SetWaitingTime(waitingTime *float64) {
+	f.WaitingTime = waitingTime
+	f.require(formBlockResendButtonConfigFieldWaitingTime)
 }
 
 func (f *FormBlockResendButtonConfig) UnmarshalJSON(data []byte) error {
@@ -1239,6 +2048,17 @@ func (f *FormBlockResendButtonConfig) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FormBlockResendButtonConfig) MarshalJSON() ([]byte, error) {
+	type embed FormBlockResendButtonConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FormBlockResendButtonConfig) String() string {
@@ -1278,32 +2098,77 @@ func (f FormBlockResendButtonConfigTextAlignmentEnum) Ptr() *FormBlockResendButt
 	return &f
 }
 
+var (
+	formBlockRichTextFieldId       = big.NewInt(1 << 0)
+	formBlockRichTextFieldCategory = big.NewInt(1 << 1)
+	formBlockRichTextFieldType     = big.NewInt(1 << 2)
+	formBlockRichTextFieldConfig   = big.NewInt(1 << 3)
+)
+
 type FormBlockRichText struct {
-	ID       string                          `json:"id" url:"id"`
+	Id       string                          `json:"id" url:"id"`
 	Category FormComponentCategoryBlockConst `json:"category" url:"category"`
 	Type     FormBlockTypeRichTextConst      `json:"type" url:"type"`
 	Config   *FormBlockRichTextConfig        `json:"config,omitempty" url:"config,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormBlockRichText) GetID() string {
+func (f *FormBlockRichText) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormBlockRichText) GetConfig() *FormBlockRichTextConfig {
-	if f == nil {
-		return nil
+func (f *FormBlockRichText) GetConfig() FormBlockRichTextConfig {
+	if f == nil || f.Config == nil {
+		return FormBlockRichTextConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
 func (f *FormBlockRichText) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockRichText) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockRichText) SetId(id string) {
+	f.Id = id
+	f.require(formBlockRichTextFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockRichText) SetCategory(category FormComponentCategoryBlockConst) {
+	f.Category = category
+	f.require(formBlockRichTextFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockRichText) SetType(type_ FormBlockTypeRichTextConst) {
+	f.Type = type_
+	f.require(formBlockRichTextFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockRichText) SetConfig(config *FormBlockRichTextConfig) {
+	f.Config = config
+	f.require(formBlockRichTextFieldConfig)
 }
 
 func (f *FormBlockRichText) UnmarshalJSON(data []byte) error {
@@ -1322,6 +2187,17 @@ func (f *FormBlockRichText) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockRichText) MarshalJSON() ([]byte, error) {
+	type embed FormBlockRichText
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockRichText) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -1334,22 +2210,43 @@ func (f *FormBlockRichText) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formBlockRichTextConfigFieldContent = big.NewInt(1 << 0)
+)
+
 type FormBlockRichTextConfig struct {
 	Content *string `json:"content,omitempty" url:"content,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormBlockRichTextConfig) GetContent() *string {
-	if f == nil {
-		return nil
+func (f *FormBlockRichTextConfig) GetContent() string {
+	if f == nil || f.Content == nil {
+		return ""
 	}
-	return f.Content
+	return *f.Content
 }
 
 func (f *FormBlockRichTextConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormBlockRichTextConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormBlockRichTextConfig) SetContent(content *string) {
+	f.Content = content
+	f.require(formBlockRichTextConfigFieldContent)
 }
 
 func (f *FormBlockRichTextConfig) UnmarshalJSON(data []byte) error {
@@ -1368,6 +2265,17 @@ func (f *FormBlockRichTextConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormBlockRichTextConfig) MarshalJSON() ([]byte, error) {
+	type embed FormBlockRichTextConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormBlockRichTextConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -1382,7 +2290,7 @@ func (f *FormBlockRichTextConfig) String() string {
 
 type FormBlockTypeDividerConst = string
 
-type FormBlockTypeHTMLConst = string
+type FormBlockTypeHtmlConst = string
 
 type FormBlockTypeImageConst = string
 
@@ -1485,46 +2393,91 @@ type FormComponentCategoryFieldConst = string
 
 type FormComponentCategoryWidgetConst = string
 
+var (
+	formEndingNodeFieldRedirection = big.NewInt(1 << 0)
+	formEndingNodeFieldAfterSubmit = big.NewInt(1 << 1)
+	formEndingNodeFieldCoordinates = big.NewInt(1 << 2)
+	formEndingNodeFieldResumeFlow  = big.NewInt(1 << 3)
+)
+
 type FormEndingNode struct {
 	Redirection *FormEndingNodeRedirection         `json:"redirection,omitempty" url:"redirection,omitempty"`
 	AfterSubmit *FormEndingNodeAfterSubmit         `json:"after_submit,omitempty" url:"after_submit,omitempty"`
 	Coordinates *FormNodeCoordinates               `json:"coordinates,omitempty" url:"coordinates,omitempty"`
 	ResumeFlow  *FormEndingNodeResumeFlowTrueConst `json:"resume_flow,omitempty" url:"resume_flow,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormEndingNode) GetRedirection() *FormEndingNodeRedirection {
-	if f == nil {
-		return nil
+func (f *FormEndingNode) GetRedirection() FormEndingNodeRedirection {
+	if f == nil || f.Redirection == nil {
+		return FormEndingNodeRedirection{}
 	}
-	return f.Redirection
+	return *f.Redirection
 }
 
-func (f *FormEndingNode) GetAfterSubmit() *FormEndingNodeAfterSubmit {
-	if f == nil {
-		return nil
+func (f *FormEndingNode) GetAfterSubmit() FormEndingNodeAfterSubmit {
+	if f == nil || f.AfterSubmit == nil {
+		return FormEndingNodeAfterSubmit{}
 	}
-	return f.AfterSubmit
+	return *f.AfterSubmit
 }
 
-func (f *FormEndingNode) GetCoordinates() *FormNodeCoordinates {
-	if f == nil {
-		return nil
+func (f *FormEndingNode) GetCoordinates() FormNodeCoordinates {
+	if f == nil || f.Coordinates == nil {
+		return FormNodeCoordinates{}
 	}
-	return f.Coordinates
+	return *f.Coordinates
 }
 
-func (f *FormEndingNode) GetResumeFlow() *FormEndingNodeResumeFlowTrueConst {
-	if f == nil {
-		return nil
+func (f *FormEndingNode) GetResumeFlow() FormEndingNodeResumeFlowTrueConst {
+	if f == nil || f.ResumeFlow == nil {
+		return false
 	}
-	return f.ResumeFlow
+	return *f.ResumeFlow
 }
 
 func (f *FormEndingNode) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormEndingNode) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetRedirection sets the Redirection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormEndingNode) SetRedirection(redirection *FormEndingNodeRedirection) {
+	f.Redirection = redirection
+	f.require(formEndingNodeFieldRedirection)
+}
+
+// SetAfterSubmit sets the AfterSubmit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormEndingNode) SetAfterSubmit(afterSubmit *FormEndingNodeAfterSubmit) {
+	f.AfterSubmit = afterSubmit
+	f.require(formEndingNodeFieldAfterSubmit)
+}
+
+// SetCoordinates sets the Coordinates field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormEndingNode) SetCoordinates(coordinates *FormNodeCoordinates) {
+	f.Coordinates = coordinates
+	f.require(formEndingNodeFieldCoordinates)
+}
+
+// SetResumeFlow sets the ResumeFlow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormEndingNode) SetResumeFlow(resumeFlow *FormEndingNodeResumeFlowTrueConst) {
+	f.ResumeFlow = resumeFlow
+	f.require(formEndingNodeFieldResumeFlow)
 }
 
 func (f *FormEndingNode) UnmarshalJSON(data []byte) error {
@@ -1543,6 +2496,17 @@ func (f *FormEndingNode) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormEndingNode) MarshalJSON() ([]byte, error) {
+	type embed FormEndingNode
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormEndingNode) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -1555,22 +2519,43 @@ func (f *FormEndingNode) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formEndingNodeAfterSubmitFieldFlowId = big.NewInt(1 << 0)
+)
+
 type FormEndingNodeAfterSubmit struct {
-	FlowID *string `json:"flow_id,omitempty" url:"flow_id,omitempty"`
+	FlowId *string `json:"flow_id,omitempty" url:"flow_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormEndingNodeAfterSubmit) GetFlowID() *string {
-	if f == nil {
-		return nil
+func (f *FormEndingNodeAfterSubmit) GetFlowId() string {
+	if f == nil || f.FlowId == nil {
+		return ""
 	}
-	return f.FlowID
+	return *f.FlowId
 }
 
 func (f *FormEndingNodeAfterSubmit) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormEndingNodeAfterSubmit) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetFlowId sets the FlowId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormEndingNodeAfterSubmit) SetFlowId(flowId *string) {
+	f.FlowId = flowId
+	f.require(formEndingNodeAfterSubmitFieldFlowId)
 }
 
 func (f *FormEndingNodeAfterSubmit) UnmarshalJSON(data []byte) error {
@@ -1589,6 +2574,17 @@ func (f *FormEndingNodeAfterSubmit) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormEndingNodeAfterSubmit) MarshalJSON() ([]byte, error) {
+	type embed FormEndingNodeAfterSubmit
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormEndingNodeAfterSubmit) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -1601,23 +2597,31 @@ func (f *FormEndingNodeAfterSubmit) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormEndingNodeID = string
+type FormEndingNodeId = string
 
 type FormEndingNodeNullable = *FormEndingNode
+
+var (
+	formEndingNodeRedirectionFieldDelay  = big.NewInt(1 << 0)
+	formEndingNodeRedirectionFieldTarget = big.NewInt(1 << 1)
+)
 
 type FormEndingNodeRedirection struct {
 	Delay  *int   `json:"delay,omitempty" url:"delay,omitempty"`
 	Target string `json:"target" url:"target"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormEndingNodeRedirection) GetDelay() *int {
-	if f == nil {
-		return nil
+func (f *FormEndingNodeRedirection) GetDelay() int {
+	if f == nil || f.Delay == nil {
+		return 0
 	}
-	return f.Delay
+	return *f.Delay
 }
 
 func (f *FormEndingNodeRedirection) GetTarget() string {
@@ -1629,6 +2633,27 @@ func (f *FormEndingNodeRedirection) GetTarget() string {
 
 func (f *FormEndingNodeRedirection) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormEndingNodeRedirection) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetDelay sets the Delay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormEndingNodeRedirection) SetDelay(delay *int) {
+	f.Delay = delay
+	f.require(formEndingNodeRedirectionFieldDelay)
+}
+
+// SetTarget sets the Target field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormEndingNodeRedirection) SetTarget(target string) {
+	f.Target = target
+	f.require(formEndingNodeRedirectionFieldTarget)
 }
 
 func (f *FormEndingNodeRedirection) UnmarshalJSON(data []byte) error {
@@ -1645,6 +2670,17 @@ func (f *FormEndingNodeRedirection) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FormEndingNodeRedirection) MarshalJSON() ([]byte, error) {
+	type embed FormEndingNodeRedirection
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FormEndingNodeRedirection) String() string {
@@ -1677,7 +2713,7 @@ type FormField struct {
 	FormFieldSocial   *FormFieldSocial
 	FormFieldTel      *FormFieldTel
 	FormFieldText     *FormFieldText
-	FormFieldURL      *FormFieldURL
+	FormFieldUrl      *FormFieldUrl
 
 	typ string
 }
@@ -1787,11 +2823,11 @@ func (f *FormField) GetFormFieldText() *FormFieldText {
 	return f.FormFieldText
 }
 
-func (f *FormField) GetFormFieldURL() *FormFieldURL {
+func (f *FormField) GetFormFieldUrl() *FormFieldUrl {
 	if f == nil {
 		return nil
 	}
-	return f.FormFieldURL
+	return f.FormFieldUrl
 }
 
 func (f *FormField) UnmarshalJSON(data []byte) error {
@@ -1885,10 +2921,10 @@ func (f *FormField) UnmarshalJSON(data []byte) error {
 		f.FormFieldText = valueFormFieldText
 		return nil
 	}
-	valueFormFieldURL := new(FormFieldURL)
-	if err := json.Unmarshal(data, &valueFormFieldURL); err == nil {
-		f.typ = "FormFieldURL"
-		f.FormFieldURL = valueFormFieldURL
+	valueFormFieldUrl := new(FormFieldUrl)
+	if err := json.Unmarshal(data, &valueFormFieldUrl); err == nil {
+		f.typ = "FormFieldUrl"
+		f.FormFieldUrl = valueFormFieldUrl
 		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
@@ -1940,8 +2976,8 @@ func (f FormField) MarshalJSON() ([]byte, error) {
 	if f.typ == "FormFieldText" || f.FormFieldText != nil {
 		return json.Marshal(f.FormFieldText)
 	}
-	if f.typ == "FormFieldURL" || f.FormFieldURL != nil {
-		return json.Marshal(f.FormFieldURL)
+	if f.typ == "FormFieldUrl" || f.FormFieldUrl != nil {
+		return json.Marshal(f.FormFieldUrl)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
@@ -1962,7 +2998,7 @@ type FormFieldVisitor interface {
 	VisitFormFieldSocial(*FormFieldSocial) error
 	VisitFormFieldTel(*FormFieldTel) error
 	VisitFormFieldText(*FormFieldText) error
-	VisitFormFieldURL(*FormFieldURL) error
+	VisitFormFieldUrl(*FormFieldUrl) error
 }
 
 func (f *FormField) Accept(visitor FormFieldVisitor) error {
@@ -2011,14 +3047,25 @@ func (f *FormField) Accept(visitor FormFieldVisitor) error {
 	if f.typ == "FormFieldText" || f.FormFieldText != nil {
 		return visitor.VisitFormFieldText(f.FormFieldText)
 	}
-	if f.typ == "FormFieldURL" || f.FormFieldURL != nil {
-		return visitor.VisitFormFieldURL(f.FormFieldURL)
+	if f.typ == "FormFieldUrl" || f.FormFieldUrl != nil {
+		return visitor.VisitFormFieldUrl(f.FormFieldUrl)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
+var (
+	formFieldBooleanFieldId        = big.NewInt(1 << 0)
+	formFieldBooleanFieldCategory  = big.NewInt(1 << 1)
+	formFieldBooleanFieldType      = big.NewInt(1 << 2)
+	formFieldBooleanFieldConfig    = big.NewInt(1 << 3)
+	formFieldBooleanFieldLabel     = big.NewInt(1 << 4)
+	formFieldBooleanFieldHint      = big.NewInt(1 << 5)
+	formFieldBooleanFieldRequired  = big.NewInt(1 << 6)
+	formFieldBooleanFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldBoolean struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeBooleanConst       `json:"type" url:"type"`
 	Config    *FormFieldBooleanConfig         `json:"config" url:"config"`
@@ -2027,15 +3074,18 @@ type FormFieldBoolean struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldBoolean) GetID() string {
+func (f *FormFieldBoolean) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormFieldBoolean) GetConfig() *FormFieldBooleanConfig {
@@ -2045,36 +3095,99 @@ func (f *FormFieldBoolean) GetConfig() *FormFieldBooleanConfig {
 	return f.Config
 }
 
-func (f *FormFieldBoolean) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldBoolean) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldBoolean) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldBoolean) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldBoolean) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldBoolean) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldBoolean) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldBoolean) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldBoolean) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldBoolean) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldBoolean) SetId(id string) {
+	f.Id = id
+	f.require(formFieldBooleanFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldBoolean) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldBooleanFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldBoolean) SetType(type_ FormFieldTypeBooleanConst) {
+	f.Type = type_
+	f.require(formFieldBooleanFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldBoolean) SetConfig(config *FormFieldBooleanConfig) {
+	f.Config = config
+	f.require(formFieldBooleanFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldBoolean) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldBooleanFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldBoolean) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldBooleanFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldBoolean) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldBooleanFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldBoolean) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldBooleanFieldSensitive)
 }
 
 func (f *FormFieldBoolean) UnmarshalJSON(data []byte) error {
@@ -2093,6 +3206,17 @@ func (f *FormFieldBoolean) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldBoolean) MarshalJSON() ([]byte, error) {
+	type embed FormFieldBoolean
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldBoolean) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2105,30 +3229,59 @@ func (f *FormFieldBoolean) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldBooleanConfigFieldDefaultValue = big.NewInt(1 << 0)
+	formFieldBooleanConfigFieldOptions      = big.NewInt(1 << 1)
+)
+
 type FormFieldBooleanConfig struct {
 	DefaultValue *bool                          `json:"default_value,omitempty" url:"default_value,omitempty"`
 	Options      *FormFieldBooleanConfigOptions `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldBooleanConfig) GetDefaultValue() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldBooleanConfig) GetDefaultValue() bool {
+	if f == nil || f.DefaultValue == nil {
+		return false
 	}
-	return f.DefaultValue
+	return *f.DefaultValue
 }
 
-func (f *FormFieldBooleanConfig) GetOptions() *FormFieldBooleanConfigOptions {
-	if f == nil {
-		return nil
+func (f *FormFieldBooleanConfig) GetOptions() FormFieldBooleanConfigOptions {
+	if f == nil || f.Options == nil {
+		return FormFieldBooleanConfigOptions{}
 	}
-	return f.Options
+	return *f.Options
 }
 
 func (f *FormFieldBooleanConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldBooleanConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldBooleanConfig) SetDefaultValue(defaultValue *bool) {
+	f.DefaultValue = defaultValue
+	f.require(formFieldBooleanConfigFieldDefaultValue)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldBooleanConfig) SetOptions(options *FormFieldBooleanConfigOptions) {
+	f.Options = options
+	f.require(formFieldBooleanConfigFieldOptions)
 }
 
 func (f *FormFieldBooleanConfig) UnmarshalJSON(data []byte) error {
@@ -2147,6 +3300,17 @@ func (f *FormFieldBooleanConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldBooleanConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldBooleanConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldBooleanConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2159,30 +3323,59 @@ func (f *FormFieldBooleanConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldBooleanConfigOptionsFieldTrue  = big.NewInt(1 << 0)
+	formFieldBooleanConfigOptionsFieldFalse = big.NewInt(1 << 1)
+)
+
 type FormFieldBooleanConfigOptions struct {
 	True  *string `json:"true,omitempty" url:"true,omitempty"`
 	False *string `json:"false,omitempty" url:"false,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldBooleanConfigOptions) GetTrue() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldBooleanConfigOptions) GetTrue() string {
+	if f == nil || f.True == nil {
+		return ""
 	}
-	return f.True
+	return *f.True
 }
 
-func (f *FormFieldBooleanConfigOptions) GetFalse() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldBooleanConfigOptions) GetFalse() string {
+	if f == nil || f.False == nil {
+		return ""
 	}
-	return f.False
+	return *f.False
 }
 
 func (f *FormFieldBooleanConfigOptions) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldBooleanConfigOptions) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetTrue sets the True field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldBooleanConfigOptions) SetTrue(true *string) {
+	f.True = true
+	f.require(formFieldBooleanConfigOptionsFieldTrue)
+}
+
+// SetFalse sets the False field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldBooleanConfigOptions) SetFalse(false *string) {
+	f.False = false
+	f.require(formFieldBooleanConfigOptionsFieldFalse)
 }
 
 func (f *FormFieldBooleanConfigOptions) UnmarshalJSON(data []byte) error {
@@ -2201,6 +3394,17 @@ func (f *FormFieldBooleanConfigOptions) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldBooleanConfigOptions) MarshalJSON() ([]byte, error) {
+	type embed FormFieldBooleanConfigOptions
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldBooleanConfigOptions) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2213,8 +3417,19 @@ func (f *FormFieldBooleanConfigOptions) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldCardsFieldId        = big.NewInt(1 << 0)
+	formFieldCardsFieldCategory  = big.NewInt(1 << 1)
+	formFieldCardsFieldType      = big.NewInt(1 << 2)
+	formFieldCardsFieldConfig    = big.NewInt(1 << 3)
+	formFieldCardsFieldLabel     = big.NewInt(1 << 4)
+	formFieldCardsFieldHint      = big.NewInt(1 << 5)
+	formFieldCardsFieldRequired  = big.NewInt(1 << 6)
+	formFieldCardsFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldCards struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeCardsConst         `json:"type" url:"type"`
 	Config    *FormFieldCardsConfig           `json:"config,omitempty" url:"config,omitempty"`
@@ -2223,54 +3438,120 @@ type FormFieldCards struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldCards) GetID() string {
+func (f *FormFieldCards) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormFieldCards) GetConfig() *FormFieldCardsConfig {
-	if f == nil {
-		return nil
+func (f *FormFieldCards) GetConfig() FormFieldCardsConfig {
+	if f == nil || f.Config == nil {
+		return FormFieldCardsConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
-func (f *FormFieldCards) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldCards) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldCards) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldCards) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldCards) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldCards) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldCards) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldCards) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldCards) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldCards) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCards) SetId(id string) {
+	f.Id = id
+	f.require(formFieldCardsFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCards) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldCardsFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCards) SetType(type_ FormFieldTypeCardsConst) {
+	f.Type = type_
+	f.require(formFieldCardsFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCards) SetConfig(config *FormFieldCardsConfig) {
+	f.Config = config
+	f.require(formFieldCardsFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCards) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldCardsFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCards) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldCardsFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCards) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldCardsFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCards) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldCardsFieldSensitive)
 }
 
 func (f *FormFieldCards) UnmarshalJSON(data []byte) error {
@@ -2289,6 +3570,17 @@ func (f *FormFieldCards) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldCards) MarshalJSON() ([]byte, error) {
+	type embed FormFieldCards
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldCards) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2301,31 +3593,40 @@ func (f *FormFieldCards) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldCardsConfigFieldHideLabels = big.NewInt(1 << 0)
+	formFieldCardsConfigFieldMultiple   = big.NewInt(1 << 1)
+	formFieldCardsConfigFieldOptions    = big.NewInt(1 << 2)
+)
+
 type FormFieldCardsConfig struct {
 	HideLabels *bool                         `json:"hide_labels,omitempty" url:"hide_labels,omitempty"`
 	Multiple   *bool                         `json:"multiple,omitempty" url:"multiple,omitempty"`
 	Options    []*FormFieldCardsConfigOption `json:"options,omitempty" url:"options,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldCardsConfig) GetHideLabels() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldCardsConfig) GetHideLabels() bool {
+	if f == nil || f.HideLabels == nil {
+		return false
 	}
-	return f.HideLabels
+	return *f.HideLabels
 }
 
-func (f *FormFieldCardsConfig) GetMultiple() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldCardsConfig) GetMultiple() bool {
+	if f == nil || f.Multiple == nil {
+		return false
 	}
-	return f.Multiple
+	return *f.Multiple
 }
 
 func (f *FormFieldCardsConfig) GetOptions() []*FormFieldCardsConfigOption {
-	if f == nil {
+	if f == nil || f.Options == nil {
 		return nil
 	}
 	return f.Options
@@ -2333,6 +3634,34 @@ func (f *FormFieldCardsConfig) GetOptions() []*FormFieldCardsConfigOption {
 
 func (f *FormFieldCardsConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldCardsConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetHideLabels sets the HideLabels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCardsConfig) SetHideLabels(hideLabels *bool) {
+	f.HideLabels = hideLabels
+	f.require(formFieldCardsConfigFieldHideLabels)
+}
+
+// SetMultiple sets the Multiple field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCardsConfig) SetMultiple(multiple *bool) {
+	f.Multiple = multiple
+	f.require(formFieldCardsConfigFieldMultiple)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCardsConfig) SetOptions(options []*FormFieldCardsConfigOption) {
+	f.Options = options
+	f.require(formFieldCardsConfigFieldOptions)
 }
 
 func (f *FormFieldCardsConfig) UnmarshalJSON(data []byte) error {
@@ -2351,6 +3680,17 @@ func (f *FormFieldCardsConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldCardsConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldCardsConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldCardsConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2363,10 +3703,19 @@ func (f *FormFieldCardsConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldCardsConfigOptionFieldValue    = big.NewInt(1 << 0)
+	formFieldCardsConfigOptionFieldLabel    = big.NewInt(1 << 1)
+	formFieldCardsConfigOptionFieldImageUrl = big.NewInt(1 << 2)
+)
+
 type FormFieldCardsConfigOption struct {
 	Value    string `json:"value" url:"value"`
 	Label    string `json:"label" url:"label"`
-	ImageURL string `json:"image_url" url:"image_url"`
+	ImageUrl string `json:"image_url" url:"image_url"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -2386,15 +3735,43 @@ func (f *FormFieldCardsConfigOption) GetLabel() string {
 	return f.Label
 }
 
-func (f *FormFieldCardsConfigOption) GetImageURL() string {
+func (f *FormFieldCardsConfigOption) GetImageUrl() string {
 	if f == nil {
 		return ""
 	}
-	return f.ImageURL
+	return f.ImageUrl
 }
 
 func (f *FormFieldCardsConfigOption) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldCardsConfigOption) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCardsConfigOption) SetValue(value string) {
+	f.Value = value
+	f.require(formFieldCardsConfigOptionFieldValue)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCardsConfigOption) SetLabel(label string) {
+	f.Label = label
+	f.require(formFieldCardsConfigOptionFieldLabel)
+}
+
+// SetImageUrl sets the ImageUrl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCardsConfigOption) SetImageUrl(imageUrl string) {
+	f.ImageUrl = imageUrl
+	f.require(formFieldCardsConfigOptionFieldImageUrl)
 }
 
 func (f *FormFieldCardsConfigOption) UnmarshalJSON(data []byte) error {
@@ -2413,6 +3790,17 @@ func (f *FormFieldCardsConfigOption) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldCardsConfigOption) MarshalJSON() ([]byte, error) {
+	type embed FormFieldCardsConfigOption
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldCardsConfigOption) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2425,8 +3813,19 @@ func (f *FormFieldCardsConfigOption) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldChoiceFieldId        = big.NewInt(1 << 0)
+	formFieldChoiceFieldCategory  = big.NewInt(1 << 1)
+	formFieldChoiceFieldType      = big.NewInt(1 << 2)
+	formFieldChoiceFieldConfig    = big.NewInt(1 << 3)
+	formFieldChoiceFieldLabel     = big.NewInt(1 << 4)
+	formFieldChoiceFieldHint      = big.NewInt(1 << 5)
+	formFieldChoiceFieldRequired  = big.NewInt(1 << 6)
+	formFieldChoiceFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldChoice struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeChoiceConst        `json:"type" url:"type"`
 	Config    *FormFieldChoiceConfig          `json:"config,omitempty" url:"config,omitempty"`
@@ -2435,54 +3834,120 @@ type FormFieldChoice struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldChoice) GetID() string {
+func (f *FormFieldChoice) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormFieldChoice) GetConfig() *FormFieldChoiceConfig {
-	if f == nil {
-		return nil
+func (f *FormFieldChoice) GetConfig() FormFieldChoiceConfig {
+	if f == nil || f.Config == nil {
+		return FormFieldChoiceConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
-func (f *FormFieldChoice) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldChoice) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldChoice) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldChoice) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldChoice) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldChoice) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldChoice) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldChoice) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldChoice) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldChoice) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoice) SetId(id string) {
+	f.Id = id
+	f.require(formFieldChoiceFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoice) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldChoiceFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoice) SetType(type_ FormFieldTypeChoiceConst) {
+	f.Type = type_
+	f.require(formFieldChoiceFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoice) SetConfig(config *FormFieldChoiceConfig) {
+	f.Config = config
+	f.require(formFieldChoiceFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoice) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldChoiceFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoice) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldChoiceFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoice) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldChoiceFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoice) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldChoiceFieldSensitive)
 }
 
 func (f *FormFieldChoice) UnmarshalJSON(data []byte) error {
@@ -2501,6 +3966,17 @@ func (f *FormFieldChoice) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldChoice) MarshalJSON() ([]byte, error) {
+	type embed FormFieldChoice
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldChoice) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2513,38 +3989,75 @@ func (f *FormFieldChoice) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldChoiceConfigFieldMultiple   = big.NewInt(1 << 0)
+	formFieldChoiceConfigFieldOptions    = big.NewInt(1 << 1)
+	formFieldChoiceConfigFieldAllowOther = big.NewInt(1 << 2)
+)
+
 type FormFieldChoiceConfig struct {
 	Multiple   *bool                            `json:"multiple,omitempty" url:"multiple,omitempty"`
 	Options    []*FormFieldChoiceConfigOption   `json:"options,omitempty" url:"options,omitempty"`
 	AllowOther *FormFieldChoiceConfigAllowOther `json:"allow_other,omitempty" url:"allow_other,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldChoiceConfig) GetMultiple() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldChoiceConfig) GetMultiple() bool {
+	if f == nil || f.Multiple == nil {
+		return false
 	}
-	return f.Multiple
+	return *f.Multiple
 }
 
 func (f *FormFieldChoiceConfig) GetOptions() []*FormFieldChoiceConfigOption {
-	if f == nil {
+	if f == nil || f.Options == nil {
 		return nil
 	}
 	return f.Options
 }
 
-func (f *FormFieldChoiceConfig) GetAllowOther() *FormFieldChoiceConfigAllowOther {
-	if f == nil {
-		return nil
+func (f *FormFieldChoiceConfig) GetAllowOther() FormFieldChoiceConfigAllowOther {
+	if f == nil || f.AllowOther == nil {
+		return FormFieldChoiceConfigAllowOther{}
 	}
-	return f.AllowOther
+	return *f.AllowOther
 }
 
 func (f *FormFieldChoiceConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldChoiceConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetMultiple sets the Multiple field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoiceConfig) SetMultiple(multiple *bool) {
+	f.Multiple = multiple
+	f.require(formFieldChoiceConfigFieldMultiple)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoiceConfig) SetOptions(options []*FormFieldChoiceConfigOption) {
+	f.Options = options
+	f.require(formFieldChoiceConfigFieldOptions)
+}
+
+// SetAllowOther sets the AllowOther field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoiceConfig) SetAllowOther(allowOther *FormFieldChoiceConfigAllowOther) {
+	f.AllowOther = allowOther
+	f.require(formFieldChoiceConfigFieldAllowOther)
 }
 
 func (f *FormFieldChoiceConfig) UnmarshalJSON(data []byte) error {
@@ -2563,6 +4076,17 @@ func (f *FormFieldChoiceConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldChoiceConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldChoiceConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldChoiceConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2575,38 +4099,75 @@ func (f *FormFieldChoiceConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldChoiceConfigAllowOtherFieldEnabled     = big.NewInt(1 << 0)
+	formFieldChoiceConfigAllowOtherFieldLabel       = big.NewInt(1 << 1)
+	formFieldChoiceConfigAllowOtherFieldPlaceholder = big.NewInt(1 << 2)
+)
+
 type FormFieldChoiceConfigAllowOther struct {
 	Enabled     *FormFieldChoiceConfigAllowOtherEnabledTrueEnum `json:"enabled,omitempty" url:"enabled,omitempty"`
 	Label       *string                                         `json:"label,omitempty" url:"label,omitempty"`
 	Placeholder *string                                         `json:"placeholder,omitempty" url:"placeholder,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldChoiceConfigAllowOther) GetEnabled() *FormFieldChoiceConfigAllowOtherEnabledTrueEnum {
-	if f == nil {
-		return nil
+func (f *FormFieldChoiceConfigAllowOther) GetEnabled() FormFieldChoiceConfigAllowOtherEnabledTrueEnum {
+	if f == nil || f.Enabled == nil {
+		return false
 	}
-	return f.Enabled
+	return *f.Enabled
 }
 
-func (f *FormFieldChoiceConfigAllowOther) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldChoiceConfigAllowOther) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldChoiceConfigAllowOther) GetPlaceholder() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldChoiceConfigAllowOther) GetPlaceholder() string {
+	if f == nil || f.Placeholder == nil {
+		return ""
 	}
-	return f.Placeholder
+	return *f.Placeholder
 }
 
 func (f *FormFieldChoiceConfigAllowOther) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldChoiceConfigAllowOther) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoiceConfigAllowOther) SetEnabled(enabled *FormFieldChoiceConfigAllowOtherEnabledTrueEnum) {
+	f.Enabled = enabled
+	f.require(formFieldChoiceConfigAllowOtherFieldEnabled)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoiceConfigAllowOther) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldChoiceConfigAllowOtherFieldLabel)
+}
+
+// SetPlaceholder sets the Placeholder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoiceConfigAllowOther) SetPlaceholder(placeholder *string) {
+	f.Placeholder = placeholder
+	f.require(formFieldChoiceConfigAllowOtherFieldPlaceholder)
 }
 
 func (f *FormFieldChoiceConfigAllowOther) UnmarshalJSON(data []byte) error {
@@ -2625,6 +4186,17 @@ func (f *FormFieldChoiceConfigAllowOther) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldChoiceConfigAllowOther) MarshalJSON() ([]byte, error) {
+	type embed FormFieldChoiceConfigAllowOther
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldChoiceConfigAllowOther) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2639,9 +4211,17 @@ func (f *FormFieldChoiceConfigAllowOther) String() string {
 
 type FormFieldChoiceConfigAllowOtherEnabledTrueEnum = bool
 
+var (
+	formFieldChoiceConfigOptionFieldValue = big.NewInt(1 << 0)
+	formFieldChoiceConfigOptionFieldLabel = big.NewInt(1 << 1)
+)
+
 type FormFieldChoiceConfigOption struct {
 	Value string `json:"value" url:"value"`
 	Label string `json:"label" url:"label"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -2665,6 +4245,27 @@ func (f *FormFieldChoiceConfigOption) GetExtraProperties() map[string]interface{
 	return f.extraProperties
 }
 
+func (f *FormFieldChoiceConfigOption) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoiceConfigOption) SetValue(value string) {
+	f.Value = value
+	f.require(formFieldChoiceConfigOptionFieldValue)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoiceConfigOption) SetLabel(label string) {
+	f.Label = label
+	f.require(formFieldChoiceConfigOptionFieldLabel)
+}
+
 func (f *FormFieldChoiceConfigOption) UnmarshalJSON(data []byte) error {
 	type unmarshaler FormFieldChoiceConfigOption
 	var value unmarshaler
@@ -2681,6 +4282,17 @@ func (f *FormFieldChoiceConfigOption) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldChoiceConfigOption) MarshalJSON() ([]byte, error) {
+	type embed FormFieldChoiceConfigOption
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldChoiceConfigOption) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2693,8 +4305,19 @@ func (f *FormFieldChoiceConfigOption) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldCustomFieldId        = big.NewInt(1 << 0)
+	formFieldCustomFieldCategory  = big.NewInt(1 << 1)
+	formFieldCustomFieldType      = big.NewInt(1 << 2)
+	formFieldCustomFieldConfig    = big.NewInt(1 << 3)
+	formFieldCustomFieldLabel     = big.NewInt(1 << 4)
+	formFieldCustomFieldHint      = big.NewInt(1 << 5)
+	formFieldCustomFieldRequired  = big.NewInt(1 << 6)
+	formFieldCustomFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldCustom struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeCustomConst        `json:"type" url:"type"`
 	Config    *FormFieldCustomConfig          `json:"config" url:"config"`
@@ -2703,15 +4326,18 @@ type FormFieldCustom struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldCustom) GetID() string {
+func (f *FormFieldCustom) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormFieldCustom) GetConfig() *FormFieldCustomConfig {
@@ -2721,36 +4347,99 @@ func (f *FormFieldCustom) GetConfig() *FormFieldCustomConfig {
 	return f.Config
 }
 
-func (f *FormFieldCustom) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldCustom) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldCustom) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldCustom) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldCustom) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldCustom) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldCustom) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldCustom) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldCustom) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldCustom) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCustom) SetId(id string) {
+	f.Id = id
+	f.require(formFieldCustomFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCustom) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldCustomFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCustom) SetType(type_ FormFieldTypeCustomConst) {
+	f.Type = type_
+	f.require(formFieldCustomFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCustom) SetConfig(config *FormFieldCustomConfig) {
+	f.Config = config
+	f.require(formFieldCustomFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCustom) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldCustomFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCustom) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldCustomFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCustom) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldCustomFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCustom) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldCustomFieldSensitive)
 }
 
 func (f *FormFieldCustom) UnmarshalJSON(data []byte) error {
@@ -2769,6 +4458,17 @@ func (f *FormFieldCustom) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldCustom) MarshalJSON() ([]byte, error) {
+	type embed FormFieldCustom
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldCustom) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2781,11 +4481,21 @@ func (f *FormFieldCustom) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldCustomConfigFieldSchema = big.NewInt(1 << 0)
+	formFieldCustomConfigFieldCode   = big.NewInt(1 << 1)
+	formFieldCustomConfigFieldCss    = big.NewInt(1 << 2)
+	formFieldCustomConfigFieldParams = big.NewInt(1 << 3)
+)
+
 type FormFieldCustomConfig struct {
 	Schema FormFieldCustomConfigSchema  `json:"schema" url:"schema"`
 	Code   string                       `json:"code" url:"code"`
-	CSS    *string                      `json:"css,omitempty" url:"css,omitempty"`
+	Css    *string                      `json:"css,omitempty" url:"css,omitempty"`
 	Params *FormFieldCustomConfigParams `json:"params,omitempty" url:"params,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -2805,22 +4515,57 @@ func (f *FormFieldCustomConfig) GetCode() string {
 	return f.Code
 }
 
-func (f *FormFieldCustomConfig) GetCSS() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldCustomConfig) GetCss() string {
+	if f == nil || f.Css == nil {
+		return ""
 	}
-	return f.CSS
+	return *f.Css
 }
 
-func (f *FormFieldCustomConfig) GetParams() *FormFieldCustomConfigParams {
-	if f == nil {
+func (f *FormFieldCustomConfig) GetParams() FormFieldCustomConfigParams {
+	if f == nil || f.Params == nil {
 		return nil
 	}
-	return f.Params
+	return *f.Params
 }
 
 func (f *FormFieldCustomConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldCustomConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetSchema sets the Schema field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCustomConfig) SetSchema(schema FormFieldCustomConfigSchema) {
+	f.Schema = schema
+	f.require(formFieldCustomConfigFieldSchema)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCustomConfig) SetCode(code string) {
+	f.Code = code
+	f.require(formFieldCustomConfigFieldCode)
+}
+
+// SetCss sets the Css field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCustomConfig) SetCss(css *string) {
+	f.Css = css
+	f.require(formFieldCustomConfigFieldCss)
+}
+
+// SetParams sets the Params field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCustomConfig) SetParams(params *FormFieldCustomConfigParams) {
+	f.Params = params
+	f.require(formFieldCustomConfigFieldParams)
 }
 
 func (f *FormFieldCustomConfig) UnmarshalJSON(data []byte) error {
@@ -2839,6 +4584,17 @@ func (f *FormFieldCustomConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldCustomConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldCustomConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldCustomConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2851,12 +4607,23 @@ func (f *FormFieldCustomConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormFieldCustomConfigParams = map[string]interface{}
+type FormFieldCustomConfigParams = map[string]string
 
 type FormFieldCustomConfigSchema = map[string]interface{}
 
+var (
+	formFieldDateFieldId        = big.NewInt(1 << 0)
+	formFieldDateFieldCategory  = big.NewInt(1 << 1)
+	formFieldDateFieldType      = big.NewInt(1 << 2)
+	formFieldDateFieldConfig    = big.NewInt(1 << 3)
+	formFieldDateFieldLabel     = big.NewInt(1 << 4)
+	formFieldDateFieldHint      = big.NewInt(1 << 5)
+	formFieldDateFieldRequired  = big.NewInt(1 << 6)
+	formFieldDateFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldDate struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeDateConst          `json:"type" url:"type"`
 	Config    *FormFieldDateConfig            `json:"config" url:"config"`
@@ -2865,15 +4632,18 @@ type FormFieldDate struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldDate) GetID() string {
+func (f *FormFieldDate) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormFieldDate) GetConfig() *FormFieldDateConfig {
@@ -2883,36 +4653,99 @@ func (f *FormFieldDate) GetConfig() *FormFieldDateConfig {
 	return f.Config
 }
 
-func (f *FormFieldDate) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldDate) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldDate) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldDate) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldDate) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldDate) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldDate) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldDate) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldDate) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldDate) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDate) SetId(id string) {
+	f.Id = id
+	f.require(formFieldDateFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDate) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldDateFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDate) SetType(type_ FormFieldTypeDateConst) {
+	f.Type = type_
+	f.require(formFieldDateFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDate) SetConfig(config *FormFieldDateConfig) {
+	f.Config = config
+	f.require(formFieldDateFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDate) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldDateFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDate) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldDateFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDate) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldDateFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDate) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldDateFieldSensitive)
 }
 
 func (f *FormFieldDate) UnmarshalJSON(data []byte) error {
@@ -2931,6 +4764,17 @@ func (f *FormFieldDate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldDate) MarshalJSON() ([]byte, error) {
+	type embed FormFieldDate
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldDate) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -2943,30 +4787,59 @@ func (f *FormFieldDate) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldDateConfigFieldFormat       = big.NewInt(1 << 0)
+	formFieldDateConfigFieldDefaultValue = big.NewInt(1 << 1)
+)
+
 type FormFieldDateConfig struct {
 	Format       *FormFieldDateConfigFormatEnum `json:"format,omitempty" url:"format,omitempty"`
 	DefaultValue *string                        `json:"default_value,omitempty" url:"default_value,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldDateConfig) GetFormat() *FormFieldDateConfigFormatEnum {
-	if f == nil {
-		return nil
+func (f *FormFieldDateConfig) GetFormat() FormFieldDateConfigFormatEnum {
+	if f == nil || f.Format == nil {
+		return ""
 	}
-	return f.Format
+	return *f.Format
 }
 
-func (f *FormFieldDateConfig) GetDefaultValue() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldDateConfig) GetDefaultValue() string {
+	if f == nil || f.DefaultValue == nil {
+		return ""
 	}
-	return f.DefaultValue
+	return *f.DefaultValue
 }
 
 func (f *FormFieldDateConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldDateConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetFormat sets the Format field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDateConfig) SetFormat(format *FormFieldDateConfigFormatEnum) {
+	f.Format = format
+	f.require(formFieldDateConfigFieldFormat)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDateConfig) SetDefaultValue(defaultValue *string) {
+	f.DefaultValue = defaultValue
+	f.require(formFieldDateConfigFieldDefaultValue)
 }
 
 func (f *FormFieldDateConfig) UnmarshalJSON(data []byte) error {
@@ -2983,6 +4856,17 @@ func (f *FormFieldDateConfig) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FormFieldDateConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldDateConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FormFieldDateConfig) String() string {
@@ -3019,8 +4903,19 @@ func (f FormFieldDateConfigFormatEnum) Ptr() *FormFieldDateConfigFormatEnum {
 	return &f
 }
 
+var (
+	formFieldDropdownFieldId        = big.NewInt(1 << 0)
+	formFieldDropdownFieldCategory  = big.NewInt(1 << 1)
+	formFieldDropdownFieldType      = big.NewInt(1 << 2)
+	formFieldDropdownFieldConfig    = big.NewInt(1 << 3)
+	formFieldDropdownFieldLabel     = big.NewInt(1 << 4)
+	formFieldDropdownFieldHint      = big.NewInt(1 << 5)
+	formFieldDropdownFieldRequired  = big.NewInt(1 << 6)
+	formFieldDropdownFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldDropdown struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeDropdownConst      `json:"type" url:"type"`
 	Config    *FormFieldDropdownConfig        `json:"config,omitempty" url:"config,omitempty"`
@@ -3029,54 +4924,120 @@ type FormFieldDropdown struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldDropdown) GetID() string {
+func (f *FormFieldDropdown) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormFieldDropdown) GetConfig() *FormFieldDropdownConfig {
-	if f == nil {
-		return nil
+func (f *FormFieldDropdown) GetConfig() FormFieldDropdownConfig {
+	if f == nil || f.Config == nil {
+		return FormFieldDropdownConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
-func (f *FormFieldDropdown) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldDropdown) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldDropdown) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldDropdown) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldDropdown) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldDropdown) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldDropdown) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldDropdown) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldDropdown) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldDropdown) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdown) SetId(id string) {
+	f.Id = id
+	f.require(formFieldDropdownFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdown) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldDropdownFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdown) SetType(type_ FormFieldTypeDropdownConst) {
+	f.Type = type_
+	f.require(formFieldDropdownFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdown) SetConfig(config *FormFieldDropdownConfig) {
+	f.Config = config
+	f.require(formFieldDropdownFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdown) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldDropdownFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdown) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldDropdownFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdown) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldDropdownFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdown) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldDropdownFieldSensitive)
 }
 
 func (f *FormFieldDropdown) UnmarshalJSON(data []byte) error {
@@ -3095,6 +5056,17 @@ func (f *FormFieldDropdown) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldDropdown) MarshalJSON() ([]byte, error) {
+	type embed FormFieldDropdown
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldDropdown) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -3107,38 +5079,75 @@ func (f *FormFieldDropdown) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldDropdownConfigFieldMultiple    = big.NewInt(1 << 0)
+	formFieldDropdownConfigFieldOptions     = big.NewInt(1 << 1)
+	formFieldDropdownConfigFieldPlaceholder = big.NewInt(1 << 2)
+)
+
 type FormFieldDropdownConfig struct {
 	Multiple    *bool                            `json:"multiple,omitempty" url:"multiple,omitempty"`
 	Options     []*FormFieldDropdownConfigOption `json:"options,omitempty" url:"options,omitempty"`
 	Placeholder *string                          `json:"placeholder,omitempty" url:"placeholder,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldDropdownConfig) GetMultiple() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldDropdownConfig) GetMultiple() bool {
+	if f == nil || f.Multiple == nil {
+		return false
 	}
-	return f.Multiple
+	return *f.Multiple
 }
 
 func (f *FormFieldDropdownConfig) GetOptions() []*FormFieldDropdownConfigOption {
-	if f == nil {
+	if f == nil || f.Options == nil {
 		return nil
 	}
 	return f.Options
 }
 
-func (f *FormFieldDropdownConfig) GetPlaceholder() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldDropdownConfig) GetPlaceholder() string {
+	if f == nil || f.Placeholder == nil {
+		return ""
 	}
-	return f.Placeholder
+	return *f.Placeholder
 }
 
 func (f *FormFieldDropdownConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldDropdownConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetMultiple sets the Multiple field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdownConfig) SetMultiple(multiple *bool) {
+	f.Multiple = multiple
+	f.require(formFieldDropdownConfigFieldMultiple)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdownConfig) SetOptions(options []*FormFieldDropdownConfigOption) {
+	f.Options = options
+	f.require(formFieldDropdownConfigFieldOptions)
+}
+
+// SetPlaceholder sets the Placeholder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdownConfig) SetPlaceholder(placeholder *string) {
+	f.Placeholder = placeholder
+	f.require(formFieldDropdownConfigFieldPlaceholder)
 }
 
 func (f *FormFieldDropdownConfig) UnmarshalJSON(data []byte) error {
@@ -3157,6 +5166,17 @@ func (f *FormFieldDropdownConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldDropdownConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldDropdownConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldDropdownConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -3169,9 +5189,17 @@ func (f *FormFieldDropdownConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldDropdownConfigOptionFieldValue = big.NewInt(1 << 0)
+	formFieldDropdownConfigOptionFieldLabel = big.NewInt(1 << 1)
+)
+
 type FormFieldDropdownConfigOption struct {
 	Value string `json:"value" url:"value"`
 	Label string `json:"label" url:"label"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -3195,6 +5223,27 @@ func (f *FormFieldDropdownConfigOption) GetExtraProperties() map[string]interfac
 	return f.extraProperties
 }
 
+func (f *FormFieldDropdownConfigOption) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdownConfigOption) SetValue(value string) {
+	f.Value = value
+	f.require(formFieldDropdownConfigOptionFieldValue)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdownConfigOption) SetLabel(label string) {
+	f.Label = label
+	f.require(formFieldDropdownConfigOptionFieldLabel)
+}
+
 func (f *FormFieldDropdownConfigOption) UnmarshalJSON(data []byte) error {
 	type unmarshaler FormFieldDropdownConfigOption
 	var value unmarshaler
@@ -3211,6 +5260,17 @@ func (f *FormFieldDropdownConfigOption) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldDropdownConfigOption) MarshalJSON() ([]byte, error) {
+	type embed FormFieldDropdownConfigOption
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldDropdownConfigOption) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -3223,8 +5283,19 @@ func (f *FormFieldDropdownConfigOption) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldEmailFieldId        = big.NewInt(1 << 0)
+	formFieldEmailFieldCategory  = big.NewInt(1 << 1)
+	formFieldEmailFieldType      = big.NewInt(1 << 2)
+	formFieldEmailFieldConfig    = big.NewInt(1 << 3)
+	formFieldEmailFieldLabel     = big.NewInt(1 << 4)
+	formFieldEmailFieldHint      = big.NewInt(1 << 5)
+	formFieldEmailFieldRequired  = big.NewInt(1 << 6)
+	formFieldEmailFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldEmail struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeEmailConst         `json:"type" url:"type"`
 	Config    *FormFieldEmailConfig           `json:"config,omitempty" url:"config,omitempty"`
@@ -3233,54 +5304,120 @@ type FormFieldEmail struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldEmail) GetID() string {
+func (f *FormFieldEmail) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormFieldEmail) GetConfig() *FormFieldEmailConfig {
-	if f == nil {
-		return nil
+func (f *FormFieldEmail) GetConfig() FormFieldEmailConfig {
+	if f == nil || f.Config == nil {
+		return FormFieldEmailConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
-func (f *FormFieldEmail) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldEmail) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldEmail) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldEmail) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldEmail) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldEmail) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldEmail) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldEmail) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldEmail) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldEmail) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldEmail) SetId(id string) {
+	f.Id = id
+	f.require(formFieldEmailFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldEmail) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldEmailFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldEmail) SetType(type_ FormFieldTypeEmailConst) {
+	f.Type = type_
+	f.require(formFieldEmailFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldEmail) SetConfig(config *FormFieldEmailConfig) {
+	f.Config = config
+	f.require(formFieldEmailFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldEmail) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldEmailFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldEmail) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldEmailFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldEmail) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldEmailFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldEmail) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldEmailFieldSensitive)
 }
 
 func (f *FormFieldEmail) UnmarshalJSON(data []byte) error {
@@ -3299,6 +5436,17 @@ func (f *FormFieldEmail) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldEmail) MarshalJSON() ([]byte, error) {
+	type embed FormFieldEmail
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldEmail) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -3311,30 +5459,59 @@ func (f *FormFieldEmail) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldEmailConfigFieldDefaultValue = big.NewInt(1 << 0)
+	formFieldEmailConfigFieldPlaceholder  = big.NewInt(1 << 1)
+)
+
 type FormFieldEmailConfig struct {
 	DefaultValue *string `json:"default_value,omitempty" url:"default_value,omitempty"`
 	Placeholder  *string `json:"placeholder,omitempty" url:"placeholder,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldEmailConfig) GetDefaultValue() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldEmailConfig) GetDefaultValue() string {
+	if f == nil || f.DefaultValue == nil {
+		return ""
 	}
-	return f.DefaultValue
+	return *f.DefaultValue
 }
 
-func (f *FormFieldEmailConfig) GetPlaceholder() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldEmailConfig) GetPlaceholder() string {
+	if f == nil || f.Placeholder == nil {
+		return ""
 	}
-	return f.Placeholder
+	return *f.Placeholder
 }
 
 func (f *FormFieldEmailConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldEmailConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldEmailConfig) SetDefaultValue(defaultValue *string) {
+	f.DefaultValue = defaultValue
+	f.require(formFieldEmailConfigFieldDefaultValue)
+}
+
+// SetPlaceholder sets the Placeholder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldEmailConfig) SetPlaceholder(placeholder *string) {
+	f.Placeholder = placeholder
+	f.require(formFieldEmailConfigFieldPlaceholder)
 }
 
 func (f *FormFieldEmailConfig) UnmarshalJSON(data []byte) error {
@@ -3353,6 +5530,17 @@ func (f *FormFieldEmailConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldEmailConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldEmailConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldEmailConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -3365,8 +5553,19 @@ func (f *FormFieldEmailConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldFileFieldId        = big.NewInt(1 << 0)
+	formFieldFileFieldCategory  = big.NewInt(1 << 1)
+	formFieldFileFieldType      = big.NewInt(1 << 2)
+	formFieldFileFieldConfig    = big.NewInt(1 << 3)
+	formFieldFileFieldLabel     = big.NewInt(1 << 4)
+	formFieldFileFieldHint      = big.NewInt(1 << 5)
+	formFieldFileFieldRequired  = big.NewInt(1 << 6)
+	formFieldFileFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldFile struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeFileConst          `json:"type" url:"type"`
 	Config    *FormFieldFileConfig            `json:"config,omitempty" url:"config,omitempty"`
@@ -3375,54 +5574,120 @@ type FormFieldFile struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldFile) GetID() string {
+func (f *FormFieldFile) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormFieldFile) GetConfig() *FormFieldFileConfig {
-	if f == nil {
-		return nil
+func (f *FormFieldFile) GetConfig() FormFieldFileConfig {
+	if f == nil || f.Config == nil {
+		return FormFieldFileConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
-func (f *FormFieldFile) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldFile) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldFile) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldFile) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldFile) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldFile) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldFile) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldFile) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldFile) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldFile) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFile) SetId(id string) {
+	f.Id = id
+	f.require(formFieldFileFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFile) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldFileFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFile) SetType(type_ FormFieldTypeFileConst) {
+	f.Type = type_
+	f.require(formFieldFileFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFile) SetConfig(config *FormFieldFileConfig) {
+	f.Config = config
+	f.require(formFieldFileFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFile) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldFileFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFile) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldFileFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFile) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldFileFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFile) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldFileFieldSensitive)
 }
 
 func (f *FormFieldFile) UnmarshalJSON(data []byte) error {
@@ -3441,6 +5706,17 @@ func (f *FormFieldFile) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldFile) MarshalJSON() ([]byte, error) {
+	type embed FormFieldFile
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldFile) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -3453,6 +5729,15 @@ func (f *FormFieldFile) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldFileConfigFieldMultiple   = big.NewInt(1 << 0)
+	formFieldFileConfigFieldStorage    = big.NewInt(1 << 1)
+	formFieldFileConfigFieldCategories = big.NewInt(1 << 2)
+	formFieldFileConfigFieldExtensions = big.NewInt(1 << 3)
+	formFieldFileConfigFieldMaxSize    = big.NewInt(1 << 4)
+	formFieldFileConfigFieldMaxFiles   = big.NewInt(1 << 5)
+)
+
 type FormFieldFileConfig struct {
 	Multiple   *bool                             `json:"multiple,omitempty" url:"multiple,omitempty"`
 	Storage    *FormFieldFileConfigStorage       `json:"storage,omitempty" url:"storage,omitempty"`
@@ -3461,54 +5746,106 @@ type FormFieldFileConfig struct {
 	MaxSize    *int                              `json:"maxSize,omitempty" url:"maxSize,omitempty"`
 	MaxFiles   *int                              `json:"maxFiles,omitempty" url:"maxFiles,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldFileConfig) GetMultiple() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldFileConfig) GetMultiple() bool {
+	if f == nil || f.Multiple == nil {
+		return false
 	}
-	return f.Multiple
+	return *f.Multiple
 }
 
-func (f *FormFieldFileConfig) GetStorage() *FormFieldFileConfigStorage {
-	if f == nil {
-		return nil
+func (f *FormFieldFileConfig) GetStorage() FormFieldFileConfigStorage {
+	if f == nil || f.Storage == nil {
+		return FormFieldFileConfigStorage{}
 	}
-	return f.Storage
+	return *f.Storage
 }
 
 func (f *FormFieldFileConfig) GetCategories() []FormFieldFileConfigCategoryEnum {
-	if f == nil {
+	if f == nil || f.Categories == nil {
 		return nil
 	}
 	return f.Categories
 }
 
 func (f *FormFieldFileConfig) GetExtensions() []string {
-	if f == nil {
+	if f == nil || f.Extensions == nil {
 		return nil
 	}
 	return f.Extensions
 }
 
-func (f *FormFieldFileConfig) GetMaxSize() *int {
-	if f == nil {
-		return nil
+func (f *FormFieldFileConfig) GetMaxSize() int {
+	if f == nil || f.MaxSize == nil {
+		return 0
 	}
-	return f.MaxSize
+	return *f.MaxSize
 }
 
-func (f *FormFieldFileConfig) GetMaxFiles() *int {
-	if f == nil {
-		return nil
+func (f *FormFieldFileConfig) GetMaxFiles() int {
+	if f == nil || f.MaxFiles == nil {
+		return 0
 	}
-	return f.MaxFiles
+	return *f.MaxFiles
 }
 
 func (f *FormFieldFileConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldFileConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetMultiple sets the Multiple field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFileConfig) SetMultiple(multiple *bool) {
+	f.Multiple = multiple
+	f.require(formFieldFileConfigFieldMultiple)
+}
+
+// SetStorage sets the Storage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFileConfig) SetStorage(storage *FormFieldFileConfigStorage) {
+	f.Storage = storage
+	f.require(formFieldFileConfigFieldStorage)
+}
+
+// SetCategories sets the Categories field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFileConfig) SetCategories(categories []FormFieldFileConfigCategoryEnum) {
+	f.Categories = categories
+	f.require(formFieldFileConfigFieldCategories)
+}
+
+// SetExtensions sets the Extensions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFileConfig) SetExtensions(extensions []string) {
+	f.Extensions = extensions
+	f.require(formFieldFileConfigFieldExtensions)
+}
+
+// SetMaxSize sets the MaxSize field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFileConfig) SetMaxSize(maxSize *int) {
+	f.MaxSize = maxSize
+	f.require(formFieldFileConfigFieldMaxSize)
+}
+
+// SetMaxFiles sets the MaxFiles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFileConfig) SetMaxFiles(maxFiles *int) {
+	f.MaxFiles = maxFiles
+	f.require(formFieldFileConfigFieldMaxFiles)
 }
 
 func (f *FormFieldFileConfig) UnmarshalJSON(data []byte) error {
@@ -3525,6 +5862,17 @@ func (f *FormFieldFileConfig) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FormFieldFileConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldFileConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FormFieldFileConfig) String() string {
@@ -3570,8 +5918,15 @@ func (f FormFieldFileConfigCategoryEnum) Ptr() *FormFieldFileConfigCategoryEnum 
 	return &f
 }
 
+var (
+	formFieldFileConfigStorageFieldType = big.NewInt(1 << 0)
+)
+
 type FormFieldFileConfigStorage struct {
 	Type FormFieldFileConfigStorageTypeEnum `json:"type" url:"type"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
@@ -3587,6 +5942,20 @@ func (f *FormFieldFileConfigStorage) GetType() FormFieldFileConfigStorageTypeEnu
 
 func (f *FormFieldFileConfigStorage) GetExtraProperties() map[string]interface{} {
 	return f.ExtraProperties
+}
+
+func (f *FormFieldFileConfigStorage) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldFileConfigStorage) SetType(type_ FormFieldFileConfigStorageTypeEnum) {
+	f.Type = type_
+	f.require(formFieldFileConfigStorageFieldType)
 }
 
 func (f *FormFieldFileConfigStorage) UnmarshalJSON(data []byte) error {
@@ -3616,7 +5985,8 @@ func (f *FormFieldFileConfigStorage) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*f),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, f.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, f.ExtraProperties)
 }
 
 func (f *FormFieldFileConfigStorage) String() string {
@@ -3653,8 +6023,19 @@ func (f FormFieldFileConfigStorageTypeEnum) Ptr() *FormFieldFileConfigStorageTyp
 	return &f
 }
 
+var (
+	formFieldLegalFieldId        = big.NewInt(1 << 0)
+	formFieldLegalFieldCategory  = big.NewInt(1 << 1)
+	formFieldLegalFieldType      = big.NewInt(1 << 2)
+	formFieldLegalFieldConfig    = big.NewInt(1 << 3)
+	formFieldLegalFieldLabel     = big.NewInt(1 << 4)
+	formFieldLegalFieldHint      = big.NewInt(1 << 5)
+	formFieldLegalFieldRequired  = big.NewInt(1 << 6)
+	formFieldLegalFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldLegal struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeLegalConst         `json:"type" url:"type"`
 	Config    *FormFieldLegalConfig           `json:"config,omitempty" url:"config,omitempty"`
@@ -3663,54 +6044,120 @@ type FormFieldLegal struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldLegal) GetID() string {
+func (f *FormFieldLegal) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormFieldLegal) GetConfig() *FormFieldLegalConfig {
-	if f == nil {
-		return nil
+func (f *FormFieldLegal) GetConfig() FormFieldLegalConfig {
+	if f == nil || f.Config == nil {
+		return FormFieldLegalConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
-func (f *FormFieldLegal) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldLegal) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldLegal) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldLegal) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldLegal) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldLegal) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldLegal) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldLegal) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldLegal) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldLegal) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldLegal) SetId(id string) {
+	f.Id = id
+	f.require(formFieldLegalFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldLegal) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldLegalFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldLegal) SetType(type_ FormFieldTypeLegalConst) {
+	f.Type = type_
+	f.require(formFieldLegalFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldLegal) SetConfig(config *FormFieldLegalConfig) {
+	f.Config = config
+	f.require(formFieldLegalFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldLegal) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldLegalFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldLegal) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldLegalFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldLegal) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldLegalFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldLegal) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldLegalFieldSensitive)
 }
 
 func (f *FormFieldLegal) UnmarshalJSON(data []byte) error {
@@ -3729,6 +6176,17 @@ func (f *FormFieldLegal) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldLegal) MarshalJSON() ([]byte, error) {
+	type embed FormFieldLegal
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldLegal) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -3741,22 +6199,43 @@ func (f *FormFieldLegal) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldLegalConfigFieldText = big.NewInt(1 << 0)
+)
+
 type FormFieldLegalConfig struct {
 	Text *string `json:"text,omitempty" url:"text,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldLegalConfig) GetText() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldLegalConfig) GetText() string {
+	if f == nil || f.Text == nil {
+		return ""
 	}
-	return f.Text
+	return *f.Text
 }
 
 func (f *FormFieldLegalConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldLegalConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetText sets the Text field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldLegalConfig) SetText(text *string) {
+	f.Text = text
+	f.require(formFieldLegalConfigFieldText)
 }
 
 func (f *FormFieldLegalConfig) UnmarshalJSON(data []byte) error {
@@ -3775,6 +6254,17 @@ func (f *FormFieldLegalConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldLegalConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldLegalConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldLegalConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -3787,8 +6277,19 @@ func (f *FormFieldLegalConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldNumberFieldId        = big.NewInt(1 << 0)
+	formFieldNumberFieldCategory  = big.NewInt(1 << 1)
+	formFieldNumberFieldType      = big.NewInt(1 << 2)
+	formFieldNumberFieldConfig    = big.NewInt(1 << 3)
+	formFieldNumberFieldLabel     = big.NewInt(1 << 4)
+	formFieldNumberFieldHint      = big.NewInt(1 << 5)
+	formFieldNumberFieldRequired  = big.NewInt(1 << 6)
+	formFieldNumberFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldNumber struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeNumberConst        `json:"type" url:"type"`
 	Config    *FormFieldNumberConfig          `json:"config,omitempty" url:"config,omitempty"`
@@ -3797,54 +6298,120 @@ type FormFieldNumber struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldNumber) GetID() string {
+func (f *FormFieldNumber) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormFieldNumber) GetConfig() *FormFieldNumberConfig {
-	if f == nil {
-		return nil
+func (f *FormFieldNumber) GetConfig() FormFieldNumberConfig {
+	if f == nil || f.Config == nil {
+		return FormFieldNumberConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
-func (f *FormFieldNumber) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldNumber) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldNumber) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldNumber) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldNumber) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldNumber) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldNumber) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldNumber) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldNumber) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldNumber) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldNumber) SetId(id string) {
+	f.Id = id
+	f.require(formFieldNumberFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldNumber) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldNumberFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldNumber) SetType(type_ FormFieldTypeNumberConst) {
+	f.Type = type_
+	f.require(formFieldNumberFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldNumber) SetConfig(config *FormFieldNumberConfig) {
+	f.Config = config
+	f.require(formFieldNumberFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldNumber) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldNumberFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldNumber) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldNumberFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldNumber) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldNumberFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldNumber) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldNumberFieldSensitive)
 }
 
 func (f *FormFieldNumber) UnmarshalJSON(data []byte) error {
@@ -3863,6 +6430,17 @@ func (f *FormFieldNumber) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldNumber) MarshalJSON() ([]byte, error) {
+	type embed FormFieldNumber
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldNumber) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -3875,46 +6453,91 @@ func (f *FormFieldNumber) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldNumberConfigFieldDefaultValue = big.NewInt(1 << 0)
+	formFieldNumberConfigFieldPlaceholder  = big.NewInt(1 << 1)
+	formFieldNumberConfigFieldMinValue     = big.NewInt(1 << 2)
+	formFieldNumberConfigFieldMaxValue     = big.NewInt(1 << 3)
+)
+
 type FormFieldNumberConfig struct {
 	DefaultValue *float64 `json:"default_value,omitempty" url:"default_value,omitempty"`
 	Placeholder  *string  `json:"placeholder,omitempty" url:"placeholder,omitempty"`
 	MinValue     *float64 `json:"min_value,omitempty" url:"min_value,omitempty"`
 	MaxValue     *float64 `json:"max_value,omitempty" url:"max_value,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldNumberConfig) GetDefaultValue() *float64 {
-	if f == nil {
-		return nil
+func (f *FormFieldNumberConfig) GetDefaultValue() float64 {
+	if f == nil || f.DefaultValue == nil {
+		return 0
 	}
-	return f.DefaultValue
+	return *f.DefaultValue
 }
 
-func (f *FormFieldNumberConfig) GetPlaceholder() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldNumberConfig) GetPlaceholder() string {
+	if f == nil || f.Placeholder == nil {
+		return ""
 	}
-	return f.Placeholder
+	return *f.Placeholder
 }
 
-func (f *FormFieldNumberConfig) GetMinValue() *float64 {
-	if f == nil {
-		return nil
+func (f *FormFieldNumberConfig) GetMinValue() float64 {
+	if f == nil || f.MinValue == nil {
+		return 0
 	}
-	return f.MinValue
+	return *f.MinValue
 }
 
-func (f *FormFieldNumberConfig) GetMaxValue() *float64 {
-	if f == nil {
-		return nil
+func (f *FormFieldNumberConfig) GetMaxValue() float64 {
+	if f == nil || f.MaxValue == nil {
+		return 0
 	}
-	return f.MaxValue
+	return *f.MaxValue
 }
 
 func (f *FormFieldNumberConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldNumberConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldNumberConfig) SetDefaultValue(defaultValue *float64) {
+	f.DefaultValue = defaultValue
+	f.require(formFieldNumberConfigFieldDefaultValue)
+}
+
+// SetPlaceholder sets the Placeholder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldNumberConfig) SetPlaceholder(placeholder *string) {
+	f.Placeholder = placeholder
+	f.require(formFieldNumberConfigFieldPlaceholder)
+}
+
+// SetMinValue sets the MinValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldNumberConfig) SetMinValue(minValue *float64) {
+	f.MinValue = minValue
+	f.require(formFieldNumberConfigFieldMinValue)
+}
+
+// SetMaxValue sets the MaxValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldNumberConfig) SetMaxValue(maxValue *float64) {
+	f.MaxValue = maxValue
+	f.require(formFieldNumberConfigFieldMaxValue)
 }
 
 func (f *FormFieldNumberConfig) UnmarshalJSON(data []byte) error {
@@ -3933,6 +6556,17 @@ func (f *FormFieldNumberConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldNumberConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldNumberConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldNumberConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -3945,8 +6579,19 @@ func (f *FormFieldNumberConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldPasswordFieldId        = big.NewInt(1 << 0)
+	formFieldPasswordFieldCategory  = big.NewInt(1 << 1)
+	formFieldPasswordFieldType      = big.NewInt(1 << 2)
+	formFieldPasswordFieldConfig    = big.NewInt(1 << 3)
+	formFieldPasswordFieldLabel     = big.NewInt(1 << 4)
+	formFieldPasswordFieldHint      = big.NewInt(1 << 5)
+	formFieldPasswordFieldRequired  = big.NewInt(1 << 6)
+	formFieldPasswordFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldPassword struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypePasswordConst      `json:"type" url:"type"`
 	Config    *FormFieldPasswordConfig        `json:"config" url:"config"`
@@ -3955,15 +6600,18 @@ type FormFieldPassword struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldPassword) GetID() string {
+func (f *FormFieldPassword) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormFieldPassword) GetConfig() *FormFieldPasswordConfig {
@@ -3973,36 +6621,99 @@ func (f *FormFieldPassword) GetConfig() *FormFieldPasswordConfig {
 	return f.Config
 }
 
-func (f *FormFieldPassword) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldPassword) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldPassword) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldPassword) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldPassword) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldPassword) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldPassword) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldPassword) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldPassword) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldPassword) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPassword) SetId(id string) {
+	f.Id = id
+	f.require(formFieldPasswordFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPassword) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldPasswordFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPassword) SetType(type_ FormFieldTypePasswordConst) {
+	f.Type = type_
+	f.require(formFieldPasswordFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPassword) SetConfig(config *FormFieldPasswordConfig) {
+	f.Config = config
+	f.require(formFieldPasswordFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPassword) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldPasswordFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPassword) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldPasswordFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPassword) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldPasswordFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPassword) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldPasswordFieldSensitive)
 }
 
 func (f *FormFieldPassword) UnmarshalJSON(data []byte) error {
@@ -4021,6 +6732,17 @@ func (f *FormFieldPassword) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldPassword) MarshalJSON() ([]byte, error) {
+	type embed FormFieldPassword
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldPassword) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -4033,6 +6755,16 @@ func (f *FormFieldPassword) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldPasswordConfigFieldHash          = big.NewInt(1 << 0)
+	formFieldPasswordConfigFieldPlaceholder   = big.NewInt(1 << 1)
+	formFieldPasswordConfigFieldMinLength     = big.NewInt(1 << 2)
+	formFieldPasswordConfigFieldMaxLength     = big.NewInt(1 << 3)
+	formFieldPasswordConfigFieldComplexity    = big.NewInt(1 << 4)
+	formFieldPasswordConfigFieldNist          = big.NewInt(1 << 5)
+	formFieldPasswordConfigFieldStrengthMeter = big.NewInt(1 << 6)
+)
+
 type FormFieldPasswordConfig struct {
 	Hash          *FormFieldPasswordConfigHashEnum `json:"hash,omitempty" url:"hash,omitempty"`
 	Placeholder   *string                          `json:"placeholder,omitempty" url:"placeholder,omitempty"`
@@ -4042,61 +6774,120 @@ type FormFieldPasswordConfig struct {
 	Nist          *bool                            `json:"nist,omitempty" url:"nist,omitempty"`
 	StrengthMeter *bool                            `json:"strength_meter,omitempty" url:"strength_meter,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldPasswordConfig) GetHash() *FormFieldPasswordConfigHashEnum {
-	if f == nil {
-		return nil
+func (f *FormFieldPasswordConfig) GetHash() FormFieldPasswordConfigHashEnum {
+	if f == nil || f.Hash == nil {
+		return ""
 	}
-	return f.Hash
+	return *f.Hash
 }
 
-func (f *FormFieldPasswordConfig) GetPlaceholder() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldPasswordConfig) GetPlaceholder() string {
+	if f == nil || f.Placeholder == nil {
+		return ""
 	}
-	return f.Placeholder
+	return *f.Placeholder
 }
 
-func (f *FormFieldPasswordConfig) GetMinLength() *int {
-	if f == nil {
-		return nil
+func (f *FormFieldPasswordConfig) GetMinLength() int {
+	if f == nil || f.MinLength == nil {
+		return 0
 	}
-	return f.MinLength
+	return *f.MinLength
 }
 
-func (f *FormFieldPasswordConfig) GetMaxLength() *int {
-	if f == nil {
-		return nil
+func (f *FormFieldPasswordConfig) GetMaxLength() int {
+	if f == nil || f.MaxLength == nil {
+		return 0
 	}
-	return f.MaxLength
+	return *f.MaxLength
 }
 
-func (f *FormFieldPasswordConfig) GetComplexity() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldPasswordConfig) GetComplexity() bool {
+	if f == nil || f.Complexity == nil {
+		return false
 	}
-	return f.Complexity
+	return *f.Complexity
 }
 
-func (f *FormFieldPasswordConfig) GetNist() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldPasswordConfig) GetNist() bool {
+	if f == nil || f.Nist == nil {
+		return false
 	}
-	return f.Nist
+	return *f.Nist
 }
 
-func (f *FormFieldPasswordConfig) GetStrengthMeter() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldPasswordConfig) GetStrengthMeter() bool {
+	if f == nil || f.StrengthMeter == nil {
+		return false
 	}
-	return f.StrengthMeter
+	return *f.StrengthMeter
 }
 
 func (f *FormFieldPasswordConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldPasswordConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetHash sets the Hash field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPasswordConfig) SetHash(hash *FormFieldPasswordConfigHashEnum) {
+	f.Hash = hash
+	f.require(formFieldPasswordConfigFieldHash)
+}
+
+// SetPlaceholder sets the Placeholder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPasswordConfig) SetPlaceholder(placeholder *string) {
+	f.Placeholder = placeholder
+	f.require(formFieldPasswordConfigFieldPlaceholder)
+}
+
+// SetMinLength sets the MinLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPasswordConfig) SetMinLength(minLength *int) {
+	f.MinLength = minLength
+	f.require(formFieldPasswordConfigFieldMinLength)
+}
+
+// SetMaxLength sets the MaxLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPasswordConfig) SetMaxLength(maxLength *int) {
+	f.MaxLength = maxLength
+	f.require(formFieldPasswordConfigFieldMaxLength)
+}
+
+// SetComplexity sets the Complexity field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPasswordConfig) SetComplexity(complexity *bool) {
+	f.Complexity = complexity
+	f.require(formFieldPasswordConfigFieldComplexity)
+}
+
+// SetNist sets the Nist field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPasswordConfig) SetNist(nist *bool) {
+	f.Nist = nist
+	f.require(formFieldPasswordConfigFieldNist)
+}
+
+// SetStrengthMeter sets the StrengthMeter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPasswordConfig) SetStrengthMeter(strengthMeter *bool) {
+	f.StrengthMeter = strengthMeter
+	f.require(formFieldPasswordConfigFieldStrengthMeter)
 }
 
 func (f *FormFieldPasswordConfig) UnmarshalJSON(data []byte) error {
@@ -4113,6 +6904,17 @@ func (f *FormFieldPasswordConfig) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FormFieldPasswordConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldPasswordConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FormFieldPasswordConfig) String() string {
@@ -4158,8 +6960,19 @@ func (f FormFieldPasswordConfigHashEnum) Ptr() *FormFieldPasswordConfigHashEnum 
 	return &f
 }
 
+var (
+	formFieldPaymentFieldId        = big.NewInt(1 << 0)
+	formFieldPaymentFieldCategory  = big.NewInt(1 << 1)
+	formFieldPaymentFieldType      = big.NewInt(1 << 2)
+	formFieldPaymentFieldConfig    = big.NewInt(1 << 3)
+	formFieldPaymentFieldLabel     = big.NewInt(1 << 4)
+	formFieldPaymentFieldHint      = big.NewInt(1 << 5)
+	formFieldPaymentFieldRequired  = big.NewInt(1 << 6)
+	formFieldPaymentFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldPayment struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypePaymentConst       `json:"type" url:"type"`
 	Config    *FormFieldPaymentConfig         `json:"config" url:"config"`
@@ -4168,15 +6981,18 @@ type FormFieldPayment struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldPayment) GetID() string {
+func (f *FormFieldPayment) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormFieldPayment) GetConfig() *FormFieldPaymentConfig {
@@ -4186,36 +7002,99 @@ func (f *FormFieldPayment) GetConfig() *FormFieldPaymentConfig {
 	return f.Config
 }
 
-func (f *FormFieldPayment) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldPayment) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldPayment) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldPayment) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldPayment) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldPayment) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldPayment) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldPayment) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldPayment) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldPayment) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPayment) SetId(id string) {
+	f.Id = id
+	f.require(formFieldPaymentFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPayment) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldPaymentFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPayment) SetType(type_ FormFieldTypePaymentConst) {
+	f.Type = type_
+	f.require(formFieldPaymentFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPayment) SetConfig(config *FormFieldPaymentConfig) {
+	f.Config = config
+	f.require(formFieldPaymentFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPayment) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldPaymentFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPayment) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldPaymentFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPayment) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldPaymentFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPayment) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldPaymentFieldSensitive)
 }
 
 func (f *FormFieldPayment) UnmarshalJSON(data []byte) error {
@@ -4234,6 +7113,17 @@ func (f *FormFieldPayment) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldPayment) MarshalJSON() ([]byte, error) {
+	type embed FormFieldPayment
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldPayment) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -4246,12 +7136,23 @@ func (f *FormFieldPayment) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldPaymentConfigFieldProvider    = big.NewInt(1 << 0)
+	formFieldPaymentConfigFieldCharge      = big.NewInt(1 << 1)
+	formFieldPaymentConfigFieldCredentials = big.NewInt(1 << 2)
+	formFieldPaymentConfigFieldCustomer    = big.NewInt(1 << 3)
+	formFieldPaymentConfigFieldFields      = big.NewInt(1 << 4)
+)
+
 type FormFieldPaymentConfig struct {
 	Provider    *FormFieldPaymentConfigProviderEnum `json:"provider,omitempty" url:"provider,omitempty"`
 	Charge      *FormFieldPaymentConfigCharge       `json:"charge" url:"charge"`
 	Credentials *FormFieldPaymentConfigCredentials  `json:"credentials" url:"credentials"`
 	Customer    *FormFieldPaymentConfigCustomer     `json:"customer,omitempty" url:"customer,omitempty"`
 	Fields      *FormFieldPaymentConfigFields       `json:"fields,omitempty" url:"fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -4271,22 +7172,64 @@ func (f *FormFieldPaymentConfig) GetCredentials() *FormFieldPaymentConfigCredent
 	return f.Credentials
 }
 
-func (f *FormFieldPaymentConfig) GetCustomer() *FormFieldPaymentConfigCustomer {
-	if f == nil {
+func (f *FormFieldPaymentConfig) GetCustomer() FormFieldPaymentConfigCustomer {
+	if f == nil || f.Customer == nil {
 		return nil
 	}
-	return f.Customer
+	return *f.Customer
 }
 
-func (f *FormFieldPaymentConfig) GetFields() *FormFieldPaymentConfigFields {
-	if f == nil {
-		return nil
+func (f *FormFieldPaymentConfig) GetFields() FormFieldPaymentConfigFields {
+	if f == nil || f.Fields == nil {
+		return FormFieldPaymentConfigFields{}
 	}
-	return f.Fields
+	return *f.Fields
 }
 
 func (f *FormFieldPaymentConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldPaymentConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfig) SetProvider(provider *FormFieldPaymentConfigProviderEnum) {
+	f.Provider = provider
+	f.require(formFieldPaymentConfigFieldProvider)
+}
+
+// SetCharge sets the Charge field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfig) SetCharge(charge *FormFieldPaymentConfigCharge) {
+	f.Charge = charge
+	f.require(formFieldPaymentConfigFieldCharge)
+}
+
+// SetCredentials sets the Credentials field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfig) SetCredentials(credentials *FormFieldPaymentConfigCredentials) {
+	f.Credentials = credentials
+	f.require(formFieldPaymentConfigFieldCredentials)
+}
+
+// SetCustomer sets the Customer field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfig) SetCustomer(customer *FormFieldPaymentConfigCustomer) {
+	f.Customer = customer
+	f.require(formFieldPaymentConfigFieldCustomer)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfig) SetFields(fields *FormFieldPaymentConfigFields) {
+	f.Fields = fields
+	f.require(formFieldPaymentConfigFieldFields)
 }
 
 func (f *FormFieldPaymentConfig) UnmarshalJSON(data []byte) error {
@@ -4303,6 +7246,17 @@ func (f *FormFieldPaymentConfig) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FormFieldPaymentConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldPaymentConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FormFieldPaymentConfig) String() string {
@@ -4379,9 +7333,17 @@ func (f *FormFieldPaymentConfigCharge) Accept(visitor FormFieldPaymentConfigChar
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
+var (
+	formFieldPaymentConfigChargeOneOffFieldType   = big.NewInt(1 << 0)
+	formFieldPaymentConfigChargeOneOffFieldOneOff = big.NewInt(1 << 1)
+)
+
 type FormFieldPaymentConfigChargeOneOff struct {
 	Type   FormFieldPaymentConfigChargeTypeOneOffConst `json:"type" url:"type"`
 	OneOff *FormFieldPaymentConfigChargeOneOffOneOff   `json:"one_off" url:"one_off"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -4398,6 +7360,27 @@ func (f *FormFieldPaymentConfigChargeOneOff) GetExtraProperties() map[string]int
 	return f.extraProperties
 }
 
+func (f *FormFieldPaymentConfigChargeOneOff) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigChargeOneOff) SetType(type_ FormFieldPaymentConfigChargeTypeOneOffConst) {
+	f.Type = type_
+	f.require(formFieldPaymentConfigChargeOneOffFieldType)
+}
+
+// SetOneOff sets the OneOff field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigChargeOneOff) SetOneOff(oneOff *FormFieldPaymentConfigChargeOneOffOneOff) {
+	f.OneOff = oneOff
+	f.require(formFieldPaymentConfigChargeOneOffFieldOneOff)
+}
+
 func (f *FormFieldPaymentConfigChargeOneOff) UnmarshalJSON(data []byte) error {
 	type unmarshaler FormFieldPaymentConfigChargeOneOff
 	var value unmarshaler
@@ -4412,6 +7395,17 @@ func (f *FormFieldPaymentConfigChargeOneOff) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FormFieldPaymentConfigChargeOneOff) MarshalJSON() ([]byte, error) {
+	type embed FormFieldPaymentConfigChargeOneOff
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FormFieldPaymentConfigChargeOneOff) String() string {
@@ -4469,9 +7463,17 @@ func (f FormFieldPaymentConfigChargeOneOffCurrencyEnum) Ptr() *FormFieldPaymentC
 	return &f
 }
 
+var (
+	formFieldPaymentConfigChargeOneOffOneOffFieldAmount   = big.NewInt(1 << 0)
+	formFieldPaymentConfigChargeOneOffOneOffFieldCurrency = big.NewInt(1 << 1)
+)
+
 type FormFieldPaymentConfigChargeOneOffOneOff struct {
 	Amount   *FormFieldPaymentConfigChargeOneOffOneOffAmount `json:"amount" url:"amount"`
 	Currency FormFieldPaymentConfigChargeOneOffCurrencyEnum  `json:"currency" url:"currency"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
@@ -4494,6 +7496,27 @@ func (f *FormFieldPaymentConfigChargeOneOffOneOff) GetCurrency() FormFieldPaymen
 
 func (f *FormFieldPaymentConfigChargeOneOffOneOff) GetExtraProperties() map[string]interface{} {
 	return f.ExtraProperties
+}
+
+func (f *FormFieldPaymentConfigChargeOneOffOneOff) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetAmount sets the Amount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigChargeOneOffOneOff) SetAmount(amount *FormFieldPaymentConfigChargeOneOffOneOffAmount) {
+	f.Amount = amount
+	f.require(formFieldPaymentConfigChargeOneOffOneOffFieldAmount)
+}
+
+// SetCurrency sets the Currency field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigChargeOneOffOneOff) SetCurrency(currency FormFieldPaymentConfigChargeOneOffCurrencyEnum) {
+	f.Currency = currency
+	f.require(formFieldPaymentConfigChargeOneOffOneOffFieldCurrency)
 }
 
 func (f *FormFieldPaymentConfigChargeOneOffOneOff) UnmarshalJSON(data []byte) error {
@@ -4523,7 +7546,8 @@ func (f *FormFieldPaymentConfigChargeOneOffOneOff) MarshalJSON() ([]byte, error)
 	}{
 		embed: embed(*f),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, f.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, f.ExtraProperties)
 }
 
 func (f *FormFieldPaymentConfigChargeOneOffOneOff) String() string {
@@ -4600,9 +7624,17 @@ func (f *FormFieldPaymentConfigChargeOneOffOneOffAmount) Accept(visitor FormFiel
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
+var (
+	formFieldPaymentConfigChargeSubscriptionFieldType         = big.NewInt(1 << 0)
+	formFieldPaymentConfigChargeSubscriptionFieldSubscription = big.NewInt(1 << 1)
+)
+
 type FormFieldPaymentConfigChargeSubscription struct {
 	Type         FormFieldPaymentConfigChargeTypeSubscriptionConst `json:"type" url:"type"`
 	Subscription FormFieldPaymentConfigSubscription                `json:"subscription" url:"subscription"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -4617,6 +7649,27 @@ func (f *FormFieldPaymentConfigChargeSubscription) GetSubscription() FormFieldPa
 
 func (f *FormFieldPaymentConfigChargeSubscription) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldPaymentConfigChargeSubscription) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigChargeSubscription) SetType(type_ FormFieldPaymentConfigChargeTypeSubscriptionConst) {
+	f.Type = type_
+	f.require(formFieldPaymentConfigChargeSubscriptionFieldType)
+}
+
+// SetSubscription sets the Subscription field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigChargeSubscription) SetSubscription(subscription FormFieldPaymentConfigSubscription) {
+	f.Subscription = subscription
+	f.require(formFieldPaymentConfigChargeSubscriptionFieldSubscription)
 }
 
 func (f *FormFieldPaymentConfigChargeSubscription) UnmarshalJSON(data []byte) error {
@@ -4635,6 +7688,17 @@ func (f *FormFieldPaymentConfigChargeSubscription) UnmarshalJSON(data []byte) er
 	return nil
 }
 
+func (f *FormFieldPaymentConfigChargeSubscription) MarshalJSON() ([]byte, error) {
+	type embed FormFieldPaymentConfigChargeSubscription
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldPaymentConfigChargeSubscription) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -4651,9 +7715,17 @@ type FormFieldPaymentConfigChargeTypeOneOffConst = string
 
 type FormFieldPaymentConfigChargeTypeSubscriptionConst = string
 
+var (
+	formFieldPaymentConfigCredentialsFieldPublicKey  = big.NewInt(1 << 0)
+	formFieldPaymentConfigCredentialsFieldPrivateKey = big.NewInt(1 << 1)
+)
+
 type FormFieldPaymentConfigCredentials struct {
 	PublicKey  string `json:"public_key" url:"public_key"`
 	PrivateKey string `json:"private_key" url:"private_key"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -4677,6 +7749,27 @@ func (f *FormFieldPaymentConfigCredentials) GetExtraProperties() map[string]inte
 	return f.extraProperties
 }
 
+func (f *FormFieldPaymentConfigCredentials) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetPublicKey sets the PublicKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigCredentials) SetPublicKey(publicKey string) {
+	f.PublicKey = publicKey
+	f.require(formFieldPaymentConfigCredentialsFieldPublicKey)
+}
+
+// SetPrivateKey sets the PrivateKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigCredentials) SetPrivateKey(privateKey string) {
+	f.PrivateKey = privateKey
+	f.require(formFieldPaymentConfigCredentialsFieldPrivateKey)
+}
+
 func (f *FormFieldPaymentConfigCredentials) UnmarshalJSON(data []byte) error {
 	type unmarshaler FormFieldPaymentConfigCredentials
 	var value unmarshaler
@@ -4693,6 +7786,17 @@ func (f *FormFieldPaymentConfigCredentials) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldPaymentConfigCredentials) MarshalJSON() ([]byte, error) {
+	type embed FormFieldPaymentConfigCredentials
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldPaymentConfigCredentials) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -4707,30 +7811,59 @@ func (f *FormFieldPaymentConfigCredentials) String() string {
 
 type FormFieldPaymentConfigCustomer = map[string]interface{}
 
+var (
+	formFieldPaymentConfigFieldPropertiesFieldLabel       = big.NewInt(1 << 0)
+	formFieldPaymentConfigFieldPropertiesFieldPlaceholder = big.NewInt(1 << 1)
+)
+
 type FormFieldPaymentConfigFieldProperties struct {
 	Label       *string `json:"label,omitempty" url:"label,omitempty"`
 	Placeholder *string `json:"placeholder,omitempty" url:"placeholder,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldPaymentConfigFieldProperties) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldPaymentConfigFieldProperties) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldPaymentConfigFieldProperties) GetPlaceholder() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldPaymentConfigFieldProperties) GetPlaceholder() string {
+	if f == nil || f.Placeholder == nil {
+		return ""
 	}
-	return f.Placeholder
+	return *f.Placeholder
 }
 
 func (f *FormFieldPaymentConfigFieldProperties) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldPaymentConfigFieldProperties) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigFieldProperties) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldPaymentConfigFieldPropertiesFieldLabel)
+}
+
+// SetPlaceholder sets the Placeholder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigFieldProperties) SetPlaceholder(placeholder *string) {
+	f.Placeholder = placeholder
+	f.require(formFieldPaymentConfigFieldPropertiesFieldPlaceholder)
 }
 
 func (f *FormFieldPaymentConfigFieldProperties) UnmarshalJSON(data []byte) error {
@@ -4749,6 +7882,17 @@ func (f *FormFieldPaymentConfigFieldProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
+func (f *FormFieldPaymentConfigFieldProperties) MarshalJSON() ([]byte, error) {
+	type embed FormFieldPaymentConfigFieldProperties
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldPaymentConfigFieldProperties) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -4761,46 +7905,91 @@ func (f *FormFieldPaymentConfigFieldProperties) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldPaymentConfigFieldsFieldCardNumber     = big.NewInt(1 << 0)
+	formFieldPaymentConfigFieldsFieldExpirationDate = big.NewInt(1 << 1)
+	formFieldPaymentConfigFieldsFieldSecurityCode   = big.NewInt(1 << 2)
+	formFieldPaymentConfigFieldsFieldTrustmarks     = big.NewInt(1 << 3)
+)
+
 type FormFieldPaymentConfigFields struct {
 	CardNumber     *FormFieldPaymentConfigFieldProperties `json:"card_number,omitempty" url:"card_number,omitempty"`
 	ExpirationDate *FormFieldPaymentConfigFieldProperties `json:"expiration_date,omitempty" url:"expiration_date,omitempty"`
 	SecurityCode   *FormFieldPaymentConfigFieldProperties `json:"security_code,omitempty" url:"security_code,omitempty"`
 	Trustmarks     *bool                                  `json:"trustmarks,omitempty" url:"trustmarks,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldPaymentConfigFields) GetCardNumber() *FormFieldPaymentConfigFieldProperties {
-	if f == nil {
-		return nil
+func (f *FormFieldPaymentConfigFields) GetCardNumber() FormFieldPaymentConfigFieldProperties {
+	if f == nil || f.CardNumber == nil {
+		return FormFieldPaymentConfigFieldProperties{}
 	}
-	return f.CardNumber
+	return *f.CardNumber
 }
 
-func (f *FormFieldPaymentConfigFields) GetExpirationDate() *FormFieldPaymentConfigFieldProperties {
-	if f == nil {
-		return nil
+func (f *FormFieldPaymentConfigFields) GetExpirationDate() FormFieldPaymentConfigFieldProperties {
+	if f == nil || f.ExpirationDate == nil {
+		return FormFieldPaymentConfigFieldProperties{}
 	}
-	return f.ExpirationDate
+	return *f.ExpirationDate
 }
 
-func (f *FormFieldPaymentConfigFields) GetSecurityCode() *FormFieldPaymentConfigFieldProperties {
-	if f == nil {
-		return nil
+func (f *FormFieldPaymentConfigFields) GetSecurityCode() FormFieldPaymentConfigFieldProperties {
+	if f == nil || f.SecurityCode == nil {
+		return FormFieldPaymentConfigFieldProperties{}
 	}
-	return f.SecurityCode
+	return *f.SecurityCode
 }
 
-func (f *FormFieldPaymentConfigFields) GetTrustmarks() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldPaymentConfigFields) GetTrustmarks() bool {
+	if f == nil || f.Trustmarks == nil {
+		return false
 	}
-	return f.Trustmarks
+	return *f.Trustmarks
 }
 
 func (f *FormFieldPaymentConfigFields) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldPaymentConfigFields) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetCardNumber sets the CardNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigFields) SetCardNumber(cardNumber *FormFieldPaymentConfigFieldProperties) {
+	f.CardNumber = cardNumber
+	f.require(formFieldPaymentConfigFieldsFieldCardNumber)
+}
+
+// SetExpirationDate sets the ExpirationDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigFields) SetExpirationDate(expirationDate *FormFieldPaymentConfigFieldProperties) {
+	f.ExpirationDate = expirationDate
+	f.require(formFieldPaymentConfigFieldsFieldExpirationDate)
+}
+
+// SetSecurityCode sets the SecurityCode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigFields) SetSecurityCode(securityCode *FormFieldPaymentConfigFieldProperties) {
+	f.SecurityCode = securityCode
+	f.require(formFieldPaymentConfigFieldsFieldSecurityCode)
+}
+
+// SetTrustmarks sets the Trustmarks field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldPaymentConfigFields) SetTrustmarks(trustmarks *bool) {
+	f.Trustmarks = trustmarks
+	f.require(formFieldPaymentConfigFieldsFieldTrustmarks)
 }
 
 func (f *FormFieldPaymentConfigFields) UnmarshalJSON(data []byte) error {
@@ -4819,6 +8008,17 @@ func (f *FormFieldPaymentConfigFields) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldPaymentConfigFields) MarshalJSON() ([]byte, error) {
+	type embed FormFieldPaymentConfigFields
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldPaymentConfigFields) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -4835,8 +8035,19 @@ type FormFieldPaymentConfigProviderEnum = string
 
 type FormFieldPaymentConfigSubscription = map[string]interface{}
 
+var (
+	formFieldSocialFieldId        = big.NewInt(1 << 0)
+	formFieldSocialFieldCategory  = big.NewInt(1 << 1)
+	formFieldSocialFieldType      = big.NewInt(1 << 2)
+	formFieldSocialFieldConfig    = big.NewInt(1 << 3)
+	formFieldSocialFieldLabel     = big.NewInt(1 << 4)
+	formFieldSocialFieldHint      = big.NewInt(1 << 5)
+	formFieldSocialFieldRequired  = big.NewInt(1 << 6)
+	formFieldSocialFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldSocial struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeSocialConst        `json:"type" url:"type"`
 	Config    *FormFieldSocialConfig          `json:"config,omitempty" url:"config,omitempty"`
@@ -4845,54 +8056,120 @@ type FormFieldSocial struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldSocial) GetID() string {
+func (f *FormFieldSocial) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormFieldSocial) GetConfig() *FormFieldSocialConfig {
-	if f == nil {
-		return nil
+func (f *FormFieldSocial) GetConfig() FormFieldSocialConfig {
+	if f == nil || f.Config == nil {
+		return FormFieldSocialConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
-func (f *FormFieldSocial) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldSocial) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldSocial) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldSocial) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldSocial) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldSocial) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldSocial) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldSocial) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldSocial) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldSocial) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldSocial) SetId(id string) {
+	f.Id = id
+	f.require(formFieldSocialFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldSocial) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldSocialFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldSocial) SetType(type_ FormFieldTypeSocialConst) {
+	f.Type = type_
+	f.require(formFieldSocialFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldSocial) SetConfig(config *FormFieldSocialConfig) {
+	f.Config = config
+	f.require(formFieldSocialFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldSocial) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldSocialFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldSocial) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldSocialFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldSocial) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldSocialFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldSocial) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldSocialFieldSensitive)
 }
 
 func (f *FormFieldSocial) UnmarshalJSON(data []byte) error {
@@ -4911,6 +8188,17 @@ func (f *FormFieldSocial) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldSocial) MarshalJSON() ([]byte, error) {
+	type embed FormFieldSocial
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldSocial) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -4924,12 +8212,23 @@ func (f *FormFieldSocial) String() string {
 }
 
 type FormFieldSocialConfig struct {
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
 func (f *FormFieldSocialConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldSocialConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 func (f *FormFieldSocialConfig) UnmarshalJSON(data []byte) error {
@@ -4948,6 +8247,17 @@ func (f *FormFieldSocialConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldSocialConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldSocialConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldSocialConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -4960,8 +8270,19 @@ func (f *FormFieldSocialConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldTelFieldId        = big.NewInt(1 << 0)
+	formFieldTelFieldCategory  = big.NewInt(1 << 1)
+	formFieldTelFieldType      = big.NewInt(1 << 2)
+	formFieldTelFieldConfig    = big.NewInt(1 << 3)
+	formFieldTelFieldLabel     = big.NewInt(1 << 4)
+	formFieldTelFieldHint      = big.NewInt(1 << 5)
+	formFieldTelFieldRequired  = big.NewInt(1 << 6)
+	formFieldTelFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldTel struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeTelConst           `json:"type" url:"type"`
 	Config    *FormFieldTelConfig             `json:"config,omitempty" url:"config,omitempty"`
@@ -4970,54 +8291,120 @@ type FormFieldTel struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldTel) GetID() string {
+func (f *FormFieldTel) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormFieldTel) GetConfig() *FormFieldTelConfig {
-	if f == nil {
-		return nil
+func (f *FormFieldTel) GetConfig() FormFieldTelConfig {
+	if f == nil || f.Config == nil {
+		return FormFieldTelConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
-func (f *FormFieldTel) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldTel) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldTel) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldTel) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldTel) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldTel) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldTel) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldTel) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldTel) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldTel) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTel) SetId(id string) {
+	f.Id = id
+	f.require(formFieldTelFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTel) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldTelFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTel) SetType(type_ FormFieldTypeTelConst) {
+	f.Type = type_
+	f.require(formFieldTelFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTel) SetConfig(config *FormFieldTelConfig) {
+	f.Config = config
+	f.require(formFieldTelFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTel) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldTelFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTel) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldTelFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTel) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldTelFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTel) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldTelFieldSensitive)
 }
 
 func (f *FormFieldTel) UnmarshalJSON(data []byte) error {
@@ -5036,6 +8423,17 @@ func (f *FormFieldTel) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldTel) MarshalJSON() ([]byte, error) {
+	type embed FormFieldTel
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldTel) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -5048,6 +8446,15 @@ func (f *FormFieldTel) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldTelConfigFieldDefaultValue  = big.NewInt(1 << 0)
+	formFieldTelConfigFieldPlaceholder   = big.NewInt(1 << 1)
+	formFieldTelConfigFieldMinLength     = big.NewInt(1 << 2)
+	formFieldTelConfigFieldMaxLength     = big.NewInt(1 << 3)
+	formFieldTelConfigFieldCountryPicker = big.NewInt(1 << 4)
+	formFieldTelConfigFieldStrings       = big.NewInt(1 << 5)
+)
+
 type FormFieldTelConfig struct {
 	DefaultValue  *string                    `json:"default_value,omitempty" url:"default_value,omitempty"`
 	Placeholder   *string                    `json:"placeholder,omitempty" url:"placeholder,omitempty"`
@@ -5056,54 +8463,106 @@ type FormFieldTelConfig struct {
 	CountryPicker *bool                      `json:"country_picker,omitempty" url:"country_picker,omitempty"`
 	Strings       *FormFieldTelConfigStrings `json:"strings,omitempty" url:"strings,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldTelConfig) GetDefaultValue() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldTelConfig) GetDefaultValue() string {
+	if f == nil || f.DefaultValue == nil {
+		return ""
 	}
-	return f.DefaultValue
+	return *f.DefaultValue
 }
 
-func (f *FormFieldTelConfig) GetPlaceholder() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldTelConfig) GetPlaceholder() string {
+	if f == nil || f.Placeholder == nil {
+		return ""
 	}
-	return f.Placeholder
+	return *f.Placeholder
 }
 
-func (f *FormFieldTelConfig) GetMinLength() *int {
-	if f == nil {
-		return nil
+func (f *FormFieldTelConfig) GetMinLength() int {
+	if f == nil || f.MinLength == nil {
+		return 0
 	}
-	return f.MinLength
+	return *f.MinLength
 }
 
-func (f *FormFieldTelConfig) GetMaxLength() *int {
-	if f == nil {
-		return nil
+func (f *FormFieldTelConfig) GetMaxLength() int {
+	if f == nil || f.MaxLength == nil {
+		return 0
 	}
-	return f.MaxLength
+	return *f.MaxLength
 }
 
-func (f *FormFieldTelConfig) GetCountryPicker() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldTelConfig) GetCountryPicker() bool {
+	if f == nil || f.CountryPicker == nil {
+		return false
 	}
-	return f.CountryPicker
+	return *f.CountryPicker
 }
 
-func (f *FormFieldTelConfig) GetStrings() *FormFieldTelConfigStrings {
-	if f == nil {
-		return nil
+func (f *FormFieldTelConfig) GetStrings() FormFieldTelConfigStrings {
+	if f == nil || f.Strings == nil {
+		return FormFieldTelConfigStrings{}
 	}
-	return f.Strings
+	return *f.Strings
 }
 
 func (f *FormFieldTelConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldTelConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTelConfig) SetDefaultValue(defaultValue *string) {
+	f.DefaultValue = defaultValue
+	f.require(formFieldTelConfigFieldDefaultValue)
+}
+
+// SetPlaceholder sets the Placeholder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTelConfig) SetPlaceholder(placeholder *string) {
+	f.Placeholder = placeholder
+	f.require(formFieldTelConfigFieldPlaceholder)
+}
+
+// SetMinLength sets the MinLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTelConfig) SetMinLength(minLength *int) {
+	f.MinLength = minLength
+	f.require(formFieldTelConfigFieldMinLength)
+}
+
+// SetMaxLength sets the MaxLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTelConfig) SetMaxLength(maxLength *int) {
+	f.MaxLength = maxLength
+	f.require(formFieldTelConfigFieldMaxLength)
+}
+
+// SetCountryPicker sets the CountryPicker field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTelConfig) SetCountryPicker(countryPicker *bool) {
+	f.CountryPicker = countryPicker
+	f.require(formFieldTelConfigFieldCountryPicker)
+}
+
+// SetStrings sets the Strings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTelConfig) SetStrings(strings *FormFieldTelConfigStrings) {
+	f.Strings = strings
+	f.require(formFieldTelConfigFieldStrings)
 }
 
 func (f *FormFieldTelConfig) UnmarshalJSON(data []byte) error {
@@ -5122,6 +8581,17 @@ func (f *FormFieldTelConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldTelConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldTelConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldTelConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -5134,22 +8604,43 @@ func (f *FormFieldTelConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldTelConfigStringsFieldFilterPlaceholder = big.NewInt(1 << 0)
+)
+
 type FormFieldTelConfigStrings struct {
 	FilterPlaceholder *string `json:"filter_placeholder,omitempty" url:"filter_placeholder,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldTelConfigStrings) GetFilterPlaceholder() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldTelConfigStrings) GetFilterPlaceholder() string {
+	if f == nil || f.FilterPlaceholder == nil {
+		return ""
 	}
-	return f.FilterPlaceholder
+	return *f.FilterPlaceholder
 }
 
 func (f *FormFieldTelConfigStrings) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldTelConfigStrings) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetFilterPlaceholder sets the FilterPlaceholder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTelConfigStrings) SetFilterPlaceholder(filterPlaceholder *string) {
+	f.FilterPlaceholder = filterPlaceholder
+	f.require(formFieldTelConfigStringsFieldFilterPlaceholder)
 }
 
 func (f *FormFieldTelConfigStrings) UnmarshalJSON(data []byte) error {
@@ -5168,6 +8659,17 @@ func (f *FormFieldTelConfigStrings) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldTelConfigStrings) MarshalJSON() ([]byte, error) {
+	type embed FormFieldTelConfigStrings
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldTelConfigStrings) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -5180,8 +8682,19 @@ func (f *FormFieldTelConfigStrings) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldTextFieldId        = big.NewInt(1 << 0)
+	formFieldTextFieldCategory  = big.NewInt(1 << 1)
+	formFieldTextFieldType      = big.NewInt(1 << 2)
+	formFieldTextFieldConfig    = big.NewInt(1 << 3)
+	formFieldTextFieldLabel     = big.NewInt(1 << 4)
+	formFieldTextFieldHint      = big.NewInt(1 << 5)
+	formFieldTextFieldRequired  = big.NewInt(1 << 6)
+	formFieldTextFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormFieldText struct {
-	ID        string                          `json:"id" url:"id"`
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
 	Type      FormFieldTypeTextConst          `json:"type" url:"type"`
 	Config    *FormFieldTextConfig            `json:"config,omitempty" url:"config,omitempty"`
@@ -5190,54 +8703,120 @@ type FormFieldText struct {
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldText) GetID() string {
+func (f *FormFieldText) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormFieldText) GetConfig() *FormFieldTextConfig {
-	if f == nil {
-		return nil
+func (f *FormFieldText) GetConfig() FormFieldTextConfig {
+	if f == nil || f.Config == nil {
+		return FormFieldTextConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
-func (f *FormFieldText) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldText) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldText) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldText) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldText) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldText) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldText) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldText) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormFieldText) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldText) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldText) SetId(id string) {
+	f.Id = id
+	f.require(formFieldTextFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldText) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldTextFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldText) SetType(type_ FormFieldTypeTextConst) {
+	f.Type = type_
+	f.require(formFieldTextFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldText) SetConfig(config *FormFieldTextConfig) {
+	f.Config = config
+	f.require(formFieldTextFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldText) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldTextFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldText) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldTextFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldText) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldTextFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldText) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldTextFieldSensitive)
 }
 
 func (f *FormFieldText) UnmarshalJSON(data []byte) error {
@@ -5256,6 +8835,17 @@ func (f *FormFieldText) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFieldText) MarshalJSON() ([]byte, error) {
+	type embed FormFieldText
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFieldText) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -5268,6 +8858,14 @@ func (f *FormFieldText) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFieldTextConfigFieldMultiline    = big.NewInt(1 << 0)
+	formFieldTextConfigFieldDefaultValue = big.NewInt(1 << 1)
+	formFieldTextConfigFieldPlaceholder  = big.NewInt(1 << 2)
+	formFieldTextConfigFieldMinLength    = big.NewInt(1 << 3)
+	formFieldTextConfigFieldMaxLength    = big.NewInt(1 << 4)
+)
+
 type FormFieldTextConfig struct {
 	Multiline    *bool   `json:"multiline,omitempty" url:"multiline,omitempty"`
 	DefaultValue *string `json:"default_value,omitempty" url:"default_value,omitempty"`
@@ -5275,47 +8873,92 @@ type FormFieldTextConfig struct {
 	MinLength    *int    `json:"min_length,omitempty" url:"min_length,omitempty"`
 	MaxLength    *int    `json:"max_length,omitempty" url:"max_length,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldTextConfig) GetMultiline() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldTextConfig) GetMultiline() bool {
+	if f == nil || f.Multiline == nil {
+		return false
 	}
-	return f.Multiline
+	return *f.Multiline
 }
 
-func (f *FormFieldTextConfig) GetDefaultValue() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldTextConfig) GetDefaultValue() string {
+	if f == nil || f.DefaultValue == nil {
+		return ""
 	}
-	return f.DefaultValue
+	return *f.DefaultValue
 }
 
-func (f *FormFieldTextConfig) GetPlaceholder() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldTextConfig) GetPlaceholder() string {
+	if f == nil || f.Placeholder == nil {
+		return ""
 	}
-	return f.Placeholder
+	return *f.Placeholder
 }
 
-func (f *FormFieldTextConfig) GetMinLength() *int {
-	if f == nil {
-		return nil
+func (f *FormFieldTextConfig) GetMinLength() int {
+	if f == nil || f.MinLength == nil {
+		return 0
 	}
-	return f.MinLength
+	return *f.MinLength
 }
 
-func (f *FormFieldTextConfig) GetMaxLength() *int {
-	if f == nil {
-		return nil
+func (f *FormFieldTextConfig) GetMaxLength() int {
+	if f == nil || f.MaxLength == nil {
+		return 0
 	}
-	return f.MaxLength
+	return *f.MaxLength
 }
 
 func (f *FormFieldTextConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFieldTextConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetMultiline sets the Multiline field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTextConfig) SetMultiline(multiline *bool) {
+	f.Multiline = multiline
+	f.require(formFieldTextConfigFieldMultiline)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTextConfig) SetDefaultValue(defaultValue *string) {
+	f.DefaultValue = defaultValue
+	f.require(formFieldTextConfigFieldDefaultValue)
+}
+
+// SetPlaceholder sets the Placeholder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTextConfig) SetPlaceholder(placeholder *string) {
+	f.Placeholder = placeholder
+	f.require(formFieldTextConfigFieldPlaceholder)
+}
+
+// SetMinLength sets the MinLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTextConfig) SetMinLength(minLength *int) {
+	f.MinLength = minLength
+	f.require(formFieldTextConfigFieldMinLength)
+}
+
+// SetMaxLength sets the MaxLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldTextConfig) SetMaxLength(maxLength *int) {
+	f.MaxLength = maxLength
+	f.require(formFieldTextConfigFieldMaxLength)
 }
 
 func (f *FormFieldTextConfig) UnmarshalJSON(data []byte) error {
@@ -5332,6 +8975,17 @@ func (f *FormFieldTextConfig) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FormFieldTextConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldTextConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FormFieldTextConfig) String() string {
@@ -5376,75 +9030,152 @@ type FormFieldTypeTelConst = string
 
 type FormFieldTypeTextConst = string
 
-type FormFieldTypeURLConst = string
+type FormFieldTypeUrlConst = string
 
-type FormFieldURL struct {
-	ID        string                          `json:"id" url:"id"`
+var (
+	formFieldUrlFieldId        = big.NewInt(1 << 0)
+	formFieldUrlFieldCategory  = big.NewInt(1 << 1)
+	formFieldUrlFieldType      = big.NewInt(1 << 2)
+	formFieldUrlFieldConfig    = big.NewInt(1 << 3)
+	formFieldUrlFieldLabel     = big.NewInt(1 << 4)
+	formFieldUrlFieldHint      = big.NewInt(1 << 5)
+	formFieldUrlFieldRequired  = big.NewInt(1 << 6)
+	formFieldUrlFieldSensitive = big.NewInt(1 << 7)
+)
+
+type FormFieldUrl struct {
+	Id        string                          `json:"id" url:"id"`
 	Category  FormComponentCategoryFieldConst `json:"category" url:"category"`
-	Type      FormFieldTypeURLConst           `json:"type" url:"type"`
-	Config    *FormFieldURLConfig             `json:"config,omitempty" url:"config,omitempty"`
+	Type      FormFieldTypeUrlConst           `json:"type" url:"type"`
+	Config    *FormFieldUrlConfig             `json:"config,omitempty" url:"config,omitempty"`
 	Label     *string                         `json:"label,omitempty" url:"label,omitempty"`
 	Hint      *string                         `json:"hint,omitempty" url:"hint,omitempty"`
 	Required  *bool                           `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                           `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldURL) GetID() string {
+func (f *FormFieldUrl) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormFieldURL) GetConfig() *FormFieldURLConfig {
-	if f == nil {
-		return nil
+func (f *FormFieldUrl) GetConfig() FormFieldUrlConfig {
+	if f == nil || f.Config == nil {
+		return FormFieldUrlConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
-func (f *FormFieldURL) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldUrl) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormFieldURL) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldUrl) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormFieldURL) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldUrl) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormFieldURL) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormFieldUrl) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
-func (f *FormFieldURL) GetExtraProperties() map[string]interface{} {
+func (f *FormFieldUrl) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
-func (f *FormFieldURL) UnmarshalJSON(data []byte) error {
-	type unmarshaler FormFieldURL
+func (f *FormFieldUrl) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldUrl) SetId(id string) {
+	f.Id = id
+	f.require(formFieldUrlFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldUrl) SetCategory(category FormComponentCategoryFieldConst) {
+	f.Category = category
+	f.require(formFieldUrlFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldUrl) SetType(type_ FormFieldTypeUrlConst) {
+	f.Type = type_
+	f.require(formFieldUrlFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldUrl) SetConfig(config *FormFieldUrlConfig) {
+	f.Config = config
+	f.require(formFieldUrlFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldUrl) SetLabel(label *string) {
+	f.Label = label
+	f.require(formFieldUrlFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldUrl) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formFieldUrlFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldUrl) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formFieldUrlFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldUrl) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formFieldUrlFieldSensitive)
+}
+
+func (f *FormFieldUrl) UnmarshalJSON(data []byte) error {
+	type unmarshaler FormFieldUrl
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*f = FormFieldURL(value)
+	*f = FormFieldUrl(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
@@ -5454,7 +9185,18 @@ func (f *FormFieldURL) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (f *FormFieldURL) String() string {
+func (f *FormFieldUrl) MarshalJSON() ([]byte, error) {
+	type embed FormFieldUrl
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FormFieldUrl) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5466,39 +9208,68 @@ func (f *FormFieldURL) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormFieldURLConfig struct {
+var (
+	formFieldUrlConfigFieldDefaultValue = big.NewInt(1 << 0)
+	formFieldUrlConfigFieldPlaceholder  = big.NewInt(1 << 1)
+)
+
+type FormFieldUrlConfig struct {
 	DefaultValue *string `json:"default_value,omitempty" url:"default_value,omitempty"`
 	Placeholder  *string `json:"placeholder,omitempty" url:"placeholder,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFieldURLConfig) GetDefaultValue() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldUrlConfig) GetDefaultValue() string {
+	if f == nil || f.DefaultValue == nil {
+		return ""
 	}
-	return f.DefaultValue
+	return *f.DefaultValue
 }
 
-func (f *FormFieldURLConfig) GetPlaceholder() *string {
-	if f == nil {
-		return nil
+func (f *FormFieldUrlConfig) GetPlaceholder() string {
+	if f == nil || f.Placeholder == nil {
+		return ""
 	}
-	return f.Placeholder
+	return *f.Placeholder
 }
 
-func (f *FormFieldURLConfig) GetExtraProperties() map[string]interface{} {
+func (f *FormFieldUrlConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
-func (f *FormFieldURLConfig) UnmarshalJSON(data []byte) error {
-	type unmarshaler FormFieldURLConfig
+func (f *FormFieldUrlConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldUrlConfig) SetDefaultValue(defaultValue *string) {
+	f.DefaultValue = defaultValue
+	f.require(formFieldUrlConfigFieldDefaultValue)
+}
+
+// SetPlaceholder sets the Placeholder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldUrlConfig) SetPlaceholder(placeholder *string) {
+	f.Placeholder = placeholder
+	f.require(formFieldUrlConfigFieldPlaceholder)
+}
+
+func (f *FormFieldUrlConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler FormFieldUrlConfig
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*f = FormFieldURLConfig(value)
+	*f = FormFieldUrlConfig(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
@@ -5508,7 +9279,18 @@ func (f *FormFieldURLConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (f *FormFieldURLConfig) String() string {
+func (f *FormFieldUrlConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFieldUrlConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FormFieldUrlConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5520,36 +9302,47 @@ func (f *FormFieldURLConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFlowFieldId          = big.NewInt(1 << 0)
+	formFlowFieldType        = big.NewInt(1 << 1)
+	formFlowFieldCoordinates = big.NewInt(1 << 2)
+	formFlowFieldAlias       = big.NewInt(1 << 3)
+	formFlowFieldConfig      = big.NewInt(1 << 4)
+)
+
 type FormFlow struct {
-	ID          string                `json:"id" url:"id"`
+	Id          string                `json:"id" url:"id"`
 	Type        FormNodeTypeFlowConst `json:"type" url:"type"`
 	Coordinates *FormNodeCoordinates  `json:"coordinates,omitempty" url:"coordinates,omitempty"`
 	Alias       *string               `json:"alias,omitempty" url:"alias,omitempty"`
 	Config      *FormFlowConfig       `json:"config" url:"config"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFlow) GetID() string {
+func (f *FormFlow) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormFlow) GetCoordinates() *FormNodeCoordinates {
-	if f == nil {
-		return nil
+func (f *FormFlow) GetCoordinates() FormNodeCoordinates {
+	if f == nil || f.Coordinates == nil {
+		return FormNodeCoordinates{}
 	}
-	return f.Coordinates
+	return *f.Coordinates
 }
 
-func (f *FormFlow) GetAlias() *string {
-	if f == nil {
-		return nil
+func (f *FormFlow) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
 	}
-	return f.Alias
+	return *f.Alias
 }
 
 func (f *FormFlow) GetConfig() *FormFlowConfig {
@@ -5561,6 +9354,48 @@ func (f *FormFlow) GetConfig() *FormFlowConfig {
 
 func (f *FormFlow) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFlow) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFlow) SetId(id string) {
+	f.Id = id
+	f.require(formFlowFieldId)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFlow) SetType(type_ FormNodeTypeFlowConst) {
+	f.Type = type_
+	f.require(formFlowFieldType)
+}
+
+// SetCoordinates sets the Coordinates field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFlow) SetCoordinates(coordinates *FormNodeCoordinates) {
+	f.Coordinates = coordinates
+	f.require(formFlowFieldCoordinates)
+}
+
+// SetAlias sets the Alias field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFlow) SetAlias(alias *string) {
+	f.Alias = alias
+	f.require(formFlowFieldAlias)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFlow) SetConfig(config *FormFlowConfig) {
+	f.Config = config
+	f.require(formFlowFieldConfig)
 }
 
 func (f *FormFlow) UnmarshalJSON(data []byte) error {
@@ -5579,6 +9414,17 @@ func (f *FormFlow) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFlow) MarshalJSON() ([]byte, error) {
+	type embed FormFlow
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFlow) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -5591,30 +9437,59 @@ func (f *FormFlow) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formFlowConfigFieldFlowId   = big.NewInt(1 << 0)
+	formFlowConfigFieldNextNode = big.NewInt(1 << 1)
+)
+
 type FormFlowConfig struct {
-	FlowID   string           `json:"flow_id" url:"flow_id"`
+	FlowId   string           `json:"flow_id" url:"flow_id"`
 	NextNode *FormNodePointer `json:"next_node,omitempty" url:"next_node,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormFlowConfig) GetFlowID() string {
+func (f *FormFlowConfig) GetFlowId() string {
 	if f == nil {
 		return ""
 	}
-	return f.FlowID
+	return f.FlowId
 }
 
-func (f *FormFlowConfig) GetNextNode() *FormNodePointer {
-	if f == nil {
-		return nil
+func (f *FormFlowConfig) GetNextNode() FormNodePointer {
+	if f == nil || f.NextNode == nil {
+		return FormNodePointer{}
 	}
-	return f.NextNode
+	return *f.NextNode
 }
 
 func (f *FormFlowConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormFlowConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetFlowId sets the FlowId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFlowConfig) SetFlowId(flowId string) {
+	f.FlowId = flowId
+	f.require(formFlowConfigFieldFlowId)
+}
+
+// SetNextNode sets the NextNode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFlowConfig) SetNextNode(nextNode *FormNodePointer) {
+	f.NextNode = nextNode
+	f.require(formFlowConfigFieldNextNode)
 }
 
 func (f *FormFlowConfig) UnmarshalJSON(data []byte) error {
@@ -5633,6 +9508,17 @@ func (f *FormFlowConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormFlowConfig) MarshalJSON() ([]byte, error) {
+	type embed FormFlowConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormFlowConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -5645,9 +9531,17 @@ func (f *FormFlowConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formHiddenFieldFieldKey   = big.NewInt(1 << 0)
+	formHiddenFieldFieldValue = big.NewInt(1 << 1)
+)
+
 type FormHiddenField struct {
 	Key   string  `json:"key" url:"key"`
 	Value *string `json:"value,omitempty" url:"value,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -5660,15 +9554,36 @@ func (f *FormHiddenField) GetKey() string {
 	return f.Key
 }
 
-func (f *FormHiddenField) GetValue() *string {
-	if f == nil {
-		return nil
+func (f *FormHiddenField) GetValue() string {
+	if f == nil || f.Value == nil {
+		return ""
 	}
-	return f.Value
+	return *f.Value
 }
 
 func (f *FormHiddenField) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormHiddenField) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetKey sets the Key field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormHiddenField) SetKey(key string) {
+	f.Key = key
+	f.require(formHiddenFieldFieldKey)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormHiddenField) SetValue(value *string) {
+	f.Value = value
+	f.require(formHiddenFieldFieldValue)
 }
 
 func (f *FormHiddenField) UnmarshalJSON(data []byte) error {
@@ -5687,6 +9602,17 @@ func (f *FormHiddenField) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormHiddenField) MarshalJSON() ([]byte, error) {
+	type embed FormHiddenField
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormHiddenField) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -5699,30 +9625,59 @@ func (f *FormHiddenField) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formLanguagesFieldPrimary = big.NewInt(1 << 0)
+	formLanguagesFieldDefault = big.NewInt(1 << 1)
+)
+
 type FormLanguages struct {
 	Primary *string `json:"primary,omitempty" url:"primary,omitempty"`
 	Default *string `json:"default,omitempty" url:"default,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormLanguages) GetPrimary() *string {
-	if f == nil {
-		return nil
+func (f *FormLanguages) GetPrimary() string {
+	if f == nil || f.Primary == nil {
+		return ""
 	}
-	return f.Primary
+	return *f.Primary
 }
 
-func (f *FormLanguages) GetDefault() *string {
-	if f == nil {
-		return nil
+func (f *FormLanguages) GetDefault() string {
+	if f == nil || f.Default == nil {
+		return ""
 	}
-	return f.Default
+	return *f.Default
 }
 
 func (f *FormLanguages) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormLanguages) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetPrimary sets the Primary field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormLanguages) SetPrimary(primary *string) {
+	f.Primary = primary
+	f.require(formLanguagesFieldPrimary)
+}
+
+// SetDefault sets the Default field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormLanguages) SetDefault(default_ *string) {
+	f.Default = default_
+	f.require(formLanguagesFieldDefault)
 }
 
 func (f *FormLanguages) UnmarshalJSON(data []byte) error {
@@ -5741,6 +9696,17 @@ func (f *FormLanguages) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormLanguages) MarshalJSON() ([]byte, error) {
+	type embed FormLanguages
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormLanguages) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -5755,30 +9721,59 @@ func (f *FormLanguages) String() string {
 
 type FormLanguagesNullable = *FormLanguages
 
+var (
+	formMessagesFieldErrors = big.NewInt(1 << 0)
+	formMessagesFieldCustom = big.NewInt(1 << 1)
+)
+
 type FormMessages struct {
 	Errors *FormMessagesError  `json:"errors,omitempty" url:"errors,omitempty"`
 	Custom *FormMessagesCustom `json:"custom,omitempty" url:"custom,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormMessages) GetErrors() *FormMessagesError {
-	if f == nil {
+func (f *FormMessages) GetErrors() FormMessagesError {
+	if f == nil || f.Errors == nil {
 		return nil
 	}
-	return f.Errors
+	return *f.Errors
 }
 
-func (f *FormMessages) GetCustom() *FormMessagesCustom {
-	if f == nil {
+func (f *FormMessages) GetCustom() FormMessagesCustom {
+	if f == nil || f.Custom == nil {
 		return nil
 	}
-	return f.Custom
+	return *f.Custom
 }
 
 func (f *FormMessages) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormMessages) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormMessages) SetErrors(errors *FormMessagesError) {
+	f.Errors = errors
+	f.require(formMessagesFieldErrors)
+}
+
+// SetCustom sets the Custom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormMessages) SetCustom(custom *FormMessagesCustom) {
+	f.Custom = custom
+	f.require(formMessagesFieldCustom)
 }
 
 func (f *FormMessages) UnmarshalJSON(data []byte) error {
@@ -5797,6 +9792,17 @@ func (f *FormMessages) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormMessages) MarshalJSON() ([]byte, error) {
+	type embed FormMessages
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormMessages) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -5809,9 +9815,9 @@ func (f *FormMessages) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormMessagesCustom = map[string]interface{}
+type FormMessagesCustom = map[string]string
 
-type FormMessagesError = map[string]interface{}
+type FormMessagesError = map[string]string
 
 type FormMessagesNullable = *FormMessages
 
@@ -5898,9 +9904,17 @@ func (f *FormNode) Accept(visitor FormNodeVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
+var (
+	formNodeCoordinatesFieldX = big.NewInt(1 << 0)
+	formNodeCoordinatesFieldY = big.NewInt(1 << 1)
+)
+
 type FormNodeCoordinates struct {
 	X int `json:"x" url:"x"`
 	Y int `json:"y" url:"y"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -5924,6 +9938,27 @@ func (f *FormNodeCoordinates) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
+func (f *FormNodeCoordinates) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetX sets the X field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormNodeCoordinates) SetX(x int) {
+	f.X = x
+	f.require(formNodeCoordinatesFieldX)
+}
+
+// SetY sets the Y field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormNodeCoordinates) SetY(y int) {
+	f.Y = y
+	f.require(formNodeCoordinatesFieldY)
+}
+
 func (f *FormNodeCoordinates) UnmarshalJSON(data []byte) error {
 	type unmarshaler FormNodeCoordinates
 	var value unmarshaler
@@ -5938,6 +9973,17 @@ func (f *FormNodeCoordinates) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FormNodeCoordinates) MarshalJSON() ([]byte, error) {
+	type embed FormNodeCoordinates
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FormNodeCoordinates) String() string {
@@ -5958,13 +10004,13 @@ type FormNodeListNullable = *FormNodeList
 
 type FormNodePointer struct {
 	String           string
-	FormEndingNodeID FormEndingNodeID
+	FormEndingNodeId FormEndingNodeId
 
 	typ string
 }
 
-func NewFormNodePointerWithFormEndingNodeID() *FormNodePointer {
-	return &FormNodePointer{typ: "FormEndingNodeID", FormEndingNodeID: "$ending"}
+func NewFormNodePointerWithFormEndingNodeId() *FormNodePointer {
+	return &FormNodePointer{typ: "FormEndingNodeId", FormEndingNodeId: "$ending"}
 }
 
 func (f *FormNodePointer) GetString() string {
@@ -5981,12 +10027,12 @@ func (f *FormNodePointer) UnmarshalJSON(data []byte) error {
 		f.String = valueString
 		return nil
 	}
-	var valueFormEndingNodeID FormEndingNodeID
-	if err := json.Unmarshal(data, &valueFormEndingNodeID); err == nil {
-		f.typ = "FormEndingNodeID"
-		f.FormEndingNodeID = valueFormEndingNodeID
-		if f.FormEndingNodeID != "$ending" {
-			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", f, "$ending", valueFormEndingNodeID)
+	var valueFormEndingNodeId FormEndingNodeId
+	if err := json.Unmarshal(data, &valueFormEndingNodeId); err == nil {
+		f.typ = "FormEndingNodeId"
+		f.FormEndingNodeId = valueFormEndingNodeId
+		if f.FormEndingNodeId != "$ending" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", f, "$ending", valueFormEndingNodeId)
 		}
 		return nil
 	}
@@ -5997,7 +10043,7 @@ func (f FormNodePointer) MarshalJSON() ([]byte, error) {
 	if f.typ == "String" || f.String != "" {
 		return json.Marshal(f.String)
 	}
-	if f.typ == "FormEndingNodeID" || f.FormEndingNodeID != "" {
+	if f.typ == "FormEndingNodeId" || f.FormEndingNodeId != "" {
 		return json.Marshal("$ending")
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
@@ -6005,15 +10051,15 @@ func (f FormNodePointer) MarshalJSON() ([]byte, error) {
 
 type FormNodePointerVisitor interface {
 	VisitString(string) error
-	VisitFormEndingNodeID(FormEndingNodeID) error
+	VisitFormEndingNodeId(FormEndingNodeId) error
 }
 
 func (f *FormNodePointer) Accept(visitor FormNodePointerVisitor) error {
 	if f.typ == "String" || f.String != "" {
 		return visitor.VisitString(f.String)
 	}
-	if f.typ == "FormEndingNodeID" || f.FormEndingNodeID != "" {
-		return visitor.VisitFormEndingNodeID(f.FormEndingNodeID)
+	if f.typ == "FormEndingNodeId" || f.FormEndingNodeId != "" {
+		return visitor.VisitFormEndingNodeId(f.FormEndingNodeId)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
@@ -6024,47 +10070,100 @@ type FormNodeTypeRouterConst = string
 
 type FormNodeTypeStepConst = string
 
+var (
+	formRouterFieldId          = big.NewInt(1 << 0)
+	formRouterFieldType        = big.NewInt(1 << 1)
+	formRouterFieldCoordinates = big.NewInt(1 << 2)
+	formRouterFieldAlias       = big.NewInt(1 << 3)
+	formRouterFieldConfig      = big.NewInt(1 << 4)
+)
+
 type FormRouter struct {
-	ID          string                  `json:"id" url:"id"`
+	Id          string                  `json:"id" url:"id"`
 	Type        FormNodeTypeRouterConst `json:"type" url:"type"`
 	Coordinates *FormNodeCoordinates    `json:"coordinates,omitempty" url:"coordinates,omitempty"`
 	Alias       *string                 `json:"alias,omitempty" url:"alias,omitempty"`
 	Config      *FormRouterConfig       `json:"config,omitempty" url:"config,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormRouter) GetID() string {
+func (f *FormRouter) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormRouter) GetCoordinates() *FormNodeCoordinates {
-	if f == nil {
-		return nil
+func (f *FormRouter) GetCoordinates() FormNodeCoordinates {
+	if f == nil || f.Coordinates == nil {
+		return FormNodeCoordinates{}
 	}
-	return f.Coordinates
+	return *f.Coordinates
 }
 
-func (f *FormRouter) GetAlias() *string {
-	if f == nil {
-		return nil
+func (f *FormRouter) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
 	}
-	return f.Alias
+	return *f.Alias
 }
 
-func (f *FormRouter) GetConfig() *FormRouterConfig {
-	if f == nil {
-		return nil
+func (f *FormRouter) GetConfig() FormRouterConfig {
+	if f == nil || f.Config == nil {
+		return FormRouterConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
 func (f *FormRouter) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormRouter) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormRouter) SetId(id string) {
+	f.Id = id
+	f.require(formRouterFieldId)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormRouter) SetType(type_ FormNodeTypeRouterConst) {
+	f.Type = type_
+	f.require(formRouterFieldType)
+}
+
+// SetCoordinates sets the Coordinates field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormRouter) SetCoordinates(coordinates *FormNodeCoordinates) {
+	f.Coordinates = coordinates
+	f.require(formRouterFieldCoordinates)
+}
+
+// SetAlias sets the Alias field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormRouter) SetAlias(alias *string) {
+	f.Alias = alias
+	f.require(formRouterFieldAlias)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormRouter) SetConfig(config *FormRouterConfig) {
+	f.Config = config
+	f.require(formRouterFieldConfig)
 }
 
 func (f *FormRouter) UnmarshalJSON(data []byte) error {
@@ -6083,6 +10182,17 @@ func (f *FormRouter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormRouter) MarshalJSON() ([]byte, error) {
+	type embed FormRouter
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormRouter) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -6095,30 +10205,59 @@ func (f *FormRouter) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formRouterConfigFieldRules    = big.NewInt(1 << 0)
+	formRouterConfigFieldFallback = big.NewInt(1 << 1)
+)
+
 type FormRouterConfig struct {
 	Rules    []*FormRouterRule `json:"rules,omitempty" url:"rules,omitempty"`
 	Fallback *FormNodePointer  `json:"fallback,omitempty" url:"fallback,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
 func (f *FormRouterConfig) GetRules() []*FormRouterRule {
-	if f == nil {
+	if f == nil || f.Rules == nil {
 		return nil
 	}
 	return f.Rules
 }
 
-func (f *FormRouterConfig) GetFallback() *FormNodePointer {
-	if f == nil {
-		return nil
+func (f *FormRouterConfig) GetFallback() FormNodePointer {
+	if f == nil || f.Fallback == nil {
+		return FormNodePointer{}
 	}
-	return f.Fallback
+	return *f.Fallback
 }
 
 func (f *FormRouterConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormRouterConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetRules sets the Rules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormRouterConfig) SetRules(rules []*FormRouterRule) {
+	f.Rules = rules
+	f.require(formRouterConfigFieldRules)
+}
+
+// SetFallback sets the Fallback field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormRouterConfig) SetFallback(fallback *FormNodePointer) {
+	f.Fallback = fallback
+	f.require(formRouterConfigFieldFallback)
 }
 
 func (f *FormRouterConfig) UnmarshalJSON(data []byte) error {
@@ -6137,6 +10276,17 @@ func (f *FormRouterConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormRouterConfig) MarshalJSON() ([]byte, error) {
+	type embed FormRouterConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormRouterConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -6149,38 +10299,75 @@ func (f *FormRouterConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formRouterRuleFieldId       = big.NewInt(1 << 0)
+	formRouterRuleFieldAlias    = big.NewInt(1 << 1)
+	formRouterRuleFieldNextNode = big.NewInt(1 << 2)
+)
+
 type FormRouterRule struct {
-	ID       string           `json:"id" url:"id"`
+	Id       string           `json:"id" url:"id"`
 	Alias    *string          `json:"alias,omitempty" url:"alias,omitempty"`
 	NextNode *FormNodePointer `json:"next_node,omitempty" url:"next_node,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormRouterRule) GetID() string {
+func (f *FormRouterRule) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormRouterRule) GetAlias() *string {
-	if f == nil {
-		return nil
+func (f *FormRouterRule) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
 	}
-	return f.Alias
+	return *f.Alias
 }
 
-func (f *FormRouterRule) GetNextNode() *FormNodePointer {
-	if f == nil {
-		return nil
+func (f *FormRouterRule) GetNextNode() FormNodePointer {
+	if f == nil || f.NextNode == nil {
+		return FormNodePointer{}
 	}
-	return f.NextNode
+	return *f.NextNode
 }
 
 func (f *FormRouterRule) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormRouterRule) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormRouterRule) SetId(id string) {
+	f.Id = id
+	f.require(formRouterRuleFieldId)
+}
+
+// SetAlias sets the Alias field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormRouterRule) SetAlias(alias *string) {
+	f.Alias = alias
+	f.require(formRouterRuleFieldAlias)
+}
+
+// SetNextNode sets the NextNode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormRouterRule) SetNextNode(nextNode *FormNodePointer) {
+	f.NextNode = nextNode
+	f.require(formRouterRuleFieldNextNode)
 }
 
 func (f *FormRouterRule) UnmarshalJSON(data []byte) error {
@@ -6199,6 +10386,17 @@ func (f *FormRouterRule) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormRouterRule) MarshalJSON() ([]byte, error) {
+	type embed FormRouterRule
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormRouterRule) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -6211,38 +10409,75 @@ func (f *FormRouterRule) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formStartNodeFieldHiddenFields = big.NewInt(1 << 0)
+	formStartNodeFieldNextNode     = big.NewInt(1 << 1)
+	formStartNodeFieldCoordinates  = big.NewInt(1 << 2)
+)
+
 type FormStartNode struct {
 	HiddenFields []*FormHiddenField   `json:"hidden_fields,omitempty" url:"hidden_fields,omitempty"`
 	NextNode     *FormNodePointer     `json:"next_node,omitempty" url:"next_node,omitempty"`
 	Coordinates  *FormNodeCoordinates `json:"coordinates,omitempty" url:"coordinates,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
 func (f *FormStartNode) GetHiddenFields() []*FormHiddenField {
-	if f == nil {
+	if f == nil || f.HiddenFields == nil {
 		return nil
 	}
 	return f.HiddenFields
 }
 
-func (f *FormStartNode) GetNextNode() *FormNodePointer {
-	if f == nil {
-		return nil
+func (f *FormStartNode) GetNextNode() FormNodePointer {
+	if f == nil || f.NextNode == nil {
+		return FormNodePointer{}
 	}
-	return f.NextNode
+	return *f.NextNode
 }
 
-func (f *FormStartNode) GetCoordinates() *FormNodeCoordinates {
-	if f == nil {
-		return nil
+func (f *FormStartNode) GetCoordinates() FormNodeCoordinates {
+	if f == nil || f.Coordinates == nil {
+		return FormNodeCoordinates{}
 	}
-	return f.Coordinates
+	return *f.Coordinates
 }
 
 func (f *FormStartNode) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormStartNode) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetHiddenFields sets the HiddenFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormStartNode) SetHiddenFields(hiddenFields []*FormHiddenField) {
+	f.HiddenFields = hiddenFields
+	f.require(formStartNodeFieldHiddenFields)
+}
+
+// SetNextNode sets the NextNode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormStartNode) SetNextNode(nextNode *FormNodePointer) {
+	f.NextNode = nextNode
+	f.require(formStartNodeFieldNextNode)
+}
+
+// SetCoordinates sets the Coordinates field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormStartNode) SetCoordinates(coordinates *FormNodeCoordinates) {
+	f.Coordinates = coordinates
+	f.require(formStartNodeFieldCoordinates)
 }
 
 func (f *FormStartNode) UnmarshalJSON(data []byte) error {
@@ -6261,6 +10496,17 @@ func (f *FormStartNode) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormStartNode) MarshalJSON() ([]byte, error) {
+	type embed FormStartNode
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormStartNode) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -6275,47 +10521,100 @@ func (f *FormStartNode) String() string {
 
 type FormStartNodeNullable = *FormStartNode
 
+var (
+	formStepFieldId          = big.NewInt(1 << 0)
+	formStepFieldType        = big.NewInt(1 << 1)
+	formStepFieldCoordinates = big.NewInt(1 << 2)
+	formStepFieldAlias       = big.NewInt(1 << 3)
+	formStepFieldConfig      = big.NewInt(1 << 4)
+)
+
 type FormStep struct {
-	ID          string                `json:"id" url:"id"`
+	Id          string                `json:"id" url:"id"`
 	Type        FormNodeTypeStepConst `json:"type" url:"type"`
 	Coordinates *FormNodeCoordinates  `json:"coordinates,omitempty" url:"coordinates,omitempty"`
 	Alias       *string               `json:"alias,omitempty" url:"alias,omitempty"`
 	Config      *FormStepConfig       `json:"config,omitempty" url:"config,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormStep) GetID() string {
+func (f *FormStep) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
-func (f *FormStep) GetCoordinates() *FormNodeCoordinates {
-	if f == nil {
-		return nil
+func (f *FormStep) GetCoordinates() FormNodeCoordinates {
+	if f == nil || f.Coordinates == nil {
+		return FormNodeCoordinates{}
 	}
-	return f.Coordinates
+	return *f.Coordinates
 }
 
-func (f *FormStep) GetAlias() *string {
-	if f == nil {
-		return nil
+func (f *FormStep) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
 	}
-	return f.Alias
+	return *f.Alias
 }
 
-func (f *FormStep) GetConfig() *FormStepConfig {
-	if f == nil {
-		return nil
+func (f *FormStep) GetConfig() FormStepConfig {
+	if f == nil || f.Config == nil {
+		return FormStepConfig{}
 	}
-	return f.Config
+	return *f.Config
 }
 
 func (f *FormStep) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormStep) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormStep) SetId(id string) {
+	f.Id = id
+	f.require(formStepFieldId)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormStep) SetType(type_ FormNodeTypeStepConst) {
+	f.Type = type_
+	f.require(formStepFieldType)
+}
+
+// SetCoordinates sets the Coordinates field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormStep) SetCoordinates(coordinates *FormNodeCoordinates) {
+	f.Coordinates = coordinates
+	f.require(formStepFieldCoordinates)
+}
+
+// SetAlias sets the Alias field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormStep) SetAlias(alias *string) {
+	f.Alias = alias
+	f.require(formStepFieldAlias)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormStep) SetConfig(config *FormStepConfig) {
+	f.Config = config
+	f.require(formStepFieldConfig)
 }
 
 func (f *FormStep) UnmarshalJSON(data []byte) error {
@@ -6334,6 +10633,17 @@ func (f *FormStep) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormStep) MarshalJSON() ([]byte, error) {
+	type embed FormStep
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormStep) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -6348,30 +10658,59 @@ func (f *FormStep) String() string {
 
 type FormStepComponentList = []*FormComponent
 
+var (
+	formStepConfigFieldComponents = big.NewInt(1 << 0)
+	formStepConfigFieldNextNode   = big.NewInt(1 << 1)
+)
+
 type FormStepConfig struct {
 	Components *FormStepComponentList `json:"components,omitempty" url:"components,omitempty"`
 	NextNode   *FormNodePointer       `json:"next_node,omitempty" url:"next_node,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormStepConfig) GetComponents() *FormStepComponentList {
-	if f == nil {
+func (f *FormStepConfig) GetComponents() FormStepComponentList {
+	if f == nil || f.Components == nil {
 		return nil
 	}
-	return f.Components
+	return *f.Components
 }
 
-func (f *FormStepConfig) GetNextNode() *FormNodePointer {
-	if f == nil {
-		return nil
+func (f *FormStepConfig) GetNextNode() FormNodePointer {
+	if f == nil || f.NextNode == nil {
+		return FormNodePointer{}
 	}
-	return f.NextNode
+	return *f.NextNode
 }
 
 func (f *FormStepConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormStepConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetComponents sets the Components field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormStepConfig) SetComponents(components *FormStepComponentList) {
+	f.Components = components
+	f.require(formStepConfigFieldComponents)
+}
+
+// SetNextNode sets the NextNode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormStepConfig) SetNextNode(nextNode *FormNodePointer) {
+	f.NextNode = nextNode
+	f.require(formStepConfigFieldNextNode)
 }
 
 func (f *FormStepConfig) UnmarshalJSON(data []byte) error {
@@ -6390,6 +10729,17 @@ func (f *FormStepConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormStepConfig) MarshalJSON() ([]byte, error) {
+	type embed FormStepConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormStepConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -6402,22 +10752,43 @@ func (f *FormStepConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formStyleFieldCss = big.NewInt(1 << 0)
+)
+
 type FormStyle struct {
-	CSS *string `json:"css,omitempty" url:"css,omitempty"`
+	Css *string `json:"css,omitempty" url:"css,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormStyle) GetCSS() *string {
-	if f == nil {
-		return nil
+func (f *FormStyle) GetCss() string {
+	if f == nil || f.Css == nil {
+		return ""
 	}
-	return f.CSS
+	return *f.Css
 }
 
 func (f *FormStyle) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormStyle) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetCss sets the Css field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormStyle) SetCss(css *string) {
+	f.Css = css
+	f.require(formStyleFieldCss)
 }
 
 func (f *FormStyle) UnmarshalJSON(data []byte) error {
@@ -6436,6 +10807,17 @@ func (f *FormStyle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormStyle) MarshalJSON() ([]byte, error) {
+	type embed FormStyle
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormStyle) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -6450,23 +10832,35 @@ func (f *FormStyle) String() string {
 
 type FormStyleNullable = *FormStyle
 
+var (
+	formSummaryFieldId          = big.NewInt(1 << 0)
+	formSummaryFieldName        = big.NewInt(1 << 1)
+	formSummaryFieldCreatedAt   = big.NewInt(1 << 2)
+	formSummaryFieldUpdatedAt   = big.NewInt(1 << 3)
+	formSummaryFieldEmbeddedAt  = big.NewInt(1 << 4)
+	formSummaryFieldSubmittedAt = big.NewInt(1 << 5)
+)
+
 type FormSummary struct {
-	ID          string    `json:"id" url:"id"`
+	Id          string    `json:"id" url:"id"`
 	Name        string    `json:"name" url:"name"`
 	CreatedAt   time.Time `json:"created_at" url:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at" url:"updated_at"`
 	EmbeddedAt  *string   `json:"embedded_at,omitempty" url:"embedded_at,omitempty"`
 	SubmittedAt *string   `json:"submitted_at,omitempty" url:"submitted_at,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormSummary) GetID() string {
+func (f *FormSummary) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormSummary) GetName() string {
@@ -6490,22 +10884,71 @@ func (f *FormSummary) GetUpdatedAt() time.Time {
 	return f.UpdatedAt
 }
 
-func (f *FormSummary) GetEmbeddedAt() *string {
-	if f == nil {
-		return nil
+func (f *FormSummary) GetEmbeddedAt() string {
+	if f == nil || f.EmbeddedAt == nil {
+		return ""
 	}
-	return f.EmbeddedAt
+	return *f.EmbeddedAt
 }
 
-func (f *FormSummary) GetSubmittedAt() *string {
-	if f == nil {
-		return nil
+func (f *FormSummary) GetSubmittedAt() string {
+	if f == nil || f.SubmittedAt == nil {
+		return ""
 	}
-	return f.SubmittedAt
+	return *f.SubmittedAt
 }
 
 func (f *FormSummary) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormSummary) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormSummary) SetId(id string) {
+	f.Id = id
+	f.require(formSummaryFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormSummary) SetName(name string) {
+	f.Name = name
+	f.require(formSummaryFieldName)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormSummary) SetCreatedAt(createdAt time.Time) {
+	f.CreatedAt = createdAt
+	f.require(formSummaryFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormSummary) SetUpdatedAt(updatedAt time.Time) {
+	f.UpdatedAt = updatedAt
+	f.require(formSummaryFieldUpdatedAt)
+}
+
+// SetEmbeddedAt sets the EmbeddedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormSummary) SetEmbeddedAt(embeddedAt *string) {
+	f.EmbeddedAt = embeddedAt
+	f.require(formSummaryFieldEmbeddedAt)
+}
+
+// SetSubmittedAt sets the SubmittedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormSummary) SetSubmittedAt(submittedAt *string) {
+	f.SubmittedAt = submittedAt
+	f.require(formSummaryFieldSubmittedAt)
 }
 
 func (f *FormSummary) UnmarshalJSON(data []byte) error {
@@ -6543,7 +10986,8 @@ func (f *FormSummary) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewDateTime(f.CreatedAt),
 		UpdatedAt: internal.NewDateTime(f.UpdatedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FormSummary) String() string {
@@ -6558,7 +11002,7 @@ func (f *FormSummary) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormTranslations = map[string]interface{}
+type FormTranslations = map[string]map[string]interface{}
 
 type FormTranslationsNullable = *FormTranslations
 
@@ -6645,8 +11089,19 @@ func (f *FormWidget) Accept(visitor FormWidgetVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
+var (
+	formWidgetAuth0VerifiableCredentialsFieldId        = big.NewInt(1 << 0)
+	formWidgetAuth0VerifiableCredentialsFieldCategory  = big.NewInt(1 << 1)
+	formWidgetAuth0VerifiableCredentialsFieldType      = big.NewInt(1 << 2)
+	formWidgetAuth0VerifiableCredentialsFieldConfig    = big.NewInt(1 << 3)
+	formWidgetAuth0VerifiableCredentialsFieldLabel     = big.NewInt(1 << 4)
+	formWidgetAuth0VerifiableCredentialsFieldHint      = big.NewInt(1 << 5)
+	formWidgetAuth0VerifiableCredentialsFieldRequired  = big.NewInt(1 << 6)
+	formWidgetAuth0VerifiableCredentialsFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormWidgetAuth0VerifiableCredentials struct {
-	ID        string                                        `json:"id" url:"id"`
+	Id        string                                        `json:"id" url:"id"`
 	Category  FormComponentCategoryWidgetConst              `json:"category" url:"category"`
 	Type      FormWidgetTypeAuth0VerifiableCredentialsConst `json:"type" url:"type"`
 	Config    *FormWidgetAuth0VerifiableCredentialsConfig   `json:"config" url:"config"`
@@ -6655,15 +11110,18 @@ type FormWidgetAuth0VerifiableCredentials struct {
 	Required  *bool                                         `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                                         `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormWidgetAuth0VerifiableCredentials) GetID() string {
+func (f *FormWidgetAuth0VerifiableCredentials) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormWidgetAuth0VerifiableCredentials) GetConfig() *FormWidgetAuth0VerifiableCredentialsConfig {
@@ -6673,36 +11131,99 @@ func (f *FormWidgetAuth0VerifiableCredentials) GetConfig() *FormWidgetAuth0Verif
 	return f.Config
 }
 
-func (f *FormWidgetAuth0VerifiableCredentials) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormWidgetAuth0VerifiableCredentials) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormWidgetAuth0VerifiableCredentials) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormWidgetAuth0VerifiableCredentials) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormWidgetAuth0VerifiableCredentials) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormWidgetAuth0VerifiableCredentials) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormWidgetAuth0VerifiableCredentials) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormWidgetAuth0VerifiableCredentials) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormWidgetAuth0VerifiableCredentials) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormWidgetAuth0VerifiableCredentials) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentials) SetId(id string) {
+	f.Id = id
+	f.require(formWidgetAuth0VerifiableCredentialsFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentials) SetCategory(category FormComponentCategoryWidgetConst) {
+	f.Category = category
+	f.require(formWidgetAuth0VerifiableCredentialsFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentials) SetType(type_ FormWidgetTypeAuth0VerifiableCredentialsConst) {
+	f.Type = type_
+	f.require(formWidgetAuth0VerifiableCredentialsFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentials) SetConfig(config *FormWidgetAuth0VerifiableCredentialsConfig) {
+	f.Config = config
+	f.require(formWidgetAuth0VerifiableCredentialsFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentials) SetLabel(label *string) {
+	f.Label = label
+	f.require(formWidgetAuth0VerifiableCredentialsFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentials) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formWidgetAuth0VerifiableCredentialsFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentials) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formWidgetAuth0VerifiableCredentialsFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentials) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formWidgetAuth0VerifiableCredentialsFieldSensitive)
 }
 
 func (f *FormWidgetAuth0VerifiableCredentials) UnmarshalJSON(data []byte) error {
@@ -6721,6 +11242,17 @@ func (f *FormWidgetAuth0VerifiableCredentials) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+func (f *FormWidgetAuth0VerifiableCredentials) MarshalJSON() ([]byte, error) {
+	type embed FormWidgetAuth0VerifiableCredentials
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormWidgetAuth0VerifiableCredentials) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -6733,30 +11265,42 @@ func (f *FormWidgetAuth0VerifiableCredentials) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formWidgetAuth0VerifiableCredentialsConfigFieldUrl            = big.NewInt(1 << 0)
+	formWidgetAuth0VerifiableCredentialsConfigFieldSize           = big.NewInt(1 << 1)
+	formWidgetAuth0VerifiableCredentialsConfigFieldAlternateText  = big.NewInt(1 << 2)
+	formWidgetAuth0VerifiableCredentialsConfigFieldAccessToken    = big.NewInt(1 << 3)
+	formWidgetAuth0VerifiableCredentialsConfigFieldVerificationId = big.NewInt(1 << 4)
+	formWidgetAuth0VerifiableCredentialsConfigFieldMaxWait        = big.NewInt(1 << 5)
+)
+
 type FormWidgetAuth0VerifiableCredentialsConfig struct {
-	URL            string   `json:"url" url:"url"`
+	Url            string   `json:"url" url:"url"`
 	Size           *float64 `json:"size,omitempty" url:"size,omitempty"`
 	AlternateText  string   `json:"alternate_text" url:"alternate_text"`
 	AccessToken    string   `json:"access_token" url:"access_token"`
-	VerificationID string   `json:"verification_id" url:"verification_id"`
+	VerificationId string   `json:"verification_id" url:"verification_id"`
 	MaxWait        *float64 `json:"max_wait,omitempty" url:"max_wait,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetURL() string {
+func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetUrl() string {
 	if f == nil {
 		return ""
 	}
-	return f.URL
+	return f.Url
 }
 
-func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetSize() *float64 {
-	if f == nil {
-		return nil
+func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetSize() float64 {
+	if f == nil || f.Size == nil {
+		return 0
 	}
-	return f.Size
+	return *f.Size
 }
 
 func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetAlternateText() string {
@@ -6773,22 +11317,71 @@ func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetAccessToken() string {
 	return f.AccessToken
 }
 
-func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetVerificationID() string {
+func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetVerificationId() string {
 	if f == nil {
 		return ""
 	}
-	return f.VerificationID
+	return f.VerificationId
 }
 
-func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetMaxWait() *float64 {
-	if f == nil {
-		return nil
+func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetMaxWait() float64 {
+	if f == nil || f.MaxWait == nil {
+		return 0
 	}
-	return f.MaxWait
+	return *f.MaxWait
 }
 
 func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormWidgetAuth0VerifiableCredentialsConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetUrl sets the Url field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentialsConfig) SetUrl(url string) {
+	f.Url = url
+	f.require(formWidgetAuth0VerifiableCredentialsConfigFieldUrl)
+}
+
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentialsConfig) SetSize(size *float64) {
+	f.Size = size
+	f.require(formWidgetAuth0VerifiableCredentialsConfigFieldSize)
+}
+
+// SetAlternateText sets the AlternateText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentialsConfig) SetAlternateText(alternateText string) {
+	f.AlternateText = alternateText
+	f.require(formWidgetAuth0VerifiableCredentialsConfigFieldAlternateText)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentialsConfig) SetAccessToken(accessToken string) {
+	f.AccessToken = accessToken
+	f.require(formWidgetAuth0VerifiableCredentialsConfigFieldAccessToken)
+}
+
+// SetVerificationId sets the VerificationId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentialsConfig) SetVerificationId(verificationId string) {
+	f.VerificationId = verificationId
+	f.require(formWidgetAuth0VerifiableCredentialsConfigFieldVerificationId)
+}
+
+// SetMaxWait sets the MaxWait field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetAuth0VerifiableCredentialsConfig) SetMaxWait(maxWait *float64) {
+	f.MaxWait = maxWait
+	f.require(formWidgetAuth0VerifiableCredentialsConfigFieldMaxWait)
 }
 
 func (f *FormWidgetAuth0VerifiableCredentialsConfig) UnmarshalJSON(data []byte) error {
@@ -6807,6 +11400,17 @@ func (f *FormWidgetAuth0VerifiableCredentialsConfig) UnmarshalJSON(data []byte) 
 	return nil
 }
 
+func (f *FormWidgetAuth0VerifiableCredentialsConfig) MarshalJSON() ([]byte, error) {
+	type embed FormWidgetAuth0VerifiableCredentialsConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormWidgetAuth0VerifiableCredentialsConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -6819,8 +11423,19 @@ func (f *FormWidgetAuth0VerifiableCredentialsConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formWidgetGMapsAddressFieldId        = big.NewInt(1 << 0)
+	formWidgetGMapsAddressFieldCategory  = big.NewInt(1 << 1)
+	formWidgetGMapsAddressFieldType      = big.NewInt(1 << 2)
+	formWidgetGMapsAddressFieldConfig    = big.NewInt(1 << 3)
+	formWidgetGMapsAddressFieldLabel     = big.NewInt(1 << 4)
+	formWidgetGMapsAddressFieldHint      = big.NewInt(1 << 5)
+	formWidgetGMapsAddressFieldRequired  = big.NewInt(1 << 6)
+	formWidgetGMapsAddressFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormWidgetGMapsAddress struct {
-	ID        string                           `json:"id" url:"id"`
+	Id        string                           `json:"id" url:"id"`
 	Category  FormComponentCategoryWidgetConst `json:"category" url:"category"`
 	Type      FormWidgetTypeGMapsAddressConst  `json:"type" url:"type"`
 	Config    *FormWidgetGMapsAddressConfig    `json:"config" url:"config"`
@@ -6829,15 +11444,18 @@ type FormWidgetGMapsAddress struct {
 	Required  *bool                            `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                            `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormWidgetGMapsAddress) GetID() string {
+func (f *FormWidgetGMapsAddress) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormWidgetGMapsAddress) GetConfig() *FormWidgetGMapsAddressConfig {
@@ -6847,36 +11465,99 @@ func (f *FormWidgetGMapsAddress) GetConfig() *FormWidgetGMapsAddressConfig {
 	return f.Config
 }
 
-func (f *FormWidgetGMapsAddress) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormWidgetGMapsAddress) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormWidgetGMapsAddress) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormWidgetGMapsAddress) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormWidgetGMapsAddress) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormWidgetGMapsAddress) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormWidgetGMapsAddress) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormWidgetGMapsAddress) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormWidgetGMapsAddress) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormWidgetGMapsAddress) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetGMapsAddress) SetId(id string) {
+	f.Id = id
+	f.require(formWidgetGMapsAddressFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetGMapsAddress) SetCategory(category FormComponentCategoryWidgetConst) {
+	f.Category = category
+	f.require(formWidgetGMapsAddressFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetGMapsAddress) SetType(type_ FormWidgetTypeGMapsAddressConst) {
+	f.Type = type_
+	f.require(formWidgetGMapsAddressFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetGMapsAddress) SetConfig(config *FormWidgetGMapsAddressConfig) {
+	f.Config = config
+	f.require(formWidgetGMapsAddressFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetGMapsAddress) SetLabel(label *string) {
+	f.Label = label
+	f.require(formWidgetGMapsAddressFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetGMapsAddress) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formWidgetGMapsAddressFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetGMapsAddress) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formWidgetGMapsAddressFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetGMapsAddress) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formWidgetGMapsAddressFieldSensitive)
 }
 
 func (f *FormWidgetGMapsAddress) UnmarshalJSON(data []byte) error {
@@ -6895,6 +11576,17 @@ func (f *FormWidgetGMapsAddress) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormWidgetGMapsAddress) MarshalJSON() ([]byte, error) {
+	type embed FormWidgetGMapsAddress
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormWidgetGMapsAddress) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -6907,22 +11599,43 @@ func (f *FormWidgetGMapsAddress) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formWidgetGMapsAddressConfigFieldApiKey = big.NewInt(1 << 0)
+)
+
 type FormWidgetGMapsAddressConfig struct {
-	APIKey string `json:"api_key" url:"api_key"`
+	ApiKey string `json:"api_key" url:"api_key"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormWidgetGMapsAddressConfig) GetAPIKey() string {
+func (f *FormWidgetGMapsAddressConfig) GetApiKey() string {
 	if f == nil {
 		return ""
 	}
-	return f.APIKey
+	return f.ApiKey
 }
 
 func (f *FormWidgetGMapsAddressConfig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormWidgetGMapsAddressConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetApiKey sets the ApiKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetGMapsAddressConfig) SetApiKey(apiKey string) {
+	f.ApiKey = apiKey
+	f.require(formWidgetGMapsAddressConfigFieldApiKey)
 }
 
 func (f *FormWidgetGMapsAddressConfig) UnmarshalJSON(data []byte) error {
@@ -6941,6 +11654,17 @@ func (f *FormWidgetGMapsAddressConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormWidgetGMapsAddressConfig) MarshalJSON() ([]byte, error) {
+	type embed FormWidgetGMapsAddressConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormWidgetGMapsAddressConfig) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -6953,8 +11677,19 @@ func (f *FormWidgetGMapsAddressConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formWidgetRecaptchaFieldId        = big.NewInt(1 << 0)
+	formWidgetRecaptchaFieldCategory  = big.NewInt(1 << 1)
+	formWidgetRecaptchaFieldType      = big.NewInt(1 << 2)
+	formWidgetRecaptchaFieldConfig    = big.NewInt(1 << 3)
+	formWidgetRecaptchaFieldLabel     = big.NewInt(1 << 4)
+	formWidgetRecaptchaFieldHint      = big.NewInt(1 << 5)
+	formWidgetRecaptchaFieldRequired  = big.NewInt(1 << 6)
+	formWidgetRecaptchaFieldSensitive = big.NewInt(1 << 7)
+)
+
 type FormWidgetRecaptcha struct {
-	ID        string                           `json:"id" url:"id"`
+	Id        string                           `json:"id" url:"id"`
 	Category  FormComponentCategoryWidgetConst `json:"category" url:"category"`
 	Type      FormWidgetTypeRecaptchaConst     `json:"type" url:"type"`
 	Config    *FormWidgetRecaptchaConfig       `json:"config" url:"config"`
@@ -6963,15 +11698,18 @@ type FormWidgetRecaptcha struct {
 	Required  *bool                            `json:"required,omitempty" url:"required,omitempty"`
 	Sensitive *bool                            `json:"sensitive,omitempty" url:"sensitive,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (f *FormWidgetRecaptcha) GetID() string {
+func (f *FormWidgetRecaptcha) GetId() string {
 	if f == nil {
 		return ""
 	}
-	return f.ID
+	return f.Id
 }
 
 func (f *FormWidgetRecaptcha) GetConfig() *FormWidgetRecaptchaConfig {
@@ -6981,36 +11719,99 @@ func (f *FormWidgetRecaptcha) GetConfig() *FormWidgetRecaptchaConfig {
 	return f.Config
 }
 
-func (f *FormWidgetRecaptcha) GetLabel() *string {
-	if f == nil {
-		return nil
+func (f *FormWidgetRecaptcha) GetLabel() string {
+	if f == nil || f.Label == nil {
+		return ""
 	}
-	return f.Label
+	return *f.Label
 }
 
-func (f *FormWidgetRecaptcha) GetHint() *string {
-	if f == nil {
-		return nil
+func (f *FormWidgetRecaptcha) GetHint() string {
+	if f == nil || f.Hint == nil {
+		return ""
 	}
-	return f.Hint
+	return *f.Hint
 }
 
-func (f *FormWidgetRecaptcha) GetRequired() *bool {
-	if f == nil {
-		return nil
+func (f *FormWidgetRecaptcha) GetRequired() bool {
+	if f == nil || f.Required == nil {
+		return false
 	}
-	return f.Required
+	return *f.Required
 }
 
-func (f *FormWidgetRecaptcha) GetSensitive() *bool {
-	if f == nil {
-		return nil
+func (f *FormWidgetRecaptcha) GetSensitive() bool {
+	if f == nil || f.Sensitive == nil {
+		return false
 	}
-	return f.Sensitive
+	return *f.Sensitive
 }
 
 func (f *FormWidgetRecaptcha) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *FormWidgetRecaptcha) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetRecaptcha) SetId(id string) {
+	f.Id = id
+	f.require(formWidgetRecaptchaFieldId)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetRecaptcha) SetCategory(category FormComponentCategoryWidgetConst) {
+	f.Category = category
+	f.require(formWidgetRecaptchaFieldCategory)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetRecaptcha) SetType(type_ FormWidgetTypeRecaptchaConst) {
+	f.Type = type_
+	f.require(formWidgetRecaptchaFieldType)
+}
+
+// SetConfig sets the Config field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetRecaptcha) SetConfig(config *FormWidgetRecaptchaConfig) {
+	f.Config = config
+	f.require(formWidgetRecaptchaFieldConfig)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetRecaptcha) SetLabel(label *string) {
+	f.Label = label
+	f.require(formWidgetRecaptchaFieldLabel)
+}
+
+// SetHint sets the Hint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetRecaptcha) SetHint(hint *string) {
+	f.Hint = hint
+	f.require(formWidgetRecaptchaFieldHint)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetRecaptcha) SetRequired(required *bool) {
+	f.Required = required
+	f.require(formWidgetRecaptchaFieldRequired)
+}
+
+// SetSensitive sets the Sensitive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetRecaptcha) SetSensitive(sensitive *bool) {
+	f.Sensitive = sensitive
+	f.require(formWidgetRecaptchaFieldSensitive)
 }
 
 func (f *FormWidgetRecaptcha) UnmarshalJSON(data []byte) error {
@@ -7029,6 +11830,17 @@ func (f *FormWidgetRecaptcha) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FormWidgetRecaptcha) MarshalJSON() ([]byte, error) {
+	type embed FormWidgetRecaptcha
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FormWidgetRecaptcha) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -7041,9 +11853,17 @@ func (f *FormWidgetRecaptcha) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	formWidgetRecaptchaConfigFieldSiteKey   = big.NewInt(1 << 0)
+	formWidgetRecaptchaConfigFieldSecretKey = big.NewInt(1 << 1)
+)
+
 type FormWidgetRecaptchaConfig struct {
 	SiteKey   string `json:"site_key" url:"site_key"`
 	SecretKey string `json:"secret_key" url:"secret_key"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -7067,6 +11887,27 @@ func (f *FormWidgetRecaptchaConfig) GetExtraProperties() map[string]interface{} 
 	return f.extraProperties
 }
 
+func (f *FormWidgetRecaptchaConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetRecaptchaConfig) SetSiteKey(siteKey string) {
+	f.SiteKey = siteKey
+	f.require(formWidgetRecaptchaConfigFieldSiteKey)
+}
+
+// SetSecretKey sets the SecretKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetRecaptchaConfig) SetSecretKey(secretKey string) {
+	f.SecretKey = secretKey
+	f.require(formWidgetRecaptchaConfigFieldSecretKey)
+}
+
 func (f *FormWidgetRecaptchaConfig) UnmarshalJSON(data []byte) error {
 	type unmarshaler FormWidgetRecaptchaConfig
 	var value unmarshaler
@@ -7081,6 +11922,17 @@ func (f *FormWidgetRecaptchaConfig) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FormWidgetRecaptchaConfig) MarshalJSON() ([]byte, error) {
+	type embed FormWidgetRecaptchaConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FormWidgetRecaptchaConfig) String() string {
@@ -7123,8 +11975,24 @@ func (f FormsRequestParametersHydrateEnum) Ptr() *FormsRequestParametersHydrateE
 	return &f
 }
 
+var (
+	getFormResponseContentFieldId           = big.NewInt(1 << 0)
+	getFormResponseContentFieldName         = big.NewInt(1 << 1)
+	getFormResponseContentFieldMessages     = big.NewInt(1 << 2)
+	getFormResponseContentFieldLanguages    = big.NewInt(1 << 3)
+	getFormResponseContentFieldTranslations = big.NewInt(1 << 4)
+	getFormResponseContentFieldNodes        = big.NewInt(1 << 5)
+	getFormResponseContentFieldStart        = big.NewInt(1 << 6)
+	getFormResponseContentFieldEnding       = big.NewInt(1 << 7)
+	getFormResponseContentFieldStyle        = big.NewInt(1 << 8)
+	getFormResponseContentFieldCreatedAt    = big.NewInt(1 << 9)
+	getFormResponseContentFieldUpdatedAt    = big.NewInt(1 << 10)
+	getFormResponseContentFieldEmbeddedAt   = big.NewInt(1 << 11)
+	getFormResponseContentFieldSubmittedAt  = big.NewInt(1 << 12)
+)
+
 type GetFormResponseContent struct {
-	ID           string            `json:"id" url:"id"`
+	Id           string            `json:"id" url:"id"`
 	Name         string            `json:"name" url:"name"`
 	Messages     *FormMessages     `json:"messages,omitempty" url:"messages,omitempty"`
 	Languages    *FormLanguages    `json:"languages,omitempty" url:"languages,omitempty"`
@@ -7138,15 +12006,18 @@ type GetFormResponseContent struct {
 	EmbeddedAt   *string           `json:"embedded_at,omitempty" url:"embedded_at,omitempty"`
 	SubmittedAt  *string           `json:"submitted_at,omitempty" url:"submitted_at,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (g *GetFormResponseContent) GetID() string {
+func (g *GetFormResponseContent) GetId() string {
 	if g == nil {
 		return ""
 	}
-	return g.ID
+	return g.Id
 }
 
 func (g *GetFormResponseContent) GetName() string {
@@ -7156,53 +12027,53 @@ func (g *GetFormResponseContent) GetName() string {
 	return g.Name
 }
 
-func (g *GetFormResponseContent) GetMessages() *FormMessages {
-	if g == nil {
-		return nil
+func (g *GetFormResponseContent) GetMessages() FormMessages {
+	if g == nil || g.Messages == nil {
+		return FormMessages{}
 	}
-	return g.Messages
+	return *g.Messages
 }
 
-func (g *GetFormResponseContent) GetLanguages() *FormLanguages {
-	if g == nil {
-		return nil
+func (g *GetFormResponseContent) GetLanguages() FormLanguages {
+	if g == nil || g.Languages == nil {
+		return FormLanguages{}
 	}
-	return g.Languages
+	return *g.Languages
 }
 
-func (g *GetFormResponseContent) GetTranslations() *FormTranslations {
-	if g == nil {
+func (g *GetFormResponseContent) GetTranslations() FormTranslations {
+	if g == nil || g.Translations == nil {
 		return nil
 	}
-	return g.Translations
+	return *g.Translations
 }
 
-func (g *GetFormResponseContent) GetNodes() *FormNodeList {
-	if g == nil {
+func (g *GetFormResponseContent) GetNodes() FormNodeList {
+	if g == nil || g.Nodes == nil {
 		return nil
 	}
-	return g.Nodes
+	return *g.Nodes
 }
 
-func (g *GetFormResponseContent) GetStart() *FormStartNode {
-	if g == nil {
-		return nil
+func (g *GetFormResponseContent) GetStart() FormStartNode {
+	if g == nil || g.Start == nil {
+		return FormStartNode{}
 	}
-	return g.Start
+	return *g.Start
 }
 
-func (g *GetFormResponseContent) GetEnding() *FormEndingNode {
-	if g == nil {
-		return nil
+func (g *GetFormResponseContent) GetEnding() FormEndingNode {
+	if g == nil || g.Ending == nil {
+		return FormEndingNode{}
 	}
-	return g.Ending
+	return *g.Ending
 }
 
-func (g *GetFormResponseContent) GetStyle() *FormStyle {
-	if g == nil {
-		return nil
+func (g *GetFormResponseContent) GetStyle() FormStyle {
+	if g == nil || g.Style == nil {
+		return FormStyle{}
 	}
-	return g.Style
+	return *g.Style
 }
 
 func (g *GetFormResponseContent) GetCreatedAt() time.Time {
@@ -7219,22 +12090,120 @@ func (g *GetFormResponseContent) GetUpdatedAt() time.Time {
 	return g.UpdatedAt
 }
 
-func (g *GetFormResponseContent) GetEmbeddedAt() *string {
-	if g == nil {
-		return nil
+func (g *GetFormResponseContent) GetEmbeddedAt() string {
+	if g == nil || g.EmbeddedAt == nil {
+		return ""
 	}
-	return g.EmbeddedAt
+	return *g.EmbeddedAt
 }
 
-func (g *GetFormResponseContent) GetSubmittedAt() *string {
-	if g == nil {
-		return nil
+func (g *GetFormResponseContent) GetSubmittedAt() string {
+	if g == nil || g.SubmittedAt == nil {
+		return ""
 	}
-	return g.SubmittedAt
+	return *g.SubmittedAt
 }
 
 func (g *GetFormResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
+}
+
+func (g *GetFormResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetId(id string) {
+	g.Id = id
+	g.require(getFormResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetName(name string) {
+	g.Name = name
+	g.require(getFormResponseContentFieldName)
+}
+
+// SetMessages sets the Messages field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetMessages(messages *FormMessages) {
+	g.Messages = messages
+	g.require(getFormResponseContentFieldMessages)
+}
+
+// SetLanguages sets the Languages field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetLanguages(languages *FormLanguages) {
+	g.Languages = languages
+	g.require(getFormResponseContentFieldLanguages)
+}
+
+// SetTranslations sets the Translations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetTranslations(translations *FormTranslations) {
+	g.Translations = translations
+	g.require(getFormResponseContentFieldTranslations)
+}
+
+// SetNodes sets the Nodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetNodes(nodes *FormNodeList) {
+	g.Nodes = nodes
+	g.require(getFormResponseContentFieldNodes)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetStart(start *FormStartNode) {
+	g.Start = start
+	g.require(getFormResponseContentFieldStart)
+}
+
+// SetEnding sets the Ending field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetEnding(ending *FormEndingNode) {
+	g.Ending = ending
+	g.require(getFormResponseContentFieldEnding)
+}
+
+// SetStyle sets the Style field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetStyle(style *FormStyle) {
+	g.Style = style
+	g.require(getFormResponseContentFieldStyle)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetCreatedAt(createdAt time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getFormResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getFormResponseContentFieldUpdatedAt)
+}
+
+// SetEmbeddedAt sets the EmbeddedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetEmbeddedAt(embeddedAt *string) {
+	g.EmbeddedAt = embeddedAt
+	g.require(getFormResponseContentFieldEmbeddedAt)
+}
+
+// SetSubmittedAt sets the SubmittedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormResponseContent) SetSubmittedAt(submittedAt *string) {
+	g.SubmittedAt = submittedAt
+	g.require(getFormResponseContentFieldSubmittedAt)
 }
 
 func (g *GetFormResponseContent) UnmarshalJSON(data []byte) error {
@@ -7272,7 +12241,8 @@ func (g *GetFormResponseContent) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewDateTime(g.CreatedAt),
 		UpdatedAt: internal.NewDateTime(g.UpdatedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (g *GetFormResponseContent) String() string {
@@ -7287,39 +12257,49 @@ func (g *GetFormResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	listFormsOffsetPaginatedResponseContentFieldStart = big.NewInt(1 << 0)
+	listFormsOffsetPaginatedResponseContentFieldLimit = big.NewInt(1 << 1)
+	listFormsOffsetPaginatedResponseContentFieldTotal = big.NewInt(1 << 2)
+	listFormsOffsetPaginatedResponseContentFieldForms = big.NewInt(1 << 3)
+)
+
 type ListFormsOffsetPaginatedResponseContent struct {
 	Start *float64       `json:"start,omitempty" url:"start,omitempty"`
 	Limit *float64       `json:"limit,omitempty" url:"limit,omitempty"`
 	Total *float64       `json:"total,omitempty" url:"total,omitempty"`
 	Forms []*FormSummary `json:"forms,omitempty" url:"forms,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListFormsOffsetPaginatedResponseContent) GetStart() *float64 {
-	if l == nil {
-		return nil
+func (l *ListFormsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
 	}
-	return l.Start
+	return *l.Start
 }
 
-func (l *ListFormsOffsetPaginatedResponseContent) GetLimit() *float64 {
-	if l == nil {
-		return nil
+func (l *ListFormsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
 	}
-	return l.Limit
+	return *l.Limit
 }
 
-func (l *ListFormsOffsetPaginatedResponseContent) GetTotal() *float64 {
-	if l == nil {
-		return nil
+func (l *ListFormsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
 	}
-	return l.Total
+	return *l.Total
 }
 
 func (l *ListFormsOffsetPaginatedResponseContent) GetForms() []*FormSummary {
-	if l == nil {
+	if l == nil || l.Forms == nil {
 		return nil
 	}
 	return l.Forms
@@ -7327,6 +12307,41 @@ func (l *ListFormsOffsetPaginatedResponseContent) GetForms() []*FormSummary {
 
 func (l *ListFormsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListFormsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFormsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listFormsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFormsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listFormsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFormsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listFormsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetForms sets the Forms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFormsOffsetPaginatedResponseContent) SetForms(forms []*FormSummary) {
+	l.Forms = forms
+	l.require(listFormsOffsetPaginatedResponseContentFieldForms)
 }
 
 func (l *ListFormsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
@@ -7345,6 +12360,17 @@ func (l *ListFormsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) err
 	return nil
 }
 
+func (l *ListFormsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListFormsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListFormsOffsetPaginatedResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -7357,8 +12383,24 @@ func (l *ListFormsOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	updateFormResponseContentFieldId           = big.NewInt(1 << 0)
+	updateFormResponseContentFieldName         = big.NewInt(1 << 1)
+	updateFormResponseContentFieldMessages     = big.NewInt(1 << 2)
+	updateFormResponseContentFieldLanguages    = big.NewInt(1 << 3)
+	updateFormResponseContentFieldTranslations = big.NewInt(1 << 4)
+	updateFormResponseContentFieldNodes        = big.NewInt(1 << 5)
+	updateFormResponseContentFieldStart        = big.NewInt(1 << 6)
+	updateFormResponseContentFieldEnding       = big.NewInt(1 << 7)
+	updateFormResponseContentFieldStyle        = big.NewInt(1 << 8)
+	updateFormResponseContentFieldCreatedAt    = big.NewInt(1 << 9)
+	updateFormResponseContentFieldUpdatedAt    = big.NewInt(1 << 10)
+	updateFormResponseContentFieldEmbeddedAt   = big.NewInt(1 << 11)
+	updateFormResponseContentFieldSubmittedAt  = big.NewInt(1 << 12)
+)
+
 type UpdateFormResponseContent struct {
-	ID           string            `json:"id" url:"id"`
+	Id           string            `json:"id" url:"id"`
 	Name         string            `json:"name" url:"name"`
 	Messages     *FormMessages     `json:"messages,omitempty" url:"messages,omitempty"`
 	Languages    *FormLanguages    `json:"languages,omitempty" url:"languages,omitempty"`
@@ -7372,15 +12414,18 @@ type UpdateFormResponseContent struct {
 	EmbeddedAt   *string           `json:"embedded_at,omitempty" url:"embedded_at,omitempty"`
 	SubmittedAt  *string           `json:"submitted_at,omitempty" url:"submitted_at,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateFormResponseContent) GetID() string {
+func (u *UpdateFormResponseContent) GetId() string {
 	if u == nil {
 		return ""
 	}
-	return u.ID
+	return u.Id
 }
 
 func (u *UpdateFormResponseContent) GetName() string {
@@ -7390,53 +12435,53 @@ func (u *UpdateFormResponseContent) GetName() string {
 	return u.Name
 }
 
-func (u *UpdateFormResponseContent) GetMessages() *FormMessages {
-	if u == nil {
-		return nil
+func (u *UpdateFormResponseContent) GetMessages() FormMessages {
+	if u == nil || u.Messages == nil {
+		return FormMessages{}
 	}
-	return u.Messages
+	return *u.Messages
 }
 
-func (u *UpdateFormResponseContent) GetLanguages() *FormLanguages {
-	if u == nil {
-		return nil
+func (u *UpdateFormResponseContent) GetLanguages() FormLanguages {
+	if u == nil || u.Languages == nil {
+		return FormLanguages{}
 	}
-	return u.Languages
+	return *u.Languages
 }
 
-func (u *UpdateFormResponseContent) GetTranslations() *FormTranslations {
-	if u == nil {
+func (u *UpdateFormResponseContent) GetTranslations() FormTranslations {
+	if u == nil || u.Translations == nil {
 		return nil
 	}
-	return u.Translations
+	return *u.Translations
 }
 
-func (u *UpdateFormResponseContent) GetNodes() *FormNodeList {
-	if u == nil {
+func (u *UpdateFormResponseContent) GetNodes() FormNodeList {
+	if u == nil || u.Nodes == nil {
 		return nil
 	}
-	return u.Nodes
+	return *u.Nodes
 }
 
-func (u *UpdateFormResponseContent) GetStart() *FormStartNode {
-	if u == nil {
-		return nil
+func (u *UpdateFormResponseContent) GetStart() FormStartNode {
+	if u == nil || u.Start == nil {
+		return FormStartNode{}
 	}
-	return u.Start
+	return *u.Start
 }
 
-func (u *UpdateFormResponseContent) GetEnding() *FormEndingNode {
-	if u == nil {
-		return nil
+func (u *UpdateFormResponseContent) GetEnding() FormEndingNode {
+	if u == nil || u.Ending == nil {
+		return FormEndingNode{}
 	}
-	return u.Ending
+	return *u.Ending
 }
 
-func (u *UpdateFormResponseContent) GetStyle() *FormStyle {
-	if u == nil {
-		return nil
+func (u *UpdateFormResponseContent) GetStyle() FormStyle {
+	if u == nil || u.Style == nil {
+		return FormStyle{}
 	}
-	return u.Style
+	return *u.Style
 }
 
 func (u *UpdateFormResponseContent) GetCreatedAt() time.Time {
@@ -7453,22 +12498,120 @@ func (u *UpdateFormResponseContent) GetUpdatedAt() time.Time {
 	return u.UpdatedAt
 }
 
-func (u *UpdateFormResponseContent) GetEmbeddedAt() *string {
-	if u == nil {
-		return nil
+func (u *UpdateFormResponseContent) GetEmbeddedAt() string {
+	if u == nil || u.EmbeddedAt == nil {
+		return ""
 	}
-	return u.EmbeddedAt
+	return *u.EmbeddedAt
 }
 
-func (u *UpdateFormResponseContent) GetSubmittedAt() *string {
-	if u == nil {
-		return nil
+func (u *UpdateFormResponseContent) GetSubmittedAt() string {
+	if u == nil || u.SubmittedAt == nil {
+		return ""
 	}
-	return u.SubmittedAt
+	return *u.SubmittedAt
 }
 
 func (u *UpdateFormResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
+}
+
+func (u *UpdateFormResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetId(id string) {
+	u.Id = id
+	u.require(updateFormResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetName(name string) {
+	u.Name = name
+	u.require(updateFormResponseContentFieldName)
+}
+
+// SetMessages sets the Messages field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetMessages(messages *FormMessages) {
+	u.Messages = messages
+	u.require(updateFormResponseContentFieldMessages)
+}
+
+// SetLanguages sets the Languages field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetLanguages(languages *FormLanguages) {
+	u.Languages = languages
+	u.require(updateFormResponseContentFieldLanguages)
+}
+
+// SetTranslations sets the Translations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetTranslations(translations *FormTranslations) {
+	u.Translations = translations
+	u.require(updateFormResponseContentFieldTranslations)
+}
+
+// SetNodes sets the Nodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetNodes(nodes *FormNodeList) {
+	u.Nodes = nodes
+	u.require(updateFormResponseContentFieldNodes)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetStart(start *FormStartNode) {
+	u.Start = start
+	u.require(updateFormResponseContentFieldStart)
+}
+
+// SetEnding sets the Ending field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetEnding(ending *FormEndingNode) {
+	u.Ending = ending
+	u.require(updateFormResponseContentFieldEnding)
+}
+
+// SetStyle sets the Style field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetStyle(style *FormStyle) {
+	u.Style = style
+	u.require(updateFormResponseContentFieldStyle)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateFormResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(updateFormResponseContentFieldUpdatedAt)
+}
+
+// SetEmbeddedAt sets the EmbeddedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetEmbeddedAt(embeddedAt *string) {
+	u.EmbeddedAt = embeddedAt
+	u.require(updateFormResponseContentFieldEmbeddedAt)
+}
+
+// SetSubmittedAt sets the SubmittedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFormResponseContent) SetSubmittedAt(submittedAt *string) {
+	u.SubmittedAt = submittedAt
+	u.require(updateFormResponseContentFieldSubmittedAt)
 }
 
 func (u *UpdateFormResponseContent) UnmarshalJSON(data []byte) error {
@@ -7506,7 +12649,8 @@ func (u *UpdateFormResponseContent) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewDateTime(u.CreatedAt),
 		UpdatedAt: internal.NewDateTime(u.UpdatedAt),
 	}
-	return json.Marshal(marshaler)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *UpdateFormResponseContent) String() string {
@@ -7519,15 +12663,4 @@ func (u *UpdateFormResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type UpdateFormRequestContent struct {
-	Name         *string                   `json:"name,omitempty" url:"-"`
-	Messages     *FormMessagesNullable     `json:"messages,omitempty" url:"-"`
-	Languages    *FormLanguagesNullable    `json:"languages,omitempty" url:"-"`
-	Translations *FormTranslationsNullable `json:"translations,omitempty" url:"-"`
-	Nodes        *FormNodeListNullable     `json:"nodes,omitempty" url:"-"`
-	Start        *FormStartNodeNullable    `json:"start,omitempty" url:"-"`
-	Ending       *FormEndingNodeNullable   `json:"ending,omitempty" url:"-"`
-	Style        *FormStyleNullable        `json:"style,omitempty" url:"-"`
 }

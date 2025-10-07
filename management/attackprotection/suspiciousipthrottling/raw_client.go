@@ -5,7 +5,6 @@ package suspiciousipthrottling
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	attackprotection "github.com/auth0/go-auth0/v2/management/attackprotection"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -34,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*core.Response[*management.GetSuspiciousIPThrottlingSettingsResponseContent], error) {
+) (*core.Response[*management.GetSuspiciousIpThrottlingSettingsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -46,24 +45,7 @@ func (r *RawClient) Get(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
-	var response *management.GetSuspiciousIPThrottlingSettingsResponseContent
+	var response *management.GetSuspiciousIpThrottlingSettingsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -75,13 +57,13 @@ func (r *RawClient) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.GetSuspiciousIPThrottlingSettingsResponseContent]{
+	return &core.Response[*management.GetSuspiciousIpThrottlingSettingsResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -90,9 +72,9 @@ func (r *RawClient) Get(
 
 func (r *RawClient) Update(
 	ctx context.Context,
-	request *attackprotection.UpdateSuspiciousIPThrottlingSettingsRequestContent,
+	request *management.UpdateSuspiciousIpThrottlingSettingsRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.UpdateSuspiciousIPThrottlingSettingsResponseContent], error) {
+) (*core.Response[*management.UpdateSuspiciousIpThrottlingSettingsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -105,29 +87,7 @@ func (r *RawClient) Update(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
-	var response *management.UpdateSuspiciousIPThrottlingSettingsResponseContent
+	var response *management.UpdateSuspiciousIpThrottlingSettingsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -140,13 +100,13 @@ func (r *RawClient) Update(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.UpdateSuspiciousIPThrottlingSettingsResponseContent]{
+	return &core.Response[*management.UpdateSuspiciousIpThrottlingSettingsResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

@@ -5,7 +5,6 @@ package users
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	connections "github.com/auth0/go-auth0/v2/management/connections"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -35,7 +34,7 @@ func (r *RawClient) DeleteByEmail(
 	ctx context.Context,
 	// The id of the connection (currently only database connections are supported)
 	id string,
-	request *connections.DeleteConnectionUsersByEmailQueryParameters,
+	request *management.DeleteConnectionUsersByEmailQueryParameters,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -59,28 +58,6 @@ func (r *RawClient) DeleteByEmail(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -91,7 +68,7 @@ func (r *RawClient) DeleteByEmail(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 	if err != nil {

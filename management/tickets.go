@@ -6,32 +6,19 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type ChangePasswordTicketRequestContent struct {
-	// URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using client_id or organization_id.
-	ResultURL *string `json:"result_url,omitempty" url:"-"`
-	// user_id of for whom the ticket should be created.
-	UserID *string `json:"user_id,omitempty" url:"-"`
-	// ID of the client (application). If provided for tenants using the New Universal Login experience, the email template and UI displays application details, and the user is prompted to redirect to the application's <a target=” href='https://auth0.com/docs/authenticate/login/auth0-universal-login/configure-default-login-routes#completing-the-password-reset-flow'>default login route</a> after the ticket is used. client_id is required to use the <a target=” href='https://auth0.com/docs/customize/actions/flows-and-triggers/post-change-password-flow'>Password Reset Post Challenge</a> trigger.
-	ClientID *string `json:"client_id,omitempty" url:"-"`
-	// (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
-	OrganizationID *string `json:"organization_id,omitempty" url:"-"`
-	// ID of the connection. If provided, allows the user to be specified using email instead of user_id. If you set this value, you must also send the email parameter. You cannot send user_id when specifying a connection_id.
-	ConnectionID *string `json:"connection_id,omitempty" url:"-"`
-	// Email address of the user for whom the tickets should be created. Requires the connection_id parameter. Cannot be specified when using user_id.
-	Email *string `json:"email,omitempty" url:"-"`
-	// Number of seconds for which the ticket is valid before expiration. If unspecified or set to 0, this value defaults to 432000 seconds (5 days).
-	TTLSec *int `json:"ttl_sec,omitempty" url:"-"`
-	// Whether to set the email_verified attribute to true (true) or whether it should not be updated (false).
-	MarkEmailAsVerified *bool `json:"mark_email_as_verified,omitempty" url:"-"`
-	// Whether to include the email address as part of the returnUrl in the reset_email (true), or not (false).
-	IncludeEmailInRedirect *bool `json:"includeEmailInRedirect,omitempty" url:"-"`
-}
+var (
+	changePasswordTicketResponseContentFieldTicket = big.NewInt(1 << 0)
+)
 
 type ChangePasswordTicketResponseContent struct {
 	// URL representing the ticket.
 	Ticket string `json:"ticket" url:"ticket"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
@@ -47,6 +34,20 @@ func (c *ChangePasswordTicketResponseContent) GetTicket() string {
 
 func (c *ChangePasswordTicketResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.ExtraProperties
+}
+
+func (c *ChangePasswordTicketResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetTicket sets the Ticket field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ChangePasswordTicketResponseContent) SetTicket(ticket string) {
+	c.Ticket = ticket
+	c.require(changePasswordTicketResponseContentFieldTicket)
 }
 
 func (c *ChangePasswordTicketResponseContent) UnmarshalJSON(data []byte) error {
@@ -76,7 +77,8 @@ func (c *ChangePasswordTicketResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*c),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, c.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
 }
 
 func (c *ChangePasswordTicketResponseContent) String() string {
@@ -91,9 +93,16 @@ func (c *ChangePasswordTicketResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	verifyEmailTicketResponseContentFieldTicket = big.NewInt(1 << 0)
+)
+
 type VerifyEmailTicketResponseContent struct {
 	// URL representing the ticket.
 	Ticket string `json:"ticket" url:"ticket"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
@@ -109,6 +118,20 @@ func (v *VerifyEmailTicketResponseContent) GetTicket() string {
 
 func (v *VerifyEmailTicketResponseContent) GetExtraProperties() map[string]interface{} {
 	return v.ExtraProperties
+}
+
+func (v *VerifyEmailTicketResponseContent) require(field *big.Int) {
+	if v.explicitFields == nil {
+		v.explicitFields = big.NewInt(0)
+	}
+	v.explicitFields.Or(v.explicitFields, field)
+}
+
+// SetTicket sets the Ticket field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyEmailTicketResponseContent) SetTicket(ticket string) {
+	v.Ticket = ticket
+	v.require(verifyEmailTicketResponseContentFieldTicket)
 }
 
 func (v *VerifyEmailTicketResponseContent) UnmarshalJSON(data []byte) error {
@@ -138,7 +161,8 @@ func (v *VerifyEmailTicketResponseContent) MarshalJSON() ([]byte, error) {
 	}{
 		embed: embed(*v),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, v.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, v.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, v.ExtraProperties)
 }
 
 func (v *VerifyEmailTicketResponseContent) String() string {
@@ -151,20 +175,4 @@ func (v *VerifyEmailTicketResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", v)
-}
-
-type VerifyEmailTicketRequestContent struct {
-	// URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using client_id or organization_id.
-	ResultURL *string `json:"result_url,omitempty" url:"-"`
-	// user_id of for whom the ticket should be created.
-	UserID string `json:"user_id" url:"-"`
-	// ID of the client (application). If provided for tenants using the New Universal Login experience, the email template and UI displays application details, and the user is prompted to redirect to the application's <a target=” href='https://auth0.com/docs/authenticate/login/auth0-universal-login/configure-default-login-routes#completing-the-password-reset-flow'>default login route</a> after the ticket is used. client_id is required to use the <a target=” href='https://auth0.com/docs/customize/actions/flows-and-triggers/post-change-password-flow'>Password Reset Post Challenge</a> trigger.
-	ClientID *string `json:"client_id,omitempty" url:"-"`
-	// (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
-	OrganizationID *string `json:"organization_id,omitempty" url:"-"`
-	// Number of seconds for which the ticket is valid before expiration. If unspecified or set to 0, this value defaults to 432000 seconds (5 days).
-	TTLSec *int `json:"ttl_sec,omitempty" url:"-"`
-	// Whether to include the email address as part of the returnUrl in the reset_email (true), or not (false).
-	IncludeEmailInRedirect *bool     `json:"includeEmailInRedirect,omitempty" url:"-"`
-	Identity               *Identity `json:"identity,omitempty" url:"-"`
 }

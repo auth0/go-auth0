@@ -9,7 +9,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	prompts "github.com/auth0/go-auth0/v2/management/prompts"
 	http "net/http"
 	strconv "strconv"
 )
@@ -39,7 +38,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // Get render setting configurations for all screens.
 func (c *Client) List(
 	ctx context.Context,
-	request *prompts.ListAculsRequestParameters,
+	request *management.ListAculsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.AculResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -49,14 +48,7 @@ func (c *Client) List(
 		"https://%7BTENANT%7D.auth0.com/api/v2",
 	)
 	endpointURL := baseURL + "/prompts/rendering"
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -64,33 +56,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		402: func(apiError *core.APIError) error {
-			return &management.PaymentRequiredError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -108,7 +73,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -121,7 +86,7 @@ func (c *Client) List(
 
 	readPageResponse := func(response *management.ListAculsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.AculResponseContent] {
 		next += 1
-		results := response.GetConfigs()
+		results := response.Configs
 		return &internal.PageResponse[*int, *management.AculResponseContent]{
 			Next:    &next,
 			Results: results,
@@ -194,7 +159,7 @@ func (c *Client) Update(
 	prompt *management.PromptGroupNameEnum,
 	// Name of the screen
 	screen *management.ScreenGroupNameEnum,
-	request *prompts.UpdateAculRequestContent,
+	request *management.UpdateAculRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateAculResponseContent, error) {
 	response, err := c.WithRawResponse.Update(

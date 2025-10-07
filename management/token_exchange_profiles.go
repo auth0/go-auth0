@@ -6,90 +6,143 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 	time "time"
 )
 
-type CreateTokenExchangeProfileRequestContent struct {
-	// Friendly name of this profile.
-	Name string `json:"name" url:"-"`
-	// Subject token type for this profile. When receiving a token exchange request on the Authentication API, the corresponding token exchange profile with a matching subject_token_type will be executed. This must be a URI.
-	SubjectTokenType string `json:"subject_token_type" url:"-"`
-	// The ID of the Custom Token Exchange action to execute for this profile, in order to validate the subject_token. The action must use the custom-token-exchange trigger.
-	ActionID string                       `json:"action_id" url:"-"`
-	Type     TokenExchangeProfileTypeEnum `json:"type,omitempty" url:"-"`
-}
-
-type TokenExchangeProfilesListRequest struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-}
+var (
+	createTokenExchangeProfileResponseContentFieldId               = big.NewInt(1 << 0)
+	createTokenExchangeProfileResponseContentFieldName             = big.NewInt(1 << 1)
+	createTokenExchangeProfileResponseContentFieldSubjectTokenType = big.NewInt(1 << 2)
+	createTokenExchangeProfileResponseContentFieldActionId         = big.NewInt(1 << 3)
+	createTokenExchangeProfileResponseContentFieldType             = big.NewInt(1 << 4)
+	createTokenExchangeProfileResponseContentFieldCreatedAt        = big.NewInt(1 << 5)
+	createTokenExchangeProfileResponseContentFieldUpdatedAt        = big.NewInt(1 << 6)
+)
 
 type CreateTokenExchangeProfileResponseContent struct {
 	// The unique ID of the token exchange profile.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Friendly name of this profile.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Subject token type for this profile. When receiving a token exchange request on the Authentication API, the corresponding token exchange profile with a matching subject_token_type will be executed. This must be a URI.
 	SubjectTokenType *string `json:"subject_token_type,omitempty" url:"subject_token_type,omitempty"`
 	// The ID of the Custom Token Exchange action to execute for this profile, in order to validate the subject_token. The action must use the custom-token-exchange trigger.
-	ActionID *string                       `json:"action_id,omitempty" url:"action_id,omitempty"`
+	ActionId *string                       `json:"action_id,omitempty" url:"action_id,omitempty"`
 	Type     *TokenExchangeProfileTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 	// The time when this profile was created.
 	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The time when this profile was updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (c *CreateTokenExchangeProfileResponseContent) GetID() *string {
-	if c == nil {
-		return nil
+func (c *CreateTokenExchangeProfileResponseContent) GetId() string {
+	if c == nil || c.Id == nil {
+		return ""
 	}
-	return c.ID
+	return *c.Id
 }
 
-func (c *CreateTokenExchangeProfileResponseContent) GetName() *string {
-	if c == nil {
-		return nil
+func (c *CreateTokenExchangeProfileResponseContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
 	}
-	return c.Name
+	return *c.Name
 }
 
-func (c *CreateTokenExchangeProfileResponseContent) GetSubjectTokenType() *string {
-	if c == nil {
-		return nil
+func (c *CreateTokenExchangeProfileResponseContent) GetSubjectTokenType() string {
+	if c == nil || c.SubjectTokenType == nil {
+		return ""
 	}
-	return c.SubjectTokenType
+	return *c.SubjectTokenType
 }
 
-func (c *CreateTokenExchangeProfileResponseContent) GetActionID() *string {
-	if c == nil {
-		return nil
+func (c *CreateTokenExchangeProfileResponseContent) GetActionId() string {
+	if c == nil || c.ActionId == nil {
+		return ""
 	}
-	return c.ActionID
+	return *c.ActionId
 }
 
-func (c *CreateTokenExchangeProfileResponseContent) GetCreatedAt() *time.Time {
-	if c == nil {
-		return nil
+func (c *CreateTokenExchangeProfileResponseContent) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
 	}
-	return c.CreatedAt
+	return *c.CreatedAt
 }
 
-func (c *CreateTokenExchangeProfileResponseContent) GetUpdatedAt() *time.Time {
-	if c == nil {
-		return nil
+func (c *CreateTokenExchangeProfileResponseContent) GetUpdatedAt() time.Time {
+	if c == nil || c.UpdatedAt == nil {
+		return time.Time{}
 	}
-	return c.UpdatedAt
+	return *c.UpdatedAt
 }
 
 func (c *CreateTokenExchangeProfileResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.ExtraProperties
+}
+
+func (c *CreateTokenExchangeProfileResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateTokenExchangeProfileResponseContent) SetId(id *string) {
+	c.Id = id
+	c.require(createTokenExchangeProfileResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateTokenExchangeProfileResponseContent) SetName(name *string) {
+	c.Name = name
+	c.require(createTokenExchangeProfileResponseContentFieldName)
+}
+
+// SetSubjectTokenType sets the SubjectTokenType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateTokenExchangeProfileResponseContent) SetSubjectTokenType(subjectTokenType *string) {
+	c.SubjectTokenType = subjectTokenType
+	c.require(createTokenExchangeProfileResponseContentFieldSubjectTokenType)
+}
+
+// SetActionId sets the ActionId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateTokenExchangeProfileResponseContent) SetActionId(actionId *string) {
+	c.ActionId = actionId
+	c.require(createTokenExchangeProfileResponseContentFieldActionId)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateTokenExchangeProfileResponseContent) SetType(type_ *TokenExchangeProfileTypeEnum) {
+	c.Type = type_
+	c.require(createTokenExchangeProfileResponseContentFieldType)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateTokenExchangeProfileResponseContent) SetCreatedAt(createdAt *time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createTokenExchangeProfileResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateTokenExchangeProfileResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(createTokenExchangeProfileResponseContentFieldUpdatedAt)
 }
 
 func (c *CreateTokenExchangeProfileResponseContent) UnmarshalJSON(data []byte) error {
@@ -127,7 +180,8 @@ func (c *CreateTokenExchangeProfileResponseContent) MarshalJSON() ([]byte, error
 		CreatedAt: internal.NewOptionalDateTime(c.CreatedAt),
 		UpdatedAt: internal.NewOptionalDateTime(c.UpdatedAt),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, c.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
 }
 
 func (c *CreateTokenExchangeProfileResponseContent) String() string {
@@ -142,70 +196,139 @@ func (c *CreateTokenExchangeProfileResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	getTokenExchangeProfileResponseContentFieldId               = big.NewInt(1 << 0)
+	getTokenExchangeProfileResponseContentFieldName             = big.NewInt(1 << 1)
+	getTokenExchangeProfileResponseContentFieldSubjectTokenType = big.NewInt(1 << 2)
+	getTokenExchangeProfileResponseContentFieldActionId         = big.NewInt(1 << 3)
+	getTokenExchangeProfileResponseContentFieldType             = big.NewInt(1 << 4)
+	getTokenExchangeProfileResponseContentFieldCreatedAt        = big.NewInt(1 << 5)
+	getTokenExchangeProfileResponseContentFieldUpdatedAt        = big.NewInt(1 << 6)
+)
+
 type GetTokenExchangeProfileResponseContent struct {
 	// The unique ID of the token exchange profile.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Friendly name of this profile.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Subject token type for this profile. When receiving a token exchange request on the Authentication API, the corresponding token exchange profile with a matching subject_token_type will be executed. This must be a URI.
 	SubjectTokenType *string `json:"subject_token_type,omitempty" url:"subject_token_type,omitempty"`
 	// The ID of the Custom Token Exchange action to execute for this profile, in order to validate the subject_token. The action must use the custom-token-exchange trigger.
-	ActionID *string                       `json:"action_id,omitempty" url:"action_id,omitempty"`
+	ActionId *string                       `json:"action_id,omitempty" url:"action_id,omitempty"`
 	Type     *TokenExchangeProfileTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 	// The time when this profile was created.
 	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The time when this profile was updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (g *GetTokenExchangeProfileResponseContent) GetID() *string {
-	if g == nil {
-		return nil
+func (g *GetTokenExchangeProfileResponseContent) GetId() string {
+	if g == nil || g.Id == nil {
+		return ""
 	}
-	return g.ID
+	return *g.Id
 }
 
-func (g *GetTokenExchangeProfileResponseContent) GetName() *string {
-	if g == nil {
-		return nil
+func (g *GetTokenExchangeProfileResponseContent) GetName() string {
+	if g == nil || g.Name == nil {
+		return ""
 	}
-	return g.Name
+	return *g.Name
 }
 
-func (g *GetTokenExchangeProfileResponseContent) GetSubjectTokenType() *string {
-	if g == nil {
-		return nil
+func (g *GetTokenExchangeProfileResponseContent) GetSubjectTokenType() string {
+	if g == nil || g.SubjectTokenType == nil {
+		return ""
 	}
-	return g.SubjectTokenType
+	return *g.SubjectTokenType
 }
 
-func (g *GetTokenExchangeProfileResponseContent) GetActionID() *string {
-	if g == nil {
-		return nil
+func (g *GetTokenExchangeProfileResponseContent) GetActionId() string {
+	if g == nil || g.ActionId == nil {
+		return ""
 	}
-	return g.ActionID
+	return *g.ActionId
 }
 
-func (g *GetTokenExchangeProfileResponseContent) GetCreatedAt() *time.Time {
-	if g == nil {
-		return nil
+func (g *GetTokenExchangeProfileResponseContent) GetCreatedAt() time.Time {
+	if g == nil || g.CreatedAt == nil {
+		return time.Time{}
 	}
-	return g.CreatedAt
+	return *g.CreatedAt
 }
 
-func (g *GetTokenExchangeProfileResponseContent) GetUpdatedAt() *time.Time {
-	if g == nil {
-		return nil
+func (g *GetTokenExchangeProfileResponseContent) GetUpdatedAt() time.Time {
+	if g == nil || g.UpdatedAt == nil {
+		return time.Time{}
 	}
-	return g.UpdatedAt
+	return *g.UpdatedAt
 }
 
 func (g *GetTokenExchangeProfileResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.ExtraProperties
+}
+
+func (g *GetTokenExchangeProfileResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTokenExchangeProfileResponseContent) SetId(id *string) {
+	g.Id = id
+	g.require(getTokenExchangeProfileResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTokenExchangeProfileResponseContent) SetName(name *string) {
+	g.Name = name
+	g.require(getTokenExchangeProfileResponseContentFieldName)
+}
+
+// SetSubjectTokenType sets the SubjectTokenType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTokenExchangeProfileResponseContent) SetSubjectTokenType(subjectTokenType *string) {
+	g.SubjectTokenType = subjectTokenType
+	g.require(getTokenExchangeProfileResponseContentFieldSubjectTokenType)
+}
+
+// SetActionId sets the ActionId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTokenExchangeProfileResponseContent) SetActionId(actionId *string) {
+	g.ActionId = actionId
+	g.require(getTokenExchangeProfileResponseContentFieldActionId)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTokenExchangeProfileResponseContent) SetType(type_ *TokenExchangeProfileTypeEnum) {
+	g.Type = type_
+	g.require(getTokenExchangeProfileResponseContentFieldType)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTokenExchangeProfileResponseContent) SetCreatedAt(createdAt *time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getTokenExchangeProfileResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTokenExchangeProfileResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getTokenExchangeProfileResponseContentFieldUpdatedAt)
 }
 
 func (g *GetTokenExchangeProfileResponseContent) UnmarshalJSON(data []byte) error {
@@ -243,7 +366,8 @@ func (g *GetTokenExchangeProfileResponseContent) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewOptionalDateTime(g.CreatedAt),
 		UpdatedAt: internal.NewOptionalDateTime(g.UpdatedAt),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, g.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *GetTokenExchangeProfileResponseContent) String() string {
@@ -258,24 +382,32 @@ func (g *GetTokenExchangeProfileResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	listTokenExchangeProfileResponseContentFieldNext                  = big.NewInt(1 << 0)
+	listTokenExchangeProfileResponseContentFieldTokenExchangeProfiles = big.NewInt(1 << 1)
+)
+
 type ListTokenExchangeProfileResponseContent struct {
 	// Opaque identifier for use with the <i>from</i> query parameter for the next page of results.<br/>This identifier is valid for 24 hours.
 	Next                  *string                                `json:"next,omitempty" url:"next,omitempty"`
 	TokenExchangeProfiles []*TokenExchangeProfileResponseContent `json:"token_exchange_profiles,omitempty" url:"token_exchange_profiles,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListTokenExchangeProfileResponseContent) GetNext() *string {
-	if l == nil {
-		return nil
+func (l *ListTokenExchangeProfileResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
 	}
-	return l.Next
+	return *l.Next
 }
 
 func (l *ListTokenExchangeProfileResponseContent) GetTokenExchangeProfiles() []*TokenExchangeProfileResponseContent {
-	if l == nil {
+	if l == nil || l.TokenExchangeProfiles == nil {
 		return nil
 	}
 	return l.TokenExchangeProfiles
@@ -283,6 +415,27 @@ func (l *ListTokenExchangeProfileResponseContent) GetTokenExchangeProfiles() []*
 
 func (l *ListTokenExchangeProfileResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListTokenExchangeProfileResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListTokenExchangeProfileResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listTokenExchangeProfileResponseContentFieldNext)
+}
+
+// SetTokenExchangeProfiles sets the TokenExchangeProfiles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListTokenExchangeProfileResponseContent) SetTokenExchangeProfiles(tokenExchangeProfiles []*TokenExchangeProfileResponseContent) {
+	l.TokenExchangeProfiles = tokenExchangeProfiles
+	l.require(listTokenExchangeProfileResponseContentFieldTokenExchangeProfiles)
 }
 
 func (l *ListTokenExchangeProfileResponseContent) UnmarshalJSON(data []byte) error {
@@ -301,6 +454,17 @@ func (l *ListTokenExchangeProfileResponseContent) UnmarshalJSON(data []byte) err
 	return nil
 }
 
+func (l *ListTokenExchangeProfileResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListTokenExchangeProfileResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (l *ListTokenExchangeProfileResponseContent) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
@@ -313,70 +477,139 @@ func (l *ListTokenExchangeProfileResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	tokenExchangeProfileResponseContentFieldId               = big.NewInt(1 << 0)
+	tokenExchangeProfileResponseContentFieldName             = big.NewInt(1 << 1)
+	tokenExchangeProfileResponseContentFieldSubjectTokenType = big.NewInt(1 << 2)
+	tokenExchangeProfileResponseContentFieldActionId         = big.NewInt(1 << 3)
+	tokenExchangeProfileResponseContentFieldType             = big.NewInt(1 << 4)
+	tokenExchangeProfileResponseContentFieldCreatedAt        = big.NewInt(1 << 5)
+	tokenExchangeProfileResponseContentFieldUpdatedAt        = big.NewInt(1 << 6)
+)
+
 type TokenExchangeProfileResponseContent struct {
 	// The unique ID of the token exchange profile.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// Friendly name of this profile.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Subject token type for this profile. When receiving a token exchange request on the Authentication API, the corresponding token exchange profile with a matching subject_token_type will be executed. This must be a URI.
 	SubjectTokenType *string `json:"subject_token_type,omitempty" url:"subject_token_type,omitempty"`
 	// The ID of the Custom Token Exchange action to execute for this profile, in order to validate the subject_token. The action must use the custom-token-exchange trigger.
-	ActionID *string                       `json:"action_id,omitempty" url:"action_id,omitempty"`
+	ActionId *string                       `json:"action_id,omitempty" url:"action_id,omitempty"`
 	Type     *TokenExchangeProfileTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 	// The time when this profile was created.
 	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The time when this profile was updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (t *TokenExchangeProfileResponseContent) GetID() *string {
-	if t == nil {
-		return nil
+func (t *TokenExchangeProfileResponseContent) GetId() string {
+	if t == nil || t.Id == nil {
+		return ""
 	}
-	return t.ID
+	return *t.Id
 }
 
-func (t *TokenExchangeProfileResponseContent) GetName() *string {
-	if t == nil {
-		return nil
+func (t *TokenExchangeProfileResponseContent) GetName() string {
+	if t == nil || t.Name == nil {
+		return ""
 	}
-	return t.Name
+	return *t.Name
 }
 
-func (t *TokenExchangeProfileResponseContent) GetSubjectTokenType() *string {
-	if t == nil {
-		return nil
+func (t *TokenExchangeProfileResponseContent) GetSubjectTokenType() string {
+	if t == nil || t.SubjectTokenType == nil {
+		return ""
 	}
-	return t.SubjectTokenType
+	return *t.SubjectTokenType
 }
 
-func (t *TokenExchangeProfileResponseContent) GetActionID() *string {
-	if t == nil {
-		return nil
+func (t *TokenExchangeProfileResponseContent) GetActionId() string {
+	if t == nil || t.ActionId == nil {
+		return ""
 	}
-	return t.ActionID
+	return *t.ActionId
 }
 
-func (t *TokenExchangeProfileResponseContent) GetCreatedAt() *time.Time {
-	if t == nil {
-		return nil
+func (t *TokenExchangeProfileResponseContent) GetCreatedAt() time.Time {
+	if t == nil || t.CreatedAt == nil {
+		return time.Time{}
 	}
-	return t.CreatedAt
+	return *t.CreatedAt
 }
 
-func (t *TokenExchangeProfileResponseContent) GetUpdatedAt() *time.Time {
-	if t == nil {
-		return nil
+func (t *TokenExchangeProfileResponseContent) GetUpdatedAt() time.Time {
+	if t == nil || t.UpdatedAt == nil {
+		return time.Time{}
 	}
-	return t.UpdatedAt
+	return *t.UpdatedAt
 }
 
 func (t *TokenExchangeProfileResponseContent) GetExtraProperties() map[string]interface{} {
 	return t.ExtraProperties
+}
+
+func (t *TokenExchangeProfileResponseContent) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenExchangeProfileResponseContent) SetId(id *string) {
+	t.Id = id
+	t.require(tokenExchangeProfileResponseContentFieldId)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenExchangeProfileResponseContent) SetName(name *string) {
+	t.Name = name
+	t.require(tokenExchangeProfileResponseContentFieldName)
+}
+
+// SetSubjectTokenType sets the SubjectTokenType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenExchangeProfileResponseContent) SetSubjectTokenType(subjectTokenType *string) {
+	t.SubjectTokenType = subjectTokenType
+	t.require(tokenExchangeProfileResponseContentFieldSubjectTokenType)
+}
+
+// SetActionId sets the ActionId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenExchangeProfileResponseContent) SetActionId(actionId *string) {
+	t.ActionId = actionId
+	t.require(tokenExchangeProfileResponseContentFieldActionId)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenExchangeProfileResponseContent) SetType(type_ *TokenExchangeProfileTypeEnum) {
+	t.Type = type_
+	t.require(tokenExchangeProfileResponseContentFieldType)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenExchangeProfileResponseContent) SetCreatedAt(createdAt *time.Time) {
+	t.CreatedAt = createdAt
+	t.require(tokenExchangeProfileResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenExchangeProfileResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	t.UpdatedAt = updatedAt
+	t.require(tokenExchangeProfileResponseContentFieldUpdatedAt)
 }
 
 func (t *TokenExchangeProfileResponseContent) UnmarshalJSON(data []byte) error {
@@ -414,7 +647,8 @@ func (t *TokenExchangeProfileResponseContent) MarshalJSON() ([]byte, error) {
 		CreatedAt: internal.NewOptionalDateTime(t.CreatedAt),
 		UpdatedAt: internal.NewOptionalDateTime(t.UpdatedAt),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, t.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, t.ExtraProperties)
 }
 
 func (t *TokenExchangeProfileResponseContent) String() string {
@@ -431,10 +665,3 @@ func (t *TokenExchangeProfileResponseContent) String() string {
 
 // The type of the profile, which controls how the profile will be executed when receiving a token exchange request.
 type TokenExchangeProfileTypeEnum = string
-
-type UpdateTokenExchangeProfileRequestContent struct {
-	// Friendly name of this profile.
-	Name *string `json:"name,omitempty" url:"-"`
-	// Subject token type for this profile. When receiving a token exchange request on the Authentication API, the corresponding token exchange profile with a matching subject_token_type will be executed. This must be a URI.
-	SubjectTokenType *string `json:"subject_token_type,omitempty" url:"-"`
-}

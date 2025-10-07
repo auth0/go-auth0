@@ -9,7 +9,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	roles "github.com/auth0/go-auth0/v2/management/roles"
 	http "net/http"
 	strconv "strconv"
 )
@@ -41,7 +40,7 @@ func (c *Client) List(
 	ctx context.Context,
 	// ID of the role to list granted permissions.
 	id string,
-	request *roles.ListRolePermissionsRequestParameters,
+	request *management.ListRolePermissionsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.PermissionsResponsePayload], error) {
 	options := core.NewRequestOptions(opts...)
@@ -54,14 +53,7 @@ func (c *Client) List(
 		baseURL+"/roles/%v/permissions",
 		id,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"per_page":       50,
-			"page":           0,
-			"include_totals": true,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -69,33 +61,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -113,7 +78,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -126,7 +91,7 @@ func (c *Client) List(
 
 	readPageResponse := func(response *management.ListRolePermissionsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.PermissionsResponsePayload] {
 		next += 1
-		results := response.GetPermissions()
+		results := response.Permissions
 		return &internal.PageResponse[*int, *management.PermissionsResponsePayload]{
 			Next:    &next,
 			Results: results,
@@ -145,7 +110,7 @@ func (c *Client) Add(
 	ctx context.Context,
 	// ID of the role to add permissions to.
 	id string,
-	request *roles.AddRolePermissionsRequestContent,
+	request *management.AddRolePermissionsRequestContent,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Add(
@@ -165,7 +130,7 @@ func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the role to remove permissions from.
 	id string,
-	request *roles.DeleteRolePermissionsRequestContent,
+	request *management.DeleteRolePermissionsRequestContent,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(

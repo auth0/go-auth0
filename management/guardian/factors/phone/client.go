@@ -6,7 +6,6 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
-	factors "github.com/auth0/go-auth0/v2/management/guardian/factors"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 )
@@ -51,7 +50,7 @@ func (c *Client) GetMessageTypes(
 // Replace the list of <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">phone-type MFA factors</a> (i.e., sms and voice) that are enabled for your tenant.
 func (c *Client) SetMessageTypes(
 	ctx context.Context,
-	request *factors.SetGuardianFactorPhoneMessageTypesRequestContent,
+	request *management.SetGuardianFactorPhoneMessageTypesRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetGuardianFactorPhoneMessageTypesResponseContent, error) {
 	response, err := c.WithRawResponse.SetMessageTypes(
@@ -83,7 +82,7 @@ func (c *Client) GetTwilioProvider(
 // Update the configuration of a Twilio phone provider that has been set up in your tenant. To learn more, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">Configure SMS and Voice Notifications for MFA</a>.
 func (c *Client) SetTwilioProvider(
 	ctx context.Context,
-	request *factors.SetGuardianFactorsProviderPhoneTwilioRequestContent,
+	request *management.SetGuardianFactorsProviderPhoneTwilioRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetGuardianFactorsProviderPhoneTwilioResponseContent, error) {
 	response, err := c.WithRawResponse.SetTwilioProvider(
@@ -114,7 +113,7 @@ func (c *Client) GetSelectedProvider(
 
 func (c *Client) SetProvider(
 	ctx context.Context,
-	request *factors.SetGuardianFactorsProviderPhoneRequestContent,
+	request *management.SetGuardianFactorsProviderPhoneRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetGuardianFactorsProviderPhoneResponseContent, error) {
 	response, err := c.WithRawResponse.SetProvider(
@@ -146,7 +145,7 @@ func (c *Client) GetTemplates(
 // Customize the messages sent to complete phone enrollment and verification (subscription required).
 func (c *Client) SetTemplates(
 	ctx context.Context,
-	request *factors.SetGuardianFactorPhoneTemplatesRequestContent,
+	request *management.SetGuardianFactorPhoneTemplatesRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetGuardianFactorPhoneTemplatesResponseContent, error) {
 	response, err := c.WithRawResponse.SetTemplates(

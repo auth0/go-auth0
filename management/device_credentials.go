@@ -6,57 +6,48 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
+	big "math/big"
 )
 
-type CreatePublicKeyDeviceCredentialRequestContent struct {
-	// Name for this device easily recognized by owner.
-	DeviceName string                            `json:"device_name" url:"-"`
-	Type       DeviceCredentialPublicKeyTypeEnum `json:"type,omitempty" url:"-"`
-	// Base64 encoded string containing the credential.
-	Value string `json:"value" url:"-"`
-	// Unique identifier for the device. Recommend using <a href="http://developer.android.com/reference/android/provider/Settings.Secure.html#ANDROID_ID">Android_ID</a> on Android and <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/index.html#//apple_ref/occ/instp/UIDevice/identifierForVendor">identifierForVendor</a>.
-	DeviceID string `json:"device_id" url:"-"`
-	// client_id of the client (application) this credential is for.
-	ClientID *string `json:"client_id,omitempty" url:"-"`
-}
-
-type ListDeviceCredentialsRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page.  There is a maximum of 1000 results allowed from this endpoint.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-	// user_id of the devices to retrieve.
-	UserID *string `json:"-" url:"user_id,omitempty"`
-	// client_id of the devices to retrieve.
-	ClientID *string `json:"-" url:"client_id,omitempty"`
-	// Type of credentials to retrieve. Must be `public_key`, `refresh_token` or `rotating_refresh_token`. The property will default to `refresh_token` when paging is requested
-	Type *DeviceCredentialTypeEnum `json:"-" url:"type,omitempty"`
-}
+var (
+	createPublicKeyDeviceCredentialResponseContentFieldId = big.NewInt(1 << 0)
+)
 
 type CreatePublicKeyDeviceCredentialResponseContent struct {
 	// The credential's identifier
-	ID string `json:"id" url:"id"`
+	Id string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 
 	rawJSON json.RawMessage
 }
 
-func (c *CreatePublicKeyDeviceCredentialResponseContent) GetID() string {
+func (c *CreatePublicKeyDeviceCredentialResponseContent) GetId() string {
 	if c == nil {
 		return ""
 	}
-	return c.ID
+	return c.Id
 }
 
 func (c *CreatePublicKeyDeviceCredentialResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.ExtraProperties
+}
+
+func (c *CreatePublicKeyDeviceCredentialResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePublicKeyDeviceCredentialResponseContent) SetId(id string) {
+	c.Id = id
+	c.require(createPublicKeyDeviceCredentialResponseContentFieldId)
 }
 
 func (c *CreatePublicKeyDeviceCredentialResponseContent) UnmarshalJSON(data []byte) error {
@@ -86,7 +77,8 @@ func (c *CreatePublicKeyDeviceCredentialResponseContent) MarshalJSON() ([]byte, 
 	}{
 		embed: embed(*c),
 	}
-	return internal.MarshalJSONWithExtraProperties(marshaler, c.ExtraProperties)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
 }
 
 func (c *CreatePublicKeyDeviceCredentialResponseContent) String() string {
@@ -101,67 +93,128 @@ func (c *CreatePublicKeyDeviceCredentialResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	deviceCredentialFieldId         = big.NewInt(1 << 0)
+	deviceCredentialFieldDeviceName = big.NewInt(1 << 1)
+	deviceCredentialFieldDeviceId   = big.NewInt(1 << 2)
+	deviceCredentialFieldType       = big.NewInt(1 << 3)
+	deviceCredentialFieldUserId     = big.NewInt(1 << 4)
+	deviceCredentialFieldClientId   = big.NewInt(1 << 5)
+)
+
 type DeviceCredential struct {
 	// ID of this device.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	Id *string `json:"id,omitempty" url:"id,omitempty"`
 	// User agent for this device
 	DeviceName *string `json:"device_name,omitempty" url:"device_name,omitempty"`
 	// Unique identifier for the device. NOTE: This field is generally not populated for refresh_tokens and rotating_refresh_tokens
-	DeviceID *string                   `json:"device_id,omitempty" url:"device_id,omitempty"`
+	DeviceId *string                   `json:"device_id,omitempty" url:"device_id,omitempty"`
 	Type     *DeviceCredentialTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 	// user_id this credential is associated with.
-	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// client_id of the client (application) this credential is for.
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (d *DeviceCredential) GetID() *string {
-	if d == nil {
-		return nil
+func (d *DeviceCredential) GetId() string {
+	if d == nil || d.Id == nil {
+		return ""
 	}
-	return d.ID
+	return *d.Id
 }
 
-func (d *DeviceCredential) GetDeviceName() *string {
-	if d == nil {
-		return nil
+func (d *DeviceCredential) GetDeviceName() string {
+	if d == nil || d.DeviceName == nil {
+		return ""
 	}
-	return d.DeviceName
+	return *d.DeviceName
 }
 
-func (d *DeviceCredential) GetDeviceID() *string {
-	if d == nil {
-		return nil
+func (d *DeviceCredential) GetDeviceId() string {
+	if d == nil || d.DeviceId == nil {
+		return ""
 	}
-	return d.DeviceID
+	return *d.DeviceId
 }
 
-func (d *DeviceCredential) GetType() *DeviceCredentialTypeEnum {
-	if d == nil {
-		return nil
+func (d *DeviceCredential) GetType() DeviceCredentialTypeEnum {
+	if d == nil || d.Type == nil {
+		return ""
 	}
-	return d.Type
+	return *d.Type
 }
 
-func (d *DeviceCredential) GetUserID() *string {
-	if d == nil {
-		return nil
+func (d *DeviceCredential) GetUserId() string {
+	if d == nil || d.UserId == nil {
+		return ""
 	}
-	return d.UserID
+	return *d.UserId
 }
 
-func (d *DeviceCredential) GetClientID() *string {
-	if d == nil {
-		return nil
+func (d *DeviceCredential) GetClientId() string {
+	if d == nil || d.ClientId == nil {
+		return ""
 	}
-	return d.ClientID
+	return *d.ClientId
 }
 
 func (d *DeviceCredential) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
+}
+
+func (d *DeviceCredential) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeviceCredential) SetId(id *string) {
+	d.Id = id
+	d.require(deviceCredentialFieldId)
+}
+
+// SetDeviceName sets the DeviceName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeviceCredential) SetDeviceName(deviceName *string) {
+	d.DeviceName = deviceName
+	d.require(deviceCredentialFieldDeviceName)
+}
+
+// SetDeviceId sets the DeviceId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeviceCredential) SetDeviceId(deviceId *string) {
+	d.DeviceId = deviceId
+	d.require(deviceCredentialFieldDeviceId)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeviceCredential) SetType(type_ *DeviceCredentialTypeEnum) {
+	d.Type = type_
+	d.require(deviceCredentialFieldType)
+}
+
+// SetUserId sets the UserId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeviceCredential) SetUserId(userId *string) {
+	d.UserId = userId
+	d.require(deviceCredentialFieldUserId)
+}
+
+// SetClientId sets the ClientId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeviceCredential) SetClientId(clientId *string) {
+	d.ClientId = clientId
+	d.require(deviceCredentialFieldClientId)
 }
 
 func (d *DeviceCredential) UnmarshalJSON(data []byte) error {
@@ -178,6 +231,17 @@ func (d *DeviceCredential) UnmarshalJSON(data []byte) error {
 	d.extraProperties = extraProperties
 	d.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (d *DeviceCredential) MarshalJSON() ([]byte, error) {
+	type embed DeviceCredential
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (d *DeviceCredential) String() string {
@@ -221,39 +285,49 @@ func (d DeviceCredentialTypeEnum) Ptr() *DeviceCredentialTypeEnum {
 	return &d
 }
 
+var (
+	listDeviceCredentialsOffsetPaginatedResponseContentFieldStart             = big.NewInt(1 << 0)
+	listDeviceCredentialsOffsetPaginatedResponseContentFieldLimit             = big.NewInt(1 << 1)
+	listDeviceCredentialsOffsetPaginatedResponseContentFieldTotal             = big.NewInt(1 << 2)
+	listDeviceCredentialsOffsetPaginatedResponseContentFieldDeviceCredentials = big.NewInt(1 << 3)
+)
+
 type ListDeviceCredentialsOffsetPaginatedResponseContent struct {
 	Start             *float64            `json:"start,omitempty" url:"start,omitempty"`
 	Limit             *float64            `json:"limit,omitempty" url:"limit,omitempty"`
 	Total             *float64            `json:"total,omitempty" url:"total,omitempty"`
 	DeviceCredentials []*DeviceCredential `json:"device_credentials,omitempty" url:"device_credentials,omitempty"`
 
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
-func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetStart() *float64 {
-	if l == nil {
-		return nil
+func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
 	}
-	return l.Start
+	return *l.Start
 }
 
-func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetLimit() *float64 {
-	if l == nil {
-		return nil
+func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
 	}
-	return l.Limit
+	return *l.Limit
 }
 
-func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetTotal() *float64 {
-	if l == nil {
-		return nil
+func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
 	}
-	return l.Total
+	return *l.Total
 }
 
 func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetDeviceCredentials() []*DeviceCredential {
-	if l == nil {
+	if l == nil || l.DeviceCredentials == nil {
 		return nil
 	}
 	return l.DeviceCredentials
@@ -261,6 +335,41 @@ func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetDeviceCredentia
 
 func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listDeviceCredentialsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listDeviceCredentialsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listDeviceCredentialsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetDeviceCredentials sets the DeviceCredentials field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) SetDeviceCredentials(deviceCredentials []*DeviceCredential) {
+	l.DeviceCredentials = deviceCredentials
+	l.require(listDeviceCredentialsOffsetPaginatedResponseContentFieldDeviceCredentials)
 }
 
 func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
@@ -277,6 +386,17 @@ func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) UnmarshalJSON(data
 	l.extraProperties = extraProperties
 	l.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListDeviceCredentialsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) String() string {

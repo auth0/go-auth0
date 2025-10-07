@@ -9,7 +9,6 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	organizations "github.com/auth0/go-auth0/v2/management/organizations"
 	http "net/http"
 	strconv "strconv"
 )
@@ -41,7 +40,7 @@ func (c *Client) List(
 	ctx context.Context,
 	// Organization identifier.
 	id string,
-	request *organizations.ListOrganizationInvitationsRequestParameters,
+	request *management.ListOrganizationInvitationsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.OrganizationInvitation], error) {
 	options := core.NewRequestOptions(opts...)
@@ -54,14 +53,7 @@ func (c *Client) List(
 		baseURL+"/organizations/%v/invitations",
 		id,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -69,33 +61,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &management.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -113,7 +78,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -126,7 +91,7 @@ func (c *Client) List(
 
 	readPageResponse := func(response *management.ListOrganizationInvitationsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.OrganizationInvitation] {
 		next += 1
-		results := response.GetInvitations()
+		results := response.Invitations
 		return &internal.PageResponse[*int, *management.OrganizationInvitation]{
 			Next:    &next,
 			Results: results,
@@ -145,7 +110,7 @@ func (c *Client) Create(
 	ctx context.Context,
 	// Organization identifier.
 	id string,
-	request *organizations.CreateOrganizationInvitationRequestContent,
+	request *management.CreateOrganizationInvitationRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateOrganizationInvitationResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
@@ -165,14 +130,14 @@ func (c *Client) Get(
 	// Organization identifier.
 	id string,
 	// The id of the user invitation.
-	invitationID string,
-	request *organizations.GetOrganizationInvitationRequestParameters,
+	invitationId string,
+	request *management.GetOrganizationInvitationRequestParameters,
 	opts ...option.RequestOption,
 ) (*management.GetOrganizationInvitationResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
-		invitationID,
+		invitationId,
 		request,
 		opts...,
 	)
@@ -187,13 +152,13 @@ func (c *Client) Delete(
 	// Organization identifier.
 	id string,
 	// The id of the user invitation.
-	invitationID string,
+	invitationId string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
-		invitationID,
+		invitationId,
 		opts...,
 	)
 	if err != nil {

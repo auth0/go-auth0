@@ -5,7 +5,6 @@ package templates
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
-	phone "github.com/auth0/go-auth0/v2/management/branding/phone"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -35,7 +34,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) List(
 	ctx context.Context,
-	request *phone.ListPhoneTemplatesRequestParameters,
+	request *management.ListPhoneTemplatesRequestParameters,
 	opts ...option.RequestOption,
 ) (*management.ListPhoneTemplatesResponseContent, error) {
 	response, err := c.WithRawResponse.List(
@@ -51,7 +50,7 @@ func (c *Client) List(
 
 func (c *Client) Create(
 	ctx context.Context,
-	request *phone.CreatePhoneTemplateRequestContent,
+	request *management.CreatePhoneTemplateRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreatePhoneTemplateResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
@@ -100,7 +99,7 @@ func (c *Client) Delete(
 func (c *Client) Update(
 	ctx context.Context,
 	id string,
-	request *phone.UpdatePhoneTemplateRequestContent,
+	request *management.UpdatePhoneTemplateRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdatePhoneTemplateResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
@@ -136,7 +135,7 @@ func (c *Client) Reset(
 func (c *Client) Test(
 	ctx context.Context,
 	id string,
-	request *phone.CreatePhoneTemplateTestNotificationRequestContent,
+	request *management.CreatePhoneTemplateTestNotificationRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreatePhoneTemplateTestNotificationResponseContent, error) {
 	response, err := c.WithRawResponse.Test(

@@ -11,8 +11,10 @@ import (
 	option "github.com/auth0/go-auth0/v2/management/option"
 	authenticationmethods "github.com/auth0/go-auth0/v2/management/users/authenticationmethods"
 	authenticators "github.com/auth0/go-auth0/v2/management/users/authenticators"
+	connectedaccounts "github.com/auth0/go-auth0/v2/management/users/connectedaccounts"
 	enrollments "github.com/auth0/go-auth0/v2/management/users/enrollments"
 	federatedconnectionstokensets "github.com/auth0/go-auth0/v2/management/users/federatedconnectionstokensets"
+	groups "github.com/auth0/go-auth0/v2/management/users/groups"
 	identities "github.com/auth0/go-auth0/v2/management/users/identities"
 	logs "github.com/auth0/go-auth0/v2/management/users/logs"
 	multifactor "github.com/auth0/go-auth0/v2/management/users/multifactor"
@@ -30,8 +32,10 @@ type Client struct {
 	WithRawResponse               *RawClient
 	AuthenticationMethods         *authenticationmethods.Client
 	Authenticators                *authenticators.Client
+	ConnectedAccounts             *connectedaccounts.Client
 	Enrollments                   *enrollments.Client
 	FederatedConnectionsTokensets *federatedconnectionstokensets.Client
+	Groups                        *groups.Client
 	Identities                    *identities.Client
 	Logs                          *logs.Client
 	Multifactor                   *multifactor.Client
@@ -51,8 +55,10 @@ func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		AuthenticationMethods:         authenticationmethods.NewClient(options),
 		Authenticators:                authenticators.NewClient(options),
+		ConnectedAccounts:             connectedaccounts.NewClient(options),
 		Enrollments:                   enrollments.NewClient(options),
 		FederatedConnectionsTokensets: federatedconnectionstokensets.NewClient(options),
+		Groups:                        groups.NewClient(options),
 		Identities:                    identities.NewClient(options),
 		Logs:                          logs.NewClient(options),
 		Multifactor:                   multifactor.NewClient(options),
@@ -101,14 +107,7 @@ func (c *Client) List(
 		"https://%7BTENANT%7D.auth0.com/api/v2",
 	)
 	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
@@ -116,33 +115,6 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &management.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		401: func(apiError *core.APIError) error {
-			return &management.UnauthorizedError{
-				APIError: apiError,
-			}
-		},
-		403: func(apiError *core.APIError) error {
-			return &management.ForbiddenError{
-				APIError: apiError,
-			}
-		},
-		429: func(apiError *core.APIError) error {
-			return &management.TooManyRequestsError{
-				APIError: apiError,
-			}
-		},
-		503: func(apiError *core.APIError) error {
-			return &management.ServiceUnavailableError{
-				APIError: apiError,
-			}
-		},
-	}
 	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
@@ -160,7 +132,7 @@ func (c *Client) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
 	next := 1
@@ -173,7 +145,7 @@ func (c *Client) List(
 
 	readPageResponse := func(response *management.ListUsersOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.UserResponseSchema] {
 		next += 1
-		results := response.GetUsers()
+		results := response.Users
 		return &internal.PageResponse[*int, *management.UserResponseSchema]{
 			Next:    &next,
 			Results: results,

@@ -4,15 +4,7 @@ package tenants
 
 import (
 	fmt "fmt"
-	management "github.com/auth0/go-auth0/v2/management"
 )
-
-type GetTenantSettingsRequestParameters struct {
-	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-}
 
 type UpdateTenantSettingsRequestContentEnabledLocalesItem string
 
@@ -52,7 +44,7 @@ const (
 	UpdateTenantSettingsRequestContentEnabledLocalesItemHr    UpdateTenantSettingsRequestContentEnabledLocalesItem = "hr"
 	UpdateTenantSettingsRequestContentEnabledLocalesItemHu    UpdateTenantSettingsRequestContentEnabledLocalesItem = "hu"
 	UpdateTenantSettingsRequestContentEnabledLocalesItemHy    UpdateTenantSettingsRequestContentEnabledLocalesItem = "hy"
-	UpdateTenantSettingsRequestContentEnabledLocalesItemID    UpdateTenantSettingsRequestContentEnabledLocalesItem = "id"
+	UpdateTenantSettingsRequestContentEnabledLocalesItemId    UpdateTenantSettingsRequestContentEnabledLocalesItem = "id"
 	UpdateTenantSettingsRequestContentEnabledLocalesItemIs    UpdateTenantSettingsRequestContentEnabledLocalesItem = "is"
 	UpdateTenantSettingsRequestContentEnabledLocalesItemIt    UpdateTenantSettingsRequestContentEnabledLocalesItem = "it"
 	UpdateTenantSettingsRequestContentEnabledLocalesItemJa    UpdateTenantSettingsRequestContentEnabledLocalesItem = "ja"
@@ -173,7 +165,7 @@ func NewUpdateTenantSettingsRequestContentEnabledLocalesItemFromString(s string)
 	case "hy":
 		return UpdateTenantSettingsRequestContentEnabledLocalesItemHy, nil
 	case "id":
-		return UpdateTenantSettingsRequestContentEnabledLocalesItemID, nil
+		return UpdateTenantSettingsRequestContentEnabledLocalesItemId, nil
 	case "is":
 		return UpdateTenantSettingsRequestContentEnabledLocalesItemIs, nil
 	case "it":
@@ -271,57 +263,4 @@ func NewUpdateTenantSettingsRequestContentEnabledLocalesItemFromString(s string)
 
 func (u UpdateTenantSettingsRequestContentEnabledLocalesItem) Ptr() *UpdateTenantSettingsRequestContentEnabledLocalesItem {
 	return &u
-}
-
-type UpdateTenantSettingsRequestContent struct {
-	ChangePassword  *management.TenantSettingsPasswordPage `json:"change_password,omitempty" url:"-"`
-	DeviceFlow      *management.TenantSettingsDeviceFlow   `json:"device_flow,omitempty" url:"-"`
-	GuardianMfaPage *management.TenantSettingsGuardianPage `json:"guardian_mfa_page,omitempty" url:"-"`
-	// Default audience for API Authorization.
-	DefaultAudience *string `json:"default_audience,omitempty" url:"-"`
-	// Name of connection used for password grants at the `/token` endpoint. The following connection types are supported: LDAP, AD, Database Connections, Passwordless, Windows Azure Active Directory, ADFS.
-	DefaultDirectory  *string                             `json:"default_directory,omitempty" url:"-"`
-	ErrorPage         *management.TenantSettingsErrorPage `json:"error_page,omitempty" url:"-"`
-	DefaultTokenQuota *management.DefaultTokenQuota       `json:"default_token_quota,omitempty" url:"-"`
-	Flags             *management.TenantSettingsFlags     `json:"flags,omitempty" url:"-"`
-	// Friendly name for this tenant.
-	FriendlyName *string `json:"friendly_name,omitempty" url:"-"`
-	// URL of logo to be shown for this tenant (recommended size: 150x150)
-	PictureURL *string `json:"picture_url,omitempty" url:"-"`
-	// End-user support email.
-	SupportEmail *string `json:"support_email,omitempty" url:"-"`
-	// End-user support url.
-	SupportURL *string `json:"support_url,omitempty" url:"-"`
-	// URLs that are valid to redirect to after logout from Auth0.
-	AllowedLogoutURLs []string `json:"allowed_logout_urls,omitempty" url:"-"`
-	// Number of hours a session will stay valid.
-	SessionLifetime *int `json:"session_lifetime,omitempty" url:"-"`
-	// Number of hours for which a session can be inactive before the user must log in again.
-	IdleSessionLifetime *int `json:"idle_session_lifetime,omitempty" url:"-"`
-	// Number of hours an ephemeral (non-persistent) session will stay valid.
-	EphemeralSessionLifetime *int `json:"ephemeral_session_lifetime,omitempty" url:"-"`
-	// Number of hours for which an ephemeral (non-persistent) session can be inactive before the user must log in again.
-	IdleEphemeralSessionLifetime *int `json:"idle_ephemeral_session_lifetime,omitempty" url:"-"`
-	// Selected sandbox version for the extensibility environment
-	SandboxVersion *string `json:"sandbox_version,omitempty" url:"-"`
-	// Selected legacy sandbox version for the extensibility environment
-	LegacySandboxVersion *string `json:"legacy_sandbox_version,omitempty" url:"-"`
-	// The default absolute redirection uri, must be https
-	DefaultRedirectionURI *string `json:"default_redirection_uri,omitempty" url:"-"`
-	// Supported locales for the user interface
-	EnabledLocales []UpdateTenantSettingsRequestContentEnabledLocalesItem `json:"enabled_locales,omitempty" url:"-"`
-	SessionCookie  *management.SessionCookieSchema                        `json:"session_cookie,omitempty" url:"-"`
-	Sessions       *management.TenantSettingsSessions                     `json:"sessions,omitempty" url:"-"`
-	OidcLogout     *management.TenantOidcLogoutSettings                   `json:"oidc_logout,omitempty" url:"-"`
-	// Whether to enable flexible factors for MFA in the PostLogin action
-	CustomizeMfaInPostloginAction *bool `json:"customize_mfa_in_postlogin_action,omitempty" url:"-"`
-	// Whether to accept an organization name instead of an ID on auth endpoints
-	AllowOrganizationNameInAuthenticationAPI *bool `json:"allow_organization_name_in_authentication_api,omitempty" url:"-"`
-	// Supported ACR values
-	AcrValuesSupported []string                       `json:"acr_values_supported,omitempty" url:"-"`
-	Mtls               *management.TenantSettingsMtls `json:"mtls,omitempty" url:"-"`
-	// Enables the use of Pushed Authorization Requests
-	PushedAuthorizationRequestsSupported *bool `json:"pushed_authorization_requests_supported,omitempty" url:"-"`
-	// Supports iss parameter in authorization responses
-	AuthorizationResponseIssParameterSupported *bool `json:"authorization_response_iss_parameter_supported,omitempty" url:"-"`
 }
