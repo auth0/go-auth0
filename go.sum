@@ -126,6 +126,8 @@ github.com/tklauser/numcpus v0.6.1 h1:ng9scYS7az0Bk4OZLvrNXNSAO2Pxr1XXRAPyjhIx+F
 github.com/tklauser/numcpus v0.6.1/go.mod h1:1XfjsgE2zo8GVw7POkMbHENHzVg3GzmoZ9fESEdAacY=
 github.com/wiremock/go-wiremock v1.14.0 h1:cVAV98Odg+hySEYKDRUasVo30q7JE/ysrdx5qOmF4f4=
 github.com/wiremock/go-wiremock v1.14.0/go.mod h1:T5XkKnsKS2asycbUrk2cpxXTEXwa6klHfCWVN8BkhkU=
+github.com/wiremock/wiremock-testcontainers-go v1.0.0-alpha-9 h1:LUa3up/6uLDRo6U++9VtLHfsJKQjwqHyHmdXuT3cqdU=
+github.com/wiremock/wiremock-testcontainers-go v1.0.0-alpha-9/go.mod h1:nWMqyEkwfGVBm8gOpQ41RhUWUqSfsFhlIrxMtO9NziU=
 github.com/wiremock/wiremock-testcontainers-go v1.0.1 h1:Lqvap23UrBCbdoA5XyixofX/jLj+McFRuXpYRL3kTuQ=
 github.com/wiremock/wiremock-testcontainers-go v1.0.1/go.mod h1:rKqLZkNjPipUNo4f2XSR9JTVhsBpNxjsq/Eu29TCO1g=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
