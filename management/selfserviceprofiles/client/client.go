@@ -18,7 +18,7 @@ import (
 type Client struct {
 	WithRawResponse *RawClient
 	CustomText      *customtext.Client
-	SsoTicket       *ssoticket.Client
+	SSOTicket       *ssoticket.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -28,7 +28,7 @@ type Client struct {
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		CustomText:      customtext.NewClient(options),
-		SsoTicket:       ssoticket.NewClient(options),
+		SSOTicket:       ssoticket.NewClient(options),
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,

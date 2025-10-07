@@ -182,7 +182,7 @@ func TestOrganizationsInvitationsCreateWithWireMock(
 		Invitee: &management.OrganizationInvitationInvitee{
 			Email: "email",
 		},
-		ClientId: "client_id",
+		ClientID: "client_id",
 	}
 	_, invocationErr := client.Organizations.Invitations.Create(
 		context.TODO(),

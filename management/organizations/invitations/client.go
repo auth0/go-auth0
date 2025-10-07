@@ -130,14 +130,14 @@ func (c *Client) Get(
 	// Organization identifier.
 	id string,
 	// The id of the user invitation.
-	invitationId string,
+	invitationID string,
 	request *management.GetOrganizationInvitationRequestParameters,
 	opts ...option.RequestOption,
 ) (*management.GetOrganizationInvitationResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
-		invitationId,
+		invitationID,
 		request,
 		opts...,
 	)
@@ -152,13 +152,13 @@ func (c *Client) Delete(
 	// Organization identifier.
 	id string,
 	// The id of the user invitation.
-	invitationId string,
+	invitationID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
-		invitationId,
+		invitationID,
 		opts...,
 	)
 	if err != nil {

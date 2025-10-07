@@ -128,13 +128,13 @@ func (c *Client) Delete(
 	// Organization identifier.
 	id string,
 	// The Client Grant ID to remove from the organization
-	grantId string,
+	grantID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
-		grantId,
+		grantID,
 		opts...,
 	)
 	if err != nil {

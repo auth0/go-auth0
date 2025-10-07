@@ -135,7 +135,7 @@ func TestEventStreamsRedeliveriesCreateWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestEventStreamsRedeliveriesCreateByIdWithWireMock(
+func TestEventStreamsRedeliveriesCreateByIDWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -159,7 +159,7 @@ func TestEventStreamsRedeliveriesCreateByIdWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	invocationErr := client.EventStreams.Redeliveries.CreateById(
+	invocationErr := client.EventStreams.Redeliveries.CreateByID(
 		context.TODO(),
 		"id",
 		"event_id",

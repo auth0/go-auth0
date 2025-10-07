@@ -19,7 +19,7 @@ type Client struct {
 	WithRawResponse   *RawClient
 	Clients           *clients.Client
 	Keys              *keys.Client
-	ScimConfiguration *client.Client
+	SCIMConfiguration *client.Client
 	Users             *users.Client
 
 	options *core.RequestOptions
@@ -31,7 +31,7 @@ func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		Clients:           clients.NewClient(options),
 		Keys:              keys.NewClient(options),
-		ScimConfiguration: client.NewClient(options),
+		SCIMConfiguration: client.NewClient(options),
 		Users:             users.NewClient(options),
 		WithRawResponse:   NewRawClient(options),
 		options:           options,

@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	createSelfServiceProfileResponseContentFieldId                     = big.NewInt(1 << 0)
+	createSelfServiceProfileResponseContentFieldID                     = big.NewInt(1 << 0)
 	createSelfServiceProfileResponseContentFieldName                   = big.NewInt(1 << 1)
 	createSelfServiceProfileResponseContentFieldDescription            = big.NewInt(1 << 2)
 	createSelfServiceProfileResponseContentFieldUserAttributes         = big.NewInt(1 << 3)
@@ -19,12 +19,12 @@ var (
 	createSelfServiceProfileResponseContentFieldUpdatedAt              = big.NewInt(1 << 5)
 	createSelfServiceProfileResponseContentFieldBranding               = big.NewInt(1 << 6)
 	createSelfServiceProfileResponseContentFieldAllowedStrategies      = big.NewInt(1 << 7)
-	createSelfServiceProfileResponseContentFieldUserAttributeProfileId = big.NewInt(1 << 8)
+	createSelfServiceProfileResponseContentFieldUserAttributeProfileID = big.NewInt(1 << 8)
 )
 
 type CreateSelfServiceProfileResponseContent struct {
 	// The unique ID of the self-service Profile.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the self-service Profile.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The description of the self-service Profile.
@@ -39,7 +39,7 @@ type CreateSelfServiceProfileResponseContent struct {
 	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `keycloak-samlp`, `pingfederate`]
 	AllowedStrategies []SelfServiceProfileAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
 	// ID of the user-attribute-profile to associate with this self-service profile.
-	UserAttributeProfileId *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
+	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -48,11 +48,11 @@ type CreateSelfServiceProfileResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateSelfServiceProfileResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateSelfServiceProfileResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *CreateSelfServiceProfileResponseContent) GetName() string {
@@ -104,11 +104,11 @@ func (c *CreateSelfServiceProfileResponseContent) GetAllowedStrategies() []SelfS
 	return c.AllowedStrategies
 }
 
-func (c *CreateSelfServiceProfileResponseContent) GetUserAttributeProfileId() string {
-	if c == nil || c.UserAttributeProfileId == nil {
+func (c *CreateSelfServiceProfileResponseContent) GetUserAttributeProfileID() string {
+	if c == nil || c.UserAttributeProfileID == nil {
 		return ""
 	}
-	return *c.UserAttributeProfileId
+	return *c.UserAttributeProfileID
 }
 
 func (c *CreateSelfServiceProfileResponseContent) GetExtraProperties() map[string]interface{} {
@@ -122,11 +122,11 @@ func (c *CreateSelfServiceProfileResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateSelfServiceProfileResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createSelfServiceProfileResponseContentFieldId)
+func (c *CreateSelfServiceProfileResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createSelfServiceProfileResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -178,11 +178,11 @@ func (c *CreateSelfServiceProfileResponseContent) SetAllowedStrategies(allowedSt
 	c.require(createSelfServiceProfileResponseContentFieldAllowedStrategies)
 }
 
-// SetUserAttributeProfileId sets the UserAttributeProfileId field and marks it as non-optional;
+// SetUserAttributeProfileID sets the UserAttributeProfileID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateSelfServiceProfileResponseContent) SetUserAttributeProfileId(userAttributeProfileId *string) {
-	c.UserAttributeProfileId = userAttributeProfileId
-	c.require(createSelfServiceProfileResponseContentFieldUserAttributeProfileId)
+func (c *CreateSelfServiceProfileResponseContent) SetUserAttributeProfileID(userAttributeProfileID *string) {
+	c.UserAttributeProfileID = userAttributeProfileID
+	c.require(createSelfServiceProfileResponseContentFieldUserAttributeProfileID)
 }
 
 func (c *CreateSelfServiceProfileResponseContent) UnmarshalJSON(data []byte) error {
@@ -237,7 +237,7 @@ func (c *CreateSelfServiceProfileResponseContent) String() string {
 }
 
 var (
-	getSelfServiceProfileResponseContentFieldId                     = big.NewInt(1 << 0)
+	getSelfServiceProfileResponseContentFieldID                     = big.NewInt(1 << 0)
 	getSelfServiceProfileResponseContentFieldName                   = big.NewInt(1 << 1)
 	getSelfServiceProfileResponseContentFieldDescription            = big.NewInt(1 << 2)
 	getSelfServiceProfileResponseContentFieldUserAttributes         = big.NewInt(1 << 3)
@@ -245,12 +245,12 @@ var (
 	getSelfServiceProfileResponseContentFieldUpdatedAt              = big.NewInt(1 << 5)
 	getSelfServiceProfileResponseContentFieldBranding               = big.NewInt(1 << 6)
 	getSelfServiceProfileResponseContentFieldAllowedStrategies      = big.NewInt(1 << 7)
-	getSelfServiceProfileResponseContentFieldUserAttributeProfileId = big.NewInt(1 << 8)
+	getSelfServiceProfileResponseContentFieldUserAttributeProfileID = big.NewInt(1 << 8)
 )
 
 type GetSelfServiceProfileResponseContent struct {
 	// The unique ID of the self-service Profile.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the self-service Profile.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The description of the self-service Profile.
@@ -265,7 +265,7 @@ type GetSelfServiceProfileResponseContent struct {
 	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `keycloak-samlp`, `pingfederate`]
 	AllowedStrategies []SelfServiceProfileAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
 	// ID of the user-attribute-profile to associate with this self-service profile.
-	UserAttributeProfileId *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
+	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -274,11 +274,11 @@ type GetSelfServiceProfileResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetSelfServiceProfileResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetSelfServiceProfileResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetSelfServiceProfileResponseContent) GetName() string {
@@ -330,11 +330,11 @@ func (g *GetSelfServiceProfileResponseContent) GetAllowedStrategies() []SelfServ
 	return g.AllowedStrategies
 }
 
-func (g *GetSelfServiceProfileResponseContent) GetUserAttributeProfileId() string {
-	if g == nil || g.UserAttributeProfileId == nil {
+func (g *GetSelfServiceProfileResponseContent) GetUserAttributeProfileID() string {
+	if g == nil || g.UserAttributeProfileID == nil {
 		return ""
 	}
-	return *g.UserAttributeProfileId
+	return *g.UserAttributeProfileID
 }
 
 func (g *GetSelfServiceProfileResponseContent) GetExtraProperties() map[string]interface{} {
@@ -348,11 +348,11 @@ func (g *GetSelfServiceProfileResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetSelfServiceProfileResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getSelfServiceProfileResponseContentFieldId)
+func (g *GetSelfServiceProfileResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getSelfServiceProfileResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -404,11 +404,11 @@ func (g *GetSelfServiceProfileResponseContent) SetAllowedStrategies(allowedStrat
 	g.require(getSelfServiceProfileResponseContentFieldAllowedStrategies)
 }
 
-// SetUserAttributeProfileId sets the UserAttributeProfileId field and marks it as non-optional;
+// SetUserAttributeProfileID sets the UserAttributeProfileID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetSelfServiceProfileResponseContent) SetUserAttributeProfileId(userAttributeProfileId *string) {
-	g.UserAttributeProfileId = userAttributeProfileId
-	g.require(getSelfServiceProfileResponseContentFieldUserAttributeProfileId)
+func (g *GetSelfServiceProfileResponseContent) SetUserAttributeProfileID(userAttributeProfileID *string) {
+	g.UserAttributeProfileID = userAttributeProfileID
+	g.require(getSelfServiceProfileResponseContentFieldUserAttributeProfileID)
 }
 
 func (g *GetSelfServiceProfileResponseContent) UnmarshalJSON(data []byte) error {
@@ -589,7 +589,7 @@ func (l *ListSelfServiceProfilesPaginatedResponseContent) String() string {
 }
 
 var (
-	selfServiceProfileFieldId                     = big.NewInt(1 << 0)
+	selfServiceProfileFieldID                     = big.NewInt(1 << 0)
 	selfServiceProfileFieldName                   = big.NewInt(1 << 1)
 	selfServiceProfileFieldDescription            = big.NewInt(1 << 2)
 	selfServiceProfileFieldUserAttributes         = big.NewInt(1 << 3)
@@ -597,12 +597,12 @@ var (
 	selfServiceProfileFieldUpdatedAt              = big.NewInt(1 << 5)
 	selfServiceProfileFieldBranding               = big.NewInt(1 << 6)
 	selfServiceProfileFieldAllowedStrategies      = big.NewInt(1 << 7)
-	selfServiceProfileFieldUserAttributeProfileId = big.NewInt(1 << 8)
+	selfServiceProfileFieldUserAttributeProfileID = big.NewInt(1 << 8)
 )
 
 type SelfServiceProfile struct {
 	// The unique ID of the self-service Profile.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the self-service Profile.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The description of the self-service Profile.
@@ -617,7 +617,7 @@ type SelfServiceProfile struct {
 	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `keycloak-samlp`, `pingfederate`]
 	AllowedStrategies []SelfServiceProfileAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
 	// ID of the user-attribute-profile to associate with this self-service profile.
-	UserAttributeProfileId *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
+	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -626,11 +626,11 @@ type SelfServiceProfile struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SelfServiceProfile) GetId() string {
-	if s == nil || s.Id == nil {
+func (s *SelfServiceProfile) GetID() string {
+	if s == nil || s.ID == nil {
 		return ""
 	}
-	return *s.Id
+	return *s.ID
 }
 
 func (s *SelfServiceProfile) GetName() string {
@@ -682,11 +682,11 @@ func (s *SelfServiceProfile) GetAllowedStrategies() []SelfServiceProfileAllowedS
 	return s.AllowedStrategies
 }
 
-func (s *SelfServiceProfile) GetUserAttributeProfileId() string {
-	if s == nil || s.UserAttributeProfileId == nil {
+func (s *SelfServiceProfile) GetUserAttributeProfileID() string {
+	if s == nil || s.UserAttributeProfileID == nil {
 		return ""
 	}
-	return *s.UserAttributeProfileId
+	return *s.UserAttributeProfileID
 }
 
 func (s *SelfServiceProfile) GetExtraProperties() map[string]interface{} {
@@ -700,11 +700,11 @@ func (s *SelfServiceProfile) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfile) SetId(id *string) {
-	s.Id = id
-	s.require(selfServiceProfileFieldId)
+func (s *SelfServiceProfile) SetID(id *string) {
+	s.ID = id
+	s.require(selfServiceProfileFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -756,11 +756,11 @@ func (s *SelfServiceProfile) SetAllowedStrategies(allowedStrategies []SelfServic
 	s.require(selfServiceProfileFieldAllowedStrategies)
 }
 
-// SetUserAttributeProfileId sets the UserAttributeProfileId field and marks it as non-optional;
+// SetUserAttributeProfileID sets the UserAttributeProfileID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfile) SetUserAttributeProfileId(userAttributeProfileId *string) {
-	s.UserAttributeProfileId = userAttributeProfileId
-	s.require(selfServiceProfileFieldUserAttributeProfileId)
+func (s *SelfServiceProfile) SetUserAttributeProfileID(userAttributeProfileID *string) {
+	s.UserAttributeProfileID = userAttributeProfileID
+	s.require(selfServiceProfileFieldUserAttributeProfileID)
 }
 
 func (s *SelfServiceProfile) UnmarshalJSON(data []byte) error {
@@ -940,12 +940,12 @@ func (s *SelfServiceProfileBrandingColors) String() string {
 }
 
 var (
-	selfServiceProfileBrandingPropertiesFieldLogoUrl = big.NewInt(1 << 0)
+	selfServiceProfileBrandingPropertiesFieldLogoURL = big.NewInt(1 << 0)
 	selfServiceProfileBrandingPropertiesFieldColors  = big.NewInt(1 << 1)
 )
 
 type SelfServiceProfileBrandingProperties struct {
-	LogoUrl *string                           `json:"logo_url,omitempty" url:"logo_url,omitempty"`
+	LogoURL *string                           `json:"logo_url,omitempty" url:"logo_url,omitempty"`
 	Colors  *SelfServiceProfileBrandingColors `json:"colors,omitempty" url:"colors,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -956,11 +956,11 @@ type SelfServiceProfileBrandingProperties struct {
 	rawJSON json.RawMessage
 }
 
-func (s *SelfServiceProfileBrandingProperties) GetLogoUrl() string {
-	if s == nil || s.LogoUrl == nil {
+func (s *SelfServiceProfileBrandingProperties) GetLogoURL() string {
+	if s == nil || s.LogoURL == nil {
 		return ""
 	}
-	return *s.LogoUrl
+	return *s.LogoURL
 }
 
 func (s *SelfServiceProfileBrandingProperties) GetColors() SelfServiceProfileBrandingColors {
@@ -981,11 +981,11 @@ func (s *SelfServiceProfileBrandingProperties) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
-// SetLogoUrl sets the LogoUrl field and marks it as non-optional;
+// SetLogoURL sets the LogoURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileBrandingProperties) SetLogoUrl(logoUrl *string) {
-	s.LogoUrl = logoUrl
-	s.require(selfServiceProfileBrandingPropertiesFieldLogoUrl)
+func (s *SelfServiceProfileBrandingProperties) SetLogoURL(logoURL *string) {
+	s.LogoURL = logoURL
+	s.require(selfServiceProfileBrandingPropertiesFieldLogoURL)
 }
 
 // SetColors sets the Colors field and marks it as non-optional;
@@ -1158,7 +1158,7 @@ func (s *SelfServiceProfileUserAttribute) String() string {
 type SelfServiceProfileUserAttributes = []*SelfServiceProfileUserAttribute
 
 var (
-	updateSelfServiceProfileResponseContentFieldId                     = big.NewInt(1 << 0)
+	updateSelfServiceProfileResponseContentFieldID                     = big.NewInt(1 << 0)
 	updateSelfServiceProfileResponseContentFieldName                   = big.NewInt(1 << 1)
 	updateSelfServiceProfileResponseContentFieldDescription            = big.NewInt(1 << 2)
 	updateSelfServiceProfileResponseContentFieldUserAttributes         = big.NewInt(1 << 3)
@@ -1166,12 +1166,12 @@ var (
 	updateSelfServiceProfileResponseContentFieldUpdatedAt              = big.NewInt(1 << 5)
 	updateSelfServiceProfileResponseContentFieldBranding               = big.NewInt(1 << 6)
 	updateSelfServiceProfileResponseContentFieldAllowedStrategies      = big.NewInt(1 << 7)
-	updateSelfServiceProfileResponseContentFieldUserAttributeProfileId = big.NewInt(1 << 8)
+	updateSelfServiceProfileResponseContentFieldUserAttributeProfileID = big.NewInt(1 << 8)
 )
 
 type UpdateSelfServiceProfileResponseContent struct {
 	// The unique ID of the self-service Profile.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the self-service Profile.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The description of the self-service Profile.
@@ -1186,7 +1186,7 @@ type UpdateSelfServiceProfileResponseContent struct {
 	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `keycloak-samlp`, `pingfederate`]
 	AllowedStrategies []SelfServiceProfileAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
 	// ID of the user-attribute-profile to associate with this self-service profile.
-	UserAttributeProfileId *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
+	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1195,11 +1195,11 @@ type UpdateSelfServiceProfileResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateSelfServiceProfileResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateSelfServiceProfileResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UpdateSelfServiceProfileResponseContent) GetName() string {
@@ -1251,11 +1251,11 @@ func (u *UpdateSelfServiceProfileResponseContent) GetAllowedStrategies() []SelfS
 	return u.AllowedStrategies
 }
 
-func (u *UpdateSelfServiceProfileResponseContent) GetUserAttributeProfileId() string {
-	if u == nil || u.UserAttributeProfileId == nil {
+func (u *UpdateSelfServiceProfileResponseContent) GetUserAttributeProfileID() string {
+	if u == nil || u.UserAttributeProfileID == nil {
 		return ""
 	}
-	return *u.UserAttributeProfileId
+	return *u.UserAttributeProfileID
 }
 
 func (u *UpdateSelfServiceProfileResponseContent) GetExtraProperties() map[string]interface{} {
@@ -1269,11 +1269,11 @@ func (u *UpdateSelfServiceProfileResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateSelfServiceProfileResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateSelfServiceProfileResponseContentFieldId)
+func (u *UpdateSelfServiceProfileResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateSelfServiceProfileResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1325,11 +1325,11 @@ func (u *UpdateSelfServiceProfileResponseContent) SetAllowedStrategies(allowedSt
 	u.require(updateSelfServiceProfileResponseContentFieldAllowedStrategies)
 }
 
-// SetUserAttributeProfileId sets the UserAttributeProfileId field and marks it as non-optional;
+// SetUserAttributeProfileID sets the UserAttributeProfileID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateSelfServiceProfileResponseContent) SetUserAttributeProfileId(userAttributeProfileId *string) {
-	u.UserAttributeProfileId = userAttributeProfileId
-	u.require(updateSelfServiceProfileResponseContentFieldUserAttributeProfileId)
+func (u *UpdateSelfServiceProfileResponseContent) SetUserAttributeProfileID(userAttributeProfileID *string) {
+	u.UserAttributeProfileID = userAttributeProfileID
+	u.require(updateSelfServiceProfileResponseContentFieldUserAttributeProfileID)
 }
 
 func (u *UpdateSelfServiceProfileResponseContent) UnmarshalJSON(data []byte) error {

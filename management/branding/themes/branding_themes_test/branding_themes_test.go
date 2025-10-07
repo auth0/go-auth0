@@ -158,7 +158,7 @@ func TestBrandingThemesCreateWithWireMock(
 				Bold: true,
 				Size: 1.1,
 			},
-			FontUrl: "font_url",
+			FontURL: "font_url",
 			InputLabels: &management.BrandingThemeFontInputLabels{
 				Bold: true,
 				Size: 1.1,
@@ -180,14 +180,14 @@ func TestBrandingThemesCreateWithWireMock(
 		},
 		PageBackground: &management.BrandingThemePageBackground{
 			BackgroundColor:    "background_color",
-			BackgroundImageUrl: "background_image_url",
+			BackgroundImageURL: "background_image_url",
 			PageLayout:         management.BrandingThemePageBackgroundPageLayoutEnumCenter,
 		},
 		Widget: &management.BrandingThemeWidget{
 			HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
 			LogoHeight:          1.1,
 			LogoPosition:        management.BrandingThemeWidgetLogoPositionEnumCenter,
-			LogoUrl:             "logo_url",
+			LogoURL:             "logo_url",
 			SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
 		},
 	}
@@ -362,7 +362,7 @@ func TestBrandingThemesUpdateWithWireMock(
 				Bold: true,
 				Size: 1.1,
 			},
-			FontUrl: "font_url",
+			FontURL: "font_url",
 			InputLabels: &management.BrandingThemeFontInputLabels{
 				Bold: true,
 				Size: 1.1,
@@ -384,14 +384,14 @@ func TestBrandingThemesUpdateWithWireMock(
 		},
 		PageBackground: &management.BrandingThemePageBackground{
 			BackgroundColor:    "background_color",
-			BackgroundImageUrl: "background_image_url",
+			BackgroundImageURL: "background_image_url",
 			PageLayout:         management.BrandingThemePageBackgroundPageLayoutEnumCenter,
 		},
 		Widget: &management.BrandingThemeWidget{
 			HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
 			LogoHeight:          1.1,
 			LogoPosition:        management.BrandingThemeWidgetLogoPositionEnumCenter,
-			LogoUrl:             "logo_url",
+			LogoURL:             "logo_url",
 			SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
 		},
 	}

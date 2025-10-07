@@ -43,7 +43,7 @@ func (c *Client) List(
 	// Organization identifier.
 	id string,
 	// ID of the user to associate roles with.
-	userId string,
+	userID string,
 	request *management.ListOrganizationMemberRolesRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.Role], error) {
@@ -56,7 +56,7 @@ func (c *Client) List(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/members/%v/roles",
 		id,
-		userId,
+		userID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
@@ -118,14 +118,14 @@ func (c *Client) Assign(
 	// Organization identifier.
 	id string,
 	// ID of the user to associate roles with.
-	userId string,
+	userID string,
 	request *management.AssignOrganizationMemberRolesRequestContent,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Assign(
 		ctx,
 		id,
-		userId,
+		userID,
 		request,
 		opts...,
 	)
@@ -143,14 +143,14 @@ func (c *Client) Delete(
 	// Organization identifier.
 	id string,
 	// User ID of the organization member to remove roles from.
-	userId string,
+	userID string,
 	request *management.DeleteOrganizationMemberRolesRequestContent,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
-		userId,
+		userID,
 		request,
 		opts...,
 	)

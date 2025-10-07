@@ -116,7 +116,7 @@ func (r *RawClient) GetDefault(
 func (r *RawClient) Get(
 	ctx context.Context,
 	// The ID of the theme
-	themeId string,
+	themeID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetBrandingThemeResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -127,7 +127,7 @@ func (r *RawClient) Get(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/branding/themes/%v",
-		themeId,
+		themeID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -161,7 +161,7 @@ func (r *RawClient) Get(
 func (r *RawClient) Delete(
 	ctx context.Context,
 	// The ID of the theme
-	themeId string,
+	themeID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -172,7 +172,7 @@ func (r *RawClient) Delete(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/branding/themes/%v",
-		themeId,
+		themeID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -204,7 +204,7 @@ func (r *RawClient) Delete(
 func (r *RawClient) Update(
 	ctx context.Context,
 	// The ID of the theme
-	themeId string,
+	themeID string,
 	request *management.UpdateBrandingThemeRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.UpdateBrandingThemeResponseContent], error) {
@@ -216,7 +216,7 @@ func (r *RawClient) Update(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/branding/themes/%v",
-		themeId,
+		themeID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

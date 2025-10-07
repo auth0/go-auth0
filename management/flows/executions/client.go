@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) List(
 	ctx context.Context,
 	// Flow id
-	flowId string,
+	flowID string,
 	request *management.ExecutionsListRequest,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.FlowExecutionSummary], error) {
@@ -48,7 +48,7 @@ func (c *Client) List(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/flows/%v/executions",
-		flowId,
+		flowID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
@@ -99,16 +99,16 @@ func (c *Client) List(
 func (c *Client) Get(
 	ctx context.Context,
 	// Flow id
-	flowId string,
+	flowID string,
 	// Flow execution id
-	executionId string,
+	executionID string,
 	request *management.ExecutionsGetRequest,
 	opts ...option.RequestOption,
 ) (*management.GetFlowExecutionResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
-		flowId,
-		executionId,
+		flowID,
+		executionID,
 		request,
 		opts...,
 	)
@@ -121,15 +121,15 @@ func (c *Client) Get(
 func (c *Client) Delete(
 	ctx context.Context,
 	// Flows id
-	flowId string,
+	flowID string,
 	// Flow execution identifier
-	executionId string,
+	executionID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
-		flowId,
-		executionId,
+		flowID,
+		executionID,
 		opts...,
 	)
 	if err != nil {

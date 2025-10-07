@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) List(
 	ctx context.Context,
 	// An actions extensibility point.
-	triggerId management.ActionTriggerTypeEnum,
+	triggerID management.ActionTriggerTypeEnum,
 	request *management.ListActionTriggerBindingsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.ActionBinding], error) {
@@ -51,7 +51,7 @@ func (c *Client) List(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/actions/triggers/%v/bindings",
-		triggerId,
+		triggerID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
@@ -109,13 +109,13 @@ func (c *Client) List(
 func (c *Client) UpdateMany(
 	ctx context.Context,
 	// An actions extensibility point.
-	triggerId management.ActionTriggerTypeEnum,
+	triggerID management.ActionTriggerTypeEnum,
 	request *management.UpdateActionBindingsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateActionBindingsResponseContent, error) {
 	response, err := c.WithRawResponse.UpdateMany(
 		ctx,
-		triggerId,
+		triggerID,
 		request,
 		opts...,
 	)

@@ -127,10 +127,10 @@ func TestDeviceCredentialsListWithWireMock(
 		IncludeFields: management.Bool(
 			true,
 		),
-		UserId: management.String(
+		UserID: management.String(
 			"user_id",
 		),
-		ClientId: management.String(
+		ClientID: management.String(
 			"client_id",
 		),
 		Type: management.DeviceCredentialTypeEnumPublicKey.Ptr(),
@@ -178,7 +178,7 @@ func TestDeviceCredentialsCreatePublicKeyWithWireMock(
 			"public_key",
 		),
 		Value:    "value",
-		DeviceId: "device_id",
+		DeviceID: "device_id",
 	}
 	_, invocationErr := client.DeviceCredentials.CreatePublicKey(
 		context.TODO(),

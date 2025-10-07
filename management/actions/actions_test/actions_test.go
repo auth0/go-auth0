@@ -112,7 +112,7 @@ func TestActionsListWithWireMock(
 		),
 	)
 	request := &management.ListActionsRequestParameters{
-		TriggerId: management.String(
+		TriggerID: management.String(
 			"triggerId",
 		),
 		ActionName: management.String(
@@ -172,7 +172,7 @@ func TestActionsCreateWithWireMock(
 		Name: "name",
 		SupportedTriggers: []*management.ActionTrigger{
 			&management.ActionTrigger{
-				Id: "id",
+				ID: "id",
 			},
 		},
 	}

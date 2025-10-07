@@ -116,7 +116,7 @@ func TestJobsUsersImportsCreateWithWireMock(
 		Users: strings.NewReader(
 			"",
 		),
-		ConnectionId: "connection_id",
+		ConnectionID: "connection_id",
 	}
 	_, invocationErr := client.Jobs.UsersImports.Create(
 		context.TODO(),

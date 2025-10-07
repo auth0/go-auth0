@@ -38,7 +38,7 @@ func (c *Client) Get(
 	// The id of the connection to retrieve its SCIM configuration
 	id string,
 	opts ...option.RequestOption,
-) (management.GetScimTokensResponseContent, error) {
+) (management.GetSCIMTokensResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
@@ -55,9 +55,9 @@ func (c *Client) Create(
 	ctx context.Context,
 	// The id of the connection to create its SCIM token
 	id string,
-	request *management.CreateScimTokenRequestContent,
+	request *management.CreateSCIMTokenRequestContent,
 	opts ...option.RequestOption,
-) (*management.CreateScimTokenResponseContent, error) {
+) (*management.CreateSCIMTokenResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
 		ctx,
 		id,
@@ -76,13 +76,13 @@ func (c *Client) Delete(
 	// The connection id that owns the SCIM token to delete
 	id string,
 	// The id of the scim token to delete
-	tokenId string,
+	tokenID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
-		tokenId,
+		tokenID,
 		opts...,
 	)
 	if err != nil {

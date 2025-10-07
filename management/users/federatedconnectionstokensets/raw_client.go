@@ -80,7 +80,7 @@ func (r *RawClient) Delete(
 	// Id of the user that owns the tokenset
 	id string,
 	// The tokenset id
-	tokensetId string,
+	tokensetID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -92,7 +92,7 @@ func (r *RawClient) Delete(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v/federated-connections-tokensets/%v",
 		id,
-		tokensetId,
+		tokensetID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

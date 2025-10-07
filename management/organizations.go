@@ -11,7 +11,7 @@ import (
 
 // Connection to be added to the organization.
 var (
-	connectionForOrganizationFieldConnectionId            = big.NewInt(1 << 0)
+	connectionForOrganizationFieldConnectionID            = big.NewInt(1 << 0)
 	connectionForOrganizationFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
 	connectionForOrganizationFieldShowAsButton            = big.NewInt(1 << 2)
 	connectionForOrganizationFieldIsSignupEnabled         = big.NewInt(1 << 3)
@@ -19,7 +19,7 @@ var (
 
 type ConnectionForOrganization struct {
 	// ID of the connection.
-	ConnectionId string `json:"connection_id" url:"connection_id"`
+	ConnectionID string `json:"connection_id" url:"connection_id"`
 	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
 	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
@@ -34,11 +34,11 @@ type ConnectionForOrganization struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *ConnectionForOrganization) GetConnectionId() string {
+func (c *ConnectionForOrganization) GetConnectionID() string {
 	if c == nil {
 		return ""
 	}
-	return c.ConnectionId
+	return c.ConnectionID
 }
 
 func (c *ConnectionForOrganization) GetAssignMembershipOnLogin() bool {
@@ -73,11 +73,11 @@ func (c *ConnectionForOrganization) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionForOrganization) SetConnectionId(connectionId string) {
-	c.ConnectionId = connectionId
-	c.require(connectionForOrganizationFieldConnectionId)
+func (c *ConnectionForOrganization) SetConnectionID(connectionID string) {
+	c.ConnectionID = connectionID
+	c.require(connectionForOrganizationFieldConnectionID)
 }
 
 // SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
@@ -141,7 +141,7 @@ func (c *ConnectionForOrganization) String() string {
 }
 
 var (
-	createOrganizationResponseContentFieldId                 = big.NewInt(1 << 0)
+	createOrganizationResponseContentFieldID                 = big.NewInt(1 << 0)
 	createOrganizationResponseContentFieldName               = big.NewInt(1 << 1)
 	createOrganizationResponseContentFieldDisplayName        = big.NewInt(1 << 2)
 	createOrganizationResponseContentFieldBranding           = big.NewInt(1 << 3)
@@ -152,7 +152,7 @@ var (
 
 type CreateOrganizationResponseContent struct {
 	// Organization identifier.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
@@ -170,11 +170,11 @@ type CreateOrganizationResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (c *CreateOrganizationResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateOrganizationResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *CreateOrganizationResponseContent) GetName() string {
@@ -230,11 +230,11 @@ func (c *CreateOrganizationResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateOrganizationResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createOrganizationResponseContentFieldId)
+func (c *CreateOrganizationResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createOrganizationResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -323,7 +323,7 @@ func (c *CreateOrganizationResponseContent) String() string {
 }
 
 var (
-	getOrganizationByNameResponseContentFieldId          = big.NewInt(1 << 0)
+	getOrganizationByNameResponseContentFieldID          = big.NewInt(1 << 0)
 	getOrganizationByNameResponseContentFieldName        = big.NewInt(1 << 1)
 	getOrganizationByNameResponseContentFieldDisplayName = big.NewInt(1 << 2)
 	getOrganizationByNameResponseContentFieldBranding    = big.NewInt(1 << 3)
@@ -333,7 +333,7 @@ var (
 
 type GetOrganizationByNameResponseContent struct {
 	// Organization identifier.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
@@ -350,11 +350,11 @@ type GetOrganizationByNameResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (g *GetOrganizationByNameResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetOrganizationByNameResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetOrganizationByNameResponseContent) GetName() string {
@@ -403,11 +403,11 @@ func (g *GetOrganizationByNameResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationByNameResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getOrganizationByNameResponseContentFieldId)
+func (g *GetOrganizationByNameResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getOrganizationByNameResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -489,7 +489,7 @@ func (g *GetOrganizationByNameResponseContent) String() string {
 }
 
 var (
-	getOrganizationResponseContentFieldId          = big.NewInt(1 << 0)
+	getOrganizationResponseContentFieldID          = big.NewInt(1 << 0)
 	getOrganizationResponseContentFieldName        = big.NewInt(1 << 1)
 	getOrganizationResponseContentFieldDisplayName = big.NewInt(1 << 2)
 	getOrganizationResponseContentFieldBranding    = big.NewInt(1 << 3)
@@ -499,7 +499,7 @@ var (
 
 type GetOrganizationResponseContent struct {
 	// Organization identifier.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
@@ -516,11 +516,11 @@ type GetOrganizationResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (g *GetOrganizationResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetOrganizationResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetOrganizationResponseContent) GetName() string {
@@ -569,11 +569,11 @@ func (g *GetOrganizationResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getOrganizationResponseContentFieldId)
+func (g *GetOrganizationResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getOrganizationResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -749,7 +749,7 @@ func (l *ListOrganizationsPaginatedResponseContent) String() string {
 }
 
 var (
-	organizationEnabledConnectionFieldConnectionId            = big.NewInt(1 << 0)
+	organizationEnabledConnectionFieldConnectionID            = big.NewInt(1 << 0)
 	organizationEnabledConnectionFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
 	organizationEnabledConnectionFieldShowAsButton            = big.NewInt(1 << 2)
 	organizationEnabledConnectionFieldIsSignupEnabled         = big.NewInt(1 << 3)
@@ -758,7 +758,7 @@ var (
 
 type OrganizationEnabledConnection struct {
 	// ID of the connection.
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
 	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
@@ -775,11 +775,11 @@ type OrganizationEnabledConnection struct {
 	rawJSON json.RawMessage
 }
 
-func (o *OrganizationEnabledConnection) GetConnectionId() string {
-	if o == nil || o.ConnectionId == nil {
+func (o *OrganizationEnabledConnection) GetConnectionID() string {
+	if o == nil || o.ConnectionID == nil {
 		return ""
 	}
-	return *o.ConnectionId
+	return *o.ConnectionID
 }
 
 func (o *OrganizationEnabledConnection) GetAssignMembershipOnLogin() bool {
@@ -821,11 +821,11 @@ func (o *OrganizationEnabledConnection) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationEnabledConnection) SetConnectionId(connectionId *string) {
-	o.ConnectionId = connectionId
-	o.require(organizationEnabledConnectionFieldConnectionId)
+func (o *OrganizationEnabledConnection) SetConnectionID(connectionID *string) {
+	o.ConnectionID = connectionID
+	o.require(organizationEnabledConnectionFieldConnectionID)
 }
 
 // SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
@@ -900,7 +900,7 @@ func (o *OrganizationEnabledConnection) String() string {
 }
 
 var (
-	updateOrganizationResponseContentFieldId          = big.NewInt(1 << 0)
+	updateOrganizationResponseContentFieldID          = big.NewInt(1 << 0)
 	updateOrganizationResponseContentFieldName        = big.NewInt(1 << 1)
 	updateOrganizationResponseContentFieldDisplayName = big.NewInt(1 << 2)
 	updateOrganizationResponseContentFieldBranding    = big.NewInt(1 << 3)
@@ -910,7 +910,7 @@ var (
 
 type UpdateOrganizationResponseContent struct {
 	// Organization identifier.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
@@ -927,11 +927,11 @@ type UpdateOrganizationResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (u *UpdateOrganizationResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateOrganizationResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UpdateOrganizationResponseContent) GetName() string {
@@ -980,11 +980,11 @@ func (u *UpdateOrganizationResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateOrganizationResponseContentFieldId)
+func (u *UpdateOrganizationResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateOrganizationResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;

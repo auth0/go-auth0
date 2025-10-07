@@ -121,7 +121,7 @@ func TestClientGrantsListWithWireMock(
 		Audience: management.String(
 			"audience",
 		),
-		ClientId: management.String(
+		ClientID: management.String(
 			"client_id",
 		),
 		AllowAnyOrganization: management.Bool(
@@ -167,7 +167,7 @@ func TestClientGrantsCreateWithWireMock(
 		),
 	)
 	request := &management.CreateClientGrantRequestContent{
-		ClientId: "client_id",
+		ClientID: "client_id",
 		Audience: "audience",
 	}
 	_, invocationErr := client.ClientGrants.Create(

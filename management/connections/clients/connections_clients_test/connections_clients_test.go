@@ -157,7 +157,7 @@ func TestConnectionsClientsUpdateWithWireMock(
 	)
 	request := []*management.UpdateEnabledClientConnectionsRequestContentItem{
 		&management.UpdateEnabledClientConnectionsRequestContentItem{
-			ClientId: "client_id",
+			ClientID: "client_id",
 			Status:   true,
 		},
 	}

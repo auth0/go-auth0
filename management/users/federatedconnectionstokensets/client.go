@@ -55,13 +55,13 @@ func (c *Client) Delete(
 	// Id of the user that owns the tokenset
 	id string,
 	// The tokenset id
-	tokensetId string,
+	tokensetID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
-		tokensetId,
+		tokensetID,
 		opts...,
 	)
 	if err != nil {

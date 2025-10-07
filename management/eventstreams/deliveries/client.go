@@ -56,13 +56,13 @@ func (c *Client) GetHistory(
 	// Unique identifier for the event stream.
 	id string,
 	// Unique identifier for the event
-	eventId string,
+	eventID string,
 	opts ...option.RequestOption,
 ) (*management.GetEventStreamDeliveryHistoryResponseContent, error) {
 	response, err := c.WithRawResponse.GetHistory(
 		ctx,
 		id,
-		eventId,
+		eventID,
 		opts...,
 	)
 	if err != nil {

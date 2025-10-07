@@ -37,7 +37,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the user to get sessions for
-	userId string,
+	userID string,
 	request *management.ListUserSessionsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.SessionResponseContent], error) {
@@ -49,7 +49,7 @@ func (c *Client) List(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v/sessions",
-		userId,
+		userID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
@@ -101,12 +101,12 @@ func (c *Client) List(
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the user to get sessions for
-	userId string,
+	userID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
-		userId,
+		userID,
 		opts...,
 	)
 	if err != nil {

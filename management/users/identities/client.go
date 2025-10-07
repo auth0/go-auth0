@@ -91,14 +91,14 @@ func (c *Client) Delete(
 	// Identity provider name of the secondary linked account (e.g. `google-oauth2`).
 	provider *management.UserIdentityProviderEnum,
 	// ID of the secondary linked account (e.g. `123456789081523216417` part after the `|` in `google-oauth2|123456789081523216417`).
-	userId string,
+	userID string,
 	opts ...option.RequestOption,
 ) (management.DeleteUserIdentityResponseContent, error) {
 	response, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
 		provider,
-		userId,
+		userID,
 		opts...,
 	)
 	if err != nil {

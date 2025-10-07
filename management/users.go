@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	createUserResponseContentFieldUserId        = big.NewInt(1 << 0)
+	createUserResponseContentFieldUserID        = big.NewInt(1 << 0)
 	createUserResponseContentFieldEmail         = big.NewInt(1 << 1)
 	createUserResponseContentFieldEmailVerified = big.NewInt(1 << 2)
 	createUserResponseContentFieldUsername      = big.NewInt(1 << 3)
@@ -25,7 +25,7 @@ var (
 	createUserResponseContentFieldName          = big.NewInt(1 << 12)
 	createUserResponseContentFieldNickname      = big.NewInt(1 << 13)
 	createUserResponseContentFieldMultifactor   = big.NewInt(1 << 14)
-	createUserResponseContentFieldLastIp        = big.NewInt(1 << 15)
+	createUserResponseContentFieldLastIP        = big.NewInt(1 << 15)
 	createUserResponseContentFieldLastLogin     = big.NewInt(1 << 16)
 	createUserResponseContentFieldLoginsCount   = big.NewInt(1 << 17)
 	createUserResponseContentFieldBlocked       = big.NewInt(1 << 18)
@@ -35,7 +35,7 @@ var (
 
 type CreateUserResponseContent struct {
 	// ID of the user which can be used when interacting with other APIs.
-	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 	// Whether this email address is verified (true) or unverified (false).
@@ -61,7 +61,7 @@ type CreateUserResponseContent struct {
 	// List of multi-factor authentication providers with which this user has enrolled.
 	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIp    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastIP    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
 	LastLogin *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
@@ -80,11 +80,11 @@ type CreateUserResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (c *CreateUserResponseContent) GetUserId() string {
-	if c == nil || c.UserId == nil {
+func (c *CreateUserResponseContent) GetUserID() string {
+	if c == nil || c.UserID == nil {
 		return ""
 	}
-	return *c.UserId
+	return *c.UserID
 }
 
 func (c *CreateUserResponseContent) GetEmail() string {
@@ -185,11 +185,11 @@ func (c *CreateUserResponseContent) GetMultifactor() []string {
 	return c.Multifactor
 }
 
-func (c *CreateUserResponseContent) GetLastIp() string {
-	if c == nil || c.LastIp == nil {
+func (c *CreateUserResponseContent) GetLastIP() string {
+	if c == nil || c.LastIP == nil {
 		return ""
 	}
-	return *c.LastIp
+	return *c.LastIP
 }
 
 func (c *CreateUserResponseContent) GetLastLogin() UserDateSchema {
@@ -238,11 +238,11 @@ func (c *CreateUserResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserResponseContent) SetUserId(userId *string) {
-	c.UserId = userId
-	c.require(createUserResponseContentFieldUserId)
+func (c *CreateUserResponseContent) SetUserID(userID *string) {
+	c.UserID = userID
+	c.require(createUserResponseContentFieldUserID)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -343,11 +343,11 @@ func (c *CreateUserResponseContent) SetMultifactor(multifactor []string) {
 	c.require(createUserResponseContentFieldMultifactor)
 }
 
-// SetLastIp sets the LastIp field and marks it as non-optional;
+// SetLastIP sets the LastIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserResponseContent) SetLastIp(lastIp *string) {
-	c.LastIp = lastIp
-	c.require(createUserResponseContentFieldLastIp)
+func (c *CreateUserResponseContent) SetLastIP(lastIP *string) {
+	c.LastIP = lastIP
+	c.require(createUserResponseContentFieldLastIP)
 }
 
 // SetLastLogin sets the LastLogin field and marks it as non-optional;
@@ -429,7 +429,7 @@ func (c *CreateUserResponseContent) String() string {
 }
 
 var (
-	getUserResponseContentFieldUserId        = big.NewInt(1 << 0)
+	getUserResponseContentFieldUserID        = big.NewInt(1 << 0)
 	getUserResponseContentFieldEmail         = big.NewInt(1 << 1)
 	getUserResponseContentFieldEmailVerified = big.NewInt(1 << 2)
 	getUserResponseContentFieldUsername      = big.NewInt(1 << 3)
@@ -444,7 +444,7 @@ var (
 	getUserResponseContentFieldName          = big.NewInt(1 << 12)
 	getUserResponseContentFieldNickname      = big.NewInt(1 << 13)
 	getUserResponseContentFieldMultifactor   = big.NewInt(1 << 14)
-	getUserResponseContentFieldLastIp        = big.NewInt(1 << 15)
+	getUserResponseContentFieldLastIP        = big.NewInt(1 << 15)
 	getUserResponseContentFieldLastLogin     = big.NewInt(1 << 16)
 	getUserResponseContentFieldLoginsCount   = big.NewInt(1 << 17)
 	getUserResponseContentFieldBlocked       = big.NewInt(1 << 18)
@@ -454,7 +454,7 @@ var (
 
 type GetUserResponseContent struct {
 	// ID of the user which can be used when interacting with other APIs.
-	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 	// Whether this email address is verified (true) or unverified (false).
@@ -480,7 +480,7 @@ type GetUserResponseContent struct {
 	// List of multi-factor authentication providers with which this user has enrolled.
 	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIp    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastIP    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
 	LastLogin *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
@@ -499,11 +499,11 @@ type GetUserResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (g *GetUserResponseContent) GetUserId() string {
-	if g == nil || g.UserId == nil {
+func (g *GetUserResponseContent) GetUserID() string {
+	if g == nil || g.UserID == nil {
 		return ""
 	}
-	return *g.UserId
+	return *g.UserID
 }
 
 func (g *GetUserResponseContent) GetEmail() string {
@@ -604,11 +604,11 @@ func (g *GetUserResponseContent) GetMultifactor() []string {
 	return g.Multifactor
 }
 
-func (g *GetUserResponseContent) GetLastIp() string {
-	if g == nil || g.LastIp == nil {
+func (g *GetUserResponseContent) GetLastIP() string {
+	if g == nil || g.LastIP == nil {
 		return ""
 	}
-	return *g.LastIp
+	return *g.LastIP
 }
 
 func (g *GetUserResponseContent) GetLastLogin() UserDateSchema {
@@ -657,11 +657,11 @@ func (g *GetUserResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserResponseContent) SetUserId(userId *string) {
-	g.UserId = userId
-	g.require(getUserResponseContentFieldUserId)
+func (g *GetUserResponseContent) SetUserID(userID *string) {
+	g.UserID = userID
+	g.require(getUserResponseContentFieldUserID)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -762,11 +762,11 @@ func (g *GetUserResponseContent) SetMultifactor(multifactor []string) {
 	g.require(getUserResponseContentFieldMultifactor)
 }
 
-// SetLastIp sets the LastIp field and marks it as non-optional;
+// SetLastIP sets the LastIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserResponseContent) SetLastIp(lastIp *string) {
-	g.LastIp = lastIp
-	g.require(getUserResponseContentFieldLastIp)
+func (g *GetUserResponseContent) SetLastIP(lastIP *string) {
+	g.LastIP = lastIP
+	g.require(getUserResponseContentFieldLastIP)
 }
 
 // SetLastLogin sets the LastLogin field and marks it as non-optional;
@@ -1100,7 +1100,7 @@ func (s SearchEngineVersionsEnum) Ptr() *SearchEngineVersionsEnum {
 }
 
 var (
-	updateUserResponseContentFieldUserId        = big.NewInt(1 << 0)
+	updateUserResponseContentFieldUserID        = big.NewInt(1 << 0)
 	updateUserResponseContentFieldEmail         = big.NewInt(1 << 1)
 	updateUserResponseContentFieldEmailVerified = big.NewInt(1 << 2)
 	updateUserResponseContentFieldUsername      = big.NewInt(1 << 3)
@@ -1115,7 +1115,7 @@ var (
 	updateUserResponseContentFieldName          = big.NewInt(1 << 12)
 	updateUserResponseContentFieldNickname      = big.NewInt(1 << 13)
 	updateUserResponseContentFieldMultifactor   = big.NewInt(1 << 14)
-	updateUserResponseContentFieldLastIp        = big.NewInt(1 << 15)
+	updateUserResponseContentFieldLastIP        = big.NewInt(1 << 15)
 	updateUserResponseContentFieldLastLogin     = big.NewInt(1 << 16)
 	updateUserResponseContentFieldLoginsCount   = big.NewInt(1 << 17)
 	updateUserResponseContentFieldBlocked       = big.NewInt(1 << 18)
@@ -1125,7 +1125,7 @@ var (
 
 type UpdateUserResponseContent struct {
 	// ID of the user which can be used when interacting with other APIs.
-	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 	// Whether this email address is verified (true) or unverified (false).
@@ -1151,7 +1151,7 @@ type UpdateUserResponseContent struct {
 	// List of multi-factor authentication providers with which this user has enrolled.
 	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIp    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastIP    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
 	LastLogin *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
@@ -1170,11 +1170,11 @@ type UpdateUserResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (u *UpdateUserResponseContent) GetUserId() string {
-	if u == nil || u.UserId == nil {
+func (u *UpdateUserResponseContent) GetUserID() string {
+	if u == nil || u.UserID == nil {
 		return ""
 	}
-	return *u.UserId
+	return *u.UserID
 }
 
 func (u *UpdateUserResponseContent) GetEmail() string {
@@ -1275,11 +1275,11 @@ func (u *UpdateUserResponseContent) GetMultifactor() []string {
 	return u.Multifactor
 }
 
-func (u *UpdateUserResponseContent) GetLastIp() string {
-	if u == nil || u.LastIp == nil {
+func (u *UpdateUserResponseContent) GetLastIP() string {
+	if u == nil || u.LastIP == nil {
 		return ""
 	}
-	return *u.LastIp
+	return *u.LastIP
 }
 
 func (u *UpdateUserResponseContent) GetLastLogin() UserDateSchema {
@@ -1328,11 +1328,11 @@ func (u *UpdateUserResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserResponseContent) SetUserId(userId *string) {
-	u.UserId = userId
-	u.require(updateUserResponseContentFieldUserId)
+func (u *UpdateUserResponseContent) SetUserID(userID *string) {
+	u.UserID = userID
+	u.require(updateUserResponseContentFieldUserID)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -1433,11 +1433,11 @@ func (u *UpdateUserResponseContent) SetMultifactor(multifactor []string) {
 	u.require(updateUserResponseContentFieldMultifactor)
 }
 
-// SetLastIp sets the LastIp field and marks it as non-optional;
+// SetLastIP sets the LastIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserResponseContent) SetLastIp(lastIp *string) {
-	u.LastIp = lastIp
-	u.require(updateUserResponseContentFieldLastIp)
+func (u *UpdateUserResponseContent) SetLastIP(lastIP *string) {
+	u.LastIP = lastIP
+	u.require(updateUserResponseContentFieldLastIP)
 }
 
 // SetLastLogin sets the LastLogin field and marks it as non-optional;
@@ -1587,7 +1587,7 @@ func (u *UserDateSchema) Accept(visitor UserDateSchemaVisitor) error {
 
 var (
 	userIdentitySchemaFieldConnection        = big.NewInt(1 << 0)
-	userIdentitySchemaFieldUserId            = big.NewInt(1 << 1)
+	userIdentitySchemaFieldUserID            = big.NewInt(1 << 1)
 	userIdentitySchemaFieldProvider          = big.NewInt(1 << 2)
 	userIdentitySchemaFieldIsSocial          = big.NewInt(1 << 3)
 	userIdentitySchemaFieldAccessToken       = big.NewInt(1 << 4)
@@ -1600,7 +1600,7 @@ type UserIdentitySchema struct {
 	// Name of the connection containing this identity.
 	Connection *string `json:"connection,omitempty" url:"connection,omitempty"`
 	// Unique identifier of the user user for this identity.
-	UserId   *string                   `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID   *string                   `json:"user_id,omitempty" url:"user_id,omitempty"`
 	Provider *UserIdentityProviderEnum `json:"provider,omitempty" url:"provider,omitempty"`
 	// Whether this identity is from a social provider (true) or not (false).
 	IsSocial *bool `json:"isSocial,omitempty" url:"isSocial,omitempty"`
@@ -1626,11 +1626,11 @@ func (u *UserIdentitySchema) GetConnection() string {
 	return *u.Connection
 }
 
-func (u *UserIdentitySchema) GetUserId() string {
-	if u == nil || u.UserId == nil {
+func (u *UserIdentitySchema) GetUserID() string {
+	if u == nil || u.UserID == nil {
 		return ""
 	}
-	return *u.UserId
+	return *u.UserID
 }
 
 func (u *UserIdentitySchema) GetProvider() UserIdentityProviderEnum {
@@ -1693,11 +1693,11 @@ func (u *UserIdentitySchema) SetConnection(connection *string) {
 	u.require(userIdentitySchemaFieldConnection)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserIdentitySchema) SetUserId(userId *string) {
-	u.UserId = userId
-	u.require(userIdentitySchemaFieldUserId)
+func (u *UserIdentitySchema) SetUserID(userID *string) {
+	u.UserID = userID
+	u.require(userIdentitySchemaFieldUserID)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -1785,7 +1785,7 @@ func (u *UserIdentitySchema) String() string {
 type UserMetadataSchema = map[string]interface{}
 
 var (
-	userResponseSchemaFieldUserId        = big.NewInt(1 << 0)
+	userResponseSchemaFieldUserID        = big.NewInt(1 << 0)
 	userResponseSchemaFieldEmail         = big.NewInt(1 << 1)
 	userResponseSchemaFieldEmailVerified = big.NewInt(1 << 2)
 	userResponseSchemaFieldUsername      = big.NewInt(1 << 3)
@@ -1800,7 +1800,7 @@ var (
 	userResponseSchemaFieldName          = big.NewInt(1 << 12)
 	userResponseSchemaFieldNickname      = big.NewInt(1 << 13)
 	userResponseSchemaFieldMultifactor   = big.NewInt(1 << 14)
-	userResponseSchemaFieldLastIp        = big.NewInt(1 << 15)
+	userResponseSchemaFieldLastIP        = big.NewInt(1 << 15)
 	userResponseSchemaFieldLastLogin     = big.NewInt(1 << 16)
 	userResponseSchemaFieldLoginsCount   = big.NewInt(1 << 17)
 	userResponseSchemaFieldBlocked       = big.NewInt(1 << 18)
@@ -1810,7 +1810,7 @@ var (
 
 type UserResponseSchema struct {
 	// ID of the user which can be used when interacting with other APIs.
-	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 	// Whether this email address is verified (true) or unverified (false).
@@ -1836,7 +1836,7 @@ type UserResponseSchema struct {
 	// List of multi-factor authentication providers with which this user has enrolled.
 	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIp    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastIP    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
 	LastLogin *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
@@ -1855,11 +1855,11 @@ type UserResponseSchema struct {
 	rawJSON json.RawMessage
 }
 
-func (u *UserResponseSchema) GetUserId() string {
-	if u == nil || u.UserId == nil {
+func (u *UserResponseSchema) GetUserID() string {
+	if u == nil || u.UserID == nil {
 		return ""
 	}
-	return *u.UserId
+	return *u.UserID
 }
 
 func (u *UserResponseSchema) GetEmail() string {
@@ -1960,11 +1960,11 @@ func (u *UserResponseSchema) GetMultifactor() []string {
 	return u.Multifactor
 }
 
-func (u *UserResponseSchema) GetLastIp() string {
-	if u == nil || u.LastIp == nil {
+func (u *UserResponseSchema) GetLastIP() string {
+	if u == nil || u.LastIP == nil {
 		return ""
 	}
-	return *u.LastIp
+	return *u.LastIP
 }
 
 func (u *UserResponseSchema) GetLastLogin() UserDateSchema {
@@ -2013,11 +2013,11 @@ func (u *UserResponseSchema) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetUserId(userId *string) {
-	u.UserId = userId
-	u.require(userResponseSchemaFieldUserId)
+func (u *UserResponseSchema) SetUserID(userID *string) {
+	u.UserID = userID
+	u.require(userResponseSchemaFieldUserID)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -2118,11 +2118,11 @@ func (u *UserResponseSchema) SetMultifactor(multifactor []string) {
 	u.require(userResponseSchemaFieldMultifactor)
 }
 
-// SetLastIp sets the LastIp field and marks it as non-optional;
+// SetLastIP sets the LastIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetLastIp(lastIp *string) {
-	u.LastIp = lastIp
-	u.require(userResponseSchemaFieldLastIp)
+func (u *UserResponseSchema) SetLastIP(lastIP *string) {
+	u.LastIP = lastIP
+	u.require(userResponseSchemaFieldLastIP)
 }
 
 // SetLastLogin sets the LastLogin field and marks it as non-optional;

@@ -120,7 +120,7 @@ func TestGuardianEnrollmentsCreateTicketWithWireMock(
 		),
 	)
 	request := &management.CreateGuardianEnrollmentTicketRequestContent{
-		UserId: "user_id",
+		UserID: "user_id",
 	}
 	_, invocationErr := client.Guardian.Enrollments.CreateTicket(
 		context.TODO(),

@@ -11,7 +11,7 @@ import (
 
 var (
 	createRuleResponseContentFieldName    = big.NewInt(1 << 0)
-	createRuleResponseContentFieldId      = big.NewInt(1 << 1)
+	createRuleResponseContentFieldID      = big.NewInt(1 << 1)
 	createRuleResponseContentFieldEnabled = big.NewInt(1 << 2)
 	createRuleResponseContentFieldScript  = big.NewInt(1 << 3)
 	createRuleResponseContentFieldOrder   = big.NewInt(1 << 4)
@@ -22,7 +22,7 @@ type CreateRuleResponseContent struct {
 	// Name of this rule.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// ID of this rule.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Whether the rule is enabled (true), or disabled (false).
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Code to be executed when this rule runs.
@@ -46,11 +46,11 @@ func (c *CreateRuleResponseContent) GetName() string {
 	return *c.Name
 }
 
-func (c *CreateRuleResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateRuleResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *CreateRuleResponseContent) GetEnabled() bool {
@@ -99,11 +99,11 @@ func (c *CreateRuleResponseContent) SetName(name *string) {
 	c.require(createRuleResponseContentFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateRuleResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createRuleResponseContentFieldId)
+func (c *CreateRuleResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createRuleResponseContentFieldID)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -175,7 +175,7 @@ func (c *CreateRuleResponseContent) String() string {
 
 var (
 	getRuleResponseContentFieldName    = big.NewInt(1 << 0)
-	getRuleResponseContentFieldId      = big.NewInt(1 << 1)
+	getRuleResponseContentFieldID      = big.NewInt(1 << 1)
 	getRuleResponseContentFieldEnabled = big.NewInt(1 << 2)
 	getRuleResponseContentFieldScript  = big.NewInt(1 << 3)
 	getRuleResponseContentFieldOrder   = big.NewInt(1 << 4)
@@ -186,7 +186,7 @@ type GetRuleResponseContent struct {
 	// Name of this rule.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// ID of this rule.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Whether the rule is enabled (true), or disabled (false).
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Code to be executed when this rule runs.
@@ -210,11 +210,11 @@ func (g *GetRuleResponseContent) GetName() string {
 	return *g.Name
 }
 
-func (g *GetRuleResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetRuleResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetRuleResponseContent) GetEnabled() bool {
@@ -263,11 +263,11 @@ func (g *GetRuleResponseContent) SetName(name *string) {
 	g.require(getRuleResponseContentFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetRuleResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getRuleResponseContentFieldId)
+func (g *GetRuleResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getRuleResponseContentFieldID)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -465,7 +465,7 @@ func (l *ListRulesOffsetPaginatedResponseContent) String() string {
 
 var (
 	ruleFieldName    = big.NewInt(1 << 0)
-	ruleFieldId      = big.NewInt(1 << 1)
+	ruleFieldID      = big.NewInt(1 << 1)
 	ruleFieldEnabled = big.NewInt(1 << 2)
 	ruleFieldScript  = big.NewInt(1 << 3)
 	ruleFieldOrder   = big.NewInt(1 << 4)
@@ -476,7 +476,7 @@ type Rule struct {
 	// Name of this rule.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// ID of this rule.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Whether the rule is enabled (true), or disabled (false).
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Code to be executed when this rule runs.
@@ -500,11 +500,11 @@ func (r *Rule) GetName() string {
 	return *r.Name
 }
 
-func (r *Rule) GetId() string {
-	if r == nil || r.Id == nil {
+func (r *Rule) GetID() string {
+	if r == nil || r.ID == nil {
 		return ""
 	}
-	return *r.Id
+	return *r.ID
 }
 
 func (r *Rule) GetEnabled() bool {
@@ -553,11 +553,11 @@ func (r *Rule) SetName(name *string) {
 	r.require(ruleFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *Rule) SetId(id *string) {
-	r.Id = id
-	r.require(ruleFieldId)
+func (r *Rule) SetID(id *string) {
+	r.ID = id
+	r.require(ruleFieldID)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -629,7 +629,7 @@ func (r *Rule) String() string {
 
 var (
 	updateRuleResponseContentFieldName    = big.NewInt(1 << 0)
-	updateRuleResponseContentFieldId      = big.NewInt(1 << 1)
+	updateRuleResponseContentFieldID      = big.NewInt(1 << 1)
 	updateRuleResponseContentFieldEnabled = big.NewInt(1 << 2)
 	updateRuleResponseContentFieldScript  = big.NewInt(1 << 3)
 	updateRuleResponseContentFieldOrder   = big.NewInt(1 << 4)
@@ -640,7 +640,7 @@ type UpdateRuleResponseContent struct {
 	// Name of this rule.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// ID of this rule.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Whether the rule is enabled (true), or disabled (false).
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Code to be executed when this rule runs.
@@ -664,11 +664,11 @@ func (u *UpdateRuleResponseContent) GetName() string {
 	return *u.Name
 }
 
-func (u *UpdateRuleResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateRuleResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UpdateRuleResponseContent) GetEnabled() bool {
@@ -717,11 +717,11 @@ func (u *UpdateRuleResponseContent) SetName(name *string) {
 	u.require(updateRuleResponseContentFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateRuleResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateRuleResponseContentFieldId)
+func (u *UpdateRuleResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateRuleResponseContentFieldID)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;

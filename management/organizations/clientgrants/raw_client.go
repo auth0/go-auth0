@@ -83,7 +83,7 @@ func (r *RawClient) Delete(
 	// Organization identifier.
 	id string,
 	// The Client Grant ID to remove from the organization
-	grantId string,
+	grantID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -95,7 +95,7 @@ func (r *RawClient) Delete(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/client-grants/%v",
 		id,
-		grantId,
+		grantID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

@@ -44,7 +44,7 @@ const (
 	UpdateTenantSettingsRequestContentEnabledLocalesItemHr    UpdateTenantSettingsRequestContentEnabledLocalesItem = "hr"
 	UpdateTenantSettingsRequestContentEnabledLocalesItemHu    UpdateTenantSettingsRequestContentEnabledLocalesItem = "hu"
 	UpdateTenantSettingsRequestContentEnabledLocalesItemHy    UpdateTenantSettingsRequestContentEnabledLocalesItem = "hy"
-	UpdateTenantSettingsRequestContentEnabledLocalesItemId    UpdateTenantSettingsRequestContentEnabledLocalesItem = "id"
+	UpdateTenantSettingsRequestContentEnabledLocalesItemID    UpdateTenantSettingsRequestContentEnabledLocalesItem = "id"
 	UpdateTenantSettingsRequestContentEnabledLocalesItemIs    UpdateTenantSettingsRequestContentEnabledLocalesItem = "is"
 	UpdateTenantSettingsRequestContentEnabledLocalesItemIt    UpdateTenantSettingsRequestContentEnabledLocalesItem = "it"
 	UpdateTenantSettingsRequestContentEnabledLocalesItemJa    UpdateTenantSettingsRequestContentEnabledLocalesItem = "ja"
@@ -165,7 +165,7 @@ func NewUpdateTenantSettingsRequestContentEnabledLocalesItemFromString(s string)
 	case "hy":
 		return UpdateTenantSettingsRequestContentEnabledLocalesItemHy, nil
 	case "id":
-		return UpdateTenantSettingsRequestContentEnabledLocalesItemId, nil
+		return UpdateTenantSettingsRequestContentEnabledLocalesItemID, nil
 	case "is":
 		return UpdateTenantSettingsRequestContentEnabledLocalesItemIs, nil
 	case "it":

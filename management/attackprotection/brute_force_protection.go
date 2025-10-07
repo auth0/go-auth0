@@ -12,14 +12,14 @@ import (
 type UpdateBruteForceSettingsRequestContentMode string
 
 const (
-	UpdateBruteForceSettingsRequestContentModeCountPerIdentifierAndIp UpdateBruteForceSettingsRequestContentMode = "count_per_identifier_and_ip"
+	UpdateBruteForceSettingsRequestContentModeCountPerIdentifierAndIP UpdateBruteForceSettingsRequestContentMode = "count_per_identifier_and_ip"
 	UpdateBruteForceSettingsRequestContentModeCountPerIdentifier      UpdateBruteForceSettingsRequestContentMode = "count_per_identifier"
 )
 
 func NewUpdateBruteForceSettingsRequestContentModeFromString(s string) (UpdateBruteForceSettingsRequestContentMode, error) {
 	switch s {
 	case "count_per_identifier_and_ip":
-		return UpdateBruteForceSettingsRequestContentModeCountPerIdentifierAndIp, nil
+		return UpdateBruteForceSettingsRequestContentModeCountPerIdentifierAndIP, nil
 	case "count_per_identifier":
 		return UpdateBruteForceSettingsRequestContentModeCountPerIdentifier, nil
 	}

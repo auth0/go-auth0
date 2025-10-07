@@ -51,18 +51,18 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-func (c *Client) CreateById(
+func (c *Client) CreateByID(
 	ctx context.Context,
 	// Unique identifier for the event stream.
 	id string,
 	// Unique identifier for the event
-	eventId string,
+	eventID string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.CreateById(
+	_, err := c.WithRawResponse.CreateByID(
 		ctx,
 		id,
-		eventId,
+		eventID,
 		opts...,
 	)
 	if err != nil {

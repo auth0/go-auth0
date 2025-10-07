@@ -118,7 +118,7 @@ func TestOrganizationsClientGrantsListWithWireMock(
 		Audience: management.String(
 			"audience",
 		),
-		ClientId: management.String(
+		ClientID: management.String(
 			"client_id",
 		),
 		Page: management.Int(
@@ -173,7 +173,7 @@ func TestOrganizationsClientGrantsCreateWithWireMock(
 		),
 	)
 	request := &management.AssociateOrganizationClientGrantRequestContent{
-		GrantId: "grant_id",
+		GrantID: "grant_id",
 	}
 	_, invocationErr := client.Organizations.ClientGrants.Create(
 		context.TODO(),

@@ -160,7 +160,7 @@ func TestEmailsProviderCreateWithWireMock(
 		Name: management.EmailProviderNameEnumMailgun,
 		Credentials: &management.EmailProviderCredentialsSchema{
 			EmailProviderCredentialsSchemaZero: &management.EmailProviderCredentialsSchemaZero{
-				ApiKey: "api_key",
+				APIKey: "api_key",
 			},
 		},
 	}

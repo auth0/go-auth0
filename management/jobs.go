@@ -13,8 +13,8 @@ var (
 	getJobResponseContentFieldStatus          = big.NewInt(1 << 0)
 	getJobResponseContentFieldType            = big.NewInt(1 << 1)
 	getJobResponseContentFieldCreatedAt       = big.NewInt(1 << 2)
-	getJobResponseContentFieldId              = big.NewInt(1 << 3)
-	getJobResponseContentFieldConnectionId    = big.NewInt(1 << 4)
+	getJobResponseContentFieldID              = big.NewInt(1 << 3)
+	getJobResponseContentFieldConnectionID    = big.NewInt(1 << 4)
 	getJobResponseContentFieldLocation        = big.NewInt(1 << 5)
 	getJobResponseContentFieldPercentageDone  = big.NewInt(1 << 6)
 	getJobResponseContentFieldTimeLeftSeconds = big.NewInt(1 << 7)
@@ -30,9 +30,9 @@ type GetJobResponseContent struct {
 	// When this job was created.
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// ID of this job.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// connection_id of the connection this job uses.
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// URL to download the result of this job.
 	Location *string `json:"location,omitempty" url:"location,omitempty"`
 	// Completion percentage of this job.
@@ -72,18 +72,18 @@ func (g *GetJobResponseContent) GetCreatedAt() string {
 	return *g.CreatedAt
 }
 
-func (g *GetJobResponseContent) GetId() string {
+func (g *GetJobResponseContent) GetID() string {
 	if g == nil {
 		return ""
 	}
-	return g.Id
+	return g.ID
 }
 
-func (g *GetJobResponseContent) GetConnectionId() string {
-	if g == nil || g.ConnectionId == nil {
+func (g *GetJobResponseContent) GetConnectionID() string {
+	if g == nil || g.ConnectionID == nil {
 		return ""
 	}
-	return *g.ConnectionId
+	return *g.ConnectionID
 }
 
 func (g *GetJobResponseContent) GetLocation() string {
@@ -153,18 +153,18 @@ func (g *GetJobResponseContent) SetCreatedAt(createdAt *string) {
 	g.require(getJobResponseContentFieldCreatedAt)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetJobResponseContent) SetId(id string) {
-	g.Id = id
-	g.require(getJobResponseContentFieldId)
+func (g *GetJobResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getJobResponseContentFieldID)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetJobResponseContent) SetConnectionId(connectionId *string) {
-	g.ConnectionId = connectionId
-	g.require(getJobResponseContentFieldConnectionId)
+func (g *GetJobResponseContent) SetConnectionID(connectionID *string) {
+	g.ConnectionID = connectionID
+	g.require(getJobResponseContentFieldConnectionID)
 }
 
 // SetLocation sets the Location field and marks it as non-optional;

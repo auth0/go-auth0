@@ -51,7 +51,7 @@ func (r *RawClient) Create(
 	if err := writer.WriteFile("users", request.Users); err != nil {
 		return nil, err
 	}
-	if err := writer.WriteField("connection_id", request.ConnectionId); err != nil {
+	if err := writer.WriteField("connection_id", request.ConnectionID); err != nil {
 		return nil, err
 	}
 	if request.Upsert != nil {
@@ -59,8 +59,8 @@ func (r *RawClient) Create(
 			return nil, err
 		}
 	}
-	if request.ExternalId != nil {
-		if err := writer.WriteField("external_id", *request.ExternalId); err != nil {
+	if request.ExternalID != nil {
+		if err := writer.WriteField("external_id", *request.ExternalID); err != nil {
 			return nil, err
 		}
 	}

@@ -127,7 +127,7 @@ func TestHooksListWithWireMock(
 		Fields: management.String(
 			"fields",
 		),
-		TriggerId: management.HookTriggerIdEnumCredentialsExchange.Ptr(),
+		TriggerID: management.HookTriggerIDEnumCredentialsExchange.Ptr(),
 	}
 	_, invocationErr := client.Hooks.List(
 		context.TODO(),
@@ -169,7 +169,7 @@ func TestHooksCreateWithWireMock(
 	request := &management.CreateHookRequestContent{
 		Name:      "name",
 		Script:    "script",
-		TriggerId: management.HookTriggerIdEnumCredentialsExchange,
+		TriggerID: management.HookTriggerIDEnumCredentialsExchange,
 	}
 	_, invocationErr := client.Hooks.Create(
 		context.TODO(),

@@ -173,7 +173,7 @@ func (r *RawClient) Get(
 	// The ID of the user in question.
 	id string,
 	// The ID of the authentication methods in question.
-	authenticationMethodId string,
+	authenticationMethodID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetUserAuthenticationMethodResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -185,7 +185,7 @@ func (r *RawClient) Get(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v/authentication-methods/%v",
 		id,
-		authenticationMethodId,
+		authenticationMethodID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -221,7 +221,7 @@ func (r *RawClient) Delete(
 	// The ID of the user in question.
 	id string,
 	// The ID of the authentication method to delete.
-	authenticationMethodId string,
+	authenticationMethodID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -233,7 +233,7 @@ func (r *RawClient) Delete(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v/authentication-methods/%v",
 		id,
-		authenticationMethodId,
+		authenticationMethodID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -267,7 +267,7 @@ func (r *RawClient) Update(
 	// The ID of the user in question.
 	id string,
 	// The ID of the authentication method to update.
-	authenticationMethodId string,
+	authenticationMethodID string,
 	request *management.UpdateUserAuthenticationMethodRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.UpdateUserAuthenticationMethodResponseContent], error) {
@@ -280,7 +280,7 @@ func (r *RawClient) Update(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v/authentication-methods/%v",
 		id,
-		authenticationMethodId,
+		authenticationMethodID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

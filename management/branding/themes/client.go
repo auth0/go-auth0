@@ -68,12 +68,12 @@ func (c *Client) GetDefault(
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the theme
-	themeId string,
+	themeID string,
 	opts ...option.RequestOption,
 ) (*management.GetBrandingThemeResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
-		themeId,
+		themeID,
 		opts...,
 	)
 	if err != nil {
@@ -86,12 +86,12 @@ func (c *Client) Get(
 func (c *Client) Delete(
 	ctx context.Context,
 	// The ID of the theme
-	themeId string,
+	themeID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
-		themeId,
+		themeID,
 		opts...,
 	)
 	if err != nil {
@@ -104,13 +104,13 @@ func (c *Client) Delete(
 func (c *Client) Update(
 	ctx context.Context,
 	// The ID of the theme
-	themeId string,
+	themeID string,
 	request *management.UpdateBrandingThemeRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateBrandingThemeResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
-		themeId,
+		themeID,
 		request,
 		opts...,
 	)

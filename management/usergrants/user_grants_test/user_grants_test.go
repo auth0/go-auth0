@@ -121,10 +121,10 @@ func TestUserGrantsListWithWireMock(
 		IncludeTotals: management.Bool(
 			true,
 		),
-		UserId: management.String(
+		UserID: management.String(
 			"user_id",
 		),
-		ClientId: management.String(
+		ClientID: management.String(
 			"client_id",
 		),
 		Audience: management.String(
@@ -142,7 +142,7 @@ func TestUserGrantsListWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestUserGrantsDeleteByUserIdWithWireMock(
+func TestUserGrantsDeleteByUserIDWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -160,10 +160,10 @@ func TestUserGrantsDeleteByUserIdWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.DeleteUserGrantByUserIdRequestParameters{
-		UserId: "user_id",
+	request := &management.DeleteUserGrantByUserIDRequestParameters{
+		UserID: "user_id",
 	}
-	invocationErr := client.UserGrants.DeleteByUserId(
+	invocationErr := client.UserGrants.DeleteByUserID(
 		context.TODO(),
 		request,
 	)

@@ -13,7 +13,7 @@ import (
 type Client struct {
 	BreachedPasswordDetection *breachedpassworddetection.Client
 	BruteForceProtection      *bruteforceprotection.Client
-	SuspiciousIpThrottling    *suspiciousipthrottling.Client
+	SuspiciousIPThrottling    *suspiciousipthrottling.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -24,7 +24,7 @@ func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		BreachedPasswordDetection: breachedpassworddetection.NewClient(options),
 		BruteForceProtection:      bruteforceprotection.NewClient(options),
-		SuspiciousIpThrottling:    suspiciousipthrottling.NewClient(options),
+		SuspiciousIPThrottling:    suspiciousipthrottling.NewClient(options),
 		options:                   options,
 		baseURL:                   options.BaseURL,
 		caller: internal.NewCaller(

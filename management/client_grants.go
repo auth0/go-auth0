@@ -65,8 +65,8 @@ func (c ClientGrantOrganizationUsageEnum) Ptr() *ClientGrantOrganizationUsageEnu
 }
 
 var (
-	clientGrantResponseContentFieldId                        = big.NewInt(1 << 0)
-	clientGrantResponseContentFieldClientId                  = big.NewInt(1 << 1)
+	clientGrantResponseContentFieldID                        = big.NewInt(1 << 0)
+	clientGrantResponseContentFieldClientID                  = big.NewInt(1 << 1)
 	clientGrantResponseContentFieldAudience                  = big.NewInt(1 << 2)
 	clientGrantResponseContentFieldScope                     = big.NewInt(1 << 3)
 	clientGrantResponseContentFieldOrganizationUsage         = big.NewInt(1 << 4)
@@ -78,9 +78,9 @@ var (
 
 type ClientGrantResponseContent struct {
 	// ID of the client grant.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the client.
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// The audience (API identifier) of this client grant.
 	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
 	// Scopes allowed for this client grant.
@@ -101,18 +101,18 @@ type ClientGrantResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *ClientGrantResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *ClientGrantResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
-func (c *ClientGrantResponseContent) GetClientId() string {
-	if c == nil || c.ClientId == nil {
+func (c *ClientGrantResponseContent) GetClientID() string {
+	if c == nil || c.ClientID == nil {
 		return ""
 	}
-	return *c.ClientId
+	return *c.ClientID
 }
 
 func (c *ClientGrantResponseContent) GetAudience() string {
@@ -175,18 +175,18 @@ func (c *ClientGrantResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ClientGrantResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(clientGrantResponseContentFieldId)
+func (c *ClientGrantResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(clientGrantResponseContentFieldID)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ClientGrantResponseContent) SetClientId(clientId *string) {
-	c.ClientId = clientId
-	c.require(clientGrantResponseContentFieldClientId)
+func (c *ClientGrantResponseContent) SetClientID(clientID *string) {
+	c.ClientID = clientID
+	c.require(clientGrantResponseContentFieldClientID)
 }
 
 // SetAudience sets the Audience field and marks it as non-optional;
@@ -301,8 +301,8 @@ func (c ClientGrantSubjectTypeEnum) Ptr() *ClientGrantSubjectTypeEnum {
 }
 
 var (
-	createClientGrantResponseContentFieldId                        = big.NewInt(1 << 0)
-	createClientGrantResponseContentFieldClientId                  = big.NewInt(1 << 1)
+	createClientGrantResponseContentFieldID                        = big.NewInt(1 << 0)
+	createClientGrantResponseContentFieldClientID                  = big.NewInt(1 << 1)
 	createClientGrantResponseContentFieldAudience                  = big.NewInt(1 << 2)
 	createClientGrantResponseContentFieldScope                     = big.NewInt(1 << 3)
 	createClientGrantResponseContentFieldOrganizationUsage         = big.NewInt(1 << 4)
@@ -314,9 +314,9 @@ var (
 
 type CreateClientGrantResponseContent struct {
 	// ID of the client grant.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the client.
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// The audience (API identifier) of this client grant.
 	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
 	// Scopes allowed for this client grant.
@@ -337,18 +337,18 @@ type CreateClientGrantResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateClientGrantResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateClientGrantResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
-func (c *CreateClientGrantResponseContent) GetClientId() string {
-	if c == nil || c.ClientId == nil {
+func (c *CreateClientGrantResponseContent) GetClientID() string {
+	if c == nil || c.ClientID == nil {
 		return ""
 	}
-	return *c.ClientId
+	return *c.ClientID
 }
 
 func (c *CreateClientGrantResponseContent) GetAudience() string {
@@ -411,18 +411,18 @@ func (c *CreateClientGrantResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateClientGrantResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createClientGrantResponseContentFieldId)
+func (c *CreateClientGrantResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createClientGrantResponseContentFieldID)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateClientGrantResponseContent) SetClientId(clientId *string) {
-	c.ClientId = clientId
-	c.require(createClientGrantResponseContentFieldClientId)
+func (c *CreateClientGrantResponseContent) SetClientID(clientID *string) {
+	c.ClientID = clientID
+	c.require(createClientGrantResponseContentFieldClientID)
 }
 
 // SetAudience sets the Audience field and marks it as non-optional;
@@ -609,8 +609,8 @@ func (l *ListClientGrantPaginatedResponseContent) String() string {
 }
 
 var (
-	updateClientGrantResponseContentFieldId                        = big.NewInt(1 << 0)
-	updateClientGrantResponseContentFieldClientId                  = big.NewInt(1 << 1)
+	updateClientGrantResponseContentFieldID                        = big.NewInt(1 << 0)
+	updateClientGrantResponseContentFieldClientID                  = big.NewInt(1 << 1)
 	updateClientGrantResponseContentFieldAudience                  = big.NewInt(1 << 2)
 	updateClientGrantResponseContentFieldScope                     = big.NewInt(1 << 3)
 	updateClientGrantResponseContentFieldOrganizationUsage         = big.NewInt(1 << 4)
@@ -622,9 +622,9 @@ var (
 
 type UpdateClientGrantResponseContent struct {
 	// ID of the client grant.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the client.
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// The audience (API identifier) of this client grant.
 	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
 	// Scopes allowed for this client grant.
@@ -645,18 +645,18 @@ type UpdateClientGrantResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateClientGrantResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateClientGrantResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
-func (u *UpdateClientGrantResponseContent) GetClientId() string {
-	if u == nil || u.ClientId == nil {
+func (u *UpdateClientGrantResponseContent) GetClientID() string {
+	if u == nil || u.ClientID == nil {
 		return ""
 	}
-	return *u.ClientId
+	return *u.ClientID
 }
 
 func (u *UpdateClientGrantResponseContent) GetAudience() string {
@@ -719,18 +719,18 @@ func (u *UpdateClientGrantResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateClientGrantResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateClientGrantResponseContentFieldId)
+func (u *UpdateClientGrantResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateClientGrantResponseContentFieldID)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateClientGrantResponseContent) SetClientId(clientId *string) {
-	u.ClientId = clientId
-	u.require(updateClientGrantResponseContentFieldClientId)
+func (u *UpdateClientGrantResponseContent) SetClientID(clientID *string) {
+	u.ClientID = clientID
+	u.require(updateClientGrantResponseContentFieldClientID)
 }
 
 // SetAudience sets the Audience field and marks it as non-optional;

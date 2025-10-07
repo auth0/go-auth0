@@ -170,13 +170,13 @@ func (c *Client) Get(
 	// The ID of the user in question.
 	id string,
 	// The ID of the authentication methods in question.
-	authenticationMethodId string,
+	authenticationMethodID string,
 	opts ...option.RequestOption,
 ) (*management.GetUserAuthenticationMethodResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
-		authenticationMethodId,
+		authenticationMethodID,
 		opts...,
 	)
 	if err != nil {
@@ -191,13 +191,13 @@ func (c *Client) Delete(
 	// The ID of the user in question.
 	id string,
 	// The ID of the authentication method to delete.
-	authenticationMethodId string,
+	authenticationMethodID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
-		authenticationMethodId,
+		authenticationMethodID,
 		opts...,
 	)
 	if err != nil {
@@ -212,14 +212,14 @@ func (c *Client) Update(
 	// The ID of the user in question.
 	id string,
 	// The ID of the authentication method to update.
-	authenticationMethodId string,
+	authenticationMethodID string,
 	request *management.UpdateUserAuthenticationMethodRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateUserAuthenticationMethodResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
 		id,
-		authenticationMethodId,
+		authenticationMethodID,
 		request,
 		opts...,
 	)

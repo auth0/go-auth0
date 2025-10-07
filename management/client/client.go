@@ -66,7 +66,7 @@ type Management struct {
 	Jobs                  *jobsclient.Client
 	LogStreams            *logstreams.Client
 	Logs                  *logs.Client
-	NetworkAcls           *networkacls.Client
+	NetworkACLs           *networkacls.Client
 	Organizations         *organizationsclient.Client
 	Prompts               *promptsclient.Client
 	RefreshTokens         *refreshtokens.Client
@@ -116,7 +116,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		Jobs:                  jobsclient.NewClient(options),
 		LogStreams:            logstreams.NewClient(options),
 		Logs:                  logs.NewClient(options),
-		NetworkAcls:           networkacls.NewClient(options),
+		NetworkACLs:           networkacls.NewClient(options),
 		Organizations:         organizationsclient.NewClient(options),
 		Prompts:               promptsclient.NewClient(options),
 		RefreshTokens:         refreshtokens.NewClient(options),

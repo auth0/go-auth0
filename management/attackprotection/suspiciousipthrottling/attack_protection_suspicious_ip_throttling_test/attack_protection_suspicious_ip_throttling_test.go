@@ -93,7 +93,7 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestAttackProtectionSuspiciousIpThrottlingGetWithWireMock(
+func TestAttackProtectionSuspiciousIPThrottlingGetWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -111,7 +111,7 @@ func TestAttackProtectionSuspiciousIpThrottlingGetWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	_, invocationErr := client.AttackProtection.SuspiciousIpThrottling.Get(
+	_, invocationErr := client.AttackProtection.SuspiciousIPThrottling.Get(
 		context.TODO(),
 	)
 
@@ -121,7 +121,7 @@ func TestAttackProtectionSuspiciousIpThrottlingGetWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestAttackProtectionSuspiciousIpThrottlingUpdateWithWireMock(
+func TestAttackProtectionSuspiciousIPThrottlingUpdateWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -147,8 +147,8 @@ func TestAttackProtectionSuspiciousIpThrottlingUpdateWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.UpdateSuspiciousIpThrottlingSettingsRequestContent{}
-	_, invocationErr := client.AttackProtection.SuspiciousIpThrottling.Update(
+	request := &management.UpdateSuspiciousIPThrottlingSettingsRequestContent{}
+	_, invocationErr := client.AttackProtection.SuspiciousIPThrottling.Update(
 		context.TODO(),
 		request,
 	)

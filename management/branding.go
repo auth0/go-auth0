@@ -107,12 +107,12 @@ func (b *BrandingColors) String() string {
 
 // Custom font settings.
 var (
-	brandingFontFieldUrl = big.NewInt(1 << 0)
+	brandingFontFieldURL = big.NewInt(1 << 0)
 )
 
 type BrandingFont struct {
 	// URL for the custom font. The URL must point to a font file and not a stylesheet. Must use HTTPS.
-	Url *string `json:"url,omitempty" url:"url,omitempty"`
+	URL *string `json:"url,omitempty" url:"url,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -121,11 +121,11 @@ type BrandingFont struct {
 	rawJSON         json.RawMessage
 }
 
-func (b *BrandingFont) GetUrl() string {
-	if b == nil || b.Url == nil {
+func (b *BrandingFont) GetURL() string {
+	if b == nil || b.URL == nil {
 		return ""
 	}
-	return *b.Url
+	return *b.URL
 }
 
 func (b *BrandingFont) GetExtraProperties() map[string]interface{} {
@@ -139,11 +139,11 @@ func (b *BrandingFont) require(field *big.Int) {
 	b.explicitFields.Or(b.explicitFields, field)
 }
 
-// SetUrl sets the Url field and marks it as non-optional;
+// SetURL sets the URL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BrandingFont) SetUrl(url *string) {
-	b.Url = url
-	b.require(brandingFontFieldUrl)
+func (b *BrandingFont) SetURL(url *string) {
+	b.URL = url
+	b.require(brandingFontFieldURL)
 }
 
 func (b *BrandingFont) UnmarshalJSON(data []byte) error {
@@ -262,17 +262,17 @@ func (b *BrandingPageBackground) Accept(visitor BrandingPageBackgroundVisitor) e
 
 var (
 	getBrandingResponseContentFieldColors     = big.NewInt(1 << 0)
-	getBrandingResponseContentFieldFaviconUrl = big.NewInt(1 << 1)
-	getBrandingResponseContentFieldLogoUrl    = big.NewInt(1 << 2)
+	getBrandingResponseContentFieldFaviconURL = big.NewInt(1 << 1)
+	getBrandingResponseContentFieldLogoURL    = big.NewInt(1 << 2)
 	getBrandingResponseContentFieldFont       = big.NewInt(1 << 3)
 )
 
 type GetBrandingResponseContent struct {
 	Colors *BrandingColors `json:"colors,omitempty" url:"colors,omitempty"`
 	// URL for the favicon. Must use HTTPS.
-	FaviconUrl *string `json:"favicon_url,omitempty" url:"favicon_url,omitempty"`
+	FaviconURL *string `json:"favicon_url,omitempty" url:"favicon_url,omitempty"`
 	// URL for the logo. Must use HTTPS.
-	LogoUrl *string       `json:"logo_url,omitempty" url:"logo_url,omitempty"`
+	LogoURL *string       `json:"logo_url,omitempty" url:"logo_url,omitempty"`
 	Font    *BrandingFont `json:"font,omitempty" url:"font,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -290,18 +290,18 @@ func (g *GetBrandingResponseContent) GetColors() BrandingColors {
 	return *g.Colors
 }
 
-func (g *GetBrandingResponseContent) GetFaviconUrl() string {
-	if g == nil || g.FaviconUrl == nil {
+func (g *GetBrandingResponseContent) GetFaviconURL() string {
+	if g == nil || g.FaviconURL == nil {
 		return ""
 	}
-	return *g.FaviconUrl
+	return *g.FaviconURL
 }
 
-func (g *GetBrandingResponseContent) GetLogoUrl() string {
-	if g == nil || g.LogoUrl == nil {
+func (g *GetBrandingResponseContent) GetLogoURL() string {
+	if g == nil || g.LogoURL == nil {
 		return ""
 	}
-	return *g.LogoUrl
+	return *g.LogoURL
 }
 
 func (g *GetBrandingResponseContent) GetFont() BrandingFont {
@@ -329,18 +329,18 @@ func (g *GetBrandingResponseContent) SetColors(colors *BrandingColors) {
 	g.require(getBrandingResponseContentFieldColors)
 }
 
-// SetFaviconUrl sets the FaviconUrl field and marks it as non-optional;
+// SetFaviconURL sets the FaviconURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetBrandingResponseContent) SetFaviconUrl(faviconUrl *string) {
-	g.FaviconUrl = faviconUrl
-	g.require(getBrandingResponseContentFieldFaviconUrl)
+func (g *GetBrandingResponseContent) SetFaviconURL(faviconURL *string) {
+	g.FaviconURL = faviconURL
+	g.require(getBrandingResponseContentFieldFaviconURL)
 }
 
-// SetLogoUrl sets the LogoUrl field and marks it as non-optional;
+// SetLogoURL sets the LogoURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetBrandingResponseContent) SetLogoUrl(logoUrl *string) {
-	g.LogoUrl = logoUrl
-	g.require(getBrandingResponseContentFieldLogoUrl)
+func (g *GetBrandingResponseContent) SetLogoURL(logoURL *string) {
+	g.LogoURL = logoURL
+	g.require(getBrandingResponseContentFieldLogoURL)
 }
 
 // SetFont sets the Font field and marks it as non-optional;
@@ -491,12 +491,12 @@ func (u *UpdateBrandingColors) String() string {
 
 // Custom font settings.
 var (
-	updateBrandingFontFieldUrl = big.NewInt(1 << 0)
+	updateBrandingFontFieldURL = big.NewInt(1 << 0)
 )
 
 type UpdateBrandingFont struct {
 	// URL for the custom font. The URL must point to a font file and not a stylesheet. Must use HTTPS.
-	Url *string `json:"url,omitempty" url:"url,omitempty"`
+	URL *string `json:"url,omitempty" url:"url,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -505,11 +505,11 @@ type UpdateBrandingFont struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateBrandingFont) GetUrl() string {
-	if u == nil || u.Url == nil {
+func (u *UpdateBrandingFont) GetURL() string {
+	if u == nil || u.URL == nil {
 		return ""
 	}
-	return *u.Url
+	return *u.URL
 }
 
 func (u *UpdateBrandingFont) GetExtraProperties() map[string]interface{} {
@@ -523,11 +523,11 @@ func (u *UpdateBrandingFont) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetUrl sets the Url field and marks it as non-optional;
+// SetURL sets the URL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateBrandingFont) SetUrl(url *string) {
-	u.Url = url
-	u.require(updateBrandingFontFieldUrl)
+func (u *UpdateBrandingFont) SetURL(url *string) {
+	u.URL = url
+	u.require(updateBrandingFontFieldURL)
 }
 
 func (u *UpdateBrandingFont) UnmarshalJSON(data []byte) error {
@@ -646,17 +646,17 @@ func (u *UpdateBrandingPageBackground) Accept(visitor UpdateBrandingPageBackgrou
 
 var (
 	updateBrandingResponseContentFieldColors     = big.NewInt(1 << 0)
-	updateBrandingResponseContentFieldFaviconUrl = big.NewInt(1 << 1)
-	updateBrandingResponseContentFieldLogoUrl    = big.NewInt(1 << 2)
+	updateBrandingResponseContentFieldFaviconURL = big.NewInt(1 << 1)
+	updateBrandingResponseContentFieldLogoURL    = big.NewInt(1 << 2)
 	updateBrandingResponseContentFieldFont       = big.NewInt(1 << 3)
 )
 
 type UpdateBrandingResponseContent struct {
 	Colors *BrandingColors `json:"colors,omitempty" url:"colors,omitempty"`
 	// URL for the favicon. Must use HTTPS.
-	FaviconUrl *string `json:"favicon_url,omitempty" url:"favicon_url,omitempty"`
+	FaviconURL *string `json:"favicon_url,omitempty" url:"favicon_url,omitempty"`
 	// URL for the logo. Must use HTTPS.
-	LogoUrl *string       `json:"logo_url,omitempty" url:"logo_url,omitempty"`
+	LogoURL *string       `json:"logo_url,omitempty" url:"logo_url,omitempty"`
 	Font    *BrandingFont `json:"font,omitempty" url:"font,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -674,18 +674,18 @@ func (u *UpdateBrandingResponseContent) GetColors() BrandingColors {
 	return *u.Colors
 }
 
-func (u *UpdateBrandingResponseContent) GetFaviconUrl() string {
-	if u == nil || u.FaviconUrl == nil {
+func (u *UpdateBrandingResponseContent) GetFaviconURL() string {
+	if u == nil || u.FaviconURL == nil {
 		return ""
 	}
-	return *u.FaviconUrl
+	return *u.FaviconURL
 }
 
-func (u *UpdateBrandingResponseContent) GetLogoUrl() string {
-	if u == nil || u.LogoUrl == nil {
+func (u *UpdateBrandingResponseContent) GetLogoURL() string {
+	if u == nil || u.LogoURL == nil {
 		return ""
 	}
-	return *u.LogoUrl
+	return *u.LogoURL
 }
 
 func (u *UpdateBrandingResponseContent) GetFont() BrandingFont {
@@ -713,18 +713,18 @@ func (u *UpdateBrandingResponseContent) SetColors(colors *BrandingColors) {
 	u.require(updateBrandingResponseContentFieldColors)
 }
 
-// SetFaviconUrl sets the FaviconUrl field and marks it as non-optional;
+// SetFaviconURL sets the FaviconURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateBrandingResponseContent) SetFaviconUrl(faviconUrl *string) {
-	u.FaviconUrl = faviconUrl
-	u.require(updateBrandingResponseContentFieldFaviconUrl)
+func (u *UpdateBrandingResponseContent) SetFaviconURL(faviconURL *string) {
+	u.FaviconURL = faviconURL
+	u.require(updateBrandingResponseContentFieldFaviconURL)
 }
 
-// SetLogoUrl sets the LogoUrl field and marks it as non-optional;
+// SetLogoURL sets the LogoURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateBrandingResponseContent) SetLogoUrl(logoUrl *string) {
-	u.LogoUrl = logoUrl
-	u.require(updateBrandingResponseContentFieldLogoUrl)
+func (u *UpdateBrandingResponseContent) SetLogoURL(logoURL *string) {
+	u.LogoURL = logoURL
+	u.require(updateBrandingResponseContentFieldLogoURL)
 }
 
 // SetFont sets the Font field and marks it as non-optional;

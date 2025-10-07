@@ -85,7 +85,7 @@ func (r *RawClient) Delete(
 	// Identity provider name of the secondary linked account (e.g. `google-oauth2`).
 	provider *management.UserIdentityProviderEnum,
 	// ID of the secondary linked account (e.g. `123456789081523216417` part after the `|` in `google-oauth2|123456789081523216417`).
-	userId string,
+	userID string,
 	opts ...option.RequestOption,
 ) (*core.Response[management.DeleteUserIdentityResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -98,7 +98,7 @@ func (r *RawClient) Delete(
 		baseURL+"/users/%v/identities/%v/%v",
 		id,
 		provider,
-		userId,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

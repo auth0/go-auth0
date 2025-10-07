@@ -167,7 +167,7 @@ func TestOrganizationsEnabledConnectionsAddWithWireMock(
 		),
 	)
 	request := &management.AddOrganizationConnectionRequestContent{
-		ConnectionId: "connection_id",
+		ConnectionID: "connection_id",
 	}
 	_, invocationErr := client.Organizations.EnabledConnections.Add(
 		context.TODO(),

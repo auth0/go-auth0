@@ -169,7 +169,7 @@ func (l *ListUserBlocksResponseContent) String() string {
 
 var (
 	userBlockIdentifierFieldIdentifier = big.NewInt(1 << 0)
-	userBlockIdentifierFieldIp         = big.NewInt(1 << 1)
+	userBlockIdentifierFieldIP         = big.NewInt(1 << 1)
 	userBlockIdentifierFieldConnection = big.NewInt(1 << 2)
 )
 
@@ -177,7 +177,7 @@ type UserBlockIdentifier struct {
 	// Identifier (should be any of an `email`, `username`, or `phone_number`)
 	Identifier *string `json:"identifier,omitempty" url:"identifier,omitempty"`
 	// IP Address
-	Ip *string `json:"ip,omitempty" url:"ip,omitempty"`
+	IP *string `json:"ip,omitempty" url:"ip,omitempty"`
 	// Connection identifier
 	Connection *string `json:"connection,omitempty" url:"connection,omitempty"`
 
@@ -196,11 +196,11 @@ func (u *UserBlockIdentifier) GetIdentifier() string {
 	return *u.Identifier
 }
 
-func (u *UserBlockIdentifier) GetIp() string {
-	if u == nil || u.Ip == nil {
+func (u *UserBlockIdentifier) GetIP() string {
+	if u == nil || u.IP == nil {
 		return ""
 	}
-	return *u.Ip
+	return *u.IP
 }
 
 func (u *UserBlockIdentifier) GetConnection() string {
@@ -228,11 +228,11 @@ func (u *UserBlockIdentifier) SetIdentifier(identifier *string) {
 	u.require(userBlockIdentifierFieldIdentifier)
 }
 
-// SetIp sets the Ip field and marks it as non-optional;
+// SetIP sets the IP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserBlockIdentifier) SetIp(ip *string) {
-	u.Ip = ip
-	u.require(userBlockIdentifierFieldIp)
+func (u *UserBlockIdentifier) SetIP(ip *string) {
+	u.IP = ip
+	u.require(userBlockIdentifierFieldIP)
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;

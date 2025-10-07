@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*management.GetSuspiciousIpThrottlingSettingsResponseContent, error) {
+) (*management.GetSuspiciousIPThrottlingSettingsResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		opts...,
@@ -50,9 +50,9 @@ func (c *Client) Get(
 // Update the details of the Suspicious IP Throttling configuration of your tenant.
 func (c *Client) Update(
 	ctx context.Context,
-	request *management.UpdateSuspiciousIpThrottlingSettingsRequestContent,
+	request *management.UpdateSuspiciousIPThrottlingSettingsRequestContent,
 	opts ...option.RequestOption,
-) (*management.UpdateSuspiciousIpThrottlingSettingsResponseContent, error) {
+) (*management.UpdateSuspiciousIPThrottlingSettingsResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
 		request,

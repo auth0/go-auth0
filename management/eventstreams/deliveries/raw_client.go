@@ -88,7 +88,7 @@ func (r *RawClient) GetHistory(
 	// Unique identifier for the event stream.
 	id string,
 	// Unique identifier for the event
-	eventId string,
+	eventID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetEventStreamDeliveryHistoryResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -100,7 +100,7 @@ func (r *RawClient) GetHistory(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/event-streams/%v/deliveries/%v",
 		id,
-		eventId,
+		eventID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

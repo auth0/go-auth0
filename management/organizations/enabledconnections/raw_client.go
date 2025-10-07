@@ -83,7 +83,7 @@ func (r *RawClient) Get(
 	// Organization identifier.
 	id string,
 	// Connection identifier.
-	connectionId string,
+	connectionID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetOrganizationConnectionResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -95,7 +95,7 @@ func (r *RawClient) Get(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/enabled_connections/%v",
 		id,
-		connectionId,
+		connectionID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -131,7 +131,7 @@ func (r *RawClient) Delete(
 	// Organization identifier.
 	id string,
 	// Connection identifier.
-	connectionId string,
+	connectionID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -143,7 +143,7 @@ func (r *RawClient) Delete(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/enabled_connections/%v",
 		id,
-		connectionId,
+		connectionID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -177,7 +177,7 @@ func (r *RawClient) Update(
 	// Organization identifier.
 	id string,
 	// Connection identifier.
-	connectionId string,
+	connectionID string,
 	request *management.UpdateOrganizationConnectionRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.UpdateOrganizationConnectionResponseContent], error) {
@@ -190,7 +190,7 @@ func (r *RawClient) Update(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/enabled_connections/%v",
 		id,
-		connectionId,
+		connectionID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

@@ -101,12 +101,12 @@ func (c *Client) List(
 }
 
 // Delete a grant associated with your account.
-func (c *Client) DeleteByUserId(
+func (c *Client) DeleteByUserID(
 	ctx context.Context,
-	request *management.DeleteUserGrantByUserIdRequestParameters,
+	request *management.DeleteUserGrantByUserIDRequestParameters,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.DeleteByUserId(
+	_, err := c.WithRawResponse.DeleteByUserID(
 		ctx,
 		request,
 		opts...,

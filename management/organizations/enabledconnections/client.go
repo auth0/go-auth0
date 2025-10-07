@@ -133,13 +133,13 @@ func (c *Client) Get(
 	// Organization identifier.
 	id string,
 	// Connection identifier.
-	connectionId string,
+	connectionID string,
 	opts ...option.RequestOption,
 ) (*management.GetOrganizationConnectionResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
-		connectionId,
+		connectionID,
 		opts...,
 	)
 	if err != nil {
@@ -156,13 +156,13 @@ func (c *Client) Delete(
 	// Organization identifier.
 	id string,
 	// Connection identifier.
-	connectionId string,
+	connectionID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
 		id,
-		connectionId,
+		connectionID,
 		opts...,
 	)
 	if err != nil {
@@ -177,14 +177,14 @@ func (c *Client) Update(
 	// Organization identifier.
 	id string,
 	// Connection identifier.
-	connectionId string,
+	connectionID string,
 	request *management.UpdateOrganizationConnectionRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateOrganizationConnectionResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
 		id,
-		connectionId,
+		connectionID,
 		request,
 		opts...,
 	)

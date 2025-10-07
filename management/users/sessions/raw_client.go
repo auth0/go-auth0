@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) Delete(
 	ctx context.Context,
 	// ID of the user to get sessions for
-	userId string,
+	userID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,7 +44,7 @@ func (r *RawClient) Delete(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v/sessions",
-		userId,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

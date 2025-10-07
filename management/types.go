@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	actionFieldId                     = big.NewInt(1 << 0)
+	actionFieldID                     = big.NewInt(1 << 0)
 	actionFieldName                   = big.NewInt(1 << 1)
 	actionFieldSupportedTriggers      = big.NewInt(1 << 2)
 	actionFieldAllChangesDeployed     = big.NewInt(1 << 3)
@@ -22,7 +22,7 @@ var (
 	actionFieldRuntime                = big.NewInt(1 << 8)
 	actionFieldSecrets                = big.NewInt(1 << 9)
 	actionFieldDeployedVersion        = big.NewInt(1 << 10)
-	actionFieldInstalledIntegrationId = big.NewInt(1 << 11)
+	actionFieldInstalledIntegrationID = big.NewInt(1 << 11)
 	actionFieldIntegration            = big.NewInt(1 << 12)
 	actionFieldStatus                 = big.NewInt(1 << 13)
 	actionFieldBuiltAt                = big.NewInt(1 << 14)
@@ -31,7 +31,7 @@ var (
 
 type Action struct {
 	// The unique ID of the action.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of an action.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
@@ -52,7 +52,7 @@ type Action struct {
 	Secrets         []*ActionSecretResponse `json:"secrets,omitempty" url:"secrets,omitempty"`
 	DeployedVersion *ActionDeployedVersion  `json:"deployed_version,omitempty" url:"deployed_version,omitempty"`
 	// installed_integration_id is the fk reference to the InstalledIntegration entity.
-	InstalledIntegrationId *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
+	InstalledIntegrationID *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
 	Integration            *Integration           `json:"integration,omitempty" url:"integration,omitempty"`
 	Status                 *ActionBuildStatusEnum `json:"status,omitempty" url:"status,omitempty"`
 	// The time when this action was built successfully.
@@ -67,11 +67,11 @@ type Action struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *Action) GetId() string {
-	if a == nil || a.Id == nil {
+func (a *Action) GetID() string {
+	if a == nil || a.ID == nil {
 		return ""
 	}
-	return *a.Id
+	return *a.ID
 }
 
 func (a *Action) GetName() string {
@@ -144,11 +144,11 @@ func (a *Action) GetDeployedVersion() ActionDeployedVersion {
 	return *a.DeployedVersion
 }
 
-func (a *Action) GetInstalledIntegrationId() string {
-	if a == nil || a.InstalledIntegrationId == nil {
+func (a *Action) GetInstalledIntegrationID() string {
+	if a == nil || a.InstalledIntegrationID == nil {
 		return ""
 	}
-	return *a.InstalledIntegrationId
+	return *a.InstalledIntegrationID
 }
 
 func (a *Action) GetIntegration() Integration {
@@ -190,11 +190,11 @@ func (a *Action) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *Action) SetId(id *string) {
-	a.Id = id
-	a.require(actionFieldId)
+func (a *Action) SetID(id *string) {
+	a.ID = id
+	a.require(actionFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -267,11 +267,11 @@ func (a *Action) SetDeployedVersion(deployedVersion *ActionDeployedVersion) {
 	a.require(actionFieldDeployedVersion)
 }
 
-// SetInstalledIntegrationId sets the InstalledIntegrationId field and marks it as non-optional;
+// SetInstalledIntegrationID sets the InstalledIntegrationID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *Action) SetInstalledIntegrationId(installedIntegrationId *string) {
-	a.InstalledIntegrationId = installedIntegrationId
-	a.require(actionFieldInstalledIntegrationId)
+func (a *Action) SetInstalledIntegrationID(installedIntegrationID *string) {
+	a.InstalledIntegrationID = installedIntegrationID
+	a.require(actionFieldInstalledIntegrationID)
 }
 
 // SetIntegration sets the Integration field and marks it as non-optional;
@@ -359,7 +359,7 @@ func (a *Action) String() string {
 
 // The action to which this version belongs.
 var (
-	actionBaseFieldId                 = big.NewInt(1 << 0)
+	actionBaseFieldID                 = big.NewInt(1 << 0)
 	actionBaseFieldName               = big.NewInt(1 << 1)
 	actionBaseFieldSupportedTriggers  = big.NewInt(1 << 2)
 	actionBaseFieldAllChangesDeployed = big.NewInt(1 << 3)
@@ -369,7 +369,7 @@ var (
 
 type ActionBase struct {
 	// The unique ID of the action.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of an action.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
@@ -388,11 +388,11 @@ type ActionBase struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *ActionBase) GetId() string {
-	if a == nil || a.Id == nil {
+func (a *ActionBase) GetID() string {
+	if a == nil || a.ID == nil {
 		return ""
 	}
-	return *a.Id
+	return *a.ID
 }
 
 func (a *ActionBase) GetName() string {
@@ -441,11 +441,11 @@ func (a *ActionBase) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *ActionBase) SetId(id *string) {
-	a.Id = id
-	a.require(actionBaseFieldId)
+func (a *ActionBase) SetID(id *string) {
+	a.ID = id
+	a.require(actionBaseFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -536,8 +536,8 @@ func (a *ActionBase) String() string {
 
 // Binding is the associative entity joining a trigger, and an action together.
 var (
-	actionBindingFieldId          = big.NewInt(1 << 0)
-	actionBindingFieldTriggerId   = big.NewInt(1 << 1)
+	actionBindingFieldID          = big.NewInt(1 << 0)
+	actionBindingFieldTriggerID   = big.NewInt(1 << 1)
 	actionBindingFieldDisplayName = big.NewInt(1 << 2)
 	actionBindingFieldAction      = big.NewInt(1 << 3)
 	actionBindingFieldCreatedAt   = big.NewInt(1 << 4)
@@ -546,8 +546,8 @@ var (
 
 type ActionBinding struct {
 	// The unique ID of this binding.
-	Id        *string                `json:"id,omitempty" url:"id,omitempty"`
-	TriggerId *ActionTriggerTypeEnum `json:"trigger_id,omitempty" url:"trigger_id,omitempty"`
+	ID        *string                `json:"id,omitempty" url:"id,omitempty"`
+	TriggerID *ActionTriggerTypeEnum `json:"trigger_id,omitempty" url:"trigger_id,omitempty"`
 	// The name of the binding.
 	DisplayName *string `json:"display_name,omitempty" url:"display_name,omitempty"`
 	Action      *Action `json:"action,omitempty" url:"action,omitempty"`
@@ -563,18 +563,18 @@ type ActionBinding struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *ActionBinding) GetId() string {
-	if a == nil || a.Id == nil {
+func (a *ActionBinding) GetID() string {
+	if a == nil || a.ID == nil {
 		return ""
 	}
-	return *a.Id
+	return *a.ID
 }
 
-func (a *ActionBinding) GetTriggerId() ActionTriggerTypeEnum {
-	if a == nil || a.TriggerId == nil {
+func (a *ActionBinding) GetTriggerID() ActionTriggerTypeEnum {
+	if a == nil || a.TriggerID == nil {
 		return ""
 	}
-	return *a.TriggerId
+	return *a.TriggerID
 }
 
 func (a *ActionBinding) GetDisplayName() string {
@@ -616,18 +616,18 @@ func (a *ActionBinding) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *ActionBinding) SetId(id *string) {
-	a.Id = id
-	a.require(actionBindingFieldId)
+func (a *ActionBinding) SetID(id *string) {
+	a.ID = id
+	a.require(actionBindingFieldID)
 }
 
-// SetTriggerId sets the TriggerId field and marks it as non-optional;
+// SetTriggerID sets the TriggerID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *ActionBinding) SetTriggerId(triggerId *ActionTriggerTypeEnum) {
-	a.TriggerId = triggerId
-	a.require(actionBindingFieldTriggerId)
+func (a *ActionBinding) SetTriggerID(triggerID *ActionTriggerTypeEnum) {
+	a.TriggerID = triggerID
+	a.require(actionBindingFieldTriggerID)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -814,17 +814,17 @@ func (a *ActionBindingRef) String() string {
 type ActionBindingRefTypeEnum string
 
 const (
-	ActionBindingRefTypeEnumBindingId  ActionBindingRefTypeEnum = "binding_id"
-	ActionBindingRefTypeEnumActionId   ActionBindingRefTypeEnum = "action_id"
+	ActionBindingRefTypeEnumBindingID  ActionBindingRefTypeEnum = "binding_id"
+	ActionBindingRefTypeEnumActionID   ActionBindingRefTypeEnum = "action_id"
 	ActionBindingRefTypeEnumActionName ActionBindingRefTypeEnum = "action_name"
 )
 
 func NewActionBindingRefTypeEnumFromString(s string) (ActionBindingRefTypeEnum, error) {
 	switch s {
 	case "binding_id":
-		return ActionBindingRefTypeEnumBindingId, nil
+		return ActionBindingRefTypeEnumBindingID, nil
 	case "action_id":
-		return ActionBindingRefTypeEnumActionId, nil
+		return ActionBindingRefTypeEnumActionID, nil
 	case "action_name":
 		return ActionBindingRefTypeEnumActionName, nil
 	}
@@ -1008,8 +1008,8 @@ func (a ActionBuildStatusEnum) Ptr() *ActionBuildStatusEnum {
 
 // The version of the action that is currently deployed.
 var (
-	actionDeployedVersionFieldId                = big.NewInt(1 << 0)
-	actionDeployedVersionFieldActionId          = big.NewInt(1 << 1)
+	actionDeployedVersionFieldID                = big.NewInt(1 << 0)
+	actionDeployedVersionFieldActionID          = big.NewInt(1 << 1)
 	actionDeployedVersionFieldCode              = big.NewInt(1 << 2)
 	actionDeployedVersionFieldDependencies      = big.NewInt(1 << 3)
 	actionDeployedVersionFieldDeployed          = big.NewInt(1 << 4)
@@ -1027,9 +1027,9 @@ var (
 
 type ActionDeployedVersion struct {
 	// The unique id of an action version.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The id of the action to which this version belongs.
-	ActionId *string `json:"action_id,omitempty" url:"action_id,omitempty"`
+	ActionID *string `json:"action_id,omitempty" url:"action_id,omitempty"`
 	// The source code of this specific version of the action.
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this specific version depends on.
@@ -1062,18 +1062,18 @@ type ActionDeployedVersion struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *ActionDeployedVersion) GetId() string {
-	if a == nil || a.Id == nil {
+func (a *ActionDeployedVersion) GetID() string {
+	if a == nil || a.ID == nil {
 		return ""
 	}
-	return *a.Id
+	return *a.ID
 }
 
-func (a *ActionDeployedVersion) GetActionId() string {
-	if a == nil || a.ActionId == nil {
+func (a *ActionDeployedVersion) GetActionID() string {
+	if a == nil || a.ActionID == nil {
 		return ""
 	}
-	return *a.ActionId
+	return *a.ActionID
 }
 
 func (a *ActionDeployedVersion) GetCode() string {
@@ -1178,18 +1178,18 @@ func (a *ActionDeployedVersion) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *ActionDeployedVersion) SetId(id *string) {
-	a.Id = id
-	a.require(actionDeployedVersionFieldId)
+func (a *ActionDeployedVersion) SetID(id *string) {
+	a.ID = id
+	a.require(actionDeployedVersionFieldID)
 }
 
-// SetActionId sets the ActionId field and marks it as non-optional;
+// SetActionID sets the ActionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *ActionDeployedVersion) SetActionId(actionId *string) {
-	a.ActionId = actionId
-	a.require(actionDeployedVersionFieldActionId)
+func (a *ActionDeployedVersion) SetActionID(actionID *string) {
+	a.ActionID = actionID
+	a.require(actionDeployedVersionFieldActionID)
 }
 
 // SetCode sets the Code field and marks it as non-optional;
@@ -1340,15 +1340,15 @@ func (a *ActionDeployedVersion) String() string {
 
 // Error is a generic error with a human readable id which should be easily referenced in support tickets.
 var (
-	actionErrorFieldId  = big.NewInt(1 << 0)
+	actionErrorFieldID  = big.NewInt(1 << 0)
 	actionErrorFieldMsg = big.NewInt(1 << 1)
-	actionErrorFieldUrl = big.NewInt(1 << 2)
+	actionErrorFieldURL = big.NewInt(1 << 2)
 )
 
 type ActionError struct {
-	Id  *string `json:"id,omitempty" url:"id,omitempty"`
+	ID  *string `json:"id,omitempty" url:"id,omitempty"`
 	Msg *string `json:"msg,omitempty" url:"msg,omitempty"`
-	Url *string `json:"url,omitempty" url:"url,omitempty"`
+	URL *string `json:"url,omitempty" url:"url,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1357,11 +1357,11 @@ type ActionError struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *ActionError) GetId() string {
-	if a == nil || a.Id == nil {
+func (a *ActionError) GetID() string {
+	if a == nil || a.ID == nil {
 		return ""
 	}
-	return *a.Id
+	return *a.ID
 }
 
 func (a *ActionError) GetMsg() string {
@@ -1371,11 +1371,11 @@ func (a *ActionError) GetMsg() string {
 	return *a.Msg
 }
 
-func (a *ActionError) GetUrl() string {
-	if a == nil || a.Url == nil {
+func (a *ActionError) GetURL() string {
+	if a == nil || a.URL == nil {
 		return ""
 	}
-	return *a.Url
+	return *a.URL
 }
 
 func (a *ActionError) GetExtraProperties() map[string]interface{} {
@@ -1389,11 +1389,11 @@ func (a *ActionError) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *ActionError) SetId(id *string) {
-	a.Id = id
-	a.require(actionErrorFieldId)
+func (a *ActionError) SetID(id *string) {
+	a.ID = id
+	a.require(actionErrorFieldID)
 }
 
 // SetMsg sets the Msg field and marks it as non-optional;
@@ -1403,11 +1403,11 @@ func (a *ActionError) SetMsg(msg *string) {
 	a.require(actionErrorFieldMsg)
 }
 
-// SetUrl sets the Url field and marks it as non-optional;
+// SetURL sets the URL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *ActionError) SetUrl(url *string) {
-	a.Url = url
-	a.require(actionErrorFieldUrl)
+func (a *ActionError) SetURL(url *string) {
+	a.URL = url
+	a.require(actionErrorFieldURL)
 }
 
 func (a *ActionError) UnmarshalJSON(data []byte) error {
@@ -1833,7 +1833,7 @@ func (a *ActionSecretResponse) String() string {
 }
 
 var (
-	actionTriggerFieldId                 = big.NewInt(1 << 0)
+	actionTriggerFieldID                 = big.NewInt(1 << 0)
 	actionTriggerFieldVersion            = big.NewInt(1 << 1)
 	actionTriggerFieldStatus             = big.NewInt(1 << 2)
 	actionTriggerFieldRuntimes           = big.NewInt(1 << 3)
@@ -1843,7 +1843,7 @@ var (
 )
 
 type ActionTrigger struct {
-	Id ActionTriggerTypeEnum `json:"id" url:"id"`
+	ID ActionTriggerTypeEnum `json:"id" url:"id"`
 	// The version of a trigger. v1, v2, etc.
 	Version *string `json:"version,omitempty" url:"version,omitempty"`
 	// status points to the trigger status.
@@ -1863,11 +1863,11 @@ type ActionTrigger struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *ActionTrigger) GetId() ActionTriggerTypeEnum {
+func (a *ActionTrigger) GetID() ActionTriggerTypeEnum {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
 func (a *ActionTrigger) GetVersion() string {
@@ -1923,11 +1923,11 @@ func (a *ActionTrigger) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *ActionTrigger) SetId(id ActionTriggerTypeEnum) {
-	a.Id = id
-	a.require(actionTriggerFieldId)
+func (a *ActionTrigger) SetID(id ActionTriggerTypeEnum) {
+	a.ID = id
+	a.require(actionTriggerFieldID)
 }
 
 // SetVersion sets the Version field and marks it as non-optional;
@@ -2012,12 +2012,12 @@ func (a *ActionTrigger) String() string {
 }
 
 var (
-	actionTriggerCompatibleTriggerFieldId      = big.NewInt(1 << 0)
+	actionTriggerCompatibleTriggerFieldID      = big.NewInt(1 << 0)
 	actionTriggerCompatibleTriggerFieldVersion = big.NewInt(1 << 1)
 )
 
 type ActionTriggerCompatibleTrigger struct {
-	Id ActionTriggerTypeEnum `json:"id" url:"id"`
+	ID ActionTriggerTypeEnum `json:"id" url:"id"`
 	// The version of a trigger. v1, v2, etc.
 	Version string `json:"version" url:"version"`
 
@@ -2029,11 +2029,11 @@ type ActionTriggerCompatibleTrigger struct {
 	rawJSON json.RawMessage
 }
 
-func (a *ActionTriggerCompatibleTrigger) GetId() ActionTriggerTypeEnum {
+func (a *ActionTriggerCompatibleTrigger) GetID() ActionTriggerTypeEnum {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
 func (a *ActionTriggerCompatibleTrigger) GetVersion() string {
@@ -2054,11 +2054,11 @@ func (a *ActionTriggerCompatibleTrigger) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *ActionTriggerCompatibleTrigger) SetId(id ActionTriggerTypeEnum) {
-	a.Id = id
-	a.require(actionTriggerCompatibleTriggerFieldId)
+func (a *ActionTriggerCompatibleTrigger) SetID(id ActionTriggerTypeEnum) {
+	a.ID = id
+	a.require(actionTriggerCompatibleTriggerFieldID)
 }
 
 // SetVersion sets the Version field and marks it as non-optional;
@@ -2115,8 +2115,8 @@ func (a *ActionTriggerCompatibleTrigger) String() string {
 type ActionTriggerTypeEnum = string
 
 var (
-	actionVersionFieldId                = big.NewInt(1 << 0)
-	actionVersionFieldActionId          = big.NewInt(1 << 1)
+	actionVersionFieldID                = big.NewInt(1 << 0)
+	actionVersionFieldActionID          = big.NewInt(1 << 1)
 	actionVersionFieldCode              = big.NewInt(1 << 2)
 	actionVersionFieldDependencies      = big.NewInt(1 << 3)
 	actionVersionFieldDeployed          = big.NewInt(1 << 4)
@@ -2134,9 +2134,9 @@ var (
 
 type ActionVersion struct {
 	// The unique id of an action version.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The id of the action to which this version belongs.
-	ActionId *string `json:"action_id,omitempty" url:"action_id,omitempty"`
+	ActionID *string `json:"action_id,omitempty" url:"action_id,omitempty"`
 	// The source code of this specific version of the action.
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this specific version depends on.
@@ -2169,18 +2169,18 @@ type ActionVersion struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *ActionVersion) GetId() string {
-	if a == nil || a.Id == nil {
+func (a *ActionVersion) GetID() string {
+	if a == nil || a.ID == nil {
 		return ""
 	}
-	return *a.Id
+	return *a.ID
 }
 
-func (a *ActionVersion) GetActionId() string {
-	if a == nil || a.ActionId == nil {
+func (a *ActionVersion) GetActionID() string {
+	if a == nil || a.ActionID == nil {
 		return ""
 	}
-	return *a.ActionId
+	return *a.ActionID
 }
 
 func (a *ActionVersion) GetCode() string {
@@ -2285,18 +2285,18 @@ func (a *ActionVersion) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *ActionVersion) SetId(id *string) {
-	a.Id = id
-	a.require(actionVersionFieldId)
+func (a *ActionVersion) SetID(id *string) {
+	a.ID = id
+	a.require(actionVersionFieldID)
 }
 
-// SetActionId sets the ActionId field and marks it as non-optional;
+// SetActionID sets the ActionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *ActionVersion) SetActionId(actionId *string) {
-	a.ActionId = actionId
-	a.require(actionVersionFieldActionId)
+func (a *ActionVersion) SetActionID(actionID *string) {
+	a.ActionID = actionID
+	a.require(actionVersionFieldActionID)
 }
 
 // SetCode sets the Code field and marks it as non-optional;
@@ -2484,7 +2484,7 @@ func (a ActionVersionBuildStatusEnum) Ptr() *ActionVersionBuildStatusEnum {
 var (
 	actionVersionDependencyFieldName        = big.NewInt(1 << 0)
 	actionVersionDependencyFieldVersion     = big.NewInt(1 << 1)
-	actionVersionDependencyFieldRegistryUrl = big.NewInt(1 << 2)
+	actionVersionDependencyFieldRegistryURL = big.NewInt(1 << 2)
 )
 
 type ActionVersionDependency struct {
@@ -2493,7 +2493,7 @@ type ActionVersionDependency struct {
 	// description is the version of the npm module, e.g. 4.17.1
 	Version *string `json:"version,omitempty" url:"version,omitempty"`
 	// registry_url is an optional value used primarily for private npm registries.
-	RegistryUrl *string `json:"registry_url,omitempty" url:"registry_url,omitempty"`
+	RegistryURL *string `json:"registry_url,omitempty" url:"registry_url,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2516,11 +2516,11 @@ func (a *ActionVersionDependency) GetVersion() string {
 	return *a.Version
 }
 
-func (a *ActionVersionDependency) GetRegistryUrl() string {
-	if a == nil || a.RegistryUrl == nil {
+func (a *ActionVersionDependency) GetRegistryURL() string {
+	if a == nil || a.RegistryURL == nil {
 		return ""
 	}
-	return *a.RegistryUrl
+	return *a.RegistryURL
 }
 
 func (a *ActionVersionDependency) GetExtraProperties() map[string]interface{} {
@@ -2548,11 +2548,11 @@ func (a *ActionVersionDependency) SetVersion(version *string) {
 	a.require(actionVersionDependencyFieldVersion)
 }
 
-// SetRegistryUrl sets the RegistryUrl field and marks it as non-optional;
+// SetRegistryURL sets the RegistryURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *ActionVersionDependency) SetRegistryUrl(registryUrl *string) {
-	a.RegistryUrl = registryUrl
-	a.require(actionVersionDependencyFieldRegistryUrl)
+func (a *ActionVersionDependency) SetRegistryURL(registryURL *string) {
+	a.RegistryURL = registryURL
+	a.require(actionVersionDependencyFieldRegistryURL)
 }
 
 func (a *ActionVersionDependency) UnmarshalJSON(data []byte) error {
@@ -2596,17 +2596,17 @@ func (a *ActionVersionDependency) String() string {
 
 // Client array filter items
 type AculClientFilter struct {
-	AculClientFilterById       *AculClientFilterById
+	AculClientFilterByID       *AculClientFilterByID
 	AculClientFilterByMetadata *AculClientFilterByMetadata
 
 	typ string
 }
 
-func (a *AculClientFilter) GetAculClientFilterById() *AculClientFilterById {
+func (a *AculClientFilter) GetAculClientFilterByID() *AculClientFilterByID {
 	if a == nil {
 		return nil
 	}
-	return a.AculClientFilterById
+	return a.AculClientFilterByID
 }
 
 func (a *AculClientFilter) GetAculClientFilterByMetadata() *AculClientFilterByMetadata {
@@ -2617,10 +2617,10 @@ func (a *AculClientFilter) GetAculClientFilterByMetadata() *AculClientFilterByMe
 }
 
 func (a *AculClientFilter) UnmarshalJSON(data []byte) error {
-	valueAculClientFilterById := new(AculClientFilterById)
-	if err := json.Unmarshal(data, &valueAculClientFilterById); err == nil {
-		a.typ = "AculClientFilterById"
-		a.AculClientFilterById = valueAculClientFilterById
+	valueAculClientFilterByID := new(AculClientFilterByID)
+	if err := json.Unmarshal(data, &valueAculClientFilterByID); err == nil {
+		a.typ = "AculClientFilterByID"
+		a.AculClientFilterByID = valueAculClientFilterByID
 		return nil
 	}
 	valueAculClientFilterByMetadata := new(AculClientFilterByMetadata)
@@ -2633,8 +2633,8 @@ func (a *AculClientFilter) UnmarshalJSON(data []byte) error {
 }
 
 func (a AculClientFilter) MarshalJSON() ([]byte, error) {
-	if a.typ == "AculClientFilterById" || a.AculClientFilterById != nil {
-		return json.Marshal(a.AculClientFilterById)
+	if a.typ == "AculClientFilterByID" || a.AculClientFilterByID != nil {
+		return json.Marshal(a.AculClientFilterByID)
 	}
 	if a.typ == "AculClientFilterByMetadata" || a.AculClientFilterByMetadata != nil {
 		return json.Marshal(a.AculClientFilterByMetadata)
@@ -2643,13 +2643,13 @@ func (a AculClientFilter) MarshalJSON() ([]byte, error) {
 }
 
 type AculClientFilterVisitor interface {
-	VisitAculClientFilterById(*AculClientFilterById) error
+	VisitAculClientFilterByID(*AculClientFilterByID) error
 	VisitAculClientFilterByMetadata(*AculClientFilterByMetadata) error
 }
 
 func (a *AculClientFilter) Accept(visitor AculClientFilterVisitor) error {
-	if a.typ == "AculClientFilterById" || a.AculClientFilterById != nil {
-		return visitor.VisitAculClientFilterById(a.AculClientFilterById)
+	if a.typ == "AculClientFilterByID" || a.AculClientFilterByID != nil {
+		return visitor.VisitAculClientFilterByID(a.AculClientFilterByID)
 	}
 	if a.typ == "AculClientFilterByMetadata" || a.AculClientFilterByMetadata != nil {
 		return visitor.VisitAculClientFilterByMetadata(a.AculClientFilterByMetadata)
@@ -2658,12 +2658,12 @@ func (a *AculClientFilter) Accept(visitor AculClientFilterVisitor) error {
 }
 
 var (
-	aculClientFilterByIdFieldId = big.NewInt(1 << 0)
+	aculClientFilterByIDFieldID = big.NewInt(1 << 0)
 )
 
-type AculClientFilterById struct {
+type AculClientFilterByID struct {
 	// Client ID
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2672,38 +2672,38 @@ type AculClientFilterById struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *AculClientFilterById) GetId() string {
+func (a *AculClientFilterByID) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
-func (a *AculClientFilterById) GetExtraProperties() map[string]interface{} {
+func (a *AculClientFilterByID) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
-func (a *AculClientFilterById) require(field *big.Int) {
+func (a *AculClientFilterByID) require(field *big.Int) {
 	if a.explicitFields == nil {
 		a.explicitFields = big.NewInt(0)
 	}
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *AculClientFilterById) SetId(id string) {
-	a.Id = id
-	a.require(aculClientFilterByIdFieldId)
+func (a *AculClientFilterByID) SetID(id string) {
+	a.ID = id
+	a.require(aculClientFilterByIDFieldID)
 }
 
-func (a *AculClientFilterById) UnmarshalJSON(data []byte) error {
-	type unmarshaler AculClientFilterById
+func (a *AculClientFilterByID) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculClientFilterByID
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*a = AculClientFilterById(value)
+	*a = AculClientFilterByID(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
@@ -2713,8 +2713,8 @@ func (a *AculClientFilterById) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AculClientFilterById) MarshalJSON() ([]byte, error) {
-	type embed AculClientFilterById
+func (a *AculClientFilterByID) MarshalJSON() ([]byte, error) {
+	type embed AculClientFilterByID
 	var marshaler = struct {
 		embed
 	}{
@@ -2724,7 +2724,7 @@ func (a *AculClientFilterById) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (a *AculClientFilterById) String() string {
+func (a *AculClientFilterByID) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -2819,17 +2819,17 @@ type AculClientMetadata = map[string]interface{}
 
 // Domains array filter items
 type AculDomainFilter struct {
-	AculDomainFilterById       *AculDomainFilterById
+	AculDomainFilterByID       *AculDomainFilterByID
 	AculDomainFilterByMetadata *AculDomainFilterByMetadata
 
 	typ string
 }
 
-func (a *AculDomainFilter) GetAculDomainFilterById() *AculDomainFilterById {
+func (a *AculDomainFilter) GetAculDomainFilterByID() *AculDomainFilterByID {
 	if a == nil {
 		return nil
 	}
-	return a.AculDomainFilterById
+	return a.AculDomainFilterByID
 }
 
 func (a *AculDomainFilter) GetAculDomainFilterByMetadata() *AculDomainFilterByMetadata {
@@ -2840,10 +2840,10 @@ func (a *AculDomainFilter) GetAculDomainFilterByMetadata() *AculDomainFilterByMe
 }
 
 func (a *AculDomainFilter) UnmarshalJSON(data []byte) error {
-	valueAculDomainFilterById := new(AculDomainFilterById)
-	if err := json.Unmarshal(data, &valueAculDomainFilterById); err == nil {
-		a.typ = "AculDomainFilterById"
-		a.AculDomainFilterById = valueAculDomainFilterById
+	valueAculDomainFilterByID := new(AculDomainFilterByID)
+	if err := json.Unmarshal(data, &valueAculDomainFilterByID); err == nil {
+		a.typ = "AculDomainFilterByID"
+		a.AculDomainFilterByID = valueAculDomainFilterByID
 		return nil
 	}
 	valueAculDomainFilterByMetadata := new(AculDomainFilterByMetadata)
@@ -2856,8 +2856,8 @@ func (a *AculDomainFilter) UnmarshalJSON(data []byte) error {
 }
 
 func (a AculDomainFilter) MarshalJSON() ([]byte, error) {
-	if a.typ == "AculDomainFilterById" || a.AculDomainFilterById != nil {
-		return json.Marshal(a.AculDomainFilterById)
+	if a.typ == "AculDomainFilterByID" || a.AculDomainFilterByID != nil {
+		return json.Marshal(a.AculDomainFilterByID)
 	}
 	if a.typ == "AculDomainFilterByMetadata" || a.AculDomainFilterByMetadata != nil {
 		return json.Marshal(a.AculDomainFilterByMetadata)
@@ -2866,13 +2866,13 @@ func (a AculDomainFilter) MarshalJSON() ([]byte, error) {
 }
 
 type AculDomainFilterVisitor interface {
-	VisitAculDomainFilterById(*AculDomainFilterById) error
+	VisitAculDomainFilterByID(*AculDomainFilterByID) error
 	VisitAculDomainFilterByMetadata(*AculDomainFilterByMetadata) error
 }
 
 func (a *AculDomainFilter) Accept(visitor AculDomainFilterVisitor) error {
-	if a.typ == "AculDomainFilterById" || a.AculDomainFilterById != nil {
-		return visitor.VisitAculDomainFilterById(a.AculDomainFilterById)
+	if a.typ == "AculDomainFilterByID" || a.AculDomainFilterByID != nil {
+		return visitor.VisitAculDomainFilterByID(a.AculDomainFilterByID)
 	}
 	if a.typ == "AculDomainFilterByMetadata" || a.AculDomainFilterByMetadata != nil {
 		return visitor.VisitAculDomainFilterByMetadata(a.AculDomainFilterByMetadata)
@@ -2881,12 +2881,12 @@ func (a *AculDomainFilter) Accept(visitor AculDomainFilterVisitor) error {
 }
 
 var (
-	aculDomainFilterByIdFieldId = big.NewInt(1 << 0)
+	aculDomainFilterByIDFieldID = big.NewInt(1 << 0)
 )
 
-type AculDomainFilterById struct {
+type AculDomainFilterByID struct {
 	// Domain ID
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2895,38 +2895,38 @@ type AculDomainFilterById struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *AculDomainFilterById) GetId() string {
+func (a *AculDomainFilterByID) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
-func (a *AculDomainFilterById) GetExtraProperties() map[string]interface{} {
+func (a *AculDomainFilterByID) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
-func (a *AculDomainFilterById) require(field *big.Int) {
+func (a *AculDomainFilterByID) require(field *big.Int) {
 	if a.explicitFields == nil {
 		a.explicitFields = big.NewInt(0)
 	}
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *AculDomainFilterById) SetId(id string) {
-	a.Id = id
-	a.require(aculDomainFilterByIdFieldId)
+func (a *AculDomainFilterByID) SetID(id string) {
+	a.ID = id
+	a.require(aculDomainFilterByIDFieldID)
 }
 
-func (a *AculDomainFilterById) UnmarshalJSON(data []byte) error {
-	type unmarshaler AculDomainFilterById
+func (a *AculDomainFilterByID) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculDomainFilterByID
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*a = AculDomainFilterById(value)
+	*a = AculDomainFilterByID(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
@@ -2936,8 +2936,8 @@ func (a *AculDomainFilterById) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AculDomainFilterById) MarshalJSON() ([]byte, error) {
-	type embed AculDomainFilterById
+func (a *AculDomainFilterByID) MarshalJSON() ([]byte, error) {
+	type embed AculDomainFilterByID
 	var marshaler = struct {
 		embed
 	}{
@@ -2947,7 +2947,7 @@ func (a *AculDomainFilterById) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (a *AculDomainFilterById) String() string {
+func (a *AculDomainFilterByID) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -3397,17 +3397,17 @@ func (a AculMatchTypeEnum) Ptr() *AculMatchTypeEnum {
 
 // Organizations array filter items
 type AculOrganizationFilter struct {
-	AculOrganizationFilterById       *AculOrganizationFilterById
+	AculOrganizationFilterByID       *AculOrganizationFilterByID
 	AculOrganizationFilterByMetadata *AculOrganizationFilterByMetadata
 
 	typ string
 }
 
-func (a *AculOrganizationFilter) GetAculOrganizationFilterById() *AculOrganizationFilterById {
+func (a *AculOrganizationFilter) GetAculOrganizationFilterByID() *AculOrganizationFilterByID {
 	if a == nil {
 		return nil
 	}
-	return a.AculOrganizationFilterById
+	return a.AculOrganizationFilterByID
 }
 
 func (a *AculOrganizationFilter) GetAculOrganizationFilterByMetadata() *AculOrganizationFilterByMetadata {
@@ -3418,10 +3418,10 @@ func (a *AculOrganizationFilter) GetAculOrganizationFilterByMetadata() *AculOrga
 }
 
 func (a *AculOrganizationFilter) UnmarshalJSON(data []byte) error {
-	valueAculOrganizationFilterById := new(AculOrganizationFilterById)
-	if err := json.Unmarshal(data, &valueAculOrganizationFilterById); err == nil {
-		a.typ = "AculOrganizationFilterById"
-		a.AculOrganizationFilterById = valueAculOrganizationFilterById
+	valueAculOrganizationFilterByID := new(AculOrganizationFilterByID)
+	if err := json.Unmarshal(data, &valueAculOrganizationFilterByID); err == nil {
+		a.typ = "AculOrganizationFilterByID"
+		a.AculOrganizationFilterByID = valueAculOrganizationFilterByID
 		return nil
 	}
 	valueAculOrganizationFilterByMetadata := new(AculOrganizationFilterByMetadata)
@@ -3434,8 +3434,8 @@ func (a *AculOrganizationFilter) UnmarshalJSON(data []byte) error {
 }
 
 func (a AculOrganizationFilter) MarshalJSON() ([]byte, error) {
-	if a.typ == "AculOrganizationFilterById" || a.AculOrganizationFilterById != nil {
-		return json.Marshal(a.AculOrganizationFilterById)
+	if a.typ == "AculOrganizationFilterByID" || a.AculOrganizationFilterByID != nil {
+		return json.Marshal(a.AculOrganizationFilterByID)
 	}
 	if a.typ == "AculOrganizationFilterByMetadata" || a.AculOrganizationFilterByMetadata != nil {
 		return json.Marshal(a.AculOrganizationFilterByMetadata)
@@ -3444,13 +3444,13 @@ func (a AculOrganizationFilter) MarshalJSON() ([]byte, error) {
 }
 
 type AculOrganizationFilterVisitor interface {
-	VisitAculOrganizationFilterById(*AculOrganizationFilterById) error
+	VisitAculOrganizationFilterByID(*AculOrganizationFilterByID) error
 	VisitAculOrganizationFilterByMetadata(*AculOrganizationFilterByMetadata) error
 }
 
 func (a *AculOrganizationFilter) Accept(visitor AculOrganizationFilterVisitor) error {
-	if a.typ == "AculOrganizationFilterById" || a.AculOrganizationFilterById != nil {
-		return visitor.VisitAculOrganizationFilterById(a.AculOrganizationFilterById)
+	if a.typ == "AculOrganizationFilterByID" || a.AculOrganizationFilterByID != nil {
+		return visitor.VisitAculOrganizationFilterByID(a.AculOrganizationFilterByID)
 	}
 	if a.typ == "AculOrganizationFilterByMetadata" || a.AculOrganizationFilterByMetadata != nil {
 		return visitor.VisitAculOrganizationFilterByMetadata(a.AculOrganizationFilterByMetadata)
@@ -3459,12 +3459,12 @@ func (a *AculOrganizationFilter) Accept(visitor AculOrganizationFilterVisitor) e
 }
 
 var (
-	aculOrganizationFilterByIdFieldId = big.NewInt(1 << 0)
+	aculOrganizationFilterByIDFieldID = big.NewInt(1 << 0)
 )
 
-type AculOrganizationFilterById struct {
+type AculOrganizationFilterByID struct {
 	// Organization ID
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3473,38 +3473,38 @@ type AculOrganizationFilterById struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *AculOrganizationFilterById) GetId() string {
+func (a *AculOrganizationFilterByID) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
-func (a *AculOrganizationFilterById) GetExtraProperties() map[string]interface{} {
+func (a *AculOrganizationFilterByID) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
-func (a *AculOrganizationFilterById) require(field *big.Int) {
+func (a *AculOrganizationFilterByID) require(field *big.Int) {
 	if a.explicitFields == nil {
 		a.explicitFields = big.NewInt(0)
 	}
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *AculOrganizationFilterById) SetId(id string) {
-	a.Id = id
-	a.require(aculOrganizationFilterByIdFieldId)
+func (a *AculOrganizationFilterByID) SetID(id string) {
+	a.ID = id
+	a.require(aculOrganizationFilterByIDFieldID)
 }
 
-func (a *AculOrganizationFilterById) UnmarshalJSON(data []byte) error {
-	type unmarshaler AculOrganizationFilterById
+func (a *AculOrganizationFilterByID) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculOrganizationFilterByID
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*a = AculOrganizationFilterById(value)
+	*a = AculOrganizationFilterByID(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *a)
 	if err != nil {
 		return err
@@ -3514,8 +3514,8 @@ func (a *AculOrganizationFilterById) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AculOrganizationFilterById) MarshalJSON() ([]byte, error) {
-	type embed AculOrganizationFilterById
+func (a *AculOrganizationFilterByID) MarshalJSON() ([]byte, error) {
+	type embed AculOrganizationFilterByID
 	var marshaler = struct {
 		embed
 	}{
@@ -3525,7 +3525,7 @@ func (a *AculOrganizationFilterById) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (a *AculOrganizationFilterById) String() string {
+func (a *AculOrganizationFilterByID) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -3809,7 +3809,7 @@ func (a *AculResponseContent) String() string {
 }
 
 var (
-	addOrganizationConnectionResponseContentFieldConnectionId            = big.NewInt(1 << 0)
+	addOrganizationConnectionResponseContentFieldConnectionID            = big.NewInt(1 << 0)
 	addOrganizationConnectionResponseContentFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
 	addOrganizationConnectionResponseContentFieldShowAsButton            = big.NewInt(1 << 2)
 	addOrganizationConnectionResponseContentFieldIsSignupEnabled         = big.NewInt(1 << 3)
@@ -3818,7 +3818,7 @@ var (
 
 type AddOrganizationConnectionResponseContent struct {
 	// ID of the connection.
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
 	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
@@ -3834,11 +3834,11 @@ type AddOrganizationConnectionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *AddOrganizationConnectionResponseContent) GetConnectionId() string {
-	if a == nil || a.ConnectionId == nil {
+func (a *AddOrganizationConnectionResponseContent) GetConnectionID() string {
+	if a == nil || a.ConnectionID == nil {
 		return ""
 	}
-	return *a.ConnectionId
+	return *a.ConnectionID
 }
 
 func (a *AddOrganizationConnectionResponseContent) GetAssignMembershipOnLogin() bool {
@@ -3880,11 +3880,11 @@ func (a *AddOrganizationConnectionResponseContent) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *AddOrganizationConnectionResponseContent) SetConnectionId(connectionId *string) {
-	a.ConnectionId = connectionId
-	a.require(addOrganizationConnectionResponseContentFieldConnectionId)
+func (a *AddOrganizationConnectionResponseContent) SetConnectionID(connectionID *string) {
+	a.ConnectionID = connectionID
+	a.require(addOrganizationConnectionResponseContentFieldConnectionID)
 }
 
 // SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
@@ -3955,7 +3955,7 @@ func (a *AddOrganizationConnectionResponseContent) String() string {
 }
 
 // IP address to check.
-type AnomalyIpFormat = string
+type AnomalyIPFormat = string
 
 // Data related to the user that does affect the application's core functionality.
 type AppMetadata = map[string]interface{}
@@ -3963,8 +3963,8 @@ type AppMetadata = map[string]interface{}
 type AssessorsTypeEnum = string
 
 var (
-	associateOrganizationClientGrantResponseContentFieldId                   = big.NewInt(1 << 0)
-	associateOrganizationClientGrantResponseContentFieldClientId             = big.NewInt(1 << 1)
+	associateOrganizationClientGrantResponseContentFieldID                   = big.NewInt(1 << 0)
+	associateOrganizationClientGrantResponseContentFieldClientID             = big.NewInt(1 << 1)
 	associateOrganizationClientGrantResponseContentFieldAudience             = big.NewInt(1 << 2)
 	associateOrganizationClientGrantResponseContentFieldScope                = big.NewInt(1 << 3)
 	associateOrganizationClientGrantResponseContentFieldOrganizationUsage    = big.NewInt(1 << 4)
@@ -3973,9 +3973,9 @@ var (
 
 type AssociateOrganizationClientGrantResponseContent struct {
 	// ID of the client grant.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the client.
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// The audience (API identifier) of this client grant
 	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
 	// Scopes allowed for this client grant.
@@ -3991,18 +3991,18 @@ type AssociateOrganizationClientGrantResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *AssociateOrganizationClientGrantResponseContent) GetId() string {
-	if a == nil || a.Id == nil {
+func (a *AssociateOrganizationClientGrantResponseContent) GetID() string {
+	if a == nil || a.ID == nil {
 		return ""
 	}
-	return *a.Id
+	return *a.ID
 }
 
-func (a *AssociateOrganizationClientGrantResponseContent) GetClientId() string {
-	if a == nil || a.ClientId == nil {
+func (a *AssociateOrganizationClientGrantResponseContent) GetClientID() string {
+	if a == nil || a.ClientID == nil {
 		return ""
 	}
-	return *a.ClientId
+	return *a.ClientID
 }
 
 func (a *AssociateOrganizationClientGrantResponseContent) GetAudience() string {
@@ -4044,18 +4044,18 @@ func (a *AssociateOrganizationClientGrantResponseContent) require(field *big.Int
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *AssociateOrganizationClientGrantResponseContent) SetId(id *string) {
-	a.Id = id
-	a.require(associateOrganizationClientGrantResponseContentFieldId)
+func (a *AssociateOrganizationClientGrantResponseContent) SetID(id *string) {
+	a.ID = id
+	a.require(associateOrganizationClientGrantResponseContentFieldID)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *AssociateOrganizationClientGrantResponseContent) SetClientId(clientId *string) {
-	a.ClientId = clientId
-	a.require(associateOrganizationClientGrantResponseContentFieldClientId)
+func (a *AssociateOrganizationClientGrantResponseContent) SetClientID(clientID *string) {
+	a.ClientID = clientID
+	a.require(associateOrganizationClientGrantResponseContentFieldClientID)
 }
 
 // SetAudience sets the Audience field and marks it as non-optional;
@@ -5499,7 +5499,7 @@ func (b *BrandingThemeFontTitle) String() string {
 var (
 	brandingThemeFontsFieldBodyText          = big.NewInt(1 << 0)
 	brandingThemeFontsFieldButtonsText       = big.NewInt(1 << 1)
-	brandingThemeFontsFieldFontUrl           = big.NewInt(1 << 2)
+	brandingThemeFontsFieldFontURL           = big.NewInt(1 << 2)
 	brandingThemeFontsFieldInputLabels       = big.NewInt(1 << 3)
 	brandingThemeFontsFieldLinks             = big.NewInt(1 << 4)
 	brandingThemeFontsFieldLinksStyle        = big.NewInt(1 << 5)
@@ -5512,7 +5512,7 @@ type BrandingThemeFonts struct {
 	BodyText    *BrandingThemeFontBodyText    `json:"body_text" url:"body_text"`
 	ButtonsText *BrandingThemeFontButtonsText `json:"buttons_text" url:"buttons_text"`
 	// Font URL
-	FontUrl     string                          `json:"font_url" url:"font_url"`
+	FontURL     string                          `json:"font_url" url:"font_url"`
 	InputLabels *BrandingThemeFontInputLabels   `json:"input_labels" url:"input_labels"`
 	Links       *BrandingThemeFontLinks         `json:"links" url:"links"`
 	LinksStyle  BrandingThemeFontLinksStyleEnum `json:"links_style" url:"links_style"`
@@ -5542,11 +5542,11 @@ func (b *BrandingThemeFonts) GetButtonsText() *BrandingThemeFontButtonsText {
 	return b.ButtonsText
 }
 
-func (b *BrandingThemeFonts) GetFontUrl() string {
+func (b *BrandingThemeFonts) GetFontURL() string {
 	if b == nil {
 		return ""
 	}
-	return b.FontUrl
+	return b.FontURL
 }
 
 func (b *BrandingThemeFonts) GetInputLabels() *BrandingThemeFontInputLabels {
@@ -5616,11 +5616,11 @@ func (b *BrandingThemeFonts) SetButtonsText(buttonsText *BrandingThemeFontButton
 	b.require(brandingThemeFontsFieldButtonsText)
 }
 
-// SetFontUrl sets the FontUrl field and marks it as non-optional;
+// SetFontURL sets the FontURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BrandingThemeFonts) SetFontUrl(fontUrl string) {
-	b.FontUrl = fontUrl
-	b.require(brandingThemeFontsFieldFontUrl)
+func (b *BrandingThemeFonts) SetFontURL(fontURL string) {
+	b.FontURL = fontURL
+	b.require(brandingThemeFontsFieldFontURL)
 }
 
 // SetInputLabels sets the InputLabels field and marks it as non-optional;
@@ -5706,7 +5706,7 @@ func (b *BrandingThemeFonts) String() string {
 
 var (
 	brandingThemePageBackgroundFieldBackgroundColor    = big.NewInt(1 << 0)
-	brandingThemePageBackgroundFieldBackgroundImageUrl = big.NewInt(1 << 1)
+	brandingThemePageBackgroundFieldBackgroundImageURL = big.NewInt(1 << 1)
 	brandingThemePageBackgroundFieldPageLayout         = big.NewInt(1 << 2)
 )
 
@@ -5714,7 +5714,7 @@ type BrandingThemePageBackground struct {
 	// Background color
 	BackgroundColor string `json:"background_color" url:"background_color"`
 	// Background image url
-	BackgroundImageUrl string                                    `json:"background_image_url" url:"background_image_url"`
+	BackgroundImageURL string                                    `json:"background_image_url" url:"background_image_url"`
 	PageLayout         BrandingThemePageBackgroundPageLayoutEnum `json:"page_layout" url:"page_layout"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -5731,11 +5731,11 @@ func (b *BrandingThemePageBackground) GetBackgroundColor() string {
 	return b.BackgroundColor
 }
 
-func (b *BrandingThemePageBackground) GetBackgroundImageUrl() string {
+func (b *BrandingThemePageBackground) GetBackgroundImageURL() string {
 	if b == nil {
 		return ""
 	}
-	return b.BackgroundImageUrl
+	return b.BackgroundImageURL
 }
 
 func (b *BrandingThemePageBackground) GetPageLayout() BrandingThemePageBackgroundPageLayoutEnum {
@@ -5763,11 +5763,11 @@ func (b *BrandingThemePageBackground) SetBackgroundColor(backgroundColor string)
 	b.require(brandingThemePageBackgroundFieldBackgroundColor)
 }
 
-// SetBackgroundImageUrl sets the BackgroundImageUrl field and marks it as non-optional;
+// SetBackgroundImageURL sets the BackgroundImageURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BrandingThemePageBackground) SetBackgroundImageUrl(backgroundImageUrl string) {
-	b.BackgroundImageUrl = backgroundImageUrl
-	b.require(brandingThemePageBackgroundFieldBackgroundImageUrl)
+func (b *BrandingThemePageBackground) SetBackgroundImageURL(backgroundImageURL string) {
+	b.BackgroundImageURL = backgroundImageURL
+	b.require(brandingThemePageBackgroundFieldBackgroundImageURL)
 }
 
 // SetPageLayout sets the PageLayout field and marks it as non-optional;
@@ -5846,7 +5846,7 @@ var (
 	brandingThemeWidgetFieldHeaderTextAlignment = big.NewInt(1 << 0)
 	brandingThemeWidgetFieldLogoHeight          = big.NewInt(1 << 1)
 	brandingThemeWidgetFieldLogoPosition        = big.NewInt(1 << 2)
-	brandingThemeWidgetFieldLogoUrl             = big.NewInt(1 << 3)
+	brandingThemeWidgetFieldLogoURL             = big.NewInt(1 << 3)
 	brandingThemeWidgetFieldSocialButtonsLayout = big.NewInt(1 << 4)
 )
 
@@ -5856,7 +5856,7 @@ type BrandingThemeWidget struct {
 	LogoHeight   float64                             `json:"logo_height" url:"logo_height"`
 	LogoPosition BrandingThemeWidgetLogoPositionEnum `json:"logo_position" url:"logo_position"`
 	// Logo url
-	LogoUrl             string                                     `json:"logo_url" url:"logo_url"`
+	LogoURL             string                                     `json:"logo_url" url:"logo_url"`
 	SocialButtonsLayout BrandingThemeWidgetSocialButtonsLayoutEnum `json:"social_buttons_layout" url:"social_buttons_layout"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -5887,11 +5887,11 @@ func (b *BrandingThemeWidget) GetLogoPosition() BrandingThemeWidgetLogoPositionE
 	return b.LogoPosition
 }
 
-func (b *BrandingThemeWidget) GetLogoUrl() string {
+func (b *BrandingThemeWidget) GetLogoURL() string {
 	if b == nil {
 		return ""
 	}
-	return b.LogoUrl
+	return b.LogoURL
 }
 
 func (b *BrandingThemeWidget) GetSocialButtonsLayout() BrandingThemeWidgetSocialButtonsLayoutEnum {
@@ -5933,11 +5933,11 @@ func (b *BrandingThemeWidget) SetLogoPosition(logoPosition BrandingThemeWidgetLo
 	b.require(brandingThemeWidgetFieldLogoPosition)
 }
 
-// SetLogoUrl sets the LogoUrl field and marks it as non-optional;
+// SetLogoURL sets the LogoURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BrandingThemeWidget) SetLogoUrl(logoUrl string) {
-	b.LogoUrl = logoUrl
-	b.require(brandingThemeWidgetFieldLogoUrl)
+func (b *BrandingThemeWidget) SetLogoURL(logoURL string) {
+	b.LogoURL = logoURL
+	b.require(brandingThemeWidgetFieldLogoURL)
 }
 
 // SetSocialButtonsLayout sets the SocialButtonsLayout field and marks it as non-optional;
@@ -6443,7 +6443,7 @@ func (b *BreachedPasswordDetectionStage) String() string {
 }
 
 var (
-	clientCredentialFieldId               = big.NewInt(1 << 0)
+	clientCredentialFieldID               = big.NewInt(1 << 0)
 	clientCredentialFieldName             = big.NewInt(1 << 1)
 	clientCredentialFieldKid              = big.NewInt(1 << 2)
 	clientCredentialFieldAlg              = big.NewInt(1 << 3)
@@ -6457,7 +6457,7 @@ var (
 
 type ClientCredential struct {
 	// ID of the credential. Generated on creation.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name given to the credential by the user.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The key identifier of the credential, generated on creation.
@@ -6483,11 +6483,11 @@ type ClientCredential struct {
 	rawJSON json.RawMessage
 }
 
-func (c *ClientCredential) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *ClientCredential) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *ClientCredential) GetName() string {
@@ -6564,11 +6564,11 @@ func (c *ClientCredential) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ClientCredential) SetId(id *string) {
-	c.Id = id
-	c.require(clientCredentialFieldId)
+func (c *ClientCredential) SetID(id *string) {
+	c.ID = id
+	c.require(clientCredentialFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -6742,9 +6742,9 @@ func (c ClientCredentialTypeEnum) Ptr() *ClientCredentialTypeEnum {
 }
 
 var (
-	connectedAccountFieldId           = big.NewInt(1 << 0)
+	connectedAccountFieldID           = big.NewInt(1 << 0)
 	connectedAccountFieldConnection   = big.NewInt(1 << 1)
-	connectedAccountFieldConnectionId = big.NewInt(1 << 2)
+	connectedAccountFieldConnectionID = big.NewInt(1 << 2)
 	connectedAccountFieldStrategy     = big.NewInt(1 << 3)
 	connectedAccountFieldAccessType   = big.NewInt(1 << 4)
 	connectedAccountFieldScopes       = big.NewInt(1 << 5)
@@ -6754,11 +6754,11 @@ var (
 
 type ConnectedAccount struct {
 	// The unique identifier for the connected account.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// The name of the connection associated with the account.
 	Connection string `json:"connection" url:"connection"`
 	// The unique identifier of the connection associated with the account.
-	ConnectionId string `json:"connection_id" url:"connection_id"`
+	ConnectionID string `json:"connection_id" url:"connection_id"`
 	// The authentication strategy used by the connection.
 	Strategy   string                         `json:"strategy" url:"strategy"`
 	AccessType ConnectedAccountAccessTypeEnum `json:"access_type" url:"access_type"`
@@ -6776,11 +6776,11 @@ type ConnectedAccount struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *ConnectedAccount) GetId() string {
+func (c *ConnectedAccount) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *ConnectedAccount) GetConnection() string {
@@ -6790,11 +6790,11 @@ func (c *ConnectedAccount) GetConnection() string {
 	return c.Connection
 }
 
-func (c *ConnectedAccount) GetConnectionId() string {
+func (c *ConnectedAccount) GetConnectionID() string {
 	if c == nil {
 		return ""
 	}
-	return c.ConnectionId
+	return c.ConnectionID
 }
 
 func (c *ConnectedAccount) GetStrategy() string {
@@ -6836,11 +6836,11 @@ func (c *ConnectedAccount) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectedAccount) SetId(id string) {
-	c.Id = id
-	c.require(connectedAccountFieldId)
+func (c *ConnectedAccount) SetID(id string) {
+	c.ID = id
+	c.require(connectedAccountFieldID)
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -6850,11 +6850,11 @@ func (c *ConnectedAccount) SetConnection(connection string) {
 	c.require(connectedAccountFieldConnection)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectedAccount) SetConnectionId(connectionId string) {
-	c.ConnectionId = connectionId
-	c.require(connectedAccountFieldConnectionId)
+func (c *ConnectedAccount) SetConnectionID(connectionID string) {
+	c.ConnectionID = connectionID
+	c.require(connectedAccountFieldConnectionID)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -6947,12 +6947,12 @@ func (c *ConnectedAccount) String() string {
 type ConnectedAccountAccessTypeEnum = string
 
 var (
-	connectionEnabledClientFieldClientId = big.NewInt(1 << 0)
+	connectionEnabledClientFieldClientID = big.NewInt(1 << 0)
 )
 
 type ConnectionEnabledClient struct {
 	// The client id
-	ClientId string `json:"client_id" url:"client_id"`
+	ClientID string `json:"client_id" url:"client_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -6962,11 +6962,11 @@ type ConnectionEnabledClient struct {
 	rawJSON json.RawMessage
 }
 
-func (c *ConnectionEnabledClient) GetClientId() string {
+func (c *ConnectionEnabledClient) GetClientID() string {
 	if c == nil {
 		return ""
 	}
-	return c.ClientId
+	return c.ClientID
 }
 
 func (c *ConnectionEnabledClient) GetExtraProperties() map[string]interface{} {
@@ -6980,11 +6980,11 @@ func (c *ConnectionEnabledClient) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionEnabledClient) SetClientId(clientId string) {
-	c.ClientId = clientId
-	c.require(connectionEnabledClientFieldClientId)
+func (c *ConnectionEnabledClient) SetClientID(clientID string) {
+	c.ClientID = clientID
+	c.require(connectionEnabledClientFieldClientID)
 }
 
 func (c *ConnectionEnabledClient) UnmarshalJSON(data []byte) error {
@@ -7034,7 +7034,7 @@ var (
 	connectionForListFieldName               = big.NewInt(1 << 0)
 	connectionForListFieldDisplayName        = big.NewInt(1 << 1)
 	connectionForListFieldOptions            = big.NewInt(1 << 2)
-	connectionForListFieldId                 = big.NewInt(1 << 3)
+	connectionForListFieldID                 = big.NewInt(1 << 3)
 	connectionForListFieldStrategy           = big.NewInt(1 << 4)
 	connectionForListFieldRealms             = big.NewInt(1 << 5)
 	connectionForListFieldIsDomainConnection = big.NewInt(1 << 6)
@@ -7049,7 +7049,7 @@ type ConnectionForList struct {
 	DisplayName *string            `json:"display_name,omitempty" url:"display_name,omitempty"`
 	Options     *ConnectionOptions `json:"options,omitempty" url:"options,omitempty"`
 	// The connection's identifier
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The type of the connection, related to the identity provider
 	Strategy *string `json:"strategy,omitempty" url:"strategy,omitempty"`
 	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
@@ -7088,11 +7088,11 @@ func (c *ConnectionForList) GetOptions() ConnectionOptions {
 	return *c.Options
 }
 
-func (c *ConnectionForList) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *ConnectionForList) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *ConnectionForList) GetStrategy() string {
@@ -7162,11 +7162,11 @@ func (c *ConnectionForList) SetOptions(options *ConnectionOptions) {
 	c.require(connectionForListFieldOptions)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionForList) SetId(id *string) {
-	c.Id = id
-	c.require(connectionForListFieldId)
+func (c *ConnectionForList) SetID(id *string) {
+	c.ID = id
+	c.require(connectionForListFieldID)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -7567,7 +7567,7 @@ const (
 	ConnectionStrategyEnumGoogleApps          ConnectionStrategyEnum = "google-apps"
 	ConnectionStrategyEnumGoogleOauth2        ConnectionStrategyEnum = "google-oauth2"
 	ConnectionStrategyEnumInstagram           ConnectionStrategyEnum = "instagram"
-	ConnectionStrategyEnumIp                  ConnectionStrategyEnum = "ip"
+	ConnectionStrategyEnumIP                  ConnectionStrategyEnum = "ip"
 	ConnectionStrategyEnumLine                ConnectionStrategyEnum = "line"
 	ConnectionStrategyEnumLinkedin            ConnectionStrategyEnum = "linkedin"
 	ConnectionStrategyEnumMiicard             ConnectionStrategyEnum = "miicard"
@@ -7661,7 +7661,7 @@ func NewConnectionStrategyEnumFromString(s string) (ConnectionStrategyEnum, erro
 	case "instagram":
 		return ConnectionStrategyEnumInstagram, nil
 	case "ip":
-		return ConnectionStrategyEnumIp, nil
+		return ConnectionStrategyEnumIP, nil
 	case "line":
 		return ConnectionStrategyEnumLine, nil
 	case "linkedin":
@@ -7748,7 +7748,7 @@ type ConnectionsMetadata = map[string]*string
 
 // Phone provider configuration schema
 var (
-	createBrandingPhoneProviderResponseContentFieldId            = big.NewInt(1 << 0)
+	createBrandingPhoneProviderResponseContentFieldID            = big.NewInt(1 << 0)
 	createBrandingPhoneProviderResponseContentFieldTenant        = big.NewInt(1 << 1)
 	createBrandingPhoneProviderResponseContentFieldName          = big.NewInt(1 << 2)
 	createBrandingPhoneProviderResponseContentFieldChannel       = big.NewInt(1 << 3)
@@ -7759,7 +7759,7 @@ var (
 )
 
 type CreateBrandingPhoneProviderResponseContent struct {
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the tenant
 	Tenant  *string                   `json:"tenant,omitempty" url:"tenant,omitempty"`
 	Name    PhoneProviderNameEnum     `json:"name" url:"name"`
@@ -7779,11 +7779,11 @@ type CreateBrandingPhoneProviderResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateBrandingPhoneProviderResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateBrandingPhoneProviderResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *CreateBrandingPhoneProviderResponseContent) GetTenant() string {
@@ -7839,11 +7839,11 @@ func (c *CreateBrandingPhoneProviderResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateBrandingPhoneProviderResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createBrandingPhoneProviderResponseContentFieldId)
+func (c *CreateBrandingPhoneProviderResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createBrandingPhoneProviderResponseContentFieldID)
 }
 
 // SetTenant sets the Tenant field and marks it as non-optional;
@@ -7952,7 +7952,7 @@ var (
 	createBrandingThemeResponseContentFieldDisplayName    = big.NewInt(1 << 2)
 	createBrandingThemeResponseContentFieldFonts          = big.NewInt(1 << 3)
 	createBrandingThemeResponseContentFieldPageBackground = big.NewInt(1 << 4)
-	createBrandingThemeResponseContentFieldThemeId        = big.NewInt(1 << 5)
+	createBrandingThemeResponseContentFieldThemeID        = big.NewInt(1 << 5)
 	createBrandingThemeResponseContentFieldWidget         = big.NewInt(1 << 6)
 )
 
@@ -7964,7 +7964,7 @@ type CreateBrandingThemeResponseContent struct {
 	Fonts          *BrandingThemeFonts          `json:"fonts" url:"fonts"`
 	PageBackground *BrandingThemePageBackground `json:"page_background" url:"page_background"`
 	// Theme Id
-	ThemeId string               `json:"themeId" url:"themeId"`
+	ThemeID string               `json:"themeId" url:"themeId"`
 	Widget  *BrandingThemeWidget `json:"widget" url:"widget"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -8009,11 +8009,11 @@ func (c *CreateBrandingThemeResponseContent) GetPageBackground() *BrandingThemeP
 	return c.PageBackground
 }
 
-func (c *CreateBrandingThemeResponseContent) GetThemeId() string {
+func (c *CreateBrandingThemeResponseContent) GetThemeID() string {
 	if c == nil {
 		return ""
 	}
-	return c.ThemeId
+	return c.ThemeID
 }
 
 func (c *CreateBrandingThemeResponseContent) GetWidget() *BrandingThemeWidget {
@@ -8069,11 +8069,11 @@ func (c *CreateBrandingThemeResponseContent) SetPageBackground(pageBackground *B
 	c.require(createBrandingThemeResponseContentFieldPageBackground)
 }
 
-// SetThemeId sets the ThemeId field and marks it as non-optional;
+// SetThemeID sets the ThemeID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateBrandingThemeResponseContent) SetThemeId(themeId string) {
-	c.ThemeId = themeId
-	c.require(createBrandingThemeResponseContentFieldThemeId)
+func (c *CreateBrandingThemeResponseContent) SetThemeID(themeID string) {
+	c.ThemeID = themeID
+	c.require(createBrandingThemeResponseContentFieldThemeID)
 }
 
 // SetWidget sets the Widget field and marks it as non-optional;
@@ -8817,8 +8817,8 @@ var (
 	createExportUsersResponseContentFieldStatus       = big.NewInt(1 << 0)
 	createExportUsersResponseContentFieldType         = big.NewInt(1 << 1)
 	createExportUsersResponseContentFieldCreatedAt    = big.NewInt(1 << 2)
-	createExportUsersResponseContentFieldId           = big.NewInt(1 << 3)
-	createExportUsersResponseContentFieldConnectionId = big.NewInt(1 << 4)
+	createExportUsersResponseContentFieldID           = big.NewInt(1 << 3)
+	createExportUsersResponseContentFieldConnectionID = big.NewInt(1 << 4)
 	createExportUsersResponseContentFieldFormat       = big.NewInt(1 << 5)
 	createExportUsersResponseContentFieldLimit        = big.NewInt(1 << 6)
 	createExportUsersResponseContentFieldFields       = big.NewInt(1 << 7)
@@ -8832,9 +8832,9 @@ type CreateExportUsersResponseContent struct {
 	// When this job was created.
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// ID of this job.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// connection_id of the connection from which users will be exported.
-	ConnectionId *string            `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string            `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	Format       *JobFileFormatEnum `json:"format,omitempty" url:"format,omitempty"`
 	// Limit the number of records.
 	Limit *int `json:"limit,omitempty" url:"limit,omitempty"`
@@ -8870,18 +8870,18 @@ func (c *CreateExportUsersResponseContent) GetCreatedAt() string {
 	return *c.CreatedAt
 }
 
-func (c *CreateExportUsersResponseContent) GetId() string {
+func (c *CreateExportUsersResponseContent) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
-func (c *CreateExportUsersResponseContent) GetConnectionId() string {
-	if c == nil || c.ConnectionId == nil {
+func (c *CreateExportUsersResponseContent) GetConnectionID() string {
+	if c == nil || c.ConnectionID == nil {
 		return ""
 	}
-	return *c.ConnectionId
+	return *c.ConnectionID
 }
 
 func (c *CreateExportUsersResponseContent) GetFormat() JobFileFormatEnum {
@@ -8937,18 +8937,18 @@ func (c *CreateExportUsersResponseContent) SetCreatedAt(createdAt *string) {
 	c.require(createExportUsersResponseContentFieldCreatedAt)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExportUsersResponseContent) SetId(id string) {
-	c.Id = id
-	c.require(createExportUsersResponseContentFieldId)
+func (c *CreateExportUsersResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createExportUsersResponseContentFieldID)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExportUsersResponseContent) SetConnectionId(connectionId *string) {
-	c.ConnectionId = connectionId
-	c.require(createExportUsersResponseContentFieldConnectionId)
+func (c *CreateExportUsersResponseContent) SetConnectionID(connectionID *string) {
+	c.ConnectionID = connectionID
+	c.require(createExportUsersResponseContentFieldConnectionID)
 }
 
 // SetFormat sets the Format field and marks it as non-optional;
@@ -9016,17 +9016,17 @@ func (c *CreateExportUsersResponseContent) String() string {
 }
 
 type CreateFlowsVaultConnectionActivecampaign struct {
-	CreateFlowsVaultConnectionActivecampaignApiKey        *CreateFlowsVaultConnectionActivecampaignApiKey
+	CreateFlowsVaultConnectionActivecampaignAPIKey        *CreateFlowsVaultConnectionActivecampaignAPIKey
 	CreateFlowsVaultConnectionActivecampaignUninitialized *CreateFlowsVaultConnectionActivecampaignUninitialized
 
 	typ string
 }
 
-func (c *CreateFlowsVaultConnectionActivecampaign) GetCreateFlowsVaultConnectionActivecampaignApiKey() *CreateFlowsVaultConnectionActivecampaignApiKey {
+func (c *CreateFlowsVaultConnectionActivecampaign) GetCreateFlowsVaultConnectionActivecampaignAPIKey() *CreateFlowsVaultConnectionActivecampaignAPIKey {
 	if c == nil {
 		return nil
 	}
-	return c.CreateFlowsVaultConnectionActivecampaignApiKey
+	return c.CreateFlowsVaultConnectionActivecampaignAPIKey
 }
 
 func (c *CreateFlowsVaultConnectionActivecampaign) GetCreateFlowsVaultConnectionActivecampaignUninitialized() *CreateFlowsVaultConnectionActivecampaignUninitialized {
@@ -9037,10 +9037,10 @@ func (c *CreateFlowsVaultConnectionActivecampaign) GetCreateFlowsVaultConnection
 }
 
 func (c *CreateFlowsVaultConnectionActivecampaign) UnmarshalJSON(data []byte) error {
-	valueCreateFlowsVaultConnectionActivecampaignApiKey := new(CreateFlowsVaultConnectionActivecampaignApiKey)
-	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionActivecampaignApiKey); err == nil {
-		c.typ = "CreateFlowsVaultConnectionActivecampaignApiKey"
-		c.CreateFlowsVaultConnectionActivecampaignApiKey = valueCreateFlowsVaultConnectionActivecampaignApiKey
+	valueCreateFlowsVaultConnectionActivecampaignAPIKey := new(CreateFlowsVaultConnectionActivecampaignAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionActivecampaignAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionActivecampaignAPIKey"
+		c.CreateFlowsVaultConnectionActivecampaignAPIKey = valueCreateFlowsVaultConnectionActivecampaignAPIKey
 		return nil
 	}
 	valueCreateFlowsVaultConnectionActivecampaignUninitialized := new(CreateFlowsVaultConnectionActivecampaignUninitialized)
@@ -9053,8 +9053,8 @@ func (c *CreateFlowsVaultConnectionActivecampaign) UnmarshalJSON(data []byte) er
 }
 
 func (c CreateFlowsVaultConnectionActivecampaign) MarshalJSON() ([]byte, error) {
-	if c.typ == "CreateFlowsVaultConnectionActivecampaignApiKey" || c.CreateFlowsVaultConnectionActivecampaignApiKey != nil {
-		return json.Marshal(c.CreateFlowsVaultConnectionActivecampaignApiKey)
+	if c.typ == "CreateFlowsVaultConnectionActivecampaignAPIKey" || c.CreateFlowsVaultConnectionActivecampaignAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionActivecampaignAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionActivecampaignUninitialized" || c.CreateFlowsVaultConnectionActivecampaignUninitialized != nil {
 		return json.Marshal(c.CreateFlowsVaultConnectionActivecampaignUninitialized)
@@ -9063,13 +9063,13 @@ func (c CreateFlowsVaultConnectionActivecampaign) MarshalJSON() ([]byte, error) 
 }
 
 type CreateFlowsVaultConnectionActivecampaignVisitor interface {
-	VisitCreateFlowsVaultConnectionActivecampaignApiKey(*CreateFlowsVaultConnectionActivecampaignApiKey) error
+	VisitCreateFlowsVaultConnectionActivecampaignAPIKey(*CreateFlowsVaultConnectionActivecampaignAPIKey) error
 	VisitCreateFlowsVaultConnectionActivecampaignUninitialized(*CreateFlowsVaultConnectionActivecampaignUninitialized) error
 }
 
 func (c *CreateFlowsVaultConnectionActivecampaign) Accept(visitor CreateFlowsVaultConnectionActivecampaignVisitor) error {
-	if c.typ == "CreateFlowsVaultConnectionActivecampaignApiKey" || c.CreateFlowsVaultConnectionActivecampaignApiKey != nil {
-		return visitor.VisitCreateFlowsVaultConnectionActivecampaignApiKey(c.CreateFlowsVaultConnectionActivecampaignApiKey)
+	if c.typ == "CreateFlowsVaultConnectionActivecampaignAPIKey" || c.CreateFlowsVaultConnectionActivecampaignAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionActivecampaignAPIKey(c.CreateFlowsVaultConnectionActivecampaignAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionActivecampaignUninitialized" || c.CreateFlowsVaultConnectionActivecampaignUninitialized != nil {
 		return visitor.VisitCreateFlowsVaultConnectionActivecampaignUninitialized(c.CreateFlowsVaultConnectionActivecampaignUninitialized)
@@ -9078,16 +9078,16 @@ func (c *CreateFlowsVaultConnectionActivecampaign) Accept(visitor CreateFlowsVau
 }
 
 var (
-	createFlowsVaultConnectionActivecampaignApiKeyFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionActivecampaignApiKeyFieldAppId = big.NewInt(1 << 1)
-	createFlowsVaultConnectionActivecampaignApiKeyFieldSetup = big.NewInt(1 << 2)
+	createFlowsVaultConnectionActivecampaignAPIKeyFieldName  = big.NewInt(1 << 0)
+	createFlowsVaultConnectionActivecampaignAPIKeyFieldAppID = big.NewInt(1 << 1)
+	createFlowsVaultConnectionActivecampaignAPIKeyFieldSetup = big.NewInt(1 << 2)
 )
 
-type CreateFlowsVaultConnectionActivecampaignApiKey struct {
+type CreateFlowsVaultConnectionActivecampaignAPIKey struct {
 	// Flows Vault Connection name.
 	Name  string                                      `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdActivecampaignEnum `json:"app_id" url:"app_id"`
-	Setup *FlowsVaultConnectioSetupApiKeyWithBaseUrl  `json:"setup" url:"setup"`
+	AppID FlowsVaultConnectionAppIDActivecampaignEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupAPIKeyWithBaseURL  `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9096,25 +9096,25 @@ type CreateFlowsVaultConnectionActivecampaignApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateFlowsVaultConnectionActivecampaignApiKey) GetName() string {
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) GetName() string {
 	if c == nil {
 		return ""
 	}
 	return c.Name
 }
 
-func (c *CreateFlowsVaultConnectionActivecampaignApiKey) GetSetup() *FlowsVaultConnectioSetupApiKeyWithBaseUrl {
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) GetSetup() *FlowsVaultConnectioSetupAPIKeyWithBaseURL {
 	if c == nil {
 		return nil
 	}
 	return c.Setup
 }
 
-func (c *CreateFlowsVaultConnectionActivecampaignApiKey) GetExtraProperties() map[string]interface{} {
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateFlowsVaultConnectionActivecampaignApiKey) require(field *big.Int) {
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
@@ -9123,32 +9123,32 @@ func (c *CreateFlowsVaultConnectionActivecampaignApiKey) require(field *big.Int)
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionActivecampaignApiKey) SetName(name string) {
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) SetName(name string) {
 	c.Name = name
-	c.require(createFlowsVaultConnectionActivecampaignApiKeyFieldName)
+	c.require(createFlowsVaultConnectionActivecampaignAPIKeyFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionActivecampaignApiKey) SetAppId(appId FlowsVaultConnectionAppIdActivecampaignEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionActivecampaignApiKeyFieldAppId)
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) SetAppID(appID FlowsVaultConnectionAppIDActivecampaignEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionActivecampaignAPIKeyFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionActivecampaignApiKey) SetSetup(setup *FlowsVaultConnectioSetupApiKeyWithBaseUrl) {
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) SetSetup(setup *FlowsVaultConnectioSetupAPIKeyWithBaseURL) {
 	c.Setup = setup
-	c.require(createFlowsVaultConnectionActivecampaignApiKeyFieldSetup)
+	c.require(createFlowsVaultConnectionActivecampaignAPIKeyFieldSetup)
 }
 
-func (c *CreateFlowsVaultConnectionActivecampaignApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateFlowsVaultConnectionActivecampaignApiKey
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionActivecampaignAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateFlowsVaultConnectionActivecampaignApiKey(value)
+	*c = CreateFlowsVaultConnectionActivecampaignAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -9158,8 +9158,8 @@ func (c *CreateFlowsVaultConnectionActivecampaignApiKey) UnmarshalJSON(data []by
 	return nil
 }
 
-func (c *CreateFlowsVaultConnectionActivecampaignApiKey) MarshalJSON() ([]byte, error) {
-	type embed CreateFlowsVaultConnectionActivecampaignApiKey
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) MarshalJSON() ([]byte, error) {
+	type embed CreateFlowsVaultConnectionActivecampaignAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -9169,7 +9169,7 @@ func (c *CreateFlowsVaultConnectionActivecampaignApiKey) MarshalJSON() ([]byte, 
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateFlowsVaultConnectionActivecampaignApiKey) String() string {
+func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -9183,13 +9183,13 @@ func (c *CreateFlowsVaultConnectionActivecampaignApiKey) String() string {
 
 var (
 	createFlowsVaultConnectionActivecampaignUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionActivecampaignUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionActivecampaignUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionActivecampaignUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                                      `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdActivecampaignEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDActivecampaignEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9223,11 +9223,11 @@ func (c *CreateFlowsVaultConnectionActivecampaignUninitialized) SetName(name str
 	c.require(createFlowsVaultConnectionActivecampaignUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionActivecampaignUninitialized) SetAppId(appId FlowsVaultConnectionAppIdActivecampaignEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionActivecampaignUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionActivecampaignUninitialized) SetAppID(appID FlowsVaultConnectionAppIDActivecampaignEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionActivecampaignUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionActivecampaignUninitialized) UnmarshalJSON(data []byte) error {
@@ -9270,17 +9270,17 @@ func (c *CreateFlowsVaultConnectionActivecampaignUninitialized) String() string 
 }
 
 type CreateFlowsVaultConnectionAirtable struct {
-	CreateFlowsVaultConnectionAirtableApiKey        *CreateFlowsVaultConnectionAirtableApiKey
+	CreateFlowsVaultConnectionAirtableAPIKey        *CreateFlowsVaultConnectionAirtableAPIKey
 	CreateFlowsVaultConnectionAirtableUninitialized *CreateFlowsVaultConnectionAirtableUninitialized
 
 	typ string
 }
 
-func (c *CreateFlowsVaultConnectionAirtable) GetCreateFlowsVaultConnectionAirtableApiKey() *CreateFlowsVaultConnectionAirtableApiKey {
+func (c *CreateFlowsVaultConnectionAirtable) GetCreateFlowsVaultConnectionAirtableAPIKey() *CreateFlowsVaultConnectionAirtableAPIKey {
 	if c == nil {
 		return nil
 	}
-	return c.CreateFlowsVaultConnectionAirtableApiKey
+	return c.CreateFlowsVaultConnectionAirtableAPIKey
 }
 
 func (c *CreateFlowsVaultConnectionAirtable) GetCreateFlowsVaultConnectionAirtableUninitialized() *CreateFlowsVaultConnectionAirtableUninitialized {
@@ -9291,10 +9291,10 @@ func (c *CreateFlowsVaultConnectionAirtable) GetCreateFlowsVaultConnectionAirtab
 }
 
 func (c *CreateFlowsVaultConnectionAirtable) UnmarshalJSON(data []byte) error {
-	valueCreateFlowsVaultConnectionAirtableApiKey := new(CreateFlowsVaultConnectionAirtableApiKey)
-	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAirtableApiKey); err == nil {
-		c.typ = "CreateFlowsVaultConnectionAirtableApiKey"
-		c.CreateFlowsVaultConnectionAirtableApiKey = valueCreateFlowsVaultConnectionAirtableApiKey
+	valueCreateFlowsVaultConnectionAirtableAPIKey := new(CreateFlowsVaultConnectionAirtableAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAirtableAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionAirtableAPIKey"
+		c.CreateFlowsVaultConnectionAirtableAPIKey = valueCreateFlowsVaultConnectionAirtableAPIKey
 		return nil
 	}
 	valueCreateFlowsVaultConnectionAirtableUninitialized := new(CreateFlowsVaultConnectionAirtableUninitialized)
@@ -9307,8 +9307,8 @@ func (c *CreateFlowsVaultConnectionAirtable) UnmarshalJSON(data []byte) error {
 }
 
 func (c CreateFlowsVaultConnectionAirtable) MarshalJSON() ([]byte, error) {
-	if c.typ == "CreateFlowsVaultConnectionAirtableApiKey" || c.CreateFlowsVaultConnectionAirtableApiKey != nil {
-		return json.Marshal(c.CreateFlowsVaultConnectionAirtableApiKey)
+	if c.typ == "CreateFlowsVaultConnectionAirtableAPIKey" || c.CreateFlowsVaultConnectionAirtableAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionAirtableAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionAirtableUninitialized" || c.CreateFlowsVaultConnectionAirtableUninitialized != nil {
 		return json.Marshal(c.CreateFlowsVaultConnectionAirtableUninitialized)
@@ -9317,13 +9317,13 @@ func (c CreateFlowsVaultConnectionAirtable) MarshalJSON() ([]byte, error) {
 }
 
 type CreateFlowsVaultConnectionAirtableVisitor interface {
-	VisitCreateFlowsVaultConnectionAirtableApiKey(*CreateFlowsVaultConnectionAirtableApiKey) error
+	VisitCreateFlowsVaultConnectionAirtableAPIKey(*CreateFlowsVaultConnectionAirtableAPIKey) error
 	VisitCreateFlowsVaultConnectionAirtableUninitialized(*CreateFlowsVaultConnectionAirtableUninitialized) error
 }
 
 func (c *CreateFlowsVaultConnectionAirtable) Accept(visitor CreateFlowsVaultConnectionAirtableVisitor) error {
-	if c.typ == "CreateFlowsVaultConnectionAirtableApiKey" || c.CreateFlowsVaultConnectionAirtableApiKey != nil {
-		return visitor.VisitCreateFlowsVaultConnectionAirtableApiKey(c.CreateFlowsVaultConnectionAirtableApiKey)
+	if c.typ == "CreateFlowsVaultConnectionAirtableAPIKey" || c.CreateFlowsVaultConnectionAirtableAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionAirtableAPIKey(c.CreateFlowsVaultConnectionAirtableAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionAirtableUninitialized" || c.CreateFlowsVaultConnectionAirtableUninitialized != nil {
 		return visitor.VisitCreateFlowsVaultConnectionAirtableUninitialized(c.CreateFlowsVaultConnectionAirtableUninitialized)
@@ -9332,16 +9332,16 @@ func (c *CreateFlowsVaultConnectionAirtable) Accept(visitor CreateFlowsVaultConn
 }
 
 var (
-	createFlowsVaultConnectionAirtableApiKeyFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionAirtableApiKeyFieldAppId = big.NewInt(1 << 1)
-	createFlowsVaultConnectionAirtableApiKeyFieldSetup = big.NewInt(1 << 2)
+	createFlowsVaultConnectionAirtableAPIKeyFieldName  = big.NewInt(1 << 0)
+	createFlowsVaultConnectionAirtableAPIKeyFieldAppID = big.NewInt(1 << 1)
+	createFlowsVaultConnectionAirtableAPIKeyFieldSetup = big.NewInt(1 << 2)
 )
 
-type CreateFlowsVaultConnectionAirtableApiKey struct {
+type CreateFlowsVaultConnectionAirtableAPIKey struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdAirtableEnum `json:"app_id" url:"app_id"`
-	Setup *FlowsVaultConnectioSetupApiKey       `json:"setup" url:"setup"`
+	AppID FlowsVaultConnectionAppIDAirtableEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupAPIKey       `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9350,25 +9350,25 @@ type CreateFlowsVaultConnectionAirtableApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateFlowsVaultConnectionAirtableApiKey) GetName() string {
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) GetName() string {
 	if c == nil {
 		return ""
 	}
 	return c.Name
 }
 
-func (c *CreateFlowsVaultConnectionAirtableApiKey) GetSetup() *FlowsVaultConnectioSetupApiKey {
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) GetSetup() *FlowsVaultConnectioSetupAPIKey {
 	if c == nil {
 		return nil
 	}
 	return c.Setup
 }
 
-func (c *CreateFlowsVaultConnectionAirtableApiKey) GetExtraProperties() map[string]interface{} {
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateFlowsVaultConnectionAirtableApiKey) require(field *big.Int) {
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
@@ -9377,32 +9377,32 @@ func (c *CreateFlowsVaultConnectionAirtableApiKey) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionAirtableApiKey) SetName(name string) {
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) SetName(name string) {
 	c.Name = name
-	c.require(createFlowsVaultConnectionAirtableApiKeyFieldName)
+	c.require(createFlowsVaultConnectionAirtableAPIKeyFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionAirtableApiKey) SetAppId(appId FlowsVaultConnectionAppIdAirtableEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionAirtableApiKeyFieldAppId)
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) SetAppID(appID FlowsVaultConnectionAppIDAirtableEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionAirtableAPIKeyFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionAirtableApiKey) SetSetup(setup *FlowsVaultConnectioSetupApiKey) {
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) SetSetup(setup *FlowsVaultConnectioSetupAPIKey) {
 	c.Setup = setup
-	c.require(createFlowsVaultConnectionAirtableApiKeyFieldSetup)
+	c.require(createFlowsVaultConnectionAirtableAPIKeyFieldSetup)
 }
 
-func (c *CreateFlowsVaultConnectionAirtableApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateFlowsVaultConnectionAirtableApiKey
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionAirtableAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateFlowsVaultConnectionAirtableApiKey(value)
+	*c = CreateFlowsVaultConnectionAirtableAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -9412,8 +9412,8 @@ func (c *CreateFlowsVaultConnectionAirtableApiKey) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-func (c *CreateFlowsVaultConnectionAirtableApiKey) MarshalJSON() ([]byte, error) {
-	type embed CreateFlowsVaultConnectionAirtableApiKey
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) MarshalJSON() ([]byte, error) {
+	type embed CreateFlowsVaultConnectionAirtableAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -9423,7 +9423,7 @@ func (c *CreateFlowsVaultConnectionAirtableApiKey) MarshalJSON() ([]byte, error)
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateFlowsVaultConnectionAirtableApiKey) String() string {
+func (c *CreateFlowsVaultConnectionAirtableAPIKey) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -9437,13 +9437,13 @@ func (c *CreateFlowsVaultConnectionAirtableApiKey) String() string {
 
 var (
 	createFlowsVaultConnectionAirtableUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionAirtableUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionAirtableUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionAirtableUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdAirtableEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDAirtableEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9477,11 +9477,11 @@ func (c *CreateFlowsVaultConnectionAirtableUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionAirtableUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionAirtableUninitialized) SetAppId(appId FlowsVaultConnectionAppIdAirtableEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionAirtableUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionAirtableUninitialized) SetAppID(appID FlowsVaultConnectionAppIDAirtableEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionAirtableUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionAirtableUninitialized) UnmarshalJSON(data []byte) error {
@@ -9587,14 +9587,14 @@ func (c *CreateFlowsVaultConnectionAuth0) Accept(visitor CreateFlowsVaultConnect
 
 var (
 	createFlowsVaultConnectionAuth0OauthAppFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionAuth0OauthAppFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionAuth0OauthAppFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionAuth0OauthAppFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionAuth0OauthApp struct {
 	// Flows Vault Connection name.
 	Name  string                             `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdAuth0Enum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDAuth0Enum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupOauthApp  `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -9636,11 +9636,11 @@ func (c *CreateFlowsVaultConnectionAuth0OauthApp) SetName(name string) {
 	c.require(createFlowsVaultConnectionAuth0OauthAppFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionAuth0OauthApp) SetAppId(appId FlowsVaultConnectionAppIdAuth0Enum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionAuth0OauthAppFieldAppId)
+func (c *CreateFlowsVaultConnectionAuth0OauthApp) SetAppID(appID FlowsVaultConnectionAppIDAuth0Enum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionAuth0OauthAppFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -9691,13 +9691,13 @@ func (c *CreateFlowsVaultConnectionAuth0OauthApp) String() string {
 
 var (
 	createFlowsVaultConnectionAuth0UninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionAuth0UninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionAuth0UninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionAuth0Uninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                             `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdAuth0Enum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDAuth0Enum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9731,11 +9731,11 @@ func (c *CreateFlowsVaultConnectionAuth0Uninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionAuth0UninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionAuth0Uninitialized) SetAppId(appId FlowsVaultConnectionAppIdAuth0Enum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionAuth0UninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionAuth0Uninitialized) SetAppID(appID FlowsVaultConnectionAppIDAuth0Enum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionAuth0UninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionAuth0Uninitialized) UnmarshalJSON(data []byte) error {
@@ -9841,14 +9841,14 @@ func (c *CreateFlowsVaultConnectionBigquery) Accept(visitor CreateFlowsVaultConn
 
 var (
 	createFlowsVaultConnectionBigqueryJwtFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionBigqueryJwtFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionBigqueryJwtFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionBigqueryJwtFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionBigqueryJwt struct {
 	// Flows Vault Connection name.
 	Name  string                                    `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdBigqueryEnum     `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDBigqueryEnum     `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupBigqueryOauthJwt `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -9890,11 +9890,11 @@ func (c *CreateFlowsVaultConnectionBigqueryJwt) SetName(name string) {
 	c.require(createFlowsVaultConnectionBigqueryJwtFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionBigqueryJwt) SetAppId(appId FlowsVaultConnectionAppIdBigqueryEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionBigqueryJwtFieldAppId)
+func (c *CreateFlowsVaultConnectionBigqueryJwt) SetAppID(appID FlowsVaultConnectionAppIDBigqueryEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionBigqueryJwtFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -9945,13 +9945,13 @@ func (c *CreateFlowsVaultConnectionBigqueryJwt) String() string {
 
 var (
 	createFlowsVaultConnectionBigqueryUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionBigqueryUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionBigqueryUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionBigqueryUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdBigqueryEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDBigqueryEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9985,11 +9985,11 @@ func (c *CreateFlowsVaultConnectionBigqueryUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionBigqueryUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionBigqueryUninitialized) SetAppId(appId FlowsVaultConnectionAppIdBigqueryEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionBigqueryUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionBigqueryUninitialized) SetAppID(appID FlowsVaultConnectionAppIDBigqueryEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionBigqueryUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionBigqueryUninitialized) UnmarshalJSON(data []byte) error {
@@ -10032,17 +10032,17 @@ func (c *CreateFlowsVaultConnectionBigqueryUninitialized) String() string {
 }
 
 type CreateFlowsVaultConnectionClearbit struct {
-	CreateFlowsVaultConnectionClearbitApiKey        *CreateFlowsVaultConnectionClearbitApiKey
+	CreateFlowsVaultConnectionClearbitAPIKey        *CreateFlowsVaultConnectionClearbitAPIKey
 	CreateFlowsVaultConnectionClearbitUninitialized *CreateFlowsVaultConnectionClearbitUninitialized
 
 	typ string
 }
 
-func (c *CreateFlowsVaultConnectionClearbit) GetCreateFlowsVaultConnectionClearbitApiKey() *CreateFlowsVaultConnectionClearbitApiKey {
+func (c *CreateFlowsVaultConnectionClearbit) GetCreateFlowsVaultConnectionClearbitAPIKey() *CreateFlowsVaultConnectionClearbitAPIKey {
 	if c == nil {
 		return nil
 	}
-	return c.CreateFlowsVaultConnectionClearbitApiKey
+	return c.CreateFlowsVaultConnectionClearbitAPIKey
 }
 
 func (c *CreateFlowsVaultConnectionClearbit) GetCreateFlowsVaultConnectionClearbitUninitialized() *CreateFlowsVaultConnectionClearbitUninitialized {
@@ -10053,10 +10053,10 @@ func (c *CreateFlowsVaultConnectionClearbit) GetCreateFlowsVaultConnectionClearb
 }
 
 func (c *CreateFlowsVaultConnectionClearbit) UnmarshalJSON(data []byte) error {
-	valueCreateFlowsVaultConnectionClearbitApiKey := new(CreateFlowsVaultConnectionClearbitApiKey)
-	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionClearbitApiKey); err == nil {
-		c.typ = "CreateFlowsVaultConnectionClearbitApiKey"
-		c.CreateFlowsVaultConnectionClearbitApiKey = valueCreateFlowsVaultConnectionClearbitApiKey
+	valueCreateFlowsVaultConnectionClearbitAPIKey := new(CreateFlowsVaultConnectionClearbitAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionClearbitAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionClearbitAPIKey"
+		c.CreateFlowsVaultConnectionClearbitAPIKey = valueCreateFlowsVaultConnectionClearbitAPIKey
 		return nil
 	}
 	valueCreateFlowsVaultConnectionClearbitUninitialized := new(CreateFlowsVaultConnectionClearbitUninitialized)
@@ -10069,8 +10069,8 @@ func (c *CreateFlowsVaultConnectionClearbit) UnmarshalJSON(data []byte) error {
 }
 
 func (c CreateFlowsVaultConnectionClearbit) MarshalJSON() ([]byte, error) {
-	if c.typ == "CreateFlowsVaultConnectionClearbitApiKey" || c.CreateFlowsVaultConnectionClearbitApiKey != nil {
-		return json.Marshal(c.CreateFlowsVaultConnectionClearbitApiKey)
+	if c.typ == "CreateFlowsVaultConnectionClearbitAPIKey" || c.CreateFlowsVaultConnectionClearbitAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionClearbitAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionClearbitUninitialized" || c.CreateFlowsVaultConnectionClearbitUninitialized != nil {
 		return json.Marshal(c.CreateFlowsVaultConnectionClearbitUninitialized)
@@ -10079,13 +10079,13 @@ func (c CreateFlowsVaultConnectionClearbit) MarshalJSON() ([]byte, error) {
 }
 
 type CreateFlowsVaultConnectionClearbitVisitor interface {
-	VisitCreateFlowsVaultConnectionClearbitApiKey(*CreateFlowsVaultConnectionClearbitApiKey) error
+	VisitCreateFlowsVaultConnectionClearbitAPIKey(*CreateFlowsVaultConnectionClearbitAPIKey) error
 	VisitCreateFlowsVaultConnectionClearbitUninitialized(*CreateFlowsVaultConnectionClearbitUninitialized) error
 }
 
 func (c *CreateFlowsVaultConnectionClearbit) Accept(visitor CreateFlowsVaultConnectionClearbitVisitor) error {
-	if c.typ == "CreateFlowsVaultConnectionClearbitApiKey" || c.CreateFlowsVaultConnectionClearbitApiKey != nil {
-		return visitor.VisitCreateFlowsVaultConnectionClearbitApiKey(c.CreateFlowsVaultConnectionClearbitApiKey)
+	if c.typ == "CreateFlowsVaultConnectionClearbitAPIKey" || c.CreateFlowsVaultConnectionClearbitAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionClearbitAPIKey(c.CreateFlowsVaultConnectionClearbitAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionClearbitUninitialized" || c.CreateFlowsVaultConnectionClearbitUninitialized != nil {
 		return visitor.VisitCreateFlowsVaultConnectionClearbitUninitialized(c.CreateFlowsVaultConnectionClearbitUninitialized)
@@ -10094,16 +10094,16 @@ func (c *CreateFlowsVaultConnectionClearbit) Accept(visitor CreateFlowsVaultConn
 }
 
 var (
-	createFlowsVaultConnectionClearbitApiKeyFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionClearbitApiKeyFieldAppId = big.NewInt(1 << 1)
-	createFlowsVaultConnectionClearbitApiKeyFieldSetup = big.NewInt(1 << 2)
+	createFlowsVaultConnectionClearbitAPIKeyFieldName  = big.NewInt(1 << 0)
+	createFlowsVaultConnectionClearbitAPIKeyFieldAppID = big.NewInt(1 << 1)
+	createFlowsVaultConnectionClearbitAPIKeyFieldSetup = big.NewInt(1 << 2)
 )
 
-type CreateFlowsVaultConnectionClearbitApiKey struct {
+type CreateFlowsVaultConnectionClearbitAPIKey struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdClearbitEnum `json:"app_id" url:"app_id"`
-	Setup *FlowsVaultConnectioSetupSecretApiKey `json:"setup" url:"setup"`
+	AppID FlowsVaultConnectionAppIDClearbitEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupSecretAPIKey `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -10112,25 +10112,25 @@ type CreateFlowsVaultConnectionClearbitApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateFlowsVaultConnectionClearbitApiKey) GetName() string {
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) GetName() string {
 	if c == nil {
 		return ""
 	}
 	return c.Name
 }
 
-func (c *CreateFlowsVaultConnectionClearbitApiKey) GetSetup() *FlowsVaultConnectioSetupSecretApiKey {
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) GetSetup() *FlowsVaultConnectioSetupSecretAPIKey {
 	if c == nil {
 		return nil
 	}
 	return c.Setup
 }
 
-func (c *CreateFlowsVaultConnectionClearbitApiKey) GetExtraProperties() map[string]interface{} {
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateFlowsVaultConnectionClearbitApiKey) require(field *big.Int) {
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
@@ -10139,32 +10139,32 @@ func (c *CreateFlowsVaultConnectionClearbitApiKey) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionClearbitApiKey) SetName(name string) {
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) SetName(name string) {
 	c.Name = name
-	c.require(createFlowsVaultConnectionClearbitApiKeyFieldName)
+	c.require(createFlowsVaultConnectionClearbitAPIKeyFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionClearbitApiKey) SetAppId(appId FlowsVaultConnectionAppIdClearbitEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionClearbitApiKeyFieldAppId)
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) SetAppID(appID FlowsVaultConnectionAppIDClearbitEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionClearbitAPIKeyFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionClearbitApiKey) SetSetup(setup *FlowsVaultConnectioSetupSecretApiKey) {
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) SetSetup(setup *FlowsVaultConnectioSetupSecretAPIKey) {
 	c.Setup = setup
-	c.require(createFlowsVaultConnectionClearbitApiKeyFieldSetup)
+	c.require(createFlowsVaultConnectionClearbitAPIKeyFieldSetup)
 }
 
-func (c *CreateFlowsVaultConnectionClearbitApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateFlowsVaultConnectionClearbitApiKey
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionClearbitAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateFlowsVaultConnectionClearbitApiKey(value)
+	*c = CreateFlowsVaultConnectionClearbitAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -10174,8 +10174,8 @@ func (c *CreateFlowsVaultConnectionClearbitApiKey) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-func (c *CreateFlowsVaultConnectionClearbitApiKey) MarshalJSON() ([]byte, error) {
-	type embed CreateFlowsVaultConnectionClearbitApiKey
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) MarshalJSON() ([]byte, error) {
+	type embed CreateFlowsVaultConnectionClearbitAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -10185,7 +10185,7 @@ func (c *CreateFlowsVaultConnectionClearbitApiKey) MarshalJSON() ([]byte, error)
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateFlowsVaultConnectionClearbitApiKey) String() string {
+func (c *CreateFlowsVaultConnectionClearbitAPIKey) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -10199,13 +10199,13 @@ func (c *CreateFlowsVaultConnectionClearbitApiKey) String() string {
 
 var (
 	createFlowsVaultConnectionClearbitUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionClearbitUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionClearbitUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionClearbitUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdClearbitEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDClearbitEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -10239,11 +10239,11 @@ func (c *CreateFlowsVaultConnectionClearbitUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionClearbitUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionClearbitUninitialized) SetAppId(appId FlowsVaultConnectionAppIdClearbitEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionClearbitUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionClearbitUninitialized) SetAppID(appID FlowsVaultConnectionAppIDClearbitEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionClearbitUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionClearbitUninitialized) UnmarshalJSON(data []byte) error {
@@ -10349,14 +10349,14 @@ func (c *CreateFlowsVaultConnectionDocusign) Accept(visitor CreateFlowsVaultConn
 
 var (
 	createFlowsVaultConnectionDocusignOauthCodeFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionDocusignOauthCodeFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionDocusignOauthCodeFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionDocusignOauthCodeFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionDocusignOauthCode struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdDocusignEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDDocusignEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupOauthCode    `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -10398,11 +10398,11 @@ func (c *CreateFlowsVaultConnectionDocusignOauthCode) SetName(name string) {
 	c.require(createFlowsVaultConnectionDocusignOauthCodeFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionDocusignOauthCode) SetAppId(appId FlowsVaultConnectionAppIdDocusignEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionDocusignOauthCodeFieldAppId)
+func (c *CreateFlowsVaultConnectionDocusignOauthCode) SetAppID(appID FlowsVaultConnectionAppIDDocusignEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionDocusignOauthCodeFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -10453,13 +10453,13 @@ func (c *CreateFlowsVaultConnectionDocusignOauthCode) String() string {
 
 var (
 	createFlowsVaultConnectionDocusignUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionDocusignUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionDocusignUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionDocusignUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdDocusignEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDDocusignEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -10493,11 +10493,11 @@ func (c *CreateFlowsVaultConnectionDocusignUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionDocusignUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionDocusignUninitialized) SetAppId(appId FlowsVaultConnectionAppIdDocusignEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionDocusignUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionDocusignUninitialized) SetAppID(appID FlowsVaultConnectionAppIDDocusignEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionDocusignUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionDocusignUninitialized) UnmarshalJSON(data []byte) error {
@@ -10603,14 +10603,14 @@ func (c *CreateFlowsVaultConnectionGoogleSheets) Accept(visitor CreateFlowsVault
 
 var (
 	createFlowsVaultConnectionGoogleSheetsOauthCodeFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionGoogleSheetsOauthCodeFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionGoogleSheetsOauthCodeFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionGoogleSheetsOauthCodeFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionGoogleSheetsOauthCode struct {
 	// Flows Vault Connection name.
 	Name  string                                    `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdGoogleSheetsEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDGoogleSheetsEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupOauthCode        `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -10652,11 +10652,11 @@ func (c *CreateFlowsVaultConnectionGoogleSheetsOauthCode) SetName(name string) {
 	c.require(createFlowsVaultConnectionGoogleSheetsOauthCodeFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionGoogleSheetsOauthCode) SetAppId(appId FlowsVaultConnectionAppIdGoogleSheetsEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionGoogleSheetsOauthCodeFieldAppId)
+func (c *CreateFlowsVaultConnectionGoogleSheetsOauthCode) SetAppID(appID FlowsVaultConnectionAppIDGoogleSheetsEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionGoogleSheetsOauthCodeFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -10707,13 +10707,13 @@ func (c *CreateFlowsVaultConnectionGoogleSheetsOauthCode) String() string {
 
 var (
 	createFlowsVaultConnectionGoogleSheetsUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionGoogleSheetsUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionGoogleSheetsUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionGoogleSheetsUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                                    `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdGoogleSheetsEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDGoogleSheetsEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -10747,11 +10747,11 @@ func (c *CreateFlowsVaultConnectionGoogleSheetsUninitialized) SetName(name strin
 	c.require(createFlowsVaultConnectionGoogleSheetsUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionGoogleSheetsUninitialized) SetAppId(appId FlowsVaultConnectionAppIdGoogleSheetsEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionGoogleSheetsUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionGoogleSheetsUninitialized) SetAppID(appID FlowsVaultConnectionAppIDGoogleSheetsEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionGoogleSheetsUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionGoogleSheetsUninitialized) UnmarshalJSON(data []byte) error {
@@ -10793,79 +10793,79 @@ func (c *CreateFlowsVaultConnectionGoogleSheetsUninitialized) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-type CreateFlowsVaultConnectionHttp struct {
-	CreateFlowsVaultConnectionHttpBearer        *CreateFlowsVaultConnectionHttpBearer
-	CreateFlowsVaultConnectionHttpUninitialized *CreateFlowsVaultConnectionHttpUninitialized
+type CreateFlowsVaultConnectionHTTP struct {
+	CreateFlowsVaultConnectionHTTPBearer        *CreateFlowsVaultConnectionHTTPBearer
+	CreateFlowsVaultConnectionHTTPUninitialized *CreateFlowsVaultConnectionHTTPUninitialized
 
 	typ string
 }
 
-func (c *CreateFlowsVaultConnectionHttp) GetCreateFlowsVaultConnectionHttpBearer() *CreateFlowsVaultConnectionHttpBearer {
+func (c *CreateFlowsVaultConnectionHTTP) GetCreateFlowsVaultConnectionHTTPBearer() *CreateFlowsVaultConnectionHTTPBearer {
 	if c == nil {
 		return nil
 	}
-	return c.CreateFlowsVaultConnectionHttpBearer
+	return c.CreateFlowsVaultConnectionHTTPBearer
 }
 
-func (c *CreateFlowsVaultConnectionHttp) GetCreateFlowsVaultConnectionHttpUninitialized() *CreateFlowsVaultConnectionHttpUninitialized {
+func (c *CreateFlowsVaultConnectionHTTP) GetCreateFlowsVaultConnectionHTTPUninitialized() *CreateFlowsVaultConnectionHTTPUninitialized {
 	if c == nil {
 		return nil
 	}
-	return c.CreateFlowsVaultConnectionHttpUninitialized
+	return c.CreateFlowsVaultConnectionHTTPUninitialized
 }
 
-func (c *CreateFlowsVaultConnectionHttp) UnmarshalJSON(data []byte) error {
-	valueCreateFlowsVaultConnectionHttpBearer := new(CreateFlowsVaultConnectionHttpBearer)
-	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHttpBearer); err == nil {
-		c.typ = "CreateFlowsVaultConnectionHttpBearer"
-		c.CreateFlowsVaultConnectionHttpBearer = valueCreateFlowsVaultConnectionHttpBearer
+func (c *CreateFlowsVaultConnectionHTTP) UnmarshalJSON(data []byte) error {
+	valueCreateFlowsVaultConnectionHTTPBearer := new(CreateFlowsVaultConnectionHTTPBearer)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPBearer); err == nil {
+		c.typ = "CreateFlowsVaultConnectionHTTPBearer"
+		c.CreateFlowsVaultConnectionHTTPBearer = valueCreateFlowsVaultConnectionHTTPBearer
 		return nil
 	}
-	valueCreateFlowsVaultConnectionHttpUninitialized := new(CreateFlowsVaultConnectionHttpUninitialized)
-	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHttpUninitialized); err == nil {
-		c.typ = "CreateFlowsVaultConnectionHttpUninitialized"
-		c.CreateFlowsVaultConnectionHttpUninitialized = valueCreateFlowsVaultConnectionHttpUninitialized
+	valueCreateFlowsVaultConnectionHTTPUninitialized := new(CreateFlowsVaultConnectionHTTPUninitialized)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPUninitialized); err == nil {
+		c.typ = "CreateFlowsVaultConnectionHTTPUninitialized"
+		c.CreateFlowsVaultConnectionHTTPUninitialized = valueCreateFlowsVaultConnectionHTTPUninitialized
 		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
 }
 
-func (c CreateFlowsVaultConnectionHttp) MarshalJSON() ([]byte, error) {
-	if c.typ == "CreateFlowsVaultConnectionHttpBearer" || c.CreateFlowsVaultConnectionHttpBearer != nil {
-		return json.Marshal(c.CreateFlowsVaultConnectionHttpBearer)
+func (c CreateFlowsVaultConnectionHTTP) MarshalJSON() ([]byte, error) {
+	if c.typ == "CreateFlowsVaultConnectionHTTPBearer" || c.CreateFlowsVaultConnectionHTTPBearer != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionHTTPBearer)
 	}
-	if c.typ == "CreateFlowsVaultConnectionHttpUninitialized" || c.CreateFlowsVaultConnectionHttpUninitialized != nil {
-		return json.Marshal(c.CreateFlowsVaultConnectionHttpUninitialized)
+	if c.typ == "CreateFlowsVaultConnectionHTTPUninitialized" || c.CreateFlowsVaultConnectionHTTPUninitialized != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionHTTPUninitialized)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
-type CreateFlowsVaultConnectionHttpVisitor interface {
-	VisitCreateFlowsVaultConnectionHttpBearer(*CreateFlowsVaultConnectionHttpBearer) error
-	VisitCreateFlowsVaultConnectionHttpUninitialized(*CreateFlowsVaultConnectionHttpUninitialized) error
+type CreateFlowsVaultConnectionHTTPVisitor interface {
+	VisitCreateFlowsVaultConnectionHTTPBearer(*CreateFlowsVaultConnectionHTTPBearer) error
+	VisitCreateFlowsVaultConnectionHTTPUninitialized(*CreateFlowsVaultConnectionHTTPUninitialized) error
 }
 
-func (c *CreateFlowsVaultConnectionHttp) Accept(visitor CreateFlowsVaultConnectionHttpVisitor) error {
-	if c.typ == "CreateFlowsVaultConnectionHttpBearer" || c.CreateFlowsVaultConnectionHttpBearer != nil {
-		return visitor.VisitCreateFlowsVaultConnectionHttpBearer(c.CreateFlowsVaultConnectionHttpBearer)
+func (c *CreateFlowsVaultConnectionHTTP) Accept(visitor CreateFlowsVaultConnectionHTTPVisitor) error {
+	if c.typ == "CreateFlowsVaultConnectionHTTPBearer" || c.CreateFlowsVaultConnectionHTTPBearer != nil {
+		return visitor.VisitCreateFlowsVaultConnectionHTTPBearer(c.CreateFlowsVaultConnectionHTTPBearer)
 	}
-	if c.typ == "CreateFlowsVaultConnectionHttpUninitialized" || c.CreateFlowsVaultConnectionHttpUninitialized != nil {
-		return visitor.VisitCreateFlowsVaultConnectionHttpUninitialized(c.CreateFlowsVaultConnectionHttpUninitialized)
+	if c.typ == "CreateFlowsVaultConnectionHTTPUninitialized" || c.CreateFlowsVaultConnectionHTTPUninitialized != nil {
+		return visitor.VisitCreateFlowsVaultConnectionHTTPUninitialized(c.CreateFlowsVaultConnectionHTTPUninitialized)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
 var (
-	createFlowsVaultConnectionHttpBearerFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionHttpBearerFieldAppId = big.NewInt(1 << 1)
-	createFlowsVaultConnectionHttpBearerFieldSetup = big.NewInt(1 << 2)
+	createFlowsVaultConnectionHTTPBearerFieldName  = big.NewInt(1 << 0)
+	createFlowsVaultConnectionHTTPBearerFieldAppID = big.NewInt(1 << 1)
+	createFlowsVaultConnectionHTTPBearerFieldSetup = big.NewInt(1 << 2)
 )
 
-type CreateFlowsVaultConnectionHttpBearer struct {
+type CreateFlowsVaultConnectionHTTPBearer struct {
 	// Flows Vault Connection name.
 	Name  string                              `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdHttpEnum   `json:"app_id" url:"app_id"`
-	Setup *FlowsVaultConnectioSetupHttpBearer `json:"setup" url:"setup"`
+	AppID FlowsVaultConnectionAppIdHttpEnum   `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupHTTPBearer `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -10874,25 +10874,25 @@ type CreateFlowsVaultConnectionHttpBearer struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateFlowsVaultConnectionHttpBearer) GetName() string {
+func (c *CreateFlowsVaultConnectionHTTPBearer) GetName() string {
 	if c == nil {
 		return ""
 	}
 	return c.Name
 }
 
-func (c *CreateFlowsVaultConnectionHttpBearer) GetSetup() *FlowsVaultConnectioSetupHttpBearer {
+func (c *CreateFlowsVaultConnectionHTTPBearer) GetSetup() *FlowsVaultConnectioSetupHTTPBearer {
 	if c == nil {
 		return nil
 	}
 	return c.Setup
 }
 
-func (c *CreateFlowsVaultConnectionHttpBearer) GetExtraProperties() map[string]interface{} {
+func (c *CreateFlowsVaultConnectionHTTPBearer) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateFlowsVaultConnectionHttpBearer) require(field *big.Int) {
+func (c *CreateFlowsVaultConnectionHTTPBearer) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
@@ -10901,32 +10901,32 @@ func (c *CreateFlowsVaultConnectionHttpBearer) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionHttpBearer) SetName(name string) {
+func (c *CreateFlowsVaultConnectionHTTPBearer) SetName(name string) {
 	c.Name = name
-	c.require(createFlowsVaultConnectionHttpBearerFieldName)
+	c.require(createFlowsVaultConnectionHTTPBearerFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionHttpBearer) SetAppId(appId FlowsVaultConnectionAppIdHttpEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionHttpBearerFieldAppId)
+func (c *CreateFlowsVaultConnectionHTTPBearer) SetAppID(appID FlowsVaultConnectionAppIdHttpEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionHTTPBearerFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionHttpBearer) SetSetup(setup *FlowsVaultConnectioSetupHttpBearer) {
+func (c *CreateFlowsVaultConnectionHTTPBearer) SetSetup(setup *FlowsVaultConnectioSetupHTTPBearer) {
 	c.Setup = setup
-	c.require(createFlowsVaultConnectionHttpBearerFieldSetup)
+	c.require(createFlowsVaultConnectionHTTPBearerFieldSetup)
 }
 
-func (c *CreateFlowsVaultConnectionHttpBearer) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateFlowsVaultConnectionHttpBearer
+func (c *CreateFlowsVaultConnectionHTTPBearer) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionHTTPBearer
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateFlowsVaultConnectionHttpBearer(value)
+	*c = CreateFlowsVaultConnectionHTTPBearer(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -10936,8 +10936,8 @@ func (c *CreateFlowsVaultConnectionHttpBearer) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (c *CreateFlowsVaultConnectionHttpBearer) MarshalJSON() ([]byte, error) {
-	type embed CreateFlowsVaultConnectionHttpBearer
+func (c *CreateFlowsVaultConnectionHTTPBearer) MarshalJSON() ([]byte, error) {
+	type embed CreateFlowsVaultConnectionHTTPBearer
 	var marshaler = struct {
 		embed
 	}{
@@ -10947,7 +10947,7 @@ func (c *CreateFlowsVaultConnectionHttpBearer) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateFlowsVaultConnectionHttpBearer) String() string {
+func (c *CreateFlowsVaultConnectionHTTPBearer) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -10960,14 +10960,14 @@ func (c *CreateFlowsVaultConnectionHttpBearer) String() string {
 }
 
 var (
-	createFlowsVaultConnectionHttpUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionHttpUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionHTTPUninitializedFieldName  = big.NewInt(1 << 0)
+	createFlowsVaultConnectionHTTPUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
-type CreateFlowsVaultConnectionHttpUninitialized struct {
+type CreateFlowsVaultConnectionHTTPUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                            `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdHttpEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIdHttpEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -10976,18 +10976,18 @@ type CreateFlowsVaultConnectionHttpUninitialized struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateFlowsVaultConnectionHttpUninitialized) GetName() string {
+func (c *CreateFlowsVaultConnectionHTTPUninitialized) GetName() string {
 	if c == nil {
 		return ""
 	}
 	return c.Name
 }
 
-func (c *CreateFlowsVaultConnectionHttpUninitialized) GetExtraProperties() map[string]interface{} {
+func (c *CreateFlowsVaultConnectionHTTPUninitialized) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateFlowsVaultConnectionHttpUninitialized) require(field *big.Int) {
+func (c *CreateFlowsVaultConnectionHTTPUninitialized) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
@@ -10996,25 +10996,25 @@ func (c *CreateFlowsVaultConnectionHttpUninitialized) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionHttpUninitialized) SetName(name string) {
+func (c *CreateFlowsVaultConnectionHTTPUninitialized) SetName(name string) {
 	c.Name = name
-	c.require(createFlowsVaultConnectionHttpUninitializedFieldName)
+	c.require(createFlowsVaultConnectionHTTPUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionHttpUninitialized) SetAppId(appId FlowsVaultConnectionAppIdHttpEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionHttpUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionHTTPUninitialized) SetAppID(appID FlowsVaultConnectionAppIdHttpEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionHTTPUninitializedFieldAppID)
 }
 
-func (c *CreateFlowsVaultConnectionHttpUninitialized) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateFlowsVaultConnectionHttpUninitialized
+func (c *CreateFlowsVaultConnectionHTTPUninitialized) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionHTTPUninitialized
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateFlowsVaultConnectionHttpUninitialized(value)
+	*c = CreateFlowsVaultConnectionHTTPUninitialized(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -11024,8 +11024,8 @@ func (c *CreateFlowsVaultConnectionHttpUninitialized) UnmarshalJSON(data []byte)
 	return nil
 }
 
-func (c *CreateFlowsVaultConnectionHttpUninitialized) MarshalJSON() ([]byte, error) {
-	type embed CreateFlowsVaultConnectionHttpUninitialized
+func (c *CreateFlowsVaultConnectionHTTPUninitialized) MarshalJSON() ([]byte, error) {
+	type embed CreateFlowsVaultConnectionHTTPUninitialized
 	var marshaler = struct {
 		embed
 	}{
@@ -11035,7 +11035,7 @@ func (c *CreateFlowsVaultConnectionHttpUninitialized) MarshalJSON() ([]byte, err
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateFlowsVaultConnectionHttpUninitialized) String() string {
+func (c *CreateFlowsVaultConnectionHTTPUninitialized) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -11048,18 +11048,18 @@ func (c *CreateFlowsVaultConnectionHttpUninitialized) String() string {
 }
 
 type CreateFlowsVaultConnectionHubspot struct {
-	CreateFlowsVaultConnectionHubspotApiKey        *CreateFlowsVaultConnectionHubspotApiKey
+	CreateFlowsVaultConnectionHubspotAPIKey        *CreateFlowsVaultConnectionHubspotAPIKey
 	CreateFlowsVaultConnectionHubspotOauthCode     *CreateFlowsVaultConnectionHubspotOauthCode
 	CreateFlowsVaultConnectionHubspotUninitialized *CreateFlowsVaultConnectionHubspotUninitialized
 
 	typ string
 }
 
-func (c *CreateFlowsVaultConnectionHubspot) GetCreateFlowsVaultConnectionHubspotApiKey() *CreateFlowsVaultConnectionHubspotApiKey {
+func (c *CreateFlowsVaultConnectionHubspot) GetCreateFlowsVaultConnectionHubspotAPIKey() *CreateFlowsVaultConnectionHubspotAPIKey {
 	if c == nil {
 		return nil
 	}
-	return c.CreateFlowsVaultConnectionHubspotApiKey
+	return c.CreateFlowsVaultConnectionHubspotAPIKey
 }
 
 func (c *CreateFlowsVaultConnectionHubspot) GetCreateFlowsVaultConnectionHubspotOauthCode() *CreateFlowsVaultConnectionHubspotOauthCode {
@@ -11077,10 +11077,10 @@ func (c *CreateFlowsVaultConnectionHubspot) GetCreateFlowsVaultConnectionHubspot
 }
 
 func (c *CreateFlowsVaultConnectionHubspot) UnmarshalJSON(data []byte) error {
-	valueCreateFlowsVaultConnectionHubspotApiKey := new(CreateFlowsVaultConnectionHubspotApiKey)
-	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspotApiKey); err == nil {
-		c.typ = "CreateFlowsVaultConnectionHubspotApiKey"
-		c.CreateFlowsVaultConnectionHubspotApiKey = valueCreateFlowsVaultConnectionHubspotApiKey
+	valueCreateFlowsVaultConnectionHubspotAPIKey := new(CreateFlowsVaultConnectionHubspotAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspotAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionHubspotAPIKey"
+		c.CreateFlowsVaultConnectionHubspotAPIKey = valueCreateFlowsVaultConnectionHubspotAPIKey
 		return nil
 	}
 	valueCreateFlowsVaultConnectionHubspotOauthCode := new(CreateFlowsVaultConnectionHubspotOauthCode)
@@ -11099,8 +11099,8 @@ func (c *CreateFlowsVaultConnectionHubspot) UnmarshalJSON(data []byte) error {
 }
 
 func (c CreateFlowsVaultConnectionHubspot) MarshalJSON() ([]byte, error) {
-	if c.typ == "CreateFlowsVaultConnectionHubspotApiKey" || c.CreateFlowsVaultConnectionHubspotApiKey != nil {
-		return json.Marshal(c.CreateFlowsVaultConnectionHubspotApiKey)
+	if c.typ == "CreateFlowsVaultConnectionHubspotAPIKey" || c.CreateFlowsVaultConnectionHubspotAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionHubspotAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionHubspotOauthCode" || c.CreateFlowsVaultConnectionHubspotOauthCode != nil {
 		return json.Marshal(c.CreateFlowsVaultConnectionHubspotOauthCode)
@@ -11112,14 +11112,14 @@ func (c CreateFlowsVaultConnectionHubspot) MarshalJSON() ([]byte, error) {
 }
 
 type CreateFlowsVaultConnectionHubspotVisitor interface {
-	VisitCreateFlowsVaultConnectionHubspotApiKey(*CreateFlowsVaultConnectionHubspotApiKey) error
+	VisitCreateFlowsVaultConnectionHubspotAPIKey(*CreateFlowsVaultConnectionHubspotAPIKey) error
 	VisitCreateFlowsVaultConnectionHubspotOauthCode(*CreateFlowsVaultConnectionHubspotOauthCode) error
 	VisitCreateFlowsVaultConnectionHubspotUninitialized(*CreateFlowsVaultConnectionHubspotUninitialized) error
 }
 
 func (c *CreateFlowsVaultConnectionHubspot) Accept(visitor CreateFlowsVaultConnectionHubspotVisitor) error {
-	if c.typ == "CreateFlowsVaultConnectionHubspotApiKey" || c.CreateFlowsVaultConnectionHubspotApiKey != nil {
-		return visitor.VisitCreateFlowsVaultConnectionHubspotApiKey(c.CreateFlowsVaultConnectionHubspotApiKey)
+	if c.typ == "CreateFlowsVaultConnectionHubspotAPIKey" || c.CreateFlowsVaultConnectionHubspotAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionHubspotAPIKey(c.CreateFlowsVaultConnectionHubspotAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionHubspotOauthCode" || c.CreateFlowsVaultConnectionHubspotOauthCode != nil {
 		return visitor.VisitCreateFlowsVaultConnectionHubspotOauthCode(c.CreateFlowsVaultConnectionHubspotOauthCode)
@@ -11131,16 +11131,16 @@ func (c *CreateFlowsVaultConnectionHubspot) Accept(visitor CreateFlowsVaultConne
 }
 
 var (
-	createFlowsVaultConnectionHubspotApiKeyFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionHubspotApiKeyFieldAppId = big.NewInt(1 << 1)
-	createFlowsVaultConnectionHubspotApiKeyFieldSetup = big.NewInt(1 << 2)
+	createFlowsVaultConnectionHubspotAPIKeyFieldName  = big.NewInt(1 << 0)
+	createFlowsVaultConnectionHubspotAPIKeyFieldAppID = big.NewInt(1 << 1)
+	createFlowsVaultConnectionHubspotAPIKeyFieldSetup = big.NewInt(1 << 2)
 )
 
-type CreateFlowsVaultConnectionHubspotApiKey struct {
+type CreateFlowsVaultConnectionHubspotAPIKey struct {
 	// Flows Vault Connection name.
 	Name  string                               `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdHubspotEnum `json:"app_id" url:"app_id"`
-	Setup *FlowsVaultConnectioSetupApiKey      `json:"setup" url:"setup"`
+	AppID FlowsVaultConnectionAppIDHubspotEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupAPIKey      `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -11149,25 +11149,25 @@ type CreateFlowsVaultConnectionHubspotApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateFlowsVaultConnectionHubspotApiKey) GetName() string {
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) GetName() string {
 	if c == nil {
 		return ""
 	}
 	return c.Name
 }
 
-func (c *CreateFlowsVaultConnectionHubspotApiKey) GetSetup() *FlowsVaultConnectioSetupApiKey {
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) GetSetup() *FlowsVaultConnectioSetupAPIKey {
 	if c == nil {
 		return nil
 	}
 	return c.Setup
 }
 
-func (c *CreateFlowsVaultConnectionHubspotApiKey) GetExtraProperties() map[string]interface{} {
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateFlowsVaultConnectionHubspotApiKey) require(field *big.Int) {
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
@@ -11176,32 +11176,32 @@ func (c *CreateFlowsVaultConnectionHubspotApiKey) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionHubspotApiKey) SetName(name string) {
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) SetName(name string) {
 	c.Name = name
-	c.require(createFlowsVaultConnectionHubspotApiKeyFieldName)
+	c.require(createFlowsVaultConnectionHubspotAPIKeyFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionHubspotApiKey) SetAppId(appId FlowsVaultConnectionAppIdHubspotEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionHubspotApiKeyFieldAppId)
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) SetAppID(appID FlowsVaultConnectionAppIDHubspotEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionHubspotAPIKeyFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionHubspotApiKey) SetSetup(setup *FlowsVaultConnectioSetupApiKey) {
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) SetSetup(setup *FlowsVaultConnectioSetupAPIKey) {
 	c.Setup = setup
-	c.require(createFlowsVaultConnectionHubspotApiKeyFieldSetup)
+	c.require(createFlowsVaultConnectionHubspotAPIKeyFieldSetup)
 }
 
-func (c *CreateFlowsVaultConnectionHubspotApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateFlowsVaultConnectionHubspotApiKey
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionHubspotAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateFlowsVaultConnectionHubspotApiKey(value)
+	*c = CreateFlowsVaultConnectionHubspotAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -11211,8 +11211,8 @@ func (c *CreateFlowsVaultConnectionHubspotApiKey) UnmarshalJSON(data []byte) err
 	return nil
 }
 
-func (c *CreateFlowsVaultConnectionHubspotApiKey) MarshalJSON() ([]byte, error) {
-	type embed CreateFlowsVaultConnectionHubspotApiKey
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) MarshalJSON() ([]byte, error) {
+	type embed CreateFlowsVaultConnectionHubspotAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -11222,7 +11222,7 @@ func (c *CreateFlowsVaultConnectionHubspotApiKey) MarshalJSON() ([]byte, error) 
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateFlowsVaultConnectionHubspotApiKey) String() string {
+func (c *CreateFlowsVaultConnectionHubspotAPIKey) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -11236,14 +11236,14 @@ func (c *CreateFlowsVaultConnectionHubspotApiKey) String() string {
 
 var (
 	createFlowsVaultConnectionHubspotOauthCodeFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionHubspotOauthCodeFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionHubspotOauthCodeFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionHubspotOauthCodeFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionHubspotOauthCode struct {
 	// Flows Vault Connection name.
 	Name  string                               `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdHubspotEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDHubspotEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupOauthCode   `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -11285,11 +11285,11 @@ func (c *CreateFlowsVaultConnectionHubspotOauthCode) SetName(name string) {
 	c.require(createFlowsVaultConnectionHubspotOauthCodeFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionHubspotOauthCode) SetAppId(appId FlowsVaultConnectionAppIdHubspotEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionHubspotOauthCodeFieldAppId)
+func (c *CreateFlowsVaultConnectionHubspotOauthCode) SetAppID(appID FlowsVaultConnectionAppIDHubspotEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionHubspotOauthCodeFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -11340,13 +11340,13 @@ func (c *CreateFlowsVaultConnectionHubspotOauthCode) String() string {
 
 var (
 	createFlowsVaultConnectionHubspotUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionHubspotUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionHubspotUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionHubspotUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                               `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdHubspotEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDHubspotEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -11380,11 +11380,11 @@ func (c *CreateFlowsVaultConnectionHubspotUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionHubspotUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionHubspotUninitialized) SetAppId(appId FlowsVaultConnectionAppIdHubspotEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionHubspotUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionHubspotUninitialized) SetAppID(appID FlowsVaultConnectionAppIDHubspotEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionHubspotUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionHubspotUninitialized) UnmarshalJSON(data []byte) error {
@@ -11490,14 +11490,14 @@ func (c *CreateFlowsVaultConnectionJwt) Accept(visitor CreateFlowsVaultConnectio
 
 var (
 	createFlowsVaultConnectionJwtJwtFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionJwtJwtFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionJwtJwtFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionJwtJwtFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionJwtJwt struct {
 	// Flows Vault Connection name.
 	Name  string                           `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdJwtEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDJwtEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupJwt     `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -11539,11 +11539,11 @@ func (c *CreateFlowsVaultConnectionJwtJwt) SetName(name string) {
 	c.require(createFlowsVaultConnectionJwtJwtFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionJwtJwt) SetAppId(appId FlowsVaultConnectionAppIdJwtEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionJwtJwtFieldAppId)
+func (c *CreateFlowsVaultConnectionJwtJwt) SetAppID(appID FlowsVaultConnectionAppIDJwtEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionJwtJwtFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -11594,13 +11594,13 @@ func (c *CreateFlowsVaultConnectionJwtJwt) String() string {
 
 var (
 	createFlowsVaultConnectionJwtUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionJwtUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionJwtUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionJwtUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                           `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdJwtEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDJwtEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -11634,11 +11634,11 @@ func (c *CreateFlowsVaultConnectionJwtUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionJwtUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionJwtUninitialized) SetAppId(appId FlowsVaultConnectionAppIdJwtEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionJwtUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionJwtUninitialized) SetAppID(appID FlowsVaultConnectionAppIDJwtEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionJwtUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionJwtUninitialized) UnmarshalJSON(data []byte) error {
@@ -11681,18 +11681,18 @@ func (c *CreateFlowsVaultConnectionJwtUninitialized) String() string {
 }
 
 type CreateFlowsVaultConnectionMailchimp struct {
-	CreateFlowsVaultConnectionMailchimpApiKey        *CreateFlowsVaultConnectionMailchimpApiKey
+	CreateFlowsVaultConnectionMailchimpAPIKey        *CreateFlowsVaultConnectionMailchimpAPIKey
 	CreateFlowsVaultConnectionMailchimpOauthCode     *CreateFlowsVaultConnectionMailchimpOauthCode
 	CreateFlowsVaultConnectionMailchimpUninitialized *CreateFlowsVaultConnectionMailchimpUninitialized
 
 	typ string
 }
 
-func (c *CreateFlowsVaultConnectionMailchimp) GetCreateFlowsVaultConnectionMailchimpApiKey() *CreateFlowsVaultConnectionMailchimpApiKey {
+func (c *CreateFlowsVaultConnectionMailchimp) GetCreateFlowsVaultConnectionMailchimpAPIKey() *CreateFlowsVaultConnectionMailchimpAPIKey {
 	if c == nil {
 		return nil
 	}
-	return c.CreateFlowsVaultConnectionMailchimpApiKey
+	return c.CreateFlowsVaultConnectionMailchimpAPIKey
 }
 
 func (c *CreateFlowsVaultConnectionMailchimp) GetCreateFlowsVaultConnectionMailchimpOauthCode() *CreateFlowsVaultConnectionMailchimpOauthCode {
@@ -11710,10 +11710,10 @@ func (c *CreateFlowsVaultConnectionMailchimp) GetCreateFlowsVaultConnectionMailc
 }
 
 func (c *CreateFlowsVaultConnectionMailchimp) UnmarshalJSON(data []byte) error {
-	valueCreateFlowsVaultConnectionMailchimpApiKey := new(CreateFlowsVaultConnectionMailchimpApiKey)
-	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimpApiKey); err == nil {
-		c.typ = "CreateFlowsVaultConnectionMailchimpApiKey"
-		c.CreateFlowsVaultConnectionMailchimpApiKey = valueCreateFlowsVaultConnectionMailchimpApiKey
+	valueCreateFlowsVaultConnectionMailchimpAPIKey := new(CreateFlowsVaultConnectionMailchimpAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimpAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionMailchimpAPIKey"
+		c.CreateFlowsVaultConnectionMailchimpAPIKey = valueCreateFlowsVaultConnectionMailchimpAPIKey
 		return nil
 	}
 	valueCreateFlowsVaultConnectionMailchimpOauthCode := new(CreateFlowsVaultConnectionMailchimpOauthCode)
@@ -11732,8 +11732,8 @@ func (c *CreateFlowsVaultConnectionMailchimp) UnmarshalJSON(data []byte) error {
 }
 
 func (c CreateFlowsVaultConnectionMailchimp) MarshalJSON() ([]byte, error) {
-	if c.typ == "CreateFlowsVaultConnectionMailchimpApiKey" || c.CreateFlowsVaultConnectionMailchimpApiKey != nil {
-		return json.Marshal(c.CreateFlowsVaultConnectionMailchimpApiKey)
+	if c.typ == "CreateFlowsVaultConnectionMailchimpAPIKey" || c.CreateFlowsVaultConnectionMailchimpAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionMailchimpAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionMailchimpOauthCode" || c.CreateFlowsVaultConnectionMailchimpOauthCode != nil {
 		return json.Marshal(c.CreateFlowsVaultConnectionMailchimpOauthCode)
@@ -11745,14 +11745,14 @@ func (c CreateFlowsVaultConnectionMailchimp) MarshalJSON() ([]byte, error) {
 }
 
 type CreateFlowsVaultConnectionMailchimpVisitor interface {
-	VisitCreateFlowsVaultConnectionMailchimpApiKey(*CreateFlowsVaultConnectionMailchimpApiKey) error
+	VisitCreateFlowsVaultConnectionMailchimpAPIKey(*CreateFlowsVaultConnectionMailchimpAPIKey) error
 	VisitCreateFlowsVaultConnectionMailchimpOauthCode(*CreateFlowsVaultConnectionMailchimpOauthCode) error
 	VisitCreateFlowsVaultConnectionMailchimpUninitialized(*CreateFlowsVaultConnectionMailchimpUninitialized) error
 }
 
 func (c *CreateFlowsVaultConnectionMailchimp) Accept(visitor CreateFlowsVaultConnectionMailchimpVisitor) error {
-	if c.typ == "CreateFlowsVaultConnectionMailchimpApiKey" || c.CreateFlowsVaultConnectionMailchimpApiKey != nil {
-		return visitor.VisitCreateFlowsVaultConnectionMailchimpApiKey(c.CreateFlowsVaultConnectionMailchimpApiKey)
+	if c.typ == "CreateFlowsVaultConnectionMailchimpAPIKey" || c.CreateFlowsVaultConnectionMailchimpAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionMailchimpAPIKey(c.CreateFlowsVaultConnectionMailchimpAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionMailchimpOauthCode" || c.CreateFlowsVaultConnectionMailchimpOauthCode != nil {
 		return visitor.VisitCreateFlowsVaultConnectionMailchimpOauthCode(c.CreateFlowsVaultConnectionMailchimpOauthCode)
@@ -11764,16 +11764,16 @@ func (c *CreateFlowsVaultConnectionMailchimp) Accept(visitor CreateFlowsVaultCon
 }
 
 var (
-	createFlowsVaultConnectionMailchimpApiKeyFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionMailchimpApiKeyFieldAppId = big.NewInt(1 << 1)
-	createFlowsVaultConnectionMailchimpApiKeyFieldSetup = big.NewInt(1 << 2)
+	createFlowsVaultConnectionMailchimpAPIKeyFieldName  = big.NewInt(1 << 0)
+	createFlowsVaultConnectionMailchimpAPIKeyFieldAppID = big.NewInt(1 << 1)
+	createFlowsVaultConnectionMailchimpAPIKeyFieldSetup = big.NewInt(1 << 2)
 )
 
-type CreateFlowsVaultConnectionMailchimpApiKey struct {
+type CreateFlowsVaultConnectionMailchimpAPIKey struct {
 	// Flows Vault Connection name.
 	Name  string                                 `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdMailchimpEnum `json:"app_id" url:"app_id"`
-	Setup *FlowsVaultConnectioSetupSecretApiKey  `json:"setup" url:"setup"`
+	AppID FlowsVaultConnectionAppIDMailchimpEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupSecretAPIKey  `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -11782,25 +11782,25 @@ type CreateFlowsVaultConnectionMailchimpApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateFlowsVaultConnectionMailchimpApiKey) GetName() string {
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) GetName() string {
 	if c == nil {
 		return ""
 	}
 	return c.Name
 }
 
-func (c *CreateFlowsVaultConnectionMailchimpApiKey) GetSetup() *FlowsVaultConnectioSetupSecretApiKey {
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) GetSetup() *FlowsVaultConnectioSetupSecretAPIKey {
 	if c == nil {
 		return nil
 	}
 	return c.Setup
 }
 
-func (c *CreateFlowsVaultConnectionMailchimpApiKey) GetExtraProperties() map[string]interface{} {
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateFlowsVaultConnectionMailchimpApiKey) require(field *big.Int) {
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
@@ -11809,32 +11809,32 @@ func (c *CreateFlowsVaultConnectionMailchimpApiKey) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionMailchimpApiKey) SetName(name string) {
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) SetName(name string) {
 	c.Name = name
-	c.require(createFlowsVaultConnectionMailchimpApiKeyFieldName)
+	c.require(createFlowsVaultConnectionMailchimpAPIKeyFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionMailchimpApiKey) SetAppId(appId FlowsVaultConnectionAppIdMailchimpEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionMailchimpApiKeyFieldAppId)
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) SetAppID(appID FlowsVaultConnectionAppIDMailchimpEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionMailchimpAPIKeyFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionMailchimpApiKey) SetSetup(setup *FlowsVaultConnectioSetupSecretApiKey) {
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) SetSetup(setup *FlowsVaultConnectioSetupSecretAPIKey) {
 	c.Setup = setup
-	c.require(createFlowsVaultConnectionMailchimpApiKeyFieldSetup)
+	c.require(createFlowsVaultConnectionMailchimpAPIKeyFieldSetup)
 }
 
-func (c *CreateFlowsVaultConnectionMailchimpApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateFlowsVaultConnectionMailchimpApiKey
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionMailchimpAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateFlowsVaultConnectionMailchimpApiKey(value)
+	*c = CreateFlowsVaultConnectionMailchimpAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -11844,8 +11844,8 @@ func (c *CreateFlowsVaultConnectionMailchimpApiKey) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-func (c *CreateFlowsVaultConnectionMailchimpApiKey) MarshalJSON() ([]byte, error) {
-	type embed CreateFlowsVaultConnectionMailchimpApiKey
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) MarshalJSON() ([]byte, error) {
+	type embed CreateFlowsVaultConnectionMailchimpAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -11855,7 +11855,7 @@ func (c *CreateFlowsVaultConnectionMailchimpApiKey) MarshalJSON() ([]byte, error
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateFlowsVaultConnectionMailchimpApiKey) String() string {
+func (c *CreateFlowsVaultConnectionMailchimpAPIKey) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -11869,14 +11869,14 @@ func (c *CreateFlowsVaultConnectionMailchimpApiKey) String() string {
 
 var (
 	createFlowsVaultConnectionMailchimpOauthCodeFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionMailchimpOauthCodeFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionMailchimpOauthCodeFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionMailchimpOauthCodeFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionMailchimpOauthCode struct {
 	// Flows Vault Connection name.
 	Name  string                                 `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdMailchimpEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDMailchimpEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupOauthCode     `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -11918,11 +11918,11 @@ func (c *CreateFlowsVaultConnectionMailchimpOauthCode) SetName(name string) {
 	c.require(createFlowsVaultConnectionMailchimpOauthCodeFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionMailchimpOauthCode) SetAppId(appId FlowsVaultConnectionAppIdMailchimpEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionMailchimpOauthCodeFieldAppId)
+func (c *CreateFlowsVaultConnectionMailchimpOauthCode) SetAppID(appID FlowsVaultConnectionAppIDMailchimpEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionMailchimpOauthCodeFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -11973,13 +11973,13 @@ func (c *CreateFlowsVaultConnectionMailchimpOauthCode) String() string {
 
 var (
 	createFlowsVaultConnectionMailchimpUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionMailchimpUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionMailchimpUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionMailchimpUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                                 `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdMailchimpEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDMailchimpEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -12013,11 +12013,11 @@ func (c *CreateFlowsVaultConnectionMailchimpUninitialized) SetName(name string) 
 	c.require(createFlowsVaultConnectionMailchimpUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionMailchimpUninitialized) SetAppId(appId FlowsVaultConnectionAppIdMailchimpEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionMailchimpUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionMailchimpUninitialized) SetAppID(appID FlowsVaultConnectionAppIDMailchimpEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionMailchimpUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionMailchimpUninitialized) UnmarshalJSON(data []byte) error {
@@ -12060,17 +12060,17 @@ func (c *CreateFlowsVaultConnectionMailchimpUninitialized) String() string {
 }
 
 type CreateFlowsVaultConnectionMailjet struct {
-	CreateFlowsVaultConnectionMailjetApiKey        *CreateFlowsVaultConnectionMailjetApiKey
+	CreateFlowsVaultConnectionMailjetAPIKey        *CreateFlowsVaultConnectionMailjetAPIKey
 	CreateFlowsVaultConnectionMailjetUninitialized *CreateFlowsVaultConnectionMailjetUninitialized
 
 	typ string
 }
 
-func (c *CreateFlowsVaultConnectionMailjet) GetCreateFlowsVaultConnectionMailjetApiKey() *CreateFlowsVaultConnectionMailjetApiKey {
+func (c *CreateFlowsVaultConnectionMailjet) GetCreateFlowsVaultConnectionMailjetAPIKey() *CreateFlowsVaultConnectionMailjetAPIKey {
 	if c == nil {
 		return nil
 	}
-	return c.CreateFlowsVaultConnectionMailjetApiKey
+	return c.CreateFlowsVaultConnectionMailjetAPIKey
 }
 
 func (c *CreateFlowsVaultConnectionMailjet) GetCreateFlowsVaultConnectionMailjetUninitialized() *CreateFlowsVaultConnectionMailjetUninitialized {
@@ -12081,10 +12081,10 @@ func (c *CreateFlowsVaultConnectionMailjet) GetCreateFlowsVaultConnectionMailjet
 }
 
 func (c *CreateFlowsVaultConnectionMailjet) UnmarshalJSON(data []byte) error {
-	valueCreateFlowsVaultConnectionMailjetApiKey := new(CreateFlowsVaultConnectionMailjetApiKey)
-	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailjetApiKey); err == nil {
-		c.typ = "CreateFlowsVaultConnectionMailjetApiKey"
-		c.CreateFlowsVaultConnectionMailjetApiKey = valueCreateFlowsVaultConnectionMailjetApiKey
+	valueCreateFlowsVaultConnectionMailjetAPIKey := new(CreateFlowsVaultConnectionMailjetAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailjetAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionMailjetAPIKey"
+		c.CreateFlowsVaultConnectionMailjetAPIKey = valueCreateFlowsVaultConnectionMailjetAPIKey
 		return nil
 	}
 	valueCreateFlowsVaultConnectionMailjetUninitialized := new(CreateFlowsVaultConnectionMailjetUninitialized)
@@ -12097,8 +12097,8 @@ func (c *CreateFlowsVaultConnectionMailjet) UnmarshalJSON(data []byte) error {
 }
 
 func (c CreateFlowsVaultConnectionMailjet) MarshalJSON() ([]byte, error) {
-	if c.typ == "CreateFlowsVaultConnectionMailjetApiKey" || c.CreateFlowsVaultConnectionMailjetApiKey != nil {
-		return json.Marshal(c.CreateFlowsVaultConnectionMailjetApiKey)
+	if c.typ == "CreateFlowsVaultConnectionMailjetAPIKey" || c.CreateFlowsVaultConnectionMailjetAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionMailjetAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionMailjetUninitialized" || c.CreateFlowsVaultConnectionMailjetUninitialized != nil {
 		return json.Marshal(c.CreateFlowsVaultConnectionMailjetUninitialized)
@@ -12107,13 +12107,13 @@ func (c CreateFlowsVaultConnectionMailjet) MarshalJSON() ([]byte, error) {
 }
 
 type CreateFlowsVaultConnectionMailjetVisitor interface {
-	VisitCreateFlowsVaultConnectionMailjetApiKey(*CreateFlowsVaultConnectionMailjetApiKey) error
+	VisitCreateFlowsVaultConnectionMailjetAPIKey(*CreateFlowsVaultConnectionMailjetAPIKey) error
 	VisitCreateFlowsVaultConnectionMailjetUninitialized(*CreateFlowsVaultConnectionMailjetUninitialized) error
 }
 
 func (c *CreateFlowsVaultConnectionMailjet) Accept(visitor CreateFlowsVaultConnectionMailjetVisitor) error {
-	if c.typ == "CreateFlowsVaultConnectionMailjetApiKey" || c.CreateFlowsVaultConnectionMailjetApiKey != nil {
-		return visitor.VisitCreateFlowsVaultConnectionMailjetApiKey(c.CreateFlowsVaultConnectionMailjetApiKey)
+	if c.typ == "CreateFlowsVaultConnectionMailjetAPIKey" || c.CreateFlowsVaultConnectionMailjetAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionMailjetAPIKey(c.CreateFlowsVaultConnectionMailjetAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionMailjetUninitialized" || c.CreateFlowsVaultConnectionMailjetUninitialized != nil {
 		return visitor.VisitCreateFlowsVaultConnectionMailjetUninitialized(c.CreateFlowsVaultConnectionMailjetUninitialized)
@@ -12122,16 +12122,16 @@ func (c *CreateFlowsVaultConnectionMailjet) Accept(visitor CreateFlowsVaultConne
 }
 
 var (
-	createFlowsVaultConnectionMailjetApiKeyFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionMailjetApiKeyFieldAppId = big.NewInt(1 << 1)
-	createFlowsVaultConnectionMailjetApiKeyFieldSetup = big.NewInt(1 << 2)
+	createFlowsVaultConnectionMailjetAPIKeyFieldName  = big.NewInt(1 << 0)
+	createFlowsVaultConnectionMailjetAPIKeyFieldAppID = big.NewInt(1 << 1)
+	createFlowsVaultConnectionMailjetAPIKeyFieldSetup = big.NewInt(1 << 2)
 )
 
-type CreateFlowsVaultConnectionMailjetApiKey struct {
+type CreateFlowsVaultConnectionMailjetAPIKey struct {
 	// Flows Vault Connection name.
 	Name  string                                 `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdMailjetEnum   `json:"app_id" url:"app_id"`
-	Setup *FlowsVaultConnectioSetupMailjetApiKey `json:"setup" url:"setup"`
+	AppID FlowsVaultConnectionAppIDMailjetEnum   `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupMailjetAPIKey `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -12140,25 +12140,25 @@ type CreateFlowsVaultConnectionMailjetApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateFlowsVaultConnectionMailjetApiKey) GetName() string {
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) GetName() string {
 	if c == nil {
 		return ""
 	}
 	return c.Name
 }
 
-func (c *CreateFlowsVaultConnectionMailjetApiKey) GetSetup() *FlowsVaultConnectioSetupMailjetApiKey {
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) GetSetup() *FlowsVaultConnectioSetupMailjetAPIKey {
 	if c == nil {
 		return nil
 	}
 	return c.Setup
 }
 
-func (c *CreateFlowsVaultConnectionMailjetApiKey) GetExtraProperties() map[string]interface{} {
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateFlowsVaultConnectionMailjetApiKey) require(field *big.Int) {
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
@@ -12167,32 +12167,32 @@ func (c *CreateFlowsVaultConnectionMailjetApiKey) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionMailjetApiKey) SetName(name string) {
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) SetName(name string) {
 	c.Name = name
-	c.require(createFlowsVaultConnectionMailjetApiKeyFieldName)
+	c.require(createFlowsVaultConnectionMailjetAPIKeyFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionMailjetApiKey) SetAppId(appId FlowsVaultConnectionAppIdMailjetEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionMailjetApiKeyFieldAppId)
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) SetAppID(appID FlowsVaultConnectionAppIDMailjetEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionMailjetAPIKeyFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionMailjetApiKey) SetSetup(setup *FlowsVaultConnectioSetupMailjetApiKey) {
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) SetSetup(setup *FlowsVaultConnectioSetupMailjetAPIKey) {
 	c.Setup = setup
-	c.require(createFlowsVaultConnectionMailjetApiKeyFieldSetup)
+	c.require(createFlowsVaultConnectionMailjetAPIKeyFieldSetup)
 }
 
-func (c *CreateFlowsVaultConnectionMailjetApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateFlowsVaultConnectionMailjetApiKey
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionMailjetAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateFlowsVaultConnectionMailjetApiKey(value)
+	*c = CreateFlowsVaultConnectionMailjetAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -12202,8 +12202,8 @@ func (c *CreateFlowsVaultConnectionMailjetApiKey) UnmarshalJSON(data []byte) err
 	return nil
 }
 
-func (c *CreateFlowsVaultConnectionMailjetApiKey) MarshalJSON() ([]byte, error) {
-	type embed CreateFlowsVaultConnectionMailjetApiKey
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) MarshalJSON() ([]byte, error) {
+	type embed CreateFlowsVaultConnectionMailjetAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -12213,7 +12213,7 @@ func (c *CreateFlowsVaultConnectionMailjetApiKey) MarshalJSON() ([]byte, error) 
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateFlowsVaultConnectionMailjetApiKey) String() string {
+func (c *CreateFlowsVaultConnectionMailjetAPIKey) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -12227,13 +12227,13 @@ func (c *CreateFlowsVaultConnectionMailjetApiKey) String() string {
 
 var (
 	createFlowsVaultConnectionMailjetUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionMailjetUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionMailjetUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionMailjetUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                               `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdMailjetEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDMailjetEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -12267,11 +12267,11 @@ func (c *CreateFlowsVaultConnectionMailjetUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionMailjetUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionMailjetUninitialized) SetAppId(appId FlowsVaultConnectionAppIdMailjetEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionMailjetUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionMailjetUninitialized) SetAppID(appID FlowsVaultConnectionAppIDMailjetEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionMailjetUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionMailjetUninitialized) UnmarshalJSON(data []byte) error {
@@ -12398,14 +12398,14 @@ func (c *CreateFlowsVaultConnectionPipedrive) Accept(visitor CreateFlowsVaultCon
 
 var (
 	createFlowsVaultConnectionPipedriveOauthCodeFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionPipedriveOauthCodeFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionPipedriveOauthCodeFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionPipedriveOauthCodeFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionPipedriveOauthCode struct {
 	// Flows Vault Connection name.
 	Name  string                                 `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdPipedriveEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDPipedriveEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupOauthCode     `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -12447,11 +12447,11 @@ func (c *CreateFlowsVaultConnectionPipedriveOauthCode) SetName(name string) {
 	c.require(createFlowsVaultConnectionPipedriveOauthCodeFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionPipedriveOauthCode) SetAppId(appId FlowsVaultConnectionAppIdPipedriveEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionPipedriveOauthCodeFieldAppId)
+func (c *CreateFlowsVaultConnectionPipedriveOauthCode) SetAppID(appID FlowsVaultConnectionAppIDPipedriveEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionPipedriveOauthCodeFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -12502,14 +12502,14 @@ func (c *CreateFlowsVaultConnectionPipedriveOauthCode) String() string {
 
 var (
 	createFlowsVaultConnectionPipedriveTokenFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionPipedriveTokenFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionPipedriveTokenFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionPipedriveTokenFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionPipedriveToken struct {
 	// Flows Vault Connection name.
 	Name  string                                 `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdPipedriveEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDPipedriveEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupToken         `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -12551,11 +12551,11 @@ func (c *CreateFlowsVaultConnectionPipedriveToken) SetName(name string) {
 	c.require(createFlowsVaultConnectionPipedriveTokenFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionPipedriveToken) SetAppId(appId FlowsVaultConnectionAppIdPipedriveEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionPipedriveTokenFieldAppId)
+func (c *CreateFlowsVaultConnectionPipedriveToken) SetAppID(appID FlowsVaultConnectionAppIDPipedriveEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionPipedriveTokenFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -12606,13 +12606,13 @@ func (c *CreateFlowsVaultConnectionPipedriveToken) String() string {
 
 var (
 	createFlowsVaultConnectionPipedriveUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionPipedriveUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionPipedriveUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionPipedriveUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                                 `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdPipedriveEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDPipedriveEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -12646,11 +12646,11 @@ func (c *CreateFlowsVaultConnectionPipedriveUninitialized) SetName(name string) 
 	c.require(createFlowsVaultConnectionPipedriveUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionPipedriveUninitialized) SetAppId(appId FlowsVaultConnectionAppIdPipedriveEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionPipedriveUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionPipedriveUninitialized) SetAppID(appID FlowsVaultConnectionAppIDPipedriveEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionPipedriveUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionPipedriveUninitialized) UnmarshalJSON(data []byte) error {
@@ -12700,7 +12700,7 @@ type CreateFlowsVaultConnectionRequestContent struct {
 	CreateFlowsVaultConnectionClearbit       *CreateFlowsVaultConnectionClearbit
 	CreateFlowsVaultConnectionDocusign       *CreateFlowsVaultConnectionDocusign
 	CreateFlowsVaultConnectionGoogleSheets   *CreateFlowsVaultConnectionGoogleSheets
-	CreateFlowsVaultConnectionHttp           *CreateFlowsVaultConnectionHttp
+	CreateFlowsVaultConnectionHTTP           *CreateFlowsVaultConnectionHTTP
 	CreateFlowsVaultConnectionHubspot        *CreateFlowsVaultConnectionHubspot
 	CreateFlowsVaultConnectionJwt            *CreateFlowsVaultConnectionJwt
 	CreateFlowsVaultConnectionMailchimp      *CreateFlowsVaultConnectionMailchimp
@@ -12767,11 +12767,11 @@ func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnection
 	return c.CreateFlowsVaultConnectionGoogleSheets
 }
 
-func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionHttp() *CreateFlowsVaultConnectionHttp {
+func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionHTTP() *CreateFlowsVaultConnectionHTTP {
 	if c == nil {
 		return nil
 	}
-	return c.CreateFlowsVaultConnectionHttp
+	return c.CreateFlowsVaultConnectionHTTP
 }
 
 func (c *CreateFlowsVaultConnectionRequestContent) GetCreateFlowsVaultConnectionHubspot() *CreateFlowsVaultConnectionHubspot {
@@ -12908,10 +12908,10 @@ func (c *CreateFlowsVaultConnectionRequestContent) UnmarshalJSON(data []byte) er
 		c.CreateFlowsVaultConnectionGoogleSheets = valueCreateFlowsVaultConnectionGoogleSheets
 		return nil
 	}
-	valueCreateFlowsVaultConnectionHttp := new(CreateFlowsVaultConnectionHttp)
-	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHttp); err == nil {
-		c.typ = "CreateFlowsVaultConnectionHttp"
-		c.CreateFlowsVaultConnectionHttp = valueCreateFlowsVaultConnectionHttp
+	valueCreateFlowsVaultConnectionHTTP := new(CreateFlowsVaultConnectionHTTP)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTP); err == nil {
+		c.typ = "CreateFlowsVaultConnectionHTTP"
+		c.CreateFlowsVaultConnectionHTTP = valueCreateFlowsVaultConnectionHTTP
 		return nil
 	}
 	valueCreateFlowsVaultConnectionHubspot := new(CreateFlowsVaultConnectionHubspot)
@@ -13017,8 +13017,8 @@ func (c CreateFlowsVaultConnectionRequestContent) MarshalJSON() ([]byte, error) 
 	if c.typ == "CreateFlowsVaultConnectionGoogleSheets" || c.CreateFlowsVaultConnectionGoogleSheets != nil {
 		return json.Marshal(c.CreateFlowsVaultConnectionGoogleSheets)
 	}
-	if c.typ == "CreateFlowsVaultConnectionHttp" || c.CreateFlowsVaultConnectionHttp != nil {
-		return json.Marshal(c.CreateFlowsVaultConnectionHttp)
+	if c.typ == "CreateFlowsVaultConnectionHTTP" || c.CreateFlowsVaultConnectionHTTP != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionHTTP)
 	}
 	if c.typ == "CreateFlowsVaultConnectionHubspot" || c.CreateFlowsVaultConnectionHubspot != nil {
 		return json.Marshal(c.CreateFlowsVaultConnectionHubspot)
@@ -13070,7 +13070,7 @@ type CreateFlowsVaultConnectionRequestContentVisitor interface {
 	VisitCreateFlowsVaultConnectionClearbit(*CreateFlowsVaultConnectionClearbit) error
 	VisitCreateFlowsVaultConnectionDocusign(*CreateFlowsVaultConnectionDocusign) error
 	VisitCreateFlowsVaultConnectionGoogleSheets(*CreateFlowsVaultConnectionGoogleSheets) error
-	VisitCreateFlowsVaultConnectionHttp(*CreateFlowsVaultConnectionHttp) error
+	VisitCreateFlowsVaultConnectionHTTP(*CreateFlowsVaultConnectionHTTP) error
 	VisitCreateFlowsVaultConnectionHubspot(*CreateFlowsVaultConnectionHubspot) error
 	VisitCreateFlowsVaultConnectionJwt(*CreateFlowsVaultConnectionJwt) error
 	VisitCreateFlowsVaultConnectionMailchimp(*CreateFlowsVaultConnectionMailchimp) error
@@ -13108,8 +13108,8 @@ func (c *CreateFlowsVaultConnectionRequestContent) Accept(visitor CreateFlowsVau
 	if c.typ == "CreateFlowsVaultConnectionGoogleSheets" || c.CreateFlowsVaultConnectionGoogleSheets != nil {
 		return visitor.VisitCreateFlowsVaultConnectionGoogleSheets(c.CreateFlowsVaultConnectionGoogleSheets)
 	}
-	if c.typ == "CreateFlowsVaultConnectionHttp" || c.CreateFlowsVaultConnectionHttp != nil {
-		return visitor.VisitCreateFlowsVaultConnectionHttp(c.CreateFlowsVaultConnectionHttp)
+	if c.typ == "CreateFlowsVaultConnectionHTTP" || c.CreateFlowsVaultConnectionHTTP != nil {
+		return visitor.VisitCreateFlowsVaultConnectionHTTP(c.CreateFlowsVaultConnectionHTTP)
 	}
 	if c.typ == "CreateFlowsVaultConnectionHubspot" || c.CreateFlowsVaultConnectionHubspot != nil {
 		return visitor.VisitCreateFlowsVaultConnectionHubspot(c.CreateFlowsVaultConnectionHubspot)
@@ -13154,8 +13154,8 @@ func (c *CreateFlowsVaultConnectionRequestContent) Accept(visitor CreateFlowsVau
 }
 
 var (
-	createFlowsVaultConnectionResponseContentFieldId          = big.NewInt(1 << 0)
-	createFlowsVaultConnectionResponseContentFieldAppId       = big.NewInt(1 << 1)
+	createFlowsVaultConnectionResponseContentFieldID          = big.NewInt(1 << 0)
+	createFlowsVaultConnectionResponseContentFieldAppID       = big.NewInt(1 << 1)
 	createFlowsVaultConnectionResponseContentFieldEnvironment = big.NewInt(1 << 2)
 	createFlowsVaultConnectionResponseContentFieldName        = big.NewInt(1 << 3)
 	createFlowsVaultConnectionResponseContentFieldAccountName = big.NewInt(1 << 4)
@@ -13168,9 +13168,9 @@ var (
 
 type CreateFlowsVaultConnectionResponseContent struct {
 	// Flows Vault Connection identifier.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// Flows Vault Connection app identifier.
-	AppId string `json:"app_id" url:"app_id"`
+	AppID string `json:"app_id" url:"app_id"`
 	// Flows Vault Connection environment.
 	Environment *string `json:"environment,omitempty" url:"environment,omitempty"`
 	// Flows Vault Connection name.
@@ -13194,18 +13194,18 @@ type CreateFlowsVaultConnectionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateFlowsVaultConnectionResponseContent) GetId() string {
+func (c *CreateFlowsVaultConnectionResponseContent) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
-func (c *CreateFlowsVaultConnectionResponseContent) GetAppId() string {
+func (c *CreateFlowsVaultConnectionResponseContent) GetAppID() string {
 	if c == nil {
 		return ""
 	}
-	return c.AppId
+	return c.AppID
 }
 
 func (c *CreateFlowsVaultConnectionResponseContent) GetEnvironment() string {
@@ -13275,18 +13275,18 @@ func (c *CreateFlowsVaultConnectionResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionResponseContent) SetId(id string) {
-	c.Id = id
-	c.require(createFlowsVaultConnectionResponseContentFieldId)
+func (c *CreateFlowsVaultConnectionResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createFlowsVaultConnectionResponseContentFieldID)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionResponseContent) SetAppId(appId string) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionResponseContentFieldAppId)
+func (c *CreateFlowsVaultConnectionResponseContent) SetAppID(appID string) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionResponseContentFieldAppID)
 }
 
 // SetEnvironment sets the Environment field and marks it as non-optional;
@@ -13464,14 +13464,14 @@ func (c *CreateFlowsVaultConnectionSalesforce) Accept(visitor CreateFlowsVaultCo
 
 var (
 	createFlowsVaultConnectionSalesforceOauthCodeFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionSalesforceOauthCodeFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionSalesforceOauthCodeFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionSalesforceOauthCodeFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionSalesforceOauthCode struct {
 	// Flows Vault Connection name.
 	Name  string                                  `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdSalesforceEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDSalesforceEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupOauthCode      `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -13513,11 +13513,11 @@ func (c *CreateFlowsVaultConnectionSalesforceOauthCode) SetName(name string) {
 	c.require(createFlowsVaultConnectionSalesforceOauthCodeFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionSalesforceOauthCode) SetAppId(appId FlowsVaultConnectionAppIdSalesforceEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionSalesforceOauthCodeFieldAppId)
+func (c *CreateFlowsVaultConnectionSalesforceOauthCode) SetAppID(appID FlowsVaultConnectionAppIDSalesforceEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionSalesforceOauthCodeFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -13568,13 +13568,13 @@ func (c *CreateFlowsVaultConnectionSalesforceOauthCode) String() string {
 
 var (
 	createFlowsVaultConnectionSalesforceUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionSalesforceUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionSalesforceUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionSalesforceUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                                  `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdSalesforceEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDSalesforceEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -13608,11 +13608,11 @@ func (c *CreateFlowsVaultConnectionSalesforceUninitialized) SetName(name string)
 	c.require(createFlowsVaultConnectionSalesforceUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionSalesforceUninitialized) SetAppId(appId FlowsVaultConnectionAppIdSalesforceEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionSalesforceUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionSalesforceUninitialized) SetAppID(appID FlowsVaultConnectionAppIDSalesforceEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionSalesforceUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionSalesforceUninitialized) UnmarshalJSON(data []byte) error {
@@ -13655,17 +13655,17 @@ func (c *CreateFlowsVaultConnectionSalesforceUninitialized) String() string {
 }
 
 type CreateFlowsVaultConnectionSendgrid struct {
-	CreateFlowsVaultConnectionSendgridApiKey        *CreateFlowsVaultConnectionSendgridApiKey
+	CreateFlowsVaultConnectionSendgridAPIKey        *CreateFlowsVaultConnectionSendgridAPIKey
 	CreateFlowsVaultConnectionSendgridUninitialized *CreateFlowsVaultConnectionSendgridUninitialized
 
 	typ string
 }
 
-func (c *CreateFlowsVaultConnectionSendgrid) GetCreateFlowsVaultConnectionSendgridApiKey() *CreateFlowsVaultConnectionSendgridApiKey {
+func (c *CreateFlowsVaultConnectionSendgrid) GetCreateFlowsVaultConnectionSendgridAPIKey() *CreateFlowsVaultConnectionSendgridAPIKey {
 	if c == nil {
 		return nil
 	}
-	return c.CreateFlowsVaultConnectionSendgridApiKey
+	return c.CreateFlowsVaultConnectionSendgridAPIKey
 }
 
 func (c *CreateFlowsVaultConnectionSendgrid) GetCreateFlowsVaultConnectionSendgridUninitialized() *CreateFlowsVaultConnectionSendgridUninitialized {
@@ -13676,10 +13676,10 @@ func (c *CreateFlowsVaultConnectionSendgrid) GetCreateFlowsVaultConnectionSendgr
 }
 
 func (c *CreateFlowsVaultConnectionSendgrid) UnmarshalJSON(data []byte) error {
-	valueCreateFlowsVaultConnectionSendgridApiKey := new(CreateFlowsVaultConnectionSendgridApiKey)
-	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSendgridApiKey); err == nil {
-		c.typ = "CreateFlowsVaultConnectionSendgridApiKey"
-		c.CreateFlowsVaultConnectionSendgridApiKey = valueCreateFlowsVaultConnectionSendgridApiKey
+	valueCreateFlowsVaultConnectionSendgridAPIKey := new(CreateFlowsVaultConnectionSendgridAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSendgridAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionSendgridAPIKey"
+		c.CreateFlowsVaultConnectionSendgridAPIKey = valueCreateFlowsVaultConnectionSendgridAPIKey
 		return nil
 	}
 	valueCreateFlowsVaultConnectionSendgridUninitialized := new(CreateFlowsVaultConnectionSendgridUninitialized)
@@ -13692,8 +13692,8 @@ func (c *CreateFlowsVaultConnectionSendgrid) UnmarshalJSON(data []byte) error {
 }
 
 func (c CreateFlowsVaultConnectionSendgrid) MarshalJSON() ([]byte, error) {
-	if c.typ == "CreateFlowsVaultConnectionSendgridApiKey" || c.CreateFlowsVaultConnectionSendgridApiKey != nil {
-		return json.Marshal(c.CreateFlowsVaultConnectionSendgridApiKey)
+	if c.typ == "CreateFlowsVaultConnectionSendgridAPIKey" || c.CreateFlowsVaultConnectionSendgridAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionSendgridAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionSendgridUninitialized" || c.CreateFlowsVaultConnectionSendgridUninitialized != nil {
 		return json.Marshal(c.CreateFlowsVaultConnectionSendgridUninitialized)
@@ -13702,13 +13702,13 @@ func (c CreateFlowsVaultConnectionSendgrid) MarshalJSON() ([]byte, error) {
 }
 
 type CreateFlowsVaultConnectionSendgridVisitor interface {
-	VisitCreateFlowsVaultConnectionSendgridApiKey(*CreateFlowsVaultConnectionSendgridApiKey) error
+	VisitCreateFlowsVaultConnectionSendgridAPIKey(*CreateFlowsVaultConnectionSendgridAPIKey) error
 	VisitCreateFlowsVaultConnectionSendgridUninitialized(*CreateFlowsVaultConnectionSendgridUninitialized) error
 }
 
 func (c *CreateFlowsVaultConnectionSendgrid) Accept(visitor CreateFlowsVaultConnectionSendgridVisitor) error {
-	if c.typ == "CreateFlowsVaultConnectionSendgridApiKey" || c.CreateFlowsVaultConnectionSendgridApiKey != nil {
-		return visitor.VisitCreateFlowsVaultConnectionSendgridApiKey(c.CreateFlowsVaultConnectionSendgridApiKey)
+	if c.typ == "CreateFlowsVaultConnectionSendgridAPIKey" || c.CreateFlowsVaultConnectionSendgridAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionSendgridAPIKey(c.CreateFlowsVaultConnectionSendgridAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionSendgridUninitialized" || c.CreateFlowsVaultConnectionSendgridUninitialized != nil {
 		return visitor.VisitCreateFlowsVaultConnectionSendgridUninitialized(c.CreateFlowsVaultConnectionSendgridUninitialized)
@@ -13717,16 +13717,16 @@ func (c *CreateFlowsVaultConnectionSendgrid) Accept(visitor CreateFlowsVaultConn
 }
 
 var (
-	createFlowsVaultConnectionSendgridApiKeyFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionSendgridApiKeyFieldAppId = big.NewInt(1 << 1)
-	createFlowsVaultConnectionSendgridApiKeyFieldSetup = big.NewInt(1 << 2)
+	createFlowsVaultConnectionSendgridAPIKeyFieldName  = big.NewInt(1 << 0)
+	createFlowsVaultConnectionSendgridAPIKeyFieldAppID = big.NewInt(1 << 1)
+	createFlowsVaultConnectionSendgridAPIKeyFieldSetup = big.NewInt(1 << 2)
 )
 
-type CreateFlowsVaultConnectionSendgridApiKey struct {
+type CreateFlowsVaultConnectionSendgridAPIKey struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdSendgridEnum `json:"app_id" url:"app_id"`
-	Setup *FlowsVaultConnectioSetupApiKey       `json:"setup" url:"setup"`
+	AppID FlowsVaultConnectionAppIDSendgridEnum `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupAPIKey       `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -13735,25 +13735,25 @@ type CreateFlowsVaultConnectionSendgridApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateFlowsVaultConnectionSendgridApiKey) GetName() string {
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) GetName() string {
 	if c == nil {
 		return ""
 	}
 	return c.Name
 }
 
-func (c *CreateFlowsVaultConnectionSendgridApiKey) GetSetup() *FlowsVaultConnectioSetupApiKey {
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) GetSetup() *FlowsVaultConnectioSetupAPIKey {
 	if c == nil {
 		return nil
 	}
 	return c.Setup
 }
 
-func (c *CreateFlowsVaultConnectionSendgridApiKey) GetExtraProperties() map[string]interface{} {
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateFlowsVaultConnectionSendgridApiKey) require(field *big.Int) {
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
@@ -13762,32 +13762,32 @@ func (c *CreateFlowsVaultConnectionSendgridApiKey) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionSendgridApiKey) SetName(name string) {
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) SetName(name string) {
 	c.Name = name
-	c.require(createFlowsVaultConnectionSendgridApiKeyFieldName)
+	c.require(createFlowsVaultConnectionSendgridAPIKeyFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionSendgridApiKey) SetAppId(appId FlowsVaultConnectionAppIdSendgridEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionSendgridApiKeyFieldAppId)
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) SetAppID(appID FlowsVaultConnectionAppIDSendgridEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionSendgridAPIKeyFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionSendgridApiKey) SetSetup(setup *FlowsVaultConnectioSetupApiKey) {
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) SetSetup(setup *FlowsVaultConnectioSetupAPIKey) {
 	c.Setup = setup
-	c.require(createFlowsVaultConnectionSendgridApiKeyFieldSetup)
+	c.require(createFlowsVaultConnectionSendgridAPIKeyFieldSetup)
 }
 
-func (c *CreateFlowsVaultConnectionSendgridApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateFlowsVaultConnectionSendgridApiKey
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionSendgridAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateFlowsVaultConnectionSendgridApiKey(value)
+	*c = CreateFlowsVaultConnectionSendgridAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -13797,8 +13797,8 @@ func (c *CreateFlowsVaultConnectionSendgridApiKey) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-func (c *CreateFlowsVaultConnectionSendgridApiKey) MarshalJSON() ([]byte, error) {
-	type embed CreateFlowsVaultConnectionSendgridApiKey
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) MarshalJSON() ([]byte, error) {
+	type embed CreateFlowsVaultConnectionSendgridAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -13808,7 +13808,7 @@ func (c *CreateFlowsVaultConnectionSendgridApiKey) MarshalJSON() ([]byte, error)
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateFlowsVaultConnectionSendgridApiKey) String() string {
+func (c *CreateFlowsVaultConnectionSendgridAPIKey) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -13822,13 +13822,13 @@ func (c *CreateFlowsVaultConnectionSendgridApiKey) String() string {
 
 var (
 	createFlowsVaultConnectionSendgridUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionSendgridUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionSendgridUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionSendgridUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdSendgridEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDSendgridEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -13862,11 +13862,11 @@ func (c *CreateFlowsVaultConnectionSendgridUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionSendgridUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionSendgridUninitialized) SetAppId(appId FlowsVaultConnectionAppIdSendgridEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionSendgridUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionSendgridUninitialized) SetAppID(appID FlowsVaultConnectionAppIDSendgridEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionSendgridUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionSendgridUninitialized) UnmarshalJSON(data []byte) error {
@@ -13993,14 +13993,14 @@ func (c *CreateFlowsVaultConnectionSlack) Accept(visitor CreateFlowsVaultConnect
 
 var (
 	createFlowsVaultConnectionSlackOauthCodeFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionSlackOauthCodeFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionSlackOauthCodeFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionSlackOauthCodeFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionSlackOauthCode struct {
 	// Flows Vault Connection name.
 	Name  string                             `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdSlackEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDSlackEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupOauthCode `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -14042,11 +14042,11 @@ func (c *CreateFlowsVaultConnectionSlackOauthCode) SetName(name string) {
 	c.require(createFlowsVaultConnectionSlackOauthCodeFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionSlackOauthCode) SetAppId(appId FlowsVaultConnectionAppIdSlackEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionSlackOauthCodeFieldAppId)
+func (c *CreateFlowsVaultConnectionSlackOauthCode) SetAppID(appID FlowsVaultConnectionAppIDSlackEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionSlackOauthCodeFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -14097,13 +14097,13 @@ func (c *CreateFlowsVaultConnectionSlackOauthCode) String() string {
 
 var (
 	createFlowsVaultConnectionSlackUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionSlackUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionSlackUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionSlackUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                             `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdSlackEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDSlackEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -14137,11 +14137,11 @@ func (c *CreateFlowsVaultConnectionSlackUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionSlackUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionSlackUninitialized) SetAppId(appId FlowsVaultConnectionAppIdSlackEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionSlackUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionSlackUninitialized) SetAppID(appID FlowsVaultConnectionAppIDSlackEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionSlackUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionSlackUninitialized) UnmarshalJSON(data []byte) error {
@@ -14185,14 +14185,14 @@ func (c *CreateFlowsVaultConnectionSlackUninitialized) String() string {
 
 var (
 	createFlowsVaultConnectionSlackWebhookFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionSlackWebhookFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionSlackWebhookFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionSlackWebhookFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionSlackWebhook struct {
 	// Flows Vault Connection name.
 	Name  string                             `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdSlackEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDSlackEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupWebhook   `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -14234,11 +14234,11 @@ func (c *CreateFlowsVaultConnectionSlackWebhook) SetName(name string) {
 	c.require(createFlowsVaultConnectionSlackWebhookFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionSlackWebhook) SetAppId(appId FlowsVaultConnectionAppIdSlackEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionSlackWebhookFieldAppId)
+func (c *CreateFlowsVaultConnectionSlackWebhook) SetAppID(appID FlowsVaultConnectionAppIDSlackEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionSlackWebhookFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -14372,14 +14372,14 @@ func (c *CreateFlowsVaultConnectionStripe) Accept(visitor CreateFlowsVaultConnec
 
 var (
 	createFlowsVaultConnectionStripeKeyPairFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionStripeKeyPairFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionStripeKeyPairFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionStripeKeyPairFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionStripeKeyPair struct {
 	// Flows Vault Connection name.
 	Name  string                                 `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdStripeEnum    `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDStripeEnum    `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupStripeKeyPair `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -14421,11 +14421,11 @@ func (c *CreateFlowsVaultConnectionStripeKeyPair) SetName(name string) {
 	c.require(createFlowsVaultConnectionStripeKeyPairFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionStripeKeyPair) SetAppId(appId FlowsVaultConnectionAppIdStripeEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionStripeKeyPairFieldAppId)
+func (c *CreateFlowsVaultConnectionStripeKeyPair) SetAppID(appID FlowsVaultConnectionAppIDStripeEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionStripeKeyPairFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -14476,14 +14476,14 @@ func (c *CreateFlowsVaultConnectionStripeKeyPair) String() string {
 
 var (
 	createFlowsVaultConnectionStripeOauthCodeFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionStripeOauthCodeFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionStripeOauthCodeFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionStripeOauthCodeFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionStripeOauthCode struct {
 	// Flows Vault Connection name.
 	Name  string                              `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdStripeEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDStripeEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupOauthCode  `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -14525,11 +14525,11 @@ func (c *CreateFlowsVaultConnectionStripeOauthCode) SetName(name string) {
 	c.require(createFlowsVaultConnectionStripeOauthCodeFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionStripeOauthCode) SetAppId(appId FlowsVaultConnectionAppIdStripeEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionStripeOauthCodeFieldAppId)
+func (c *CreateFlowsVaultConnectionStripeOauthCode) SetAppID(appID FlowsVaultConnectionAppIDStripeEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionStripeOauthCodeFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -14580,13 +14580,13 @@ func (c *CreateFlowsVaultConnectionStripeOauthCode) String() string {
 
 var (
 	createFlowsVaultConnectionStripeUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionStripeUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionStripeUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionStripeUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                              `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdStripeEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDStripeEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -14620,11 +14620,11 @@ func (c *CreateFlowsVaultConnectionStripeUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionStripeUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionStripeUninitialized) SetAppId(appId FlowsVaultConnectionAppIdStripeEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionStripeUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionStripeUninitialized) SetAppID(appID FlowsVaultConnectionAppIDStripeEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionStripeUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionStripeUninitialized) UnmarshalJSON(data []byte) error {
@@ -14730,14 +14730,14 @@ func (c *CreateFlowsVaultConnectionTelegram) Accept(visitor CreateFlowsVaultConn
 
 var (
 	createFlowsVaultConnectionTelegramTokenFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionTelegramTokenFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionTelegramTokenFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionTelegramTokenFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionTelegramToken struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdTelegramEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDTelegramEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupToken        `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -14779,11 +14779,11 @@ func (c *CreateFlowsVaultConnectionTelegramToken) SetName(name string) {
 	c.require(createFlowsVaultConnectionTelegramTokenFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionTelegramToken) SetAppId(appId FlowsVaultConnectionAppIdTelegramEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionTelegramTokenFieldAppId)
+func (c *CreateFlowsVaultConnectionTelegramToken) SetAppID(appID FlowsVaultConnectionAppIDTelegramEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionTelegramTokenFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -14834,13 +14834,13 @@ func (c *CreateFlowsVaultConnectionTelegramToken) String() string {
 
 var (
 	createFlowsVaultConnectionTelegramUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionTelegramUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionTelegramUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionTelegramUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdTelegramEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDTelegramEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -14874,11 +14874,11 @@ func (c *CreateFlowsVaultConnectionTelegramUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionTelegramUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionTelegramUninitialized) SetAppId(appId FlowsVaultConnectionAppIdTelegramEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionTelegramUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionTelegramUninitialized) SetAppID(appID FlowsVaultConnectionAppIDTelegramEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionTelegramUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionTelegramUninitialized) UnmarshalJSON(data []byte) error {
@@ -14921,17 +14921,17 @@ func (c *CreateFlowsVaultConnectionTelegramUninitialized) String() string {
 }
 
 type CreateFlowsVaultConnectionTwilio struct {
-	CreateFlowsVaultConnectionTwilioApiKey        *CreateFlowsVaultConnectionTwilioApiKey
+	CreateFlowsVaultConnectionTwilioAPIKey        *CreateFlowsVaultConnectionTwilioAPIKey
 	CreateFlowsVaultConnectionTwilioUninitialized *CreateFlowsVaultConnectionTwilioUninitialized
 
 	typ string
 }
 
-func (c *CreateFlowsVaultConnectionTwilio) GetCreateFlowsVaultConnectionTwilioApiKey() *CreateFlowsVaultConnectionTwilioApiKey {
+func (c *CreateFlowsVaultConnectionTwilio) GetCreateFlowsVaultConnectionTwilioAPIKey() *CreateFlowsVaultConnectionTwilioAPIKey {
 	if c == nil {
 		return nil
 	}
-	return c.CreateFlowsVaultConnectionTwilioApiKey
+	return c.CreateFlowsVaultConnectionTwilioAPIKey
 }
 
 func (c *CreateFlowsVaultConnectionTwilio) GetCreateFlowsVaultConnectionTwilioUninitialized() *CreateFlowsVaultConnectionTwilioUninitialized {
@@ -14942,10 +14942,10 @@ func (c *CreateFlowsVaultConnectionTwilio) GetCreateFlowsVaultConnectionTwilioUn
 }
 
 func (c *CreateFlowsVaultConnectionTwilio) UnmarshalJSON(data []byte) error {
-	valueCreateFlowsVaultConnectionTwilioApiKey := new(CreateFlowsVaultConnectionTwilioApiKey)
-	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTwilioApiKey); err == nil {
-		c.typ = "CreateFlowsVaultConnectionTwilioApiKey"
-		c.CreateFlowsVaultConnectionTwilioApiKey = valueCreateFlowsVaultConnectionTwilioApiKey
+	valueCreateFlowsVaultConnectionTwilioAPIKey := new(CreateFlowsVaultConnectionTwilioAPIKey)
+	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTwilioAPIKey); err == nil {
+		c.typ = "CreateFlowsVaultConnectionTwilioAPIKey"
+		c.CreateFlowsVaultConnectionTwilioAPIKey = valueCreateFlowsVaultConnectionTwilioAPIKey
 		return nil
 	}
 	valueCreateFlowsVaultConnectionTwilioUninitialized := new(CreateFlowsVaultConnectionTwilioUninitialized)
@@ -14958,8 +14958,8 @@ func (c *CreateFlowsVaultConnectionTwilio) UnmarshalJSON(data []byte) error {
 }
 
 func (c CreateFlowsVaultConnectionTwilio) MarshalJSON() ([]byte, error) {
-	if c.typ == "CreateFlowsVaultConnectionTwilioApiKey" || c.CreateFlowsVaultConnectionTwilioApiKey != nil {
-		return json.Marshal(c.CreateFlowsVaultConnectionTwilioApiKey)
+	if c.typ == "CreateFlowsVaultConnectionTwilioAPIKey" || c.CreateFlowsVaultConnectionTwilioAPIKey != nil {
+		return json.Marshal(c.CreateFlowsVaultConnectionTwilioAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionTwilioUninitialized" || c.CreateFlowsVaultConnectionTwilioUninitialized != nil {
 		return json.Marshal(c.CreateFlowsVaultConnectionTwilioUninitialized)
@@ -14968,13 +14968,13 @@ func (c CreateFlowsVaultConnectionTwilio) MarshalJSON() ([]byte, error) {
 }
 
 type CreateFlowsVaultConnectionTwilioVisitor interface {
-	VisitCreateFlowsVaultConnectionTwilioApiKey(*CreateFlowsVaultConnectionTwilioApiKey) error
+	VisitCreateFlowsVaultConnectionTwilioAPIKey(*CreateFlowsVaultConnectionTwilioAPIKey) error
 	VisitCreateFlowsVaultConnectionTwilioUninitialized(*CreateFlowsVaultConnectionTwilioUninitialized) error
 }
 
 func (c *CreateFlowsVaultConnectionTwilio) Accept(visitor CreateFlowsVaultConnectionTwilioVisitor) error {
-	if c.typ == "CreateFlowsVaultConnectionTwilioApiKey" || c.CreateFlowsVaultConnectionTwilioApiKey != nil {
-		return visitor.VisitCreateFlowsVaultConnectionTwilioApiKey(c.CreateFlowsVaultConnectionTwilioApiKey)
+	if c.typ == "CreateFlowsVaultConnectionTwilioAPIKey" || c.CreateFlowsVaultConnectionTwilioAPIKey != nil {
+		return visitor.VisitCreateFlowsVaultConnectionTwilioAPIKey(c.CreateFlowsVaultConnectionTwilioAPIKey)
 	}
 	if c.typ == "CreateFlowsVaultConnectionTwilioUninitialized" || c.CreateFlowsVaultConnectionTwilioUninitialized != nil {
 		return visitor.VisitCreateFlowsVaultConnectionTwilioUninitialized(c.CreateFlowsVaultConnectionTwilioUninitialized)
@@ -14983,16 +14983,16 @@ func (c *CreateFlowsVaultConnectionTwilio) Accept(visitor CreateFlowsVaultConnec
 }
 
 var (
-	createFlowsVaultConnectionTwilioApiKeyFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionTwilioApiKeyFieldAppId = big.NewInt(1 << 1)
-	createFlowsVaultConnectionTwilioApiKeyFieldSetup = big.NewInt(1 << 2)
+	createFlowsVaultConnectionTwilioAPIKeyFieldName  = big.NewInt(1 << 0)
+	createFlowsVaultConnectionTwilioAPIKeyFieldAppID = big.NewInt(1 << 1)
+	createFlowsVaultConnectionTwilioAPIKeyFieldSetup = big.NewInt(1 << 2)
 )
 
-type CreateFlowsVaultConnectionTwilioApiKey struct {
+type CreateFlowsVaultConnectionTwilioAPIKey struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdTwilioEnum   `json:"app_id" url:"app_id"`
-	Setup *FlowsVaultConnectioSetupTwilioApiKey `json:"setup" url:"setup"`
+	AppID FlowsVaultConnectionAppIDTwilioEnum   `json:"app_id" url:"app_id"`
+	Setup *FlowsVaultConnectioSetupTwilioAPIKey `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -15001,25 +15001,25 @@ type CreateFlowsVaultConnectionTwilioApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateFlowsVaultConnectionTwilioApiKey) GetName() string {
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) GetName() string {
 	if c == nil {
 		return ""
 	}
 	return c.Name
 }
 
-func (c *CreateFlowsVaultConnectionTwilioApiKey) GetSetup() *FlowsVaultConnectioSetupTwilioApiKey {
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) GetSetup() *FlowsVaultConnectioSetupTwilioAPIKey {
 	if c == nil {
 		return nil
 	}
 	return c.Setup
 }
 
-func (c *CreateFlowsVaultConnectionTwilioApiKey) GetExtraProperties() map[string]interface{} {
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateFlowsVaultConnectionTwilioApiKey) require(field *big.Int) {
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
@@ -15028,32 +15028,32 @@ func (c *CreateFlowsVaultConnectionTwilioApiKey) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionTwilioApiKey) SetName(name string) {
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) SetName(name string) {
 	c.Name = name
-	c.require(createFlowsVaultConnectionTwilioApiKeyFieldName)
+	c.require(createFlowsVaultConnectionTwilioAPIKeyFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionTwilioApiKey) SetAppId(appId FlowsVaultConnectionAppIdTwilioEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionTwilioApiKeyFieldAppId)
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) SetAppID(appID FlowsVaultConnectionAppIDTwilioEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionTwilioAPIKeyFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionTwilioApiKey) SetSetup(setup *FlowsVaultConnectioSetupTwilioApiKey) {
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) SetSetup(setup *FlowsVaultConnectioSetupTwilioAPIKey) {
 	c.Setup = setup
-	c.require(createFlowsVaultConnectionTwilioApiKeyFieldSetup)
+	c.require(createFlowsVaultConnectionTwilioAPIKeyFieldSetup)
 }
 
-func (c *CreateFlowsVaultConnectionTwilioApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateFlowsVaultConnectionTwilioApiKey
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFlowsVaultConnectionTwilioAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateFlowsVaultConnectionTwilioApiKey(value)
+	*c = CreateFlowsVaultConnectionTwilioAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -15063,8 +15063,8 @@ func (c *CreateFlowsVaultConnectionTwilioApiKey) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (c *CreateFlowsVaultConnectionTwilioApiKey) MarshalJSON() ([]byte, error) {
-	type embed CreateFlowsVaultConnectionTwilioApiKey
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) MarshalJSON() ([]byte, error) {
+	type embed CreateFlowsVaultConnectionTwilioAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -15074,7 +15074,7 @@ func (c *CreateFlowsVaultConnectionTwilioApiKey) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateFlowsVaultConnectionTwilioApiKey) String() string {
+func (c *CreateFlowsVaultConnectionTwilioAPIKey) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -15088,13 +15088,13 @@ func (c *CreateFlowsVaultConnectionTwilioApiKey) String() string {
 
 var (
 	createFlowsVaultConnectionTwilioUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionTwilioUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionTwilioUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionTwilioUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                              `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdTwilioEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDTwilioEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -15128,11 +15128,11 @@ func (c *CreateFlowsVaultConnectionTwilioUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionTwilioUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionTwilioUninitialized) SetAppId(appId FlowsVaultConnectionAppIdTwilioEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionTwilioUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionTwilioUninitialized) SetAppID(appID FlowsVaultConnectionAppIDTwilioEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionTwilioUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionTwilioUninitialized) UnmarshalJSON(data []byte) error {
@@ -15238,14 +15238,14 @@ func (c *CreateFlowsVaultConnectionWhatsapp) Accept(visitor CreateFlowsVaultConn
 
 var (
 	createFlowsVaultConnectionWhatsappTokenFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionWhatsappTokenFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionWhatsappTokenFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionWhatsappTokenFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionWhatsappToken struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdWhatsappEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDWhatsappEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupToken        `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -15287,11 +15287,11 @@ func (c *CreateFlowsVaultConnectionWhatsappToken) SetName(name string) {
 	c.require(createFlowsVaultConnectionWhatsappTokenFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionWhatsappToken) SetAppId(appId FlowsVaultConnectionAppIdWhatsappEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionWhatsappTokenFieldAppId)
+func (c *CreateFlowsVaultConnectionWhatsappToken) SetAppID(appID FlowsVaultConnectionAppIDWhatsappEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionWhatsappTokenFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -15342,13 +15342,13 @@ func (c *CreateFlowsVaultConnectionWhatsappToken) String() string {
 
 var (
 	createFlowsVaultConnectionWhatsappUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionWhatsappUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionWhatsappUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionWhatsappUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                                `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdWhatsappEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDWhatsappEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -15382,11 +15382,11 @@ func (c *CreateFlowsVaultConnectionWhatsappUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionWhatsappUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionWhatsappUninitialized) SetAppId(appId FlowsVaultConnectionAppIdWhatsappEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionWhatsappUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionWhatsappUninitialized) SetAppID(appID FlowsVaultConnectionAppIDWhatsappEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionWhatsappUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionWhatsappUninitialized) UnmarshalJSON(data []byte) error {
@@ -15492,13 +15492,13 @@ func (c *CreateFlowsVaultConnectionZapier) Accept(visitor CreateFlowsVaultConnec
 
 var (
 	createFlowsVaultConnectionZapierUninitializedFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionZapierUninitializedFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionZapierUninitializedFieldAppID = big.NewInt(1 << 1)
 )
 
 type CreateFlowsVaultConnectionZapierUninitialized struct {
 	// Flows Vault Connection name.
 	Name  string                              `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdZapierEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDZapierEnum `json:"app_id" url:"app_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -15532,11 +15532,11 @@ func (c *CreateFlowsVaultConnectionZapierUninitialized) SetName(name string) {
 	c.require(createFlowsVaultConnectionZapierUninitializedFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionZapierUninitialized) SetAppId(appId FlowsVaultConnectionAppIdZapierEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionZapierUninitializedFieldAppId)
+func (c *CreateFlowsVaultConnectionZapierUninitialized) SetAppID(appID FlowsVaultConnectionAppIDZapierEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionZapierUninitializedFieldAppID)
 }
 
 func (c *CreateFlowsVaultConnectionZapierUninitialized) UnmarshalJSON(data []byte) error {
@@ -15580,14 +15580,14 @@ func (c *CreateFlowsVaultConnectionZapierUninitialized) String() string {
 
 var (
 	createFlowsVaultConnectionZapierWebhookFieldName  = big.NewInt(1 << 0)
-	createFlowsVaultConnectionZapierWebhookFieldAppId = big.NewInt(1 << 1)
+	createFlowsVaultConnectionZapierWebhookFieldAppID = big.NewInt(1 << 1)
 	createFlowsVaultConnectionZapierWebhookFieldSetup = big.NewInt(1 << 2)
 )
 
 type CreateFlowsVaultConnectionZapierWebhook struct {
 	// Flows Vault Connection name.
 	Name  string                              `json:"name" url:"name"`
-	AppId FlowsVaultConnectionAppIdZapierEnum `json:"app_id" url:"app_id"`
+	AppID FlowsVaultConnectionAppIDZapierEnum `json:"app_id" url:"app_id"`
 	Setup *FlowsVaultConnectioSetupWebhook    `json:"setup" url:"setup"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -15629,11 +15629,11 @@ func (c *CreateFlowsVaultConnectionZapierWebhook) SetName(name string) {
 	c.require(createFlowsVaultConnectionZapierWebhookFieldName)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFlowsVaultConnectionZapierWebhook) SetAppId(appId FlowsVaultConnectionAppIdZapierEnum) {
-	c.AppId = appId
-	c.require(createFlowsVaultConnectionZapierWebhookFieldAppId)
+func (c *CreateFlowsVaultConnectionZapierWebhook) SetAppID(appID FlowsVaultConnectionAppIDZapierEnum) {
+	c.AppID = appID
+	c.require(createFlowsVaultConnectionZapierWebhookFieldAppID)
 }
 
 // SetSetup sets the Setup field and marks it as non-optional;
@@ -15683,15 +15683,15 @@ func (c *CreateFlowsVaultConnectionZapierWebhook) String() string {
 }
 
 var (
-	createGuardianEnrollmentTicketResponseContentFieldTicketId  = big.NewInt(1 << 0)
-	createGuardianEnrollmentTicketResponseContentFieldTicketUrl = big.NewInt(1 << 1)
+	createGuardianEnrollmentTicketResponseContentFieldTicketID  = big.NewInt(1 << 0)
+	createGuardianEnrollmentTicketResponseContentFieldTicketURL = big.NewInt(1 << 1)
 )
 
 type CreateGuardianEnrollmentTicketResponseContent struct {
 	// The ticket_id used to identify the enrollment
-	TicketId *string `json:"ticket_id,omitempty" url:"ticket_id,omitempty"`
+	TicketID *string `json:"ticket_id,omitempty" url:"ticket_id,omitempty"`
 	// The url you can use to start enrollment
-	TicketUrl *string `json:"ticket_url,omitempty" url:"ticket_url,omitempty"`
+	TicketURL *string `json:"ticket_url,omitempty" url:"ticket_url,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -15701,18 +15701,18 @@ type CreateGuardianEnrollmentTicketResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (c *CreateGuardianEnrollmentTicketResponseContent) GetTicketId() string {
-	if c == nil || c.TicketId == nil {
+func (c *CreateGuardianEnrollmentTicketResponseContent) GetTicketID() string {
+	if c == nil || c.TicketID == nil {
 		return ""
 	}
-	return *c.TicketId
+	return *c.TicketID
 }
 
-func (c *CreateGuardianEnrollmentTicketResponseContent) GetTicketUrl() string {
-	if c == nil || c.TicketUrl == nil {
+func (c *CreateGuardianEnrollmentTicketResponseContent) GetTicketURL() string {
+	if c == nil || c.TicketURL == nil {
 		return ""
 	}
-	return *c.TicketUrl
+	return *c.TicketURL
 }
 
 func (c *CreateGuardianEnrollmentTicketResponseContent) GetExtraProperties() map[string]interface{} {
@@ -15726,18 +15726,18 @@ func (c *CreateGuardianEnrollmentTicketResponseContent) require(field *big.Int) 
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetTicketId sets the TicketId field and marks it as non-optional;
+// SetTicketID sets the TicketID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateGuardianEnrollmentTicketResponseContent) SetTicketId(ticketId *string) {
-	c.TicketId = ticketId
-	c.require(createGuardianEnrollmentTicketResponseContentFieldTicketId)
+func (c *CreateGuardianEnrollmentTicketResponseContent) SetTicketID(ticketID *string) {
+	c.TicketID = ticketID
+	c.require(createGuardianEnrollmentTicketResponseContentFieldTicketID)
 }
 
-// SetTicketUrl sets the TicketUrl field and marks it as non-optional;
+// SetTicketURL sets the TicketURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateGuardianEnrollmentTicketResponseContent) SetTicketUrl(ticketUrl *string) {
-	c.TicketUrl = ticketUrl
-	c.require(createGuardianEnrollmentTicketResponseContentFieldTicketUrl)
+func (c *CreateGuardianEnrollmentTicketResponseContent) SetTicketURL(ticketURL *string) {
+	c.TicketURL = ticketURL
+	c.require(createGuardianEnrollmentTicketResponseContentFieldTicketURL)
 }
 
 func (c *CreateGuardianEnrollmentTicketResponseContent) UnmarshalJSON(data []byte) error {
@@ -15790,9 +15790,9 @@ var (
 	createImportUsersResponseContentFieldStatus       = big.NewInt(1 << 0)
 	createImportUsersResponseContentFieldType         = big.NewInt(1 << 1)
 	createImportUsersResponseContentFieldCreatedAt    = big.NewInt(1 << 2)
-	createImportUsersResponseContentFieldId           = big.NewInt(1 << 3)
-	createImportUsersResponseContentFieldConnectionId = big.NewInt(1 << 4)
-	createImportUsersResponseContentFieldExternalId   = big.NewInt(1 << 5)
+	createImportUsersResponseContentFieldID           = big.NewInt(1 << 3)
+	createImportUsersResponseContentFieldConnectionID = big.NewInt(1 << 4)
+	createImportUsersResponseContentFieldExternalID   = big.NewInt(1 << 5)
 )
 
 type CreateImportUsersResponseContent struct {
@@ -15803,11 +15803,11 @@ type CreateImportUsersResponseContent struct {
 	// When this job was created.
 	CreatedAt string `json:"created_at" url:"created_at"`
 	// ID of this job.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// connection_id of the connection to which users will be imported.
-	ConnectionId string `json:"connection_id" url:"connection_id"`
+	ConnectionID string `json:"connection_id" url:"connection_id"`
 	// Customer-defined ID.
-	ExternalId *string `json:"external_id,omitempty" url:"external_id,omitempty"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -15838,25 +15838,25 @@ func (c *CreateImportUsersResponseContent) GetCreatedAt() string {
 	return c.CreatedAt
 }
 
-func (c *CreateImportUsersResponseContent) GetId() string {
+func (c *CreateImportUsersResponseContent) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
-func (c *CreateImportUsersResponseContent) GetConnectionId() string {
+func (c *CreateImportUsersResponseContent) GetConnectionID() string {
 	if c == nil {
 		return ""
 	}
-	return c.ConnectionId
+	return c.ConnectionID
 }
 
-func (c *CreateImportUsersResponseContent) GetExternalId() string {
-	if c == nil || c.ExternalId == nil {
+func (c *CreateImportUsersResponseContent) GetExternalID() string {
+	if c == nil || c.ExternalID == nil {
 		return ""
 	}
-	return *c.ExternalId
+	return *c.ExternalID
 }
 
 func (c *CreateImportUsersResponseContent) GetExtraProperties() map[string]interface{} {
@@ -15891,25 +15891,25 @@ func (c *CreateImportUsersResponseContent) SetCreatedAt(createdAt string) {
 	c.require(createImportUsersResponseContentFieldCreatedAt)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateImportUsersResponseContent) SetId(id string) {
-	c.Id = id
-	c.require(createImportUsersResponseContentFieldId)
+func (c *CreateImportUsersResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createImportUsersResponseContentFieldID)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateImportUsersResponseContent) SetConnectionId(connectionId string) {
-	c.ConnectionId = connectionId
-	c.require(createImportUsersResponseContentFieldConnectionId)
+func (c *CreateImportUsersResponseContent) SetConnectionID(connectionID string) {
+	c.ConnectionID = connectionID
+	c.require(createImportUsersResponseContentFieldConnectionID)
 }
 
-// SetExternalId sets the ExternalId field and marks it as non-optional;
+// SetExternalID sets the ExternalID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateImportUsersResponseContent) SetExternalId(externalId *string) {
-	c.ExternalId = externalId
-	c.require(createImportUsersResponseContentFieldExternalId)
+func (c *CreateImportUsersResponseContent) SetExternalID(externalID *string) {
+	c.ExternalID = externalID
+	c.require(createImportUsersResponseContentFieldExternalID)
 }
 
 func (c *CreateImportUsersResponseContent) UnmarshalJSON(data []byte) error {
@@ -15956,44 +15956,44 @@ func (c *CreateImportUsersResponseContent) String() string {
 }
 
 var (
-	createOrganizationInvitationResponseContentFieldId             = big.NewInt(1 << 0)
-	createOrganizationInvitationResponseContentFieldOrganizationId = big.NewInt(1 << 1)
+	createOrganizationInvitationResponseContentFieldID             = big.NewInt(1 << 0)
+	createOrganizationInvitationResponseContentFieldOrganizationID = big.NewInt(1 << 1)
 	createOrganizationInvitationResponseContentFieldInviter        = big.NewInt(1 << 2)
 	createOrganizationInvitationResponseContentFieldInvitee        = big.NewInt(1 << 3)
-	createOrganizationInvitationResponseContentFieldInvitationUrl  = big.NewInt(1 << 4)
+	createOrganizationInvitationResponseContentFieldInvitationURL  = big.NewInt(1 << 4)
 	createOrganizationInvitationResponseContentFieldCreatedAt      = big.NewInt(1 << 5)
 	createOrganizationInvitationResponseContentFieldExpiresAt      = big.NewInt(1 << 6)
-	createOrganizationInvitationResponseContentFieldClientId       = big.NewInt(1 << 7)
-	createOrganizationInvitationResponseContentFieldConnectionId   = big.NewInt(1 << 8)
+	createOrganizationInvitationResponseContentFieldClientID       = big.NewInt(1 << 7)
+	createOrganizationInvitationResponseContentFieldConnectionID   = big.NewInt(1 << 8)
 	createOrganizationInvitationResponseContentFieldAppMetadata    = big.NewInt(1 << 9)
 	createOrganizationInvitationResponseContentFieldUserMetadata   = big.NewInt(1 << 10)
 	createOrganizationInvitationResponseContentFieldRoles          = big.NewInt(1 << 11)
-	createOrganizationInvitationResponseContentFieldTicketId       = big.NewInt(1 << 12)
+	createOrganizationInvitationResponseContentFieldTicketID       = big.NewInt(1 << 12)
 )
 
 type CreateOrganizationInvitationResponseContent struct {
 	// The id of the user invitation.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Organization identifier.
-	OrganizationId *string                        `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	OrganizationID *string                        `json:"organization_id,omitempty" url:"organization_id,omitempty"`
 	Inviter        *OrganizationInvitationInviter `json:"inviter,omitempty" url:"inviter,omitempty"`
 	Invitee        *OrganizationInvitationInvitee `json:"invitee,omitempty" url:"invitee,omitempty"`
 	// The invitation url to be send to the invitee.
-	InvitationUrl *string `json:"invitation_url,omitempty" url:"invitation_url,omitempty"`
+	InvitationURL *string `json:"invitation_url,omitempty" url:"invitation_url,omitempty"`
 	// The ISO 8601 formatted timestamp representing the creation time of the invitation.
 	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The ISO 8601 formatted timestamp representing the expiration time of the invitation.
 	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
 	// Auth0 client ID. Used to resolve the application's login initiation endpoint.
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// The id of the connection to force invitee to authenticate with.
-	ConnectionId *string       `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string       `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	AppMetadata  *AppMetadata  `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
 	UserMetadata *UserMetadata `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
 	// List of roles IDs to associated with the user.
 	Roles []string `json:"roles,omitempty" url:"roles,omitempty"`
 	// The id of the invitation ticket
-	TicketId *string `json:"ticket_id,omitempty" url:"ticket_id,omitempty"`
+	TicketID *string `json:"ticket_id,omitempty" url:"ticket_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -16002,18 +16002,18 @@ type CreateOrganizationInvitationResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateOrganizationInvitationResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateOrganizationInvitationResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
-func (c *CreateOrganizationInvitationResponseContent) GetOrganizationId() string {
-	if c == nil || c.OrganizationId == nil {
+func (c *CreateOrganizationInvitationResponseContent) GetOrganizationID() string {
+	if c == nil || c.OrganizationID == nil {
 		return ""
 	}
-	return *c.OrganizationId
+	return *c.OrganizationID
 }
 
 func (c *CreateOrganizationInvitationResponseContent) GetInviter() OrganizationInvitationInviter {
@@ -16030,11 +16030,11 @@ func (c *CreateOrganizationInvitationResponseContent) GetInvitee() OrganizationI
 	return *c.Invitee
 }
 
-func (c *CreateOrganizationInvitationResponseContent) GetInvitationUrl() string {
-	if c == nil || c.InvitationUrl == nil {
+func (c *CreateOrganizationInvitationResponseContent) GetInvitationURL() string {
+	if c == nil || c.InvitationURL == nil {
 		return ""
 	}
-	return *c.InvitationUrl
+	return *c.InvitationURL
 }
 
 func (c *CreateOrganizationInvitationResponseContent) GetCreatedAt() time.Time {
@@ -16051,18 +16051,18 @@ func (c *CreateOrganizationInvitationResponseContent) GetExpiresAt() time.Time {
 	return *c.ExpiresAt
 }
 
-func (c *CreateOrganizationInvitationResponseContent) GetClientId() string {
-	if c == nil || c.ClientId == nil {
+func (c *CreateOrganizationInvitationResponseContent) GetClientID() string {
+	if c == nil || c.ClientID == nil {
 		return ""
 	}
-	return *c.ClientId
+	return *c.ClientID
 }
 
-func (c *CreateOrganizationInvitationResponseContent) GetConnectionId() string {
-	if c == nil || c.ConnectionId == nil {
+func (c *CreateOrganizationInvitationResponseContent) GetConnectionID() string {
+	if c == nil || c.ConnectionID == nil {
 		return ""
 	}
-	return *c.ConnectionId
+	return *c.ConnectionID
 }
 
 func (c *CreateOrganizationInvitationResponseContent) GetAppMetadata() AppMetadata {
@@ -16086,11 +16086,11 @@ func (c *CreateOrganizationInvitationResponseContent) GetRoles() []string {
 	return c.Roles
 }
 
-func (c *CreateOrganizationInvitationResponseContent) GetTicketId() string {
-	if c == nil || c.TicketId == nil {
+func (c *CreateOrganizationInvitationResponseContent) GetTicketID() string {
+	if c == nil || c.TicketID == nil {
 		return ""
 	}
-	return *c.TicketId
+	return *c.TicketID
 }
 
 func (c *CreateOrganizationInvitationResponseContent) GetExtraProperties() map[string]interface{} {
@@ -16104,18 +16104,18 @@ func (c *CreateOrganizationInvitationResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateOrganizationInvitationResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createOrganizationInvitationResponseContentFieldId)
+func (c *CreateOrganizationInvitationResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createOrganizationInvitationResponseContentFieldID)
 }
 
-// SetOrganizationId sets the OrganizationId field and marks it as non-optional;
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateOrganizationInvitationResponseContent) SetOrganizationId(organizationId *string) {
-	c.OrganizationId = organizationId
-	c.require(createOrganizationInvitationResponseContentFieldOrganizationId)
+func (c *CreateOrganizationInvitationResponseContent) SetOrganizationID(organizationID *string) {
+	c.OrganizationID = organizationID
+	c.require(createOrganizationInvitationResponseContentFieldOrganizationID)
 }
 
 // SetInviter sets the Inviter field and marks it as non-optional;
@@ -16132,11 +16132,11 @@ func (c *CreateOrganizationInvitationResponseContent) SetInvitee(invitee *Organi
 	c.require(createOrganizationInvitationResponseContentFieldInvitee)
 }
 
-// SetInvitationUrl sets the InvitationUrl field and marks it as non-optional;
+// SetInvitationURL sets the InvitationURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateOrganizationInvitationResponseContent) SetInvitationUrl(invitationUrl *string) {
-	c.InvitationUrl = invitationUrl
-	c.require(createOrganizationInvitationResponseContentFieldInvitationUrl)
+func (c *CreateOrganizationInvitationResponseContent) SetInvitationURL(invitationURL *string) {
+	c.InvitationURL = invitationURL
+	c.require(createOrganizationInvitationResponseContentFieldInvitationURL)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
@@ -16153,18 +16153,18 @@ func (c *CreateOrganizationInvitationResponseContent) SetExpiresAt(expiresAt *ti
 	c.require(createOrganizationInvitationResponseContentFieldExpiresAt)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateOrganizationInvitationResponseContent) SetClientId(clientId *string) {
-	c.ClientId = clientId
-	c.require(createOrganizationInvitationResponseContentFieldClientId)
+func (c *CreateOrganizationInvitationResponseContent) SetClientID(clientID *string) {
+	c.ClientID = clientID
+	c.require(createOrganizationInvitationResponseContentFieldClientID)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateOrganizationInvitationResponseContent) SetConnectionId(connectionId *string) {
-	c.ConnectionId = connectionId
-	c.require(createOrganizationInvitationResponseContentFieldConnectionId)
+func (c *CreateOrganizationInvitationResponseContent) SetConnectionID(connectionID *string) {
+	c.ConnectionID = connectionID
+	c.require(createOrganizationInvitationResponseContentFieldConnectionID)
 }
 
 // SetAppMetadata sets the AppMetadata field and marks it as non-optional;
@@ -16188,11 +16188,11 @@ func (c *CreateOrganizationInvitationResponseContent) SetRoles(roles []string) {
 	c.require(createOrganizationInvitationResponseContentFieldRoles)
 }
 
-// SetTicketId sets the TicketId field and marks it as non-optional;
+// SetTicketID sets the TicketID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateOrganizationInvitationResponseContent) SetTicketId(ticketId *string) {
-	c.TicketId = ticketId
-	c.require(createOrganizationInvitationResponseContentFieldTicketId)
+func (c *CreateOrganizationInvitationResponseContent) SetTicketID(ticketID *string) {
+	c.TicketID = ticketID
+	c.require(createOrganizationInvitationResponseContentFieldTicketID)
 }
 
 func (c *CreateOrganizationInvitationResponseContent) UnmarshalJSON(data []byte) error {
@@ -16343,7 +16343,7 @@ func (c *CreatePhoneProviderSendTestResponseContent) String() string {
 }
 
 var (
-	createPhoneTemplateResponseContentFieldId           = big.NewInt(1 << 0)
+	createPhoneTemplateResponseContentFieldID           = big.NewInt(1 << 0)
 	createPhoneTemplateResponseContentFieldChannel      = big.NewInt(1 << 1)
 	createPhoneTemplateResponseContentFieldCustomizable = big.NewInt(1 << 2)
 	createPhoneTemplateResponseContentFieldTenant       = big.NewInt(1 << 3)
@@ -16353,7 +16353,7 @@ var (
 )
 
 type CreatePhoneTemplateResponseContent struct {
-	Id           string                            `json:"id" url:"id"`
+	ID           string                            `json:"id" url:"id"`
 	Channel      *string                           `json:"channel,omitempty" url:"channel,omitempty"`
 	Customizable *bool                             `json:"customizable,omitempty" url:"customizable,omitempty"`
 	Tenant       *string                           `json:"tenant,omitempty" url:"tenant,omitempty"`
@@ -16369,11 +16369,11 @@ type CreatePhoneTemplateResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreatePhoneTemplateResponseContent) GetId() string {
+func (c *CreatePhoneTemplateResponseContent) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *CreatePhoneTemplateResponseContent) GetChannel() string {
@@ -16429,11 +16429,11 @@ func (c *CreatePhoneTemplateResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreatePhoneTemplateResponseContent) SetId(id string) {
-	c.Id = id
-	c.require(createPhoneTemplateResponseContentFieldId)
+func (c *CreatePhoneTemplateResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createPhoneTemplateResponseContentFieldID)
 }
 
 // SetChannel sets the Channel field and marks it as non-optional;
@@ -16601,15 +16601,15 @@ func (c *CreatePhoneTemplateTestNotificationResponseContent) String() string {
 }
 
 var (
-	createScimConfigurationRequestContentFieldUserIdAttribute = big.NewInt(1 << 0)
-	createScimConfigurationRequestContentFieldMapping         = big.NewInt(1 << 1)
+	createSCIMConfigurationRequestContentFieldUserIDAttribute = big.NewInt(1 << 0)
+	createSCIMConfigurationRequestContentFieldMapping         = big.NewInt(1 << 1)
 )
 
-type CreateScimConfigurationRequestContent struct {
+type CreateSCIMConfigurationRequestContent struct {
 	// User ID attribute for generating unique user ids
-	UserIdAttribute *string `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
+	UserIDAttribute *string `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
 	// The mapping between auth0 and SCIM
-	Mapping []*ScimMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
+	Mapping []*SCIMMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -16618,52 +16618,52 @@ type CreateScimConfigurationRequestContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateScimConfigurationRequestContent) GetUserIdAttribute() string {
-	if c == nil || c.UserIdAttribute == nil {
+func (c *CreateSCIMConfigurationRequestContent) GetUserIDAttribute() string {
+	if c == nil || c.UserIDAttribute == nil {
 		return ""
 	}
-	return *c.UserIdAttribute
+	return *c.UserIDAttribute
 }
 
-func (c *CreateScimConfigurationRequestContent) GetMapping() []*ScimMappingItem {
+func (c *CreateSCIMConfigurationRequestContent) GetMapping() []*SCIMMappingItem {
 	if c == nil || c.Mapping == nil {
 		return nil
 	}
 	return c.Mapping
 }
 
-func (c *CreateScimConfigurationRequestContent) GetExtraProperties() map[string]interface{} {
+func (c *CreateSCIMConfigurationRequestContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateScimConfigurationRequestContent) require(field *big.Int) {
+func (c *CreateSCIMConfigurationRequestContent) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetUserIdAttribute sets the UserIdAttribute field and marks it as non-optional;
+// SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimConfigurationRequestContent) SetUserIdAttribute(userIdAttribute *string) {
-	c.UserIdAttribute = userIdAttribute
-	c.require(createScimConfigurationRequestContentFieldUserIdAttribute)
+func (c *CreateSCIMConfigurationRequestContent) SetUserIDAttribute(userIDAttribute *string) {
+	c.UserIDAttribute = userIDAttribute
+	c.require(createSCIMConfigurationRequestContentFieldUserIDAttribute)
 }
 
 // SetMapping sets the Mapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimConfigurationRequestContent) SetMapping(mapping []*ScimMappingItem) {
+func (c *CreateSCIMConfigurationRequestContent) SetMapping(mapping []*SCIMMappingItem) {
 	c.Mapping = mapping
-	c.require(createScimConfigurationRequestContentFieldMapping)
+	c.require(createSCIMConfigurationRequestContentFieldMapping)
 }
 
-func (c *CreateScimConfigurationRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateScimConfigurationRequestContent
+func (c *CreateSCIMConfigurationRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateSCIMConfigurationRequestContent
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateScimConfigurationRequestContent(value)
+	*c = CreateSCIMConfigurationRequestContent(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -16673,8 +16673,8 @@ func (c *CreateScimConfigurationRequestContent) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (c *CreateScimConfigurationRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateScimConfigurationRequestContent
+func (c *CreateSCIMConfigurationRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateSCIMConfigurationRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -16684,7 +16684,7 @@ func (c *CreateScimConfigurationRequestContent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateScimConfigurationRequestContent) String() string {
+func (c *CreateSCIMConfigurationRequestContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -16697,19 +16697,19 @@ func (c *CreateScimConfigurationRequestContent) String() string {
 }
 
 var (
-	createScimConfigurationResponseContentFieldConnectionId    = big.NewInt(1 << 0)
-	createScimConfigurationResponseContentFieldConnectionName  = big.NewInt(1 << 1)
-	createScimConfigurationResponseContentFieldStrategy        = big.NewInt(1 << 2)
-	createScimConfigurationResponseContentFieldTenantName      = big.NewInt(1 << 3)
-	createScimConfigurationResponseContentFieldUserIdAttribute = big.NewInt(1 << 4)
-	createScimConfigurationResponseContentFieldMapping         = big.NewInt(1 << 5)
-	createScimConfigurationResponseContentFieldCreatedAt       = big.NewInt(1 << 6)
-	createScimConfigurationResponseContentFieldUpdatedOn       = big.NewInt(1 << 7)
+	createSCIMConfigurationResponseContentFieldConnectionID    = big.NewInt(1 << 0)
+	createSCIMConfigurationResponseContentFieldConnectionName  = big.NewInt(1 << 1)
+	createSCIMConfigurationResponseContentFieldStrategy        = big.NewInt(1 << 2)
+	createSCIMConfigurationResponseContentFieldTenantName      = big.NewInt(1 << 3)
+	createSCIMConfigurationResponseContentFieldUserIDAttribute = big.NewInt(1 << 4)
+	createSCIMConfigurationResponseContentFieldMapping         = big.NewInt(1 << 5)
+	createSCIMConfigurationResponseContentFieldCreatedAt       = big.NewInt(1 << 6)
+	createSCIMConfigurationResponseContentFieldUpdatedOn       = big.NewInt(1 << 7)
 )
 
-type CreateScimConfigurationResponseContent struct {
+type CreateSCIMConfigurationResponseContent struct {
 	// The connection's identifier
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// The connection's identifier
 	ConnectionName *string `json:"connection_name,omitempty" url:"connection_name,omitempty"`
 	// The connection's strategy
@@ -16717,9 +16717,9 @@ type CreateScimConfigurationResponseContent struct {
 	// The tenant's name
 	TenantName *string `json:"tenant_name,omitempty" url:"tenant_name,omitempty"`
 	// User ID attribute for generating unique user ids
-	UserIdAttribute *string `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
+	UserIDAttribute *string `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
 	// The mapping between auth0 and SCIM
-	Mapping []*ScimMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
+	Mapping []*SCIMMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
 	// The Date Time Scim Configuration was created
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The Date Time Scim Configuration was last updated
@@ -16732,136 +16732,136 @@ type CreateScimConfigurationResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateScimConfigurationResponseContent) GetConnectionId() string {
-	if c == nil || c.ConnectionId == nil {
+func (c *CreateSCIMConfigurationResponseContent) GetConnectionID() string {
+	if c == nil || c.ConnectionID == nil {
 		return ""
 	}
-	return *c.ConnectionId
+	return *c.ConnectionID
 }
 
-func (c *CreateScimConfigurationResponseContent) GetConnectionName() string {
+func (c *CreateSCIMConfigurationResponseContent) GetConnectionName() string {
 	if c == nil || c.ConnectionName == nil {
 		return ""
 	}
 	return *c.ConnectionName
 }
 
-func (c *CreateScimConfigurationResponseContent) GetStrategy() string {
+func (c *CreateSCIMConfigurationResponseContent) GetStrategy() string {
 	if c == nil || c.Strategy == nil {
 		return ""
 	}
 	return *c.Strategy
 }
 
-func (c *CreateScimConfigurationResponseContent) GetTenantName() string {
+func (c *CreateSCIMConfigurationResponseContent) GetTenantName() string {
 	if c == nil || c.TenantName == nil {
 		return ""
 	}
 	return *c.TenantName
 }
 
-func (c *CreateScimConfigurationResponseContent) GetUserIdAttribute() string {
-	if c == nil || c.UserIdAttribute == nil {
+func (c *CreateSCIMConfigurationResponseContent) GetUserIDAttribute() string {
+	if c == nil || c.UserIDAttribute == nil {
 		return ""
 	}
-	return *c.UserIdAttribute
+	return *c.UserIDAttribute
 }
 
-func (c *CreateScimConfigurationResponseContent) GetMapping() []*ScimMappingItem {
+func (c *CreateSCIMConfigurationResponseContent) GetMapping() []*SCIMMappingItem {
 	if c == nil || c.Mapping == nil {
 		return nil
 	}
 	return c.Mapping
 }
 
-func (c *CreateScimConfigurationResponseContent) GetCreatedAt() string {
+func (c *CreateSCIMConfigurationResponseContent) GetCreatedAt() string {
 	if c == nil || c.CreatedAt == nil {
 		return ""
 	}
 	return *c.CreatedAt
 }
 
-func (c *CreateScimConfigurationResponseContent) GetUpdatedOn() string {
+func (c *CreateSCIMConfigurationResponseContent) GetUpdatedOn() string {
 	if c == nil || c.UpdatedOn == nil {
 		return ""
 	}
 	return *c.UpdatedOn
 }
 
-func (c *CreateScimConfigurationResponseContent) GetExtraProperties() map[string]interface{} {
+func (c *CreateSCIMConfigurationResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateScimConfigurationResponseContent) require(field *big.Int) {
+func (c *CreateSCIMConfigurationResponseContent) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimConfigurationResponseContent) SetConnectionId(connectionId *string) {
-	c.ConnectionId = connectionId
-	c.require(createScimConfigurationResponseContentFieldConnectionId)
+func (c *CreateSCIMConfigurationResponseContent) SetConnectionID(connectionID *string) {
+	c.ConnectionID = connectionID
+	c.require(createSCIMConfigurationResponseContentFieldConnectionID)
 }
 
 // SetConnectionName sets the ConnectionName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimConfigurationResponseContent) SetConnectionName(connectionName *string) {
+func (c *CreateSCIMConfigurationResponseContent) SetConnectionName(connectionName *string) {
 	c.ConnectionName = connectionName
-	c.require(createScimConfigurationResponseContentFieldConnectionName)
+	c.require(createSCIMConfigurationResponseContentFieldConnectionName)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimConfigurationResponseContent) SetStrategy(strategy *string) {
+func (c *CreateSCIMConfigurationResponseContent) SetStrategy(strategy *string) {
 	c.Strategy = strategy
-	c.require(createScimConfigurationResponseContentFieldStrategy)
+	c.require(createSCIMConfigurationResponseContentFieldStrategy)
 }
 
 // SetTenantName sets the TenantName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimConfigurationResponseContent) SetTenantName(tenantName *string) {
+func (c *CreateSCIMConfigurationResponseContent) SetTenantName(tenantName *string) {
 	c.TenantName = tenantName
-	c.require(createScimConfigurationResponseContentFieldTenantName)
+	c.require(createSCIMConfigurationResponseContentFieldTenantName)
 }
 
-// SetUserIdAttribute sets the UserIdAttribute field and marks it as non-optional;
+// SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimConfigurationResponseContent) SetUserIdAttribute(userIdAttribute *string) {
-	c.UserIdAttribute = userIdAttribute
-	c.require(createScimConfigurationResponseContentFieldUserIdAttribute)
+func (c *CreateSCIMConfigurationResponseContent) SetUserIDAttribute(userIDAttribute *string) {
+	c.UserIDAttribute = userIDAttribute
+	c.require(createSCIMConfigurationResponseContentFieldUserIDAttribute)
 }
 
 // SetMapping sets the Mapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimConfigurationResponseContent) SetMapping(mapping []*ScimMappingItem) {
+func (c *CreateSCIMConfigurationResponseContent) SetMapping(mapping []*SCIMMappingItem) {
 	c.Mapping = mapping
-	c.require(createScimConfigurationResponseContentFieldMapping)
+	c.require(createSCIMConfigurationResponseContentFieldMapping)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimConfigurationResponseContent) SetCreatedAt(createdAt *string) {
+func (c *CreateSCIMConfigurationResponseContent) SetCreatedAt(createdAt *string) {
 	c.CreatedAt = createdAt
-	c.require(createScimConfigurationResponseContentFieldCreatedAt)
+	c.require(createSCIMConfigurationResponseContentFieldCreatedAt)
 }
 
 // SetUpdatedOn sets the UpdatedOn field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimConfigurationResponseContent) SetUpdatedOn(updatedOn *string) {
+func (c *CreateSCIMConfigurationResponseContent) SetUpdatedOn(updatedOn *string) {
 	c.UpdatedOn = updatedOn
-	c.require(createScimConfigurationResponseContentFieldUpdatedOn)
+	c.require(createSCIMConfigurationResponseContentFieldUpdatedOn)
 }
 
-func (c *CreateScimConfigurationResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateScimConfigurationResponseContent
+func (c *CreateSCIMConfigurationResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateSCIMConfigurationResponseContent
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateScimConfigurationResponseContent(value)
+	*c = CreateSCIMConfigurationResponseContent(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -16871,8 +16871,8 @@ func (c *CreateScimConfigurationResponseContent) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (c *CreateScimConfigurationResponseContent) MarshalJSON() ([]byte, error) {
-	type embed CreateScimConfigurationResponseContent
+func (c *CreateSCIMConfigurationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateSCIMConfigurationResponseContent
 	var marshaler = struct {
 		embed
 	}{
@@ -16882,7 +16882,7 @@ func (c *CreateScimConfigurationResponseContent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateScimConfigurationResponseContent) String() string {
+func (c *CreateSCIMConfigurationResponseContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -16895,16 +16895,16 @@ func (c *CreateScimConfigurationResponseContent) String() string {
 }
 
 var (
-	createScimTokenResponseContentFieldTokenId    = big.NewInt(1 << 0)
-	createScimTokenResponseContentFieldToken      = big.NewInt(1 << 1)
-	createScimTokenResponseContentFieldScopes     = big.NewInt(1 << 2)
-	createScimTokenResponseContentFieldCreatedAt  = big.NewInt(1 << 3)
-	createScimTokenResponseContentFieldValidUntil = big.NewInt(1 << 4)
+	createSCIMTokenResponseContentFieldTokenID    = big.NewInt(1 << 0)
+	createSCIMTokenResponseContentFieldToken      = big.NewInt(1 << 1)
+	createSCIMTokenResponseContentFieldScopes     = big.NewInt(1 << 2)
+	createSCIMTokenResponseContentFieldCreatedAt  = big.NewInt(1 << 3)
+	createSCIMTokenResponseContentFieldValidUntil = big.NewInt(1 << 4)
 )
 
-type CreateScimTokenResponseContent struct {
+type CreateSCIMTokenResponseContent struct {
 	// The token's identifier
-	TokenId *string `json:"token_id,omitempty" url:"token_id,omitempty"`
+	TokenID *string `json:"token_id,omitempty" url:"token_id,omitempty"`
 	// The scim client's token
 	Token *string `json:"token,omitempty" url:"token,omitempty"`
 	// The scopes of the scim token
@@ -16921,94 +16921,94 @@ type CreateScimTokenResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateScimTokenResponseContent) GetTokenId() string {
-	if c == nil || c.TokenId == nil {
+func (c *CreateSCIMTokenResponseContent) GetTokenID() string {
+	if c == nil || c.TokenID == nil {
 		return ""
 	}
-	return *c.TokenId
+	return *c.TokenID
 }
 
-func (c *CreateScimTokenResponseContent) GetToken() string {
+func (c *CreateSCIMTokenResponseContent) GetToken() string {
 	if c == nil || c.Token == nil {
 		return ""
 	}
 	return *c.Token
 }
 
-func (c *CreateScimTokenResponseContent) GetScopes() []string {
+func (c *CreateSCIMTokenResponseContent) GetScopes() []string {
 	if c == nil || c.Scopes == nil {
 		return nil
 	}
 	return c.Scopes
 }
 
-func (c *CreateScimTokenResponseContent) GetCreatedAt() string {
+func (c *CreateSCIMTokenResponseContent) GetCreatedAt() string {
 	if c == nil || c.CreatedAt == nil {
 		return ""
 	}
 	return *c.CreatedAt
 }
 
-func (c *CreateScimTokenResponseContent) GetValidUntil() string {
+func (c *CreateSCIMTokenResponseContent) GetValidUntil() string {
 	if c == nil || c.ValidUntil == nil {
 		return ""
 	}
 	return *c.ValidUntil
 }
 
-func (c *CreateScimTokenResponseContent) GetExtraProperties() map[string]interface{} {
+func (c *CreateSCIMTokenResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateScimTokenResponseContent) require(field *big.Int) {
+func (c *CreateSCIMTokenResponseContent) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetTokenId sets the TokenId field and marks it as non-optional;
+// SetTokenID sets the TokenID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimTokenResponseContent) SetTokenId(tokenId *string) {
-	c.TokenId = tokenId
-	c.require(createScimTokenResponseContentFieldTokenId)
+func (c *CreateSCIMTokenResponseContent) SetTokenID(tokenID *string) {
+	c.TokenID = tokenID
+	c.require(createSCIMTokenResponseContentFieldTokenID)
 }
 
 // SetToken sets the Token field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimTokenResponseContent) SetToken(token *string) {
+func (c *CreateSCIMTokenResponseContent) SetToken(token *string) {
 	c.Token = token
-	c.require(createScimTokenResponseContentFieldToken)
+	c.require(createSCIMTokenResponseContentFieldToken)
 }
 
 // SetScopes sets the Scopes field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimTokenResponseContent) SetScopes(scopes []string) {
+func (c *CreateSCIMTokenResponseContent) SetScopes(scopes []string) {
 	c.Scopes = scopes
-	c.require(createScimTokenResponseContentFieldScopes)
+	c.require(createSCIMTokenResponseContentFieldScopes)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimTokenResponseContent) SetCreatedAt(createdAt *string) {
+func (c *CreateSCIMTokenResponseContent) SetCreatedAt(createdAt *string) {
 	c.CreatedAt = createdAt
-	c.require(createScimTokenResponseContentFieldCreatedAt)
+	c.require(createSCIMTokenResponseContentFieldCreatedAt)
 }
 
 // SetValidUntil sets the ValidUntil field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateScimTokenResponseContent) SetValidUntil(validUntil *string) {
+func (c *CreateSCIMTokenResponseContent) SetValidUntil(validUntil *string) {
 	c.ValidUntil = validUntil
-	c.require(createScimTokenResponseContentFieldValidUntil)
+	c.require(createSCIMTokenResponseContentFieldValidUntil)
 }
 
-func (c *CreateScimTokenResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateScimTokenResponseContent
+func (c *CreateSCIMTokenResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateSCIMTokenResponseContent
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateScimTokenResponseContent(value)
+	*c = CreateSCIMTokenResponseContent(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -17018,8 +17018,8 @@ func (c *CreateScimTokenResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (c *CreateScimTokenResponseContent) MarshalJSON() ([]byte, error) {
-	type embed CreateScimTokenResponseContent
+func (c *CreateSCIMTokenResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateSCIMTokenResponseContent
 	var marshaler = struct {
 		embed
 	}{
@@ -17029,7 +17029,7 @@ func (c *CreateScimTokenResponseContent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateScimTokenResponseContent) String() string {
+func (c *CreateSCIMTokenResponseContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -17042,10 +17042,10 @@ func (c *CreateScimTokenResponseContent) String() string {
 }
 
 var (
-	createSelfServiceProfileSsoTicketResponseContentFieldTicket = big.NewInt(1 << 0)
+	createSelfServiceProfileSSOTicketResponseContentFieldTicket = big.NewInt(1 << 0)
 )
 
-type CreateSelfServiceProfileSsoTicketResponseContent struct {
+type CreateSelfServiceProfileSSOTicketResponseContent struct {
 	// The URL for the created ticket.
 	Ticket *string `json:"ticket,omitempty" url:"ticket,omitempty"`
 
@@ -17056,18 +17056,18 @@ type CreateSelfServiceProfileSsoTicketResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateSelfServiceProfileSsoTicketResponseContent) GetTicket() string {
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) GetTicket() string {
 	if c == nil || c.Ticket == nil {
 		return ""
 	}
 	return *c.Ticket
 }
 
-func (c *CreateSelfServiceProfileSsoTicketResponseContent) GetExtraProperties() map[string]interface{} {
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
-func (c *CreateSelfServiceProfileSsoTicketResponseContent) require(field *big.Int) {
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
@@ -17076,18 +17076,18 @@ func (c *CreateSelfServiceProfileSsoTicketResponseContent) require(field *big.In
 
 // SetTicket sets the Ticket field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateSelfServiceProfileSsoTicketResponseContent) SetTicket(ticket *string) {
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) SetTicket(ticket *string) {
 	c.Ticket = ticket
-	c.require(createSelfServiceProfileSsoTicketResponseContentFieldTicket)
+	c.require(createSelfServiceProfileSSOTicketResponseContentFieldTicket)
 }
 
-func (c *CreateSelfServiceProfileSsoTicketResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateSelfServiceProfileSsoTicketResponseContent
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateSelfServiceProfileSSOTicketResponseContent
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*c = CreateSelfServiceProfileSsoTicketResponseContent(value)
+	*c = CreateSelfServiceProfileSSOTicketResponseContent(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -17097,8 +17097,8 @@ func (c *CreateSelfServiceProfileSsoTicketResponseContent) UnmarshalJSON(data []
 	return nil
 }
 
-func (c *CreateSelfServiceProfileSsoTicketResponseContent) MarshalJSON() ([]byte, error) {
-	type embed CreateSelfServiceProfileSsoTicketResponseContent
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateSelfServiceProfileSSOTicketResponseContent
 	var marshaler = struct {
 		embed
 	}{
@@ -17108,7 +17108,7 @@ func (c *CreateSelfServiceProfileSsoTicketResponseContent) MarshalJSON() ([]byte
 	return json.Marshal(explicitMarshaler)
 }
 
-func (c *CreateSelfServiceProfileSsoTicketResponseContent) String() string {
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -17200,7 +17200,7 @@ func (c *CreateTokenQuota) String() string {
 
 // The successfully created authentication method.
 var (
-	createUserAuthenticationMethodResponseContentFieldId                            = big.NewInt(1 << 0)
+	createUserAuthenticationMethodResponseContentFieldID                            = big.NewInt(1 << 0)
 	createUserAuthenticationMethodResponseContentFieldType                          = big.NewInt(1 << 1)
 	createUserAuthenticationMethodResponseContentFieldName                          = big.NewInt(1 << 2)
 	createUserAuthenticationMethodResponseContentFieldTotpSecret                    = big.NewInt(1 << 3)
@@ -17208,7 +17208,7 @@ var (
 	createUserAuthenticationMethodResponseContentFieldEmail                         = big.NewInt(1 << 5)
 	createUserAuthenticationMethodResponseContentFieldAuthenticationMethods         = big.NewInt(1 << 6)
 	createUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 7)
-	createUserAuthenticationMethodResponseContentFieldKeyId                         = big.NewInt(1 << 8)
+	createUserAuthenticationMethodResponseContentFieldKeyID                         = big.NewInt(1 << 8)
 	createUserAuthenticationMethodResponseContentFieldPublicKey                     = big.NewInt(1 << 9)
 	createUserAuthenticationMethodResponseContentFieldAaguid                        = big.NewInt(1 << 10)
 	createUserAuthenticationMethodResponseContentFieldRelyingPartyIdentifier        = big.NewInt(1 << 11)
@@ -17217,7 +17217,7 @@ var (
 
 type CreateUserAuthenticationMethodResponseContent struct {
 	// The ID of the newly created authentication method (automatically generated by the application)
-	Id   *string                                 `json:"id,omitempty" url:"id,omitempty"`
+	ID   *string                                 `json:"id,omitempty" url:"id,omitempty"`
 	Type CreatedUserAuthenticationMethodTypeEnum `json:"type" url:"type"`
 	// A human-readable label to identify the authentication method.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -17230,7 +17230,7 @@ type CreateUserAuthenticationMethodResponseContent struct {
 	AuthenticationMethods         []*UserAuthenticationMethodProperties `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
 	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum    `json:"preferred_authentication_method,omitempty" url:"preferred_authentication_method,omitempty"`
 	// Applies to webauthn authenticators only. The id of the credential.
-	KeyId *string `json:"key_id,omitempty" url:"key_id,omitempty"`
+	KeyID *string `json:"key_id,omitempty" url:"key_id,omitempty"`
 	// Applies to webauthn authenticators only. The public key.
 	PublicKey *string `json:"public_key,omitempty" url:"public_key,omitempty"`
 	// Applies to passkeys only. Authenticator Attestation Globally Unique Identifier.
@@ -17247,11 +17247,11 @@ type CreateUserAuthenticationMethodResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateUserAuthenticationMethodResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateUserAuthenticationMethodResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *CreateUserAuthenticationMethodResponseContent) GetType() CreatedUserAuthenticationMethodTypeEnum {
@@ -17303,11 +17303,11 @@ func (c *CreateUserAuthenticationMethodResponseContent) GetPreferredAuthenticati
 	return *c.PreferredAuthenticationMethod
 }
 
-func (c *CreateUserAuthenticationMethodResponseContent) GetKeyId() string {
-	if c == nil || c.KeyId == nil {
+func (c *CreateUserAuthenticationMethodResponseContent) GetKeyID() string {
+	if c == nil || c.KeyID == nil {
 		return ""
 	}
-	return *c.KeyId
+	return *c.KeyID
 }
 
 func (c *CreateUserAuthenticationMethodResponseContent) GetPublicKey() string {
@@ -17349,11 +17349,11 @@ func (c *CreateUserAuthenticationMethodResponseContent) require(field *big.Int) 
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createUserAuthenticationMethodResponseContentFieldId)
+func (c *CreateUserAuthenticationMethodResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createUserAuthenticationMethodResponseContentFieldID)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -17405,11 +17405,11 @@ func (c *CreateUserAuthenticationMethodResponseContent) SetPreferredAuthenticati
 	c.require(createUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod)
 }
 
-// SetKeyId sets the KeyId field and marks it as non-optional;
+// SetKeyID sets the KeyID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodResponseContent) SetKeyId(keyId *string) {
-	c.KeyId = keyId
-	c.require(createUserAuthenticationMethodResponseContentFieldKeyId)
+func (c *CreateUserAuthenticationMethodResponseContent) SetKeyID(keyID *string) {
+	c.KeyID = keyID
+	c.require(createUserAuthenticationMethodResponseContentFieldKeyID)
 }
 
 // SetPublicKey sets the PublicKey field and marks it as non-optional;
@@ -17488,7 +17488,7 @@ func (c *CreateUserAuthenticationMethodResponseContent) String() string {
 }
 
 var (
-	createVerifiableCredentialTemplateResponseContentFieldId                         = big.NewInt(1 << 0)
+	createVerifiableCredentialTemplateResponseContentFieldID                         = big.NewInt(1 << 0)
 	createVerifiableCredentialTemplateResponseContentFieldName                       = big.NewInt(1 << 1)
 	createVerifiableCredentialTemplateResponseContentFieldType                       = big.NewInt(1 << 2)
 	createVerifiableCredentialTemplateResponseContentFieldDialect                    = big.NewInt(1 << 3)
@@ -17501,7 +17501,7 @@ var (
 
 type CreateVerifiableCredentialTemplateResponseContent struct {
 	// The id of the template.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the template.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The type of the template.
@@ -17526,11 +17526,11 @@ type CreateVerifiableCredentialTemplateResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (c *CreateVerifiableCredentialTemplateResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateVerifiableCredentialTemplateResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *CreateVerifiableCredentialTemplateResponseContent) GetName() string {
@@ -17600,11 +17600,11 @@ func (c *CreateVerifiableCredentialTemplateResponseContent) require(field *big.I
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateVerifiableCredentialTemplateResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createVerifiableCredentialTemplateResponseContentFieldId)
+func (c *CreateVerifiableCredentialTemplateResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createVerifiableCredentialTemplateResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -17718,7 +17718,7 @@ var (
 	createVerificationEmailResponseContentFieldStatus    = big.NewInt(1 << 0)
 	createVerificationEmailResponseContentFieldType      = big.NewInt(1 << 1)
 	createVerificationEmailResponseContentFieldCreatedAt = big.NewInt(1 << 2)
-	createVerificationEmailResponseContentFieldId        = big.NewInt(1 << 3)
+	createVerificationEmailResponseContentFieldID        = big.NewInt(1 << 3)
 )
 
 type CreateVerificationEmailResponseContent struct {
@@ -17729,7 +17729,7 @@ type CreateVerificationEmailResponseContent struct {
 	// When this job was created.
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// ID of this job.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -17760,11 +17760,11 @@ func (c *CreateVerificationEmailResponseContent) GetCreatedAt() string {
 	return *c.CreatedAt
 }
 
-func (c *CreateVerificationEmailResponseContent) GetId() string {
+func (c *CreateVerificationEmailResponseContent) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *CreateVerificationEmailResponseContent) GetExtraProperties() map[string]interface{} {
@@ -17799,11 +17799,11 @@ func (c *CreateVerificationEmailResponseContent) SetCreatedAt(createdAt *string)
 	c.require(createVerificationEmailResponseContentFieldCreatedAt)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateVerificationEmailResponseContent) SetId(id string) {
-	c.Id = id
-	c.require(createVerificationEmailResponseContentFieldId)
+func (c *CreateVerificationEmailResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createVerificationEmailResponseContentFieldID)
 }
 
 func (c *CreateVerificationEmailResponseContent) UnmarshalJSON(data []byte) error {
@@ -18558,7 +18558,7 @@ type DeleteUserIdentityResponseContent = []*DeleteUserIdentityResponseContentIte
 
 var (
 	deleteUserIdentityResponseContentItemFieldConnection        = big.NewInt(1 << 0)
-	deleteUserIdentityResponseContentItemFieldUserId            = big.NewInt(1 << 1)
+	deleteUserIdentityResponseContentItemFieldUserID            = big.NewInt(1 << 1)
 	deleteUserIdentityResponseContentItemFieldProvider          = big.NewInt(1 << 2)
 	deleteUserIdentityResponseContentItemFieldIsSocial          = big.NewInt(1 << 3)
 	deleteUserIdentityResponseContentItemFieldAccessToken       = big.NewInt(1 << 4)
@@ -18571,7 +18571,7 @@ type DeleteUserIdentityResponseContentItem struct {
 	// The name of the connection for the identity.
 	Connection string `json:"connection" url:"connection"`
 	// The unique identifier for the user for the identity.
-	UserId string `json:"user_id" url:"user_id"`
+	UserID string `json:"user_id" url:"user_id"`
 	// The type of identity provider.
 	Provider string `json:"provider" url:"provider"`
 	// <code>true</code> if the identity provider is a social provider, <code>false</code>s otherwise
@@ -18598,11 +18598,11 @@ func (d *DeleteUserIdentityResponseContentItem) GetConnection() string {
 	return d.Connection
 }
 
-func (d *DeleteUserIdentityResponseContentItem) GetUserId() string {
+func (d *DeleteUserIdentityResponseContentItem) GetUserID() string {
 	if d == nil {
 		return ""
 	}
-	return d.UserId
+	return d.UserID
 }
 
 func (d *DeleteUserIdentityResponseContentItem) GetProvider() string {
@@ -18665,11 +18665,11 @@ func (d *DeleteUserIdentityResponseContentItem) SetConnection(connection string)
 	d.require(deleteUserIdentityResponseContentItemFieldConnection)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeleteUserIdentityResponseContentItem) SetUserId(userId string) {
-	d.UserId = userId
-	d.require(deleteUserIdentityResponseContentItemFieldUserId)
+func (d *DeleteUserIdentityResponseContentItem) SetUserID(userID string) {
+	d.UserID = userID
+	d.require(deleteUserIdentityResponseContentItemFieldUserID)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -18835,8 +18835,8 @@ func (d *DeployActionVersionRequestBodyParams) String() string {
 type DeployActionVersionRequestContent = *DeployActionVersionRequestBodyParams
 
 var (
-	deployActionVersionResponseContentFieldId                = big.NewInt(1 << 0)
-	deployActionVersionResponseContentFieldActionId          = big.NewInt(1 << 1)
+	deployActionVersionResponseContentFieldID                = big.NewInt(1 << 0)
+	deployActionVersionResponseContentFieldActionID          = big.NewInt(1 << 1)
 	deployActionVersionResponseContentFieldCode              = big.NewInt(1 << 2)
 	deployActionVersionResponseContentFieldDependencies      = big.NewInt(1 << 3)
 	deployActionVersionResponseContentFieldDeployed          = big.NewInt(1 << 4)
@@ -18854,9 +18854,9 @@ var (
 
 type DeployActionVersionResponseContent struct {
 	// The unique id of an action version.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The id of the action to which this version belongs.
-	ActionId *string `json:"action_id,omitempty" url:"action_id,omitempty"`
+	ActionID *string `json:"action_id,omitempty" url:"action_id,omitempty"`
 	// The source code of this specific version of the action.
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this specific version depends on.
@@ -18889,18 +18889,18 @@ type DeployActionVersionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (d *DeployActionVersionResponseContent) GetId() string {
-	if d == nil || d.Id == nil {
+func (d *DeployActionVersionResponseContent) GetID() string {
+	if d == nil || d.ID == nil {
 		return ""
 	}
-	return *d.Id
+	return *d.ID
 }
 
-func (d *DeployActionVersionResponseContent) GetActionId() string {
-	if d == nil || d.ActionId == nil {
+func (d *DeployActionVersionResponseContent) GetActionID() string {
+	if d == nil || d.ActionID == nil {
 		return ""
 	}
-	return *d.ActionId
+	return *d.ActionID
 }
 
 func (d *DeployActionVersionResponseContent) GetCode() string {
@@ -19005,18 +19005,18 @@ func (d *DeployActionVersionResponseContent) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeployActionVersionResponseContent) SetId(id *string) {
-	d.Id = id
-	d.require(deployActionVersionResponseContentFieldId)
+func (d *DeployActionVersionResponseContent) SetID(id *string) {
+	d.ID = id
+	d.require(deployActionVersionResponseContentFieldID)
 }
 
-// SetActionId sets the ActionId field and marks it as non-optional;
+// SetActionID sets the ActionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeployActionVersionResponseContent) SetActionId(actionId *string) {
-	d.ActionId = actionId
-	d.require(deployActionVersionResponseContentFieldActionId)
+func (d *DeployActionVersionResponseContent) SetActionID(actionID *string) {
+	d.ActionID = actionID
+	d.require(deployActionVersionResponseContentFieldActionID)
 }
 
 // SetCode sets the Code field and marks it as non-optional;
@@ -19170,24 +19170,24 @@ type EmailMailgunRegionEnum = string
 
 // Credentials required to use the provider.
 var (
-	emailProviderCredentialsFieldApiUser  = big.NewInt(1 << 0)
+	emailProviderCredentialsFieldAPIUser  = big.NewInt(1 << 0)
 	emailProviderCredentialsFieldRegion   = big.NewInt(1 << 1)
-	emailProviderCredentialsFieldSmtpHost = big.NewInt(1 << 2)
-	emailProviderCredentialsFieldSmtpPort = big.NewInt(1 << 3)
-	emailProviderCredentialsFieldSmtpUser = big.NewInt(1 << 4)
+	emailProviderCredentialsFieldSMTPHost = big.NewInt(1 << 2)
+	emailProviderCredentialsFieldSMTPPort = big.NewInt(1 << 3)
+	emailProviderCredentialsFieldSMTPUser = big.NewInt(1 << 4)
 )
 
 type EmailProviderCredentials struct {
 	// API User.
-	ApiUser *string `json:"api_user,omitempty" url:"api_user,omitempty"`
+	APIUser *string `json:"api_user,omitempty" url:"api_user,omitempty"`
 	// AWS or SparkPost region.
 	Region *string `json:"region,omitempty" url:"region,omitempty"`
 	// SMTP host.
-	SmtpHost *string `json:"smtp_host,omitempty" url:"smtp_host,omitempty"`
+	SMTPHost *string `json:"smtp_host,omitempty" url:"smtp_host,omitempty"`
 	// SMTP port.
-	SmtpPort *int `json:"smtp_port,omitempty" url:"smtp_port,omitempty"`
+	SMTPPort *int `json:"smtp_port,omitempty" url:"smtp_port,omitempty"`
 	// SMTP username.
-	SmtpUser *string `json:"smtp_user,omitempty" url:"smtp_user,omitempty"`
+	SMTPUser *string `json:"smtp_user,omitempty" url:"smtp_user,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -19196,11 +19196,11 @@ type EmailProviderCredentials struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EmailProviderCredentials) GetApiUser() string {
-	if e == nil || e.ApiUser == nil {
+func (e *EmailProviderCredentials) GetAPIUser() string {
+	if e == nil || e.APIUser == nil {
 		return ""
 	}
-	return *e.ApiUser
+	return *e.APIUser
 }
 
 func (e *EmailProviderCredentials) GetRegion() string {
@@ -19210,25 +19210,25 @@ func (e *EmailProviderCredentials) GetRegion() string {
 	return *e.Region
 }
 
-func (e *EmailProviderCredentials) GetSmtpHost() string {
-	if e == nil || e.SmtpHost == nil {
+func (e *EmailProviderCredentials) GetSMTPHost() string {
+	if e == nil || e.SMTPHost == nil {
 		return ""
 	}
-	return *e.SmtpHost
+	return *e.SMTPHost
 }
 
-func (e *EmailProviderCredentials) GetSmtpPort() int {
-	if e == nil || e.SmtpPort == nil {
+func (e *EmailProviderCredentials) GetSMTPPort() int {
+	if e == nil || e.SMTPPort == nil {
 		return 0
 	}
-	return *e.SmtpPort
+	return *e.SMTPPort
 }
 
-func (e *EmailProviderCredentials) GetSmtpUser() string {
-	if e == nil || e.SmtpUser == nil {
+func (e *EmailProviderCredentials) GetSMTPUser() string {
+	if e == nil || e.SMTPUser == nil {
 		return ""
 	}
-	return *e.SmtpUser
+	return *e.SMTPUser
 }
 
 func (e *EmailProviderCredentials) GetExtraProperties() map[string]interface{} {
@@ -19242,11 +19242,11 @@ func (e *EmailProviderCredentials) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetApiUser sets the ApiUser field and marks it as non-optional;
+// SetAPIUser sets the APIUser field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentials) SetApiUser(apiUser *string) {
-	e.ApiUser = apiUser
-	e.require(emailProviderCredentialsFieldApiUser)
+func (e *EmailProviderCredentials) SetAPIUser(apiUser *string) {
+	e.APIUser = apiUser
+	e.require(emailProviderCredentialsFieldAPIUser)
 }
 
 // SetRegion sets the Region field and marks it as non-optional;
@@ -19256,25 +19256,25 @@ func (e *EmailProviderCredentials) SetRegion(region *string) {
 	e.require(emailProviderCredentialsFieldRegion)
 }
 
-// SetSmtpHost sets the SmtpHost field and marks it as non-optional;
+// SetSMTPHost sets the SMTPHost field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentials) SetSmtpHost(smtpHost *string) {
-	e.SmtpHost = smtpHost
-	e.require(emailProviderCredentialsFieldSmtpHost)
+func (e *EmailProviderCredentials) SetSMTPHost(smtpHost *string) {
+	e.SMTPHost = smtpHost
+	e.require(emailProviderCredentialsFieldSMTPHost)
 }
 
-// SetSmtpPort sets the SmtpPort field and marks it as non-optional;
+// SetSMTPPort sets the SMTPPort field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentials) SetSmtpPort(smtpPort *int) {
-	e.SmtpPort = smtpPort
-	e.require(emailProviderCredentialsFieldSmtpPort)
+func (e *EmailProviderCredentials) SetSMTPPort(smtpPort *int) {
+	e.SMTPPort = smtpPort
+	e.require(emailProviderCredentialsFieldSMTPPort)
 }
 
-// SetSmtpUser sets the SmtpUser field and marks it as non-optional;
+// SetSMTPUser sets the SMTPUser field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentials) SetSmtpUser(smtpUser *string) {
-	e.SmtpUser = smtpUser
-	e.require(emailProviderCredentialsFieldSmtpUser)
+func (e *EmailProviderCredentials) SetSMTPUser(smtpUser *string) {
+	e.SMTPUser = smtpUser
+	e.require(emailProviderCredentialsFieldSMTPUser)
 }
 
 func (e *EmailProviderCredentials) UnmarshalJSON(data []byte) error {
@@ -19319,12 +19319,12 @@ func (e *EmailProviderCredentials) String() string {
 // Credentials required to use the provider.
 type EmailProviderCredentialsSchema struct {
 	EmailProviderCredentialsSchemaZero             *EmailProviderCredentialsSchemaZero
-	EmailProviderCredentialsSchemaAccessKeyId      *EmailProviderCredentialsSchemaAccessKeyId
-	EmailProviderCredentialsSchemaSmtpHost         *EmailProviderCredentialsSchemaSmtpHost
+	EmailProviderCredentialsSchemaAccessKeyID      *EmailProviderCredentialsSchemaAccessKeyID
+	EmailProviderCredentialsSchemaSMTPHost         *EmailProviderCredentialsSchemaSMTPHost
 	EmailProviderCredentialsSchemaThree            *EmailProviderCredentialsSchemaThree
-	EmailProviderCredentialsSchemaApiKey           *EmailProviderCredentialsSchemaApiKey
+	EmailProviderCredentialsSchemaAPIKey           *EmailProviderCredentialsSchemaAPIKey
 	EmailProviderCredentialsSchemaConnectionString *EmailProviderCredentialsSchemaConnectionString
-	EmailProviderCredentialsSchemaClientId         *EmailProviderCredentialsSchemaClientId
+	EmailProviderCredentialsSchemaClientID         *EmailProviderCredentialsSchemaClientID
 	ExtensibilityEmailProviderCredentials          *ExtensibilityEmailProviderCredentials
 
 	typ string
@@ -19337,18 +19337,18 @@ func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaZero()
 	return e.EmailProviderCredentialsSchemaZero
 }
 
-func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaAccessKeyId() *EmailProviderCredentialsSchemaAccessKeyId {
+func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaAccessKeyID() *EmailProviderCredentialsSchemaAccessKeyID {
 	if e == nil {
 		return nil
 	}
-	return e.EmailProviderCredentialsSchemaAccessKeyId
+	return e.EmailProviderCredentialsSchemaAccessKeyID
 }
 
-func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaSmtpHost() *EmailProviderCredentialsSchemaSmtpHost {
+func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaSMTPHost() *EmailProviderCredentialsSchemaSMTPHost {
 	if e == nil {
 		return nil
 	}
-	return e.EmailProviderCredentialsSchemaSmtpHost
+	return e.EmailProviderCredentialsSchemaSMTPHost
 }
 
 func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaThree() *EmailProviderCredentialsSchemaThree {
@@ -19358,11 +19358,11 @@ func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaThree(
 	return e.EmailProviderCredentialsSchemaThree
 }
 
-func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaApiKey() *EmailProviderCredentialsSchemaApiKey {
+func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaAPIKey() *EmailProviderCredentialsSchemaAPIKey {
 	if e == nil {
 		return nil
 	}
-	return e.EmailProviderCredentialsSchemaApiKey
+	return e.EmailProviderCredentialsSchemaAPIKey
 }
 
 func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaConnectionString() *EmailProviderCredentialsSchemaConnectionString {
@@ -19372,11 +19372,11 @@ func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaConnec
 	return e.EmailProviderCredentialsSchemaConnectionString
 }
 
-func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaClientId() *EmailProviderCredentialsSchemaClientId {
+func (e *EmailProviderCredentialsSchema) GetEmailProviderCredentialsSchemaClientID() *EmailProviderCredentialsSchemaClientID {
 	if e == nil {
 		return nil
 	}
-	return e.EmailProviderCredentialsSchemaClientId
+	return e.EmailProviderCredentialsSchemaClientID
 }
 
 func (e *EmailProviderCredentialsSchema) GetExtensibilityEmailProviderCredentials() *ExtensibilityEmailProviderCredentials {
@@ -19393,16 +19393,16 @@ func (e *EmailProviderCredentialsSchema) UnmarshalJSON(data []byte) error {
 		e.EmailProviderCredentialsSchemaZero = valueEmailProviderCredentialsSchemaZero
 		return nil
 	}
-	valueEmailProviderCredentialsSchemaAccessKeyId := new(EmailProviderCredentialsSchemaAccessKeyId)
-	if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaAccessKeyId); err == nil {
-		e.typ = "EmailProviderCredentialsSchemaAccessKeyId"
-		e.EmailProviderCredentialsSchemaAccessKeyId = valueEmailProviderCredentialsSchemaAccessKeyId
+	valueEmailProviderCredentialsSchemaAccessKeyID := new(EmailProviderCredentialsSchemaAccessKeyID)
+	if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaAccessKeyID); err == nil {
+		e.typ = "EmailProviderCredentialsSchemaAccessKeyID"
+		e.EmailProviderCredentialsSchemaAccessKeyID = valueEmailProviderCredentialsSchemaAccessKeyID
 		return nil
 	}
-	valueEmailProviderCredentialsSchemaSmtpHost := new(EmailProviderCredentialsSchemaSmtpHost)
-	if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaSmtpHost); err == nil {
-		e.typ = "EmailProviderCredentialsSchemaSmtpHost"
-		e.EmailProviderCredentialsSchemaSmtpHost = valueEmailProviderCredentialsSchemaSmtpHost
+	valueEmailProviderCredentialsSchemaSMTPHost := new(EmailProviderCredentialsSchemaSMTPHost)
+	if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaSMTPHost); err == nil {
+		e.typ = "EmailProviderCredentialsSchemaSMTPHost"
+		e.EmailProviderCredentialsSchemaSMTPHost = valueEmailProviderCredentialsSchemaSMTPHost
 		return nil
 	}
 	valueEmailProviderCredentialsSchemaThree := new(EmailProviderCredentialsSchemaThree)
@@ -19411,10 +19411,10 @@ func (e *EmailProviderCredentialsSchema) UnmarshalJSON(data []byte) error {
 		e.EmailProviderCredentialsSchemaThree = valueEmailProviderCredentialsSchemaThree
 		return nil
 	}
-	valueEmailProviderCredentialsSchemaApiKey := new(EmailProviderCredentialsSchemaApiKey)
-	if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaApiKey); err == nil {
-		e.typ = "EmailProviderCredentialsSchemaApiKey"
-		e.EmailProviderCredentialsSchemaApiKey = valueEmailProviderCredentialsSchemaApiKey
+	valueEmailProviderCredentialsSchemaAPIKey := new(EmailProviderCredentialsSchemaAPIKey)
+	if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaAPIKey); err == nil {
+		e.typ = "EmailProviderCredentialsSchemaAPIKey"
+		e.EmailProviderCredentialsSchemaAPIKey = valueEmailProviderCredentialsSchemaAPIKey
 		return nil
 	}
 	valueEmailProviderCredentialsSchemaConnectionString := new(EmailProviderCredentialsSchemaConnectionString)
@@ -19423,10 +19423,10 @@ func (e *EmailProviderCredentialsSchema) UnmarshalJSON(data []byte) error {
 		e.EmailProviderCredentialsSchemaConnectionString = valueEmailProviderCredentialsSchemaConnectionString
 		return nil
 	}
-	valueEmailProviderCredentialsSchemaClientId := new(EmailProviderCredentialsSchemaClientId)
-	if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaClientId); err == nil {
-		e.typ = "EmailProviderCredentialsSchemaClientId"
-		e.EmailProviderCredentialsSchemaClientId = valueEmailProviderCredentialsSchemaClientId
+	valueEmailProviderCredentialsSchemaClientID := new(EmailProviderCredentialsSchemaClientID)
+	if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaClientID); err == nil {
+		e.typ = "EmailProviderCredentialsSchemaClientID"
+		e.EmailProviderCredentialsSchemaClientID = valueEmailProviderCredentialsSchemaClientID
 		return nil
 	}
 	valueExtensibilityEmailProviderCredentials := new(ExtensibilityEmailProviderCredentials)
@@ -19442,23 +19442,23 @@ func (e EmailProviderCredentialsSchema) MarshalJSON() ([]byte, error) {
 	if e.typ == "EmailProviderCredentialsSchemaZero" || e.EmailProviderCredentialsSchemaZero != nil {
 		return json.Marshal(e.EmailProviderCredentialsSchemaZero)
 	}
-	if e.typ == "EmailProviderCredentialsSchemaAccessKeyId" || e.EmailProviderCredentialsSchemaAccessKeyId != nil {
-		return json.Marshal(e.EmailProviderCredentialsSchemaAccessKeyId)
+	if e.typ == "EmailProviderCredentialsSchemaAccessKeyID" || e.EmailProviderCredentialsSchemaAccessKeyID != nil {
+		return json.Marshal(e.EmailProviderCredentialsSchemaAccessKeyID)
 	}
-	if e.typ == "EmailProviderCredentialsSchemaSmtpHost" || e.EmailProviderCredentialsSchemaSmtpHost != nil {
-		return json.Marshal(e.EmailProviderCredentialsSchemaSmtpHost)
+	if e.typ == "EmailProviderCredentialsSchemaSMTPHost" || e.EmailProviderCredentialsSchemaSMTPHost != nil {
+		return json.Marshal(e.EmailProviderCredentialsSchemaSMTPHost)
 	}
 	if e.typ == "EmailProviderCredentialsSchemaThree" || e.EmailProviderCredentialsSchemaThree != nil {
 		return json.Marshal(e.EmailProviderCredentialsSchemaThree)
 	}
-	if e.typ == "EmailProviderCredentialsSchemaApiKey" || e.EmailProviderCredentialsSchemaApiKey != nil {
-		return json.Marshal(e.EmailProviderCredentialsSchemaApiKey)
+	if e.typ == "EmailProviderCredentialsSchemaAPIKey" || e.EmailProviderCredentialsSchemaAPIKey != nil {
+		return json.Marshal(e.EmailProviderCredentialsSchemaAPIKey)
 	}
 	if e.typ == "EmailProviderCredentialsSchemaConnectionString" || e.EmailProviderCredentialsSchemaConnectionString != nil {
 		return json.Marshal(e.EmailProviderCredentialsSchemaConnectionString)
 	}
-	if e.typ == "EmailProviderCredentialsSchemaClientId" || e.EmailProviderCredentialsSchemaClientId != nil {
-		return json.Marshal(e.EmailProviderCredentialsSchemaClientId)
+	if e.typ == "EmailProviderCredentialsSchemaClientID" || e.EmailProviderCredentialsSchemaClientID != nil {
+		return json.Marshal(e.EmailProviderCredentialsSchemaClientID)
 	}
 	if e.typ == "ExtensibilityEmailProviderCredentials" || e.ExtensibilityEmailProviderCredentials != nil {
 		return json.Marshal(e.ExtensibilityEmailProviderCredentials)
@@ -19468,12 +19468,12 @@ func (e EmailProviderCredentialsSchema) MarshalJSON() ([]byte, error) {
 
 type EmailProviderCredentialsSchemaVisitor interface {
 	VisitEmailProviderCredentialsSchemaZero(*EmailProviderCredentialsSchemaZero) error
-	VisitEmailProviderCredentialsSchemaAccessKeyId(*EmailProviderCredentialsSchemaAccessKeyId) error
-	VisitEmailProviderCredentialsSchemaSmtpHost(*EmailProviderCredentialsSchemaSmtpHost) error
+	VisitEmailProviderCredentialsSchemaAccessKeyID(*EmailProviderCredentialsSchemaAccessKeyID) error
+	VisitEmailProviderCredentialsSchemaSMTPHost(*EmailProviderCredentialsSchemaSMTPHost) error
 	VisitEmailProviderCredentialsSchemaThree(*EmailProviderCredentialsSchemaThree) error
-	VisitEmailProviderCredentialsSchemaApiKey(*EmailProviderCredentialsSchemaApiKey) error
+	VisitEmailProviderCredentialsSchemaAPIKey(*EmailProviderCredentialsSchemaAPIKey) error
 	VisitEmailProviderCredentialsSchemaConnectionString(*EmailProviderCredentialsSchemaConnectionString) error
-	VisitEmailProviderCredentialsSchemaClientId(*EmailProviderCredentialsSchemaClientId) error
+	VisitEmailProviderCredentialsSchemaClientID(*EmailProviderCredentialsSchemaClientID) error
 	VisitExtensibilityEmailProviderCredentials(*ExtensibilityEmailProviderCredentials) error
 }
 
@@ -19481,23 +19481,23 @@ func (e *EmailProviderCredentialsSchema) Accept(visitor EmailProviderCredentials
 	if e.typ == "EmailProviderCredentialsSchemaZero" || e.EmailProviderCredentialsSchemaZero != nil {
 		return visitor.VisitEmailProviderCredentialsSchemaZero(e.EmailProviderCredentialsSchemaZero)
 	}
-	if e.typ == "EmailProviderCredentialsSchemaAccessKeyId" || e.EmailProviderCredentialsSchemaAccessKeyId != nil {
-		return visitor.VisitEmailProviderCredentialsSchemaAccessKeyId(e.EmailProviderCredentialsSchemaAccessKeyId)
+	if e.typ == "EmailProviderCredentialsSchemaAccessKeyID" || e.EmailProviderCredentialsSchemaAccessKeyID != nil {
+		return visitor.VisitEmailProviderCredentialsSchemaAccessKeyID(e.EmailProviderCredentialsSchemaAccessKeyID)
 	}
-	if e.typ == "EmailProviderCredentialsSchemaSmtpHost" || e.EmailProviderCredentialsSchemaSmtpHost != nil {
-		return visitor.VisitEmailProviderCredentialsSchemaSmtpHost(e.EmailProviderCredentialsSchemaSmtpHost)
+	if e.typ == "EmailProviderCredentialsSchemaSMTPHost" || e.EmailProviderCredentialsSchemaSMTPHost != nil {
+		return visitor.VisitEmailProviderCredentialsSchemaSMTPHost(e.EmailProviderCredentialsSchemaSMTPHost)
 	}
 	if e.typ == "EmailProviderCredentialsSchemaThree" || e.EmailProviderCredentialsSchemaThree != nil {
 		return visitor.VisitEmailProviderCredentialsSchemaThree(e.EmailProviderCredentialsSchemaThree)
 	}
-	if e.typ == "EmailProviderCredentialsSchemaApiKey" || e.EmailProviderCredentialsSchemaApiKey != nil {
-		return visitor.VisitEmailProviderCredentialsSchemaApiKey(e.EmailProviderCredentialsSchemaApiKey)
+	if e.typ == "EmailProviderCredentialsSchemaAPIKey" || e.EmailProviderCredentialsSchemaAPIKey != nil {
+		return visitor.VisitEmailProviderCredentialsSchemaAPIKey(e.EmailProviderCredentialsSchemaAPIKey)
 	}
 	if e.typ == "EmailProviderCredentialsSchemaConnectionString" || e.EmailProviderCredentialsSchemaConnectionString != nil {
 		return visitor.VisitEmailProviderCredentialsSchemaConnectionString(e.EmailProviderCredentialsSchemaConnectionString)
 	}
-	if e.typ == "EmailProviderCredentialsSchemaClientId" || e.EmailProviderCredentialsSchemaClientId != nil {
-		return visitor.VisitEmailProviderCredentialsSchemaClientId(e.EmailProviderCredentialsSchemaClientId)
+	if e.typ == "EmailProviderCredentialsSchemaClientID" || e.EmailProviderCredentialsSchemaClientID != nil {
+		return visitor.VisitEmailProviderCredentialsSchemaClientID(e.EmailProviderCredentialsSchemaClientID)
 	}
 	if e.typ == "ExtensibilityEmailProviderCredentials" || e.ExtensibilityEmailProviderCredentials != nil {
 		return visitor.VisitExtensibilityEmailProviderCredentials(e.ExtensibilityEmailProviderCredentials)
@@ -19506,14 +19506,14 @@ func (e *EmailProviderCredentialsSchema) Accept(visitor EmailProviderCredentials
 }
 
 var (
-	emailProviderCredentialsSchemaAccessKeyIdFieldAccessKeyId     = big.NewInt(1 << 0)
-	emailProviderCredentialsSchemaAccessKeyIdFieldSecretAccessKey = big.NewInt(1 << 1)
-	emailProviderCredentialsSchemaAccessKeyIdFieldRegion          = big.NewInt(1 << 2)
+	emailProviderCredentialsSchemaAccessKeyIDFieldAccessKeyID     = big.NewInt(1 << 0)
+	emailProviderCredentialsSchemaAccessKeyIDFieldSecretAccessKey = big.NewInt(1 << 1)
+	emailProviderCredentialsSchemaAccessKeyIDFieldRegion          = big.NewInt(1 << 2)
 )
 
-type EmailProviderCredentialsSchemaAccessKeyId struct {
+type EmailProviderCredentialsSchemaAccessKeyID struct {
 	// AWS Access Key ID.
-	AccessKeyId *string `json:"accessKeyId,omitempty" url:"accessKeyId,omitempty"`
+	AccessKeyID *string `json:"accessKeyId,omitempty" url:"accessKeyId,omitempty"`
 	// AWS Secret Access Key.
 	SecretAccessKey *string `json:"secretAccessKey,omitempty" url:"secretAccessKey,omitempty"`
 	// AWS region.
@@ -19526,66 +19526,66 @@ type EmailProviderCredentialsSchemaAccessKeyId struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EmailProviderCredentialsSchemaAccessKeyId) GetAccessKeyId() string {
-	if e == nil || e.AccessKeyId == nil {
+func (e *EmailProviderCredentialsSchemaAccessKeyID) GetAccessKeyID() string {
+	if e == nil || e.AccessKeyID == nil {
 		return ""
 	}
-	return *e.AccessKeyId
+	return *e.AccessKeyID
 }
 
-func (e *EmailProviderCredentialsSchemaAccessKeyId) GetSecretAccessKey() string {
+func (e *EmailProviderCredentialsSchemaAccessKeyID) GetSecretAccessKey() string {
 	if e == nil || e.SecretAccessKey == nil {
 		return ""
 	}
 	return *e.SecretAccessKey
 }
 
-func (e *EmailProviderCredentialsSchemaAccessKeyId) GetRegion() string {
+func (e *EmailProviderCredentialsSchemaAccessKeyID) GetRegion() string {
 	if e == nil || e.Region == nil {
 		return ""
 	}
 	return *e.Region
 }
 
-func (e *EmailProviderCredentialsSchemaAccessKeyId) GetExtraProperties() map[string]interface{} {
+func (e *EmailProviderCredentialsSchemaAccessKeyID) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
-func (e *EmailProviderCredentialsSchemaAccessKeyId) require(field *big.Int) {
+func (e *EmailProviderCredentialsSchemaAccessKeyID) require(field *big.Int) {
 	if e.explicitFields == nil {
 		e.explicitFields = big.NewInt(0)
 	}
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetAccessKeyId sets the AccessKeyId field and marks it as non-optional;
+// SetAccessKeyID sets the AccessKeyID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaAccessKeyId) SetAccessKeyId(accessKeyId *string) {
-	e.AccessKeyId = accessKeyId
-	e.require(emailProviderCredentialsSchemaAccessKeyIdFieldAccessKeyId)
+func (e *EmailProviderCredentialsSchemaAccessKeyID) SetAccessKeyID(accessKeyID *string) {
+	e.AccessKeyID = accessKeyID
+	e.require(emailProviderCredentialsSchemaAccessKeyIDFieldAccessKeyID)
 }
 
 // SetSecretAccessKey sets the SecretAccessKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaAccessKeyId) SetSecretAccessKey(secretAccessKey *string) {
+func (e *EmailProviderCredentialsSchemaAccessKeyID) SetSecretAccessKey(secretAccessKey *string) {
 	e.SecretAccessKey = secretAccessKey
-	e.require(emailProviderCredentialsSchemaAccessKeyIdFieldSecretAccessKey)
+	e.require(emailProviderCredentialsSchemaAccessKeyIDFieldSecretAccessKey)
 }
 
 // SetRegion sets the Region field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaAccessKeyId) SetRegion(region *string) {
+func (e *EmailProviderCredentialsSchemaAccessKeyID) SetRegion(region *string) {
 	e.Region = region
-	e.require(emailProviderCredentialsSchemaAccessKeyIdFieldRegion)
+	e.require(emailProviderCredentialsSchemaAccessKeyIDFieldRegion)
 }
 
-func (e *EmailProviderCredentialsSchemaAccessKeyId) UnmarshalJSON(data []byte) error {
-	type unmarshaler EmailProviderCredentialsSchemaAccessKeyId
+func (e *EmailProviderCredentialsSchemaAccessKeyID) UnmarshalJSON(data []byte) error {
+	type unmarshaler EmailProviderCredentialsSchemaAccessKeyID
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*e = EmailProviderCredentialsSchemaAccessKeyId(value)
+	*e = EmailProviderCredentialsSchemaAccessKeyID(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
@@ -19595,8 +19595,8 @@ func (e *EmailProviderCredentialsSchemaAccessKeyId) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-func (e *EmailProviderCredentialsSchemaAccessKeyId) MarshalJSON() ([]byte, error) {
-	type embed EmailProviderCredentialsSchemaAccessKeyId
+func (e *EmailProviderCredentialsSchemaAccessKeyID) MarshalJSON() ([]byte, error) {
+	type embed EmailProviderCredentialsSchemaAccessKeyID
 	var marshaler = struct {
 		embed
 	}{
@@ -19606,7 +19606,7 @@ func (e *EmailProviderCredentialsSchemaAccessKeyId) MarshalJSON() ([]byte, error
 	return json.Marshal(explicitMarshaler)
 }
 
-func (e *EmailProviderCredentialsSchemaAccessKeyId) String() string {
+func (e *EmailProviderCredentialsSchemaAccessKeyID) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -19619,14 +19619,14 @@ func (e *EmailProviderCredentialsSchemaAccessKeyId) String() string {
 }
 
 var (
-	emailProviderCredentialsSchemaApiKeyFieldApiKey = big.NewInt(1 << 0)
-	emailProviderCredentialsSchemaApiKeyFieldDomain = big.NewInt(1 << 1)
-	emailProviderCredentialsSchemaApiKeyFieldRegion = big.NewInt(1 << 2)
+	emailProviderCredentialsSchemaAPIKeyFieldAPIKey = big.NewInt(1 << 0)
+	emailProviderCredentialsSchemaAPIKeyFieldDomain = big.NewInt(1 << 1)
+	emailProviderCredentialsSchemaAPIKeyFieldRegion = big.NewInt(1 << 2)
 )
 
-type EmailProviderCredentialsSchemaApiKey struct {
+type EmailProviderCredentialsSchemaAPIKey struct {
 	// API Key
-	ApiKey *string `json:"api_key,omitempty" url:"api_key,omitempty"`
+	APIKey *string `json:"api_key,omitempty" url:"api_key,omitempty"`
 	// Domain
 	Domain *string                 `json:"domain,omitempty" url:"domain,omitempty"`
 	Region *EmailMailgunRegionEnum `json:"region,omitempty" url:"region,omitempty"`
@@ -19638,59 +19638,59 @@ type EmailProviderCredentialsSchemaApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EmailProviderCredentialsSchemaApiKey) GetApiKey() string {
-	if e == nil || e.ApiKey == nil {
+func (e *EmailProviderCredentialsSchemaAPIKey) GetAPIKey() string {
+	if e == nil || e.APIKey == nil {
 		return ""
 	}
-	return *e.ApiKey
+	return *e.APIKey
 }
 
-func (e *EmailProviderCredentialsSchemaApiKey) GetDomain() string {
+func (e *EmailProviderCredentialsSchemaAPIKey) GetDomain() string {
 	if e == nil || e.Domain == nil {
 		return ""
 	}
 	return *e.Domain
 }
 
-func (e *EmailProviderCredentialsSchemaApiKey) GetExtraProperties() map[string]interface{} {
+func (e *EmailProviderCredentialsSchemaAPIKey) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
-func (e *EmailProviderCredentialsSchemaApiKey) require(field *big.Int) {
+func (e *EmailProviderCredentialsSchemaAPIKey) require(field *big.Int) {
 	if e.explicitFields == nil {
 		e.explicitFields = big.NewInt(0)
 	}
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetApiKey sets the ApiKey field and marks it as non-optional;
+// SetAPIKey sets the APIKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaApiKey) SetApiKey(apiKey *string) {
-	e.ApiKey = apiKey
-	e.require(emailProviderCredentialsSchemaApiKeyFieldApiKey)
+func (e *EmailProviderCredentialsSchemaAPIKey) SetAPIKey(apiKey *string) {
+	e.APIKey = apiKey
+	e.require(emailProviderCredentialsSchemaAPIKeyFieldAPIKey)
 }
 
 // SetDomain sets the Domain field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaApiKey) SetDomain(domain *string) {
+func (e *EmailProviderCredentialsSchemaAPIKey) SetDomain(domain *string) {
 	e.Domain = domain
-	e.require(emailProviderCredentialsSchemaApiKeyFieldDomain)
+	e.require(emailProviderCredentialsSchemaAPIKeyFieldDomain)
 }
 
 // SetRegion sets the Region field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaApiKey) SetRegion(region *EmailMailgunRegionEnum) {
+func (e *EmailProviderCredentialsSchemaAPIKey) SetRegion(region *EmailMailgunRegionEnum) {
 	e.Region = region
-	e.require(emailProviderCredentialsSchemaApiKeyFieldRegion)
+	e.require(emailProviderCredentialsSchemaAPIKeyFieldRegion)
 }
 
-func (e *EmailProviderCredentialsSchemaApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler EmailProviderCredentialsSchemaApiKey
+func (e *EmailProviderCredentialsSchemaAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler EmailProviderCredentialsSchemaAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*e = EmailProviderCredentialsSchemaApiKey(value)
+	*e = EmailProviderCredentialsSchemaAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
@@ -19700,8 +19700,8 @@ func (e *EmailProviderCredentialsSchemaApiKey) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (e *EmailProviderCredentialsSchemaApiKey) MarshalJSON() ([]byte, error) {
-	type embed EmailProviderCredentialsSchemaApiKey
+func (e *EmailProviderCredentialsSchemaAPIKey) MarshalJSON() ([]byte, error) {
+	type embed EmailProviderCredentialsSchemaAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -19711,7 +19711,7 @@ func (e *EmailProviderCredentialsSchemaApiKey) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (e *EmailProviderCredentialsSchemaApiKey) String() string {
+func (e *EmailProviderCredentialsSchemaAPIKey) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -19724,16 +19724,16 @@ func (e *EmailProviderCredentialsSchemaApiKey) String() string {
 }
 
 var (
-	emailProviderCredentialsSchemaClientIdFieldTenantId     = big.NewInt(1 << 0)
-	emailProviderCredentialsSchemaClientIdFieldClientId     = big.NewInt(1 << 1)
-	emailProviderCredentialsSchemaClientIdFieldClientSecret = big.NewInt(1 << 2)
+	emailProviderCredentialsSchemaClientIDFieldTenantID     = big.NewInt(1 << 0)
+	emailProviderCredentialsSchemaClientIDFieldClientID     = big.NewInt(1 << 1)
+	emailProviderCredentialsSchemaClientIDFieldClientSecret = big.NewInt(1 << 2)
 )
 
-type EmailProviderCredentialsSchemaClientId struct {
+type EmailProviderCredentialsSchemaClientID struct {
 	// Microsoft 365 Tenant ID.
-	TenantId *string `json:"tenantId,omitempty" url:"tenantId,omitempty"`
+	TenantID *string `json:"tenantId,omitempty" url:"tenantId,omitempty"`
 	// Microsoft 365 Client ID.
-	ClientId *string `json:"clientId,omitempty" url:"clientId,omitempty"`
+	ClientID *string `json:"clientId,omitempty" url:"clientId,omitempty"`
 	// Microsoft 365 Client Secret.
 	ClientSecret *string `json:"clientSecret,omitempty" url:"clientSecret,omitempty"`
 
@@ -19744,66 +19744,66 @@ type EmailProviderCredentialsSchemaClientId struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EmailProviderCredentialsSchemaClientId) GetTenantId() string {
-	if e == nil || e.TenantId == nil {
+func (e *EmailProviderCredentialsSchemaClientID) GetTenantID() string {
+	if e == nil || e.TenantID == nil {
 		return ""
 	}
-	return *e.TenantId
+	return *e.TenantID
 }
 
-func (e *EmailProviderCredentialsSchemaClientId) GetClientId() string {
-	if e == nil || e.ClientId == nil {
+func (e *EmailProviderCredentialsSchemaClientID) GetClientID() string {
+	if e == nil || e.ClientID == nil {
 		return ""
 	}
-	return *e.ClientId
+	return *e.ClientID
 }
 
-func (e *EmailProviderCredentialsSchemaClientId) GetClientSecret() string {
+func (e *EmailProviderCredentialsSchemaClientID) GetClientSecret() string {
 	if e == nil || e.ClientSecret == nil {
 		return ""
 	}
 	return *e.ClientSecret
 }
 
-func (e *EmailProviderCredentialsSchemaClientId) GetExtraProperties() map[string]interface{} {
+func (e *EmailProviderCredentialsSchemaClientID) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
-func (e *EmailProviderCredentialsSchemaClientId) require(field *big.Int) {
+func (e *EmailProviderCredentialsSchemaClientID) require(field *big.Int) {
 	if e.explicitFields == nil {
 		e.explicitFields = big.NewInt(0)
 	}
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetTenantId sets the TenantId field and marks it as non-optional;
+// SetTenantID sets the TenantID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaClientId) SetTenantId(tenantId *string) {
-	e.TenantId = tenantId
-	e.require(emailProviderCredentialsSchemaClientIdFieldTenantId)
+func (e *EmailProviderCredentialsSchemaClientID) SetTenantID(tenantID *string) {
+	e.TenantID = tenantID
+	e.require(emailProviderCredentialsSchemaClientIDFieldTenantID)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaClientId) SetClientId(clientId *string) {
-	e.ClientId = clientId
-	e.require(emailProviderCredentialsSchemaClientIdFieldClientId)
+func (e *EmailProviderCredentialsSchemaClientID) SetClientID(clientID *string) {
+	e.ClientID = clientID
+	e.require(emailProviderCredentialsSchemaClientIDFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaClientId) SetClientSecret(clientSecret *string) {
+func (e *EmailProviderCredentialsSchemaClientID) SetClientSecret(clientSecret *string) {
 	e.ClientSecret = clientSecret
-	e.require(emailProviderCredentialsSchemaClientIdFieldClientSecret)
+	e.require(emailProviderCredentialsSchemaClientIDFieldClientSecret)
 }
 
-func (e *EmailProviderCredentialsSchemaClientId) UnmarshalJSON(data []byte) error {
-	type unmarshaler EmailProviderCredentialsSchemaClientId
+func (e *EmailProviderCredentialsSchemaClientID) UnmarshalJSON(data []byte) error {
+	type unmarshaler EmailProviderCredentialsSchemaClientID
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*e = EmailProviderCredentialsSchemaClientId(value)
+	*e = EmailProviderCredentialsSchemaClientID(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
@@ -19813,8 +19813,8 @@ func (e *EmailProviderCredentialsSchemaClientId) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (e *EmailProviderCredentialsSchemaClientId) MarshalJSON() ([]byte, error) {
-	type embed EmailProviderCredentialsSchemaClientId
+func (e *EmailProviderCredentialsSchemaClientID) MarshalJSON() ([]byte, error) {
+	type embed EmailProviderCredentialsSchemaClientID
 	var marshaler = struct {
 		embed
 	}{
@@ -19824,7 +19824,7 @@ func (e *EmailProviderCredentialsSchemaClientId) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (e *EmailProviderCredentialsSchemaClientId) String() string {
+func (e *EmailProviderCredentialsSchemaClientID) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -19916,20 +19916,20 @@ func (e *EmailProviderCredentialsSchemaConnectionString) String() string {
 }
 
 var (
-	emailProviderCredentialsSchemaSmtpHostFieldSmtpHost = big.NewInt(1 << 0)
-	emailProviderCredentialsSchemaSmtpHostFieldSmtpPort = big.NewInt(1 << 1)
-	emailProviderCredentialsSchemaSmtpHostFieldSmtpUser = big.NewInt(1 << 2)
-	emailProviderCredentialsSchemaSmtpHostFieldSmtpPass = big.NewInt(1 << 3)
+	emailProviderCredentialsSchemaSMTPHostFieldSMTPHost = big.NewInt(1 << 0)
+	emailProviderCredentialsSchemaSMTPHostFieldSMTPPort = big.NewInt(1 << 1)
+	emailProviderCredentialsSchemaSMTPHostFieldSMTPUser = big.NewInt(1 << 2)
+	emailProviderCredentialsSchemaSMTPHostFieldSMTPPass = big.NewInt(1 << 3)
 )
 
-type EmailProviderCredentialsSchemaSmtpHost struct {
-	SmtpHost *EmailSmtpHost `json:"smtp_host,omitempty" url:"smtp_host,omitempty"`
+type EmailProviderCredentialsSchemaSMTPHost struct {
+	SMTPHost *EmailSMTPHost `json:"smtp_host,omitempty" url:"smtp_host,omitempty"`
 	// SMTP port.
-	SmtpPort *int `json:"smtp_port,omitempty" url:"smtp_port,omitempty"`
+	SMTPPort *int `json:"smtp_port,omitempty" url:"smtp_port,omitempty"`
 	// SMTP username.
-	SmtpUser *string `json:"smtp_user,omitempty" url:"smtp_user,omitempty"`
+	SMTPUser *string `json:"smtp_user,omitempty" url:"smtp_user,omitempty"`
 	// SMTP password.
-	SmtpPass *string `json:"smtp_pass,omitempty" url:"smtp_pass,omitempty"`
+	SMTPPass *string `json:"smtp_pass,omitempty" url:"smtp_pass,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -19938,80 +19938,80 @@ type EmailProviderCredentialsSchemaSmtpHost struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EmailProviderCredentialsSchemaSmtpHost) GetSmtpHost() EmailSmtpHost {
-	if e == nil || e.SmtpHost == nil {
+func (e *EmailProviderCredentialsSchemaSMTPHost) GetSMTPHost() EmailSMTPHost {
+	if e == nil || e.SMTPHost == nil {
 		return ""
 	}
-	return *e.SmtpHost
+	return *e.SMTPHost
 }
 
-func (e *EmailProviderCredentialsSchemaSmtpHost) GetSmtpPort() int {
-	if e == nil || e.SmtpPort == nil {
+func (e *EmailProviderCredentialsSchemaSMTPHost) GetSMTPPort() int {
+	if e == nil || e.SMTPPort == nil {
 		return 0
 	}
-	return *e.SmtpPort
+	return *e.SMTPPort
 }
 
-func (e *EmailProviderCredentialsSchemaSmtpHost) GetSmtpUser() string {
-	if e == nil || e.SmtpUser == nil {
+func (e *EmailProviderCredentialsSchemaSMTPHost) GetSMTPUser() string {
+	if e == nil || e.SMTPUser == nil {
 		return ""
 	}
-	return *e.SmtpUser
+	return *e.SMTPUser
 }
 
-func (e *EmailProviderCredentialsSchemaSmtpHost) GetSmtpPass() string {
-	if e == nil || e.SmtpPass == nil {
+func (e *EmailProviderCredentialsSchemaSMTPHost) GetSMTPPass() string {
+	if e == nil || e.SMTPPass == nil {
 		return ""
 	}
-	return *e.SmtpPass
+	return *e.SMTPPass
 }
 
-func (e *EmailProviderCredentialsSchemaSmtpHost) GetExtraProperties() map[string]interface{} {
+func (e *EmailProviderCredentialsSchemaSMTPHost) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
-func (e *EmailProviderCredentialsSchemaSmtpHost) require(field *big.Int) {
+func (e *EmailProviderCredentialsSchemaSMTPHost) require(field *big.Int) {
 	if e.explicitFields == nil {
 		e.explicitFields = big.NewInt(0)
 	}
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetSmtpHost sets the SmtpHost field and marks it as non-optional;
+// SetSMTPHost sets the SMTPHost field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaSmtpHost) SetSmtpHost(smtpHost *EmailSmtpHost) {
-	e.SmtpHost = smtpHost
-	e.require(emailProviderCredentialsSchemaSmtpHostFieldSmtpHost)
+func (e *EmailProviderCredentialsSchemaSMTPHost) SetSMTPHost(smtpHost *EmailSMTPHost) {
+	e.SMTPHost = smtpHost
+	e.require(emailProviderCredentialsSchemaSMTPHostFieldSMTPHost)
 }
 
-// SetSmtpPort sets the SmtpPort field and marks it as non-optional;
+// SetSMTPPort sets the SMTPPort field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaSmtpHost) SetSmtpPort(smtpPort *int) {
-	e.SmtpPort = smtpPort
-	e.require(emailProviderCredentialsSchemaSmtpHostFieldSmtpPort)
+func (e *EmailProviderCredentialsSchemaSMTPHost) SetSMTPPort(smtpPort *int) {
+	e.SMTPPort = smtpPort
+	e.require(emailProviderCredentialsSchemaSMTPHostFieldSMTPPort)
 }
 
-// SetSmtpUser sets the SmtpUser field and marks it as non-optional;
+// SetSMTPUser sets the SMTPUser field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaSmtpHost) SetSmtpUser(smtpUser *string) {
-	e.SmtpUser = smtpUser
-	e.require(emailProviderCredentialsSchemaSmtpHostFieldSmtpUser)
+func (e *EmailProviderCredentialsSchemaSMTPHost) SetSMTPUser(smtpUser *string) {
+	e.SMTPUser = smtpUser
+	e.require(emailProviderCredentialsSchemaSMTPHostFieldSMTPUser)
 }
 
-// SetSmtpPass sets the SmtpPass field and marks it as non-optional;
+// SetSMTPPass sets the SMTPPass field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaSmtpHost) SetSmtpPass(smtpPass *string) {
-	e.SmtpPass = smtpPass
-	e.require(emailProviderCredentialsSchemaSmtpHostFieldSmtpPass)
+func (e *EmailProviderCredentialsSchemaSMTPHost) SetSMTPPass(smtpPass *string) {
+	e.SMTPPass = smtpPass
+	e.require(emailProviderCredentialsSchemaSMTPHostFieldSMTPPass)
 }
 
-func (e *EmailProviderCredentialsSchemaSmtpHost) UnmarshalJSON(data []byte) error {
-	type unmarshaler EmailProviderCredentialsSchemaSmtpHost
+func (e *EmailProviderCredentialsSchemaSMTPHost) UnmarshalJSON(data []byte) error {
+	type unmarshaler EmailProviderCredentialsSchemaSMTPHost
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*e = EmailProviderCredentialsSchemaSmtpHost(value)
+	*e = EmailProviderCredentialsSchemaSMTPHost(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *e)
 	if err != nil {
 		return err
@@ -20021,8 +20021,8 @@ func (e *EmailProviderCredentialsSchemaSmtpHost) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (e *EmailProviderCredentialsSchemaSmtpHost) MarshalJSON() ([]byte, error) {
-	type embed EmailProviderCredentialsSchemaSmtpHost
+func (e *EmailProviderCredentialsSchemaSMTPHost) MarshalJSON() ([]byte, error) {
+	type embed EmailProviderCredentialsSchemaSMTPHost
 	var marshaler = struct {
 		embed
 	}{
@@ -20032,7 +20032,7 @@ func (e *EmailProviderCredentialsSchemaSmtpHost) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (e *EmailProviderCredentialsSchemaSmtpHost) String() string {
+func (e *EmailProviderCredentialsSchemaSMTPHost) String() string {
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -20045,13 +20045,13 @@ func (e *EmailProviderCredentialsSchemaSmtpHost) String() string {
 }
 
 var (
-	emailProviderCredentialsSchemaThreeFieldApiKey = big.NewInt(1 << 0)
+	emailProviderCredentialsSchemaThreeFieldAPIKey = big.NewInt(1 << 0)
 	emailProviderCredentialsSchemaThreeFieldRegion = big.NewInt(1 << 1)
 )
 
 type EmailProviderCredentialsSchemaThree struct {
 	// API Key
-	ApiKey *string                   `json:"api_key,omitempty" url:"api_key,omitempty"`
+	APIKey *string                   `json:"api_key,omitempty" url:"api_key,omitempty"`
 	Region *EmailSparkPostRegionEnum `json:"region,omitempty" url:"region,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -20061,11 +20061,11 @@ type EmailProviderCredentialsSchemaThree struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EmailProviderCredentialsSchemaThree) GetApiKey() string {
-	if e == nil || e.ApiKey == nil {
+func (e *EmailProviderCredentialsSchemaThree) GetAPIKey() string {
+	if e == nil || e.APIKey == nil {
 		return ""
 	}
-	return *e.ApiKey
+	return *e.APIKey
 }
 
 func (e *EmailProviderCredentialsSchemaThree) GetExtraProperties() map[string]interface{} {
@@ -20079,11 +20079,11 @@ func (e *EmailProviderCredentialsSchemaThree) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetApiKey sets the ApiKey field and marks it as non-optional;
+// SetAPIKey sets the APIKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaThree) SetApiKey(apiKey *string) {
-	e.ApiKey = apiKey
-	e.require(emailProviderCredentialsSchemaThreeFieldApiKey)
+func (e *EmailProviderCredentialsSchemaThree) SetAPIKey(apiKey *string) {
+	e.APIKey = apiKey
+	e.require(emailProviderCredentialsSchemaThreeFieldAPIKey)
 }
 
 // SetRegion sets the Region field and marks it as non-optional;
@@ -20133,12 +20133,12 @@ func (e *EmailProviderCredentialsSchemaThree) String() string {
 }
 
 var (
-	emailProviderCredentialsSchemaZeroFieldApiKey = big.NewInt(1 << 0)
+	emailProviderCredentialsSchemaZeroFieldAPIKey = big.NewInt(1 << 0)
 )
 
 type EmailProviderCredentialsSchemaZero struct {
 	// API Key
-	ApiKey string `json:"api_key" url:"api_key"`
+	APIKey string `json:"api_key" url:"api_key"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -20147,11 +20147,11 @@ type EmailProviderCredentialsSchemaZero struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EmailProviderCredentialsSchemaZero) GetApiKey() string {
+func (e *EmailProviderCredentialsSchemaZero) GetAPIKey() string {
 	if e == nil {
 		return ""
 	}
-	return e.ApiKey
+	return e.APIKey
 }
 
 func (e *EmailProviderCredentialsSchemaZero) GetExtraProperties() map[string]interface{} {
@@ -20165,11 +20165,11 @@ func (e *EmailProviderCredentialsSchemaZero) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetApiKey sets the ApiKey field and marks it as non-optional;
+// SetAPIKey sets the APIKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailProviderCredentialsSchemaZero) SetApiKey(apiKey string) {
-	e.ApiKey = apiKey
-	e.require(emailProviderCredentialsSchemaZeroFieldApiKey)
+func (e *EmailProviderCredentialsSchemaZero) SetAPIKey(apiKey string) {
+	e.APIKey = apiKey
+	e.require(emailProviderCredentialsSchemaZeroFieldAPIKey)
 }
 
 func (e *EmailProviderCredentialsSchemaZero) UnmarshalJSON(data []byte) error {
@@ -20220,7 +20220,7 @@ const (
 	EmailProviderNameEnumSendgrid  EmailProviderNameEnum = "sendgrid"
 	EmailProviderNameEnumSes       EmailProviderNameEnum = "ses"
 	EmailProviderNameEnumSparkpost EmailProviderNameEnum = "sparkpost"
-	EmailProviderNameEnumSmtp      EmailProviderNameEnum = "smtp"
+	EmailProviderNameEnumSMTP      EmailProviderNameEnum = "smtp"
 	EmailProviderNameEnumAzureCs   EmailProviderNameEnum = "azure_cs"
 	EmailProviderNameEnumMs365     EmailProviderNameEnum = "ms365"
 	EmailProviderNameEnumCustom    EmailProviderNameEnum = "custom"
@@ -20239,7 +20239,7 @@ func NewEmailProviderNameEnumFromString(s string) (EmailProviderNameEnum, error)
 	case "sparkpost":
 		return EmailProviderNameEnumSparkpost, nil
 	case "smtp":
-		return EmailProviderNameEnumSmtp, nil
+		return EmailProviderNameEnumSMTP, nil
 	case "azure_cs":
 		return EmailProviderNameEnumAzureCs, nil
 	case "ms365":
@@ -20259,7 +20259,7 @@ func (e EmailProviderNameEnum) Ptr() *EmailProviderNameEnum {
 type EmailProviderSettings = map[string]interface{}
 
 // SMTP host.
-type EmailSmtpHost = string
+type EmailSMTPHost = string
 
 // Set to <code>eu</code> to use SparkPost service hosted in Western Europe. To use SparkPost hosted in North America, set it to <code>null</code>.
 type EmailSparkPostRegionEnum = string
@@ -20522,7 +20522,7 @@ func (e EncryptionKeyType) Ptr() *EncryptionKeyType {
 
 // Event content. This will only be set if delivery failed.
 var (
-	eventStreamCloudEventFieldId          = big.NewInt(1 << 0)
+	eventStreamCloudEventFieldID          = big.NewInt(1 << 0)
 	eventStreamCloudEventFieldSource      = big.NewInt(1 << 1)
 	eventStreamCloudEventFieldSpecversion = big.NewInt(1 << 2)
 	eventStreamCloudEventFieldType        = big.NewInt(1 << 3)
@@ -20532,7 +20532,7 @@ var (
 
 type EventStreamCloudEvent struct {
 	// Unique identifier for the event
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Where the event originated
 	Source *string `json:"source,omitempty" url:"source,omitempty"`
 	// Version of CloudEvents spec
@@ -20551,11 +20551,11 @@ type EventStreamCloudEvent struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamCloudEvent) GetId() string {
-	if e == nil || e.Id == nil {
+func (e *EventStreamCloudEvent) GetID() string {
+	if e == nil || e.ID == nil {
 		return ""
 	}
-	return *e.Id
+	return *e.ID
 }
 
 func (e *EventStreamCloudEvent) GetSource() string {
@@ -20604,11 +20604,11 @@ func (e *EventStreamCloudEvent) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEvent) SetId(id *string) {
-	e.Id = id
-	e.require(eventStreamCloudEventFieldId)
+func (e *EventStreamCloudEvent) SetID(id *string) {
+	e.ID = id
+	e.require(eventStreamCloudEventFieldID)
 }
 
 // SetSource sets the Source field and marks it as non-optional;
@@ -20695,8 +20695,8 @@ func (e *EventStreamCloudEvent) String() string {
 
 // Metadata about a specific attempt to deliver an event
 var (
-	eventStreamDeliveryFieldId            = big.NewInt(1 << 0)
-	eventStreamDeliveryFieldEventStreamId = big.NewInt(1 << 1)
+	eventStreamDeliveryFieldID            = big.NewInt(1 << 0)
+	eventStreamDeliveryFieldEventStreamID = big.NewInt(1 << 1)
 	eventStreamDeliveryFieldStatus        = big.NewInt(1 << 2)
 	eventStreamDeliveryFieldEventType     = big.NewInt(1 << 3)
 	eventStreamDeliveryFieldAttempts      = big.NewInt(1 << 4)
@@ -20705,9 +20705,9 @@ var (
 
 type EventStreamDelivery struct {
 	// Unique identifier for the delivery
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// Unique identifier for the event stream.
-	EventStreamId string                           `json:"event_stream_id" url:"event_stream_id"`
+	EventStreamID string                           `json:"event_stream_id" url:"event_stream_id"`
 	Status        EventStreamDeliveryStatusEnum    `json:"status" url:"status"`
 	EventType     EventStreamDeliveryEventTypeEnum `json:"event_type" url:"event_type"`
 	// Results of delivery attempts
@@ -20721,18 +20721,18 @@ type EventStreamDelivery struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamDelivery) GetId() string {
+func (e *EventStreamDelivery) GetID() string {
 	if e == nil {
 		return ""
 	}
-	return e.Id
+	return e.ID
 }
 
-func (e *EventStreamDelivery) GetEventStreamId() string {
+func (e *EventStreamDelivery) GetEventStreamID() string {
 	if e == nil {
 		return ""
 	}
-	return e.EventStreamId
+	return e.EventStreamID
 }
 
 func (e *EventStreamDelivery) GetEventType() EventStreamDeliveryEventTypeEnum {
@@ -20767,18 +20767,18 @@ func (e *EventStreamDelivery) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamDelivery) SetId(id string) {
-	e.Id = id
-	e.require(eventStreamDeliveryFieldId)
+func (e *EventStreamDelivery) SetID(id string) {
+	e.ID = id
+	e.require(eventStreamDeliveryFieldID)
 }
 
-// SetEventStreamId sets the EventStreamId field and marks it as non-optional;
+// SetEventStreamID sets the EventStreamID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamDelivery) SetEventStreamId(eventStreamId string) {
-	e.EventStreamId = eventStreamId
-	e.require(eventStreamDeliveryFieldEventStreamId)
+func (e *EventStreamDelivery) SetEventStreamID(eventStreamID string) {
+	e.EventStreamID = eventStreamID
+	e.require(eventStreamDeliveryFieldEventStreamID)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -21135,7 +21135,7 @@ func (e *ExtensibilityEmailProviderCredentials) String() string {
 }
 
 var (
-	federatedConnectionTokenSetFieldId         = big.NewInt(1 << 0)
+	federatedConnectionTokenSetFieldID         = big.NewInt(1 << 0)
 	federatedConnectionTokenSetFieldConnection = big.NewInt(1 << 1)
 	federatedConnectionTokenSetFieldScope      = big.NewInt(1 << 2)
 	federatedConnectionTokenSetFieldExpiresAt  = big.NewInt(1 << 3)
@@ -21144,7 +21144,7 @@ var (
 )
 
 type FederatedConnectionTokenSet struct {
-	Id         *string    `json:"id,omitempty" url:"id,omitempty"`
+	ID         *string    `json:"id,omitempty" url:"id,omitempty"`
 	Connection *string    `json:"connection,omitempty" url:"connection,omitempty"`
 	Scope      *string    `json:"scope,omitempty" url:"scope,omitempty"`
 	ExpiresAt  *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
@@ -21159,11 +21159,11 @@ type FederatedConnectionTokenSet struct {
 	rawJSON json.RawMessage
 }
 
-func (f *FederatedConnectionTokenSet) GetId() string {
-	if f == nil || f.Id == nil {
+func (f *FederatedConnectionTokenSet) GetID() string {
+	if f == nil || f.ID == nil {
 		return ""
 	}
-	return *f.Id
+	return *f.ID
 }
 
 func (f *FederatedConnectionTokenSet) GetConnection() string {
@@ -21212,11 +21212,11 @@ func (f *FederatedConnectionTokenSet) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FederatedConnectionTokenSet) SetId(id *string) {
-	f.Id = id
-	f.require(federatedConnectionTokenSetFieldId)
+func (f *FederatedConnectionTokenSet) SetID(id *string) {
+	f.ID = id
+	f.require(federatedConnectionTokenSetFieldID)
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -21313,9 +21313,9 @@ func (f *FederatedConnectionTokenSet) String() string {
 type FlowExecutionDebug = map[string]interface{}
 
 var (
-	flowExecutionSummaryFieldId        = big.NewInt(1 << 0)
-	flowExecutionSummaryFieldTraceId   = big.NewInt(1 << 1)
-	flowExecutionSummaryFieldJourneyId = big.NewInt(1 << 2)
+	flowExecutionSummaryFieldID        = big.NewInt(1 << 0)
+	flowExecutionSummaryFieldTraceID   = big.NewInt(1 << 1)
+	flowExecutionSummaryFieldJourneyID = big.NewInt(1 << 2)
 	flowExecutionSummaryFieldStatus    = big.NewInt(1 << 3)
 	flowExecutionSummaryFieldCreatedAt = big.NewInt(1 << 4)
 	flowExecutionSummaryFieldUpdatedAt = big.NewInt(1 << 5)
@@ -21325,11 +21325,11 @@ var (
 
 type FlowExecutionSummary struct {
 	// Flow execution identifier
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// Trace id
-	TraceId string `json:"trace_id" url:"trace_id"`
+	TraceID string `json:"trace_id" url:"trace_id"`
 	// Journey id
-	JourneyId *string `json:"journey_id,omitempty" url:"journey_id,omitempty"`
+	JourneyID *string `json:"journey_id,omitempty" url:"journey_id,omitempty"`
 	// Execution status
 	Status string `json:"status" url:"status"`
 	// The ISO 8601 formatted date when this flow execution was created.
@@ -21348,25 +21348,25 @@ type FlowExecutionSummary struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *FlowExecutionSummary) GetId() string {
+func (f *FlowExecutionSummary) GetID() string {
 	if f == nil {
 		return ""
 	}
-	return f.Id
+	return f.ID
 }
 
-func (f *FlowExecutionSummary) GetTraceId() string {
+func (f *FlowExecutionSummary) GetTraceID() string {
 	if f == nil {
 		return ""
 	}
-	return f.TraceId
+	return f.TraceID
 }
 
-func (f *FlowExecutionSummary) GetJourneyId() string {
-	if f == nil || f.JourneyId == nil {
+func (f *FlowExecutionSummary) GetJourneyID() string {
+	if f == nil || f.JourneyID == nil {
 		return ""
 	}
-	return *f.JourneyId
+	return *f.JourneyID
 }
 
 func (f *FlowExecutionSummary) GetStatus() string {
@@ -21415,25 +21415,25 @@ func (f *FlowExecutionSummary) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowExecutionSummary) SetId(id string) {
-	f.Id = id
-	f.require(flowExecutionSummaryFieldId)
+func (f *FlowExecutionSummary) SetID(id string) {
+	f.ID = id
+	f.require(flowExecutionSummaryFieldID)
 }
 
-// SetTraceId sets the TraceId field and marks it as non-optional;
+// SetTraceID sets the TraceID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowExecutionSummary) SetTraceId(traceId string) {
-	f.TraceId = traceId
-	f.require(flowExecutionSummaryFieldTraceId)
+func (f *FlowExecutionSummary) SetTraceID(traceID string) {
+	f.TraceID = traceID
+	f.require(flowExecutionSummaryFieldTraceID)
 }
 
-// SetJourneyId sets the JourneyId field and marks it as non-optional;
+// SetJourneyID sets the JourneyID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowExecutionSummary) SetJourneyId(journeyId *string) {
-	f.JourneyId = journeyId
-	f.require(flowExecutionSummaryFieldJourneyId)
+func (f *FlowExecutionSummary) SetJourneyID(journeyID *string) {
+	f.JourneyID = journeyID
+	f.require(flowExecutionSummaryFieldJourneyID)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -21531,13 +21531,13 @@ func (f *FlowExecutionSummary) String() string {
 }
 
 var (
-	flowsVaultConnectioSetupApiKeyFieldType   = big.NewInt(1 << 0)
-	flowsVaultConnectioSetupApiKeyFieldApiKey = big.NewInt(1 << 1)
+	flowsVaultConnectioSetupAPIKeyFieldType   = big.NewInt(1 << 0)
+	flowsVaultConnectioSetupAPIKeyFieldAPIKey = big.NewInt(1 << 1)
 )
 
-type FlowsVaultConnectioSetupApiKey struct {
-	Type   FlowsVaultConnectioSetupTypeApiKeyEnum `json:"type" url:"type"`
-	ApiKey string                                 `json:"api_key" url:"api_key"`
+type FlowsVaultConnectioSetupAPIKey struct {
+	Type   FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
+	APIKey string                                 `json:"api_key" url:"api_key"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -21546,18 +21546,18 @@ type FlowsVaultConnectioSetupApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *FlowsVaultConnectioSetupApiKey) GetApiKey() string {
+func (f *FlowsVaultConnectioSetupAPIKey) GetAPIKey() string {
 	if f == nil {
 		return ""
 	}
-	return f.ApiKey
+	return f.APIKey
 }
 
-func (f *FlowsVaultConnectioSetupApiKey) GetExtraProperties() map[string]interface{} {
+func (f *FlowsVaultConnectioSetupAPIKey) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
-func (f *FlowsVaultConnectioSetupApiKey) require(field *big.Int) {
+func (f *FlowsVaultConnectioSetupAPIKey) require(field *big.Int) {
 	if f.explicitFields == nil {
 		f.explicitFields = big.NewInt(0)
 	}
@@ -21566,25 +21566,25 @@ func (f *FlowsVaultConnectioSetupApiKey) require(field *big.Int) {
 
 // SetType sets the Type field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupApiKey) SetType(type_ FlowsVaultConnectioSetupTypeApiKeyEnum) {
+func (f *FlowsVaultConnectioSetupAPIKey) SetType(type_ FlowsVaultConnectioSetupTypeAPIKeyEnum) {
 	f.Type = type_
-	f.require(flowsVaultConnectioSetupApiKeyFieldType)
+	f.require(flowsVaultConnectioSetupAPIKeyFieldType)
 }
 
-// SetApiKey sets the ApiKey field and marks it as non-optional;
+// SetAPIKey sets the APIKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupApiKey) SetApiKey(apiKey string) {
-	f.ApiKey = apiKey
-	f.require(flowsVaultConnectioSetupApiKeyFieldApiKey)
+func (f *FlowsVaultConnectioSetupAPIKey) SetAPIKey(apiKey string) {
+	f.APIKey = apiKey
+	f.require(flowsVaultConnectioSetupAPIKeyFieldAPIKey)
 }
 
-func (f *FlowsVaultConnectioSetupApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler FlowsVaultConnectioSetupApiKey
+func (f *FlowsVaultConnectioSetupAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*f = FlowsVaultConnectioSetupApiKey(value)
+	*f = FlowsVaultConnectioSetupAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
@@ -21594,8 +21594,8 @@ func (f *FlowsVaultConnectioSetupApiKey) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (f *FlowsVaultConnectioSetupApiKey) MarshalJSON() ([]byte, error) {
-	type embed FlowsVaultConnectioSetupApiKey
+func (f *FlowsVaultConnectioSetupAPIKey) MarshalJSON() ([]byte, error) {
+	type embed FlowsVaultConnectioSetupAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -21605,7 +21605,7 @@ func (f *FlowsVaultConnectioSetupApiKey) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (f *FlowsVaultConnectioSetupApiKey) String() string {
+func (f *FlowsVaultConnectioSetupAPIKey) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -21618,15 +21618,15 @@ func (f *FlowsVaultConnectioSetupApiKey) String() string {
 }
 
 var (
-	flowsVaultConnectioSetupApiKeyWithBaseUrlFieldType    = big.NewInt(1 << 0)
-	flowsVaultConnectioSetupApiKeyWithBaseUrlFieldApiKey  = big.NewInt(1 << 1)
-	flowsVaultConnectioSetupApiKeyWithBaseUrlFieldBaseUrl = big.NewInt(1 << 2)
+	flowsVaultConnectioSetupAPIKeyWithBaseURLFieldType    = big.NewInt(1 << 0)
+	flowsVaultConnectioSetupAPIKeyWithBaseURLFieldAPIKey  = big.NewInt(1 << 1)
+	flowsVaultConnectioSetupAPIKeyWithBaseURLFieldBaseURL = big.NewInt(1 << 2)
 )
 
-type FlowsVaultConnectioSetupApiKeyWithBaseUrl struct {
-	Type    FlowsVaultConnectioSetupTypeApiKeyEnum `json:"type" url:"type"`
-	ApiKey  string                                 `json:"api_key" url:"api_key"`
-	BaseUrl *string                                `json:"base_url,omitempty" url:"base_url,omitempty"`
+type FlowsVaultConnectioSetupAPIKeyWithBaseURL struct {
+	Type    FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
+	APIKey  string                                 `json:"api_key" url:"api_key"`
+	BaseURL *string                                `json:"base_url,omitempty" url:"base_url,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -21635,25 +21635,25 @@ type FlowsVaultConnectioSetupApiKeyWithBaseUrl struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) GetApiKey() string {
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetAPIKey() string {
 	if f == nil {
 		return ""
 	}
-	return f.ApiKey
+	return f.APIKey
 }
 
-func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) GetBaseUrl() string {
-	if f == nil || f.BaseUrl == nil {
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetBaseURL() string {
+	if f == nil || f.BaseURL == nil {
 		return ""
 	}
-	return *f.BaseUrl
+	return *f.BaseURL
 }
 
-func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) GetExtraProperties() map[string]interface{} {
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
-func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) require(field *big.Int) {
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) require(field *big.Int) {
 	if f.explicitFields == nil {
 		f.explicitFields = big.NewInt(0)
 	}
@@ -21662,32 +21662,32 @@ func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) require(field *big.Int) {
 
 // SetType sets the Type field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) SetType(type_ FlowsVaultConnectioSetupTypeApiKeyEnum) {
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) SetType(type_ FlowsVaultConnectioSetupTypeAPIKeyEnum) {
 	f.Type = type_
-	f.require(flowsVaultConnectioSetupApiKeyWithBaseUrlFieldType)
+	f.require(flowsVaultConnectioSetupAPIKeyWithBaseURLFieldType)
 }
 
-// SetApiKey sets the ApiKey field and marks it as non-optional;
+// SetAPIKey sets the APIKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) SetApiKey(apiKey string) {
-	f.ApiKey = apiKey
-	f.require(flowsVaultConnectioSetupApiKeyWithBaseUrlFieldApiKey)
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) SetAPIKey(apiKey string) {
+	f.APIKey = apiKey
+	f.require(flowsVaultConnectioSetupAPIKeyWithBaseURLFieldAPIKey)
 }
 
-// SetBaseUrl sets the BaseUrl field and marks it as non-optional;
+// SetBaseURL sets the BaseURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) SetBaseUrl(baseUrl *string) {
-	f.BaseUrl = baseUrl
-	f.require(flowsVaultConnectioSetupApiKeyWithBaseUrlFieldBaseUrl)
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) SetBaseURL(baseURL *string) {
+	f.BaseURL = baseURL
+	f.require(flowsVaultConnectioSetupAPIKeyWithBaseURLFieldBaseURL)
 }
 
-func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) UnmarshalJSON(data []byte) error {
-	type unmarshaler FlowsVaultConnectioSetupApiKeyWithBaseUrl
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupAPIKeyWithBaseURL
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*f = FlowsVaultConnectioSetupApiKeyWithBaseUrl(value)
+	*f = FlowsVaultConnectioSetupAPIKeyWithBaseURL(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
@@ -21697,8 +21697,8 @@ func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) MarshalJSON() ([]byte, error) {
-	type embed FlowsVaultConnectioSetupApiKeyWithBaseUrl
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) MarshalJSON() ([]byte, error) {
+	type embed FlowsVaultConnectioSetupAPIKeyWithBaseURL
 	var marshaler = struct {
 		embed
 	}{
@@ -21708,7 +21708,7 @@ func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) MarshalJSON() ([]byte, error
 	return json.Marshal(explicitMarshaler)
 }
 
-func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) String() string {
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -21722,14 +21722,14 @@ func (f *FlowsVaultConnectioSetupApiKeyWithBaseUrl) String() string {
 
 var (
 	flowsVaultConnectioSetupBigqueryOauthJwtFieldType        = big.NewInt(1 << 0)
-	flowsVaultConnectioSetupBigqueryOauthJwtFieldProjectId   = big.NewInt(1 << 1)
+	flowsVaultConnectioSetupBigqueryOauthJwtFieldProjectID   = big.NewInt(1 << 1)
 	flowsVaultConnectioSetupBigqueryOauthJwtFieldPrivateKey  = big.NewInt(1 << 2)
 	flowsVaultConnectioSetupBigqueryOauthJwtFieldClientEmail = big.NewInt(1 << 3)
 )
 
 type FlowsVaultConnectioSetupBigqueryOauthJwt struct {
 	Type        *FlowsVaultConnectioSetupTypeOauthJwtEnum `json:"type,omitempty" url:"type,omitempty"`
-	ProjectId   *string                                   `json:"project_id,omitempty" url:"project_id,omitempty"`
+	ProjectID   *string                                   `json:"project_id,omitempty" url:"project_id,omitempty"`
 	PrivateKey  *string                                   `json:"private_key,omitempty" url:"private_key,omitempty"`
 	ClientEmail *string                                   `json:"client_email,omitempty" url:"client_email,omitempty"`
 
@@ -21740,11 +21740,11 @@ type FlowsVaultConnectioSetupBigqueryOauthJwt struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) GetProjectId() string {
-	if f == nil || f.ProjectId == nil {
+func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) GetProjectID() string {
+	if f == nil || f.ProjectID == nil {
 		return ""
 	}
-	return *f.ProjectId
+	return *f.ProjectID
 }
 
 func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) GetPrivateKey() string {
@@ -21779,11 +21779,11 @@ func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) SetType(type_ *FlowsVaultConn
 	f.require(flowsVaultConnectioSetupBigqueryOauthJwtFieldType)
 }
 
-// SetProjectId sets the ProjectId field and marks it as non-optional;
+// SetProjectID sets the ProjectID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) SetProjectId(projectId *string) {
-	f.ProjectId = projectId
-	f.require(flowsVaultConnectioSetupBigqueryOauthJwtFieldProjectId)
+func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) SetProjectID(projectID *string) {
+	f.ProjectID = projectID
+	f.require(flowsVaultConnectioSetupBigqueryOauthJwtFieldProjectID)
 }
 
 // SetPrivateKey sets the PrivateKey field and marks it as non-optional;
@@ -21840,11 +21840,11 @@ func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) String() string {
 }
 
 var (
-	flowsVaultConnectioSetupHttpBearerFieldType  = big.NewInt(1 << 0)
-	flowsVaultConnectioSetupHttpBearerFieldToken = big.NewInt(1 << 1)
+	flowsVaultConnectioSetupHTTPBearerFieldType  = big.NewInt(1 << 0)
+	flowsVaultConnectioSetupHTTPBearerFieldToken = big.NewInt(1 << 1)
 )
 
-type FlowsVaultConnectioSetupHttpBearer struct {
+type FlowsVaultConnectioSetupHTTPBearer struct {
 	Type  FlowsVaultConnectioSetupTypeBearerEnum `json:"type" url:"type"`
 	Token string                                 `json:"token" url:"token"`
 
@@ -21855,18 +21855,18 @@ type FlowsVaultConnectioSetupHttpBearer struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *FlowsVaultConnectioSetupHttpBearer) GetToken() string {
+func (f *FlowsVaultConnectioSetupHTTPBearer) GetToken() string {
 	if f == nil {
 		return ""
 	}
 	return f.Token
 }
 
-func (f *FlowsVaultConnectioSetupHttpBearer) GetExtraProperties() map[string]interface{} {
+func (f *FlowsVaultConnectioSetupHTTPBearer) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
-func (f *FlowsVaultConnectioSetupHttpBearer) require(field *big.Int) {
+func (f *FlowsVaultConnectioSetupHTTPBearer) require(field *big.Int) {
 	if f.explicitFields == nil {
 		f.explicitFields = big.NewInt(0)
 	}
@@ -21875,25 +21875,25 @@ func (f *FlowsVaultConnectioSetupHttpBearer) require(field *big.Int) {
 
 // SetType sets the Type field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupHttpBearer) SetType(type_ FlowsVaultConnectioSetupTypeBearerEnum) {
+func (f *FlowsVaultConnectioSetupHTTPBearer) SetType(type_ FlowsVaultConnectioSetupTypeBearerEnum) {
 	f.Type = type_
-	f.require(flowsVaultConnectioSetupHttpBearerFieldType)
+	f.require(flowsVaultConnectioSetupHTTPBearerFieldType)
 }
 
 // SetToken sets the Token field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupHttpBearer) SetToken(token string) {
+func (f *FlowsVaultConnectioSetupHTTPBearer) SetToken(token string) {
 	f.Token = token
-	f.require(flowsVaultConnectioSetupHttpBearerFieldToken)
+	f.require(flowsVaultConnectioSetupHTTPBearerFieldToken)
 }
 
-func (f *FlowsVaultConnectioSetupHttpBearer) UnmarshalJSON(data []byte) error {
-	type unmarshaler FlowsVaultConnectioSetupHttpBearer
+func (f *FlowsVaultConnectioSetupHTTPBearer) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupHTTPBearer
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*f = FlowsVaultConnectioSetupHttpBearer(value)
+	*f = FlowsVaultConnectioSetupHTTPBearer(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
@@ -21903,8 +21903,8 @@ func (f *FlowsVaultConnectioSetupHttpBearer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (f *FlowsVaultConnectioSetupHttpBearer) MarshalJSON() ([]byte, error) {
-	type embed FlowsVaultConnectioSetupHttpBearer
+func (f *FlowsVaultConnectioSetupHTTPBearer) MarshalJSON() ([]byte, error) {
+	type embed FlowsVaultConnectioSetupHTTPBearer
 	var marshaler = struct {
 		embed
 	}{
@@ -21914,7 +21914,7 @@ func (f *FlowsVaultConnectioSetupHttpBearer) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (f *FlowsVaultConnectioSetupHttpBearer) String() string {
+func (f *FlowsVaultConnectioSetupHTTPBearer) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -22071,14 +22071,14 @@ func (f FlowsVaultConnectioSetupJwtAlgorithmEnum) Ptr() *FlowsVaultConnectioSetu
 }
 
 var (
-	flowsVaultConnectioSetupMailjetApiKeyFieldType      = big.NewInt(1 << 0)
-	flowsVaultConnectioSetupMailjetApiKeyFieldApiKey    = big.NewInt(1 << 1)
-	flowsVaultConnectioSetupMailjetApiKeyFieldSecretKey = big.NewInt(1 << 2)
+	flowsVaultConnectioSetupMailjetAPIKeyFieldType      = big.NewInt(1 << 0)
+	flowsVaultConnectioSetupMailjetAPIKeyFieldAPIKey    = big.NewInt(1 << 1)
+	flowsVaultConnectioSetupMailjetAPIKeyFieldSecretKey = big.NewInt(1 << 2)
 )
 
-type FlowsVaultConnectioSetupMailjetApiKey struct {
-	Type      FlowsVaultConnectioSetupTypeApiKeyEnum `json:"type" url:"type"`
-	ApiKey    string                                 `json:"api_key" url:"api_key"`
+type FlowsVaultConnectioSetupMailjetAPIKey struct {
+	Type      FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
+	APIKey    string                                 `json:"api_key" url:"api_key"`
 	SecretKey string                                 `json:"secret_key" url:"secret_key"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -22088,25 +22088,25 @@ type FlowsVaultConnectioSetupMailjetApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *FlowsVaultConnectioSetupMailjetApiKey) GetApiKey() string {
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) GetAPIKey() string {
 	if f == nil {
 		return ""
 	}
-	return f.ApiKey
+	return f.APIKey
 }
 
-func (f *FlowsVaultConnectioSetupMailjetApiKey) GetSecretKey() string {
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) GetSecretKey() string {
 	if f == nil {
 		return ""
 	}
 	return f.SecretKey
 }
 
-func (f *FlowsVaultConnectioSetupMailjetApiKey) GetExtraProperties() map[string]interface{} {
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
-func (f *FlowsVaultConnectioSetupMailjetApiKey) require(field *big.Int) {
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) require(field *big.Int) {
 	if f.explicitFields == nil {
 		f.explicitFields = big.NewInt(0)
 	}
@@ -22115,32 +22115,32 @@ func (f *FlowsVaultConnectioSetupMailjetApiKey) require(field *big.Int) {
 
 // SetType sets the Type field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupMailjetApiKey) SetType(type_ FlowsVaultConnectioSetupTypeApiKeyEnum) {
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) SetType(type_ FlowsVaultConnectioSetupTypeAPIKeyEnum) {
 	f.Type = type_
-	f.require(flowsVaultConnectioSetupMailjetApiKeyFieldType)
+	f.require(flowsVaultConnectioSetupMailjetAPIKeyFieldType)
 }
 
-// SetApiKey sets the ApiKey field and marks it as non-optional;
+// SetAPIKey sets the APIKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupMailjetApiKey) SetApiKey(apiKey string) {
-	f.ApiKey = apiKey
-	f.require(flowsVaultConnectioSetupMailjetApiKeyFieldApiKey)
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) SetAPIKey(apiKey string) {
+	f.APIKey = apiKey
+	f.require(flowsVaultConnectioSetupMailjetAPIKeyFieldAPIKey)
 }
 
 // SetSecretKey sets the SecretKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupMailjetApiKey) SetSecretKey(secretKey string) {
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) SetSecretKey(secretKey string) {
 	f.SecretKey = secretKey
-	f.require(flowsVaultConnectioSetupMailjetApiKeyFieldSecretKey)
+	f.require(flowsVaultConnectioSetupMailjetAPIKeyFieldSecretKey)
 }
 
-func (f *FlowsVaultConnectioSetupMailjetApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler FlowsVaultConnectioSetupMailjetApiKey
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupMailjetAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*f = FlowsVaultConnectioSetupMailjetApiKey(value)
+	*f = FlowsVaultConnectioSetupMailjetAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
@@ -22150,8 +22150,8 @@ func (f *FlowsVaultConnectioSetupMailjetApiKey) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (f *FlowsVaultConnectioSetupMailjetApiKey) MarshalJSON() ([]byte, error) {
-	type embed FlowsVaultConnectioSetupMailjetApiKey
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) MarshalJSON() ([]byte, error) {
+	type embed FlowsVaultConnectioSetupMailjetAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -22161,7 +22161,7 @@ func (f *FlowsVaultConnectioSetupMailjetApiKey) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (f *FlowsVaultConnectioSetupMailjetApiKey) String() string {
+func (f *FlowsVaultConnectioSetupMailjetAPIKey) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -22175,7 +22175,7 @@ func (f *FlowsVaultConnectioSetupMailjetApiKey) String() string {
 
 var (
 	flowsVaultConnectioSetupOauthAppFieldType         = big.NewInt(1 << 0)
-	flowsVaultConnectioSetupOauthAppFieldClientId     = big.NewInt(1 << 1)
+	flowsVaultConnectioSetupOauthAppFieldClientID     = big.NewInt(1 << 1)
 	flowsVaultConnectioSetupOauthAppFieldClientSecret = big.NewInt(1 << 2)
 	flowsVaultConnectioSetupOauthAppFieldDomain       = big.NewInt(1 << 3)
 	flowsVaultConnectioSetupOauthAppFieldAudience     = big.NewInt(1 << 4)
@@ -22183,7 +22183,7 @@ var (
 
 type FlowsVaultConnectioSetupOauthApp struct {
 	Type         FlowsVaultConnectioSetupTypeOauthAppEnum `json:"type" url:"type"`
-	ClientId     string                                   `json:"client_id" url:"client_id"`
+	ClientID     string                                   `json:"client_id" url:"client_id"`
 	ClientSecret string                                   `json:"client_secret" url:"client_secret"`
 	Domain       string                                   `json:"domain" url:"domain"`
 	Audience     *string                                  `json:"audience,omitempty" url:"audience,omitempty"`
@@ -22195,11 +22195,11 @@ type FlowsVaultConnectioSetupOauthApp struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *FlowsVaultConnectioSetupOauthApp) GetClientId() string {
+func (f *FlowsVaultConnectioSetupOauthApp) GetClientID() string {
 	if f == nil {
 		return ""
 	}
-	return f.ClientId
+	return f.ClientID
 }
 
 func (f *FlowsVaultConnectioSetupOauthApp) GetClientSecret() string {
@@ -22241,11 +22241,11 @@ func (f *FlowsVaultConnectioSetupOauthApp) SetType(type_ FlowsVaultConnectioSetu
 	f.require(flowsVaultConnectioSetupOauthAppFieldType)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupOauthApp) SetClientId(clientId string) {
-	f.ClientId = clientId
-	f.require(flowsVaultConnectioSetupOauthAppFieldClientId)
+func (f *FlowsVaultConnectioSetupOauthApp) SetClientID(clientID string) {
+	f.ClientID = clientID
+	f.require(flowsVaultConnectioSetupOauthAppFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;
@@ -22401,12 +22401,12 @@ func (f *FlowsVaultConnectioSetupOauthCode) String() string {
 }
 
 var (
-	flowsVaultConnectioSetupSecretApiKeyFieldType      = big.NewInt(1 << 0)
-	flowsVaultConnectioSetupSecretApiKeyFieldSecretKey = big.NewInt(1 << 1)
+	flowsVaultConnectioSetupSecretAPIKeyFieldType      = big.NewInt(1 << 0)
+	flowsVaultConnectioSetupSecretAPIKeyFieldSecretKey = big.NewInt(1 << 1)
 )
 
-type FlowsVaultConnectioSetupSecretApiKey struct {
-	Type      FlowsVaultConnectioSetupTypeApiKeyEnum `json:"type" url:"type"`
+type FlowsVaultConnectioSetupSecretAPIKey struct {
+	Type      FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
 	SecretKey string                                 `json:"secret_key" url:"secret_key"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -22416,18 +22416,18 @@ type FlowsVaultConnectioSetupSecretApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *FlowsVaultConnectioSetupSecretApiKey) GetSecretKey() string {
+func (f *FlowsVaultConnectioSetupSecretAPIKey) GetSecretKey() string {
 	if f == nil {
 		return ""
 	}
 	return f.SecretKey
 }
 
-func (f *FlowsVaultConnectioSetupSecretApiKey) GetExtraProperties() map[string]interface{} {
+func (f *FlowsVaultConnectioSetupSecretAPIKey) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
-func (f *FlowsVaultConnectioSetupSecretApiKey) require(field *big.Int) {
+func (f *FlowsVaultConnectioSetupSecretAPIKey) require(field *big.Int) {
 	if f.explicitFields == nil {
 		f.explicitFields = big.NewInt(0)
 	}
@@ -22436,25 +22436,25 @@ func (f *FlowsVaultConnectioSetupSecretApiKey) require(field *big.Int) {
 
 // SetType sets the Type field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupSecretApiKey) SetType(type_ FlowsVaultConnectioSetupTypeApiKeyEnum) {
+func (f *FlowsVaultConnectioSetupSecretAPIKey) SetType(type_ FlowsVaultConnectioSetupTypeAPIKeyEnum) {
 	f.Type = type_
-	f.require(flowsVaultConnectioSetupSecretApiKeyFieldType)
+	f.require(flowsVaultConnectioSetupSecretAPIKeyFieldType)
 }
 
 // SetSecretKey sets the SecretKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupSecretApiKey) SetSecretKey(secretKey string) {
+func (f *FlowsVaultConnectioSetupSecretAPIKey) SetSecretKey(secretKey string) {
 	f.SecretKey = secretKey
-	f.require(flowsVaultConnectioSetupSecretApiKeyFieldSecretKey)
+	f.require(flowsVaultConnectioSetupSecretAPIKeyFieldSecretKey)
 }
 
-func (f *FlowsVaultConnectioSetupSecretApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler FlowsVaultConnectioSetupSecretApiKey
+func (f *FlowsVaultConnectioSetupSecretAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupSecretAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*f = FlowsVaultConnectioSetupSecretApiKey(value)
+	*f = FlowsVaultConnectioSetupSecretAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
@@ -22464,8 +22464,8 @@ func (f *FlowsVaultConnectioSetupSecretApiKey) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (f *FlowsVaultConnectioSetupSecretApiKey) MarshalJSON() ([]byte, error) {
-	type embed FlowsVaultConnectioSetupSecretApiKey
+func (f *FlowsVaultConnectioSetupSecretAPIKey) MarshalJSON() ([]byte, error) {
+	type embed FlowsVaultConnectioSetupSecretAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -22475,7 +22475,7 @@ func (f *FlowsVaultConnectioSetupSecretApiKey) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (f *FlowsVaultConnectioSetupSecretApiKey) String() string {
+func (f *FlowsVaultConnectioSetupSecretAPIKey) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -22678,15 +22678,15 @@ func (f *FlowsVaultConnectioSetupToken) String() string {
 }
 
 var (
-	flowsVaultConnectioSetupTwilioApiKeyFieldType      = big.NewInt(1 << 0)
-	flowsVaultConnectioSetupTwilioApiKeyFieldAccountId = big.NewInt(1 << 1)
-	flowsVaultConnectioSetupTwilioApiKeyFieldApiKey    = big.NewInt(1 << 2)
+	flowsVaultConnectioSetupTwilioAPIKeyFieldType      = big.NewInt(1 << 0)
+	flowsVaultConnectioSetupTwilioAPIKeyFieldAccountID = big.NewInt(1 << 1)
+	flowsVaultConnectioSetupTwilioAPIKeyFieldAPIKey    = big.NewInt(1 << 2)
 )
 
-type FlowsVaultConnectioSetupTwilioApiKey struct {
-	Type      FlowsVaultConnectioSetupTypeApiKeyEnum `json:"type" url:"type"`
-	AccountId string                                 `json:"account_id" url:"account_id"`
-	ApiKey    string                                 `json:"api_key" url:"api_key"`
+type FlowsVaultConnectioSetupTwilioAPIKey struct {
+	Type      FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
+	AccountID string                                 `json:"account_id" url:"account_id"`
+	APIKey    string                                 `json:"api_key" url:"api_key"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -22695,25 +22695,25 @@ type FlowsVaultConnectioSetupTwilioApiKey struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *FlowsVaultConnectioSetupTwilioApiKey) GetAccountId() string {
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) GetAccountID() string {
 	if f == nil {
 		return ""
 	}
-	return f.AccountId
+	return f.AccountID
 }
 
-func (f *FlowsVaultConnectioSetupTwilioApiKey) GetApiKey() string {
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) GetAPIKey() string {
 	if f == nil {
 		return ""
 	}
-	return f.ApiKey
+	return f.APIKey
 }
 
-func (f *FlowsVaultConnectioSetupTwilioApiKey) GetExtraProperties() map[string]interface{} {
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
-func (f *FlowsVaultConnectioSetupTwilioApiKey) require(field *big.Int) {
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) require(field *big.Int) {
 	if f.explicitFields == nil {
 		f.explicitFields = big.NewInt(0)
 	}
@@ -22722,32 +22722,32 @@ func (f *FlowsVaultConnectioSetupTwilioApiKey) require(field *big.Int) {
 
 // SetType sets the Type field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupTwilioApiKey) SetType(type_ FlowsVaultConnectioSetupTypeApiKeyEnum) {
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) SetType(type_ FlowsVaultConnectioSetupTypeAPIKeyEnum) {
 	f.Type = type_
-	f.require(flowsVaultConnectioSetupTwilioApiKeyFieldType)
+	f.require(flowsVaultConnectioSetupTwilioAPIKeyFieldType)
 }
 
-// SetAccountId sets the AccountId field and marks it as non-optional;
+// SetAccountID sets the AccountID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupTwilioApiKey) SetAccountId(accountId string) {
-	f.AccountId = accountId
-	f.require(flowsVaultConnectioSetupTwilioApiKeyFieldAccountId)
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) SetAccountID(accountID string) {
+	f.AccountID = accountID
+	f.require(flowsVaultConnectioSetupTwilioAPIKeyFieldAccountID)
 }
 
-// SetApiKey sets the ApiKey field and marks it as non-optional;
+// SetAPIKey sets the APIKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupTwilioApiKey) SetApiKey(apiKey string) {
-	f.ApiKey = apiKey
-	f.require(flowsVaultConnectioSetupTwilioApiKeyFieldApiKey)
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) SetAPIKey(apiKey string) {
+	f.APIKey = apiKey
+	f.require(flowsVaultConnectioSetupTwilioAPIKeyFieldAPIKey)
 }
 
-func (f *FlowsVaultConnectioSetupTwilioApiKey) UnmarshalJSON(data []byte) error {
-	type unmarshaler FlowsVaultConnectioSetupTwilioApiKey
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler FlowsVaultConnectioSetupTwilioAPIKey
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*f = FlowsVaultConnectioSetupTwilioApiKey(value)
+	*f = FlowsVaultConnectioSetupTwilioAPIKey(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *f)
 	if err != nil {
 		return err
@@ -22757,8 +22757,8 @@ func (f *FlowsVaultConnectioSetupTwilioApiKey) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (f *FlowsVaultConnectioSetupTwilioApiKey) MarshalJSON() ([]byte, error) {
-	type embed FlowsVaultConnectioSetupTwilioApiKey
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) MarshalJSON() ([]byte, error) {
+	type embed FlowsVaultConnectioSetupTwilioAPIKey
 	var marshaler = struct {
 		embed
 	}{
@@ -22768,7 +22768,7 @@ func (f *FlowsVaultConnectioSetupTwilioApiKey) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (f *FlowsVaultConnectioSetupTwilioApiKey) String() string {
+func (f *FlowsVaultConnectioSetupTwilioAPIKey) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -22780,7 +22780,7 @@ func (f *FlowsVaultConnectioSetupTwilioApiKey) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowsVaultConnectioSetupTypeApiKeyEnum = string
+type FlowsVaultConnectioSetupTypeAPIKeyEnum = string
 
 type FlowsVaultConnectioSetupTypeBearerEnum = string
 
@@ -22800,12 +22800,12 @@ type FlowsVaultConnectioSetupTypeWebhookEnum = string
 
 var (
 	flowsVaultConnectioSetupWebhookFieldType = big.NewInt(1 << 0)
-	flowsVaultConnectioSetupWebhookFieldUrl  = big.NewInt(1 << 1)
+	flowsVaultConnectioSetupWebhookFieldURL  = big.NewInt(1 << 1)
 )
 
 type FlowsVaultConnectioSetupWebhook struct {
 	Type FlowsVaultConnectioSetupTypeWebhookEnum `json:"type" url:"type"`
-	Url  string                                  `json:"url" url:"url"`
+	URL  string                                  `json:"url" url:"url"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -22814,11 +22814,11 @@ type FlowsVaultConnectioSetupWebhook struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *FlowsVaultConnectioSetupWebhook) GetUrl() string {
+func (f *FlowsVaultConnectioSetupWebhook) GetURL() string {
 	if f == nil {
 		return ""
 	}
-	return f.Url
+	return f.URL
 }
 
 func (f *FlowsVaultConnectioSetupWebhook) GetExtraProperties() map[string]interface{} {
@@ -22839,11 +22839,11 @@ func (f *FlowsVaultConnectioSetupWebhook) SetType(type_ FlowsVaultConnectioSetup
 	f.require(flowsVaultConnectioSetupWebhookFieldType)
 }
 
-// SetUrl sets the Url field and marks it as non-optional;
+// SetURL sets the URL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupWebhook) SetUrl(url string) {
-	f.Url = url
-	f.require(flowsVaultConnectioSetupWebhookFieldUrl)
+func (f *FlowsVaultConnectioSetupWebhook) SetURL(url string) {
+	f.URL = url
+	f.require(flowsVaultConnectioSetupWebhookFieldURL)
 }
 
 func (f *FlowsVaultConnectioSetupWebhook) UnmarshalJSON(data []byte) error {
@@ -22886,71 +22886,71 @@ func (f *FlowsVaultConnectioSetupWebhook) String() string {
 }
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdActivecampaignEnum = string
+type FlowsVaultConnectionAppIDActivecampaignEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdAirtableEnum = string
+type FlowsVaultConnectionAppIDAirtableEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdAuth0Enum = string
+type FlowsVaultConnectionAppIDAuth0Enum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdBigqueryEnum = string
+type FlowsVaultConnectionAppIDBigqueryEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdClearbitEnum = string
+type FlowsVaultConnectionAppIDClearbitEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdDocusignEnum = string
+type FlowsVaultConnectionAppIDDocusignEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdGoogleSheetsEnum = string
+type FlowsVaultConnectionAppIDGoogleSheetsEnum = string
 
 // Flows Vault Connection app identifier.
 type FlowsVaultConnectionAppIdHttpEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdHubspotEnum = string
+type FlowsVaultConnectionAppIDHubspotEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdJwtEnum = string
+type FlowsVaultConnectionAppIDJwtEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdMailchimpEnum = string
+type FlowsVaultConnectionAppIDMailchimpEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdMailjetEnum = string
+type FlowsVaultConnectionAppIDMailjetEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdPipedriveEnum = string
+type FlowsVaultConnectionAppIDPipedriveEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdSalesforceEnum = string
+type FlowsVaultConnectionAppIDSalesforceEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdSendgridEnum = string
+type FlowsVaultConnectionAppIDSendgridEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdSlackEnum = string
+type FlowsVaultConnectionAppIDSlackEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdStripeEnum = string
+type FlowsVaultConnectionAppIDStripeEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdTelegramEnum = string
+type FlowsVaultConnectionAppIDTelegramEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdTwilioEnum = string
+type FlowsVaultConnectionAppIDTwilioEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdWhatsappEnum = string
+type FlowsVaultConnectionAppIDWhatsappEnum = string
 
 // Flows Vault Connection app identifier.
-type FlowsVaultConnectionAppIdZapierEnum = string
+type FlowsVaultConnectionAppIDZapierEnum = string
 
 var (
-	flowsVaultConnectionSummaryFieldId          = big.NewInt(1 << 0)
-	flowsVaultConnectionSummaryFieldAppId       = big.NewInt(1 << 1)
+	flowsVaultConnectionSummaryFieldID          = big.NewInt(1 << 0)
+	flowsVaultConnectionSummaryFieldAppID       = big.NewInt(1 << 1)
 	flowsVaultConnectionSummaryFieldName        = big.NewInt(1 << 2)
 	flowsVaultConnectionSummaryFieldAccountName = big.NewInt(1 << 3)
 	flowsVaultConnectionSummaryFieldReady       = big.NewInt(1 << 4)
@@ -22962,9 +22962,9 @@ var (
 
 type FlowsVaultConnectionSummary struct {
 	// Flows Vault Connection identifier.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// Flows Vault Connection app identifier.
-	AppId string `json:"app_id" url:"app_id"`
+	AppID string `json:"app_id" url:"app_id"`
 	// Flows Vault Connection name.
 	Name string `json:"name" url:"name"`
 	// Flows Vault Connection custom account name.
@@ -22986,18 +22986,18 @@ type FlowsVaultConnectionSummary struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *FlowsVaultConnectionSummary) GetId() string {
+func (f *FlowsVaultConnectionSummary) GetID() string {
 	if f == nil {
 		return ""
 	}
-	return f.Id
+	return f.ID
 }
 
-func (f *FlowsVaultConnectionSummary) GetAppId() string {
+func (f *FlowsVaultConnectionSummary) GetAppID() string {
 	if f == nil {
 		return ""
 	}
-	return f.AppId
+	return f.AppID
 }
 
 func (f *FlowsVaultConnectionSummary) GetName() string {
@@ -23060,18 +23060,18 @@ func (f *FlowsVaultConnectionSummary) require(field *big.Int) {
 	f.explicitFields.Or(f.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectionSummary) SetId(id string) {
-	f.Id = id
-	f.require(flowsVaultConnectionSummaryFieldId)
+func (f *FlowsVaultConnectionSummary) SetID(id string) {
+	f.ID = id
+	f.require(flowsVaultConnectionSummaryFieldID)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectionSummary) SetAppId(appId string) {
-	f.AppId = appId
-	f.require(flowsVaultConnectionSummaryFieldAppId)
+func (f *FlowsVaultConnectionSummary) SetAppID(appID string) {
+	f.AppID = appID
+	f.require(flowsVaultConnectionSummaryFieldAppID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -23180,8 +23180,8 @@ func (f *FlowsVaultConnectionSummary) String() string {
 
 // The result of a specific execution of a trigger.
 var (
-	getActionExecutionResponseContentFieldId        = big.NewInt(1 << 0)
-	getActionExecutionResponseContentFieldTriggerId = big.NewInt(1 << 1)
+	getActionExecutionResponseContentFieldID        = big.NewInt(1 << 0)
+	getActionExecutionResponseContentFieldTriggerID = big.NewInt(1 << 1)
 	getActionExecutionResponseContentFieldStatus    = big.NewInt(1 << 2)
 	getActionExecutionResponseContentFieldResults   = big.NewInt(1 << 3)
 	getActionExecutionResponseContentFieldCreatedAt = big.NewInt(1 << 4)
@@ -23190,8 +23190,8 @@ var (
 
 type GetActionExecutionResponseContent struct {
 	// ID identifies this specific execution simulation. These IDs would resemble real executions in production.
-	Id        *string                    `json:"id,omitempty" url:"id,omitempty"`
-	TriggerId *ActionTriggerTypeEnum     `json:"trigger_id,omitempty" url:"trigger_id,omitempty"`
+	ID        *string                    `json:"id,omitempty" url:"id,omitempty"`
+	TriggerID *ActionTriggerTypeEnum     `json:"trigger_id,omitempty" url:"trigger_id,omitempty"`
 	Status    *ActionExecutionStatusEnum `json:"status,omitempty" url:"status,omitempty"`
 	Results   []*ActionExecutionResult   `json:"results,omitempty" url:"results,omitempty"`
 	// The time that the execution was started.
@@ -23206,18 +23206,18 @@ type GetActionExecutionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetActionExecutionResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetActionExecutionResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
-func (g *GetActionExecutionResponseContent) GetTriggerId() ActionTriggerTypeEnum {
-	if g == nil || g.TriggerId == nil {
+func (g *GetActionExecutionResponseContent) GetTriggerID() ActionTriggerTypeEnum {
+	if g == nil || g.TriggerID == nil {
 		return ""
 	}
-	return *g.TriggerId
+	return *g.TriggerID
 }
 
 func (g *GetActionExecutionResponseContent) GetStatus() ActionExecutionStatusEnum {
@@ -23259,18 +23259,18 @@ func (g *GetActionExecutionResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetActionExecutionResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getActionExecutionResponseContentFieldId)
+func (g *GetActionExecutionResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getActionExecutionResponseContentFieldID)
 }
 
-// SetTriggerId sets the TriggerId field and marks it as non-optional;
+// SetTriggerID sets the TriggerID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetActionExecutionResponseContent) SetTriggerId(triggerId *ActionTriggerTypeEnum) {
-	g.TriggerId = triggerId
-	g.require(getActionExecutionResponseContentFieldTriggerId)
+func (g *GetActionExecutionResponseContent) SetTriggerID(triggerID *ActionTriggerTypeEnum) {
+	g.TriggerID = triggerID
+	g.require(getActionExecutionResponseContentFieldTriggerID)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -23353,8 +23353,8 @@ func (g *GetActionExecutionResponseContent) String() string {
 }
 
 var (
-	getActionVersionResponseContentFieldId                = big.NewInt(1 << 0)
-	getActionVersionResponseContentFieldActionId          = big.NewInt(1 << 1)
+	getActionVersionResponseContentFieldID                = big.NewInt(1 << 0)
+	getActionVersionResponseContentFieldActionID          = big.NewInt(1 << 1)
 	getActionVersionResponseContentFieldCode              = big.NewInt(1 << 2)
 	getActionVersionResponseContentFieldDependencies      = big.NewInt(1 << 3)
 	getActionVersionResponseContentFieldDeployed          = big.NewInt(1 << 4)
@@ -23372,9 +23372,9 @@ var (
 
 type GetActionVersionResponseContent struct {
 	// The unique id of an action version.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The id of the action to which this version belongs.
-	ActionId *string `json:"action_id,omitempty" url:"action_id,omitempty"`
+	ActionID *string `json:"action_id,omitempty" url:"action_id,omitempty"`
 	// The source code of this specific version of the action.
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this specific version depends on.
@@ -23407,18 +23407,18 @@ type GetActionVersionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetActionVersionResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetActionVersionResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
-func (g *GetActionVersionResponseContent) GetActionId() string {
-	if g == nil || g.ActionId == nil {
+func (g *GetActionVersionResponseContent) GetActionID() string {
+	if g == nil || g.ActionID == nil {
 		return ""
 	}
-	return *g.ActionId
+	return *g.ActionID
 }
 
 func (g *GetActionVersionResponseContent) GetCode() string {
@@ -23523,18 +23523,18 @@ func (g *GetActionVersionResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetActionVersionResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getActionVersionResponseContentFieldId)
+func (g *GetActionVersionResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getActionVersionResponseContentFieldID)
 }
 
-// SetActionId sets the ActionId field and marks it as non-optional;
+// SetActionID sets the ActionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetActionVersionResponseContent) SetActionId(actionId *string) {
-	g.ActionId = actionId
-	g.require(getActionVersionResponseContentFieldActionId)
+func (g *GetActionVersionResponseContent) SetActionID(actionID *string) {
+	g.ActionID = actionID
+	g.require(getActionVersionResponseContentFieldActionID)
 }
 
 // SetCode sets the Code field and marks it as non-optional;
@@ -23907,7 +23907,7 @@ var (
 	getBrandingDefaultThemeResponseContentFieldDisplayName    = big.NewInt(1 << 2)
 	getBrandingDefaultThemeResponseContentFieldFonts          = big.NewInt(1 << 3)
 	getBrandingDefaultThemeResponseContentFieldPageBackground = big.NewInt(1 << 4)
-	getBrandingDefaultThemeResponseContentFieldThemeId        = big.NewInt(1 << 5)
+	getBrandingDefaultThemeResponseContentFieldThemeID        = big.NewInt(1 << 5)
 	getBrandingDefaultThemeResponseContentFieldWidget         = big.NewInt(1 << 6)
 )
 
@@ -23919,7 +23919,7 @@ type GetBrandingDefaultThemeResponseContent struct {
 	Fonts          *BrandingThemeFonts          `json:"fonts" url:"fonts"`
 	PageBackground *BrandingThemePageBackground `json:"page_background" url:"page_background"`
 	// Theme Id
-	ThemeId string               `json:"themeId" url:"themeId"`
+	ThemeID string               `json:"themeId" url:"themeId"`
 	Widget  *BrandingThemeWidget `json:"widget" url:"widget"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -23964,11 +23964,11 @@ func (g *GetBrandingDefaultThemeResponseContent) GetPageBackground() *BrandingTh
 	return g.PageBackground
 }
 
-func (g *GetBrandingDefaultThemeResponseContent) GetThemeId() string {
+func (g *GetBrandingDefaultThemeResponseContent) GetThemeID() string {
 	if g == nil {
 		return ""
 	}
-	return g.ThemeId
+	return g.ThemeID
 }
 
 func (g *GetBrandingDefaultThemeResponseContent) GetWidget() *BrandingThemeWidget {
@@ -24024,11 +24024,11 @@ func (g *GetBrandingDefaultThemeResponseContent) SetPageBackground(pageBackgroun
 	g.require(getBrandingDefaultThemeResponseContentFieldPageBackground)
 }
 
-// SetThemeId sets the ThemeId field and marks it as non-optional;
+// SetThemeID sets the ThemeID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetBrandingDefaultThemeResponseContent) SetThemeId(themeId string) {
-	g.ThemeId = themeId
-	g.require(getBrandingDefaultThemeResponseContentFieldThemeId)
+func (g *GetBrandingDefaultThemeResponseContent) SetThemeID(themeID string) {
+	g.ThemeID = themeID
+	g.require(getBrandingDefaultThemeResponseContentFieldThemeID)
 }
 
 // SetWidget sets the Widget field and marks it as non-optional;
@@ -24079,7 +24079,7 @@ func (g *GetBrandingDefaultThemeResponseContent) String() string {
 
 // Phone provider configuration schema
 var (
-	getBrandingPhoneProviderResponseContentFieldId            = big.NewInt(1 << 0)
+	getBrandingPhoneProviderResponseContentFieldID            = big.NewInt(1 << 0)
 	getBrandingPhoneProviderResponseContentFieldTenant        = big.NewInt(1 << 1)
 	getBrandingPhoneProviderResponseContentFieldName          = big.NewInt(1 << 2)
 	getBrandingPhoneProviderResponseContentFieldChannel       = big.NewInt(1 << 3)
@@ -24090,7 +24090,7 @@ var (
 )
 
 type GetBrandingPhoneProviderResponseContent struct {
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the tenant
 	Tenant  *string                   `json:"tenant,omitempty" url:"tenant,omitempty"`
 	Name    PhoneProviderNameEnum     `json:"name" url:"name"`
@@ -24110,11 +24110,11 @@ type GetBrandingPhoneProviderResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetBrandingPhoneProviderResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetBrandingPhoneProviderResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetBrandingPhoneProviderResponseContent) GetTenant() string {
@@ -24170,11 +24170,11 @@ func (g *GetBrandingPhoneProviderResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetBrandingPhoneProviderResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getBrandingPhoneProviderResponseContentFieldId)
+func (g *GetBrandingPhoneProviderResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getBrandingPhoneProviderResponseContentFieldID)
 }
 
 // SetTenant sets the Tenant field and marks it as non-optional;
@@ -24283,7 +24283,7 @@ var (
 	getBrandingThemeResponseContentFieldDisplayName    = big.NewInt(1 << 2)
 	getBrandingThemeResponseContentFieldFonts          = big.NewInt(1 << 3)
 	getBrandingThemeResponseContentFieldPageBackground = big.NewInt(1 << 4)
-	getBrandingThemeResponseContentFieldThemeId        = big.NewInt(1 << 5)
+	getBrandingThemeResponseContentFieldThemeID        = big.NewInt(1 << 5)
 	getBrandingThemeResponseContentFieldWidget         = big.NewInt(1 << 6)
 )
 
@@ -24295,7 +24295,7 @@ type GetBrandingThemeResponseContent struct {
 	Fonts          *BrandingThemeFonts          `json:"fonts" url:"fonts"`
 	PageBackground *BrandingThemePageBackground `json:"page_background" url:"page_background"`
 	// Theme Id
-	ThemeId string               `json:"themeId" url:"themeId"`
+	ThemeID string               `json:"themeId" url:"themeId"`
 	Widget  *BrandingThemeWidget `json:"widget" url:"widget"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -24340,11 +24340,11 @@ func (g *GetBrandingThemeResponseContent) GetPageBackground() *BrandingThemePage
 	return g.PageBackground
 }
 
-func (g *GetBrandingThemeResponseContent) GetThemeId() string {
+func (g *GetBrandingThemeResponseContent) GetThemeID() string {
 	if g == nil {
 		return ""
 	}
-	return g.ThemeId
+	return g.ThemeID
 }
 
 func (g *GetBrandingThemeResponseContent) GetWidget() *BrandingThemeWidget {
@@ -24400,11 +24400,11 @@ func (g *GetBrandingThemeResponseContent) SetPageBackground(pageBackground *Bran
 	g.require(getBrandingThemeResponseContentFieldPageBackground)
 }
 
-// SetThemeId sets the ThemeId field and marks it as non-optional;
+// SetThemeID sets the ThemeID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetBrandingThemeResponseContent) SetThemeId(themeId string) {
-	g.ThemeId = themeId
-	g.require(getBrandingThemeResponseContentFieldThemeId)
+func (g *GetBrandingThemeResponseContent) SetThemeID(themeID string) {
+	g.ThemeID = themeID
+	g.require(getBrandingThemeResponseContentFieldThemeID)
 }
 
 // SetWidget sets the Widget field and marks it as non-optional;
@@ -24759,14 +24759,14 @@ func (g *GetBruteForceSettingsResponseContent) String() string {
 type GetBruteForceSettingsResponseContentMode string
 
 const (
-	GetBruteForceSettingsResponseContentModeCountPerIdentifierAndIp GetBruteForceSettingsResponseContentMode = "count_per_identifier_and_ip"
+	GetBruteForceSettingsResponseContentModeCountPerIdentifierAndIP GetBruteForceSettingsResponseContentMode = "count_per_identifier_and_ip"
 	GetBruteForceSettingsResponseContentModeCountPerIdentifier      GetBruteForceSettingsResponseContentMode = "count_per_identifier"
 )
 
 func NewGetBruteForceSettingsResponseContentModeFromString(s string) (GetBruteForceSettingsResponseContentMode, error) {
 	switch s {
 	case "count_per_identifier_and_ip":
-		return GetBruteForceSettingsResponseContentModeCountPerIdentifierAndIp, nil
+		return GetBruteForceSettingsResponseContentModeCountPerIdentifierAndIP, nil
 	case "count_per_identifier":
 		return GetBruteForceSettingsResponseContentModeCountPerIdentifier, nil
 	}
@@ -24801,7 +24801,7 @@ func (g GetBruteForceSettingsResponseContentShieldsItem) Ptr() *GetBruteForceSet
 }
 
 var (
-	getClientCredentialResponseContentFieldId               = big.NewInt(1 << 0)
+	getClientCredentialResponseContentFieldID               = big.NewInt(1 << 0)
 	getClientCredentialResponseContentFieldName             = big.NewInt(1 << 1)
 	getClientCredentialResponseContentFieldKid              = big.NewInt(1 << 2)
 	getClientCredentialResponseContentFieldAlg              = big.NewInt(1 << 3)
@@ -24815,7 +24815,7 @@ var (
 
 type GetClientCredentialResponseContent struct {
 	// ID of the credential. Generated on creation.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name given to the credential by the user.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The key identifier of the credential, generated on creation.
@@ -24841,11 +24841,11 @@ type GetClientCredentialResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (g *GetClientCredentialResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetClientCredentialResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetClientCredentialResponseContent) GetName() string {
@@ -24922,11 +24922,11 @@ func (g *GetClientCredentialResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetClientCredentialResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getClientCredentialResponseContentFieldId)
+func (g *GetClientCredentialResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getClientCredentialResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -25570,8 +25570,8 @@ func (g *GetEncryptionKeyResponseContent) String() string {
 
 // Metadata about a specific attempt to deliver an event
 var (
-	getEventStreamDeliveryHistoryResponseContentFieldId            = big.NewInt(1 << 0)
-	getEventStreamDeliveryHistoryResponseContentFieldEventStreamId = big.NewInt(1 << 1)
+	getEventStreamDeliveryHistoryResponseContentFieldID            = big.NewInt(1 << 0)
+	getEventStreamDeliveryHistoryResponseContentFieldEventStreamID = big.NewInt(1 << 1)
 	getEventStreamDeliveryHistoryResponseContentFieldStatus        = big.NewInt(1 << 2)
 	getEventStreamDeliveryHistoryResponseContentFieldEventType     = big.NewInt(1 << 3)
 	getEventStreamDeliveryHistoryResponseContentFieldAttempts      = big.NewInt(1 << 4)
@@ -25580,9 +25580,9 @@ var (
 
 type GetEventStreamDeliveryHistoryResponseContent struct {
 	// Unique identifier for the delivery
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// Unique identifier for the event stream.
-	EventStreamId string                           `json:"event_stream_id" url:"event_stream_id"`
+	EventStreamID string                           `json:"event_stream_id" url:"event_stream_id"`
 	Status        EventStreamDeliveryStatusEnum    `json:"status" url:"status"`
 	EventType     EventStreamDeliveryEventTypeEnum `json:"event_type" url:"event_type"`
 	// Results of delivery attempts
@@ -25596,18 +25596,18 @@ type GetEventStreamDeliveryHistoryResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetEventStreamDeliveryHistoryResponseContent) GetId() string {
+func (g *GetEventStreamDeliveryHistoryResponseContent) GetID() string {
 	if g == nil {
 		return ""
 	}
-	return g.Id
+	return g.ID
 }
 
-func (g *GetEventStreamDeliveryHistoryResponseContent) GetEventStreamId() string {
+func (g *GetEventStreamDeliveryHistoryResponseContent) GetEventStreamID() string {
 	if g == nil {
 		return ""
 	}
-	return g.EventStreamId
+	return g.EventStreamID
 }
 
 func (g *GetEventStreamDeliveryHistoryResponseContent) GetEventType() EventStreamDeliveryEventTypeEnum {
@@ -25642,18 +25642,18 @@ func (g *GetEventStreamDeliveryHistoryResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetEventStreamDeliveryHistoryResponseContent) SetId(id string) {
-	g.Id = id
-	g.require(getEventStreamDeliveryHistoryResponseContentFieldId)
+func (g *GetEventStreamDeliveryHistoryResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getEventStreamDeliveryHistoryResponseContentFieldID)
 }
 
-// SetEventStreamId sets the EventStreamId field and marks it as non-optional;
+// SetEventStreamID sets the EventStreamID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetEventStreamDeliveryHistoryResponseContent) SetEventStreamId(eventStreamId string) {
-	g.EventStreamId = eventStreamId
-	g.require(getEventStreamDeliveryHistoryResponseContentFieldEventStreamId)
+func (g *GetEventStreamDeliveryHistoryResponseContent) SetEventStreamID(eventStreamID string) {
+	g.EventStreamID = eventStreamID
+	g.require(getEventStreamDeliveryHistoryResponseContentFieldEventStreamID)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -25724,9 +25724,9 @@ func (g *GetEventStreamDeliveryHistoryResponseContent) String() string {
 }
 
 var (
-	getFlowExecutionResponseContentFieldId        = big.NewInt(1 << 0)
-	getFlowExecutionResponseContentFieldTraceId   = big.NewInt(1 << 1)
-	getFlowExecutionResponseContentFieldJourneyId = big.NewInt(1 << 2)
+	getFlowExecutionResponseContentFieldID        = big.NewInt(1 << 0)
+	getFlowExecutionResponseContentFieldTraceID   = big.NewInt(1 << 1)
+	getFlowExecutionResponseContentFieldJourneyID = big.NewInt(1 << 2)
 	getFlowExecutionResponseContentFieldStatus    = big.NewInt(1 << 3)
 	getFlowExecutionResponseContentFieldDebug     = big.NewInt(1 << 4)
 	getFlowExecutionResponseContentFieldCreatedAt = big.NewInt(1 << 5)
@@ -25737,11 +25737,11 @@ var (
 
 type GetFlowExecutionResponseContent struct {
 	// Flow execution identifier
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// Trace id
-	TraceId string `json:"trace_id" url:"trace_id"`
+	TraceID string `json:"trace_id" url:"trace_id"`
 	// Journey id
-	JourneyId *string `json:"journey_id,omitempty" url:"journey_id,omitempty"`
+	JourneyID *string `json:"journey_id,omitempty" url:"journey_id,omitempty"`
 	// Execution status
 	Status string              `json:"status" url:"status"`
 	Debug  *FlowExecutionDebug `json:"debug,omitempty" url:"debug,omitempty"`
@@ -25761,25 +25761,25 @@ type GetFlowExecutionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetFlowExecutionResponseContent) GetId() string {
+func (g *GetFlowExecutionResponseContent) GetID() string {
 	if g == nil {
 		return ""
 	}
-	return g.Id
+	return g.ID
 }
 
-func (g *GetFlowExecutionResponseContent) GetTraceId() string {
+func (g *GetFlowExecutionResponseContent) GetTraceID() string {
 	if g == nil {
 		return ""
 	}
-	return g.TraceId
+	return g.TraceID
 }
 
-func (g *GetFlowExecutionResponseContent) GetJourneyId() string {
-	if g == nil || g.JourneyId == nil {
+func (g *GetFlowExecutionResponseContent) GetJourneyID() string {
+	if g == nil || g.JourneyID == nil {
 		return ""
 	}
-	return *g.JourneyId
+	return *g.JourneyID
 }
 
 func (g *GetFlowExecutionResponseContent) GetStatus() string {
@@ -25835,25 +25835,25 @@ func (g *GetFlowExecutionResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetFlowExecutionResponseContent) SetId(id string) {
-	g.Id = id
-	g.require(getFlowExecutionResponseContentFieldId)
+func (g *GetFlowExecutionResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getFlowExecutionResponseContentFieldID)
 }
 
-// SetTraceId sets the TraceId field and marks it as non-optional;
+// SetTraceID sets the TraceID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetFlowExecutionResponseContent) SetTraceId(traceId string) {
-	g.TraceId = traceId
-	g.require(getFlowExecutionResponseContentFieldTraceId)
+func (g *GetFlowExecutionResponseContent) SetTraceID(traceID string) {
+	g.TraceID = traceID
+	g.require(getFlowExecutionResponseContentFieldTraceID)
 }
 
-// SetJourneyId sets the JourneyId field and marks it as non-optional;
+// SetJourneyID sets the JourneyID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetFlowExecutionResponseContent) SetJourneyId(journeyId *string) {
-	g.JourneyId = journeyId
-	g.require(getFlowExecutionResponseContentFieldJourneyId)
+func (g *GetFlowExecutionResponseContent) SetJourneyID(journeyID *string) {
+	g.JourneyID = journeyID
+	g.require(getFlowExecutionResponseContentFieldJourneyID)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -25958,8 +25958,8 @@ func (g *GetFlowExecutionResponseContent) String() string {
 }
 
 var (
-	getFlowsVaultConnectionResponseContentFieldId          = big.NewInt(1 << 0)
-	getFlowsVaultConnectionResponseContentFieldAppId       = big.NewInt(1 << 1)
+	getFlowsVaultConnectionResponseContentFieldID          = big.NewInt(1 << 0)
+	getFlowsVaultConnectionResponseContentFieldAppID       = big.NewInt(1 << 1)
 	getFlowsVaultConnectionResponseContentFieldEnvironment = big.NewInt(1 << 2)
 	getFlowsVaultConnectionResponseContentFieldName        = big.NewInt(1 << 3)
 	getFlowsVaultConnectionResponseContentFieldAccountName = big.NewInt(1 << 4)
@@ -25972,9 +25972,9 @@ var (
 
 type GetFlowsVaultConnectionResponseContent struct {
 	// Flows Vault Connection identifier.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// Flows Vault Connection app identifier.
-	AppId string `json:"app_id" url:"app_id"`
+	AppID string `json:"app_id" url:"app_id"`
 	// Flows Vault Connection environment.
 	Environment *string `json:"environment,omitempty" url:"environment,omitempty"`
 	// Flows Vault Connection name.
@@ -25998,18 +25998,18 @@ type GetFlowsVaultConnectionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetFlowsVaultConnectionResponseContent) GetId() string {
+func (g *GetFlowsVaultConnectionResponseContent) GetID() string {
 	if g == nil {
 		return ""
 	}
-	return g.Id
+	return g.ID
 }
 
-func (g *GetFlowsVaultConnectionResponseContent) GetAppId() string {
+func (g *GetFlowsVaultConnectionResponseContent) GetAppID() string {
 	if g == nil {
 		return ""
 	}
-	return g.AppId
+	return g.AppID
 }
 
 func (g *GetFlowsVaultConnectionResponseContent) GetEnvironment() string {
@@ -26079,18 +26079,18 @@ func (g *GetFlowsVaultConnectionResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetFlowsVaultConnectionResponseContent) SetId(id string) {
-	g.Id = id
-	g.require(getFlowsVaultConnectionResponseContentFieldId)
+func (g *GetFlowsVaultConnectionResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getFlowsVaultConnectionResponseContentFieldID)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetFlowsVaultConnectionResponseContent) SetAppId(appId string) {
-	g.AppId = appId
-	g.require(getFlowsVaultConnectionResponseContentFieldAppId)
+func (g *GetFlowsVaultConnectionResponseContent) SetAppID(appID string) {
+	g.AppID = appID
+	g.require(getFlowsVaultConnectionResponseContentFieldAppID)
 }
 
 // SetEnvironment sets the Environment field and marks it as non-optional;
@@ -26205,7 +26205,7 @@ func (g *GetFlowsVaultConnectionResponseContent) String() string {
 }
 
 var (
-	getGuardianEnrollmentResponseContentFieldId          = big.NewInt(1 << 0)
+	getGuardianEnrollmentResponseContentFieldID          = big.NewInt(1 << 0)
 	getGuardianEnrollmentResponseContentFieldStatus      = big.NewInt(1 << 1)
 	getGuardianEnrollmentResponseContentFieldName        = big.NewInt(1 << 2)
 	getGuardianEnrollmentResponseContentFieldIdentifier  = big.NewInt(1 << 3)
@@ -26216,7 +26216,7 @@ var (
 
 type GetGuardianEnrollmentResponseContent struct {
 	// ID for this enrollment.
-	Id     string                    `json:"id" url:"id"`
+	ID     string                    `json:"id" url:"id"`
 	Status *GuardianEnrollmentStatus `json:"status,omitempty" url:"status,omitempty"`
 	// Device name (only for push notification).
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -26234,11 +26234,11 @@ type GetGuardianEnrollmentResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetGuardianEnrollmentResponseContent) GetId() string {
+func (g *GetGuardianEnrollmentResponseContent) GetID() string {
 	if g == nil {
 		return ""
 	}
-	return g.Id
+	return g.ID
 }
 
 func (g *GetGuardianEnrollmentResponseContent) GetStatus() GuardianEnrollmentStatus {
@@ -26294,11 +26294,11 @@ func (g *GetGuardianEnrollmentResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetGuardianEnrollmentResponseContent) SetId(id string) {
-	g.Id = id
-	g.require(getGuardianEnrollmentResponseContentFieldId)
+func (g *GetGuardianEnrollmentResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getGuardianEnrollmentResponseContentFieldID)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -26764,13 +26764,13 @@ func (g *GetGuardianFactorSmsTemplatesResponseContent) String() string {
 }
 
 var (
-	getGuardianFactorsProviderApnsResponseContentFieldBundleId = big.NewInt(1 << 0)
+	getGuardianFactorsProviderApnsResponseContentFieldBundleID = big.NewInt(1 << 0)
 	getGuardianFactorsProviderApnsResponseContentFieldSandbox  = big.NewInt(1 << 1)
 	getGuardianFactorsProviderApnsResponseContentFieldEnabled  = big.NewInt(1 << 2)
 )
 
 type GetGuardianFactorsProviderApnsResponseContent struct {
-	BundleId *string `json:"bundle_id,omitempty" url:"bundle_id,omitempty"`
+	BundleID *string `json:"bundle_id,omitempty" url:"bundle_id,omitempty"`
 	Sandbox  *bool   `json:"sandbox,omitempty" url:"sandbox,omitempty"`
 	Enabled  *bool   `json:"enabled,omitempty" url:"enabled,omitempty"`
 
@@ -26781,11 +26781,11 @@ type GetGuardianFactorsProviderApnsResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetGuardianFactorsProviderApnsResponseContent) GetBundleId() string {
-	if g == nil || g.BundleId == nil {
+func (g *GetGuardianFactorsProviderApnsResponseContent) GetBundleID() string {
+	if g == nil || g.BundleID == nil {
 		return ""
 	}
-	return *g.BundleId
+	return *g.BundleID
 }
 
 func (g *GetGuardianFactorsProviderApnsResponseContent) GetSandbox() bool {
@@ -26813,11 +26813,11 @@ func (g *GetGuardianFactorsProviderApnsResponseContent) require(field *big.Int) 
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetBundleId sets the BundleId field and marks it as non-optional;
+// SetBundleID sets the BundleID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetGuardianFactorsProviderApnsResponseContent) SetBundleId(bundleId *string) {
-	g.BundleId = bundleId
-	g.require(getGuardianFactorsProviderApnsResponseContentFieldBundleId)
+func (g *GetGuardianFactorsProviderApnsResponseContent) SetBundleID(bundleID *string) {
+	g.BundleID = bundleID
+	g.require(getGuardianFactorsProviderApnsResponseContentFieldBundleID)
 }
 
 // SetSandbox sets the Sandbox field and marks it as non-optional;
@@ -27368,7 +27368,7 @@ func (g *GetGuardianFactorsProviderSmsTwilioResponseContent) String() string {
 }
 
 var (
-	getGuardianFactorsProviderSnsResponseContentFieldAwsAccessKeyId                = big.NewInt(1 << 0)
+	getGuardianFactorsProviderSnsResponseContentFieldAwsAccessKeyID                = big.NewInt(1 << 0)
 	getGuardianFactorsProviderSnsResponseContentFieldAwsSecretAccessKey            = big.NewInt(1 << 1)
 	getGuardianFactorsProviderSnsResponseContentFieldAwsRegion                     = big.NewInt(1 << 2)
 	getGuardianFactorsProviderSnsResponseContentFieldSnsApnsPlatformApplicationArn = big.NewInt(1 << 3)
@@ -27376,7 +27376,7 @@ var (
 )
 
 type GetGuardianFactorsProviderSnsResponseContent struct {
-	AwsAccessKeyId                *string `json:"aws_access_key_id,omitempty" url:"aws_access_key_id,omitempty"`
+	AwsAccessKeyID                *string `json:"aws_access_key_id,omitempty" url:"aws_access_key_id,omitempty"`
 	AwsSecretAccessKey            *string `json:"aws_secret_access_key,omitempty" url:"aws_secret_access_key,omitempty"`
 	AwsRegion                     *string `json:"aws_region,omitempty" url:"aws_region,omitempty"`
 	SnsApnsPlatformApplicationArn *string `json:"sns_apns_platform_application_arn,omitempty" url:"sns_apns_platform_application_arn,omitempty"`
@@ -27389,11 +27389,11 @@ type GetGuardianFactorsProviderSnsResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetGuardianFactorsProviderSnsResponseContent) GetAwsAccessKeyId() string {
-	if g == nil || g.AwsAccessKeyId == nil {
+func (g *GetGuardianFactorsProviderSnsResponseContent) GetAwsAccessKeyID() string {
+	if g == nil || g.AwsAccessKeyID == nil {
 		return ""
 	}
-	return *g.AwsAccessKeyId
+	return *g.AwsAccessKeyID
 }
 
 func (g *GetGuardianFactorsProviderSnsResponseContent) GetAwsSecretAccessKey() string {
@@ -27435,11 +27435,11 @@ func (g *GetGuardianFactorsProviderSnsResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetAwsAccessKeyId sets the AwsAccessKeyId field and marks it as non-optional;
+// SetAwsAccessKeyID sets the AwsAccessKeyID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetGuardianFactorsProviderSnsResponseContent) SetAwsAccessKeyId(awsAccessKeyId *string) {
-	g.AwsAccessKeyId = awsAccessKeyId
-	g.require(getGuardianFactorsProviderSnsResponseContentFieldAwsAccessKeyId)
+func (g *GetGuardianFactorsProviderSnsResponseContent) SetAwsAccessKeyID(awsAccessKeyID *string) {
+	g.AwsAccessKeyID = awsAccessKeyID
+	g.require(getGuardianFactorsProviderSnsResponseContentFieldAwsAccessKeyID)
 }
 
 // SetAwsSecretAccessKey sets the AwsSecretAccessKey field and marks it as non-optional;
@@ -27611,8 +27611,8 @@ var (
 	getJobGenericErrorResponseContentFieldStatus        = big.NewInt(1 << 0)
 	getJobGenericErrorResponseContentFieldType          = big.NewInt(1 << 1)
 	getJobGenericErrorResponseContentFieldCreatedAt     = big.NewInt(1 << 2)
-	getJobGenericErrorResponseContentFieldId            = big.NewInt(1 << 3)
-	getJobGenericErrorResponseContentFieldConnectionId  = big.NewInt(1 << 4)
+	getJobGenericErrorResponseContentFieldID            = big.NewInt(1 << 3)
+	getJobGenericErrorResponseContentFieldConnectionID  = big.NewInt(1 << 4)
 	getJobGenericErrorResponseContentFieldStatusDetails = big.NewInt(1 << 5)
 )
 
@@ -27624,9 +27624,9 @@ type GetJobGenericErrorResponseContent struct {
 	// When this job was created.
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// ID of this job.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// connection_id of the connection this job uses.
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// Status details.
 	StatusDetails *string `json:"status_details,omitempty" url:"status_details,omitempty"`
 
@@ -27659,18 +27659,18 @@ func (g *GetJobGenericErrorResponseContent) GetCreatedAt() string {
 	return *g.CreatedAt
 }
 
-func (g *GetJobGenericErrorResponseContent) GetId() string {
+func (g *GetJobGenericErrorResponseContent) GetID() string {
 	if g == nil {
 		return ""
 	}
-	return g.Id
+	return g.ID
 }
 
-func (g *GetJobGenericErrorResponseContent) GetConnectionId() string {
-	if g == nil || g.ConnectionId == nil {
+func (g *GetJobGenericErrorResponseContent) GetConnectionID() string {
+	if g == nil || g.ConnectionID == nil {
 		return ""
 	}
-	return *g.ConnectionId
+	return *g.ConnectionID
 }
 
 func (g *GetJobGenericErrorResponseContent) GetStatusDetails() string {
@@ -27712,18 +27712,18 @@ func (g *GetJobGenericErrorResponseContent) SetCreatedAt(createdAt *string) {
 	g.require(getJobGenericErrorResponseContentFieldCreatedAt)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetJobGenericErrorResponseContent) SetId(id string) {
-	g.Id = id
-	g.require(getJobGenericErrorResponseContentFieldId)
+func (g *GetJobGenericErrorResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getJobGenericErrorResponseContentFieldID)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetJobGenericErrorResponseContent) SetConnectionId(connectionId *string) {
-	g.ConnectionId = connectionId
-	g.require(getJobGenericErrorResponseContentFieldConnectionId)
+func (g *GetJobGenericErrorResponseContent) SetConnectionID(connectionID *string) {
+	g.ConnectionID = connectionID
+	g.require(getJobGenericErrorResponseContentFieldConnectionID)
 }
 
 // SetStatusDetails sets the StatusDetails field and marks it as non-optional;
@@ -27898,7 +27898,7 @@ func (g *GetJobImportUserError) String() string {
 type GetJobUserError = map[string]interface{}
 
 var (
-	getOrganizationConnectionResponseContentFieldConnectionId            = big.NewInt(1 << 0)
+	getOrganizationConnectionResponseContentFieldConnectionID            = big.NewInt(1 << 0)
 	getOrganizationConnectionResponseContentFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
 	getOrganizationConnectionResponseContentFieldShowAsButton            = big.NewInt(1 << 2)
 	getOrganizationConnectionResponseContentFieldIsSignupEnabled         = big.NewInt(1 << 3)
@@ -27907,7 +27907,7 @@ var (
 
 type GetOrganizationConnectionResponseContent struct {
 	// ID of the connection.
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
 	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
@@ -27923,11 +27923,11 @@ type GetOrganizationConnectionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetOrganizationConnectionResponseContent) GetConnectionId() string {
-	if g == nil || g.ConnectionId == nil {
+func (g *GetOrganizationConnectionResponseContent) GetConnectionID() string {
+	if g == nil || g.ConnectionID == nil {
 		return ""
 	}
-	return *g.ConnectionId
+	return *g.ConnectionID
 }
 
 func (g *GetOrganizationConnectionResponseContent) GetAssignMembershipOnLogin() bool {
@@ -27969,11 +27969,11 @@ func (g *GetOrganizationConnectionResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationConnectionResponseContent) SetConnectionId(connectionId *string) {
-	g.ConnectionId = connectionId
-	g.require(getOrganizationConnectionResponseContentFieldConnectionId)
+func (g *GetOrganizationConnectionResponseContent) SetConnectionID(connectionID *string) {
+	g.ConnectionID = connectionID
+	g.require(getOrganizationConnectionResponseContentFieldConnectionID)
 }
 
 // SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
@@ -28044,44 +28044,44 @@ func (g *GetOrganizationConnectionResponseContent) String() string {
 }
 
 var (
-	getOrganizationInvitationResponseContentFieldId             = big.NewInt(1 << 0)
-	getOrganizationInvitationResponseContentFieldOrganizationId = big.NewInt(1 << 1)
+	getOrganizationInvitationResponseContentFieldID             = big.NewInt(1 << 0)
+	getOrganizationInvitationResponseContentFieldOrganizationID = big.NewInt(1 << 1)
 	getOrganizationInvitationResponseContentFieldInviter        = big.NewInt(1 << 2)
 	getOrganizationInvitationResponseContentFieldInvitee        = big.NewInt(1 << 3)
-	getOrganizationInvitationResponseContentFieldInvitationUrl  = big.NewInt(1 << 4)
+	getOrganizationInvitationResponseContentFieldInvitationURL  = big.NewInt(1 << 4)
 	getOrganizationInvitationResponseContentFieldCreatedAt      = big.NewInt(1 << 5)
 	getOrganizationInvitationResponseContentFieldExpiresAt      = big.NewInt(1 << 6)
-	getOrganizationInvitationResponseContentFieldClientId       = big.NewInt(1 << 7)
-	getOrganizationInvitationResponseContentFieldConnectionId   = big.NewInt(1 << 8)
+	getOrganizationInvitationResponseContentFieldClientID       = big.NewInt(1 << 7)
+	getOrganizationInvitationResponseContentFieldConnectionID   = big.NewInt(1 << 8)
 	getOrganizationInvitationResponseContentFieldAppMetadata    = big.NewInt(1 << 9)
 	getOrganizationInvitationResponseContentFieldUserMetadata   = big.NewInt(1 << 10)
 	getOrganizationInvitationResponseContentFieldRoles          = big.NewInt(1 << 11)
-	getOrganizationInvitationResponseContentFieldTicketId       = big.NewInt(1 << 12)
+	getOrganizationInvitationResponseContentFieldTicketID       = big.NewInt(1 << 12)
 )
 
 type GetOrganizationInvitationResponseContent struct {
 	// The id of the user invitation.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Organization identifier.
-	OrganizationId *string                        `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	OrganizationID *string                        `json:"organization_id,omitempty" url:"organization_id,omitempty"`
 	Inviter        *OrganizationInvitationInviter `json:"inviter,omitempty" url:"inviter,omitempty"`
 	Invitee        *OrganizationInvitationInvitee `json:"invitee,omitempty" url:"invitee,omitempty"`
 	// The invitation url to be send to the invitee.
-	InvitationUrl *string `json:"invitation_url,omitempty" url:"invitation_url,omitempty"`
+	InvitationURL *string `json:"invitation_url,omitempty" url:"invitation_url,omitempty"`
 	// The ISO 8601 formatted timestamp representing the creation time of the invitation.
 	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The ISO 8601 formatted timestamp representing the expiration time of the invitation.
 	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
 	// Auth0 client ID. Used to resolve the application's login initiation endpoint.
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// The id of the connection to force invitee to authenticate with.
-	ConnectionId *string       `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string       `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	AppMetadata  *AppMetadata  `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
 	UserMetadata *UserMetadata `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
 	// List of roles IDs to associated with the user.
 	Roles []string `json:"roles,omitempty" url:"roles,omitempty"`
 	// The id of the invitation ticket
-	TicketId *string `json:"ticket_id,omitempty" url:"ticket_id,omitempty"`
+	TicketID *string `json:"ticket_id,omitempty" url:"ticket_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -28090,18 +28090,18 @@ type GetOrganizationInvitationResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetOrganizationInvitationResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetOrganizationInvitationResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
-func (g *GetOrganizationInvitationResponseContent) GetOrganizationId() string {
-	if g == nil || g.OrganizationId == nil {
+func (g *GetOrganizationInvitationResponseContent) GetOrganizationID() string {
+	if g == nil || g.OrganizationID == nil {
 		return ""
 	}
-	return *g.OrganizationId
+	return *g.OrganizationID
 }
 
 func (g *GetOrganizationInvitationResponseContent) GetInviter() OrganizationInvitationInviter {
@@ -28118,11 +28118,11 @@ func (g *GetOrganizationInvitationResponseContent) GetInvitee() OrganizationInvi
 	return *g.Invitee
 }
 
-func (g *GetOrganizationInvitationResponseContent) GetInvitationUrl() string {
-	if g == nil || g.InvitationUrl == nil {
+func (g *GetOrganizationInvitationResponseContent) GetInvitationURL() string {
+	if g == nil || g.InvitationURL == nil {
 		return ""
 	}
-	return *g.InvitationUrl
+	return *g.InvitationURL
 }
 
 func (g *GetOrganizationInvitationResponseContent) GetCreatedAt() time.Time {
@@ -28139,18 +28139,18 @@ func (g *GetOrganizationInvitationResponseContent) GetExpiresAt() time.Time {
 	return *g.ExpiresAt
 }
 
-func (g *GetOrganizationInvitationResponseContent) GetClientId() string {
-	if g == nil || g.ClientId == nil {
+func (g *GetOrganizationInvitationResponseContent) GetClientID() string {
+	if g == nil || g.ClientID == nil {
 		return ""
 	}
-	return *g.ClientId
+	return *g.ClientID
 }
 
-func (g *GetOrganizationInvitationResponseContent) GetConnectionId() string {
-	if g == nil || g.ConnectionId == nil {
+func (g *GetOrganizationInvitationResponseContent) GetConnectionID() string {
+	if g == nil || g.ConnectionID == nil {
 		return ""
 	}
-	return *g.ConnectionId
+	return *g.ConnectionID
 }
 
 func (g *GetOrganizationInvitationResponseContent) GetAppMetadata() AppMetadata {
@@ -28174,11 +28174,11 @@ func (g *GetOrganizationInvitationResponseContent) GetRoles() []string {
 	return g.Roles
 }
 
-func (g *GetOrganizationInvitationResponseContent) GetTicketId() string {
-	if g == nil || g.TicketId == nil {
+func (g *GetOrganizationInvitationResponseContent) GetTicketID() string {
+	if g == nil || g.TicketID == nil {
 		return ""
 	}
-	return *g.TicketId
+	return *g.TicketID
 }
 
 func (g *GetOrganizationInvitationResponseContent) GetExtraProperties() map[string]interface{} {
@@ -28192,18 +28192,18 @@ func (g *GetOrganizationInvitationResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationInvitationResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getOrganizationInvitationResponseContentFieldId)
+func (g *GetOrganizationInvitationResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getOrganizationInvitationResponseContentFieldID)
 }
 
-// SetOrganizationId sets the OrganizationId field and marks it as non-optional;
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationInvitationResponseContent) SetOrganizationId(organizationId *string) {
-	g.OrganizationId = organizationId
-	g.require(getOrganizationInvitationResponseContentFieldOrganizationId)
+func (g *GetOrganizationInvitationResponseContent) SetOrganizationID(organizationID *string) {
+	g.OrganizationID = organizationID
+	g.require(getOrganizationInvitationResponseContentFieldOrganizationID)
 }
 
 // SetInviter sets the Inviter field and marks it as non-optional;
@@ -28220,11 +28220,11 @@ func (g *GetOrganizationInvitationResponseContent) SetInvitee(invitee *Organizat
 	g.require(getOrganizationInvitationResponseContentFieldInvitee)
 }
 
-// SetInvitationUrl sets the InvitationUrl field and marks it as non-optional;
+// SetInvitationURL sets the InvitationURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationInvitationResponseContent) SetInvitationUrl(invitationUrl *string) {
-	g.InvitationUrl = invitationUrl
-	g.require(getOrganizationInvitationResponseContentFieldInvitationUrl)
+func (g *GetOrganizationInvitationResponseContent) SetInvitationURL(invitationURL *string) {
+	g.InvitationURL = invitationURL
+	g.require(getOrganizationInvitationResponseContentFieldInvitationURL)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
@@ -28241,18 +28241,18 @@ func (g *GetOrganizationInvitationResponseContent) SetExpiresAt(expiresAt *time.
 	g.require(getOrganizationInvitationResponseContentFieldExpiresAt)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationInvitationResponseContent) SetClientId(clientId *string) {
-	g.ClientId = clientId
-	g.require(getOrganizationInvitationResponseContentFieldClientId)
+func (g *GetOrganizationInvitationResponseContent) SetClientID(clientID *string) {
+	g.ClientID = clientID
+	g.require(getOrganizationInvitationResponseContentFieldClientID)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationInvitationResponseContent) SetConnectionId(connectionId *string) {
-	g.ConnectionId = connectionId
-	g.require(getOrganizationInvitationResponseContentFieldConnectionId)
+func (g *GetOrganizationInvitationResponseContent) SetConnectionID(connectionID *string) {
+	g.ConnectionID = connectionID
+	g.require(getOrganizationInvitationResponseContentFieldConnectionID)
 }
 
 // SetAppMetadata sets the AppMetadata field and marks it as non-optional;
@@ -28276,11 +28276,11 @@ func (g *GetOrganizationInvitationResponseContent) SetRoles(roles []string) {
 	g.require(getOrganizationInvitationResponseContentFieldRoles)
 }
 
-// SetTicketId sets the TicketId field and marks it as non-optional;
+// SetTicketID sets the TicketID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetOrganizationInvitationResponseContent) SetTicketId(ticketId *string) {
-	g.TicketId = ticketId
-	g.require(getOrganizationInvitationResponseContentFieldTicketId)
+func (g *GetOrganizationInvitationResponseContent) SetTicketID(ticketID *string) {
+	g.TicketID = ticketID
+	g.require(getOrganizationInvitationResponseContentFieldTicketID)
 }
 
 func (g *GetOrganizationInvitationResponseContent) UnmarshalJSON(data []byte) error {
@@ -28338,7 +28338,7 @@ func (g *GetOrganizationInvitationResponseContent) String() string {
 type GetPartialsResponseContent = map[string]interface{}
 
 var (
-	getPhoneTemplateResponseContentFieldId           = big.NewInt(1 << 0)
+	getPhoneTemplateResponseContentFieldID           = big.NewInt(1 << 0)
 	getPhoneTemplateResponseContentFieldChannel      = big.NewInt(1 << 1)
 	getPhoneTemplateResponseContentFieldCustomizable = big.NewInt(1 << 2)
 	getPhoneTemplateResponseContentFieldTenant       = big.NewInt(1 << 3)
@@ -28348,7 +28348,7 @@ var (
 )
 
 type GetPhoneTemplateResponseContent struct {
-	Id           string                            `json:"id" url:"id"`
+	ID           string                            `json:"id" url:"id"`
 	Channel      *string                           `json:"channel,omitempty" url:"channel,omitempty"`
 	Customizable *bool                             `json:"customizable,omitempty" url:"customizable,omitempty"`
 	Tenant       *string                           `json:"tenant,omitempty" url:"tenant,omitempty"`
@@ -28364,11 +28364,11 @@ type GetPhoneTemplateResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetPhoneTemplateResponseContent) GetId() string {
+func (g *GetPhoneTemplateResponseContent) GetID() string {
 	if g == nil {
 		return ""
 	}
-	return g.Id
+	return g.ID
 }
 
 func (g *GetPhoneTemplateResponseContent) GetChannel() string {
@@ -28424,11 +28424,11 @@ func (g *GetPhoneTemplateResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetPhoneTemplateResponseContent) SetId(id string) {
-	g.Id = id
-	g.require(getPhoneTemplateResponseContentFieldId)
+func (g *GetPhoneTemplateResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getPhoneTemplateResponseContentFieldID)
 }
 
 // SetChannel sets the Channel field and marks it as non-optional;
@@ -28671,12 +28671,12 @@ func (g *GetRiskAssessmentsSettingsResponseContent) String() string {
 }
 
 var (
-	getScimConfigurationDefaultMappingResponseContentFieldMapping = big.NewInt(1 << 0)
+	getSCIMConfigurationDefaultMappingResponseContentFieldMapping = big.NewInt(1 << 0)
 )
 
-type GetScimConfigurationDefaultMappingResponseContent struct {
+type GetSCIMConfigurationDefaultMappingResponseContent struct {
 	// The mapping between auth0 and SCIM
-	Mapping []*ScimMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
+	Mapping []*SCIMMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -28685,18 +28685,18 @@ type GetScimConfigurationDefaultMappingResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetScimConfigurationDefaultMappingResponseContent) GetMapping() []*ScimMappingItem {
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) GetMapping() []*SCIMMappingItem {
 	if g == nil || g.Mapping == nil {
 		return nil
 	}
 	return g.Mapping
 }
 
-func (g *GetScimConfigurationDefaultMappingResponseContent) GetExtraProperties() map[string]interface{} {
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
 }
 
-func (g *GetScimConfigurationDefaultMappingResponseContent) require(field *big.Int) {
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) require(field *big.Int) {
 	if g.explicitFields == nil {
 		g.explicitFields = big.NewInt(0)
 	}
@@ -28705,18 +28705,18 @@ func (g *GetScimConfigurationDefaultMappingResponseContent) require(field *big.I
 
 // SetMapping sets the Mapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetScimConfigurationDefaultMappingResponseContent) SetMapping(mapping []*ScimMappingItem) {
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) SetMapping(mapping []*SCIMMappingItem) {
 	g.Mapping = mapping
-	g.require(getScimConfigurationDefaultMappingResponseContentFieldMapping)
+	g.require(getSCIMConfigurationDefaultMappingResponseContentFieldMapping)
 }
 
-func (g *GetScimConfigurationDefaultMappingResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler GetScimConfigurationDefaultMappingResponseContent
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetSCIMConfigurationDefaultMappingResponseContent
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*g = GetScimConfigurationDefaultMappingResponseContent(value)
+	*g = GetSCIMConfigurationDefaultMappingResponseContent(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *g)
 	if err != nil {
 		return err
@@ -28726,8 +28726,8 @@ func (g *GetScimConfigurationDefaultMappingResponseContent) UnmarshalJSON(data [
 	return nil
 }
 
-func (g *GetScimConfigurationDefaultMappingResponseContent) MarshalJSON() ([]byte, error) {
-	type embed GetScimConfigurationDefaultMappingResponseContent
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetSCIMConfigurationDefaultMappingResponseContent
 	var marshaler = struct {
 		embed
 	}{
@@ -28737,7 +28737,7 @@ func (g *GetScimConfigurationDefaultMappingResponseContent) MarshalJSON() ([]byt
 	return json.Marshal(explicitMarshaler)
 }
 
-func (g *GetScimConfigurationDefaultMappingResponseContent) String() string {
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -28750,19 +28750,19 @@ func (g *GetScimConfigurationDefaultMappingResponseContent) String() string {
 }
 
 var (
-	getScimConfigurationResponseContentFieldConnectionId    = big.NewInt(1 << 0)
-	getScimConfigurationResponseContentFieldConnectionName  = big.NewInt(1 << 1)
-	getScimConfigurationResponseContentFieldStrategy        = big.NewInt(1 << 2)
-	getScimConfigurationResponseContentFieldTenantName      = big.NewInt(1 << 3)
-	getScimConfigurationResponseContentFieldUserIdAttribute = big.NewInt(1 << 4)
-	getScimConfigurationResponseContentFieldMapping         = big.NewInt(1 << 5)
-	getScimConfigurationResponseContentFieldCreatedAt       = big.NewInt(1 << 6)
-	getScimConfigurationResponseContentFieldUpdatedOn       = big.NewInt(1 << 7)
+	getSCIMConfigurationResponseContentFieldConnectionID    = big.NewInt(1 << 0)
+	getSCIMConfigurationResponseContentFieldConnectionName  = big.NewInt(1 << 1)
+	getSCIMConfigurationResponseContentFieldStrategy        = big.NewInt(1 << 2)
+	getSCIMConfigurationResponseContentFieldTenantName      = big.NewInt(1 << 3)
+	getSCIMConfigurationResponseContentFieldUserIDAttribute = big.NewInt(1 << 4)
+	getSCIMConfigurationResponseContentFieldMapping         = big.NewInt(1 << 5)
+	getSCIMConfigurationResponseContentFieldCreatedAt       = big.NewInt(1 << 6)
+	getSCIMConfigurationResponseContentFieldUpdatedOn       = big.NewInt(1 << 7)
 )
 
-type GetScimConfigurationResponseContent struct {
+type GetSCIMConfigurationResponseContent struct {
 	// The connection's identifier
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// The connection's identifier
 	ConnectionName *string `json:"connection_name,omitempty" url:"connection_name,omitempty"`
 	// The connection's strategy
@@ -28770,9 +28770,9 @@ type GetScimConfigurationResponseContent struct {
 	// The tenant's name
 	TenantName *string `json:"tenant_name,omitempty" url:"tenant_name,omitempty"`
 	// User ID attribute for generating unique user ids
-	UserIdAttribute *string `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
+	UserIDAttribute *string `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
 	// The mapping between auth0 and SCIM
-	Mapping []*ScimMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
+	Mapping []*SCIMMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
 	// The Date Time Scim Configuration was created
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The Date Time Scim Configuration was last updated
@@ -28785,136 +28785,136 @@ type GetScimConfigurationResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetScimConfigurationResponseContent) GetConnectionId() string {
-	if g == nil || g.ConnectionId == nil {
+func (g *GetSCIMConfigurationResponseContent) GetConnectionID() string {
+	if g == nil || g.ConnectionID == nil {
 		return ""
 	}
-	return *g.ConnectionId
+	return *g.ConnectionID
 }
 
-func (g *GetScimConfigurationResponseContent) GetConnectionName() string {
+func (g *GetSCIMConfigurationResponseContent) GetConnectionName() string {
 	if g == nil || g.ConnectionName == nil {
 		return ""
 	}
 	return *g.ConnectionName
 }
 
-func (g *GetScimConfigurationResponseContent) GetStrategy() string {
+func (g *GetSCIMConfigurationResponseContent) GetStrategy() string {
 	if g == nil || g.Strategy == nil {
 		return ""
 	}
 	return *g.Strategy
 }
 
-func (g *GetScimConfigurationResponseContent) GetTenantName() string {
+func (g *GetSCIMConfigurationResponseContent) GetTenantName() string {
 	if g == nil || g.TenantName == nil {
 		return ""
 	}
 	return *g.TenantName
 }
 
-func (g *GetScimConfigurationResponseContent) GetUserIdAttribute() string {
-	if g == nil || g.UserIdAttribute == nil {
+func (g *GetSCIMConfigurationResponseContent) GetUserIDAttribute() string {
+	if g == nil || g.UserIDAttribute == nil {
 		return ""
 	}
-	return *g.UserIdAttribute
+	return *g.UserIDAttribute
 }
 
-func (g *GetScimConfigurationResponseContent) GetMapping() []*ScimMappingItem {
+func (g *GetSCIMConfigurationResponseContent) GetMapping() []*SCIMMappingItem {
 	if g == nil || g.Mapping == nil {
 		return nil
 	}
 	return g.Mapping
 }
 
-func (g *GetScimConfigurationResponseContent) GetCreatedAt() string {
+func (g *GetSCIMConfigurationResponseContent) GetCreatedAt() string {
 	if g == nil || g.CreatedAt == nil {
 		return ""
 	}
 	return *g.CreatedAt
 }
 
-func (g *GetScimConfigurationResponseContent) GetUpdatedOn() string {
+func (g *GetSCIMConfigurationResponseContent) GetUpdatedOn() string {
 	if g == nil || g.UpdatedOn == nil {
 		return ""
 	}
 	return *g.UpdatedOn
 }
 
-func (g *GetScimConfigurationResponseContent) GetExtraProperties() map[string]interface{} {
+func (g *GetSCIMConfigurationResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
 }
 
-func (g *GetScimConfigurationResponseContent) require(field *big.Int) {
+func (g *GetSCIMConfigurationResponseContent) require(field *big.Int) {
 	if g.explicitFields == nil {
 		g.explicitFields = big.NewInt(0)
 	}
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetScimConfigurationResponseContent) SetConnectionId(connectionId *string) {
-	g.ConnectionId = connectionId
-	g.require(getScimConfigurationResponseContentFieldConnectionId)
+func (g *GetSCIMConfigurationResponseContent) SetConnectionID(connectionID *string) {
+	g.ConnectionID = connectionID
+	g.require(getSCIMConfigurationResponseContentFieldConnectionID)
 }
 
 // SetConnectionName sets the ConnectionName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetScimConfigurationResponseContent) SetConnectionName(connectionName *string) {
+func (g *GetSCIMConfigurationResponseContent) SetConnectionName(connectionName *string) {
 	g.ConnectionName = connectionName
-	g.require(getScimConfigurationResponseContentFieldConnectionName)
+	g.require(getSCIMConfigurationResponseContentFieldConnectionName)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetScimConfigurationResponseContent) SetStrategy(strategy *string) {
+func (g *GetSCIMConfigurationResponseContent) SetStrategy(strategy *string) {
 	g.Strategy = strategy
-	g.require(getScimConfigurationResponseContentFieldStrategy)
+	g.require(getSCIMConfigurationResponseContentFieldStrategy)
 }
 
 // SetTenantName sets the TenantName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetScimConfigurationResponseContent) SetTenantName(tenantName *string) {
+func (g *GetSCIMConfigurationResponseContent) SetTenantName(tenantName *string) {
 	g.TenantName = tenantName
-	g.require(getScimConfigurationResponseContentFieldTenantName)
+	g.require(getSCIMConfigurationResponseContentFieldTenantName)
 }
 
-// SetUserIdAttribute sets the UserIdAttribute field and marks it as non-optional;
+// SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetScimConfigurationResponseContent) SetUserIdAttribute(userIdAttribute *string) {
-	g.UserIdAttribute = userIdAttribute
-	g.require(getScimConfigurationResponseContentFieldUserIdAttribute)
+func (g *GetSCIMConfigurationResponseContent) SetUserIDAttribute(userIDAttribute *string) {
+	g.UserIDAttribute = userIDAttribute
+	g.require(getSCIMConfigurationResponseContentFieldUserIDAttribute)
 }
 
 // SetMapping sets the Mapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetScimConfigurationResponseContent) SetMapping(mapping []*ScimMappingItem) {
+func (g *GetSCIMConfigurationResponseContent) SetMapping(mapping []*SCIMMappingItem) {
 	g.Mapping = mapping
-	g.require(getScimConfigurationResponseContentFieldMapping)
+	g.require(getSCIMConfigurationResponseContentFieldMapping)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetScimConfigurationResponseContent) SetCreatedAt(createdAt *string) {
+func (g *GetSCIMConfigurationResponseContent) SetCreatedAt(createdAt *string) {
 	g.CreatedAt = createdAt
-	g.require(getScimConfigurationResponseContentFieldCreatedAt)
+	g.require(getSCIMConfigurationResponseContentFieldCreatedAt)
 }
 
 // SetUpdatedOn sets the UpdatedOn field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetScimConfigurationResponseContent) SetUpdatedOn(updatedOn *string) {
+func (g *GetSCIMConfigurationResponseContent) SetUpdatedOn(updatedOn *string) {
 	g.UpdatedOn = updatedOn
-	g.require(getScimConfigurationResponseContentFieldUpdatedOn)
+	g.require(getSCIMConfigurationResponseContentFieldUpdatedOn)
 }
 
-func (g *GetScimConfigurationResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler GetScimConfigurationResponseContent
+func (g *GetSCIMConfigurationResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetSCIMConfigurationResponseContent
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*g = GetScimConfigurationResponseContent(value)
+	*g = GetSCIMConfigurationResponseContent(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *g)
 	if err != nil {
 		return err
@@ -28924,8 +28924,8 @@ func (g *GetScimConfigurationResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (g *GetScimConfigurationResponseContent) MarshalJSON() ([]byte, error) {
-	type embed GetScimConfigurationResponseContent
+func (g *GetSCIMConfigurationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetSCIMConfigurationResponseContent
 	var marshaler = struct {
 		embed
 	}{
@@ -28935,7 +28935,7 @@ func (g *GetScimConfigurationResponseContent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (g *GetScimConfigurationResponseContent) String() string {
+func (g *GetSCIMConfigurationResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -28948,7 +28948,7 @@ func (g *GetScimConfigurationResponseContent) String() string {
 }
 
 // The list of scim tokens for scim clients
-type GetScimTokensResponseContent = []*ScimTokenItem
+type GetSCIMTokensResponseContent = []*SCIMTokenItem
 
 var (
 	getSigningKeysResponseContentFieldKid          = big.NewInt(1 << 0)
@@ -29214,21 +29214,21 @@ func (g *GetSigningKeysResponseContent) String() string {
 }
 
 var (
-	getSuspiciousIpThrottlingSettingsResponseContentFieldEnabled   = big.NewInt(1 << 0)
-	getSuspiciousIpThrottlingSettingsResponseContentFieldShields   = big.NewInt(1 << 1)
-	getSuspiciousIpThrottlingSettingsResponseContentFieldAllowlist = big.NewInt(1 << 2)
-	getSuspiciousIpThrottlingSettingsResponseContentFieldStage     = big.NewInt(1 << 3)
+	getSuspiciousIPThrottlingSettingsResponseContentFieldEnabled   = big.NewInt(1 << 0)
+	getSuspiciousIPThrottlingSettingsResponseContentFieldShields   = big.NewInt(1 << 1)
+	getSuspiciousIPThrottlingSettingsResponseContentFieldAllowlist = big.NewInt(1 << 2)
+	getSuspiciousIPThrottlingSettingsResponseContentFieldStage     = big.NewInt(1 << 3)
 )
 
-type GetSuspiciousIpThrottlingSettingsResponseContent struct {
+type GetSuspiciousIPThrottlingSettingsResponseContent struct {
 	// Whether or not suspicious IP throttling attack protections are active.
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Action to take when a suspicious IP throttling threshold is violated.
 	//
 	//	Possible values: <code>block</code>, <code>admin_notification</code>.
-	Shields   []SuspiciousIpThrottlingShieldsEnum `json:"shields,omitempty" url:"shields,omitempty"`
-	Allowlist *SuspiciousIpThrottlingAllowlist    `json:"allowlist,omitempty" url:"allowlist,omitempty"`
-	Stage     *SuspiciousIpThrottlingStage        `json:"stage,omitempty" url:"stage,omitempty"`
+	Shields   []SuspiciousIPThrottlingShieldsEnum `json:"shields,omitempty" url:"shields,omitempty"`
+	Allowlist *SuspiciousIPThrottlingAllowlist    `json:"allowlist,omitempty" url:"allowlist,omitempty"`
+	Stage     *SuspiciousIPThrottlingStage        `json:"stage,omitempty" url:"stage,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -29237,39 +29237,39 @@ type GetSuspiciousIpThrottlingSettingsResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) GetEnabled() bool {
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) GetEnabled() bool {
 	if g == nil || g.Enabled == nil {
 		return false
 	}
 	return *g.Enabled
 }
 
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) GetShields() []SuspiciousIpThrottlingShieldsEnum {
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) GetShields() []SuspiciousIPThrottlingShieldsEnum {
 	if g == nil || g.Shields == nil {
 		return nil
 	}
 	return g.Shields
 }
 
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) GetAllowlist() SuspiciousIpThrottlingAllowlist {
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) GetAllowlist() SuspiciousIPThrottlingAllowlist {
 	if g == nil || g.Allowlist == nil {
 		return nil
 	}
 	return *g.Allowlist
 }
 
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) GetStage() SuspiciousIpThrottlingStage {
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) GetStage() SuspiciousIPThrottlingStage {
 	if g == nil || g.Stage == nil {
-		return SuspiciousIpThrottlingStage{}
+		return SuspiciousIPThrottlingStage{}
 	}
 	return *g.Stage
 }
 
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
 }
 
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) require(field *big.Int) {
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) require(field *big.Int) {
 	if g.explicitFields == nil {
 		g.explicitFields = big.NewInt(0)
 	}
@@ -29278,39 +29278,39 @@ func (g *GetSuspiciousIpThrottlingSettingsResponseContent) require(field *big.In
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) SetEnabled(enabled *bool) {
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) SetEnabled(enabled *bool) {
 	g.Enabled = enabled
-	g.require(getSuspiciousIpThrottlingSettingsResponseContentFieldEnabled)
+	g.require(getSuspiciousIPThrottlingSettingsResponseContentFieldEnabled)
 }
 
 // SetShields sets the Shields field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) SetShields(shields []SuspiciousIpThrottlingShieldsEnum) {
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) SetShields(shields []SuspiciousIPThrottlingShieldsEnum) {
 	g.Shields = shields
-	g.require(getSuspiciousIpThrottlingSettingsResponseContentFieldShields)
+	g.require(getSuspiciousIPThrottlingSettingsResponseContentFieldShields)
 }
 
 // SetAllowlist sets the Allowlist field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) SetAllowlist(allowlist *SuspiciousIpThrottlingAllowlist) {
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) SetAllowlist(allowlist *SuspiciousIPThrottlingAllowlist) {
 	g.Allowlist = allowlist
-	g.require(getSuspiciousIpThrottlingSettingsResponseContentFieldAllowlist)
+	g.require(getSuspiciousIPThrottlingSettingsResponseContentFieldAllowlist)
 }
 
 // SetStage sets the Stage field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) SetStage(stage *SuspiciousIpThrottlingStage) {
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) SetStage(stage *SuspiciousIPThrottlingStage) {
 	g.Stage = stage
-	g.require(getSuspiciousIpThrottlingSettingsResponseContentFieldStage)
+	g.require(getSuspiciousIPThrottlingSettingsResponseContentFieldStage)
 }
 
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler GetSuspiciousIpThrottlingSettingsResponseContent
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetSuspiciousIPThrottlingSettingsResponseContent
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*g = GetSuspiciousIpThrottlingSettingsResponseContent(value)
+	*g = GetSuspiciousIPThrottlingSettingsResponseContent(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *g)
 	if err != nil {
 		return err
@@ -29320,8 +29320,8 @@ func (g *GetSuspiciousIpThrottlingSettingsResponseContent) UnmarshalJSON(data []
 	return nil
 }
 
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) MarshalJSON() ([]byte, error) {
-	type embed GetSuspiciousIpThrottlingSettingsResponseContent
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetSuspiciousIPThrottlingSettingsResponseContent
 	var marshaler = struct {
 		embed
 	}{
@@ -29331,7 +29331,7 @@ func (g *GetSuspiciousIpThrottlingSettingsResponseContent) MarshalJSON() ([]byte
 	return json.Marshal(explicitMarshaler)
 }
 
-func (g *GetSuspiciousIpThrottlingSettingsResponseContent) String() string {
+func (g *GetSuspiciousIPThrottlingSettingsResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -29353,10 +29353,10 @@ var (
 	getTenantSettingsResponseContentFieldDefaultTokenQuota                          = big.NewInt(1 << 6)
 	getTenantSettingsResponseContentFieldFlags                                      = big.NewInt(1 << 7)
 	getTenantSettingsResponseContentFieldFriendlyName                               = big.NewInt(1 << 8)
-	getTenantSettingsResponseContentFieldPictureUrl                                 = big.NewInt(1 << 9)
+	getTenantSettingsResponseContentFieldPictureURL                                 = big.NewInt(1 << 9)
 	getTenantSettingsResponseContentFieldSupportEmail                               = big.NewInt(1 << 10)
-	getTenantSettingsResponseContentFieldSupportUrl                                 = big.NewInt(1 << 11)
-	getTenantSettingsResponseContentFieldAllowedLogoutUrls                          = big.NewInt(1 << 12)
+	getTenantSettingsResponseContentFieldSupportURL                                 = big.NewInt(1 << 11)
+	getTenantSettingsResponseContentFieldAllowedLogoutURLs                          = big.NewInt(1 << 12)
 	getTenantSettingsResponseContentFieldSessionLifetime                            = big.NewInt(1 << 13)
 	getTenantSettingsResponseContentFieldIdleSessionLifetime                        = big.NewInt(1 << 14)
 	getTenantSettingsResponseContentFieldEphemeralSessionLifetime                   = big.NewInt(1 << 15)
@@ -29364,12 +29364,12 @@ var (
 	getTenantSettingsResponseContentFieldSandboxVersion                             = big.NewInt(1 << 17)
 	getTenantSettingsResponseContentFieldLegacySandboxVersion                       = big.NewInt(1 << 18)
 	getTenantSettingsResponseContentFieldSandboxVersionsAvailable                   = big.NewInt(1 << 19)
-	getTenantSettingsResponseContentFieldDefaultRedirectionUri                      = big.NewInt(1 << 20)
+	getTenantSettingsResponseContentFieldDefaultRedirectionURI                      = big.NewInt(1 << 20)
 	getTenantSettingsResponseContentFieldEnabledLocales                             = big.NewInt(1 << 21)
 	getTenantSettingsResponseContentFieldSessionCookie                              = big.NewInt(1 << 22)
 	getTenantSettingsResponseContentFieldSessions                                   = big.NewInt(1 << 23)
 	getTenantSettingsResponseContentFieldOidcLogout                                 = big.NewInt(1 << 24)
-	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationApi   = big.NewInt(1 << 25)
+	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI   = big.NewInt(1 << 25)
 	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction              = big.NewInt(1 << 26)
 	getTenantSettingsResponseContentFieldAcrValuesSupported                         = big.NewInt(1 << 27)
 	getTenantSettingsResponseContentFieldMtls                                       = big.NewInt(1 << 28)
@@ -29391,13 +29391,13 @@ type GetTenantSettingsResponseContent struct {
 	// Friendly name for this tenant.
 	FriendlyName *string `json:"friendly_name,omitempty" url:"friendly_name,omitempty"`
 	// URL of logo to be shown for this tenant (recommended size: 150x150)
-	PictureUrl *string `json:"picture_url,omitempty" url:"picture_url,omitempty"`
+	PictureURL *string `json:"picture_url,omitempty" url:"picture_url,omitempty"`
 	// End-user support email address.
 	SupportEmail *string `json:"support_email,omitempty" url:"support_email,omitempty"`
 	// End-user support URL.
-	SupportUrl *string `json:"support_url,omitempty" url:"support_url,omitempty"`
+	SupportURL *string `json:"support_url,omitempty" url:"support_url,omitempty"`
 	// URLs that are valid to redirect to after logout from Auth0.
-	AllowedLogoutUrls []string `json:"allowed_logout_urls,omitempty" url:"allowed_logout_urls,omitempty"`
+	AllowedLogoutURLs []string `json:"allowed_logout_urls,omitempty" url:"allowed_logout_urls,omitempty"`
 	// Number of hours a session will stay valid.
 	SessionLifetime *float64 `json:"session_lifetime,omitempty" url:"session_lifetime,omitempty"`
 	// Number of hours for which a session can be inactive before the user must log in again.
@@ -29413,14 +29413,14 @@ type GetTenantSettingsResponseContent struct {
 	// Available sandbox versions for the extensibility environment.
 	SandboxVersionsAvailable []string `json:"sandbox_versions_available,omitempty" url:"sandbox_versions_available,omitempty"`
 	// The default absolute redirection uri, must be https
-	DefaultRedirectionUri *string `json:"default_redirection_uri,omitempty" url:"default_redirection_uri,omitempty"`
+	DefaultRedirectionURI *string `json:"default_redirection_uri,omitempty" url:"default_redirection_uri,omitempty"`
 	// Supported locales for the user interface.
 	EnabledLocales []SupportedLocales        `json:"enabled_locales,omitempty" url:"enabled_locales,omitempty"`
 	SessionCookie  *SessionCookieSchema      `json:"session_cookie,omitempty" url:"session_cookie,omitempty"`
 	Sessions       *TenantSettingsSessions   `json:"sessions,omitempty" url:"sessions,omitempty"`
 	OidcLogout     *TenantOidcLogoutSettings `json:"oidc_logout,omitempty" url:"oidc_logout,omitempty"`
 	// Whether to accept an organization name instead of an ID on auth endpoints
-	AllowOrganizationNameInAuthenticationApi *bool `json:"allow_organization_name_in_authentication_api,omitempty" url:"allow_organization_name_in_authentication_api,omitempty"`
+	AllowOrganizationNameInAuthenticationAPI *bool `json:"allow_organization_name_in_authentication_api,omitempty" url:"allow_organization_name_in_authentication_api,omitempty"`
 	// Whether to enable flexible factors for MFA in the PostLogin action
 	CustomizeMfaInPostloginAction *bool `json:"customize_mfa_in_postlogin_action,omitempty" url:"customize_mfa_in_postlogin_action,omitempty"`
 	// Supported ACR values
@@ -29501,11 +29501,11 @@ func (g *GetTenantSettingsResponseContent) GetFriendlyName() string {
 	return *g.FriendlyName
 }
 
-func (g *GetTenantSettingsResponseContent) GetPictureUrl() string {
-	if g == nil || g.PictureUrl == nil {
+func (g *GetTenantSettingsResponseContent) GetPictureURL() string {
+	if g == nil || g.PictureURL == nil {
 		return ""
 	}
-	return *g.PictureUrl
+	return *g.PictureURL
 }
 
 func (g *GetTenantSettingsResponseContent) GetSupportEmail() string {
@@ -29515,18 +29515,18 @@ func (g *GetTenantSettingsResponseContent) GetSupportEmail() string {
 	return *g.SupportEmail
 }
 
-func (g *GetTenantSettingsResponseContent) GetSupportUrl() string {
-	if g == nil || g.SupportUrl == nil {
+func (g *GetTenantSettingsResponseContent) GetSupportURL() string {
+	if g == nil || g.SupportURL == nil {
 		return ""
 	}
-	return *g.SupportUrl
+	return *g.SupportURL
 }
 
-func (g *GetTenantSettingsResponseContent) GetAllowedLogoutUrls() []string {
-	if g == nil || g.AllowedLogoutUrls == nil {
+func (g *GetTenantSettingsResponseContent) GetAllowedLogoutURLs() []string {
+	if g == nil || g.AllowedLogoutURLs == nil {
 		return nil
 	}
-	return g.AllowedLogoutUrls
+	return g.AllowedLogoutURLs
 }
 
 func (g *GetTenantSettingsResponseContent) GetSessionLifetime() float64 {
@@ -29578,11 +29578,11 @@ func (g *GetTenantSettingsResponseContent) GetSandboxVersionsAvailable() []strin
 	return g.SandboxVersionsAvailable
 }
 
-func (g *GetTenantSettingsResponseContent) GetDefaultRedirectionUri() string {
-	if g == nil || g.DefaultRedirectionUri == nil {
+func (g *GetTenantSettingsResponseContent) GetDefaultRedirectionURI() string {
+	if g == nil || g.DefaultRedirectionURI == nil {
 		return ""
 	}
-	return *g.DefaultRedirectionUri
+	return *g.DefaultRedirectionURI
 }
 
 func (g *GetTenantSettingsResponseContent) GetEnabledLocales() []SupportedLocales {
@@ -29613,11 +29613,11 @@ func (g *GetTenantSettingsResponseContent) GetOidcLogout() TenantOidcLogoutSetti
 	return *g.OidcLogout
 }
 
-func (g *GetTenantSettingsResponseContent) GetAllowOrganizationNameInAuthenticationApi() bool {
-	if g == nil || g.AllowOrganizationNameInAuthenticationApi == nil {
+func (g *GetTenantSettingsResponseContent) GetAllowOrganizationNameInAuthenticationAPI() bool {
+	if g == nil || g.AllowOrganizationNameInAuthenticationAPI == nil {
 		return false
 	}
-	return *g.AllowOrganizationNameInAuthenticationApi
+	return *g.AllowOrganizationNameInAuthenticationAPI
 }
 
 func (g *GetTenantSettingsResponseContent) GetCustomizeMfaInPostloginAction() bool {
@@ -29729,11 +29729,11 @@ func (g *GetTenantSettingsResponseContent) SetFriendlyName(friendlyName *string)
 	g.require(getTenantSettingsResponseContentFieldFriendlyName)
 }
 
-// SetPictureUrl sets the PictureUrl field and marks it as non-optional;
+// SetPictureURL sets the PictureURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTenantSettingsResponseContent) SetPictureUrl(pictureUrl *string) {
-	g.PictureUrl = pictureUrl
-	g.require(getTenantSettingsResponseContentFieldPictureUrl)
+func (g *GetTenantSettingsResponseContent) SetPictureURL(pictureURL *string) {
+	g.PictureURL = pictureURL
+	g.require(getTenantSettingsResponseContentFieldPictureURL)
 }
 
 // SetSupportEmail sets the SupportEmail field and marks it as non-optional;
@@ -29743,18 +29743,18 @@ func (g *GetTenantSettingsResponseContent) SetSupportEmail(supportEmail *string)
 	g.require(getTenantSettingsResponseContentFieldSupportEmail)
 }
 
-// SetSupportUrl sets the SupportUrl field and marks it as non-optional;
+// SetSupportURL sets the SupportURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTenantSettingsResponseContent) SetSupportUrl(supportUrl *string) {
-	g.SupportUrl = supportUrl
-	g.require(getTenantSettingsResponseContentFieldSupportUrl)
+func (g *GetTenantSettingsResponseContent) SetSupportURL(supportURL *string) {
+	g.SupportURL = supportURL
+	g.require(getTenantSettingsResponseContentFieldSupportURL)
 }
 
-// SetAllowedLogoutUrls sets the AllowedLogoutUrls field and marks it as non-optional;
+// SetAllowedLogoutURLs sets the AllowedLogoutURLs field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTenantSettingsResponseContent) SetAllowedLogoutUrls(allowedLogoutUrls []string) {
-	g.AllowedLogoutUrls = allowedLogoutUrls
-	g.require(getTenantSettingsResponseContentFieldAllowedLogoutUrls)
+func (g *GetTenantSettingsResponseContent) SetAllowedLogoutURLs(allowedLogoutURLs []string) {
+	g.AllowedLogoutURLs = allowedLogoutURLs
+	g.require(getTenantSettingsResponseContentFieldAllowedLogoutURLs)
 }
 
 // SetSessionLifetime sets the SessionLifetime field and marks it as non-optional;
@@ -29806,11 +29806,11 @@ func (g *GetTenantSettingsResponseContent) SetSandboxVersionsAvailable(sandboxVe
 	g.require(getTenantSettingsResponseContentFieldSandboxVersionsAvailable)
 }
 
-// SetDefaultRedirectionUri sets the DefaultRedirectionUri field and marks it as non-optional;
+// SetDefaultRedirectionURI sets the DefaultRedirectionURI field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTenantSettingsResponseContent) SetDefaultRedirectionUri(defaultRedirectionUri *string) {
-	g.DefaultRedirectionUri = defaultRedirectionUri
-	g.require(getTenantSettingsResponseContentFieldDefaultRedirectionUri)
+func (g *GetTenantSettingsResponseContent) SetDefaultRedirectionURI(defaultRedirectionURI *string) {
+	g.DefaultRedirectionURI = defaultRedirectionURI
+	g.require(getTenantSettingsResponseContentFieldDefaultRedirectionURI)
 }
 
 // SetEnabledLocales sets the EnabledLocales field and marks it as non-optional;
@@ -29841,11 +29841,11 @@ func (g *GetTenantSettingsResponseContent) SetOidcLogout(oidcLogout *TenantOidcL
 	g.require(getTenantSettingsResponseContentFieldOidcLogout)
 }
 
-// SetAllowOrganizationNameInAuthenticationApi sets the AllowOrganizationNameInAuthenticationApi field and marks it as non-optional;
+// SetAllowOrganizationNameInAuthenticationAPI sets the AllowOrganizationNameInAuthenticationAPI field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTenantSettingsResponseContent) SetAllowOrganizationNameInAuthenticationApi(allowOrganizationNameInAuthenticationApi *bool) {
-	g.AllowOrganizationNameInAuthenticationApi = allowOrganizationNameInAuthenticationApi
-	g.require(getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationApi)
+func (g *GetTenantSettingsResponseContent) SetAllowOrganizationNameInAuthenticationAPI(allowOrganizationNameInAuthenticationAPI *bool) {
+	g.AllowOrganizationNameInAuthenticationAPI = allowOrganizationNameInAuthenticationAPI
+	g.require(getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI)
 }
 
 // SetCustomizeMfaInPostloginAction sets the CustomizeMfaInPostloginAction field and marks it as non-optional;
@@ -30065,23 +30065,23 @@ func (g *GetUniversalLoginTemplateResponseContent) Accept(visitor GetUniversalLo
 }
 
 var (
-	getUserAuthenticationMethodResponseContentFieldId                            = big.NewInt(1 << 0)
+	getUserAuthenticationMethodResponseContentFieldID                            = big.NewInt(1 << 0)
 	getUserAuthenticationMethodResponseContentFieldType                          = big.NewInt(1 << 1)
 	getUserAuthenticationMethodResponseContentFieldConfirmed                     = big.NewInt(1 << 2)
 	getUserAuthenticationMethodResponseContentFieldName                          = big.NewInt(1 << 3)
 	getUserAuthenticationMethodResponseContentFieldAuthenticationMethods         = big.NewInt(1 << 4)
 	getUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 5)
-	getUserAuthenticationMethodResponseContentFieldLinkId                        = big.NewInt(1 << 6)
+	getUserAuthenticationMethodResponseContentFieldLinkID                        = big.NewInt(1 << 6)
 	getUserAuthenticationMethodResponseContentFieldPhoneNumber                   = big.NewInt(1 << 7)
 	getUserAuthenticationMethodResponseContentFieldEmail                         = big.NewInt(1 << 8)
-	getUserAuthenticationMethodResponseContentFieldKeyId                         = big.NewInt(1 << 9)
+	getUserAuthenticationMethodResponseContentFieldKeyID                         = big.NewInt(1 << 9)
 	getUserAuthenticationMethodResponseContentFieldPublicKey                     = big.NewInt(1 << 10)
 	getUserAuthenticationMethodResponseContentFieldCreatedAt                     = big.NewInt(1 << 11)
 	getUserAuthenticationMethodResponseContentFieldEnrolledAt                    = big.NewInt(1 << 12)
 	getUserAuthenticationMethodResponseContentFieldLastAuthAt                    = big.NewInt(1 << 13)
 	getUserAuthenticationMethodResponseContentFieldCredentialDeviceType          = big.NewInt(1 << 14)
 	getUserAuthenticationMethodResponseContentFieldCredentialBackedUp            = big.NewInt(1 << 15)
-	getUserAuthenticationMethodResponseContentFieldIdentityUserId                = big.NewInt(1 << 16)
+	getUserAuthenticationMethodResponseContentFieldIdentityUserID                = big.NewInt(1 << 16)
 	getUserAuthenticationMethodResponseContentFieldUserAgent                     = big.NewInt(1 << 17)
 	getUserAuthenticationMethodResponseContentFieldAaguid                        = big.NewInt(1 << 18)
 	getUserAuthenticationMethodResponseContentFieldRelyingPartyIdentifier        = big.NewInt(1 << 19)
@@ -30089,7 +30089,7 @@ var (
 
 type GetUserAuthenticationMethodResponseContent struct {
 	// The ID of the authentication method (auto generated)
-	Id   string                       `json:"id" url:"id"`
+	ID   string                       `json:"id" url:"id"`
 	Type AuthenticationMethodTypeEnum `json:"type" url:"type"`
 	// The authentication method status
 	Confirmed *bool `json:"confirmed,omitempty" url:"confirmed,omitempty"`
@@ -30098,13 +30098,13 @@ type GetUserAuthenticationMethodResponseContent struct {
 	AuthenticationMethods         []*UserAuthenticationMethodProperties `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
 	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum    `json:"preferred_authentication_method,omitempty" url:"preferred_authentication_method,omitempty"`
 	// The ID of a linked authentication method. Linked authentication methods will be deleted together.
-	LinkId *string `json:"link_id,omitempty" url:"link_id,omitempty"`
+	LinkID *string `json:"link_id,omitempty" url:"link_id,omitempty"`
 	// Applies to phone authentication methods only. The destination phone number used to send verification codes via text and voice.
 	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
 	// Applies to email and email-verification authentication methods only. The email address used to send verification messages.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 	// Applies to webauthn authentication methods only. The ID of the generated credential.
-	KeyId *string `json:"key_id,omitempty" url:"key_id,omitempty"`
+	KeyID *string `json:"key_id,omitempty" url:"key_id,omitempty"`
 	// Applies to webauthn authentication methods only. The public key.
 	PublicKey *string `json:"public_key,omitempty" url:"public_key,omitempty"`
 	// Authenticator creation date
@@ -30118,7 +30118,7 @@ type GetUserAuthenticationMethodResponseContent struct {
 	// Applies to passkeys only. Whether the credential was backed up.
 	CredentialBackedUp *bool `json:"credential_backed_up,omitempty" url:"credential_backed_up,omitempty"`
 	// Applies to passkeys only. The ID of the user identity linked with the authentication method.
-	IdentityUserId *string `json:"identity_user_id,omitempty" url:"identity_user_id,omitempty"`
+	IdentityUserID *string `json:"identity_user_id,omitempty" url:"identity_user_id,omitempty"`
 	// Applies to passkeys only. The user-agent of the browser used to create the passkey.
 	UserAgent *string `json:"user_agent,omitempty" url:"user_agent,omitempty"`
 	// Applies to passkey authentication methods only. Authenticator Attestation Globally Unique Identifier.
@@ -30133,11 +30133,11 @@ type GetUserAuthenticationMethodResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetUserAuthenticationMethodResponseContent) GetId() string {
+func (g *GetUserAuthenticationMethodResponseContent) GetID() string {
 	if g == nil {
 		return ""
 	}
-	return g.Id
+	return g.ID
 }
 
 func (g *GetUserAuthenticationMethodResponseContent) GetType() AuthenticationMethodTypeEnum {
@@ -30175,11 +30175,11 @@ func (g *GetUserAuthenticationMethodResponseContent) GetPreferredAuthenticationM
 	return *g.PreferredAuthenticationMethod
 }
 
-func (g *GetUserAuthenticationMethodResponseContent) GetLinkId() string {
-	if g == nil || g.LinkId == nil {
+func (g *GetUserAuthenticationMethodResponseContent) GetLinkID() string {
+	if g == nil || g.LinkID == nil {
 		return ""
 	}
-	return *g.LinkId
+	return *g.LinkID
 }
 
 func (g *GetUserAuthenticationMethodResponseContent) GetPhoneNumber() string {
@@ -30196,11 +30196,11 @@ func (g *GetUserAuthenticationMethodResponseContent) GetEmail() string {
 	return *g.Email
 }
 
-func (g *GetUserAuthenticationMethodResponseContent) GetKeyId() string {
-	if g == nil || g.KeyId == nil {
+func (g *GetUserAuthenticationMethodResponseContent) GetKeyID() string {
+	if g == nil || g.KeyID == nil {
 		return ""
 	}
-	return *g.KeyId
+	return *g.KeyID
 }
 
 func (g *GetUserAuthenticationMethodResponseContent) GetPublicKey() string {
@@ -30245,11 +30245,11 @@ func (g *GetUserAuthenticationMethodResponseContent) GetCredentialBackedUp() boo
 	return *g.CredentialBackedUp
 }
 
-func (g *GetUserAuthenticationMethodResponseContent) GetIdentityUserId() string {
-	if g == nil || g.IdentityUserId == nil {
+func (g *GetUserAuthenticationMethodResponseContent) GetIdentityUserID() string {
+	if g == nil || g.IdentityUserID == nil {
 		return ""
 	}
-	return *g.IdentityUserId
+	return *g.IdentityUserID
 }
 
 func (g *GetUserAuthenticationMethodResponseContent) GetUserAgent() string {
@@ -30284,11 +30284,11 @@ func (g *GetUserAuthenticationMethodResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserAuthenticationMethodResponseContent) SetId(id string) {
-	g.Id = id
-	g.require(getUserAuthenticationMethodResponseContentFieldId)
+func (g *GetUserAuthenticationMethodResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getUserAuthenticationMethodResponseContentFieldID)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -30326,11 +30326,11 @@ func (g *GetUserAuthenticationMethodResponseContent) SetPreferredAuthenticationM
 	g.require(getUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod)
 }
 
-// SetLinkId sets the LinkId field and marks it as non-optional;
+// SetLinkID sets the LinkID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserAuthenticationMethodResponseContent) SetLinkId(linkId *string) {
-	g.LinkId = linkId
-	g.require(getUserAuthenticationMethodResponseContentFieldLinkId)
+func (g *GetUserAuthenticationMethodResponseContent) SetLinkID(linkID *string) {
+	g.LinkID = linkID
+	g.require(getUserAuthenticationMethodResponseContentFieldLinkID)
 }
 
 // SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
@@ -30347,11 +30347,11 @@ func (g *GetUserAuthenticationMethodResponseContent) SetEmail(email *string) {
 	g.require(getUserAuthenticationMethodResponseContentFieldEmail)
 }
 
-// SetKeyId sets the KeyId field and marks it as non-optional;
+// SetKeyID sets the KeyID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserAuthenticationMethodResponseContent) SetKeyId(keyId *string) {
-	g.KeyId = keyId
-	g.require(getUserAuthenticationMethodResponseContentFieldKeyId)
+func (g *GetUserAuthenticationMethodResponseContent) SetKeyID(keyID *string) {
+	g.KeyID = keyID
+	g.require(getUserAuthenticationMethodResponseContentFieldKeyID)
 }
 
 // SetPublicKey sets the PublicKey field and marks it as non-optional;
@@ -30396,11 +30396,11 @@ func (g *GetUserAuthenticationMethodResponseContent) SetCredentialBackedUp(crede
 	g.require(getUserAuthenticationMethodResponseContentFieldCredentialBackedUp)
 }
 
-// SetIdentityUserId sets the IdentityUserId field and marks it as non-optional;
+// SetIdentityUserID sets the IdentityUserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserAuthenticationMethodResponseContent) SetIdentityUserId(identityUserId *string) {
-	g.IdentityUserId = identityUserId
-	g.require(getUserAuthenticationMethodResponseContentFieldIdentityUserId)
+func (g *GetUserAuthenticationMethodResponseContent) SetIdentityUserID(identityUserID *string) {
+	g.IdentityUserID = identityUserID
+	g.require(getUserAuthenticationMethodResponseContentFieldIdentityUserID)
 }
 
 // SetUserAgent sets the UserAgent field and marks it as non-optional;
@@ -30575,7 +30575,7 @@ func (g *GetUserGroupsResponseContent) String() string {
 }
 
 var (
-	getVerifiableCredentialTemplateResponseContentFieldId                         = big.NewInt(1 << 0)
+	getVerifiableCredentialTemplateResponseContentFieldID                         = big.NewInt(1 << 0)
 	getVerifiableCredentialTemplateResponseContentFieldName                       = big.NewInt(1 << 1)
 	getVerifiableCredentialTemplateResponseContentFieldType                       = big.NewInt(1 << 2)
 	getVerifiableCredentialTemplateResponseContentFieldDialect                    = big.NewInt(1 << 3)
@@ -30588,7 +30588,7 @@ var (
 
 type GetVerifiableCredentialTemplateResponseContent struct {
 	// The id of the template.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the template.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The type of the template.
@@ -30613,11 +30613,11 @@ type GetVerifiableCredentialTemplateResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (g *GetVerifiableCredentialTemplateResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetVerifiableCredentialTemplateResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetVerifiableCredentialTemplateResponseContent) GetName() string {
@@ -30687,11 +30687,11 @@ func (g *GetVerifiableCredentialTemplateResponseContent) require(field *big.Int)
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetVerifiableCredentialTemplateResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getVerifiableCredentialTemplateResponseContentFieldId)
+func (g *GetVerifiableCredentialTemplateResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getVerifiableCredentialTemplateResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -30803,11 +30803,11 @@ func (g *GetVerifiableCredentialTemplateResponseContent) String() string {
 
 // Represents the metadata of a group. Member lists are retrieved via a separate endpoint.
 var (
-	groupFieldId             = big.NewInt(1 << 0)
+	groupFieldID             = big.NewInt(1 << 0)
 	groupFieldName           = big.NewInt(1 << 1)
-	groupFieldExternalId     = big.NewInt(1 << 2)
-	groupFieldConnectionId   = big.NewInt(1 << 3)
-	groupFieldOrganizationId = big.NewInt(1 << 4)
+	groupFieldExternalID     = big.NewInt(1 << 2)
+	groupFieldConnectionID   = big.NewInt(1 << 3)
+	groupFieldOrganizationID = big.NewInt(1 << 4)
 	groupFieldTenantName     = big.NewInt(1 << 5)
 	groupFieldDescription    = big.NewInt(1 << 6)
 	groupFieldCreatedAt      = big.NewInt(1 << 7)
@@ -30816,15 +30816,15 @@ var (
 
 type Group struct {
 	// Unique identifier for the group (service-generated).
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of the group. Must be unique within its scope (connection, organization, or tenant). Must contain between 1 and 128 printable ASCII characters.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// External identifier for the group, often used for SCIM synchronization. Max length of 256 characters.
-	ExternalId *string `json:"external_id,omitempty" url:"external_id,omitempty"`
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Identifier for the connection this group belongs to (if a connection group).
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// Identifier for the organization this group belongs to (if an organization group).
-	OrganizationId *string `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	OrganizationID *string `json:"organization_id,omitempty" url:"organization_id,omitempty"`
 	// Identifier for the tenant this group belongs to.
 	TenantName  *string `json:"tenant_name,omitempty" url:"tenant_name,omitempty"`
 	Description *string `json:"description,omitempty" url:"description,omitempty"`
@@ -30840,11 +30840,11 @@ type Group struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *Group) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *Group) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *Group) GetName() string {
@@ -30854,25 +30854,25 @@ func (g *Group) GetName() string {
 	return *g.Name
 }
 
-func (g *Group) GetExternalId() string {
-	if g == nil || g.ExternalId == nil {
+func (g *Group) GetExternalID() string {
+	if g == nil || g.ExternalID == nil {
 		return ""
 	}
-	return *g.ExternalId
+	return *g.ExternalID
 }
 
-func (g *Group) GetConnectionId() string {
-	if g == nil || g.ConnectionId == nil {
+func (g *Group) GetConnectionID() string {
+	if g == nil || g.ConnectionID == nil {
 		return ""
 	}
-	return *g.ConnectionId
+	return *g.ConnectionID
 }
 
-func (g *Group) GetOrganizationId() string {
-	if g == nil || g.OrganizationId == nil {
+func (g *Group) GetOrganizationID() string {
+	if g == nil || g.OrganizationID == nil {
 		return ""
 	}
-	return *g.OrganizationId
+	return *g.OrganizationID
 }
 
 func (g *Group) GetTenantName() string {
@@ -30914,11 +30914,11 @@ func (g *Group) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *Group) SetId(id *string) {
-	g.Id = id
-	g.require(groupFieldId)
+func (g *Group) SetID(id *string) {
+	g.ID = id
+	g.require(groupFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -30928,25 +30928,25 @@ func (g *Group) SetName(name *string) {
 	g.require(groupFieldName)
 }
 
-// SetExternalId sets the ExternalId field and marks it as non-optional;
+// SetExternalID sets the ExternalID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *Group) SetExternalId(externalId *string) {
-	g.ExternalId = externalId
-	g.require(groupFieldExternalId)
+func (g *Group) SetExternalID(externalID *string) {
+	g.ExternalID = externalID
+	g.require(groupFieldExternalID)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *Group) SetConnectionId(connectionId *string) {
-	g.ConnectionId = connectionId
-	g.require(groupFieldConnectionId)
+func (g *Group) SetConnectionID(connectionID *string) {
+	g.ConnectionID = connectionID
+	g.require(groupFieldConnectionID)
 }
 
-// SetOrganizationId sets the OrganizationId field and marks it as non-optional;
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *Group) SetOrganizationId(organizationId *string) {
-	g.OrganizationId = organizationId
-	g.require(groupFieldOrganizationId)
+func (g *Group) SetOrganizationID(organizationID *string) {
+	g.OrganizationID = organizationID
+	g.require(groupFieldOrganizationID)
 }
 
 // SetTenantName sets the TenantName field and marks it as non-optional;
@@ -31316,17 +31316,17 @@ func (g GuardianFactorsProviderSmsProviderEnum) Ptr() *GuardianFactorsProviderSm
 
 // This must be provided to verify primary social, enterprise and passwordless email identities. Also, is needed to verify secondary identities.
 var (
-	identityFieldUserId       = big.NewInt(1 << 0)
+	identityFieldUserID       = big.NewInt(1 << 0)
 	identityFieldProvider     = big.NewInt(1 << 1)
-	identityFieldConnectionId = big.NewInt(1 << 2)
+	identityFieldConnectionID = big.NewInt(1 << 2)
 )
 
 type Identity struct {
 	// user_id of the identity to be verified.
-	UserId   string               `json:"user_id" url:"user_id"`
+	UserID   string               `json:"user_id" url:"user_id"`
 	Provider IdentityProviderEnum `json:"provider" url:"provider"`
 	// connection_id of the identity.
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -31335,11 +31335,11 @@ type Identity struct {
 	rawJSON         json.RawMessage
 }
 
-func (i *Identity) GetUserId() string {
+func (i *Identity) GetUserID() string {
 	if i == nil {
 		return ""
 	}
-	return i.UserId
+	return i.UserID
 }
 
 func (i *Identity) GetProvider() IdentityProviderEnum {
@@ -31349,11 +31349,11 @@ func (i *Identity) GetProvider() IdentityProviderEnum {
 	return i.Provider
 }
 
-func (i *Identity) GetConnectionId() string {
-	if i == nil || i.ConnectionId == nil {
+func (i *Identity) GetConnectionID() string {
+	if i == nil || i.ConnectionID == nil {
 		return ""
 	}
-	return *i.ConnectionId
+	return *i.ConnectionID
 }
 
 func (i *Identity) GetExtraProperties() map[string]interface{} {
@@ -31367,11 +31367,11 @@ func (i *Identity) require(field *big.Int) {
 	i.explicitFields.Or(i.explicitFields, field)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (i *Identity) SetUserId(userId string) {
-	i.UserId = userId
-	i.require(identityFieldUserId)
+func (i *Identity) SetUserID(userID string) {
+	i.UserID = userID
+	i.require(identityFieldUserID)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -31381,11 +31381,11 @@ func (i *Identity) SetProvider(provider IdentityProviderEnum) {
 	i.require(identityFieldProvider)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (i *Identity) SetConnectionId(connectionId *string) {
-	i.ConnectionId = connectionId
-	i.require(identityFieldConnectionId)
+func (i *Identity) SetConnectionID(connectionID *string) {
+	i.ConnectionID = connectionID
+	i.require(identityFieldConnectionID)
 }
 
 func (i *Identity) UnmarshalJSON(data []byte) error {
@@ -31457,7 +31457,7 @@ const (
 	IdentityProviderEnumGoogleApps          IdentityProviderEnum = "google-apps"
 	IdentityProviderEnumGoogleOauth2        IdentityProviderEnum = "google-oauth2"
 	IdentityProviderEnumInstagram           IdentityProviderEnum = "instagram"
-	IdentityProviderEnumIp                  IdentityProviderEnum = "ip"
+	IdentityProviderEnumIP                  IdentityProviderEnum = "ip"
 	IdentityProviderEnumLine                IdentityProviderEnum = "line"
 	IdentityProviderEnumLinkedin            IdentityProviderEnum = "linkedin"
 	IdentityProviderEnumMiicard             IdentityProviderEnum = "miicard"
@@ -31550,7 +31550,7 @@ func NewIdentityProviderEnumFromString(s string) (IdentityProviderEnum, error) {
 	case "instagram":
 		return IdentityProviderEnumInstagram, nil
 	case "ip":
-		return IdentityProviderEnumIp, nil
+		return IdentityProviderEnumIP, nil
 	case "line":
 		return IdentityProviderEnumLine, nil
 	case "linkedin":
@@ -31825,17 +31825,17 @@ func (i *ImportEncryptionKeyResponseContent) String() string {
 // Integration defines a self contained functioning unit which partners
 // publish. A partner may create one or many of these integrations.
 var (
-	integrationFieldId                = big.NewInt(1 << 0)
-	integrationFieldCatalogId         = big.NewInt(1 << 1)
-	integrationFieldUrlSlug           = big.NewInt(1 << 2)
-	integrationFieldPartnerId         = big.NewInt(1 << 3)
+	integrationFieldID                = big.NewInt(1 << 0)
+	integrationFieldCatalogID         = big.NewInt(1 << 1)
+	integrationFieldURLSlug           = big.NewInt(1 << 2)
+	integrationFieldPartnerID         = big.NewInt(1 << 3)
 	integrationFieldName              = big.NewInt(1 << 4)
 	integrationFieldDescription       = big.NewInt(1 << 5)
 	integrationFieldShortDescription  = big.NewInt(1 << 6)
 	integrationFieldLogo              = big.NewInt(1 << 7)
 	integrationFieldFeatureType       = big.NewInt(1 << 8)
-	integrationFieldTermsOfUseUrl     = big.NewInt(1 << 9)
-	integrationFieldPrivacyPolicyUrl  = big.NewInt(1 << 10)
+	integrationFieldTermsOfUseURL     = big.NewInt(1 << 9)
+	integrationFieldPrivacyPolicyURL  = big.NewInt(1 << 10)
 	integrationFieldPublicSupportLink = big.NewInt(1 << 11)
 	integrationFieldCurrentRelease    = big.NewInt(1 << 12)
 	integrationFieldCreatedAt         = big.NewInt(1 << 13)
@@ -31845,14 +31845,14 @@ var (
 type Integration struct {
 	// id is a system generated GUID. This same ID is designed to be federated in
 	// all the applicable localities.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// catalog_id refers to the ID in the marketplace catalog
-	CatalogId *string `json:"catalog_id,omitempty" url:"catalog_id,omitempty"`
+	CatalogID *string `json:"catalog_id,omitempty" url:"catalog_id,omitempty"`
 	// url_slug refers to the url_slug in the marketplace catalog
-	UrlSlug *string `json:"url_slug,omitempty" url:"url_slug,omitempty"`
+	URLSlug *string `json:"url_slug,omitempty" url:"url_slug,omitempty"`
 	// partner_id is the foreign key reference to the partner account this
 	// integration belongs to.
-	PartnerId *string `json:"partner_id,omitempty" url:"partner_id,omitempty"`
+	PartnerID *string `json:"partner_id,omitempty" url:"partner_id,omitempty"`
 	// name is the integration name, which will be used for display purposes in
 	// the marketplace.
 	//
@@ -31866,8 +31866,8 @@ type Integration struct {
 	ShortDescription  *string                     `json:"short_description,omitempty" url:"short_description,omitempty"`
 	Logo              *string                     `json:"logo,omitempty" url:"logo,omitempty"`
 	FeatureType       *IntegrationFeatureTypeEnum `json:"feature_type,omitempty" url:"feature_type,omitempty"`
-	TermsOfUseUrl     *string                     `json:"terms_of_use_url,omitempty" url:"terms_of_use_url,omitempty"`
-	PrivacyPolicyUrl  *string                     `json:"privacy_policy_url,omitempty" url:"privacy_policy_url,omitempty"`
+	TermsOfUseURL     *string                     `json:"terms_of_use_url,omitempty" url:"terms_of_use_url,omitempty"`
+	PrivacyPolicyURL  *string                     `json:"privacy_policy_url,omitempty" url:"privacy_policy_url,omitempty"`
 	PublicSupportLink *string                     `json:"public_support_link,omitempty" url:"public_support_link,omitempty"`
 	CurrentRelease    *IntegrationRelease         `json:"current_release,omitempty" url:"current_release,omitempty"`
 	CreatedAt         *time.Time                  `json:"created_at,omitempty" url:"created_at,omitempty"`
@@ -31880,32 +31880,32 @@ type Integration struct {
 	rawJSON         json.RawMessage
 }
 
-func (i *Integration) GetId() string {
-	if i == nil || i.Id == nil {
+func (i *Integration) GetID() string {
+	if i == nil || i.ID == nil {
 		return ""
 	}
-	return *i.Id
+	return *i.ID
 }
 
-func (i *Integration) GetCatalogId() string {
-	if i == nil || i.CatalogId == nil {
+func (i *Integration) GetCatalogID() string {
+	if i == nil || i.CatalogID == nil {
 		return ""
 	}
-	return *i.CatalogId
+	return *i.CatalogID
 }
 
-func (i *Integration) GetUrlSlug() string {
-	if i == nil || i.UrlSlug == nil {
+func (i *Integration) GetURLSlug() string {
+	if i == nil || i.URLSlug == nil {
 		return ""
 	}
-	return *i.UrlSlug
+	return *i.URLSlug
 }
 
-func (i *Integration) GetPartnerId() string {
-	if i == nil || i.PartnerId == nil {
+func (i *Integration) GetPartnerID() string {
+	if i == nil || i.PartnerID == nil {
 		return ""
 	}
-	return *i.PartnerId
+	return *i.PartnerID
 }
 
 func (i *Integration) GetName() string {
@@ -31943,18 +31943,18 @@ func (i *Integration) GetFeatureType() IntegrationFeatureTypeEnum {
 	return *i.FeatureType
 }
 
-func (i *Integration) GetTermsOfUseUrl() string {
-	if i == nil || i.TermsOfUseUrl == nil {
+func (i *Integration) GetTermsOfUseURL() string {
+	if i == nil || i.TermsOfUseURL == nil {
 		return ""
 	}
-	return *i.TermsOfUseUrl
+	return *i.TermsOfUseURL
 }
 
-func (i *Integration) GetPrivacyPolicyUrl() string {
-	if i == nil || i.PrivacyPolicyUrl == nil {
+func (i *Integration) GetPrivacyPolicyURL() string {
+	if i == nil || i.PrivacyPolicyURL == nil {
 		return ""
 	}
-	return *i.PrivacyPolicyUrl
+	return *i.PrivacyPolicyURL
 }
 
 func (i *Integration) GetPublicSupportLink() string {
@@ -31996,32 +31996,32 @@ func (i *Integration) require(field *big.Int) {
 	i.explicitFields.Or(i.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (i *Integration) SetId(id *string) {
-	i.Id = id
-	i.require(integrationFieldId)
+func (i *Integration) SetID(id *string) {
+	i.ID = id
+	i.require(integrationFieldID)
 }
 
-// SetCatalogId sets the CatalogId field and marks it as non-optional;
+// SetCatalogID sets the CatalogID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (i *Integration) SetCatalogId(catalogId *string) {
-	i.CatalogId = catalogId
-	i.require(integrationFieldCatalogId)
+func (i *Integration) SetCatalogID(catalogID *string) {
+	i.CatalogID = catalogID
+	i.require(integrationFieldCatalogID)
 }
 
-// SetUrlSlug sets the UrlSlug field and marks it as non-optional;
+// SetURLSlug sets the URLSlug field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (i *Integration) SetUrlSlug(urlSlug *string) {
-	i.UrlSlug = urlSlug
-	i.require(integrationFieldUrlSlug)
+func (i *Integration) SetURLSlug(urlSlug *string) {
+	i.URLSlug = urlSlug
+	i.require(integrationFieldURLSlug)
 }
 
-// SetPartnerId sets the PartnerId field and marks it as non-optional;
+// SetPartnerID sets the PartnerID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (i *Integration) SetPartnerId(partnerId *string) {
-	i.PartnerId = partnerId
-	i.require(integrationFieldPartnerId)
+func (i *Integration) SetPartnerID(partnerID *string) {
+	i.PartnerID = partnerID
+	i.require(integrationFieldPartnerID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -32059,18 +32059,18 @@ func (i *Integration) SetFeatureType(featureType *IntegrationFeatureTypeEnum) {
 	i.require(integrationFieldFeatureType)
 }
 
-// SetTermsOfUseUrl sets the TermsOfUseUrl field and marks it as non-optional;
+// SetTermsOfUseURL sets the TermsOfUseURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (i *Integration) SetTermsOfUseUrl(termsOfUseUrl *string) {
-	i.TermsOfUseUrl = termsOfUseUrl
-	i.require(integrationFieldTermsOfUseUrl)
+func (i *Integration) SetTermsOfUseURL(termsOfUseURL *string) {
+	i.TermsOfUseURL = termsOfUseURL
+	i.require(integrationFieldTermsOfUseURL)
 }
 
-// SetPrivacyPolicyUrl sets the PrivacyPolicyUrl field and marks it as non-optional;
+// SetPrivacyPolicyURL sets the PrivacyPolicyURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (i *Integration) SetPrivacyPolicyUrl(privacyPolicyUrl *string) {
-	i.PrivacyPolicyUrl = privacyPolicyUrl
-	i.require(integrationFieldPrivacyPolicyUrl)
+func (i *Integration) SetPrivacyPolicyURL(privacyPolicyURL *string) {
+	i.PrivacyPolicyURL = privacyPolicyURL
+	i.require(integrationFieldPrivacyPolicyURL)
 }
 
 // SetPublicSupportLink sets the PublicSupportLink field and marks it as non-optional;
@@ -32160,7 +32160,7 @@ const (
 	IntegrationFeatureTypeEnumAction           IntegrationFeatureTypeEnum = "action"
 	IntegrationFeatureTypeEnumSocialConnection IntegrationFeatureTypeEnum = "social_connection"
 	IntegrationFeatureTypeEnumLogStream        IntegrationFeatureTypeEnum = "log_stream"
-	IntegrationFeatureTypeEnumSsoIntegration   IntegrationFeatureTypeEnum = "sso_integration"
+	IntegrationFeatureTypeEnumSSOIntegration   IntegrationFeatureTypeEnum = "sso_integration"
 	IntegrationFeatureTypeEnumSmsProvider      IntegrationFeatureTypeEnum = "sms_provider"
 )
 
@@ -32175,7 +32175,7 @@ func NewIntegrationFeatureTypeEnumFromString(s string) (IntegrationFeatureTypeEn
 	case "log_stream":
 		return IntegrationFeatureTypeEnumLogStream, nil
 	case "sso_integration":
-		return IntegrationFeatureTypeEnumSsoIntegration, nil
+		return IntegrationFeatureTypeEnumSSOIntegration, nil
 	case "sms_provider":
 		return IntegrationFeatureTypeEnumSmsProvider, nil
 	}
@@ -32188,7 +32188,7 @@ func (i IntegrationFeatureTypeEnum) Ptr() *IntegrationFeatureTypeEnum {
 }
 
 var (
-	integrationReleaseFieldId                    = big.NewInt(1 << 0)
+	integrationReleaseFieldID                    = big.NewInt(1 << 0)
 	integrationReleaseFieldTrigger               = big.NewInt(1 << 1)
 	integrationReleaseFieldSemver                = big.NewInt(1 << 2)
 	integrationReleaseFieldRequiredSecrets       = big.NewInt(1 << 3)
@@ -32197,7 +32197,7 @@ var (
 
 type IntegrationRelease struct {
 	// The id of the associated IntegrationRelease
-	Id      *string            `json:"id,omitempty" url:"id,omitempty"`
+	ID      *string            `json:"id,omitempty" url:"id,omitempty"`
 	Trigger *ActionTrigger     `json:"trigger,omitempty" url:"trigger,omitempty"`
 	Semver  *IntegrationSemVer `json:"semver,omitempty" url:"semver,omitempty"`
 	// required_secrets declares all the necessary secrets for an integration to
@@ -32214,11 +32214,11 @@ type IntegrationRelease struct {
 	rawJSON json.RawMessage
 }
 
-func (i *IntegrationRelease) GetId() string {
-	if i == nil || i.Id == nil {
+func (i *IntegrationRelease) GetID() string {
+	if i == nil || i.ID == nil {
 		return ""
 	}
-	return *i.Id
+	return *i.ID
 }
 
 func (i *IntegrationRelease) GetTrigger() ActionTrigger {
@@ -32260,11 +32260,11 @@ func (i *IntegrationRelease) require(field *big.Int) {
 	i.explicitFields.Or(i.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (i *IntegrationRelease) SetId(id *string) {
-	i.Id = id
-	i.require(integrationReleaseFieldId)
+func (i *IntegrationRelease) SetID(id *string) {
+	i.ID = id
+	i.require(integrationReleaseFieldID)
 }
 
 // SetTrigger sets the Trigger field and marks it as non-optional;
@@ -32777,14 +32777,14 @@ func (i *IntegrationSemVer) String() string {
 type JobFileFormatEnum string
 
 const (
-	JobFileFormatEnumJson JobFileFormatEnum = "json"
+	JobFileFormatEnumJSON JobFileFormatEnum = "json"
 	JobFileFormatEnumCsv  JobFileFormatEnum = "csv"
 )
 
 func NewJobFileFormatEnumFromString(s string) (JobFileFormatEnum, error) {
 	switch s {
 	case "json":
-		return JobFileFormatEnumJson, nil
+		return JobFileFormatEnumJSON, nil
 	case "csv":
 		return JobFileFormatEnumCsv, nil
 	}
@@ -35679,18 +35679,18 @@ var (
 	logFieldType            = big.NewInt(1 << 1)
 	logFieldDescription     = big.NewInt(1 << 2)
 	logFieldConnection      = big.NewInt(1 << 3)
-	logFieldConnectionId    = big.NewInt(1 << 4)
-	logFieldClientId        = big.NewInt(1 << 5)
+	logFieldConnectionID    = big.NewInt(1 << 4)
+	logFieldClientID        = big.NewInt(1 << 5)
 	logFieldClientName      = big.NewInt(1 << 6)
-	logFieldIp              = big.NewInt(1 << 7)
+	logFieldIP              = big.NewInt(1 << 7)
 	logFieldHostname        = big.NewInt(1 << 8)
-	logFieldUserId          = big.NewInt(1 << 9)
+	logFieldUserID          = big.NewInt(1 << 9)
 	logFieldUserName        = big.NewInt(1 << 10)
 	logFieldAudience        = big.NewInt(1 << 11)
 	logFieldScope           = big.NewInt(1 << 12)
 	logFieldStrategy        = big.NewInt(1 << 13)
 	logFieldStrategyType    = big.NewInt(1 << 14)
-	logFieldLogId           = big.NewInt(1 << 15)
+	logFieldLogID           = big.NewInt(1 << 15)
 	logFieldIsMobile        = big.NewInt(1 << 16)
 	logFieldDetails         = big.NewInt(1 << 17)
 	logFieldUserAgent       = big.NewInt(1 << 18)
@@ -35707,17 +35707,17 @@ type Log struct {
 	// Name of the connection the event relates to.
 	Connection *string `json:"connection,omitempty" url:"connection,omitempty"`
 	// ID of the connection the event relates to.
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// ID of the client (application).
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// Name of the client (application).
 	ClientName *string `json:"client_name,omitempty" url:"client_name,omitempty"`
 	// IP address of the log event source.
-	Ip *string `json:"ip,omitempty" url:"ip,omitempty"`
+	IP *string `json:"ip,omitempty" url:"ip,omitempty"`
 	// Hostname the event applies to.
 	Hostname *string `json:"hostname,omitempty" url:"hostname,omitempty"`
 	// ID of the user involved in the event.
-	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Name of the user involved in the event.
 	UserName *string `json:"user_name,omitempty" url:"user_name,omitempty"`
 	// API audience the event applies to.
@@ -35729,7 +35729,7 @@ type Log struct {
 	// Type of strategy involved in the event.
 	StrategyType *string `json:"strategy_type,omitempty" url:"strategy_type,omitempty"`
 	// Unique ID of the event.
-	LogId *string `json:"log_id,omitempty" url:"log_id,omitempty"`
+	LogID *string `json:"log_id,omitempty" url:"log_id,omitempty"`
 	// Whether the client was a mobile device (true) or desktop/laptop/server (false).
 	IsMobile *bool       `json:"isMobile,omitempty" url:"isMobile,omitempty"`
 	Details  *LogDetails `json:"details,omitempty" url:"details,omitempty"`
@@ -35774,18 +35774,18 @@ func (l *Log) GetConnection() string {
 	return *l.Connection
 }
 
-func (l *Log) GetConnectionId() string {
-	if l == nil || l.ConnectionId == nil {
+func (l *Log) GetConnectionID() string {
+	if l == nil || l.ConnectionID == nil {
 		return ""
 	}
-	return *l.ConnectionId
+	return *l.ConnectionID
 }
 
-func (l *Log) GetClientId() string {
-	if l == nil || l.ClientId == nil {
+func (l *Log) GetClientID() string {
+	if l == nil || l.ClientID == nil {
 		return ""
 	}
-	return *l.ClientId
+	return *l.ClientID
 }
 
 func (l *Log) GetClientName() string {
@@ -35795,11 +35795,11 @@ func (l *Log) GetClientName() string {
 	return *l.ClientName
 }
 
-func (l *Log) GetIp() string {
-	if l == nil || l.Ip == nil {
+func (l *Log) GetIP() string {
+	if l == nil || l.IP == nil {
 		return ""
 	}
-	return *l.Ip
+	return *l.IP
 }
 
 func (l *Log) GetHostname() string {
@@ -35809,11 +35809,11 @@ func (l *Log) GetHostname() string {
 	return *l.Hostname
 }
 
-func (l *Log) GetUserId() string {
-	if l == nil || l.UserId == nil {
+func (l *Log) GetUserID() string {
+	if l == nil || l.UserID == nil {
 		return ""
 	}
-	return *l.UserId
+	return *l.UserID
 }
 
 func (l *Log) GetUserName() string {
@@ -35851,11 +35851,11 @@ func (l *Log) GetStrategyType() string {
 	return *l.StrategyType
 }
 
-func (l *Log) GetLogId() string {
-	if l == nil || l.LogId == nil {
+func (l *Log) GetLogID() string {
+	if l == nil || l.LogID == nil {
 		return ""
 	}
-	return *l.LogId
+	return *l.LogID
 }
 
 func (l *Log) GetIsMobile() bool {
@@ -35932,18 +35932,18 @@ func (l *Log) SetConnection(connection *string) {
 	l.require(logFieldConnection)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *Log) SetConnectionId(connectionId *string) {
-	l.ConnectionId = connectionId
-	l.require(logFieldConnectionId)
+func (l *Log) SetConnectionID(connectionID *string) {
+	l.ConnectionID = connectionID
+	l.require(logFieldConnectionID)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *Log) SetClientId(clientId *string) {
-	l.ClientId = clientId
-	l.require(logFieldClientId)
+func (l *Log) SetClientID(clientID *string) {
+	l.ClientID = clientID
+	l.require(logFieldClientID)
 }
 
 // SetClientName sets the ClientName field and marks it as non-optional;
@@ -35953,11 +35953,11 @@ func (l *Log) SetClientName(clientName *string) {
 	l.require(logFieldClientName)
 }
 
-// SetIp sets the Ip field and marks it as non-optional;
+// SetIP sets the IP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *Log) SetIp(ip *string) {
-	l.Ip = ip
-	l.require(logFieldIp)
+func (l *Log) SetIP(ip *string) {
+	l.IP = ip
+	l.require(logFieldIP)
 }
 
 // SetHostname sets the Hostname field and marks it as non-optional;
@@ -35967,11 +35967,11 @@ func (l *Log) SetHostname(hostname *string) {
 	l.require(logFieldHostname)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *Log) SetUserId(userId *string) {
-	l.UserId = userId
-	l.require(logFieldUserId)
+func (l *Log) SetUserID(userID *string) {
+	l.UserID = userID
+	l.require(logFieldUserID)
 }
 
 // SetUserName sets the UserName field and marks it as non-optional;
@@ -36009,11 +36009,11 @@ func (l *Log) SetStrategyType(strategyType *string) {
 	l.require(logFieldStrategyType)
 }
 
-// SetLogId sets the LogId field and marks it as non-optional;
+// SetLogID sets the LogID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *Log) SetLogId(logId *string) {
-	l.LogId = logId
-	l.require(logFieldLogId)
+func (l *Log) SetLogID(logID *string) {
+	l.LogID = logID
+	l.require(logFieldLogID)
 }
 
 // SetIsMobile sets the IsMobile field and marks it as non-optional;
@@ -37185,19 +37185,19 @@ const (
 	// Update Connections Keys
 	OauthScopeUpdateConnectionsKeys OauthScope = "update:connections_keys"
 	// Read Scim Config
-	OauthScopeReadScimConfig OauthScope = "read:scim_config"
+	OauthScopeReadSCIMConfig OauthScope = "read:scim_config"
 	// Create Scim Config
-	OauthScopeCreateScimConfig OauthScope = "create:scim_config"
+	OauthScopeCreateSCIMConfig OauthScope = "create:scim_config"
 	// Update Scim Config
-	OauthScopeUpdateScimConfig OauthScope = "update:scim_config"
+	OauthScopeUpdateSCIMConfig OauthScope = "update:scim_config"
 	// Delete Scim Config
-	OauthScopeDeleteScimConfig OauthScope = "delete:scim_config"
+	OauthScopeDeleteSCIMConfig OauthScope = "delete:scim_config"
 	// Read Scim Token
-	OauthScopeReadScimToken OauthScope = "read:scim_token"
+	OauthScopeReadSCIMToken OauthScope = "read:scim_token"
 	// Create Scim Token
-	OauthScopeCreateScimToken OauthScope = "create:scim_token"
+	OauthScopeCreateSCIMToken OauthScope = "create:scim_token"
 	// Delete Scim Token
-	OauthScopeDeleteScimToken OauthScope = "delete:scim_token"
+	OauthScopeDeleteSCIMToken OauthScope = "delete:scim_token"
 	// Delete Users
 	OauthScopeDeleteUsers OauthScope = "delete:users"
 	// Read Custom Domains
@@ -37365,13 +37365,13 @@ const (
 	// Update Tenant Settings
 	OauthScopeUpdateTenantSettings OauthScope = "update:tenant_settings"
 	// Read Network Acls
-	OauthScopeReadNetworkAcls OauthScope = "read:network_acls"
+	OauthScopeReadNetworkACLs OauthScope = "read:network_acls"
 	// Create Network Acls
-	OauthScopeCreateNetworkAcls OauthScope = "create:network_acls"
+	OauthScopeCreateNetworkACLs OauthScope = "create:network_acls"
 	// Update Network Acls
-	OauthScopeUpdateNetworkAcls OauthScope = "update:network_acls"
+	OauthScopeUpdateNetworkACLs OauthScope = "update:network_acls"
 	// Delete Network Acls
-	OauthScopeDeleteNetworkAcls OauthScope = "delete:network_acls"
+	OauthScopeDeleteNetworkACLs OauthScope = "delete:network_acls"
 	// Read Organizations
 	OauthScopeReadOrganizations OauthScope = "read:organizations"
 	// Read Organizations Summary
@@ -37477,9 +37477,9 @@ const (
 	// Update Self Service Profile Custom Texts
 	OauthScopeUpdateSelfServiceProfileCustomTexts OauthScope = "update:self_service_profile_custom_texts"
 	// Create Sso Access Tickets
-	OauthScopeCreateSsoAccessTickets OauthScope = "create:sso_access_tickets"
+	OauthScopeCreateSSOAccessTickets OauthScope = "create:sso_access_tickets"
 	// Delete Sso Access Tickets
-	OauthScopeDeleteSsoAccessTickets OauthScope = "delete:sso_access_tickets"
+	OauthScopeDeleteSSOAccessTickets OauthScope = "delete:sso_access_tickets"
 	// Read Sessions
 	OauthScopeReadSessions OauthScope = "read:sessions"
 	// Update Sessions
@@ -37685,19 +37685,19 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 	case "update:connections_keys":
 		return OauthScopeUpdateConnectionsKeys, nil
 	case "read:scim_config":
-		return OauthScopeReadScimConfig, nil
+		return OauthScopeReadSCIMConfig, nil
 	case "create:scim_config":
-		return OauthScopeCreateScimConfig, nil
+		return OauthScopeCreateSCIMConfig, nil
 	case "update:scim_config":
-		return OauthScopeUpdateScimConfig, nil
+		return OauthScopeUpdateSCIMConfig, nil
 	case "delete:scim_config":
-		return OauthScopeDeleteScimConfig, nil
+		return OauthScopeDeleteSCIMConfig, nil
 	case "read:scim_token":
-		return OauthScopeReadScimToken, nil
+		return OauthScopeReadSCIMToken, nil
 	case "create:scim_token":
-		return OauthScopeCreateScimToken, nil
+		return OauthScopeCreateSCIMToken, nil
 	case "delete:scim_token":
-		return OauthScopeDeleteScimToken, nil
+		return OauthScopeDeleteSCIMToken, nil
 	case "delete:users":
 		return OauthScopeDeleteUsers, nil
 	case "read:custom_domains":
@@ -37865,13 +37865,13 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 	case "update:tenant_settings":
 		return OauthScopeUpdateTenantSettings, nil
 	case "read:network_acls":
-		return OauthScopeReadNetworkAcls, nil
+		return OauthScopeReadNetworkACLs, nil
 	case "create:network_acls":
-		return OauthScopeCreateNetworkAcls, nil
+		return OauthScopeCreateNetworkACLs, nil
 	case "update:network_acls":
-		return OauthScopeUpdateNetworkAcls, nil
+		return OauthScopeUpdateNetworkACLs, nil
 	case "delete:network_acls":
-		return OauthScopeDeleteNetworkAcls, nil
+		return OauthScopeDeleteNetworkACLs, nil
 	case "read:organizations":
 		return OauthScopeReadOrganizations, nil
 	case "read:organizations_summary":
@@ -37977,9 +37977,9 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 	case "update:self_service_profile_custom_texts":
 		return OauthScopeUpdateSelfServiceProfileCustomTexts, nil
 	case "create:sso_access_tickets":
-		return OauthScopeCreateSsoAccessTickets, nil
+		return OauthScopeCreateSSOAccessTickets, nil
 	case "delete:sso_access_tickets":
-		return OauthScopeDeleteSsoAccessTickets, nil
+		return OauthScopeDeleteSSOAccessTickets, nil
 	case "read:sessions":
 		return OauthScopeReadSessions, nil
 	case "update:sessions":
@@ -38082,7 +38082,7 @@ func (o OauthScope) Ptr() *OauthScope {
 }
 
 var (
-	organizationFieldId          = big.NewInt(1 << 0)
+	organizationFieldID          = big.NewInt(1 << 0)
 	organizationFieldName        = big.NewInt(1 << 1)
 	organizationFieldDisplayName = big.NewInt(1 << 2)
 	organizationFieldBranding    = big.NewInt(1 << 3)
@@ -38092,7 +38092,7 @@ var (
 
 type Organization struct {
 	// Organization identifier.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
@@ -38109,11 +38109,11 @@ type Organization struct {
 	rawJSON json.RawMessage
 }
 
-func (o *Organization) GetId() string {
-	if o == nil || o.Id == nil {
+func (o *Organization) GetID() string {
+	if o == nil || o.ID == nil {
 		return ""
 	}
-	return *o.Id
+	return *o.ID
 }
 
 func (o *Organization) GetName() string {
@@ -38162,11 +38162,11 @@ func (o *Organization) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *Organization) SetId(id *string) {
-	o.Id = id
-	o.require(organizationFieldId)
+func (o *Organization) SetID(id *string) {
+	o.ID = id
+	o.require(organizationFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -38249,13 +38249,13 @@ func (o *Organization) String() string {
 
 // Theme defines how to style the login pages.
 var (
-	organizationBrandingFieldLogoUrl = big.NewInt(1 << 0)
+	organizationBrandingFieldLogoURL = big.NewInt(1 << 0)
 	organizationBrandingFieldColors  = big.NewInt(1 << 1)
 )
 
 type OrganizationBranding struct {
 	// URL of logo to display on login page.
-	LogoUrl *string                     `json:"logo_url,omitempty" url:"logo_url,omitempty"`
+	LogoURL *string                     `json:"logo_url,omitempty" url:"logo_url,omitempty"`
 	Colors  *OrganizationBrandingColors `json:"colors,omitempty" url:"colors,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -38265,11 +38265,11 @@ type OrganizationBranding struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *OrganizationBranding) GetLogoUrl() string {
-	if o == nil || o.LogoUrl == nil {
+func (o *OrganizationBranding) GetLogoURL() string {
+	if o == nil || o.LogoURL == nil {
 		return ""
 	}
-	return *o.LogoUrl
+	return *o.LogoURL
 }
 
 func (o *OrganizationBranding) GetColors() OrganizationBrandingColors {
@@ -38290,11 +38290,11 @@ func (o *OrganizationBranding) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetLogoUrl sets the LogoUrl field and marks it as non-optional;
+// SetLogoURL sets the LogoURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationBranding) SetLogoUrl(logoUrl *string) {
-	o.LogoUrl = logoUrl
-	o.require(organizationBrandingFieldLogoUrl)
+func (o *OrganizationBranding) SetLogoURL(logoURL *string) {
+	o.LogoURL = logoURL
+	o.require(organizationBrandingFieldLogoURL)
 }
 
 // SetColors sets the Colors field and marks it as non-optional;
@@ -38441,8 +38441,8 @@ func (o *OrganizationBrandingColors) String() string {
 }
 
 var (
-	organizationClientGrantFieldId                   = big.NewInt(1 << 0)
-	organizationClientGrantFieldClientId             = big.NewInt(1 << 1)
+	organizationClientGrantFieldID                   = big.NewInt(1 << 0)
+	organizationClientGrantFieldClientID             = big.NewInt(1 << 1)
 	organizationClientGrantFieldAudience             = big.NewInt(1 << 2)
 	organizationClientGrantFieldScope                = big.NewInt(1 << 3)
 	organizationClientGrantFieldOrganizationUsage    = big.NewInt(1 << 4)
@@ -38451,9 +38451,9 @@ var (
 
 type OrganizationClientGrant struct {
 	// ID of the client grant.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the client.
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// The audience (API identifier) of this client grant
 	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
 	// Scopes allowed for this client grant.
@@ -38469,18 +38469,18 @@ type OrganizationClientGrant struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *OrganizationClientGrant) GetId() string {
-	if o == nil || o.Id == nil {
+func (o *OrganizationClientGrant) GetID() string {
+	if o == nil || o.ID == nil {
 		return ""
 	}
-	return *o.Id
+	return *o.ID
 }
 
-func (o *OrganizationClientGrant) GetClientId() string {
-	if o == nil || o.ClientId == nil {
+func (o *OrganizationClientGrant) GetClientID() string {
+	if o == nil || o.ClientID == nil {
 		return ""
 	}
-	return *o.ClientId
+	return *o.ClientID
 }
 
 func (o *OrganizationClientGrant) GetAudience() string {
@@ -38522,18 +38522,18 @@ func (o *OrganizationClientGrant) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationClientGrant) SetId(id *string) {
-	o.Id = id
-	o.require(organizationClientGrantFieldId)
+func (o *OrganizationClientGrant) SetID(id *string) {
+	o.ID = id
+	o.require(organizationClientGrantFieldID)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationClientGrant) SetClientId(clientId *string) {
-	o.ClientId = clientId
-	o.require(organizationClientGrantFieldClientId)
+func (o *OrganizationClientGrant) SetClientID(clientID *string) {
+	o.ClientID = clientID
+	o.require(organizationClientGrantFieldClientID)
 }
 
 // SetAudience sets the Audience field and marks it as non-optional;
@@ -38604,7 +38604,7 @@ func (o *OrganizationClientGrant) String() string {
 }
 
 var (
-	organizationConnectionFieldConnectionId            = big.NewInt(1 << 0)
+	organizationConnectionFieldConnectionID            = big.NewInt(1 << 0)
 	organizationConnectionFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
 	organizationConnectionFieldShowAsButton            = big.NewInt(1 << 2)
 	organizationConnectionFieldIsSignupEnabled         = big.NewInt(1 << 3)
@@ -38613,7 +38613,7 @@ var (
 
 type OrganizationConnection struct {
 	// ID of the connection.
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
 	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
@@ -38629,11 +38629,11 @@ type OrganizationConnection struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *OrganizationConnection) GetConnectionId() string {
-	if o == nil || o.ConnectionId == nil {
+func (o *OrganizationConnection) GetConnectionID() string {
+	if o == nil || o.ConnectionID == nil {
 		return ""
 	}
-	return *o.ConnectionId
+	return *o.ConnectionID
 }
 
 func (o *OrganizationConnection) GetAssignMembershipOnLogin() bool {
@@ -38675,11 +38675,11 @@ func (o *OrganizationConnection) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationConnection) SetConnectionId(connectionId *string) {
-	o.ConnectionId = connectionId
-	o.require(organizationConnectionFieldConnectionId)
+func (o *OrganizationConnection) SetConnectionID(connectionID *string) {
+	o.ConnectionID = connectionID
+	o.require(organizationConnectionFieldConnectionID)
 }
 
 // SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
@@ -38851,44 +38851,44 @@ func (o *OrganizationConnectionInformation) String() string {
 }
 
 var (
-	organizationInvitationFieldId             = big.NewInt(1 << 0)
-	organizationInvitationFieldOrganizationId = big.NewInt(1 << 1)
+	organizationInvitationFieldID             = big.NewInt(1 << 0)
+	organizationInvitationFieldOrganizationID = big.NewInt(1 << 1)
 	organizationInvitationFieldInviter        = big.NewInt(1 << 2)
 	organizationInvitationFieldInvitee        = big.NewInt(1 << 3)
-	organizationInvitationFieldInvitationUrl  = big.NewInt(1 << 4)
+	organizationInvitationFieldInvitationURL  = big.NewInt(1 << 4)
 	organizationInvitationFieldCreatedAt      = big.NewInt(1 << 5)
 	organizationInvitationFieldExpiresAt      = big.NewInt(1 << 6)
-	organizationInvitationFieldClientId       = big.NewInt(1 << 7)
-	organizationInvitationFieldConnectionId   = big.NewInt(1 << 8)
+	organizationInvitationFieldClientID       = big.NewInt(1 << 7)
+	organizationInvitationFieldConnectionID   = big.NewInt(1 << 8)
 	organizationInvitationFieldAppMetadata    = big.NewInt(1 << 9)
 	organizationInvitationFieldUserMetadata   = big.NewInt(1 << 10)
 	organizationInvitationFieldRoles          = big.NewInt(1 << 11)
-	organizationInvitationFieldTicketId       = big.NewInt(1 << 12)
+	organizationInvitationFieldTicketID       = big.NewInt(1 << 12)
 )
 
 type OrganizationInvitation struct {
 	// The id of the user invitation.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Organization identifier.
-	OrganizationId *string                        `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	OrganizationID *string                        `json:"organization_id,omitempty" url:"organization_id,omitempty"`
 	Inviter        *OrganizationInvitationInviter `json:"inviter,omitempty" url:"inviter,omitempty"`
 	Invitee        *OrganizationInvitationInvitee `json:"invitee,omitempty" url:"invitee,omitempty"`
 	// The invitation url to be send to the invitee.
-	InvitationUrl *string `json:"invitation_url,omitempty" url:"invitation_url,omitempty"`
+	InvitationURL *string `json:"invitation_url,omitempty" url:"invitation_url,omitempty"`
 	// The ISO 8601 formatted timestamp representing the creation time of the invitation.
 	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The ISO 8601 formatted timestamp representing the expiration time of the invitation.
 	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
 	// Auth0 client ID. Used to resolve the application's login initiation endpoint.
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// The id of the connection to force invitee to authenticate with.
-	ConnectionId *string       `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string       `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	AppMetadata  *AppMetadata  `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
 	UserMetadata *UserMetadata `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
 	// List of roles IDs to associated with the user.
 	Roles []string `json:"roles,omitempty" url:"roles,omitempty"`
 	// The id of the invitation ticket
-	TicketId *string `json:"ticket_id,omitempty" url:"ticket_id,omitempty"`
+	TicketID *string `json:"ticket_id,omitempty" url:"ticket_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -38897,18 +38897,18 @@ type OrganizationInvitation struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *OrganizationInvitation) GetId() string {
-	if o == nil || o.Id == nil {
+func (o *OrganizationInvitation) GetID() string {
+	if o == nil || o.ID == nil {
 		return ""
 	}
-	return *o.Id
+	return *o.ID
 }
 
-func (o *OrganizationInvitation) GetOrganizationId() string {
-	if o == nil || o.OrganizationId == nil {
+func (o *OrganizationInvitation) GetOrganizationID() string {
+	if o == nil || o.OrganizationID == nil {
 		return ""
 	}
-	return *o.OrganizationId
+	return *o.OrganizationID
 }
 
 func (o *OrganizationInvitation) GetInviter() OrganizationInvitationInviter {
@@ -38925,11 +38925,11 @@ func (o *OrganizationInvitation) GetInvitee() OrganizationInvitationInvitee {
 	return *o.Invitee
 }
 
-func (o *OrganizationInvitation) GetInvitationUrl() string {
-	if o == nil || o.InvitationUrl == nil {
+func (o *OrganizationInvitation) GetInvitationURL() string {
+	if o == nil || o.InvitationURL == nil {
 		return ""
 	}
-	return *o.InvitationUrl
+	return *o.InvitationURL
 }
 
 func (o *OrganizationInvitation) GetCreatedAt() time.Time {
@@ -38946,18 +38946,18 @@ func (o *OrganizationInvitation) GetExpiresAt() time.Time {
 	return *o.ExpiresAt
 }
 
-func (o *OrganizationInvitation) GetClientId() string {
-	if o == nil || o.ClientId == nil {
+func (o *OrganizationInvitation) GetClientID() string {
+	if o == nil || o.ClientID == nil {
 		return ""
 	}
-	return *o.ClientId
+	return *o.ClientID
 }
 
-func (o *OrganizationInvitation) GetConnectionId() string {
-	if o == nil || o.ConnectionId == nil {
+func (o *OrganizationInvitation) GetConnectionID() string {
+	if o == nil || o.ConnectionID == nil {
 		return ""
 	}
-	return *o.ConnectionId
+	return *o.ConnectionID
 }
 
 func (o *OrganizationInvitation) GetAppMetadata() AppMetadata {
@@ -38981,11 +38981,11 @@ func (o *OrganizationInvitation) GetRoles() []string {
 	return o.Roles
 }
 
-func (o *OrganizationInvitation) GetTicketId() string {
-	if o == nil || o.TicketId == nil {
+func (o *OrganizationInvitation) GetTicketID() string {
+	if o == nil || o.TicketID == nil {
 		return ""
 	}
-	return *o.TicketId
+	return *o.TicketID
 }
 
 func (o *OrganizationInvitation) GetExtraProperties() map[string]interface{} {
@@ -38999,18 +38999,18 @@ func (o *OrganizationInvitation) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationInvitation) SetId(id *string) {
-	o.Id = id
-	o.require(organizationInvitationFieldId)
+func (o *OrganizationInvitation) SetID(id *string) {
+	o.ID = id
+	o.require(organizationInvitationFieldID)
 }
 
-// SetOrganizationId sets the OrganizationId field and marks it as non-optional;
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationInvitation) SetOrganizationId(organizationId *string) {
-	o.OrganizationId = organizationId
-	o.require(organizationInvitationFieldOrganizationId)
+func (o *OrganizationInvitation) SetOrganizationID(organizationID *string) {
+	o.OrganizationID = organizationID
+	o.require(organizationInvitationFieldOrganizationID)
 }
 
 // SetInviter sets the Inviter field and marks it as non-optional;
@@ -39027,11 +39027,11 @@ func (o *OrganizationInvitation) SetInvitee(invitee *OrganizationInvitationInvit
 	o.require(organizationInvitationFieldInvitee)
 }
 
-// SetInvitationUrl sets the InvitationUrl field and marks it as non-optional;
+// SetInvitationURL sets the InvitationURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationInvitation) SetInvitationUrl(invitationUrl *string) {
-	o.InvitationUrl = invitationUrl
-	o.require(organizationInvitationFieldInvitationUrl)
+func (o *OrganizationInvitation) SetInvitationURL(invitationURL *string) {
+	o.InvitationURL = invitationURL
+	o.require(organizationInvitationFieldInvitationURL)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
@@ -39048,18 +39048,18 @@ func (o *OrganizationInvitation) SetExpiresAt(expiresAt *time.Time) {
 	o.require(organizationInvitationFieldExpiresAt)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationInvitation) SetClientId(clientId *string) {
-	o.ClientId = clientId
-	o.require(organizationInvitationFieldClientId)
+func (o *OrganizationInvitation) SetClientID(clientID *string) {
+	o.ClientID = clientID
+	o.require(organizationInvitationFieldClientID)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationInvitation) SetConnectionId(connectionId *string) {
-	o.ConnectionId = connectionId
-	o.require(organizationInvitationFieldConnectionId)
+func (o *OrganizationInvitation) SetConnectionID(connectionID *string) {
+	o.ConnectionID = connectionID
+	o.require(organizationInvitationFieldConnectionID)
 }
 
 // SetAppMetadata sets the AppMetadata field and marks it as non-optional;
@@ -39083,11 +39083,11 @@ func (o *OrganizationInvitation) SetRoles(roles []string) {
 	o.require(organizationInvitationFieldRoles)
 }
 
-// SetTicketId sets the TicketId field and marks it as non-optional;
+// SetTicketID sets the TicketID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationInvitation) SetTicketId(ticketId *string) {
-	o.TicketId = ticketId
-	o.require(organizationInvitationFieldTicketId)
+func (o *OrganizationInvitation) SetTicketID(ticketID *string) {
+	o.TicketID = ticketID
+	o.require(organizationInvitationFieldTicketID)
 }
 
 func (o *OrganizationInvitation) UnmarshalJSON(data []byte) error {
@@ -39300,7 +39300,7 @@ func (o *OrganizationInvitationInviter) String() string {
 }
 
 var (
-	organizationMemberFieldUserId  = big.NewInt(1 << 0)
+	organizationMemberFieldUserID  = big.NewInt(1 << 0)
 	organizationMemberFieldPicture = big.NewInt(1 << 1)
 	organizationMemberFieldName    = big.NewInt(1 << 2)
 	organizationMemberFieldEmail   = big.NewInt(1 << 3)
@@ -39309,7 +39309,7 @@ var (
 
 type OrganizationMember struct {
 	// ID of this user.
-	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// URL to a picture for this user.
 	Picture *string `json:"picture,omitempty" url:"picture,omitempty"`
 	// Name of this user.
@@ -39325,11 +39325,11 @@ type OrganizationMember struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *OrganizationMember) GetUserId() string {
-	if o == nil || o.UserId == nil {
+func (o *OrganizationMember) GetUserID() string {
+	if o == nil || o.UserID == nil {
 		return ""
 	}
-	return *o.UserId
+	return *o.UserID
 }
 
 func (o *OrganizationMember) GetPicture() string {
@@ -39371,11 +39371,11 @@ func (o *OrganizationMember) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationMember) SetUserId(userId *string) {
-	o.UserId = userId
-	o.require(organizationMemberFieldUserId)
+func (o *OrganizationMember) SetUserID(userID *string) {
+	o.UserID = userID
+	o.require(organizationMemberFieldUserID)
 }
 
 // SetPicture sets the Picture field and marks it as non-optional;
@@ -39446,13 +39446,13 @@ func (o *OrganizationMember) String() string {
 }
 
 var (
-	organizationMemberRoleFieldId   = big.NewInt(1 << 0)
+	organizationMemberRoleFieldID   = big.NewInt(1 << 0)
 	organizationMemberRoleFieldName = big.NewInt(1 << 1)
 )
 
 type OrganizationMemberRole struct {
 	// ID for this role.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
@@ -39463,11 +39463,11 @@ type OrganizationMemberRole struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *OrganizationMemberRole) GetId() string {
-	if o == nil || o.Id == nil {
+func (o *OrganizationMemberRole) GetID() string {
+	if o == nil || o.ID == nil {
 		return ""
 	}
-	return *o.Id
+	return *o.ID
 }
 
 func (o *OrganizationMemberRole) GetName() string {
@@ -39488,11 +39488,11 @@ func (o *OrganizationMemberRole) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationMemberRole) SetId(id *string) {
-	o.Id = id
-	o.require(organizationMemberRoleFieldId)
+func (o *OrganizationMemberRole) SetID(id *string) {
+	o.ID = id
+	o.require(organizationMemberRoleFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -39575,11 +39575,11 @@ type PartialGroupsEnum string
 
 const (
 	PartialGroupsEnumLogin             PartialGroupsEnum = "login"
-	PartialGroupsEnumLoginId           PartialGroupsEnum = "login-id"
+	PartialGroupsEnumLoginID           PartialGroupsEnum = "login-id"
 	PartialGroupsEnumLoginPassword     PartialGroupsEnum = "login-password"
 	PartialGroupsEnumLoginPasswordless PartialGroupsEnum = "login-passwordless"
 	PartialGroupsEnumSignup            PartialGroupsEnum = "signup"
-	PartialGroupsEnumSignupId          PartialGroupsEnum = "signup-id"
+	PartialGroupsEnumSignupID          PartialGroupsEnum = "signup-id"
 	PartialGroupsEnumSignupPassword    PartialGroupsEnum = "signup-password"
 	PartialGroupsEnumCustomizedConsent PartialGroupsEnum = "customized-consent"
 )
@@ -39589,7 +39589,7 @@ func NewPartialGroupsEnumFromString(s string) (PartialGroupsEnum, error) {
 	case "login":
 		return PartialGroupsEnumLogin, nil
 	case "login-id":
-		return PartialGroupsEnumLoginId, nil
+		return PartialGroupsEnumLoginID, nil
 	case "login-password":
 		return PartialGroupsEnumLoginPassword, nil
 	case "login-passwordless":
@@ -39597,7 +39597,7 @@ func NewPartialGroupsEnumFromString(s string) (PartialGroupsEnum, error) {
 	case "signup":
 		return PartialGroupsEnumSignup, nil
 	case "signup-id":
-		return PartialGroupsEnumSignupId, nil
+		return PartialGroupsEnumSignupID, nil
 	case "signup-password":
 		return PartialGroupsEnumSignupPassword, nil
 	case "customized-consent":
@@ -39707,7 +39707,7 @@ func (p *PartialPhoneTemplateContent) String() string {
 }
 
 var (
-	patchClientCredentialResponseContentFieldId               = big.NewInt(1 << 0)
+	patchClientCredentialResponseContentFieldID               = big.NewInt(1 << 0)
 	patchClientCredentialResponseContentFieldName             = big.NewInt(1 << 1)
 	patchClientCredentialResponseContentFieldKid              = big.NewInt(1 << 2)
 	patchClientCredentialResponseContentFieldAlg              = big.NewInt(1 << 3)
@@ -39721,7 +39721,7 @@ var (
 
 type PatchClientCredentialResponseContent struct {
 	// ID of the credential. Generated on creation.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name given to the credential by the user.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The key identifier of the credential, generated on creation.
@@ -39747,11 +39747,11 @@ type PatchClientCredentialResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (p *PatchClientCredentialResponseContent) GetId() string {
-	if p == nil || p.Id == nil {
+func (p *PatchClientCredentialResponseContent) GetID() string {
+	if p == nil || p.ID == nil {
 		return ""
 	}
-	return *p.Id
+	return *p.ID
 }
 
 func (p *PatchClientCredentialResponseContent) GetName() string {
@@ -39828,11 +39828,11 @@ func (p *PatchClientCredentialResponseContent) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PatchClientCredentialResponseContent) SetId(id *string) {
-	p.Id = id
-	p.require(patchClientCredentialResponseContentFieldId)
+func (p *PatchClientCredentialResponseContent) SetID(id *string) {
+	p.ID = id
+	p.require(patchClientCredentialResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -40355,7 +40355,7 @@ func (p PhoneProviderNameEnum) Ptr() *PhoneProviderNameEnum {
 
 // Phone provider configuration schema
 var (
-	phoneProviderSchemaMaskedFieldId            = big.NewInt(1 << 0)
+	phoneProviderSchemaMaskedFieldID            = big.NewInt(1 << 0)
 	phoneProviderSchemaMaskedFieldTenant        = big.NewInt(1 << 1)
 	phoneProviderSchemaMaskedFieldName          = big.NewInt(1 << 2)
 	phoneProviderSchemaMaskedFieldChannel       = big.NewInt(1 << 3)
@@ -40366,7 +40366,7 @@ var (
 )
 
 type PhoneProviderSchemaMasked struct {
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the tenant
 	Tenant  *string                   `json:"tenant,omitempty" url:"tenant,omitempty"`
 	Name    PhoneProviderNameEnum     `json:"name" url:"name"`
@@ -40386,11 +40386,11 @@ type PhoneProviderSchemaMasked struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *PhoneProviderSchemaMasked) GetId() string {
-	if p == nil || p.Id == nil {
+func (p *PhoneProviderSchemaMasked) GetID() string {
+	if p == nil || p.ID == nil {
 		return ""
 	}
-	return *p.Id
+	return *p.ID
 }
 
 func (p *PhoneProviderSchemaMasked) GetTenant() string {
@@ -40446,11 +40446,11 @@ func (p *PhoneProviderSchemaMasked) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PhoneProviderSchemaMasked) SetId(id *string) {
-	p.Id = id
-	p.require(phoneProviderSchemaMaskedFieldId)
+func (p *PhoneProviderSchemaMasked) SetID(id *string) {
+	p.ID = id
+	p.require(phoneProviderSchemaMaskedFieldID)
 }
 
 // SetTenant sets the Tenant field and marks it as non-optional;
@@ -40554,7 +40554,7 @@ func (p *PhoneProviderSchemaMasked) String() string {
 }
 
 var (
-	phoneTemplateFieldId           = big.NewInt(1 << 0)
+	phoneTemplateFieldID           = big.NewInt(1 << 0)
 	phoneTemplateFieldChannel      = big.NewInt(1 << 1)
 	phoneTemplateFieldCustomizable = big.NewInt(1 << 2)
 	phoneTemplateFieldTenant       = big.NewInt(1 << 3)
@@ -40564,7 +40564,7 @@ var (
 )
 
 type PhoneTemplate struct {
-	Id           string                            `json:"id" url:"id"`
+	ID           string                            `json:"id" url:"id"`
 	Channel      *string                           `json:"channel,omitempty" url:"channel,omitempty"`
 	Customizable *bool                             `json:"customizable,omitempty" url:"customizable,omitempty"`
 	Tenant       *string                           `json:"tenant,omitempty" url:"tenant,omitempty"`
@@ -40580,11 +40580,11 @@ type PhoneTemplate struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *PhoneTemplate) GetId() string {
+func (p *PhoneTemplate) GetID() string {
 	if p == nil {
 		return ""
 	}
-	return p.Id
+	return p.ID
 }
 
 func (p *PhoneTemplate) GetChannel() string {
@@ -40640,11 +40640,11 @@ func (p *PhoneTemplate) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PhoneTemplate) SetId(id string) {
-	p.Id = id
-	p.require(phoneTemplateFieldId)
+func (p *PhoneTemplate) SetID(id string) {
+	p.ID = id
+	p.require(phoneTemplateFieldID)
 }
 
 // SetChannel sets the Channel field and marks it as non-optional;
@@ -40967,7 +40967,7 @@ func (p PhoneTemplateNotificationTypeEnum) Ptr() *PhoneTemplateNotificationTypeE
 }
 
 var (
-	postClientCredentialResponseContentFieldId               = big.NewInt(1 << 0)
+	postClientCredentialResponseContentFieldID               = big.NewInt(1 << 0)
 	postClientCredentialResponseContentFieldName             = big.NewInt(1 << 1)
 	postClientCredentialResponseContentFieldKid              = big.NewInt(1 << 2)
 	postClientCredentialResponseContentFieldAlg              = big.NewInt(1 << 3)
@@ -40981,7 +40981,7 @@ var (
 
 type PostClientCredentialResponseContent struct {
 	// ID of the credential. Generated on creation.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name given to the credential by the user.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The key identifier of the credential, generated on creation.
@@ -41007,11 +41007,11 @@ type PostClientCredentialResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (p *PostClientCredentialResponseContent) GetId() string {
-	if p == nil || p.Id == nil {
+func (p *PostClientCredentialResponseContent) GetID() string {
+	if p == nil || p.ID == nil {
 		return ""
 	}
-	return *p.Id
+	return *p.ID
 }
 
 func (p *PostClientCredentialResponseContent) GetName() string {
@@ -41088,11 +41088,11 @@ func (p *PostClientCredentialResponseContent) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PostClientCredentialResponseContent) SetId(id *string) {
-	p.Id = id
-	p.require(postClientCredentialResponseContentFieldId)
+func (p *PostClientCredentialResponseContent) SetID(id *string) {
+	p.ID = id
+	p.require(postClientCredentialResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -41241,12 +41241,12 @@ type PromptGroupNameEnum string
 
 const (
 	PromptGroupNameEnumLogin                     PromptGroupNameEnum = "login"
-	PromptGroupNameEnumLoginId                   PromptGroupNameEnum = "login-id"
+	PromptGroupNameEnumLoginID                   PromptGroupNameEnum = "login-id"
 	PromptGroupNameEnumLoginPassword             PromptGroupNameEnum = "login-password"
 	PromptGroupNameEnumLoginPasswordless         PromptGroupNameEnum = "login-passwordless"
 	PromptGroupNameEnumLoginEmailVerification    PromptGroupNameEnum = "login-email-verification"
 	PromptGroupNameEnumSignup                    PromptGroupNameEnum = "signup"
-	PromptGroupNameEnumSignupId                  PromptGroupNameEnum = "signup-id"
+	PromptGroupNameEnumSignupID                  PromptGroupNameEnum = "signup-id"
 	PromptGroupNameEnumSignupPassword            PromptGroupNameEnum = "signup-password"
 	PromptGroupNameEnumPhoneIdentifierEnrollment PromptGroupNameEnum = "phone-identifier-enrollment"
 	PromptGroupNameEnumPhoneIdentifierChallenge  PromptGroupNameEnum = "phone-identifier-challenge"
@@ -41283,7 +41283,7 @@ func NewPromptGroupNameEnumFromString(s string) (PromptGroupNameEnum, error) {
 	case "login":
 		return PromptGroupNameEnumLogin, nil
 	case "login-id":
-		return PromptGroupNameEnumLoginId, nil
+		return PromptGroupNameEnumLoginID, nil
 	case "login-password":
 		return PromptGroupNameEnumLoginPassword, nil
 	case "login-passwordless":
@@ -41293,7 +41293,7 @@ func NewPromptGroupNameEnumFromString(s string) (PromptGroupNameEnum, error) {
 	case "signup":
 		return PromptGroupNameEnumSignup, nil
 	case "signup-id":
-		return PromptGroupNameEnumSignupId, nil
+		return PromptGroupNameEnumSignupID, nil
 	case "signup-password":
 		return PromptGroupNameEnumSignupPassword, nil
 	case "phone-identifier-enrollment":
@@ -41400,7 +41400,7 @@ const (
 	PromptLanguageEnumHr    PromptLanguageEnum = "hr"
 	PromptLanguageEnumHu    PromptLanguageEnum = "hu"
 	PromptLanguageEnumHy    PromptLanguageEnum = "hy"
-	PromptLanguageEnumId    PromptLanguageEnum = "id"
+	PromptLanguageEnumID    PromptLanguageEnum = "id"
 	PromptLanguageEnumIs    PromptLanguageEnum = "is"
 	PromptLanguageEnumIt    PromptLanguageEnum = "it"
 	PromptLanguageEnumJa    PromptLanguageEnum = "ja"
@@ -41521,7 +41521,7 @@ func NewPromptLanguageEnumFromString(s string) (PromptLanguageEnum, error) {
 	case "hy":
 		return PromptLanguageEnumHy, nil
 	case "id":
-		return PromptLanguageEnumId, nil
+		return PromptLanguageEnumID, nil
 	case "is":
 		return PromptLanguageEnumIs, nil
 	case "it":
@@ -41715,23 +41715,23 @@ type RefreshTokenDateObject = map[string]interface{}
 
 // Device used while issuing/exchanging the refresh token
 var (
-	refreshTokenDeviceFieldInitialIp        = big.NewInt(1 << 0)
+	refreshTokenDeviceFieldInitialIP        = big.NewInt(1 << 0)
 	refreshTokenDeviceFieldInitialAsn       = big.NewInt(1 << 1)
 	refreshTokenDeviceFieldInitialUserAgent = big.NewInt(1 << 2)
-	refreshTokenDeviceFieldLastIp           = big.NewInt(1 << 3)
+	refreshTokenDeviceFieldLastIP           = big.NewInt(1 << 3)
 	refreshTokenDeviceFieldLastAsn          = big.NewInt(1 << 4)
 	refreshTokenDeviceFieldLastUserAgent    = big.NewInt(1 << 5)
 )
 
 type RefreshTokenDevice struct {
 	// First IP address associated with the refresh token
-	InitialIp *string `json:"initial_ip,omitempty" url:"initial_ip,omitempty"`
+	InitialIP *string `json:"initial_ip,omitempty" url:"initial_ip,omitempty"`
 	// First autonomous system number associated with the refresh token
 	InitialAsn *string `json:"initial_asn,omitempty" url:"initial_asn,omitempty"`
 	// First user agent associated with the refresh token
 	InitialUserAgent *string `json:"initial_user_agent,omitempty" url:"initial_user_agent,omitempty"`
 	// Last IP address associated with the refresh token
-	LastIp *string `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastIP *string `json:"last_ip,omitempty" url:"last_ip,omitempty"`
 	// Last autonomous system number associated with the refresh token
 	LastAsn *string `json:"last_asn,omitempty" url:"last_asn,omitempty"`
 	// Last user agent associated with the refresh token
@@ -41745,11 +41745,11 @@ type RefreshTokenDevice struct {
 	rawJSON json.RawMessage
 }
 
-func (r *RefreshTokenDevice) GetInitialIp() string {
-	if r == nil || r.InitialIp == nil {
+func (r *RefreshTokenDevice) GetInitialIP() string {
+	if r == nil || r.InitialIP == nil {
 		return ""
 	}
-	return *r.InitialIp
+	return *r.InitialIP
 }
 
 func (r *RefreshTokenDevice) GetInitialAsn() string {
@@ -41766,11 +41766,11 @@ func (r *RefreshTokenDevice) GetInitialUserAgent() string {
 	return *r.InitialUserAgent
 }
 
-func (r *RefreshTokenDevice) GetLastIp() string {
-	if r == nil || r.LastIp == nil {
+func (r *RefreshTokenDevice) GetLastIP() string {
+	if r == nil || r.LastIP == nil {
 		return ""
 	}
-	return *r.LastIp
+	return *r.LastIP
 }
 
 func (r *RefreshTokenDevice) GetLastAsn() string {
@@ -41798,11 +41798,11 @@ func (r *RefreshTokenDevice) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetInitialIp sets the InitialIp field and marks it as non-optional;
+// SetInitialIP sets the InitialIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefreshTokenDevice) SetInitialIp(initialIp *string) {
-	r.InitialIp = initialIp
-	r.require(refreshTokenDeviceFieldInitialIp)
+func (r *RefreshTokenDevice) SetInitialIP(initialIP *string) {
+	r.InitialIP = initialIP
+	r.require(refreshTokenDeviceFieldInitialIP)
 }
 
 // SetInitialAsn sets the InitialAsn field and marks it as non-optional;
@@ -41819,11 +41819,11 @@ func (r *RefreshTokenDevice) SetInitialUserAgent(initialUserAgent *string) {
 	r.require(refreshTokenDeviceFieldInitialUserAgent)
 }
 
-// SetLastIp sets the LastIp field and marks it as non-optional;
+// SetLastIP sets the LastIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefreshTokenDevice) SetLastIp(lastIp *string) {
-	r.LastIp = lastIp
-	r.require(refreshTokenDeviceFieldLastIp)
+func (r *RefreshTokenDevice) SetLastIP(lastIP *string) {
+	r.LastIP = lastIP
+	r.require(refreshTokenDeviceFieldLastIP)
 }
 
 // SetLastAsn sets the LastAsn field and marks it as non-optional;
@@ -41985,14 +41985,14 @@ func (r *RefreshTokenResourceServer) String() string {
 }
 
 var (
-	refreshTokenResponseContentFieldId              = big.NewInt(1 << 0)
-	refreshTokenResponseContentFieldUserId          = big.NewInt(1 << 1)
+	refreshTokenResponseContentFieldID              = big.NewInt(1 << 0)
+	refreshTokenResponseContentFieldUserID          = big.NewInt(1 << 1)
 	refreshTokenResponseContentFieldCreatedAt       = big.NewInt(1 << 2)
 	refreshTokenResponseContentFieldIdleExpiresAt   = big.NewInt(1 << 3)
 	refreshTokenResponseContentFieldExpiresAt       = big.NewInt(1 << 4)
 	refreshTokenResponseContentFieldDevice          = big.NewInt(1 << 5)
-	refreshTokenResponseContentFieldClientId        = big.NewInt(1 << 6)
-	refreshTokenResponseContentFieldSessionId       = big.NewInt(1 << 7)
+	refreshTokenResponseContentFieldClientID        = big.NewInt(1 << 6)
+	refreshTokenResponseContentFieldSessionID       = big.NewInt(1 << 7)
 	refreshTokenResponseContentFieldRotating        = big.NewInt(1 << 8)
 	refreshTokenResponseContentFieldResourceServers = big.NewInt(1 << 9)
 	refreshTokenResponseContentFieldLastExchangedAt = big.NewInt(1 << 10)
@@ -42000,16 +42000,16 @@ var (
 
 type RefreshTokenResponseContent struct {
 	// The ID of the refresh token
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the user which can be used when interacting with other APIs.
-	UserId        *string             `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID        *string             `json:"user_id,omitempty" url:"user_id,omitempty"`
 	CreatedAt     *RefreshTokenDate   `json:"created_at,omitempty" url:"created_at,omitempty"`
 	IdleExpiresAt *RefreshTokenDate   `json:"idle_expires_at,omitempty" url:"idle_expires_at,omitempty"`
 	ExpiresAt     *RefreshTokenDate   `json:"expires_at,omitempty" url:"expires_at,omitempty"`
 	Device        *RefreshTokenDevice `json:"device,omitempty" url:"device,omitempty"`
 	// ID of the client application granted with this refresh token
-	ClientId  *string                `json:"client_id,omitempty" url:"client_id,omitempty"`
-	SessionId *RefreshTokenSessionId `json:"session_id,omitempty" url:"session_id,omitempty"`
+	ClientID  *string                `json:"client_id,omitempty" url:"client_id,omitempty"`
+	SessionID *RefreshTokenSessionID `json:"session_id,omitempty" url:"session_id,omitempty"`
 	// True if the token is a rotating refresh token
 	Rotating *bool `json:"rotating,omitempty" url:"rotating,omitempty"`
 	// A list of the resource server IDs associated to this refresh-token and their granted scopes
@@ -42024,18 +42024,18 @@ type RefreshTokenResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (r *RefreshTokenResponseContent) GetId() string {
-	if r == nil || r.Id == nil {
+func (r *RefreshTokenResponseContent) GetID() string {
+	if r == nil || r.ID == nil {
 		return ""
 	}
-	return *r.Id
+	return *r.ID
 }
 
-func (r *RefreshTokenResponseContent) GetUserId() string {
-	if r == nil || r.UserId == nil {
+func (r *RefreshTokenResponseContent) GetUserID() string {
+	if r == nil || r.UserID == nil {
 		return ""
 	}
-	return *r.UserId
+	return *r.UserID
 }
 
 func (r *RefreshTokenResponseContent) GetCreatedAt() RefreshTokenDate {
@@ -42066,18 +42066,18 @@ func (r *RefreshTokenResponseContent) GetDevice() RefreshTokenDevice {
 	return *r.Device
 }
 
-func (r *RefreshTokenResponseContent) GetClientId() string {
-	if r == nil || r.ClientId == nil {
+func (r *RefreshTokenResponseContent) GetClientID() string {
+	if r == nil || r.ClientID == nil {
 		return ""
 	}
-	return *r.ClientId
+	return *r.ClientID
 }
 
-func (r *RefreshTokenResponseContent) GetSessionId() RefreshTokenSessionId {
-	if r == nil || r.SessionId == nil {
+func (r *RefreshTokenResponseContent) GetSessionID() RefreshTokenSessionID {
+	if r == nil || r.SessionID == nil {
 		return nil
 	}
-	return *r.SessionId
+	return *r.SessionID
 }
 
 func (r *RefreshTokenResponseContent) GetRotating() bool {
@@ -42112,18 +42112,18 @@ func (r *RefreshTokenResponseContent) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefreshTokenResponseContent) SetId(id *string) {
-	r.Id = id
-	r.require(refreshTokenResponseContentFieldId)
+func (r *RefreshTokenResponseContent) SetID(id *string) {
+	r.ID = id
+	r.require(refreshTokenResponseContentFieldID)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefreshTokenResponseContent) SetUserId(userId *string) {
-	r.UserId = userId
-	r.require(refreshTokenResponseContentFieldUserId)
+func (r *RefreshTokenResponseContent) SetUserID(userID *string) {
+	r.UserID = userID
+	r.require(refreshTokenResponseContentFieldUserID)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
@@ -42154,18 +42154,18 @@ func (r *RefreshTokenResponseContent) SetDevice(device *RefreshTokenDevice) {
 	r.require(refreshTokenResponseContentFieldDevice)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefreshTokenResponseContent) SetClientId(clientId *string) {
-	r.ClientId = clientId
-	r.require(refreshTokenResponseContentFieldClientId)
+func (r *RefreshTokenResponseContent) SetClientID(clientID *string) {
+	r.ClientID = clientID
+	r.require(refreshTokenResponseContentFieldClientID)
 }
 
-// SetSessionId sets the SessionId field and marks it as non-optional;
+// SetSessionID sets the SessionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefreshTokenResponseContent) SetSessionId(sessionId *RefreshTokenSessionId) {
-	r.SessionId = sessionId
-	r.require(refreshTokenResponseContentFieldSessionId)
+func (r *RefreshTokenResponseContent) SetSessionID(sessionID *RefreshTokenSessionID) {
+	r.SessionID = sessionID
+	r.require(refreshTokenResponseContentFieldSessionID)
 }
 
 // SetRotating sets the Rotating field and marks it as non-optional;
@@ -42233,12 +42233,12 @@ func (r *RefreshTokenResponseContent) String() string {
 }
 
 // ID of the authenticated session used to obtain this refresh-token
-type RefreshTokenSessionId = *string
+type RefreshTokenSessionID = *string
 
 type ResetPhoneTemplateRequestContent = interface{}
 
 var (
-	resetPhoneTemplateResponseContentFieldId           = big.NewInt(1 << 0)
+	resetPhoneTemplateResponseContentFieldID           = big.NewInt(1 << 0)
 	resetPhoneTemplateResponseContentFieldChannel      = big.NewInt(1 << 1)
 	resetPhoneTemplateResponseContentFieldCustomizable = big.NewInt(1 << 2)
 	resetPhoneTemplateResponseContentFieldTenant       = big.NewInt(1 << 3)
@@ -42248,7 +42248,7 @@ var (
 )
 
 type ResetPhoneTemplateResponseContent struct {
-	Id           string                            `json:"id" url:"id"`
+	ID           string                            `json:"id" url:"id"`
 	Channel      *string                           `json:"channel,omitempty" url:"channel,omitempty"`
 	Customizable *bool                             `json:"customizable,omitempty" url:"customizable,omitempty"`
 	Tenant       *string                           `json:"tenant,omitempty" url:"tenant,omitempty"`
@@ -42264,11 +42264,11 @@ type ResetPhoneTemplateResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *ResetPhoneTemplateResponseContent) GetId() string {
+func (r *ResetPhoneTemplateResponseContent) GetID() string {
 	if r == nil {
 		return ""
 	}
-	return r.Id
+	return r.ID
 }
 
 func (r *ResetPhoneTemplateResponseContent) GetChannel() string {
@@ -42324,11 +42324,11 @@ func (r *ResetPhoneTemplateResponseContent) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *ResetPhoneTemplateResponseContent) SetId(id string) {
-	r.Id = id
-	r.require(resetPhoneTemplateResponseContentFieldId)
+func (r *ResetPhoneTemplateResponseContent) SetID(id string) {
+	r.ID = id
+	r.require(resetPhoneTemplateResponseContentFieldID)
 }
 
 // SetChannel sets the Channel field and marks it as non-optional;
@@ -42517,14 +42517,14 @@ func (r *RevokedSigningKeysResponseContent) String() string {
 }
 
 var (
-	roleFieldId          = big.NewInt(1 << 0)
+	roleFieldID          = big.NewInt(1 << 0)
 	roleFieldName        = big.NewInt(1 << 1)
 	roleFieldDescription = big.NewInt(1 << 2)
 )
 
 type Role struct {
 	// ID for this role.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Description of this role.
@@ -42537,11 +42537,11 @@ type Role struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *Role) GetId() string {
-	if r == nil || r.Id == nil {
+func (r *Role) GetID() string {
+	if r == nil || r.ID == nil {
 		return ""
 	}
-	return *r.Id
+	return *r.ID
 }
 
 func (r *Role) GetName() string {
@@ -42569,11 +42569,11 @@ func (r *Role) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *Role) SetId(id *string) {
-	r.Id = id
-	r.require(roleFieldId)
+func (r *Role) SetID(id *string) {
+	r.ID = id
+	r.require(roleFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -42630,7 +42630,7 @@ func (r *Role) String() string {
 }
 
 var (
-	roleUserFieldUserId  = big.NewInt(1 << 0)
+	roleUserFieldUserID  = big.NewInt(1 << 0)
 	roleUserFieldPicture = big.NewInt(1 << 1)
 	roleUserFieldName    = big.NewInt(1 << 2)
 	roleUserFieldEmail   = big.NewInt(1 << 3)
@@ -42638,7 +42638,7 @@ var (
 
 type RoleUser struct {
 	// ID of this user.
-	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// URL to a picture for this user.
 	Picture *string `json:"picture,omitempty" url:"picture,omitempty"`
 	// Name of this user.
@@ -42653,11 +42653,11 @@ type RoleUser struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *RoleUser) GetUserId() string {
-	if r == nil || r.UserId == nil {
+func (r *RoleUser) GetUserID() string {
+	if r == nil || r.UserID == nil {
 		return ""
 	}
-	return *r.UserId
+	return *r.UserID
 }
 
 func (r *RoleUser) GetPicture() string {
@@ -42692,11 +42692,11 @@ func (r *RoleUser) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RoleUser) SetUserId(userId *string) {
-	r.UserId = userId
-	r.require(roleUserFieldUserId)
+func (r *RoleUser) SetUserID(userID *string) {
+	r.UserID = userID
+	r.require(roleUserFieldUserID)
 }
 
 // SetPicture sets the Picture field and marks it as non-optional;
@@ -43186,15 +43186,15 @@ func (r *RotateSigningKeysResponseContent) String() string {
 }
 
 var (
-	scimMappingItemFieldAuth0 = big.NewInt(1 << 0)
-	scimMappingItemFieldScim  = big.NewInt(1 << 1)
+	sCIMMappingItemFieldAuth0 = big.NewInt(1 << 0)
+	sCIMMappingItemFieldSCIM  = big.NewInt(1 << 1)
 )
 
-type ScimMappingItem struct {
+type SCIMMappingItem struct {
 	// The field location in the auth0 schema
 	Auth0 *string `json:"auth0,omitempty" url:"auth0,omitempty"`
 	// The field location in the SCIM schema
-	Scim *string `json:"scim,omitempty" url:"scim,omitempty"`
+	SCIM *string `json:"scim,omitempty" url:"scim,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -43204,25 +43204,25 @@ type ScimMappingItem struct {
 	rawJSON json.RawMessage
 }
 
-func (s *ScimMappingItem) GetAuth0() string {
+func (s *SCIMMappingItem) GetAuth0() string {
 	if s == nil || s.Auth0 == nil {
 		return ""
 	}
 	return *s.Auth0
 }
 
-func (s *ScimMappingItem) GetScim() string {
-	if s == nil || s.Scim == nil {
+func (s *SCIMMappingItem) GetSCIM() string {
+	if s == nil || s.SCIM == nil {
 		return ""
 	}
-	return *s.Scim
+	return *s.SCIM
 }
 
-func (s *ScimMappingItem) GetExtraProperties() map[string]interface{} {
+func (s *SCIMMappingItem) GetExtraProperties() map[string]interface{} {
 	return s.ExtraProperties
 }
 
-func (s *ScimMappingItem) require(field *big.Int) {
+func (s *SCIMMappingItem) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -43231,20 +43231,20 @@ func (s *ScimMappingItem) require(field *big.Int) {
 
 // SetAuth0 sets the Auth0 field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *ScimMappingItem) SetAuth0(auth0 *string) {
+func (s *SCIMMappingItem) SetAuth0(auth0 *string) {
 	s.Auth0 = auth0
-	s.require(scimMappingItemFieldAuth0)
+	s.require(sCIMMappingItemFieldAuth0)
 }
 
-// SetScim sets the Scim field and marks it as non-optional;
+// SetSCIM sets the SCIM field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *ScimMappingItem) SetScim(scim *string) {
-	s.Scim = scim
-	s.require(scimMappingItemFieldScim)
+func (s *SCIMMappingItem) SetSCIM(scim *string) {
+	s.SCIM = scim
+	s.require(sCIMMappingItemFieldSCIM)
 }
 
-func (s *ScimMappingItem) UnmarshalJSON(data []byte) error {
-	type embed ScimMappingItem
+func (s *SCIMMappingItem) UnmarshalJSON(data []byte) error {
+	type embed SCIMMappingItem
 	var unmarshaler = struct {
 		embed
 	}{
@@ -43253,7 +43253,7 @@ func (s *ScimMappingItem) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*s = ScimMappingItem(unmarshaler.embed)
+	*s = SCIMMappingItem(unmarshaler.embed)
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
@@ -43263,8 +43263,8 @@ func (s *ScimMappingItem) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (s *ScimMappingItem) MarshalJSON() ([]byte, error) {
-	type embed ScimMappingItem
+func (s *SCIMMappingItem) MarshalJSON() ([]byte, error) {
+	type embed SCIMMappingItem
 	var marshaler = struct {
 		embed
 	}{
@@ -43274,7 +43274,7 @@ func (s *ScimMappingItem) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, s.ExtraProperties)
 }
 
-func (s *ScimMappingItem) String() string {
+func (s *SCIMMappingItem) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -43287,16 +43287,16 @@ func (s *ScimMappingItem) String() string {
 }
 
 var (
-	scimTokenItemFieldTokenId    = big.NewInt(1 << 0)
-	scimTokenItemFieldScopes     = big.NewInt(1 << 1)
-	scimTokenItemFieldCreatedAt  = big.NewInt(1 << 2)
-	scimTokenItemFieldValidUntil = big.NewInt(1 << 3)
-	scimTokenItemFieldLastUsedAt = big.NewInt(1 << 4)
+	sCIMTokenItemFieldTokenID    = big.NewInt(1 << 0)
+	sCIMTokenItemFieldScopes     = big.NewInt(1 << 1)
+	sCIMTokenItemFieldCreatedAt  = big.NewInt(1 << 2)
+	sCIMTokenItemFieldValidUntil = big.NewInt(1 << 3)
+	sCIMTokenItemFieldLastUsedAt = big.NewInt(1 << 4)
 )
 
-type ScimTokenItem struct {
+type SCIMTokenItem struct {
 	// The token's identifier
-	TokenId *string `json:"token_id,omitempty" url:"token_id,omitempty"`
+	TokenID *string `json:"token_id,omitempty" url:"token_id,omitempty"`
 	// The scopes of the scim token
 	Scopes []string `json:"scopes,omitempty" url:"scopes,omitempty"`
 	// The token's created at timestamp
@@ -43314,89 +43314,89 @@ type ScimTokenItem struct {
 	rawJSON json.RawMessage
 }
 
-func (s *ScimTokenItem) GetTokenId() string {
-	if s == nil || s.TokenId == nil {
+func (s *SCIMTokenItem) GetTokenID() string {
+	if s == nil || s.TokenID == nil {
 		return ""
 	}
-	return *s.TokenId
+	return *s.TokenID
 }
 
-func (s *ScimTokenItem) GetScopes() []string {
+func (s *SCIMTokenItem) GetScopes() []string {
 	if s == nil || s.Scopes == nil {
 		return nil
 	}
 	return s.Scopes
 }
 
-func (s *ScimTokenItem) GetCreatedAt() string {
+func (s *SCIMTokenItem) GetCreatedAt() string {
 	if s == nil || s.CreatedAt == nil {
 		return ""
 	}
 	return *s.CreatedAt
 }
 
-func (s *ScimTokenItem) GetValidUntil() string {
+func (s *SCIMTokenItem) GetValidUntil() string {
 	if s == nil || s.ValidUntil == nil {
 		return ""
 	}
 	return *s.ValidUntil
 }
 
-func (s *ScimTokenItem) GetLastUsedAt() string {
+func (s *SCIMTokenItem) GetLastUsedAt() string {
 	if s == nil || s.LastUsedAt == nil {
 		return ""
 	}
 	return *s.LastUsedAt
 }
 
-func (s *ScimTokenItem) GetExtraProperties() map[string]interface{} {
+func (s *SCIMTokenItem) GetExtraProperties() map[string]interface{} {
 	return s.ExtraProperties
 }
 
-func (s *ScimTokenItem) require(field *big.Int) {
+func (s *SCIMTokenItem) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
-// SetTokenId sets the TokenId field and marks it as non-optional;
+// SetTokenID sets the TokenID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *ScimTokenItem) SetTokenId(tokenId *string) {
-	s.TokenId = tokenId
-	s.require(scimTokenItemFieldTokenId)
+func (s *SCIMTokenItem) SetTokenID(tokenID *string) {
+	s.TokenID = tokenID
+	s.require(sCIMTokenItemFieldTokenID)
 }
 
 // SetScopes sets the Scopes field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *ScimTokenItem) SetScopes(scopes []string) {
+func (s *SCIMTokenItem) SetScopes(scopes []string) {
 	s.Scopes = scopes
-	s.require(scimTokenItemFieldScopes)
+	s.require(sCIMTokenItemFieldScopes)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *ScimTokenItem) SetCreatedAt(createdAt *string) {
+func (s *SCIMTokenItem) SetCreatedAt(createdAt *string) {
 	s.CreatedAt = createdAt
-	s.require(scimTokenItemFieldCreatedAt)
+	s.require(sCIMTokenItemFieldCreatedAt)
 }
 
 // SetValidUntil sets the ValidUntil field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *ScimTokenItem) SetValidUntil(validUntil *string) {
+func (s *SCIMTokenItem) SetValidUntil(validUntil *string) {
 	s.ValidUntil = validUntil
-	s.require(scimTokenItemFieldValidUntil)
+	s.require(sCIMTokenItemFieldValidUntil)
 }
 
 // SetLastUsedAt sets the LastUsedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *ScimTokenItem) SetLastUsedAt(lastUsedAt *string) {
+func (s *SCIMTokenItem) SetLastUsedAt(lastUsedAt *string) {
 	s.LastUsedAt = lastUsedAt
-	s.require(scimTokenItemFieldLastUsedAt)
+	s.require(sCIMTokenItemFieldLastUsedAt)
 }
 
-func (s *ScimTokenItem) UnmarshalJSON(data []byte) error {
-	type embed ScimTokenItem
+func (s *SCIMTokenItem) UnmarshalJSON(data []byte) error {
+	type embed SCIMTokenItem
 	var unmarshaler = struct {
 		embed
 	}{
@@ -43405,7 +43405,7 @@ func (s *ScimTokenItem) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*s = ScimTokenItem(unmarshaler.embed)
+	*s = SCIMTokenItem(unmarshaler.embed)
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
@@ -43415,8 +43415,8 @@ func (s *ScimTokenItem) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (s *ScimTokenItem) MarshalJSON() ([]byte, error) {
-	type embed ScimTokenItem
+func (s *SCIMTokenItem) MarshalJSON() ([]byte, error) {
+	type embed SCIMTokenItem
 	var marshaler = struct {
 		embed
 	}{
@@ -43426,7 +43426,7 @@ func (s *ScimTokenItem) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, s.ExtraProperties)
 }
 
-func (s *ScimTokenItem) String() string {
+func (s *SCIMTokenItem) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -43443,14 +43443,14 @@ type ScreenGroupNameEnum string
 
 const (
 	ScreenGroupNameEnumLogin                                     ScreenGroupNameEnum = "login"
-	ScreenGroupNameEnumLoginId                                   ScreenGroupNameEnum = "login-id"
+	ScreenGroupNameEnumLoginID                                   ScreenGroupNameEnum = "login-id"
 	ScreenGroupNameEnumLoginPassword                             ScreenGroupNameEnum = "login-password"
 	ScreenGroupNameEnumLoginPasswordlessEmailCode                ScreenGroupNameEnum = "login-passwordless-email-code"
 	ScreenGroupNameEnumLoginPasswordlessEmailLink                ScreenGroupNameEnum = "login-passwordless-email-link"
 	ScreenGroupNameEnumLoginPasswordlessSmsOtp                   ScreenGroupNameEnum = "login-passwordless-sms-otp"
 	ScreenGroupNameEnumLoginEmailVerification                    ScreenGroupNameEnum = "login-email-verification"
 	ScreenGroupNameEnumSignup                                    ScreenGroupNameEnum = "signup"
-	ScreenGroupNameEnumSignupId                                  ScreenGroupNameEnum = "signup-id"
+	ScreenGroupNameEnumSignupID                                  ScreenGroupNameEnum = "signup-id"
 	ScreenGroupNameEnumSignupPassword                            ScreenGroupNameEnum = "signup-password"
 	ScreenGroupNameEnumPhoneIdentifierEnrollment                 ScreenGroupNameEnum = "phone-identifier-enrollment"
 	ScreenGroupNameEnumPhoneIdentifierChallenge                  ScreenGroupNameEnum = "phone-identifier-challenge"
@@ -43537,7 +43537,7 @@ func NewScreenGroupNameEnumFromString(s string) (ScreenGroupNameEnum, error) {
 	case "login":
 		return ScreenGroupNameEnumLogin, nil
 	case "login-id":
-		return ScreenGroupNameEnumLoginId, nil
+		return ScreenGroupNameEnumLoginID, nil
 	case "login-password":
 		return ScreenGroupNameEnumLoginPassword, nil
 	case "login-passwordless-email-code":
@@ -43551,7 +43551,7 @@ func NewScreenGroupNameEnumFromString(s string) (ScreenGroupNameEnum, error) {
 	case "signup":
 		return ScreenGroupNameEnumSignup, nil
 	case "signup-id":
-		return ScreenGroupNameEnumSignupId, nil
+		return ScreenGroupNameEnumSignupID, nil
 	case "signup-password":
 		return ScreenGroupNameEnumSignupPassword, nil
 	case "phone-identifier-enrollment":
@@ -43727,15 +43727,15 @@ type SelfServiceProfileCustomTextPageEnum = string
 
 // If provided, this will create a new connection for the SSO flow with the given configuration
 var (
-	selfServiceProfileSsoTicketConnectionConfigFieldName               = big.NewInt(1 << 0)
-	selfServiceProfileSsoTicketConnectionConfigFieldDisplayName        = big.NewInt(1 << 1)
-	selfServiceProfileSsoTicketConnectionConfigFieldIsDomainConnection = big.NewInt(1 << 2)
-	selfServiceProfileSsoTicketConnectionConfigFieldShowAsButton       = big.NewInt(1 << 3)
-	selfServiceProfileSsoTicketConnectionConfigFieldMetadata           = big.NewInt(1 << 4)
-	selfServiceProfileSsoTicketConnectionConfigFieldOptions            = big.NewInt(1 << 5)
+	selfServiceProfileSSOTicketConnectionConfigFieldName               = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketConnectionConfigFieldDisplayName        = big.NewInt(1 << 1)
+	selfServiceProfileSSOTicketConnectionConfigFieldIsDomainConnection = big.NewInt(1 << 2)
+	selfServiceProfileSSOTicketConnectionConfigFieldShowAsButton       = big.NewInt(1 << 3)
+	selfServiceProfileSSOTicketConnectionConfigFieldMetadata           = big.NewInt(1 << 4)
+	selfServiceProfileSSOTicketConnectionConfigFieldOptions            = big.NewInt(1 << 5)
 )
 
-type SelfServiceProfileSsoTicketConnectionConfig struct {
+type SelfServiceProfileSSOTicketConnectionConfig struct {
 	// The name of the connection that will be created as a part of the SSO flow.
 	Name string `json:"name" url:"name"`
 	// Connection name used in the new universal login experience
@@ -43745,7 +43745,7 @@ type SelfServiceProfileSsoTicketConnectionConfig struct {
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)
 	ShowAsButton *bool                                         `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 	Metadata     *ConnectionsMetadata                          `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Options      *SelfServiceProfileSsoTicketConnectionOptions `json:"options,omitempty" url:"options,omitempty"`
+	Options      *SelfServiceProfileSSOTicketConnectionOptions `json:"options,omitempty" url:"options,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -43754,53 +43754,53 @@ type SelfServiceProfileSsoTicketConnectionConfig struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionConfig) GetName() string {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetName() string {
 	if s == nil {
 		return ""
 	}
 	return s.Name
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionConfig) GetDisplayName() string {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetDisplayName() string {
 	if s == nil || s.DisplayName == nil {
 		return ""
 	}
 	return *s.DisplayName
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionConfig) GetIsDomainConnection() bool {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetIsDomainConnection() bool {
 	if s == nil || s.IsDomainConnection == nil {
 		return false
 	}
 	return *s.IsDomainConnection
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionConfig) GetShowAsButton() bool {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetShowAsButton() bool {
 	if s == nil || s.ShowAsButton == nil {
 		return false
 	}
 	return *s.ShowAsButton
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionConfig) GetMetadata() ConnectionsMetadata {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetMetadata() ConnectionsMetadata {
 	if s == nil || s.Metadata == nil {
 		return nil
 	}
 	return *s.Metadata
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionConfig) GetOptions() SelfServiceProfileSsoTicketConnectionOptions {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetOptions() SelfServiceProfileSSOTicketConnectionOptions {
 	if s == nil || s.Options == nil {
-		return SelfServiceProfileSsoTicketConnectionOptions{}
+		return SelfServiceProfileSSOTicketConnectionOptions{}
 	}
 	return *s.Options
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionConfig) GetExtraProperties() map[string]interface{} {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionConfig) require(field *big.Int) {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -43809,53 +43809,53 @@ func (s *SelfServiceProfileSsoTicketConnectionConfig) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketConnectionConfig) SetName(name string) {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) SetName(name string) {
 	s.Name = name
-	s.require(selfServiceProfileSsoTicketConnectionConfigFieldName)
+	s.require(selfServiceProfileSSOTicketConnectionConfigFieldName)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketConnectionConfig) SetDisplayName(displayName *string) {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) SetDisplayName(displayName *string) {
 	s.DisplayName = displayName
-	s.require(selfServiceProfileSsoTicketConnectionConfigFieldDisplayName)
+	s.require(selfServiceProfileSSOTicketConnectionConfigFieldDisplayName)
 }
 
 // SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketConnectionConfig) SetIsDomainConnection(isDomainConnection *bool) {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) SetIsDomainConnection(isDomainConnection *bool) {
 	s.IsDomainConnection = isDomainConnection
-	s.require(selfServiceProfileSsoTicketConnectionConfigFieldIsDomainConnection)
+	s.require(selfServiceProfileSSOTicketConnectionConfigFieldIsDomainConnection)
 }
 
 // SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketConnectionConfig) SetShowAsButton(showAsButton *bool) {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) SetShowAsButton(showAsButton *bool) {
 	s.ShowAsButton = showAsButton
-	s.require(selfServiceProfileSsoTicketConnectionConfigFieldShowAsButton)
+	s.require(selfServiceProfileSSOTicketConnectionConfigFieldShowAsButton)
 }
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketConnectionConfig) SetMetadata(metadata *ConnectionsMetadata) {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) SetMetadata(metadata *ConnectionsMetadata) {
 	s.Metadata = metadata
-	s.require(selfServiceProfileSsoTicketConnectionConfigFieldMetadata)
+	s.require(selfServiceProfileSSOTicketConnectionConfigFieldMetadata)
 }
 
 // SetOptions sets the Options field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketConnectionConfig) SetOptions(options *SelfServiceProfileSsoTicketConnectionOptions) {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) SetOptions(options *SelfServiceProfileSSOTicketConnectionOptions) {
 	s.Options = options
-	s.require(selfServiceProfileSsoTicketConnectionConfigFieldOptions)
+	s.require(selfServiceProfileSSOTicketConnectionConfigFieldOptions)
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionConfig) UnmarshalJSON(data []byte) error {
-	type unmarshaler SelfServiceProfileSsoTicketConnectionConfig
+func (s *SelfServiceProfileSSOTicketConnectionConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketConnectionConfig
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*s = SelfServiceProfileSsoTicketConnectionConfig(value)
+	*s = SelfServiceProfileSSOTicketConnectionConfig(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
@@ -43865,8 +43865,8 @@ func (s *SelfServiceProfileSsoTicketConnectionConfig) UnmarshalJSON(data []byte)
 	return nil
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionConfig) MarshalJSON() ([]byte, error) {
-	type embed SelfServiceProfileSsoTicketConnectionConfig
+func (s *SelfServiceProfileSSOTicketConnectionConfig) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketConnectionConfig
 	var marshaler = struct {
 		embed
 	}{
@@ -43876,7 +43876,7 @@ func (s *SelfServiceProfileSsoTicketConnectionConfig) MarshalJSON() ([]byte, err
 	return json.Marshal(explicitMarshaler)
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionConfig) String() string {
+func (s *SelfServiceProfileSSOTicketConnectionConfig) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -43890,17 +43890,17 @@ func (s *SelfServiceProfileSsoTicketConnectionConfig) String() string {
 
 // The connection's options (depend on the connection strategy)
 var (
-	selfServiceProfileSsoTicketConnectionOptionsFieldIconUrl       = big.NewInt(1 << 0)
-	selfServiceProfileSsoTicketConnectionOptionsFieldDomainAliases = big.NewInt(1 << 1)
-	selfServiceProfileSsoTicketConnectionOptionsFieldIdpinitiated  = big.NewInt(1 << 2)
+	selfServiceProfileSSOTicketConnectionOptionsFieldIconURL       = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketConnectionOptionsFieldDomainAliases = big.NewInt(1 << 1)
+	selfServiceProfileSSOTicketConnectionOptionsFieldIdpinitiated  = big.NewInt(1 << 2)
 )
 
-type SelfServiceProfileSsoTicketConnectionOptions struct {
+type SelfServiceProfileSSOTicketConnectionOptions struct {
 	// URL for the icon. Must use HTTPS.
-	IconUrl *string `json:"icon_url,omitempty" url:"icon_url,omitempty"`
+	IconURL *string `json:"icon_url,omitempty" url:"icon_url,omitempty"`
 	// List of domain_aliases that can be authenticated in the Identity Provider
 	DomainAliases []string                                        `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
-	Idpinitiated  *SelfServiceProfileSsoTicketIdpInitiatedOptions `json:"idpinitiated,omitempty" url:"idpinitiated,omitempty"`
+	Idpinitiated  *SelfServiceProfileSSOTicketIdpInitiatedOptions `json:"idpinitiated,omitempty" url:"idpinitiated,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -43909,66 +43909,66 @@ type SelfServiceProfileSsoTicketConnectionOptions struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionOptions) GetIconUrl() string {
-	if s == nil || s.IconUrl == nil {
+func (s *SelfServiceProfileSSOTicketConnectionOptions) GetIconURL() string {
+	if s == nil || s.IconURL == nil {
 		return ""
 	}
-	return *s.IconUrl
+	return *s.IconURL
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionOptions) GetDomainAliases() []string {
+func (s *SelfServiceProfileSSOTicketConnectionOptions) GetDomainAliases() []string {
 	if s == nil || s.DomainAliases == nil {
 		return nil
 	}
 	return s.DomainAliases
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionOptions) GetIdpinitiated() SelfServiceProfileSsoTicketIdpInitiatedOptions {
+func (s *SelfServiceProfileSSOTicketConnectionOptions) GetIdpinitiated() SelfServiceProfileSSOTicketIdpInitiatedOptions {
 	if s == nil || s.Idpinitiated == nil {
-		return SelfServiceProfileSsoTicketIdpInitiatedOptions{}
+		return SelfServiceProfileSSOTicketIdpInitiatedOptions{}
 	}
 	return *s.Idpinitiated
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionOptions) GetExtraProperties() map[string]interface{} {
+func (s *SelfServiceProfileSSOTicketConnectionOptions) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionOptions) require(field *big.Int) {
+func (s *SelfServiceProfileSSOTicketConnectionOptions) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
-// SetIconUrl sets the IconUrl field and marks it as non-optional;
+// SetIconURL sets the IconURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketConnectionOptions) SetIconUrl(iconUrl *string) {
-	s.IconUrl = iconUrl
-	s.require(selfServiceProfileSsoTicketConnectionOptionsFieldIconUrl)
+func (s *SelfServiceProfileSSOTicketConnectionOptions) SetIconURL(iconURL *string) {
+	s.IconURL = iconURL
+	s.require(selfServiceProfileSSOTicketConnectionOptionsFieldIconURL)
 }
 
 // SetDomainAliases sets the DomainAliases field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketConnectionOptions) SetDomainAliases(domainAliases []string) {
+func (s *SelfServiceProfileSSOTicketConnectionOptions) SetDomainAliases(domainAliases []string) {
 	s.DomainAliases = domainAliases
-	s.require(selfServiceProfileSsoTicketConnectionOptionsFieldDomainAliases)
+	s.require(selfServiceProfileSSOTicketConnectionOptionsFieldDomainAliases)
 }
 
 // SetIdpinitiated sets the Idpinitiated field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketConnectionOptions) SetIdpinitiated(idpinitiated *SelfServiceProfileSsoTicketIdpInitiatedOptions) {
+func (s *SelfServiceProfileSSOTicketConnectionOptions) SetIdpinitiated(idpinitiated *SelfServiceProfileSSOTicketIdpInitiatedOptions) {
 	s.Idpinitiated = idpinitiated
-	s.require(selfServiceProfileSsoTicketConnectionOptionsFieldIdpinitiated)
+	s.require(selfServiceProfileSSOTicketConnectionOptionsFieldIdpinitiated)
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionOptions) UnmarshalJSON(data []byte) error {
-	type unmarshaler SelfServiceProfileSsoTicketConnectionOptions
+func (s *SelfServiceProfileSSOTicketConnectionOptions) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketConnectionOptions
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*s = SelfServiceProfileSsoTicketConnectionOptions(value)
+	*s = SelfServiceProfileSSOTicketConnectionOptions(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
@@ -43978,8 +43978,8 @@ func (s *SelfServiceProfileSsoTicketConnectionOptions) UnmarshalJSON(data []byte
 	return nil
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionOptions) MarshalJSON() ([]byte, error) {
-	type embed SelfServiceProfileSsoTicketConnectionOptions
+func (s *SelfServiceProfileSSOTicketConnectionOptions) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketConnectionOptions
 	var marshaler = struct {
 		embed
 	}{
@@ -43989,7 +43989,7 @@ func (s *SelfServiceProfileSsoTicketConnectionOptions) MarshalJSON() ([]byte, er
 	return json.Marshal(explicitMarshaler)
 }
 
-func (s *SelfServiceProfileSsoTicketConnectionOptions) String() string {
+func (s *SelfServiceProfileSSOTicketConnectionOptions) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -44003,11 +44003,11 @@ func (s *SelfServiceProfileSsoTicketConnectionOptions) String() string {
 
 // Configuration for the setup of the connection’s domain_aliases in the self-service SSO flow.
 var (
-	selfServiceProfileSsoTicketDomainAliasesConfigFieldDomainVerification = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketDomainAliasesConfigFieldDomainVerification = big.NewInt(1 << 0)
 )
 
-type SelfServiceProfileSsoTicketDomainAliasesConfig struct {
-	DomainVerification SelfServiceProfileSsoTicketDomainVerificationEnum `json:"domain_verification" url:"domain_verification"`
+type SelfServiceProfileSSOTicketDomainAliasesConfig struct {
+	DomainVerification SelfServiceProfileSSOTicketDomainVerificationEnum `json:"domain_verification" url:"domain_verification"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -44016,18 +44016,18 @@ type SelfServiceProfileSsoTicketDomainAliasesConfig struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SelfServiceProfileSsoTicketDomainAliasesConfig) GetDomainVerification() SelfServiceProfileSsoTicketDomainVerificationEnum {
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) GetDomainVerification() SelfServiceProfileSSOTicketDomainVerificationEnum {
 	if s == nil {
 		return ""
 	}
 	return s.DomainVerification
 }
 
-func (s *SelfServiceProfileSsoTicketDomainAliasesConfig) GetExtraProperties() map[string]interface{} {
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
-func (s *SelfServiceProfileSsoTicketDomainAliasesConfig) require(field *big.Int) {
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -44036,18 +44036,18 @@ func (s *SelfServiceProfileSsoTicketDomainAliasesConfig) require(field *big.Int)
 
 // SetDomainVerification sets the DomainVerification field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketDomainAliasesConfig) SetDomainVerification(domainVerification SelfServiceProfileSsoTicketDomainVerificationEnum) {
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) SetDomainVerification(domainVerification SelfServiceProfileSSOTicketDomainVerificationEnum) {
 	s.DomainVerification = domainVerification
-	s.require(selfServiceProfileSsoTicketDomainAliasesConfigFieldDomainVerification)
+	s.require(selfServiceProfileSSOTicketDomainAliasesConfigFieldDomainVerification)
 }
 
-func (s *SelfServiceProfileSsoTicketDomainAliasesConfig) UnmarshalJSON(data []byte) error {
-	type unmarshaler SelfServiceProfileSsoTicketDomainAliasesConfig
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketDomainAliasesConfig
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*s = SelfServiceProfileSsoTicketDomainAliasesConfig(value)
+	*s = SelfServiceProfileSSOTicketDomainAliasesConfig(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
@@ -44057,8 +44057,8 @@ func (s *SelfServiceProfileSsoTicketDomainAliasesConfig) UnmarshalJSON(data []by
 	return nil
 }
 
-func (s *SelfServiceProfileSsoTicketDomainAliasesConfig) MarshalJSON() ([]byte, error) {
-	type embed SelfServiceProfileSsoTicketDomainAliasesConfig
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketDomainAliasesConfig
 	var marshaler = struct {
 		embed
 	}{
@@ -44068,7 +44068,7 @@ func (s *SelfServiceProfileSsoTicketDomainAliasesConfig) MarshalJSON() ([]byte, 
 	return json.Marshal(explicitMarshaler)
 }
 
-func (s *SelfServiceProfileSsoTicketDomainAliasesConfig) String() string {
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -44081,40 +44081,40 @@ func (s *SelfServiceProfileSsoTicketDomainAliasesConfig) String() string {
 }
 
 // Whether the end user should complete the domain verification step. Possible values are 'none' (the step is not shown to the user), 'optional' (the user may add a domain alias in the domain verification step) or 'required' (the user must add a domain alias in order to enable the connection). Defaults to 'none'.
-type SelfServiceProfileSsoTicketDomainVerificationEnum string
+type SelfServiceProfileSSOTicketDomainVerificationEnum string
 
 const (
-	SelfServiceProfileSsoTicketDomainVerificationEnumNone     SelfServiceProfileSsoTicketDomainVerificationEnum = "none"
-	SelfServiceProfileSsoTicketDomainVerificationEnumOptional SelfServiceProfileSsoTicketDomainVerificationEnum = "optional"
-	SelfServiceProfileSsoTicketDomainVerificationEnumRequired SelfServiceProfileSsoTicketDomainVerificationEnum = "required"
+	SelfServiceProfileSSOTicketDomainVerificationEnumNone     SelfServiceProfileSSOTicketDomainVerificationEnum = "none"
+	SelfServiceProfileSSOTicketDomainVerificationEnumOptional SelfServiceProfileSSOTicketDomainVerificationEnum = "optional"
+	SelfServiceProfileSSOTicketDomainVerificationEnumRequired SelfServiceProfileSSOTicketDomainVerificationEnum = "required"
 )
 
-func NewSelfServiceProfileSsoTicketDomainVerificationEnumFromString(s string) (SelfServiceProfileSsoTicketDomainVerificationEnum, error) {
+func NewSelfServiceProfileSSOTicketDomainVerificationEnumFromString(s string) (SelfServiceProfileSSOTicketDomainVerificationEnum, error) {
 	switch s {
 	case "none":
-		return SelfServiceProfileSsoTicketDomainVerificationEnumNone, nil
+		return SelfServiceProfileSSOTicketDomainVerificationEnumNone, nil
 	case "optional":
-		return SelfServiceProfileSsoTicketDomainVerificationEnumOptional, nil
+		return SelfServiceProfileSSOTicketDomainVerificationEnumOptional, nil
 	case "required":
-		return SelfServiceProfileSsoTicketDomainVerificationEnumRequired, nil
+		return SelfServiceProfileSSOTicketDomainVerificationEnumRequired, nil
 	}
-	var t SelfServiceProfileSsoTicketDomainVerificationEnum
+	var t SelfServiceProfileSSOTicketDomainVerificationEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (s SelfServiceProfileSsoTicketDomainVerificationEnum) Ptr() *SelfServiceProfileSsoTicketDomainVerificationEnum {
+func (s SelfServiceProfileSSOTicketDomainVerificationEnum) Ptr() *SelfServiceProfileSSOTicketDomainVerificationEnum {
 	return &s
 }
 
 var (
-	selfServiceProfileSsoTicketEnabledOrganizationFieldOrganizationId          = big.NewInt(1 << 0)
-	selfServiceProfileSsoTicketEnabledOrganizationFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
-	selfServiceProfileSsoTicketEnabledOrganizationFieldShowAsButton            = big.NewInt(1 << 2)
+	selfServiceProfileSSOTicketEnabledOrganizationFieldOrganizationID          = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketEnabledOrganizationFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
+	selfServiceProfileSSOTicketEnabledOrganizationFieldShowAsButton            = big.NewInt(1 << 2)
 )
 
-type SelfServiceProfileSsoTicketEnabledOrganization struct {
+type SelfServiceProfileSSOTicketEnabledOrganization struct {
 	// Organization identifier.
-	OrganizationId string `json:"organization_id" url:"organization_id"`
+	OrganizationID string `json:"organization_id" url:"organization_id"`
 	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
 	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
@@ -44127,66 +44127,66 @@ type SelfServiceProfileSsoTicketEnabledOrganization struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SelfServiceProfileSsoTicketEnabledOrganization) GetOrganizationId() string {
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) GetOrganizationID() string {
 	if s == nil {
 		return ""
 	}
-	return s.OrganizationId
+	return s.OrganizationID
 }
 
-func (s *SelfServiceProfileSsoTicketEnabledOrganization) GetAssignMembershipOnLogin() bool {
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) GetAssignMembershipOnLogin() bool {
 	if s == nil || s.AssignMembershipOnLogin == nil {
 		return false
 	}
 	return *s.AssignMembershipOnLogin
 }
 
-func (s *SelfServiceProfileSsoTicketEnabledOrganization) GetShowAsButton() bool {
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) GetShowAsButton() bool {
 	if s == nil || s.ShowAsButton == nil {
 		return false
 	}
 	return *s.ShowAsButton
 }
 
-func (s *SelfServiceProfileSsoTicketEnabledOrganization) GetExtraProperties() map[string]interface{} {
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
-func (s *SelfServiceProfileSsoTicketEnabledOrganization) require(field *big.Int) {
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
-// SetOrganizationId sets the OrganizationId field and marks it as non-optional;
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketEnabledOrganization) SetOrganizationId(organizationId string) {
-	s.OrganizationId = organizationId
-	s.require(selfServiceProfileSsoTicketEnabledOrganizationFieldOrganizationId)
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) SetOrganizationID(organizationID string) {
+	s.OrganizationID = organizationID
+	s.require(selfServiceProfileSSOTicketEnabledOrganizationFieldOrganizationID)
 }
 
 // SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketEnabledOrganization) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
 	s.AssignMembershipOnLogin = assignMembershipOnLogin
-	s.require(selfServiceProfileSsoTicketEnabledOrganizationFieldAssignMembershipOnLogin)
+	s.require(selfServiceProfileSSOTicketEnabledOrganizationFieldAssignMembershipOnLogin)
 }
 
 // SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketEnabledOrganization) SetShowAsButton(showAsButton *bool) {
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) SetShowAsButton(showAsButton *bool) {
 	s.ShowAsButton = showAsButton
-	s.require(selfServiceProfileSsoTicketEnabledOrganizationFieldShowAsButton)
+	s.require(selfServiceProfileSSOTicketEnabledOrganizationFieldShowAsButton)
 }
 
-func (s *SelfServiceProfileSsoTicketEnabledOrganization) UnmarshalJSON(data []byte) error {
-	type unmarshaler SelfServiceProfileSsoTicketEnabledOrganization
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketEnabledOrganization
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*s = SelfServiceProfileSsoTicketEnabledOrganization(value)
+	*s = SelfServiceProfileSSOTicketEnabledOrganization(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
@@ -44196,8 +44196,8 @@ func (s *SelfServiceProfileSsoTicketEnabledOrganization) UnmarshalJSON(data []by
 	return nil
 }
 
-func (s *SelfServiceProfileSsoTicketEnabledOrganization) MarshalJSON() ([]byte, error) {
-	type embed SelfServiceProfileSsoTicketEnabledOrganization
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketEnabledOrganization
 	var marshaler = struct {
 		embed
 	}{
@@ -44207,7 +44207,7 @@ func (s *SelfServiceProfileSsoTicketEnabledOrganization) MarshalJSON() ([]byte, 
 	return json.Marshal(explicitMarshaler)
 }
 
-func (s *SelfServiceProfileSsoTicketEnabledOrganization) String() string {
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -44220,45 +44220,45 @@ func (s *SelfServiceProfileSsoTicketEnabledOrganization) String() string {
 }
 
 // The protocol used to connect to the the default application
-type SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnum string
+type SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum string
 
 const (
-	SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnumSamlp  SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnum = "samlp"
-	SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnumWsfed  SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnum = "wsfed"
-	SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnumOauth2 SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnum = "oauth2"
+	SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumSamlp  SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum = "samlp"
+	SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumWsfed  SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum = "wsfed"
+	SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumOauth2 SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum = "oauth2"
 )
 
-func NewSelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnumFromString(s string) (SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnum, error) {
+func NewSelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumFromString(s string) (SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum, error) {
 	switch s {
 	case "samlp":
-		return SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnumSamlp, nil
+		return SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumSamlp, nil
 	case "wsfed":
-		return SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnumWsfed, nil
+		return SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumWsfed, nil
 	case "oauth2":
-		return SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnumOauth2, nil
+		return SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumOauth2, nil
 	}
-	var t SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnum
+	var t SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (s SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnum) Ptr() *SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnum {
+func (s SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum) Ptr() *SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum {
 	return &s
 }
 
 // Allows IdP-initiated login
 var (
-	selfServiceProfileSsoTicketIdpInitiatedOptionsFieldEnabled              = big.NewInt(1 << 0)
-	selfServiceProfileSsoTicketIdpInitiatedOptionsFieldClientId             = big.NewInt(1 << 1)
-	selfServiceProfileSsoTicketIdpInitiatedOptionsFieldClientProtocol       = big.NewInt(1 << 2)
-	selfServiceProfileSsoTicketIdpInitiatedOptionsFieldClientAuthorizequery = big.NewInt(1 << 3)
+	selfServiceProfileSSOTicketIdpInitiatedOptionsFieldEnabled              = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientID             = big.NewInt(1 << 1)
+	selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientProtocol       = big.NewInt(1 << 2)
+	selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientAuthorizequery = big.NewInt(1 << 3)
 )
 
-type SelfServiceProfileSsoTicketIdpInitiatedOptions struct {
+type SelfServiceProfileSSOTicketIdpInitiatedOptions struct {
 	// Enables IdP-initiated login for this connection
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Default application <code>client_id</code> user is redirected to after validated SAML response
-	ClientId       *string                                                    `json:"client_id,omitempty" url:"client_id,omitempty"`
-	ClientProtocol *SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnum `json:"client_protocol,omitempty" url:"client_protocol,omitempty"`
+	ClientID       *string                                                    `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientProtocol *SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum `json:"client_protocol,omitempty" url:"client_protocol,omitempty"`
 	// Query string options to customize the behaviour for OpenID Connect when <code>idpinitiated.client_protocol</code> is <code>oauth2</code>. Allowed parameters: <code>redirect_uri</code>, <code>scope</code>, <code>response_type</code>. For example, <code>redirect_uri=https://jwt.io&scope=openid email&response_type=token</code>
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
 
@@ -44269,39 +44269,39 @@ type SelfServiceProfileSsoTicketIdpInitiatedOptions struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) GetEnabled() bool {
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) GetEnabled() bool {
 	if s == nil || s.Enabled == nil {
 		return false
 	}
 	return *s.Enabled
 }
 
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) GetClientId() string {
-	if s == nil || s.ClientId == nil {
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) GetClientID() string {
+	if s == nil || s.ClientID == nil {
 		return ""
 	}
-	return *s.ClientId
+	return *s.ClientID
 }
 
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) GetClientProtocol() SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnum {
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) GetClientProtocol() SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum {
 	if s == nil || s.ClientProtocol == nil {
 		return ""
 	}
 	return *s.ClientProtocol
 }
 
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) GetClientAuthorizequery() string {
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) GetClientAuthorizequery() string {
 	if s == nil || s.ClientAuthorizequery == nil {
 		return ""
 	}
 	return *s.ClientAuthorizequery
 }
 
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) GetExtraProperties() map[string]interface{} {
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) require(field *big.Int) {
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -44310,39 +44310,39 @@ func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) require(field *big.Int)
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) SetEnabled(enabled *bool) {
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) SetEnabled(enabled *bool) {
 	s.Enabled = enabled
-	s.require(selfServiceProfileSsoTicketIdpInitiatedOptionsFieldEnabled)
+	s.require(selfServiceProfileSSOTicketIdpInitiatedOptionsFieldEnabled)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) SetClientId(clientId *string) {
-	s.ClientId = clientId
-	s.require(selfServiceProfileSsoTicketIdpInitiatedOptionsFieldClientId)
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) SetClientID(clientID *string) {
+	s.ClientID = clientID
+	s.require(selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientID)
 }
 
 // SetClientProtocol sets the ClientProtocol field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) SetClientProtocol(clientProtocol *SelfServiceProfileSsoTicketIdpInitiatedClientProtocolEnum) {
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) SetClientProtocol(clientProtocol *SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum) {
 	s.ClientProtocol = clientProtocol
-	s.require(selfServiceProfileSsoTicketIdpInitiatedOptionsFieldClientProtocol)
+	s.require(selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientProtocol)
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) SetClientAuthorizequery(clientAuthorizequery *string) {
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) SetClientAuthorizequery(clientAuthorizequery *string) {
 	s.ClientAuthorizequery = clientAuthorizequery
-	s.require(selfServiceProfileSsoTicketIdpInitiatedOptionsFieldClientAuthorizequery)
+	s.require(selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientAuthorizequery)
 }
 
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) UnmarshalJSON(data []byte) error {
-	type unmarshaler SelfServiceProfileSsoTicketIdpInitiatedOptions
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketIdpInitiatedOptions
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*s = SelfServiceProfileSsoTicketIdpInitiatedOptions(value)
+	*s = SelfServiceProfileSSOTicketIdpInitiatedOptions(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
@@ -44352,8 +44352,8 @@ func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) UnmarshalJSON(data []by
 	return nil
 }
 
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) MarshalJSON() ([]byte, error) {
-	type embed SelfServiceProfileSsoTicketIdpInitiatedOptions
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketIdpInitiatedOptions
 	var marshaler = struct {
 		embed
 	}{
@@ -44363,7 +44363,7 @@ func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) MarshalJSON() ([]byte, 
 	return json.Marshal(explicitMarshaler)
 }
 
-func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) String() string {
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -44377,13 +44377,13 @@ func (s *SelfServiceProfileSsoTicketIdpInitiatedOptions) String() string {
 
 // Configuration for the setup of Provisioning in the self-service flow.
 var (
-	selfServiceProfileSsoTicketProvisioningConfigFieldScopes        = big.NewInt(1 << 0)
-	selfServiceProfileSsoTicketProvisioningConfigFieldTokenLifetime = big.NewInt(1 << 1)
+	selfServiceProfileSSOTicketProvisioningConfigFieldScopes        = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketProvisioningConfigFieldTokenLifetime = big.NewInt(1 << 1)
 )
 
-type SelfServiceProfileSsoTicketProvisioningConfig struct {
+type SelfServiceProfileSSOTicketProvisioningConfig struct {
 	// The scopes of the SCIM tokens generated during the self-service flow.
-	Scopes []SelfServiceProfileSsoTicketProvisioningScopeEnum `json:"scopes" url:"scopes"`
+	Scopes []SelfServiceProfileSSOTicketProvisioningScopeEnum `json:"scopes" url:"scopes"`
 	// Lifetime of the tokens in seconds. Must be greater than 900. If not provided, the tokens don't expire.
 	TokenLifetime *int `json:"token_lifetime,omitempty" url:"token_lifetime,omitempty"`
 
@@ -44394,25 +44394,25 @@ type SelfServiceProfileSsoTicketProvisioningConfig struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SelfServiceProfileSsoTicketProvisioningConfig) GetScopes() []SelfServiceProfileSsoTicketProvisioningScopeEnum {
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) GetScopes() []SelfServiceProfileSSOTicketProvisioningScopeEnum {
 	if s == nil {
 		return nil
 	}
 	return s.Scopes
 }
 
-func (s *SelfServiceProfileSsoTicketProvisioningConfig) GetTokenLifetime() int {
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) GetTokenLifetime() int {
 	if s == nil || s.TokenLifetime == nil {
 		return 0
 	}
 	return *s.TokenLifetime
 }
 
-func (s *SelfServiceProfileSsoTicketProvisioningConfig) GetExtraProperties() map[string]interface{} {
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
-func (s *SelfServiceProfileSsoTicketProvisioningConfig) require(field *big.Int) {
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -44421,25 +44421,25 @@ func (s *SelfServiceProfileSsoTicketProvisioningConfig) require(field *big.Int) 
 
 // SetScopes sets the Scopes field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketProvisioningConfig) SetScopes(scopes []SelfServiceProfileSsoTicketProvisioningScopeEnum) {
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) SetScopes(scopes []SelfServiceProfileSSOTicketProvisioningScopeEnum) {
 	s.Scopes = scopes
-	s.require(selfServiceProfileSsoTicketProvisioningConfigFieldScopes)
+	s.require(selfServiceProfileSSOTicketProvisioningConfigFieldScopes)
 }
 
 // SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SelfServiceProfileSsoTicketProvisioningConfig) SetTokenLifetime(tokenLifetime *int) {
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) SetTokenLifetime(tokenLifetime *int) {
 	s.TokenLifetime = tokenLifetime
-	s.require(selfServiceProfileSsoTicketProvisioningConfigFieldTokenLifetime)
+	s.require(selfServiceProfileSSOTicketProvisioningConfigFieldTokenLifetime)
 }
 
-func (s *SelfServiceProfileSsoTicketProvisioningConfig) UnmarshalJSON(data []byte) error {
-	type unmarshaler SelfServiceProfileSsoTicketProvisioningConfig
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketProvisioningConfig
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*s = SelfServiceProfileSsoTicketProvisioningConfig(value)
+	*s = SelfServiceProfileSSOTicketProvisioningConfig(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
@@ -44449,8 +44449,8 @@ func (s *SelfServiceProfileSsoTicketProvisioningConfig) UnmarshalJSON(data []byt
 	return nil
 }
 
-func (s *SelfServiceProfileSsoTicketProvisioningConfig) MarshalJSON() ([]byte, error) {
-	type embed SelfServiceProfileSsoTicketProvisioningConfig
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketProvisioningConfig
 	var marshaler = struct {
 		embed
 	}{
@@ -44460,7 +44460,7 @@ func (s *SelfServiceProfileSsoTicketProvisioningConfig) MarshalJSON() ([]byte, e
 	return json.Marshal(explicitMarshaler)
 }
 
-func (s *SelfServiceProfileSsoTicketProvisioningConfig) String() string {
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -44472,34 +44472,34 @@ func (s *SelfServiceProfileSsoTicketProvisioningConfig) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
-type SelfServiceProfileSsoTicketProvisioningScopeEnum string
+type SelfServiceProfileSSOTicketProvisioningScopeEnum string
 
 const (
-	SelfServiceProfileSsoTicketProvisioningScopeEnumGetUsers    SelfServiceProfileSsoTicketProvisioningScopeEnum = "get:users"
-	SelfServiceProfileSsoTicketProvisioningScopeEnumPostUsers   SelfServiceProfileSsoTicketProvisioningScopeEnum = "post:users"
-	SelfServiceProfileSsoTicketProvisioningScopeEnumPutUsers    SelfServiceProfileSsoTicketProvisioningScopeEnum = "put:users"
-	SelfServiceProfileSsoTicketProvisioningScopeEnumPatchUsers  SelfServiceProfileSsoTicketProvisioningScopeEnum = "patch:users"
-	SelfServiceProfileSsoTicketProvisioningScopeEnumDeleteUsers SelfServiceProfileSsoTicketProvisioningScopeEnum = "delete:users"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumGetUsers    SelfServiceProfileSSOTicketProvisioningScopeEnum = "get:users"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumPostUsers   SelfServiceProfileSSOTicketProvisioningScopeEnum = "post:users"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumPutUsers    SelfServiceProfileSSOTicketProvisioningScopeEnum = "put:users"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumPatchUsers  SelfServiceProfileSSOTicketProvisioningScopeEnum = "patch:users"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumDeleteUsers SelfServiceProfileSSOTicketProvisioningScopeEnum = "delete:users"
 )
 
-func NewSelfServiceProfileSsoTicketProvisioningScopeEnumFromString(s string) (SelfServiceProfileSsoTicketProvisioningScopeEnum, error) {
+func NewSelfServiceProfileSSOTicketProvisioningScopeEnumFromString(s string) (SelfServiceProfileSSOTicketProvisioningScopeEnum, error) {
 	switch s {
 	case "get:users":
-		return SelfServiceProfileSsoTicketProvisioningScopeEnumGetUsers, nil
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumGetUsers, nil
 	case "post:users":
-		return SelfServiceProfileSsoTicketProvisioningScopeEnumPostUsers, nil
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumPostUsers, nil
 	case "put:users":
-		return SelfServiceProfileSsoTicketProvisioningScopeEnumPutUsers, nil
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumPutUsers, nil
 	case "patch:users":
-		return SelfServiceProfileSsoTicketProvisioningScopeEnumPatchUsers, nil
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumPatchUsers, nil
 	case "delete:users":
-		return SelfServiceProfileSsoTicketProvisioningScopeEnumDeleteUsers, nil
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumDeleteUsers, nil
 	}
-	var t SelfServiceProfileSsoTicketProvisioningScopeEnum
+	var t SelfServiceProfileSSOTicketProvisioningScopeEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (s SelfServiceProfileSsoTicketProvisioningScopeEnum) Ptr() *SelfServiceProfileSsoTicketProvisioningScopeEnum {
+func (s SelfServiceProfileSSOTicketProvisioningScopeEnum) Ptr() *SelfServiceProfileSSOTicketProvisioningScopeEnum {
 	return &s
 }
 
@@ -44708,12 +44708,12 @@ func (s *SessionAuthenticationSignals) String() string {
 
 // Client details
 var (
-	sessionClientMetadataFieldClientId = big.NewInt(1 << 0)
+	sessionClientMetadataFieldClientID = big.NewInt(1 << 0)
 )
 
 type SessionClientMetadata struct {
 	// ID of client for the session
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -44723,11 +44723,11 @@ type SessionClientMetadata struct {
 	rawJSON json.RawMessage
 }
 
-func (s *SessionClientMetadata) GetClientId() string {
-	if s == nil || s.ClientId == nil {
+func (s *SessionClientMetadata) GetClientID() string {
+	if s == nil || s.ClientID == nil {
 		return ""
 	}
-	return *s.ClientId
+	return *s.ClientID
 }
 
 func (s *SessionClientMetadata) GetExtraProperties() map[string]interface{} {
@@ -44741,11 +44741,11 @@ func (s *SessionClientMetadata) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SessionClientMetadata) SetClientId(clientId *string) {
-	s.ClientId = clientId
-	s.require(sessionClientMetadataFieldClientId)
+func (s *SessionClientMetadata) SetClientID(clientID *string) {
+	s.ClientID = clientID
+	s.require(sessionClientMetadataFieldClientID)
 }
 
 func (s *SessionClientMetadata) UnmarshalJSON(data []byte) error {
@@ -45067,22 +45067,22 @@ func (s *SessionDate) Accept(visitor SessionDateVisitor) error {
 // Metadata related to the device used in the session
 var (
 	sessionDeviceMetadataFieldInitialUserAgent = big.NewInt(1 << 0)
-	sessionDeviceMetadataFieldInitialIp        = big.NewInt(1 << 1)
+	sessionDeviceMetadataFieldInitialIP        = big.NewInt(1 << 1)
 	sessionDeviceMetadataFieldInitialAsn       = big.NewInt(1 << 2)
 	sessionDeviceMetadataFieldLastUserAgent    = big.NewInt(1 << 3)
-	sessionDeviceMetadataFieldLastIp           = big.NewInt(1 << 4)
+	sessionDeviceMetadataFieldLastIP           = big.NewInt(1 << 4)
 	sessionDeviceMetadataFieldLastAsn          = big.NewInt(1 << 5)
 )
 
 type SessionDeviceMetadata struct {
 	// First user agent of the device from which this user logged in
 	InitialUserAgent *string    `json:"initial_user_agent,omitempty" url:"initial_user_agent,omitempty"`
-	InitialIp        *SessionIp `json:"initial_ip,omitempty" url:"initial_ip,omitempty"`
+	InitialIP        *SessionIP `json:"initial_ip,omitempty" url:"initial_ip,omitempty"`
 	// First autonomous system number associated with this session
 	InitialAsn *string `json:"initial_asn,omitempty" url:"initial_asn,omitempty"`
 	// Last user agent of the device from which this user logged in
 	LastUserAgent *string    `json:"last_user_agent,omitempty" url:"last_user_agent,omitempty"`
-	LastIp        *SessionIp `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastIP        *SessionIP `json:"last_ip,omitempty" url:"last_ip,omitempty"`
 	// Last autonomous system number from which this user logged in
 	LastAsn *string `json:"last_asn,omitempty" url:"last_asn,omitempty"`
 
@@ -45101,11 +45101,11 @@ func (s *SessionDeviceMetadata) GetInitialUserAgent() string {
 	return *s.InitialUserAgent
 }
 
-func (s *SessionDeviceMetadata) GetInitialIp() SessionIp {
-	if s == nil || s.InitialIp == nil {
+func (s *SessionDeviceMetadata) GetInitialIP() SessionIP {
+	if s == nil || s.InitialIP == nil {
 		return nil
 	}
-	return *s.InitialIp
+	return *s.InitialIP
 }
 
 func (s *SessionDeviceMetadata) GetInitialAsn() string {
@@ -45122,11 +45122,11 @@ func (s *SessionDeviceMetadata) GetLastUserAgent() string {
 	return *s.LastUserAgent
 }
 
-func (s *SessionDeviceMetadata) GetLastIp() SessionIp {
-	if s == nil || s.LastIp == nil {
+func (s *SessionDeviceMetadata) GetLastIP() SessionIP {
+	if s == nil || s.LastIP == nil {
 		return nil
 	}
-	return *s.LastIp
+	return *s.LastIP
 }
 
 func (s *SessionDeviceMetadata) GetLastAsn() string {
@@ -45154,11 +45154,11 @@ func (s *SessionDeviceMetadata) SetInitialUserAgent(initialUserAgent *string) {
 	s.require(sessionDeviceMetadataFieldInitialUserAgent)
 }
 
-// SetInitialIp sets the InitialIp field and marks it as non-optional;
+// SetInitialIP sets the InitialIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SessionDeviceMetadata) SetInitialIp(initialIp *SessionIp) {
-	s.InitialIp = initialIp
-	s.require(sessionDeviceMetadataFieldInitialIp)
+func (s *SessionDeviceMetadata) SetInitialIP(initialIP *SessionIP) {
+	s.InitialIP = initialIP
+	s.require(sessionDeviceMetadataFieldInitialIP)
 }
 
 // SetInitialAsn sets the InitialAsn field and marks it as non-optional;
@@ -45175,11 +45175,11 @@ func (s *SessionDeviceMetadata) SetLastUserAgent(lastUserAgent *string) {
 	s.require(sessionDeviceMetadataFieldLastUserAgent)
 }
 
-// SetLastIp sets the LastIp field and marks it as non-optional;
+// SetLastIP sets the LastIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SessionDeviceMetadata) SetLastIp(lastIp *SessionIp) {
-	s.LastIp = lastIp
-	s.require(sessionDeviceMetadataFieldLastIp)
+func (s *SessionDeviceMetadata) SetLastIP(lastIP *SessionIP) {
+	s.LastIP = lastIP
+	s.require(sessionDeviceMetadataFieldLastIP)
 }
 
 // SetLastAsn sets the LastAsn field and marks it as non-optional;
@@ -45233,14 +45233,14 @@ func (s *SessionDeviceMetadata) String() string {
 }
 
 // First IP address associated with this session
-type SessionIp = *string
+type SessionIP = *string
 
 // Metadata associated with the session, in the form of an object with string values (max 255 chars). Maximum of 25 metadata properties allowed.
 type SessionMetadata = map[string]interface{}
 
 var (
-	sessionResponseContentFieldId               = big.NewInt(1 << 0)
-	sessionResponseContentFieldUserId           = big.NewInt(1 << 1)
+	sessionResponseContentFieldID               = big.NewInt(1 << 0)
+	sessionResponseContentFieldUserID           = big.NewInt(1 << 1)
 	sessionResponseContentFieldCreatedAt        = big.NewInt(1 << 2)
 	sessionResponseContentFieldUpdatedAt        = big.NewInt(1 << 3)
 	sessionResponseContentFieldAuthenticatedAt  = big.NewInt(1 << 4)
@@ -45256,9 +45256,9 @@ var (
 
 type SessionResponseContent struct {
 	// The ID of the session
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the user which can be used when interacting with other APIs.
-	UserId           *string                `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID           *string                `json:"user_id,omitempty" url:"user_id,omitempty"`
 	CreatedAt        *SessionDate           `json:"created_at,omitempty" url:"created_at,omitempty"`
 	UpdatedAt        *SessionDate           `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	AuthenticatedAt  *SessionDate           `json:"authenticated_at,omitempty" url:"authenticated_at,omitempty"`
@@ -45280,18 +45280,18 @@ type SessionResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (s *SessionResponseContent) GetId() string {
-	if s == nil || s.Id == nil {
+func (s *SessionResponseContent) GetID() string {
+	if s == nil || s.ID == nil {
 		return ""
 	}
-	return *s.Id
+	return *s.ID
 }
 
-func (s *SessionResponseContent) GetUserId() string {
-	if s == nil || s.UserId == nil {
+func (s *SessionResponseContent) GetUserID() string {
+	if s == nil || s.UserID == nil {
 		return ""
 	}
-	return *s.UserId
+	return *s.UserID
 }
 
 func (s *SessionResponseContent) GetCreatedAt() SessionDate {
@@ -45382,18 +45382,18 @@ func (s *SessionResponseContent) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SessionResponseContent) SetId(id *string) {
-	s.Id = id
-	s.require(sessionResponseContentFieldId)
+func (s *SessionResponseContent) SetID(id *string) {
+	s.ID = id
+	s.require(sessionResponseContentFieldID)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SessionResponseContent) SetUserId(userId *string) {
-	s.UserId = userId
-	s.require(sessionResponseContentFieldUserId)
+func (s *SessionResponseContent) SetUserID(userID *string) {
+	s.UserID = userID
+	s.require(sessionResponseContentFieldUserID)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
@@ -46266,13 +46266,13 @@ func (s *SetGuardianFactorsProviderPhoneTwilioResponseContent) String() string {
 
 var (
 	setGuardianFactorsProviderPushNotificationApnsRequestContentFieldSandbox  = big.NewInt(1 << 0)
-	setGuardianFactorsProviderPushNotificationApnsRequestContentFieldBundleId = big.NewInt(1 << 1)
+	setGuardianFactorsProviderPushNotificationApnsRequestContentFieldBundleID = big.NewInt(1 << 1)
 	setGuardianFactorsProviderPushNotificationApnsRequestContentFieldP12      = big.NewInt(1 << 2)
 )
 
 type SetGuardianFactorsProviderPushNotificationApnsRequestContent struct {
 	Sandbox  *bool   `json:"sandbox,omitempty" url:"sandbox,omitempty"`
-	BundleId *string `json:"bundle_id,omitempty" url:"bundle_id,omitempty"`
+	BundleID *string `json:"bundle_id,omitempty" url:"bundle_id,omitempty"`
 	P12      *string `json:"p12,omitempty" url:"p12,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -46289,11 +46289,11 @@ func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) GetSandbo
 	return *s.Sandbox
 }
 
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) GetBundleId() string {
-	if s == nil || s.BundleId == nil {
+func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) GetBundleID() string {
+	if s == nil || s.BundleID == nil {
 		return ""
 	}
-	return *s.BundleId
+	return *s.BundleID
 }
 
 func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) GetP12() string {
@@ -46321,11 +46321,11 @@ func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) SetSandbo
 	s.require(setGuardianFactorsProviderPushNotificationApnsRequestContentFieldSandbox)
 }
 
-// SetBundleId sets the BundleId field and marks it as non-optional;
+// SetBundleID sets the BundleID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) SetBundleId(bundleId *string) {
-	s.BundleId = bundleId
-	s.require(setGuardianFactorsProviderPushNotificationApnsRequestContentFieldBundleId)
+func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) SetBundleID(bundleID *string) {
+	s.BundleID = bundleID
+	s.require(setGuardianFactorsProviderPushNotificationApnsRequestContentFieldBundleID)
 }
 
 // SetP12 sets the P12 field and marks it as non-optional;
@@ -46376,12 +46376,12 @@ func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) String() 
 
 var (
 	setGuardianFactorsProviderPushNotificationApnsResponseContentFieldSandbox  = big.NewInt(1 << 0)
-	setGuardianFactorsProviderPushNotificationApnsResponseContentFieldBundleId = big.NewInt(1 << 1)
+	setGuardianFactorsProviderPushNotificationApnsResponseContentFieldBundleID = big.NewInt(1 << 1)
 )
 
 type SetGuardianFactorsProviderPushNotificationApnsResponseContent struct {
 	Sandbox  *bool   `json:"sandbox,omitempty" url:"sandbox,omitempty"`
-	BundleId *string `json:"bundle_id,omitempty" url:"bundle_id,omitempty"`
+	BundleID *string `json:"bundle_id,omitempty" url:"bundle_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -46397,11 +46397,11 @@ func (s *SetGuardianFactorsProviderPushNotificationApnsResponseContent) GetSandb
 	return *s.Sandbox
 }
 
-func (s *SetGuardianFactorsProviderPushNotificationApnsResponseContent) GetBundleId() string {
-	if s == nil || s.BundleId == nil {
+func (s *SetGuardianFactorsProviderPushNotificationApnsResponseContent) GetBundleID() string {
+	if s == nil || s.BundleID == nil {
 		return ""
 	}
-	return *s.BundleId
+	return *s.BundleID
 }
 
 func (s *SetGuardianFactorsProviderPushNotificationApnsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -46422,11 +46422,11 @@ func (s *SetGuardianFactorsProviderPushNotificationApnsResponseContent) SetSandb
 	s.require(setGuardianFactorsProviderPushNotificationApnsResponseContentFieldSandbox)
 }
 
-// SetBundleId sets the BundleId field and marks it as non-optional;
+// SetBundleID sets the BundleID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorsProviderPushNotificationApnsResponseContent) SetBundleId(bundleId *string) {
-	s.BundleId = bundleId
-	s.require(setGuardianFactorsProviderPushNotificationApnsResponseContentFieldBundleId)
+func (s *SetGuardianFactorsProviderPushNotificationApnsResponseContent) SetBundleID(bundleID *string) {
+	s.BundleID = bundleID
+	s.require(setGuardianFactorsProviderPushNotificationApnsResponseContentFieldBundleID)
 }
 
 func (s *SetGuardianFactorsProviderPushNotificationApnsResponseContent) UnmarshalJSON(data []byte) error {
@@ -46707,7 +46707,7 @@ func (s *SetGuardianFactorsProviderPushNotificationResponseContent) String() str
 }
 
 var (
-	setGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsAccessKeyId                = big.NewInt(1 << 0)
+	setGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsAccessKeyID                = big.NewInt(1 << 0)
 	setGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsSecretAccessKey            = big.NewInt(1 << 1)
 	setGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsRegion                     = big.NewInt(1 << 2)
 	setGuardianFactorsProviderPushNotificationSnsResponseContentFieldSnsApnsPlatformApplicationArn = big.NewInt(1 << 3)
@@ -46715,7 +46715,7 @@ var (
 )
 
 type SetGuardianFactorsProviderPushNotificationSnsResponseContent struct {
-	AwsAccessKeyId                *string `json:"aws_access_key_id,omitempty" url:"aws_access_key_id,omitempty"`
+	AwsAccessKeyID                *string `json:"aws_access_key_id,omitempty" url:"aws_access_key_id,omitempty"`
 	AwsSecretAccessKey            *string `json:"aws_secret_access_key,omitempty" url:"aws_secret_access_key,omitempty"`
 	AwsRegion                     *string `json:"aws_region,omitempty" url:"aws_region,omitempty"`
 	SnsApnsPlatformApplicationArn *string `json:"sns_apns_platform_application_arn,omitempty" url:"sns_apns_platform_application_arn,omitempty"`
@@ -46728,11 +46728,11 @@ type SetGuardianFactorsProviderPushNotificationSnsResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SetGuardianFactorsProviderPushNotificationSnsResponseContent) GetAwsAccessKeyId() string {
-	if s == nil || s.AwsAccessKeyId == nil {
+func (s *SetGuardianFactorsProviderPushNotificationSnsResponseContent) GetAwsAccessKeyID() string {
+	if s == nil || s.AwsAccessKeyID == nil {
 		return ""
 	}
-	return *s.AwsAccessKeyId
+	return *s.AwsAccessKeyID
 }
 
 func (s *SetGuardianFactorsProviderPushNotificationSnsResponseContent) GetAwsSecretAccessKey() string {
@@ -46774,11 +46774,11 @@ func (s *SetGuardianFactorsProviderPushNotificationSnsResponseContent) require(f
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
-// SetAwsAccessKeyId sets the AwsAccessKeyId field and marks it as non-optional;
+// SetAwsAccessKeyID sets the AwsAccessKeyID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorsProviderPushNotificationSnsResponseContent) SetAwsAccessKeyId(awsAccessKeyId *string) {
-	s.AwsAccessKeyId = awsAccessKeyId
-	s.require(setGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsAccessKeyId)
+func (s *SetGuardianFactorsProviderPushNotificationSnsResponseContent) SetAwsAccessKeyID(awsAccessKeyID *string) {
+	s.AwsAccessKeyID = awsAccessKeyID
+	s.require(setGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsAccessKeyID)
 }
 
 // SetAwsSecretAccessKey sets the AwsSecretAccessKey field and marks it as non-optional;
@@ -47071,7 +47071,7 @@ type SetSelfServiceProfileCustomTextResponseContent = map[string]string
 
 // The successfully created authentication method.
 var (
-	setUserAuthenticationMethodResponseContentFieldId                            = big.NewInt(1 << 0)
+	setUserAuthenticationMethodResponseContentFieldID                            = big.NewInt(1 << 0)
 	setUserAuthenticationMethodResponseContentFieldType                          = big.NewInt(1 << 1)
 	setUserAuthenticationMethodResponseContentFieldName                          = big.NewInt(1 << 2)
 	setUserAuthenticationMethodResponseContentFieldTotpSecret                    = big.NewInt(1 << 3)
@@ -47079,7 +47079,7 @@ var (
 	setUserAuthenticationMethodResponseContentFieldEmail                         = big.NewInt(1 << 5)
 	setUserAuthenticationMethodResponseContentFieldAuthenticationMethods         = big.NewInt(1 << 6)
 	setUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 7)
-	setUserAuthenticationMethodResponseContentFieldKeyId                         = big.NewInt(1 << 8)
+	setUserAuthenticationMethodResponseContentFieldKeyID                         = big.NewInt(1 << 8)
 	setUserAuthenticationMethodResponseContentFieldPublicKey                     = big.NewInt(1 << 9)
 	setUserAuthenticationMethodResponseContentFieldAaguid                        = big.NewInt(1 << 10)
 	setUserAuthenticationMethodResponseContentFieldRelyingPartyIdentifier        = big.NewInt(1 << 11)
@@ -47088,7 +47088,7 @@ var (
 
 type SetUserAuthenticationMethodResponseContent struct {
 	// The ID of the newly created authentication method (automatically generated by the application)
-	Id   *string                             `json:"id,omitempty" url:"id,omitempty"`
+	ID   *string                             `json:"id,omitempty" url:"id,omitempty"`
 	Type CreatedAuthenticationMethodTypeEnum `json:"type" url:"type"`
 	// A human-readable label to identify the authentication method.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -47101,7 +47101,7 @@ type SetUserAuthenticationMethodResponseContent struct {
 	AuthenticationMethods         []*UserAuthenticationMethodProperties `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
 	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum    `json:"preferred_authentication_method,omitempty" url:"preferred_authentication_method,omitempty"`
 	// Applies to webauthn authenticators only. The id of the credential.
-	KeyId *string `json:"key_id,omitempty" url:"key_id,omitempty"`
+	KeyID *string `json:"key_id,omitempty" url:"key_id,omitempty"`
 	// Applies to webauthn authenticators only. The public key.
 	PublicKey *string `json:"public_key,omitempty" url:"public_key,omitempty"`
 	// Applies to passkeys only. Authenticator Attestation Globally Unique Identifier.
@@ -47118,11 +47118,11 @@ type SetUserAuthenticationMethodResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SetUserAuthenticationMethodResponseContent) GetId() string {
-	if s == nil || s.Id == nil {
+func (s *SetUserAuthenticationMethodResponseContent) GetID() string {
+	if s == nil || s.ID == nil {
 		return ""
 	}
-	return *s.Id
+	return *s.ID
 }
 
 func (s *SetUserAuthenticationMethodResponseContent) GetType() CreatedAuthenticationMethodTypeEnum {
@@ -47174,11 +47174,11 @@ func (s *SetUserAuthenticationMethodResponseContent) GetPreferredAuthenticationM
 	return *s.PreferredAuthenticationMethod
 }
 
-func (s *SetUserAuthenticationMethodResponseContent) GetKeyId() string {
-	if s == nil || s.KeyId == nil {
+func (s *SetUserAuthenticationMethodResponseContent) GetKeyID() string {
+	if s == nil || s.KeyID == nil {
 		return ""
 	}
-	return *s.KeyId
+	return *s.KeyID
 }
 
 func (s *SetUserAuthenticationMethodResponseContent) GetPublicKey() string {
@@ -47220,11 +47220,11 @@ func (s *SetUserAuthenticationMethodResponseContent) require(field *big.Int) {
 	s.explicitFields.Or(s.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetUserAuthenticationMethodResponseContent) SetId(id *string) {
-	s.Id = id
-	s.require(setUserAuthenticationMethodResponseContentFieldId)
+func (s *SetUserAuthenticationMethodResponseContent) SetID(id *string) {
+	s.ID = id
+	s.require(setUserAuthenticationMethodResponseContentFieldID)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -47276,11 +47276,11 @@ func (s *SetUserAuthenticationMethodResponseContent) SetPreferredAuthenticationM
 	s.require(setUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod)
 }
 
-// SetKeyId sets the KeyId field and marks it as non-optional;
+// SetKeyID sets the KeyID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetUserAuthenticationMethodResponseContent) SetKeyId(keyId *string) {
-	s.KeyId = keyId
-	s.require(setUserAuthenticationMethodResponseContentFieldKeyId)
+func (s *SetUserAuthenticationMethodResponseContent) SetKeyID(keyID *string) {
+	s.KeyID = keyID
+	s.require(setUserAuthenticationMethodResponseContentFieldKeyID)
 }
 
 // SetPublicKey sets the PublicKey field and marks it as non-optional;
@@ -47919,7 +47919,7 @@ const (
 	SupportedLocalesHr    SupportedLocales = "hr"
 	SupportedLocalesHu    SupportedLocales = "hu"
 	SupportedLocalesHy    SupportedLocales = "hy"
-	SupportedLocalesId    SupportedLocales = "id"
+	SupportedLocalesID    SupportedLocales = "id"
 	SupportedLocalesIs    SupportedLocales = "is"
 	SupportedLocalesIt    SupportedLocales = "it"
 	SupportedLocalesJa    SupportedLocales = "ja"
@@ -48040,7 +48040,7 @@ func NewSupportedLocalesFromString(s string) (SupportedLocales, error) {
 	case "hy":
 		return SupportedLocalesHy, nil
 	case "id":
-		return SupportedLocalesId, nil
+		return SupportedLocalesID, nil
 	case "is":
 		return SupportedLocalesIs, nil
 	case "it":
@@ -48141,17 +48141,17 @@ func (s SupportedLocales) Ptr() *SupportedLocales {
 }
 
 // List of trusted IP addresses that will not have attack protection enforced against them.
-type SuspiciousIpThrottlingAllowlist = []SuspiciousIpThrottlingAllowlistItem
+type SuspiciousIPThrottlingAllowlist = []SuspiciousIPThrottlingAllowlistItem
 
-type SuspiciousIpThrottlingAllowlistItem = string
+type SuspiciousIPThrottlingAllowlistItem = string
 
 // Configuration options that apply before every login attempt.
 var (
-	suspiciousIpThrottlingPreLoginStageFieldMaxAttempts = big.NewInt(1 << 0)
-	suspiciousIpThrottlingPreLoginStageFieldRate        = big.NewInt(1 << 1)
+	suspiciousIPThrottlingPreLoginStageFieldMaxAttempts = big.NewInt(1 << 0)
+	suspiciousIPThrottlingPreLoginStageFieldRate        = big.NewInt(1 << 1)
 )
 
-type SuspiciousIpThrottlingPreLoginStage struct {
+type SuspiciousIPThrottlingPreLoginStage struct {
 	// Total number of attempts allowed per day.
 	MaxAttempts *int `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
 	// Interval of time, given in milliseconds, at which new attempts are granted.
@@ -48164,25 +48164,25 @@ type SuspiciousIpThrottlingPreLoginStage struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SuspiciousIpThrottlingPreLoginStage) GetMaxAttempts() int {
+func (s *SuspiciousIPThrottlingPreLoginStage) GetMaxAttempts() int {
 	if s == nil || s.MaxAttempts == nil {
 		return 0
 	}
 	return *s.MaxAttempts
 }
 
-func (s *SuspiciousIpThrottlingPreLoginStage) GetRate() int {
+func (s *SuspiciousIPThrottlingPreLoginStage) GetRate() int {
 	if s == nil || s.Rate == nil {
 		return 0
 	}
 	return *s.Rate
 }
 
-func (s *SuspiciousIpThrottlingPreLoginStage) GetExtraProperties() map[string]interface{} {
+func (s *SuspiciousIPThrottlingPreLoginStage) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
-func (s *SuspiciousIpThrottlingPreLoginStage) require(field *big.Int) {
+func (s *SuspiciousIPThrottlingPreLoginStage) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -48191,25 +48191,25 @@ func (s *SuspiciousIpThrottlingPreLoginStage) require(field *big.Int) {
 
 // SetMaxAttempts sets the MaxAttempts field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SuspiciousIpThrottlingPreLoginStage) SetMaxAttempts(maxAttempts *int) {
+func (s *SuspiciousIPThrottlingPreLoginStage) SetMaxAttempts(maxAttempts *int) {
 	s.MaxAttempts = maxAttempts
-	s.require(suspiciousIpThrottlingPreLoginStageFieldMaxAttempts)
+	s.require(suspiciousIPThrottlingPreLoginStageFieldMaxAttempts)
 }
 
 // SetRate sets the Rate field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SuspiciousIpThrottlingPreLoginStage) SetRate(rate *int) {
+func (s *SuspiciousIPThrottlingPreLoginStage) SetRate(rate *int) {
 	s.Rate = rate
-	s.require(suspiciousIpThrottlingPreLoginStageFieldRate)
+	s.require(suspiciousIPThrottlingPreLoginStageFieldRate)
 }
 
-func (s *SuspiciousIpThrottlingPreLoginStage) UnmarshalJSON(data []byte) error {
-	type unmarshaler SuspiciousIpThrottlingPreLoginStage
+func (s *SuspiciousIPThrottlingPreLoginStage) UnmarshalJSON(data []byte) error {
+	type unmarshaler SuspiciousIPThrottlingPreLoginStage
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*s = SuspiciousIpThrottlingPreLoginStage(value)
+	*s = SuspiciousIPThrottlingPreLoginStage(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
@@ -48219,8 +48219,8 @@ func (s *SuspiciousIpThrottlingPreLoginStage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (s *SuspiciousIpThrottlingPreLoginStage) MarshalJSON() ([]byte, error) {
-	type embed SuspiciousIpThrottlingPreLoginStage
+func (s *SuspiciousIPThrottlingPreLoginStage) MarshalJSON() ([]byte, error) {
+	type embed SuspiciousIPThrottlingPreLoginStage
 	var marshaler = struct {
 		embed
 	}{
@@ -48230,7 +48230,7 @@ func (s *SuspiciousIpThrottlingPreLoginStage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (s *SuspiciousIpThrottlingPreLoginStage) String() string {
+func (s *SuspiciousIPThrottlingPreLoginStage) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -48244,11 +48244,11 @@ func (s *SuspiciousIpThrottlingPreLoginStage) String() string {
 
 // Configuration options that apply before every user registration attempt.
 var (
-	suspiciousIpThrottlingPreUserRegistrationStageFieldMaxAttempts = big.NewInt(1 << 0)
-	suspiciousIpThrottlingPreUserRegistrationStageFieldRate        = big.NewInt(1 << 1)
+	suspiciousIPThrottlingPreUserRegistrationStageFieldMaxAttempts = big.NewInt(1 << 0)
+	suspiciousIPThrottlingPreUserRegistrationStageFieldRate        = big.NewInt(1 << 1)
 )
 
-type SuspiciousIpThrottlingPreUserRegistrationStage struct {
+type SuspiciousIPThrottlingPreUserRegistrationStage struct {
 	// Total number of attempts allowed.
 	MaxAttempts *int `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
 	// Interval of time, given in milliseconds, at which new attempts are granted.
@@ -48261,25 +48261,25 @@ type SuspiciousIpThrottlingPreUserRegistrationStage struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SuspiciousIpThrottlingPreUserRegistrationStage) GetMaxAttempts() int {
+func (s *SuspiciousIPThrottlingPreUserRegistrationStage) GetMaxAttempts() int {
 	if s == nil || s.MaxAttempts == nil {
 		return 0
 	}
 	return *s.MaxAttempts
 }
 
-func (s *SuspiciousIpThrottlingPreUserRegistrationStage) GetRate() int {
+func (s *SuspiciousIPThrottlingPreUserRegistrationStage) GetRate() int {
 	if s == nil || s.Rate == nil {
 		return 0
 	}
 	return *s.Rate
 }
 
-func (s *SuspiciousIpThrottlingPreUserRegistrationStage) GetExtraProperties() map[string]interface{} {
+func (s *SuspiciousIPThrottlingPreUserRegistrationStage) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
-func (s *SuspiciousIpThrottlingPreUserRegistrationStage) require(field *big.Int) {
+func (s *SuspiciousIPThrottlingPreUserRegistrationStage) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -48288,25 +48288,25 @@ func (s *SuspiciousIpThrottlingPreUserRegistrationStage) require(field *big.Int)
 
 // SetMaxAttempts sets the MaxAttempts field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SuspiciousIpThrottlingPreUserRegistrationStage) SetMaxAttempts(maxAttempts *int) {
+func (s *SuspiciousIPThrottlingPreUserRegistrationStage) SetMaxAttempts(maxAttempts *int) {
 	s.MaxAttempts = maxAttempts
-	s.require(suspiciousIpThrottlingPreUserRegistrationStageFieldMaxAttempts)
+	s.require(suspiciousIPThrottlingPreUserRegistrationStageFieldMaxAttempts)
 }
 
 // SetRate sets the Rate field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SuspiciousIpThrottlingPreUserRegistrationStage) SetRate(rate *int) {
+func (s *SuspiciousIPThrottlingPreUserRegistrationStage) SetRate(rate *int) {
 	s.Rate = rate
-	s.require(suspiciousIpThrottlingPreUserRegistrationStageFieldRate)
+	s.require(suspiciousIPThrottlingPreUserRegistrationStageFieldRate)
 }
 
-func (s *SuspiciousIpThrottlingPreUserRegistrationStage) UnmarshalJSON(data []byte) error {
-	type unmarshaler SuspiciousIpThrottlingPreUserRegistrationStage
+func (s *SuspiciousIPThrottlingPreUserRegistrationStage) UnmarshalJSON(data []byte) error {
+	type unmarshaler SuspiciousIPThrottlingPreUserRegistrationStage
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*s = SuspiciousIpThrottlingPreUserRegistrationStage(value)
+	*s = SuspiciousIPThrottlingPreUserRegistrationStage(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
@@ -48316,8 +48316,8 @@ func (s *SuspiciousIpThrottlingPreUserRegistrationStage) UnmarshalJSON(data []by
 	return nil
 }
 
-func (s *SuspiciousIpThrottlingPreUserRegistrationStage) MarshalJSON() ([]byte, error) {
-	type embed SuspiciousIpThrottlingPreUserRegistrationStage
+func (s *SuspiciousIPThrottlingPreUserRegistrationStage) MarshalJSON() ([]byte, error) {
+	type embed SuspiciousIPThrottlingPreUserRegistrationStage
 	var marshaler = struct {
 		embed
 	}{
@@ -48327,7 +48327,7 @@ func (s *SuspiciousIpThrottlingPreUserRegistrationStage) MarshalJSON() ([]byte, 
 	return json.Marshal(explicitMarshaler)
 }
 
-func (s *SuspiciousIpThrottlingPreUserRegistrationStage) String() string {
+func (s *SuspiciousIPThrottlingPreUserRegistrationStage) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -48339,37 +48339,37 @@ func (s *SuspiciousIpThrottlingPreUserRegistrationStage) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
-type SuspiciousIpThrottlingShieldsEnum string
+type SuspiciousIPThrottlingShieldsEnum string
 
 const (
-	SuspiciousIpThrottlingShieldsEnumBlock             SuspiciousIpThrottlingShieldsEnum = "block"
-	SuspiciousIpThrottlingShieldsEnumAdminNotification SuspiciousIpThrottlingShieldsEnum = "admin_notification"
+	SuspiciousIPThrottlingShieldsEnumBlock             SuspiciousIPThrottlingShieldsEnum = "block"
+	SuspiciousIPThrottlingShieldsEnumAdminNotification SuspiciousIPThrottlingShieldsEnum = "admin_notification"
 )
 
-func NewSuspiciousIpThrottlingShieldsEnumFromString(s string) (SuspiciousIpThrottlingShieldsEnum, error) {
+func NewSuspiciousIPThrottlingShieldsEnumFromString(s string) (SuspiciousIPThrottlingShieldsEnum, error) {
 	switch s {
 	case "block":
-		return SuspiciousIpThrottlingShieldsEnumBlock, nil
+		return SuspiciousIPThrottlingShieldsEnumBlock, nil
 	case "admin_notification":
-		return SuspiciousIpThrottlingShieldsEnumAdminNotification, nil
+		return SuspiciousIPThrottlingShieldsEnumAdminNotification, nil
 	}
-	var t SuspiciousIpThrottlingShieldsEnum
+	var t SuspiciousIPThrottlingShieldsEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (s SuspiciousIpThrottlingShieldsEnum) Ptr() *SuspiciousIpThrottlingShieldsEnum {
+func (s SuspiciousIPThrottlingShieldsEnum) Ptr() *SuspiciousIPThrottlingShieldsEnum {
 	return &s
 }
 
 // Holds per-stage configuration options (max_attempts and rate).
 var (
-	suspiciousIpThrottlingStageFieldPreLogin            = big.NewInt(1 << 0)
-	suspiciousIpThrottlingStageFieldPreUserRegistration = big.NewInt(1 << 1)
+	suspiciousIPThrottlingStageFieldPreLogin            = big.NewInt(1 << 0)
+	suspiciousIPThrottlingStageFieldPreUserRegistration = big.NewInt(1 << 1)
 )
 
-type SuspiciousIpThrottlingStage struct {
-	PreLogin            *SuspiciousIpThrottlingPreLoginStage            `json:"pre-login,omitempty" url:"pre-login,omitempty"`
-	PreUserRegistration *SuspiciousIpThrottlingPreUserRegistrationStage `json:"pre-user-registration,omitempty" url:"pre-user-registration,omitempty"`
+type SuspiciousIPThrottlingStage struct {
+	PreLogin            *SuspiciousIPThrottlingPreLoginStage            `json:"pre-login,omitempty" url:"pre-login,omitempty"`
+	PreUserRegistration *SuspiciousIPThrottlingPreUserRegistrationStage `json:"pre-user-registration,omitempty" url:"pre-user-registration,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -48378,25 +48378,25 @@ type SuspiciousIpThrottlingStage struct {
 	rawJSON         json.RawMessage
 }
 
-func (s *SuspiciousIpThrottlingStage) GetPreLogin() SuspiciousIpThrottlingPreLoginStage {
+func (s *SuspiciousIPThrottlingStage) GetPreLogin() SuspiciousIPThrottlingPreLoginStage {
 	if s == nil || s.PreLogin == nil {
-		return SuspiciousIpThrottlingPreLoginStage{}
+		return SuspiciousIPThrottlingPreLoginStage{}
 	}
 	return *s.PreLogin
 }
 
-func (s *SuspiciousIpThrottlingStage) GetPreUserRegistration() SuspiciousIpThrottlingPreUserRegistrationStage {
+func (s *SuspiciousIPThrottlingStage) GetPreUserRegistration() SuspiciousIPThrottlingPreUserRegistrationStage {
 	if s == nil || s.PreUserRegistration == nil {
-		return SuspiciousIpThrottlingPreUserRegistrationStage{}
+		return SuspiciousIPThrottlingPreUserRegistrationStage{}
 	}
 	return *s.PreUserRegistration
 }
 
-func (s *SuspiciousIpThrottlingStage) GetExtraProperties() map[string]interface{} {
+func (s *SuspiciousIPThrottlingStage) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
-func (s *SuspiciousIpThrottlingStage) require(field *big.Int) {
+func (s *SuspiciousIPThrottlingStage) require(field *big.Int) {
 	if s.explicitFields == nil {
 		s.explicitFields = big.NewInt(0)
 	}
@@ -48405,25 +48405,25 @@ func (s *SuspiciousIpThrottlingStage) require(field *big.Int) {
 
 // SetPreLogin sets the PreLogin field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SuspiciousIpThrottlingStage) SetPreLogin(preLogin *SuspiciousIpThrottlingPreLoginStage) {
+func (s *SuspiciousIPThrottlingStage) SetPreLogin(preLogin *SuspiciousIPThrottlingPreLoginStage) {
 	s.PreLogin = preLogin
-	s.require(suspiciousIpThrottlingStageFieldPreLogin)
+	s.require(suspiciousIPThrottlingStageFieldPreLogin)
 }
 
 // SetPreUserRegistration sets the PreUserRegistration field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SuspiciousIpThrottlingStage) SetPreUserRegistration(preUserRegistration *SuspiciousIpThrottlingPreUserRegistrationStage) {
+func (s *SuspiciousIPThrottlingStage) SetPreUserRegistration(preUserRegistration *SuspiciousIPThrottlingPreUserRegistrationStage) {
 	s.PreUserRegistration = preUserRegistration
-	s.require(suspiciousIpThrottlingStageFieldPreUserRegistration)
+	s.require(suspiciousIPThrottlingStageFieldPreUserRegistration)
 }
 
-func (s *SuspiciousIpThrottlingStage) UnmarshalJSON(data []byte) error {
-	type unmarshaler SuspiciousIpThrottlingStage
+func (s *SuspiciousIPThrottlingStage) UnmarshalJSON(data []byte) error {
+	type unmarshaler SuspiciousIPThrottlingStage
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*s = SuspiciousIpThrottlingStage(value)
+	*s = SuspiciousIPThrottlingStage(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *s)
 	if err != nil {
 		return err
@@ -48433,8 +48433,8 @@ func (s *SuspiciousIpThrottlingStage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (s *SuspiciousIpThrottlingStage) MarshalJSON() ([]byte, error) {
-	type embed SuspiciousIpThrottlingStage
+func (s *SuspiciousIPThrottlingStage) MarshalJSON() ([]byte, error) {
+	type embed SuspiciousIPThrottlingStage
 	var marshaler = struct {
 		embed
 	}{
@@ -48444,7 +48444,7 @@ func (s *SuspiciousIpThrottlingStage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (s *SuspiciousIpThrottlingStage) String() string {
+func (s *SuspiciousIPThrottlingStage) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -48657,18 +48657,18 @@ func (t TenantSettingsDeviceFlowCharset) Ptr() *TenantSettingsDeviceFlowCharset 
 
 // Error page customization.
 var (
-	tenantSettingsErrorPageFieldHtml        = big.NewInt(1 << 0)
+	tenantSettingsErrorPageFieldHTML        = big.NewInt(1 << 0)
 	tenantSettingsErrorPageFieldShowLogLink = big.NewInt(1 << 1)
-	tenantSettingsErrorPageFieldUrl         = big.NewInt(1 << 2)
+	tenantSettingsErrorPageFieldURL         = big.NewInt(1 << 2)
 )
 
 type TenantSettingsErrorPage struct {
 	// Custom Error HTML (<a href='https://github.com/Shopify/liquid/wiki/Liquid-for-Designers'>Liquid syntax</a> is supported).
-	Html *string `json:"html,omitempty" url:"html,omitempty"`
+	HTML *string `json:"html,omitempty" url:"html,omitempty"`
 	// Whether to show the link to log as part of the default error page (true, default) or not to show the link (false).
 	ShowLogLink *bool `json:"show_log_link,omitempty" url:"show_log_link,omitempty"`
 	// URL to redirect to when an error occurs instead of showing the default error page.
-	Url *string `json:"url,omitempty" url:"url,omitempty"`
+	URL *string `json:"url,omitempty" url:"url,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -48677,11 +48677,11 @@ type TenantSettingsErrorPage struct {
 	rawJSON         json.RawMessage
 }
 
-func (t *TenantSettingsErrorPage) GetHtml() string {
-	if t == nil || t.Html == nil {
+func (t *TenantSettingsErrorPage) GetHTML() string {
+	if t == nil || t.HTML == nil {
 		return ""
 	}
-	return *t.Html
+	return *t.HTML
 }
 
 func (t *TenantSettingsErrorPage) GetShowLogLink() bool {
@@ -48691,11 +48691,11 @@ func (t *TenantSettingsErrorPage) GetShowLogLink() bool {
 	return *t.ShowLogLink
 }
 
-func (t *TenantSettingsErrorPage) GetUrl() string {
-	if t == nil || t.Url == nil {
+func (t *TenantSettingsErrorPage) GetURL() string {
+	if t == nil || t.URL == nil {
 		return ""
 	}
-	return *t.Url
+	return *t.URL
 }
 
 func (t *TenantSettingsErrorPage) GetExtraProperties() map[string]interface{} {
@@ -48709,11 +48709,11 @@ func (t *TenantSettingsErrorPage) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
-// SetHtml sets the Html field and marks it as non-optional;
+// SetHTML sets the HTML field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TenantSettingsErrorPage) SetHtml(html *string) {
-	t.Html = html
-	t.require(tenantSettingsErrorPageFieldHtml)
+func (t *TenantSettingsErrorPage) SetHTML(html *string) {
+	t.HTML = html
+	t.require(tenantSettingsErrorPageFieldHTML)
 }
 
 // SetShowLogLink sets the ShowLogLink field and marks it as non-optional;
@@ -48723,11 +48723,11 @@ func (t *TenantSettingsErrorPage) SetShowLogLink(showLogLink *bool) {
 	t.require(tenantSettingsErrorPageFieldShowLogLink)
 }
 
-// SetUrl sets the Url field and marks it as non-optional;
+// SetURL sets the URL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TenantSettingsErrorPage) SetUrl(url *string) {
-	t.Url = url
-	t.require(tenantSettingsErrorPageFieldUrl)
+func (t *TenantSettingsErrorPage) SetURL(url *string) {
+	t.URL = url
+	t.require(tenantSettingsErrorPageFieldURL)
 }
 
 func (t *TenantSettingsErrorPage) UnmarshalJSON(data []byte) error {
@@ -48772,7 +48772,7 @@ func (t *TenantSettingsErrorPage) String() string {
 // Flags used to change the behavior of this tenant.
 var (
 	tenantSettingsFlagsFieldChangePwdFlowV1                                = big.NewInt(1 << 0)
-	tenantSettingsFlagsFieldEnableApisSection                              = big.NewInt(1 << 1)
+	tenantSettingsFlagsFieldEnableAPIsSection                              = big.NewInt(1 << 1)
 	tenantSettingsFlagsFieldDisableImpersonation                           = big.NewInt(1 << 2)
 	tenantSettingsFlagsFieldEnableClientConnections                        = big.NewInt(1 << 3)
 	tenantSettingsFlagsFieldEnablePipeline2                                = big.NewInt(1 << 4)
@@ -48780,10 +48780,10 @@ var (
 	tenantSettingsFlagsFieldAllowLegacyRoGrantTypes                        = big.NewInt(1 << 6)
 	tenantSettingsFlagsFieldAllowLegacyTokeninfoEndpoint                   = big.NewInt(1 << 7)
 	tenantSettingsFlagsFieldEnableLegacyProfile                            = big.NewInt(1 << 8)
-	tenantSettingsFlagsFieldEnableIdtokenApi2                              = big.NewInt(1 << 9)
+	tenantSettingsFlagsFieldEnableIdtokenAPI2                              = big.NewInt(1 << 9)
 	tenantSettingsFlagsFieldEnablePublicSignupUserExistsError              = big.NewInt(1 << 10)
-	tenantSettingsFlagsFieldEnableSso                                      = big.NewInt(1 << 11)
-	tenantSettingsFlagsFieldAllowChangingEnableSso                         = big.NewInt(1 << 12)
+	tenantSettingsFlagsFieldEnableSSO                                      = big.NewInt(1 << 11)
+	tenantSettingsFlagsFieldAllowChangingEnableSSO                         = big.NewInt(1 << 12)
 	tenantSettingsFlagsFieldDisableClickjackProtectionHeaders              = big.NewInt(1 << 13)
 	tenantSettingsFlagsFieldNoDiscloseEnterpriseConnections                = big.NewInt(1 << 14)
 	tenantSettingsFlagsFieldEnforceClientAuthenticationOnPasswordlessStart = big.NewInt(1 << 15)
@@ -48797,7 +48797,7 @@ var (
 	tenantSettingsFlagsFieldImprovedSignupBotDetectionInClassic            = big.NewInt(1 << 23)
 	tenantSettingsFlagsFieldGenaiTrial                                     = big.NewInt(1 << 24)
 	tenantSettingsFlagsFieldEnableDynamicClientRegistration                = big.NewInt(1 << 25)
-	tenantSettingsFlagsFieldDisableManagementApiSmsObfuscation             = big.NewInt(1 << 26)
+	tenantSettingsFlagsFieldDisableManagementAPISmsObfuscation             = big.NewInt(1 << 26)
 	tenantSettingsFlagsFieldTrustAzureAdfsEmailVerifiedConnectionProperty  = big.NewInt(1 << 27)
 	tenantSettingsFlagsFieldCustomDomainsProvisioning                      = big.NewInt(1 << 28)
 )
@@ -48806,7 +48806,7 @@ type TenantSettingsFlags struct {
 	// Whether to use the older v1 change password flow (true, not recommended except for backward compatibility) or the newer safer flow (false, recommended).
 	ChangePwdFlowV1 *bool `json:"change_pwd_flow_v1,omitempty" url:"change_pwd_flow_v1,omitempty"`
 	// Whether the APIs section is enabled (true) or disabled (false).
-	EnableApisSection *bool `json:"enable_apis_section,omitempty" url:"enable_apis_section,omitempty"`
+	EnableAPIsSection *bool `json:"enable_apis_section,omitempty" url:"enable_apis_section,omitempty"`
 	// Whether the impersonation functionality has been disabled (true) or not (false). Read-only.
 	DisableImpersonation *bool `json:"disable_impersonation,omitempty" url:"disable_impersonation,omitempty"`
 	// Whether all current connections should be enabled when a new client (application) is created (true, default) or not (false).
@@ -48822,13 +48822,13 @@ type TenantSettingsFlags struct {
 	// Whether ID tokens and the userinfo endpoint includes a complete user profile (true) or only OpenID Connect claims (false).
 	EnableLegacyProfile *bool `json:"enable_legacy_profile,omitempty" url:"enable_legacy_profile,omitempty"`
 	// Whether ID tokens can be used to authorize some types of requests to API v2 (true) not not (false).
-	EnableIdtokenApi2 *bool `json:"enable_idtoken_api2,omitempty" url:"enable_idtoken_api2,omitempty"`
+	EnableIdtokenAPI2 *bool `json:"enable_idtoken_api2,omitempty" url:"enable_idtoken_api2,omitempty"`
 	// Whether the public sign up process shows a user_exists error (true) or a generic error (false) if the user already exists.
 	EnablePublicSignupUserExistsError *bool `json:"enable_public_signup_user_exists_error,omitempty" url:"enable_public_signup_user_exists_error,omitempty"`
 	// Whether users are prompted to confirm log in before SSO redirection (false) or are not prompted (true).
-	EnableSso *bool `json:"enable_sso,omitempty" url:"enable_sso,omitempty"`
+	EnableSSO *bool `json:"enable_sso,omitempty" url:"enable_sso,omitempty"`
 	// Whether the `enable_sso` setting can be changed (true) or not (false).
-	AllowChangingEnableSso *bool `json:"allow_changing_enable_sso,omitempty" url:"allow_changing_enable_sso,omitempty"`
+	AllowChangingEnableSSO *bool `json:"allow_changing_enable_sso,omitempty" url:"allow_changing_enable_sso,omitempty"`
 	// Whether classic Universal Login prompts include additional security headers to prevent clickjacking (true) or no safeguard (false).
 	DisableClickjackProtectionHeaders *bool `json:"disable_clickjack_protection_headers,omitempty" url:"disable_clickjack_protection_headers,omitempty"`
 	// Do not Publish Enterprise Connections Information with IdP domains on the lock configuration file.
@@ -48856,7 +48856,7 @@ type TenantSettingsFlags struct {
 	// Whether third-party developers can <a href="https://auth0.com/docs/api-auth/dynamic-client-registration">dynamically register</a> applications for your APIs (true) or not (false). This flag enables dynamic client registration.
 	EnableDynamicClientRegistration *bool `json:"enable_dynamic_client_registration,omitempty" url:"enable_dynamic_client_registration,omitempty"`
 	// If true, SMS phone numbers will not be obfuscated in Management API GET calls.
-	DisableManagementApiSmsObfuscation *bool `json:"disable_management_api_sms_obfuscation,omitempty" url:"disable_management_api_sms_obfuscation,omitempty"`
+	DisableManagementAPISmsObfuscation *bool `json:"disable_management_api_sms_obfuscation,omitempty" url:"disable_management_api_sms_obfuscation,omitempty"`
 	// Changes email_verified behavior for Azure AD/ADFS connections when enabled. Sets email_verified to false otherwise.
 	TrustAzureAdfsEmailVerifiedConnectionProperty *bool `json:"trust_azure_adfs_email_verified_connection_property,omitempty" url:"trust_azure_adfs_email_verified_connection_property,omitempty"`
 	// If true, custom domains feature will be enabled for tenant.
@@ -48876,11 +48876,11 @@ func (t *TenantSettingsFlags) GetChangePwdFlowV1() bool {
 	return *t.ChangePwdFlowV1
 }
 
-func (t *TenantSettingsFlags) GetEnableApisSection() bool {
-	if t == nil || t.EnableApisSection == nil {
+func (t *TenantSettingsFlags) GetEnableAPIsSection() bool {
+	if t == nil || t.EnableAPIsSection == nil {
 		return false
 	}
-	return *t.EnableApisSection
+	return *t.EnableAPIsSection
 }
 
 func (t *TenantSettingsFlags) GetDisableImpersonation() bool {
@@ -48932,11 +48932,11 @@ func (t *TenantSettingsFlags) GetEnableLegacyProfile() bool {
 	return *t.EnableLegacyProfile
 }
 
-func (t *TenantSettingsFlags) GetEnableIdtokenApi2() bool {
-	if t == nil || t.EnableIdtokenApi2 == nil {
+func (t *TenantSettingsFlags) GetEnableIdtokenAPI2() bool {
+	if t == nil || t.EnableIdtokenAPI2 == nil {
 		return false
 	}
-	return *t.EnableIdtokenApi2
+	return *t.EnableIdtokenAPI2
 }
 
 func (t *TenantSettingsFlags) GetEnablePublicSignupUserExistsError() bool {
@@ -48946,18 +48946,18 @@ func (t *TenantSettingsFlags) GetEnablePublicSignupUserExistsError() bool {
 	return *t.EnablePublicSignupUserExistsError
 }
 
-func (t *TenantSettingsFlags) GetEnableSso() bool {
-	if t == nil || t.EnableSso == nil {
+func (t *TenantSettingsFlags) GetEnableSSO() bool {
+	if t == nil || t.EnableSSO == nil {
 		return false
 	}
-	return *t.EnableSso
+	return *t.EnableSSO
 }
 
-func (t *TenantSettingsFlags) GetAllowChangingEnableSso() bool {
-	if t == nil || t.AllowChangingEnableSso == nil {
+func (t *TenantSettingsFlags) GetAllowChangingEnableSSO() bool {
+	if t == nil || t.AllowChangingEnableSSO == nil {
 		return false
 	}
-	return *t.AllowChangingEnableSso
+	return *t.AllowChangingEnableSSO
 }
 
 func (t *TenantSettingsFlags) GetDisableClickjackProtectionHeaders() bool {
@@ -49051,11 +49051,11 @@ func (t *TenantSettingsFlags) GetEnableDynamicClientRegistration() bool {
 	return *t.EnableDynamicClientRegistration
 }
 
-func (t *TenantSettingsFlags) GetDisableManagementApiSmsObfuscation() bool {
-	if t == nil || t.DisableManagementApiSmsObfuscation == nil {
+func (t *TenantSettingsFlags) GetDisableManagementAPISmsObfuscation() bool {
+	if t == nil || t.DisableManagementAPISmsObfuscation == nil {
 		return false
 	}
-	return *t.DisableManagementApiSmsObfuscation
+	return *t.DisableManagementAPISmsObfuscation
 }
 
 func (t *TenantSettingsFlags) GetTrustAzureAdfsEmailVerifiedConnectionProperty() bool {
@@ -49090,11 +49090,11 @@ func (t *TenantSettingsFlags) SetChangePwdFlowV1(changePwdFlowV1 *bool) {
 	t.require(tenantSettingsFlagsFieldChangePwdFlowV1)
 }
 
-// SetEnableApisSection sets the EnableApisSection field and marks it as non-optional;
+// SetEnableAPIsSection sets the EnableAPIsSection field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TenantSettingsFlags) SetEnableApisSection(enableApisSection *bool) {
-	t.EnableApisSection = enableApisSection
-	t.require(tenantSettingsFlagsFieldEnableApisSection)
+func (t *TenantSettingsFlags) SetEnableAPIsSection(enableAPIsSection *bool) {
+	t.EnableAPIsSection = enableAPIsSection
+	t.require(tenantSettingsFlagsFieldEnableAPIsSection)
 }
 
 // SetDisableImpersonation sets the DisableImpersonation field and marks it as non-optional;
@@ -49146,11 +49146,11 @@ func (t *TenantSettingsFlags) SetEnableLegacyProfile(enableLegacyProfile *bool) 
 	t.require(tenantSettingsFlagsFieldEnableLegacyProfile)
 }
 
-// SetEnableIdtokenApi2 sets the EnableIdtokenApi2 field and marks it as non-optional;
+// SetEnableIdtokenAPI2 sets the EnableIdtokenAPI2 field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TenantSettingsFlags) SetEnableIdtokenApi2(enableIdtokenApi2 *bool) {
-	t.EnableIdtokenApi2 = enableIdtokenApi2
-	t.require(tenantSettingsFlagsFieldEnableIdtokenApi2)
+func (t *TenantSettingsFlags) SetEnableIdtokenAPI2(enableIdtokenAPI2 *bool) {
+	t.EnableIdtokenAPI2 = enableIdtokenAPI2
+	t.require(tenantSettingsFlagsFieldEnableIdtokenAPI2)
 }
 
 // SetEnablePublicSignupUserExistsError sets the EnablePublicSignupUserExistsError field and marks it as non-optional;
@@ -49160,18 +49160,18 @@ func (t *TenantSettingsFlags) SetEnablePublicSignupUserExistsError(enablePublicS
 	t.require(tenantSettingsFlagsFieldEnablePublicSignupUserExistsError)
 }
 
-// SetEnableSso sets the EnableSso field and marks it as non-optional;
+// SetEnableSSO sets the EnableSSO field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TenantSettingsFlags) SetEnableSso(enableSso *bool) {
-	t.EnableSso = enableSso
-	t.require(tenantSettingsFlagsFieldEnableSso)
+func (t *TenantSettingsFlags) SetEnableSSO(enableSSO *bool) {
+	t.EnableSSO = enableSSO
+	t.require(tenantSettingsFlagsFieldEnableSSO)
 }
 
-// SetAllowChangingEnableSso sets the AllowChangingEnableSso field and marks it as non-optional;
+// SetAllowChangingEnableSSO sets the AllowChangingEnableSSO field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TenantSettingsFlags) SetAllowChangingEnableSso(allowChangingEnableSso *bool) {
-	t.AllowChangingEnableSso = allowChangingEnableSso
-	t.require(tenantSettingsFlagsFieldAllowChangingEnableSso)
+func (t *TenantSettingsFlags) SetAllowChangingEnableSSO(allowChangingEnableSSO *bool) {
+	t.AllowChangingEnableSSO = allowChangingEnableSSO
+	t.require(tenantSettingsFlagsFieldAllowChangingEnableSSO)
 }
 
 // SetDisableClickjackProtectionHeaders sets the DisableClickjackProtectionHeaders field and marks it as non-optional;
@@ -49265,11 +49265,11 @@ func (t *TenantSettingsFlags) SetEnableDynamicClientRegistration(enableDynamicCl
 	t.require(tenantSettingsFlagsFieldEnableDynamicClientRegistration)
 }
 
-// SetDisableManagementApiSmsObfuscation sets the DisableManagementApiSmsObfuscation field and marks it as non-optional;
+// SetDisableManagementAPISmsObfuscation sets the DisableManagementAPISmsObfuscation field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TenantSettingsFlags) SetDisableManagementApiSmsObfuscation(disableManagementApiSmsObfuscation *bool) {
-	t.DisableManagementApiSmsObfuscation = disableManagementApiSmsObfuscation
-	t.require(tenantSettingsFlagsFieldDisableManagementApiSmsObfuscation)
+func (t *TenantSettingsFlags) SetDisableManagementAPISmsObfuscation(disableManagementAPISmsObfuscation *bool) {
+	t.DisableManagementAPISmsObfuscation = disableManagementAPISmsObfuscation
+	t.require(tenantSettingsFlagsFieldDisableManagementAPISmsObfuscation)
 }
 
 // SetTrustAzureAdfsEmailVerifiedConnectionProperty sets the TrustAzureAdfsEmailVerifiedConnectionProperty field and marks it as non-optional;
@@ -49328,14 +49328,14 @@ func (t *TenantSettingsFlags) String() string {
 // Guardian page customization.
 var (
 	tenantSettingsGuardianPageFieldEnabled = big.NewInt(1 << 0)
-	tenantSettingsGuardianPageFieldHtml    = big.NewInt(1 << 1)
+	tenantSettingsGuardianPageFieldHTML    = big.NewInt(1 << 1)
 )
 
 type TenantSettingsGuardianPage struct {
 	// Whether to use the custom Guardian HTML (true) or the default Auth0 page (false, default)
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Custom Guardian HTML (<a href='https://github.com/Shopify/liquid/wiki/Liquid-for-Designers'>Liquid syntax</a> is supported).
-	Html *string `json:"html,omitempty" url:"html,omitempty"`
+	HTML *string `json:"html,omitempty" url:"html,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -49351,11 +49351,11 @@ func (t *TenantSettingsGuardianPage) GetEnabled() bool {
 	return *t.Enabled
 }
 
-func (t *TenantSettingsGuardianPage) GetHtml() string {
-	if t == nil || t.Html == nil {
+func (t *TenantSettingsGuardianPage) GetHTML() string {
+	if t == nil || t.HTML == nil {
 		return ""
 	}
-	return *t.Html
+	return *t.HTML
 }
 
 func (t *TenantSettingsGuardianPage) GetExtraProperties() map[string]interface{} {
@@ -49376,11 +49376,11 @@ func (t *TenantSettingsGuardianPage) SetEnabled(enabled *bool) {
 	t.require(tenantSettingsGuardianPageFieldEnabled)
 }
 
-// SetHtml sets the Html field and marks it as non-optional;
+// SetHTML sets the HTML field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TenantSettingsGuardianPage) SetHtml(html *string) {
-	t.Html = html
-	t.require(tenantSettingsGuardianPageFieldHtml)
+func (t *TenantSettingsGuardianPage) SetHTML(html *string) {
+	t.HTML = html
+	t.require(tenantSettingsGuardianPageFieldHTML)
 }
 
 func (t *TenantSettingsGuardianPage) UnmarshalJSON(data []byte) error {
@@ -49505,14 +49505,14 @@ func (t *TenantSettingsMtls) String() string {
 // Change Password page customization.
 var (
 	tenantSettingsPasswordPageFieldEnabled = big.NewInt(1 << 0)
-	tenantSettingsPasswordPageFieldHtml    = big.NewInt(1 << 1)
+	tenantSettingsPasswordPageFieldHTML    = big.NewInt(1 << 1)
 )
 
 type TenantSettingsPasswordPage struct {
 	// Whether to use the custom change password HTML (true) or the default Auth0 page (false). Default is to use the Auth0 page.
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Custom change password HTML (<a href='https://github.com/Shopify/liquid/wiki/Liquid-for-Designers'>Liquid syntax</a> supported).
-	Html *string `json:"html,omitempty" url:"html,omitempty"`
+	HTML *string `json:"html,omitempty" url:"html,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -49528,11 +49528,11 @@ func (t *TenantSettingsPasswordPage) GetEnabled() bool {
 	return *t.Enabled
 }
 
-func (t *TenantSettingsPasswordPage) GetHtml() string {
-	if t == nil || t.Html == nil {
+func (t *TenantSettingsPasswordPage) GetHTML() string {
+	if t == nil || t.HTML == nil {
 		return ""
 	}
-	return *t.Html
+	return *t.HTML
 }
 
 func (t *TenantSettingsPasswordPage) GetExtraProperties() map[string]interface{} {
@@ -49553,11 +49553,11 @@ func (t *TenantSettingsPasswordPage) SetEnabled(enabled *bool) {
 	t.require(tenantSettingsPasswordPageFieldEnabled)
 }
 
-// SetHtml sets the Html field and marks it as non-optional;
+// SetHTML sets the HTML field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TenantSettingsPasswordPage) SetHtml(html *string) {
-	t.Html = html
-	t.require(tenantSettingsPasswordPageFieldHtml)
+func (t *TenantSettingsPasswordPage) SetHTML(html *string) {
+	t.HTML = html
+	t.require(tenantSettingsPasswordPageFieldHTML)
 }
 
 func (t *TenantSettingsPasswordPage) UnmarshalJSON(data []byte) error {
@@ -50427,7 +50427,7 @@ func (u *UpdateAculResponseContent) String() string {
 
 // Phone provider configuration schema
 var (
-	updateBrandingPhoneProviderResponseContentFieldId            = big.NewInt(1 << 0)
+	updateBrandingPhoneProviderResponseContentFieldID            = big.NewInt(1 << 0)
 	updateBrandingPhoneProviderResponseContentFieldTenant        = big.NewInt(1 << 1)
 	updateBrandingPhoneProviderResponseContentFieldName          = big.NewInt(1 << 2)
 	updateBrandingPhoneProviderResponseContentFieldChannel       = big.NewInt(1 << 3)
@@ -50438,7 +50438,7 @@ var (
 )
 
 type UpdateBrandingPhoneProviderResponseContent struct {
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the tenant
 	Tenant  *string                   `json:"tenant,omitempty" url:"tenant,omitempty"`
 	Name    PhoneProviderNameEnum     `json:"name" url:"name"`
@@ -50458,11 +50458,11 @@ type UpdateBrandingPhoneProviderResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateBrandingPhoneProviderResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateBrandingPhoneProviderResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UpdateBrandingPhoneProviderResponseContent) GetTenant() string {
@@ -50518,11 +50518,11 @@ func (u *UpdateBrandingPhoneProviderResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateBrandingPhoneProviderResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateBrandingPhoneProviderResponseContentFieldId)
+func (u *UpdateBrandingPhoneProviderResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateBrandingPhoneProviderResponseContentFieldID)
 }
 
 // SetTenant sets the Tenant field and marks it as non-optional;
@@ -50631,7 +50631,7 @@ var (
 	updateBrandingThemeResponseContentFieldDisplayName    = big.NewInt(1 << 2)
 	updateBrandingThemeResponseContentFieldFonts          = big.NewInt(1 << 3)
 	updateBrandingThemeResponseContentFieldPageBackground = big.NewInt(1 << 4)
-	updateBrandingThemeResponseContentFieldThemeId        = big.NewInt(1 << 5)
+	updateBrandingThemeResponseContentFieldThemeID        = big.NewInt(1 << 5)
 	updateBrandingThemeResponseContentFieldWidget         = big.NewInt(1 << 6)
 )
 
@@ -50643,7 +50643,7 @@ type UpdateBrandingThemeResponseContent struct {
 	Fonts          *BrandingThemeFonts          `json:"fonts" url:"fonts"`
 	PageBackground *BrandingThemePageBackground `json:"page_background" url:"page_background"`
 	// Theme Id
-	ThemeId string               `json:"themeId" url:"themeId"`
+	ThemeID string               `json:"themeId" url:"themeId"`
 	Widget  *BrandingThemeWidget `json:"widget" url:"widget"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -50688,11 +50688,11 @@ func (u *UpdateBrandingThemeResponseContent) GetPageBackground() *BrandingThemeP
 	return u.PageBackground
 }
 
-func (u *UpdateBrandingThemeResponseContent) GetThemeId() string {
+func (u *UpdateBrandingThemeResponseContent) GetThemeID() string {
 	if u == nil {
 		return ""
 	}
-	return u.ThemeId
+	return u.ThemeID
 }
 
 func (u *UpdateBrandingThemeResponseContent) GetWidget() *BrandingThemeWidget {
@@ -50748,11 +50748,11 @@ func (u *UpdateBrandingThemeResponseContent) SetPageBackground(pageBackground *B
 	u.require(updateBrandingThemeResponseContentFieldPageBackground)
 }
 
-// SetThemeId sets the ThemeId field and marks it as non-optional;
+// SetThemeID sets the ThemeID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateBrandingThemeResponseContent) SetThemeId(themeId string) {
-	u.ThemeId = themeId
-	u.require(updateBrandingThemeResponseContentFieldThemeId)
+func (u *UpdateBrandingThemeResponseContent) SetThemeID(themeID string) {
+	u.ThemeID = themeID
+	u.require(updateBrandingThemeResponseContentFieldThemeID)
 }
 
 // SetWidget sets the Widget field and marks it as non-optional;
@@ -51107,14 +51107,14 @@ func (u *UpdateBruteForceSettingsResponseContent) String() string {
 type UpdateBruteForceSettingsResponseContentMode string
 
 const (
-	UpdateBruteForceSettingsResponseContentModeCountPerIdentifierAndIp UpdateBruteForceSettingsResponseContentMode = "count_per_identifier_and_ip"
+	UpdateBruteForceSettingsResponseContentModeCountPerIdentifierAndIP UpdateBruteForceSettingsResponseContentMode = "count_per_identifier_and_ip"
 	UpdateBruteForceSettingsResponseContentModeCountPerIdentifier      UpdateBruteForceSettingsResponseContentMode = "count_per_identifier"
 )
 
 func NewUpdateBruteForceSettingsResponseContentModeFromString(s string) (UpdateBruteForceSettingsResponseContentMode, error) {
 	switch s {
 	case "count_per_identifier_and_ip":
-		return UpdateBruteForceSettingsResponseContentModeCountPerIdentifierAndIp, nil
+		return UpdateBruteForceSettingsResponseContentModeCountPerIdentifierAndIP, nil
 	case "count_per_identifier":
 		return UpdateBruteForceSettingsResponseContentModeCountPerIdentifier, nil
 	}
@@ -51296,13 +51296,13 @@ func (u *UpdateEmailProviderResponseContent) String() string {
 type UpdateEnabledClientConnectionsRequestContent = []*UpdateEnabledClientConnectionsRequestContentItem
 
 var (
-	updateEnabledClientConnectionsRequestContentItemFieldClientId = big.NewInt(1 << 0)
+	updateEnabledClientConnectionsRequestContentItemFieldClientID = big.NewInt(1 << 0)
 	updateEnabledClientConnectionsRequestContentItemFieldStatus   = big.NewInt(1 << 1)
 )
 
 type UpdateEnabledClientConnectionsRequestContentItem struct {
 	// The client_id of the client to be the subject to change status
-	ClientId string `json:"client_id" url:"client_id"`
+	ClientID string `json:"client_id" url:"client_id"`
 	// Whether the connection is enabled or not for this client_id
 	Status bool `json:"status" url:"status"`
 
@@ -51313,11 +51313,11 @@ type UpdateEnabledClientConnectionsRequestContentItem struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateEnabledClientConnectionsRequestContentItem) GetClientId() string {
+func (u *UpdateEnabledClientConnectionsRequestContentItem) GetClientID() string {
 	if u == nil {
 		return ""
 	}
-	return u.ClientId
+	return u.ClientID
 }
 
 func (u *UpdateEnabledClientConnectionsRequestContentItem) GetStatus() bool {
@@ -51338,11 +51338,11 @@ func (u *UpdateEnabledClientConnectionsRequestContentItem) require(field *big.In
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateEnabledClientConnectionsRequestContentItem) SetClientId(clientId string) {
-	u.ClientId = clientId
-	u.require(updateEnabledClientConnectionsRequestContentItemFieldClientId)
+func (u *UpdateEnabledClientConnectionsRequestContentItem) SetClientID(clientID string) {
+	u.ClientID = clientID
+	u.require(updateEnabledClientConnectionsRequestContentItemFieldClientID)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -51392,8 +51392,8 @@ func (u *UpdateEnabledClientConnectionsRequestContentItem) String() string {
 }
 
 var (
-	updateFlowsVaultConnectionResponseContentFieldId          = big.NewInt(1 << 0)
-	updateFlowsVaultConnectionResponseContentFieldAppId       = big.NewInt(1 << 1)
+	updateFlowsVaultConnectionResponseContentFieldID          = big.NewInt(1 << 0)
+	updateFlowsVaultConnectionResponseContentFieldAppID       = big.NewInt(1 << 1)
 	updateFlowsVaultConnectionResponseContentFieldEnvironment = big.NewInt(1 << 2)
 	updateFlowsVaultConnectionResponseContentFieldName        = big.NewInt(1 << 3)
 	updateFlowsVaultConnectionResponseContentFieldAccountName = big.NewInt(1 << 4)
@@ -51406,9 +51406,9 @@ var (
 
 type UpdateFlowsVaultConnectionResponseContent struct {
 	// Flows Vault Connection identifier.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// Flows Vault Connection app identifier.
-	AppId string `json:"app_id" url:"app_id"`
+	AppID string `json:"app_id" url:"app_id"`
 	// Flows Vault Connection environment.
 	Environment *string `json:"environment,omitempty" url:"environment,omitempty"`
 	// Flows Vault Connection name.
@@ -51432,18 +51432,18 @@ type UpdateFlowsVaultConnectionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateFlowsVaultConnectionResponseContent) GetId() string {
+func (u *UpdateFlowsVaultConnectionResponseContent) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
-func (u *UpdateFlowsVaultConnectionResponseContent) GetAppId() string {
+func (u *UpdateFlowsVaultConnectionResponseContent) GetAppID() string {
 	if u == nil {
 		return ""
 	}
-	return u.AppId
+	return u.AppID
 }
 
 func (u *UpdateFlowsVaultConnectionResponseContent) GetEnvironment() string {
@@ -51513,18 +51513,18 @@ func (u *UpdateFlowsVaultConnectionResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateFlowsVaultConnectionResponseContent) SetId(id string) {
-	u.Id = id
-	u.require(updateFlowsVaultConnectionResponseContentFieldId)
+func (u *UpdateFlowsVaultConnectionResponseContent) SetID(id string) {
+	u.ID = id
+	u.require(updateFlowsVaultConnectionResponseContentFieldID)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateFlowsVaultConnectionResponseContent) SetAppId(appId string) {
-	u.AppId = appId
-	u.require(updateFlowsVaultConnectionResponseContentFieldAppId)
+func (u *UpdateFlowsVaultConnectionResponseContent) SetAppID(appID string) {
+	u.AppID = appID
+	u.require(updateFlowsVaultConnectionResponseContentFieldAppID)
 }
 
 // SetEnvironment sets the Environment field and marks it as non-optional;
@@ -51640,35 +51640,35 @@ func (u *UpdateFlowsVaultConnectionResponseContent) String() string {
 
 // Flows Vault Connection configuration.
 type UpdateFlowsVaultConnectionSetup struct {
-	FlowsVaultConnectioSetupApiKeyWithBaseUrl *FlowsVaultConnectioSetupApiKeyWithBaseUrl
-	FlowsVaultConnectioSetupApiKey            *FlowsVaultConnectioSetupApiKey
+	FlowsVaultConnectioSetupAPIKeyWithBaseURL *FlowsVaultConnectioSetupAPIKeyWithBaseURL
+	FlowsVaultConnectioSetupAPIKey            *FlowsVaultConnectioSetupAPIKey
 	FlowsVaultConnectioSetupOauthApp          *FlowsVaultConnectioSetupOauthApp
 	FlowsVaultConnectioSetupBigqueryOauthJwt  *FlowsVaultConnectioSetupBigqueryOauthJwt
-	FlowsVaultConnectioSetupSecretApiKey      *FlowsVaultConnectioSetupSecretApiKey
-	FlowsVaultConnectioSetupHttpBearer        *FlowsVaultConnectioSetupHttpBearer
+	FlowsVaultConnectioSetupSecretAPIKey      *FlowsVaultConnectioSetupSecretAPIKey
+	FlowsVaultConnectioSetupHTTPBearer        *FlowsVaultConnectioSetupHTTPBearer
 	FlowsVaultConnectioSetupJwt               *FlowsVaultConnectioSetupJwt
-	FlowsVaultConnectioSetupMailjetApiKey     *FlowsVaultConnectioSetupMailjetApiKey
+	FlowsVaultConnectioSetupMailjetAPIKey     *FlowsVaultConnectioSetupMailjetAPIKey
 	FlowsVaultConnectioSetupToken             *FlowsVaultConnectioSetupToken
 	FlowsVaultConnectioSetupWebhook           *FlowsVaultConnectioSetupWebhook
 	FlowsVaultConnectioSetupStripeKeyPair     *FlowsVaultConnectioSetupStripeKeyPair
 	FlowsVaultConnectioSetupOauthCode         *FlowsVaultConnectioSetupOauthCode
-	FlowsVaultConnectioSetupTwilioApiKey      *FlowsVaultConnectioSetupTwilioApiKey
+	FlowsVaultConnectioSetupTwilioAPIKey      *FlowsVaultConnectioSetupTwilioAPIKey
 
 	typ string
 }
 
-func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupApiKeyWithBaseUrl() *FlowsVaultConnectioSetupApiKeyWithBaseUrl {
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupAPIKeyWithBaseURL() *FlowsVaultConnectioSetupAPIKeyWithBaseURL {
 	if u == nil {
 		return nil
 	}
-	return u.FlowsVaultConnectioSetupApiKeyWithBaseUrl
+	return u.FlowsVaultConnectioSetupAPIKeyWithBaseURL
 }
 
-func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupApiKey() *FlowsVaultConnectioSetupApiKey {
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupAPIKey() *FlowsVaultConnectioSetupAPIKey {
 	if u == nil {
 		return nil
 	}
-	return u.FlowsVaultConnectioSetupApiKey
+	return u.FlowsVaultConnectioSetupAPIKey
 }
 
 func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupOauthApp() *FlowsVaultConnectioSetupOauthApp {
@@ -51685,18 +51685,18 @@ func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupBigqueryOau
 	return u.FlowsVaultConnectioSetupBigqueryOauthJwt
 }
 
-func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupSecretApiKey() *FlowsVaultConnectioSetupSecretApiKey {
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupSecretAPIKey() *FlowsVaultConnectioSetupSecretAPIKey {
 	if u == nil {
 		return nil
 	}
-	return u.FlowsVaultConnectioSetupSecretApiKey
+	return u.FlowsVaultConnectioSetupSecretAPIKey
 }
 
-func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupHttpBearer() *FlowsVaultConnectioSetupHttpBearer {
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupHTTPBearer() *FlowsVaultConnectioSetupHTTPBearer {
 	if u == nil {
 		return nil
 	}
-	return u.FlowsVaultConnectioSetupHttpBearer
+	return u.FlowsVaultConnectioSetupHTTPBearer
 }
 
 func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupJwt() *FlowsVaultConnectioSetupJwt {
@@ -51706,11 +51706,11 @@ func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupJwt() *Flow
 	return u.FlowsVaultConnectioSetupJwt
 }
 
-func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupMailjetApiKey() *FlowsVaultConnectioSetupMailjetApiKey {
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupMailjetAPIKey() *FlowsVaultConnectioSetupMailjetAPIKey {
 	if u == nil {
 		return nil
 	}
-	return u.FlowsVaultConnectioSetupMailjetApiKey
+	return u.FlowsVaultConnectioSetupMailjetAPIKey
 }
 
 func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupToken() *FlowsVaultConnectioSetupToken {
@@ -51741,24 +51741,24 @@ func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupOauthCode()
 	return u.FlowsVaultConnectioSetupOauthCode
 }
 
-func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupTwilioApiKey() *FlowsVaultConnectioSetupTwilioApiKey {
+func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupTwilioAPIKey() *FlowsVaultConnectioSetupTwilioAPIKey {
 	if u == nil {
 		return nil
 	}
-	return u.FlowsVaultConnectioSetupTwilioApiKey
+	return u.FlowsVaultConnectioSetupTwilioAPIKey
 }
 
 func (u *UpdateFlowsVaultConnectionSetup) UnmarshalJSON(data []byte) error {
-	valueFlowsVaultConnectioSetupApiKeyWithBaseUrl := new(FlowsVaultConnectioSetupApiKeyWithBaseUrl)
-	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupApiKeyWithBaseUrl); err == nil {
-		u.typ = "FlowsVaultConnectioSetupApiKeyWithBaseUrl"
-		u.FlowsVaultConnectioSetupApiKeyWithBaseUrl = valueFlowsVaultConnectioSetupApiKeyWithBaseUrl
+	valueFlowsVaultConnectioSetupAPIKeyWithBaseURL := new(FlowsVaultConnectioSetupAPIKeyWithBaseURL)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupAPIKeyWithBaseURL); err == nil {
+		u.typ = "FlowsVaultConnectioSetupAPIKeyWithBaseURL"
+		u.FlowsVaultConnectioSetupAPIKeyWithBaseURL = valueFlowsVaultConnectioSetupAPIKeyWithBaseURL
 		return nil
 	}
-	valueFlowsVaultConnectioSetupApiKey := new(FlowsVaultConnectioSetupApiKey)
-	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupApiKey); err == nil {
-		u.typ = "FlowsVaultConnectioSetupApiKey"
-		u.FlowsVaultConnectioSetupApiKey = valueFlowsVaultConnectioSetupApiKey
+	valueFlowsVaultConnectioSetupAPIKey := new(FlowsVaultConnectioSetupAPIKey)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupAPIKey); err == nil {
+		u.typ = "FlowsVaultConnectioSetupAPIKey"
+		u.FlowsVaultConnectioSetupAPIKey = valueFlowsVaultConnectioSetupAPIKey
 		return nil
 	}
 	valueFlowsVaultConnectioSetupOauthApp := new(FlowsVaultConnectioSetupOauthApp)
@@ -51773,16 +51773,16 @@ func (u *UpdateFlowsVaultConnectionSetup) UnmarshalJSON(data []byte) error {
 		u.FlowsVaultConnectioSetupBigqueryOauthJwt = valueFlowsVaultConnectioSetupBigqueryOauthJwt
 		return nil
 	}
-	valueFlowsVaultConnectioSetupSecretApiKey := new(FlowsVaultConnectioSetupSecretApiKey)
-	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupSecretApiKey); err == nil {
-		u.typ = "FlowsVaultConnectioSetupSecretApiKey"
-		u.FlowsVaultConnectioSetupSecretApiKey = valueFlowsVaultConnectioSetupSecretApiKey
+	valueFlowsVaultConnectioSetupSecretAPIKey := new(FlowsVaultConnectioSetupSecretAPIKey)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupSecretAPIKey); err == nil {
+		u.typ = "FlowsVaultConnectioSetupSecretAPIKey"
+		u.FlowsVaultConnectioSetupSecretAPIKey = valueFlowsVaultConnectioSetupSecretAPIKey
 		return nil
 	}
-	valueFlowsVaultConnectioSetupHttpBearer := new(FlowsVaultConnectioSetupHttpBearer)
-	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupHttpBearer); err == nil {
-		u.typ = "FlowsVaultConnectioSetupHttpBearer"
-		u.FlowsVaultConnectioSetupHttpBearer = valueFlowsVaultConnectioSetupHttpBearer
+	valueFlowsVaultConnectioSetupHTTPBearer := new(FlowsVaultConnectioSetupHTTPBearer)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupHTTPBearer); err == nil {
+		u.typ = "FlowsVaultConnectioSetupHTTPBearer"
+		u.FlowsVaultConnectioSetupHTTPBearer = valueFlowsVaultConnectioSetupHTTPBearer
 		return nil
 	}
 	valueFlowsVaultConnectioSetupJwt := new(FlowsVaultConnectioSetupJwt)
@@ -51791,10 +51791,10 @@ func (u *UpdateFlowsVaultConnectionSetup) UnmarshalJSON(data []byte) error {
 		u.FlowsVaultConnectioSetupJwt = valueFlowsVaultConnectioSetupJwt
 		return nil
 	}
-	valueFlowsVaultConnectioSetupMailjetApiKey := new(FlowsVaultConnectioSetupMailjetApiKey)
-	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupMailjetApiKey); err == nil {
-		u.typ = "FlowsVaultConnectioSetupMailjetApiKey"
-		u.FlowsVaultConnectioSetupMailjetApiKey = valueFlowsVaultConnectioSetupMailjetApiKey
+	valueFlowsVaultConnectioSetupMailjetAPIKey := new(FlowsVaultConnectioSetupMailjetAPIKey)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupMailjetAPIKey); err == nil {
+		u.typ = "FlowsVaultConnectioSetupMailjetAPIKey"
+		u.FlowsVaultConnectioSetupMailjetAPIKey = valueFlowsVaultConnectioSetupMailjetAPIKey
 		return nil
 	}
 	valueFlowsVaultConnectioSetupToken := new(FlowsVaultConnectioSetupToken)
@@ -51821,21 +51821,21 @@ func (u *UpdateFlowsVaultConnectionSetup) UnmarshalJSON(data []byte) error {
 		u.FlowsVaultConnectioSetupOauthCode = valueFlowsVaultConnectioSetupOauthCode
 		return nil
 	}
-	valueFlowsVaultConnectioSetupTwilioApiKey := new(FlowsVaultConnectioSetupTwilioApiKey)
-	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupTwilioApiKey); err == nil {
-		u.typ = "FlowsVaultConnectioSetupTwilioApiKey"
-		u.FlowsVaultConnectioSetupTwilioApiKey = valueFlowsVaultConnectioSetupTwilioApiKey
+	valueFlowsVaultConnectioSetupTwilioAPIKey := new(FlowsVaultConnectioSetupTwilioAPIKey)
+	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupTwilioAPIKey); err == nil {
+		u.typ = "FlowsVaultConnectioSetupTwilioAPIKey"
+		u.FlowsVaultConnectioSetupTwilioAPIKey = valueFlowsVaultConnectioSetupTwilioAPIKey
 		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
 }
 
 func (u UpdateFlowsVaultConnectionSetup) MarshalJSON() ([]byte, error) {
-	if u.typ == "FlowsVaultConnectioSetupApiKeyWithBaseUrl" || u.FlowsVaultConnectioSetupApiKeyWithBaseUrl != nil {
-		return json.Marshal(u.FlowsVaultConnectioSetupApiKeyWithBaseUrl)
+	if u.typ == "FlowsVaultConnectioSetupAPIKeyWithBaseURL" || u.FlowsVaultConnectioSetupAPIKeyWithBaseURL != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupAPIKeyWithBaseURL)
 	}
-	if u.typ == "FlowsVaultConnectioSetupApiKey" || u.FlowsVaultConnectioSetupApiKey != nil {
-		return json.Marshal(u.FlowsVaultConnectioSetupApiKey)
+	if u.typ == "FlowsVaultConnectioSetupAPIKey" || u.FlowsVaultConnectioSetupAPIKey != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupAPIKey)
 	}
 	if u.typ == "FlowsVaultConnectioSetupOauthApp" || u.FlowsVaultConnectioSetupOauthApp != nil {
 		return json.Marshal(u.FlowsVaultConnectioSetupOauthApp)
@@ -51843,17 +51843,17 @@ func (u UpdateFlowsVaultConnectionSetup) MarshalJSON() ([]byte, error) {
 	if u.typ == "FlowsVaultConnectioSetupBigqueryOauthJwt" || u.FlowsVaultConnectioSetupBigqueryOauthJwt != nil {
 		return json.Marshal(u.FlowsVaultConnectioSetupBigqueryOauthJwt)
 	}
-	if u.typ == "FlowsVaultConnectioSetupSecretApiKey" || u.FlowsVaultConnectioSetupSecretApiKey != nil {
-		return json.Marshal(u.FlowsVaultConnectioSetupSecretApiKey)
+	if u.typ == "FlowsVaultConnectioSetupSecretAPIKey" || u.FlowsVaultConnectioSetupSecretAPIKey != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupSecretAPIKey)
 	}
-	if u.typ == "FlowsVaultConnectioSetupHttpBearer" || u.FlowsVaultConnectioSetupHttpBearer != nil {
-		return json.Marshal(u.FlowsVaultConnectioSetupHttpBearer)
+	if u.typ == "FlowsVaultConnectioSetupHTTPBearer" || u.FlowsVaultConnectioSetupHTTPBearer != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupHTTPBearer)
 	}
 	if u.typ == "FlowsVaultConnectioSetupJwt" || u.FlowsVaultConnectioSetupJwt != nil {
 		return json.Marshal(u.FlowsVaultConnectioSetupJwt)
 	}
-	if u.typ == "FlowsVaultConnectioSetupMailjetApiKey" || u.FlowsVaultConnectioSetupMailjetApiKey != nil {
-		return json.Marshal(u.FlowsVaultConnectioSetupMailjetApiKey)
+	if u.typ == "FlowsVaultConnectioSetupMailjetAPIKey" || u.FlowsVaultConnectioSetupMailjetAPIKey != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupMailjetAPIKey)
 	}
 	if u.typ == "FlowsVaultConnectioSetupToken" || u.FlowsVaultConnectioSetupToken != nil {
 		return json.Marshal(u.FlowsVaultConnectioSetupToken)
@@ -51867,34 +51867,34 @@ func (u UpdateFlowsVaultConnectionSetup) MarshalJSON() ([]byte, error) {
 	if u.typ == "FlowsVaultConnectioSetupOauthCode" || u.FlowsVaultConnectioSetupOauthCode != nil {
 		return json.Marshal(u.FlowsVaultConnectioSetupOauthCode)
 	}
-	if u.typ == "FlowsVaultConnectioSetupTwilioApiKey" || u.FlowsVaultConnectioSetupTwilioApiKey != nil {
-		return json.Marshal(u.FlowsVaultConnectioSetupTwilioApiKey)
+	if u.typ == "FlowsVaultConnectioSetupTwilioAPIKey" || u.FlowsVaultConnectioSetupTwilioAPIKey != nil {
+		return json.Marshal(u.FlowsVaultConnectioSetupTwilioAPIKey)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
 type UpdateFlowsVaultConnectionSetupVisitor interface {
-	VisitFlowsVaultConnectioSetupApiKeyWithBaseUrl(*FlowsVaultConnectioSetupApiKeyWithBaseUrl) error
-	VisitFlowsVaultConnectioSetupApiKey(*FlowsVaultConnectioSetupApiKey) error
+	VisitFlowsVaultConnectioSetupAPIKeyWithBaseURL(*FlowsVaultConnectioSetupAPIKeyWithBaseURL) error
+	VisitFlowsVaultConnectioSetupAPIKey(*FlowsVaultConnectioSetupAPIKey) error
 	VisitFlowsVaultConnectioSetupOauthApp(*FlowsVaultConnectioSetupOauthApp) error
 	VisitFlowsVaultConnectioSetupBigqueryOauthJwt(*FlowsVaultConnectioSetupBigqueryOauthJwt) error
-	VisitFlowsVaultConnectioSetupSecretApiKey(*FlowsVaultConnectioSetupSecretApiKey) error
-	VisitFlowsVaultConnectioSetupHttpBearer(*FlowsVaultConnectioSetupHttpBearer) error
+	VisitFlowsVaultConnectioSetupSecretAPIKey(*FlowsVaultConnectioSetupSecretAPIKey) error
+	VisitFlowsVaultConnectioSetupHTTPBearer(*FlowsVaultConnectioSetupHTTPBearer) error
 	VisitFlowsVaultConnectioSetupJwt(*FlowsVaultConnectioSetupJwt) error
-	VisitFlowsVaultConnectioSetupMailjetApiKey(*FlowsVaultConnectioSetupMailjetApiKey) error
+	VisitFlowsVaultConnectioSetupMailjetAPIKey(*FlowsVaultConnectioSetupMailjetAPIKey) error
 	VisitFlowsVaultConnectioSetupToken(*FlowsVaultConnectioSetupToken) error
 	VisitFlowsVaultConnectioSetupWebhook(*FlowsVaultConnectioSetupWebhook) error
 	VisitFlowsVaultConnectioSetupStripeKeyPair(*FlowsVaultConnectioSetupStripeKeyPair) error
 	VisitFlowsVaultConnectioSetupOauthCode(*FlowsVaultConnectioSetupOauthCode) error
-	VisitFlowsVaultConnectioSetupTwilioApiKey(*FlowsVaultConnectioSetupTwilioApiKey) error
+	VisitFlowsVaultConnectioSetupTwilioAPIKey(*FlowsVaultConnectioSetupTwilioAPIKey) error
 }
 
 func (u *UpdateFlowsVaultConnectionSetup) Accept(visitor UpdateFlowsVaultConnectionSetupVisitor) error {
-	if u.typ == "FlowsVaultConnectioSetupApiKeyWithBaseUrl" || u.FlowsVaultConnectioSetupApiKeyWithBaseUrl != nil {
-		return visitor.VisitFlowsVaultConnectioSetupApiKeyWithBaseUrl(u.FlowsVaultConnectioSetupApiKeyWithBaseUrl)
+	if u.typ == "FlowsVaultConnectioSetupAPIKeyWithBaseURL" || u.FlowsVaultConnectioSetupAPIKeyWithBaseURL != nil {
+		return visitor.VisitFlowsVaultConnectioSetupAPIKeyWithBaseURL(u.FlowsVaultConnectioSetupAPIKeyWithBaseURL)
 	}
-	if u.typ == "FlowsVaultConnectioSetupApiKey" || u.FlowsVaultConnectioSetupApiKey != nil {
-		return visitor.VisitFlowsVaultConnectioSetupApiKey(u.FlowsVaultConnectioSetupApiKey)
+	if u.typ == "FlowsVaultConnectioSetupAPIKey" || u.FlowsVaultConnectioSetupAPIKey != nil {
+		return visitor.VisitFlowsVaultConnectioSetupAPIKey(u.FlowsVaultConnectioSetupAPIKey)
 	}
 	if u.typ == "FlowsVaultConnectioSetupOauthApp" || u.FlowsVaultConnectioSetupOauthApp != nil {
 		return visitor.VisitFlowsVaultConnectioSetupOauthApp(u.FlowsVaultConnectioSetupOauthApp)
@@ -51902,17 +51902,17 @@ func (u *UpdateFlowsVaultConnectionSetup) Accept(visitor UpdateFlowsVaultConnect
 	if u.typ == "FlowsVaultConnectioSetupBigqueryOauthJwt" || u.FlowsVaultConnectioSetupBigqueryOauthJwt != nil {
 		return visitor.VisitFlowsVaultConnectioSetupBigqueryOauthJwt(u.FlowsVaultConnectioSetupBigqueryOauthJwt)
 	}
-	if u.typ == "FlowsVaultConnectioSetupSecretApiKey" || u.FlowsVaultConnectioSetupSecretApiKey != nil {
-		return visitor.VisitFlowsVaultConnectioSetupSecretApiKey(u.FlowsVaultConnectioSetupSecretApiKey)
+	if u.typ == "FlowsVaultConnectioSetupSecretAPIKey" || u.FlowsVaultConnectioSetupSecretAPIKey != nil {
+		return visitor.VisitFlowsVaultConnectioSetupSecretAPIKey(u.FlowsVaultConnectioSetupSecretAPIKey)
 	}
-	if u.typ == "FlowsVaultConnectioSetupHttpBearer" || u.FlowsVaultConnectioSetupHttpBearer != nil {
-		return visitor.VisitFlowsVaultConnectioSetupHttpBearer(u.FlowsVaultConnectioSetupHttpBearer)
+	if u.typ == "FlowsVaultConnectioSetupHTTPBearer" || u.FlowsVaultConnectioSetupHTTPBearer != nil {
+		return visitor.VisitFlowsVaultConnectioSetupHTTPBearer(u.FlowsVaultConnectioSetupHTTPBearer)
 	}
 	if u.typ == "FlowsVaultConnectioSetupJwt" || u.FlowsVaultConnectioSetupJwt != nil {
 		return visitor.VisitFlowsVaultConnectioSetupJwt(u.FlowsVaultConnectioSetupJwt)
 	}
-	if u.typ == "FlowsVaultConnectioSetupMailjetApiKey" || u.FlowsVaultConnectioSetupMailjetApiKey != nil {
-		return visitor.VisitFlowsVaultConnectioSetupMailjetApiKey(u.FlowsVaultConnectioSetupMailjetApiKey)
+	if u.typ == "FlowsVaultConnectioSetupMailjetAPIKey" || u.FlowsVaultConnectioSetupMailjetAPIKey != nil {
+		return visitor.VisitFlowsVaultConnectioSetupMailjetAPIKey(u.FlowsVaultConnectioSetupMailjetAPIKey)
 	}
 	if u.typ == "FlowsVaultConnectioSetupToken" || u.FlowsVaultConnectioSetupToken != nil {
 		return visitor.VisitFlowsVaultConnectioSetupToken(u.FlowsVaultConnectioSetupToken)
@@ -51926,8 +51926,8 @@ func (u *UpdateFlowsVaultConnectionSetup) Accept(visitor UpdateFlowsVaultConnect
 	if u.typ == "FlowsVaultConnectioSetupOauthCode" || u.FlowsVaultConnectioSetupOauthCode != nil {
 		return visitor.VisitFlowsVaultConnectioSetupOauthCode(u.FlowsVaultConnectioSetupOauthCode)
 	}
-	if u.typ == "FlowsVaultConnectioSetupTwilioApiKey" || u.FlowsVaultConnectioSetupTwilioApiKey != nil {
-		return visitor.VisitFlowsVaultConnectioSetupTwilioApiKey(u.FlowsVaultConnectioSetupTwilioApiKey)
+	if u.typ == "FlowsVaultConnectioSetupTwilioAPIKey" || u.FlowsVaultConnectioSetupTwilioAPIKey != nil {
+		return visitor.VisitFlowsVaultConnectioSetupTwilioAPIKey(u.FlowsVaultConnectioSetupTwilioAPIKey)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
@@ -52043,7 +52043,7 @@ func (u *UpdateGuardianFactorDuoSettingsResponseContent) String() string {
 }
 
 var (
-	updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsAccessKeyId                = big.NewInt(1 << 0)
+	updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsAccessKeyID                = big.NewInt(1 << 0)
 	updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsSecretAccessKey            = big.NewInt(1 << 1)
 	updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsRegion                     = big.NewInt(1 << 2)
 	updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldSnsApnsPlatformApplicationArn = big.NewInt(1 << 3)
@@ -52051,7 +52051,7 @@ var (
 )
 
 type UpdateGuardianFactorsProviderPushNotificationSnsResponseContent struct {
-	AwsAccessKeyId                *string `json:"aws_access_key_id,omitempty" url:"aws_access_key_id,omitempty"`
+	AwsAccessKeyID                *string `json:"aws_access_key_id,omitempty" url:"aws_access_key_id,omitempty"`
 	AwsSecretAccessKey            *string `json:"aws_secret_access_key,omitempty" url:"aws_secret_access_key,omitempty"`
 	AwsRegion                     *string `json:"aws_region,omitempty" url:"aws_region,omitempty"`
 	SnsApnsPlatformApplicationArn *string `json:"sns_apns_platform_application_arn,omitempty" url:"sns_apns_platform_application_arn,omitempty"`
@@ -52064,11 +52064,11 @@ type UpdateGuardianFactorsProviderPushNotificationSnsResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateGuardianFactorsProviderPushNotificationSnsResponseContent) GetAwsAccessKeyId() string {
-	if u == nil || u.AwsAccessKeyId == nil {
+func (u *UpdateGuardianFactorsProviderPushNotificationSnsResponseContent) GetAwsAccessKeyID() string {
+	if u == nil || u.AwsAccessKeyID == nil {
 		return ""
 	}
-	return *u.AwsAccessKeyId
+	return *u.AwsAccessKeyID
 }
 
 func (u *UpdateGuardianFactorsProviderPushNotificationSnsResponseContent) GetAwsSecretAccessKey() string {
@@ -52110,11 +52110,11 @@ func (u *UpdateGuardianFactorsProviderPushNotificationSnsResponseContent) requir
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetAwsAccessKeyId sets the AwsAccessKeyId field and marks it as non-optional;
+// SetAwsAccessKeyID sets the AwsAccessKeyID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateGuardianFactorsProviderPushNotificationSnsResponseContent) SetAwsAccessKeyId(awsAccessKeyId *string) {
-	u.AwsAccessKeyId = awsAccessKeyId
-	u.require(updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsAccessKeyId)
+func (u *UpdateGuardianFactorsProviderPushNotificationSnsResponseContent) SetAwsAccessKeyID(awsAccessKeyID *string) {
+	u.AwsAccessKeyID = awsAccessKeyID
+	u.require(updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsAccessKeyID)
 }
 
 // SetAwsSecretAccessKey sets the AwsSecretAccessKey field and marks it as non-optional;
@@ -52188,7 +52188,7 @@ func (u *UpdateGuardianFactorsProviderPushNotificationSnsResponseContent) String
 type UpdateHookSecretRequestContent = map[string]string
 
 var (
-	updateOrganizationConnectionResponseContentFieldConnectionId            = big.NewInt(1 << 0)
+	updateOrganizationConnectionResponseContentFieldConnectionID            = big.NewInt(1 << 0)
 	updateOrganizationConnectionResponseContentFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
 	updateOrganizationConnectionResponseContentFieldShowAsButton            = big.NewInt(1 << 2)
 	updateOrganizationConnectionResponseContentFieldIsSignupEnabled         = big.NewInt(1 << 3)
@@ -52197,7 +52197,7 @@ var (
 
 type UpdateOrganizationConnectionResponseContent struct {
 	// ID of the connection.
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
 	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
@@ -52213,11 +52213,11 @@ type UpdateOrganizationConnectionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateOrganizationConnectionResponseContent) GetConnectionId() string {
-	if u == nil || u.ConnectionId == nil {
+func (u *UpdateOrganizationConnectionResponseContent) GetConnectionID() string {
+	if u == nil || u.ConnectionID == nil {
 		return ""
 	}
-	return *u.ConnectionId
+	return *u.ConnectionID
 }
 
 func (u *UpdateOrganizationConnectionResponseContent) GetAssignMembershipOnLogin() bool {
@@ -52259,11 +52259,11 @@ func (u *UpdateOrganizationConnectionResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationConnectionResponseContent) SetConnectionId(connectionId *string) {
-	u.ConnectionId = connectionId
-	u.require(updateOrganizationConnectionResponseContentFieldConnectionId)
+func (u *UpdateOrganizationConnectionResponseContent) SetConnectionID(connectionID *string) {
+	u.ConnectionID = connectionID
+	u.require(updateOrganizationConnectionResponseContentFieldConnectionID)
 }
 
 // SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
@@ -52334,7 +52334,7 @@ func (u *UpdateOrganizationConnectionResponseContent) String() string {
 }
 
 var (
-	updatePhoneTemplateResponseContentFieldId           = big.NewInt(1 << 0)
+	updatePhoneTemplateResponseContentFieldID           = big.NewInt(1 << 0)
 	updatePhoneTemplateResponseContentFieldChannel      = big.NewInt(1 << 1)
 	updatePhoneTemplateResponseContentFieldCustomizable = big.NewInt(1 << 2)
 	updatePhoneTemplateResponseContentFieldTenant       = big.NewInt(1 << 3)
@@ -52344,7 +52344,7 @@ var (
 )
 
 type UpdatePhoneTemplateResponseContent struct {
-	Id           string                            `json:"id" url:"id"`
+	ID           string                            `json:"id" url:"id"`
 	Channel      *string                           `json:"channel,omitempty" url:"channel,omitempty"`
 	Customizable *bool                             `json:"customizable,omitempty" url:"customizable,omitempty"`
 	Tenant       *string                           `json:"tenant,omitempty" url:"tenant,omitempty"`
@@ -52360,11 +52360,11 @@ type UpdatePhoneTemplateResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdatePhoneTemplateResponseContent) GetId() string {
+func (u *UpdatePhoneTemplateResponseContent) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *UpdatePhoneTemplateResponseContent) GetChannel() string {
@@ -52420,11 +52420,11 @@ func (u *UpdatePhoneTemplateResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdatePhoneTemplateResponseContent) SetId(id string) {
-	u.Id = id
-	u.require(updatePhoneTemplateResponseContentFieldId)
+func (u *UpdatePhoneTemplateResponseContent) SetID(id string) {
+	u.ID = id
+	u.require(updatePhoneTemplateResponseContentFieldID)
 }
 
 // SetChannel sets the Channel field and marks it as non-optional;
@@ -52667,19 +52667,19 @@ func (u *UpdateRiskAssessmentsSettingsResponseContent) String() string {
 }
 
 var (
-	updateScimConfigurationResponseContentFieldConnectionId    = big.NewInt(1 << 0)
-	updateScimConfigurationResponseContentFieldConnectionName  = big.NewInt(1 << 1)
-	updateScimConfigurationResponseContentFieldStrategy        = big.NewInt(1 << 2)
-	updateScimConfigurationResponseContentFieldTenantName      = big.NewInt(1 << 3)
-	updateScimConfigurationResponseContentFieldUserIdAttribute = big.NewInt(1 << 4)
-	updateScimConfigurationResponseContentFieldMapping         = big.NewInt(1 << 5)
-	updateScimConfigurationResponseContentFieldCreatedAt       = big.NewInt(1 << 6)
-	updateScimConfigurationResponseContentFieldUpdatedOn       = big.NewInt(1 << 7)
+	updateSCIMConfigurationResponseContentFieldConnectionID    = big.NewInt(1 << 0)
+	updateSCIMConfigurationResponseContentFieldConnectionName  = big.NewInt(1 << 1)
+	updateSCIMConfigurationResponseContentFieldStrategy        = big.NewInt(1 << 2)
+	updateSCIMConfigurationResponseContentFieldTenantName      = big.NewInt(1 << 3)
+	updateSCIMConfigurationResponseContentFieldUserIDAttribute = big.NewInt(1 << 4)
+	updateSCIMConfigurationResponseContentFieldMapping         = big.NewInt(1 << 5)
+	updateSCIMConfigurationResponseContentFieldCreatedAt       = big.NewInt(1 << 6)
+	updateSCIMConfigurationResponseContentFieldUpdatedOn       = big.NewInt(1 << 7)
 )
 
-type UpdateScimConfigurationResponseContent struct {
+type UpdateSCIMConfigurationResponseContent struct {
 	// The connection's identifier
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// The connection's identifier
 	ConnectionName *string `json:"connection_name,omitempty" url:"connection_name,omitempty"`
 	// The connection's strategy
@@ -52687,9 +52687,9 @@ type UpdateScimConfigurationResponseContent struct {
 	// The tenant's name
 	TenantName *string `json:"tenant_name,omitempty" url:"tenant_name,omitempty"`
 	// User ID attribute for generating unique user ids
-	UserIdAttribute *string `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
+	UserIDAttribute *string `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
 	// The mapping between auth0 and SCIM
-	Mapping []*ScimMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
+	Mapping []*SCIMMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
 	// The Date Time Scim Configuration was created
 	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The Date Time Scim Configuration was last updated
@@ -52702,136 +52702,136 @@ type UpdateScimConfigurationResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateScimConfigurationResponseContent) GetConnectionId() string {
-	if u == nil || u.ConnectionId == nil {
+func (u *UpdateSCIMConfigurationResponseContent) GetConnectionID() string {
+	if u == nil || u.ConnectionID == nil {
 		return ""
 	}
-	return *u.ConnectionId
+	return *u.ConnectionID
 }
 
-func (u *UpdateScimConfigurationResponseContent) GetConnectionName() string {
+func (u *UpdateSCIMConfigurationResponseContent) GetConnectionName() string {
 	if u == nil || u.ConnectionName == nil {
 		return ""
 	}
 	return *u.ConnectionName
 }
 
-func (u *UpdateScimConfigurationResponseContent) GetStrategy() string {
+func (u *UpdateSCIMConfigurationResponseContent) GetStrategy() string {
 	if u == nil || u.Strategy == nil {
 		return ""
 	}
 	return *u.Strategy
 }
 
-func (u *UpdateScimConfigurationResponseContent) GetTenantName() string {
+func (u *UpdateSCIMConfigurationResponseContent) GetTenantName() string {
 	if u == nil || u.TenantName == nil {
 		return ""
 	}
 	return *u.TenantName
 }
 
-func (u *UpdateScimConfigurationResponseContent) GetUserIdAttribute() string {
-	if u == nil || u.UserIdAttribute == nil {
+func (u *UpdateSCIMConfigurationResponseContent) GetUserIDAttribute() string {
+	if u == nil || u.UserIDAttribute == nil {
 		return ""
 	}
-	return *u.UserIdAttribute
+	return *u.UserIDAttribute
 }
 
-func (u *UpdateScimConfigurationResponseContent) GetMapping() []*ScimMappingItem {
+func (u *UpdateSCIMConfigurationResponseContent) GetMapping() []*SCIMMappingItem {
 	if u == nil || u.Mapping == nil {
 		return nil
 	}
 	return u.Mapping
 }
 
-func (u *UpdateScimConfigurationResponseContent) GetCreatedAt() string {
+func (u *UpdateSCIMConfigurationResponseContent) GetCreatedAt() string {
 	if u == nil || u.CreatedAt == nil {
 		return ""
 	}
 	return *u.CreatedAt
 }
 
-func (u *UpdateScimConfigurationResponseContent) GetUpdatedOn() string {
+func (u *UpdateSCIMConfigurationResponseContent) GetUpdatedOn() string {
 	if u == nil || u.UpdatedOn == nil {
 		return ""
 	}
 	return *u.UpdatedOn
 }
 
-func (u *UpdateScimConfigurationResponseContent) GetExtraProperties() map[string]interface{} {
+func (u *UpdateSCIMConfigurationResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
-func (u *UpdateScimConfigurationResponseContent) require(field *big.Int) {
+func (u *UpdateSCIMConfigurationResponseContent) require(field *big.Int) {
 	if u.explicitFields == nil {
 		u.explicitFields = big.NewInt(0)
 	}
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateScimConfigurationResponseContent) SetConnectionId(connectionId *string) {
-	u.ConnectionId = connectionId
-	u.require(updateScimConfigurationResponseContentFieldConnectionId)
+func (u *UpdateSCIMConfigurationResponseContent) SetConnectionID(connectionID *string) {
+	u.ConnectionID = connectionID
+	u.require(updateSCIMConfigurationResponseContentFieldConnectionID)
 }
 
 // SetConnectionName sets the ConnectionName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateScimConfigurationResponseContent) SetConnectionName(connectionName *string) {
+func (u *UpdateSCIMConfigurationResponseContent) SetConnectionName(connectionName *string) {
 	u.ConnectionName = connectionName
-	u.require(updateScimConfigurationResponseContentFieldConnectionName)
+	u.require(updateSCIMConfigurationResponseContentFieldConnectionName)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateScimConfigurationResponseContent) SetStrategy(strategy *string) {
+func (u *UpdateSCIMConfigurationResponseContent) SetStrategy(strategy *string) {
 	u.Strategy = strategy
-	u.require(updateScimConfigurationResponseContentFieldStrategy)
+	u.require(updateSCIMConfigurationResponseContentFieldStrategy)
 }
 
 // SetTenantName sets the TenantName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateScimConfigurationResponseContent) SetTenantName(tenantName *string) {
+func (u *UpdateSCIMConfigurationResponseContent) SetTenantName(tenantName *string) {
 	u.TenantName = tenantName
-	u.require(updateScimConfigurationResponseContentFieldTenantName)
+	u.require(updateSCIMConfigurationResponseContentFieldTenantName)
 }
 
-// SetUserIdAttribute sets the UserIdAttribute field and marks it as non-optional;
+// SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateScimConfigurationResponseContent) SetUserIdAttribute(userIdAttribute *string) {
-	u.UserIdAttribute = userIdAttribute
-	u.require(updateScimConfigurationResponseContentFieldUserIdAttribute)
+func (u *UpdateSCIMConfigurationResponseContent) SetUserIDAttribute(userIDAttribute *string) {
+	u.UserIDAttribute = userIDAttribute
+	u.require(updateSCIMConfigurationResponseContentFieldUserIDAttribute)
 }
 
 // SetMapping sets the Mapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateScimConfigurationResponseContent) SetMapping(mapping []*ScimMappingItem) {
+func (u *UpdateSCIMConfigurationResponseContent) SetMapping(mapping []*SCIMMappingItem) {
 	u.Mapping = mapping
-	u.require(updateScimConfigurationResponseContentFieldMapping)
+	u.require(updateSCIMConfigurationResponseContentFieldMapping)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateScimConfigurationResponseContent) SetCreatedAt(createdAt *string) {
+func (u *UpdateSCIMConfigurationResponseContent) SetCreatedAt(createdAt *string) {
 	u.CreatedAt = createdAt
-	u.require(updateScimConfigurationResponseContentFieldCreatedAt)
+	u.require(updateSCIMConfigurationResponseContentFieldCreatedAt)
 }
 
 // SetUpdatedOn sets the UpdatedOn field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateScimConfigurationResponseContent) SetUpdatedOn(updatedOn *string) {
+func (u *UpdateSCIMConfigurationResponseContent) SetUpdatedOn(updatedOn *string) {
 	u.UpdatedOn = updatedOn
-	u.require(updateScimConfigurationResponseContentFieldUpdatedOn)
+	u.require(updateSCIMConfigurationResponseContentFieldUpdatedOn)
 }
 
-func (u *UpdateScimConfigurationResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateScimConfigurationResponseContent
+func (u *UpdateSCIMConfigurationResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateSCIMConfigurationResponseContent
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*u = UpdateScimConfigurationResponseContent(value)
+	*u = UpdateSCIMConfigurationResponseContent(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
@@ -52841,8 +52841,8 @@ func (u *UpdateScimConfigurationResponseContent) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (u *UpdateScimConfigurationResponseContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateScimConfigurationResponseContent
+func (u *UpdateSCIMConfigurationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateSCIMConfigurationResponseContent
 	var marshaler = struct {
 		embed
 	}{
@@ -52852,7 +52852,7 @@ func (u *UpdateScimConfigurationResponseContent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (u *UpdateScimConfigurationResponseContent) String() string {
+func (u *UpdateSCIMConfigurationResponseContent) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -52865,21 +52865,21 @@ func (u *UpdateScimConfigurationResponseContent) String() string {
 }
 
 var (
-	updateSuspiciousIpThrottlingSettingsResponseContentFieldEnabled   = big.NewInt(1 << 0)
-	updateSuspiciousIpThrottlingSettingsResponseContentFieldShields   = big.NewInt(1 << 1)
-	updateSuspiciousIpThrottlingSettingsResponseContentFieldAllowlist = big.NewInt(1 << 2)
-	updateSuspiciousIpThrottlingSettingsResponseContentFieldStage     = big.NewInt(1 << 3)
+	updateSuspiciousIPThrottlingSettingsResponseContentFieldEnabled   = big.NewInt(1 << 0)
+	updateSuspiciousIPThrottlingSettingsResponseContentFieldShields   = big.NewInt(1 << 1)
+	updateSuspiciousIPThrottlingSettingsResponseContentFieldAllowlist = big.NewInt(1 << 2)
+	updateSuspiciousIPThrottlingSettingsResponseContentFieldStage     = big.NewInt(1 << 3)
 )
 
-type UpdateSuspiciousIpThrottlingSettingsResponseContent struct {
+type UpdateSuspiciousIPThrottlingSettingsResponseContent struct {
 	// Whether or not suspicious IP throttling attack protections are active.
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
 	// Action to take when a suspicious IP throttling threshold is violated.
 	//
 	//	Possible values: <code>block</code>, <code>admin_notification</code>.
-	Shields   []SuspiciousIpThrottlingShieldsEnum `json:"shields,omitempty" url:"shields,omitempty"`
-	Allowlist *SuspiciousIpThrottlingAllowlist    `json:"allowlist,omitempty" url:"allowlist,omitempty"`
-	Stage     *SuspiciousIpThrottlingStage        `json:"stage,omitempty" url:"stage,omitempty"`
+	Shields   []SuspiciousIPThrottlingShieldsEnum `json:"shields,omitempty" url:"shields,omitempty"`
+	Allowlist *SuspiciousIPThrottlingAllowlist    `json:"allowlist,omitempty" url:"allowlist,omitempty"`
+	Stage     *SuspiciousIPThrottlingStage        `json:"stage,omitempty" url:"stage,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -52888,39 +52888,39 @@ type UpdateSuspiciousIpThrottlingSettingsResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) GetEnabled() bool {
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) GetEnabled() bool {
 	if u == nil || u.Enabled == nil {
 		return false
 	}
 	return *u.Enabled
 }
 
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) GetShields() []SuspiciousIpThrottlingShieldsEnum {
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) GetShields() []SuspiciousIPThrottlingShieldsEnum {
 	if u == nil || u.Shields == nil {
 		return nil
 	}
 	return u.Shields
 }
 
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) GetAllowlist() SuspiciousIpThrottlingAllowlist {
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) GetAllowlist() SuspiciousIPThrottlingAllowlist {
 	if u == nil || u.Allowlist == nil {
 		return nil
 	}
 	return *u.Allowlist
 }
 
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) GetStage() SuspiciousIpThrottlingStage {
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) GetStage() SuspiciousIPThrottlingStage {
 	if u == nil || u.Stage == nil {
-		return SuspiciousIpThrottlingStage{}
+		return SuspiciousIPThrottlingStage{}
 	}
 	return *u.Stage
 }
 
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) require(field *big.Int) {
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) require(field *big.Int) {
 	if u.explicitFields == nil {
 		u.explicitFields = big.NewInt(0)
 	}
@@ -52929,39 +52929,39 @@ func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) require(field *big
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) SetEnabled(enabled *bool) {
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) SetEnabled(enabled *bool) {
 	u.Enabled = enabled
-	u.require(updateSuspiciousIpThrottlingSettingsResponseContentFieldEnabled)
+	u.require(updateSuspiciousIPThrottlingSettingsResponseContentFieldEnabled)
 }
 
 // SetShields sets the Shields field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) SetShields(shields []SuspiciousIpThrottlingShieldsEnum) {
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) SetShields(shields []SuspiciousIPThrottlingShieldsEnum) {
 	u.Shields = shields
-	u.require(updateSuspiciousIpThrottlingSettingsResponseContentFieldShields)
+	u.require(updateSuspiciousIPThrottlingSettingsResponseContentFieldShields)
 }
 
 // SetAllowlist sets the Allowlist field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) SetAllowlist(allowlist *SuspiciousIpThrottlingAllowlist) {
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) SetAllowlist(allowlist *SuspiciousIPThrottlingAllowlist) {
 	u.Allowlist = allowlist
-	u.require(updateSuspiciousIpThrottlingSettingsResponseContentFieldAllowlist)
+	u.require(updateSuspiciousIPThrottlingSettingsResponseContentFieldAllowlist)
 }
 
 // SetStage sets the Stage field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) SetStage(stage *SuspiciousIpThrottlingStage) {
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) SetStage(stage *SuspiciousIPThrottlingStage) {
 	u.Stage = stage
-	u.require(updateSuspiciousIpThrottlingSettingsResponseContentFieldStage)
+	u.require(updateSuspiciousIPThrottlingSettingsResponseContentFieldStage)
 }
 
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateSuspiciousIpThrottlingSettingsResponseContent
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateSuspiciousIPThrottlingSettingsResponseContent
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*u = UpdateSuspiciousIpThrottlingSettingsResponseContent(value)
+	*u = UpdateSuspiciousIPThrottlingSettingsResponseContent(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
@@ -52971,8 +52971,8 @@ func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) UnmarshalJSON(data
 	return nil
 }
 
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateSuspiciousIpThrottlingSettingsResponseContent
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateSuspiciousIPThrottlingSettingsResponseContent
 	var marshaler = struct {
 		embed
 	}{
@@ -52982,7 +52982,7 @@ func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) MarshalJSON() ([]b
 	return json.Marshal(explicitMarshaler)
 }
 
-func (u *UpdateSuspiciousIpThrottlingSettingsResponseContent) String() string {
+func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -53004,10 +53004,10 @@ var (
 	updateTenantSettingsResponseContentFieldDefaultTokenQuota                          = big.NewInt(1 << 6)
 	updateTenantSettingsResponseContentFieldFlags                                      = big.NewInt(1 << 7)
 	updateTenantSettingsResponseContentFieldFriendlyName                               = big.NewInt(1 << 8)
-	updateTenantSettingsResponseContentFieldPictureUrl                                 = big.NewInt(1 << 9)
+	updateTenantSettingsResponseContentFieldPictureURL                                 = big.NewInt(1 << 9)
 	updateTenantSettingsResponseContentFieldSupportEmail                               = big.NewInt(1 << 10)
-	updateTenantSettingsResponseContentFieldSupportUrl                                 = big.NewInt(1 << 11)
-	updateTenantSettingsResponseContentFieldAllowedLogoutUrls                          = big.NewInt(1 << 12)
+	updateTenantSettingsResponseContentFieldSupportURL                                 = big.NewInt(1 << 11)
+	updateTenantSettingsResponseContentFieldAllowedLogoutURLs                          = big.NewInt(1 << 12)
 	updateTenantSettingsResponseContentFieldSessionLifetime                            = big.NewInt(1 << 13)
 	updateTenantSettingsResponseContentFieldIdleSessionLifetime                        = big.NewInt(1 << 14)
 	updateTenantSettingsResponseContentFieldEphemeralSessionLifetime                   = big.NewInt(1 << 15)
@@ -53015,12 +53015,12 @@ var (
 	updateTenantSettingsResponseContentFieldSandboxVersion                             = big.NewInt(1 << 17)
 	updateTenantSettingsResponseContentFieldLegacySandboxVersion                       = big.NewInt(1 << 18)
 	updateTenantSettingsResponseContentFieldSandboxVersionsAvailable                   = big.NewInt(1 << 19)
-	updateTenantSettingsResponseContentFieldDefaultRedirectionUri                      = big.NewInt(1 << 20)
+	updateTenantSettingsResponseContentFieldDefaultRedirectionURI                      = big.NewInt(1 << 20)
 	updateTenantSettingsResponseContentFieldEnabledLocales                             = big.NewInt(1 << 21)
 	updateTenantSettingsResponseContentFieldSessionCookie                              = big.NewInt(1 << 22)
 	updateTenantSettingsResponseContentFieldSessions                                   = big.NewInt(1 << 23)
 	updateTenantSettingsResponseContentFieldOidcLogout                                 = big.NewInt(1 << 24)
-	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationApi   = big.NewInt(1 << 25)
+	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI   = big.NewInt(1 << 25)
 	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction              = big.NewInt(1 << 26)
 	updateTenantSettingsResponseContentFieldAcrValuesSupported                         = big.NewInt(1 << 27)
 	updateTenantSettingsResponseContentFieldMtls                                       = big.NewInt(1 << 28)
@@ -53042,13 +53042,13 @@ type UpdateTenantSettingsResponseContent struct {
 	// Friendly name for this tenant.
 	FriendlyName *string `json:"friendly_name,omitempty" url:"friendly_name,omitempty"`
 	// URL of logo to be shown for this tenant (recommended size: 150x150)
-	PictureUrl *string `json:"picture_url,omitempty" url:"picture_url,omitempty"`
+	PictureURL *string `json:"picture_url,omitempty" url:"picture_url,omitempty"`
 	// End-user support email address.
 	SupportEmail *string `json:"support_email,omitempty" url:"support_email,omitempty"`
 	// End-user support URL.
-	SupportUrl *string `json:"support_url,omitempty" url:"support_url,omitempty"`
+	SupportURL *string `json:"support_url,omitempty" url:"support_url,omitempty"`
 	// URLs that are valid to redirect to after logout from Auth0.
-	AllowedLogoutUrls []string `json:"allowed_logout_urls,omitempty" url:"allowed_logout_urls,omitempty"`
+	AllowedLogoutURLs []string `json:"allowed_logout_urls,omitempty" url:"allowed_logout_urls,omitempty"`
 	// Number of hours a session will stay valid.
 	SessionLifetime *float64 `json:"session_lifetime,omitempty" url:"session_lifetime,omitempty"`
 	// Number of hours for which a session can be inactive before the user must log in again.
@@ -53064,14 +53064,14 @@ type UpdateTenantSettingsResponseContent struct {
 	// Available sandbox versions for the extensibility environment.
 	SandboxVersionsAvailable []string `json:"sandbox_versions_available,omitempty" url:"sandbox_versions_available,omitempty"`
 	// The default absolute redirection uri, must be https
-	DefaultRedirectionUri *string `json:"default_redirection_uri,omitempty" url:"default_redirection_uri,omitempty"`
+	DefaultRedirectionURI *string `json:"default_redirection_uri,omitempty" url:"default_redirection_uri,omitempty"`
 	// Supported locales for the user interface.
 	EnabledLocales []SupportedLocales        `json:"enabled_locales,omitempty" url:"enabled_locales,omitempty"`
 	SessionCookie  *SessionCookieSchema      `json:"session_cookie,omitempty" url:"session_cookie,omitempty"`
 	Sessions       *TenantSettingsSessions   `json:"sessions,omitempty" url:"sessions,omitempty"`
 	OidcLogout     *TenantOidcLogoutSettings `json:"oidc_logout,omitempty" url:"oidc_logout,omitempty"`
 	// Whether to accept an organization name instead of an ID on auth endpoints
-	AllowOrganizationNameInAuthenticationApi *bool `json:"allow_organization_name_in_authentication_api,omitempty" url:"allow_organization_name_in_authentication_api,omitempty"`
+	AllowOrganizationNameInAuthenticationAPI *bool `json:"allow_organization_name_in_authentication_api,omitempty" url:"allow_organization_name_in_authentication_api,omitempty"`
 	// Whether to enable flexible factors for MFA in the PostLogin action
 	CustomizeMfaInPostloginAction *bool `json:"customize_mfa_in_postlogin_action,omitempty" url:"customize_mfa_in_postlogin_action,omitempty"`
 	// Supported ACR values
@@ -53152,11 +53152,11 @@ func (u *UpdateTenantSettingsResponseContent) GetFriendlyName() string {
 	return *u.FriendlyName
 }
 
-func (u *UpdateTenantSettingsResponseContent) GetPictureUrl() string {
-	if u == nil || u.PictureUrl == nil {
+func (u *UpdateTenantSettingsResponseContent) GetPictureURL() string {
+	if u == nil || u.PictureURL == nil {
 		return ""
 	}
-	return *u.PictureUrl
+	return *u.PictureURL
 }
 
 func (u *UpdateTenantSettingsResponseContent) GetSupportEmail() string {
@@ -53166,18 +53166,18 @@ func (u *UpdateTenantSettingsResponseContent) GetSupportEmail() string {
 	return *u.SupportEmail
 }
 
-func (u *UpdateTenantSettingsResponseContent) GetSupportUrl() string {
-	if u == nil || u.SupportUrl == nil {
+func (u *UpdateTenantSettingsResponseContent) GetSupportURL() string {
+	if u == nil || u.SupportURL == nil {
 		return ""
 	}
-	return *u.SupportUrl
+	return *u.SupportURL
 }
 
-func (u *UpdateTenantSettingsResponseContent) GetAllowedLogoutUrls() []string {
-	if u == nil || u.AllowedLogoutUrls == nil {
+func (u *UpdateTenantSettingsResponseContent) GetAllowedLogoutURLs() []string {
+	if u == nil || u.AllowedLogoutURLs == nil {
 		return nil
 	}
-	return u.AllowedLogoutUrls
+	return u.AllowedLogoutURLs
 }
 
 func (u *UpdateTenantSettingsResponseContent) GetSessionLifetime() float64 {
@@ -53229,11 +53229,11 @@ func (u *UpdateTenantSettingsResponseContent) GetSandboxVersionsAvailable() []st
 	return u.SandboxVersionsAvailable
 }
 
-func (u *UpdateTenantSettingsResponseContent) GetDefaultRedirectionUri() string {
-	if u == nil || u.DefaultRedirectionUri == nil {
+func (u *UpdateTenantSettingsResponseContent) GetDefaultRedirectionURI() string {
+	if u == nil || u.DefaultRedirectionURI == nil {
 		return ""
 	}
-	return *u.DefaultRedirectionUri
+	return *u.DefaultRedirectionURI
 }
 
 func (u *UpdateTenantSettingsResponseContent) GetEnabledLocales() []SupportedLocales {
@@ -53264,11 +53264,11 @@ func (u *UpdateTenantSettingsResponseContent) GetOidcLogout() TenantOidcLogoutSe
 	return *u.OidcLogout
 }
 
-func (u *UpdateTenantSettingsResponseContent) GetAllowOrganizationNameInAuthenticationApi() bool {
-	if u == nil || u.AllowOrganizationNameInAuthenticationApi == nil {
+func (u *UpdateTenantSettingsResponseContent) GetAllowOrganizationNameInAuthenticationAPI() bool {
+	if u == nil || u.AllowOrganizationNameInAuthenticationAPI == nil {
 		return false
 	}
-	return *u.AllowOrganizationNameInAuthenticationApi
+	return *u.AllowOrganizationNameInAuthenticationAPI
 }
 
 func (u *UpdateTenantSettingsResponseContent) GetCustomizeMfaInPostloginAction() bool {
@@ -53380,11 +53380,11 @@ func (u *UpdateTenantSettingsResponseContent) SetFriendlyName(friendlyName *stri
 	u.require(updateTenantSettingsResponseContentFieldFriendlyName)
 }
 
-// SetPictureUrl sets the PictureUrl field and marks it as non-optional;
+// SetPictureURL sets the PictureURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateTenantSettingsResponseContent) SetPictureUrl(pictureUrl *string) {
-	u.PictureUrl = pictureUrl
-	u.require(updateTenantSettingsResponseContentFieldPictureUrl)
+func (u *UpdateTenantSettingsResponseContent) SetPictureURL(pictureURL *string) {
+	u.PictureURL = pictureURL
+	u.require(updateTenantSettingsResponseContentFieldPictureURL)
 }
 
 // SetSupportEmail sets the SupportEmail field and marks it as non-optional;
@@ -53394,18 +53394,18 @@ func (u *UpdateTenantSettingsResponseContent) SetSupportEmail(supportEmail *stri
 	u.require(updateTenantSettingsResponseContentFieldSupportEmail)
 }
 
-// SetSupportUrl sets the SupportUrl field and marks it as non-optional;
+// SetSupportURL sets the SupportURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateTenantSettingsResponseContent) SetSupportUrl(supportUrl *string) {
-	u.SupportUrl = supportUrl
-	u.require(updateTenantSettingsResponseContentFieldSupportUrl)
+func (u *UpdateTenantSettingsResponseContent) SetSupportURL(supportURL *string) {
+	u.SupportURL = supportURL
+	u.require(updateTenantSettingsResponseContentFieldSupportURL)
 }
 
-// SetAllowedLogoutUrls sets the AllowedLogoutUrls field and marks it as non-optional;
+// SetAllowedLogoutURLs sets the AllowedLogoutURLs field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateTenantSettingsResponseContent) SetAllowedLogoutUrls(allowedLogoutUrls []string) {
-	u.AllowedLogoutUrls = allowedLogoutUrls
-	u.require(updateTenantSettingsResponseContentFieldAllowedLogoutUrls)
+func (u *UpdateTenantSettingsResponseContent) SetAllowedLogoutURLs(allowedLogoutURLs []string) {
+	u.AllowedLogoutURLs = allowedLogoutURLs
+	u.require(updateTenantSettingsResponseContentFieldAllowedLogoutURLs)
 }
 
 // SetSessionLifetime sets the SessionLifetime field and marks it as non-optional;
@@ -53457,11 +53457,11 @@ func (u *UpdateTenantSettingsResponseContent) SetSandboxVersionsAvailable(sandbo
 	u.require(updateTenantSettingsResponseContentFieldSandboxVersionsAvailable)
 }
 
-// SetDefaultRedirectionUri sets the DefaultRedirectionUri field and marks it as non-optional;
+// SetDefaultRedirectionURI sets the DefaultRedirectionURI field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateTenantSettingsResponseContent) SetDefaultRedirectionUri(defaultRedirectionUri *string) {
-	u.DefaultRedirectionUri = defaultRedirectionUri
-	u.require(updateTenantSettingsResponseContentFieldDefaultRedirectionUri)
+func (u *UpdateTenantSettingsResponseContent) SetDefaultRedirectionURI(defaultRedirectionURI *string) {
+	u.DefaultRedirectionURI = defaultRedirectionURI
+	u.require(updateTenantSettingsResponseContentFieldDefaultRedirectionURI)
 }
 
 // SetEnabledLocales sets the EnabledLocales field and marks it as non-optional;
@@ -53492,11 +53492,11 @@ func (u *UpdateTenantSettingsResponseContent) SetOidcLogout(oidcLogout *TenantOi
 	u.require(updateTenantSettingsResponseContentFieldOidcLogout)
 }
 
-// SetAllowOrganizationNameInAuthenticationApi sets the AllowOrganizationNameInAuthenticationApi field and marks it as non-optional;
+// SetAllowOrganizationNameInAuthenticationAPI sets the AllowOrganizationNameInAuthenticationAPI field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateTenantSettingsResponseContent) SetAllowOrganizationNameInAuthenticationApi(allowOrganizationNameInAuthenticationApi *bool) {
-	u.AllowOrganizationNameInAuthenticationApi = allowOrganizationNameInAuthenticationApi
-	u.require(updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationApi)
+func (u *UpdateTenantSettingsResponseContent) SetAllowOrganizationNameInAuthenticationAPI(allowOrganizationNameInAuthenticationAPI *bool) {
+	u.AllowOrganizationNameInAuthenticationAPI = allowOrganizationNameInAuthenticationAPI
+	u.require(updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI)
 }
 
 // SetCustomizeMfaInPostloginAction sets the CustomizeMfaInPostloginAction field and marks it as non-optional;
@@ -53793,7 +53793,7 @@ func (u *UpdateUniversalLoginTemplateRequestContentTemplate) String() string {
 
 // The successfully created authentication method.
 var (
-	updateUserAuthenticationMethodResponseContentFieldId                            = big.NewInt(1 << 0)
+	updateUserAuthenticationMethodResponseContentFieldID                            = big.NewInt(1 << 0)
 	updateUserAuthenticationMethodResponseContentFieldType                          = big.NewInt(1 << 1)
 	updateUserAuthenticationMethodResponseContentFieldName                          = big.NewInt(1 << 2)
 	updateUserAuthenticationMethodResponseContentFieldTotpSecret                    = big.NewInt(1 << 3)
@@ -53801,7 +53801,7 @@ var (
 	updateUserAuthenticationMethodResponseContentFieldEmail                         = big.NewInt(1 << 5)
 	updateUserAuthenticationMethodResponseContentFieldAuthenticationMethods         = big.NewInt(1 << 6)
 	updateUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 7)
-	updateUserAuthenticationMethodResponseContentFieldKeyId                         = big.NewInt(1 << 8)
+	updateUserAuthenticationMethodResponseContentFieldKeyID                         = big.NewInt(1 << 8)
 	updateUserAuthenticationMethodResponseContentFieldPublicKey                     = big.NewInt(1 << 9)
 	updateUserAuthenticationMethodResponseContentFieldAaguid                        = big.NewInt(1 << 10)
 	updateUserAuthenticationMethodResponseContentFieldRelyingPartyIdentifier        = big.NewInt(1 << 11)
@@ -53810,7 +53810,7 @@ var (
 
 type UpdateUserAuthenticationMethodResponseContent struct {
 	// The ID of the newly created authentication method (automatically generated by the application)
-	Id   *string                             `json:"id,omitempty" url:"id,omitempty"`
+	ID   *string                             `json:"id,omitempty" url:"id,omitempty"`
 	Type CreatedAuthenticationMethodTypeEnum `json:"type" url:"type"`
 	// A human-readable label to identify the authentication method.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -53823,7 +53823,7 @@ type UpdateUserAuthenticationMethodResponseContent struct {
 	AuthenticationMethods         []*UserAuthenticationMethodProperties `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
 	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum    `json:"preferred_authentication_method,omitempty" url:"preferred_authentication_method,omitempty"`
 	// Applies to webauthn authentication methods only. The id of the credential.
-	KeyId *string `json:"key_id,omitempty" url:"key_id,omitempty"`
+	KeyID *string `json:"key_id,omitempty" url:"key_id,omitempty"`
 	// Applies to webauthn authentication methods only. The public key.
 	PublicKey *string `json:"public_key,omitempty" url:"public_key,omitempty"`
 	// Applies to passkey authentication methods only. Authenticator Attestation Globally Unique Identifier.
@@ -53840,11 +53840,11 @@ type UpdateUserAuthenticationMethodResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateUserAuthenticationMethodResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateUserAuthenticationMethodResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UpdateUserAuthenticationMethodResponseContent) GetType() CreatedAuthenticationMethodTypeEnum {
@@ -53896,11 +53896,11 @@ func (u *UpdateUserAuthenticationMethodResponseContent) GetPreferredAuthenticati
 	return *u.PreferredAuthenticationMethod
 }
 
-func (u *UpdateUserAuthenticationMethodResponseContent) GetKeyId() string {
-	if u == nil || u.KeyId == nil {
+func (u *UpdateUserAuthenticationMethodResponseContent) GetKeyID() string {
+	if u == nil || u.KeyID == nil {
 		return ""
 	}
-	return *u.KeyId
+	return *u.KeyID
 }
 
 func (u *UpdateUserAuthenticationMethodResponseContent) GetPublicKey() string {
@@ -53942,11 +53942,11 @@ func (u *UpdateUserAuthenticationMethodResponseContent) require(field *big.Int) 
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserAuthenticationMethodResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateUserAuthenticationMethodResponseContentFieldId)
+func (u *UpdateUserAuthenticationMethodResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateUserAuthenticationMethodResponseContentFieldID)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -53998,11 +53998,11 @@ func (u *UpdateUserAuthenticationMethodResponseContent) SetPreferredAuthenticati
 	u.require(updateUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod)
 }
 
-// SetKeyId sets the KeyId field and marks it as non-optional;
+// SetKeyID sets the KeyID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserAuthenticationMethodResponseContent) SetKeyId(keyId *string) {
-	u.KeyId = keyId
-	u.require(updateUserAuthenticationMethodResponseContentFieldKeyId)
+func (u *UpdateUserAuthenticationMethodResponseContent) SetKeyID(keyID *string) {
+	u.KeyID = keyID
+	u.require(updateUserAuthenticationMethodResponseContentFieldKeyID)
 }
 
 // SetPublicKey sets the PublicKey field and marks it as non-optional;
@@ -54081,7 +54081,7 @@ func (u *UpdateUserAuthenticationMethodResponseContent) String() string {
 }
 
 var (
-	updateVerifiableCredentialTemplateResponseContentFieldId                         = big.NewInt(1 << 0)
+	updateVerifiableCredentialTemplateResponseContentFieldID                         = big.NewInt(1 << 0)
 	updateVerifiableCredentialTemplateResponseContentFieldName                       = big.NewInt(1 << 1)
 	updateVerifiableCredentialTemplateResponseContentFieldType                       = big.NewInt(1 << 2)
 	updateVerifiableCredentialTemplateResponseContentFieldDialect                    = big.NewInt(1 << 3)
@@ -54094,7 +54094,7 @@ var (
 
 type UpdateVerifiableCredentialTemplateResponseContent struct {
 	// The id of the template.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the template.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The type of the template.
@@ -54119,11 +54119,11 @@ type UpdateVerifiableCredentialTemplateResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (u *UpdateVerifiableCredentialTemplateResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateVerifiableCredentialTemplateResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UpdateVerifiableCredentialTemplateResponseContent) GetName() string {
@@ -54193,11 +54193,11 @@ func (u *UpdateVerifiableCredentialTemplateResponseContent) require(field *big.I
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateVerifiableCredentialTemplateResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateVerifiableCredentialTemplateResponseContentFieldId)
+func (u *UpdateVerifiableCredentialTemplateResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateVerifiableCredentialTemplateResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -54308,23 +54308,23 @@ func (u *UpdateVerifiableCredentialTemplateResponseContent) String() string {
 }
 
 var (
-	userAuthenticationMethodFieldId                            = big.NewInt(1 << 0)
+	userAuthenticationMethodFieldID                            = big.NewInt(1 << 0)
 	userAuthenticationMethodFieldType                          = big.NewInt(1 << 1)
 	userAuthenticationMethodFieldConfirmed                     = big.NewInt(1 << 2)
 	userAuthenticationMethodFieldName                          = big.NewInt(1 << 3)
 	userAuthenticationMethodFieldAuthenticationMethods         = big.NewInt(1 << 4)
 	userAuthenticationMethodFieldPreferredAuthenticationMethod = big.NewInt(1 << 5)
-	userAuthenticationMethodFieldLinkId                        = big.NewInt(1 << 6)
+	userAuthenticationMethodFieldLinkID                        = big.NewInt(1 << 6)
 	userAuthenticationMethodFieldPhoneNumber                   = big.NewInt(1 << 7)
 	userAuthenticationMethodFieldEmail                         = big.NewInt(1 << 8)
-	userAuthenticationMethodFieldKeyId                         = big.NewInt(1 << 9)
+	userAuthenticationMethodFieldKeyID                         = big.NewInt(1 << 9)
 	userAuthenticationMethodFieldPublicKey                     = big.NewInt(1 << 10)
 	userAuthenticationMethodFieldCreatedAt                     = big.NewInt(1 << 11)
 	userAuthenticationMethodFieldEnrolledAt                    = big.NewInt(1 << 12)
 	userAuthenticationMethodFieldLastAuthAt                    = big.NewInt(1 << 13)
 	userAuthenticationMethodFieldCredentialDeviceType          = big.NewInt(1 << 14)
 	userAuthenticationMethodFieldCredentialBackedUp            = big.NewInt(1 << 15)
-	userAuthenticationMethodFieldIdentityUserId                = big.NewInt(1 << 16)
+	userAuthenticationMethodFieldIdentityUserID                = big.NewInt(1 << 16)
 	userAuthenticationMethodFieldUserAgent                     = big.NewInt(1 << 17)
 	userAuthenticationMethodFieldAaguid                        = big.NewInt(1 << 18)
 	userAuthenticationMethodFieldRelyingPartyIdentifier        = big.NewInt(1 << 19)
@@ -54332,7 +54332,7 @@ var (
 
 type UserAuthenticationMethod struct {
 	// The ID of the authentication method (auto generated)
-	Id   string                       `json:"id" url:"id"`
+	ID   string                       `json:"id" url:"id"`
 	Type AuthenticationMethodTypeEnum `json:"type" url:"type"`
 	// The authentication method status
 	Confirmed *bool `json:"confirmed,omitempty" url:"confirmed,omitempty"`
@@ -54341,13 +54341,13 @@ type UserAuthenticationMethod struct {
 	AuthenticationMethods         []*UserAuthenticationMethodProperties `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
 	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum    `json:"preferred_authentication_method,omitempty" url:"preferred_authentication_method,omitempty"`
 	// The ID of a linked authentication method. Linked authentication methods will be deleted together.
-	LinkId *string `json:"link_id,omitempty" url:"link_id,omitempty"`
+	LinkID *string `json:"link_id,omitempty" url:"link_id,omitempty"`
 	// Applies to phone authentication methods only. The destination phone number used to send verification codes via text and voice.
 	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
 	// Applies to email and email-verification authentication methods only. The email address used to send verification messages.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 	// Applies to webauthn authentication methods only. The ID of the generated credential.
-	KeyId *string `json:"key_id,omitempty" url:"key_id,omitempty"`
+	KeyID *string `json:"key_id,omitempty" url:"key_id,omitempty"`
 	// Applies to webauthn authentication methods only. The public key.
 	PublicKey *string `json:"public_key,omitempty" url:"public_key,omitempty"`
 	// Authenticator creation date
@@ -54361,7 +54361,7 @@ type UserAuthenticationMethod struct {
 	// Applies to passkeys only. Whether the credential was backed up.
 	CredentialBackedUp *bool `json:"credential_backed_up,omitempty" url:"credential_backed_up,omitempty"`
 	// Applies to passkeys only. The ID of the user identity linked with the authentication method.
-	IdentityUserId *string `json:"identity_user_id,omitempty" url:"identity_user_id,omitempty"`
+	IdentityUserID *string `json:"identity_user_id,omitempty" url:"identity_user_id,omitempty"`
 	// Applies to passkeys only. The user-agent of the browser used to create the passkey.
 	UserAgent *string `json:"user_agent,omitempty" url:"user_agent,omitempty"`
 	// Applies to passkey authentication methods only. Authenticator Attestation Globally Unique Identifier.
@@ -54376,11 +54376,11 @@ type UserAuthenticationMethod struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserAuthenticationMethod) GetId() string {
+func (u *UserAuthenticationMethod) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *UserAuthenticationMethod) GetType() AuthenticationMethodTypeEnum {
@@ -54418,11 +54418,11 @@ func (u *UserAuthenticationMethod) GetPreferredAuthenticationMethod() PreferredA
 	return *u.PreferredAuthenticationMethod
 }
 
-func (u *UserAuthenticationMethod) GetLinkId() string {
-	if u == nil || u.LinkId == nil {
+func (u *UserAuthenticationMethod) GetLinkID() string {
+	if u == nil || u.LinkID == nil {
 		return ""
 	}
-	return *u.LinkId
+	return *u.LinkID
 }
 
 func (u *UserAuthenticationMethod) GetPhoneNumber() string {
@@ -54439,11 +54439,11 @@ func (u *UserAuthenticationMethod) GetEmail() string {
 	return *u.Email
 }
 
-func (u *UserAuthenticationMethod) GetKeyId() string {
-	if u == nil || u.KeyId == nil {
+func (u *UserAuthenticationMethod) GetKeyID() string {
+	if u == nil || u.KeyID == nil {
 		return ""
 	}
-	return *u.KeyId
+	return *u.KeyID
 }
 
 func (u *UserAuthenticationMethod) GetPublicKey() string {
@@ -54488,11 +54488,11 @@ func (u *UserAuthenticationMethod) GetCredentialBackedUp() bool {
 	return *u.CredentialBackedUp
 }
 
-func (u *UserAuthenticationMethod) GetIdentityUserId() string {
-	if u == nil || u.IdentityUserId == nil {
+func (u *UserAuthenticationMethod) GetIdentityUserID() string {
+	if u == nil || u.IdentityUserID == nil {
 		return ""
 	}
-	return *u.IdentityUserId
+	return *u.IdentityUserID
 }
 
 func (u *UserAuthenticationMethod) GetUserAgent() string {
@@ -54527,11 +54527,11 @@ func (u *UserAuthenticationMethod) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAuthenticationMethod) SetId(id string) {
-	u.Id = id
-	u.require(userAuthenticationMethodFieldId)
+func (u *UserAuthenticationMethod) SetID(id string) {
+	u.ID = id
+	u.require(userAuthenticationMethodFieldID)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -54569,11 +54569,11 @@ func (u *UserAuthenticationMethod) SetPreferredAuthenticationMethod(preferredAut
 	u.require(userAuthenticationMethodFieldPreferredAuthenticationMethod)
 }
 
-// SetLinkId sets the LinkId field and marks it as non-optional;
+// SetLinkID sets the LinkID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAuthenticationMethod) SetLinkId(linkId *string) {
-	u.LinkId = linkId
-	u.require(userAuthenticationMethodFieldLinkId)
+func (u *UserAuthenticationMethod) SetLinkID(linkID *string) {
+	u.LinkID = linkID
+	u.require(userAuthenticationMethodFieldLinkID)
 }
 
 // SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
@@ -54590,11 +54590,11 @@ func (u *UserAuthenticationMethod) SetEmail(email *string) {
 	u.require(userAuthenticationMethodFieldEmail)
 }
 
-// SetKeyId sets the KeyId field and marks it as non-optional;
+// SetKeyID sets the KeyID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAuthenticationMethod) SetKeyId(keyId *string) {
-	u.KeyId = keyId
-	u.require(userAuthenticationMethodFieldKeyId)
+func (u *UserAuthenticationMethod) SetKeyID(keyID *string) {
+	u.KeyID = keyID
+	u.require(userAuthenticationMethodFieldKeyID)
 }
 
 // SetPublicKey sets the PublicKey field and marks it as non-optional;
@@ -54639,11 +54639,11 @@ func (u *UserAuthenticationMethod) SetCredentialBackedUp(credentialBackedUp *boo
 	u.require(userAuthenticationMethodFieldCredentialBackedUp)
 }
 
-// SetIdentityUserId sets the IdentityUserId field and marks it as non-optional;
+// SetIdentityUserID sets the IdentityUserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAuthenticationMethod) SetIdentityUserId(identityUserId *string) {
-	u.IdentityUserId = identityUserId
-	u.require(userAuthenticationMethodFieldIdentityUserId)
+func (u *UserAuthenticationMethod) SetIdentityUserID(identityUserID *string) {
+	u.IdentityUserID = identityUserID
+	u.require(userAuthenticationMethodFieldIdentityUserID)
 }
 
 // SetUserAgent sets the UserAgent field and marks it as non-optional;
@@ -54724,12 +54724,12 @@ func (u *UserAuthenticationMethod) String() string {
 
 var (
 	userAuthenticationMethodPropertiesFieldType = big.NewInt(1 << 0)
-	userAuthenticationMethodPropertiesFieldId   = big.NewInt(1 << 1)
+	userAuthenticationMethodPropertiesFieldID   = big.NewInt(1 << 1)
 )
 
 type UserAuthenticationMethodProperties struct {
 	Type *UserAuthenticationMethodPropertiesEnum `json:"type,omitempty" url:"type,omitempty"`
-	Id   *string                                 `json:"id,omitempty" url:"id,omitempty"`
+	ID   *string                                 `json:"id,omitempty" url:"id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -54746,11 +54746,11 @@ func (u *UserAuthenticationMethodProperties) GetType() UserAuthenticationMethodP
 	return *u.Type
 }
 
-func (u *UserAuthenticationMethodProperties) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UserAuthenticationMethodProperties) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UserAuthenticationMethodProperties) GetExtraProperties() map[string]interface{} {
@@ -54771,11 +54771,11 @@ func (u *UserAuthenticationMethodProperties) SetType(type_ *UserAuthenticationMe
 	u.require(userAuthenticationMethodPropertiesFieldType)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAuthenticationMethodProperties) SetId(id *string) {
-	u.Id = id
-	u.require(userAuthenticationMethodPropertiesFieldId)
+func (u *UserAuthenticationMethodProperties) SetID(id *string) {
+	u.ID = id
+	u.require(userAuthenticationMethodPropertiesFieldID)
 }
 
 func (u *UserAuthenticationMethodProperties) UnmarshalJSON(data []byte) error {
@@ -54905,28 +54905,28 @@ func (u UserEnrollmentStatusEnum) Ptr() *UserEnrollmentStatusEnum {
 }
 
 // user_id of the secondary user account being linked.
-type UserId struct {
+type UserID struct {
 	String  string
 	Integer int
 
 	typ string
 }
 
-func (u *UserId) GetString() string {
+func (u *UserID) GetString() string {
 	if u == nil {
 		return ""
 	}
 	return u.String
 }
 
-func (u *UserId) GetInteger() int {
+func (u *UserID) GetInteger() int {
 	if u == nil {
 		return 0
 	}
 	return u.Integer
 }
 
-func (u *UserId) UnmarshalJSON(data []byte) error {
+func (u *UserID) UnmarshalJSON(data []byte) error {
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
 		u.typ = "String"
@@ -54942,7 +54942,7 @@ func (u *UserId) UnmarshalJSON(data []byte) error {
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
 }
 
-func (u UserId) MarshalJSON() ([]byte, error) {
+func (u UserID) MarshalJSON() ([]byte, error) {
 	if u.typ == "String" || u.String != "" {
 		return json.Marshal(u.String)
 	}
@@ -54952,12 +54952,12 @@ func (u UserId) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
-type UserIdVisitor interface {
+type UserIDVisitor interface {
 	VisitString(string) error
 	VisitInteger(int) error
 }
 
-func (u *UserId) Accept(visitor UserIdVisitor) error {
+func (u *UserID) Accept(visitor UserIDVisitor) error {
 	if u.typ == "String" || u.String != "" {
 		return visitor.VisitString(u.String)
 	}
@@ -54969,7 +54969,7 @@ func (u *UserId) Accept(visitor UserIdVisitor) error {
 
 var (
 	userIdentityFieldConnection        = big.NewInt(1 << 0)
-	userIdentityFieldUserId            = big.NewInt(1 << 1)
+	userIdentityFieldUserID            = big.NewInt(1 << 1)
 	userIdentityFieldProvider          = big.NewInt(1 << 2)
 	userIdentityFieldProfileData       = big.NewInt(1 << 3)
 	userIdentityFieldIsSocial          = big.NewInt(1 << 4)
@@ -54981,7 +54981,7 @@ var (
 type UserIdentity struct {
 	// Connection name of this identity.
 	Connection string  `json:"connection" url:"connection"`
-	UserId     *UserId `json:"user_id" url:"user_id"`
+	UserID     *UserID `json:"user_id" url:"user_id"`
 	// Type of identity provider.
 	Provider    string           `json:"provider" url:"provider"`
 	ProfileData *UserProfileData `json:"profileData,omitempty" url:"profileData,omitempty"`
@@ -55008,11 +55008,11 @@ func (u *UserIdentity) GetConnection() string {
 	return u.Connection
 }
 
-func (u *UserIdentity) GetUserId() *UserId {
+func (u *UserIdentity) GetUserID() *UserID {
 	if u == nil {
 		return nil
 	}
-	return u.UserId
+	return u.UserID
 }
 
 func (u *UserIdentity) GetProvider() string {
@@ -55075,11 +55075,11 @@ func (u *UserIdentity) SetConnection(connection string) {
 	u.require(userIdentityFieldConnection)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserIdentity) SetUserId(userId *UserId) {
-	u.UserId = userId
-	u.require(userIdentityFieldUserId)
+func (u *UserIdentity) SetUserID(userID *UserID) {
+	u.UserID = userID
+	u.require(userIdentityFieldUserID)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -55193,7 +55193,7 @@ const (
 	UserIdentityProviderEnumGoogleApps          UserIdentityProviderEnum = "google-apps"
 	UserIdentityProviderEnumGoogleOauth2        UserIdentityProviderEnum = "google-oauth2"
 	UserIdentityProviderEnumInstagram           UserIdentityProviderEnum = "instagram"
-	UserIdentityProviderEnumIp                  UserIdentityProviderEnum = "ip"
+	UserIdentityProviderEnumIP                  UserIdentityProviderEnum = "ip"
 	UserIdentityProviderEnumLine                UserIdentityProviderEnum = "line"
 	UserIdentityProviderEnumLinkedin            UserIdentityProviderEnum = "linkedin"
 	UserIdentityProviderEnumMiicard             UserIdentityProviderEnum = "miicard"
@@ -55286,7 +55286,7 @@ func NewUserIdentityProviderEnumFromString(s string) (UserIdentityProviderEnum, 
 	case "instagram":
 		return UserIdentityProviderEnumInstagram, nil
 	case "ip":
-		return UserIdentityProviderEnumIp, nil
+		return UserIdentityProviderEnumIP, nil
 	case "line":
 		return UserIdentityProviderEnumLine, nil
 	case "linkedin":
@@ -55868,7 +55868,7 @@ func (u *UserProfileData) String() string {
 }
 
 var (
-	usersEnrollmentFieldId          = big.NewInt(1 << 0)
+	usersEnrollmentFieldID          = big.NewInt(1 << 0)
 	usersEnrollmentFieldStatus      = big.NewInt(1 << 1)
 	usersEnrollmentFieldType        = big.NewInt(1 << 2)
 	usersEnrollmentFieldName        = big.NewInt(1 << 3)
@@ -55881,7 +55881,7 @@ var (
 
 type UsersEnrollment struct {
 	// ID of this enrollment.
-	Id     *string                   `json:"id,omitempty" url:"id,omitempty"`
+	ID     *string                   `json:"id,omitempty" url:"id,omitempty"`
 	Status *UserEnrollmentStatusEnum `json:"status,omitempty" url:"status,omitempty"`
 	// Type of enrollment.
 	Type *string `json:"type,omitempty" url:"type,omitempty"`
@@ -55905,11 +55905,11 @@ type UsersEnrollment struct {
 	rawJSON json.RawMessage
 }
 
-func (u *UsersEnrollment) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UsersEnrollment) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UsersEnrollment) GetStatus() UserEnrollmentStatusEnum {
@@ -55979,11 +55979,11 @@ func (u *UsersEnrollment) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UsersEnrollment) SetId(id *string) {
-	u.Id = id
-	u.require(usersEnrollmentFieldId)
+func (u *UsersEnrollment) SetID(id *string) {
+	u.ID = id
+	u.require(usersEnrollmentFieldID)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -56094,7 +56094,7 @@ func (u *UsersEnrollment) String() string {
 }
 
 var (
-	verifiableCredentialTemplateResponseFieldId                         = big.NewInt(1 << 0)
+	verifiableCredentialTemplateResponseFieldID                         = big.NewInt(1 << 0)
 	verifiableCredentialTemplateResponseFieldName                       = big.NewInt(1 << 1)
 	verifiableCredentialTemplateResponseFieldType                       = big.NewInt(1 << 2)
 	verifiableCredentialTemplateResponseFieldDialect                    = big.NewInt(1 << 3)
@@ -56107,7 +56107,7 @@ var (
 
 type VerifiableCredentialTemplateResponse struct {
 	// The id of the template.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the template.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The type of the template.
@@ -56132,11 +56132,11 @@ type VerifiableCredentialTemplateResponse struct {
 	rawJSON json.RawMessage
 }
 
-func (v *VerifiableCredentialTemplateResponse) GetId() string {
-	if v == nil || v.Id == nil {
+func (v *VerifiableCredentialTemplateResponse) GetID() string {
+	if v == nil || v.ID == nil {
 		return ""
 	}
-	return *v.Id
+	return *v.ID
 }
 
 func (v *VerifiableCredentialTemplateResponse) GetName() string {
@@ -56206,11 +56206,11 @@ func (v *VerifiableCredentialTemplateResponse) require(field *big.Int) {
 	v.explicitFields.Or(v.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (v *VerifiableCredentialTemplateResponse) SetId(id *string) {
-	v.Id = id
-	v.require(verifiableCredentialTemplateResponseFieldId)
+func (v *VerifiableCredentialTemplateResponse) SetID(id *string) {
+	v.ID = id
+	v.require(verifiableCredentialTemplateResponseFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;

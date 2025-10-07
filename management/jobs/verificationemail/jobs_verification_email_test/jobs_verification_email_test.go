@@ -120,7 +120,7 @@ func TestJobsVerificationEmailCreateWithWireMock(
 		),
 	)
 	request := &management.CreateVerificationEmailRequestContent{
-		UserId: "user_id",
+		UserID: "user_id",
 	}
 	_, invocationErr := client.Jobs.VerificationEmail.Create(
 		context.TODO(),

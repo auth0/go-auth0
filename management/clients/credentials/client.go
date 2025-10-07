@@ -38,12 +38,12 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the client.
-	clientId string,
+	clientID string,
 	opts ...option.RequestOption,
 ) ([]*management.ClientCredential, error) {
 	response, err := c.WithRawResponse.List(
 		ctx,
-		clientId,
+		clientID,
 		opts...,
 	)
 	if err != nil {
@@ -93,13 +93,13 @@ func (c *Client) List(
 func (c *Client) Create(
 	ctx context.Context,
 	// ID of the client.
-	clientId string,
+	clientID string,
 	request *management.PostClientCredentialRequestContent,
 	opts ...option.RequestOption,
 ) (*management.PostClientCredentialResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
 		ctx,
-		clientId,
+		clientID,
 		request,
 		opts...,
 	)
@@ -115,15 +115,15 @@ func (c *Client) Create(
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the client.
-	clientId string,
+	clientID string,
 	// ID of the credential.
-	credentialId string,
+	credentialID string,
 	opts ...option.RequestOption,
 ) (*management.GetClientCredentialResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
-		clientId,
-		credentialId,
+		clientID,
+		credentialID,
 		opts...,
 	)
 	if err != nil {
@@ -136,15 +136,15 @@ func (c *Client) Get(
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the client.
-	clientId string,
+	clientID string,
 	// ID of the credential to delete.
-	credentialId string,
+	credentialID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
-		clientId,
-		credentialId,
+		clientID,
+		credentialID,
 		opts...,
 	)
 	if err != nil {
@@ -157,16 +157,16 @@ func (c *Client) Delete(
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the client.
-	clientId string,
+	clientID string,
 	// ID of the credential.
-	credentialId string,
+	credentialID string,
 	request *management.PatchClientCredentialRequestContent,
 	opts ...option.RequestOption,
 ) (*management.PatchClientCredentialResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
-		clientId,
-		credentialId,
+		clientID,
+		credentialID,
 		request,
 		opts...,
 	)

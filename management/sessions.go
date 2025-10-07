@@ -10,8 +10,8 @@ import (
 )
 
 var (
-	getSessionResponseContentFieldId               = big.NewInt(1 << 0)
-	getSessionResponseContentFieldUserId           = big.NewInt(1 << 1)
+	getSessionResponseContentFieldID               = big.NewInt(1 << 0)
+	getSessionResponseContentFieldUserID           = big.NewInt(1 << 1)
 	getSessionResponseContentFieldCreatedAt        = big.NewInt(1 << 2)
 	getSessionResponseContentFieldUpdatedAt        = big.NewInt(1 << 3)
 	getSessionResponseContentFieldAuthenticatedAt  = big.NewInt(1 << 4)
@@ -27,9 +27,9 @@ var (
 
 type GetSessionResponseContent struct {
 	// The ID of the session
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the user which can be used when interacting with other APIs.
-	UserId           *string                `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID           *string                `json:"user_id,omitempty" url:"user_id,omitempty"`
 	CreatedAt        *SessionDate           `json:"created_at,omitempty" url:"created_at,omitempty"`
 	UpdatedAt        *SessionDate           `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	AuthenticatedAt  *SessionDate           `json:"authenticated_at,omitempty" url:"authenticated_at,omitempty"`
@@ -51,18 +51,18 @@ type GetSessionResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (g *GetSessionResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetSessionResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
-func (g *GetSessionResponseContent) GetUserId() string {
-	if g == nil || g.UserId == nil {
+func (g *GetSessionResponseContent) GetUserID() string {
+	if g == nil || g.UserID == nil {
 		return ""
 	}
-	return *g.UserId
+	return *g.UserID
 }
 
 func (g *GetSessionResponseContent) GetCreatedAt() SessionDate {
@@ -153,18 +153,18 @@ func (g *GetSessionResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetSessionResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getSessionResponseContentFieldId)
+func (g *GetSessionResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getSessionResponseContentFieldID)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetSessionResponseContent) SetUserId(userId *string) {
-	g.UserId = userId
-	g.require(getSessionResponseContentFieldUserId)
+func (g *GetSessionResponseContent) SetUserID(userID *string) {
+	g.UserID = userID
+	g.require(getSessionResponseContentFieldUserID)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
@@ -288,8 +288,8 @@ func (g *GetSessionResponseContent) String() string {
 }
 
 var (
-	updateSessionResponseContentFieldId               = big.NewInt(1 << 0)
-	updateSessionResponseContentFieldUserId           = big.NewInt(1 << 1)
+	updateSessionResponseContentFieldID               = big.NewInt(1 << 0)
+	updateSessionResponseContentFieldUserID           = big.NewInt(1 << 1)
 	updateSessionResponseContentFieldCreatedAt        = big.NewInt(1 << 2)
 	updateSessionResponseContentFieldUpdatedAt        = big.NewInt(1 << 3)
 	updateSessionResponseContentFieldAuthenticatedAt  = big.NewInt(1 << 4)
@@ -305,9 +305,9 @@ var (
 
 type UpdateSessionResponseContent struct {
 	// The ID of the session
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the user which can be used when interacting with other APIs.
-	UserId           *string                `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID           *string                `json:"user_id,omitempty" url:"user_id,omitempty"`
 	CreatedAt        *SessionDate           `json:"created_at,omitempty" url:"created_at,omitempty"`
 	UpdatedAt        *SessionDate           `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	AuthenticatedAt  *SessionDate           `json:"authenticated_at,omitempty" url:"authenticated_at,omitempty"`
@@ -329,18 +329,18 @@ type UpdateSessionResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (u *UpdateSessionResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateSessionResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
-func (u *UpdateSessionResponseContent) GetUserId() string {
-	if u == nil || u.UserId == nil {
+func (u *UpdateSessionResponseContent) GetUserID() string {
+	if u == nil || u.UserID == nil {
 		return ""
 	}
-	return *u.UserId
+	return *u.UserID
 }
 
 func (u *UpdateSessionResponseContent) GetCreatedAt() SessionDate {
@@ -431,18 +431,18 @@ func (u *UpdateSessionResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateSessionResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateSessionResponseContentFieldId)
+func (u *UpdateSessionResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateSessionResponseContentFieldID)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateSessionResponseContent) SetUserId(userId *string) {
-	u.UserId = userId
-	u.require(updateSessionResponseContentFieldUserId)
+func (u *UpdateSessionResponseContent) SetUserID(userID *string) {
+	u.UserID = userID
+	u.require(updateSessionResponseContentFieldUserID)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;

@@ -93,7 +93,7 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestNetworkAclsListWithWireMock(
+func TestNetworkACLsListWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -111,7 +111,7 @@ func TestNetworkAclsListWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.ListNetworkAclsRequestParameters{
+	request := &management.ListNetworkACLsRequestParameters{
 		Page: management.Int(
 			1,
 		),
@@ -122,7 +122,7 @@ func TestNetworkAclsListWithWireMock(
 			true,
 		),
 	}
-	_, invocationErr := client.NetworkAcls.List(
+	_, invocationErr := client.NetworkACLs.List(
 		context.TODO(),
 		request,
 	)
@@ -133,7 +133,7 @@ func TestNetworkAclsListWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestNetworkAclsCreateWithWireMock(
+func TestNetworkACLsCreateWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -159,16 +159,16 @@ func TestNetworkAclsCreateWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.CreateNetworkAclRequestContent{
+	request := &management.CreateNetworkACLRequestContent{
 		Description: "description",
 		Active:      true,
 		Priority:    1.1,
-		Rule: &management.NetworkAclRule{
-			Action: &management.NetworkAclAction{},
-			Scope:  management.NetworkAclRuleScopeEnumManagement,
+		Rule: &management.NetworkACLRule{
+			Action: &management.NetworkACLAction{},
+			Scope:  management.NetworkACLRuleScopeEnumManagement,
 		},
 	}
-	invocationErr := client.NetworkAcls.Create(
+	invocationErr := client.NetworkACLs.Create(
 		context.TODO(),
 		request,
 	)
@@ -179,7 +179,7 @@ func TestNetworkAclsCreateWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestNetworkAclsGetWithWireMock(
+func TestNetworkACLsGetWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -200,7 +200,7 @@ func TestNetworkAclsGetWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	_, invocationErr := client.NetworkAcls.Get(
+	_, invocationErr := client.NetworkACLs.Get(
 		context.TODO(),
 		"id",
 	)
@@ -211,7 +211,7 @@ func TestNetworkAclsGetWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestNetworkAclsSetWithWireMock(
+func TestNetworkACLsSetWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -240,16 +240,16 @@ func TestNetworkAclsSetWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.SetNetworkAclRequestContent{
+	request := &management.SetNetworkACLRequestContent{
 		Description: "description",
 		Active:      true,
 		Priority:    1.1,
-		Rule: &management.NetworkAclRule{
-			Action: &management.NetworkAclAction{},
-			Scope:  management.NetworkAclRuleScopeEnumManagement,
+		Rule: &management.NetworkACLRule{
+			Action: &management.NetworkACLAction{},
+			Scope:  management.NetworkACLRuleScopeEnumManagement,
 		},
 	}
-	_, invocationErr := client.NetworkAcls.Set(
+	_, invocationErr := client.NetworkACLs.Set(
 		context.TODO(),
 		"id",
 		request,
@@ -261,7 +261,7 @@ func TestNetworkAclsSetWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestNetworkAclsDeleteWithWireMock(
+func TestNetworkACLsDeleteWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -282,7 +282,7 @@ func TestNetworkAclsDeleteWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	invocationErr := client.NetworkAcls.Delete(
+	invocationErr := client.NetworkACLs.Delete(
 		context.TODO(),
 		"id",
 	)
@@ -293,7 +293,7 @@ func TestNetworkAclsDeleteWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestNetworkAclsUpdateWithWireMock(
+func TestNetworkACLsUpdateWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -322,8 +322,8 @@ func TestNetworkAclsUpdateWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.UpdateNetworkAclRequestContent{}
-	_, invocationErr := client.NetworkAcls.Update(
+	request := &management.UpdateNetworkACLRequestContent{}
+	_, invocationErr := client.NetworkACLs.Update(
 		context.TODO(),
 		"id",
 		request,

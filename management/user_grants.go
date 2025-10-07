@@ -136,20 +136,20 @@ func (l *ListUserGrantsOffsetPaginatedResponseContent) String() string {
 }
 
 var (
-	userGrantFieldId       = big.NewInt(1 << 0)
-	userGrantFieldClientId = big.NewInt(1 << 1)
-	userGrantFieldUserId   = big.NewInt(1 << 2)
+	userGrantFieldID       = big.NewInt(1 << 0)
+	userGrantFieldClientID = big.NewInt(1 << 1)
+	userGrantFieldUserID   = big.NewInt(1 << 2)
 	userGrantFieldAudience = big.NewInt(1 << 3)
 	userGrantFieldScope    = big.NewInt(1 << 4)
 )
 
 type UserGrant struct {
 	// ID of the grant.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the client.
-	ClientId *string `json:"clientID,omitempty" url:"clientID,omitempty"`
+	ClientID *string `json:"clientID,omitempty" url:"clientID,omitempty"`
 	// ID of the user.
-	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Audience of the grant.
 	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
 	// Scopes included in this grant.
@@ -162,25 +162,25 @@ type UserGrant struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserGrant) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UserGrant) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
-func (u *UserGrant) GetClientId() string {
-	if u == nil || u.ClientId == nil {
+func (u *UserGrant) GetClientID() string {
+	if u == nil || u.ClientID == nil {
 		return ""
 	}
-	return *u.ClientId
+	return *u.ClientID
 }
 
-func (u *UserGrant) GetUserId() string {
-	if u == nil || u.UserId == nil {
+func (u *UserGrant) GetUserID() string {
+	if u == nil || u.UserID == nil {
 		return ""
 	}
-	return *u.UserId
+	return *u.UserID
 }
 
 func (u *UserGrant) GetAudience() string {
@@ -208,25 +208,25 @@ func (u *UserGrant) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserGrant) SetId(id *string) {
-	u.Id = id
-	u.require(userGrantFieldId)
+func (u *UserGrant) SetID(id *string) {
+	u.ID = id
+	u.require(userGrantFieldID)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserGrant) SetClientId(clientId *string) {
-	u.ClientId = clientId
-	u.require(userGrantFieldClientId)
+func (u *UserGrant) SetClientID(clientID *string) {
+	u.ClientID = clientID
+	u.require(userGrantFieldClientID)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserGrant) SetUserId(userId *string) {
-	u.UserId = userId
-	u.require(userGrantFieldUserId)
+func (u *UserGrant) SetUserID(userID *string) {
+	u.UserID = userID
+	u.require(userGrantFieldUserID)
 }
 
 // SetAudience sets the Audience field and marks it as non-optional;

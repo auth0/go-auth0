@@ -10,12 +10,12 @@ import (
 )
 
 var (
-	createPublicKeyDeviceCredentialResponseContentFieldId = big.NewInt(1 << 0)
+	createPublicKeyDeviceCredentialResponseContentFieldID = big.NewInt(1 << 0)
 )
 
 type CreatePublicKeyDeviceCredentialResponseContent struct {
 	// The credential's identifier
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -25,11 +25,11 @@ type CreatePublicKeyDeviceCredentialResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (c *CreatePublicKeyDeviceCredentialResponseContent) GetId() string {
+func (c *CreatePublicKeyDeviceCredentialResponseContent) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *CreatePublicKeyDeviceCredentialResponseContent) GetExtraProperties() map[string]interface{} {
@@ -43,11 +43,11 @@ func (c *CreatePublicKeyDeviceCredentialResponseContent) require(field *big.Int)
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreatePublicKeyDeviceCredentialResponseContent) SetId(id string) {
-	c.Id = id
-	c.require(createPublicKeyDeviceCredentialResponseContentFieldId)
+func (c *CreatePublicKeyDeviceCredentialResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createPublicKeyDeviceCredentialResponseContentFieldID)
 }
 
 func (c *CreatePublicKeyDeviceCredentialResponseContent) UnmarshalJSON(data []byte) error {
@@ -94,26 +94,26 @@ func (c *CreatePublicKeyDeviceCredentialResponseContent) String() string {
 }
 
 var (
-	deviceCredentialFieldId         = big.NewInt(1 << 0)
+	deviceCredentialFieldID         = big.NewInt(1 << 0)
 	deviceCredentialFieldDeviceName = big.NewInt(1 << 1)
-	deviceCredentialFieldDeviceId   = big.NewInt(1 << 2)
+	deviceCredentialFieldDeviceID   = big.NewInt(1 << 2)
 	deviceCredentialFieldType       = big.NewInt(1 << 3)
-	deviceCredentialFieldUserId     = big.NewInt(1 << 4)
-	deviceCredentialFieldClientId   = big.NewInt(1 << 5)
+	deviceCredentialFieldUserID     = big.NewInt(1 << 4)
+	deviceCredentialFieldClientID   = big.NewInt(1 << 5)
 )
 
 type DeviceCredential struct {
 	// ID of this device.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// User agent for this device
 	DeviceName *string `json:"device_name,omitempty" url:"device_name,omitempty"`
 	// Unique identifier for the device. NOTE: This field is generally not populated for refresh_tokens and rotating_refresh_tokens
-	DeviceId *string                   `json:"device_id,omitempty" url:"device_id,omitempty"`
+	DeviceID *string                   `json:"device_id,omitempty" url:"device_id,omitempty"`
 	Type     *DeviceCredentialTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 	// user_id this credential is associated with.
-	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// client_id of the client (application) this credential is for.
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -122,11 +122,11 @@ type DeviceCredential struct {
 	rawJSON         json.RawMessage
 }
 
-func (d *DeviceCredential) GetId() string {
-	if d == nil || d.Id == nil {
+func (d *DeviceCredential) GetID() string {
+	if d == nil || d.ID == nil {
 		return ""
 	}
-	return *d.Id
+	return *d.ID
 }
 
 func (d *DeviceCredential) GetDeviceName() string {
@@ -136,11 +136,11 @@ func (d *DeviceCredential) GetDeviceName() string {
 	return *d.DeviceName
 }
 
-func (d *DeviceCredential) GetDeviceId() string {
-	if d == nil || d.DeviceId == nil {
+func (d *DeviceCredential) GetDeviceID() string {
+	if d == nil || d.DeviceID == nil {
 		return ""
 	}
-	return *d.DeviceId
+	return *d.DeviceID
 }
 
 func (d *DeviceCredential) GetType() DeviceCredentialTypeEnum {
@@ -150,18 +150,18 @@ func (d *DeviceCredential) GetType() DeviceCredentialTypeEnum {
 	return *d.Type
 }
 
-func (d *DeviceCredential) GetUserId() string {
-	if d == nil || d.UserId == nil {
+func (d *DeviceCredential) GetUserID() string {
+	if d == nil || d.UserID == nil {
 		return ""
 	}
-	return *d.UserId
+	return *d.UserID
 }
 
-func (d *DeviceCredential) GetClientId() string {
-	if d == nil || d.ClientId == nil {
+func (d *DeviceCredential) GetClientID() string {
+	if d == nil || d.ClientID == nil {
 		return ""
 	}
-	return *d.ClientId
+	return *d.ClientID
 }
 
 func (d *DeviceCredential) GetExtraProperties() map[string]interface{} {
@@ -175,11 +175,11 @@ func (d *DeviceCredential) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeviceCredential) SetId(id *string) {
-	d.Id = id
-	d.require(deviceCredentialFieldId)
+func (d *DeviceCredential) SetID(id *string) {
+	d.ID = id
+	d.require(deviceCredentialFieldID)
 }
 
 // SetDeviceName sets the DeviceName field and marks it as non-optional;
@@ -189,11 +189,11 @@ func (d *DeviceCredential) SetDeviceName(deviceName *string) {
 	d.require(deviceCredentialFieldDeviceName)
 }
 
-// SetDeviceId sets the DeviceId field and marks it as non-optional;
+// SetDeviceID sets the DeviceID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeviceCredential) SetDeviceId(deviceId *string) {
-	d.DeviceId = deviceId
-	d.require(deviceCredentialFieldDeviceId)
+func (d *DeviceCredential) SetDeviceID(deviceID *string) {
+	d.DeviceID = deviceID
+	d.require(deviceCredentialFieldDeviceID)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -203,18 +203,18 @@ func (d *DeviceCredential) SetType(type_ *DeviceCredentialTypeEnum) {
 	d.require(deviceCredentialFieldType)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeviceCredential) SetUserId(userId *string) {
-	d.UserId = userId
-	d.require(deviceCredentialFieldUserId)
+func (d *DeviceCredential) SetUserID(userID *string) {
+	d.UserID = userID
+	d.require(deviceCredentialFieldUserID)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeviceCredential) SetClientId(clientId *string) {
-	d.ClientId = clientId
-	d.require(deviceCredentialFieldClientId)
+func (d *DeviceCredential) SetClientID(clientID *string) {
+	d.ClientID = clientID
+	d.require(deviceCredentialFieldClientID)
 }
 
 func (d *DeviceCredential) UnmarshalJSON(data []byte) error {

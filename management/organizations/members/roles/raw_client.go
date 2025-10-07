@@ -35,7 +35,7 @@ func (r *RawClient) Assign(
 	// Organization identifier.
 	id string,
 	// ID of the user to associate roles with.
-	userId string,
+	userID string,
 	request *management.AssignOrganizationMemberRolesRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
@@ -48,7 +48,7 @@ func (r *RawClient) Assign(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/members/%v/roles",
 		id,
-		userId,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -84,7 +84,7 @@ func (r *RawClient) Delete(
 	// Organization identifier.
 	id string,
 	// User ID of the organization member to remove roles from.
-	userId string,
+	userID string,
 	request *management.DeleteOrganizationMemberRolesRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
@@ -97,7 +97,7 @@ func (r *RawClient) Delete(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/members/%v/roles",
 		id,
-		userId,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

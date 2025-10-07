@@ -14,18 +14,18 @@ var (
 	getLogResponseContentFieldType            = big.NewInt(1 << 1)
 	getLogResponseContentFieldDescription     = big.NewInt(1 << 2)
 	getLogResponseContentFieldConnection      = big.NewInt(1 << 3)
-	getLogResponseContentFieldConnectionId    = big.NewInt(1 << 4)
-	getLogResponseContentFieldClientId        = big.NewInt(1 << 5)
+	getLogResponseContentFieldConnectionID    = big.NewInt(1 << 4)
+	getLogResponseContentFieldClientID        = big.NewInt(1 << 5)
 	getLogResponseContentFieldClientName      = big.NewInt(1 << 6)
-	getLogResponseContentFieldIp              = big.NewInt(1 << 7)
+	getLogResponseContentFieldIP              = big.NewInt(1 << 7)
 	getLogResponseContentFieldHostname        = big.NewInt(1 << 8)
-	getLogResponseContentFieldUserId          = big.NewInt(1 << 9)
+	getLogResponseContentFieldUserID          = big.NewInt(1 << 9)
 	getLogResponseContentFieldUserName        = big.NewInt(1 << 10)
 	getLogResponseContentFieldAudience        = big.NewInt(1 << 11)
 	getLogResponseContentFieldScope           = big.NewInt(1 << 12)
 	getLogResponseContentFieldStrategy        = big.NewInt(1 << 13)
 	getLogResponseContentFieldStrategyType    = big.NewInt(1 << 14)
-	getLogResponseContentFieldLogId           = big.NewInt(1 << 15)
+	getLogResponseContentFieldLogID           = big.NewInt(1 << 15)
 	getLogResponseContentFieldIsMobile        = big.NewInt(1 << 16)
 	getLogResponseContentFieldDetails         = big.NewInt(1 << 17)
 	getLogResponseContentFieldUserAgent       = big.NewInt(1 << 18)
@@ -42,17 +42,17 @@ type GetLogResponseContent struct {
 	// Name of the connection the event relates to.
 	Connection *string `json:"connection,omitempty" url:"connection,omitempty"`
 	// ID of the connection the event relates to.
-	ConnectionId *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
 	// ID of the client (application).
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 	// Name of the client (application).
 	ClientName *string `json:"client_name,omitempty" url:"client_name,omitempty"`
 	// IP address of the log event source.
-	Ip *string `json:"ip,omitempty" url:"ip,omitempty"`
+	IP *string `json:"ip,omitempty" url:"ip,omitempty"`
 	// Hostname the event applies to.
 	Hostname *string `json:"hostname,omitempty" url:"hostname,omitempty"`
 	// ID of the user involved in the event.
-	UserId *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// Name of the user involved in the event.
 	UserName *string `json:"user_name,omitempty" url:"user_name,omitempty"`
 	// API audience the event applies to.
@@ -64,7 +64,7 @@ type GetLogResponseContent struct {
 	// Type of strategy involved in the event.
 	StrategyType *string `json:"strategy_type,omitempty" url:"strategy_type,omitempty"`
 	// Unique ID of the event.
-	LogId *string `json:"log_id,omitempty" url:"log_id,omitempty"`
+	LogID *string `json:"log_id,omitempty" url:"log_id,omitempty"`
 	// Whether the client was a mobile device (true) or desktop/laptop/server (false).
 	IsMobile *bool       `json:"isMobile,omitempty" url:"isMobile,omitempty"`
 	Details  *LogDetails `json:"details,omitempty" url:"details,omitempty"`
@@ -109,18 +109,18 @@ func (g *GetLogResponseContent) GetConnection() string {
 	return *g.Connection
 }
 
-func (g *GetLogResponseContent) GetConnectionId() string {
-	if g == nil || g.ConnectionId == nil {
+func (g *GetLogResponseContent) GetConnectionID() string {
+	if g == nil || g.ConnectionID == nil {
 		return ""
 	}
-	return *g.ConnectionId
+	return *g.ConnectionID
 }
 
-func (g *GetLogResponseContent) GetClientId() string {
-	if g == nil || g.ClientId == nil {
+func (g *GetLogResponseContent) GetClientID() string {
+	if g == nil || g.ClientID == nil {
 		return ""
 	}
-	return *g.ClientId
+	return *g.ClientID
 }
 
 func (g *GetLogResponseContent) GetClientName() string {
@@ -130,11 +130,11 @@ func (g *GetLogResponseContent) GetClientName() string {
 	return *g.ClientName
 }
 
-func (g *GetLogResponseContent) GetIp() string {
-	if g == nil || g.Ip == nil {
+func (g *GetLogResponseContent) GetIP() string {
+	if g == nil || g.IP == nil {
 		return ""
 	}
-	return *g.Ip
+	return *g.IP
 }
 
 func (g *GetLogResponseContent) GetHostname() string {
@@ -144,11 +144,11 @@ func (g *GetLogResponseContent) GetHostname() string {
 	return *g.Hostname
 }
 
-func (g *GetLogResponseContent) GetUserId() string {
-	if g == nil || g.UserId == nil {
+func (g *GetLogResponseContent) GetUserID() string {
+	if g == nil || g.UserID == nil {
 		return ""
 	}
-	return *g.UserId
+	return *g.UserID
 }
 
 func (g *GetLogResponseContent) GetUserName() string {
@@ -186,11 +186,11 @@ func (g *GetLogResponseContent) GetStrategyType() string {
 	return *g.StrategyType
 }
 
-func (g *GetLogResponseContent) GetLogId() string {
-	if g == nil || g.LogId == nil {
+func (g *GetLogResponseContent) GetLogID() string {
+	if g == nil || g.LogID == nil {
 		return ""
 	}
-	return *g.LogId
+	return *g.LogID
 }
 
 func (g *GetLogResponseContent) GetIsMobile() bool {
@@ -267,18 +267,18 @@ func (g *GetLogResponseContent) SetConnection(connection *string) {
 	g.require(getLogResponseContentFieldConnection)
 }
 
-// SetConnectionId sets the ConnectionId field and marks it as non-optional;
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetLogResponseContent) SetConnectionId(connectionId *string) {
-	g.ConnectionId = connectionId
-	g.require(getLogResponseContentFieldConnectionId)
+func (g *GetLogResponseContent) SetConnectionID(connectionID *string) {
+	g.ConnectionID = connectionID
+	g.require(getLogResponseContentFieldConnectionID)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetLogResponseContent) SetClientId(clientId *string) {
-	g.ClientId = clientId
-	g.require(getLogResponseContentFieldClientId)
+func (g *GetLogResponseContent) SetClientID(clientID *string) {
+	g.ClientID = clientID
+	g.require(getLogResponseContentFieldClientID)
 }
 
 // SetClientName sets the ClientName field and marks it as non-optional;
@@ -288,11 +288,11 @@ func (g *GetLogResponseContent) SetClientName(clientName *string) {
 	g.require(getLogResponseContentFieldClientName)
 }
 
-// SetIp sets the Ip field and marks it as non-optional;
+// SetIP sets the IP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetLogResponseContent) SetIp(ip *string) {
-	g.Ip = ip
-	g.require(getLogResponseContentFieldIp)
+func (g *GetLogResponseContent) SetIP(ip *string) {
+	g.IP = ip
+	g.require(getLogResponseContentFieldIP)
 }
 
 // SetHostname sets the Hostname field and marks it as non-optional;
@@ -302,11 +302,11 @@ func (g *GetLogResponseContent) SetHostname(hostname *string) {
 	g.require(getLogResponseContentFieldHostname)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetLogResponseContent) SetUserId(userId *string) {
-	g.UserId = userId
-	g.require(getLogResponseContentFieldUserId)
+func (g *GetLogResponseContent) SetUserID(userID *string) {
+	g.UserID = userID
+	g.require(getLogResponseContentFieldUserID)
 }
 
 // SetUserName sets the UserName field and marks it as non-optional;
@@ -344,11 +344,11 @@ func (g *GetLogResponseContent) SetStrategyType(strategyType *string) {
 	g.require(getLogResponseContentFieldStrategyType)
 }
 
-// SetLogId sets the LogId field and marks it as non-optional;
+// SetLogID sets the LogID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetLogResponseContent) SetLogId(logId *string) {
-	g.LogId = logId
-	g.require(getLogResponseContentFieldLogId)
+func (g *GetLogResponseContent) SetLogID(logID *string) {
+	g.LogID = logID
+	g.require(getLogResponseContentFieldLogID)
 }
 
 // SetIsMobile sets the IsMobile field and marks it as non-optional;

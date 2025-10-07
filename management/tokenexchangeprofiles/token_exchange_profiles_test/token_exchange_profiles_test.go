@@ -159,7 +159,7 @@ func TestTokenExchangeProfilesCreateWithWireMock(
 	request := &management.CreateTokenExchangeProfileRequestContent{
 		Name:             "name",
 		SubjectTokenType: "subject_token_type",
-		ActionId:         "action_id",
+		ActionID:         "action_id",
 		Type: management.TokenExchangeProfileTypeEnum(
 			"custom_authentication",
 		),

@@ -92,7 +92,7 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestAnomalyBlocksCheckIpWithWireMock(
+func TestAnomalyBlocksCheckIPWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -113,7 +113,7 @@ func TestAnomalyBlocksCheckIpWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	invocationErr := client.Anomaly.Blocks.CheckIp(
+	invocationErr := client.Anomaly.Blocks.CheckIP(
 		context.TODO(),
 		"id",
 	)
@@ -124,7 +124,7 @@ func TestAnomalyBlocksCheckIpWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestAnomalyBlocksUnblockIpWithWireMock(
+func TestAnomalyBlocksUnblockIPWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -145,7 +145,7 @@ func TestAnomalyBlocksUnblockIpWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	invocationErr := client.Anomaly.Blocks.UnblockIp(
+	invocationErr := client.Anomaly.Blocks.UnblockIP(
 		context.TODO(),
 		"id",
 	)

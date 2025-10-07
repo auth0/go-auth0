@@ -37,9 +37,9 @@ func (c *Client) Create(
 	ctx context.Context,
 	// The id of the self-service profile to retrieve
 	id string,
-	request *management.CreateSelfServiceProfileSsoTicketRequestContent,
+	request *management.CreateSelfServiceProfileSSOTicketRequestContent,
 	opts ...option.RequestOption,
-) (*management.CreateSelfServiceProfileSsoTicketResponseContent, error) {
+) (*management.CreateSelfServiceProfileSSOTicketResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
 		ctx,
 		id,
@@ -57,14 +57,14 @@ func (c *Client) Create(
 func (c *Client) Revoke(
 	ctx context.Context,
 	// The id of the self-service profile
-	profileId string,
+	profileID string,
 	// The id of the ticket to revoke
 	id string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Revoke(
 		ctx,
-		profileId,
+		profileID,
 		id,
 		opts...,
 	)

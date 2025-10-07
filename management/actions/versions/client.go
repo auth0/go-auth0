@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) List(
 	ctx context.Context,
 	// The ID of the action.
-	actionId string,
+	actionID string,
 	request *management.ListActionVersionsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*management.ActionVersion], error) {
@@ -51,7 +51,7 @@ func (c *Client) List(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/actions/actions/%v/versions",
-		actionId,
+		actionID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
@@ -109,14 +109,14 @@ func (c *Client) List(
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the action.
-	actionId string,
+	actionID string,
 	// The ID of the action version.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetActionVersionResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
-		actionId,
+		actionID,
 		id,
 		opts...,
 	)
@@ -130,7 +130,7 @@ func (c *Client) Get(
 func (c *Client) Deploy(
 	ctx context.Context,
 	// The ID of an action.
-	actionId string,
+	actionID string,
 	// The ID of an action version.
 	id string,
 	request *management.DeployActionVersionRequestContent,
@@ -138,7 +138,7 @@ func (c *Client) Deploy(
 ) (*management.DeployActionVersionResponseContent, error) {
 	response, err := c.WithRawResponse.Deploy(
 		ctx,
-		actionId,
+		actionID,
 		id,
 		request,
 		opts...,

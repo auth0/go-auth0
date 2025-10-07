@@ -93,7 +93,7 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestSelfServiceProfilesSsoTicketCreateWithWireMock(
+func TestSelfServiceProfilesSSOTicketCreateWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -122,8 +122,8 @@ func TestSelfServiceProfilesSsoTicketCreateWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.CreateSelfServiceProfileSsoTicketRequestContent{}
-	_, invocationErr := client.SelfServiceProfiles.SsoTicket.Create(
+	request := &management.CreateSelfServiceProfileSSOTicketRequestContent{}
+	_, invocationErr := client.SelfServiceProfiles.SSOTicket.Create(
 		context.TODO(),
 		"id",
 		request,
@@ -135,7 +135,7 @@ func TestSelfServiceProfilesSsoTicketCreateWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestSelfServiceProfilesSsoTicketRevokeWithWireMock(
+func TestSelfServiceProfilesSSOTicketRevokeWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -159,7 +159,7 @@ func TestSelfServiceProfilesSsoTicketRevokeWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	invocationErr := client.SelfServiceProfiles.SsoTicket.Revoke(
+	invocationErr := client.SelfServiceProfiles.SSOTicket.Revoke(
 		context.TODO(),
 		"profileId",
 		"id",

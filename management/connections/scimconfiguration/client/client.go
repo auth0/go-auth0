@@ -41,7 +41,7 @@ func (c *Client) Get(
 	// The id of the connection to retrieve its SCIM configuration
 	id string,
 	opts ...option.RequestOption,
-) (*management.GetScimConfigurationResponseContent, error) {
+) (*management.GetSCIMConfigurationResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
@@ -58,9 +58,9 @@ func (c *Client) Create(
 	ctx context.Context,
 	// The id of the connection to create its SCIM configuration
 	id string,
-	request *management.CreateScimConfigurationRequestContent,
+	request *management.CreateSCIMConfigurationRequestContent,
 	opts ...option.RequestOption,
-) (*management.CreateScimConfigurationResponseContent, error) {
+) (*management.CreateSCIMConfigurationResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
 		ctx,
 		id,
@@ -96,9 +96,9 @@ func (c *Client) Update(
 	ctx context.Context,
 	// The id of the connection to update its SCIM configuration
 	id string,
-	request *management.UpdateScimConfigurationRequestContent,
+	request *management.UpdateSCIMConfigurationRequestContent,
 	opts ...option.RequestOption,
-) (*management.UpdateScimConfigurationResponseContent, error) {
+) (*management.UpdateSCIMConfigurationResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
 		id,
@@ -117,7 +117,7 @@ func (c *Client) GetDefaultMapping(
 	// The id of the connection to retrieve its default SCIM mapping
 	id string,
 	opts ...option.RequestOption,
-) (*management.GetScimConfigurationDefaultMappingResponseContent, error) {
+) (*management.GetSCIMConfigurationDefaultMappingResponseContent, error) {
 	response, err := c.WithRawResponse.GetDefaultMapping(
 		ctx,
 		id,

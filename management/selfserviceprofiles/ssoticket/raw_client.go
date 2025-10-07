@@ -34,9 +34,9 @@ func (r *RawClient) Create(
 	ctx context.Context,
 	// The id of the self-service profile to retrieve
 	id string,
-	request *management.CreateSelfServiceProfileSsoTicketRequestContent,
+	request *management.CreateSelfServiceProfileSSOTicketRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.CreateSelfServiceProfileSsoTicketResponseContent], error) {
+) (*core.Response[*management.CreateSelfServiceProfileSSOTicketResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -52,7 +52,7 @@ func (r *RawClient) Create(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	var response *management.CreateSelfServiceProfileSsoTicketResponseContent
+	var response *management.CreateSelfServiceProfileSSOTicketResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -71,7 +71,7 @@ func (r *RawClient) Create(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.CreateSelfServiceProfileSsoTicketResponseContent]{
+	return &core.Response[*management.CreateSelfServiceProfileSSOTicketResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -81,7 +81,7 @@ func (r *RawClient) Create(
 func (r *RawClient) Revoke(
 	ctx context.Context,
 	// The id of the self-service profile
-	profileId string,
+	profileID string,
 	// The id of the ticket to revoke
 	id string,
 	opts ...option.RequestOption,
@@ -94,7 +94,7 @@ func (r *RawClient) Revoke(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/self-service-profiles/%v/sso-ticket/%v/revoke",
-		profileId,
+		profileID,
 		id,
 	)
 	headers := internal.MergeHeaders(

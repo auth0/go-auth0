@@ -83,7 +83,7 @@ func (r *RawClient) Get(
 	// Organization identifier.
 	id string,
 	// The id of the user invitation.
-	invitationId string,
+	invitationID string,
 	request *management.GetOrganizationInvitationRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetOrganizationInvitationResponseContent], error) {
@@ -96,7 +96,7 @@ func (r *RawClient) Get(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/invitations/%v",
 		id,
-		invitationId,
+		invitationID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
@@ -139,7 +139,7 @@ func (r *RawClient) Delete(
 	// Organization identifier.
 	id string,
 	// The id of the user invitation.
-	invitationId string,
+	invitationID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -151,7 +151,7 @@ func (r *RawClient) Delete(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/organizations/%v/invitations/%v",
 		id,
-		invitationId,
+		invitationID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

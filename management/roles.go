@@ -10,14 +10,14 @@ import (
 )
 
 var (
-	createRoleResponseContentFieldId          = big.NewInt(1 << 0)
+	createRoleResponseContentFieldID          = big.NewInt(1 << 0)
 	createRoleResponseContentFieldName        = big.NewInt(1 << 1)
 	createRoleResponseContentFieldDescription = big.NewInt(1 << 2)
 )
 
 type CreateRoleResponseContent struct {
 	// ID for this role.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Description of this role.
@@ -30,11 +30,11 @@ type CreateRoleResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateRoleResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateRoleResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *CreateRoleResponseContent) GetName() string {
@@ -62,11 +62,11 @@ func (c *CreateRoleResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateRoleResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createRoleResponseContentFieldId)
+func (c *CreateRoleResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createRoleResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -123,14 +123,14 @@ func (c *CreateRoleResponseContent) String() string {
 }
 
 var (
-	getRoleResponseContentFieldId          = big.NewInt(1 << 0)
+	getRoleResponseContentFieldID          = big.NewInt(1 << 0)
 	getRoleResponseContentFieldName        = big.NewInt(1 << 1)
 	getRoleResponseContentFieldDescription = big.NewInt(1 << 2)
 )
 
 type GetRoleResponseContent struct {
 	// ID for this role.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Description of this role.
@@ -143,11 +143,11 @@ type GetRoleResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetRoleResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetRoleResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetRoleResponseContent) GetName() string {
@@ -175,11 +175,11 @@ func (g *GetRoleResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetRoleResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getRoleResponseContentFieldId)
+func (g *GetRoleResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getRoleResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -362,14 +362,14 @@ func (l *ListRolesOffsetPaginatedResponseContent) String() string {
 }
 
 var (
-	updateRoleResponseContentFieldId          = big.NewInt(1 << 0)
+	updateRoleResponseContentFieldID          = big.NewInt(1 << 0)
 	updateRoleResponseContentFieldName        = big.NewInt(1 << 1)
 	updateRoleResponseContentFieldDescription = big.NewInt(1 << 2)
 )
 
 type UpdateRoleResponseContent struct {
 	// ID for this role.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Description of this role.
@@ -382,11 +382,11 @@ type UpdateRoleResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateRoleResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateRoleResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UpdateRoleResponseContent) GetName() string {
@@ -414,11 +414,11 @@ func (u *UpdateRoleResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateRoleResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateRoleResponseContentFieldId)
+func (u *UpdateRoleResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateRoleResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;

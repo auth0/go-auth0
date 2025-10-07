@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	createResourceServerResponseContentFieldId                                        = big.NewInt(1 << 0)
+	createResourceServerResponseContentFieldID                                        = big.NewInt(1 << 0)
 	createResourceServerResponseContentFieldName                                      = big.NewInt(1 << 1)
 	createResourceServerResponseContentFieldIsSystem                                  = big.NewInt(1 << 2)
 	createResourceServerResponseContentFieldIdentifier                                = big.NewInt(1 << 3)
@@ -28,12 +28,12 @@ var (
 	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 15)
 	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 16)
 	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 17)
-	createResourceServerResponseContentFieldClientId                                  = big.NewInt(1 << 18)
+	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 18)
 )
 
 type CreateResourceServerResponseContent struct {
 	// ID of the API (resource server).
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Friendly name for this resource server. Can not contain `<` or `>` characters.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this is an Auth0 system API (true) or a custom API (false).
@@ -62,7 +62,7 @@ type CreateResourceServerResponseContent struct {
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -71,11 +71,11 @@ type CreateResourceServerResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateResourceServerResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateResourceServerResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *CreateResourceServerResponseContent) GetName() string {
@@ -190,11 +190,11 @@ func (c *CreateResourceServerResponseContent) GetSubjectTypeAuthorization() Reso
 	return *c.SubjectTypeAuthorization
 }
 
-func (c *CreateResourceServerResponseContent) GetClientId() string {
-	if c == nil || c.ClientId == nil {
+func (c *CreateResourceServerResponseContent) GetClientID() string {
+	if c == nil || c.ClientID == nil {
 		return ""
 	}
-	return *c.ClientId
+	return *c.ClientID
 }
 
 func (c *CreateResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
@@ -208,11 +208,11 @@ func (c *CreateResourceServerResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createResourceServerResponseContentFieldId)
+func (c *CreateResourceServerResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createResourceServerResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -334,11 +334,11 @@ func (c *CreateResourceServerResponseContent) SetSubjectTypeAuthorization(subjec
 	c.require(createResourceServerResponseContentFieldSubjectTypeAuthorization)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerResponseContent) SetClientId(clientId *string) {
-	c.ClientId = clientId
-	c.require(createResourceServerResponseContentFieldClientId)
+func (c *CreateResourceServerResponseContent) SetClientID(clientID *string) {
+	c.ClientID = clientID
+	c.require(createResourceServerResponseContentFieldClientID)
 }
 
 func (c *CreateResourceServerResponseContent) UnmarshalJSON(data []byte) error {
@@ -381,7 +381,7 @@ func (c *CreateResourceServerResponseContent) String() string {
 }
 
 var (
-	getResourceServerResponseContentFieldId                                        = big.NewInt(1 << 0)
+	getResourceServerResponseContentFieldID                                        = big.NewInt(1 << 0)
 	getResourceServerResponseContentFieldName                                      = big.NewInt(1 << 1)
 	getResourceServerResponseContentFieldIsSystem                                  = big.NewInt(1 << 2)
 	getResourceServerResponseContentFieldIdentifier                                = big.NewInt(1 << 3)
@@ -399,12 +399,12 @@ var (
 	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 15)
 	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 16)
 	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 17)
-	getResourceServerResponseContentFieldClientId                                  = big.NewInt(1 << 18)
+	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 18)
 )
 
 type GetResourceServerResponseContent struct {
 	// ID of the API (resource server).
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Friendly name for this resource server. Can not contain `<` or `>` characters.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this is an Auth0 system API (true) or a custom API (false).
@@ -433,7 +433,7 @@ type GetResourceServerResponseContent struct {
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -442,11 +442,11 @@ type GetResourceServerResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetResourceServerResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetResourceServerResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetResourceServerResponseContent) GetName() string {
@@ -561,11 +561,11 @@ func (g *GetResourceServerResponseContent) GetSubjectTypeAuthorization() Resourc
 	return *g.SubjectTypeAuthorization
 }
 
-func (g *GetResourceServerResponseContent) GetClientId() string {
-	if g == nil || g.ClientId == nil {
+func (g *GetResourceServerResponseContent) GetClientID() string {
+	if g == nil || g.ClientID == nil {
 		return ""
 	}
-	return *g.ClientId
+	return *g.ClientID
 }
 
 func (g *GetResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
@@ -579,11 +579,11 @@ func (g *GetResourceServerResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetResourceServerResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getResourceServerResponseContentFieldId)
+func (g *GetResourceServerResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getResourceServerResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -705,11 +705,11 @@ func (g *GetResourceServerResponseContent) SetSubjectTypeAuthorization(subjectTy
 	g.require(getResourceServerResponseContentFieldSubjectTypeAuthorization)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetResourceServerResponseContent) SetClientId(clientId *string) {
-	g.ClientId = clientId
-	g.require(getResourceServerResponseContentFieldClientId)
+func (g *GetResourceServerResponseContent) SetClientID(clientID *string) {
+	g.ClientID = clientID
+	g.require(getResourceServerResponseContentFieldClientID)
 }
 
 func (g *GetResourceServerResponseContent) UnmarshalJSON(data []byte) error {
@@ -878,7 +878,7 @@ func (l *ListResourceServerOffsetPaginatedResponseContent) String() string {
 }
 
 var (
-	resourceServerFieldId                                        = big.NewInt(1 << 0)
+	resourceServerFieldID                                        = big.NewInt(1 << 0)
 	resourceServerFieldName                                      = big.NewInt(1 << 1)
 	resourceServerFieldIsSystem                                  = big.NewInt(1 << 2)
 	resourceServerFieldIdentifier                                = big.NewInt(1 << 3)
@@ -896,12 +896,12 @@ var (
 	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 15)
 	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 16)
 	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 17)
-	resourceServerFieldClientId                                  = big.NewInt(1 << 18)
+	resourceServerFieldClientID                                  = big.NewInt(1 << 18)
 )
 
 type ResourceServer struct {
 	// ID of the API (resource server).
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Friendly name for this resource server. Can not contain `<` or `>` characters.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this is an Auth0 system API (true) or a custom API (false).
@@ -930,7 +930,7 @@ type ResourceServer struct {
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -939,11 +939,11 @@ type ResourceServer struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *ResourceServer) GetId() string {
-	if r == nil || r.Id == nil {
+func (r *ResourceServer) GetID() string {
+	if r == nil || r.ID == nil {
 		return ""
 	}
-	return *r.Id
+	return *r.ID
 }
 
 func (r *ResourceServer) GetName() string {
@@ -1058,11 +1058,11 @@ func (r *ResourceServer) GetSubjectTypeAuthorization() ResourceServerSubjectType
 	return *r.SubjectTypeAuthorization
 }
 
-func (r *ResourceServer) GetClientId() string {
-	if r == nil || r.ClientId == nil {
+func (r *ResourceServer) GetClientID() string {
+	if r == nil || r.ClientID == nil {
 		return ""
 	}
-	return *r.ClientId
+	return *r.ClientID
 }
 
 func (r *ResourceServer) GetExtraProperties() map[string]interface{} {
@@ -1076,11 +1076,11 @@ func (r *ResourceServer) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *ResourceServer) SetId(id *string) {
-	r.Id = id
-	r.require(resourceServerFieldId)
+func (r *ResourceServer) SetID(id *string) {
+	r.ID = id
+	r.require(resourceServerFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1202,11 +1202,11 @@ func (r *ResourceServer) SetSubjectTypeAuthorization(subjectTypeAuthorization *R
 	r.require(resourceServerFieldSubjectTypeAuthorization)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *ResourceServer) SetClientId(clientId *string) {
-	r.ClientId = clientId
-	r.require(resourceServerFieldClientId)
+func (r *ResourceServer) SetClientID(clientID *string) {
+	r.ClientID = clientID
+	r.require(resourceServerFieldClientID)
 }
 
 func (r *ResourceServer) UnmarshalJSON(data []byte) error {
@@ -2081,7 +2081,7 @@ func (r *ResourceServerTokenEncryptionKey) String() string {
 }
 
 var (
-	updateResourceServerResponseContentFieldId                                        = big.NewInt(1 << 0)
+	updateResourceServerResponseContentFieldID                                        = big.NewInt(1 << 0)
 	updateResourceServerResponseContentFieldName                                      = big.NewInt(1 << 1)
 	updateResourceServerResponseContentFieldIsSystem                                  = big.NewInt(1 << 2)
 	updateResourceServerResponseContentFieldIdentifier                                = big.NewInt(1 << 3)
@@ -2099,12 +2099,12 @@ var (
 	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 15)
 	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 16)
 	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 17)
-	updateResourceServerResponseContentFieldClientId                                  = big.NewInt(1 << 18)
+	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 18)
 )
 
 type UpdateResourceServerResponseContent struct {
 	// ID of the API (resource server).
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Friendly name for this resource server. Can not contain `<` or `>` characters.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this is an Auth0 system API (true) or a custom API (false).
@@ -2133,7 +2133,7 @@ type UpdateResourceServerResponseContent struct {
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientId *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2142,11 +2142,11 @@ type UpdateResourceServerResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateResourceServerResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateResourceServerResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UpdateResourceServerResponseContent) GetName() string {
@@ -2261,11 +2261,11 @@ func (u *UpdateResourceServerResponseContent) GetSubjectTypeAuthorization() Reso
 	return *u.SubjectTypeAuthorization
 }
 
-func (u *UpdateResourceServerResponseContent) GetClientId() string {
-	if u == nil || u.ClientId == nil {
+func (u *UpdateResourceServerResponseContent) GetClientID() string {
+	if u == nil || u.ClientID == nil {
 		return ""
 	}
-	return *u.ClientId
+	return *u.ClientID
 }
 
 func (u *UpdateResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
@@ -2279,11 +2279,11 @@ func (u *UpdateResourceServerResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateResourceServerResponseContentFieldId)
+func (u *UpdateResourceServerResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateResourceServerResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2405,11 +2405,11 @@ func (u *UpdateResourceServerResponseContent) SetSubjectTypeAuthorization(subjec
 	u.require(updateResourceServerResponseContentFieldSubjectTypeAuthorization)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerResponseContent) SetClientId(clientId *string) {
-	u.ClientId = clientId
-	u.require(updateResourceServerResponseContentFieldClientId)
+func (u *UpdateResourceServerResponseContent) SetClientID(clientID *string) {
+	u.ClientID = clientID
+	u.require(updateResourceServerResponseContentFieldClientID)
 }
 
 func (u *UpdateResourceServerResponseContent) UnmarshalJSON(data []byte) error {

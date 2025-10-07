@@ -30,10 +30,10 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) CheckIp(
+func (r *RawClient) CheckIP(
 	ctx context.Context,
 	// IP address to check.
-	id management.AnomalyIpFormat,
+	id management.AnomalyIPFormat,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -73,10 +73,10 @@ func (r *RawClient) CheckIp(
 	}, nil
 }
 
-func (r *RawClient) UnblockIp(
+func (r *RawClient) UnblockIP(
 	ctx context.Context,
 	// IP address to unblock.
-	id management.AnomalyIpFormat,
+	id management.AnomalyIPFormat,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)

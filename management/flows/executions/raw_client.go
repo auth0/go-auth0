@@ -33,9 +33,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) Get(
 	ctx context.Context,
 	// Flow id
-	flowId string,
+	flowID string,
 	// Flow execution id
-	executionId string,
+	executionID string,
 	request *management.ExecutionsGetRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetFlowExecutionResponseContent], error) {
@@ -47,8 +47,8 @@ func (r *RawClient) Get(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/flows/%v/executions/%v",
-		flowId,
-		executionId,
+		flowID,
+		executionID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
@@ -89,9 +89,9 @@ func (r *RawClient) Get(
 func (r *RawClient) Delete(
 	ctx context.Context,
 	// Flows id
-	flowId string,
+	flowID string,
 	// Flow execution identifier
-	executionId string,
+	executionID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -102,8 +102,8 @@ func (r *RawClient) Delete(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/flows/%v/executions/%v",
-		flowId,
-		executionId,
+		flowID,
+		executionID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

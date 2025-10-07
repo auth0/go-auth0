@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	createActionResponseContentFieldId                     = big.NewInt(1 << 0)
+	createActionResponseContentFieldID                     = big.NewInt(1 << 0)
 	createActionResponseContentFieldName                   = big.NewInt(1 << 1)
 	createActionResponseContentFieldSupportedTriggers      = big.NewInt(1 << 2)
 	createActionResponseContentFieldAllChangesDeployed     = big.NewInt(1 << 3)
@@ -22,7 +22,7 @@ var (
 	createActionResponseContentFieldRuntime                = big.NewInt(1 << 8)
 	createActionResponseContentFieldSecrets                = big.NewInt(1 << 9)
 	createActionResponseContentFieldDeployedVersion        = big.NewInt(1 << 10)
-	createActionResponseContentFieldInstalledIntegrationId = big.NewInt(1 << 11)
+	createActionResponseContentFieldInstalledIntegrationID = big.NewInt(1 << 11)
 	createActionResponseContentFieldIntegration            = big.NewInt(1 << 12)
 	createActionResponseContentFieldStatus                 = big.NewInt(1 << 13)
 	createActionResponseContentFieldBuiltAt                = big.NewInt(1 << 14)
@@ -31,7 +31,7 @@ var (
 
 type CreateActionResponseContent struct {
 	// The unique ID of the action.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of an action.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
@@ -52,7 +52,7 @@ type CreateActionResponseContent struct {
 	Secrets         []*ActionSecretResponse `json:"secrets,omitempty" url:"secrets,omitempty"`
 	DeployedVersion *ActionDeployedVersion  `json:"deployed_version,omitempty" url:"deployed_version,omitempty"`
 	// installed_integration_id is the fk reference to the InstalledIntegration entity.
-	InstalledIntegrationId *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
+	InstalledIntegrationID *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
 	Integration            *Integration           `json:"integration,omitempty" url:"integration,omitempty"`
 	Status                 *ActionBuildStatusEnum `json:"status,omitempty" url:"status,omitempty"`
 	// The time when this action was built successfully.
@@ -67,11 +67,11 @@ type CreateActionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateActionResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateActionResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *CreateActionResponseContent) GetName() string {
@@ -144,11 +144,11 @@ func (c *CreateActionResponseContent) GetDeployedVersion() ActionDeployedVersion
 	return *c.DeployedVersion
 }
 
-func (c *CreateActionResponseContent) GetInstalledIntegrationId() string {
-	if c == nil || c.InstalledIntegrationId == nil {
+func (c *CreateActionResponseContent) GetInstalledIntegrationID() string {
+	if c == nil || c.InstalledIntegrationID == nil {
 		return ""
 	}
-	return *c.InstalledIntegrationId
+	return *c.InstalledIntegrationID
 }
 
 func (c *CreateActionResponseContent) GetIntegration() Integration {
@@ -190,11 +190,11 @@ func (c *CreateActionResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createActionResponseContentFieldId)
+func (c *CreateActionResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createActionResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -267,11 +267,11 @@ func (c *CreateActionResponseContent) SetDeployedVersion(deployedVersion *Action
 	c.require(createActionResponseContentFieldDeployedVersion)
 }
 
-// SetInstalledIntegrationId sets the InstalledIntegrationId field and marks it as non-optional;
+// SetInstalledIntegrationID sets the InstalledIntegrationID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionResponseContent) SetInstalledIntegrationId(installedIntegrationId *string) {
-	c.InstalledIntegrationId = installedIntegrationId
-	c.require(createActionResponseContentFieldInstalledIntegrationId)
+func (c *CreateActionResponseContent) SetInstalledIntegrationID(installedIntegrationID *string) {
+	c.InstalledIntegrationID = installedIntegrationID
+	c.require(createActionResponseContentFieldInstalledIntegrationID)
 }
 
 // SetIntegration sets the Integration field and marks it as non-optional;
@@ -358,8 +358,8 @@ func (c *CreateActionResponseContent) String() string {
 }
 
 var (
-	deployActionResponseContentFieldId                = big.NewInt(1 << 0)
-	deployActionResponseContentFieldActionId          = big.NewInt(1 << 1)
+	deployActionResponseContentFieldID                = big.NewInt(1 << 0)
+	deployActionResponseContentFieldActionID          = big.NewInt(1 << 1)
 	deployActionResponseContentFieldCode              = big.NewInt(1 << 2)
 	deployActionResponseContentFieldDependencies      = big.NewInt(1 << 3)
 	deployActionResponseContentFieldDeployed          = big.NewInt(1 << 4)
@@ -377,9 +377,9 @@ var (
 
 type DeployActionResponseContent struct {
 	// The unique id of an action version.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The id of the action to which this version belongs.
-	ActionId *string `json:"action_id,omitempty" url:"action_id,omitempty"`
+	ActionID *string `json:"action_id,omitempty" url:"action_id,omitempty"`
 	// The source code of this specific version of the action.
 	Code *string `json:"code,omitempty" url:"code,omitempty"`
 	// The list of third party npm modules, and their versions, that this specific version depends on.
@@ -412,18 +412,18 @@ type DeployActionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (d *DeployActionResponseContent) GetId() string {
-	if d == nil || d.Id == nil {
+func (d *DeployActionResponseContent) GetID() string {
+	if d == nil || d.ID == nil {
 		return ""
 	}
-	return *d.Id
+	return *d.ID
 }
 
-func (d *DeployActionResponseContent) GetActionId() string {
-	if d == nil || d.ActionId == nil {
+func (d *DeployActionResponseContent) GetActionID() string {
+	if d == nil || d.ActionID == nil {
 		return ""
 	}
-	return *d.ActionId
+	return *d.ActionID
 }
 
 func (d *DeployActionResponseContent) GetCode() string {
@@ -528,18 +528,18 @@ func (d *DeployActionResponseContent) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeployActionResponseContent) SetId(id *string) {
-	d.Id = id
-	d.require(deployActionResponseContentFieldId)
+func (d *DeployActionResponseContent) SetID(id *string) {
+	d.ID = id
+	d.require(deployActionResponseContentFieldID)
 }
 
-// SetActionId sets the ActionId field and marks it as non-optional;
+// SetActionID sets the ActionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeployActionResponseContent) SetActionId(actionId *string) {
-	d.ActionId = actionId
-	d.require(deployActionResponseContentFieldActionId)
+func (d *DeployActionResponseContent) SetActionID(actionID *string) {
+	d.ActionID = actionID
+	d.require(deployActionResponseContentFieldActionID)
 }
 
 // SetCode sets the Code field and marks it as non-optional;
@@ -689,7 +689,7 @@ func (d *DeployActionResponseContent) String() string {
 }
 
 var (
-	getActionResponseContentFieldId                     = big.NewInt(1 << 0)
+	getActionResponseContentFieldID                     = big.NewInt(1 << 0)
 	getActionResponseContentFieldName                   = big.NewInt(1 << 1)
 	getActionResponseContentFieldSupportedTriggers      = big.NewInt(1 << 2)
 	getActionResponseContentFieldAllChangesDeployed     = big.NewInt(1 << 3)
@@ -700,7 +700,7 @@ var (
 	getActionResponseContentFieldRuntime                = big.NewInt(1 << 8)
 	getActionResponseContentFieldSecrets                = big.NewInt(1 << 9)
 	getActionResponseContentFieldDeployedVersion        = big.NewInt(1 << 10)
-	getActionResponseContentFieldInstalledIntegrationId = big.NewInt(1 << 11)
+	getActionResponseContentFieldInstalledIntegrationID = big.NewInt(1 << 11)
 	getActionResponseContentFieldIntegration            = big.NewInt(1 << 12)
 	getActionResponseContentFieldStatus                 = big.NewInt(1 << 13)
 	getActionResponseContentFieldBuiltAt                = big.NewInt(1 << 14)
@@ -709,7 +709,7 @@ var (
 
 type GetActionResponseContent struct {
 	// The unique ID of the action.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of an action.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
@@ -730,7 +730,7 @@ type GetActionResponseContent struct {
 	Secrets         []*ActionSecretResponse `json:"secrets,omitempty" url:"secrets,omitempty"`
 	DeployedVersion *ActionDeployedVersion  `json:"deployed_version,omitempty" url:"deployed_version,omitempty"`
 	// installed_integration_id is the fk reference to the InstalledIntegration entity.
-	InstalledIntegrationId *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
+	InstalledIntegrationID *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
 	Integration            *Integration           `json:"integration,omitempty" url:"integration,omitempty"`
 	Status                 *ActionBuildStatusEnum `json:"status,omitempty" url:"status,omitempty"`
 	// The time when this action was built successfully.
@@ -745,11 +745,11 @@ type GetActionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetActionResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetActionResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetActionResponseContent) GetName() string {
@@ -822,11 +822,11 @@ func (g *GetActionResponseContent) GetDeployedVersion() ActionDeployedVersion {
 	return *g.DeployedVersion
 }
 
-func (g *GetActionResponseContent) GetInstalledIntegrationId() string {
-	if g == nil || g.InstalledIntegrationId == nil {
+func (g *GetActionResponseContent) GetInstalledIntegrationID() string {
+	if g == nil || g.InstalledIntegrationID == nil {
 		return ""
 	}
-	return *g.InstalledIntegrationId
+	return *g.InstalledIntegrationID
 }
 
 func (g *GetActionResponseContent) GetIntegration() Integration {
@@ -868,11 +868,11 @@ func (g *GetActionResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetActionResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getActionResponseContentFieldId)
+func (g *GetActionResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getActionResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -945,11 +945,11 @@ func (g *GetActionResponseContent) SetDeployedVersion(deployedVersion *ActionDep
 	g.require(getActionResponseContentFieldDeployedVersion)
 }
 
-// SetInstalledIntegrationId sets the InstalledIntegrationId field and marks it as non-optional;
+// SetInstalledIntegrationID sets the InstalledIntegrationID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetActionResponseContent) SetInstalledIntegrationId(installedIntegrationId *string) {
-	g.InstalledIntegrationId = installedIntegrationId
-	g.require(getActionResponseContentFieldInstalledIntegrationId)
+func (g *GetActionResponseContent) SetInstalledIntegrationID(installedIntegrationID *string) {
+	g.InstalledIntegrationID = installedIntegrationID
+	g.require(getActionResponseContentFieldInstalledIntegrationID)
 }
 
 // SetIntegration sets the Integration field and marks it as non-optional;
@@ -1250,7 +1250,7 @@ func (t *TestActionResponseContent) String() string {
 type TestActionResultPayload = map[string]interface{}
 
 var (
-	updateActionResponseContentFieldId                     = big.NewInt(1 << 0)
+	updateActionResponseContentFieldID                     = big.NewInt(1 << 0)
 	updateActionResponseContentFieldName                   = big.NewInt(1 << 1)
 	updateActionResponseContentFieldSupportedTriggers      = big.NewInt(1 << 2)
 	updateActionResponseContentFieldAllChangesDeployed     = big.NewInt(1 << 3)
@@ -1261,7 +1261,7 @@ var (
 	updateActionResponseContentFieldRuntime                = big.NewInt(1 << 8)
 	updateActionResponseContentFieldSecrets                = big.NewInt(1 << 9)
 	updateActionResponseContentFieldDeployedVersion        = big.NewInt(1 << 10)
-	updateActionResponseContentFieldInstalledIntegrationId = big.NewInt(1 << 11)
+	updateActionResponseContentFieldInstalledIntegrationID = big.NewInt(1 << 11)
 	updateActionResponseContentFieldIntegration            = big.NewInt(1 << 12)
 	updateActionResponseContentFieldStatus                 = big.NewInt(1 << 13)
 	updateActionResponseContentFieldBuiltAt                = big.NewInt(1 << 14)
@@ -1270,7 +1270,7 @@ var (
 
 type UpdateActionResponseContent struct {
 	// The unique ID of the action.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of an action.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
@@ -1291,7 +1291,7 @@ type UpdateActionResponseContent struct {
 	Secrets         []*ActionSecretResponse `json:"secrets,omitempty" url:"secrets,omitempty"`
 	DeployedVersion *ActionDeployedVersion  `json:"deployed_version,omitempty" url:"deployed_version,omitempty"`
 	// installed_integration_id is the fk reference to the InstalledIntegration entity.
-	InstalledIntegrationId *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
+	InstalledIntegrationID *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
 	Integration            *Integration           `json:"integration,omitempty" url:"integration,omitempty"`
 	Status                 *ActionBuildStatusEnum `json:"status,omitempty" url:"status,omitempty"`
 	// The time when this action was built successfully.
@@ -1306,11 +1306,11 @@ type UpdateActionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateActionResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateActionResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UpdateActionResponseContent) GetName() string {
@@ -1383,11 +1383,11 @@ func (u *UpdateActionResponseContent) GetDeployedVersion() ActionDeployedVersion
 	return *u.DeployedVersion
 }
 
-func (u *UpdateActionResponseContent) GetInstalledIntegrationId() string {
-	if u == nil || u.InstalledIntegrationId == nil {
+func (u *UpdateActionResponseContent) GetInstalledIntegrationID() string {
+	if u == nil || u.InstalledIntegrationID == nil {
 		return ""
 	}
-	return *u.InstalledIntegrationId
+	return *u.InstalledIntegrationID
 }
 
 func (u *UpdateActionResponseContent) GetIntegration() Integration {
@@ -1429,11 +1429,11 @@ func (u *UpdateActionResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateActionResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateActionResponseContentFieldId)
+func (u *UpdateActionResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateActionResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1506,11 +1506,11 @@ func (u *UpdateActionResponseContent) SetDeployedVersion(deployedVersion *Action
 	u.require(updateActionResponseContentFieldDeployedVersion)
 }
 
-// SetInstalledIntegrationId sets the InstalledIntegrationId field and marks it as non-optional;
+// SetInstalledIntegrationID sets the InstalledIntegrationID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateActionResponseContent) SetInstalledIntegrationId(installedIntegrationId *string) {
-	u.InstalledIntegrationId = installedIntegrationId
-	u.require(updateActionResponseContentFieldInstalledIntegrationId)
+func (u *UpdateActionResponseContent) SetInstalledIntegrationID(installedIntegrationID *string) {
+	u.InstalledIntegrationID = installedIntegrationID
+	u.require(updateActionResponseContentFieldInstalledIntegrationID)
 }
 
 // SetIntegration sets the Integration field and marks it as non-optional;

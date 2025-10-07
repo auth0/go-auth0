@@ -35,7 +35,7 @@ func (r *RawClient) Get(
 	// The id of the connection to retrieve its SCIM configuration
 	id string,
 	opts ...option.RequestOption,
-) (*core.Response[*management.GetScimConfigurationResponseContent], error) {
+) (*core.Response[*management.GetSCIMConfigurationResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -50,7 +50,7 @@ func (r *RawClient) Get(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *management.GetScimConfigurationResponseContent
+	var response *management.GetSCIMConfigurationResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -68,7 +68,7 @@ func (r *RawClient) Get(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.GetScimConfigurationResponseContent]{
+	return &core.Response[*management.GetSCIMConfigurationResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -79,9 +79,9 @@ func (r *RawClient) Create(
 	ctx context.Context,
 	// The id of the connection to create its SCIM configuration
 	id string,
-	request *management.CreateScimConfigurationRequestContent,
+	request *management.CreateSCIMConfigurationRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.CreateScimConfigurationResponseContent], error) {
+) (*core.Response[*management.CreateSCIMConfigurationResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -96,7 +96,7 @@ func (r *RawClient) Create(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *management.CreateScimConfigurationResponseContent
+	var response *management.CreateSCIMConfigurationResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -115,7 +115,7 @@ func (r *RawClient) Create(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.CreateScimConfigurationResponseContent]{
+	return &core.Response[*management.CreateSCIMConfigurationResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -169,9 +169,9 @@ func (r *RawClient) Update(
 	ctx context.Context,
 	// The id of the connection to update its SCIM configuration
 	id string,
-	request *management.UpdateScimConfigurationRequestContent,
+	request *management.UpdateSCIMConfigurationRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.UpdateScimConfigurationResponseContent], error) {
+) (*core.Response[*management.UpdateSCIMConfigurationResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -187,7 +187,7 @@ func (r *RawClient) Update(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	var response *management.UpdateScimConfigurationResponseContent
+	var response *management.UpdateSCIMConfigurationResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -206,7 +206,7 @@ func (r *RawClient) Update(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.UpdateScimConfigurationResponseContent]{
+	return &core.Response[*management.UpdateSCIMConfigurationResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -218,7 +218,7 @@ func (r *RawClient) GetDefaultMapping(
 	// The id of the connection to retrieve its default SCIM mapping
 	id string,
 	opts ...option.RequestOption,
-) (*core.Response[*management.GetScimConfigurationDefaultMappingResponseContent], error) {
+) (*core.Response[*management.GetSCIMConfigurationDefaultMappingResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -233,7 +233,7 @@ func (r *RawClient) GetDefaultMapping(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *management.GetScimConfigurationDefaultMappingResponseContent
+	var response *management.GetSCIMConfigurationDefaultMappingResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -251,7 +251,7 @@ func (r *RawClient) GetDefaultMapping(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.GetScimConfigurationDefaultMappingResponseContent]{
+	return &core.Response[*management.GetSCIMConfigurationDefaultMappingResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

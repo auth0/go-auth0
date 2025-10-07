@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) Get(
 	ctx context.Context,
 	// The ID of the action.
-	actionId string,
+	actionID string,
 	// The ID of the action version.
 	id string,
 	opts ...option.RequestOption,
@@ -46,7 +46,7 @@ func (r *RawClient) Get(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/actions/actions/%v/versions/%v",
-		actionId,
+		actionID,
 		id,
 	)
 	headers := internal.MergeHeaders(
@@ -81,7 +81,7 @@ func (r *RawClient) Get(
 func (r *RawClient) Deploy(
 	ctx context.Context,
 	// The ID of an action.
-	actionId string,
+	actionID string,
 	// The ID of an action version.
 	id string,
 	request *management.DeployActionVersionRequestContent,
@@ -95,7 +95,7 @@ func (r *RawClient) Deploy(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/actions/actions/%v/versions/%v/deploy",
-		actionId,
+		actionID,
 		id,
 	)
 	headers := internal.MergeHeaders(

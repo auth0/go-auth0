@@ -10,8 +10,8 @@ import (
 )
 
 var (
-	createHookResponseContentFieldTriggerId    = big.NewInt(1 << 0)
-	createHookResponseContentFieldId           = big.NewInt(1 << 1)
+	createHookResponseContentFieldTriggerID    = big.NewInt(1 << 0)
+	createHookResponseContentFieldID           = big.NewInt(1 << 1)
 	createHookResponseContentFieldName         = big.NewInt(1 << 2)
 	createHookResponseContentFieldEnabled      = big.NewInt(1 << 3)
 	createHookResponseContentFieldScript       = big.NewInt(1 << 4)
@@ -20,9 +20,9 @@ var (
 
 type CreateHookResponseContent struct {
 	// Trigger ID
-	TriggerId *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
+	TriggerID *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
 	// ID of this hook.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this hook.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this hook will be executed (true) or ignored (false).
@@ -38,18 +38,18 @@ type CreateHookResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateHookResponseContent) GetTriggerId() string {
-	if c == nil || c.TriggerId == nil {
+func (c *CreateHookResponseContent) GetTriggerID() string {
+	if c == nil || c.TriggerID == nil {
 		return ""
 	}
-	return *c.TriggerId
+	return *c.TriggerID
 }
 
-func (c *CreateHookResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateHookResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *CreateHookResponseContent) GetName() string {
@@ -91,18 +91,18 @@ func (c *CreateHookResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetTriggerId sets the TriggerId field and marks it as non-optional;
+// SetTriggerID sets the TriggerID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateHookResponseContent) SetTriggerId(triggerId *string) {
-	c.TriggerId = triggerId
-	c.require(createHookResponseContentFieldTriggerId)
+func (c *CreateHookResponseContent) SetTriggerID(triggerID *string) {
+	c.TriggerID = triggerID
+	c.require(createHookResponseContentFieldTriggerID)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateHookResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createHookResponseContentFieldId)
+func (c *CreateHookResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createHookResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -173,8 +173,8 @@ func (c *CreateHookResponseContent) String() string {
 }
 
 var (
-	getHookResponseContentFieldTriggerId    = big.NewInt(1 << 0)
-	getHookResponseContentFieldId           = big.NewInt(1 << 1)
+	getHookResponseContentFieldTriggerID    = big.NewInt(1 << 0)
+	getHookResponseContentFieldID           = big.NewInt(1 << 1)
 	getHookResponseContentFieldName         = big.NewInt(1 << 2)
 	getHookResponseContentFieldEnabled      = big.NewInt(1 << 3)
 	getHookResponseContentFieldScript       = big.NewInt(1 << 4)
@@ -183,9 +183,9 @@ var (
 
 type GetHookResponseContent struct {
 	// Trigger ID
-	TriggerId *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
+	TriggerID *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
 	// ID of this hook.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this hook.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this hook will be executed (true) or ignored (false).
@@ -201,18 +201,18 @@ type GetHookResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetHookResponseContent) GetTriggerId() string {
-	if g == nil || g.TriggerId == nil {
+func (g *GetHookResponseContent) GetTriggerID() string {
+	if g == nil || g.TriggerID == nil {
 		return ""
 	}
-	return *g.TriggerId
+	return *g.TriggerID
 }
 
-func (g *GetHookResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetHookResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetHookResponseContent) GetName() string {
@@ -254,18 +254,18 @@ func (g *GetHookResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetTriggerId sets the TriggerId field and marks it as non-optional;
+// SetTriggerID sets the TriggerID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetHookResponseContent) SetTriggerId(triggerId *string) {
-	g.TriggerId = triggerId
-	g.require(getHookResponseContentFieldTriggerId)
+func (g *GetHookResponseContent) SetTriggerID(triggerID *string) {
+	g.TriggerID = triggerID
+	g.require(getHookResponseContentFieldTriggerID)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetHookResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getHookResponseContentFieldId)
+func (g *GetHookResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getHookResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -336,8 +336,8 @@ func (g *GetHookResponseContent) String() string {
 }
 
 var (
-	hookFieldTriggerId    = big.NewInt(1 << 0)
-	hookFieldId           = big.NewInt(1 << 1)
+	hookFieldTriggerID    = big.NewInt(1 << 0)
+	hookFieldID           = big.NewInt(1 << 1)
 	hookFieldName         = big.NewInt(1 << 2)
 	hookFieldEnabled      = big.NewInt(1 << 3)
 	hookFieldScript       = big.NewInt(1 << 4)
@@ -346,9 +346,9 @@ var (
 
 type Hook struct {
 	// Trigger ID
-	TriggerId *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
+	TriggerID *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
 	// ID of this hook.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this hook.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this hook will be executed (true) or ignored (false).
@@ -364,18 +364,18 @@ type Hook struct {
 	rawJSON         json.RawMessage
 }
 
-func (h *Hook) GetTriggerId() string {
-	if h == nil || h.TriggerId == nil {
+func (h *Hook) GetTriggerID() string {
+	if h == nil || h.TriggerID == nil {
 		return ""
 	}
-	return *h.TriggerId
+	return *h.TriggerID
 }
 
-func (h *Hook) GetId() string {
-	if h == nil || h.Id == nil {
+func (h *Hook) GetID() string {
+	if h == nil || h.ID == nil {
 		return ""
 	}
-	return *h.Id
+	return *h.ID
 }
 
 func (h *Hook) GetName() string {
@@ -417,18 +417,18 @@ func (h *Hook) require(field *big.Int) {
 	h.explicitFields.Or(h.explicitFields, field)
 }
 
-// SetTriggerId sets the TriggerId field and marks it as non-optional;
+// SetTriggerID sets the TriggerID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (h *Hook) SetTriggerId(triggerId *string) {
-	h.TriggerId = triggerId
-	h.require(hookFieldTriggerId)
+func (h *Hook) SetTriggerID(triggerID *string) {
+	h.TriggerID = triggerID
+	h.require(hookFieldTriggerID)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (h *Hook) SetId(id *string) {
-	h.Id = id
-	h.require(hookFieldId)
+func (h *Hook) SetID(id *string) {
+	h.ID = id
+	h.require(hookFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -502,34 +502,34 @@ func (h *Hook) String() string {
 type HookDependencies = map[string]string
 
 // Retrieves hooks that match the trigger
-type HookTriggerIdEnum string
+type HookTriggerIDEnum string
 
 const (
-	HookTriggerIdEnumCredentialsExchange  HookTriggerIdEnum = "credentials-exchange"
-	HookTriggerIdEnumPreUserRegistration  HookTriggerIdEnum = "pre-user-registration"
-	HookTriggerIdEnumPostUserRegistration HookTriggerIdEnum = "post-user-registration"
-	HookTriggerIdEnumPostChangePassword   HookTriggerIdEnum = "post-change-password"
-	HookTriggerIdEnumSendPhoneMessage     HookTriggerIdEnum = "send-phone-message"
+	HookTriggerIDEnumCredentialsExchange  HookTriggerIDEnum = "credentials-exchange"
+	HookTriggerIDEnumPreUserRegistration  HookTriggerIDEnum = "pre-user-registration"
+	HookTriggerIDEnumPostUserRegistration HookTriggerIDEnum = "post-user-registration"
+	HookTriggerIDEnumPostChangePassword   HookTriggerIDEnum = "post-change-password"
+	HookTriggerIDEnumSendPhoneMessage     HookTriggerIDEnum = "send-phone-message"
 )
 
-func NewHookTriggerIdEnumFromString(s string) (HookTriggerIdEnum, error) {
+func NewHookTriggerIDEnumFromString(s string) (HookTriggerIDEnum, error) {
 	switch s {
 	case "credentials-exchange":
-		return HookTriggerIdEnumCredentialsExchange, nil
+		return HookTriggerIDEnumCredentialsExchange, nil
 	case "pre-user-registration":
-		return HookTriggerIdEnumPreUserRegistration, nil
+		return HookTriggerIDEnumPreUserRegistration, nil
 	case "post-user-registration":
-		return HookTriggerIdEnumPostUserRegistration, nil
+		return HookTriggerIDEnumPostUserRegistration, nil
 	case "post-change-password":
-		return HookTriggerIdEnumPostChangePassword, nil
+		return HookTriggerIDEnumPostChangePassword, nil
 	case "send-phone-message":
-		return HookTriggerIdEnumSendPhoneMessage, nil
+		return HookTriggerIDEnumSendPhoneMessage, nil
 	}
-	var t HookTriggerIdEnum
+	var t HookTriggerIDEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (h HookTriggerIdEnum) Ptr() *HookTriggerIdEnum {
+func (h HookTriggerIDEnum) Ptr() *HookTriggerIDEnum {
 	return &h
 }
 
@@ -660,8 +660,8 @@ func (l *ListHooksOffsetPaginatedResponseContent) String() string {
 }
 
 var (
-	updateHookResponseContentFieldTriggerId    = big.NewInt(1 << 0)
-	updateHookResponseContentFieldId           = big.NewInt(1 << 1)
+	updateHookResponseContentFieldTriggerID    = big.NewInt(1 << 0)
+	updateHookResponseContentFieldID           = big.NewInt(1 << 1)
 	updateHookResponseContentFieldName         = big.NewInt(1 << 2)
 	updateHookResponseContentFieldEnabled      = big.NewInt(1 << 3)
 	updateHookResponseContentFieldScript       = big.NewInt(1 << 4)
@@ -670,9 +670,9 @@ var (
 
 type UpdateHookResponseContent struct {
 	// Trigger ID
-	TriggerId *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
+	TriggerID *string `json:"triggerId,omitempty" url:"triggerId,omitempty"`
 	// ID of this hook.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of this hook.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Whether this hook will be executed (true) or ignored (false).
@@ -688,18 +688,18 @@ type UpdateHookResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateHookResponseContent) GetTriggerId() string {
-	if u == nil || u.TriggerId == nil {
+func (u *UpdateHookResponseContent) GetTriggerID() string {
+	if u == nil || u.TriggerID == nil {
 		return ""
 	}
-	return *u.TriggerId
+	return *u.TriggerID
 }
 
-func (u *UpdateHookResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateHookResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UpdateHookResponseContent) GetName() string {
@@ -741,18 +741,18 @@ func (u *UpdateHookResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetTriggerId sets the TriggerId field and marks it as non-optional;
+// SetTriggerID sets the TriggerID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateHookResponseContent) SetTriggerId(triggerId *string) {
-	u.TriggerId = triggerId
-	u.require(updateHookResponseContentFieldTriggerId)
+func (u *UpdateHookResponseContent) SetTriggerID(triggerID *string) {
+	u.TriggerID = triggerID
+	u.require(updateHookResponseContentFieldTriggerID)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateHookResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateHookResponseContentFieldId)
+func (u *UpdateHookResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateHookResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;

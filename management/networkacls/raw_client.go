@@ -32,7 +32,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Create(
 	ctx context.Context,
-	request *management.CreateNetworkAclRequestContent,
+	request *management.CreateNetworkACLRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -76,7 +76,7 @@ func (r *RawClient) Get(
 	// The id of the access control list to retrieve.
 	id string,
 	opts ...option.RequestOption,
-) (*core.Response[*management.GetNetworkAclsResponseContent], error) {
+) (*core.Response[*management.GetNetworkACLsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -91,7 +91,7 @@ func (r *RawClient) Get(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *management.GetNetworkAclsResponseContent
+	var response *management.GetNetworkACLsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -109,7 +109,7 @@ func (r *RawClient) Get(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.GetNetworkAclsResponseContent]{
+	return &core.Response[*management.GetNetworkACLsResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -120,9 +120,9 @@ func (r *RawClient) Set(
 	ctx context.Context,
 	// The id of the ACL to update.
 	id string,
-	request *management.SetNetworkAclRequestContent,
+	request *management.SetNetworkACLRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.SetNetworkAclsResponseContent], error) {
+) (*core.Response[*management.SetNetworkACLsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -138,7 +138,7 @@ func (r *RawClient) Set(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	var response *management.SetNetworkAclsResponseContent
+	var response *management.SetNetworkACLsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -157,7 +157,7 @@ func (r *RawClient) Set(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.SetNetworkAclsResponseContent]{
+	return &core.Response[*management.SetNetworkACLsResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -211,9 +211,9 @@ func (r *RawClient) Update(
 	ctx context.Context,
 	// The id of the ACL to update.
 	id string,
-	request *management.UpdateNetworkAclRequestContent,
+	request *management.UpdateNetworkACLRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.UpdateNetworkAclResponseContent], error) {
+) (*core.Response[*management.UpdateNetworkACLResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -229,7 +229,7 @@ func (r *RawClient) Update(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	var response *management.UpdateNetworkAclResponseContent
+	var response *management.UpdateNetworkACLResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -248,7 +248,7 @@ func (r *RawClient) Update(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.UpdateNetworkAclResponseContent]{
+	return &core.Response[*management.UpdateNetworkACLResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

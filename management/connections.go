@@ -795,7 +795,7 @@ const (
 	ConnectionIdentityProviderEnumGoogleApps          ConnectionIdentityProviderEnum = "google-apps"
 	ConnectionIdentityProviderEnumGoogleOauth2        ConnectionIdentityProviderEnum = "google-oauth2"
 	ConnectionIdentityProviderEnumInstagram           ConnectionIdentityProviderEnum = "instagram"
-	ConnectionIdentityProviderEnumIp                  ConnectionIdentityProviderEnum = "ip"
+	ConnectionIdentityProviderEnumIP                  ConnectionIdentityProviderEnum = "ip"
 	ConnectionIdentityProviderEnumLine                ConnectionIdentityProviderEnum = "line"
 	ConnectionIdentityProviderEnumLinkedin            ConnectionIdentityProviderEnum = "linkedin"
 	ConnectionIdentityProviderEnumMiicard             ConnectionIdentityProviderEnum = "miicard"
@@ -888,7 +888,7 @@ func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityPr
 	case "instagram":
 		return ConnectionIdentityProviderEnumInstagram, nil
 	case "ip":
-		return ConnectionIdentityProviderEnumIp, nil
+		return ConnectionIdentityProviderEnumIP, nil
 	case "line":
 		return ConnectionIdentityProviderEnumLine, nil
 	case "linkedin":
@@ -1049,40 +1049,40 @@ func (c *ConnectionPasskeyAuthenticationMethod) String() string {
 }
 
 // Controls the UI used to challenge the user for their passkey.
-type ConnectionPasskeyChallengeUiEnum string
+type ConnectionPasskeyChallengeUIEnum string
 
 const (
-	ConnectionPasskeyChallengeUiEnumBoth     ConnectionPasskeyChallengeUiEnum = "both"
-	ConnectionPasskeyChallengeUiEnumAutofill ConnectionPasskeyChallengeUiEnum = "autofill"
-	ConnectionPasskeyChallengeUiEnumButton   ConnectionPasskeyChallengeUiEnum = "button"
+	ConnectionPasskeyChallengeUIEnumBoth     ConnectionPasskeyChallengeUIEnum = "both"
+	ConnectionPasskeyChallengeUIEnumAutofill ConnectionPasskeyChallengeUIEnum = "autofill"
+	ConnectionPasskeyChallengeUIEnumButton   ConnectionPasskeyChallengeUIEnum = "button"
 )
 
-func NewConnectionPasskeyChallengeUiEnumFromString(s string) (ConnectionPasskeyChallengeUiEnum, error) {
+func NewConnectionPasskeyChallengeUIEnumFromString(s string) (ConnectionPasskeyChallengeUIEnum, error) {
 	switch s {
 	case "both":
-		return ConnectionPasskeyChallengeUiEnumBoth, nil
+		return ConnectionPasskeyChallengeUIEnumBoth, nil
 	case "autofill":
-		return ConnectionPasskeyChallengeUiEnumAutofill, nil
+		return ConnectionPasskeyChallengeUIEnumAutofill, nil
 	case "button":
-		return ConnectionPasskeyChallengeUiEnumButton, nil
+		return ConnectionPasskeyChallengeUIEnumButton, nil
 	}
-	var t ConnectionPasskeyChallengeUiEnum
+	var t ConnectionPasskeyChallengeUIEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (c ConnectionPasskeyChallengeUiEnum) Ptr() *ConnectionPasskeyChallengeUiEnum {
+func (c ConnectionPasskeyChallengeUIEnum) Ptr() *ConnectionPasskeyChallengeUIEnum {
 	return &c
 }
 
 // Options for the passkey authentication method
 var (
-	connectionPasskeyOptionsFieldChallengeUi                  = big.NewInt(1 << 0)
+	connectionPasskeyOptionsFieldChallengeUI                  = big.NewInt(1 << 0)
 	connectionPasskeyOptionsFieldProgressiveEnrollmentEnabled = big.NewInt(1 << 1)
 	connectionPasskeyOptionsFieldLocalEnrollmentEnabled       = big.NewInt(1 << 2)
 )
 
 type ConnectionPasskeyOptions struct {
-	ChallengeUi *ConnectionPasskeyChallengeUiEnum `json:"challenge_ui,omitempty" url:"challenge_ui,omitempty"`
+	ChallengeUI *ConnectionPasskeyChallengeUIEnum `json:"challenge_ui,omitempty" url:"challenge_ui,omitempty"`
 	// Enables or disables progressive enrollment of passkeys for the connection.
 	ProgressiveEnrollmentEnabled *bool `json:"progressive_enrollment_enabled,omitempty" url:"progressive_enrollment_enabled,omitempty"`
 	// Enables or disables enrollment prompt for local passkey when user authenticates using a cross-device passkey for the connection.
@@ -1095,11 +1095,11 @@ type ConnectionPasskeyOptions struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *ConnectionPasskeyOptions) GetChallengeUi() ConnectionPasskeyChallengeUiEnum {
-	if c == nil || c.ChallengeUi == nil {
+func (c *ConnectionPasskeyOptions) GetChallengeUI() ConnectionPasskeyChallengeUIEnum {
+	if c == nil || c.ChallengeUI == nil {
 		return ""
 	}
-	return *c.ChallengeUi
+	return *c.ChallengeUI
 }
 
 func (c *ConnectionPasskeyOptions) GetProgressiveEnrollmentEnabled() bool {
@@ -1127,11 +1127,11 @@ func (c *ConnectionPasskeyOptions) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetChallengeUi sets the ChallengeUi field and marks it as non-optional;
+// SetChallengeUI sets the ChallengeUI field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionPasskeyOptions) SetChallengeUi(challengeUi *ConnectionPasskeyChallengeUiEnum) {
-	c.ChallengeUi = challengeUi
-	c.require(connectionPasskeyOptionsFieldChallengeUi)
+func (c *ConnectionPasskeyOptions) SetChallengeUI(challengeUI *ConnectionPasskeyChallengeUIEnum) {
+	c.ChallengeUI = challengeUI
+	c.require(connectionPasskeyOptionsFieldChallengeUI)
 }
 
 // SetProgressiveEnrollmentEnabled sets the ProgressiveEnrollmentEnabled field and marks it as non-optional;
@@ -1666,7 +1666,7 @@ var (
 	connectionPropertiesOptionsFieldPasswordHistory                  = big.NewInt(1 << 12)
 	connectionPropertiesOptionsFieldPasswordNoPersonalInfo           = big.NewInt(1 << 13)
 	connectionPropertiesOptionsFieldPasswordDictionary               = big.NewInt(1 << 14)
-	connectionPropertiesOptionsFieldApiEnableUsers                   = big.NewInt(1 << 15)
+	connectionPropertiesOptionsFieldAPIEnableUsers                   = big.NewInt(1 << 15)
 	connectionPropertiesOptionsFieldBasicProfile                     = big.NewInt(1 << 16)
 	connectionPropertiesOptionsFieldExtAdmin                         = big.NewInt(1 << 17)
 	connectionPropertiesOptionsFieldExtIsSuspended                   = big.NewInt(1 << 18)
@@ -1701,7 +1701,7 @@ type ConnectionPropertiesOptions struct {
 	PasswordHistory                  *ConnectionPasswordHistoryOptions           `json:"password_history,omitempty" url:"password_history,omitempty"`
 	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions    `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
 	PasswordDictionary               *ConnectionPasswordDictionaryOptions        `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
-	ApiEnableUsers                   *bool                                       `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
+	APIEnableUsers                   *bool                                       `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
 	BasicProfile                     *bool                                       `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
 	ExtAdmin                         *bool                                       `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
 	ExtIsSuspended                   *bool                                       `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
@@ -1828,11 +1828,11 @@ func (c *ConnectionPropertiesOptions) GetPasswordDictionary() ConnectionPassword
 	return *c.PasswordDictionary
 }
 
-func (c *ConnectionPropertiesOptions) GetApiEnableUsers() bool {
-	if c == nil || c.ApiEnableUsers == nil {
+func (c *ConnectionPropertiesOptions) GetAPIEnableUsers() bool {
+	if c == nil || c.APIEnableUsers == nil {
 		return false
 	}
-	return *c.ApiEnableUsers
+	return *c.APIEnableUsers
 }
 
 func (c *ConnectionPropertiesOptions) GetBasicProfile() bool {
@@ -2035,11 +2035,11 @@ func (c *ConnectionPropertiesOptions) SetPasswordDictionary(passwordDictionary *
 	c.require(connectionPropertiesOptionsFieldPasswordDictionary)
 }
 
-// SetApiEnableUsers sets the ApiEnableUsers field and marks it as non-optional;
+// SetAPIEnableUsers sets the APIEnableUsers field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionPropertiesOptions) SetApiEnableUsers(apiEnableUsers *bool) {
-	c.ApiEnableUsers = apiEnableUsers
-	c.require(connectionPropertiesOptionsFieldApiEnableUsers)
+func (c *ConnectionPropertiesOptions) SetAPIEnableUsers(apiEnableUsers *bool) {
+	c.APIEnableUsers = apiEnableUsers
+	c.require(connectionPropertiesOptionsFieldAPIEnableUsers)
 }
 
 // SetBasicProfile sets the BasicProfile field and marks it as non-optional;
@@ -2340,16 +2340,16 @@ type ConnectionUpstreamAliasEnum string
 const (
 	ConnectionUpstreamAliasEnumAcrValues    ConnectionUpstreamAliasEnum = "acr_values"
 	ConnectionUpstreamAliasEnumAudience     ConnectionUpstreamAliasEnum = "audience"
-	ConnectionUpstreamAliasEnumClientId     ConnectionUpstreamAliasEnum = "client_id"
+	ConnectionUpstreamAliasEnumClientID     ConnectionUpstreamAliasEnum = "client_id"
 	ConnectionUpstreamAliasEnumDisplay      ConnectionUpstreamAliasEnum = "display"
-	ConnectionUpstreamAliasEnumIdTokenHint  ConnectionUpstreamAliasEnum = "id_token_hint"
+	ConnectionUpstreamAliasEnumIDTokenHint  ConnectionUpstreamAliasEnum = "id_token_hint"
 	ConnectionUpstreamAliasEnumLoginHint    ConnectionUpstreamAliasEnum = "login_hint"
 	ConnectionUpstreamAliasEnumMaxAge       ConnectionUpstreamAliasEnum = "max_age"
 	ConnectionUpstreamAliasEnumPrompt       ConnectionUpstreamAliasEnum = "prompt"
 	ConnectionUpstreamAliasEnumResource     ConnectionUpstreamAliasEnum = "resource"
 	ConnectionUpstreamAliasEnumResponseMode ConnectionUpstreamAliasEnum = "response_mode"
 	ConnectionUpstreamAliasEnumResponseType ConnectionUpstreamAliasEnum = "response_type"
-	ConnectionUpstreamAliasEnumUiLocales    ConnectionUpstreamAliasEnum = "ui_locales"
+	ConnectionUpstreamAliasEnumUILocales    ConnectionUpstreamAliasEnum = "ui_locales"
 )
 
 func NewConnectionUpstreamAliasEnumFromString(s string) (ConnectionUpstreamAliasEnum, error) {
@@ -2359,11 +2359,11 @@ func NewConnectionUpstreamAliasEnumFromString(s string) (ConnectionUpstreamAlias
 	case "audience":
 		return ConnectionUpstreamAliasEnumAudience, nil
 	case "client_id":
-		return ConnectionUpstreamAliasEnumClientId, nil
+		return ConnectionUpstreamAliasEnumClientID, nil
 	case "display":
 		return ConnectionUpstreamAliasEnumDisplay, nil
 	case "id_token_hint":
-		return ConnectionUpstreamAliasEnumIdTokenHint, nil
+		return ConnectionUpstreamAliasEnumIDTokenHint, nil
 	case "login_hint":
 		return ConnectionUpstreamAliasEnumLoginHint, nil
 	case "max_age":
@@ -2377,7 +2377,7 @@ func NewConnectionUpstreamAliasEnumFromString(s string) (ConnectionUpstreamAlias
 	case "response_type":
 		return ConnectionUpstreamAliasEnumResponseType, nil
 	case "ui_locales":
-		return ConnectionUpstreamAliasEnumUiLocales, nil
+		return ConnectionUpstreamAliasEnumUILocales, nil
 	}
 	var t ConnectionUpstreamAliasEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -2645,7 +2645,7 @@ var (
 	createConnectionResponseContentFieldName               = big.NewInt(1 << 0)
 	createConnectionResponseContentFieldDisplayName        = big.NewInt(1 << 1)
 	createConnectionResponseContentFieldOptions            = big.NewInt(1 << 2)
-	createConnectionResponseContentFieldId                 = big.NewInt(1 << 3)
+	createConnectionResponseContentFieldID                 = big.NewInt(1 << 3)
 	createConnectionResponseContentFieldStrategy           = big.NewInt(1 << 4)
 	createConnectionResponseContentFieldRealms             = big.NewInt(1 << 5)
 	createConnectionResponseContentFieldEnabledClients     = big.NewInt(1 << 6)
@@ -2661,7 +2661,7 @@ type CreateConnectionResponseContent struct {
 	DisplayName *string            `json:"display_name,omitempty" url:"display_name,omitempty"`
 	Options     *ConnectionOptions `json:"options,omitempty" url:"options,omitempty"`
 	// The connection's identifier
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The type of the connection, related to the identity provider
 	Strategy *string `json:"strategy,omitempty" url:"strategy,omitempty"`
 	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
@@ -2702,11 +2702,11 @@ func (c *CreateConnectionResponseContent) GetOptions() ConnectionOptions {
 	return *c.Options
 }
 
-func (c *CreateConnectionResponseContent) GetId() string {
-	if c == nil || c.Id == nil {
+func (c *CreateConnectionResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *CreateConnectionResponseContent) GetStrategy() string {
@@ -2783,11 +2783,11 @@ func (c *CreateConnectionResponseContent) SetOptions(options *ConnectionOptions)
 	c.require(createConnectionResponseContentFieldOptions)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateConnectionResponseContent) SetId(id *string) {
-	c.Id = id
-	c.require(createConnectionResponseContentFieldId)
+func (c *CreateConnectionResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createConnectionResponseContentFieldID)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -3003,7 +3003,7 @@ var (
 	getConnectionResponseContentFieldName               = big.NewInt(1 << 0)
 	getConnectionResponseContentFieldDisplayName        = big.NewInt(1 << 1)
 	getConnectionResponseContentFieldOptions            = big.NewInt(1 << 2)
-	getConnectionResponseContentFieldId                 = big.NewInt(1 << 3)
+	getConnectionResponseContentFieldID                 = big.NewInt(1 << 3)
 	getConnectionResponseContentFieldStrategy           = big.NewInt(1 << 4)
 	getConnectionResponseContentFieldRealms             = big.NewInt(1 << 5)
 	getConnectionResponseContentFieldEnabledClients     = big.NewInt(1 << 6)
@@ -3019,7 +3019,7 @@ type GetConnectionResponseContent struct {
 	DisplayName *string            `json:"display_name,omitempty" url:"display_name,omitempty"`
 	Options     *ConnectionOptions `json:"options,omitempty" url:"options,omitempty"`
 	// The connection's identifier
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The type of the connection, related to the identity provider
 	Strategy *string `json:"strategy,omitempty" url:"strategy,omitempty"`
 	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
@@ -3060,11 +3060,11 @@ func (g *GetConnectionResponseContent) GetOptions() ConnectionOptions {
 	return *g.Options
 }
 
-func (g *GetConnectionResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetConnectionResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetConnectionResponseContent) GetStrategy() string {
@@ -3141,11 +3141,11 @@ func (g *GetConnectionResponseContent) SetOptions(options *ConnectionOptions) {
 	g.require(getConnectionResponseContentFieldOptions)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetConnectionResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getConnectionResponseContentFieldId)
+func (g *GetConnectionResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getConnectionResponseContentFieldID)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -3728,7 +3728,7 @@ var (
 	updateConnectionOptionsFieldPasswordHistory                  = big.NewInt(1 << 12)
 	updateConnectionOptionsFieldPasswordNoPersonalInfo           = big.NewInt(1 << 13)
 	updateConnectionOptionsFieldPasswordDictionary               = big.NewInt(1 << 14)
-	updateConnectionOptionsFieldApiEnableUsers                   = big.NewInt(1 << 15)
+	updateConnectionOptionsFieldAPIEnableUsers                   = big.NewInt(1 << 15)
 	updateConnectionOptionsFieldBasicProfile                     = big.NewInt(1 << 16)
 	updateConnectionOptionsFieldExtAdmin                         = big.NewInt(1 << 17)
 	updateConnectionOptionsFieldExtIsSuspended                   = big.NewInt(1 << 18)
@@ -3763,7 +3763,7 @@ type UpdateConnectionOptions struct {
 	PasswordHistory                  *ConnectionPasswordHistoryOptions           `json:"password_history,omitempty" url:"password_history,omitempty"`
 	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions    `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
 	PasswordDictionary               *ConnectionPasswordDictionaryOptions        `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
-	ApiEnableUsers                   *bool                                       `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
+	APIEnableUsers                   *bool                                       `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
 	BasicProfile                     *bool                                       `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
 	ExtAdmin                         *bool                                       `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
 	ExtIsSuspended                   *bool                                       `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
@@ -3890,11 +3890,11 @@ func (u *UpdateConnectionOptions) GetPasswordDictionary() ConnectionPasswordDict
 	return *u.PasswordDictionary
 }
 
-func (u *UpdateConnectionOptions) GetApiEnableUsers() bool {
-	if u == nil || u.ApiEnableUsers == nil {
+func (u *UpdateConnectionOptions) GetAPIEnableUsers() bool {
+	if u == nil || u.APIEnableUsers == nil {
 		return false
 	}
-	return *u.ApiEnableUsers
+	return *u.APIEnableUsers
 }
 
 func (u *UpdateConnectionOptions) GetBasicProfile() bool {
@@ -4097,11 +4097,11 @@ func (u *UpdateConnectionOptions) SetPasswordDictionary(passwordDictionary *Conn
 	u.require(updateConnectionOptionsFieldPasswordDictionary)
 }
 
-// SetApiEnableUsers sets the ApiEnableUsers field and marks it as non-optional;
+// SetAPIEnableUsers sets the APIEnableUsers field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionOptions) SetApiEnableUsers(apiEnableUsers *bool) {
-	u.ApiEnableUsers = apiEnableUsers
-	u.require(updateConnectionOptionsFieldApiEnableUsers)
+func (u *UpdateConnectionOptions) SetAPIEnableUsers(apiEnableUsers *bool) {
+	u.APIEnableUsers = apiEnableUsers
+	u.require(updateConnectionOptionsFieldAPIEnableUsers)
 }
 
 // SetBasicProfile sets the BasicProfile field and marks it as non-optional;
@@ -4235,7 +4235,7 @@ var (
 	updateConnectionResponseContentFieldName               = big.NewInt(1 << 0)
 	updateConnectionResponseContentFieldDisplayName        = big.NewInt(1 << 1)
 	updateConnectionResponseContentFieldOptions            = big.NewInt(1 << 2)
-	updateConnectionResponseContentFieldId                 = big.NewInt(1 << 3)
+	updateConnectionResponseContentFieldID                 = big.NewInt(1 << 3)
 	updateConnectionResponseContentFieldStrategy           = big.NewInt(1 << 4)
 	updateConnectionResponseContentFieldRealms             = big.NewInt(1 << 5)
 	updateConnectionResponseContentFieldEnabledClients     = big.NewInt(1 << 6)
@@ -4251,7 +4251,7 @@ type UpdateConnectionResponseContent struct {
 	DisplayName *string            `json:"display_name,omitempty" url:"display_name,omitempty"`
 	Options     *ConnectionOptions `json:"options,omitempty" url:"options,omitempty"`
 	// The connection's identifier
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The type of the connection, related to the identity provider
 	Strategy *string `json:"strategy,omitempty" url:"strategy,omitempty"`
 	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
@@ -4292,11 +4292,11 @@ func (u *UpdateConnectionResponseContent) GetOptions() ConnectionOptions {
 	return *u.Options
 }
 
-func (u *UpdateConnectionResponseContent) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UpdateConnectionResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UpdateConnectionResponseContent) GetStrategy() string {
@@ -4373,11 +4373,11 @@ func (u *UpdateConnectionResponseContent) SetOptions(options *ConnectionOptions)
 	u.require(updateConnectionResponseContentFieldOptions)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionResponseContent) SetId(id *string) {
-	u.Id = id
-	u.require(updateConnectionResponseContentFieldId)
+func (u *UpdateConnectionResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateConnectionResponseContentFieldID)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;

@@ -28,7 +28,7 @@ Retrieve all actions.
 
 ```go
 request := &management.ListActionsRequestParameters{
-        TriggerId: management.String(
+        TriggerID: management.String(
             "triggerId",
         ),
         ActionName: management.String(
@@ -66,7 +66,7 @@ client.Actions.List(
 <dl>
 <dd>
 
-**triggerId:** `*management.ActionTriggerTypeEnum` — An actions extensibility point.
+**triggerID:** `*management.ActionTriggerTypeEnum` — An actions extensibility point.
     
 </dd>
 </dl>
@@ -149,7 +149,7 @@ request := &management.CreateActionRequestContent{
         Name: "name",
         SupportedTriggers: []*management.ActionTrigger{
             &management.ActionTrigger{
-                Id: "id",
+                ID: "id",
             },
         },
     }
@@ -232,7 +232,7 @@ client.Actions.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Get(Id) -> *management.GetActionResponseContent</code></summary>
+<details><summary><code>client.Actions.Get(ID) -> *management.GetActionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -290,7 +290,7 @@ client.Actions.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Actions.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -362,7 +362,7 @@ client.Actions.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Update(Id, request) -> *management.UpdateActionResponseContent</code></summary>
+<details><summary><code>client.Actions.Update(ID, request) -> *management.UpdateActionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -470,7 +470,7 @@ client.Actions.Update(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Deploy(Id) -> *management.DeployActionResponseContent</code></summary>
+<details><summary><code>client.Actions.Deploy(ID) -> *management.DeployActionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -528,7 +528,7 @@ client.Actions.Deploy(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Test(Id, request) -> *management.TestActionResponseContent</code></summary>
+<details><summary><code>client.Actions.Test(ID, request) -> *management.TestActionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -698,7 +698,7 @@ client.Branding.Update(
 <dl>
 <dd>
 
-**faviconUrl:** `*string` — URL for the favicon. Must use HTTPS.
+**faviconURL:** `*string` — URL for the favicon. Must use HTTPS.
     
 </dd>
 </dl>
@@ -706,7 +706,7 @@ client.Branding.Update(
 <dl>
 <dd>
 
-**logoUrl:** `*string` — URL for the logo. Must use HTTPS.
+**logoURL:** `*string` — URL for the logo. Must use HTTPS.
     
 </dd>
 </dl>
@@ -764,7 +764,7 @@ request := &management.ListClientGrantsRequestParameters{
         Audience: management.String(
             "audience",
         ),
-        ClientId: management.String(
+        ClientID: management.String(
             "client_id",
         ),
         AllowAnyOrganization: management.Bool(
@@ -815,7 +815,7 @@ client.ClientGrants.List(
 <dl>
 <dd>
 
-**clientId:** `*string` — Optional filter on client_id.
+**clientID:** `*string` — Optional filter on client_id.
     
 </dd>
 </dl>
@@ -871,7 +871,7 @@ Create a client grant for a machine-to-machine login flow. To learn more, read <
 
 ```go
 request := &management.CreateClientGrantRequestContent{
-        ClientId: "client_id",
+        ClientID: "client_id",
         Audience: "audience",
     }
 client.ClientGrants.Create(
@@ -893,7 +893,7 @@ client.ClientGrants.Create(
 <dl>
 <dd>
 
-**clientId:** `string` — ID of the client.
+**clientID:** `string` — ID of the client.
     
 </dd>
 </dl>
@@ -953,7 +953,7 @@ client.ClientGrants.Create(
 </dl>
 </details>
 
-<details><summary><code>client.ClientGrants.Delete(Id) -> error</code></summary>
+<details><summary><code>client.ClientGrants.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -1011,7 +1011,7 @@ client.ClientGrants.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.ClientGrants.Update(Id, request) -> *management.UpdateClientGrantResponseContent</code></summary>
+<details><summary><code>client.ClientGrants.Update(ID, request) -> *management.UpdateClientGrantResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -1365,7 +1365,7 @@ client.Clients.Create(
 <dl>
 <dd>
 
-**logoUri:** `*string` — URL of the logo to display for this client. Recommended size is 150x150 pixels.
+**logoURI:** `*string` — URL of the logo to display for this client. Recommended size is 150x150 pixels.
     
 </dd>
 </dl>
@@ -1437,7 +1437,7 @@ client.Clients.Create(
 <dl>
 <dd>
 
-**allowedLogoutUrls:** `[]string` — Comma-separated list of URLs that are valid to redirect to after logout from Auth0. Wildcards are allowed for subdomains.
+**allowedLogoutURLs:** `[]string` — Comma-separated list of URLs that are valid to redirect to after logout from Auth0. Wildcards are allowed for subdomains.
     
 </dd>
 </dl>
@@ -1589,7 +1589,7 @@ client.Clients.Create(
 <dl>
 <dd>
 
-**initiateLoginUri:** `*string` — Initiate login uri, must be https
+**initiateLoginURI:** `*string` — Initiate login uri, must be https
     
 </dd>
 </dl>
@@ -1713,7 +1713,7 @@ client.Clients.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.Get(Id) -> *management.GetClientResponseContent</code></summary>
+<details><summary><code>client.Clients.Get(ID) -> *management.GetClientResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -1826,7 +1826,7 @@ client.Clients.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Clients.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -1884,7 +1884,7 @@ client.Clients.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.Update(Id, request) -> *management.UpdateClientResponseContent</code></summary>
+<details><summary><code>client.Clients.Update(ID, request) -> *management.UpdateClientResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -1972,7 +1972,7 @@ client.Clients.Update(
 <dl>
 <dd>
 
-**logoUri:** `*string` — The URL of the client logo (recommended size: 150x150)
+**logoURI:** `*string` — The URL of the client logo (recommended size: 150x150)
     
 </dd>
 </dl>
@@ -2052,7 +2052,7 @@ client.Clients.Update(
 <dl>
 <dd>
 
-**allowedLogoutUrls:** `[]string` — URLs that are valid to redirect to after logout from Auth0.
+**allowedLogoutURLs:** `[]string` — URLs that are valid to redirect to after logout from Auth0.
     
 </dd>
 </dl>
@@ -2204,7 +2204,7 @@ client.Clients.Update(
 <dl>
 <dd>
 
-**initiateLoginUri:** `*string` — Initiate login uri, must be https
+**initiateLoginURI:** `*string` — Initiate login uri, must be https
     
 </dd>
 </dl>
@@ -2284,7 +2284,7 @@ client.Clients.Update(
 <dl>
 <dd>
 
-**signedRequestObject:** `*management.ClientSignedRequestObjectWithCredentialId` 
+**signedRequestObject:** `*management.ClientSignedRequestObjectWithCredentialID` 
     
 </dd>
 </dl>
@@ -2312,7 +2312,7 @@ client.Clients.Update(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.RotateSecret(Id) -> *management.RotateClientSecretResponseContent</code></summary>
+<details><summary><code>client.Clients.RotateSecret(ID) -> *management.RotateClientSecretResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -2634,7 +2634,7 @@ client.Connections.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Get(Id) -> *management.GetConnectionResponseContent</code></summary>
+<details><summary><code>client.Connections.Get(ID) -> *management.GetConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -2717,7 +2717,7 @@ client.Connections.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Connections.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -2775,7 +2775,7 @@ client.Connections.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Update(Id, request) -> *management.UpdateConnectionResponseContent</code></summary>
+<details><summary><code>client.Connections.Update(ID, request) -> *management.UpdateConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -2893,7 +2893,7 @@ client.Connections.Update(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.CheckStatus(Id) -> error</code></summary>
+<details><summary><code>client.Connections.CheckStatus(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -3081,7 +3081,7 @@ client.CustomDomains.Create(
 <dl>
 <dd>
 
-**tlsPolicy:** `*management.CustomDomainTlsPolicyEnum` 
+**tlsPolicy:** `*management.CustomDomainTLSPolicyEnum` 
     
 </dd>
 </dl>
@@ -3089,7 +3089,7 @@ client.CustomDomains.Create(
 <dl>
 <dd>
 
-**customClientIpHeader:** `*management.CustomDomainCustomClientIpHeader` 
+**customClientIPHeader:** `*management.CustomDomainCustomClientIPHeader` 
     
 </dd>
 </dl>
@@ -3101,7 +3101,7 @@ client.CustomDomains.Create(
 </dl>
 </details>
 
-<details><summary><code>client.CustomDomains.Get(Id) -> *management.GetCustomDomainResponseContent</code></summary>
+<details><summary><code>client.CustomDomains.Get(ID) -> *management.GetCustomDomainResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3159,7 +3159,7 @@ client.CustomDomains.Get(
 </dl>
 </details>
 
-<details><summary><code>client.CustomDomains.Delete(Id) -> error</code></summary>
+<details><summary><code>client.CustomDomains.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -3217,7 +3217,7 @@ client.CustomDomains.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.CustomDomains.Update(Id, request) -> *management.UpdateCustomDomainResponseContent</code></summary>
+<details><summary><code>client.CustomDomains.Update(ID, request) -> *management.UpdateCustomDomainResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3296,7 +3296,7 @@ client.CustomDomains.Update(
 <dl>
 <dd>
 
-**tlsPolicy:** `*management.CustomDomainTlsPolicyEnum` 
+**tlsPolicy:** `*management.CustomDomainTLSPolicyEnum` 
     
 </dd>
 </dl>
@@ -3304,7 +3304,7 @@ client.CustomDomains.Update(
 <dl>
 <dd>
 
-**customClientIpHeader:** `*management.CustomDomainCustomClientIpHeader` 
+**customClientIPHeader:** `*management.CustomDomainCustomClientIPHeader` 
     
 </dd>
 </dl>
@@ -3316,7 +3316,7 @@ client.CustomDomains.Update(
 </dl>
 </details>
 
-<details><summary><code>client.CustomDomains.Test(Id) -> *management.TestCustomDomainResponseContent</code></summary>
+<details><summary><code>client.CustomDomains.Test(ID) -> *management.TestCustomDomainResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3374,7 +3374,7 @@ client.CustomDomains.Test(
 </dl>
 </details>
 
-<details><summary><code>client.CustomDomains.Verify(Id) -> *management.VerifyCustomDomainResponseContent</code></summary>
+<details><summary><code>client.CustomDomains.Verify(ID) -> *management.VerifyCustomDomainResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3483,10 +3483,10 @@ request := &management.ListDeviceCredentialsRequestParameters{
         IncludeFields: management.Bool(
             true,
         ),
-        UserId: management.String(
+        UserID: management.String(
             "user_id",
         ),
-        ClientId: management.String(
+        ClientID: management.String(
             "client_id",
         ),
         Type: management.DeviceCredentialTypeEnumPublicKey.Ptr(),
@@ -3550,7 +3550,7 @@ client.DeviceCredentials.List(
 <dl>
 <dd>
 
-**userId:** `*string` — user_id of the devices to retrieve.
+**userID:** `*string` — user_id of the devices to retrieve.
     
 </dd>
 </dl>
@@ -3558,7 +3558,7 @@ client.DeviceCredentials.List(
 <dl>
 <dd>
 
-**clientId:** `*string` — client_id of the devices to retrieve.
+**clientID:** `*string` — client_id of the devices to retrieve.
     
 </dd>
 </dl>
@@ -3613,7 +3613,7 @@ request := &management.CreatePublicKeyDeviceCredentialRequestContent{
             "public_key",
         ),
         Value: "value",
-        DeviceId: "device_id",
+        DeviceID: "device_id",
     }
 client.DeviceCredentials.CreatePublicKey(
         context.TODO(),
@@ -3658,7 +3658,7 @@ client.DeviceCredentials.CreatePublicKey(
 <dl>
 <dd>
 
-**deviceId:** `string` — Unique identifier for the device. Recommend using <a href="http://developer.android.com/reference/android/provider/Settings.Secure.html#ANDROID_ID">Android_ID</a> on Android and <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/index.html#//apple_ref/occ/instp/UIDevice/identifierForVendor">identifierForVendor</a>.
+**deviceID:** `string` — Unique identifier for the device. Recommend using <a href="http://developer.android.com/reference/android/provider/Settings.Secure.html#ANDROID_ID">Android_ID</a> on Android and <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/index.html#//apple_ref/occ/instp/UIDevice/identifierForVendor">identifierForVendor</a>.
     
 </dd>
 </dl>
@@ -3666,7 +3666,7 @@ client.DeviceCredentials.CreatePublicKey(
 <dl>
 <dd>
 
-**clientId:** `*string` — client_id of the client (application) this credential is for.
+**clientID:** `*string` — client_id of the client (application) this credential is for.
     
 </dd>
 </dl>
@@ -3678,7 +3678,7 @@ client.DeviceCredentials.CreatePublicKey(
 </dl>
 </details>
 
-<details><summary><code>client.DeviceCredentials.Delete(Id) -> error</code></summary>
+<details><summary><code>client.DeviceCredentials.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -3810,7 +3810,7 @@ client.EmailTemplates.Create(
 <dl>
 <dd>
 
-**resultUrl:** `*string` — URL to redirect the user to after a successful action.
+**resultURL:** `*string` — URL to redirect the user to after a successful action.
     
 </dd>
 </dl>
@@ -4002,7 +4002,7 @@ client.EmailTemplates.Set(
 <dl>
 <dd>
 
-**resultUrl:** `*string` — URL to redirect the user to after a successful action.
+**resultURL:** `*string` — URL to redirect the user to after a successful action.
     
 </dd>
 </dl>
@@ -4134,7 +4134,7 @@ client.EmailTemplates.Update(
 <dl>
 <dd>
 
-**resultUrl:** `*string` — URL to redirect the user to after a successful action.
+**resultURL:** `*string` — URL to redirect the user to after a successful action.
     
 </dd>
 </dl>
@@ -4311,7 +4311,7 @@ client.EventStreams.Create(
 </dl>
 </details>
 
-<details><summary><code>client.EventStreams.Get(Id) -> *management.GetEventStreamResponseContent</code></summary>
+<details><summary><code>client.EventStreams.Get(ID) -> *management.GetEventStreamResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4355,7 +4355,7 @@ client.EventStreams.Get(
 </dl>
 </details>
 
-<details><summary><code>client.EventStreams.Delete(Id) -> error</code></summary>
+<details><summary><code>client.EventStreams.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -4399,7 +4399,7 @@ client.EventStreams.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.EventStreams.Update(Id, request) -> *management.UpdateEventStreamResponseContent</code></summary>
+<details><summary><code>client.EventStreams.Update(ID, request) -> *management.UpdateEventStreamResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4477,7 +4477,7 @@ client.EventStreams.Update(
 </dl>
 </details>
 
-<details><summary><code>client.EventStreams.Test(Id, request) -> *management.CreateEventStreamTestEventResponseContent</code></summary>
+<details><summary><code>client.EventStreams.Test(ID, request) -> *management.CreateEventStreamTestEventResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4687,7 +4687,7 @@ client.Flows.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Flows.Get(Id) -> *management.GetFlowResponseContent</code></summary>
+<details><summary><code>client.Flows.Get(ID) -> *management.GetFlowResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4741,7 +4741,7 @@ client.Flows.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Flows.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Flows.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -4785,7 +4785,7 @@ client.Flows.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Flows.Update(Id, request) -> *management.UpdateFlowResponseContent</code></summary>
+<details><summary><code>client.Flows.Update(ID, request) -> *management.UpdateFlowResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5030,7 +5030,7 @@ client.Forms.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Forms.Get(Id) -> *management.GetFormResponseContent</code></summary>
+<details><summary><code>client.Forms.Get(ID) -> *management.GetFormResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5084,7 +5084,7 @@ client.Forms.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Forms.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Forms.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -5128,7 +5128,7 @@ client.Forms.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Forms.Update(Id, request) -> *management.UpdateFormResponseContent</code></summary>
+<details><summary><code>client.Forms.Update(ID, request) -> *management.UpdateFormResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5276,10 +5276,10 @@ request := &management.ListUserGrantsRequestParameters{
         IncludeTotals: management.Bool(
             true,
         ),
-        UserId: management.String(
+        UserID: management.String(
             "user_id",
         ),
-        ClientId: management.String(
+        ClientID: management.String(
             "client_id",
         ),
         Audience: management.String(
@@ -5329,7 +5329,7 @@ client.UserGrants.List(
 <dl>
 <dd>
 
-**userId:** `*string` — user_id of the grants to retrieve.
+**userID:** `*string` — user_id of the grants to retrieve.
     
 </dd>
 </dl>
@@ -5337,7 +5337,7 @@ client.UserGrants.List(
 <dl>
 <dd>
 
-**clientId:** `*string` — client_id of the grants to retrieve.
+**clientID:** `*string` — client_id of the grants to retrieve.
     
 </dd>
 </dl>
@@ -5357,7 +5357,7 @@ client.UserGrants.List(
 </dl>
 </details>
 
-<details><summary><code>client.UserGrants.DeleteByUserId() -> error</code></summary>
+<details><summary><code>client.UserGrants.DeleteByUserID() -> error</code></summary>
 <dl>
 <dd>
 
@@ -5384,10 +5384,10 @@ Delete a grant associated with your account.
 <dd>
 
 ```go
-request := &management.DeleteUserGrantByUserIdRequestParameters{
-        UserId: "user_id",
+request := &management.DeleteUserGrantByUserIDRequestParameters{
+        UserID: "user_id",
     }
-client.UserGrants.DeleteByUserId(
+client.UserGrants.DeleteByUserID(
         context.TODO(),
         request,
     )
@@ -5406,7 +5406,7 @@ client.UserGrants.DeleteByUserId(
 <dl>
 <dd>
 
-**userId:** `string` — user_id of the grant to delete.
+**userID:** `string` — user_id of the grant to delete.
     
 </dd>
 </dl>
@@ -5418,7 +5418,7 @@ client.UserGrants.DeleteByUserId(
 </dl>
 </details>
 
-<details><summary><code>client.UserGrants.Delete(Id) -> error</code></summary>
+<details><summary><code>client.UserGrants.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -5520,7 +5520,7 @@ request := &management.ListHooksRequestParameters{
         Fields: management.String(
             "fields",
         ),
-        TriggerId: management.HookTriggerIdEnumCredentialsExchange.Ptr(),
+        TriggerID: management.HookTriggerIDEnumCredentialsExchange.Ptr(),
     }
 client.Hooks.List(
         context.TODO(),
@@ -5581,7 +5581,7 @@ client.Hooks.List(
 <dl>
 <dd>
 
-**triggerId:** `*management.HookTriggerIdEnum` — Retrieves hooks that match the trigger
+**triggerID:** `*management.HookTriggerIDEnum` — Retrieves hooks that match the trigger
     
 </dd>
 </dl>
@@ -5623,7 +5623,7 @@ Create a new hook.
 request := &management.CreateHookRequestContent{
         Name: "name",
         Script: "script",
-        TriggerId: management.HookTriggerIdEnumCredentialsExchange,
+        TriggerID: management.HookTriggerIDEnumCredentialsExchange,
     }
 client.Hooks.Create(
         context.TODO(),
@@ -5676,7 +5676,7 @@ client.Hooks.Create(
 <dl>
 <dd>
 
-**triggerId:** `*management.HookTriggerIdEnum` 
+**triggerID:** `*management.HookTriggerIDEnum` 
     
 </dd>
 </dl>
@@ -5688,7 +5688,7 @@ client.Hooks.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Hooks.Get(Id) -> *management.GetHookResponseContent</code></summary>
+<details><summary><code>client.Hooks.Get(ID) -> *management.GetHookResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5760,7 +5760,7 @@ client.Hooks.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Hooks.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Hooks.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -5818,7 +5818,7 @@ client.Hooks.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Hooks.Update(Id, request) -> *management.UpdateHookResponseContent</code></summary>
+<details><summary><code>client.Hooks.Update(ID, request) -> *management.UpdateHookResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5911,7 +5911,7 @@ client.Hooks.Update(
 </details>
 
 ## Jobs
-<details><summary><code>client.Jobs.Get(Id) -> *management.GetJobResponseContent</code></summary>
+<details><summary><code>client.Jobs.Get(ID) -> *management.GetJobResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6230,12 +6230,12 @@ Response: <pre><code>{
 
 ```go
 request := &management.CreateLogStreamRequestContent{
-        CreateLogStreamHttpRequestBody: &management.CreateLogStreamHttpRequestBody{
-            Type: management.LogStreamHttpEnum(
+        CreateLogStreamHTTPRequestBody: &management.CreateLogStreamHTTPRequestBody{
+            Type: management.LogStreamHTTPEnum(
                 "http",
             ),
-            Sink: &management.LogStreamHttpSink{
-                HttpEndpoint: "httpEndpoint",
+            Sink: &management.LogStreamHTTPSink{
+                HTTPEndpoint: "httpEndpoint",
             },
         },
     }
@@ -6270,7 +6270,7 @@ client.LogStreams.Create(
 </dl>
 </details>
 
-<details><summary><code>client.LogStreams.Get(Id) -> *management.GetLogStreamResponseContent</code></summary>
+<details><summary><code>client.LogStreams.Get(ID) -> *management.GetLogStreamResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6429,7 +6429,7 @@ client.LogStreams.Get(
 </dl>
 </details>
 
-<details><summary><code>client.LogStreams.Delete(Id) -> error</code></summary>
+<details><summary><code>client.LogStreams.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -6487,7 +6487,7 @@ client.LogStreams.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.LogStreams.Update(Id, request) -> *management.UpdateLogStreamResponseContent</code></summary>
+<details><summary><code>client.LogStreams.Update(ID, request) -> *management.UpdateLogStreamResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6791,7 +6791,7 @@ Values specified without quotes are matched using a case insensitive 'starts wit
 </dl>
 </details>
 
-<details><summary><code>client.Logs.Get(Id) -> *management.GetLogResponseContent</code></summary>
+<details><summary><code>client.Logs.Get(ID) -> *management.GetLogResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6849,8 +6849,8 @@ client.Logs.Get(
 </dl>
 </details>
 
-## NetworkAcls
-<details><summary><code>client.NetworkAcls.List() -> *management.ListNetworkAclsOffsetPaginatedResponseContent</code></summary>
+## NetworkACLs
+<details><summary><code>client.NetworkACLs.List() -> *management.ListNetworkACLsOffsetPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6877,7 +6877,7 @@ Get all access control list entries for your client.
 <dd>
 
 ```go
-request := &management.ListNetworkAclsRequestParameters{
+request := &management.ListNetworkACLsRequestParameters{
         Page: management.Int(
             1,
         ),
@@ -6888,7 +6888,7 @@ request := &management.ListNetworkAclsRequestParameters{
             true,
         ),
     }
-client.NetworkAcls.List(
+client.NetworkACLs.List(
         context.TODO(),
         request,
     )
@@ -6935,7 +6935,7 @@ client.NetworkAcls.List(
 </dl>
 </details>
 
-<details><summary><code>client.NetworkAcls.Create(request) -> error</code></summary>
+<details><summary><code>client.NetworkACLs.Create(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -6962,16 +6962,16 @@ Create a new access control list for your client.
 <dd>
 
 ```go
-request := &management.CreateNetworkAclRequestContent{
+request := &management.CreateNetworkACLRequestContent{
         Description: "description",
         Active: true,
         Priority: 1.1,
-        Rule: &management.NetworkAclRule{
-            Action: &management.NetworkAclAction{},
-            Scope: management.NetworkAclRuleScopeEnumManagement,
+        Rule: &management.NetworkACLRule{
+            Action: &management.NetworkACLAction{},
+            Scope: management.NetworkACLRuleScopeEnumManagement,
         },
     }
-client.NetworkAcls.Create(
+client.NetworkACLs.Create(
         context.TODO(),
         request,
     )
@@ -7014,7 +7014,7 @@ client.NetworkAcls.Create(
 <dl>
 <dd>
 
-**rule:** `*management.NetworkAclRule` 
+**rule:** `*management.NetworkACLRule` 
     
 </dd>
 </dl>
@@ -7026,7 +7026,7 @@ client.NetworkAcls.Create(
 </dl>
 </details>
 
-<details><summary><code>client.NetworkAcls.Get(Id) -> *management.GetNetworkAclsResponseContent</code></summary>
+<details><summary><code>client.NetworkACLs.Get(ID) -> *management.GetNetworkACLsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7053,7 +7053,7 @@ Get a specific access control list entry for your client.
 <dd>
 
 ```go
-client.NetworkAcls.Get(
+client.NetworkACLs.Get(
         context.TODO(),
         "id",
     )
@@ -7084,7 +7084,7 @@ client.NetworkAcls.Get(
 </dl>
 </details>
 
-<details><summary><code>client.NetworkAcls.Set(Id, request) -> *management.SetNetworkAclsResponseContent</code></summary>
+<details><summary><code>client.NetworkACLs.Set(ID, request) -> *management.SetNetworkACLsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7111,16 +7111,16 @@ Update existing access control list for your client.
 <dd>
 
 ```go
-request := &management.SetNetworkAclRequestContent{
+request := &management.SetNetworkACLRequestContent{
         Description: "description",
         Active: true,
         Priority: 1.1,
-        Rule: &management.NetworkAclRule{
-            Action: &management.NetworkAclAction{},
-            Scope: management.NetworkAclRuleScopeEnumManagement,
+        Rule: &management.NetworkACLRule{
+            Action: &management.NetworkACLAction{},
+            Scope: management.NetworkACLRuleScopeEnumManagement,
         },
     }
-client.NetworkAcls.Set(
+client.NetworkACLs.Set(
         context.TODO(),
         "id",
         request,
@@ -7172,7 +7172,7 @@ client.NetworkAcls.Set(
 <dl>
 <dd>
 
-**rule:** `*management.NetworkAclRule` 
+**rule:** `*management.NetworkACLRule` 
     
 </dd>
 </dl>
@@ -7184,7 +7184,7 @@ client.NetworkAcls.Set(
 </dl>
 </details>
 
-<details><summary><code>client.NetworkAcls.Delete(Id) -> error</code></summary>
+<details><summary><code>client.NetworkACLs.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -7211,7 +7211,7 @@ Delete existing access control list for your client.
 <dd>
 
 ```go
-client.NetworkAcls.Delete(
+client.NetworkACLs.Delete(
         context.TODO(),
         "id",
     )
@@ -7242,7 +7242,7 @@ client.NetworkAcls.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.NetworkAcls.Update(Id, request) -> *management.UpdateNetworkAclResponseContent</code></summary>
+<details><summary><code>client.NetworkACLs.Update(ID, request) -> *management.UpdateNetworkACLResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7269,8 +7269,8 @@ Update existing access control list for your client.
 <dd>
 
 ```go
-request := &management.UpdateNetworkAclRequestContent{}
-client.NetworkAcls.Update(
+request := &management.UpdateNetworkACLRequestContent{}
+client.NetworkACLs.Update(
         context.TODO(),
         "id",
         request,
@@ -7322,7 +7322,7 @@ client.NetworkAcls.Update(
 <dl>
 <dd>
 
-**rule:** `*management.NetworkAclRule` 
+**rule:** `*management.NetworkACLRule` 
     
 </dd>
 </dl>
@@ -7597,7 +7597,7 @@ client.Organizations.GetByName(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Get(Id) -> *management.GetOrganizationResponseContent</code></summary>
+<details><summary><code>client.Organizations.Get(ID) -> *management.GetOrganizationResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7655,7 +7655,7 @@ client.Organizations.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Organizations.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -7715,7 +7715,7 @@ client.Organizations.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Update(Id, request) -> *management.UpdateOrganizationResponseContent</code></summary>
+<details><summary><code>client.Organizations.Update(ID, request) -> *management.UpdateOrganizationResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7934,7 +7934,7 @@ client.Prompts.UpdateSettings(
 </details>
 
 ## RefreshTokens
-<details><summary><code>client.RefreshTokens.Get(Id) -> *management.GetRefreshTokenResponseContent</code></summary>
+<details><summary><code>client.RefreshTokens.Get(ID) -> *management.GetRefreshTokenResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7992,7 +7992,7 @@ client.RefreshTokens.Get(
 </dl>
 </details>
 
-<details><summary><code>client.RefreshTokens.Delete(Id) -> error</code></summary>
+<details><summary><code>client.RefreshTokens.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -8328,7 +8328,7 @@ client.ResourceServers.Create(
 </dl>
 </details>
 
-<details><summary><code>client.ResourceServers.Get(Id) -> *management.GetResourceServerResponseContent</code></summary>
+<details><summary><code>client.ResourceServers.Get(ID) -> *management.GetResourceServerResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -8400,7 +8400,7 @@ client.ResourceServers.Get(
 </dl>
 </details>
 
-<details><summary><code>client.ResourceServers.Delete(Id) -> error</code></summary>
+<details><summary><code>client.ResourceServers.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -8458,7 +8458,7 @@ client.ResourceServers.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.ResourceServers.Update(Id, request) -> *management.UpdateResourceServerResponseContent</code></summary>
+<details><summary><code>client.ResourceServers.Update(ID, request) -> *management.UpdateResourceServerResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -8800,7 +8800,7 @@ client.Roles.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Roles.Get(Id) -> *management.GetRoleResponseContent</code></summary>
+<details><summary><code>client.Roles.Get(ID) -> *management.GetRoleResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -8858,7 +8858,7 @@ client.Roles.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Roles.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Roles.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -8916,7 +8916,7 @@ client.Roles.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Roles.Update(Id, request) -> *management.UpdateRoleResponseContent</code></summary>
+<details><summary><code>client.Roles.Update(ID, request) -> *management.UpdateRoleResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -9199,7 +9199,7 @@ client.Rules.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Rules.Get(Id) -> *management.GetRuleResponseContent</code></summary>
+<details><summary><code>client.Rules.Get(ID) -> *management.GetRuleResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -9282,7 +9282,7 @@ client.Rules.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Rules.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Rules.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -9340,7 +9340,7 @@ client.Rules.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Rules.Update(Id, request) -> *management.UpdateRuleResponseContent</code></summary>
+<details><summary><code>client.Rules.Update(ID, request) -> *management.UpdateRuleResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -9780,7 +9780,7 @@ client.SelfServiceProfiles.Create(
 <dl>
 <dd>
 
-**userAttributeProfileId:** `*string` — ID of the user-attribute-profile to associate with this self-service profile.
+**userAttributeProfileID:** `*string` — ID of the user-attribute-profile to associate with this self-service profile.
     
 </dd>
 </dl>
@@ -9792,7 +9792,7 @@ client.SelfServiceProfiles.Create(
 </dl>
 </details>
 
-<details><summary><code>client.SelfServiceProfiles.Get(Id) -> *management.GetSelfServiceProfileResponseContent</code></summary>
+<details><summary><code>client.SelfServiceProfiles.Get(ID) -> *management.GetSelfServiceProfileResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -9850,7 +9850,7 @@ client.SelfServiceProfiles.Get(
 </dl>
 </details>
 
-<details><summary><code>client.SelfServiceProfiles.Delete(Id) -> error</code></summary>
+<details><summary><code>client.SelfServiceProfiles.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -9908,7 +9908,7 @@ client.SelfServiceProfiles.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.SelfServiceProfiles.Update(Id, request) -> *management.UpdateSelfServiceProfileResponseContent</code></summary>
+<details><summary><code>client.SelfServiceProfiles.Update(ID, request) -> *management.UpdateSelfServiceProfileResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10004,7 +10004,7 @@ client.SelfServiceProfiles.Update(
 <dl>
 <dd>
 
-**userAttributeProfileId:** `*string` — ID of the user-attribute-profile to associate with this self-service profile.
+**userAttributeProfileID:** `*string` — ID of the user-attribute-profile to associate with this self-service profile.
     
 </dd>
 </dl>
@@ -10017,7 +10017,7 @@ client.SelfServiceProfiles.Update(
 </details>
 
 ## Sessions
-<details><summary><code>client.Sessions.Get(Id) -> *management.GetSessionResponseContent</code></summary>
+<details><summary><code>client.Sessions.Get(ID) -> *management.GetSessionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10075,7 +10075,7 @@ client.Sessions.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Sessions.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Sessions.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -10133,7 +10133,7 @@ client.Sessions.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Sessions.Update(Id, request) -> *management.UpdateSessionResponseContent</code></summary>
+<details><summary><code>client.Sessions.Update(ID, request) -> *management.UpdateSessionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10201,7 +10201,7 @@ client.Sessions.Update(
 </dl>
 </details>
 
-<details><summary><code>client.Sessions.Revoke(Id) -> error</code></summary>
+<details><summary><code>client.Sessions.Revoke(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -10509,7 +10509,7 @@ Create an email verification ticket for a given user. An email verification tick
 
 ```go
 request := &management.VerifyEmailTicketRequestContent{
-        UserId: "user_id",
+        UserID: "user_id",
     }
 client.Tickets.VerifyEmail(
         context.TODO(),
@@ -10530,7 +10530,7 @@ client.Tickets.VerifyEmail(
 <dl>
 <dd>
 
-**resultUrl:** `*string` — URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using client_id or organization_id.
+**resultURL:** `*string` — URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using client_id or organization_id.
     
 </dd>
 </dl>
@@ -10538,7 +10538,7 @@ client.Tickets.VerifyEmail(
 <dl>
 <dd>
 
-**userId:** `string` — user_id of for whom the ticket should be created.
+**userID:** `string` — user_id of for whom the ticket should be created.
     
 </dd>
 </dl>
@@ -10546,7 +10546,7 @@ client.Tickets.VerifyEmail(
 <dl>
 <dd>
 
-**clientId:** `*string` — ID of the client (application). If provided for tenants using the New Universal Login experience, the email template and UI displays application details, and the user is prompted to redirect to the application's <a target='' href='https://auth0.com/docs/authenticate/login/auth0-universal-login/configure-default-login-routes#completing-the-password-reset-flow'>default login route</a> after the ticket is used. client_id is required to use the <a target='' href='https://auth0.com/docs/customize/actions/flows-and-triggers/post-change-password-flow'>Password Reset Post Challenge</a> trigger.
+**clientID:** `*string` — ID of the client (application). If provided for tenants using the New Universal Login experience, the email template and UI displays application details, and the user is prompted to redirect to the application's <a target='' href='https://auth0.com/docs/authenticate/login/auth0-universal-login/configure-default-login-routes#completing-the-password-reset-flow'>default login route</a> after the ticket is used. client_id is required to use the <a target='' href='https://auth0.com/docs/customize/actions/flows-and-triggers/post-change-password-flow'>Password Reset Post Challenge</a> trigger.
     
 </dd>
 </dl>
@@ -10554,7 +10554,7 @@ client.Tickets.VerifyEmail(
 <dl>
 <dd>
 
-**organizationId:** `*string` — (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
+**organizationID:** `*string` — (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
     
 </dd>
 </dl>
@@ -10639,7 +10639,7 @@ client.Tickets.ChangePassword(
 <dl>
 <dd>
 
-**resultUrl:** `*string` — URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using client_id or organization_id.
+**resultURL:** `*string` — URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using client_id or organization_id.
     
 </dd>
 </dl>
@@ -10647,7 +10647,7 @@ client.Tickets.ChangePassword(
 <dl>
 <dd>
 
-**userId:** `*string` — user_id of for whom the ticket should be created.
+**userID:** `*string` — user_id of for whom the ticket should be created.
     
 </dd>
 </dl>
@@ -10655,7 +10655,7 @@ client.Tickets.ChangePassword(
 <dl>
 <dd>
 
-**clientId:** `*string` — ID of the client (application). If provided for tenants using the New Universal Login experience, the email template and UI displays application details, and the user is prompted to redirect to the application's <a target='' href='https://auth0.com/docs/authenticate/login/auth0-universal-login/configure-default-login-routes#completing-the-password-reset-flow'>default login route</a> after the ticket is used. client_id is required to use the <a target='' href='https://auth0.com/docs/customize/actions/flows-and-triggers/post-change-password-flow'>Password Reset Post Challenge</a> trigger.
+**clientID:** `*string` — ID of the client (application). If provided for tenants using the New Universal Login experience, the email template and UI displays application details, and the user is prompted to redirect to the application's <a target='' href='https://auth0.com/docs/authenticate/login/auth0-universal-login/configure-default-login-routes#completing-the-password-reset-flow'>default login route</a> after the ticket is used. client_id is required to use the <a target='' href='https://auth0.com/docs/customize/actions/flows-and-triggers/post-change-password-flow'>Password Reset Post Challenge</a> trigger.
     
 </dd>
 </dl>
@@ -10663,7 +10663,7 @@ client.Tickets.ChangePassword(
 <dl>
 <dd>
 
-**organizationId:** `*string` — (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
+**organizationID:** `*string` — (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
     
 </dd>
 </dl>
@@ -10671,7 +10671,7 @@ client.Tickets.ChangePassword(
 <dl>
 <dd>
 
-**connectionId:** `*string` — ID of the connection. If provided, allows the user to be specified using email instead of user_id. If you set this value, you must also send the email parameter. You cannot send user_id when specifying a connection_id.
+**connectionID:** `*string` — ID of the connection. If provided, allows the user to be specified using email instead of user_id. If you set this value, you must also send the email parameter. You cannot send user_id when specifying a connection_id.
     
 </dd>
 </dl>
@@ -10828,7 +10828,7 @@ Create a new Token Exchange Profile within your tenant.
 request := &management.CreateTokenExchangeProfileRequestContent{
         Name: "name",
         SubjectTokenType: "subject_token_type",
-        ActionId: "action_id",
+        ActionID: "action_id",
         Type: management.TokenExchangeProfileTypeEnum(
             "custom_authentication",
         ),
@@ -10868,7 +10868,7 @@ client.TokenExchangeProfiles.Create(
 <dl>
 <dd>
 
-**actionId:** `string` — The ID of the Custom Token Exchange action to execute for this profile, in order to validate the subject_token. The action must use the custom-token-exchange trigger.
+**actionID:** `string` — The ID of the Custom Token Exchange action to execute for this profile, in order to validate the subject_token. The action must use the custom-token-exchange trigger.
     
 </dd>
 </dl>
@@ -10888,7 +10888,7 @@ client.TokenExchangeProfiles.Create(
 </dl>
 </details>
 
-<details><summary><code>client.TokenExchangeProfiles.Get(Id) -> *management.GetTokenExchangeProfileResponseContent</code></summary>
+<details><summary><code>client.TokenExchangeProfiles.Get(ID) -> *management.GetTokenExchangeProfileResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10946,7 +10946,7 @@ client.TokenExchangeProfiles.Get(
 </dl>
 </details>
 
-<details><summary><code>client.TokenExchangeProfiles.Delete(Id) -> error</code></summary>
+<details><summary><code>client.TokenExchangeProfiles.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -11004,7 +11004,7 @@ client.TokenExchangeProfiles.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.TokenExchangeProfiles.Update(Id, request) -> error</code></summary>
+<details><summary><code>client.TokenExchangeProfiles.Update(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -11220,7 +11220,7 @@ client.UserAttributeProfiles.Create(
 <dl>
 <dd>
 
-**userId:** `*management.UserAttributeProfileUserId` 
+**userID:** `*management.UserAttributeProfileUserID` 
     
 </dd>
 </dl>
@@ -11282,7 +11282,7 @@ client.UserAttributeProfiles.ListTemplates(
 </dl>
 </details>
 
-<details><summary><code>client.UserAttributeProfiles.GetTemplate(Id) -> *management.GetUserAttributeProfileTemplateResponseContent</code></summary>
+<details><summary><code>client.UserAttributeProfiles.GetTemplate(ID) -> *management.GetUserAttributeProfileTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -11340,7 +11340,7 @@ client.UserAttributeProfiles.GetTemplate(
 </dl>
 </details>
 
-<details><summary><code>client.UserAttributeProfiles.Get(Id) -> *management.GetUserAttributeProfileResponseContent</code></summary>
+<details><summary><code>client.UserAttributeProfiles.Get(ID) -> *management.GetUserAttributeProfileResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -11398,7 +11398,7 @@ client.UserAttributeProfiles.Get(
 </dl>
 </details>
 
-<details><summary><code>client.UserAttributeProfiles.Delete(Id) -> error</code></summary>
+<details><summary><code>client.UserAttributeProfiles.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -11456,7 +11456,7 @@ client.UserAttributeProfiles.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.UserAttributeProfiles.Update(Id, request) -> *management.UpdateUserAttributeProfileResponseContent</code></summary>
+<details><summary><code>client.UserAttributeProfiles.Update(ID, request) -> *management.UpdateUserAttributeProfileResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -11520,7 +11520,7 @@ client.UserAttributeProfiles.Update(
 <dl>
 <dd>
 
-**userId:** `*management.UserAttributeProfilePatchUserId` 
+**userID:** `*management.UserAttributeProfilePatchUserID` 
     
 </dd>
 </dl>
@@ -11681,7 +11681,7 @@ client.UserBlocks.DeleteByIdentifier(
 </dl>
 </details>
 
-<details><summary><code>client.UserBlocks.List(Id) -> *management.ListUserBlocksResponseContent</code></summary>
+<details><summary><code>client.UserBlocks.List(ID) -> *management.ListUserBlocksResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -11758,7 +11758,7 @@ client.UserBlocks.List(
 </dl>
 </details>
 
-<details><summary><code>client.UserBlocks.Delete(Id) -> error</code></summary>
+<details><summary><code>client.UserBlocks.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -12139,7 +12139,7 @@ client.Users.Create(
 <dl>
 <dd>
 
-**userId:** `*string` — The external user's id provided by the identity provider.
+**userID:** `*string` — The external user's id provided by the identity provider.
     
 </dd>
 </dl>
@@ -12270,7 +12270,7 @@ client.Users.ListUsersByEmail(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Get(Id) -> *management.GetUserResponseContent</code></summary>
+<details><summary><code>client.Users.Get(ID) -> *management.GetUserResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12353,7 +12353,7 @@ client.Users.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Users.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -12411,7 +12411,7 @@ client.Users.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Update(Id, request) -> *management.UpdateUserResponseContent</code></summary>
+<details><summary><code>client.Users.Update(ID, request) -> *management.UpdateUserResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12664,7 +12664,7 @@ client.Users.Update(
 <dl>
 <dd>
 
-**clientId:** `*string` — Auth0 client ID. Only valid when updating email address.
+**clientID:** `*string` — Auth0 client ID. Only valid when updating email address.
     
 </dd>
 </dl>
@@ -12684,7 +12684,7 @@ client.Users.Update(
 </dl>
 </details>
 
-<details><summary><code>client.Users.RegenerateRecoveryCode(Id) -> *management.RegenerateUsersRecoveryCodeResponseContent</code></summary>
+<details><summary><code>client.Users.RegenerateRecoveryCode(ID) -> *management.RegenerateUsersRecoveryCodeResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12742,7 +12742,7 @@ client.Users.RegenerateRecoveryCode(
 </dl>
 </details>
 
-<details><summary><code>client.Users.RevokeAccess(Id, request) -> error</code></summary>
+<details><summary><code>client.Users.RevokeAccess(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -12798,7 +12798,7 @@ client.Users.RevokeAccess(
 <dl>
 <dd>
 
-**sessionId:** `*string` — ID of the session to revoke.
+**sessionID:** `*string` — ID of the session to revoke.
     
 </dd>
 </dl>
@@ -12819,7 +12819,7 @@ client.Users.RevokeAccess(
 </details>
 
 ## Actions Versions
-<details><summary><code>client.Actions.Versions.List(ActionId) -> *management.ListActionVersionsPaginatedResponseContent</code></summary>
+<details><summary><code>client.Actions.Versions.List(ActionID) -> *management.ListActionVersionsPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12874,7 +12874,7 @@ client.Actions.Versions.List(
 <dl>
 <dd>
 
-**actionId:** `string` — The ID of the action.
+**actionID:** `string` — The ID of the action.
     
 </dd>
 </dl>
@@ -12902,7 +12902,7 @@ client.Actions.Versions.List(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Versions.Get(ActionId, Id) -> *management.GetActionVersionResponseContent</code></summary>
+<details><summary><code>client.Actions.Versions.Get(ActionID, ID) -> *management.GetActionVersionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12949,7 +12949,7 @@ client.Actions.Versions.Get(
 <dl>
 <dd>
 
-**actionId:** `string` — The ID of the action.
+**actionID:** `string` — The ID of the action.
     
 </dd>
 </dl>
@@ -12969,7 +12969,7 @@ client.Actions.Versions.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Versions.Deploy(ActionId, Id, request) -> *management.DeployActionVersionResponseContent</code></summary>
+<details><summary><code>client.Actions.Versions.Deploy(ActionID, ID, request) -> *management.DeployActionVersionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -13018,7 +13018,7 @@ client.Actions.Versions.Deploy(
 <dl>
 <dd>
 
-**actionId:** `string` — The ID of an action.
+**actionID:** `string` — The ID of an action.
     
 </dd>
 </dl>
@@ -13047,7 +13047,7 @@ client.Actions.Versions.Deploy(
 </details>
 
 ## Actions Executions
-<details><summary><code>client.Actions.Executions.Get(Id) -> *management.GetActionExecutionResponseContent</code></summary>
+<details><summary><code>client.Actions.Executions.Get(ID) -> *management.GetActionExecutionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -13149,7 +13149,7 @@ client.Actions.Triggers.List(
 </details>
 
 ## Actions Triggers Bindings
-<details><summary><code>client.Actions.Triggers.Bindings.List(TriggerId) -> *management.ListActionBindingsPaginatedResponseContent</code></summary>
+<details><summary><code>client.Actions.Triggers.Bindings.List(TriggerID) -> *management.ListActionBindingsPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -13204,7 +13204,7 @@ client.Actions.Triggers.Bindings.List(
 <dl>
 <dd>
 
-**triggerId:** `management.ActionTriggerTypeEnum` — An actions extensibility point.
+**triggerID:** `management.ActionTriggerTypeEnum` — An actions extensibility point.
     
 </dd>
 </dl>
@@ -13232,7 +13232,7 @@ client.Actions.Triggers.Bindings.List(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Triggers.Bindings.UpdateMany(TriggerId, request) -> *management.UpdateActionBindingsResponseContent</code></summary>
+<details><summary><code>client.Actions.Triggers.Bindings.UpdateMany(TriggerID, request) -> *management.UpdateActionBindingsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -13280,7 +13280,7 @@ client.Actions.Triggers.Bindings.UpdateMany(
 <dl>
 <dd>
 
-**triggerId:** `management.ActionTriggerTypeEnum` — An actions extensibility point.
+**triggerID:** `management.ActionTriggerTypeEnum` — An actions extensibility point.
     
 </dd>
 </dl>
@@ -13301,7 +13301,7 @@ client.Actions.Triggers.Bindings.UpdateMany(
 </details>
 
 ## Anomaly Blocks
-<details><summary><code>client.Anomaly.Blocks.CheckIp(Id) -> error</code></summary>
+<details><summary><code>client.Anomaly.Blocks.CheckIP(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -13328,7 +13328,7 @@ Check if the given IP address is blocked via the <a href="https://auth0.com/docs
 <dd>
 
 ```go
-client.Anomaly.Blocks.CheckIp(
+client.Anomaly.Blocks.CheckIP(
         context.TODO(),
         "id",
     )
@@ -13347,7 +13347,7 @@ client.Anomaly.Blocks.CheckIp(
 <dl>
 <dd>
 
-**id:** `management.AnomalyIpFormat` — IP address to check.
+**id:** `management.AnomalyIPFormat` — IP address to check.
     
 </dd>
 </dl>
@@ -13359,7 +13359,7 @@ client.Anomaly.Blocks.CheckIp(
 </dl>
 </details>
 
-<details><summary><code>client.Anomaly.Blocks.UnblockIp(Id) -> error</code></summary>
+<details><summary><code>client.Anomaly.Blocks.UnblockIP(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -13386,7 +13386,7 @@ Remove a block imposed by <a href="https://auth0.com/docs/configure/attack-prote
 <dd>
 
 ```go
-client.Anomaly.Blocks.UnblockIp(
+client.Anomaly.Blocks.UnblockIP(
         context.TODO(),
         "id",
     )
@@ -13405,7 +13405,7 @@ client.Anomaly.Blocks.UnblockIp(
 <dl>
 <dd>
 
-**id:** `management.AnomalyIpFormat` — IP address to unblock.
+**id:** `management.AnomalyIPFormat` — IP address to unblock.
     
 </dd>
 </dl>
@@ -13697,8 +13697,8 @@ Account Lockout: Determines whether or not IP address is used when counting fail
 </dl>
 </details>
 
-## AttackProtection SuspiciousIpThrottling
-<details><summary><code>client.AttackProtection.SuspiciousIpThrottling.Get() -> *management.GetSuspiciousIpThrottlingSettingsResponseContent</code></summary>
+## AttackProtection SuspiciousIPThrottling
+<details><summary><code>client.AttackProtection.SuspiciousIPThrottling.Get() -> *management.GetSuspiciousIPThrottlingSettingsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -13725,7 +13725,7 @@ Retrieve details of the Suspicious IP Throttling configuration of your tenant.
 <dd>
 
 ```go
-client.AttackProtection.SuspiciousIpThrottling.Get(
+client.AttackProtection.SuspiciousIPThrottling.Get(
         context.TODO(),
     )
 }
@@ -13740,7 +13740,7 @@ client.AttackProtection.SuspiciousIpThrottling.Get(
 </dl>
 </details>
 
-<details><summary><code>client.AttackProtection.SuspiciousIpThrottling.Update(request) -> *management.UpdateSuspiciousIpThrottlingSettingsResponseContent</code></summary>
+<details><summary><code>client.AttackProtection.SuspiciousIPThrottling.Update(request) -> *management.UpdateSuspiciousIPThrottlingSettingsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -13767,8 +13767,8 @@ Update the details of the Suspicious IP Throttling configuration of your tenant.
 <dd>
 
 ```go
-request := &management.UpdateSuspiciousIpThrottlingSettingsRequestContent{}
-client.AttackProtection.SuspiciousIpThrottling.Update(
+request := &management.UpdateSuspiciousIPThrottlingSettingsRequestContent{}
+client.AttackProtection.SuspiciousIPThrottling.Update(
         context.TODO(),
         request,
     )
@@ -13795,7 +13795,7 @@ client.AttackProtection.SuspiciousIpThrottling.Update(
 <dl>
 <dd>
 
-**shields:** `[]*management.SuspiciousIpThrottlingShieldsEnum` 
+**shields:** `[]*management.SuspiciousIPThrottlingShieldsEnum` 
 
 Action to take when a suspicious IP throttling threshold is violated.
           Possible values: <code>block</code>, <code>admin_notification</code>.
@@ -13806,7 +13806,7 @@ Action to take when a suspicious IP throttling threshold is violated.
 <dl>
 <dd>
 
-**allowlist:** `*management.SuspiciousIpThrottlingAllowlist` 
+**allowlist:** `*management.SuspiciousIPThrottlingAllowlist` 
     
 </dd>
 </dl>
@@ -13814,7 +13814,7 @@ Action to take when a suspicious IP throttling threshold is violated.
 <dl>
 <dd>
 
-**stage:** `*management.SuspiciousIpThrottlingStage` 
+**stage:** `*management.SuspiciousIPThrottlingStage` 
     
 </dd>
 </dl>
@@ -14034,7 +14034,7 @@ request := &management.CreateBrandingThemeRequestContent{
                 Bold: true,
                 Size: 1.1,
             },
-            FontUrl: "font_url",
+            FontURL: "font_url",
             InputLabels: &management.BrandingThemeFontInputLabels{
                 Bold: true,
                 Size: 1.1,
@@ -14056,14 +14056,14 @@ request := &management.CreateBrandingThemeRequestContent{
         },
         PageBackground: &management.BrandingThemePageBackground{
             BackgroundColor: "background_color",
-            BackgroundImageUrl: "background_image_url",
+            BackgroundImageURL: "background_image_url",
             PageLayout: management.BrandingThemePageBackgroundPageLayoutEnumCenter,
         },
         Widget: &management.BrandingThemeWidget{
             HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
             LogoHeight: 1.1,
             LogoPosition: management.BrandingThemeWidgetLogoPositionEnumCenter,
-            LogoUrl: "logo_url",
+            LogoURL: "logo_url",
             SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
         },
     }
@@ -14180,7 +14180,7 @@ client.Branding.Themes.GetDefault(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Themes.Get(ThemeId) -> *management.GetBrandingThemeResponseContent</code></summary>
+<details><summary><code>client.Branding.Themes.Get(ThemeID) -> *management.GetBrandingThemeResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -14226,7 +14226,7 @@ client.Branding.Themes.Get(
 <dl>
 <dd>
 
-**themeId:** `string` — The ID of the theme
+**themeID:** `string` — The ID of the theme
     
 </dd>
 </dl>
@@ -14238,7 +14238,7 @@ client.Branding.Themes.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Themes.Delete(ThemeId) -> error</code></summary>
+<details><summary><code>client.Branding.Themes.Delete(ThemeID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -14284,7 +14284,7 @@ client.Branding.Themes.Delete(
 <dl>
 <dd>
 
-**themeId:** `string` — The ID of the theme
+**themeID:** `string` — The ID of the theme
     
 </dd>
 </dl>
@@ -14296,7 +14296,7 @@ client.Branding.Themes.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Themes.Update(ThemeId, request) -> *management.UpdateBrandingThemeResponseContent</code></summary>
+<details><summary><code>client.Branding.Themes.Update(ThemeID, request) -> *management.UpdateBrandingThemeResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -14362,7 +14362,7 @@ request := &management.UpdateBrandingThemeRequestContent{
                 Bold: true,
                 Size: 1.1,
             },
-            FontUrl: "font_url",
+            FontURL: "font_url",
             InputLabels: &management.BrandingThemeFontInputLabels{
                 Bold: true,
                 Size: 1.1,
@@ -14384,14 +14384,14 @@ request := &management.UpdateBrandingThemeRequestContent{
         },
         PageBackground: &management.BrandingThemePageBackground{
             BackgroundColor: "background_color",
-            BackgroundImageUrl: "background_image_url",
+            BackgroundImageURL: "background_image_url",
             PageLayout: management.BrandingThemePageBackgroundPageLayoutEnumCenter,
         },
         Widget: &management.BrandingThemeWidget{
             HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
             LogoHeight: 1.1,
             LogoPosition: management.BrandingThemeWidgetLogoPositionEnumCenter,
-            LogoUrl: "logo_url",
+            LogoURL: "logo_url",
             SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
         },
     }
@@ -14415,7 +14415,7 @@ client.Branding.Themes.Update(
 <dl>
 <dd>
 
-**themeId:** `string` — The ID of the theme
+**themeID:** `string` — The ID of the theme
     
 </dd>
 </dl>
@@ -14630,7 +14630,7 @@ client.Branding.Phone.Providers.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Phone.Providers.Get(Id) -> *management.GetBrandingPhoneProviderResponseContent</code></summary>
+<details><summary><code>client.Branding.Phone.Providers.Get(ID) -> *management.GetBrandingPhoneProviderResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -14688,7 +14688,7 @@ client.Branding.Phone.Providers.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Phone.Providers.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Branding.Phone.Providers.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -14746,7 +14746,7 @@ client.Branding.Phone.Providers.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Phone.Providers.Update(Id, request) -> *management.UpdateBrandingPhoneProviderResponseContent</code></summary>
+<details><summary><code>client.Branding.Phone.Providers.Update(ID, request) -> *management.UpdateBrandingPhoneProviderResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -14839,7 +14839,7 @@ client.Branding.Phone.Providers.Update(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Phone.Providers.Test(Id, request) -> *management.CreatePhoneProviderSendTestResponseContent</code></summary>
+<details><summary><code>client.Branding.Phone.Providers.Test(ID, request) -> *management.CreatePhoneProviderSendTestResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -15014,7 +15014,7 @@ client.Branding.Phone.Templates.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Phone.Templates.Get(Id) -> *management.GetPhoneTemplateResponseContent</code></summary>
+<details><summary><code>client.Branding.Phone.Templates.Get(ID) -> *management.GetPhoneTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -15058,7 +15058,7 @@ client.Branding.Phone.Templates.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Phone.Templates.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Branding.Phone.Templates.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -15102,7 +15102,7 @@ client.Branding.Phone.Templates.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Phone.Templates.Update(Id, request) -> *management.UpdatePhoneTemplateResponseContent</code></summary>
+<details><summary><code>client.Branding.Phone.Templates.Update(ID, request) -> *management.UpdatePhoneTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -15164,7 +15164,7 @@ client.Branding.Phone.Templates.Update(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Phone.Templates.Reset(Id, request) -> *management.ResetPhoneTemplateResponseContent</code></summary>
+<details><summary><code>client.Branding.Phone.Templates.Reset(ID, request) -> *management.ResetPhoneTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -15220,7 +15220,7 @@ client.Branding.Phone.Templates.Reset(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Phone.Templates.Test(Id, request) -> *management.CreatePhoneTemplateTestNotificationResponseContent</code></summary>
+<details><summary><code>client.Branding.Phone.Templates.Test(ID, request) -> *management.CreatePhoneTemplateTestNotificationResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -15285,7 +15285,7 @@ client.Branding.Phone.Templates.Test(
 </details>
 
 ## ClientGrants Organizations
-<details><summary><code>client.ClientGrants.Organizations.List(Id) -> *management.ListClientGrantOrganizationsPaginatedResponseContent</code></summary>
+<details><summary><code>client.ClientGrants.Organizations.List(ID) -> *management.ListClientGrantOrganizationsPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -15355,7 +15355,7 @@ client.ClientGrants.Organizations.List(
 </details>
 
 ## Clients Credentials
-<details><summary><code>client.Clients.Credentials.List(ClientId) -> []*management.ClientCredential</code></summary>
+<details><summary><code>client.Clients.Credentials.List(ClientID) -> []*management.ClientCredential</code></summary>
 <dl>
 <dd>
 
@@ -15403,7 +15403,7 @@ client.Clients.Credentials.List(
 <dl>
 <dd>
 
-**clientId:** `string` — ID of the client.
+**clientID:** `string` — ID of the client.
     
 </dd>
 </dl>
@@ -15415,7 +15415,7 @@ client.Clients.Credentials.List(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.Credentials.Create(ClientId, request) -> *management.PostClientCredentialResponseContent</code></summary>
+<details><summary><code>client.Clients.Credentials.Create(ClientID, request) -> *management.PostClientCredentialResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -15497,7 +15497,7 @@ client.Clients.Credentials.Create(
 <dl>
 <dd>
 
-**clientId:** `string` — ID of the client.
+**clientID:** `string` — ID of the client.
     
 </dd>
 </dl>
@@ -15565,7 +15565,7 @@ client.Clients.Credentials.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.Credentials.Get(ClientId, CredentialId) -> *management.GetClientCredentialResponseContent</code></summary>
+<details><summary><code>client.Clients.Credentials.Get(ClientID, CredentialID) -> *management.GetClientCredentialResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -15614,7 +15614,7 @@ client.Clients.Credentials.Get(
 <dl>
 <dd>
 
-**clientId:** `string` — ID of the client.
+**clientID:** `string` — ID of the client.
     
 </dd>
 </dl>
@@ -15622,7 +15622,7 @@ client.Clients.Credentials.Get(
 <dl>
 <dd>
 
-**credentialId:** `string` — ID of the credential.
+**credentialID:** `string` — ID of the credential.
     
 </dd>
 </dl>
@@ -15634,7 +15634,7 @@ client.Clients.Credentials.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.Credentials.Delete(ClientId, CredentialId) -> error</code></summary>
+<details><summary><code>client.Clients.Credentials.Delete(ClientID, CredentialID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -15681,7 +15681,7 @@ client.Clients.Credentials.Delete(
 <dl>
 <dd>
 
-**clientId:** `string` — ID of the client.
+**clientID:** `string` — ID of the client.
     
 </dd>
 </dl>
@@ -15689,7 +15689,7 @@ client.Clients.Credentials.Delete(
 <dl>
 <dd>
 
-**credentialId:** `string` — ID of the credential to delete.
+**credentialID:** `string` — ID of the credential to delete.
     
 </dd>
 </dl>
@@ -15701,7 +15701,7 @@ client.Clients.Credentials.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.Credentials.Update(ClientId, CredentialId, request) -> *management.PatchClientCredentialResponseContent</code></summary>
+<details><summary><code>client.Clients.Credentials.Update(ClientID, CredentialID, request) -> *management.PatchClientCredentialResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -15750,7 +15750,7 @@ client.Clients.Credentials.Update(
 <dl>
 <dd>
 
-**clientId:** `string` — ID of the client.
+**clientID:** `string` — ID of the client.
     
 </dd>
 </dl>
@@ -15758,7 +15758,7 @@ client.Clients.Credentials.Update(
 <dl>
 <dd>
 
-**credentialId:** `string` — ID of the credential.
+**credentialID:** `string` — ID of the credential.
     
 </dd>
 </dl>
@@ -15779,7 +15779,7 @@ client.Clients.Credentials.Update(
 </details>
 
 ## Clients Connections
-<details><summary><code>client.Clients.Connections.Get(Id) -> *management.ListClientConnectionsResponseContent</code></summary>
+<details><summary><code>client.Clients.Connections.Get(ID) -> *management.ListClientConnectionsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -15901,7 +15901,7 @@ client.Clients.Connections.Get(
 </details>
 
 ## Connections Clients
-<details><summary><code>client.Connections.Clients.Get(Id) -> *management.GetConnectionEnabledClientsResponseContent</code></summary>
+<details><summary><code>client.Connections.Clients.Get(ID) -> *management.GetConnectionEnabledClientsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -15986,7 +15986,7 @@ client.Connections.Clients.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Clients.Update(Id, request) -> error</code></summary>
+<details><summary><code>client.Connections.Clients.Update(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -16001,7 +16001,7 @@ client.Connections.Clients.Get(
 ```go
 request := []*management.UpdateEnabledClientConnectionsRequestContentItem{
         &management.UpdateEnabledClientConnectionsRequestContentItem{
-            ClientId: "client_id",
+            ClientID: "client_id",
             Status: true,
         },
     }
@@ -16046,7 +16046,7 @@ client.Connections.Clients.Update(
 </details>
 
 ## Connections Keys
-<details><summary><code>client.Connections.Keys.Get(Id) -> []*management.ConnectionKey</code></summary>
+<details><summary><code>client.Connections.Keys.Get(ID) -> []*management.ConnectionKey</code></summary>
 <dl>
 <dd>
 
@@ -16104,7 +16104,7 @@ client.Connections.Keys.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Keys.Rotate(Id, request) -> *management.RotateConnectionsKeysResponseContent</code></summary>
+<details><summary><code>client.Connections.Keys.Rotate(ID, request) -> *management.RotateConnectionsKeysResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -16172,8 +16172,8 @@ client.Connections.Keys.Rotate(
 </dl>
 </details>
 
-## Connections ScimConfiguration
-<details><summary><code>client.Connections.ScimConfiguration.Get(Id) -> *management.GetScimConfigurationResponseContent</code></summary>
+## Connections SCIMConfiguration
+<details><summary><code>client.Connections.SCIMConfiguration.Get(ID) -> *management.GetSCIMConfigurationResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -16200,7 +16200,7 @@ Retrieves a scim configuration by its <code>connectionId</code>.
 <dd>
 
 ```go
-client.Connections.ScimConfiguration.Get(
+client.Connections.SCIMConfiguration.Get(
         context.TODO(),
         "id",
     )
@@ -16231,7 +16231,7 @@ client.Connections.ScimConfiguration.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.ScimConfiguration.Create(Id, request) -> *management.CreateScimConfigurationResponseContent</code></summary>
+<details><summary><code>client.Connections.SCIMConfiguration.Create(ID, request) -> *management.CreateSCIMConfigurationResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -16258,8 +16258,8 @@ Create a scim configuration for a connection.
 <dd>
 
 ```go
-request := &management.CreateScimConfigurationRequestContent{}
-client.Connections.ScimConfiguration.Create(
+request := &management.CreateSCIMConfigurationRequestContent{}
+client.Connections.SCIMConfiguration.Create(
         context.TODO(),
         "id",
         request,
@@ -16287,7 +16287,7 @@ client.Connections.ScimConfiguration.Create(
 <dl>
 <dd>
 
-**request:** `*management.CreateScimConfigurationRequestContent` 
+**request:** `*management.CreateSCIMConfigurationRequestContent` 
     
 </dd>
 </dl>
@@ -16299,7 +16299,7 @@ client.Connections.ScimConfiguration.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.ScimConfiguration.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Connections.SCIMConfiguration.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -16326,7 +16326,7 @@ Deletes a scim configuration by its <code>connectionId</code>.
 <dd>
 
 ```go
-client.Connections.ScimConfiguration.Delete(
+client.Connections.SCIMConfiguration.Delete(
         context.TODO(),
         "id",
     )
@@ -16357,7 +16357,7 @@ client.Connections.ScimConfiguration.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.ScimConfiguration.Update(Id, request) -> *management.UpdateScimConfigurationResponseContent</code></summary>
+<details><summary><code>client.Connections.SCIMConfiguration.Update(ID, request) -> *management.UpdateSCIMConfigurationResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -16384,13 +16384,13 @@ Update a scim configuration by its <code>connectionId</code>.
 <dd>
 
 ```go
-request := &management.UpdateScimConfigurationRequestContent{
-        UserIdAttribute: "user_id_attribute",
-        Mapping: []*management.ScimMappingItem{
-            &management.ScimMappingItem{},
+request := &management.UpdateSCIMConfigurationRequestContent{
+        UserIDAttribute: "user_id_attribute",
+        Mapping: []*management.SCIMMappingItem{
+            &management.SCIMMappingItem{},
         },
     }
-client.Connections.ScimConfiguration.Update(
+client.Connections.SCIMConfiguration.Update(
         context.TODO(),
         "id",
         request,
@@ -16418,7 +16418,7 @@ client.Connections.ScimConfiguration.Update(
 <dl>
 <dd>
 
-**userIdAttribute:** `string` — User ID attribute for generating unique user ids
+**userIDAttribute:** `string` — User ID attribute for generating unique user ids
     
 </dd>
 </dl>
@@ -16426,7 +16426,7 @@ client.Connections.ScimConfiguration.Update(
 <dl>
 <dd>
 
-**mapping:** `[]*management.ScimMappingItem` — The mapping between auth0 and SCIM
+**mapping:** `[]*management.SCIMMappingItem` — The mapping between auth0 and SCIM
     
 </dd>
 </dl>
@@ -16438,7 +16438,7 @@ client.Connections.ScimConfiguration.Update(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.ScimConfiguration.GetDefaultMapping(Id) -> *management.GetScimConfigurationDefaultMappingResponseContent</code></summary>
+<details><summary><code>client.Connections.SCIMConfiguration.GetDefaultMapping(ID) -> *management.GetSCIMConfigurationDefaultMappingResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -16465,7 +16465,7 @@ Retrieves a scim configuration's default mapping by its <code>connectionId</code
 <dd>
 
 ```go
-client.Connections.ScimConfiguration.GetDefaultMapping(
+client.Connections.SCIMConfiguration.GetDefaultMapping(
         context.TODO(),
         "id",
     )
@@ -16497,7 +16497,7 @@ client.Connections.ScimConfiguration.GetDefaultMapping(
 </details>
 
 ## Connections Users
-<details><summary><code>client.Connections.Users.DeleteByEmail(Id) -> error</code></summary>
+<details><summary><code>client.Connections.Users.DeleteByEmail(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -16567,8 +16567,8 @@ client.Connections.Users.DeleteByEmail(
 </dl>
 </details>
 
-## Connections ScimConfiguration Tokens
-<details><summary><code>client.Connections.ScimConfiguration.Tokens.Get(Id) -> management.GetScimTokensResponseContent</code></summary>
+## Connections SCIMConfiguration Tokens
+<details><summary><code>client.Connections.SCIMConfiguration.Tokens.Get(ID) -> management.GetSCIMTokensResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -16595,7 +16595,7 @@ Retrieves all scim tokens by its connection <code>id</code>.
 <dd>
 
 ```go
-client.Connections.ScimConfiguration.Tokens.Get(
+client.Connections.SCIMConfiguration.Tokens.Get(
         context.TODO(),
         "id",
     )
@@ -16626,7 +16626,7 @@ client.Connections.ScimConfiguration.Tokens.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.ScimConfiguration.Tokens.Create(Id, request) -> *management.CreateScimTokenResponseContent</code></summary>
+<details><summary><code>client.Connections.SCIMConfiguration.Tokens.Create(ID, request) -> *management.CreateSCIMTokenResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -16653,8 +16653,8 @@ Create a scim token for a scim client.
 <dd>
 
 ```go
-request := &management.CreateScimTokenRequestContent{}
-client.Connections.ScimConfiguration.Tokens.Create(
+request := &management.CreateSCIMTokenRequestContent{}
+client.Connections.SCIMConfiguration.Tokens.Create(
         context.TODO(),
         "id",
         request,
@@ -16702,7 +16702,7 @@ client.Connections.ScimConfiguration.Tokens.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.ScimConfiguration.Tokens.Delete(Id, TokenId) -> error</code></summary>
+<details><summary><code>client.Connections.SCIMConfiguration.Tokens.Delete(ID, TokenID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -16729,7 +16729,7 @@ Deletes a scim token by its connection <code>id</code> and <code>tokenId</code>.
 <dd>
 
 ```go
-client.Connections.ScimConfiguration.Tokens.Delete(
+client.Connections.SCIMConfiguration.Tokens.Delete(
         context.TODO(),
         "id",
         "tokenId",
@@ -16757,7 +16757,7 @@ client.Connections.ScimConfiguration.Tokens.Delete(
 <dl>
 <dd>
 
-**tokenId:** `string` — The id of the scim token to delete
+**tokenID:** `string` — The id of the scim token to delete
     
 </dd>
 </dl>
@@ -16916,7 +16916,7 @@ request := &management.CreateEmailProviderRequestContent{
         Name: management.EmailProviderNameEnumMailgun,
         Credentials: &management.EmailProviderCredentialsSchema{
             EmailProviderCredentialsSchemaZero: &management.EmailProviderCredentialsSchemaZero{
-                ApiKey: "api_key",
+                APIKey: "api_key",
             },
         },
     }
@@ -17156,7 +17156,7 @@ client.Emails.Provider.Update(
 </details>
 
 ## EventStreams Deliveries
-<details><summary><code>client.EventStreams.Deliveries.List(Id) -> []*management.EventStreamDelivery</code></summary>
+<details><summary><code>client.EventStreams.Deliveries.List(ID) -> []*management.EventStreamDelivery</code></summary>
 <dl>
 <dd>
 
@@ -17269,7 +17269,7 @@ client.EventStreams.Deliveries.List(
 </dl>
 </details>
 
-<details><summary><code>client.EventStreams.Deliveries.GetHistory(Id, EventId) -> *management.GetEventStreamDeliveryHistoryResponseContent</code></summary>
+<details><summary><code>client.EventStreams.Deliveries.GetHistory(ID, EventID) -> *management.GetEventStreamDeliveryHistoryResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -17310,7 +17310,7 @@ client.EventStreams.Deliveries.GetHistory(
 <dl>
 <dd>
 
-**eventId:** `string` — Unique identifier for the event
+**eventID:** `string` — Unique identifier for the event
     
 </dd>
 </dl>
@@ -17323,7 +17323,7 @@ client.EventStreams.Deliveries.GetHistory(
 </details>
 
 ## EventStreams Redeliveries
-<details><summary><code>client.EventStreams.Redeliveries.Create(Id, request) -> *management.CreateEventStreamRedeliveryResponseContent</code></summary>
+<details><summary><code>client.EventStreams.Redeliveries.Create(ID, request) -> *management.CreateEventStreamRedeliveryResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -17401,7 +17401,7 @@ client.EventStreams.Redeliveries.Create(
 </dl>
 </details>
 
-<details><summary><code>client.EventStreams.Redeliveries.CreateById(Id, EventId) -> error</code></summary>
+<details><summary><code>client.EventStreams.Redeliveries.CreateByID(ID, EventID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -17414,7 +17414,7 @@ client.EventStreams.Redeliveries.Create(
 <dd>
 
 ```go
-client.EventStreams.Redeliveries.CreateById(
+client.EventStreams.Redeliveries.CreateByID(
         context.TODO(),
         "id",
         "event_id",
@@ -17442,7 +17442,7 @@ client.EventStreams.Redeliveries.CreateById(
 <dl>
 <dd>
 
-**eventId:** `string` — Unique identifier for the event
+**eventID:** `string` — Unique identifier for the event
     
 </dd>
 </dl>
@@ -17455,7 +17455,7 @@ client.EventStreams.Redeliveries.CreateById(
 </details>
 
 ## Flows Executions
-<details><summary><code>client.Flows.Executions.List(FlowId) -> *management.ListFlowExecutionsPaginatedResponseContent</code></summary>
+<details><summary><code>client.Flows.Executions.List(FlowID) -> *management.ListFlowExecutionsPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -17496,7 +17496,7 @@ client.Flows.Executions.List(
 <dl>
 <dd>
 
-**flowId:** `string` — Flow id
+**flowID:** `string` — Flow id
     
 </dd>
 </dl>
@@ -17524,7 +17524,7 @@ client.Flows.Executions.List(
 </dl>
 </details>
 
-<details><summary><code>client.Flows.Executions.Get(FlowId, ExecutionId) -> *management.GetFlowExecutionResponseContent</code></summary>
+<details><summary><code>client.Flows.Executions.Get(FlowID, ExecutionID) -> *management.GetFlowExecutionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -17559,7 +17559,7 @@ client.Flows.Executions.Get(
 <dl>
 <dd>
 
-**flowId:** `string` — Flow id
+**flowID:** `string` — Flow id
     
 </dd>
 </dl>
@@ -17567,7 +17567,7 @@ client.Flows.Executions.Get(
 <dl>
 <dd>
 
-**executionId:** `string` — Flow execution id
+**executionID:** `string` — Flow execution id
     
 </dd>
 </dl>
@@ -17587,7 +17587,7 @@ client.Flows.Executions.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Flows.Executions.Delete(FlowId, ExecutionId) -> error</code></summary>
+<details><summary><code>client.Flows.Executions.Delete(FlowID, ExecutionID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -17620,7 +17620,7 @@ client.Flows.Executions.Delete(
 <dl>
 <dd>
 
-**flowId:** `string` — Flows id
+**flowID:** `string` — Flows id
     
 </dd>
 </dl>
@@ -17628,7 +17628,7 @@ client.Flows.Executions.Delete(
 <dl>
 <dd>
 
-**executionId:** `string` — Flow execution identifier
+**executionID:** `string` — Flow execution identifier
     
 </dd>
 </dl>
@@ -17727,16 +17727,16 @@ client.Flows.Vault.Connections.List(
 ```go
 request := &management.CreateFlowsVaultConnectionRequestContent{
         CreateFlowsVaultConnectionActivecampaign: &management.CreateFlowsVaultConnectionActivecampaign{
-            CreateFlowsVaultConnectionActivecampaignApiKey: &management.CreateFlowsVaultConnectionActivecampaignApiKey{
+            CreateFlowsVaultConnectionActivecampaignAPIKey: &management.CreateFlowsVaultConnectionActivecampaignAPIKey{
                 Name: "name",
-                AppId: management.FlowsVaultConnectionAppIdActivecampaignEnum(
+                AppID: management.FlowsVaultConnectionAppIDActivecampaignEnum(
                     "ACTIVECAMPAIGN",
                 ),
-                Setup: &management.FlowsVaultConnectioSetupApiKeyWithBaseUrl{
-                    Type: management.FlowsVaultConnectioSetupTypeApiKeyEnum(
+                Setup: &management.FlowsVaultConnectioSetupAPIKeyWithBaseURL{
+                    Type: management.FlowsVaultConnectioSetupTypeAPIKeyEnum(
                         "API_KEY",
                     ),
-                    ApiKey: "api_key",
+                    APIKey: "api_key",
                 },
             },
         },
@@ -17772,7 +17772,7 @@ client.Flows.Vault.Connections.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Flows.Vault.Connections.Get(Id) -> *management.GetFlowsVaultConnectionResponseContent</code></summary>
+<details><summary><code>client.Flows.Vault.Connections.Get(ID) -> *management.GetFlowsVaultConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -17816,7 +17816,7 @@ client.Flows.Vault.Connections.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Flows.Vault.Connections.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Flows.Vault.Connections.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -17860,7 +17860,7 @@ client.Flows.Vault.Connections.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Flows.Vault.Connections.Update(Id, request) -> *management.UpdateFlowsVaultConnectionResponseContent</code></summary>
+<details><summary><code>client.Flows.Vault.Connections.Update(ID, request) -> *management.UpdateFlowsVaultConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -17954,7 +17954,7 @@ Note: Users cannot enroll in Email as a factor through custom enrollment tickets
 
 ```go
 request := &management.CreateGuardianEnrollmentTicketRequestContent{
-        UserId: "user_id",
+        UserID: "user_id",
     }
 client.Guardian.Enrollments.CreateTicket(
         context.TODO(),
@@ -17975,7 +17975,7 @@ client.Guardian.Enrollments.CreateTicket(
 <dl>
 <dd>
 
-**userId:** `string` — user_id for the enrollment ticket
+**userID:** `string` — user_id for the enrollment ticket
     
 </dd>
 </dl>
@@ -18027,7 +18027,7 @@ client.Guardian.Enrollments.CreateTicket(
 </dl>
 </details>
 
-<details><summary><code>client.Guardian.Enrollments.Get(Id) -> *management.GetGuardianEnrollmentResponseContent</code></summary>
+<details><summary><code>client.Guardian.Enrollments.Get(ID) -> *management.GetGuardianEnrollmentResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -18085,7 +18085,7 @@ client.Guardian.Enrollments.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Guardian.Enrollments.Delete(Id) -> error</code></summary>
+<details><summary><code>client.Guardian.Enrollments.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -19117,7 +19117,7 @@ client.Guardian.Factors.PushNotification.SetSnsProvider(
 <dl>
 <dd>
 
-**awsAccessKeyId:** `*string` 
+**awsAccessKeyID:** `*string` 
     
 </dd>
 </dl>
@@ -19208,7 +19208,7 @@ client.Guardian.Factors.PushNotification.UpdateSnsProvider(
 <dl>
 <dd>
 
-**awsAccessKeyId:** `*string` 
+**awsAccessKeyID:** `*string` 
     
 </dd>
 </dl>
@@ -19888,7 +19888,7 @@ client.Guardian.Factors.Duo.Settings.Update(
 </details>
 
 ## Hooks Secrets
-<details><summary><code>client.Hooks.Secrets.Get(Id) -> management.GetHookSecretResponseContent</code></summary>
+<details><summary><code>client.Hooks.Secrets.Get(ID) -> management.GetHookSecretResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -19946,7 +19946,7 @@ client.Hooks.Secrets.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Hooks.Secrets.Create(Id, request) -> error</code></summary>
+<details><summary><code>client.Hooks.Secrets.Create(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -20016,7 +20016,7 @@ client.Hooks.Secrets.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Hooks.Secrets.Delete(Id, request) -> error</code></summary>
+<details><summary><code>client.Hooks.Secrets.Delete(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -20086,7 +20086,7 @@ client.Hooks.Secrets.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Hooks.Secrets.Update(Id, request) -> error</code></summary>
+<details><summary><code>client.Hooks.Secrets.Update(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -20204,7 +20204,7 @@ client.Jobs.UsersExports.Create(
 <dl>
 <dd>
 
-**connectionId:** `*string` — connection_id of the connection from which users will be exported.
+**connectionID:** `*string` — connection_id of the connection from which users will be exported.
     
 </dd>
 </dl>
@@ -20272,7 +20272,7 @@ request := &management.CreateImportUsersRequestContent{
         Users: strings.NewReader(
             "",
         ),
-        ConnectionId: "connection_id",
+        ConnectionID: "connection_id",
     }
 client.Jobs.UsersImports.Create(
         context.TODO(),
@@ -20321,7 +20321,7 @@ Note: You must have the `Status` toggle enabled for the verification email templ
 
 ```go
 request := &management.CreateVerificationEmailRequestContent{
-        UserId: "user_id",
+        UserID: "user_id",
     }
 client.Jobs.VerificationEmail.Create(
         context.TODO(),
@@ -20342,7 +20342,7 @@ client.Jobs.VerificationEmail.Create(
 <dl>
 <dd>
 
-**userId:** `string` — user_id of the user to send the verification email to.
+**userID:** `string` — user_id of the user to send the verification email to.
     
 </dd>
 </dl>
@@ -20350,7 +20350,7 @@ client.Jobs.VerificationEmail.Create(
 <dl>
 <dd>
 
-**clientId:** `*string` — client_id of the client (application). If no value provided, the global Client ID will be used.
+**clientID:** `*string` — client_id of the client (application). If no value provided, the global Client ID will be used.
     
 </dd>
 </dl>
@@ -20366,7 +20366,7 @@ client.Jobs.VerificationEmail.Create(
 <dl>
 <dd>
 
-**organizationId:** `*string` — (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
+**organizationID:** `*string` — (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
     
 </dd>
 </dl>
@@ -20379,7 +20379,7 @@ client.Jobs.VerificationEmail.Create(
 </details>
 
 ## Jobs Errors
-<details><summary><code>client.Jobs.Errors.Get(Id) -> *jobs.ErrorsGetResponse</code></summary>
+<details><summary><code>client.Jobs.Errors.Get(ID) -> *jobs.ErrorsGetResponse</code></summary>
 <dl>
 <dd>
 
@@ -21222,7 +21222,7 @@ client.Keys.Signing.Revoke(
 </details>
 
 ## Organizations ClientGrants
-<details><summary><code>client.Organizations.ClientGrants.List(Id) -> *management.ListOrganizationClientGrantsOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Organizations.ClientGrants.List(ID) -> *management.ListOrganizationClientGrantsOffsetPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -21239,7 +21239,7 @@ request := &management.ListOrganizationClientGrantsRequestParameters{
         Audience: management.String(
             "audience",
         ),
-        ClientId: management.String(
+        ClientID: management.String(
             "client_id",
         ),
         Page: management.Int(
@@ -21288,7 +21288,7 @@ client.Organizations.ClientGrants.List(
 <dl>
 <dd>
 
-**clientId:** `*string` — Optional filter on client_id of the client grant.
+**clientID:** `*string` — Optional filter on client_id of the client grant.
     
 </dd>
 </dl>
@@ -21296,7 +21296,7 @@ client.Organizations.ClientGrants.List(
 <dl>
 <dd>
 
-**grantIds:** `*string` — Optional filter on the ID of the client grant. Must be URL encoded and may be specified multiple times (max 10).<br /><b>e.g.</b> <i>../client-grants?grant_ids=id1&grant_ids=id2</i>
+**grantIDs:** `*string` — Optional filter on the ID of the client grant. Must be URL encoded and may be specified multiple times (max 10).<br /><b>e.g.</b> <i>../client-grants?grant_ids=id1&grant_ids=id2</i>
     
 </dd>
 </dl>
@@ -21332,7 +21332,7 @@ client.Organizations.ClientGrants.List(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.ClientGrants.Create(Id, request) -> *management.AssociateOrganizationClientGrantResponseContent</code></summary>
+<details><summary><code>client.Organizations.ClientGrants.Create(ID, request) -> *management.AssociateOrganizationClientGrantResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -21346,7 +21346,7 @@ client.Organizations.ClientGrants.List(
 
 ```go
 request := &management.AssociateOrganizationClientGrantRequestContent{
-        GrantId: "grant_id",
+        GrantID: "grant_id",
     }
 client.Organizations.ClientGrants.Create(
         context.TODO(),
@@ -21376,7 +21376,7 @@ client.Organizations.ClientGrants.Create(
 <dl>
 <dd>
 
-**grantId:** `string` — A Client Grant ID to add to the organization.
+**grantID:** `string` — A Client Grant ID to add to the organization.
     
 </dd>
 </dl>
@@ -21388,7 +21388,7 @@ client.Organizations.ClientGrants.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.ClientGrants.Delete(Id, GrantId) -> error</code></summary>
+<details><summary><code>client.Organizations.ClientGrants.Delete(ID, GrantID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -21429,7 +21429,7 @@ client.Organizations.ClientGrants.Delete(
 <dl>
 <dd>
 
-**grantId:** `string` — The Client Grant ID to remove from the organization
+**grantID:** `string` — The Client Grant ID to remove from the organization
     
 </dd>
 </dl>
@@ -21442,7 +21442,7 @@ client.Organizations.ClientGrants.Delete(
 </details>
 
 ## Organizations EnabledConnections
-<details><summary><code>client.Organizations.EnabledConnections.List(Id) -> *management.ListOrganizationConnectionsOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Organizations.EnabledConnections.List(ID) -> *management.ListOrganizationConnectionsOffsetPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -21536,7 +21536,7 @@ client.Organizations.EnabledConnections.List(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.EnabledConnections.Add(Id, request) -> *management.AddOrganizationConnectionResponseContent</code></summary>
+<details><summary><code>client.Organizations.EnabledConnections.Add(ID, request) -> *management.AddOrganizationConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -21566,7 +21566,7 @@ Enable a specific connection for a given Organization. To enable a connection, i
 
 ```go
 request := &management.AddOrganizationConnectionRequestContent{
-        ConnectionId: "connection_id",
+        ConnectionID: "connection_id",
     }
 client.Organizations.EnabledConnections.Add(
         context.TODO(),
@@ -21596,7 +21596,7 @@ client.Organizations.EnabledConnections.Add(
 <dl>
 <dd>
 
-**connectionId:** `string` — Single connection ID to add to the organization.
+**connectionID:** `string` — Single connection ID to add to the organization.
     
 </dd>
 </dl>
@@ -21632,7 +21632,7 @@ client.Organizations.EnabledConnections.Add(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.EnabledConnections.Get(Id, ConnectionId) -> *management.GetOrganizationConnectionResponseContent</code></summary>
+<details><summary><code>client.Organizations.EnabledConnections.Get(ID, ConnectionID) -> *management.GetOrganizationConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -21687,7 +21687,7 @@ client.Organizations.EnabledConnections.Get(
 <dl>
 <dd>
 
-**connectionId:** `string` — Connection identifier.
+**connectionID:** `string` — Connection identifier.
     
 </dd>
 </dl>
@@ -21699,7 +21699,7 @@ client.Organizations.EnabledConnections.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.EnabledConnections.Delete(Id, ConnectionId) -> error</code></summary>
+<details><summary><code>client.Organizations.EnabledConnections.Delete(ID, ConnectionID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -21756,7 +21756,7 @@ client.Organizations.EnabledConnections.Delete(
 <dl>
 <dd>
 
-**connectionId:** `string` — Connection identifier.
+**connectionID:** `string` — Connection identifier.
     
 </dd>
 </dl>
@@ -21768,7 +21768,7 @@ client.Organizations.EnabledConnections.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.EnabledConnections.Update(Id, ConnectionId, request) -> *management.UpdateOrganizationConnectionResponseContent</code></summary>
+<details><summary><code>client.Organizations.EnabledConnections.Update(ID, ConnectionID, request) -> *management.UpdateOrganizationConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -21825,7 +21825,7 @@ client.Organizations.EnabledConnections.Update(
 <dl>
 <dd>
 
-**connectionId:** `string` — Connection identifier.
+**connectionID:** `string` — Connection identifier.
     
 </dd>
 </dl>
@@ -21862,7 +21862,7 @@ client.Organizations.EnabledConnections.Update(
 </details>
 
 ## Organizations Invitations
-<details><summary><code>client.Organizations.Invitations.List(Id) -> *management.ListOrganizationInvitationsOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Organizations.Invitations.List(ID) -> *management.ListOrganizationInvitationsOffsetPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -21989,7 +21989,7 @@ client.Organizations.Invitations.List(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Invitations.Create(Id, request) -> *management.CreateOrganizationInvitationResponseContent</code></summary>
+<details><summary><code>client.Organizations.Invitations.Create(ID, request) -> *management.CreateOrganizationInvitationResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -22023,7 +22023,7 @@ request := &management.CreateOrganizationInvitationRequestContent{
         Invitee: &management.OrganizationInvitationInvitee{
             Email: "email",
         },
-        ClientId: "client_id",
+        ClientID: "client_id",
     }
 client.Organizations.Invitations.Create(
         context.TODO(),
@@ -22069,7 +22069,7 @@ client.Organizations.Invitations.Create(
 <dl>
 <dd>
 
-**clientId:** `string` — Auth0 client ID. Used to resolve the application's login initiation endpoint.
+**clientID:** `string` — Auth0 client ID. Used to resolve the application's login initiation endpoint.
     
 </dd>
 </dl>
@@ -22077,7 +22077,7 @@ client.Organizations.Invitations.Create(
 <dl>
 <dd>
 
-**connectionId:** `*string` — The id of the connection to force invitee to authenticate with.
+**connectionID:** `*string` — The id of the connection to force invitee to authenticate with.
     
 </dd>
 </dl>
@@ -22129,7 +22129,7 @@ client.Organizations.Invitations.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Invitations.Get(Id, InvitationId) -> *management.GetOrganizationInvitationResponseContent</code></summary>
+<details><summary><code>client.Organizations.Invitations.Get(ID, InvitationID) -> *management.GetOrganizationInvitationResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -22179,7 +22179,7 @@ client.Organizations.Invitations.Get(
 <dl>
 <dd>
 
-**invitationId:** `string` — The id of the user invitation.
+**invitationID:** `string` — The id of the user invitation.
     
 </dd>
 </dl>
@@ -22207,7 +22207,7 @@ client.Organizations.Invitations.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Invitations.Delete(Id, InvitationId) -> error</code></summary>
+<details><summary><code>client.Organizations.Invitations.Delete(ID, InvitationID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -22248,7 +22248,7 @@ client.Organizations.Invitations.Delete(
 <dl>
 <dd>
 
-**invitationId:** `string` — The id of the user invitation.
+**invitationID:** `string` — The id of the user invitation.
     
 </dd>
 </dl>
@@ -22261,7 +22261,7 @@ client.Organizations.Invitations.Delete(
 </details>
 
 ## Organizations Members
-<details><summary><code>client.Organizations.Members.List(Id) -> *management.ListOrganizationMembersPaginatedResponseContent</code></summary>
+<details><summary><code>client.Organizations.Members.List(ID) -> *management.ListOrganizationMembersPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -22387,7 +22387,7 @@ client.Organizations.Members.List(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Members.Create(Id, request) -> error</code></summary>
+<details><summary><code>client.Organizations.Members.Create(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -22461,7 +22461,7 @@ client.Organizations.Members.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Members.Delete(Id, request) -> error</code></summary>
+<details><summary><code>client.Organizations.Members.Delete(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -22520,7 +22520,7 @@ client.Organizations.Members.Delete(
 </details>
 
 ## Organizations Members Roles
-<details><summary><code>client.Organizations.Members.Roles.List(Id, UserId) -> *management.ListOrganizationMemberRolesOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Organizations.Members.Roles.List(ID, UserID) -> *management.ListOrganizationMemberRolesOffsetPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -22589,7 +22589,7 @@ client.Organizations.Members.Roles.List(
 <dl>
 <dd>
 
-**userId:** `string` — ID of the user to associate roles with.
+**userID:** `string` — ID of the user to associate roles with.
     
 </dd>
 </dl>
@@ -22625,7 +22625,7 @@ client.Organizations.Members.Roles.List(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Members.Roles.Assign(Id, UserId, request) -> error</code></summary>
+<details><summary><code>client.Organizations.Members.Roles.Assign(ID, UserID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -22688,7 +22688,7 @@ client.Organizations.Members.Roles.Assign(
 <dl>
 <dd>
 
-**userId:** `string` — ID of the user to associate roles with.
+**userID:** `string` — ID of the user to associate roles with.
     
 </dd>
 </dl>
@@ -22708,7 +22708,7 @@ client.Organizations.Members.Roles.Assign(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Members.Roles.Delete(Id, UserId, request) -> error</code></summary>
+<details><summary><code>client.Organizations.Members.Roles.Delete(ID, UserID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -22771,7 +22771,7 @@ client.Organizations.Members.Roles.Delete(
 <dl>
 <dd>
 
-**userId:** `string` — User ID of the organization member to remove roles from.
+**userID:** `string` — User ID of the organization member to remove roles from.
     
 </dd>
 </dl>
@@ -23626,7 +23626,7 @@ client.RiskAssessments.Settings.NewDevice.Update(
 </details>
 
 ## Roles Permissions
-<details><summary><code>client.Roles.Permissions.List(Id) -> *management.ListRolePermissionsOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Roles.Permissions.List(ID) -> *management.ListRolePermissionsOffsetPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -23720,7 +23720,7 @@ client.Roles.Permissions.List(
 </dl>
 </details>
 
-<details><summary><code>client.Roles.Permissions.Add(Id, request) -> error</code></summary>
+<details><summary><code>client.Roles.Permissions.Add(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -23795,7 +23795,7 @@ client.Roles.Permissions.Add(
 </dl>
 </details>
 
-<details><summary><code>client.Roles.Permissions.Delete(Id, request) -> error</code></summary>
+<details><summary><code>client.Roles.Permissions.Delete(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -23871,7 +23871,7 @@ client.Roles.Permissions.Delete(
 </details>
 
 ## Roles Users
-<details><summary><code>client.Roles.Users.List(Id) -> *management.ListRoleUsersPaginatedResponseContent</code></summary>
+<details><summary><code>client.Roles.Users.List(ID) -> *management.ListRoleUsersPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -23972,7 +23972,7 @@ client.Roles.Users.List(
 </dl>
 </details>
 
-<details><summary><code>client.Roles.Users.Assign(Id, request) -> error</code></summary>
+<details><summary><code>client.Roles.Users.Assign(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -24047,7 +24047,7 @@ client.Roles.Users.Assign(
 </details>
 
 ## SelfServiceProfiles CustomText
-<details><summary><code>client.SelfServiceProfiles.CustomText.List(Id, Language, Page) -> management.ListSelfServiceProfileCustomTextResponseContent</code></summary>
+<details><summary><code>client.SelfServiceProfiles.CustomText.List(ID, Language, Page) -> management.ListSelfServiceProfileCustomTextResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -24127,7 +24127,7 @@ client.SelfServiceProfiles.CustomText.List(
 </dl>
 </details>
 
-<details><summary><code>client.SelfServiceProfiles.CustomText.Set(Id, Language, Page, request) -> management.SetSelfServiceProfileCustomTextResponseContent</code></summary>
+<details><summary><code>client.SelfServiceProfiles.CustomText.Set(ID, Language, Page, request) -> management.SetSelfServiceProfileCustomTextResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -24219,8 +24219,8 @@ client.SelfServiceProfiles.CustomText.Set(
 </dl>
 </details>
 
-## SelfServiceProfiles SsoTicket
-<details><summary><code>client.SelfServiceProfiles.SsoTicket.Create(Id, request) -> *management.CreateSelfServiceProfileSsoTicketResponseContent</code></summary>
+## SelfServiceProfiles SSOTicket
+<details><summary><code>client.SelfServiceProfiles.SSOTicket.Create(ID, request) -> *management.CreateSelfServiceProfileSSOTicketResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -24247,8 +24247,8 @@ Creates an SSO access ticket to initiate the Self Service SSO Flow using a self-
 <dd>
 
 ```go
-request := &management.CreateSelfServiceProfileSsoTicketRequestContent{}
-client.SelfServiceProfiles.SsoTicket.Create(
+request := &management.CreateSelfServiceProfileSSOTicketRequestContent{}
+client.SelfServiceProfiles.SSOTicket.Create(
         context.TODO(),
         "id",
         request,
@@ -24276,7 +24276,7 @@ client.SelfServiceProfiles.SsoTicket.Create(
 <dl>
 <dd>
 
-**connectionId:** `*string` — If provided, this will allow editing of the provided connection during the SSO Flow
+**connectionID:** `*string` — If provided, this will allow editing of the provided connection during the SSO Flow
     
 </dd>
 </dl>
@@ -24284,7 +24284,7 @@ client.SelfServiceProfiles.SsoTicket.Create(
 <dl>
 <dd>
 
-**connectionConfig:** `*management.SelfServiceProfileSsoTicketConnectionConfig` 
+**connectionConfig:** `*management.SelfServiceProfileSSOTicketConnectionConfig` 
     
 </dd>
 </dl>
@@ -24300,7 +24300,7 @@ client.SelfServiceProfiles.SsoTicket.Create(
 <dl>
 <dd>
 
-**enabledOrganizations:** `[]*management.SelfServiceProfileSsoTicketEnabledOrganization` — List of organizations that the connection will be enabled for.
+**enabledOrganizations:** `[]*management.SelfServiceProfileSSOTicketEnabledOrganization` — List of organizations that the connection will be enabled for.
     
 </dd>
 </dl>
@@ -24316,7 +24316,7 @@ client.SelfServiceProfiles.SsoTicket.Create(
 <dl>
 <dd>
 
-**domainAliasesConfig:** `*management.SelfServiceProfileSsoTicketDomainAliasesConfig` 
+**domainAliasesConfig:** `*management.SelfServiceProfileSSOTicketDomainAliasesConfig` 
     
 </dd>
 </dl>
@@ -24324,7 +24324,7 @@ client.SelfServiceProfiles.SsoTicket.Create(
 <dl>
 <dd>
 
-**provisioningConfig:** `*management.SelfServiceProfileSsoTicketProvisioningConfig` 
+**provisioningConfig:** `*management.SelfServiceProfileSSOTicketProvisioningConfig` 
     
 </dd>
 </dl>
@@ -24336,7 +24336,7 @@ client.SelfServiceProfiles.SsoTicket.Create(
 </dl>
 </details>
 
-<details><summary><code>client.SelfServiceProfiles.SsoTicket.Revoke(ProfileId, Id) -> error</code></summary>
+<details><summary><code>client.SelfServiceProfiles.SSOTicket.Revoke(ProfileID, ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -24364,7 +24364,7 @@ Clients should treat these `202` responses as an acknowledgment that the request
 <dd>
 
 ```go
-client.SelfServiceProfiles.SsoTicket.Revoke(
+client.SelfServiceProfiles.SSOTicket.Revoke(
         context.TODO(),
         "profileId",
         "id",
@@ -24384,7 +24384,7 @@ client.SelfServiceProfiles.SsoTicket.Revoke(
 <dl>
 <dd>
 
-**profileId:** `string` — The id of the self-service profile
+**profileID:** `string` — The id of the self-service profile
     
 </dd>
 </dl>
@@ -24598,7 +24598,7 @@ client.Tenants.Settings.Update(
 <dl>
 <dd>
 
-**pictureUrl:** `*string` — URL of logo to be shown for this tenant (recommended size: 150x150)
+**pictureURL:** `*string` — URL of logo to be shown for this tenant (recommended size: 150x150)
     
 </dd>
 </dl>
@@ -24614,7 +24614,7 @@ client.Tenants.Settings.Update(
 <dl>
 <dd>
 
-**supportUrl:** `*string` — End-user support url.
+**supportURL:** `*string` — End-user support url.
     
 </dd>
 </dl>
@@ -24622,7 +24622,7 @@ client.Tenants.Settings.Update(
 <dl>
 <dd>
 
-**allowedLogoutUrls:** `[]string` — URLs that are valid to redirect to after logout from Auth0.
+**allowedLogoutURLs:** `[]string` — URLs that are valid to redirect to after logout from Auth0.
     
 </dd>
 </dl>
@@ -24678,7 +24678,7 @@ client.Tenants.Settings.Update(
 <dl>
 <dd>
 
-**defaultRedirectionUri:** `*string` — The default absolute redirection uri, must be https
+**defaultRedirectionURI:** `*string` — The default absolute redirection uri, must be https
     
 </dd>
 </dl>
@@ -24726,7 +24726,7 @@ client.Tenants.Settings.Update(
 <dl>
 <dd>
 
-**allowOrganizationNameInAuthenticationApi:** `*bool` — Whether to accept an organization name instead of an ID on auth endpoints
+**allowOrganizationNameInAuthenticationAPI:** `*bool` — Whether to accept an organization name instead of an ID on auth endpoints
     
 </dd>
 </dl>
@@ -24771,7 +24771,7 @@ client.Tenants.Settings.Update(
 </details>
 
 ## Users AuthenticationMethods
-<details><summary><code>client.Users.AuthenticationMethods.List(Id) -> *management.ListUserAuthenticationMethodsOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Users.AuthenticationMethods.List(ID) -> *management.ListUserAuthenticationMethodsOffsetPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -24865,7 +24865,7 @@ client.Users.AuthenticationMethods.List(
 </dl>
 </details>
 
-<details><summary><code>client.Users.AuthenticationMethods.Create(Id, request) -> *management.CreateUserAuthenticationMethodResponseContent</code></summary>
+<details><summary><code>client.Users.AuthenticationMethods.Create(ID, request) -> *management.CreateUserAuthenticationMethodResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -24971,7 +24971,7 @@ client.Users.AuthenticationMethods.Create(
 <dl>
 <dd>
 
-**keyId:** `*string` — Applies to webauthn authentication methods only. The id of the credential.
+**keyID:** `*string` — Applies to webauthn authentication methods only. The id of the credential.
     
 </dd>
 </dl>
@@ -24999,7 +24999,7 @@ client.Users.AuthenticationMethods.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Users.AuthenticationMethods.Set(Id, request) -> []*management.SetUserAuthenticationMethodResponseContent</code></summary>
+<details><summary><code>client.Users.AuthenticationMethods.Set(ID, request) -> []*management.SetUserAuthenticationMethodResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -25073,7 +25073,7 @@ client.Users.AuthenticationMethods.Set(
 </dl>
 </details>
 
-<details><summary><code>client.Users.AuthenticationMethods.DeleteAll(Id) -> error</code></summary>
+<details><summary><code>client.Users.AuthenticationMethods.DeleteAll(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -25131,7 +25131,7 @@ client.Users.AuthenticationMethods.DeleteAll(
 </dl>
 </details>
 
-<details><summary><code>client.Users.AuthenticationMethods.Get(Id, AuthenticationMethodId) -> *management.GetUserAuthenticationMethodResponseContent</code></summary>
+<details><summary><code>client.Users.AuthenticationMethods.Get(ID, AuthenticationMethodID) -> *management.GetUserAuthenticationMethodResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -25172,7 +25172,7 @@ client.Users.AuthenticationMethods.Get(
 <dl>
 <dd>
 
-**authenticationMethodId:** `string` — The ID of the authentication methods in question.
+**authenticationMethodID:** `string` — The ID of the authentication methods in question.
     
 </dd>
 </dl>
@@ -25184,7 +25184,7 @@ client.Users.AuthenticationMethods.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Users.AuthenticationMethods.Delete(Id, AuthenticationMethodId) -> error</code></summary>
+<details><summary><code>client.Users.AuthenticationMethods.Delete(ID, AuthenticationMethodID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -25239,7 +25239,7 @@ client.Users.AuthenticationMethods.Delete(
 <dl>
 <dd>
 
-**authenticationMethodId:** `string` — The ID of the authentication method to delete.
+**authenticationMethodID:** `string` — The ID of the authentication method to delete.
     
 </dd>
 </dl>
@@ -25251,7 +25251,7 @@ client.Users.AuthenticationMethods.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Users.AuthenticationMethods.Update(Id, AuthenticationMethodId, request) -> *management.UpdateUserAuthenticationMethodResponseContent</code></summary>
+<details><summary><code>client.Users.AuthenticationMethods.Update(ID, AuthenticationMethodID, request) -> *management.UpdateUserAuthenticationMethodResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -25308,7 +25308,7 @@ client.Users.AuthenticationMethods.Update(
 <dl>
 <dd>
 
-**authenticationMethodId:** `string` — The ID of the authentication method to update.
+**authenticationMethodID:** `string` — The ID of the authentication method to update.
     
 </dd>
 </dl>
@@ -25337,7 +25337,7 @@ client.Users.AuthenticationMethods.Update(
 </details>
 
 ## Users Authenticators
-<details><summary><code>client.Users.Authenticators.DeleteAll(Id) -> error</code></summary>
+<details><summary><code>client.Users.Authenticators.DeleteAll(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -25396,7 +25396,7 @@ client.Users.Authenticators.DeleteAll(
 </details>
 
 ## Users ConnectedAccounts
-<details><summary><code>client.Users.ConnectedAccounts.List(Id) -> *management.ListUserConnectedAccountsResponseContent</code></summary>
+<details><summary><code>client.Users.ConnectedAccounts.List(ID) -> *management.ListUserConnectedAccountsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -25480,7 +25480,7 @@ client.Users.ConnectedAccounts.List(
 </details>
 
 ## Users Enrollments
-<details><summary><code>client.Users.Enrollments.Get(Id) -> []*management.UsersEnrollment</code></summary>
+<details><summary><code>client.Users.Enrollments.Get(ID) -> []*management.UsersEnrollment</code></summary>
 <dl>
 <dd>
 
@@ -25539,7 +25539,7 @@ client.Users.Enrollments.Get(
 </details>
 
 ## Users FederatedConnectionsTokensets
-<details><summary><code>client.Users.FederatedConnectionsTokensets.List(Id) -> []*management.FederatedConnectionTokenSet</code></summary>
+<details><summary><code>client.Users.FederatedConnectionsTokensets.List(ID) -> []*management.FederatedConnectionTokenSet</code></summary>
 <dl>
 <dd>
 
@@ -25597,7 +25597,7 @@ client.Users.FederatedConnectionsTokensets.List(
 </dl>
 </details>
 
-<details><summary><code>client.Users.FederatedConnectionsTokensets.Delete(Id, TokensetId) -> error</code></summary>
+<details><summary><code>client.Users.FederatedConnectionsTokensets.Delete(ID, TokensetID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -25638,7 +25638,7 @@ client.Users.FederatedConnectionsTokensets.Delete(
 <dl>
 <dd>
 
-**tokensetId:** `string` — The tokenset id
+**tokensetID:** `string` — The tokenset id
     
 </dd>
 </dl>
@@ -25651,7 +25651,7 @@ client.Users.FederatedConnectionsTokensets.Delete(
 </details>
 
 ## Users Groups
-<details><summary><code>client.Users.Groups.Get(Id) -> *management.GetUserGroupsResponseContent</code></summary>
+<details><summary><code>client.Users.Groups.Get(ID) -> *management.GetUserGroupsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -25735,7 +25735,7 @@ client.Users.Groups.Get(
 </details>
 
 ## Users Identities
-<details><summary><code>client.Users.Identities.Link(Id, request) -> []*management.UserIdentity</code></summary>
+<details><summary><code>client.Users.Identities.Link(ID, request) -> []*management.UserIdentity</code></summary>
 <dl>
 <dd>
 
@@ -25826,7 +25826,7 @@ client.Users.Identities.Link(
 <dl>
 <dd>
 
-**connectionId:** `*string` — connection_id of the secondary user account being linked when more than one `auth0` database provider exists.
+**connectionID:** `*string` — connection_id of the secondary user account being linked when more than one `auth0` database provider exists.
     
 </dd>
 </dl>
@@ -25834,7 +25834,7 @@ client.Users.Identities.Link(
 <dl>
 <dd>
 
-**userId:** `*management.UserId` 
+**userID:** `*management.UserID` 
     
 </dd>
 </dl>
@@ -25854,7 +25854,7 @@ client.Users.Identities.Link(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Identities.Delete(Id, Provider, UserId) -> management.DeleteUserIdentityResponseContent</code></summary>
+<details><summary><code>client.Users.Identities.Delete(ID, Provider, UserID) -> management.DeleteUserIdentityResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -25920,7 +25920,7 @@ client.Users.Identities.Delete(
 <dl>
 <dd>
 
-**userId:** `string` — ID of the secondary linked account (e.g. `123456789081523216417` part after the `|` in `google-oauth2|123456789081523216417`).
+**userID:** `string` — ID of the secondary linked account (e.g. `123456789081523216417` part after the `|` in `google-oauth2|123456789081523216417`).
     
 </dd>
 </dl>
@@ -25933,7 +25933,7 @@ client.Users.Identities.Delete(
 </details>
 
 ## Users Logs
-<details><summary><code>client.Users.Logs.List(Id) -> *management.UserListLogOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Users.Logs.List(ID) -> *management.UserListLogOffsetPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -26045,7 +26045,7 @@ client.Users.Logs.List(
 </details>
 
 ## Users Multifactor
-<details><summary><code>client.Users.Multifactor.InvalidateRememberBrowser(Id) -> error</code></summary>
+<details><summary><code>client.Users.Multifactor.InvalidateRememberBrowser(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -26103,7 +26103,7 @@ client.Users.Multifactor.InvalidateRememberBrowser(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Multifactor.DeleteProvider(Id, Provider) -> error</code></summary>
+<details><summary><code>client.Users.Multifactor.DeleteProvider(ID, Provider) -> error</code></summary>
 <dl>
 <dd>
 
@@ -26171,7 +26171,7 @@ client.Users.Multifactor.DeleteProvider(
 </details>
 
 ## Users Organizations
-<details><summary><code>client.Users.Organizations.List(Id) -> *management.ListUserOrganizationsOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Users.Organizations.List(ID) -> *management.ListUserOrganizationsOffsetPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -26266,7 +26266,7 @@ client.Users.Organizations.List(
 </details>
 
 ## Users Permissions
-<details><summary><code>client.Users.Permissions.List(Id) -> *management.ListUserPermissionsOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Users.Permissions.List(ID) -> *management.ListUserPermissionsOffsetPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -26360,7 +26360,7 @@ client.Users.Permissions.List(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Permissions.Create(Id, request) -> error</code></summary>
+<details><summary><code>client.Users.Permissions.Create(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -26435,7 +26435,7 @@ client.Users.Permissions.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Permissions.Delete(Id, request) -> error</code></summary>
+<details><summary><code>client.Users.Permissions.Delete(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -26511,7 +26511,7 @@ client.Users.Permissions.Delete(
 </details>
 
 ## Users RiskAssessments
-<details><summary><code>client.Users.RiskAssessments.Clear(Id, request) -> error</code></summary>
+<details><summary><code>client.Users.RiskAssessments.Clear(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -26595,7 +26595,7 @@ client.Users.RiskAssessments.Clear(
 </details>
 
 ## Users Roles
-<details><summary><code>client.Users.Roles.List(Id) -> *management.ListUserRolesOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Users.Roles.List(ID) -> *management.ListUserRolesOffsetPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -26691,7 +26691,7 @@ client.Users.Roles.List(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Roles.Assign(Id, request) -> error</code></summary>
+<details><summary><code>client.Users.Roles.Assign(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -26765,7 +26765,7 @@ client.Users.Roles.Assign(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Roles.Delete(Id, request) -> error</code></summary>
+<details><summary><code>client.Users.Roles.Delete(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -26840,7 +26840,7 @@ client.Users.Roles.Delete(
 </details>
 
 ## Users RefreshToken
-<details><summary><code>client.Users.RefreshToken.List(UserId) -> *management.ListRefreshTokensPaginatedResponseContent</code></summary>
+<details><summary><code>client.Users.RefreshToken.List(UserID) -> *management.ListRefreshTokensPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -26895,7 +26895,7 @@ client.Users.RefreshToken.List(
 <dl>
 <dd>
 
-**userId:** `string` — ID of the user to get refresh tokens for
+**userID:** `string` — ID of the user to get refresh tokens for
     
 </dd>
 </dl>
@@ -26923,7 +26923,7 @@ client.Users.RefreshToken.List(
 </dl>
 </details>
 
-<details><summary><code>client.Users.RefreshToken.Delete(UserId) -> error</code></summary>
+<details><summary><code>client.Users.RefreshToken.Delete(UserID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -26969,7 +26969,7 @@ client.Users.RefreshToken.Delete(
 <dl>
 <dd>
 
-**userId:** `string` — ID of the user to get remove refresh tokens for
+**userID:** `string` — ID of the user to get remove refresh tokens for
     
 </dd>
 </dl>
@@ -26982,7 +26982,7 @@ client.Users.RefreshToken.Delete(
 </details>
 
 ## Users Sessions
-<details><summary><code>client.Users.Sessions.List(UserId) -> *management.ListUserSessionsPaginatedResponseContent</code></summary>
+<details><summary><code>client.Users.Sessions.List(UserID) -> *management.ListUserSessionsPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -27037,7 +27037,7 @@ client.Users.Sessions.List(
 <dl>
 <dd>
 
-**userId:** `string` — ID of the user to get sessions for
+**userID:** `string` — ID of the user to get sessions for
     
 </dd>
 </dl>
@@ -27065,7 +27065,7 @@ client.Users.Sessions.List(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Sessions.Delete(UserId) -> error</code></summary>
+<details><summary><code>client.Users.Sessions.Delete(UserID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -27111,7 +27111,7 @@ client.Users.Sessions.Delete(
 <dl>
 <dd>
 
-**userId:** `string` — ID of the user to get sessions for
+**userID:** `string` — ID of the user to get sessions for
     
 </dd>
 </dl>
@@ -27307,7 +27307,7 @@ client.VerifiableCredentials.Verification.Templates.Create(
 </dl>
 </details>
 
-<details><summary><code>client.VerifiableCredentials.Verification.Templates.Get(Id) -> *management.GetVerifiableCredentialTemplateResponseContent</code></summary>
+<details><summary><code>client.VerifiableCredentials.Verification.Templates.Get(ID) -> *management.GetVerifiableCredentialTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -27365,7 +27365,7 @@ client.VerifiableCredentials.Verification.Templates.Get(
 </dl>
 </details>
 
-<details><summary><code>client.VerifiableCredentials.Verification.Templates.Delete(Id) -> error</code></summary>
+<details><summary><code>client.VerifiableCredentials.Verification.Templates.Delete(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -27423,7 +27423,7 @@ client.VerifiableCredentials.Verification.Templates.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.VerifiableCredentials.Verification.Templates.Update(Id, request) -> *management.UpdateVerifiableCredentialTemplateResponseContent</code></summary>
+<details><summary><code>client.VerifiableCredentials.Verification.Templates.Update(ID, request) -> *management.UpdateVerifiableCredentialTemplateResponseContent</code></summary>
 <dl>
 <dd>
 

@@ -351,8 +351,8 @@ func (c *CreateEventStreamResponseContent) Accept(visitor CreateEventStreamRespo
 
 // Metadata about a specific attempt to deliver an event
 var (
-	createEventStreamTestEventResponseContentFieldId            = big.NewInt(1 << 0)
-	createEventStreamTestEventResponseContentFieldEventStreamId = big.NewInt(1 << 1)
+	createEventStreamTestEventResponseContentFieldID            = big.NewInt(1 << 0)
+	createEventStreamTestEventResponseContentFieldEventStreamID = big.NewInt(1 << 1)
 	createEventStreamTestEventResponseContentFieldStatus        = big.NewInt(1 << 2)
 	createEventStreamTestEventResponseContentFieldEventType     = big.NewInt(1 << 3)
 	createEventStreamTestEventResponseContentFieldAttempts      = big.NewInt(1 << 4)
@@ -361,9 +361,9 @@ var (
 
 type CreateEventStreamTestEventResponseContent struct {
 	// Unique identifier for the delivery
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// Unique identifier for the event stream.
-	EventStreamId string                           `json:"event_stream_id" url:"event_stream_id"`
+	EventStreamID string                           `json:"event_stream_id" url:"event_stream_id"`
 	Status        EventStreamDeliveryStatusEnum    `json:"status" url:"status"`
 	EventType     EventStreamDeliveryEventTypeEnum `json:"event_type" url:"event_type"`
 	// Results of delivery attempts
@@ -377,18 +377,18 @@ type CreateEventStreamTestEventResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateEventStreamTestEventResponseContent) GetId() string {
+func (c *CreateEventStreamTestEventResponseContent) GetID() string {
 	if c == nil {
 		return ""
 	}
-	return c.Id
+	return c.ID
 }
 
-func (c *CreateEventStreamTestEventResponseContent) GetEventStreamId() string {
+func (c *CreateEventStreamTestEventResponseContent) GetEventStreamID() string {
 	if c == nil {
 		return ""
 	}
-	return c.EventStreamId
+	return c.EventStreamID
 }
 
 func (c *CreateEventStreamTestEventResponseContent) GetEventType() EventStreamDeliveryEventTypeEnum {
@@ -423,18 +423,18 @@ func (c *CreateEventStreamTestEventResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEventStreamTestEventResponseContent) SetId(id string) {
-	c.Id = id
-	c.require(createEventStreamTestEventResponseContentFieldId)
+func (c *CreateEventStreamTestEventResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createEventStreamTestEventResponseContentFieldID)
 }
 
-// SetEventStreamId sets the EventStreamId field and marks it as non-optional;
+// SetEventStreamID sets the EventStreamID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEventStreamTestEventResponseContent) SetEventStreamId(eventStreamId string) {
-	c.EventStreamId = eventStreamId
-	c.require(createEventStreamTestEventResponseContentFieldEventStreamId)
+func (c *CreateEventStreamTestEventResponseContent) SetEventStreamID(eventStreamID string) {
+	c.EventStreamID = eventStreamID
+	c.require(createEventStreamTestEventResponseContentFieldEventStreamID)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -634,12 +634,12 @@ func (c *CreateEventStreamWebHookRequestContent) String() string {
 
 // Configuration specific to an action destination.
 var (
-	eventStreamActionConfigurationFieldActionId = big.NewInt(1 << 0)
+	eventStreamActionConfigurationFieldActionID = big.NewInt(1 << 0)
 )
 
 type EventStreamActionConfiguration struct {
 	// Action ID for the action destination.
-	ActionId string `json:"action_id" url:"action_id"`
+	ActionID string `json:"action_id" url:"action_id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -648,11 +648,11 @@ type EventStreamActionConfiguration struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamActionConfiguration) GetActionId() string {
+func (e *EventStreamActionConfiguration) GetActionID() string {
 	if e == nil {
 		return ""
 	}
-	return e.ActionId
+	return e.ActionID
 }
 
 func (e *EventStreamActionConfiguration) GetExtraProperties() map[string]interface{} {
@@ -666,11 +666,11 @@ func (e *EventStreamActionConfiguration) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetActionId sets the ActionId field and marks it as non-optional;
+// SetActionID sets the ActionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamActionConfiguration) SetActionId(actionId string) {
-	e.ActionId = actionId
-	e.require(eventStreamActionConfigurationFieldActionId)
+func (e *EventStreamActionConfiguration) SetActionID(actionID string) {
+	e.ActionID = actionID
+	e.require(eventStreamActionConfigurationFieldActionID)
 }
 
 func (e *EventStreamActionConfiguration) UnmarshalJSON(data []byte) error {
@@ -802,7 +802,7 @@ func (e *EventStreamActionDestination) String() string {
 type EventStreamActionDestinationTypeEnum = string
 
 var (
-	eventStreamActionResponseContentFieldId            = big.NewInt(1 << 0)
+	eventStreamActionResponseContentFieldID            = big.NewInt(1 << 0)
 	eventStreamActionResponseContentFieldName          = big.NewInt(1 << 1)
 	eventStreamActionResponseContentFieldSubscriptions = big.NewInt(1 << 2)
 	eventStreamActionResponseContentFieldDestination   = big.NewInt(1 << 3)
@@ -813,7 +813,7 @@ var (
 
 type EventStreamActionResponseContent struct {
 	// Unique identifier for the event stream.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of the event stream.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// List of event types subscribed to in this stream.
@@ -832,11 +832,11 @@ type EventStreamActionResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamActionResponseContent) GetId() string {
-	if e == nil || e.Id == nil {
+func (e *EventStreamActionResponseContent) GetID() string {
+	if e == nil || e.ID == nil {
 		return ""
 	}
-	return *e.Id
+	return *e.ID
 }
 
 func (e *EventStreamActionResponseContent) GetName() string {
@@ -892,11 +892,11 @@ func (e *EventStreamActionResponseContent) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamActionResponseContent) SetId(id *string) {
-	e.Id = id
-	e.require(eventStreamActionResponseContentFieldId)
+func (e *EventStreamActionResponseContent) SetID(id *string) {
+	e.ID = id
+	e.require(eventStreamActionResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1181,14 +1181,14 @@ func (e EventStreamEventBridgeAwsRegionEnum) Ptr() *EventStreamEventBridgeAwsReg
 
 // Configuration specific to an eventbridge destination.
 var (
-	eventStreamEventBridgeConfigurationFieldAwsAccountId          = big.NewInt(1 << 0)
+	eventStreamEventBridgeConfigurationFieldAwsAccountID          = big.NewInt(1 << 0)
 	eventStreamEventBridgeConfigurationFieldAwsRegion             = big.NewInt(1 << 1)
 	eventStreamEventBridgeConfigurationFieldAwsPartnerEventSource = big.NewInt(1 << 2)
 )
 
 type EventStreamEventBridgeConfiguration struct {
 	// AWS Account ID for EventBridge destination.
-	AwsAccountId string                              `json:"aws_account_id" url:"aws_account_id"`
+	AwsAccountID string                              `json:"aws_account_id" url:"aws_account_id"`
 	AwsRegion    EventStreamEventBridgeAwsRegionEnum `json:"aws_region" url:"aws_region"`
 	// AWS Partner Event Source for EventBridge destination.
 	AwsPartnerEventSource *string `json:"aws_partner_event_source,omitempty" url:"aws_partner_event_source,omitempty"`
@@ -1200,11 +1200,11 @@ type EventStreamEventBridgeConfiguration struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamEventBridgeConfiguration) GetAwsAccountId() string {
+func (e *EventStreamEventBridgeConfiguration) GetAwsAccountID() string {
 	if e == nil {
 		return ""
 	}
-	return e.AwsAccountId
+	return e.AwsAccountID
 }
 
 func (e *EventStreamEventBridgeConfiguration) GetAwsRegion() EventStreamEventBridgeAwsRegionEnum {
@@ -1232,11 +1232,11 @@ func (e *EventStreamEventBridgeConfiguration) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetAwsAccountId sets the AwsAccountId field and marks it as non-optional;
+// SetAwsAccountID sets the AwsAccountID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamEventBridgeConfiguration) SetAwsAccountId(awsAccountId string) {
-	e.AwsAccountId = awsAccountId
-	e.require(eventStreamEventBridgeConfigurationFieldAwsAccountId)
+func (e *EventStreamEventBridgeConfiguration) SetAwsAccountID(awsAccountID string) {
+	e.AwsAccountID = awsAccountID
+	e.require(eventStreamEventBridgeConfigurationFieldAwsAccountID)
 }
 
 // SetAwsRegion sets the AwsRegion field and marks it as non-optional;
@@ -1382,7 +1382,7 @@ func (e *EventStreamEventBridgeDestination) String() string {
 type EventStreamEventBridgeDestinationTypeEnum = string
 
 var (
-	eventStreamEventBridgeResponseContentFieldId            = big.NewInt(1 << 0)
+	eventStreamEventBridgeResponseContentFieldID            = big.NewInt(1 << 0)
 	eventStreamEventBridgeResponseContentFieldName          = big.NewInt(1 << 1)
 	eventStreamEventBridgeResponseContentFieldSubscriptions = big.NewInt(1 << 2)
 	eventStreamEventBridgeResponseContentFieldDestination   = big.NewInt(1 << 3)
@@ -1393,7 +1393,7 @@ var (
 
 type EventStreamEventBridgeResponseContent struct {
 	// Unique identifier for the event stream.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of the event stream.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// List of event types subscribed to in this stream.
@@ -1412,11 +1412,11 @@ type EventStreamEventBridgeResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamEventBridgeResponseContent) GetId() string {
-	if e == nil || e.Id == nil {
+func (e *EventStreamEventBridgeResponseContent) GetID() string {
+	if e == nil || e.ID == nil {
 		return ""
 	}
-	return *e.Id
+	return *e.ID
 }
 
 func (e *EventStreamEventBridgeResponseContent) GetName() string {
@@ -1472,11 +1472,11 @@ func (e *EventStreamEventBridgeResponseContent) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamEventBridgeResponseContent) SetId(id *string) {
-	e.Id = id
-	e.require(eventStreamEventBridgeResponseContentFieldId)
+func (e *EventStreamEventBridgeResponseContent) SetID(id *string) {
+	e.ID = id
+	e.require(eventStreamEventBridgeResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2228,7 +2228,7 @@ func (e *EventStreamWebhookDestination) String() string {
 type EventStreamWebhookDestinationTypeEnum = string
 
 var (
-	eventStreamWebhookResponseContentFieldId            = big.NewInt(1 << 0)
+	eventStreamWebhookResponseContentFieldID            = big.NewInt(1 << 0)
 	eventStreamWebhookResponseContentFieldName          = big.NewInt(1 << 1)
 	eventStreamWebhookResponseContentFieldSubscriptions = big.NewInt(1 << 2)
 	eventStreamWebhookResponseContentFieldDestination   = big.NewInt(1 << 3)
@@ -2239,7 +2239,7 @@ var (
 
 type EventStreamWebhookResponseContent struct {
 	// Unique identifier for the event stream.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// Name of the event stream.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// List of event types subscribed to in this stream.
@@ -2258,11 +2258,11 @@ type EventStreamWebhookResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EventStreamWebhookResponseContent) GetId() string {
-	if e == nil || e.Id == nil {
+func (e *EventStreamWebhookResponseContent) GetID() string {
+	if e == nil || e.ID == nil {
 		return ""
 	}
-	return *e.Id
+	return *e.ID
 }
 
 func (e *EventStreamWebhookResponseContent) GetName() string {
@@ -2318,11 +2318,11 @@ func (e *EventStreamWebhookResponseContent) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamWebhookResponseContent) SetId(id *string) {
-	e.Id = id
-	e.require(eventStreamWebhookResponseContentFieldId)
+func (e *EventStreamWebhookResponseContent) SetID(id *string) {
+	e.ID = id
+	e.require(eventStreamWebhookResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;

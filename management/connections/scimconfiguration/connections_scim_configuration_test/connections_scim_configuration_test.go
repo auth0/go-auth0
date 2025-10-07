@@ -93,7 +93,7 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestConnectionsScimConfigurationGetWithWireMock(
+func TestConnectionsSCIMConfigurationGetWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -114,7 +114,7 @@ func TestConnectionsScimConfigurationGetWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	_, invocationErr := client.Connections.ScimConfiguration.Get(
+	_, invocationErr := client.Connections.SCIMConfiguration.Get(
 		context.TODO(),
 		"id",
 	)
@@ -125,7 +125,7 @@ func TestConnectionsScimConfigurationGetWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestConnectionsScimConfigurationCreateWithWireMock(
+func TestConnectionsSCIMConfigurationCreateWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -146,8 +146,8 @@ func TestConnectionsScimConfigurationCreateWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.CreateScimConfigurationRequestContent{}
-	_, invocationErr := client.Connections.ScimConfiguration.Create(
+	request := &management.CreateSCIMConfigurationRequestContent{}
+	_, invocationErr := client.Connections.SCIMConfiguration.Create(
 		context.TODO(),
 		"id",
 		request,
@@ -159,7 +159,7 @@ func TestConnectionsScimConfigurationCreateWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestConnectionsScimConfigurationDeleteWithWireMock(
+func TestConnectionsSCIMConfigurationDeleteWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -180,7 +180,7 @@ func TestConnectionsScimConfigurationDeleteWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	invocationErr := client.Connections.ScimConfiguration.Delete(
+	invocationErr := client.Connections.SCIMConfiguration.Delete(
 		context.TODO(),
 		"id",
 	)
@@ -191,7 +191,7 @@ func TestConnectionsScimConfigurationDeleteWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestConnectionsScimConfigurationUpdateWithWireMock(
+func TestConnectionsSCIMConfigurationUpdateWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -220,13 +220,13 @@ func TestConnectionsScimConfigurationUpdateWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.UpdateScimConfigurationRequestContent{
-		UserIdAttribute: "user_id_attribute",
-		Mapping: []*management.ScimMappingItem{
-			&management.ScimMappingItem{},
+	request := &management.UpdateSCIMConfigurationRequestContent{
+		UserIDAttribute: "user_id_attribute",
+		Mapping: []*management.SCIMMappingItem{
+			&management.SCIMMappingItem{},
 		},
 	}
-	_, invocationErr := client.Connections.ScimConfiguration.Update(
+	_, invocationErr := client.Connections.SCIMConfiguration.Update(
 		context.TODO(),
 		"id",
 		request,
@@ -238,7 +238,7 @@ func TestConnectionsScimConfigurationUpdateWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
-func TestConnectionsScimConfigurationGetDefaultMappingWithWireMock(
+func TestConnectionsSCIMConfigurationGetDefaultMappingWithWireMock(
 	t *testing.T,
 ) {
 	// wiremock client and server initialized in shared main_test.go
@@ -259,7 +259,7 @@ func TestConnectionsScimConfigurationGetDefaultMappingWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	_, invocationErr := client.Connections.ScimConfiguration.GetDefaultMapping(
+	_, invocationErr := client.Connections.SCIMConfiguration.GetDefaultMapping(
 		context.TODO(),
 		"id",
 	)

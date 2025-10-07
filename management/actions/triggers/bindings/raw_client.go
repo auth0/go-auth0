@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) UpdateMany(
 	ctx context.Context,
 	// An actions extensibility point.
-	triggerId management.ActionTriggerTypeEnum,
+	triggerID management.ActionTriggerTypeEnum,
 	request *management.UpdateActionBindingsRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.UpdateActionBindingsResponseContent], error) {
@@ -45,7 +45,7 @@ func (r *RawClient) UpdateMany(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/actions/triggers/%v/bindings",
-		triggerId,
+		triggerID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

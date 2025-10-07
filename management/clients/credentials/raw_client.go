@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) List(
 	ctx context.Context,
 	// ID of the client.
-	clientId string,
+	clientID string,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*management.ClientCredential], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,7 +44,7 @@ func (r *RawClient) List(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/clients/%v/credentials",
-		clientId,
+		clientID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -78,7 +78,7 @@ func (r *RawClient) List(
 func (r *RawClient) Create(
 	ctx context.Context,
 	// ID of the client.
-	clientId string,
+	clientID string,
 	request *management.PostClientCredentialRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.PostClientCredentialResponseContent], error) {
@@ -90,7 +90,7 @@ func (r *RawClient) Create(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/clients/%v/credentials",
-		clientId,
+		clientID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -126,9 +126,9 @@ func (r *RawClient) Create(
 func (r *RawClient) Get(
 	ctx context.Context,
 	// ID of the client.
-	clientId string,
+	clientID string,
 	// ID of the credential.
-	credentialId string,
+	credentialID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetClientCredentialResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -139,8 +139,8 @@ func (r *RawClient) Get(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/clients/%v/credentials/%v",
-		clientId,
-		credentialId,
+		clientID,
+		credentialID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -174,9 +174,9 @@ func (r *RawClient) Get(
 func (r *RawClient) Delete(
 	ctx context.Context,
 	// ID of the client.
-	clientId string,
+	clientID string,
 	// ID of the credential to delete.
-	credentialId string,
+	credentialID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -187,8 +187,8 @@ func (r *RawClient) Delete(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/clients/%v/credentials/%v",
-		clientId,
-		credentialId,
+		clientID,
+		credentialID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -220,9 +220,9 @@ func (r *RawClient) Delete(
 func (r *RawClient) Update(
 	ctx context.Context,
 	// ID of the client.
-	clientId string,
+	clientID string,
 	// ID of the credential.
-	credentialId string,
+	credentialID string,
 	request *management.PatchClientCredentialRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.PatchClientCredentialResponseContent], error) {
@@ -234,8 +234,8 @@ func (r *RawClient) Update(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/clients/%v/credentials/%v",
-		clientId,
-		credentialId,
+		clientID,
+		credentialID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

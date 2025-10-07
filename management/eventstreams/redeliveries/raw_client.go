@@ -78,12 +78,12 @@ func (r *RawClient) Create(
 	}, nil
 }
 
-func (r *RawClient) CreateById(
+func (r *RawClient) CreateByID(
 	ctx context.Context,
 	// Unique identifier for the event stream.
 	id string,
 	// Unique identifier for the event
-	eventId string,
+	eventID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -95,7 +95,7 @@ func (r *RawClient) CreateById(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/event-streams/%v/redeliver/%v",
 		id,
-		eventId,
+		eventID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

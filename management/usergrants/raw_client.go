@@ -30,9 +30,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) DeleteByUserId(
+func (r *RawClient) DeleteByUserID(
 	ctx context.Context,
-	request *management.DeleteUserGrantByUserIdRequestParameters,
+	request *management.DeleteUserGrantByUserIDRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)

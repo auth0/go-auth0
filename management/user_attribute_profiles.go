@@ -10,16 +10,16 @@ import (
 )
 
 var (
-	createUserAttributeProfileResponseContentFieldId             = big.NewInt(1 << 0)
+	createUserAttributeProfileResponseContentFieldID             = big.NewInt(1 << 0)
 	createUserAttributeProfileResponseContentFieldName           = big.NewInt(1 << 1)
-	createUserAttributeProfileResponseContentFieldUserId         = big.NewInt(1 << 2)
+	createUserAttributeProfileResponseContentFieldUserID         = big.NewInt(1 << 2)
 	createUserAttributeProfileResponseContentFieldUserAttributes = big.NewInt(1 << 3)
 )
 
 type CreateUserAttributeProfileResponseContent struct {
-	Id             *UserAttributeProfileId             `json:"id,omitempty" url:"id,omitempty"`
+	ID             *UserAttributeProfileID             `json:"id,omitempty" url:"id,omitempty"`
 	Name           *UserAttributeProfileName           `json:"name,omitempty" url:"name,omitempty"`
-	UserId         *UserAttributeProfileUserId         `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID         *UserAttributeProfileUserID         `json:"user_id,omitempty" url:"user_id,omitempty"`
 	UserAttributes *UserAttributeProfileUserAttributes `json:"user_attributes,omitempty" url:"user_attributes,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -29,11 +29,11 @@ type CreateUserAttributeProfileResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *CreateUserAttributeProfileResponseContent) GetId() UserAttributeProfileId {
-	if c == nil || c.Id == nil {
+func (c *CreateUserAttributeProfileResponseContent) GetID() UserAttributeProfileID {
+	if c == nil || c.ID == nil {
 		return ""
 	}
-	return *c.Id
+	return *c.ID
 }
 
 func (c *CreateUserAttributeProfileResponseContent) GetName() UserAttributeProfileName {
@@ -43,11 +43,11 @@ func (c *CreateUserAttributeProfileResponseContent) GetName() UserAttributeProfi
 	return *c.Name
 }
 
-func (c *CreateUserAttributeProfileResponseContent) GetUserId() UserAttributeProfileUserId {
-	if c == nil || c.UserId == nil {
-		return UserAttributeProfileUserId{}
+func (c *CreateUserAttributeProfileResponseContent) GetUserID() UserAttributeProfileUserID {
+	if c == nil || c.UserID == nil {
+		return UserAttributeProfileUserID{}
 	}
-	return *c.UserId
+	return *c.UserID
 }
 
 func (c *CreateUserAttributeProfileResponseContent) GetUserAttributes() UserAttributeProfileUserAttributes {
@@ -68,11 +68,11 @@ func (c *CreateUserAttributeProfileResponseContent) require(field *big.Int) {
 	c.explicitFields.Or(c.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAttributeProfileResponseContent) SetId(id *UserAttributeProfileId) {
-	c.Id = id
-	c.require(createUserAttributeProfileResponseContentFieldId)
+func (c *CreateUserAttributeProfileResponseContent) SetID(id *UserAttributeProfileID) {
+	c.ID = id
+	c.require(createUserAttributeProfileResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -82,11 +82,11 @@ func (c *CreateUserAttributeProfileResponseContent) SetName(name *UserAttributeP
 	c.require(createUserAttributeProfileResponseContentFieldName)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAttributeProfileResponseContent) SetUserId(userId *UserAttributeProfileUserId) {
-	c.UserId = userId
-	c.require(createUserAttributeProfileResponseContentFieldUserId)
+func (c *CreateUserAttributeProfileResponseContent) SetUserID(userID *UserAttributeProfileUserID) {
+	c.UserID = userID
+	c.require(createUserAttributeProfileResponseContentFieldUserID)
 }
 
 // SetUserAttributes sets the UserAttributes field and marks it as non-optional;
@@ -136,16 +136,16 @@ func (c *CreateUserAttributeProfileResponseContent) String() string {
 }
 
 var (
-	getUserAttributeProfileResponseContentFieldId             = big.NewInt(1 << 0)
+	getUserAttributeProfileResponseContentFieldID             = big.NewInt(1 << 0)
 	getUserAttributeProfileResponseContentFieldName           = big.NewInt(1 << 1)
-	getUserAttributeProfileResponseContentFieldUserId         = big.NewInt(1 << 2)
+	getUserAttributeProfileResponseContentFieldUserID         = big.NewInt(1 << 2)
 	getUserAttributeProfileResponseContentFieldUserAttributes = big.NewInt(1 << 3)
 )
 
 type GetUserAttributeProfileResponseContent struct {
-	Id             *UserAttributeProfileId             `json:"id,omitempty" url:"id,omitempty"`
+	ID             *UserAttributeProfileID             `json:"id,omitempty" url:"id,omitempty"`
 	Name           *UserAttributeProfileName           `json:"name,omitempty" url:"name,omitempty"`
-	UserId         *UserAttributeProfileUserId         `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID         *UserAttributeProfileUserID         `json:"user_id,omitempty" url:"user_id,omitempty"`
 	UserAttributes *UserAttributeProfileUserAttributes `json:"user_attributes,omitempty" url:"user_attributes,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -155,11 +155,11 @@ type GetUserAttributeProfileResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetUserAttributeProfileResponseContent) GetId() UserAttributeProfileId {
-	if g == nil || g.Id == nil {
+func (g *GetUserAttributeProfileResponseContent) GetID() UserAttributeProfileID {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetUserAttributeProfileResponseContent) GetName() UserAttributeProfileName {
@@ -169,11 +169,11 @@ func (g *GetUserAttributeProfileResponseContent) GetName() UserAttributeProfileN
 	return *g.Name
 }
 
-func (g *GetUserAttributeProfileResponseContent) GetUserId() UserAttributeProfileUserId {
-	if g == nil || g.UserId == nil {
-		return UserAttributeProfileUserId{}
+func (g *GetUserAttributeProfileResponseContent) GetUserID() UserAttributeProfileUserID {
+	if g == nil || g.UserID == nil {
+		return UserAttributeProfileUserID{}
 	}
-	return *g.UserId
+	return *g.UserID
 }
 
 func (g *GetUserAttributeProfileResponseContent) GetUserAttributes() UserAttributeProfileUserAttributes {
@@ -194,11 +194,11 @@ func (g *GetUserAttributeProfileResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserAttributeProfileResponseContent) SetId(id *UserAttributeProfileId) {
-	g.Id = id
-	g.require(getUserAttributeProfileResponseContentFieldId)
+func (g *GetUserAttributeProfileResponseContent) SetID(id *UserAttributeProfileID) {
+	g.ID = id
+	g.require(getUserAttributeProfileResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -208,11 +208,11 @@ func (g *GetUserAttributeProfileResponseContent) SetName(name *UserAttributeProf
 	g.require(getUserAttributeProfileResponseContentFieldName)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserAttributeProfileResponseContent) SetUserId(userId *UserAttributeProfileUserId) {
-	g.UserId = userId
-	g.require(getUserAttributeProfileResponseContentFieldUserId)
+func (g *GetUserAttributeProfileResponseContent) SetUserID(userID *UserAttributeProfileUserID) {
+	g.UserID = userID
+	g.require(getUserAttributeProfileResponseContentFieldUserID)
 }
 
 // SetUserAttributes sets the UserAttributes field and marks it as non-optional;
@@ -262,14 +262,14 @@ func (g *GetUserAttributeProfileResponseContent) String() string {
 }
 
 var (
-	getUserAttributeProfileTemplateResponseContentFieldId          = big.NewInt(1 << 0)
+	getUserAttributeProfileTemplateResponseContentFieldID          = big.NewInt(1 << 0)
 	getUserAttributeProfileTemplateResponseContentFieldDisplayName = big.NewInt(1 << 1)
 	getUserAttributeProfileTemplateResponseContentFieldTemplate    = big.NewInt(1 << 2)
 )
 
 type GetUserAttributeProfileTemplateResponseContent struct {
 	// The id of the template.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The user-friendly name of the template displayed in the UI.
 	DisplayName *string                       `json:"display_name,omitempty" url:"display_name,omitempty"`
 	Template    *UserAttributeProfileTemplate `json:"template,omitempty" url:"template,omitempty"`
@@ -281,11 +281,11 @@ type GetUserAttributeProfileTemplateResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetUserAttributeProfileTemplateResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetUserAttributeProfileTemplateResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
 func (g *GetUserAttributeProfileTemplateResponseContent) GetDisplayName() string {
@@ -313,11 +313,11 @@ func (g *GetUserAttributeProfileTemplateResponseContent) require(field *big.Int)
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserAttributeProfileTemplateResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getUserAttributeProfileTemplateResponseContentFieldId)
+func (g *GetUserAttributeProfileTemplateResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getUserAttributeProfileTemplateResponseContentFieldID)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -547,16 +547,16 @@ func (l *ListUserAttributeProfilesPaginatedResponseContent) String() string {
 }
 
 var (
-	updateUserAttributeProfileResponseContentFieldId             = big.NewInt(1 << 0)
+	updateUserAttributeProfileResponseContentFieldID             = big.NewInt(1 << 0)
 	updateUserAttributeProfileResponseContentFieldName           = big.NewInt(1 << 1)
-	updateUserAttributeProfileResponseContentFieldUserId         = big.NewInt(1 << 2)
+	updateUserAttributeProfileResponseContentFieldUserID         = big.NewInt(1 << 2)
 	updateUserAttributeProfileResponseContentFieldUserAttributes = big.NewInt(1 << 3)
 )
 
 type UpdateUserAttributeProfileResponseContent struct {
-	Id             *UserAttributeProfileId             `json:"id,omitempty" url:"id,omitempty"`
+	ID             *UserAttributeProfileID             `json:"id,omitempty" url:"id,omitempty"`
 	Name           *UserAttributeProfileName           `json:"name,omitempty" url:"name,omitempty"`
-	UserId         *UserAttributeProfileUserId         `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID         *UserAttributeProfileUserID         `json:"user_id,omitempty" url:"user_id,omitempty"`
 	UserAttributes *UserAttributeProfileUserAttributes `json:"user_attributes,omitempty" url:"user_attributes,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -566,11 +566,11 @@ type UpdateUserAttributeProfileResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdateUserAttributeProfileResponseContent) GetId() UserAttributeProfileId {
-	if u == nil || u.Id == nil {
+func (u *UpdateUserAttributeProfileResponseContent) GetID() UserAttributeProfileID {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UpdateUserAttributeProfileResponseContent) GetName() UserAttributeProfileName {
@@ -580,11 +580,11 @@ func (u *UpdateUserAttributeProfileResponseContent) GetName() UserAttributeProfi
 	return *u.Name
 }
 
-func (u *UpdateUserAttributeProfileResponseContent) GetUserId() UserAttributeProfileUserId {
-	if u == nil || u.UserId == nil {
-		return UserAttributeProfileUserId{}
+func (u *UpdateUserAttributeProfileResponseContent) GetUserID() UserAttributeProfileUserID {
+	if u == nil || u.UserID == nil {
+		return UserAttributeProfileUserID{}
 	}
-	return *u.UserId
+	return *u.UserID
 }
 
 func (u *UpdateUserAttributeProfileResponseContent) GetUserAttributes() UserAttributeProfileUserAttributes {
@@ -605,11 +605,11 @@ func (u *UpdateUserAttributeProfileResponseContent) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserAttributeProfileResponseContent) SetId(id *UserAttributeProfileId) {
-	u.Id = id
-	u.require(updateUserAttributeProfileResponseContentFieldId)
+func (u *UpdateUserAttributeProfileResponseContent) SetID(id *UserAttributeProfileID) {
+	u.ID = id
+	u.require(updateUserAttributeProfileResponseContentFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -619,11 +619,11 @@ func (u *UpdateUserAttributeProfileResponseContent) SetName(name *UserAttributeP
 	u.require(updateUserAttributeProfileResponseContentFieldName)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserAttributeProfileResponseContent) SetUserId(userId *UserAttributeProfileUserId) {
-	u.UserId = userId
-	u.require(updateUserAttributeProfileResponseContentFieldUserId)
+func (u *UpdateUserAttributeProfileResponseContent) SetUserID(userID *UserAttributeProfileUserID) {
+	u.UserID = userID
+	u.require(updateUserAttributeProfileResponseContentFieldUserID)
 }
 
 // SetUserAttributes sets the UserAttributes field and marks it as non-optional;
@@ -673,16 +673,16 @@ func (u *UpdateUserAttributeProfileResponseContent) String() string {
 }
 
 var (
-	userAttributeProfileFieldId             = big.NewInt(1 << 0)
+	userAttributeProfileFieldID             = big.NewInt(1 << 0)
 	userAttributeProfileFieldName           = big.NewInt(1 << 1)
-	userAttributeProfileFieldUserId         = big.NewInt(1 << 2)
+	userAttributeProfileFieldUserID         = big.NewInt(1 << 2)
 	userAttributeProfileFieldUserAttributes = big.NewInt(1 << 3)
 )
 
 type UserAttributeProfile struct {
-	Id             *UserAttributeProfileId             `json:"id,omitempty" url:"id,omitempty"`
+	ID             *UserAttributeProfileID             `json:"id,omitempty" url:"id,omitempty"`
 	Name           *UserAttributeProfileName           `json:"name,omitempty" url:"name,omitempty"`
-	UserId         *UserAttributeProfileUserId         `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID         *UserAttributeProfileUserID         `json:"user_id,omitempty" url:"user_id,omitempty"`
 	UserAttributes *UserAttributeProfileUserAttributes `json:"user_attributes,omitempty" url:"user_attributes,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -692,11 +692,11 @@ type UserAttributeProfile struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserAttributeProfile) GetId() UserAttributeProfileId {
-	if u == nil || u.Id == nil {
+func (u *UserAttributeProfile) GetID() UserAttributeProfileID {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UserAttributeProfile) GetName() UserAttributeProfileName {
@@ -706,11 +706,11 @@ func (u *UserAttributeProfile) GetName() UserAttributeProfileName {
 	return *u.Name
 }
 
-func (u *UserAttributeProfile) GetUserId() UserAttributeProfileUserId {
-	if u == nil || u.UserId == nil {
-		return UserAttributeProfileUserId{}
+func (u *UserAttributeProfile) GetUserID() UserAttributeProfileUserID {
+	if u == nil || u.UserID == nil {
+		return UserAttributeProfileUserID{}
 	}
-	return *u.UserId
+	return *u.UserID
 }
 
 func (u *UserAttributeProfile) GetUserAttributes() UserAttributeProfileUserAttributes {
@@ -731,11 +731,11 @@ func (u *UserAttributeProfile) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfile) SetId(id *UserAttributeProfileId) {
-	u.Id = id
-	u.require(userAttributeProfileFieldId)
+func (u *UserAttributeProfile) SetID(id *UserAttributeProfileID) {
+	u.ID = id
+	u.require(userAttributeProfileFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -745,11 +745,11 @@ func (u *UserAttributeProfile) SetName(name *UserAttributeProfileName) {
 	u.require(userAttributeProfileFieldName)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfile) SetUserId(userId *UserAttributeProfileUserId) {
-	u.UserId = userId
-	u.require(userAttributeProfileFieldUserId)
+func (u *UserAttributeProfile) SetUserID(userID *UserAttributeProfileUserID) {
+	u.UserID = userID
+	u.require(userAttributeProfileFieldUserID)
 }
 
 // SetUserAttributes sets the UserAttributes field and marks it as non-optional;
@@ -799,7 +799,7 @@ func (u *UserAttributeProfile) String() string {
 }
 
 // User Attribute Profile identifier.
-type UserAttributeProfileId = string
+type UserAttributeProfileID = string
 
 // The name of the user attribute profile.
 type UserAttributeProfileName = string
@@ -901,10 +901,10 @@ func (u *UserAttributeProfileOidcMapping) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-type UserAttributeProfilePatchUserId = *UserAttributeProfileUserId
+type UserAttributeProfilePatchUserID = *UserAttributeProfileUserID
 
 // SAML mapping override for this strategy
-type UserAttributeProfileSamlMapping = []string
+type UserAttributeProfileSAMLMapping = []string
 
 // Strategy-specific overrides for this attribute
 var (
@@ -1099,15 +1099,15 @@ func (u *UserAttributeProfileStrategyOverrides) String() string {
 
 var (
 	userAttributeProfileStrategyOverridesMappingFieldOidcMapping = big.NewInt(1 << 0)
-	userAttributeProfileStrategyOverridesMappingFieldSamlMapping = big.NewInt(1 << 1)
-	userAttributeProfileStrategyOverridesMappingFieldScimMapping = big.NewInt(1 << 2)
+	userAttributeProfileStrategyOverridesMappingFieldSAMLMapping = big.NewInt(1 << 1)
+	userAttributeProfileStrategyOverridesMappingFieldSCIMMapping = big.NewInt(1 << 2)
 )
 
 type UserAttributeProfileStrategyOverridesMapping struct {
 	OidcMapping *UserAttributeProfileOidcMapping `json:"oidc_mapping,omitempty" url:"oidc_mapping,omitempty"`
-	SamlMapping *UserAttributeProfileSamlMapping `json:"saml_mapping,omitempty" url:"saml_mapping,omitempty"`
+	SAMLMapping *UserAttributeProfileSAMLMapping `json:"saml_mapping,omitempty" url:"saml_mapping,omitempty"`
 	// SCIM mapping override for this strategy
-	ScimMapping *string `json:"scim_mapping,omitempty" url:"scim_mapping,omitempty"`
+	SCIMMapping *string `json:"scim_mapping,omitempty" url:"scim_mapping,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1123,18 +1123,18 @@ func (u *UserAttributeProfileStrategyOverridesMapping) GetOidcMapping() UserAttr
 	return *u.OidcMapping
 }
 
-func (u *UserAttributeProfileStrategyOverridesMapping) GetSamlMapping() UserAttributeProfileSamlMapping {
-	if u == nil || u.SamlMapping == nil {
+func (u *UserAttributeProfileStrategyOverridesMapping) GetSAMLMapping() UserAttributeProfileSAMLMapping {
+	if u == nil || u.SAMLMapping == nil {
 		return nil
 	}
-	return *u.SamlMapping
+	return *u.SAMLMapping
 }
 
-func (u *UserAttributeProfileStrategyOverridesMapping) GetScimMapping() string {
-	if u == nil || u.ScimMapping == nil {
+func (u *UserAttributeProfileStrategyOverridesMapping) GetSCIMMapping() string {
+	if u == nil || u.SCIMMapping == nil {
 		return ""
 	}
-	return *u.ScimMapping
+	return *u.SCIMMapping
 }
 
 func (u *UserAttributeProfileStrategyOverridesMapping) GetExtraProperties() map[string]interface{} {
@@ -1155,18 +1155,18 @@ func (u *UserAttributeProfileStrategyOverridesMapping) SetOidcMapping(oidcMappin
 	u.require(userAttributeProfileStrategyOverridesMappingFieldOidcMapping)
 }
 
-// SetSamlMapping sets the SamlMapping field and marks it as non-optional;
+// SetSAMLMapping sets the SAMLMapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesMapping) SetSamlMapping(samlMapping *UserAttributeProfileSamlMapping) {
-	u.SamlMapping = samlMapping
-	u.require(userAttributeProfileStrategyOverridesMappingFieldSamlMapping)
+func (u *UserAttributeProfileStrategyOverridesMapping) SetSAMLMapping(samlMapping *UserAttributeProfileSAMLMapping) {
+	u.SAMLMapping = samlMapping
+	u.require(userAttributeProfileStrategyOverridesMappingFieldSAMLMapping)
 }
 
-// SetScimMapping sets the ScimMapping field and marks it as non-optional;
+// SetSCIMMapping sets the SCIMMapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesMapping) SetScimMapping(scimMapping *string) {
-	u.ScimMapping = scimMapping
-	u.require(userAttributeProfileStrategyOverridesMappingFieldScimMapping)
+func (u *UserAttributeProfileStrategyOverridesMapping) SetSCIMMapping(scimMapping *string) {
+	u.SCIMMapping = scimMapping
+	u.require(userAttributeProfileStrategyOverridesMappingFieldSCIMMapping)
 }
 
 func (u *UserAttributeProfileStrategyOverridesMapping) UnmarshalJSON(data []byte) error {
@@ -1210,25 +1210,25 @@ func (u *UserAttributeProfileStrategyOverridesMapping) String() string {
 
 // Strategy-specific overrides for user ID
 var (
-	userAttributeProfileStrategyOverridesUserIdFieldPingfederate = big.NewInt(1 << 0)
-	userAttributeProfileStrategyOverridesUserIdFieldAd           = big.NewInt(1 << 1)
-	userAttributeProfileStrategyOverridesUserIdFieldAdfs         = big.NewInt(1 << 2)
-	userAttributeProfileStrategyOverridesUserIdFieldWaad         = big.NewInt(1 << 3)
-	userAttributeProfileStrategyOverridesUserIdFieldGoogleApps   = big.NewInt(1 << 4)
-	userAttributeProfileStrategyOverridesUserIdFieldOkta         = big.NewInt(1 << 5)
-	userAttributeProfileStrategyOverridesUserIdFieldOidc         = big.NewInt(1 << 6)
-	userAttributeProfileStrategyOverridesUserIdFieldSamlp        = big.NewInt(1 << 7)
+	userAttributeProfileStrategyOverridesUserIDFieldPingfederate = big.NewInt(1 << 0)
+	userAttributeProfileStrategyOverridesUserIDFieldAd           = big.NewInt(1 << 1)
+	userAttributeProfileStrategyOverridesUserIDFieldAdfs         = big.NewInt(1 << 2)
+	userAttributeProfileStrategyOverridesUserIDFieldWaad         = big.NewInt(1 << 3)
+	userAttributeProfileStrategyOverridesUserIDFieldGoogleApps   = big.NewInt(1 << 4)
+	userAttributeProfileStrategyOverridesUserIDFieldOkta         = big.NewInt(1 << 5)
+	userAttributeProfileStrategyOverridesUserIDFieldOidc         = big.NewInt(1 << 6)
+	userAttributeProfileStrategyOverridesUserIDFieldSamlp        = big.NewInt(1 << 7)
 )
 
-type UserAttributeProfileStrategyOverridesUserId struct {
-	Pingfederate *UserAttributeProfileStrategyOverridesUserIdMapping `json:"pingfederate,omitempty" url:"pingfederate,omitempty"`
-	Ad           *UserAttributeProfileStrategyOverridesUserIdMapping `json:"ad,omitempty" url:"ad,omitempty"`
-	Adfs         *UserAttributeProfileStrategyOverridesUserIdMapping `json:"adfs,omitempty" url:"adfs,omitempty"`
-	Waad         *UserAttributeProfileStrategyOverridesUserIdMapping `json:"waad,omitempty" url:"waad,omitempty"`
-	GoogleApps   *UserAttributeProfileStrategyOverridesUserIdMapping `json:"google-apps,omitempty" url:"google-apps,omitempty"`
-	Okta         *UserAttributeProfileStrategyOverridesUserIdMapping `json:"okta,omitempty" url:"okta,omitempty"`
-	Oidc         *UserAttributeProfileStrategyOverridesUserIdMapping `json:"oidc,omitempty" url:"oidc,omitempty"`
-	Samlp        *UserAttributeProfileStrategyOverridesUserIdMapping `json:"samlp,omitempty" url:"samlp,omitempty"`
+type UserAttributeProfileStrategyOverridesUserID struct {
+	Pingfederate *UserAttributeProfileStrategyOverridesUserIDMapping `json:"pingfederate,omitempty" url:"pingfederate,omitempty"`
+	Ad           *UserAttributeProfileStrategyOverridesUserIDMapping `json:"ad,omitempty" url:"ad,omitempty"`
+	Adfs         *UserAttributeProfileStrategyOverridesUserIDMapping `json:"adfs,omitempty" url:"adfs,omitempty"`
+	Waad         *UserAttributeProfileStrategyOverridesUserIDMapping `json:"waad,omitempty" url:"waad,omitempty"`
+	GoogleApps   *UserAttributeProfileStrategyOverridesUserIDMapping `json:"google-apps,omitempty" url:"google-apps,omitempty"`
+	Okta         *UserAttributeProfileStrategyOverridesUserIDMapping `json:"okta,omitempty" url:"okta,omitempty"`
+	Oidc         *UserAttributeProfileStrategyOverridesUserIDMapping `json:"oidc,omitempty" url:"oidc,omitempty"`
+	Samlp        *UserAttributeProfileStrategyOverridesUserIDMapping `json:"samlp,omitempty" url:"samlp,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1237,67 +1237,67 @@ type UserAttributeProfileStrategyOverridesUserId struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) GetPingfederate() UserAttributeProfileStrategyOverridesUserIdMapping {
+func (u *UserAttributeProfileStrategyOverridesUserID) GetPingfederate() UserAttributeProfileStrategyOverridesUserIDMapping {
 	if u == nil || u.Pingfederate == nil {
-		return UserAttributeProfileStrategyOverridesUserIdMapping{}
+		return UserAttributeProfileStrategyOverridesUserIDMapping{}
 	}
 	return *u.Pingfederate
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) GetAd() UserAttributeProfileStrategyOverridesUserIdMapping {
+func (u *UserAttributeProfileStrategyOverridesUserID) GetAd() UserAttributeProfileStrategyOverridesUserIDMapping {
 	if u == nil || u.Ad == nil {
-		return UserAttributeProfileStrategyOverridesUserIdMapping{}
+		return UserAttributeProfileStrategyOverridesUserIDMapping{}
 	}
 	return *u.Ad
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) GetAdfs() UserAttributeProfileStrategyOverridesUserIdMapping {
+func (u *UserAttributeProfileStrategyOverridesUserID) GetAdfs() UserAttributeProfileStrategyOverridesUserIDMapping {
 	if u == nil || u.Adfs == nil {
-		return UserAttributeProfileStrategyOverridesUserIdMapping{}
+		return UserAttributeProfileStrategyOverridesUserIDMapping{}
 	}
 	return *u.Adfs
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) GetWaad() UserAttributeProfileStrategyOverridesUserIdMapping {
+func (u *UserAttributeProfileStrategyOverridesUserID) GetWaad() UserAttributeProfileStrategyOverridesUserIDMapping {
 	if u == nil || u.Waad == nil {
-		return UserAttributeProfileStrategyOverridesUserIdMapping{}
+		return UserAttributeProfileStrategyOverridesUserIDMapping{}
 	}
 	return *u.Waad
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) GetGoogleApps() UserAttributeProfileStrategyOverridesUserIdMapping {
+func (u *UserAttributeProfileStrategyOverridesUserID) GetGoogleApps() UserAttributeProfileStrategyOverridesUserIDMapping {
 	if u == nil || u.GoogleApps == nil {
-		return UserAttributeProfileStrategyOverridesUserIdMapping{}
+		return UserAttributeProfileStrategyOverridesUserIDMapping{}
 	}
 	return *u.GoogleApps
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) GetOkta() UserAttributeProfileStrategyOverridesUserIdMapping {
+func (u *UserAttributeProfileStrategyOverridesUserID) GetOkta() UserAttributeProfileStrategyOverridesUserIDMapping {
 	if u == nil || u.Okta == nil {
-		return UserAttributeProfileStrategyOverridesUserIdMapping{}
+		return UserAttributeProfileStrategyOverridesUserIDMapping{}
 	}
 	return *u.Okta
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) GetOidc() UserAttributeProfileStrategyOverridesUserIdMapping {
+func (u *UserAttributeProfileStrategyOverridesUserID) GetOidc() UserAttributeProfileStrategyOverridesUserIDMapping {
 	if u == nil || u.Oidc == nil {
-		return UserAttributeProfileStrategyOverridesUserIdMapping{}
+		return UserAttributeProfileStrategyOverridesUserIDMapping{}
 	}
 	return *u.Oidc
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) GetSamlp() UserAttributeProfileStrategyOverridesUserIdMapping {
+func (u *UserAttributeProfileStrategyOverridesUserID) GetSamlp() UserAttributeProfileStrategyOverridesUserIDMapping {
 	if u == nil || u.Samlp == nil {
-		return UserAttributeProfileStrategyOverridesUserIdMapping{}
+		return UserAttributeProfileStrategyOverridesUserIDMapping{}
 	}
 	return *u.Samlp
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) GetExtraProperties() map[string]interface{} {
+func (u *UserAttributeProfileStrategyOverridesUserID) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) require(field *big.Int) {
+func (u *UserAttributeProfileStrategyOverridesUserID) require(field *big.Int) {
 	if u.explicitFields == nil {
 		u.explicitFields = big.NewInt(0)
 	}
@@ -1306,67 +1306,67 @@ func (u *UserAttributeProfileStrategyOverridesUserId) require(field *big.Int) {
 
 // SetPingfederate sets the Pingfederate field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesUserId) SetPingfederate(pingfederate *UserAttributeProfileStrategyOverridesUserIdMapping) {
+func (u *UserAttributeProfileStrategyOverridesUserID) SetPingfederate(pingfederate *UserAttributeProfileStrategyOverridesUserIDMapping) {
 	u.Pingfederate = pingfederate
-	u.require(userAttributeProfileStrategyOverridesUserIdFieldPingfederate)
+	u.require(userAttributeProfileStrategyOverridesUserIDFieldPingfederate)
 }
 
 // SetAd sets the Ad field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesUserId) SetAd(ad *UserAttributeProfileStrategyOverridesUserIdMapping) {
+func (u *UserAttributeProfileStrategyOverridesUserID) SetAd(ad *UserAttributeProfileStrategyOverridesUserIDMapping) {
 	u.Ad = ad
-	u.require(userAttributeProfileStrategyOverridesUserIdFieldAd)
+	u.require(userAttributeProfileStrategyOverridesUserIDFieldAd)
 }
 
 // SetAdfs sets the Adfs field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesUserId) SetAdfs(adfs *UserAttributeProfileStrategyOverridesUserIdMapping) {
+func (u *UserAttributeProfileStrategyOverridesUserID) SetAdfs(adfs *UserAttributeProfileStrategyOverridesUserIDMapping) {
 	u.Adfs = adfs
-	u.require(userAttributeProfileStrategyOverridesUserIdFieldAdfs)
+	u.require(userAttributeProfileStrategyOverridesUserIDFieldAdfs)
 }
 
 // SetWaad sets the Waad field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesUserId) SetWaad(waad *UserAttributeProfileStrategyOverridesUserIdMapping) {
+func (u *UserAttributeProfileStrategyOverridesUserID) SetWaad(waad *UserAttributeProfileStrategyOverridesUserIDMapping) {
 	u.Waad = waad
-	u.require(userAttributeProfileStrategyOverridesUserIdFieldWaad)
+	u.require(userAttributeProfileStrategyOverridesUserIDFieldWaad)
 }
 
 // SetGoogleApps sets the GoogleApps field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesUserId) SetGoogleApps(googleApps *UserAttributeProfileStrategyOverridesUserIdMapping) {
+func (u *UserAttributeProfileStrategyOverridesUserID) SetGoogleApps(googleApps *UserAttributeProfileStrategyOverridesUserIDMapping) {
 	u.GoogleApps = googleApps
-	u.require(userAttributeProfileStrategyOverridesUserIdFieldGoogleApps)
+	u.require(userAttributeProfileStrategyOverridesUserIDFieldGoogleApps)
 }
 
 // SetOkta sets the Okta field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesUserId) SetOkta(okta *UserAttributeProfileStrategyOverridesUserIdMapping) {
+func (u *UserAttributeProfileStrategyOverridesUserID) SetOkta(okta *UserAttributeProfileStrategyOverridesUserIDMapping) {
 	u.Okta = okta
-	u.require(userAttributeProfileStrategyOverridesUserIdFieldOkta)
+	u.require(userAttributeProfileStrategyOverridesUserIDFieldOkta)
 }
 
 // SetOidc sets the Oidc field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesUserId) SetOidc(oidc *UserAttributeProfileStrategyOverridesUserIdMapping) {
+func (u *UserAttributeProfileStrategyOverridesUserID) SetOidc(oidc *UserAttributeProfileStrategyOverridesUserIDMapping) {
 	u.Oidc = oidc
-	u.require(userAttributeProfileStrategyOverridesUserIdFieldOidc)
+	u.require(userAttributeProfileStrategyOverridesUserIDFieldOidc)
 }
 
 // SetSamlp sets the Samlp field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesUserId) SetSamlp(samlp *UserAttributeProfileStrategyOverridesUserIdMapping) {
+func (u *UserAttributeProfileStrategyOverridesUserID) SetSamlp(samlp *UserAttributeProfileStrategyOverridesUserIDMapping) {
 	u.Samlp = samlp
-	u.require(userAttributeProfileStrategyOverridesUserIdFieldSamlp)
+	u.require(userAttributeProfileStrategyOverridesUserIDFieldSamlp)
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) UnmarshalJSON(data []byte) error {
-	type unmarshaler UserAttributeProfileStrategyOverridesUserId
+func (u *UserAttributeProfileStrategyOverridesUserID) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserAttributeProfileStrategyOverridesUserID
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*u = UserAttributeProfileStrategyOverridesUserId(value)
+	*u = UserAttributeProfileStrategyOverridesUserID(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
@@ -1376,8 +1376,8 @@ func (u *UserAttributeProfileStrategyOverridesUserId) UnmarshalJSON(data []byte)
 	return nil
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) MarshalJSON() ([]byte, error) {
-	type embed UserAttributeProfileStrategyOverridesUserId
+func (u *UserAttributeProfileStrategyOverridesUserID) MarshalJSON() ([]byte, error) {
+	type embed UserAttributeProfileStrategyOverridesUserID
 	var marshaler = struct {
 		embed
 	}{
@@ -1387,7 +1387,7 @@ func (u *UserAttributeProfileStrategyOverridesUserId) MarshalJSON() ([]byte, err
 	return json.Marshal(explicitMarshaler)
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserId) String() string {
+func (u *UserAttributeProfileStrategyOverridesUserID) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1400,16 +1400,16 @@ func (u *UserAttributeProfileStrategyOverridesUserId) String() string {
 }
 
 var (
-	userAttributeProfileStrategyOverridesUserIdMappingFieldOidcMapping = big.NewInt(1 << 0)
-	userAttributeProfileStrategyOverridesUserIdMappingFieldSamlMapping = big.NewInt(1 << 1)
-	userAttributeProfileStrategyOverridesUserIdMappingFieldScimMapping = big.NewInt(1 << 2)
+	userAttributeProfileStrategyOverridesUserIDMappingFieldOidcMapping = big.NewInt(1 << 0)
+	userAttributeProfileStrategyOverridesUserIDMappingFieldSAMLMapping = big.NewInt(1 << 1)
+	userAttributeProfileStrategyOverridesUserIDMappingFieldSCIMMapping = big.NewInt(1 << 2)
 )
 
-type UserAttributeProfileStrategyOverridesUserIdMapping struct {
-	OidcMapping *UserAttributeProfileUserIdOidcStrategyOverrideMapping `json:"oidc_mapping,omitempty" url:"oidc_mapping,omitempty"`
-	SamlMapping *UserAttributeProfileSamlMapping                       `json:"saml_mapping,omitempty" url:"saml_mapping,omitempty"`
+type UserAttributeProfileStrategyOverridesUserIDMapping struct {
+	OidcMapping *UserAttributeProfileUserIDOidcStrategyOverrideMapping `json:"oidc_mapping,omitempty" url:"oidc_mapping,omitempty"`
+	SAMLMapping *UserAttributeProfileSAMLMapping                       `json:"saml_mapping,omitempty" url:"saml_mapping,omitempty"`
 	// SCIM mapping override for this strategy
-	ScimMapping *string `json:"scim_mapping,omitempty" url:"scim_mapping,omitempty"`
+	SCIMMapping *string `json:"scim_mapping,omitempty" url:"scim_mapping,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1418,32 +1418,32 @@ type UserAttributeProfileStrategyOverridesUserIdMapping struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserIdMapping) GetOidcMapping() UserAttributeProfileUserIdOidcStrategyOverrideMapping {
+func (u *UserAttributeProfileStrategyOverridesUserIDMapping) GetOidcMapping() UserAttributeProfileUserIDOidcStrategyOverrideMapping {
 	if u == nil || u.OidcMapping == nil {
 		return ""
 	}
 	return *u.OidcMapping
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserIdMapping) GetSamlMapping() UserAttributeProfileSamlMapping {
-	if u == nil || u.SamlMapping == nil {
+func (u *UserAttributeProfileStrategyOverridesUserIDMapping) GetSAMLMapping() UserAttributeProfileSAMLMapping {
+	if u == nil || u.SAMLMapping == nil {
 		return nil
 	}
-	return *u.SamlMapping
+	return *u.SAMLMapping
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserIdMapping) GetScimMapping() string {
-	if u == nil || u.ScimMapping == nil {
+func (u *UserAttributeProfileStrategyOverridesUserIDMapping) GetSCIMMapping() string {
+	if u == nil || u.SCIMMapping == nil {
 		return ""
 	}
-	return *u.ScimMapping
+	return *u.SCIMMapping
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserIdMapping) GetExtraProperties() map[string]interface{} {
+func (u *UserAttributeProfileStrategyOverridesUserIDMapping) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserIdMapping) require(field *big.Int) {
+func (u *UserAttributeProfileStrategyOverridesUserIDMapping) require(field *big.Int) {
 	if u.explicitFields == nil {
 		u.explicitFields = big.NewInt(0)
 	}
@@ -1452,32 +1452,32 @@ func (u *UserAttributeProfileStrategyOverridesUserIdMapping) require(field *big.
 
 // SetOidcMapping sets the OidcMapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesUserIdMapping) SetOidcMapping(oidcMapping *UserAttributeProfileUserIdOidcStrategyOverrideMapping) {
+func (u *UserAttributeProfileStrategyOverridesUserIDMapping) SetOidcMapping(oidcMapping *UserAttributeProfileUserIDOidcStrategyOverrideMapping) {
 	u.OidcMapping = oidcMapping
-	u.require(userAttributeProfileStrategyOverridesUserIdMappingFieldOidcMapping)
+	u.require(userAttributeProfileStrategyOverridesUserIDMappingFieldOidcMapping)
 }
 
-// SetSamlMapping sets the SamlMapping field and marks it as non-optional;
+// SetSAMLMapping sets the SAMLMapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesUserIdMapping) SetSamlMapping(samlMapping *UserAttributeProfileSamlMapping) {
-	u.SamlMapping = samlMapping
-	u.require(userAttributeProfileStrategyOverridesUserIdMappingFieldSamlMapping)
+func (u *UserAttributeProfileStrategyOverridesUserIDMapping) SetSAMLMapping(samlMapping *UserAttributeProfileSAMLMapping) {
+	u.SAMLMapping = samlMapping
+	u.require(userAttributeProfileStrategyOverridesUserIDMappingFieldSAMLMapping)
 }
 
-// SetScimMapping sets the ScimMapping field and marks it as non-optional;
+// SetSCIMMapping sets the SCIMMapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileStrategyOverridesUserIdMapping) SetScimMapping(scimMapping *string) {
-	u.ScimMapping = scimMapping
-	u.require(userAttributeProfileStrategyOverridesUserIdMappingFieldScimMapping)
+func (u *UserAttributeProfileStrategyOverridesUserIDMapping) SetSCIMMapping(scimMapping *string) {
+	u.SCIMMapping = scimMapping
+	u.require(userAttributeProfileStrategyOverridesUserIDMappingFieldSCIMMapping)
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserIdMapping) UnmarshalJSON(data []byte) error {
-	type unmarshaler UserAttributeProfileStrategyOverridesUserIdMapping
+func (u *UserAttributeProfileStrategyOverridesUserIDMapping) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserAttributeProfileStrategyOverridesUserIDMapping
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*u = UserAttributeProfileStrategyOverridesUserIdMapping(value)
+	*u = UserAttributeProfileStrategyOverridesUserIDMapping(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
@@ -1487,8 +1487,8 @@ func (u *UserAttributeProfileStrategyOverridesUserIdMapping) UnmarshalJSON(data 
 	return nil
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserIdMapping) MarshalJSON() ([]byte, error) {
-	type embed UserAttributeProfileStrategyOverridesUserIdMapping
+func (u *UserAttributeProfileStrategyOverridesUserIDMapping) MarshalJSON() ([]byte, error) {
+	type embed UserAttributeProfileStrategyOverridesUserIDMapping
 	var marshaler = struct {
 		embed
 	}{
@@ -1498,7 +1498,7 @@ func (u *UserAttributeProfileStrategyOverridesUserIdMapping) MarshalJSON() ([]by
 	return json.Marshal(explicitMarshaler)
 }
 
-func (u *UserAttributeProfileStrategyOverridesUserIdMapping) String() string {
+func (u *UserAttributeProfileStrategyOverridesUserIDMapping) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1513,13 +1513,13 @@ func (u *UserAttributeProfileStrategyOverridesUserIdMapping) String() string {
 // The structure of the template, which can be used as the payload for creating or updating a User Attribute Profile.
 var (
 	userAttributeProfileTemplateFieldName           = big.NewInt(1 << 0)
-	userAttributeProfileTemplateFieldUserId         = big.NewInt(1 << 1)
+	userAttributeProfileTemplateFieldUserID         = big.NewInt(1 << 1)
 	userAttributeProfileTemplateFieldUserAttributes = big.NewInt(1 << 2)
 )
 
 type UserAttributeProfileTemplate struct {
 	Name           *UserAttributeProfileName           `json:"name,omitempty" url:"name,omitempty"`
-	UserId         *UserAttributeProfileUserId         `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID         *UserAttributeProfileUserID         `json:"user_id,omitempty" url:"user_id,omitempty"`
 	UserAttributes *UserAttributeProfileUserAttributes `json:"user_attributes,omitempty" url:"user_attributes,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -1536,11 +1536,11 @@ func (u *UserAttributeProfileTemplate) GetName() UserAttributeProfileName {
 	return *u.Name
 }
 
-func (u *UserAttributeProfileTemplate) GetUserId() UserAttributeProfileUserId {
-	if u == nil || u.UserId == nil {
-		return UserAttributeProfileUserId{}
+func (u *UserAttributeProfileTemplate) GetUserID() UserAttributeProfileUserID {
+	if u == nil || u.UserID == nil {
+		return UserAttributeProfileUserID{}
 	}
-	return *u.UserId
+	return *u.UserID
 }
 
 func (u *UserAttributeProfileTemplate) GetUserAttributes() UserAttributeProfileUserAttributes {
@@ -1568,11 +1568,11 @@ func (u *UserAttributeProfileTemplate) SetName(name *UserAttributeProfileName) {
 	u.require(userAttributeProfileTemplateFieldName)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileTemplate) SetUserId(userId *UserAttributeProfileUserId) {
-	u.UserId = userId
-	u.require(userAttributeProfileTemplateFieldUserId)
+func (u *UserAttributeProfileTemplate) SetUserID(userID *UserAttributeProfileUserID) {
+	u.UserID = userID
+	u.require(userAttributeProfileTemplateFieldUserID)
 }
 
 // SetUserAttributes sets the UserAttributes field and marks it as non-optional;
@@ -1622,14 +1622,14 @@ func (u *UserAttributeProfileTemplate) String() string {
 }
 
 var (
-	userAttributeProfileTemplateItemFieldId          = big.NewInt(1 << 0)
+	userAttributeProfileTemplateItemFieldID          = big.NewInt(1 << 0)
 	userAttributeProfileTemplateItemFieldDisplayName = big.NewInt(1 << 1)
 	userAttributeProfileTemplateItemFieldTemplate    = big.NewInt(1 << 2)
 )
 
 type UserAttributeProfileTemplateItem struct {
 	// The id of the template.
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The user-friendly name of the template displayed in the UI.
 	DisplayName *string                       `json:"display_name,omitempty" url:"display_name,omitempty"`
 	Template    *UserAttributeProfileTemplate `json:"template,omitempty" url:"template,omitempty"`
@@ -1641,11 +1641,11 @@ type UserAttributeProfileTemplateItem struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserAttributeProfileTemplateItem) GetId() string {
-	if u == nil || u.Id == nil {
+func (u *UserAttributeProfileTemplateItem) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Id
+	return *u.ID
 }
 
 func (u *UserAttributeProfileTemplateItem) GetDisplayName() string {
@@ -1673,11 +1673,11 @@ func (u *UserAttributeProfileTemplateItem) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileTemplateItem) SetId(id *string) {
-	u.Id = id
-	u.require(userAttributeProfileTemplateItemFieldId)
+func (u *UserAttributeProfileTemplateItem) SetID(id *string) {
+	u.ID = id
+	u.require(userAttributeProfileTemplateItemFieldID)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -1739,8 +1739,8 @@ var (
 	userAttributeProfileUserAttributeAdditionalPropertiesFieldProfileRequired   = big.NewInt(1 << 2)
 	userAttributeProfileUserAttributeAdditionalPropertiesFieldAuth0Mapping      = big.NewInt(1 << 3)
 	userAttributeProfileUserAttributeAdditionalPropertiesFieldOidcMapping       = big.NewInt(1 << 4)
-	userAttributeProfileUserAttributeAdditionalPropertiesFieldSamlMapping       = big.NewInt(1 << 5)
-	userAttributeProfileUserAttributeAdditionalPropertiesFieldScimMapping       = big.NewInt(1 << 6)
+	userAttributeProfileUserAttributeAdditionalPropertiesFieldSAMLMapping       = big.NewInt(1 << 5)
+	userAttributeProfileUserAttributeAdditionalPropertiesFieldSCIMMapping       = big.NewInt(1 << 6)
 	userAttributeProfileUserAttributeAdditionalPropertiesFieldStrategyOverrides = big.NewInt(1 << 7)
 )
 
@@ -1754,9 +1754,9 @@ type UserAttributeProfileUserAttributeAdditionalProperties struct {
 	// Auth0 mapping for this attribute
 	Auth0Mapping string                           `json:"auth0_mapping" url:"auth0_mapping"`
 	OidcMapping  *UserAttributeProfileOidcMapping `json:"oidc_mapping,omitempty" url:"oidc_mapping,omitempty"`
-	SamlMapping  *UserAttributeProfileSamlMapping `json:"saml_mapping,omitempty" url:"saml_mapping,omitempty"`
+	SAMLMapping  *UserAttributeProfileSAMLMapping `json:"saml_mapping,omitempty" url:"saml_mapping,omitempty"`
 	// SCIM mapping for this attribute
-	ScimMapping       *string                                `json:"scim_mapping,omitempty" url:"scim_mapping,omitempty"`
+	SCIMMapping       *string                                `json:"scim_mapping,omitempty" url:"scim_mapping,omitempty"`
 	StrategyOverrides *UserAttributeProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -1801,18 +1801,18 @@ func (u *UserAttributeProfileUserAttributeAdditionalProperties) GetOidcMapping()
 	return *u.OidcMapping
 }
 
-func (u *UserAttributeProfileUserAttributeAdditionalProperties) GetSamlMapping() UserAttributeProfileSamlMapping {
-	if u == nil || u.SamlMapping == nil {
+func (u *UserAttributeProfileUserAttributeAdditionalProperties) GetSAMLMapping() UserAttributeProfileSAMLMapping {
+	if u == nil || u.SAMLMapping == nil {
 		return nil
 	}
-	return *u.SamlMapping
+	return *u.SAMLMapping
 }
 
-func (u *UserAttributeProfileUserAttributeAdditionalProperties) GetScimMapping() string {
-	if u == nil || u.ScimMapping == nil {
+func (u *UserAttributeProfileUserAttributeAdditionalProperties) GetSCIMMapping() string {
+	if u == nil || u.SCIMMapping == nil {
 		return ""
 	}
-	return *u.ScimMapping
+	return *u.SCIMMapping
 }
 
 func (u *UserAttributeProfileUserAttributeAdditionalProperties) GetStrategyOverrides() UserAttributeProfileStrategyOverrides {
@@ -1868,18 +1868,18 @@ func (u *UserAttributeProfileUserAttributeAdditionalProperties) SetOidcMapping(o
 	u.require(userAttributeProfileUserAttributeAdditionalPropertiesFieldOidcMapping)
 }
 
-// SetSamlMapping sets the SamlMapping field and marks it as non-optional;
+// SetSAMLMapping sets the SAMLMapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileUserAttributeAdditionalProperties) SetSamlMapping(samlMapping *UserAttributeProfileSamlMapping) {
-	u.SamlMapping = samlMapping
-	u.require(userAttributeProfileUserAttributeAdditionalPropertiesFieldSamlMapping)
+func (u *UserAttributeProfileUserAttributeAdditionalProperties) SetSAMLMapping(samlMapping *UserAttributeProfileSAMLMapping) {
+	u.SAMLMapping = samlMapping
+	u.require(userAttributeProfileUserAttributeAdditionalPropertiesFieldSAMLMapping)
 }
 
-// SetScimMapping sets the ScimMapping field and marks it as non-optional;
+// SetSCIMMapping sets the SCIMMapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileUserAttributeAdditionalProperties) SetScimMapping(scimMapping *string) {
-	u.ScimMapping = scimMapping
-	u.require(userAttributeProfileUserAttributeAdditionalPropertiesFieldScimMapping)
+func (u *UserAttributeProfileUserAttributeAdditionalProperties) SetSCIMMapping(scimMapping *string) {
+	u.SCIMMapping = scimMapping
+	u.require(userAttributeProfileUserAttributeAdditionalPropertiesFieldSCIMMapping)
 }
 
 // SetStrategyOverrides sets the StrategyOverrides field and marks it as non-optional;
@@ -1933,18 +1933,18 @@ type UserAttributeProfileUserAttributes = map[string]*UserAttributeProfileUserAt
 
 // User ID mapping configuration
 var (
-	userAttributeProfileUserIdFieldOidcMapping       = big.NewInt(1 << 0)
-	userAttributeProfileUserIdFieldSamlMapping       = big.NewInt(1 << 1)
-	userAttributeProfileUserIdFieldScimMapping       = big.NewInt(1 << 2)
-	userAttributeProfileUserIdFieldStrategyOverrides = big.NewInt(1 << 3)
+	userAttributeProfileUserIDFieldOidcMapping       = big.NewInt(1 << 0)
+	userAttributeProfileUserIDFieldSAMLMapping       = big.NewInt(1 << 1)
+	userAttributeProfileUserIDFieldSCIMMapping       = big.NewInt(1 << 2)
+	userAttributeProfileUserIDFieldStrategyOverrides = big.NewInt(1 << 3)
 )
 
-type UserAttributeProfileUserId struct {
-	OidcMapping *UserAttributeProfileUserIdOidcMappingEnum `json:"oidc_mapping,omitempty" url:"oidc_mapping,omitempty"`
-	SamlMapping *UserAttributeProfileUserIdSamlMapping     `json:"saml_mapping,omitempty" url:"saml_mapping,omitempty"`
+type UserAttributeProfileUserID struct {
+	OidcMapping *UserAttributeProfileUserIDOidcMappingEnum `json:"oidc_mapping,omitempty" url:"oidc_mapping,omitempty"`
+	SAMLMapping *UserAttributeProfileUserIdSamlMapping     `json:"saml_mapping,omitempty" url:"saml_mapping,omitempty"`
 	// SCIM mapping for user ID
-	ScimMapping       *string                                      `json:"scim_mapping,omitempty" url:"scim_mapping,omitempty"`
-	StrategyOverrides *UserAttributeProfileStrategyOverridesUserId `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	SCIMMapping       *string                                      `json:"scim_mapping,omitempty" url:"scim_mapping,omitempty"`
+	StrategyOverrides *UserAttributeProfileStrategyOverridesUserID `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1953,32 +1953,32 @@ type UserAttributeProfileUserId struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserAttributeProfileUserId) GetSamlMapping() UserAttributeProfileUserIdSamlMapping {
-	if u == nil || u.SamlMapping == nil {
+func (u *UserAttributeProfileUserID) GetSAMLMapping() UserAttributeProfileUserIdSamlMapping {
+	if u == nil || u.SAMLMapping == nil {
 		return nil
 	}
-	return *u.SamlMapping
+	return *u.SAMLMapping
 }
 
-func (u *UserAttributeProfileUserId) GetScimMapping() string {
-	if u == nil || u.ScimMapping == nil {
+func (u *UserAttributeProfileUserID) GetSCIMMapping() string {
+	if u == nil || u.SCIMMapping == nil {
 		return ""
 	}
-	return *u.ScimMapping
+	return *u.SCIMMapping
 }
 
-func (u *UserAttributeProfileUserId) GetStrategyOverrides() UserAttributeProfileStrategyOverridesUserId {
+func (u *UserAttributeProfileUserID) GetStrategyOverrides() UserAttributeProfileStrategyOverridesUserID {
 	if u == nil || u.StrategyOverrides == nil {
-		return UserAttributeProfileStrategyOverridesUserId{}
+		return UserAttributeProfileStrategyOverridesUserID{}
 	}
 	return *u.StrategyOverrides
 }
 
-func (u *UserAttributeProfileUserId) GetExtraProperties() map[string]interface{} {
+func (u *UserAttributeProfileUserID) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
-func (u *UserAttributeProfileUserId) require(field *big.Int) {
+func (u *UserAttributeProfileUserID) require(field *big.Int) {
 	if u.explicitFields == nil {
 		u.explicitFields = big.NewInt(0)
 	}
@@ -1987,39 +1987,39 @@ func (u *UserAttributeProfileUserId) require(field *big.Int) {
 
 // SetOidcMapping sets the OidcMapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileUserId) SetOidcMapping(oidcMapping *UserAttributeProfileUserIdOidcMappingEnum) {
+func (u *UserAttributeProfileUserID) SetOidcMapping(oidcMapping *UserAttributeProfileUserIDOidcMappingEnum) {
 	u.OidcMapping = oidcMapping
-	u.require(userAttributeProfileUserIdFieldOidcMapping)
+	u.require(userAttributeProfileUserIDFieldOidcMapping)
 }
 
-// SetSamlMapping sets the SamlMapping field and marks it as non-optional;
+// SetSAMLMapping sets the SAMLMapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileUserId) SetSamlMapping(samlMapping *UserAttributeProfileUserIdSamlMapping) {
-	u.SamlMapping = samlMapping
-	u.require(userAttributeProfileUserIdFieldSamlMapping)
+func (u *UserAttributeProfileUserID) SetSAMLMapping(samlMapping *UserAttributeProfileUserIdSamlMapping) {
+	u.SAMLMapping = samlMapping
+	u.require(userAttributeProfileUserIDFieldSAMLMapping)
 }
 
-// SetScimMapping sets the ScimMapping field and marks it as non-optional;
+// SetSCIMMapping sets the SCIMMapping field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileUserId) SetScimMapping(scimMapping *string) {
-	u.ScimMapping = scimMapping
-	u.require(userAttributeProfileUserIdFieldScimMapping)
+func (u *UserAttributeProfileUserID) SetSCIMMapping(scimMapping *string) {
+	u.SCIMMapping = scimMapping
+	u.require(userAttributeProfileUserIDFieldSCIMMapping)
 }
 
 // SetStrategyOverrides sets the StrategyOverrides field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserAttributeProfileUserId) SetStrategyOverrides(strategyOverrides *UserAttributeProfileStrategyOverridesUserId) {
+func (u *UserAttributeProfileUserID) SetStrategyOverrides(strategyOverrides *UserAttributeProfileStrategyOverridesUserID) {
 	u.StrategyOverrides = strategyOverrides
-	u.require(userAttributeProfileUserIdFieldStrategyOverrides)
+	u.require(userAttributeProfileUserIDFieldStrategyOverrides)
 }
 
-func (u *UserAttributeProfileUserId) UnmarshalJSON(data []byte) error {
-	type unmarshaler UserAttributeProfileUserId
+func (u *UserAttributeProfileUserID) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserAttributeProfileUserID
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*u = UserAttributeProfileUserId(value)
+	*u = UserAttributeProfileUserID(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
@@ -2029,8 +2029,8 @@ func (u *UserAttributeProfileUserId) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (u *UserAttributeProfileUserId) MarshalJSON() ([]byte, error) {
-	type embed UserAttributeProfileUserId
+func (u *UserAttributeProfileUserID) MarshalJSON() ([]byte, error) {
+	type embed UserAttributeProfileUserID
 	var marshaler = struct {
 		embed
 	}{
@@ -2040,7 +2040,7 @@ func (u *UserAttributeProfileUserId) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (u *UserAttributeProfileUserId) String() string {
+func (u *UserAttributeProfileUserID) String() string {
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -2053,31 +2053,31 @@ func (u *UserAttributeProfileUserId) String() string {
 }
 
 // OIDC mapping for user ID
-type UserAttributeProfileUserIdOidcMappingEnum = string
+type UserAttributeProfileUserIDOidcMappingEnum = string
 
 // OIDC mapping override for this strategy
-type UserAttributeProfileUserIdOidcStrategyOverrideMapping string
+type UserAttributeProfileUserIDOidcStrategyOverrideMapping string
 
 const (
-	UserAttributeProfileUserIdOidcStrategyOverrideMappingSub   UserAttributeProfileUserIdOidcStrategyOverrideMapping = "sub"
-	UserAttributeProfileUserIdOidcStrategyOverrideMappingOid   UserAttributeProfileUserIdOidcStrategyOverrideMapping = "oid"
-	UserAttributeProfileUserIdOidcStrategyOverrideMappingEmail UserAttributeProfileUserIdOidcStrategyOverrideMapping = "email"
+	UserAttributeProfileUserIDOidcStrategyOverrideMappingSub   UserAttributeProfileUserIDOidcStrategyOverrideMapping = "sub"
+	UserAttributeProfileUserIDOidcStrategyOverrideMappingOid   UserAttributeProfileUserIDOidcStrategyOverrideMapping = "oid"
+	UserAttributeProfileUserIDOidcStrategyOverrideMappingEmail UserAttributeProfileUserIDOidcStrategyOverrideMapping = "email"
 )
 
-func NewUserAttributeProfileUserIdOidcStrategyOverrideMappingFromString(s string) (UserAttributeProfileUserIdOidcStrategyOverrideMapping, error) {
+func NewUserAttributeProfileUserIDOidcStrategyOverrideMappingFromString(s string) (UserAttributeProfileUserIDOidcStrategyOverrideMapping, error) {
 	switch s {
 	case "sub":
-		return UserAttributeProfileUserIdOidcStrategyOverrideMappingSub, nil
+		return UserAttributeProfileUserIDOidcStrategyOverrideMappingSub, nil
 	case "oid":
-		return UserAttributeProfileUserIdOidcStrategyOverrideMappingOid, nil
+		return UserAttributeProfileUserIDOidcStrategyOverrideMappingOid, nil
 	case "email":
-		return UserAttributeProfileUserIdOidcStrategyOverrideMappingEmail, nil
+		return UserAttributeProfileUserIDOidcStrategyOverrideMappingEmail, nil
 	}
-	var t UserAttributeProfileUserIdOidcStrategyOverrideMapping
+	var t UserAttributeProfileUserIDOidcStrategyOverrideMapping
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (u UserAttributeProfileUserIdOidcStrategyOverrideMapping) Ptr() *UserAttributeProfileUserIdOidcStrategyOverrideMapping {
+func (u UserAttributeProfileUserIDOidcStrategyOverrideMapping) Ptr() *UserAttributeProfileUserIDOidcStrategyOverrideMapping {
 	return &u
 }
 

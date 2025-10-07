@@ -10,14 +10,14 @@ import (
 )
 
 var (
-	getRefreshTokenResponseContentFieldId              = big.NewInt(1 << 0)
-	getRefreshTokenResponseContentFieldUserId          = big.NewInt(1 << 1)
+	getRefreshTokenResponseContentFieldID              = big.NewInt(1 << 0)
+	getRefreshTokenResponseContentFieldUserID          = big.NewInt(1 << 1)
 	getRefreshTokenResponseContentFieldCreatedAt       = big.NewInt(1 << 2)
 	getRefreshTokenResponseContentFieldIdleExpiresAt   = big.NewInt(1 << 3)
 	getRefreshTokenResponseContentFieldExpiresAt       = big.NewInt(1 << 4)
 	getRefreshTokenResponseContentFieldDevice          = big.NewInt(1 << 5)
-	getRefreshTokenResponseContentFieldClientId        = big.NewInt(1 << 6)
-	getRefreshTokenResponseContentFieldSessionId       = big.NewInt(1 << 7)
+	getRefreshTokenResponseContentFieldClientID        = big.NewInt(1 << 6)
+	getRefreshTokenResponseContentFieldSessionID       = big.NewInt(1 << 7)
 	getRefreshTokenResponseContentFieldRotating        = big.NewInt(1 << 8)
 	getRefreshTokenResponseContentFieldResourceServers = big.NewInt(1 << 9)
 	getRefreshTokenResponseContentFieldLastExchangedAt = big.NewInt(1 << 10)
@@ -25,16 +25,16 @@ var (
 
 type GetRefreshTokenResponseContent struct {
 	// The ID of the refresh token
-	Id *string `json:"id,omitempty" url:"id,omitempty"`
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// ID of the user which can be used when interacting with other APIs.
-	UserId        *string             `json:"user_id,omitempty" url:"user_id,omitempty"`
+	UserID        *string             `json:"user_id,omitempty" url:"user_id,omitempty"`
 	CreatedAt     *RefreshTokenDate   `json:"created_at,omitempty" url:"created_at,omitempty"`
 	IdleExpiresAt *RefreshTokenDate   `json:"idle_expires_at,omitempty" url:"idle_expires_at,omitempty"`
 	ExpiresAt     *RefreshTokenDate   `json:"expires_at,omitempty" url:"expires_at,omitempty"`
 	Device        *RefreshTokenDevice `json:"device,omitempty" url:"device,omitempty"`
 	// ID of the client application granted with this refresh token
-	ClientId  *string                `json:"client_id,omitempty" url:"client_id,omitempty"`
-	SessionId *RefreshTokenSessionId `json:"session_id,omitempty" url:"session_id,omitempty"`
+	ClientID  *string                `json:"client_id,omitempty" url:"client_id,omitempty"`
+	SessionID *RefreshTokenSessionID `json:"session_id,omitempty" url:"session_id,omitempty"`
 	// True if the token is a rotating refresh token
 	Rotating *bool `json:"rotating,omitempty" url:"rotating,omitempty"`
 	// A list of the resource server IDs associated to this refresh-token and their granted scopes
@@ -49,18 +49,18 @@ type GetRefreshTokenResponseContent struct {
 	rawJSON json.RawMessage
 }
 
-func (g *GetRefreshTokenResponseContent) GetId() string {
-	if g == nil || g.Id == nil {
+func (g *GetRefreshTokenResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
 		return ""
 	}
-	return *g.Id
+	return *g.ID
 }
 
-func (g *GetRefreshTokenResponseContent) GetUserId() string {
-	if g == nil || g.UserId == nil {
+func (g *GetRefreshTokenResponseContent) GetUserID() string {
+	if g == nil || g.UserID == nil {
 		return ""
 	}
-	return *g.UserId
+	return *g.UserID
 }
 
 func (g *GetRefreshTokenResponseContent) GetCreatedAt() RefreshTokenDate {
@@ -91,18 +91,18 @@ func (g *GetRefreshTokenResponseContent) GetDevice() RefreshTokenDevice {
 	return *g.Device
 }
 
-func (g *GetRefreshTokenResponseContent) GetClientId() string {
-	if g == nil || g.ClientId == nil {
+func (g *GetRefreshTokenResponseContent) GetClientID() string {
+	if g == nil || g.ClientID == nil {
 		return ""
 	}
-	return *g.ClientId
+	return *g.ClientID
 }
 
-func (g *GetRefreshTokenResponseContent) GetSessionId() RefreshTokenSessionId {
-	if g == nil || g.SessionId == nil {
+func (g *GetRefreshTokenResponseContent) GetSessionID() RefreshTokenSessionID {
+	if g == nil || g.SessionID == nil {
 		return nil
 	}
-	return *g.SessionId
+	return *g.SessionID
 }
 
 func (g *GetRefreshTokenResponseContent) GetRotating() bool {
@@ -137,18 +137,18 @@ func (g *GetRefreshTokenResponseContent) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetRefreshTokenResponseContent) SetId(id *string) {
-	g.Id = id
-	g.require(getRefreshTokenResponseContentFieldId)
+func (g *GetRefreshTokenResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getRefreshTokenResponseContentFieldID)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetRefreshTokenResponseContent) SetUserId(userId *string) {
-	g.UserId = userId
-	g.require(getRefreshTokenResponseContentFieldUserId)
+func (g *GetRefreshTokenResponseContent) SetUserID(userID *string) {
+	g.UserID = userID
+	g.require(getRefreshTokenResponseContentFieldUserID)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
@@ -179,18 +179,18 @@ func (g *GetRefreshTokenResponseContent) SetDevice(device *RefreshTokenDevice) {
 	g.require(getRefreshTokenResponseContentFieldDevice)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetRefreshTokenResponseContent) SetClientId(clientId *string) {
-	g.ClientId = clientId
-	g.require(getRefreshTokenResponseContentFieldClientId)
+func (g *GetRefreshTokenResponseContent) SetClientID(clientID *string) {
+	g.ClientID = clientID
+	g.require(getRefreshTokenResponseContentFieldClientID)
 }
 
-// SetSessionId sets the SessionId field and marks it as non-optional;
+// SetSessionID sets the SessionID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetRefreshTokenResponseContent) SetSessionId(sessionId *RefreshTokenSessionId) {
-	g.SessionId = sessionId
-	g.require(getRefreshTokenResponseContentFieldSessionId)
+func (g *GetRefreshTokenResponseContent) SetSessionID(sessionID *RefreshTokenSessionID) {
+	g.SessionID = sessionID
+	g.require(getRefreshTokenResponseContentFieldSessionID)
 }
 
 // SetRotating sets the Rotating field and marks it as non-optional;

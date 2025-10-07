@@ -359,7 +359,7 @@ func givenAConnection(t *testing.T, options *management.ConnectionPropertiesOpti
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
-		err := mgmtAPI.Connections.Delete(context.Background(), connectionCreated.GetId())
+		err := mgmtAPI.Connections.Delete(context.Background(), connectionCreated.GetID())
 		require.NoError(t, err)
 	})
 

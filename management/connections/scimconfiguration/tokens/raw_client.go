@@ -35,7 +35,7 @@ func (r *RawClient) Get(
 	// The id of the connection to retrieve its SCIM configuration
 	id string,
 	opts ...option.RequestOption,
-) (*core.Response[management.GetScimTokensResponseContent], error) {
+) (*core.Response[management.GetSCIMTokensResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -50,7 +50,7 @@ func (r *RawClient) Get(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response management.GetScimTokensResponseContent
+	var response management.GetSCIMTokensResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -68,7 +68,7 @@ func (r *RawClient) Get(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[management.GetScimTokensResponseContent]{
+	return &core.Response[management.GetSCIMTokensResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -79,9 +79,9 @@ func (r *RawClient) Create(
 	ctx context.Context,
 	// The id of the connection to create its SCIM token
 	id string,
-	request *management.CreateScimTokenRequestContent,
+	request *management.CreateSCIMTokenRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.CreateScimTokenResponseContent], error) {
+) (*core.Response[*management.CreateSCIMTokenResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -97,7 +97,7 @@ func (r *RawClient) Create(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	var response *management.CreateScimTokenResponseContent
+	var response *management.CreateSCIMTokenResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -116,7 +116,7 @@ func (r *RawClient) Create(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.CreateScimTokenResponseContent]{
+	return &core.Response[*management.CreateSCIMTokenResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -128,7 +128,7 @@ func (r *RawClient) Delete(
 	// The connection id that owns the SCIM token to delete
 	id string,
 	// The id of the scim token to delete
-	tokenId string,
+	tokenID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -140,7 +140,7 @@ func (r *RawClient) Delete(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/connections/%v/scim-configuration/tokens/%v",
 		id,
-		tokenId,
+		tokenID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

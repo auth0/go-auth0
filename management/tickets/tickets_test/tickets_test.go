@@ -120,7 +120,7 @@ func TestTicketsVerifyEmailWithWireMock(
 		),
 	)
 	request := &management.VerifyEmailTicketRequestContent{
-		UserId: "user_id",
+		UserID: "user_id",
 	}
 	_, invocationErr := client.Tickets.VerifyEmail(
 		context.TODO(),
