@@ -12,6 +12,7 @@ meta.go
 go.mod
 go.sum
 README.md
+test
 .mock
 .github
 CHANGELOG.md
