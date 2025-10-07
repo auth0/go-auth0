@@ -343,7 +343,7 @@ func givenSignUpDetails(t *testing.T, options *management.ConnectionPropertiesOp
 		password:    "Passwords hide their chuck",
 		email:       fmt.Sprintf("chuck%d@example.com", rand.Intn(999)),
 		phoneNumber: fmt.Sprintf("+1234567890%d", rand.Intn(9)),
-		connection:  *conn.GetName(),
+		connection:  conn.GetName(),
 	}
 }
 
@@ -359,7 +359,7 @@ func givenAConnection(t *testing.T, options *management.ConnectionPropertiesOpti
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
-		err := mgmtAPI.Connections.Delete(context.Background(), *connectionCreated.GetID())
+		err := mgmtAPI.Connections.Delete(context.Background(), connectionCreated.GetId())
 		require.NoError(t, err)
 	})
 

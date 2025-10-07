@@ -199,7 +199,7 @@ func TestActionsVersionsDeployWithWireMock(
 		context.TODO(),
 		"actionId",
 		"id",
-		request,
+		&request,
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
