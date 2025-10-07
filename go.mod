@@ -11,7 +11,7 @@ require (
 	github.com/wiremock/go-wiremock v1.14.0
 	github.com/wiremock/wiremock-testcontainers-go v1.0.0-alpha-9
 	go.devnw.com/structs v1.0.0
-	golang.org/x/oauth2 v0.30.0
+	golang.org/x/oauth2 v0.31.0
 	gopkg.in/dnaeon/go-vcr.v3 v3.2.0
 )
 
