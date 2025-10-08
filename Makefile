@@ -54,6 +54,7 @@ test: ## Run tests with http recordings. To run a specific test pass the FILTER 
 		go test \
 		-run "$(FILTER)" \
 		-cover \
+		-coverpkg=./... \
 		-covermode=atomic \
 		-coverprofile=coverage.out \
 		./...
@@ -70,6 +71,7 @@ test-e2e: ## Run tests without http recordings. To run a specific test pass the 
 	@go test \
 		-run "$(FILTER)" \
 		-cover \
+		-coverpkg=./... \
 		-covermode=atomic \
 		-coverprofile=coverage.out \
 		-timeout 20m \
