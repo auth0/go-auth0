@@ -33,6 +33,17 @@ type RequestOptions struct {
 	Ctx         context.Context
 	Token       string
 	TokenSource oauth2.TokenSource
+	Insecure    bool // For testing purposes only - allows HTTP instead of HTTPS
+
+	// Auth0ClientEnv holds custom environment entries for the Auth0-Client header
+	Auth0ClientEnv map[string]string
+
+	// NoAuth0ClientInfo when true, prevents sending the "Auth0-Client" header
+	NoAuth0ClientInfo bool
+
+	// CustomDomainHeader is the custom domain to be sent in the "Auth0-Custom-Domain" header
+	// for whitelisted API endpoints
+	CustomDomainHeader string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -63,6 +74,12 @@ func (r *RequestOptions) ToHeader() http.Header {
 		}
 	} else if r.Token != "" {
 		header.Set("Authorization", "Bearer "+r.Token)
+	}
+
+	// Add custom domain header hint for request-level usage
+	// This will be read by the CustomDomainHeaderTransport
+	if r.CustomDomainHeader != "" {
+		header.Set("X-Auth0-Custom-Domain-Hint", r.CustomDomainHeader)
 	}
 
 	return header
@@ -232,4 +249,83 @@ func (c *ClientCredentialsPrivateKeyJwtAndAudienceOption) applyRequestOptions(op
 
 	// Set the token source for automatic token management
 	options.TokenSource = c.tokenSource
+}
+
+// DebugOption implements the RequestOption interface.
+type DebugOption struct {
+	Debug bool
+}
+
+func (d *DebugOption) applyRequestOptions(opts *RequestOptions) {
+	if opts.HTTPClient == nil {
+		opts.HTTPClient = &http.Client{}
+	}
+
+	// Ensure we have a concrete *http.Client to modify its Transport
+	if client, ok := opts.HTTPClient.(*http.Client); ok {
+		client.Transport = internal.DebugTransport(client.Transport, d.Debug)
+	}
+}
+
+// UserAgentOption implements the RequestOption interface.
+type UserAgentOption struct {
+	UserAgent string
+}
+
+func (u *UserAgentOption) applyRequestOptions(opts *RequestOptions) {
+	// Set the User-Agent header directly
+	if opts.HTTPHeader == nil {
+		opts.HTTPHeader = make(http.Header)
+	}
+	opts.HTTPHeader.Set("User-Agent", u.UserAgent)
+}
+
+// InsecureOption implements the RequestOption interface.
+// This option is for testing purposes only and should not be used in production.
+type InsecureOption struct{}
+
+func (i *InsecureOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Insecure = true
+
+	// Change the BaseURL scheme from https to http
+	if opts.BaseURL != "" {
+		if u, err := url.Parse(opts.BaseURL); err == nil && u.Scheme == "https" {
+			u.Scheme = "http"
+			opts.BaseURL = u.String()
+		}
+	}
+
+	// Set a static "insecure" token if no credentials are provided (matches v1 behavior)
+	if opts.Token == "" && opts.TokenSource == nil {
+		opts.Token = "insecure"
+	}
+}
+
+// Auth0ClientEnvEntryOption implements the RequestOption interface.
+type Auth0ClientEnvEntryOption struct {
+	Key   string
+	Value string
+}
+
+func (a *Auth0ClientEnvEntryOption) applyRequestOptions(opts *RequestOptions) {
+	if opts.Auth0ClientEnv == nil {
+		opts.Auth0ClientEnv = make(map[string]string)
+	}
+	opts.Auth0ClientEnv[a.Key] = a.Value
+}
+
+// NoAuth0ClientInfoOption implements the RequestOption interface.
+type NoAuth0ClientInfoOption struct{}
+
+func (n *NoAuth0ClientInfoOption) applyRequestOptions(opts *RequestOptions) {
+	opts.NoAuth0ClientInfo = true
+}
+
+// CustomDomainHeaderOption implements the RequestOption interface.
+type CustomDomainHeaderOption struct {
+	CustomDomainHeader string
+}
+
+func (c *CustomDomainHeaderOption) applyRequestOptions(opts *RequestOptions) {
+	opts.CustomDomainHeader = c.CustomDomainHeader
 }

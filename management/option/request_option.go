@@ -109,3 +109,47 @@ func WithClientCredentialsPrivateKeyJwt(ctx context.Context, clientID string, pr
 		Algorithm:  algorithm,
 	}
 }
+
+// WithDebug configures the HTTP client to enable debug logging of requests and responses.
+func WithDebug(debug bool) *core.DebugOption {
+	return &core.DebugOption{
+		Debug: debug,
+	}
+}
+
+// WithUserAgent configures the HTTP client to use a custom User-Agent header.
+func WithUserAgent(userAgent string) *core.UserAgentOption {
+	return &core.UserAgentOption{
+		UserAgent: userAgent,
+	}
+}
+
+// WithInsecure configures the client to allow HTTP instead of HTTPS and sets
+// a static "insecure" token for testing.
+//
+// This option is available for testing purposes and should not be used in production.
+// Note: Users should pass the domain without a scheme (e.g., "localhost:8080").
+func WithInsecure() *core.InsecureOption {
+	return &core.InsecureOption{}
+}
+
+// WithAuth0ClientEnvEntry allows adding extra environment keys to the client information.
+func WithAuth0ClientEnvEntry(key string, value string) *core.Auth0ClientEnvEntryOption {
+	return &core.Auth0ClientEnvEntryOption{
+		Key:   key,
+		Value: value,
+	}
+}
+
+// WithNoAuth0ClientInfo configures the client to not send the "Auth0-Client" header at all.
+func WithNoAuth0ClientInfo() *core.NoAuth0ClientInfoOption {
+	return &core.NoAuth0ClientInfoOption{}
+}
+
+// WithCustomDomainHeader sets the custom domain for the Management instance.
+// The custom domain header is only sent for whitelisted API endpoints.
+func WithCustomDomainHeader(domain string) *core.CustomDomainHeaderOption {
+	return &core.CustomDomainHeaderOption{
+		CustomDomainHeader: domain,
+	}
+}
