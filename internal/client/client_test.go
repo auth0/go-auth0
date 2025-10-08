@@ -1183,8 +1183,10 @@ func TestRedactSensitiveHeaders(t *testing.T) {
 func TestCustomDomainHeaderTransport(t *testing.T) {
 	t.Run("Adds header for whitelisted path with client-level domain", func(t *testing.T) {
 		var capturedHeaders http.Header
+
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			capturedHeaders = r.Header.Clone()
+
 			w.WriteHeader(http.StatusOK)
 		}))
 		defer server.Close()
@@ -1202,8 +1204,10 @@ func TestCustomDomainHeaderTransport(t *testing.T) {
 
 	t.Run("Does not add header for non-whitelisted path", func(t *testing.T) {
 		var capturedHeaders http.Header
+
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			capturedHeaders = r.Header.Clone()
+
 			w.WriteHeader(http.StatusOK)
 		}))
 		defer server.Close()
@@ -1221,8 +1225,10 @@ func TestCustomDomainHeaderTransport(t *testing.T) {
 
 	t.Run("Request-level domain overrides client-level domain", func(t *testing.T) {
 		var capturedHeaders http.Header
+
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			capturedHeaders = r.Header.Clone()
+
 			w.WriteHeader(http.StatusOK)
 		}))
 		defer server.Close()
@@ -1242,8 +1248,10 @@ func TestCustomDomainHeaderTransport(t *testing.T) {
 
 	t.Run("Request-level domain works without client-level domain", func(t *testing.T) {
 		var capturedHeaders http.Header
+
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			capturedHeaders = r.Header.Clone()
+
 			w.WriteHeader(http.StatusOK)
 		}))
 		defer server.Close()
@@ -1264,8 +1272,10 @@ func TestCustomDomainHeaderTransport(t *testing.T) {
 
 	t.Run("No header when neither client-level nor request-level domain provided", func(t *testing.T) {
 		var capturedHeaders http.Header
+
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			capturedHeaders = r.Header.Clone()
+
 			w.WriteHeader(http.StatusOK)
 		}))
 		defer server.Close()
@@ -1306,8 +1316,10 @@ func TestCustomDomainHeaderTransport(t *testing.T) {
 		for _, path := range whitelistedPaths {
 			t.Run("Whitelisted: "+path, func(t *testing.T) {
 				var capturedHeaders http.Header
+
 				server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 					capturedHeaders = r.Header.Clone()
+
 					w.WriteHeader(http.StatusOK)
 				}))
 				defer server.Close()
@@ -1327,8 +1339,10 @@ func TestCustomDomainHeaderTransport(t *testing.T) {
 		for _, path := range nonWhitelistedPaths {
 			t.Run("Non-whitelisted: "+path, func(t *testing.T) {
 				var capturedHeaders http.Header
+
 				server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 					capturedHeaders = r.Header.Clone()
+
 					w.WriteHeader(http.StatusOK)
 				}))
 				defer server.Close()

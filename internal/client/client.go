@@ -35,7 +35,7 @@ type Auth0ClientInfo struct {
 	Env     map[string]string `json:"env,omitempty"`
 }
 
-// customDomainWhitelistedPaths are the API paths that are allowed to receive the Auth0-Custom-Domain header
+// customDomainWhitelistedPaths are the API paths that are allowed to receive the Auth0-Custom-Domain header.
 var customDomainWhitelistedPaths = compileCustomDomainWhitelistedPathPatterns()
 
 func compileCustomDomainWhitelistedPathPatterns() []*regexp.Regexp {
@@ -58,13 +58,14 @@ func compileCustomDomainWhitelistedPathPatterns() []*regexp.Regexp {
 	return compiled
 }
 
-// isPathWhitelistedForCustomDomain checks if the given path is whitelisted for the custom domain header
+// isPathWhitelistedForCustomDomain checks if the given path is whitelisted for the custom domain header.
 func isPathWhitelistedForCustomDomain(path string) bool {
 	for _, pattern := range customDomainWhitelistedPaths {
 		if pattern.MatchString(path) {
 			return true
 		}
 	}
+
 	return false
 }
 
@@ -374,7 +375,7 @@ func dumpResponse(r *http.Response) {
 	log.Printf("\n%s\n\n", b)
 }
 
-// redactSensitiveHeaders redacts sensitive header values to prevent token leakage in logs
+// redactSensitiveHeaders redacts sensitive header values to prevent token leakage in logs.
 func redactSensitiveHeaders(headers http.Header) {
 	sensitiveHeaders := []string{
 		"Authorization",
