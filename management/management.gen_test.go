@@ -2311,6 +2311,16 @@ func TestClient_GetOIDCLogout(tt *testing.T) {
 	c.GetOIDCLogout()
 }
 
+func TestClient_GetOrganizationDiscoveryMethods(tt *testing.T) {
+	var zeroValue []string
+	c := &Client{OrganizationDiscoveryMethods: &zeroValue}
+	c.GetOrganizationDiscoveryMethods()
+	c = &Client{}
+	c.GetOrganizationDiscoveryMethods()
+	c = nil
+	c.GetOrganizationDiscoveryMethods()
+}
+
 func TestClient_GetOrganizationRequireBehavior(tt *testing.T) {
 	var zeroValue string
 	c := &Client{OrganizationRequireBehavior: &zeroValue}
@@ -9089,6 +9099,14 @@ func TestDeviceCredentialList_String(t *testing.T) {
 	}
 }
 
+func TestDiscoveryDomainList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &DiscoveryDomainList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestDropboxClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &DropboxClientAddon{}
@@ -12573,6 +12591,64 @@ func TestOrganizationConnectionDetails_String(t *testing.T) {
 func TestOrganizationConnectionList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &OrganizationConnectionList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestOrganizationDiscoveryDomain_GetDomain(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationDiscoveryDomain{Domain: &zeroValue}
+	o.GetDomain()
+	o = &OrganizationDiscoveryDomain{}
+	o.GetDomain()
+	o = nil
+	o.GetDomain()
+}
+
+func TestOrganizationDiscoveryDomain_GetID(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationDiscoveryDomain{ID: &zeroValue}
+	o.GetID()
+	o = &OrganizationDiscoveryDomain{}
+	o.GetID()
+	o = nil
+	o.GetID()
+}
+
+func TestOrganizationDiscoveryDomain_GetStatus(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationDiscoveryDomain{Status: &zeroValue}
+	o.GetStatus()
+	o = &OrganizationDiscoveryDomain{}
+	o.GetStatus()
+	o = nil
+	o.GetStatus()
+}
+
+func TestOrganizationDiscoveryDomain_GetVerificationHost(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationDiscoveryDomain{VerificationHost: &zeroValue}
+	o.GetVerificationHost()
+	o = &OrganizationDiscoveryDomain{}
+	o.GetVerificationHost()
+	o = nil
+	o.GetVerificationHost()
+}
+
+func TestOrganizationDiscoveryDomain_GetVerificationTXT(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationDiscoveryDomain{VerificationTXT: &zeroValue}
+	o.GetVerificationTXT()
+	o = &OrganizationDiscoveryDomain{}
+	o.GetVerificationTXT()
+	o = nil
+	o.GetVerificationTXT()
+}
+
+func TestOrganizationDiscoveryDomain_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &OrganizationDiscoveryDomain{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
