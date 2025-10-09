@@ -23,7 +23,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/auth0/go-auth0"
+	"github.com/auth0/go-auth0/v2"
 )
 
 func TestRetries(t *testing.T) {
@@ -1123,7 +1123,8 @@ func TestDumpRequest(t *testing.T) {
 	assert.Contains(t, logOutput, "POST /test")
 	assert.Contains(t, logOutput, "Host: api.example.com")
 	assert.Contains(t, logOutput, "Content-Type: application/json")
-	assert.Contains(t, logOutput, "Authorization: Bearer test-token")
+	assert.Contains(t, logOutput, "Authorization: [REDACTED]")
+	assert.NotContains(t, logOutput, "Bearer test-token")
 	assert.Contains(t, logOutput, `{"test":"value"}`)
 }
 
@@ -1139,8 +1140,12 @@ func TestDumpResponse(t *testing.T) {
 		Status:     "200 OK",
 		StatusCode: 200,
 		Proto:      "HTTP/1.1",
-		Header:     http.Header{"Content-Type": []string{"application/json"}},
-		Body:       body,
+		Header: http.Header{
+			"Content-Type":  []string{"application/json"},
+			"Set-Cookie":    []string{"session=abc123; HttpOnly"},
+			"Authorization": []string{"Bearer response-token"},
+		},
+		Body: body,
 	}
 
 	dumpResponse(resp)
@@ -1148,5 +1153,210 @@ func TestDumpResponse(t *testing.T) {
 	logOutput := buf.String()
 	assert.Contains(t, logOutput, "HTTP/0.0 200 OK")
 	assert.Contains(t, logOutput, "Content-Type: application/json")
+	assert.Contains(t, logOutput, "Set-Cookie: [REDACTED]")
+	assert.Contains(t, logOutput, "Authorization: [REDACTED]")
+	assert.NotContains(t, logOutput, "session=abc123")
+	assert.NotContains(t, logOutput, "response-token")
 	assert.Contains(t, logOutput, `{"result":"success"}`)
+}
+
+func TestRedactSensitiveHeaders(t *testing.T) {
+	headers := http.Header{
+		"Content-Type":  []string{"application/json"},
+		"Authorization": []string{"Bearer secret-token"},
+		"Cookie":        []string{"session=abc123"},
+		"X-Api-Key":     []string{"api-key-123"},
+		"X-Custom":      []string{"custom-value"},
+		"User-Agent":    []string{"Go-Auth0"},
+	}
+
+	redactSensitiveHeaders(headers)
+
+	assert.Equal(t, "application/json", headers.Get("Content-Type"))
+	assert.Equal(t, "[REDACTED]", headers.Get("Authorization"))
+	assert.Equal(t, "[REDACTED]", headers.Get("Cookie"))
+	assert.Equal(t, "[REDACTED]", headers.Get("X-Api-Key"))
+	assert.Equal(t, "custom-value", headers.Get("X-Custom"))
+	assert.Equal(t, "Go-Auth0", headers.Get("User-Agent"))
+}
+
+func TestCustomDomainHeaderTransport(t *testing.T) {
+	t.Run("Adds header for whitelisted path with client-level domain", func(t *testing.T) {
+		var capturedHeaders http.Header
+
+		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			capturedHeaders = r.Header.Clone()
+
+			w.WriteHeader(http.StatusOK)
+		}))
+		defer server.Close()
+
+		transport := CustomDomainHeaderTransport(http.DefaultTransport, "client.example.com")
+		client := &http.Client{Transport: transport}
+
+		// Test whitelisted path: /api/v2/users
+		req, _ := http.NewRequest("GET", server.URL+"/api/v2/users", nil)
+		_, err := client.Do(req)
+
+		assert.NoError(t, err)
+		assert.Equal(t, "client.example.com", capturedHeaders.Get("Auth0-Custom-Domain"))
+	})
+
+	t.Run("Does not add header for non-whitelisted path", func(t *testing.T) {
+		var capturedHeaders http.Header
+
+		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			capturedHeaders = r.Header.Clone()
+
+			w.WriteHeader(http.StatusOK)
+		}))
+		defer server.Close()
+
+		transport := CustomDomainHeaderTransport(http.DefaultTransport, "client.example.com")
+		client := &http.Client{Transport: transport}
+
+		// Test non-whitelisted path: /api/v2/clients
+		req, _ := http.NewRequest("GET", server.URL+"/api/v2/clients", nil)
+		_, err := client.Do(req)
+
+		assert.NoError(t, err)
+		assert.Empty(t, capturedHeaders.Get("Auth0-Custom-Domain"))
+	})
+
+	t.Run("Request-level domain overrides client-level domain", func(t *testing.T) {
+		var capturedHeaders http.Header
+
+		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			capturedHeaders = r.Header.Clone()
+
+			w.WriteHeader(http.StatusOK)
+		}))
+		defer server.Close()
+
+		transport := CustomDomainHeaderTransport(http.DefaultTransport, "client.example.com")
+		client := &http.Client{Transport: transport}
+
+		// Test with request-level hint header
+		req, _ := http.NewRequest("GET", server.URL+"/api/v2/users", nil)
+		req.Header.Set("X-Auth0-Custom-Domain-Hint", "request.example.com")
+		_, err := client.Do(req)
+
+		assert.NoError(t, err)
+		assert.Equal(t, "request.example.com", capturedHeaders.Get("Auth0-Custom-Domain"))
+		assert.Empty(t, capturedHeaders.Get("X-Auth0-Custom-Domain-Hint"), "Hint header should be removed")
+	})
+
+	t.Run("Request-level domain works without client-level domain", func(t *testing.T) {
+		var capturedHeaders http.Header
+
+		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			capturedHeaders = r.Header.Clone()
+
+			w.WriteHeader(http.StatusOK)
+		}))
+		defer server.Close()
+
+		// No client-level domain (empty string)
+		transport := CustomDomainHeaderTransport(http.DefaultTransport, "")
+		client := &http.Client{Transport: transport}
+
+		// Test with request-level hint header
+		req, _ := http.NewRequest("GET", server.URL+"/api/v2/users", nil)
+		req.Header.Set("X-Auth0-Custom-Domain-Hint", "request.example.com")
+		_, err := client.Do(req)
+
+		assert.NoError(t, err)
+		assert.Equal(t, "request.example.com", capturedHeaders.Get("Auth0-Custom-Domain"))
+		assert.Empty(t, capturedHeaders.Get("X-Auth0-Custom-Domain-Hint"), "Hint header should be removed")
+	})
+
+	t.Run("No header when neither client-level nor request-level domain provided", func(t *testing.T) {
+		var capturedHeaders http.Header
+
+		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			capturedHeaders = r.Header.Clone()
+
+			w.WriteHeader(http.StatusOK)
+		}))
+		defer server.Close()
+
+		transport := CustomDomainHeaderTransport(http.DefaultTransport, "")
+		client := &http.Client{Transport: transport}
+
+		req, _ := http.NewRequest("GET", server.URL+"/api/v2/users", nil)
+		_, err := client.Do(req)
+
+		assert.NoError(t, err)
+		assert.Empty(t, capturedHeaders.Get("Auth0-Custom-Domain"))
+	})
+
+	t.Run("Whitelisted paths verification", func(t *testing.T) {
+		whitelistedPaths := []string{
+			"/api/v2/jobs/verification-email",
+			"/api/v2/tickets/email-verification",
+			"/api/v2/tickets/password-change",
+			"/api/v2/organizations/org123/invitations",
+			"/api/v2/users",
+			"/api/v2/users/user123",
+			"/api/v2/guardian/enrollments/ticket",
+			"/api/v2/self-service-profiles/ssp123/sso-ticket",
+		}
+
+		nonWhitelistedPaths := []string{
+			"/api/v2/clients",
+			"/api/v2/connections",
+			"/api/v2/roles",
+			"/api/v2/users/user123/roles",
+			"/api/v2/jobs",
+			"/api/v2/tickets",
+			"/api/v2/organizations",
+			"/api/v2/self-service-profiles",
+		}
+
+		for _, path := range whitelistedPaths {
+			t.Run("Whitelisted: "+path, func(t *testing.T) {
+				var capturedHeaders http.Header
+
+				server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					capturedHeaders = r.Header.Clone()
+
+					w.WriteHeader(http.StatusOK)
+				}))
+				defer server.Close()
+
+				transport := CustomDomainHeaderTransport(http.DefaultTransport, "test.example.com")
+				client := &http.Client{Transport: transport}
+
+				req, _ := http.NewRequest("GET", server.URL+path, nil)
+				_, err := client.Do(req)
+
+				assert.NoError(t, err)
+				assert.Equal(t, "test.example.com", capturedHeaders.Get("Auth0-Custom-Domain"),
+					"Expected header for whitelisted path: %s", path)
+			})
+		}
+
+		for _, path := range nonWhitelistedPaths {
+			t.Run("Non-whitelisted: "+path, func(t *testing.T) {
+				var capturedHeaders http.Header
+
+				server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					capturedHeaders = r.Header.Clone()
+
+					w.WriteHeader(http.StatusOK)
+				}))
+				defer server.Close()
+
+				transport := CustomDomainHeaderTransport(http.DefaultTransport, "test.example.com")
+				client := &http.Client{Transport: transport}
+
+				req, _ := http.NewRequest("GET", server.URL+path, nil)
+				_, err := client.Do(req)
+
+				assert.NoError(t, err)
+				assert.Empty(t, capturedHeaders.Get("Auth0-Custom-Domain"),
+					"Expected no header for non-whitelisted path: %s", path)
+			})
+		}
+	})
 }

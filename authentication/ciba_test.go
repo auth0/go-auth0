@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/auth0/go-auth0/authentication/ciba"
+	"github.com/auth0/go-auth0/v2/authentication/ciba"
 )
 
 func TestCIBA_Initiate(t *testing.T) {

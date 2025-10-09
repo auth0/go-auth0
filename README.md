@@ -2,27 +2,26 @@
 
 <div align="center">
 
-[![GoDoc](https://pkg.go.dev/badge/github.com/auth0/go-auth0.svg)](https://pkg.go.dev/github.com/auth0/go-auth0)
-[![Go Report Card](https://goreportcard.com/badge/github.com/auth0/go-auth0?style=flat-square)](https://goreportcard.com/report/github.com/auth0/go-auth0)
+[![GoDoc](https://pkg.go.dev/badge/github.com/auth0/go-auth0/v2.svg)](https://pkg.go.dev/github.com/auth0/go-auth0/v2)
+[![Go Report Card](https://goreportcard.com/badge/github.com/auth0/go-auth0/v2?style=flat-square)](https://goreportcard.com/report/github.com/auth0/go-auth0/v2)
 [![Release](https://img.shields.io/github/v/release/auth0/go-auth0?include_prereleases&style=flat-square)](https://github.com/auth0/go-auth0/releases)
-[![License](https://img.shields.io/github/license/auth0/go-auth0.svg?style=flat-square)](https://github.com/auth0/go-auth0/blob/main/LICENSE)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/auth0/go-auth0/main.yml?branch=main&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Amain)
-[![Codecov](https://img.shields.io/codecov/c/github/auth0/go-auth0?style=flat-square)](https://codecov.io/gh/auth0/go-auth0)
+[![License](https://img.shields.io/github/license/auth0/go-auth0.svg?style=flat-square)](https://github.com/auth0/go-auth0/blob/v2/LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/auth0/go-auth0/main.yml?branch=v2&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Av2)
+[![Codecov](https://img.shields.io/codecov/c/github/auth0/go-auth0/v2?style=flat-square)](https://codecov.io/gh/auth0/go-auth0/tree/v2)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fauth0%2Fgo-auth0.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fauth0%2Fgo-auth0?ref=badge_shield)
 
-📚 [Documentation](#documentation) • 🚀 [Getting Started](#getting-started) • 💬 [Feedback](#feedback)
+📚 [Documentation](#documentation) • 🚀 [Getting started](#getting-started) • 💬 [Feedback](#feedback)
 
 </div>
 
-
-
--------------------------------------
+---
 
 ## Documentation
 
-- [Godoc](https://pkg.go.dev/github.com/auth0/go-auth0) - explore the Go SDK documentation.
+- [Godoc](https://pkg.go.dev/github.com/auth0/go-auth0/v2) - explore the Go SDK documentation.
 - [Docs site](https://www.auth0.com/docs) — explore our docs site and learn more about Auth0.
 - [Examples](./EXAMPLES.md) - Further examples around usage of the SDK.
+- [API Reference](./reference.md) - Complete API reference documentation.
 
 ## Getting started
 
@@ -30,21 +29,19 @@
 
 This library follows the [same support policy as Go](https://go.dev/doc/devel/release#policy). The last two major Go releases are actively supported and compatibility issues will be fixed. While you may find that older versions of Go may work, we will not actively test and fix compatibility issues with these versions.
 
-- Go 1.23+
+- Go 1.24+
 
 ### Installation
 
 ```shell
-go get github.com/auth0/go-auth0
+go get github.com/auth0/go-auth0/v2
 ```
 
 ### Usage
 
 #### Authentication API Client
 
-The Authentication API client is based on the [Authentication API docs](https://auth0.com/docs/api/authentication).
-
-Create an Authentication API client by providing the details of your Auth0 Application.
+This client can be used to access Auth0's [Authentication API](https://auth0.com/docs/api/authentication).
 
 ```go
 package main
@@ -53,9 +50,9 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth0/go-auth0/authentication"
-	"github.com/auth0/go-auth0/authentication/database"
-	"github.com/auth0/go-auth0/authentication/oauth"
+	"github.com/auth0/go-auth0/v2/authentication"
+	"github.com/auth0/go-auth0/v2/authentication/database"
+	"github.com/auth0/go-auth0/v2/authentication/oauth"
 )
 
 func main() {
@@ -99,12 +96,15 @@ func main() {
 	}
 }
 ```
+
 > **Note**
 > The [context](https://pkg.go.dev/context?utm_source=godoc) package can be used to pass cancellation signals and deadlines to the Client for handling a request. If there is no context available then `context.Background()` can be used.
 
 #### Management API Client
 
-The Management API client is based on the [Management API docs](https://auth0.com/docs/api/management/v2).
+The Auth0 Management API is meant to be used by back-end servers or trusted parties performing administrative tasks. Generally speaking, anything that can be done through the Auth0 dashboard (and more) can also be done through this API.
+
+Initialize your client class with a domain and token:
 
 ```go
 package main
@@ -113,64 +113,38 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth0/go-auth0"
-	"github.com/auth0/go-auth0/management"
+	"github.com/auth0/go-auth0/v2/management/option"
+	management "github.com/auth0/go-auth0/v2/management/client"
 )
 
 func main() {
-	// Get these from your Auth0 Application Dashboard.
-	// The application needs to be a Machine To Machine authorized
-	// to request access tokens for the Auth0 Management API,
-	// with the desired permissions (scopes).
-	domain := "example.auth0.com"
-	clientID := "EXAMPLE_16L9d34h0qe4NVE6SaHxZEid"
-	clientSecret := "EXAMPLE_XSQGmnt8JdXs23407hrK6XXXXXXX"
-
-	// Initialize a new client using a domain, client ID and client secret.
-	// Alternatively you can specify an access token:
-	// `management.WithStaticToken("token")`
-	auth0API, err := management.New(
-		domain,
-		management.WithClientCredentials(context.TODO(), clientID, clientSecret),  // Replace with a Context that better suits your usage
-	)
-	if err != nil {
-		log.Fatalf("failed to initialize the auth0 management API client: %+v", err)
-	}
-
-	// Now we can interact with the Auth0 Management API.
-	// Example: Creating a new client.
-	client := &management.Client{
-		Name:        auth0.String("My Client"),
-		Description: auth0.String("Client created through the Go SDK"),
-	}
-
-	// The passed in client will get hydrated with the response.
-	// This means that after this request, we will have access
-	// to the client ID on the same client object.
-	err = auth0API.Client.Create(context.TODO(), client)  // Replace with a Context that better suits your usage
-	if err != nil {
-		log.Fatalf("failed to create a new client: %+v", err)
-	}
-
-	// Make use of the getter functions to safely access
-	// fields without causing a panic due nil pointers.
-	log.Printf(
-		"Created an auth0 client successfully. The ID is: %q",
-		client.GetClientID(),
+	mgmt, err := management.New(
+		"{YOUR_TENANT_AND REGION}.auth0.com",
+		option.WithToken("{YOUR_API_V2_TOKEN}"),  // Replace with a Context that better suits your usage
 	)
 }
 ```
-> **Note**
-> The [context](https://pkg.go.dev/context?utm_source=godoc) package can be used to pass cancellation signals and deadlines to the Client for handling a request. If there is no context available then `context.Background()` can be used.
 
-### Rate Limiting
+Or use client credentials:
 
-The Auth0 Management API imposes a rate limit on all API clients. When the limit is reached, the SDK will handle it in
-the background by retrying the API request when the limit is lifted.
+```go
+package main
 
-> **Note**
-> The SDK does not prevent `http.StatusTooManyRequests` errors, instead it waits for the rate limit to be reset based on
-> the value of the `X-Rate-Limit-Reset` header as the amount of seconds to wait.
+import (
+	"context"
+	"log"
+
+	"github.com/auth0/go-auth0/v2/management/option"
+	management "github.com/auth0/go-auth0/v2/management/client"
+)
+
+func main() {
+	mgmt, err := management.New(
+		"{YOUR_TENANT_AND REGION}.auth0.com",
+		option.WithClientCredentials(context.TODO(), clientID, clientSecret),  // Replace with a Context that better suits your usage
+	)
+}
+```
 
 ## Feedback
 

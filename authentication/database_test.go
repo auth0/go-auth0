@@ -10,16 +10,18 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/auth0/go-auth0"
+	"github.com/auth0/go-auth0/v2"
 
-	"github.com/auth0/go-auth0/authentication/database"
-	"github.com/auth0/go-auth0/management"
+	"github.com/auth0/go-auth0/v2/authentication/database"
+	"github.com/auth0/go-auth0/v2/management"
 )
 
 // TestDatabaseSignUp_RequiresUsername tests the Database.Signup method with a connection that requires a username.
 func TestDatabaseSignUp_RequiresUsername(t *testing.T) {
-	connectionOptions := &management.ConnectionOptions{
-		RequiresUsername: auth0.Bool(true),
+	connectionOptions := &management.ConnectionPropertiesOptions{
+		ExtraProperties: map[string]interface{}{
+			"requires_username": true,
+		},
 	}
 
 	configureHTTPTestRecordings(t, authAPI)
@@ -42,16 +44,16 @@ func TestDatabaseSignUp_RequiresUsername(t *testing.T) {
 
 // TestDatabaseSignUp_WithEmailIdentifier tests the Database.Signup method with a connection that requires an email.
 func TestDatabaseSignUp_WithEmailIdentifier(t *testing.T) {
-	connectionOptions := &management.ConnectionOptions{
-		Attributes: &management.ConnectionOptionsAttributes{
-			Email: &management.ConnectionOptionsEmailAttribute{
-				Identifier: &management.ConnectionOptionsAttributeIdentifier{
+	connectionOptions := &management.ConnectionPropertiesOptions{
+		Attributes: &management.ConnectionAttributes{
+			Email: &management.EmailAttribute{
+				Identifier: &management.ConnectionAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
-				Signup: &management.ConnectionOptionsAttributeSignup{
-					Status: auth0.String("required"),
-					Verification: &management.ConnectionOptionsAttributeVerification{
+				Signup: &management.SignupVerified{
+					Status: management.SignupStatusEnumRequired.Ptr(),
+					Verification: &management.SignupVerification{
 						Active: auth0.Bool(false),
 					},
 				},
@@ -78,15 +80,15 @@ func TestDatabaseSignUp_WithEmailIdentifier(t *testing.T) {
 
 // TestDatabaseSignUp_WithUsernameIdentifier tests the Database.Signup method with a connection that requires a username.
 func TestDatabaseSignUp_WithUsernameIdentifier(t *testing.T) {
-	connectionOptions := &management.ConnectionOptions{
-		Attributes: &management.ConnectionOptionsAttributes{
-			Username: &management.ConnectionOptionsUsernameAttribute{
-				Identifier: &management.ConnectionOptionsAttributeIdentifier{
+	connectionOptions := &management.ConnectionPropertiesOptions{
+		Attributes: &management.ConnectionAttributes{
+			Username: &management.UsernameAttribute{
+				Identifier: &management.ConnectionAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
-				Signup: &management.ConnectionOptionsAttributeSignup{
-					Status: auth0.String("required"),
+				Signup: &management.SignupSchema{
+					Status: management.SignupStatusEnumRequired.Ptr(),
 				},
 			},
 		},
@@ -109,27 +111,27 @@ func TestDatabaseSignUp_WithUsernameIdentifier(t *testing.T) {
 	assert.Equal(t, userData.Username, createdUser.Username)
 }
 
-// TestDatabaseSignUp_WithUsernameAndEmailIdentifiers tests the Database.Signup method with a connection that requires both a username and email.
+// TestDatabaseSignUp_WithUsernameAndEmailIdentifiers tests the Database.Signup method with a connection that requires both username and email.
 func TestDatabaseSignUp_WithUsernameAndEmailIdentifiers(t *testing.T) {
-	connectionOptions := &management.ConnectionOptions{
-		Attributes: &management.ConnectionOptionsAttributes{
-			Username: &management.ConnectionOptionsUsernameAttribute{
-				Identifier: &management.ConnectionOptionsAttributeIdentifier{
+	connectionOptions := &management.ConnectionPropertiesOptions{
+		Attributes: &management.ConnectionAttributes{
+			Username: &management.UsernameAttribute{
+				Identifier: &management.ConnectionAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
-				Signup: &management.ConnectionOptionsAttributeSignup{
-					Status: auth0.String("required"),
+				Signup: &management.SignupSchema{
+					Status: management.SignupStatusEnumRequired.Ptr(),
 				},
 			},
-			Email: &management.ConnectionOptionsEmailAttribute{
-				Identifier: &management.ConnectionOptionsAttributeIdentifier{
+			Email: &management.EmailAttribute{
+				Identifier: &management.ConnectionAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
-				Signup: &management.ConnectionOptionsAttributeSignup{
-					Status: auth0.String("required"),
-					Verification: &management.ConnectionOptionsAttributeVerification{
+				Signup: &management.SignupVerified{
+					Status: management.SignupStatusEnumRequired.Ptr(),
+					Verification: &management.SignupVerification{
 						Active: auth0.Bool(false),
 					},
 				},
@@ -143,8 +145,8 @@ func TestDatabaseSignUp_WithUsernameAndEmailIdentifiers(t *testing.T) {
 
 	userData := database.SignupRequest{
 		Connection: details.connection,
-		Username:   details.username,
 		Password:   details.password,
+		Username:   details.username,
 		Email:      details.email,
 	}
 
@@ -158,16 +160,16 @@ func TestDatabaseSignUp_WithUsernameAndEmailIdentifiers(t *testing.T) {
 
 // TestDatabaseSignUp_WithPhoneNumberIdentifier tests the Database.Signup method with a connection that requires a phone number.
 func TestDatabaseSignUp_WithPhoneNumberIdentifier(t *testing.T) {
-	connectionOptions := &management.ConnectionOptions{
-		Attributes: &management.ConnectionOptionsAttributes{
-			PhoneNumber: &management.ConnectionOptionsPhoneNumberAttribute{
-				Identifier: &management.ConnectionOptionsAttributeIdentifier{
+	connectionOptions := &management.ConnectionPropertiesOptions{
+		Attributes: &management.ConnectionAttributes{
+			PhoneNumber: &management.PhoneAttribute{
+				Identifier: &management.ConnectionAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
-				Signup: &management.ConnectionOptionsAttributeSignup{
-					Status: auth0.String("required"),
-					Verification: &management.ConnectionOptionsAttributeVerification{
+				Signup: &management.SignupVerified{
+					Status: management.SignupStatusEnumRequired.Ptr(),
+					Verification: &management.SignupVerification{
 						Active: auth0.Bool(false),
 					},
 				},
@@ -192,27 +194,27 @@ func TestDatabaseSignUp_WithPhoneNumberIdentifier(t *testing.T) {
 	assert.Equal(t, userData.PhoneNumber, createdUser.PhoneNumber)
 }
 
-// TestDatabaseSignUp_WithUsernameAndPhoneNumberIdentifiers tests the Database.Signup method with a connection that requires both a username and phone number.
+// TestDatabaseSignUp_WithUsernameAndPhoneNumberIdentifiers tests the Database.Signup method with a connection that requires both username and phone number.
 func TestDatabaseSignUp_WithUsernameAndPhoneNumberIdentifiers(t *testing.T) {
-	connectionOptions := &management.ConnectionOptions{
-		Attributes: &management.ConnectionOptionsAttributes{
-			Username: &management.ConnectionOptionsUsernameAttribute{
-				Identifier: &management.ConnectionOptionsAttributeIdentifier{
+	connectionOptions := &management.ConnectionPropertiesOptions{
+		Attributes: &management.ConnectionAttributes{
+			Username: &management.UsernameAttribute{
+				Identifier: &management.ConnectionAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
-				Signup: &management.ConnectionOptionsAttributeSignup{
-					Status: auth0.String("required"),
+				Signup: &management.SignupSchema{
+					Status: management.SignupStatusEnumRequired.Ptr(),
 				},
 			},
-			PhoneNumber: &management.ConnectionOptionsPhoneNumberAttribute{
-				Identifier: &management.ConnectionOptionsAttributeIdentifier{
+			PhoneNumber: &management.PhoneAttribute{
+				Identifier: &management.ConnectionAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
-				Signup: &management.ConnectionOptionsAttributeSignup{
-					Status: auth0.String("required"),
-					Verification: &management.ConnectionOptionsAttributeVerification{
+				Signup: &management.SignupVerified{
+					Status: management.SignupStatusEnumRequired.Ptr(),
+					Verification: &management.SignupVerification{
 						Active: auth0.Bool(false),
 					},
 				},
@@ -226,8 +228,8 @@ func TestDatabaseSignUp_WithUsernameAndPhoneNumberIdentifiers(t *testing.T) {
 
 	userData := database.SignupRequest{
 		Connection:  details.connection,
-		Username:    details.username,
 		Password:    details.password,
+		Username:    details.username,
 		PhoneNumber: details.phoneNumber,
 	}
 
@@ -239,39 +241,39 @@ func TestDatabaseSignUp_WithUsernameAndPhoneNumberIdentifiers(t *testing.T) {
 	assert.Equal(t, userData.PhoneNumber, createdUser.PhoneNumber)
 }
 
-// TestDatabaseSignUp_WithUsernameEmailAndPhoneNumberIdentifiers tests the Database.Signup method with a connection that requires a username, email, and phone number.
+// TestDatabaseSignUp_WithUsernameEmailAndPhoneNumberIdentifiers tests the Database.Signup method with a connection that requires username, email, and phone number.
 func TestDatabaseSignUp_WithUsernameEmailAndPhoneNumberIdentifiers(t *testing.T) {
-	connectionOptions := &management.ConnectionOptions{
-		Attributes: &management.ConnectionOptionsAttributes{
-			Username: &management.ConnectionOptionsUsernameAttribute{
-				Identifier: &management.ConnectionOptionsAttributeIdentifier{
+	connectionOptions := &management.ConnectionPropertiesOptions{
+		Attributes: &management.ConnectionAttributes{
+			Username: &management.UsernameAttribute{
+				Identifier: &management.ConnectionAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
-				Signup: &management.ConnectionOptionsAttributeSignup{
-					Status: auth0.String("required"),
+				Signup: &management.SignupSchema{
+					Status: management.SignupStatusEnumRequired.Ptr(),
 				},
 			},
-			Email: &management.ConnectionOptionsEmailAttribute{
-				Identifier: &management.ConnectionOptionsAttributeIdentifier{
+			Email: &management.EmailAttribute{
+				Identifier: &management.ConnectionAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
-				Signup: &management.ConnectionOptionsAttributeSignup{
-					Status: auth0.String("required"),
-					Verification: &management.ConnectionOptionsAttributeVerification{
+				Signup: &management.SignupVerified{
+					Status: management.SignupStatusEnumRequired.Ptr(),
+					Verification: &management.SignupVerification{
 						Active: auth0.Bool(false),
 					},
 				},
 			},
-			PhoneNumber: &management.ConnectionOptionsPhoneNumberAttribute{
-				Identifier: &management.ConnectionOptionsAttributeIdentifier{
+			PhoneNumber: &management.PhoneAttribute{
+				Identifier: &management.ConnectionAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
-				Signup: &management.ConnectionOptionsAttributeSignup{
-					Status: auth0.String("required"),
-					Verification: &management.ConnectionOptionsAttributeVerification{
+				Signup: &management.SignupVerified{
+					Status: management.SignupStatusEnumRequired.Ptr(),
+					Verification: &management.SignupVerification{
 						Active: auth0.Bool(false),
 					},
 				},
@@ -285,8 +287,8 @@ func TestDatabaseSignUp_WithUsernameEmailAndPhoneNumberIdentifiers(t *testing.T)
 
 	userData := database.SignupRequest{
 		Connection:  details.connection,
-		Username:    details.username,
 		Password:    details.password,
+		Username:    details.username,
 		Email:       details.email,
 		PhoneNumber: details.phoneNumber,
 	}
@@ -321,7 +323,7 @@ type userDetails struct {
 	phoneNumber string
 }
 
-func givenSignUpDetails(t *testing.T, options *management.ConnectionOptions) *userDetails {
+func givenSignUpDetails(t *testing.T, options *management.ConnectionPropertiesOptions) *userDetails {
 	t.Helper()
 	// If we're running from recordings then we want to return the default
 	if usingRecordingResponses(t) {
@@ -345,21 +347,21 @@ func givenSignUpDetails(t *testing.T, options *management.ConnectionOptions) *us
 	}
 }
 
-func givenAConnection(t *testing.T, options *management.ConnectionOptions) *management.Connection {
-	conn := &management.Connection{
-		Name:           auth0.Stringf("Test-Connection-%d", time.Now().Unix()),
-		Strategy:       auth0.String("auth0"),
-		EnabledClients: &[]string{clientID, mgmtClientID},
+func givenAConnection(t *testing.T, options *management.ConnectionPropertiesOptions) *management.CreateConnectionResponseContent {
+	conn := &management.CreateConnectionRequestContent{
+		Name:           fmt.Sprintf("Test-Connection-%d", time.Now().Unix()),
+		Strategy:       "auth0",
+		EnabledClients: []string{clientID, mgmtClientID},
 	}
-	conn.Options = &options
+	conn.Options = options
 
-	err := mgmtAPI.Connection.Create(context.Background(), conn)
+	connectionCreated, err := mgmtAPI.Connections.Create(context.Background(), conn)
 	require.NoError(t, err)
 
 	t.Cleanup(func() {
-		err := mgmtAPI.Connection.Delete(context.Background(), conn.GetID())
+		err := mgmtAPI.Connections.Delete(context.Background(), connectionCreated.GetID())
 		require.NoError(t, err)
 	})
 
-	return conn
+	return connectionCreated
 }

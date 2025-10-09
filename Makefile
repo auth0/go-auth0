@@ -12,10 +12,6 @@ GO_BIN ?= $(shell go env GOPATH)/bin
 help: ## Show this help
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-generate: ## Generate management accessor methods
-	@echo "==> Generating management accessor methods..."
-	@go generate ./...
-
 #-----------------------------------------------------------------------------------------------------------------------
 # Dependencies
 #-----------------------------------------------------------------------------------------------------------------------
@@ -46,18 +42,6 @@ check-vuln: $(GO_BIN)/govulncheck ## Check for vulnerabilities
 	@echo "==> Checking for vulnerabilities..."
 	@govulncheck -show verbose ./...
 
-check-getters: ## Check that struct field getters were generated
-	@echo "==> Checking that struct field getters were generated..."
-	@$(MAKE) generate
-	@if [ -n "$$(git status --porcelain)" ]; \
-	then \
-		echo "Go generate resulted in changed files:"; \
-		echo "$$(git diff)"; \
-		echo "Please run \`make generate\` to regenerate struct field getters."; \
-		exit 1; \
-	fi
-	@echo "Struct field getters are generated correctly."
-
 #-----------------------------------------------------------------------------------------------------------------------
 # Testing
 #-----------------------------------------------------------------------------------------------------------------------
@@ -70,6 +54,7 @@ test: ## Run tests with http recordings. To run a specific test pass the FILTER 
 		go test \
 		-run "$(FILTER)" \
 		-cover \
+		-coverpkg=./... \
 		-covermode=atomic \
 		-coverprofile=coverage.out \
 		./...
@@ -86,6 +71,7 @@ test-e2e: ## Run tests without http recordings. To run a specific test pass the 
 	@go test \
 		-run "$(FILTER)" \
 		-cover \
+		-coverpkg=./... \
 		-covermode=atomic \
 		-coverprofile=coverage.out \
 		-timeout 20m \

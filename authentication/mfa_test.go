@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/auth0/go-auth0/authentication/mfa"
-	"github.com/auth0/go-auth0/authentication/oauth"
+	"github.com/auth0/go-auth0/v2/authentication/mfa"
+	"github.com/auth0/go-auth0/v2/authentication/oauth"
 )
 
 func TestMFAChallenge(t *testing.T) {

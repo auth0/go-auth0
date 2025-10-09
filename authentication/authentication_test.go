@@ -21,11 +21,14 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/auth0/go-auth0"
-	"github.com/auth0/go-auth0/authentication/database"
-	"github.com/auth0/go-auth0/authentication/oauth"
-	"github.com/auth0/go-auth0/internal/client"
-	"github.com/auth0/go-auth0/management"
+	"github.com/auth0/go-auth0/v2/management"
+
+	"github.com/auth0/go-auth0/v2"
+	"github.com/auth0/go-auth0/v2/authentication/database"
+	"github.com/auth0/go-auth0/v2/authentication/oauth"
+	"github.com/auth0/go-auth0/v2/internal/client"
+	managementClient "github.com/auth0/go-auth0/v2/management/client"
+	"github.com/auth0/go-auth0/v2/management/option"
 )
 
 var (
@@ -37,7 +40,7 @@ var (
 	httpRecordings        string
 	httpRecordingsEnabled = false
 	authAPI               = &Authentication{}
-	mgmtAPI               = &management.Management{}
+	mgmtAPI               = &managementClient.Management{}
 	jwtPublicKey          = `-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8foXPIpkeLKAVfVg/W0X
 steFas2XwrxAGG0lnLS3mc/cYc/pD/plsR779O8It/2YmHFWIDmCIcW57boDae/K
@@ -119,9 +122,9 @@ func initializeTestClient() {
 		log.Fatal("failed to initialize the auth api client")
 	}
 
-	mgmtAPI, err = management.New(
+	mgmtAPI, err = managementClient.New(
 		domain,
-		management.WithClientCredentials(context.Background(), mgmtClientID, mgmtClientSecret),
+		option.WithClientCredentials(context.Background(), mgmtClientID, mgmtClientSecret),
 	)
 
 	if err != nil {
@@ -635,8 +638,8 @@ func givenAUser(t *testing.T) userDetails {
 	t.Helper()
 
 	if !usingRecordingResponses(t) {
-		user := &management.User{
-			Connection:    auth0.String("Username-Password-Authentication"),
+		user := &management.CreateUserRequestContent{
+			Connection:    "Username-Password-Authentication",
 			Email:         auth0.String("chuck@example.com"),
 			Password:      auth0.String("Testpassword123!"),
 			Username:      auth0.String("test-user"),
@@ -644,11 +647,11 @@ func givenAUser(t *testing.T) userDetails {
 			VerifyEmail:   auth0.Bool(false),
 		}
 
-		err := mgmtAPI.User.Create(context.Background(), user)
+		userCreated, err := mgmtAPI.Users.Create(context.Background(), user)
 		require.NoError(t, err)
 
 		t.Cleanup(func() {
-			err := mgmtAPI.User.Delete(context.Background(), user.GetID())
+			err := mgmtAPI.Users.Delete(context.Background(), userCreated.GetUserID())
 			require.NoError(t, err)
 		})
 	}

@@ -6,8 +6,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/auth0/go-auth0/authentication/mfa"
-	"github.com/auth0/go-auth0/authentication/oauth"
+	"github.com/auth0/go-auth0/v2/authentication/mfa"
+	"github.com/auth0/go-auth0/v2/authentication/oauth"
 )
 
 // MFA exposes requesting an MFA challenge and verifying MFA methods.

@@ -1,83 +1,97 @@
 # Examples
 
-- [OAuth Client Credentials](#oauth-client-credentials)
+This guide provides comprehensive examples for using the Auth0 Go SDK v2, covering authentication, management operations, pagination, and advanced usage patterns.
+
+## Table of Contents
+
+- [Client Credentials Authentication](#client-credentials-authentication)
 - [Request Options](#request-options)
 - [Pagination](#pagination)
-  - [Page based pagination](#page-based-pagination)
-  - [Checkpoint pagination](#checkpoint-pagination)
-- [Custom User Structs](#providing-a-custom-user-struct)
+  - [Page-based Pagination](#page-based-pagination)
+  - [Checkpoint Pagination](#checkpoint-pagination)
+- [Custom Request Handling](#custom-request-handling)
+- [Error Handling](#error-handling)
+- [Complete Examples](#complete-examples)
 
-## OAuth Client Credentials
+## Client Credentials Authentication
 
-The SDK provides several ways to authenticate with Auth0 using OAuth client credentials.
+The SDK v2 provides several ways to authenticate with Auth0 using OAuth client credentials through the options pattern.
 
 ### Management API Initialization
 
-When initializing the Management API client, you can use these client credentials options:
-
 ```go
-// Standard client credentials with client secret
-api, err := management.New(
-    "your-tenant.auth0.com",
-    management.WithClientCredentials(
-        context.Background(),
-        "YOUR_CLIENT_ID",
-        "YOUR_CLIENT_SECRET"
-    )
+import (
+    "context"
+    "github.com/auth0/go-auth0/v2/management"
+    "github.com/auth0/go-auth0/v2/management/client"
+    "github.com/auth0/go-auth0/v2/management/option"
 )
 
-// Client credentials with custom audience
-api, err := management.New(
+// Standard client credentials with client secret
+mgmt, err := client.New(
     "your-tenant.auth0.com",
-    management.WithClientCredentialsAndAudience(
+    option.WithClientCredentials(
         context.Background(),
         "YOUR_CLIENT_ID",
         "YOUR_CLIENT_SECRET",
-        "https://custom-api.example.com"
-    )
+    ),
+)
+
+// Client credentials with custom audience
+mgmt, err := client.New(
+    "your-tenant.auth0.com",
+    option.WithClientCredentialsAndAudience(
+        context.Background(),
+        "YOUR_CLIENT_ID",
+        "YOUR_CLIENT_SECRET",
+        "https://custom-api.example.com",
+    ),
 )
 
 // Client credentials with Private Key JWT
-api, err := management.New(
+mgmt, err := client.New(
     "your-tenant.auth0.com",
-    management.WithClientCredentialsPrivateKeyJwt(
+    option.WithClientCredentialsPrivateKeyJwt(
         context.Background(),
         "YOUR_CLIENT_ID",
-        privateKey,
-        "RS256"
-    )
+        privateKeyPEM, // PEM-encoded private key
+        "RS256",
+    ),
 )
 
 // Private Key JWT with custom audience
-api, err := management.New(
+mgmt, err := client.New(
     "your-tenant.auth0.com",
-    management.WithClientCredentialsPrivateKeyJwtAndAudience(
+    option.WithClientCredentialsPrivateKeyJwtAndAudience(
         context.Background(),
         "YOUR_CLIENT_ID",
-        privateKey,
+        privateKeyPEM,
         "RS256",
-        "https://custom-api.example.com"
-    )
+        "https://custom-api.example.com",
+    ),
 )
 
 // Using a pre-acquired static token
-api, err := management.New(
+mgmt, err := client.New(
     "your-tenant.auth0.com",
-    management.WithStaticToken("YOUR_ACCESS_TOKEN")
+    option.WithToken("YOUR_ACCESS_TOKEN"),
 )
 ```
 
 ### Authentication API Initialization
 
-For the Authentication API, use these initialization patterns:
-
 ```go
+import (
+    "context"
+    "github.com/auth0/go-auth0/v2/authentication"
+)
+
 // With client secret authentication
 auth, err := authentication.New(
     context.Background(),
     "your-tenant.auth0.com",
     authentication.WithClientID("YOUR_CLIENT_ID"),
-    authentication.WithClientSecret("YOUR_CLIENT_SECRET")
+    authentication.WithClientSecret("YOUR_CLIENT_SECRET"),
 )
 
 // With private key JWT authentication
@@ -85,221 +99,602 @@ auth, err := authentication.New(
     context.Background(),
     "your-tenant.auth0.com",
     authentication.WithClientID("YOUR_CLIENT_ID"),
-    authentication.WithClientAssertion(privateKey, "RS256")
+    authentication.WithClientAssertion(privateKeyPEM, "RS256"),
 )
 ```
 
 ## Request Options
 
-Fine-grained configuration can be provided on a per-request basis to enhance the request with specific query params, headers, or to pass it a custom context.
+v2 provides fine-grained configuration through request options that can be applied to individual requests.
 
-> **Note**
-> Not all of the API endpoints support the query parameters added by these funcs.
-> Review the [API docs](https://auth0.com/docs/api/management/v2) for the full documentation of the supported parameters per endpoint.
+### Basic Request Options
 
 ```go
-// Example
-userGrants, err := auth0API.Grant.List(
-    context.Background(),
-    management.Header("MySpecialHeader","MySpecialHeaderValue"),
-    management.Parameter("user_id", "someUserID"),
-    management.Parameter("client", "someClientID"),
-    management.Parameter("audience", "someAPIAudience"),
+import (
+    "net/http"
+    "net/url"
 )
 
-// Other helper funcs
-management.Query()
-management.ExcludeFields()
-management.IncludeFields()
-management.Page()
-management.PerPage()
-management.IncludeTotals()
-management.Take()
-management.From()
-management.Sort()
+// Add custom headers
+clients, err := mgmt.Clients.List(
+    ctx,
+    &management.ListClientsRequestParameters{},
+    option.WithHTTPHeader(http.Header{
+        "X-Custom-Header": []string{"custom-value"},
+        "X-Request-ID":    []string{"req-123"},
+    }),
+)
+
+// Add query parameters
+queryParams := url.Values{}
+queryParams.Set("include_fields", "client_id,name,app_type")
+queryParams.Set("exclude_fields", "client_secret")
+
+clients, err := mgmt.Clients.List(
+    ctx,
+    &management.ListClientsRequestParameters{},
+    option.WithQueryParameters(queryParams),
+)
+
+// Add body properties (for requests with body)
+bodyProps := map[string]interface{}{
+    "custom_field": "custom_value",
+}
+
+response, err := mgmt.Clients.Create(
+    ctx,
+    createRequest,
+    option.WithBodyProperties(bodyProps),
+)
+
+// Configure retry attempts
+users, err := mgmt.Users.List(
+    ctx,
+    &management.ListUsersRequestParameters{},
+    option.WithMaxAttempts(3),
+)
+```
+
+### Common Request Parameter Patterns
+
+```go
+// List clients with filtering and pagination
+listRequest := &management.ListClientsRequestParameters{
+    AppType:    management.String("spa"),
+    Page:       management.Int(0),
+    PerPage:    management.Int(25),
+    Fields:     management.String("client_id,name,app_type"),
+    IncludeFields: management.Bool(true),
+}
+
+clients, err := mgmt.Clients.List(ctx, listRequest)
+
+// List users with search and sorting
+userListRequest := &management.ListUsersRequestParameters{
+    Search:     management.String("email:\"*@example.com\""),
+    Sort:       management.String("created_at:1"),
+    Page:       management.Int(0),
+    PerPage:    management.Int(50),
+}
+
+users, err := mgmt.Users.List(ctx, userListRequest)
+
+// List connections with specific fields
+connectionListRequest := &management.ListConnectionsRequestParameters{
+    Strategy:   management.String("auth0"),
+    Fields:     management.String("id,name,strategy,enabled_clients"),
+    IncludeFields: management.Bool(true),
+}
+
+connections, err := mgmt.Connections.List(ctx, connectionListRequest)
 ```
 
 ## Pagination
 
-This SDK supports both offset and checkpoint pagination.
+The SDK v2 uses a `Page` type for pagination with built-in iterator support.
 
-### Page based pagination
-
-When retrieving lists of resources, if no query parameters are set using the `management.PerPage` and `Management.IncludeTotals` helper funcs, then the SDK will default to sending `per_page=50` and `include_totals=true`.
-
-> **Note**
-> The maximum value of the `per_page` query parameter is 100.
-
-<details>
-  <summary>Page based pagination example</summary>
+### Page-based Pagination
 
 ```go
-var page int
+// Manual pagination using GetNextPage
+ctx := context.Background()
+page := 0
+
 for {
-    clients, err := auth0API.Client.List(
-        context.Background(),
-        management.Page(page),
-        management.PerPage(100),
-    )
+    listRequest := &management.ListClientsRequestParameters{
+        Page:    management.Int(page),
+        PerPage: management.Int(25),
+    }
+
+    clientsPage, err := mgmt.Clients.List(ctx, listRequest)
     if err != nil {
         return err
     }
 
-    // Accumulate here the results or check for a specific client.
-
-    if !clients.HasNext() {
-        break
+    // Process current page results
+    for _, client := range clientsPage.Results {
+        fmt.Printf("Client: %s (%s)\n",
+            *client.GetName(),
+            *client.GetClientID(),
+        )
     }
 
+    // Try to get next page
+    nextPage, err := clientsPage.GetNextPage(ctx)
+    if err != nil {
+        if errors.Is(err, core.ErrNoPages) {
+            // No more pages, we're done
+            break
+        }
+        return err
+    }
+
+    // Continue with next page
+    clientsPage = nextPage
     page++
 }
 ```
 
-</details>
-
-### Checkpoint pagination
-
-Checkpoint pagination can be used when you wish to retrieve more than 1000 results from certain APIs. The APIs that support checkpoint based pagination are:
-
-- `Log.List` (`/api/v2/logs`)
-- `Organization.List` (`/api/v2/organizations`)
-- `Organization.Members` (`/api/v2/organizations/{id}/members`)
-- `Role.Users` (`/api/v2/roles/{id}/users`)
-
-<details>
-  <summary>Checkpoint pagination example</summary>
+### Using Page Iterator
 
 ```go
-// For the first call, only pass the `take` query parameter, the API will
-// then return a `Next` value that can be used for future requests.
-orgList, err := auth0API.Organization.List(context.Background(), management.Take(100))
-if err != nil {
-    log.Fatalf("err: %+v", err)
+// Using the built-in iterator for automatic pagination
+listRequest := &management.ListClientsRequestParameters{
+    PerPage: management.Int(50),
 }
 
-if !orgList.HasNext() {
-    // No need to continue we can stop here.
-    return
+clientsPage, err := mgmt.Clients.List(ctx, listRequest)
+if err != nil {
+    return err
+}
+
+iterator := clientsPage.Iterator()
+for iterator.Next(ctx) {
+    client := iterator.Current()
+    fmt.Printf("Client: %s (%s)\n",
+        *client.GetName(),
+        *client.GetClientID(),
+    )
+}
+
+if iterator.Err() != nil {
+    return iterator.Err()
+}
+```
+
+### Checkpoint Pagination (For Logs and Organizations)
+
+For APIs that support checkpoint pagination (like logs, organizations), you can use either iterators or manual pagination:
+
+```go
+// Option 1: Using iterator (recommended)
+logListRequest := &management.ListLogsRequestParameters{
+    Take: management.Int(100),
+}
+
+logsPage, err := mgmt.Logs.List(ctx, logListRequest)
+if err != nil {
+    return err
+}
+
+iterator := logsPage.Iterator()
+for iterator.Next(ctx) {
+    log := iterator.Current()
+    fmt.Printf("Log: %s - %s\n",
+        *log.GetID(),
+        *log.GetType(),
+    )
+}
+
+if iterator.Err() != nil {
+    return iterator.Err()
+}
+```
+
+```go
+// Option 2: Manual checkpoint pagination (for advanced use cases)
+var fromLogID *string
+
+for {
+    logListRequest := &management.ListLogsRequestParameters{
+        Take: management.Int(100),
+    }
+
+    if fromLogID != nil {
+        logListRequest.From = fromLogID
+    }
+
+    logsPage, err := mgmt.Logs.List(ctx, logListRequest)
+    if err != nil {
+        return err
+    }
+
+    // Process logs
+    for _, log := range logsPage.Results {
+        fmt.Printf("Log: %s - %s\n",
+            *log.GetID(),
+            *log.GetType(),
+        )
+    }
+
+    // Check if we have more logs
+    if len(logsPage.Results) == 0 {
+        break // No more logs
+    }
+
+    // Use the ID of the last log as the checkpoint for the next request
+    lastLog := logsPage.Results[len(logsPage.Results)-1]
+    fromLogID = lastLog.ID
+}
+```
+
+## Custom Request Handling
+
+For scenarios requiring custom request handling or working with fields not included in the generated types:
+
+### Using WithBodyProperties for Additional Fields
+
+The `WithBodyProperties` option allows you to send additional fields in request bodies that aren't part of the generated SDK types. This is useful for:
+
+- Custom metadata fields
+- Advanced configuration options
+- Fields that may be added to the Auth0 API but not yet in the SDK
+
+```go
+// Example: Creating a client with additional custom properties
+customBodyProps := map[string]interface{}{
+    "custom_domain_verified": true,
+    "integration_metadata": map[string]interface{}{
+        "source":      "terraform",
+        "environment": "production",
+        "team":        "platform",
+    },
+    "advanced_settings": map[string]interface{}{
+        "custom_login_page":         true,
+        "universal_login_branding":  true,
+    },
+}
+
+createRequest := &management.CreateClientRequestContent{
+    Name:    "My Custom App",
+    AppType: &management.ClientAppTypeEnumSpa,
+    Callbacks: []string{"https://myapp.com/callback"},
+}
+
+client, err := mgmt.Clients.Create(
+    ctx,
+    createRequest,
+    option.WithBodyProperties(customBodyProps),
+)
+```
+
+### Working with Nullable Fields
+
+```go
+// Use WithBodyProperties to explicitly set fields to null
+_, err := mgmt.Clients.Update(
+    ctx,
+    clientID,
+    &management.UpdateClientRequestContent{
+        Name: management.String("Updated App Name"),
+    },
+    option.WithBodyProperties(map[string]interface{}{
+        "description":     nil, // This will set description to null
+        "logo_uri":        "https://example.com/new-logo.png",
+        "custom_metadata": nil, // This will set custom_metadata to null
+    }),
+)
+```
+
+### Working with ExtraProperties
+
+Some SDK types include an `ExtraProperties` field that can be used in both directions:
+
+1. **In Requests**: Set extra properties to send additional fields to Auth0
+2. **In Responses**: Capture additional fields returned by Auth0 that aren't in the standard schema
+
+#### Setting ExtraProperties in Requests
+
+```go
+// Example: Creating a connection with extra properties in the request struct
+createRequest := &management.CreateConnectionRequestContent{
+    Name:     "My Custom DB",
+    Strategy: management.ConnectionIdentityProviderEnumAuth0,
+    Options: &management.ConnectionPropertiesOptions{
+        ImportMode: management.Bool(true),
+        // Set extra properties directly on the struct
+        ExtraProperties: map[string]interface{}{
+            "custom_timeout":     30,
+            "retry_policy":       "exponential_backoff",
+            "webhook_endpoints": []string{
+                "https://api.example.com/auth-webhook",
+                "https://backup.example.com/auth-webhook",
+            },
+            "advanced_config": map[string]interface{}{
+                "enable_debug_logs": true,
+                "api_version":       "v2.1",
+                "custom_headers": map[string]string{
+                    "X-Custom-Source": "auth0-sdk",
+                    "X-Environment":   "production",
+                },
+            },
+        },
+    },
+}
+
+newConn, err := mgmt.Connections.Create(ctx, createRequest)
+if err != nil {
+    return err
+}
+```
+
+```go
+// Example: Updating connection with extra properties
+updateRequest := &management.UpdateConnectionRequestContent{
+    Options: &management.ConnectionPropertiesOptions{
+        ExtraProperties: map[string]interface{}{
+            "maintenance_mode":    false,
+            "last_updated_by":     "admin-user-123",
+            "migration_settings": map[string]interface{}{
+                "batch_size":     1000,
+                "rate_limit_ms":  100,
+                "error_handling": "continue",
+            },
+        },
+    },
+}
+
+updatedConn, err := mgmt.Connections.Update(ctx, "con_123", updateRequest)
+```
+
+## Error Handling
+
+```go
+import (
+    "errors"
+    "fmt"
+    "net/http"
+)
+
+// Basic error handling
+clients, err := mgmt.Clients.List(ctx, &management.ListClientsRequestParameters{})
+if err != nil {
+    // Check for specific HTTP status codes if needed
+    fmt.Printf("Error listing clients: %v\n", err)
+    return err
+}
+
+// Handle pagination errors
+clientsPage, err := mgmt.Clients.List(ctx, &management.ListClientsRequestParameters{})
+if err != nil {
+    return err
 }
 
 for {
-    // Pass the `next` and `take` query parameters now so
-    // that we can correctly paginate the organizations.
-    orgList, err = auth0API.Organization.List(
-        context.Background(),
-        management.From(orgList.Next),
-        management.Take(100),
+    // Process current page
+    for _, client := range clientsPage.Results {
+        fmt.Printf("Client: %s\n", *client.GetName())
+    }
+
+    // Try to get next page
+    nextPage, err := clientsPage.GetNextPage(ctx)
+    if err != nil {
+        if errors.Is(err, core.ErrNoPages) {
+            // This is expected when we reach the end
+            break
+        }
+        // This is an actual error
+        return fmt.Errorf("error getting next page: %w", err)
+    }
+
+    clientsPage = nextPage
+}
+```
+
+## Complete Examples
+
+### Client Management Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+
+    "github.com/auth0/go-auth0/v2/management"
+    "github.com/auth0/go-auth0/v2/management/client"
+    "github.com/auth0/go-auth0/v2/management/option"
+)
+
+func main() {
+    // Initialize management client
+    mgmt, err := client.New(
+        "your-tenant.auth0.com",
+        option.WithClientCredentials(
+            context.Background(),
+            "YOUR_CLIENT_ID",
+            "YOUR_CLIENT_SECRET",
+        ),
     )
     if err != nil {
-        log.Fatalf("err :%+v", err)
+        log.Fatalf("Error creating management client: %v", err)
     }
 
-    for _, org := range orgList.Organizations {
-        log.Printf("org %s", org.GetID())
+    ctx := context.Background()
+
+    // Create a new client application
+    createRequest := &management.CreateClientRequestContent{
+        Name:    "My Go SDK v2 App",
+        AppType: &management.ClientAppTypeEnumSpa,
+        Callbacks: []string{
+            "http://localhost:3000/callback",
+            "https://myapp.com/callback",
+        },
+        AllowedOrigins: []string{
+            "http://localhost:3000",
+            "https://myapp.com",
+        },
+        OidcConformant: management.Bool(true),
+        JwtConfiguration: &management.ClientJwtConfiguration{
+            Algorithm:         management.String("RS256"),
+            LifetimeInSeconds: management.Int(3600),
+        },
     }
 
-    // The `HasNext` helper func checks whether
-    // the API has informed us that there is
-    // more data to retrieve or not.
-    if !orgList.HasNext() {
-        break
+    clientResponse, err := mgmt.Clients.Create(ctx, createRequest)
+    if err != nil {
+        log.Fatalf("Error creating client: %v", err)
     }
-}
-```
 
-</details>
-
-However, for `Log.List`, the `Next` value is not returned via the API but instead is an ID of a log entry. Determining if there are more logs to retrieved must also be done manually.
-
-<details>
-  <summary>Checkpoint pagination example for <code>Log.List</code></summary>
-
-```go
-var logs []*management.Log
-initialLogId := "LOGID"
-for {
-    // Retrieve 100 logs after the specified log
-    logs, err = auth0API.Log.List(
-        context.Background(),
-        management.From(logFromId),
-        management.Take(100),
+    fmt.Printf("Created client: %s (ID: %s)\n",
+        *clientResponse.GetName(),
+        *clientResponse.GetClientID(),
     )
 
+    // List all SPA clients
+    listRequest := &management.ListClientsRequestParameters{
+        AppType: management.String("spa"),
+        Fields:  management.String("client_id,name,app_type,callbacks"),
+        IncludeFields: management.Bool(true),
+        PerPage: management.Int(10),
+    }
+
+    clientsPage, err := mgmt.Clients.List(ctx, listRequest)
     if err != nil {
-        log.Fatalf("err: %+v", err)
+        log.Fatalf("Error listing clients: %v", err)
     }
 
-    for _, logData := range logs {
-        log.Printf("ID %s", logData.GetID())
-        log.Printf("Type %s", logData.GetType())
-
+    fmt.Println("\nSPA Clients:")
+    iterator := clientsPage.Iterator()
+    for iterator.Next(ctx) {
+        client := iterator.Current()
+        fmt.Printf("- %s (%s)\n", *client.GetName(), *client.GetClientID())
     }
 
-    // The HasNext helper cannot be used with `Log.List` so instead we check the length of the
-    // returned logs array. When it reaches 0 there are no more logs left to process.
-    if len(logs) == 0 {
-        break
+    if iterator.Err() != nil {
+        log.Fatalf("Error iterating clients: %v", iterator.Err())
     }
 
-    logFromId = logs[len(logs)-1].GetID()
+    // Update the client
+    updateRequest := &management.UpdateClientRequestContent{
+        Description: management.String("Updated description for my app"),
+        LogoURI:     management.String("https://example.com/logo.png"),
+    }
+
+    updatedClient, err := mgmt.Clients.Update(
+        ctx,
+        *clientResponse.GetClientID(),
+        updateRequest,
+    )
+    if err != nil {
+        log.Fatalf("Error updating client: %v", err)
+    }
+
+    fmt.Printf("Updated client description: %s\n",
+        *updatedClient.GetDescription(),
+    )
 }
 ```
 
-</details>
-
-## Providing a custom User struct
-
-The `management.User` struct within the SDK only contains the properties supported by Auth0. Therefore, any extra properties added by an external identity provider will not be included within the struct returned from the SDK APIs. To expose these custom properties, we recommend creating a custom struct and then manually calling the API via the lower level request functionality exposed by the SDK, as shown below.
-
-First, define a custom struct that embeds the `management.User` struct exposed by the SDK, and add any helper funcs required to safely access your custom values.
+### User Management Example
 
 ```go
-// Define a custom struct that embeds the `management.User` struct exposed by the SDK.
-type CustomUser struct {
-	management.User
-	OurCustomID *string `json:"custom_id,omitempty"`
-}
+package main
 
-// Create a helper func that will safely retrieve the `OurCustomId` value from CustomUser in the
-// cases where it may be nil.
-func (u *CustomUser) GetOurCustomID() string {
-	if u == nil || u.OurCustomID == nil {
-		return ""
-	}
-	return *u.OurCustomID
+import (
+    "context"
+    "fmt"
+    "log"
+
+    "github.com/auth0/go-auth0/v2/management"
+    "github.com/auth0/go-auth0/v2/management/client"
+    "github.com/auth0/go-auth0/v2/management/option"
+)
+
+func main() {
+    mgmt, err := client.New(
+        "your-tenant.auth0.com",
+        option.WithClientCredentials(
+            context.Background(),
+            "YOUR_CLIENT_ID",
+            "YOUR_CLIENT_SECRET",
+        ),
+    )
+    if err != nil {
+        log.Fatalf("Error creating management client: %v", err)
+    }
+
+    ctx := context.Background()
+
+    // Create a new user
+    createUserRequest := &management.CreateUserRequestContent{
+        Email:      "newuser@example.com",
+        Connection: "Username-Password-Authentication",
+        Password:   management.String("TempPassword123!"),
+        UserMetadata: map[string]interface{}{
+            "preference": "email",
+            "plan":       "premium",
+        },
+        AppMetadata: map[string]interface{}{
+            "role":  "user",
+            "scope": "read:profile",
+        },
+    }
+
+    userResponse, err := mgmt.Users.Create(ctx, createUserRequest)
+    if err != nil {
+        log.Fatalf("Error creating user: %v", err)
+    }
+
+    fmt.Printf("Created user: %s (ID: %s)\n",
+        *userResponse.GetEmail(),
+        *userResponse.GetUserID(),
+    )
+
+    // Search for users by email domain
+    searchRequest := &management.ListUsersRequestParameters{
+        Search:  management.String("email:\"*@example.com\""),
+        Sort:    management.String("created_at:1"),
+        PerPage: management.Int(25),
+    }
+
+    usersPage, err := mgmt.Users.List(ctx, searchRequest)
+    if err != nil {
+        log.Fatalf("Error searching users: %v", err)
+    }
+
+    fmt.Println("\nUsers with @example.com domain:")
+    for _, user := range usersPage.Results {
+        fmt.Printf("- %s (Created: %s)\n",
+            *user.GetEmail(),
+            *user.GetCreatedAt(),
+        )
+    }
+
+    // Update user metadata
+    updateUserRequest := &management.UpdateUserRequestContent{
+        UserMetadata: map[string]interface{}{
+            "preference":    "sms",
+            "plan":          "premium",
+            "last_updated":  "2024-01-01",
+        },
+    }
+
+    updatedUser, err := mgmt.Users.Update(
+        ctx,
+        *userResponse.GetUserID(),
+        updateUserRequest,
+    )
+    if err != nil {
+        log.Fatalf("Error updating user: %v", err)
+    }
+
+    fmt.Printf("Updated user metadata: %v\n",
+        updatedUser.UserMetadata,
+    )
 }
 ```
 
-Then, create a request using the lower level request functionality exposed by the SDK.
-
-```go
-var user CustomUser
-err := auth0API.Request(context.Background(), http.MethodGet, auth0API.URI("users", "auth0|63cfb8ca89c31c3f33f1dffd"), &user)
-if err != nil {
-    log.Fatalf("error was %+v", err)
-}
-log.Printf("User %s", user.GetOurCustomID())
-```
-
-To handle nullable fields, create a custom struct without the omitempty tag and set it to null using a custom request.
-
-```go
-// Define a custom struct similar to the `Tenant` struct exposed by the SDK but without the `omitempty` tag.
-type CustomTenant struct {
-ACRValuesSupported *[]string          `json:"acr_values_supported"`
-MTLS               *management.MTLSConfiguration `json:"mtls"`
-}
-
-// Create a custom request to set the nullable fields to null.
-nullableTenantSettings := &CustomTenant{
-ACRValuesSupported: nil,
-MTLS:               nil,
-}
-
-err := auth0API.Request(context.Background(), http.MethodPatch, auth0API.URI("tenants", "settings"), nullableTenantSettings)
-if err != nil {
-log.Fatalf("error was %+v", err)
-}
-
-log.Printf("Tenant %+v", tenant)
-```
+These examples demonstrate the key patterns for using the Auth0 Go SDK v2 effectively. The SDK's type-safe approach and built-in pagination support make it easier to work with Auth0's Management API while providing flexibility for advanced use cases.
