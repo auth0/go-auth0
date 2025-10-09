@@ -406,9 +406,18 @@ func DebugTransport(base http.RoundTripper, debug bool) http.RoundTripper {
 	}
 
 	return RoundTripFunc(func(req *http.Request) (*http.Response, error) {
+		// Note: We cannot dump the request here because inner transports
+		// (UserAgent, Auth0Client, etc.) haven't modified it yet.
+		// DumpRequestOut creates a wire representation, but transports
+		// set headers during RoundTrip, not before.
+		// So we log the request info manually after it's been prepared.
+		// Call the base transport which will trigger all inner transports
+		res, err := base.RoundTrip(req)
+
+		// Now dump the request after transports have modified it
+		// We do this before checking error so we can see what was attempted
 		dumpRequest(req)
 
-		res, err := base.RoundTrip(req)
 		if err != nil {
 			return res, err
 		}

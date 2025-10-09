@@ -1,8 +1,6 @@
 package client
 
 import (
-	"encoding/base64"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -50,20 +48,16 @@ func New(domain string, options ...option.RequestOption) (*Management, error) {
 	// Build the base options that will be passed to NewWithOptions
 	baseOptions := []option.RequestOption{
 		option.WithBaseURL(u.String() + "/api/v2"),
-		option.WithHTTPClient(http.DefaultClient),
-		option.WithHTTPHeader(http.Header{
-			"User-Agent": []string{internal.UserAgent},
-		}),
 		option.WithMaxAttempts(uint(retryOptions.MaxRetries)),
 	}
 
-	// Apply CustomDomainHeaderTransport to support request-level custom domain headers
-	// Pass empty string for client-level domain; request-level will use the hint header
-	httpClient := *http.DefaultClient // Clone to avoid modifying the global client
-	httpClient.Transport = internal.CustomDomainHeaderTransport(http.DefaultClient.Transport, "")
-	baseOptions = append(baseOptions, option.WithHTTPClient(&httpClient))
+	// Clone DefaultClient to avoid modifying the global client
+	httpClient := *http.DefaultClient
 
-	// Only add Auth0-Client header if NoAuth0ClientInfo is not set
+	// Apply transports in order: UserAgent, Auth0-Client (if needed), then CustomDomain
+	httpClient.Transport = internal.UserAgentTransport(http.DefaultClient.Transport, internal.UserAgent)
+
+	// Only add Auth0-Client header transport if NoAuth0ClientInfo is not set
 	if !noAuth0ClientInfo {
 		// Process env options if any were found
 		envOpts := core.NewRequestOptions(envOnlyOptions...)
@@ -85,18 +79,18 @@ func New(domain string, options ...option.RequestOption) (*Management, error) {
 			auth0ClientInfo.Env[k] = v
 		}
 
-		auth0ClientJSON, err := json.Marshal(auth0ClientInfo)
+		// Apply Auth0ClientInfo transport
+		transport, err := internal.Auth0ClientInfoTransport(httpClient.Transport, auth0ClientInfo)
 		if err != nil {
 			return nil, err
 		}
-
-		auth0ClientEncoded := base64.StdEncoding.EncodeToString(auth0ClientJSON)
-
-		// Add the Auth0-Client header
-		baseOptions = append(baseOptions, option.WithHTTPHeader(http.Header{
-			"Auth0-Client": []string{auth0ClientEncoded},
-		}))
+		httpClient.Transport = transport
 	}
+
+	// Apply CustomDomainHeaderTransport last (pass empty string for client-level domain; request-level will use the hint header)
+	httpClient.Transport = internal.CustomDomainHeaderTransport(httpClient.Transport, "")
+
+	baseOptions = append(baseOptions, option.WithHTTPClient(&httpClient))
 
 	m := NewWithOptions(append(baseOptions, options...)...)
 
