@@ -1,5 +1,83 @@
 # Change Log
 
+## [v2.0.0](https://github.com/auth0/go-auth0/tree/v2.0.0) (2025-10-09)
+
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.0.0-beta.0...v2.0.0)
+
+**⚠️ BREAKING CHANGES - Major Rewrite**
+
+This is the stable v2.0.0 release of the Auth0 Go SDK - a complete rewrite with significant breaking changes from v1.x. Please review the [Migration Guide](./MIGRATION_GUIDE.md) for detailed upgrade instructions.
+
+**Added**
+
+- **New OpenAPI-generated SDK**: Complete rewrite generated from Auth0's OpenAPI specifications
+- **Hierarchical package structure**: Organized management APIs into logical subpackages
+- **Strongly typed interfaces**: Specific request/response types replace generic interfaces
+- **Enhanced type safety**: Enums and constants replace string literals
+- **Improved error handling**: Structured error types with better error messages
+- **Better IntelliSense support**: Improved code completion and documentation
+
+**Changed**
+
+- **BREAKING**: Module name changed from `github.com/auth0/go-auth0` to `github.com/auth0/go-auth0/v2`
+- **BREAKING**: Client initialization changed from `management.New()` to `client.New()` with new option pattern
+- **BREAKING**: Manager structure changed from flat (`mgmt.User`) to hierarchical (`mgmt.Users`)
+- **BREAKING**: All methods now require specific request objects instead of generic structs
+- **BREAKING**: Method signatures updated to return specific response types
+- **BREAKING**: Package organization changed from flat structure to organized subpackages
+- **BREAKING**: Configuration pattern changed to use `option.RequestOption` types
+
+**Migration Required**
+
+<details>
+<summary>Click to see migration examples</summary>
+
+**Before (v1):**
+
+```go
+import "github.com/auth0/go-auth0/management"
+
+mgmt, err := management.New(domain,
+    management.WithClientCredentials(ctx, clientID, clientSecret))
+
+client := &management.Client{
+    Name: auth0.String("My App"),
+    AppType: auth0.String("spa"),
+}
+err := mgmt.Client.Create(ctx, client)
+```
+
+**After (v2):**
+
+```go
+import (
+    "github.com/auth0/go-auth0/v2/management"
+    "github.com/auth0/go-auth0/v2/management/client"
+    "github.com/auth0/go-auth0/v2/option"
+)
+
+mgmt, err := client.New("your-domain.auth0.com",
+    option.WithClientCredentials(ctx, clientID, clientSecret))
+
+request := &management.CreateClientRequestContent{
+    Name: "My App",
+    AppType: &management.ClientAppTypeEnumSpa,
+}
+response, err := mgmt.Clients.Create(ctx, request)
+```
+
+**Key Migration Steps:**
+
+- Update imports to `github.com/auth0/go-auth0/v2`
+- Change `mgmt.User` → `mgmt.Users`, `mgmt.Client` → `mgmt.Clients`
+- Replace generic structs with specific request objects
+- Use typed enums instead of string literals
+- Handle specific response types
+
+</details>
+
+**Note**: The `authentication` package is NOT affected by these changes. Authentication APIs remain the same between V1 and V2.
+
 ## [v1.29.0](https://github.com/auth0/go-auth0/tree/v1.29.0) (2025-09-29)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.28.0...v1.29.0)
 
