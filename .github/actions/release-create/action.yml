@@ -25,6 +25,9 @@ inputs:
   prerelease:
     default: false
     required: false
+  make_latest:
+    default: 'legacy'
+    required: false
   fail_on_unmatched_files:
     default: true
     required: false
@@ -41,6 +44,7 @@ runs:
         target_commitish: ${{ inputs.commit }}
         draft: ${{ inputs.draft }}
         prerelease: ${{ inputs.prerelease }}
+        make_latest: ${{ inputs.make_latest }}
         fail_on_unmatched_files: ${{ inputs.fail_on_unmatched_files }}
         files: ${{ inputs.files }}
       env:
