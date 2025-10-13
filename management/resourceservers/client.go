@@ -48,7 +48,14 @@ func (c *Client) List(
 		"https://%7BTENANT%7D.auth0.com/api/v2",
 	)
 	endpointURL := baseURL + "/resource-servers"
-	queryParams, err := internal.QueryValues(request)
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"page":           0,
+			"per_page":       50,
+			"include_totals": true,
+		},
+	)
 	if err != nil {
 		return nil, err
 	}

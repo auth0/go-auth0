@@ -51,7 +51,12 @@ func (c *Client) List(
 		baseURL+"/users/%v/sessions",
 		userID,
 	)
-	queryParams, err := internal.QueryValues(request)
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"take": 50,
+		},
+	)
 	if err != nil {
 		return nil, err
 	}
