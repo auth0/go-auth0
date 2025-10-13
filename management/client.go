@@ -174,7 +174,7 @@ type Client struct {
 	// To unset values (set to null), use a PATCH request like this:
 	// PATCH /api/v2/clients/{id}
 	// {
-	//	 "skip_non_verifiable_callback_uri_confirmation_prompt": nul l
+	//	 "skip_non_verifiable_callback_uri_confirmation_prompt": null
 	// }
 	//
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
@@ -188,7 +188,7 @@ type Client struct {
 	// To unset values (set to null), use a PATCH request like this:
 	// PATCH /api/v2/clients/{id}
 	// {
-	//	 "skip_non_verifiable_callback_uri_confirmation_prompt": nul l
+	//	 "organization_discovery_methods": null
 	// }
 	//
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
