@@ -53,7 +53,14 @@ func (c *Client) List(
 		baseURL+"/users/%v/permissions",
 		id,
 	)
-	queryParams, err := internal.QueryValues(request)
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"per_page":       50,
+			"page":           0,
+			"include_totals": true,
+		},
+	)
 	if err != nil {
 		return nil, err
 	}

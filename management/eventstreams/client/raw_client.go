@@ -42,7 +42,12 @@ func (r *RawClient) List(
 		"https://%7BTENANT%7D.auth0.com/api/v2",
 	)
 	endpointURL := baseURL + "/event-streams"
-	queryParams, err := internal.QueryValues(request)
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"take": 50,
+		},
+	)
 	if err != nil {
 		return nil, err
 	}

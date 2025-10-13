@@ -53,7 +53,13 @@ func (c *Client) List(
 		baseURL+"/actions/actions/%v/versions",
 		actionID,
 	)
-	queryParams, err := internal.QueryValues(request)
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"page":     0,
+			"per_page": 50,
+		},
+	)
 	if err != nil {
 		return nil, err
 	}
