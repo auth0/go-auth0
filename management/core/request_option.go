@@ -114,7 +114,13 @@ type HTTPHeaderOption struct {
 }
 
 func (h *HTTPHeaderOption) applyRequestOptions(opts *RequestOptions) {
-	opts.HTTPHeader = h.HTTPHeader
+	// Merge headers instead of replacing to preserve existing headers
+	if opts.HTTPHeader == nil {
+		opts.HTTPHeader = make(http.Header)
+	}
+	for key, values := range h.HTTPHeader {
+		opts.HTTPHeader[key] = values
+	}
 }
 
 // BodyPropertiesOption implements the RequestOption interface.
@@ -123,7 +129,13 @@ type BodyPropertiesOption struct {
 }
 
 func (b *BodyPropertiesOption) applyRequestOptions(opts *RequestOptions) {
-	opts.BodyProperties = b.BodyProperties
+	// Merge properties instead of replacing to preserve existing properties
+	if opts.BodyProperties == nil {
+		opts.BodyProperties = make(map[string]interface{})
+	}
+	for key, value := range b.BodyProperties {
+		opts.BodyProperties[key] = value
+	}
 }
 
 // QueryParametersOption implements the RequestOption interface.
@@ -132,7 +144,13 @@ type QueryParametersOption struct {
 }
 
 func (q *QueryParametersOption) applyRequestOptions(opts *RequestOptions) {
-	opts.QueryParameters = q.QueryParameters
+	// Merge query parameters instead of replacing to preserve existing parameters
+	if opts.QueryParameters == nil {
+		opts.QueryParameters = make(url.Values)
+	}
+	for key, values := range q.QueryParameters {
+		opts.QueryParameters[key] = values
+	}
 }
 
 // MaxAttemptsOption implements the RequestOption interface.
