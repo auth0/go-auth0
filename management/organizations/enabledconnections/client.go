@@ -53,7 +53,14 @@ func (c *Client) List(
 		baseURL+"/organizations/%v/enabled_connections",
 		id,
 	)
-	queryParams, err := internal.QueryValues(request)
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"page":           0,
+			"per_page":       50,
+			"include_totals": true,
+		},
+	)
 	if err != nil {
 		return nil, err
 	}

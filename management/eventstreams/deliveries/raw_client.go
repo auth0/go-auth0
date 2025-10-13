@@ -47,7 +47,12 @@ func (r *RawClient) List(
 		baseURL+"/event-streams/%v/deliveries",
 		id,
 	)
-	queryParams, err := internal.QueryValues(request)
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"take": 50,
+		},
+	)
 	if err != nil {
 		return nil, err
 	}
