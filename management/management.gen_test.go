@@ -599,6 +599,24 @@ func TestActionVersionList_String(t *testing.T) {
 	}
 }
 
+func TestAuthentication_GetActive(tt *testing.T) {
+	var zeroValue bool
+	a := &Authentication{Active: &zeroValue}
+	a.GetActive()
+	a = &Authentication{}
+	a.GetActive()
+	a = nil
+	a.GetActive()
+}
+
+func TestAuthentication_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &Authentication{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestAuthenticationMethod_GetAuthenticationMethods(tt *testing.T) {
 	var zeroValue []AuthenticationMethodReference
 	a := &AuthenticationMethod{AuthenticationMethods: &zeroValue}
@@ -3167,6 +3185,38 @@ func TestConcurClientAddon_String(t *testing.T) {
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
+}
+
+func TestConnectedAccounts_GetActive(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectedAccounts{Active: &zeroValue}
+	c.GetActive()
+	c = &ConnectedAccounts{}
+	c.GetActive()
+	c = nil
+	c.GetActive()
+}
+
+func TestConnectedAccounts_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectedAccounts{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnection_GetAuthentication(tt *testing.T) {
+	c := &Connection{}
+	c.GetAuthentication()
+	c = nil
+	c.GetAuthentication()
+}
+
+func TestConnection_GetConnectedAccounts(tt *testing.T) {
+	c := &Connection{}
+	c.GetConnectedAccounts()
+	c = nil
+	c.GetConnectedAccounts()
 }
 
 func TestConnection_GetDisplayName(tt *testing.T) {

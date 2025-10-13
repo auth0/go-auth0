@@ -469,6 +469,19 @@ func (a *ActionVersionList) String() string {
 	return Stringify(a)
 }
 
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (a *Authentication) GetActive() bool {
+	if a == nil || a.Active == nil {
+		return false
+	}
+	return *a.Active
+}
+
+// String returns a string representation of Authentication.
+func (a *Authentication) String() string {
+	return Stringify(a)
+}
+
 // GetAuthenticationMethods returns the AuthenticationMethods field if it's non-nil, zero value otherwise.
 func (a *AuthenticationMethod) GetAuthenticationMethods() []AuthenticationMethodReference {
 	if a == nil || a.AuthenticationMethods == nil {
@@ -2592,6 +2605,35 @@ func (c *CloudBeesClientAddon) String() string {
 // String returns a string representation of ConcurClientAddon.
 func (c *ConcurClientAddon) String() string {
 	return Stringify(c)
+}
+
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (c *ConnectedAccounts) GetActive() bool {
+	if c == nil || c.Active == nil {
+		return false
+	}
+	return *c.Active
+}
+
+// String returns a string representation of ConnectedAccounts.
+func (c *ConnectedAccounts) String() string {
+	return Stringify(c)
+}
+
+// GetAuthentication returns the Authentication field.
+func (c *Connection) GetAuthentication() *Authentication {
+	if c == nil {
+		return nil
+	}
+	return c.Authentication
+}
+
+// GetConnectedAccounts returns the ConnectedAccounts field.
+func (c *Connection) GetConnectedAccounts() *ConnectedAccounts {
+	if c == nil {
+		return nil
+	}
+	return c.ConnectedAccounts
 }
 
 // GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.

@@ -20,6 +20,12 @@ var connectionTestCases = []connectionTestCase{
 		connection: Connection{
 			Name:     auth0.Stringf("Test-Auth0-Connection-%d", time.Now().Unix()),
 			Strategy: auth0.String("auth0"),
+			Authentication: &Authentication{
+				Active: auth0.Bool(true),
+			},
+			ConnectedAccounts: &ConnectedAccounts{
+				Active: auth0.Bool(true),
+			},
 		},
 		options: &ConnectionOptions{
 			StrategyVersion: auth0.Int(2),

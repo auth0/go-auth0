@@ -60,3 +60,4 @@ jobs:
           tag: ${{ steps.get_version.outputs.version }}
           commit: ${{ github.sha }}
           prerelease: ${{ steps.get_prerelease.outputs.prerelease }}
+          make_latest: 'legacy'
