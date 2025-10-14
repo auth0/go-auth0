@@ -2,6 +2,7 @@ package management
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math/rand"
 	"net/http"
@@ -800,7 +801,8 @@ func cleanupOrganizationDiscoveryDomain(t *testing.T, orgID, domainID string) {
 
 	err := api.Organization.DeleteDiscoveryDomain(context.Background(), orgID, domainID)
 	if err != nil {
-		if err.(Error).Status() != http.StatusNotFound {
+		var apiErr Error
+		if errors.As(err, &apiErr) && apiErr.Status() != http.StatusNotFound {
 			t.Error(err)
 		}
 	}
@@ -811,7 +813,8 @@ func cleanupOrganization(t *testing.T, orgID string) {
 
 	err := api.Organization.Delete(context.Background(), orgID)
 	if err != nil {
-		if err.(Error).Status() != http.StatusNotFound {
+		var apiErr Error
+		if errors.As(err, &apiErr) && apiErr.Status() != http.StatusNotFound {
 			t.Error(err)
 		}
 	}

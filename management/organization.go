@@ -1,6 +1,9 @@
 package management
 
-import "context"
+import (
+	"context"
+	"errors"
+)
 
 // Organization is used to allow B2B customers to better manage
 // their partners and customers, and to customize the ways that
@@ -225,7 +228,7 @@ type OrganizationDiscoveryDomain struct {
 	// Possible values are "pending" and "verified".
 	Status *string `json:"status,omitempty"`
 	// A unique token generated for the discovery domain.
-	// This must be placed in a DNS TXT record at the location specified by the verification_host field to prove domain ownership.
+	// This must be placed in a DNS TXT record at the location specified by the `VerificationHost` field to prove domain ownership.
 	VerificationTXT *string `json:"verification_txt,omitempty"`
 	// The full domain where the TXT record should be added.
 	VerificationHost *string `json:"verification_host,omitempty"`
@@ -505,11 +508,11 @@ func (m *OrganizationManager) DeleteDiscoveryDomain(ctx context.Context, id stri
 
 // UpdateDiscoveryDomain updates a specific discovery domain for an organization.
 func (m *OrganizationManager) UpdateDiscoveryDomain(ctx context.Context, id string, domainID string, d *OrganizationDiscoveryDomain, opts ...RequestOption) (err error) {
-	if d != nil {
-		d = d.cleanForPatch()
+	if d == nil {
+		return errors.New("organization discovery domain cannot be nil")
 	}
 
-	err = m.management.Request(ctx, "PATCH", m.management.URI("organizations", id, "discovery-domains", domainID), &d, opts...)
+	err = m.management.Request(ctx, "PATCH", m.management.URI("organizations", id, "discovery-domains", domainID), d.cleanForPatch(), opts...)
 
 	return
 }
