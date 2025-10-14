@@ -1,5 +1,14 @@
 # Change Log
 
+## [v2.0.1](https://github.com/auth0/go-auth0/tree/v2.0.1) (2025-10-13)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.0.0...v2.0.1)
+
+**Added**
+- feat: Set default User-Agent and fix request option merging [\#625](https://github.com/auth0/go-auth0/pull/625) ([developerkunal](https://github.com/developerkunal))
+
+**Fixed**
+- fix: ensure consistent pagination defaults across management API client methods [\#629](https://github.com/auth0/go-auth0/pull/629) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.0.0](https://github.com/auth0/go-auth0/tree/v2.0.0) (2025-10-09)
 
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.0.0-beta.0...v2.0.0)
