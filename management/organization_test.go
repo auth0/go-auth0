@@ -742,6 +742,13 @@ func TestOrganizationManager_UpdateDiscoveryDomain(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+func TestOrganizationManager_UpdateDiscoveryDomain_NilDomain(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	err := api.Organization.UpdateDiscoveryDomain(context.Background(), "org_123", "domain_123", nil)
+	assert.EqualError(t, err, "organization discovery domain cannot be nil")
+}
+
 func TestOrganizationManager_DeleteDiscoveryDomain(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
