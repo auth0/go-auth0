@@ -469,6 +469,19 @@ func (a *ActionVersionList) String() string {
 	return Stringify(a)
 }
 
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (a *Authentication) GetActive() bool {
+	if a == nil || a.Active == nil {
+		return false
+	}
+	return *a.Active
+}
+
+// String returns a string representation of Authentication.
+func (a *Authentication) String() string {
+	return Stringify(a)
+}
+
 // GetAuthenticationMethods returns the AuthenticationMethods field if it's non-nil, zero value otherwise.
 func (a *AuthenticationMethod) GetAuthenticationMethods() []AuthenticationMethodReference {
 	if a == nil || a.AuthenticationMethods == nil {
@@ -1526,6 +1539,35 @@ func (b *BruteForceProtection) String() string {
 	return Stringify(b)
 }
 
+// GetDateFrom returns the DateFrom field if it's non-nil, zero value otherwise.
+func (b *BulkRedeliverRequest) GetDateFrom() string {
+	if b == nil || b.DateFrom == nil {
+		return ""
+	}
+	return *b.DateFrom
+}
+
+// GetDateTo returns the DateTo field if it's non-nil, zero value otherwise.
+func (b *BulkRedeliverRequest) GetDateTo() string {
+	if b == nil || b.DateTo == nil {
+		return ""
+	}
+	return *b.DateTo
+}
+
+// GetEventTypes returns the EventTypes field if it's non-nil, zero value otherwise.
+func (b *BulkRedeliverRequest) GetEventTypes() []string {
+	if b == nil || b.EventTypes == nil {
+		return nil
+	}
+	return *b.EventTypes
+}
+
+// String returns a string representation of BulkRedeliverRequest.
+func (b *BulkRedeliverRequest) String() string {
+	return Stringify(b)
+}
+
 // GetAddons returns the Addons field.
 func (c *Client) GetAddons() *ClientAddons {
 	if c == nil {
@@ -1830,6 +1872,14 @@ func (c *Client) GetRequirePushedAuthorizationRequests() bool {
 	return *c.RequirePushedAuthorizationRequests
 }
 
+// GetResourceServerIdentifier returns the ResourceServerIdentifier field if it's non-nil, zero value otherwise.
+func (c *Client) GetResourceServerIdentifier() string {
+	if c == nil || c.ResourceServerIdentifier == nil {
+		return ""
+	}
+	return *c.ResourceServerIdentifier
+}
+
 // GetSessionTransfer returns the SessionTransfer field.
 func (c *Client) GetSessionTransfer() *SessionTransfer {
 	if c == nil {
@@ -1844,6 +1894,14 @@ func (c *Client) GetSignedRequestObject() *ClientSignedRequestObject {
 		return nil
 	}
 	return c.SignedRequestObject
+}
+
+// GetSkipNonVerifiableCallbackURIConfirmationPrompt returns the SkipNonVerifiableCallbackURIConfirmationPrompt field if it's non-nil, zero value otherwise.
+func (c *Client) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if c == nil || c.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *c.SkipNonVerifiableCallbackURIConfirmationPrompt
 }
 
 // GetSSO returns the SSO field if it's non-nil, zero value otherwise.
@@ -2539,6 +2597,35 @@ func (c *CloudBeesClientAddon) String() string {
 // String returns a string representation of ConcurClientAddon.
 func (c *ConcurClientAddon) String() string {
 	return Stringify(c)
+}
+
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (c *ConnectedAccounts) GetActive() bool {
+	if c == nil || c.Active == nil {
+		return false
+	}
+	return *c.Active
+}
+
+// String returns a string representation of ConnectedAccounts.
+func (c *ConnectedAccounts) String() string {
+	return Stringify(c)
+}
+
+// GetAuthentication returns the Authentication field.
+func (c *Connection) GetAuthentication() *Authentication {
+	if c == nil {
+		return nil
+	}
+	return c.Authentication
+}
+
+// GetConnectedAccounts returns the ConnectedAccounts field.
+func (c *Connection) GetConnectedAccounts() *ConnectedAccounts {
+	if c == nil {
+		return nil
+	}
+	return c.ConnectedAccounts
 }
 
 // GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
@@ -3869,6 +3956,14 @@ func (c *ConnectionOptionsEmailAttribute) GetSignup() *ConnectionOptionsAttribut
 		return nil
 	}
 	return c.Signup
+}
+
+// GetUnique returns the Unique field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsEmailAttribute) GetUnique() bool {
+	if c == nil || c.Unique == nil {
+		return false
+	}
+	return *c.Unique
 }
 
 // GetVerificationMethod returns the VerificationMethod field.
@@ -5245,6 +5340,14 @@ func (c *ConnectionOptionsOIDC) GetNonPersistentAttrs() []string {
 		return nil
 	}
 	return *c.NonPersistentAttrs
+}
+
+// GetOIDCMetadata returns the OIDCMetadata map if it's non-nil, an empty map otherwise.
+func (c *ConnectionOptionsOIDC) GetOIDCMetadata() map[string]interface{} {
+	if c == nil || c.OIDCMetadata == nil {
+		return map[string]interface{}{}
+	}
+	return c.OIDCMetadata
 }
 
 // GetScope returns the Scope field if it's non-nil, zero value otherwise.
@@ -7053,6 +7156,120 @@ func (d *DailyStat) String() string {
 	return Stringify(d)
 }
 
+// GetDuration returns the Duration field if it's non-nil, zero value otherwise.
+func (d *DeliveryAttempt) GetDuration() float64 {
+	if d == nil || d.Duration == nil {
+		return 0
+	}
+	return *d.Duration
+}
+
+// GetErrorMessage returns the ErrorMessage field if it's non-nil, zero value otherwise.
+func (d *DeliveryAttempt) GetErrorMessage() string {
+	if d == nil || d.ErrorMessage == nil {
+		return ""
+	}
+	return *d.ErrorMessage
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (d *DeliveryAttempt) GetStatus() string {
+	if d == nil || d.Status == nil {
+		return ""
+	}
+	return *d.Status
+}
+
+// GetTimestamp returns the Timestamp field if it's non-nil, zero value otherwise.
+func (d *DeliveryAttempt) GetTimestamp() time.Time {
+	if d == nil || d.Timestamp == nil {
+		return time.Time{}
+	}
+	return *d.Timestamp
+}
+
+// String returns a string representation of DeliveryAttempt.
+func (d *DeliveryAttempt) String() string {
+	return Stringify(d)
+}
+
+// GetA0Purpose returns the A0Purpose field if it's non-nil, zero value otherwise.
+func (d *DeliveryEvent) GetA0Purpose() string {
+	if d == nil || d.A0Purpose == nil {
+		return ""
+	}
+	return *d.A0Purpose
+}
+
+// GetA0Stream returns the A0Stream field if it's non-nil, zero value otherwise.
+func (d *DeliveryEvent) GetA0Stream() string {
+	if d == nil || d.A0Stream == nil {
+		return ""
+	}
+	return *d.A0Stream
+}
+
+// GetA0Tenant returns the A0Tenant field if it's non-nil, zero value otherwise.
+func (d *DeliveryEvent) GetA0Tenant() string {
+	if d == nil || d.A0Tenant == nil {
+		return ""
+	}
+	return *d.A0Tenant
+}
+
+// GetData returns the Data map if it's non-nil, an empty map otherwise.
+func (d *DeliveryEvent) GetData() map[string]interface{} {
+	if d == nil || d.Data == nil {
+		return map[string]interface{}{}
+	}
+	return d.Data
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (d *DeliveryEvent) GetID() string {
+	if d == nil || d.ID == nil {
+		return ""
+	}
+	return *d.ID
+}
+
+// GetSource returns the Source field if it's non-nil, zero value otherwise.
+func (d *DeliveryEvent) GetSource() string {
+	if d == nil || d.Source == nil {
+		return ""
+	}
+	return *d.Source
+}
+
+// GetSpecVersion returns the SpecVersion field if it's non-nil, zero value otherwise.
+func (d *DeliveryEvent) GetSpecVersion() string {
+	if d == nil || d.SpecVersion == nil {
+		return ""
+	}
+	return *d.SpecVersion
+}
+
+// GetTime returns the Time field if it's non-nil, zero value otherwise.
+func (d *DeliveryEvent) GetTime() time.Time {
+	if d == nil || d.Time == nil {
+		return time.Time{}
+	}
+	return *d.Time
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (d *DeliveryEvent) GetType() string {
+	if d == nil || d.Type == nil {
+		return ""
+	}
+	return *d.Type
+}
+
+// String returns a string representation of DeliveryEvent.
+func (d *DeliveryEvent) String() string {
+	return Stringify(d)
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (d *DeviceCredential) GetClientID() string {
 	if d == nil || d.ClientID == nil {
@@ -7663,6 +7880,101 @@ func (e *EnrollmentTicket) String() string {
 	return Stringify(e)
 }
 
+// GetEvent returns the Event field.
+func (e *EventDelivery) GetEvent() *DeliveryEvent {
+	if e == nil {
+		return nil
+	}
+	return e.Event
+}
+
+// GetEventStreamID returns the EventStreamID field if it's non-nil, zero value otherwise.
+func (e *EventDelivery) GetEventStreamID() string {
+	if e == nil || e.EventStreamID == nil {
+		return ""
+	}
+	return *e.EventStreamID
+}
+
+// GetEventType returns the EventType field if it's non-nil, zero value otherwise.
+func (e *EventDelivery) GetEventType() string {
+	if e == nil || e.EventType == nil {
+		return ""
+	}
+	return *e.EventType
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (e *EventDelivery) GetID() string {
+	if e == nil || e.ID == nil {
+		return ""
+	}
+	return *e.ID
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (e *EventDelivery) GetStatus() string {
+	if e == nil || e.Status == nil {
+		return ""
+	}
+	return *e.Status
+}
+
+// String returns a string representation of EventDelivery.
+func (e *EventDelivery) String() string {
+	return Stringify(e)
+}
+
+// String returns a string representation of EventDeliveryList.
+func (e *EventDeliveryList) String() string {
+	return Stringify(e)
+}
+
+// GetDateFrom returns the DateFrom field if it's non-nil, zero value otherwise.
+func (e *EventDeliveryListQueryParams) GetDateFrom() time.Time {
+	if e == nil || e.DateFrom == nil {
+		return time.Time{}
+	}
+	return *e.DateFrom
+}
+
+// GetDateTo returns the DateTo field if it's non-nil, zero value otherwise.
+func (e *EventDeliveryListQueryParams) GetDateTo() time.Time {
+	if e == nil || e.DateTo == nil {
+		return time.Time{}
+	}
+	return *e.DateTo
+}
+
+// GetEventTypes returns the EventTypes field if it's non-nil, zero value otherwise.
+func (e *EventDeliveryListQueryParams) GetEventTypes() []string {
+	if e == nil || e.EventTypes == nil {
+		return nil
+	}
+	return *e.EventTypes
+}
+
+// GetFrom returns the From field if it's non-nil, zero value otherwise.
+func (e *EventDeliveryListQueryParams) GetFrom() string {
+	if e == nil || e.From == nil {
+		return ""
+	}
+	return *e.From
+}
+
+// GetTake returns the Take field if it's non-nil, zero value otherwise.
+func (e *EventDeliveryListQueryParams) GetTake() int {
+	if e == nil || e.Take == nil {
+		return 0
+	}
+	return *e.Take
+}
+
+// String returns a string representation of EventDeliveryListQueryParams.
+func (e *EventDeliveryListQueryParams) String() string {
+	return Stringify(e)
+}
+
 // GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
 func (e *EventStream) GetCreatedAt() time.Time {
 	if e == nil || e.CreatedAt == nil {
@@ -7747,6 +8059,35 @@ func (e *EventStreamDestination) String() string {
 
 // String returns a string representation of EventStreamList.
 func (e *EventStreamList) String() string {
+	return Stringify(e)
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (e *EventStreamStats) GetID() string {
+	if e == nil || e.ID == nil {
+		return ""
+	}
+	return *e.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (e *EventStreamStats) GetName() string {
+	if e == nil || e.Name == nil {
+		return ""
+	}
+	return *e.Name
+}
+
+// GetWindow returns the Window field.
+func (e *EventStreamStats) GetWindow() *StatsWindow {
+	if e == nil {
+		return nil
+	}
+	return e.Window
+}
+
+// String returns a string representation of EventStreamStats.
+func (e *EventStreamStats) String() string {
 	return Stringify(e)
 }
 
@@ -10463,6 +10804,14 @@ func (r *ResourceServer) GetAuthorizationDetails() []ResourceServerAuthorization
 	return *r.AuthorizationDetails
 }
 
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetClientID() string {
+	if r == nil || r.ClientID == nil {
+		return ""
+	}
+	return *r.ClientID
+}
+
 // GetConsentPolicy returns the ConsentPolicy field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetConsentPolicy() string {
 	if r == nil || r.ConsentPolicy == nil {
@@ -11480,6 +11829,14 @@ func (s *SelfServiceProfile) GetUpdatedAt() time.Time {
 	return *s.UpdatedAt
 }
 
+// GetUserAttributeProfileID returns the UserAttributeProfileID field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfile) GetUserAttributeProfileID() string {
+	if s == nil || s.UserAttributeProfileID == nil {
+		return ""
+	}
+	return *s.UserAttributeProfileID
+}
+
 // String returns a string representation of SelfServiceProfile.
 func (s *SelfServiceProfile) String() string {
 	return Stringify(s)
@@ -11520,6 +11877,14 @@ func (s *SelfServiceProfileTicket) GetEnabledClients() []string {
 		return nil
 	}
 	return *s.EnabledClients
+}
+
+// GetProvisioningConfig returns the ProvisioningConfig field.
+func (s *SelfServiceProfileTicket) GetProvisioningConfig() *SelfServiceProfileTicketProvisioningConfig {
+	if s == nil {
+		return nil
+	}
+	return s.ProvisioningConfig
 }
 
 // GetTicket returns the Ticket field if it's non-nil, zero value otherwise.
@@ -11693,6 +12058,27 @@ func (s *SelfServiceProfileTicketEnabledOrganizations) GetShowAsButton() bool {
 
 // String returns a string representation of SelfServiceProfileTicketEnabledOrganizations.
 func (s *SelfServiceProfileTicketEnabledOrganizations) String() string {
+	return Stringify(s)
+}
+
+// GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketProvisioningConfig) GetScopes() []string {
+	if s == nil || s.Scopes == nil {
+		return nil
+	}
+	return *s.Scopes
+}
+
+// GetTokenLifetime returns the TokenLifetime field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicketProvisioningConfig) GetTokenLifetime() int {
+	if s == nil || s.TokenLifetime == nil {
+		return 0
+	}
+	return *s.TokenLifetime
+}
+
+// String returns a string representation of SelfServiceProfileTicketProvisioningConfig.
+func (s *SelfServiceProfileTicketProvisioningConfig) String() string {
 	return Stringify(s)
 }
 
@@ -12187,6 +12573,77 @@ func (s *Stage) String() string {
 	return Stringify(s)
 }
 
+// GetScaleFactor returns the ScaleFactor field if it's non-nil, zero value otherwise.
+func (s *StatsInterval) GetScaleFactor() int {
+	if s == nil || s.ScaleFactor == nil {
+		return 0
+	}
+	return *s.ScaleFactor
+}
+
+// String returns a string representation of StatsInterval.
+func (s *StatsInterval) String() string {
+	return Stringify(s)
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (s *StatsMetric) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (s *StatsMetric) GetType() string {
+	if s == nil || s.Type == nil {
+		return ""
+	}
+	return *s.Type
+}
+
+// GetWindowTotal returns the WindowTotal field if it's non-nil, zero value otherwise.
+func (s *StatsMetric) GetWindowTotal() int {
+	if s == nil || s.WindowTotal == nil {
+		return 0
+	}
+	return *s.WindowTotal
+}
+
+// String returns a string representation of StatsMetric.
+func (s *StatsMetric) String() string {
+	return Stringify(s)
+}
+
+// GetBucketInterval returns the BucketInterval field.
+func (s *StatsWindow) GetBucketInterval() *StatsInterval {
+	if s == nil {
+		return nil
+	}
+	return s.BucketInterval
+}
+
+// GetDateFrom returns the DateFrom field if it's non-nil, zero value otherwise.
+func (s *StatsWindow) GetDateFrom() time.Time {
+	if s == nil || s.DateFrom == nil {
+		return time.Time{}
+	}
+	return *s.DateFrom
+}
+
+// GetDateTo returns the DateTo field if it's non-nil, zero value otherwise.
+func (s *StatsWindow) GetDateTo() time.Time {
+	if s == nil || s.DateTo == nil {
+		return time.Time{}
+	}
+	return *s.DateTo
+}
+
+// String returns a string representation of StatsWindow.
+func (s *StatsWindow) String() string {
+	return Stringify(s)
+}
+
 // GetAllowList returns the AllowList field if it's non-nil, zero value otherwise.
 func (s *SuspiciousIPThrottling) GetAllowList() []string {
 	if s == nil || s.AllowList == nil {
@@ -12422,6 +12879,14 @@ func (t *Tenant) GetSessions() *TenantSessions {
 		return nil
 	}
 	return t.Sessions
+}
+
+// GetSkipNonVerifiableCallbackURIConfirmationPrompt returns the SkipNonVerifiableCallbackURIConfirmationPrompt field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if t == nil || t.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *t.SkipNonVerifiableCallbackURIConfirmationPrompt
 }
 
 // GetSupportEmail returns the SupportEmail field if it's non-nil, zero value otherwise.
@@ -12889,6 +13354,59 @@ func (t *TenantUniversalLoginColors) String() string {
 	return Stringify(t)
 }
 
+// GetData returns the Data map if it's non-nil, an empty map otherwise.
+func (t *TestEvent) GetData() map[string]interface{} {
+	if t == nil || t.Data == nil {
+		return map[string]interface{}{}
+	}
+	return t.Data
+}
+
+// GetEvent returns the Event field.
+func (t *TestEvent) GetEvent() *DeliveryEvent {
+	if t == nil {
+		return nil
+	}
+	return t.Event
+}
+
+// GetEventStreamID returns the EventStreamID field if it's non-nil, zero value otherwise.
+func (t *TestEvent) GetEventStreamID() string {
+	if t == nil || t.EventStreamID == nil {
+		return ""
+	}
+	return *t.EventStreamID
+}
+
+// GetEventType returns the EventType field if it's non-nil, zero value otherwise.
+func (t *TestEvent) GetEventType() string {
+	if t == nil || t.EventType == nil {
+		return ""
+	}
+	return *t.EventType
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (t *TestEvent) GetID() string {
+	if t == nil || t.ID == nil {
+		return ""
+	}
+	return *t.ID
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (t *TestEvent) GetStatus() string {
+	if t == nil || t.Status == nil {
+		return ""
+	}
+	return *t.Status
+}
+
+// String returns a string representation of TestEvent.
+func (t *TestEvent) String() string {
+	return Stringify(t)
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (t *Ticket) GetClientID() string {
 	if t == nil || t.ClientID == nil {
@@ -13332,6 +13850,264 @@ func (u *User) String() string {
 	return Stringify(u)
 }
 
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfile) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfile) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+// GetUserID returns the UserID field.
+func (u *UserAttributeProfile) GetUserID() *UserAttributeProfileUserID {
+	if u == nil {
+		return nil
+	}
+	return u.UserID
+}
+
+// String returns a string representation of UserAttributeProfile.
+func (u *UserAttributeProfile) String() string {
+	return Stringify(u)
+}
+
+// String returns a string representation of UserAttributeProfileList.
+func (u *UserAttributeProfileList) String() string {
+	return Stringify(u)
+}
+
+// GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileOIDCMapping) GetDisplayName() string {
+	if u == nil || u.DisplayName == nil {
+		return ""
+	}
+	return *u.DisplayName
+}
+
+// GetMapping returns the Mapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileOIDCMapping) GetMapping() string {
+	if u == nil || u.Mapping == nil {
+		return ""
+	}
+	return *u.Mapping
+}
+
+// String returns a string representation of UserAttributeProfileOIDCMapping.
+func (u *UserAttributeProfileOIDCMapping) String() string {
+	return Stringify(u)
+}
+
+// GetOIDCMapping returns the OIDCMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileStrategyOverrides) GetOIDCMapping() string {
+	if u == nil || u.OIDCMapping == nil {
+		return ""
+	}
+	return *u.OIDCMapping
+}
+
+// GetSAMLMapping returns the SAMLMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileStrategyOverrides) GetSAMLMapping() []string {
+	if u == nil || u.SAMLMapping == nil {
+		return nil
+	}
+	return *u.SAMLMapping
+}
+
+// GetSCIMMapping returns the SCIMMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileStrategyOverrides) GetSCIMMapping() string {
+	if u == nil || u.SCIMMapping == nil {
+		return ""
+	}
+	return *u.SCIMMapping
+}
+
+// String returns a string representation of UserAttributeProfileStrategyOverrides.
+func (u *UserAttributeProfileStrategyOverrides) String() string {
+	return Stringify(u)
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileTemplate) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+// GetUserID returns the UserID field.
+func (u *UserAttributeProfileTemplate) GetUserID() *UserAttributeProfileUserID {
+	if u == nil {
+		return nil
+	}
+	return u.UserID
+}
+
+// String returns a string representation of UserAttributeProfileTemplate.
+func (u *UserAttributeProfileTemplate) String() string {
+	return Stringify(u)
+}
+
+// GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileTemplateItem) GetDisplayName() string {
+	if u == nil || u.DisplayName == nil {
+		return ""
+	}
+	return *u.DisplayName
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileTemplateItem) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+// GetTemplate returns the Template field.
+func (u *UserAttributeProfileTemplateItem) GetTemplate() *UserAttributeProfileTemplate {
+	if u == nil {
+		return nil
+	}
+	return u.Template
+}
+
+// String returns a string representation of UserAttributeProfileTemplateItem.
+func (u *UserAttributeProfileTemplateItem) String() string {
+	return Stringify(u)
+}
+
+// String returns a string representation of UserAttributeProfileTemplateList.
+func (u *UserAttributeProfileTemplateList) String() string {
+	return Stringify(u)
+}
+
+// GetAuth0Mapping returns the Auth0Mapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetAuth0Mapping() string {
+	if u == nil || u.Auth0Mapping == nil {
+		return ""
+	}
+	return *u.Auth0Mapping
+}
+
+// GetDescription returns the Description field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+// GetLabel returns the Label field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetLabel() string {
+	if u == nil || u.Label == nil {
+		return ""
+	}
+	return *u.Label
+}
+
+// GetOIDCMapping returns the OIDCMapping field.
+func (u *UserAttributeProfileUserAttributes) GetOIDCMapping() *UserAttributeProfileOIDCMapping {
+	if u == nil {
+		return nil
+	}
+	return u.OIDCMapping
+}
+
+// GetProfileRequired returns the ProfileRequired field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetProfileRequired() bool {
+	if u == nil || u.ProfileRequired == nil {
+		return false
+	}
+	return *u.ProfileRequired
+}
+
+// GetSAMLMapping returns the SAMLMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetSAMLMapping() []string {
+	if u == nil || u.SAMLMapping == nil {
+		return nil
+	}
+	return *u.SAMLMapping
+}
+
+// GetSCIMMapping returns the SCIMMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserAttributes) GetSCIMMapping() string {
+	if u == nil || u.SCIMMapping == nil {
+		return ""
+	}
+	return *u.SCIMMapping
+}
+
+// String returns a string representation of UserAttributeProfileUserAttributes.
+func (u *UserAttributeProfileUserAttributes) String() string {
+	return Stringify(u)
+}
+
+// GetOIDCMapping returns the OIDCMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserID) GetOIDCMapping() string {
+	if u == nil || u.OIDCMapping == nil {
+		return ""
+	}
+	return *u.OIDCMapping
+}
+
+// GetSAMLMapping returns the SAMLMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserID) GetSAMLMapping() []string {
+	if u == nil || u.SAMLMapping == nil {
+		return nil
+	}
+	return *u.SAMLMapping
+}
+
+// GetSCIMMapping returns the SCIMMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributeProfileUserID) GetSCIMMapping() string {
+	if u == nil || u.SCIMMapping == nil {
+		return ""
+	}
+	return *u.SCIMMapping
+}
+
+// String returns a string representation of UserAttributeProfileUserID.
+func (u *UserAttributeProfileUserID) String() string {
+	return Stringify(u)
+}
+
+// GetOIDCMapping returns the OIDCMapping field.
+func (u *UserAttributesStrategyOverride) GetOIDCMapping() *UserAttributeProfileOIDCMapping {
+	if u == nil {
+		return nil
+	}
+	return u.OIDCMapping
+}
+
+// GetSAMLMapping returns the SAMLMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributesStrategyOverride) GetSAMLMapping() []string {
+	if u == nil || u.SAMLMapping == nil {
+		return nil
+	}
+	return *u.SAMLMapping
+}
+
+// GetSCIMMapping returns the SCIMMapping field if it's non-nil, zero value otherwise.
+func (u *UserAttributesStrategyOverride) GetSCIMMapping() string {
+	if u == nil || u.SCIMMapping == nil {
+		return ""
+	}
+	return *u.SCIMMapping
+}
+
+// String returns a string representation of UserAttributesStrategyOverride.
+func (u *UserAttributesStrategyOverride) String() string {
+	return Stringify(u)
+}
+
 // GetIdentifier returns the Identifier field if it's non-nil, zero value otherwise.
 func (u *UserBlock) GetIdentifier() string {
 	if u == nil || u.Identifier == nil {
@@ -13350,6 +14126,64 @@ func (u *UserBlock) GetIP() string {
 
 // String returns a string representation of UserBlock.
 func (u *UserBlock) String() string {
+	return Stringify(u)
+}
+
+// GetAccessType returns the AccessType field.
+func (u *UserConnectedAccount) GetAccessType() *UserConnectedAccountAccessType {
+	if u == nil {
+		return nil
+	}
+	return u.AccessType
+}
+
+// GetConnection returns the Connection field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetConnection() string {
+	if u == nil || u.Connection == nil {
+		return ""
+	}
+	return *u.Connection
+}
+
+// GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetCreatedAt() time.Time {
+	if u == nil || u.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.CreatedAt
+}
+
+// GetExpiresAt returns the ExpiresAt field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetExpiresAt() time.Time {
+	if u == nil || u.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *u.ExpiresAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+// GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetScopes() []string {
+	if u == nil || u.Scopes == nil {
+		return nil
+	}
+	return *u.Scopes
+}
+
+// String returns a string representation of UserConnectedAccount.
+func (u *UserConnectedAccount) String() string {
+	return Stringify(u)
+}
+
+// String returns a string representation of UserConnectedAccountList.
+func (u *UserConnectedAccountList) String() string {
 	return Stringify(u)
 }
 
@@ -13427,6 +14261,59 @@ func (u *UserEnrollment) GetType() string {
 
 // String returns a string representation of UserEnrollment.
 func (u *UserEnrollment) String() string {
+	return Stringify(u)
+}
+
+// GetConnection returns the Connection field if it's non-nil, zero value otherwise.
+func (u *UserFederatedConnectionsTokenSet) GetConnection() string {
+	if u == nil || u.Connection == nil {
+		return ""
+	}
+	return *u.Connection
+}
+
+// GetExpiresAt returns the ExpiresAt field if it's non-nil, zero value otherwise.
+func (u *UserFederatedConnectionsTokenSet) GetExpiresAt() time.Time {
+	if u == nil || u.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *u.ExpiresAt
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (u *UserFederatedConnectionsTokenSet) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+// GetIssuedAt returns the IssuedAt field if it's non-nil, zero value otherwise.
+func (u *UserFederatedConnectionsTokenSet) GetIssuedAt() time.Time {
+	if u == nil || u.IssuedAt == nil {
+		return time.Time{}
+	}
+	return *u.IssuedAt
+}
+
+// GetLastUsedAt returns the LastUsedAt field if it's non-nil, zero value otherwise.
+func (u *UserFederatedConnectionsTokenSet) GetLastUsedAt() time.Time {
+	if u == nil || u.LastUsedAt == nil {
+		return time.Time{}
+	}
+	return *u.LastUsedAt
+}
+
+// GetScope returns the Scope field if it's non-nil, zero value otherwise.
+func (u *UserFederatedConnectionsTokenSet) GetScope() string {
+	if u == nil || u.Scope == nil {
+		return ""
+	}
+	return *u.Scope
+}
+
+// String returns a string representation of UserFederatedConnectionsTokenSet.
+func (u *UserFederatedConnectionsTokenSet) String() string {
 	return Stringify(u)
 }
 

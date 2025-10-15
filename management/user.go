@@ -450,6 +450,54 @@ type UserRiskAssessmentAssessor struct {
 	Assessors []string `json:"assessors,omitempty"`
 }
 
+// UserFederatedConnectionsTokenSet represents a single active token set issued to a user from a federated connection.
+type UserFederatedConnectionsTokenSet struct {
+	// ID is the unique identifier for the token set.
+	ID *string `json:"id,omitempty"`
+	// Connection is the name of the connection containing the user whose tokens are being managed.
+	Connection *string `json:"connection,omitempty"`
+	// Scope is the scope of the tokens.
+	Scope *string `json:"scope,omitempty"`
+	// ExpiresAt is the expiration time of the tokens.
+	ExpiresAt *time.Time `json:"expires_at,omitempty"`
+	// IssuedAt is the time when the tokens were issued.
+	IssuedAt *time.Time `json:"issued_at,omitempty"`
+	// LastUsedAt is the last time the tokens were used.
+	LastUsedAt *time.Time `json:"last_used_at,omitempty"`
+}
+
+// UserConnectedAccountAccessType represents the access type for a connected account.
+type UserConnectedAccountAccessType string
+
+const (
+	// UserConnectedAccountAccessTypeOffline represents offline access to the connected account.
+	UserConnectedAccountAccessTypeOffline UserConnectedAccountAccessType = "offline"
+)
+
+// UserConnectedAccountList is an envelope struct that is used when calling GetConnectedAccounts().
+//
+// It holds metadata for checkpoint pagination, such as next.
+type UserConnectedAccountList struct {
+	List
+	ConnectedAccounts []*UserConnectedAccount `json:"connected_accounts"`
+}
+
+// UserConnectedAccount represents a single connected account for a user.
+type UserConnectedAccount struct {
+	// ID is the unique identifier for the connected account.
+	ID *string `json:"id,omitempty"`
+	// Connection is the name of the connection associated with the account.
+	Connection *string `json:"connection,omitempty"`
+	// AccessType is the access type for to the connected account.
+	AccessType *UserConnectedAccountAccessType `json:"access_type,omitempty"`
+	// Scopes are the scopes granted for this connected account.
+	Scopes *[]string `json:"scopes,omitempty"`
+	// CreatedAt is the ISO 8601 timestamp when the connected account was created.
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+	// ExpiresAt is the ISO 8601 timestamp when the connected account expires.
+	ExpiresAt *time.Time `json:"expires_at,omitempty"`
+}
+
 // UserManager manages Auth0 User resources.
 type UserManager manager
 
@@ -858,4 +906,26 @@ func (m *UserManager) GetUserLogs(ctx context.Context, userID string, opts ...Re
 func (m *UserManager) ClearRiskAssessmentAssessors(ctx context.Context, userID string, ua *UserRiskAssessmentAssessor, opts ...RequestOption) error {
 	uri := m.management.URI("users", userID, "risk-assessments", "clear")
 	return m.management.Request(ctx, "POST", uri, &ua, opts...)
+}
+
+// ListFederatedConnectionsTokenSets retrieves the active federated connection token sets for a user.
+func (m *UserManager) ListFederatedConnectionsTokenSets(ctx context.Context, userID string, opts ...RequestOption) (ufcts []*UserFederatedConnectionsTokenSet, err error) {
+	uri := m.management.URI("users", userID, "federated-connections-tokensets")
+	err = m.management.Request(ctx, "GET", uri, &ufcts, opts...)
+
+	return
+}
+
+// DeleteFederatedConnectionsTokenSet deletes a specific federated connection token set for a user.
+func (m *UserManager) DeleteFederatedConnectionsTokenSet(ctx context.Context, userID, tokenSetID string, opts ...RequestOption) error {
+	uri := m.management.URI("users", userID, "federated-connections-tokensets", tokenSetID)
+	return m.management.Request(ctx, "DELETE", uri, nil, opts...)
+}
+
+// ListConnectedAccounts retrieves the connected accounts for a user.
+func (m *UserManager) ListConnectedAccounts(ctx context.Context, userID string, opts ...RequestOption) (cal *UserConnectedAccountList, err error) {
+	uri := m.management.URI("users", userID, "connected-accounts")
+	err = m.management.Request(ctx, "GET", uri, &cal, applyListCheckpointDefaults(opts))
+
+	return
 }

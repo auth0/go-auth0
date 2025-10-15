@@ -1,5 +1,29 @@
 # Change Log
 
+## [v1.30.0](https://github.com/auth0/go-auth0/tree/v1.30.0) (2025-10-09)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.29.0...v1.30.0)
+
+**Added**
+- feat: add SSO ticket endpoint to custom domain header whitelist paths [\#615](https://github.com/auth0/go-auth0/pull/615) ([developerkunal](https://github.com/developerkunal))
+- feat: support connection purpose configuration options [\#602](https://github.com/auth0/go-auth0/pull/602) ([developerkunal](https://github.com/developerkunal))
+
+## [v1.29.0](https://github.com/auth0/go-auth0/tree/v1.29.0) (2025-09-29)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.28.0...v1.29.0)
+
+**Added**
+- feat(user): add `UserConnectedAccountList` type and `ListConnectedAccounts` method [\#611](https://github.com/auth0/go-auth0/pull/611) ([developerkunal](https://github.com/developerkunal))
+- feat: self-service SSO user attribute profile updates [\#610](https://github.com/auth0/go-auth0/pull/610) ([ewanharris](https://github.com/ewanharris))
+- feat: add SkipNonVerifiableCallbackURIConfirmationPrompt to Tenant and Client for custom URI schemes [\#609](https://github.com/auth0/go-auth0/pull/609) ([developerkunal](https://github.com/developerkunal))
+- fix: Added `unique` attribute to schema for ConnectionOptionsEmailAttribute [\#607](https://github.com/auth0/go-auth0/pull/607) ([duedares-rvj](https://github.com/duedares-rvj))
+- feat(oidc): add `oidc_metadata` field to connection options and update tests [\#606](https://github.com/auth0/go-auth0/pull/606) ([developerkunal](https://github.com/developerkunal))
+
+## [v1.28.0](https://github.com/auth0/go-auth0/tree/v1.28.0) (2025-09-09)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.27.0...v1.28.0)
+
+**Added**
+- feat: Events - Support for Test, Delivery, Redelivery and Stats [\#580](https://github.com/auth0/go-auth0/pull/580) ([duedares-rvj](https://github.com/duedares-rvj))
+- feat: add Token Vault support, `ResourceServerIdentifier` to Client, and `ClientID` to ResourceServer [\#593](https://github.com/auth0/go-auth0/pull/593) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.27.0](https://github.com/auth0/go-auth0/tree/v1.27.0) (2025-08-29)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.26.0...v1.27.0)
 

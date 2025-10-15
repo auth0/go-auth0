@@ -157,6 +157,22 @@ type Connection struct {
 	// ShowAsButton Display connection as a button.
 	// Enable showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to false.)
 	ShowAsButton *bool `json:"show_as_button,omitempty"`
+
+	// Authentication is used for configuring the purpose of a Connection for login with Universal Login and displaying the connection.
+	Authentication *Authentication `json:"authentication,omitempty"`
+
+	// ConnectedAccounts is used for configuring the purpose of a connection to be used for connected accounts and Token Vault.
+	ConnectedAccounts *ConnectedAccounts `json:"connected_accounts,omitempty"`
+}
+
+// Authentication is used for configuring the purpose of a Connection for login with Universal Login and displaying the connection.
+type Authentication struct {
+	Active *bool `json:"active,omitempty"`
+}
+
+// ConnectedAccounts is used for configuring the purpose of a connection to be used for connected accounts and Token Vault.
+type ConnectedAccounts struct {
+	Active *bool `json:"active,omitempty"`
 }
 
 // ConnectionKey is used to fetch public keys for a connection.
@@ -567,6 +583,7 @@ type ConnectionOptionsEmailAttribute struct {
 	ProfileRequired    *bool                                              `json:"profile_required,omitempty"`
 	Signup             *ConnectionOptionsAttributeSignup                  `json:"signup,omitempty"`
 	VerificationMethod *ConnectionOptionsEmailAttributeVerificationMethod `json:"verification_method,omitempty"`
+	Unique             *bool                                              `json:"unique,omitempty"`
 }
 
 // ConnectionOptionsUsernameAttribute defines configuration settings for username attributes.
@@ -1118,6 +1135,20 @@ type ConnectionOptionsOIDC struct {
 
 	// TokenEndpointAuthSigningAlg specifies the signing algorithm for the token endpoint.
 	TokenEndpointAuthSigningAlg *string `json:"token_endpoint_auth_signing_alg,omitempty"`
+
+	// OIDCMetadata holds additional OIDC provider metadata as defined by the
+	// OpenID Connect Discovery specification. This field is free-form and allows
+	// specifying any valid metadata keys, such as "issuer", "authorization_endpoint",
+	// "token_endpoint", or "jwks_uri". See the OIDC Discovery spec for the complete list:
+	// https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
+	//
+	// Example:
+	//  conn.Options.OIDCMetadata = map[string]interface{}{
+	//      "issuer":                 "https://example.com/",
+	//      "authorization_endpoint": "https://example.com/authorize",
+	//      "jwks_uri":               "https://example.com/.well-known/jwks.json",
+	//  }
+	OIDCMetadata map[string]interface{} `json:"oidc_metadata,omitempty"`
 }
 
 // ConnectionOptionsOIDCConnectionSettings contains PKCE configuration for the connection.

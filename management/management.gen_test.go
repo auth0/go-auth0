@@ -599,6 +599,24 @@ func TestActionVersionList_String(t *testing.T) {
 	}
 }
 
+func TestAuthentication_GetActive(tt *testing.T) {
+	var zeroValue bool
+	a := &Authentication{Active: &zeroValue}
+	a.GetActive()
+	a = &Authentication{}
+	a.GetActive()
+	a = nil
+	a.GetActive()
+}
+
+func TestAuthentication_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &Authentication{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestAuthenticationMethod_GetAuthenticationMethods(tt *testing.T) {
 	var zeroValue []AuthenticationMethodReference
 	a := &AuthenticationMethod{AuthenticationMethods: &zeroValue}
@@ -1949,6 +1967,44 @@ func TestBruteForceProtection_String(t *testing.T) {
 	}
 }
 
+func TestBulkRedeliverRequest_GetDateFrom(tt *testing.T) {
+	var zeroValue string
+	b := &BulkRedeliverRequest{DateFrom: &zeroValue}
+	b.GetDateFrom()
+	b = &BulkRedeliverRequest{}
+	b.GetDateFrom()
+	b = nil
+	b.GetDateFrom()
+}
+
+func TestBulkRedeliverRequest_GetDateTo(tt *testing.T) {
+	var zeroValue string
+	b := &BulkRedeliverRequest{DateTo: &zeroValue}
+	b.GetDateTo()
+	b = &BulkRedeliverRequest{}
+	b.GetDateTo()
+	b = nil
+	b.GetDateTo()
+}
+
+func TestBulkRedeliverRequest_GetEventTypes(tt *testing.T) {
+	var zeroValue []string
+	b := &BulkRedeliverRequest{EventTypes: &zeroValue}
+	b.GetEventTypes()
+	b = &BulkRedeliverRequest{}
+	b.GetEventTypes()
+	b = nil
+	b.GetEventTypes()
+}
+
+func TestBulkRedeliverRequest_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BulkRedeliverRequest{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestClient_GetAddons(tt *testing.T) {
 	c := &Client{}
 	c.GetAddons()
@@ -2302,6 +2358,16 @@ func TestClient_GetRequirePushedAuthorizationRequests(tt *testing.T) {
 	c.GetRequirePushedAuthorizationRequests()
 }
 
+func TestClient_GetResourceServerIdentifier(tt *testing.T) {
+	var zeroValue string
+	c := &Client{ResourceServerIdentifier: &zeroValue}
+	c.GetResourceServerIdentifier()
+	c = &Client{}
+	c.GetResourceServerIdentifier()
+	c = nil
+	c.GetResourceServerIdentifier()
+}
+
 func TestClient_GetSessionTransfer(tt *testing.T) {
 	c := &Client{}
 	c.GetSessionTransfer()
@@ -2314,6 +2380,16 @@ func TestClient_GetSignedRequestObject(tt *testing.T) {
 	c.GetSignedRequestObject()
 	c = nil
 	c.GetSignedRequestObject()
+}
+
+func TestClient_GetSkipNonVerifiableCallbackURIConfirmationPrompt(tt *testing.T) {
+	var zeroValue bool
+	c := &Client{SkipNonVerifiableCallbackURIConfirmationPrompt: &zeroValue}
+	c.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+	c = &Client{}
+	c.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+	c = nil
+	c.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
 }
 
 func TestClient_GetSSO(tt *testing.T) {
@@ -3099,6 +3175,38 @@ func TestConcurClientAddon_String(t *testing.T) {
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
+}
+
+func TestConnectedAccounts_GetActive(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectedAccounts{Active: &zeroValue}
+	c.GetActive()
+	c = &ConnectedAccounts{}
+	c.GetActive()
+	c = nil
+	c.GetActive()
+}
+
+func TestConnectedAccounts_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectedAccounts{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnection_GetAuthentication(tt *testing.T) {
+	c := &Connection{}
+	c.GetAuthentication()
+	c = nil
+	c.GetAuthentication()
+}
+
+func TestConnection_GetConnectedAccounts(tt *testing.T) {
+	c := &Connection{}
+	c.GetConnectedAccounts()
+	c = nil
+	c.GetConnectedAccounts()
 }
 
 func TestConnection_GetDisplayName(tt *testing.T) {
@@ -4757,6 +4865,16 @@ func TestConnectionOptionsEmailAttribute_GetSignup(tt *testing.T) {
 	c.GetSignup()
 	c = nil
 	c.GetSignup()
+}
+
+func TestConnectionOptionsEmailAttribute_GetUnique(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsEmailAttribute{Unique: &zeroValue}
+	c.GetUnique()
+	c = &ConnectionOptionsEmailAttribute{}
+	c.GetUnique()
+	c = nil
+	c.GetUnique()
 }
 
 func TestConnectionOptionsEmailAttribute_GetVerificationMethod(tt *testing.T) {
@@ -6482,6 +6600,16 @@ func TestConnectionOptionsOIDC_GetNonPersistentAttrs(tt *testing.T) {
 	c.GetNonPersistentAttrs()
 	c = nil
 	c.GetNonPersistentAttrs()
+}
+
+func TestConnectionOptionsOIDC_GetOIDCMetadata(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsOIDC{OIDCMetadata: zeroValue}
+	c.GetOIDCMetadata()
+	c = &ConnectionOptionsOIDC{}
+	c.GetOIDCMetadata()
+	c = nil
+	c.GetOIDCMetadata()
 }
 
 func TestConnectionOptionsOIDC_GetScope(tt *testing.T) {
@@ -8729,6 +8857,152 @@ func TestDailyStat_String(t *testing.T) {
 	}
 }
 
+func TestDeliveryAttempt_GetDuration(tt *testing.T) {
+	var zeroValue float64
+	d := &DeliveryAttempt{Duration: &zeroValue}
+	d.GetDuration()
+	d = &DeliveryAttempt{}
+	d.GetDuration()
+	d = nil
+	d.GetDuration()
+}
+
+func TestDeliveryAttempt_GetErrorMessage(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryAttempt{ErrorMessage: &zeroValue}
+	d.GetErrorMessage()
+	d = &DeliveryAttempt{}
+	d.GetErrorMessage()
+	d = nil
+	d.GetErrorMessage()
+}
+
+func TestDeliveryAttempt_GetStatus(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryAttempt{Status: &zeroValue}
+	d.GetStatus()
+	d = &DeliveryAttempt{}
+	d.GetStatus()
+	d = nil
+	d.GetStatus()
+}
+
+func TestDeliveryAttempt_GetTimestamp(tt *testing.T) {
+	var zeroValue time.Time
+	d := &DeliveryAttempt{Timestamp: &zeroValue}
+	d.GetTimestamp()
+	d = &DeliveryAttempt{}
+	d.GetTimestamp()
+	d = nil
+	d.GetTimestamp()
+}
+
+func TestDeliveryAttempt_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &DeliveryAttempt{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestDeliveryEvent_GetA0Purpose(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{A0Purpose: &zeroValue}
+	d.GetA0Purpose()
+	d = &DeliveryEvent{}
+	d.GetA0Purpose()
+	d = nil
+	d.GetA0Purpose()
+}
+
+func TestDeliveryEvent_GetA0Stream(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{A0Stream: &zeroValue}
+	d.GetA0Stream()
+	d = &DeliveryEvent{}
+	d.GetA0Stream()
+	d = nil
+	d.GetA0Stream()
+}
+
+func TestDeliveryEvent_GetA0Tenant(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{A0Tenant: &zeroValue}
+	d.GetA0Tenant()
+	d = &DeliveryEvent{}
+	d.GetA0Tenant()
+	d = nil
+	d.GetA0Tenant()
+}
+
+func TestDeliveryEvent_GetData(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	d := &DeliveryEvent{Data: zeroValue}
+	d.GetData()
+	d = &DeliveryEvent{}
+	d.GetData()
+	d = nil
+	d.GetData()
+}
+
+func TestDeliveryEvent_GetID(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{ID: &zeroValue}
+	d.GetID()
+	d = &DeliveryEvent{}
+	d.GetID()
+	d = nil
+	d.GetID()
+}
+
+func TestDeliveryEvent_GetSource(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{Source: &zeroValue}
+	d.GetSource()
+	d = &DeliveryEvent{}
+	d.GetSource()
+	d = nil
+	d.GetSource()
+}
+
+func TestDeliveryEvent_GetSpecVersion(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{SpecVersion: &zeroValue}
+	d.GetSpecVersion()
+	d = &DeliveryEvent{}
+	d.GetSpecVersion()
+	d = nil
+	d.GetSpecVersion()
+}
+
+func TestDeliveryEvent_GetTime(tt *testing.T) {
+	var zeroValue time.Time
+	d := &DeliveryEvent{Time: &zeroValue}
+	d.GetTime()
+	d = &DeliveryEvent{}
+	d.GetTime()
+	d = nil
+	d.GetTime()
+}
+
+func TestDeliveryEvent_GetType(tt *testing.T) {
+	var zeroValue string
+	d := &DeliveryEvent{Type: &zeroValue}
+	d.GetType()
+	d = &DeliveryEvent{}
+	d.GetType()
+	d = nil
+	d.GetType()
+}
+
+func TestDeliveryEvent_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &DeliveryEvent{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestDeviceCredential_GetClientID(tt *testing.T) {
 	var zeroValue string
 	d := &DeviceCredential{ClientID: &zeroValue}
@@ -9528,6 +9802,127 @@ func TestEnrollmentTicket_String(t *testing.T) {
 	}
 }
 
+func TestEventDelivery_GetEvent(tt *testing.T) {
+	e := &EventDelivery{}
+	e.GetEvent()
+	e = nil
+	e.GetEvent()
+}
+
+func TestEventDelivery_GetEventStreamID(tt *testing.T) {
+	var zeroValue string
+	e := &EventDelivery{EventStreamID: &zeroValue}
+	e.GetEventStreamID()
+	e = &EventDelivery{}
+	e.GetEventStreamID()
+	e = nil
+	e.GetEventStreamID()
+}
+
+func TestEventDelivery_GetEventType(tt *testing.T) {
+	var zeroValue string
+	e := &EventDelivery{EventType: &zeroValue}
+	e.GetEventType()
+	e = &EventDelivery{}
+	e.GetEventType()
+	e = nil
+	e.GetEventType()
+}
+
+func TestEventDelivery_GetID(tt *testing.T) {
+	var zeroValue string
+	e := &EventDelivery{ID: &zeroValue}
+	e.GetID()
+	e = &EventDelivery{}
+	e.GetID()
+	e = nil
+	e.GetID()
+}
+
+func TestEventDelivery_GetStatus(tt *testing.T) {
+	var zeroValue string
+	e := &EventDelivery{Status: &zeroValue}
+	e.GetStatus()
+	e = &EventDelivery{}
+	e.GetStatus()
+	e = nil
+	e.GetStatus()
+}
+
+func TestEventDelivery_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventDelivery{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventDeliveryList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventDeliveryList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventDeliveryListQueryParams_GetDateFrom(tt *testing.T) {
+	var zeroValue time.Time
+	e := &EventDeliveryListQueryParams{DateFrom: &zeroValue}
+	e.GetDateFrom()
+	e = &EventDeliveryListQueryParams{}
+	e.GetDateFrom()
+	e = nil
+	e.GetDateFrom()
+}
+
+func TestEventDeliveryListQueryParams_GetDateTo(tt *testing.T) {
+	var zeroValue time.Time
+	e := &EventDeliveryListQueryParams{DateTo: &zeroValue}
+	e.GetDateTo()
+	e = &EventDeliveryListQueryParams{}
+	e.GetDateTo()
+	e = nil
+	e.GetDateTo()
+}
+
+func TestEventDeliveryListQueryParams_GetEventTypes(tt *testing.T) {
+	var zeroValue []string
+	e := &EventDeliveryListQueryParams{EventTypes: &zeroValue}
+	e.GetEventTypes()
+	e = &EventDeliveryListQueryParams{}
+	e.GetEventTypes()
+	e = nil
+	e.GetEventTypes()
+}
+
+func TestEventDeliveryListQueryParams_GetFrom(tt *testing.T) {
+	var zeroValue string
+	e := &EventDeliveryListQueryParams{From: &zeroValue}
+	e.GetFrom()
+	e = &EventDeliveryListQueryParams{}
+	e.GetFrom()
+	e = nil
+	e.GetFrom()
+}
+
+func TestEventDeliveryListQueryParams_GetTake(tt *testing.T) {
+	var zeroValue int
+	e := &EventDeliveryListQueryParams{Take: &zeroValue}
+	e.GetTake()
+	e = &EventDeliveryListQueryParams{}
+	e.GetTake()
+	e = nil
+	e.GetTake()
+}
+
+func TestEventDeliveryListQueryParams_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventDeliveryListQueryParams{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestEventStream_GetCreatedAt(tt *testing.T) {
 	var zeroValue time.Time
 	e := &EventStream{CreatedAt: &zeroValue}
@@ -9634,6 +10029,41 @@ func TestEventStreamDestination_String(t *testing.T) {
 func TestEventStreamList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &EventStreamList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventStreamStats_GetID(tt *testing.T) {
+	var zeroValue string
+	e := &EventStreamStats{ID: &zeroValue}
+	e.GetID()
+	e = &EventStreamStats{}
+	e.GetID()
+	e = nil
+	e.GetID()
+}
+
+func TestEventStreamStats_GetName(tt *testing.T) {
+	var zeroValue string
+	e := &EventStreamStats{Name: &zeroValue}
+	e.GetName()
+	e = &EventStreamStats{}
+	e.GetName()
+	e = nil
+	e.GetName()
+}
+
+func TestEventStreamStats_GetWindow(tt *testing.T) {
+	e := &EventStreamStats{}
+	e.GetWindow()
+	e = nil
+	e.GetWindow()
+}
+
+func TestEventStreamStats_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventStreamStats{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -13119,6 +13549,16 @@ func TestResourceServer_GetAuthorizationDetails(tt *testing.T) {
 	r.GetAuthorizationDetails()
 }
 
+func TestResourceServer_GetClientID(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServer{ClientID: &zeroValue}
+	r.GetClientID()
+	r = &ResourceServer{}
+	r.GetClientID()
+	r = nil
+	r.GetClientID()
+}
+
 func TestResourceServer_GetConsentPolicy(tt *testing.T) {
 	var zeroValue string
 	r := &ResourceServer{ConsentPolicy: &zeroValue}
@@ -14417,6 +14857,16 @@ func TestSelfServiceProfile_GetUpdatedAt(tt *testing.T) {
 	s.GetUpdatedAt()
 }
 
+func TestSelfServiceProfile_GetUserAttributeProfileID(tt *testing.T) {
+	var zeroValue string
+	s := &SelfServiceProfile{UserAttributeProfileID: &zeroValue}
+	s.GetUserAttributeProfileID()
+	s = &SelfServiceProfile{}
+	s.GetUserAttributeProfileID()
+	s = nil
+	s.GetUserAttributeProfileID()
+}
+
 func TestSelfServiceProfile_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SelfServiceProfile{}
@@ -14465,6 +14915,13 @@ func TestSelfServiceProfileTicket_GetEnabledClients(tt *testing.T) {
 	s.GetEnabledClients()
 	s = nil
 	s.GetEnabledClients()
+}
+
+func TestSelfServiceProfileTicket_GetProvisioningConfig(tt *testing.T) {
+	s := &SelfServiceProfileTicket{}
+	s.GetProvisioningConfig()
+	s = nil
+	s.GetProvisioningConfig()
 }
 
 func TestSelfServiceProfileTicket_GetTicket(tt *testing.T) {
@@ -14684,6 +15141,34 @@ func TestSelfServiceProfileTicketEnabledOrganizations_GetShowAsButton(tt *testin
 func TestSelfServiceProfileTicketEnabledOrganizations_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SelfServiceProfileTicketEnabledOrganizations{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSelfServiceProfileTicketProvisioningConfig_GetScopes(tt *testing.T) {
+	var zeroValue []string
+	s := &SelfServiceProfileTicketProvisioningConfig{Scopes: &zeroValue}
+	s.GetScopes()
+	s = &SelfServiceProfileTicketProvisioningConfig{}
+	s.GetScopes()
+	s = nil
+	s.GetScopes()
+}
+
+func TestSelfServiceProfileTicketProvisioningConfig_GetTokenLifetime(tt *testing.T) {
+	var zeroValue int
+	s := &SelfServiceProfileTicketProvisioningConfig{TokenLifetime: &zeroValue}
+	s.GetTokenLifetime()
+	s = &SelfServiceProfileTicketProvisioningConfig{}
+	s.GetTokenLifetime()
+	s = nil
+	s.GetTokenLifetime()
+}
+
+func TestSelfServiceProfileTicketProvisioningConfig_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SelfServiceProfileTicketProvisioningConfig{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -15317,6 +15802,97 @@ func TestStage_String(t *testing.T) {
 	}
 }
 
+func TestStatsInterval_GetScaleFactor(tt *testing.T) {
+	var zeroValue int
+	s := &StatsInterval{ScaleFactor: &zeroValue}
+	s.GetScaleFactor()
+	s = &StatsInterval{}
+	s.GetScaleFactor()
+	s = nil
+	s.GetScaleFactor()
+}
+
+func TestStatsInterval_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &StatsInterval{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestStatsMetric_GetName(tt *testing.T) {
+	var zeroValue string
+	s := &StatsMetric{Name: &zeroValue}
+	s.GetName()
+	s = &StatsMetric{}
+	s.GetName()
+	s = nil
+	s.GetName()
+}
+
+func TestStatsMetric_GetType(tt *testing.T) {
+	var zeroValue string
+	s := &StatsMetric{Type: &zeroValue}
+	s.GetType()
+	s = &StatsMetric{}
+	s.GetType()
+	s = nil
+	s.GetType()
+}
+
+func TestStatsMetric_GetWindowTotal(tt *testing.T) {
+	var zeroValue int
+	s := &StatsMetric{WindowTotal: &zeroValue}
+	s.GetWindowTotal()
+	s = &StatsMetric{}
+	s.GetWindowTotal()
+	s = nil
+	s.GetWindowTotal()
+}
+
+func TestStatsMetric_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &StatsMetric{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestStatsWindow_GetBucketInterval(tt *testing.T) {
+	s := &StatsWindow{}
+	s.GetBucketInterval()
+	s = nil
+	s.GetBucketInterval()
+}
+
+func TestStatsWindow_GetDateFrom(tt *testing.T) {
+	var zeroValue time.Time
+	s := &StatsWindow{DateFrom: &zeroValue}
+	s.GetDateFrom()
+	s = &StatsWindow{}
+	s.GetDateFrom()
+	s = nil
+	s.GetDateFrom()
+}
+
+func TestStatsWindow_GetDateTo(tt *testing.T) {
+	var zeroValue time.Time
+	s := &StatsWindow{DateTo: &zeroValue}
+	s.GetDateTo()
+	s = &StatsWindow{}
+	s.GetDateTo()
+	s = nil
+	s.GetDateTo()
+}
+
+func TestStatsWindow_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &StatsWindow{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestSuspiciousIPThrottling_GetAllowList(tt *testing.T) {
 	var zeroValue []string
 	s := &SuspiciousIPThrottling{AllowList: &zeroValue}
@@ -15580,6 +16156,16 @@ func TestTenant_GetSessions(tt *testing.T) {
 	t.GetSessions()
 	t = nil
 	t.GetSessions()
+}
+
+func TestTenant_GetSkipNonVerifiableCallbackURIConfirmationPrompt(tt *testing.T) {
+	var zeroValue bool
+	t := &Tenant{SkipNonVerifiableCallbackURIConfirmationPrompt: &zeroValue}
+	t.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+	t = &Tenant{}
+	t.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
+	t = nil
+	t.GetSkipNonVerifiableCallbackURIConfirmationPrompt()
 }
 
 func TestTenant_GetSupportEmail(tt *testing.T) {
@@ -16171,6 +16757,71 @@ func TestTenantUniversalLoginColors_String(t *testing.T) {
 	}
 }
 
+func TestTestEvent_GetData(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	t := &TestEvent{Data: zeroValue}
+	t.GetData()
+	t = &TestEvent{}
+	t.GetData()
+	t = nil
+	t.GetData()
+}
+
+func TestTestEvent_GetEvent(tt *testing.T) {
+	t := &TestEvent{}
+	t.GetEvent()
+	t = nil
+	t.GetEvent()
+}
+
+func TestTestEvent_GetEventStreamID(tt *testing.T) {
+	var zeroValue string
+	t := &TestEvent{EventStreamID: &zeroValue}
+	t.GetEventStreamID()
+	t = &TestEvent{}
+	t.GetEventStreamID()
+	t = nil
+	t.GetEventStreamID()
+}
+
+func TestTestEvent_GetEventType(tt *testing.T) {
+	var zeroValue string
+	t := &TestEvent{EventType: &zeroValue}
+	t.GetEventType()
+	t = &TestEvent{}
+	t.GetEventType()
+	t = nil
+	t.GetEventType()
+}
+
+func TestTestEvent_GetID(tt *testing.T) {
+	var zeroValue string
+	t := &TestEvent{ID: &zeroValue}
+	t.GetID()
+	t = &TestEvent{}
+	t.GetID()
+	t = nil
+	t.GetID()
+}
+
+func TestTestEvent_GetStatus(tt *testing.T) {
+	var zeroValue string
+	t := &TestEvent{Status: &zeroValue}
+	t.GetStatus()
+	t = &TestEvent{}
+	t.GetStatus()
+	t = nil
+	t.GetStatus()
+}
+
+func TestTestEvent_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TestEvent{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestTicket_GetClientID(tt *testing.T) {
 	var zeroValue string
 	t := &Ticket{ClientID: &zeroValue}
@@ -16734,6 +17385,331 @@ func TestUser_String(t *testing.T) {
 	}
 }
 
+func TestUserAttributeProfile_GetID(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfile{ID: &zeroValue}
+	u.GetID()
+	u = &UserAttributeProfile{}
+	u.GetID()
+	u = nil
+	u.GetID()
+}
+
+func TestUserAttributeProfile_GetName(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfile{Name: &zeroValue}
+	u.GetName()
+	u = &UserAttributeProfile{}
+	u.GetName()
+	u = nil
+	u.GetName()
+}
+
+func TestUserAttributeProfile_GetUserID(tt *testing.T) {
+	u := &UserAttributeProfile{}
+	u.GetUserID()
+	u = nil
+	u.GetUserID()
+}
+
+func TestUserAttributeProfile_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfile{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileOIDCMapping_GetDisplayName(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileOIDCMapping{DisplayName: &zeroValue}
+	u.GetDisplayName()
+	u = &UserAttributeProfileOIDCMapping{}
+	u.GetDisplayName()
+	u = nil
+	u.GetDisplayName()
+}
+
+func TestUserAttributeProfileOIDCMapping_GetMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileOIDCMapping{Mapping: &zeroValue}
+	u.GetMapping()
+	u = &UserAttributeProfileOIDCMapping{}
+	u.GetMapping()
+	u = nil
+	u.GetMapping()
+}
+
+func TestUserAttributeProfileOIDCMapping_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileOIDCMapping{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileStrategyOverrides_GetOIDCMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileStrategyOverrides{OIDCMapping: &zeroValue}
+	u.GetOIDCMapping()
+	u = &UserAttributeProfileStrategyOverrides{}
+	u.GetOIDCMapping()
+	u = nil
+	u.GetOIDCMapping()
+}
+
+func TestUserAttributeProfileStrategyOverrides_GetSAMLMapping(tt *testing.T) {
+	var zeroValue []string
+	u := &UserAttributeProfileStrategyOverrides{SAMLMapping: &zeroValue}
+	u.GetSAMLMapping()
+	u = &UserAttributeProfileStrategyOverrides{}
+	u.GetSAMLMapping()
+	u = nil
+	u.GetSAMLMapping()
+}
+
+func TestUserAttributeProfileStrategyOverrides_GetSCIMMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileStrategyOverrides{SCIMMapping: &zeroValue}
+	u.GetSCIMMapping()
+	u = &UserAttributeProfileStrategyOverrides{}
+	u.GetSCIMMapping()
+	u = nil
+	u.GetSCIMMapping()
+}
+
+func TestUserAttributeProfileStrategyOverrides_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileStrategyOverrides{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileTemplate_GetName(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileTemplate{Name: &zeroValue}
+	u.GetName()
+	u = &UserAttributeProfileTemplate{}
+	u.GetName()
+	u = nil
+	u.GetName()
+}
+
+func TestUserAttributeProfileTemplate_GetUserID(tt *testing.T) {
+	u := &UserAttributeProfileTemplate{}
+	u.GetUserID()
+	u = nil
+	u.GetUserID()
+}
+
+func TestUserAttributeProfileTemplate_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileTemplate{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileTemplateItem_GetDisplayName(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileTemplateItem{DisplayName: &zeroValue}
+	u.GetDisplayName()
+	u = &UserAttributeProfileTemplateItem{}
+	u.GetDisplayName()
+	u = nil
+	u.GetDisplayName()
+}
+
+func TestUserAttributeProfileTemplateItem_GetID(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileTemplateItem{ID: &zeroValue}
+	u.GetID()
+	u = &UserAttributeProfileTemplateItem{}
+	u.GetID()
+	u = nil
+	u.GetID()
+}
+
+func TestUserAttributeProfileTemplateItem_GetTemplate(tt *testing.T) {
+	u := &UserAttributeProfileTemplateItem{}
+	u.GetTemplate()
+	u = nil
+	u.GetTemplate()
+}
+
+func TestUserAttributeProfileTemplateItem_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileTemplateItem{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileTemplateList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileTemplateList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileUserAttributes_GetAuth0Mapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileUserAttributes{Auth0Mapping: &zeroValue}
+	u.GetAuth0Mapping()
+	u = &UserAttributeProfileUserAttributes{}
+	u.GetAuth0Mapping()
+	u = nil
+	u.GetAuth0Mapping()
+}
+
+func TestUserAttributeProfileUserAttributes_GetDescription(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileUserAttributes{Description: &zeroValue}
+	u.GetDescription()
+	u = &UserAttributeProfileUserAttributes{}
+	u.GetDescription()
+	u = nil
+	u.GetDescription()
+}
+
+func TestUserAttributeProfileUserAttributes_GetLabel(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileUserAttributes{Label: &zeroValue}
+	u.GetLabel()
+	u = &UserAttributeProfileUserAttributes{}
+	u.GetLabel()
+	u = nil
+	u.GetLabel()
+}
+
+func TestUserAttributeProfileUserAttributes_GetOIDCMapping(tt *testing.T) {
+	u := &UserAttributeProfileUserAttributes{}
+	u.GetOIDCMapping()
+	u = nil
+	u.GetOIDCMapping()
+}
+
+func TestUserAttributeProfileUserAttributes_GetProfileRequired(tt *testing.T) {
+	var zeroValue bool
+	u := &UserAttributeProfileUserAttributes{ProfileRequired: &zeroValue}
+	u.GetProfileRequired()
+	u = &UserAttributeProfileUserAttributes{}
+	u.GetProfileRequired()
+	u = nil
+	u.GetProfileRequired()
+}
+
+func TestUserAttributeProfileUserAttributes_GetSAMLMapping(tt *testing.T) {
+	var zeroValue []string
+	u := &UserAttributeProfileUserAttributes{SAMLMapping: &zeroValue}
+	u.GetSAMLMapping()
+	u = &UserAttributeProfileUserAttributes{}
+	u.GetSAMLMapping()
+	u = nil
+	u.GetSAMLMapping()
+}
+
+func TestUserAttributeProfileUserAttributes_GetSCIMMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileUserAttributes{SCIMMapping: &zeroValue}
+	u.GetSCIMMapping()
+	u = &UserAttributeProfileUserAttributes{}
+	u.GetSCIMMapping()
+	u = nil
+	u.GetSCIMMapping()
+}
+
+func TestUserAttributeProfileUserAttributes_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileUserAttributes{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributeProfileUserID_GetOIDCMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileUserID{OIDCMapping: &zeroValue}
+	u.GetOIDCMapping()
+	u = &UserAttributeProfileUserID{}
+	u.GetOIDCMapping()
+	u = nil
+	u.GetOIDCMapping()
+}
+
+func TestUserAttributeProfileUserID_GetSAMLMapping(tt *testing.T) {
+	var zeroValue []string
+	u := &UserAttributeProfileUserID{SAMLMapping: &zeroValue}
+	u.GetSAMLMapping()
+	u = &UserAttributeProfileUserID{}
+	u.GetSAMLMapping()
+	u = nil
+	u.GetSAMLMapping()
+}
+
+func TestUserAttributeProfileUserID_GetSCIMMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributeProfileUserID{SCIMMapping: &zeroValue}
+	u.GetSCIMMapping()
+	u = &UserAttributeProfileUserID{}
+	u.GetSCIMMapping()
+	u = nil
+	u.GetSCIMMapping()
+}
+
+func TestUserAttributeProfileUserID_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributeProfileUserID{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserAttributesStrategyOverride_GetOIDCMapping(tt *testing.T) {
+	u := &UserAttributesStrategyOverride{}
+	u.GetOIDCMapping()
+	u = nil
+	u.GetOIDCMapping()
+}
+
+func TestUserAttributesStrategyOverride_GetSAMLMapping(tt *testing.T) {
+	var zeroValue []string
+	u := &UserAttributesStrategyOverride{SAMLMapping: &zeroValue}
+	u.GetSAMLMapping()
+	u = &UserAttributesStrategyOverride{}
+	u.GetSAMLMapping()
+	u = nil
+	u.GetSAMLMapping()
+}
+
+func TestUserAttributesStrategyOverride_GetSCIMMapping(tt *testing.T) {
+	var zeroValue string
+	u := &UserAttributesStrategyOverride{SCIMMapping: &zeroValue}
+	u.GetSCIMMapping()
+	u = &UserAttributesStrategyOverride{}
+	u.GetSCIMMapping()
+	u = nil
+	u.GetSCIMMapping()
+}
+
+func TestUserAttributesStrategyOverride_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserAttributesStrategyOverride{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestUserBlock_GetIdentifier(tt *testing.T) {
 	var zeroValue string
 	u := &UserBlock{Identifier: &zeroValue}
@@ -16757,6 +17733,79 @@ func TestUserBlock_GetIP(tt *testing.T) {
 func TestUserBlock_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &UserBlock{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserConnectedAccount_GetAccessType(tt *testing.T) {
+	u := &UserConnectedAccount{}
+	u.GetAccessType()
+	u = nil
+	u.GetAccessType()
+}
+
+func TestUserConnectedAccount_GetConnection(tt *testing.T) {
+	var zeroValue string
+	u := &UserConnectedAccount{Connection: &zeroValue}
+	u.GetConnection()
+	u = &UserConnectedAccount{}
+	u.GetConnection()
+	u = nil
+	u.GetConnection()
+}
+
+func TestUserConnectedAccount_GetCreatedAt(tt *testing.T) {
+	var zeroValue time.Time
+	u := &UserConnectedAccount{CreatedAt: &zeroValue}
+	u.GetCreatedAt()
+	u = &UserConnectedAccount{}
+	u.GetCreatedAt()
+	u = nil
+	u.GetCreatedAt()
+}
+
+func TestUserConnectedAccount_GetExpiresAt(tt *testing.T) {
+	var zeroValue time.Time
+	u := &UserConnectedAccount{ExpiresAt: &zeroValue}
+	u.GetExpiresAt()
+	u = &UserConnectedAccount{}
+	u.GetExpiresAt()
+	u = nil
+	u.GetExpiresAt()
+}
+
+func TestUserConnectedAccount_GetID(tt *testing.T) {
+	var zeroValue string
+	u := &UserConnectedAccount{ID: &zeroValue}
+	u.GetID()
+	u = &UserConnectedAccount{}
+	u.GetID()
+	u = nil
+	u.GetID()
+}
+
+func TestUserConnectedAccount_GetScopes(tt *testing.T) {
+	var zeroValue []string
+	u := &UserConnectedAccount{Scopes: &zeroValue}
+	u.GetScopes()
+	u = &UserConnectedAccount{}
+	u.GetScopes()
+	u = nil
+	u.GetScopes()
+}
+
+func TestUserConnectedAccount_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserConnectedAccount{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserConnectedAccountList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserConnectedAccountList{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -16855,6 +17904,74 @@ func TestUserEnrollment_GetType(tt *testing.T) {
 func TestUserEnrollment_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &UserEnrollment{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestUserFederatedConnectionsTokenSet_GetConnection(tt *testing.T) {
+	var zeroValue string
+	u := &UserFederatedConnectionsTokenSet{Connection: &zeroValue}
+	u.GetConnection()
+	u = &UserFederatedConnectionsTokenSet{}
+	u.GetConnection()
+	u = nil
+	u.GetConnection()
+}
+
+func TestUserFederatedConnectionsTokenSet_GetExpiresAt(tt *testing.T) {
+	var zeroValue time.Time
+	u := &UserFederatedConnectionsTokenSet{ExpiresAt: &zeroValue}
+	u.GetExpiresAt()
+	u = &UserFederatedConnectionsTokenSet{}
+	u.GetExpiresAt()
+	u = nil
+	u.GetExpiresAt()
+}
+
+func TestUserFederatedConnectionsTokenSet_GetID(tt *testing.T) {
+	var zeroValue string
+	u := &UserFederatedConnectionsTokenSet{ID: &zeroValue}
+	u.GetID()
+	u = &UserFederatedConnectionsTokenSet{}
+	u.GetID()
+	u = nil
+	u.GetID()
+}
+
+func TestUserFederatedConnectionsTokenSet_GetIssuedAt(tt *testing.T) {
+	var zeroValue time.Time
+	u := &UserFederatedConnectionsTokenSet{IssuedAt: &zeroValue}
+	u.GetIssuedAt()
+	u = &UserFederatedConnectionsTokenSet{}
+	u.GetIssuedAt()
+	u = nil
+	u.GetIssuedAt()
+}
+
+func TestUserFederatedConnectionsTokenSet_GetLastUsedAt(tt *testing.T) {
+	var zeroValue time.Time
+	u := &UserFederatedConnectionsTokenSet{LastUsedAt: &zeroValue}
+	u.GetLastUsedAt()
+	u = &UserFederatedConnectionsTokenSet{}
+	u.GetLastUsedAt()
+	u = nil
+	u.GetLastUsedAt()
+}
+
+func TestUserFederatedConnectionsTokenSet_GetScope(tt *testing.T) {
+	var zeroValue string
+	u := &UserFederatedConnectionsTokenSet{Scope: &zeroValue}
+	u.GetScope()
+	u = &UserFederatedConnectionsTokenSet{}
+	u.GetScope()
+	u = nil
+	u.GetScope()
+}
+
+func TestUserFederatedConnectionsTokenSet_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &UserFederatedConnectionsTokenSet{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
