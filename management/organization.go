@@ -1,6 +1,9 @@
 package management
 
-import "context"
+import (
+	"context"
+	"errors"
+)
 
 // Organization is used to allow B2B customers to better manage
 // their partners and customers, and to customize the ways that
@@ -213,6 +216,35 @@ type OrganizationMemberList struct {
 type OrganizationList struct {
 	List
 	Organizations []*Organization `json:"organizations"`
+}
+
+// OrganizationDiscoveryDomain represents domains used for Home Realm Discovery.
+type OrganizationDiscoveryDomain struct {
+	// The ID of the Organization Discovery Domain.
+	ID *string `json:"id,omitempty"`
+	// The domain name of the Organization Discovery Domain.
+	Domain *string `json:"domain,omitempty"`
+	// The verification status of the Organization Discovery Domain.
+	// Possible values are "pending" and "verified".
+	Status *string `json:"status,omitempty"`
+	// A unique token generated for the discovery domain.
+	// This must be placed in a DNS TXT record at the location specified by the `VerificationHost` field to prove domain ownership.
+	VerificationTXT *string `json:"verification_txt,omitempty"`
+	// The full domain where the TXT record should be added.
+	VerificationHost *string `json:"verification_host,omitempty"`
+}
+
+// cleanForPatch removes fields that are not allowed to be updated via PATCH.
+func (o *OrganizationDiscoveryDomain) cleanForPatch() *OrganizationDiscoveryDomain {
+	return &OrganizationDiscoveryDomain{
+		Status: o.Status,
+	}
+}
+
+// DiscoveryDomainList is a list of OrganizationDiscoveryDomains.
+type DiscoveryDomainList struct {
+	List
+	Domains []*OrganizationDiscoveryDomain `json:"domains"`
 }
 
 // OrganizationManager is used for managing an Organization.
@@ -445,5 +477,42 @@ func (m *OrganizationManager) AssociateClientGrant(ctx context.Context, id strin
 // RemoveClientGrant removes a client grant from an organization.
 func (m *OrganizationManager) RemoveClientGrant(ctx context.Context, id string, grantID string, opts ...RequestOption) (err error) {
 	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "client-grants", grantID), nil, opts...)
+	return
+}
+
+// DiscoveryDomains retrieves the discovery domains for an organization.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Checkpoint_Pagination
+func (m *OrganizationManager) DiscoveryDomains(ctx context.Context, id string, opts ...RequestOption) (d *DiscoveryDomainList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "discovery-domains"), &d, applyListCheckpointDefaults(opts))
+	return
+}
+
+// CreateDiscoveryDomain creates a discovery domain for an organization.
+func (m *OrganizationManager) CreateDiscoveryDomain(ctx context.Context, id string, d *OrganizationDiscoveryDomain, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "POST", m.management.URI("organizations", id, "discovery-domains"), &d, opts...)
+	return
+}
+
+// DiscoveryDomain retrieves a specific discovery domain for an organization.
+func (m *OrganizationManager) DiscoveryDomain(ctx context.Context, id string, domainID string, opts ...RequestOption) (d *OrganizationDiscoveryDomain, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "discovery-domains", domainID), &d, opts...)
+	return
+}
+
+// DeleteDiscoveryDomain deletes a specific discovery domain from an organization.
+func (m *OrganizationManager) DeleteDiscoveryDomain(ctx context.Context, id string, domainID string, opts ...RequestOption) (err error) {
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "discovery-domains", domainID), nil, opts...)
+	return
+}
+
+// UpdateDiscoveryDomain updates a specific discovery domain for an organization.
+func (m *OrganizationManager) UpdateDiscoveryDomain(ctx context.Context, id string, domainID string, d *OrganizationDiscoveryDomain, opts ...RequestOption) (err error) {
+	if d == nil {
+		return errors.New("organization discovery domain cannot be nil")
+	}
+
+	err = m.management.Request(ctx, "PATCH", m.management.URI("organizations", id, "discovery-domains", domainID), d.cleanForPatch(), opts...)
+
 	return
 }
