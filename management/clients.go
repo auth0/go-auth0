@@ -10,6 +10,28 @@ import (
 	time "time"
 )
 
+type AsyncApprovalNotificationsChannelsEnum string
+
+const (
+	AsyncApprovalNotificationsChannelsEnumGuardianPush AsyncApprovalNotificationsChannelsEnum = "guardian-push"
+	AsyncApprovalNotificationsChannelsEnumEmail        AsyncApprovalNotificationsChannelsEnum = "email"
+)
+
+func NewAsyncApprovalNotificationsChannelsEnumFromString(s string) (AsyncApprovalNotificationsChannelsEnum, error) {
+	switch s {
+	case "guardian-push":
+		return AsyncApprovalNotificationsChannelsEnumGuardianPush, nil
+	case "email":
+		return AsyncApprovalNotificationsChannelsEnumEmail, nil
+	}
+	var t AsyncApprovalNotificationsChannelsEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AsyncApprovalNotificationsChannelsEnum) Ptr() *AsyncApprovalNotificationsChannelsEnum {
+	return &a
+}
+
 var (
 	clientFieldClientID                           = big.NewInt(1 << 0)
 	clientFieldTenant                             = big.NewInt(1 << 1)
@@ -43,22 +65,24 @@ var (
 	clientFieldFormTemplate                       = big.NewInt(1 << 29)
 	clientFieldAddons                             = big.NewInt(1 << 30)
 	clientFieldTokenEndpointAuthMethod            = big.NewInt(1 << 31)
-	clientFieldClientMetadata                     = big.NewInt(1 << 32)
-	clientFieldMobile                             = big.NewInt(1 << 33)
-	clientFieldInitiateLoginURI                   = big.NewInt(1 << 34)
-	clientFieldRefreshToken                       = big.NewInt(1 << 35)
-	clientFieldDefaultOrganization                = big.NewInt(1 << 36)
-	clientFieldOrganizationUsage                  = big.NewInt(1 << 37)
-	clientFieldOrganizationRequireBehavior        = big.NewInt(1 << 38)
-	clientFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 39)
-	clientFieldClientAuthenticationMethods        = big.NewInt(1 << 40)
-	clientFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 41)
-	clientFieldRequireProofOfPossession           = big.NewInt(1 << 42)
-	clientFieldSignedRequestObject                = big.NewInt(1 << 43)
-	clientFieldComplianceLevel                    = big.NewInt(1 << 44)
-	clientFieldParRequestExpiry                   = big.NewInt(1 << 45)
-	clientFieldTokenQuota                         = big.NewInt(1 << 46)
-	clientFieldResourceServerIdentifier           = big.NewInt(1 << 47)
+	clientFieldIsTokenEndpointIPHeaderTrusted     = big.NewInt(1 << 32)
+	clientFieldClientMetadata                     = big.NewInt(1 << 33)
+	clientFieldMobile                             = big.NewInt(1 << 34)
+	clientFieldInitiateLoginURI                   = big.NewInt(1 << 35)
+	clientFieldRefreshToken                       = big.NewInt(1 << 36)
+	clientFieldDefaultOrganization                = big.NewInt(1 << 37)
+	clientFieldOrganizationUsage                  = big.NewInt(1 << 38)
+	clientFieldOrganizationRequireBehavior        = big.NewInt(1 << 39)
+	clientFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 40)
+	clientFieldClientAuthenticationMethods        = big.NewInt(1 << 41)
+	clientFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 42)
+	clientFieldRequireProofOfPossession           = big.NewInt(1 << 43)
+	clientFieldSignedRequestObject                = big.NewInt(1 << 44)
+	clientFieldComplianceLevel                    = big.NewInt(1 << 45)
+	clientFieldParRequestExpiry                   = big.NewInt(1 << 46)
+	clientFieldTokenQuota                         = big.NewInt(1 << 47)
+	clientFieldResourceServerIdentifier           = big.NewInt(1 << 48)
+	clientFieldAsyncApprovalNotificationChannels  = big.NewInt(1 << 49)
 )
 
 type Client struct {
@@ -118,8 +142,10 @@ type Client struct {
 	FormTemplate            *string                            `json:"form_template,omitempty" url:"form_template,omitempty"`
 	Addons                  *ClientAddons                      `json:"addons,omitempty" url:"addons,omitempty"`
 	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          *ClientMetadata                    `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
-	Mobile                  *ClientMobile                      `json:"mobile,omitempty" url:"mobile,omitempty"`
+	// If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+	IsTokenEndpointIPHeaderTrusted *bool           `json:"is_token_endpoint_ip_header_trusted,omitempty" url:"is_token_endpoint_ip_header_trusted,omitempty"`
+	ClientMetadata                 *ClientMetadata `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
@@ -139,7 +165,8 @@ type Client struct {
 	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
-	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -373,6 +400,13 @@ func (c *Client) GetTokenEndpointAuthMethod() ClientTokenEndpointAuthMethodEnum 
 	return *c.TokenEndpointAuthMethod
 }
 
+func (c *Client) GetIsTokenEndpointIPHeaderTrusted() bool {
+	if c == nil || c.IsTokenEndpointIPHeaderTrusted == nil {
+		return false
+	}
+	return *c.IsTokenEndpointIPHeaderTrusted
+}
+
 func (c *Client) GetClientMetadata() ClientMetadata {
 	if c == nil || c.ClientMetadata == nil {
 		return nil
@@ -483,6 +517,13 @@ func (c *Client) GetResourceServerIdentifier() string {
 		return ""
 	}
 	return *c.ResourceServerIdentifier
+}
+
+func (c *Client) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration {
+	if c == nil || c.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *c.AsyncApprovalNotificationChannels
 }
 
 func (c *Client) GetExtraProperties() map[string]interface{} {
@@ -720,6 +761,13 @@ func (c *Client) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *ClientToken
 	c.require(clientFieldTokenEndpointAuthMethod)
 }
 
+// SetIsTokenEndpointIPHeaderTrusted sets the IsTokenEndpointIPHeaderTrusted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetIsTokenEndpointIPHeaderTrusted(isTokenEndpointIPHeaderTrusted *bool) {
+	c.IsTokenEndpointIPHeaderTrusted = isTokenEndpointIPHeaderTrusted
+	c.require(clientFieldIsTokenEndpointIPHeaderTrusted)
+}
+
 // SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetClientMetadata(clientMetadata *ClientMetadata) {
@@ -830,6 +878,13 @@ func (c *Client) SetTokenQuota(tokenQuota *TokenQuota) {
 func (c *Client) SetResourceServerIdentifier(resourceServerIdentifier *string) {
 	c.ResourceServerIdentifier = resourceServerIdentifier
 	c.require(clientFieldResourceServerIdentifier)
+}
+
+// SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
+	c.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
+	c.require(clientFieldAsyncApprovalNotificationChannels)
 }
 
 func (c *Client) UnmarshalJSON(data []byte) error {
@@ -4624,6 +4679,12 @@ func (c ClientAppTypeEnum) Ptr() *ClientAppTypeEnum {
 	return &c
 }
 
+// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`.
+type ClientAsyncApprovalNotificationsChannelsAPIPatchConfiguration = []AsyncApprovalNotificationsChannelsEnum
+
+// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`.
+type ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration = []AsyncApprovalNotificationsChannelsEnum
+
 // Defines client authentication methods.
 var (
 	clientAuthenticationMethodFieldPrivateKeyJwt           = big.NewInt(1 << 0)
@@ -6986,22 +7047,24 @@ var (
 	createClientResponseContentFieldFormTemplate                       = big.NewInt(1 << 29)
 	createClientResponseContentFieldAddons                             = big.NewInt(1 << 30)
 	createClientResponseContentFieldTokenEndpointAuthMethod            = big.NewInt(1 << 31)
-	createClientResponseContentFieldClientMetadata                     = big.NewInt(1 << 32)
-	createClientResponseContentFieldMobile                             = big.NewInt(1 << 33)
-	createClientResponseContentFieldInitiateLoginURI                   = big.NewInt(1 << 34)
-	createClientResponseContentFieldRefreshToken                       = big.NewInt(1 << 35)
-	createClientResponseContentFieldDefaultOrganization                = big.NewInt(1 << 36)
-	createClientResponseContentFieldOrganizationUsage                  = big.NewInt(1 << 37)
-	createClientResponseContentFieldOrganizationRequireBehavior        = big.NewInt(1 << 38)
-	createClientResponseContentFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 39)
-	createClientResponseContentFieldClientAuthenticationMethods        = big.NewInt(1 << 40)
-	createClientResponseContentFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 41)
-	createClientResponseContentFieldRequireProofOfPossession           = big.NewInt(1 << 42)
-	createClientResponseContentFieldSignedRequestObject                = big.NewInt(1 << 43)
-	createClientResponseContentFieldComplianceLevel                    = big.NewInt(1 << 44)
-	createClientResponseContentFieldParRequestExpiry                   = big.NewInt(1 << 45)
-	createClientResponseContentFieldTokenQuota                         = big.NewInt(1 << 46)
-	createClientResponseContentFieldResourceServerIdentifier           = big.NewInt(1 << 47)
+	createClientResponseContentFieldIsTokenEndpointIPHeaderTrusted     = big.NewInt(1 << 32)
+	createClientResponseContentFieldClientMetadata                     = big.NewInt(1 << 33)
+	createClientResponseContentFieldMobile                             = big.NewInt(1 << 34)
+	createClientResponseContentFieldInitiateLoginURI                   = big.NewInt(1 << 35)
+	createClientResponseContentFieldRefreshToken                       = big.NewInt(1 << 36)
+	createClientResponseContentFieldDefaultOrganization                = big.NewInt(1 << 37)
+	createClientResponseContentFieldOrganizationUsage                  = big.NewInt(1 << 38)
+	createClientResponseContentFieldOrganizationRequireBehavior        = big.NewInt(1 << 39)
+	createClientResponseContentFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 40)
+	createClientResponseContentFieldClientAuthenticationMethods        = big.NewInt(1 << 41)
+	createClientResponseContentFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 42)
+	createClientResponseContentFieldRequireProofOfPossession           = big.NewInt(1 << 43)
+	createClientResponseContentFieldSignedRequestObject                = big.NewInt(1 << 44)
+	createClientResponseContentFieldComplianceLevel                    = big.NewInt(1 << 45)
+	createClientResponseContentFieldParRequestExpiry                   = big.NewInt(1 << 46)
+	createClientResponseContentFieldTokenQuota                         = big.NewInt(1 << 47)
+	createClientResponseContentFieldResourceServerIdentifier           = big.NewInt(1 << 48)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels  = big.NewInt(1 << 49)
 )
 
 type CreateClientResponseContent struct {
@@ -7061,8 +7124,10 @@ type CreateClientResponseContent struct {
 	FormTemplate            *string                            `json:"form_template,omitempty" url:"form_template,omitempty"`
 	Addons                  *ClientAddons                      `json:"addons,omitempty" url:"addons,omitempty"`
 	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          *ClientMetadata                    `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
-	Mobile                  *ClientMobile                      `json:"mobile,omitempty" url:"mobile,omitempty"`
+	// If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+	IsTokenEndpointIPHeaderTrusted *bool           `json:"is_token_endpoint_ip_header_trusted,omitempty" url:"is_token_endpoint_ip_header_trusted,omitempty"`
+	ClientMetadata                 *ClientMetadata `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
@@ -7082,7 +7147,8 @@ type CreateClientResponseContent struct {
 	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
-	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7316,6 +7382,13 @@ func (c *CreateClientResponseContent) GetTokenEndpointAuthMethod() ClientTokenEn
 	return *c.TokenEndpointAuthMethod
 }
 
+func (c *CreateClientResponseContent) GetIsTokenEndpointIPHeaderTrusted() bool {
+	if c == nil || c.IsTokenEndpointIPHeaderTrusted == nil {
+		return false
+	}
+	return *c.IsTokenEndpointIPHeaderTrusted
+}
+
 func (c *CreateClientResponseContent) GetClientMetadata() ClientMetadata {
 	if c == nil || c.ClientMetadata == nil {
 		return nil
@@ -7426,6 +7499,13 @@ func (c *CreateClientResponseContent) GetResourceServerIdentifier() string {
 		return ""
 	}
 	return *c.ResourceServerIdentifier
+}
+
+func (c *CreateClientResponseContent) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration {
+	if c == nil || c.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *c.AsyncApprovalNotificationChannels
 }
 
 func (c *CreateClientResponseContent) GetExtraProperties() map[string]interface{} {
@@ -7663,6 +7743,13 @@ func (c *CreateClientResponseContent) SetTokenEndpointAuthMethod(tokenEndpointAu
 	c.require(createClientResponseContentFieldTokenEndpointAuthMethod)
 }
 
+// SetIsTokenEndpointIPHeaderTrusted sets the IsTokenEndpointIPHeaderTrusted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetIsTokenEndpointIPHeaderTrusted(isTokenEndpointIPHeaderTrusted *bool) {
+	c.IsTokenEndpointIPHeaderTrusted = isTokenEndpointIPHeaderTrusted
+	c.require(createClientResponseContentFieldIsTokenEndpointIPHeaderTrusted)
+}
+
 // SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateClientResponseContent) SetClientMetadata(clientMetadata *ClientMetadata) {
@@ -7773,6 +7860,13 @@ func (c *CreateClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (c *CreateClientResponseContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
 	c.ResourceServerIdentifier = resourceServerIdentifier
 	c.require(createClientResponseContentFieldResourceServerIdentifier)
+}
+
+// SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
+	c.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
+	c.require(createClientResponseContentFieldAsyncApprovalNotificationChannels)
 }
 
 func (c *CreateClientResponseContent) UnmarshalJSON(data []byte) error {
@@ -7930,22 +8024,24 @@ var (
 	getClientResponseContentFieldFormTemplate                       = big.NewInt(1 << 29)
 	getClientResponseContentFieldAddons                             = big.NewInt(1 << 30)
 	getClientResponseContentFieldTokenEndpointAuthMethod            = big.NewInt(1 << 31)
-	getClientResponseContentFieldClientMetadata                     = big.NewInt(1 << 32)
-	getClientResponseContentFieldMobile                             = big.NewInt(1 << 33)
-	getClientResponseContentFieldInitiateLoginURI                   = big.NewInt(1 << 34)
-	getClientResponseContentFieldRefreshToken                       = big.NewInt(1 << 35)
-	getClientResponseContentFieldDefaultOrganization                = big.NewInt(1 << 36)
-	getClientResponseContentFieldOrganizationUsage                  = big.NewInt(1 << 37)
-	getClientResponseContentFieldOrganizationRequireBehavior        = big.NewInt(1 << 38)
-	getClientResponseContentFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 39)
-	getClientResponseContentFieldClientAuthenticationMethods        = big.NewInt(1 << 40)
-	getClientResponseContentFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 41)
-	getClientResponseContentFieldRequireProofOfPossession           = big.NewInt(1 << 42)
-	getClientResponseContentFieldSignedRequestObject                = big.NewInt(1 << 43)
-	getClientResponseContentFieldComplianceLevel                    = big.NewInt(1 << 44)
-	getClientResponseContentFieldParRequestExpiry                   = big.NewInt(1 << 45)
-	getClientResponseContentFieldTokenQuota                         = big.NewInt(1 << 46)
-	getClientResponseContentFieldResourceServerIdentifier           = big.NewInt(1 << 47)
+	getClientResponseContentFieldIsTokenEndpointIPHeaderTrusted     = big.NewInt(1 << 32)
+	getClientResponseContentFieldClientMetadata                     = big.NewInt(1 << 33)
+	getClientResponseContentFieldMobile                             = big.NewInt(1 << 34)
+	getClientResponseContentFieldInitiateLoginURI                   = big.NewInt(1 << 35)
+	getClientResponseContentFieldRefreshToken                       = big.NewInt(1 << 36)
+	getClientResponseContentFieldDefaultOrganization                = big.NewInt(1 << 37)
+	getClientResponseContentFieldOrganizationUsage                  = big.NewInt(1 << 38)
+	getClientResponseContentFieldOrganizationRequireBehavior        = big.NewInt(1 << 39)
+	getClientResponseContentFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 40)
+	getClientResponseContentFieldClientAuthenticationMethods        = big.NewInt(1 << 41)
+	getClientResponseContentFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 42)
+	getClientResponseContentFieldRequireProofOfPossession           = big.NewInt(1 << 43)
+	getClientResponseContentFieldSignedRequestObject                = big.NewInt(1 << 44)
+	getClientResponseContentFieldComplianceLevel                    = big.NewInt(1 << 45)
+	getClientResponseContentFieldParRequestExpiry                   = big.NewInt(1 << 46)
+	getClientResponseContentFieldTokenQuota                         = big.NewInt(1 << 47)
+	getClientResponseContentFieldResourceServerIdentifier           = big.NewInt(1 << 48)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels  = big.NewInt(1 << 49)
 )
 
 type GetClientResponseContent struct {
@@ -8005,8 +8101,10 @@ type GetClientResponseContent struct {
 	FormTemplate            *string                            `json:"form_template,omitempty" url:"form_template,omitempty"`
 	Addons                  *ClientAddons                      `json:"addons,omitempty" url:"addons,omitempty"`
 	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          *ClientMetadata                    `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
-	Mobile                  *ClientMobile                      `json:"mobile,omitempty" url:"mobile,omitempty"`
+	// If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+	IsTokenEndpointIPHeaderTrusted *bool           `json:"is_token_endpoint_ip_header_trusted,omitempty" url:"is_token_endpoint_ip_header_trusted,omitempty"`
+	ClientMetadata                 *ClientMetadata `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
@@ -8026,7 +8124,8 @@ type GetClientResponseContent struct {
 	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
-	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -8260,6 +8359,13 @@ func (g *GetClientResponseContent) GetTokenEndpointAuthMethod() ClientTokenEndpo
 	return *g.TokenEndpointAuthMethod
 }
 
+func (g *GetClientResponseContent) GetIsTokenEndpointIPHeaderTrusted() bool {
+	if g == nil || g.IsTokenEndpointIPHeaderTrusted == nil {
+		return false
+	}
+	return *g.IsTokenEndpointIPHeaderTrusted
+}
+
 func (g *GetClientResponseContent) GetClientMetadata() ClientMetadata {
 	if g == nil || g.ClientMetadata == nil {
 		return nil
@@ -8370,6 +8476,13 @@ func (g *GetClientResponseContent) GetResourceServerIdentifier() string {
 		return ""
 	}
 	return *g.ResourceServerIdentifier
+}
+
+func (g *GetClientResponseContent) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration {
+	if g == nil || g.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *g.AsyncApprovalNotificationChannels
 }
 
 func (g *GetClientResponseContent) GetExtraProperties() map[string]interface{} {
@@ -8607,6 +8720,13 @@ func (g *GetClientResponseContent) SetTokenEndpointAuthMethod(tokenEndpointAuthM
 	g.require(getClientResponseContentFieldTokenEndpointAuthMethod)
 }
 
+// SetIsTokenEndpointIPHeaderTrusted sets the IsTokenEndpointIPHeaderTrusted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetIsTokenEndpointIPHeaderTrusted(isTokenEndpointIPHeaderTrusted *bool) {
+	g.IsTokenEndpointIPHeaderTrusted = isTokenEndpointIPHeaderTrusted
+	g.require(getClientResponseContentFieldIsTokenEndpointIPHeaderTrusted)
+}
+
 // SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetClientResponseContent) SetClientMetadata(clientMetadata *ClientMetadata) {
@@ -8717,6 +8837,13 @@ func (g *GetClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (g *GetClientResponseContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
 	g.ResourceServerIdentifier = resourceServerIdentifier
 	g.require(getClientResponseContentFieldResourceServerIdentifier)
+}
+
+// SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
+	g.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
+	g.require(getClientResponseContentFieldAsyncApprovalNotificationChannels)
 }
 
 func (g *GetClientResponseContent) UnmarshalJSON(data []byte) error {
@@ -9566,22 +9693,24 @@ var (
 	rotateClientSecretResponseContentFieldFormTemplate                       = big.NewInt(1 << 29)
 	rotateClientSecretResponseContentFieldAddons                             = big.NewInt(1 << 30)
 	rotateClientSecretResponseContentFieldTokenEndpointAuthMethod            = big.NewInt(1 << 31)
-	rotateClientSecretResponseContentFieldClientMetadata                     = big.NewInt(1 << 32)
-	rotateClientSecretResponseContentFieldMobile                             = big.NewInt(1 << 33)
-	rotateClientSecretResponseContentFieldInitiateLoginURI                   = big.NewInt(1 << 34)
-	rotateClientSecretResponseContentFieldRefreshToken                       = big.NewInt(1 << 35)
-	rotateClientSecretResponseContentFieldDefaultOrganization                = big.NewInt(1 << 36)
-	rotateClientSecretResponseContentFieldOrganizationUsage                  = big.NewInt(1 << 37)
-	rotateClientSecretResponseContentFieldOrganizationRequireBehavior        = big.NewInt(1 << 38)
-	rotateClientSecretResponseContentFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 39)
-	rotateClientSecretResponseContentFieldClientAuthenticationMethods        = big.NewInt(1 << 40)
-	rotateClientSecretResponseContentFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 41)
-	rotateClientSecretResponseContentFieldRequireProofOfPossession           = big.NewInt(1 << 42)
-	rotateClientSecretResponseContentFieldSignedRequestObject                = big.NewInt(1 << 43)
-	rotateClientSecretResponseContentFieldComplianceLevel                    = big.NewInt(1 << 44)
-	rotateClientSecretResponseContentFieldParRequestExpiry                   = big.NewInt(1 << 45)
-	rotateClientSecretResponseContentFieldTokenQuota                         = big.NewInt(1 << 46)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier           = big.NewInt(1 << 47)
+	rotateClientSecretResponseContentFieldIsTokenEndpointIPHeaderTrusted     = big.NewInt(1 << 32)
+	rotateClientSecretResponseContentFieldClientMetadata                     = big.NewInt(1 << 33)
+	rotateClientSecretResponseContentFieldMobile                             = big.NewInt(1 << 34)
+	rotateClientSecretResponseContentFieldInitiateLoginURI                   = big.NewInt(1 << 35)
+	rotateClientSecretResponseContentFieldRefreshToken                       = big.NewInt(1 << 36)
+	rotateClientSecretResponseContentFieldDefaultOrganization                = big.NewInt(1 << 37)
+	rotateClientSecretResponseContentFieldOrganizationUsage                  = big.NewInt(1 << 38)
+	rotateClientSecretResponseContentFieldOrganizationRequireBehavior        = big.NewInt(1 << 39)
+	rotateClientSecretResponseContentFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 40)
+	rotateClientSecretResponseContentFieldClientAuthenticationMethods        = big.NewInt(1 << 41)
+	rotateClientSecretResponseContentFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 42)
+	rotateClientSecretResponseContentFieldRequireProofOfPossession           = big.NewInt(1 << 43)
+	rotateClientSecretResponseContentFieldSignedRequestObject                = big.NewInt(1 << 44)
+	rotateClientSecretResponseContentFieldComplianceLevel                    = big.NewInt(1 << 45)
+	rotateClientSecretResponseContentFieldParRequestExpiry                   = big.NewInt(1 << 46)
+	rotateClientSecretResponseContentFieldTokenQuota                         = big.NewInt(1 << 47)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier           = big.NewInt(1 << 48)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels  = big.NewInt(1 << 49)
 )
 
 type RotateClientSecretResponseContent struct {
@@ -9641,8 +9770,10 @@ type RotateClientSecretResponseContent struct {
 	FormTemplate            *string                            `json:"form_template,omitempty" url:"form_template,omitempty"`
 	Addons                  *ClientAddons                      `json:"addons,omitempty" url:"addons,omitempty"`
 	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          *ClientMetadata                    `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
-	Mobile                  *ClientMobile                      `json:"mobile,omitempty" url:"mobile,omitempty"`
+	// If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+	IsTokenEndpointIPHeaderTrusted *bool           `json:"is_token_endpoint_ip_header_trusted,omitempty" url:"is_token_endpoint_ip_header_trusted,omitempty"`
+	ClientMetadata                 *ClientMetadata `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
@@ -9662,7 +9793,8 @@ type RotateClientSecretResponseContent struct {
 	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
-	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9896,6 +10028,13 @@ func (r *RotateClientSecretResponseContent) GetTokenEndpointAuthMethod() ClientT
 	return *r.TokenEndpointAuthMethod
 }
 
+func (r *RotateClientSecretResponseContent) GetIsTokenEndpointIPHeaderTrusted() bool {
+	if r == nil || r.IsTokenEndpointIPHeaderTrusted == nil {
+		return false
+	}
+	return *r.IsTokenEndpointIPHeaderTrusted
+}
+
 func (r *RotateClientSecretResponseContent) GetClientMetadata() ClientMetadata {
 	if r == nil || r.ClientMetadata == nil {
 		return nil
@@ -10006,6 +10145,13 @@ func (r *RotateClientSecretResponseContent) GetResourceServerIdentifier() string
 		return ""
 	}
 	return *r.ResourceServerIdentifier
+}
+
+func (r *RotateClientSecretResponseContent) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration {
+	if r == nil || r.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *r.AsyncApprovalNotificationChannels
 }
 
 func (r *RotateClientSecretResponseContent) GetExtraProperties() map[string]interface{} {
@@ -10243,6 +10389,13 @@ func (r *RotateClientSecretResponseContent) SetTokenEndpointAuthMethod(tokenEndp
 	r.require(rotateClientSecretResponseContentFieldTokenEndpointAuthMethod)
 }
 
+// SetIsTokenEndpointIPHeaderTrusted sets the IsTokenEndpointIPHeaderTrusted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetIsTokenEndpointIPHeaderTrusted(isTokenEndpointIPHeaderTrusted *bool) {
+	r.IsTokenEndpointIPHeaderTrusted = isTokenEndpointIPHeaderTrusted
+	r.require(rotateClientSecretResponseContentFieldIsTokenEndpointIPHeaderTrusted)
+}
+
 // SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetClientMetadata(clientMetadata *ClientMetadata) {
@@ -10355,6 +10508,13 @@ func (r *RotateClientSecretResponseContent) SetResourceServerIdentifier(resource
 	r.require(rotateClientSecretResponseContentFieldResourceServerIdentifier)
 }
 
+// SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
+	r.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
+	r.require(rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels)
+}
+
 func (r *RotateClientSecretResponseContent) UnmarshalJSON(data []byte) error {
 	type embed RotateClientSecretResponseContent
 	var unmarshaler = struct {
@@ -10431,22 +10591,24 @@ var (
 	updateClientResponseContentFieldFormTemplate                       = big.NewInt(1 << 29)
 	updateClientResponseContentFieldAddons                             = big.NewInt(1 << 30)
 	updateClientResponseContentFieldTokenEndpointAuthMethod            = big.NewInt(1 << 31)
-	updateClientResponseContentFieldClientMetadata                     = big.NewInt(1 << 32)
-	updateClientResponseContentFieldMobile                             = big.NewInt(1 << 33)
-	updateClientResponseContentFieldInitiateLoginURI                   = big.NewInt(1 << 34)
-	updateClientResponseContentFieldRefreshToken                       = big.NewInt(1 << 35)
-	updateClientResponseContentFieldDefaultOrganization                = big.NewInt(1 << 36)
-	updateClientResponseContentFieldOrganizationUsage                  = big.NewInt(1 << 37)
-	updateClientResponseContentFieldOrganizationRequireBehavior        = big.NewInt(1 << 38)
-	updateClientResponseContentFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 39)
-	updateClientResponseContentFieldClientAuthenticationMethods        = big.NewInt(1 << 40)
-	updateClientResponseContentFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 41)
-	updateClientResponseContentFieldRequireProofOfPossession           = big.NewInt(1 << 42)
-	updateClientResponseContentFieldSignedRequestObject                = big.NewInt(1 << 43)
-	updateClientResponseContentFieldComplianceLevel                    = big.NewInt(1 << 44)
-	updateClientResponseContentFieldParRequestExpiry                   = big.NewInt(1 << 45)
-	updateClientResponseContentFieldTokenQuota                         = big.NewInt(1 << 46)
-	updateClientResponseContentFieldResourceServerIdentifier           = big.NewInt(1 << 47)
+	updateClientResponseContentFieldIsTokenEndpointIPHeaderTrusted     = big.NewInt(1 << 32)
+	updateClientResponseContentFieldClientMetadata                     = big.NewInt(1 << 33)
+	updateClientResponseContentFieldMobile                             = big.NewInt(1 << 34)
+	updateClientResponseContentFieldInitiateLoginURI                   = big.NewInt(1 << 35)
+	updateClientResponseContentFieldRefreshToken                       = big.NewInt(1 << 36)
+	updateClientResponseContentFieldDefaultOrganization                = big.NewInt(1 << 37)
+	updateClientResponseContentFieldOrganizationUsage                  = big.NewInt(1 << 38)
+	updateClientResponseContentFieldOrganizationRequireBehavior        = big.NewInt(1 << 39)
+	updateClientResponseContentFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 40)
+	updateClientResponseContentFieldClientAuthenticationMethods        = big.NewInt(1 << 41)
+	updateClientResponseContentFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 42)
+	updateClientResponseContentFieldRequireProofOfPossession           = big.NewInt(1 << 43)
+	updateClientResponseContentFieldSignedRequestObject                = big.NewInt(1 << 44)
+	updateClientResponseContentFieldComplianceLevel                    = big.NewInt(1 << 45)
+	updateClientResponseContentFieldParRequestExpiry                   = big.NewInt(1 << 46)
+	updateClientResponseContentFieldTokenQuota                         = big.NewInt(1 << 47)
+	updateClientResponseContentFieldResourceServerIdentifier           = big.NewInt(1 << 48)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels  = big.NewInt(1 << 49)
 )
 
 type UpdateClientResponseContent struct {
@@ -10506,8 +10668,10 @@ type UpdateClientResponseContent struct {
 	FormTemplate            *string                            `json:"form_template,omitempty" url:"form_template,omitempty"`
 	Addons                  *ClientAddons                      `json:"addons,omitempty" url:"addons,omitempty"`
 	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          *ClientMetadata                    `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
-	Mobile                  *ClientMobile                      `json:"mobile,omitempty" url:"mobile,omitempty"`
+	// If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+	IsTokenEndpointIPHeaderTrusted *bool           `json:"is_token_endpoint_ip_header_trusted,omitempty" url:"is_token_endpoint_ip_header_trusted,omitempty"`
+	ClientMetadata                 *ClientMetadata `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
@@ -10527,7 +10691,8 @@ type UpdateClientResponseContent struct {
 	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
-	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -10761,6 +10926,13 @@ func (u *UpdateClientResponseContent) GetTokenEndpointAuthMethod() ClientTokenEn
 	return *u.TokenEndpointAuthMethod
 }
 
+func (u *UpdateClientResponseContent) GetIsTokenEndpointIPHeaderTrusted() bool {
+	if u == nil || u.IsTokenEndpointIPHeaderTrusted == nil {
+		return false
+	}
+	return *u.IsTokenEndpointIPHeaderTrusted
+}
+
 func (u *UpdateClientResponseContent) GetClientMetadata() ClientMetadata {
 	if u == nil || u.ClientMetadata == nil {
 		return nil
@@ -10871,6 +11043,13 @@ func (u *UpdateClientResponseContent) GetResourceServerIdentifier() string {
 		return ""
 	}
 	return *u.ResourceServerIdentifier
+}
+
+func (u *UpdateClientResponseContent) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration {
+	if u == nil || u.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *u.AsyncApprovalNotificationChannels
 }
 
 func (u *UpdateClientResponseContent) GetExtraProperties() map[string]interface{} {
@@ -11108,6 +11287,13 @@ func (u *UpdateClientResponseContent) SetTokenEndpointAuthMethod(tokenEndpointAu
 	u.require(updateClientResponseContentFieldTokenEndpointAuthMethod)
 }
 
+// SetIsTokenEndpointIPHeaderTrusted sets the IsTokenEndpointIPHeaderTrusted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetIsTokenEndpointIPHeaderTrusted(isTokenEndpointIPHeaderTrusted *bool) {
+	u.IsTokenEndpointIPHeaderTrusted = isTokenEndpointIPHeaderTrusted
+	u.require(updateClientResponseContentFieldIsTokenEndpointIPHeaderTrusted)
+}
+
 // SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateClientResponseContent) SetClientMetadata(clientMetadata *ClientMetadata) {
@@ -11218,6 +11404,13 @@ func (u *UpdateClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (u *UpdateClientResponseContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
 	u.ResourceServerIdentifier = resourceServerIdentifier
 	u.require(updateClientResponseContentFieldResourceServerIdentifier)
+}
+
+// SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
+	u.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
+	u.require(updateClientResponseContentFieldAsyncApprovalNotificationChannels)
 }
 
 func (u *UpdateClientResponseContent) UnmarshalJSON(data []byte) error {

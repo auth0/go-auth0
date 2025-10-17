@@ -1461,6 +1461,14 @@ client.Clients.Create(
 <dl>
 <dd>
 
+**isTokenEndpointIPHeaderTrusted:** `*bool` — If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **appType:** `*management.ClientAppTypeEnum` 
     
 </dd>
@@ -1702,6 +1710,14 @@ client.Clients.Create(
 <dd>
 
 **resourceServerIdentifier:** `*string` — The identifier of the resource server that this client is linked to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asyncApprovalNotificationChannels:** `*management.ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration` 
     
 </dd>
 </dl>
@@ -2124,6 +2140,14 @@ client.Clients.Update(
 <dl>
 <dd>
 
+**isTokenEndpointIPHeaderTrusted:** `*bool` — If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **appType:** `*management.ClientAppTypeEnum` 
     
 </dd>
@@ -2301,6 +2325,14 @@ client.Clients.Update(
 <dd>
 
 **parRequestExpiry:** `*int` — Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asyncApprovalNotificationChannels:** `*management.ClientAsyncApprovalNotificationsChannelsAPIPatchConfiguration` 
     
 </dd>
 </dl>
@@ -2626,6 +2658,22 @@ client.Connections.Create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**authentication:** `*management.ConnectionAuthenticationPurpose` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectedAccounts:** `*management.ConnectionConnectedAccountsPurpose` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -2882,6 +2930,22 @@ client.Connections.Update(
 <dd>
 
 **metadata:** `*management.ConnectionsMetadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authentication:** `*management.ConnectionAuthenticationPurpose` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectedAccounts:** `*management.ConnectionConnectedAccountsPurpose` 
     
 </dd>
 </dl>
@@ -13417,6 +13481,116 @@ client.Anomaly.Blocks.UnblockIP(
 </dl>
 </details>
 
+## AttackProtection BotDetection
+<details><summary><code>client.AttackProtection.BotDetection.Read() -> *management.GetBotDetectionSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the Bot Detection configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.BotDetection.Read(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.BotDetection.Update(request) -> *management.UpdateBotDetectionSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the Bot Detection configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateBotDetectionSettingsRequestContent{}
+client.AttackProtection.BotDetection.Update(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**allowlist:** `[]any` — List of IP addresses or CIDR blocks to allowlist
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**monitoringModeEnabled:** `*bool` — Whether monitoring mode is enabled (logs but does not block)
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## AttackProtection BreachedPasswordDetection
 <details><summary><code>client.AttackProtection.BreachedPasswordDetection.Get() -> *management.GetBreachedPasswordDetectionSettingsResponseContent</code></summary>
 <dl>
@@ -13686,6 +13860,132 @@ Account Lockout: Determines whether or not IP address is used when counting fail
 <dd>
 
 **maxAttempts:** `*int` — Maximum number of unsuccessful attempts.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## AttackProtection Captcha
+<details><summary><code>client.AttackProtection.Captcha.Get() -> *management.GetCaptchaResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the CAPTCHA configuration for your client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.Captcha.Get(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.Captcha.Update(request) -> *management.UpdateCaptchaResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update existing CAPTCHA configuration for your client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateCaptchaRequestContent{}
+client.AttackProtection.Captcha.Update(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**siteKey:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**secret:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apiKey:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**projectID:** `*string` 
     
 </dd>
 </dl>
@@ -17737,6 +18037,7 @@ request := &management.CreateFlowsVaultConnectionRequestContent{
                         "API_KEY",
                     ),
                     APIKey: "api_key",
+                    BaseURL: "base_url",
                 },
             },
         },
@@ -25639,90 +25940,6 @@ client.Users.FederatedConnectionsTokensets.Delete(
 <dd>
 
 **tokensetID:** `string` — The tokenset id
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users Groups
-<details><summary><code>client.Users.Groups.Get(ID) -> *management.GetUserGroupsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the first <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors">multi-factor authentication</a> enrollment that a specific user has confirmed.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetUserGroupsRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Users.Groups.Get(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to list groups for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 25.
     
 </dd>
 </dl>

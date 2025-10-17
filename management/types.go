@@ -3954,11 +3954,155 @@ func (a *AddOrganizationConnectionResponseContent) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+type AnomalyAllowlistFormat = string
+
 // IP address to check.
 type AnomalyIPFormat = string
 
 // Data related to the user that does affect the application's core functionality.
 type AppMetadata = map[string]interface{}
+
+var (
+	arkoseCaptchaConfigFieldSiteKey         = big.NewInt(1 << 0)
+	arkoseCaptchaConfigFieldSecret          = big.NewInt(1 << 1)
+	arkoseCaptchaConfigFieldClientSubdomain = big.NewInt(1 << 2)
+	arkoseCaptchaConfigFieldVerifySubdomain = big.NewInt(1 << 3)
+	arkoseCaptchaConfigFieldFailOpen        = big.NewInt(1 << 4)
+)
+
+type ArkoseCaptchaConfig struct {
+	SiteKey         string  `json:"siteKey" url:"siteKey"`
+	Secret          string  `json:"secret" url:"secret"`
+	ClientSubdomain *string `json:"clientSubdomain,omitempty" url:"clientSubdomain,omitempty"`
+	VerifySubdomain *string `json:"verifySubdomain,omitempty" url:"verifySubdomain,omitempty"`
+	FailOpen        *bool   `json:"failOpen,omitempty" url:"failOpen,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ArkoseCaptchaConfig) GetSiteKey() string {
+	if a == nil {
+		return ""
+	}
+	return a.SiteKey
+}
+
+func (a *ArkoseCaptchaConfig) GetSecret() string {
+	if a == nil {
+		return ""
+	}
+	return a.Secret
+}
+
+func (a *ArkoseCaptchaConfig) GetClientSubdomain() string {
+	if a == nil || a.ClientSubdomain == nil {
+		return ""
+	}
+	return *a.ClientSubdomain
+}
+
+func (a *ArkoseCaptchaConfig) GetVerifySubdomain() string {
+	if a == nil || a.VerifySubdomain == nil {
+		return ""
+	}
+	return *a.VerifySubdomain
+}
+
+func (a *ArkoseCaptchaConfig) GetFailOpen() bool {
+	if a == nil || a.FailOpen == nil {
+		return false
+	}
+	return *a.FailOpen
+}
+
+func (a *ArkoseCaptchaConfig) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *ArkoseCaptchaConfig) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ArkoseCaptchaConfig) SetSiteKey(siteKey string) {
+	a.SiteKey = siteKey
+	a.require(arkoseCaptchaConfigFieldSiteKey)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ArkoseCaptchaConfig) SetSecret(secret string) {
+	a.Secret = secret
+	a.require(arkoseCaptchaConfigFieldSecret)
+}
+
+// SetClientSubdomain sets the ClientSubdomain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ArkoseCaptchaConfig) SetClientSubdomain(clientSubdomain *string) {
+	a.ClientSubdomain = clientSubdomain
+	a.require(arkoseCaptchaConfigFieldClientSubdomain)
+}
+
+// SetVerifySubdomain sets the VerifySubdomain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ArkoseCaptchaConfig) SetVerifySubdomain(verifySubdomain *string) {
+	a.VerifySubdomain = verifySubdomain
+	a.require(arkoseCaptchaConfigFieldVerifySubdomain)
+}
+
+// SetFailOpen sets the FailOpen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ArkoseCaptchaConfig) SetFailOpen(failOpen *bool) {
+	a.FailOpen = failOpen
+	a.require(arkoseCaptchaConfigFieldFailOpen)
+}
+
+func (a *ArkoseCaptchaConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler ArkoseCaptchaConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = ArkoseCaptchaConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ArkoseCaptchaConfig) MarshalJSON() ([]byte, error) {
+	type embed ArkoseCaptchaConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ArkoseCaptchaConfig) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
 
 type AssessorsTypeEnum = string
 
@@ -4114,6 +4258,143 @@ func (a *AssociateOrganizationClientGrantResponseContent) MarshalJSON() ([]byte,
 }
 
 func (a *AssociateOrganizationClientGrantResponseContent) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+type Auth0CaptchaConfig struct {
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *Auth0CaptchaConfig) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *Auth0CaptchaConfig) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+func (a *Auth0CaptchaConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler Auth0CaptchaConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = Auth0CaptchaConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *Auth0CaptchaConfig) MarshalJSON() ([]byte, error) {
+	type embed Auth0CaptchaConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *Auth0CaptchaConfig) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	auth0V2CaptchaConfigFieldFailOpen = big.NewInt(1 << 0)
+)
+
+type Auth0V2CaptchaConfig struct {
+	FailOpen *bool `json:"failOpen,omitempty" url:"failOpen,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *Auth0V2CaptchaConfig) GetFailOpen() bool {
+	if a == nil || a.FailOpen == nil {
+		return false
+	}
+	return *a.FailOpen
+}
+
+func (a *Auth0V2CaptchaConfig) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *Auth0V2CaptchaConfig) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetFailOpen sets the FailOpen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Auth0V2CaptchaConfig) SetFailOpen(failOpen *bool) {
+	a.FailOpen = failOpen
+	a.require(auth0V2CaptchaConfigFieldFailOpen)
+}
+
+func (a *Auth0V2CaptchaConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler Auth0V2CaptchaConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = Auth0V2CaptchaConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *Auth0V2CaptchaConfig) MarshalJSON() ([]byte, error) {
+	type embed Auth0V2CaptchaConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *Auth0V2CaptchaConfig) String() string {
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -6442,6 +6723,245 @@ func (b *BreachedPasswordDetectionStage) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+// The captcha assessment policy for userpass flow enabled for this tenant
+type CaptchaEnforcementPolicyEnum string
+
+const (
+	CaptchaEnforcementPolicyEnumHighRisk CaptchaEnforcementPolicyEnum = "high_risk"
+	CaptchaEnforcementPolicyEnumAlwaysOn CaptchaEnforcementPolicyEnum = "always_on"
+	CaptchaEnforcementPolicyEnumOff      CaptchaEnforcementPolicyEnum = "off"
+)
+
+func NewCaptchaEnforcementPolicyEnumFromString(s string) (CaptchaEnforcementPolicyEnum, error) {
+	switch s {
+	case "high_risk":
+		return CaptchaEnforcementPolicyEnumHighRisk, nil
+	case "always_on":
+		return CaptchaEnforcementPolicyEnumAlwaysOn, nil
+	case "off":
+		return CaptchaEnforcementPolicyEnumOff, nil
+	}
+	var t CaptchaEnforcementPolicyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CaptchaEnforcementPolicyEnum) Ptr() *CaptchaEnforcementPolicyEnum {
+	return &c
+}
+
+// The selected captcha provider.
+type CaptchaProviderEnum string
+
+const (
+	CaptchaProviderEnumAuth0               CaptchaProviderEnum = "auth0"
+	CaptchaProviderEnumAuth0V2             CaptchaProviderEnum = "auth0_v2"
+	CaptchaProviderEnumRecaptchaV2         CaptchaProviderEnum = "recaptcha_v2"
+	CaptchaProviderEnumRecaptchaEnterprise CaptchaProviderEnum = "recaptcha_enterprise"
+	CaptchaProviderEnumHcaptcha            CaptchaProviderEnum = "hcaptcha"
+	CaptchaProviderEnumFriendlyCaptcha     CaptchaProviderEnum = "friendly_captcha"
+	CaptchaProviderEnumArkose              CaptchaProviderEnum = "arkose"
+)
+
+func NewCaptchaProviderEnumFromString(s string) (CaptchaProviderEnum, error) {
+	switch s {
+	case "auth0":
+		return CaptchaProviderEnumAuth0, nil
+	case "auth0_v2":
+		return CaptchaProviderEnumAuth0V2, nil
+	case "recaptcha_v2":
+		return CaptchaProviderEnumRecaptchaV2, nil
+	case "recaptcha_enterprise":
+		return CaptchaProviderEnumRecaptchaEnterprise, nil
+	case "hcaptcha":
+		return CaptchaProviderEnumHcaptcha, nil
+	case "friendly_captcha":
+		return CaptchaProviderEnumFriendlyCaptcha, nil
+	case "arkose":
+		return CaptchaProviderEnumArkose, nil
+	}
+	var t CaptchaProviderEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CaptchaProviderEnum) Ptr() *CaptchaProviderEnum {
+	return &c
+}
+
+// Config for all captcha providers available for this tenant.
+var (
+	captchaProvidersConfigFieldAuth0               = big.NewInt(1 << 0)
+	captchaProvidersConfigFieldAuth0V2             = big.NewInt(1 << 1)
+	captchaProvidersConfigFieldRecaptchaV2         = big.NewInt(1 << 2)
+	captchaProvidersConfigFieldRecaptchaEnterprise = big.NewInt(1 << 3)
+	captchaProvidersConfigFieldHcaptcha            = big.NewInt(1 << 4)
+	captchaProvidersConfigFieldFriendlyCaptcha     = big.NewInt(1 << 5)
+	captchaProvidersConfigFieldArkose              = big.NewInt(1 << 6)
+)
+
+type CaptchaProvidersConfig struct {
+	Auth0               *Auth0CaptchaConfig               `json:"auth0,omitempty" url:"auth0,omitempty"`
+	Auth0V2             *Auth0V2CaptchaConfig             `json:"auth0_v2,omitempty" url:"auth0_v2,omitempty"`
+	RecaptchaV2         *RecaptchaV2CaptchaConfig         `json:"recaptcha_v2,omitempty" url:"recaptcha_v2,omitempty"`
+	RecaptchaEnterprise *RecaptchaEnterpriseCaptchaConfig `json:"recaptcha_enterprise,omitempty" url:"recaptcha_enterprise,omitempty"`
+	Hcaptcha            *HcaptchaCaptchaConfig            `json:"hcaptcha,omitempty" url:"hcaptcha,omitempty"`
+	FriendlyCaptcha     *FriendlyCaptchaConfig            `json:"friendly_captcha,omitempty" url:"friendly_captcha,omitempty"`
+	Arkose              *ArkoseCaptchaConfig              `json:"arkose,omitempty" url:"arkose,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaProvidersConfig) GetAuth0() Auth0CaptchaConfig {
+	if c == nil || c.Auth0 == nil {
+		return Auth0CaptchaConfig{}
+	}
+	return *c.Auth0
+}
+
+func (c *CaptchaProvidersConfig) GetAuth0V2() Auth0V2CaptchaConfig {
+	if c == nil || c.Auth0V2 == nil {
+		return Auth0V2CaptchaConfig{}
+	}
+	return *c.Auth0V2
+}
+
+func (c *CaptchaProvidersConfig) GetRecaptchaV2() RecaptchaV2CaptchaConfig {
+	if c == nil || c.RecaptchaV2 == nil {
+		return RecaptchaV2CaptchaConfig{}
+	}
+	return *c.RecaptchaV2
+}
+
+func (c *CaptchaProvidersConfig) GetRecaptchaEnterprise() RecaptchaEnterpriseCaptchaConfig {
+	if c == nil || c.RecaptchaEnterprise == nil {
+		return RecaptchaEnterpriseCaptchaConfig{}
+	}
+	return *c.RecaptchaEnterprise
+}
+
+func (c *CaptchaProvidersConfig) GetHcaptcha() HcaptchaCaptchaConfig {
+	if c == nil || c.Hcaptcha == nil {
+		return HcaptchaCaptchaConfig{}
+	}
+	return *c.Hcaptcha
+}
+
+func (c *CaptchaProvidersConfig) GetFriendlyCaptcha() FriendlyCaptchaConfig {
+	if c == nil || c.FriendlyCaptcha == nil {
+		return FriendlyCaptchaConfig{}
+	}
+	return *c.FriendlyCaptcha
+}
+
+func (c *CaptchaProvidersConfig) GetArkose() ArkoseCaptchaConfig {
+	if c == nil || c.Arkose == nil {
+		return ArkoseCaptchaConfig{}
+	}
+	return *c.Arkose
+}
+
+func (c *CaptchaProvidersConfig) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CaptchaProvidersConfig) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetAuth0 sets the Auth0 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaProvidersConfig) SetAuth0(auth0 *Auth0CaptchaConfig) {
+	c.Auth0 = auth0
+	c.require(captchaProvidersConfigFieldAuth0)
+}
+
+// SetAuth0V2 sets the Auth0V2 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaProvidersConfig) SetAuth0V2(auth0V2 *Auth0V2CaptchaConfig) {
+	c.Auth0V2 = auth0V2
+	c.require(captchaProvidersConfigFieldAuth0V2)
+}
+
+// SetRecaptchaV2 sets the RecaptchaV2 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaProvidersConfig) SetRecaptchaV2(recaptchaV2 *RecaptchaV2CaptchaConfig) {
+	c.RecaptchaV2 = recaptchaV2
+	c.require(captchaProvidersConfigFieldRecaptchaV2)
+}
+
+// SetRecaptchaEnterprise sets the RecaptchaEnterprise field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaProvidersConfig) SetRecaptchaEnterprise(recaptchaEnterprise *RecaptchaEnterpriseCaptchaConfig) {
+	c.RecaptchaEnterprise = recaptchaEnterprise
+	c.require(captchaProvidersConfigFieldRecaptchaEnterprise)
+}
+
+// SetHcaptcha sets the Hcaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaProvidersConfig) SetHcaptcha(hcaptcha *HcaptchaCaptchaConfig) {
+	c.Hcaptcha = hcaptcha
+	c.require(captchaProvidersConfigFieldHcaptcha)
+}
+
+// SetFriendlyCaptcha sets the FriendlyCaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaProvidersConfig) SetFriendlyCaptcha(friendlyCaptcha *FriendlyCaptchaConfig) {
+	c.FriendlyCaptcha = friendlyCaptcha
+	c.require(captchaProvidersConfigFieldFriendlyCaptcha)
+}
+
+// SetArkose sets the Arkose field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaProvidersConfig) SetArkose(arkose *ArkoseCaptchaConfig) {
+	c.Arkose = arkose
+	c.require(captchaProvidersConfigFieldArkose)
+}
+
+func (c *CaptchaProvidersConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaProvidersConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaProvidersConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaProvidersConfig) MarshalJSON() ([]byte, error) {
+	type embed CaptchaProvidersConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaProvidersConfig) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 var (
 	clientCredentialFieldID               = big.NewInt(1 << 0)
 	clientCredentialFieldName             = big.NewInt(1 << 1)
@@ -6946,6 +7466,180 @@ func (c *ConnectedAccount) String() string {
 // The access type for the connected account.
 type ConnectedAccountAccessTypeEnum = string
 
+// Configure the purpose of a connection to be used for authentication during login.
+var (
+	connectionAuthenticationPurposeFieldActive = big.NewInt(1 << 0)
+)
+
+type ConnectionAuthenticationPurpose struct {
+	Active bool `json:"active" url:"active"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionAuthenticationPurpose) GetActive() bool {
+	if c == nil {
+		return false
+	}
+	return c.Active
+}
+
+func (c *ConnectionAuthenticationPurpose) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConnectionAuthenticationPurpose) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionAuthenticationPurpose) SetActive(active bool) {
+	c.Active = active
+	c.require(connectionAuthenticationPurposeFieldActive)
+}
+
+func (c *ConnectionAuthenticationPurpose) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionAuthenticationPurpose
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionAuthenticationPurpose(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionAuthenticationPurpose) MarshalJSON() ([]byte, error) {
+	type embed ConnectionAuthenticationPurpose
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionAuthenticationPurpose) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
+var (
+	connectionConnectedAccountsPurposeFieldActive         = big.NewInt(1 << 0)
+	connectionConnectedAccountsPurposeFieldCrossAppAccess = big.NewInt(1 << 1)
+)
+
+type ConnectionConnectedAccountsPurpose struct {
+	Active         bool  `json:"active" url:"active"`
+	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionConnectedAccountsPurpose) GetActive() bool {
+	if c == nil {
+		return false
+	}
+	return c.Active
+}
+
+func (c *ConnectionConnectedAccountsPurpose) GetCrossAppAccess() bool {
+	if c == nil || c.CrossAppAccess == nil {
+		return false
+	}
+	return *c.CrossAppAccess
+}
+
+func (c *ConnectionConnectedAccountsPurpose) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConnectionConnectedAccountsPurpose) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionConnectedAccountsPurpose) SetActive(active bool) {
+	c.Active = active
+	c.require(connectionConnectedAccountsPurposeFieldActive)
+}
+
+// SetCrossAppAccess sets the CrossAppAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionConnectedAccountsPurpose) SetCrossAppAccess(crossAppAccess *bool) {
+	c.CrossAppAccess = crossAppAccess
+	c.require(connectionConnectedAccountsPurposeFieldCrossAppAccess)
+}
+
+func (c *ConnectionConnectedAccountsPurpose) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionConnectedAccountsPurpose
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionConnectedAccountsPurpose(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionConnectedAccountsPurpose) MarshalJSON() ([]byte, error) {
+	type embed ConnectionConnectedAccountsPurpose
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionConnectedAccountsPurpose) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 var (
 	connectionEnabledClientFieldClientID = big.NewInt(1 << 0)
 )
@@ -7040,6 +7734,8 @@ var (
 	connectionForListFieldIsDomainConnection = big.NewInt(1 << 6)
 	connectionForListFieldShowAsButton       = big.NewInt(1 << 7)
 	connectionForListFieldMetadata           = big.NewInt(1 << 8)
+	connectionForListFieldAuthentication     = big.NewInt(1 << 9)
+	connectionForListFieldConnectedAccounts  = big.NewInt(1 << 10)
 )
 
 type ConnectionForList struct {
@@ -7057,8 +7753,10 @@ type ConnectionForList struct {
 	// True if the connection is domain level
 	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD.
-	ShowAsButton *bool                `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Metadata     *ConnectionsMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
+	ShowAsButton      *bool                               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Metadata          *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7128,6 +7826,20 @@ func (c *ConnectionForList) GetMetadata() ConnectionsMetadata {
 		return nil
 	}
 	return *c.Metadata
+}
+
+func (c *ConnectionForList) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *ConnectionForList) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
 }
 
 func (c *ConnectionForList) GetExtraProperties() map[string]interface{} {
@@ -7202,6 +7914,20 @@ func (c *ConnectionForList) SetShowAsButton(showAsButton *bool) {
 func (c *ConnectionForList) SetMetadata(metadata *ConnectionsMetadata) {
 	c.Metadata = metadata
 	c.require(connectionForListFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionForList) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(connectionForListFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionForList) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(connectionForListFieldConnectedAccounts)
 }
 
 func (c *ConnectionForList) UnmarshalJSON(data []byte) error {
@@ -21626,7 +22352,7 @@ var (
 type FlowsVaultConnectioSetupAPIKeyWithBaseURL struct {
 	Type    FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
 	APIKey  string                                 `json:"api_key" url:"api_key"`
-	BaseURL *string                                `json:"base_url,omitempty" url:"base_url,omitempty"`
+	BaseURL string                                 `json:"base_url" url:"base_url"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -21643,10 +22369,10 @@ func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetAPIKey() string {
 }
 
 func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetBaseURL() string {
-	if f == nil || f.BaseURL == nil {
+	if f == nil {
 		return ""
 	}
-	return *f.BaseURL
+	return f.BaseURL
 }
 
 func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetExtraProperties() map[string]interface{} {
@@ -21676,7 +22402,7 @@ func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) SetAPIKey(apiKey string) {
 
 // SetBaseURL sets the BaseURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) SetBaseURL(baseURL *string) {
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) SetBaseURL(baseURL string) {
 	f.BaseURL = baseURL
 	f.require(flowsVaultConnectioSetupAPIKeyWithBaseURLFieldBaseURL)
 }
@@ -23178,6 +23904,100 @@ func (f *FlowsVaultConnectionSummary) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	friendlyCaptchaConfigFieldSiteKey = big.NewInt(1 << 0)
+	friendlyCaptchaConfigFieldSecret  = big.NewInt(1 << 1)
+)
+
+type FriendlyCaptchaConfig struct {
+	SiteKey *string `json:"siteKey,omitempty" url:"siteKey,omitempty"`
+	Secret  *string `json:"secret,omitempty" url:"secret,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FriendlyCaptchaConfig) GetSiteKey() string {
+	if f == nil || f.SiteKey == nil {
+		return ""
+	}
+	return *f.SiteKey
+}
+
+func (f *FriendlyCaptchaConfig) GetSecret() string {
+	if f == nil || f.Secret == nil {
+		return ""
+	}
+	return *f.Secret
+}
+
+func (f *FriendlyCaptchaConfig) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FriendlyCaptchaConfig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FriendlyCaptchaConfig) SetSiteKey(siteKey *string) {
+	f.SiteKey = siteKey
+	f.require(friendlyCaptchaConfigFieldSiteKey)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FriendlyCaptchaConfig) SetSecret(secret *string) {
+	f.Secret = secret
+	f.require(friendlyCaptchaConfigFieldSecret)
+}
+
+func (f *FriendlyCaptchaConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler FriendlyCaptchaConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FriendlyCaptchaConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FriendlyCaptchaConfig) MarshalJSON() ([]byte, error) {
+	type embed FriendlyCaptchaConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FriendlyCaptchaConfig) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
 // The result of a specific execution of a trigger.
 var (
 	getActionExecutionResponseContentFieldID        = big.NewInt(1 << 0)
@@ -23890,6 +24710,102 @@ func (g *GetAculResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetAculResponseContent) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getBotDetectionSettingsResponseContentFieldAllowlist             = big.NewInt(1 << 0)
+	getBotDetectionSettingsResponseContentFieldMonitoringModeEnabled = big.NewInt(1 << 1)
+)
+
+type GetBotDetectionSettingsResponseContent struct {
+	// List of IP addresses or CIDR blocks to allowlist
+	Allowlist []interface{} `json:"allowlist" url:"allowlist"`
+	// Whether monitoring mode is enabled (logs but does not block)
+	MonitoringModeEnabled bool `json:"monitoring_mode_enabled" url:"monitoring_mode_enabled"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetAllowlist() []interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.Allowlist
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetMonitoringModeEnabled() bool {
+	if g == nil {
+		return false
+	}
+	return g.MonitoringModeEnabled
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
+}
+
+func (g *GetBotDetectionSettingsResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetAllowlist sets the Allowlist field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBotDetectionSettingsResponseContent) SetAllowlist(allowlist []interface{}) {
+	g.Allowlist = allowlist
+	g.require(getBotDetectionSettingsResponseContentFieldAllowlist)
+}
+
+// SetMonitoringModeEnabled sets the MonitoringModeEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBotDetectionSettingsResponseContent) SetMonitoringModeEnabled(monitoringModeEnabled bool) {
+	g.MonitoringModeEnabled = monitoringModeEnabled
+	g.require(getBotDetectionSettingsResponseContentFieldMonitoringModeEnabled)
+}
+
+func (g *GetBotDetectionSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetBotDetectionSettingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetBotDetectionSettingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetBotDetectionSettingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetBotDetectionSettingsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetBotDetectionSettingsResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -24798,6 +25714,89 @@ func NewGetBruteForceSettingsResponseContentShieldsItemFromString(s string) (Get
 
 func (g GetBruteForceSettingsResponseContentShieldsItem) Ptr() *GetBruteForceSettingsResponseContentShieldsItem {
 	return &g
+}
+
+var (
+	getCaptchaResponseContentFieldActiveProviderID = big.NewInt(1 << 0)
+)
+
+type GetCaptchaResponseContent struct {
+	ActiveProviderID *string `json:"active_provider_id,omitempty" url:"active_provider_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (g *GetCaptchaResponseContent) GetActiveProviderID() string {
+	if g == nil || g.ActiveProviderID == nil {
+		return ""
+	}
+	return *g.ActiveProviderID
+}
+
+func (g *GetCaptchaResponseContent) GetExtraProperties() map[string]interface{} {
+	return g.ExtraProperties
+}
+
+func (g *GetCaptchaResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetActiveProviderID sets the ActiveProviderID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCaptchaResponseContent) SetActiveProviderID(activeProviderID *string) {
+	g.ActiveProviderID = activeProviderID
+	g.require(getCaptchaResponseContentFieldActiveProviderID)
+}
+
+func (g *GetCaptchaResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetCaptchaResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetCaptchaResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.ExtraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetCaptchaResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetCaptchaResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
+}
+
+func (g *GetCaptchaResponseContent) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }
 
 var (
@@ -30480,101 +31479,6 @@ func (g *GetUserAuthenticationMethodResponseContent) String() string {
 }
 
 var (
-	getUserGroupsResponseContentFieldGroups = big.NewInt(1 << 0)
-	getUserGroupsResponseContentFieldNext   = big.NewInt(1 << 1)
-)
-
-type GetUserGroupsResponseContent struct {
-	Groups []*Group `json:"groups" url:"groups"`
-	// A token to retrieve the next page of results.
-	Next *string `json:"next,omitempty" url:"next,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (g *GetUserGroupsResponseContent) GetGroups() []*Group {
-	if g == nil {
-		return nil
-	}
-	return g.Groups
-}
-
-func (g *GetUserGroupsResponseContent) GetNext() string {
-	if g == nil || g.Next == nil {
-		return ""
-	}
-	return *g.Next
-}
-
-func (g *GetUserGroupsResponseContent) GetExtraProperties() map[string]interface{} {
-	return g.extraProperties
-}
-
-func (g *GetUserGroupsResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
-	}
-	g.explicitFields.Or(g.explicitFields, field)
-}
-
-// SetGroups sets the Groups field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserGroupsResponseContent) SetGroups(groups []*Group) {
-	g.Groups = groups
-	g.require(getUserGroupsResponseContentFieldGroups)
-}
-
-// SetNext sets the Next field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserGroupsResponseContent) SetNext(next *string) {
-	g.Next = next
-	g.require(getUserGroupsResponseContentFieldNext)
-}
-
-func (g *GetUserGroupsResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler GetUserGroupsResponseContent
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*g = GetUserGroupsResponseContent(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *g)
-	if err != nil {
-		return err
-	}
-	g.extraProperties = extraProperties
-	g.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (g *GetUserGroupsResponseContent) MarshalJSON() ([]byte, error) {
-	type embed GetUserGroupsResponseContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*g),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (g *GetUserGroupsResponseContent) String() string {
-	if len(g.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(g); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", g)
-}
-
-var (
 	getVerifiableCredentialTemplateResponseContentFieldID                         = big.NewInt(1 << 0)
 	getVerifiableCredentialTemplateResponseContentFieldName                       = big.NewInt(1 << 1)
 	getVerifiableCredentialTemplateResponseContentFieldType                       = big.NewInt(1 << 2)
@@ -30836,8 +31740,9 @@ type Group struct {
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
 }
 
 func (g *Group) GetID() string {
@@ -30904,7 +31809,7 @@ func (g *Group) GetUpdatedAt() time.Time {
 }
 
 func (g *Group) GetExtraProperties() map[string]interface{} {
-	return g.extraProperties
+	return g.ExtraProperties
 }
 
 func (g *Group) require(field *big.Int) {
@@ -30996,7 +31901,7 @@ func (g *Group) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
-	g.extraProperties = extraProperties
+	g.ExtraProperties = extraProperties
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -31013,7 +31918,7 @@ func (g *Group) MarshalJSON() ([]byte, error) {
 		UpdatedAt: internal.NewOptionalDateTime(g.UpdatedAt),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
-	return json.Marshal(explicitMarshaler)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *Group) String() string {
@@ -31312,6 +32217,100 @@ func NewGuardianFactorsProviderSmsProviderEnumFromString(s string) (GuardianFact
 
 func (g GuardianFactorsProviderSmsProviderEnum) Ptr() *GuardianFactorsProviderSmsProviderEnum {
 	return &g
+}
+
+var (
+	hcaptchaCaptchaConfigFieldSiteKey = big.NewInt(1 << 0)
+	hcaptchaCaptchaConfigFieldSecret  = big.NewInt(1 << 1)
+)
+
+type HcaptchaCaptchaConfig struct {
+	SiteKey *string `json:"siteKey,omitempty" url:"siteKey,omitempty"`
+	Secret  *string `json:"secret,omitempty" url:"secret,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (h *HcaptchaCaptchaConfig) GetSiteKey() string {
+	if h == nil || h.SiteKey == nil {
+		return ""
+	}
+	return *h.SiteKey
+}
+
+func (h *HcaptchaCaptchaConfig) GetSecret() string {
+	if h == nil || h.Secret == nil {
+		return ""
+	}
+	return *h.Secret
+}
+
+func (h *HcaptchaCaptchaConfig) GetExtraProperties() map[string]interface{} {
+	return h.extraProperties
+}
+
+func (h *HcaptchaCaptchaConfig) require(field *big.Int) {
+	if h.explicitFields == nil {
+		h.explicitFields = big.NewInt(0)
+	}
+	h.explicitFields.Or(h.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (h *HcaptchaCaptchaConfig) SetSiteKey(siteKey *string) {
+	h.SiteKey = siteKey
+	h.require(hcaptchaCaptchaConfigFieldSiteKey)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (h *HcaptchaCaptchaConfig) SetSecret(secret *string) {
+	h.Secret = secret
+	h.require(hcaptchaCaptchaConfigFieldSecret)
+}
+
+func (h *HcaptchaCaptchaConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler HcaptchaCaptchaConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*h = HcaptchaCaptchaConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *h)
+	if err != nil {
+		return err
+	}
+	h.extraProperties = extraProperties
+	h.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (h *HcaptchaCaptchaConfig) MarshalJSON() ([]byte, error) {
+	type embed HcaptchaCaptchaConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*h),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, h.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (h *HcaptchaCaptchaConfig) String() string {
+	if len(h.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(h.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(h); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", h)
 }
 
 // This must be provided to verify primary social, enterprise and passwordless email identities. Also, is needed to verify secondary identities.
@@ -41647,6 +42646,210 @@ func (p PublicKeyCredentialAlgorithmEnum) Ptr() *PublicKeyCredentialAlgorithmEnu
 	return &p
 }
 
+var (
+	recaptchaEnterpriseCaptchaConfigFieldSiteKey   = big.NewInt(1 << 0)
+	recaptchaEnterpriseCaptchaConfigFieldAPIKey    = big.NewInt(1 << 1)
+	recaptchaEnterpriseCaptchaConfigFieldProjectID = big.NewInt(1 << 2)
+)
+
+type RecaptchaEnterpriseCaptchaConfig struct {
+	SiteKey   *string `json:"siteKey,omitempty" url:"siteKey,omitempty"`
+	APIKey    *string `json:"apiKey,omitempty" url:"apiKey,omitempty"`
+	ProjectID *string `json:"projectId,omitempty" url:"projectId,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RecaptchaEnterpriseCaptchaConfig) GetSiteKey() string {
+	if r == nil || r.SiteKey == nil {
+		return ""
+	}
+	return *r.SiteKey
+}
+
+func (r *RecaptchaEnterpriseCaptchaConfig) GetAPIKey() string {
+	if r == nil || r.APIKey == nil {
+		return ""
+	}
+	return *r.APIKey
+}
+
+func (r *RecaptchaEnterpriseCaptchaConfig) GetProjectID() string {
+	if r == nil || r.ProjectID == nil {
+		return ""
+	}
+	return *r.ProjectID
+}
+
+func (r *RecaptchaEnterpriseCaptchaConfig) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *RecaptchaEnterpriseCaptchaConfig) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RecaptchaEnterpriseCaptchaConfig) SetSiteKey(siteKey *string) {
+	r.SiteKey = siteKey
+	r.require(recaptchaEnterpriseCaptchaConfigFieldSiteKey)
+}
+
+// SetAPIKey sets the APIKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RecaptchaEnterpriseCaptchaConfig) SetAPIKey(apiKey *string) {
+	r.APIKey = apiKey
+	r.require(recaptchaEnterpriseCaptchaConfigFieldAPIKey)
+}
+
+// SetProjectID sets the ProjectID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RecaptchaEnterpriseCaptchaConfig) SetProjectID(projectID *string) {
+	r.ProjectID = projectID
+	r.require(recaptchaEnterpriseCaptchaConfigFieldProjectID)
+}
+
+func (r *RecaptchaEnterpriseCaptchaConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler RecaptchaEnterpriseCaptchaConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RecaptchaEnterpriseCaptchaConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RecaptchaEnterpriseCaptchaConfig) MarshalJSON() ([]byte, error) {
+	type embed RecaptchaEnterpriseCaptchaConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *RecaptchaEnterpriseCaptchaConfig) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	recaptchaV2CaptchaConfigFieldSiteKey = big.NewInt(1 << 0)
+	recaptchaV2CaptchaConfigFieldSecret  = big.NewInt(1 << 1)
+)
+
+type RecaptchaV2CaptchaConfig struct {
+	SiteKey *string `json:"siteKey,omitempty" url:"siteKey,omitempty"`
+	Secret  *string `json:"secret,omitempty" url:"secret,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RecaptchaV2CaptchaConfig) GetSiteKey() string {
+	if r == nil || r.SiteKey == nil {
+		return ""
+	}
+	return *r.SiteKey
+}
+
+func (r *RecaptchaV2CaptchaConfig) GetSecret() string {
+	if r == nil || r.Secret == nil {
+		return ""
+	}
+	return *r.Secret
+}
+
+func (r *RecaptchaV2CaptchaConfig) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *RecaptchaV2CaptchaConfig) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RecaptchaV2CaptchaConfig) SetSiteKey(siteKey *string) {
+	r.SiteKey = siteKey
+	r.require(recaptchaV2CaptchaConfigFieldSiteKey)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RecaptchaV2CaptchaConfig) SetSecret(secret *string) {
+	r.Secret = secret
+	r.require(recaptchaV2CaptchaConfigFieldSecret)
+}
+
+func (r *RecaptchaV2CaptchaConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler RecaptchaV2CaptchaConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RecaptchaV2CaptchaConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RecaptchaV2CaptchaConfig) MarshalJSON() ([]byte, error) {
+	type embed RecaptchaV2CaptchaConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *RecaptchaV2CaptchaConfig) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
 type RefreshTokenDate struct {
 	// The date and time when the refresh token was created
 	DateTime               time.Time
@@ -50425,6 +51628,102 @@ func (u *UpdateAculResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	updateBotDetectionSettingsResponseContentFieldAllowlist             = big.NewInt(1 << 0)
+	updateBotDetectionSettingsResponseContentFieldMonitoringModeEnabled = big.NewInt(1 << 1)
+)
+
+type UpdateBotDetectionSettingsResponseContent struct {
+	// List of IP addresses or CIDR blocks to allowlist
+	Allowlist []interface{} `json:"allowlist,omitempty" url:"allowlist,omitempty"`
+	// Whether monitoring mode is enabled (logs but does not block)
+	MonitoringModeEnabled *bool `json:"monitoring_mode_enabled,omitempty" url:"monitoring_mode_enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetAllowlist() []interface{} {
+	if u == nil || u.Allowlist == nil {
+		return nil
+	}
+	return u.Allowlist
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetMonitoringModeEnabled() bool {
+	if u == nil || u.MonitoringModeEnabled == nil {
+		return false
+	}
+	return *u.MonitoringModeEnabled
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetAllowlist sets the Allowlist field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBotDetectionSettingsResponseContent) SetAllowlist(allowlist []interface{}) {
+	u.Allowlist = allowlist
+	u.require(updateBotDetectionSettingsResponseContentFieldAllowlist)
+}
+
+// SetMonitoringModeEnabled sets the MonitoringModeEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBotDetectionSettingsResponseContent) SetMonitoringModeEnabled(monitoringModeEnabled *bool) {
+	u.MonitoringModeEnabled = monitoringModeEnabled
+	u.require(updateBotDetectionSettingsResponseContentFieldMonitoringModeEnabled)
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateBotDetectionSettingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateBotDetectionSettingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateBotDetectionSettingsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
 // Phone provider configuration schema
 var (
 	updateBrandingPhoneProviderResponseContentFieldID            = big.NewInt(1 << 0)
@@ -51146,6 +52445,165 @@ func NewUpdateBruteForceSettingsResponseContentShieldsItemFromString(s string) (
 
 func (u UpdateBruteForceSettingsResponseContentShieldsItem) Ptr() *UpdateBruteForceSettingsResponseContentShieldsItem {
 	return &u
+}
+
+var (
+	updateCaptchaResponseContentFieldPolicy              = big.NewInt(1 << 0)
+	updateCaptchaResponseContentFieldPasswordlessPolicy  = big.NewInt(1 << 1)
+	updateCaptchaResponseContentFieldPasswordResetPolicy = big.NewInt(1 << 2)
+	updateCaptchaResponseContentFieldSelected            = big.NewInt(1 << 3)
+	updateCaptchaResponseContentFieldProviders           = big.NewInt(1 << 4)
+	updateCaptchaResponseContentFieldAllowlist           = big.NewInt(1 << 5)
+)
+
+type UpdateCaptchaResponseContent struct {
+	Policy              *CaptchaEnforcementPolicyEnum `json:"policy,omitempty" url:"policy,omitempty"`
+	PasswordlessPolicy  *CaptchaEnforcementPolicyEnum `json:"passwordless_policy,omitempty" url:"passwordless_policy,omitempty"`
+	PasswordResetPolicy *CaptchaEnforcementPolicyEnum `json:"password_reset_policy,omitempty" url:"password_reset_policy,omitempty"`
+	Selected            *CaptchaProviderEnum          `json:"selected,omitempty" url:"selected,omitempty"`
+	Providers           *CaptchaProvidersConfig       `json:"providers,omitempty" url:"providers,omitempty"`
+	// List of trusted IP addresses that will not have attack protection enforced against them.
+	Allowlist []AnomalyAllowlistFormat `json:"allowlist,omitempty" url:"allowlist,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateCaptchaResponseContent) GetPolicy() CaptchaEnforcementPolicyEnum {
+	if u == nil || u.Policy == nil {
+		return ""
+	}
+	return *u.Policy
+}
+
+func (u *UpdateCaptchaResponseContent) GetPasswordlessPolicy() CaptchaEnforcementPolicyEnum {
+	if u == nil || u.PasswordlessPolicy == nil {
+		return ""
+	}
+	return *u.PasswordlessPolicy
+}
+
+func (u *UpdateCaptchaResponseContent) GetPasswordResetPolicy() CaptchaEnforcementPolicyEnum {
+	if u == nil || u.PasswordResetPolicy == nil {
+		return ""
+	}
+	return *u.PasswordResetPolicy
+}
+
+func (u *UpdateCaptchaResponseContent) GetSelected() CaptchaProviderEnum {
+	if u == nil || u.Selected == nil {
+		return ""
+	}
+	return *u.Selected
+}
+
+func (u *UpdateCaptchaResponseContent) GetProviders() CaptchaProvidersConfig {
+	if u == nil || u.Providers == nil {
+		return CaptchaProvidersConfig{}
+	}
+	return *u.Providers
+}
+
+func (u *UpdateCaptchaResponseContent) GetAllowlist() []AnomalyAllowlistFormat {
+	if u == nil || u.Allowlist == nil {
+		return nil
+	}
+	return u.Allowlist
+}
+
+func (u *UpdateCaptchaResponseContent) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UpdateCaptchaResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetPolicy sets the Policy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCaptchaResponseContent) SetPolicy(policy *CaptchaEnforcementPolicyEnum) {
+	u.Policy = policy
+	u.require(updateCaptchaResponseContentFieldPolicy)
+}
+
+// SetPasswordlessPolicy sets the PasswordlessPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCaptchaResponseContent) SetPasswordlessPolicy(passwordlessPolicy *CaptchaEnforcementPolicyEnum) {
+	u.PasswordlessPolicy = passwordlessPolicy
+	u.require(updateCaptchaResponseContentFieldPasswordlessPolicy)
+}
+
+// SetPasswordResetPolicy sets the PasswordResetPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCaptchaResponseContent) SetPasswordResetPolicy(passwordResetPolicy *CaptchaEnforcementPolicyEnum) {
+	u.PasswordResetPolicy = passwordResetPolicy
+	u.require(updateCaptchaResponseContentFieldPasswordResetPolicy)
+}
+
+// SetSelected sets the Selected field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCaptchaResponseContent) SetSelected(selected *CaptchaProviderEnum) {
+	u.Selected = selected
+	u.require(updateCaptchaResponseContentFieldSelected)
+}
+
+// SetProviders sets the Providers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCaptchaResponseContent) SetProviders(providers *CaptchaProvidersConfig) {
+	u.Providers = providers
+	u.require(updateCaptchaResponseContentFieldProviders)
+}
+
+// SetAllowlist sets the Allowlist field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCaptchaResponseContent) SetAllowlist(allowlist []AnomalyAllowlistFormat) {
+	u.Allowlist = allowlist
+	u.require(updateCaptchaResponseContentFieldAllowlist)
+}
+
+func (u *UpdateCaptchaResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateCaptchaResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateCaptchaResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateCaptchaResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateCaptchaResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateCaptchaResponseContent) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 var (
@@ -54902,6 +56360,253 @@ func NewUserEnrollmentStatusEnumFromString(s string) (UserEnrollmentStatusEnum, 
 
 func (u UserEnrollmentStatusEnum) Ptr() *UserEnrollmentStatusEnum {
 	return &u
+}
+
+var (
+	userGroupsResponseSchemaFieldID                  = big.NewInt(1 << 0)
+	userGroupsResponseSchemaFieldName                = big.NewInt(1 << 1)
+	userGroupsResponseSchemaFieldExternalID          = big.NewInt(1 << 2)
+	userGroupsResponseSchemaFieldConnectionID        = big.NewInt(1 << 3)
+	userGroupsResponseSchemaFieldOrganizationID      = big.NewInt(1 << 4)
+	userGroupsResponseSchemaFieldTenantName          = big.NewInt(1 << 5)
+	userGroupsResponseSchemaFieldDescription         = big.NewInt(1 << 6)
+	userGroupsResponseSchemaFieldCreatedAt           = big.NewInt(1 << 7)
+	userGroupsResponseSchemaFieldUpdatedAt           = big.NewInt(1 << 8)
+	userGroupsResponseSchemaFieldMembershipCreatedAt = big.NewInt(1 << 9)
+)
+
+type UserGroupsResponseSchema struct {
+	// Unique identifier for the group (service-generated).
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// Name of the group. Must be unique within its scope (connection, organization, or tenant). Must contain between 1 and 128 printable ASCII characters.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// External identifier for the group, often used for SCIM synchronization. Max length of 256 characters.
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
+	// Identifier for the connection this group belongs to (if a connection group).
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	// Identifier for the organization this group belongs to (if an organization group).
+	OrganizationID *string `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	// Identifier for the tenant this group belongs to.
+	TenantName  *string `json:"tenant_name,omitempty" url:"tenant_name,omitempty"`
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// Timestamp of when the group was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Timestamp of when the group was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// Timestamp of when the group membership was added.
+	MembershipCreatedAt *time.Time `json:"membership_created_at,omitempty" url:"membership_created_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UserGroupsResponseSchema) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+func (u *UserGroupsResponseSchema) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+func (u *UserGroupsResponseSchema) GetExternalID() string {
+	if u == nil || u.ExternalID == nil {
+		return ""
+	}
+	return *u.ExternalID
+}
+
+func (u *UserGroupsResponseSchema) GetConnectionID() string {
+	if u == nil || u.ConnectionID == nil {
+		return ""
+	}
+	return *u.ConnectionID
+}
+
+func (u *UserGroupsResponseSchema) GetOrganizationID() string {
+	if u == nil || u.OrganizationID == nil {
+		return ""
+	}
+	return *u.OrganizationID
+}
+
+func (u *UserGroupsResponseSchema) GetTenantName() string {
+	if u == nil || u.TenantName == nil {
+		return ""
+	}
+	return *u.TenantName
+}
+
+func (u *UserGroupsResponseSchema) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+func (u *UserGroupsResponseSchema) GetCreatedAt() time.Time {
+	if u == nil || u.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.CreatedAt
+}
+
+func (u *UserGroupsResponseSchema) GetUpdatedAt() time.Time {
+	if u == nil || u.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *u.UpdatedAt
+}
+
+func (u *UserGroupsResponseSchema) GetMembershipCreatedAt() time.Time {
+	if u == nil || u.MembershipCreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.MembershipCreatedAt
+}
+
+func (u *UserGroupsResponseSchema) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UserGroupsResponseSchema) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetID(id *string) {
+	u.ID = id
+	u.require(userGroupsResponseSchemaFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetName(name *string) {
+	u.Name = name
+	u.require(userGroupsResponseSchemaFieldName)
+}
+
+// SetExternalID sets the ExternalID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetExternalID(externalID *string) {
+	u.ExternalID = externalID
+	u.require(userGroupsResponseSchemaFieldExternalID)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetConnectionID(connectionID *string) {
+	u.ConnectionID = connectionID
+	u.require(userGroupsResponseSchemaFieldConnectionID)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetOrganizationID(organizationID *string) {
+	u.OrganizationID = organizationID
+	u.require(userGroupsResponseSchemaFieldOrganizationID)
+}
+
+// SetTenantName sets the TenantName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetTenantName(tenantName *string) {
+	u.TenantName = tenantName
+	u.require(userGroupsResponseSchemaFieldTenantName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetDescription(description *string) {
+	u.Description = description
+	u.require(userGroupsResponseSchemaFieldDescription)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetCreatedAt(createdAt *time.Time) {
+	u.CreatedAt = createdAt
+	u.require(userGroupsResponseSchemaFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetUpdatedAt(updatedAt *time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(userGroupsResponseSchemaFieldUpdatedAt)
+}
+
+// SetMembershipCreatedAt sets the MembershipCreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetMembershipCreatedAt(membershipCreatedAt *time.Time) {
+	u.MembershipCreatedAt = membershipCreatedAt
+	u.require(userGroupsResponseSchemaFieldMembershipCreatedAt)
+}
+
+func (u *UserGroupsResponseSchema) UnmarshalJSON(data []byte) error {
+	type embed UserGroupsResponseSchema
+	var unmarshaler = struct {
+		embed
+		CreatedAt           *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt           *internal.DateTime `json:"updated_at,omitempty"`
+		MembershipCreatedAt *internal.DateTime `json:"membership_created_at,omitempty"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UserGroupsResponseSchema(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	u.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	u.MembershipCreatedAt = unmarshaler.MembershipCreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserGroupsResponseSchema) MarshalJSON() ([]byte, error) {
+	type embed UserGroupsResponseSchema
+	var marshaler = struct {
+		embed
+		CreatedAt           *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt           *internal.DateTime `json:"updated_at,omitempty"`
+		MembershipCreatedAt *internal.DateTime `json:"membership_created_at,omitempty"`
+	}{
+		embed:               embed(*u),
+		CreatedAt:           internal.NewOptionalDateTime(u.CreatedAt),
+		UpdatedAt:           internal.NewOptionalDateTime(u.UpdatedAt),
+		MembershipCreatedAt: internal.NewOptionalDateTime(u.MembershipCreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UserGroupsResponseSchema) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 // user_id of the secondary user account being linked.
