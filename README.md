@@ -9,6 +9,7 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/auth0/go-auth0/main.yml?branch=v2&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Av2)
 [![Codecov](https://img.shields.io/codecov/c/github/auth0/go-auth0/v2?style=flat-square)](https://codecov.io/gh/auth0/go-auth0/tree/v2)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fauth0%2Fgo-auth0.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fauth0%2Fgo-auth0?ref=badge_shield)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/auth0/go-auth0)
 
 📚 [Documentation](#documentation) • 🚀 [Getting started](#getting-started) • 💬 [Feedback](#feedback)
 
