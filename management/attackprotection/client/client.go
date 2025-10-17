@@ -3,16 +3,20 @@
 package client
 
 import (
+	botdetection "github.com/auth0/go-auth0/v2/management/attackprotection/botdetection"
 	breachedpassworddetection "github.com/auth0/go-auth0/v2/management/attackprotection/breachedpassworddetection"
 	bruteforceprotection "github.com/auth0/go-auth0/v2/management/attackprotection/bruteforceprotection"
+	captcha "github.com/auth0/go-auth0/v2/management/attackprotection/captcha"
 	suspiciousipthrottling "github.com/auth0/go-auth0/v2/management/attackprotection/suspiciousipthrottling"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 )
 
 type Client struct {
+	BotDetection              *botdetection.Client
 	BreachedPasswordDetection *breachedpassworddetection.Client
 	BruteForceProtection      *bruteforceprotection.Client
+	Captcha                   *captcha.Client
 	SuspiciousIPThrottling    *suspiciousipthrottling.Client
 
 	options *core.RequestOptions
@@ -22,8 +26,10 @@ type Client struct {
 
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
+		BotDetection:              botdetection.NewClient(options),
 		BreachedPasswordDetection: breachedpassworddetection.NewClient(options),
 		BruteForceProtection:      bruteforceprotection.NewClient(options),
+		Captcha:                   captcha.NewClient(options),
 		SuspiciousIPThrottling:    suspiciousipthrottling.NewClient(options),
 		options:                   options,
 		baseURL:                   options.BaseURL,

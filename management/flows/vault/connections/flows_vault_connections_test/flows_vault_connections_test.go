@@ -162,7 +162,8 @@ func TestFlowsVaultConnectionsCreateWithWireMock(
 					Type: management.FlowsVaultConnectioSetupTypeAPIKeyEnum(
 						"API_KEY",
 					),
-					APIKey: "api_key",
+					APIKey:  "api_key",
+					BaseURL: "base_url",
 				},
 			},
 		},
