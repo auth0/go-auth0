@@ -2052,6 +2052,16 @@ func TestClient_GetAppType(tt *testing.T) {
 	c.GetAppType()
 }
 
+func TestClient_GetAsyncApprovalNotificationChannels(tt *testing.T) {
+	var zeroValue []string
+	c := &Client{AsyncApprovalNotificationChannels: &zeroValue}
+	c.GetAsyncApprovalNotificationChannels()
+	c = &Client{}
+	c.GetAsyncApprovalNotificationChannels()
+	c = nil
+	c.GetAsyncApprovalNotificationChannels()
+}
+
 func TestClient_GetCallbacks(tt *testing.T) {
 	var zeroValue []string
 	c := &Client{Callbacks: &zeroValue}
