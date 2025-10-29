@@ -214,10 +214,16 @@ type ClientCredentialsAndAudienceOption struct {
 func (c *ClientCredentialsAndAudienceOption) applyRequestOptions(options *RequestOptions) {
 	// Initialize token source if needed
 	if c.tokenSource == nil {
+		parsedURL, err := url.Parse(options.BaseURL)
+		if err != nil {
+			return
+		}
+
+		tokenURL := parsedURL.Scheme + "://" + parsedURL.Host + "/oauth/token"
 		cfg := &clientcredentials.Config{
 			ClientID:     c.ClientID,
 			ClientSecret: c.ClientSecret,
-			TokenURL:     options.BaseURL + "/oauth/token",
+			TokenURL:     tokenURL,
 			EndpointParams: url.Values{
 				"audience": []string{c.Audience},
 			},
@@ -240,7 +246,14 @@ type ClientCredentialsPrivateKeyJwtOption struct {
 func (c *ClientCredentialsPrivateKeyJwtOption) applyRequestOptions(options *RequestOptions) {
 	// Initialize token source if needed
 	if c.tokenSource == nil {
-		c.tokenSource = internal.OAuth2ClientCredentialsPrivateKeyJwt(*c.Ctx, options.BaseURL, c.Algorithm, c.PrivateKey, c.ClientID)
+		parsedURL, err := url.Parse(options.BaseURL)
+		if err != nil {
+			return
+		}
+
+		// Extract only scheme and host to pass to the internal function
+		baseURL := parsedURL.Scheme + "://" + parsedURL.Host
+		c.tokenSource = internal.OAuth2ClientCredentialsPrivateKeyJwt(*c.Ctx, baseURL, c.ClientID, c.PrivateKey, c.Algorithm)
 	}
 
 	// Set the token source for automatic token management
@@ -259,7 +272,14 @@ type ClientCredentialsPrivateKeyJwtAndAudienceOption struct {
 func (c *ClientCredentialsPrivateKeyJwtAndAudienceOption) applyRequestOptions(options *RequestOptions) {
 	// Initialize token source if needed
 	if c.tokenSource == nil {
-		c.tokenSource = internal.OAuth2ClientCredentialsPrivateKeyJwtAndAudience(*c.Ctx, options.BaseURL, c.Algorithm, c.PrivateKey, c.ClientID, c.Audience)
+		parsedURL, err := url.Parse(options.BaseURL)
+		if err != nil {
+			return
+		}
+
+		// Extract only scheme and host to pass to the internal function
+		baseURL := parsedURL.Scheme + "://" + parsedURL.Host
+		c.tokenSource = internal.OAuth2ClientCredentialsPrivateKeyJwtAndAudience(*c.Ctx, baseURL, c.ClientID, c.PrivateKey, c.Algorithm, c.Audience)
 	}
 
 	// Set the token source for automatic token management
