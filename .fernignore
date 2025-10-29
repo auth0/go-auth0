@@ -3,6 +3,7 @@ internal
 main
 management/client/management.go
 management/core/request_option.go
+management/core/request_option_test.go
 management/option/request_option.go
 # preserve manual fix to broken test (caused by optional request body being an alias of an optional type)
 management/actions/versions/actions_versions_test/actions_versions_test.go
@@ -12,6 +13,7 @@ meta.go
 go.mod
 go.sum
 README.md
+AGENTS.md
 test
 .mock
 .github
